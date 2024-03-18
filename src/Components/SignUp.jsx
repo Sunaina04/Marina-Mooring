@@ -1,19 +1,21 @@
 const SignUp=()=>{
     const changeHandle=(e)=>{}
-    return <div className="contain">
-        <form className="container">
-        <h2 className="signup">SignUp</h2>
+    return <div>
+        <form className="signUpForm">
+            <div className="container">
+            <h2 className="signup">SignUp</h2>
+            <input type="text" placeholder="Email" name="email" required onChange={changeHandle}/>
+            <input type="password" placeholder="Create password" name="pwd" required/>
+            <input type="password" placeholder="Confirm password" name="pwd_confirm" required/>
+            <input type="submit" value="Signup" className="signUpBtn"/>
         
-            <input type="text" placeholder="Email" onChange={changeHandle}/>
-            <input type="password" placeholder="Create password"/>
-            <input type="password" placeholder="Confirm password"/>
-            <input type="submit" value="Signup"/>
-        
-        <h6>Already have an account?<a href="#login">Login</a></h6>
-        <h6>or</h6>
-        <input type="button" value="Login with facebook"/><br/>
-        <input type="button" value="Login with Google"/> 
-        </form>   
+        <h6 style={{width:"50%",textAlign:"center"}}>Already have an account?<a href="#login">Login</a></h6>
+        <h6 style={{width:"50%",textAlign:"center"}}>------or------</h6>
+        <input type="button" value="Login with facebook" className="facebookBtn"/><br/>
+        <input type="button" value="Login with Google" className="googleBtn"/> 
+        </div>
+        </form> 
+
     </div>
 }
 
