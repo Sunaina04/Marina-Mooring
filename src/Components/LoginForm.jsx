@@ -1,33 +1,117 @@
 import React from "react";
 import { useState } from "react";
-
+import { FaFacebook } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
+import "./LoginForm.css"
 export default function LoginForm() {
     const [form, setForm] = useState({
-        FirstName: '',
-        LastName: '',
+
         Email: '',
         Password: '',
-        Address: '',
-        zipcode: '',
+
     })
 
+
+
     const handleChange = (e) => {
+
+        // console.log(e.target.value);
+
         setForm(prev => ({
             ...prev,
             [e.target.name]: e.target.value,
         }))
     }
 
+
+    const handleLogin = _ => {
+        console.log("data", form.Email, form.Password);
+
+      
+
+    }
     return (
         <>
-            <form className="flex flex-col gap-y-2">
-                <input type="text" name="firstname" onChange={handleChange} placeholder="First Name" className="px-4 py-2" />
-                <input type="text" name="lastname" onChange={handleChange} placeholder="Last Name" className="px-4 py-2" />
-                <input type="text" name="email" onChange={handleChange} placeholder="Email" className="px-4 py-2" />
-                <input type="text" name="password" onChange={handleChange} placeholder="Password" className="px-4 py-2" />
-                <input type="text" name="address" onChange={handleChange} placeholder="Address" className="px-4 py-2" />
-                <input type="text" name="zipcode" onChange={handleChange} placeholder="Zip Code" className="px-4 py-2" />
-            </form>
+
+            <div className="main-conatiner">
+                <div className="container">
+                    <div className="login_Form">
+
+                        <div>
+
+                            <h1>Login</h1>
+                        </div>
+
+                        <div className="input">
+                            <div className="email">
+                                <input type="text" name="Email" onChange={handleChange} placeholder="Email" className="px-4 py-2" />
+
+                            </div>
+                            <div className="password">
+                                <input type="text" name="Password" onChange={handleChange} placeholder="Password" className="px-4 py-2" />
+
+                            </div>
+                        </div>
+                        <div >
+                            <p style={{ color: "blue", fontSize: "0.90rem", cursor:"pointer" }}>Forgot password</p>
+                        </div>
+                        <div className="login-btn">
+                            <button onClick={handleLogin}>Login</button>
+
+                            <p style={{ fontSize: "0.90rem" }}>Don`t have an account? <span style={{ color: "blue", cursor:"pointer" }}>Signup</span></p>
+                        </div>
+                        <div className="other">
+                            <hr />
+
+                        </div>
+                        <div className="btn-Container">
+                            <div className="btn-facebook">
+                                <button>
+
+                                    <div className="iconFacebook">
+
+                                        <FaFacebook fontSize={20} />
+
+                                        <span style={{ marginLeft: "4rem", }}>
+                                            Login with Facebook
+                                        </span>
+
+                                    </div>
+
+
+
+                                </button>
+                            </div>
+                            <div className="btn-google">
+                                <button>
+
+                                    <div className="iconGoogle">
+
+                                        <FcGoogle fontSize={20} />
+
+                                        <span style={{ marginLeft: "4rem" }}>
+                                            Login with Google
+                                        </span>
+
+
+                                    </div>
+
+
+
+                                </button>
+
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
         </>
     )
 }

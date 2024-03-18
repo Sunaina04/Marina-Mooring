@@ -9,13 +9,15 @@ import Footer from './Components/Footer';
 function App() {
   return (
     <Router>
-      <Header />
+      {/* <Header /> */}
+
+      <LoginForm/>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<LoginForm />} />
+        {/* <Route path="/" element={<Home />} /> */}
+        {/* <Route path="/" element={<LoginForm />} /> */}
         {/* Add more routes here as needed */}
       </Routes>
-      <Footer />
+      {/* <Footer /> */}
     </Router>
   );
 }
