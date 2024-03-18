@@ -28,9 +28,6 @@ export default function LoginForm() {
                 <input type="text" name="address" onChange={handleChange} placeholder="Address" className="px-4 py-2" />
                 <input type="text" name="zipcode" onChange={handleChange} placeholder="Zip Code" className="px-4 py-2" />
             </form>
-            <div>
-                {form.FirstName}
-            </div>
         </>
     )
 }
