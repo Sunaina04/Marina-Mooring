@@ -78,8 +78,6 @@ export default function LoginForm() {
 
                                     </div>
 
-
-
                                 </button>
                             </div>
                             <div className="btn-google">
