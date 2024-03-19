@@ -10,16 +10,14 @@ import SignUp from "./Components/SignUp";
 function App() {
   return (
     <Router>
-      {/* <Header /> */}
-      <LoginForm/>
-      {/* <SignUp/> */}
+      <Header />
       <Routes>
-        {/* <Route path="/" element={<Home />} /> */}
-        {/* <Route path="/login" element={<LoginForm />} /> */}
-        {/* <Route path="/signup" element={<SignUp />} /> */}
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<LoginForm />} />
+        <Route path="/signup" element={<SignUp />} />
         {/* Add more routes here as needed */}
       </Routes>
-      {/* <Footer /> */}
+      <Footer />
     </Router>
   );
 }
