@@ -113,14 +113,14 @@ export default function LoginForm() {
 
 
     const handleLogin = () => {
-        if (!form.Email) {
+        if (!username) {
             setErrors((prev) => ({
                 ...prev,
                 email: "Email is required",
             }));
             return;
         }
-        if (!form.Password) {
+        if (!password) {
             setErrors((prev) => ({
                 ...prev,
                 password: "Password is required",
@@ -128,7 +128,7 @@ export default function LoginForm() {
             return;
         }
 
-        console.log("data", form.Email, form.Password);
+        console.log("data", username, password);
     };
 
     return (
@@ -159,26 +159,7 @@ export default function LoginForm() {
                             <p style={{ fontSize: "0.90rem" }}>Don`t have an account? <span style={{ color: "blue", cursor: "pointer" }}>Signup</span></p>
 
                         </div>
-
-                    </div>
-                    <div>
-                        <p
-                            style={{ color: "blue", fontSize: "0.90rem", cursor: "pointer" }}
-                        >
-                            Forgot password ?
-                        </p>
-                    </div>
-                    <div className="login-btn">
-                        <button onClick={handleLogin}>Login</button>
-                        <p style={{ fontSize: "0.90rem" }}>
-                            Don't have an account?{" "}
-                            <span style={{ color: "blue", cursor: "pointer" }}>Signup</span>
-                        </p>
-                    </div>
-                    <div className="other">
-                        <hr />
-                    </div>
-                    <div className="btn-Container">
+                        <div className="btn-Container">
                         <div className="btn-facebook">
                             <button>
                                 <div className="iconFacebook">
@@ -199,6 +180,8 @@ export default function LoginForm() {
                                 </div>
                             </button>
                         </div>
+                    </div>
+
                     </div>
                 </div>
             </div>

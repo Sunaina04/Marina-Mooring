@@ -3,16 +3,16 @@ import { RootState } from "../store/store";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: "https://89a6-2401-4900-1c6f-5cca-8165-71e4-c390-35d8.ngrok-free.app/",
-  prepareHeaders: (headers, { getState }) => {
-    const token = (getState() as RootState).user?.userData?.token;
-    if (token) {
-      headers.set("Authorization", `Bearer ${token}`);
-    }
-    // Add the Host header here
-    headers.set("Host", "example.com"); // Replace "example.com" with your desired host
-    console.log("headers", headers, headers.get("Host"));
-    return headers;
-  },
+  // prepareHeaders: (headers, { getState }) => {
+  //   const token = (getState() as RootState).user?.userData?.token;
+  //   if (token) {
+  //     headers.set("Authorization", `Bearer ${token}`);
+  //   }
+  //   // Add the Host header here
+  //   headers.set("Host", "example.com"); // Replace "example.com" with your desired host
+  //   console.log("headers", headers, headers.get("Host"));
+  //   return headers;
+  // },
 });
 
 
