@@ -70,7 +70,12 @@ export default function LoginForm() {
         }
     };
 
-    const handleLogin = () => {
+
+
+
+
+
+    const handleLogin = async () => {
         if (!form.Email) {
             setErrors((prev) => ({
                 ...prev,
@@ -86,7 +91,24 @@ export default function LoginForm() {
             return;
         }
 
-        console.log("data", form.Email, form.Password);
+
+        const response = await fetch('http://192.168.1.38:8080/api/v1/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: "test2@gmail.com",
+                password: "1234",
+            }),
+        });
+        const data = await response.json();
+
+        console.log("data", data);
+
+
+
+        // console.log("data", form.Email, form.Password);
     };
 
     return (
@@ -94,7 +116,7 @@ export default function LoginForm() {
             <div className="main-conatiner">
                 <div className="container">
                     <div className="login_Form">
-                        <div>
+                        <div className="login-Heading">
                             <h1>Login</h1>
                         </div>
                         <div className="input">
@@ -121,14 +143,16 @@ export default function LoginForm() {
                         </div>
                         <div>
                             <p
-                                style={{ color: "blue", fontSize: "0.90rem", cursor: "pointer" }}
+
+                                className="forgotPass"
+
                             >
                                 Forgot password ?
                             </p>
                         </div>
                         <div className="login-btn">
                             <button onClick={handleLogin}>Login</button>
-                            <p style={{ fontSize: "0.90rem" }}>
+                            <p className="dont-have-account">
                                 Don't have an account?{" "}
                                 <span style={{ color: "blue", cursor: "pointer" }}>Signup</span>
                             </p>
@@ -141,7 +165,7 @@ export default function LoginForm() {
                                 <button>
                                     <div className="iconFacebook">
                                         <FaFacebook fontSize={20} />
-                                        <span style={{ marginLeft: "4rem" }}>
+                                        <span className="sinup" >
                                             Login with Facebook
                                         </span>
                                     </div>
@@ -151,7 +175,7 @@ export default function LoginForm() {
                                 <button>
                                     <div className="iconGoogle">
                                         <FcGoogle fontSize={20} />
-                                        <span style={{ marginLeft: "4rem" }}>
+                                        <span className="sinup">
                                             Login with Google
                                         </span>
                                     </div>
