@@ -1,14 +1,16 @@
-
 import React, { useState } from "react";
 import { FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import "./LoginForm.css";
+import "./FormLogin.css"
+import { useLoginMutation } from "../Services/authentication/authApi";
 
 export default function LoginForm() {
-    const [form, setForm] = useState({
-        Email: "",
-        Password: "",
+
+    const [loginPayload, setLoginPayload] = useState({
+        username: "",
+        password: "",
     });
+    const { username, password } = loginPayload;
 
     const [errors, setErrors] = useState({
         email: "",
@@ -18,12 +20,13 @@ export default function LoginForm() {
     const handleChange = (e) => {
         const { name, value } = e.target;
 
-        setForm((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
+        // console.log(e.target.value);
 
-        if (name === "Email") {
+        setLoginPayload((prev) => ({
+            ...prev,
+            [e.target.name]: e.target.value,
+        }));
+        if (name === "username") {
             if (!value) {
                 setErrors((prev) => ({
                     ...prev,
@@ -45,8 +48,7 @@ export default function LoginForm() {
             }
         }
 
-        if (name === "Password") {
-
+        if (name === "password") {
             if (!value) {
                 setErrors((prev) => ({
                     ...prev,
@@ -57,7 +59,8 @@ export default function LoginForm() {
                 if (!passwordRegex.test(value)) {
                     setErrors((prev) => ({
                         ...prev,
-                        password: "Password must be at least 8 characters long and include letters, numbers, and symbols.",
+                        password:
+                            "Password must be at least 8 characters long and include letters, numbers, and symbols.",
                     }));
                 } else {
                     setErrors((prev) => ({
@@ -66,37 +69,62 @@ export default function LoginForm() {
                     }));
                 }
             }
-
         }
     };
 
 
+    const [login] = useLoginMutation();
+    const signInHandler = async () => {
+        try {
+            if (!username) {
+                setErrors((prev) => ({
+                    ...prev,
+                    email: "Email is required",
+                }));
+                return;
+            }
+            if (!password) {
+                setErrors((prev) => ({
+                    ...prev,
+                    password: "Password is required",
+                }));
+                return;
+            }
 
+            console.log("data", username, password);
+            console.log("Attempting login...", loginPayload);
 
+            const response = await login(loginPayload);
 
+            console.log("RESPONSE >>>", response);
 
-    const handleLogin = async () => {
-        if (!form.Email) {
-            setErrors((prev) => ({
-                ...prev,
-                email: "Email is required",
-            }));
-            return;
+            // Handle response based on status
+            if (response.status === 200) {
+                // Login successful
+                console.log("Login successful!");
+            } else {
+                // Handle other status codes
+                console.error("Login failed with status:", response.status);
+            }
+        } catch (error) {
+            console.error("Error occurred during login:", error);
+            // Handle specific error types if needed
+            if (
+                error instanceof TypeError &&
+                error.message.includes("NetworkError")
+            ) {
+                console.error(
+                    "Network error occurred. Please check your internet connection."
+                );
+            } else {
+                console.error("Unexpected error occurred during login:", error);
+            }
         }
-        if (!form.Password) {
-            setErrors((prev) => ({
-                ...prev,
-                password: "Password is required",
-            }));
-            return;
-        }
-
-
-        console.log("data", data);
-
-
-        // console.log("data", form.Email, form.Password);
     };
+
+    /* ***************************************************
+     * NOTE: API Hooks
+     ****************************************************/
 
     return (
         <>
@@ -110,8 +138,8 @@ export default function LoginForm() {
                             <div className="email">
                                 <input
                                     type="text"
-                                    name="Email"
-                                    value={form.Email}
+                                    name="username"
+                                    value={loginPayload.username}
                                     onChange={handleChange}
                                     placeholder="Email"
                                 />
@@ -120,8 +148,8 @@ export default function LoginForm() {
                             <div className="password">
                                 <input
                                     type="password"
-                                    name="Password"
-                                    value={form.Password}
+                                    name="password"
+                                    value={loginPayload.password}
                                     onChange={handleChange}
                                     placeholder="Password"
                                 />
@@ -138,7 +166,7 @@ export default function LoginForm() {
                             </p>
                         </div>
                         <div className="login-btn">
-                            <button onClick={handleLogin}>Login</button>
+                            <button onClick={signInHandler}>Login</button>
                             <p className="dont-have-account">
                                 Don't have an account?{" "}
                                 <span style={{ color: "blue", cursor: "pointer" }}>Sign-up</span>
@@ -173,8 +201,5 @@ export default function LoginForm() {
                 </div>
             </div>
         </>
-    );
+    )
 }
-
-
-
