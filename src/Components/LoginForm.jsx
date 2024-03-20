@@ -92,20 +92,7 @@ export default function LoginForm() {
         }
 
 
-        const response = await fetch('http://192.168.1.38:8080/api/v1/auth/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email: "test2@gmail.com",
-                password: "1234",
-            }),
-        });
-        const data = await response.json();
-
         console.log("data", data);
-
 
 
         // console.log("data", form.Email, form.Password);
@@ -154,7 +141,7 @@ export default function LoginForm() {
                             <button onClick={handleLogin}>Login</button>
                             <p className="dont-have-account">
                                 Don't have an account?{" "}
-                                <span style={{ color: "blue", cursor: "pointer" }}>Signup</span>
+                                <span style={{ color: "blue", cursor: "pointer" }}>Sign-up</span>
                             </p>
                         </div>
                         <div className="other">
