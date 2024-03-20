@@ -9,6 +9,8 @@
     width: 100%;
     height: 100Vh;
     display: flex;
+    flex-wrap: wrap;
+    flex: 1 1 150px;
     justify-content: center;
     text-align: center;
     background-color: rgb(45, 45, 197);
@@ -21,7 +23,7 @@
 .signUp_Form{
     
     width: 20vw;
-    height: 72vh;
+    height: 90vh;
     border: 2px solid rgb(230, 230, 236);
     padding: 1rem;
     border-radius: 0.90rem;
@@ -36,6 +38,34 @@
     padding: 1rem;
 }
 
+.firstName input{
+    
+    width: 15vw;
+    height: 2.4rem;
+    padding: 1rem;
+    border-radius: 5px;
+    border: 1px solid gray;
+}
+
+
+.lastName input{
+    
+    width: 15vw;
+    height: 2.4rem;
+    padding: 1rem;
+    border-radius: 5px;
+    border: 1px solid gray;
+}
+
+
+.contact input{
+    
+    width: 15vw;
+    height: 2.4rem;
+    padding: 1rem;
+    border-radius: 5px;
+    border: 1px solid gray;
+}
 .email input {
     width: 15vw;
     height: 2.4rem;
