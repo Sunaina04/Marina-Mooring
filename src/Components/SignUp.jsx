@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 import "./SignUp.css";
 import { FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
@@ -24,7 +24,7 @@ const SignUp=()=>{
                 e.target.value="";
             }
         }  
-    return(    
+    return(
     <div className="main-container">
             <form>
             <div className="container">
@@ -53,9 +53,6 @@ const SignUp=()=>{
                 <div className="password">
                 <input type="password" placeholder="Create password" name="pwd" required/>
 
-                </div>
-                <div className="confirmPassword">
-                <input type="password" placeholder="Confirm password" name="pwd_confirm" required/>
                 </div>
             </div>
             <div className="signUp-btn">

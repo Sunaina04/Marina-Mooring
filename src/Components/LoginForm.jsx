@@ -4,6 +4,7 @@ import { FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import "./LoginForm.css";
 import { useLoginMutation } from "../Services/authentication/authApi";
+import { Link } from "react-router-dom";
 
 export default function LoginForm() {
     const [loginPayload, setLoginPayload] = useState({
@@ -172,7 +173,9 @@ export default function LoginForm() {
                         <button onClick={handleLogin}>Login</button>
                         <p style={{ fontSize: "0.90rem" }}>
                             Don't have an account?{" "}
+                            <Link to="/signup">
                             <span style={{ color: "blue", cursor: "pointer" }}>Signup</span>
+                            </Link>
                         </p>
                     </div>
                     <div className="other">
