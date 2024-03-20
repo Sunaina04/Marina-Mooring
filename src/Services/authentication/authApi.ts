@@ -5,7 +5,7 @@ const authApi = userApi.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (payload: LOGIN_PAYLOAD) => ({
-        url: `user/emailLogin`,
+        url: "api/v1/auth/login",
         method: "POST",
         body: payload,
       }),
@@ -13,7 +13,7 @@ const authApi = userApi.injectEndpoints({
 
     signup: builder.mutation({
       query: (payload: SIGNUP_PAYLOAD) => ({
-        url: `/user/signup`,
+        url: "v1/mmm/employees/saveEmployee",
         method: "POST",
         body: payload,
       }),
@@ -21,7 +21,7 @@ const authApi = userApi.injectEndpoints({
 
     forgotPassword: builder.mutation({
       query: (payload: FORGOT_PASSWORD_PAYLOAD) => ({
-        url: "/user/forgotpassword",
+        url: "",
         method: "POST",
         body: payload,
       }),
@@ -29,7 +29,7 @@ const authApi = userApi.injectEndpoints({
 
     resetPassword: builder.mutation({
       query: (payload: RESET_PASSWORD_PAYLOAD) => ({
-        url: "/user/reset-password",
+        url: "",
         method: "POST",
         body: payload,
       }),

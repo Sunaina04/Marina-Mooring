@@ -2,34 +2,65 @@ import React from "react";
 import { useState } from "react";
 import { FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import "./LoginForm.css"
+import "./LoginForm.css";
+import { useLoginMutation } from "../Services/authentication/authApi";
+
 export default function LoginForm() {
-    const [form, setForm] = useState({
-
-        Email: '',
-        Password: '',
-
+    const [loginPayload, setLoginPayload] = useState({
+        username: "",
+        password: "",
     })
-
+    const { username, password } = loginPayload;
 
 
     const handleChange = (e) => {
 
         // console.log(e.target.value);
 
-        setForm(prev => ({
+        setLoginPayload(prev => ({
             ...prev,
             [e.target.name]: e.target.value,
         }))
     }
 
+    /* ***************************************************
+  * NOTE: API Hooks
+  ****************************************************/
+    const [login] = useLoginMutation();
 
-    const handleLogin = _ => {
-        console.log("data", form.Email, form.Password);
+    const signInHandler = async () => {
+        try {
+            if (password.trim().length === 0 || username.trim().length === 0) {
+                console.log("Enter valid email and password");
+                return; // Exit early if either username or password is empty
+            }
+            
+            console.log("Attempting login...", loginPayload);
+    
+            const response = await login(loginPayload);
+            
+            console.log("RESPONSE >>>", response);
+            
+            // Handle response based on status
+            if (response.status === 200) {
+                // Login successful
+                console.log("Login successful!");
+            } else {
+                // Handle other status codes
+                console.error("Login failed with status:", response.status);
+            }
+        } catch (error) {
+            console.error("Error occurred during login:", error);
+            // Handle specific error types if needed
+            if (error instanceof TypeError && error.message.includes("NetworkError")) {
+                console.error("Network error occurred. Please check your internet connection.");
+            } else {
+                console.error("Unexpected error occurred during login:", error);
+            }
+        }
+    };
+    
 
-      
-
-    }
     return (
         <>
 
@@ -44,21 +75,21 @@ export default function LoginForm() {
 
                         <div className="input">
                             <div className="email">
-                                <input type="text" name="Email" onChange={handleChange} placeholder="Email" className="px-4 py-2" />
+                                <input type="text" name="username" value={username} onChange={handleChange} placeholder="Email" className="px-4 py-2" />
 
                             </div>
                             <div className="password">
-                                <input type="text" name="Password" onChange={handleChange} placeholder="Password" className="px-4 py-2" />
+                                <input type="text" name="password" value={password} onChange={handleChange} placeholder="Password" className="px-4 py-2" />
 
                             </div>
                         </div>
                         <div >
-                            <p style={{ color: "blue", fontSize: "0.90rem", cursor:"pointer" }}>Forgot password</p>
+                            <p style={{ color: "blue", fontSize: "0.90rem", cursor: "pointer" }}>Forgot password</p>
                         </div>
                         <div className="login-btn">
-                            <button onClick={handleLogin}>Login</button>
+                            <button onClick={signInHandler}>Login</button>
 
-                            <p style={{ fontSize: "0.90rem" }}>Don`t have an account? <span style={{ color: "blue", cursor:"pointer" }}>Signup</span></p>
+                            <p style={{ fontSize: "0.90rem" }}>Don`t have an account? <span style={{ color: "blue", cursor: "pointer" }}>Signup</span></p>
                         </div>
                         <div className="other">
                             <hr />

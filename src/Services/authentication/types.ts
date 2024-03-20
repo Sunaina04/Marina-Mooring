@@ -2,16 +2,13 @@
 export interface LOGIN_PAYLOAD {
   username: string;
   password: string;
-  email: string;
-  device_type: string;
-  device_token: string;
-  user_type: string;
-  guestToken: string | null;
 }
 
 export interface SIGNUP_PAYLOAD {
-  email: string;
-  name: string;
+  firstname: string;
+  lastname: string;
+  phoneNumber: string;
+  emai: string;
   password: string;
 }
 

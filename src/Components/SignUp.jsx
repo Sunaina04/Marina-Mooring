@@ -1,5 +1,9 @@
-const SignUp=()=>{
-    const changeHandle=(e)=>{}
+const SignUp=()=> {
+
+    const changeHandle=()=>{
+
+    }
+
     return <div>
         <form className="signUpForm">
             <div className="container">
