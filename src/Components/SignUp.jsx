@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 import "./SignUp.css";
 import { FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
@@ -24,6 +24,7 @@ const SignUp = () => {
   };
   
   return (
+
     <div className="main-container">
       <form>
         <div className="container">
