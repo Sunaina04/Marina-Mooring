@@ -1,18 +1,17 @@
-
 import React, { useState } from "react";
 import { FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import "./LoginForm.css";
+import "./FormLogin.css"
 import { useLoginMutation } from "../Services/authentication/authApi";
 import { Link } from "react-router-dom";
 
 export default function LoginForm() {
+
     const [loginPayload, setLoginPayload] = useState({
         username: "",
         password: "",
-    })
+    });
     const { username, password } = loginPayload;
-
 
     const [errors, setErrors] = useState({
         email: "",
@@ -24,11 +23,11 @@ export default function LoginForm() {
 
         // console.log(e.target.value);
 
-        setLoginPayload(prev => ({
+        setLoginPayload((prev) => ({
             ...prev,
             [e.target.name]: e.target.value,
-        }))
-        if (name === "Email") {
+        }));
+        if (name === "username") {
             if (!value) {
                 setErrors((prev) => ({
                     ...prev,
@@ -50,8 +49,7 @@ export default function LoginForm() {
             }
         }
 
-        if (name === "Password") {
-
+        if (name === "password") {
             if (!value) {
                 setErrors((prev) => ({
                     ...prev,
@@ -62,7 +60,8 @@ export default function LoginForm() {
                 if (!passwordRegex.test(value)) {
                     setErrors((prev) => ({
                         ...prev,
-                        password: "Password must be at least 8 characters long and include letters, numbers, and symbols.",
+                        password:
+                            "Password must be at least 8 characters long and include letters, numbers, and symbols.",
                     }));
                 } else {
                     setErrors((prev) => ({
@@ -71,22 +70,29 @@ export default function LoginForm() {
                     }));
                 }
             }
-
         }
-    }
+    };
 
-    /* ***************************************************
-  * NOTE: API Hooks
-  ****************************************************/
+
     const [login] = useLoginMutation();
-
     const signInHandler = async () => {
         try {
-            if (password.trim().length === 0 || username.trim().length === 0) {
-                console.log("Enter valid email and password");
-                return; // Exit early if either username or password is empty
+            if (!username) {
+                setErrors((prev) => ({
+                    ...prev,
+                    email: "Email is required",
+                }));
+                return;
+            }
+            if (!password) {
+                setErrors((prev) => ({
+                    ...prev,
+                    password: "Password is required",
+                }));
+                return;
             }
 
+            console.log("data", username, password);
             console.log("Attempting login...", loginPayload);
 
             const response = await login(loginPayload);
@@ -104,110 +110,97 @@ export default function LoginForm() {
         } catch (error) {
             console.error("Error occurred during login:", error);
             // Handle specific error types if needed
-            if (error instanceof TypeError && error.message.includes("NetworkError")) {
-                console.error("Network error occurred. Please check your internet connection.");
+            if (
+                error instanceof TypeError &&
+                error.message.includes("NetworkError")
+            ) {
+                console.error(
+                    "Network error occurred. Please check your internet connection."
+                );
             } else {
                 console.error("Unexpected error occurred during login:", error);
             }
         }
     };
 
-
-    const handleLogin = () => {
-        if (!form.Email) {
-            setErrors((prev) => ({
-                ...prev,
-                email: "Email is required",
-            }));
-            return;
-        }
-        if (!form.Password) {
-            setErrors((prev) => ({
-                ...prev,
-                password: "Password is required",
-            }));
-            return;
-        }
-
-        console.log("data", form.Email, form.Password);
-    };
+    /* ***************************************************
+     * NOTE: API Hooks
+     ****************************************************/
 
     return (
         <>
             <div className="main-conatiner">
                 <div className="container">
                     <div className="login_Form">
-                        <div>
+                        <div className="login-Heading">
                             <h1>Login</h1>
                         </div>
                         <div className="input">
                             <div className="email">
-                                <input type="text" name="username" value={username} onChange={handleChange} placeholder="Email" className="px-4 py-2" />
+                                <input
+                                    type="text"
+                                    name="username"
+                                    value={loginPayload.username}
+                                    onChange={handleChange}
+                                    placeholder="Email"
+                                />
                                 {errors.email && <p className="error">{errors.email}</p>}
                             </div>
                             <div className="password">
-                                <input type="text" name="password" value={password} onChange={handleChange} placeholder="Password" className="px-4 py-2" />
+                                <input
+                                    type="password"
+                                    name="password"
+                                    value={loginPayload.password}
+                                    onChange={handleChange}
+                                    placeholder="Password"
+                                />
                                 {errors.password && <p className="error">{errors.password}</p>}
-
                             </div>
                         </div>
-                        <div >
-                            <p style={{ color: "blue", fontSize: "0.90rem", cursor: "pointer" }}>Forgot password</p>
+                        <div>
+                            <p
+
+                                className="forgotPass"
+
+                            >
+                                Forgot password ?
+                            </p>
                         </div>
                         <div className="login-btn">
                             <button onClick={signInHandler}>Login</button>
-
-                            <p style={{ fontSize: "0.90rem" }}>Don`t have an account? <span style={{ color: "blue", cursor: "pointer" }}>Signup</span></p>
-
+                            <p className="dont-have-account">
+                                Don't have an account?{" "}
+                                <span style={{ color: "blue", cursor: "pointer" }}>Sign-up</span>
+                            </p>
                         </div>
-
-                    </div>
-                    <div>
-                        <p
-                            style={{ color: "blue", fontSize: "0.90rem", cursor: "pointer" }}
-                        >
-                            Forgot password ?
-                        </p>
-                    </div>
-                    <div className="login-btn">
-                        <button onClick={handleLogin}>Login</button>
-                        <p style={{ fontSize: "0.90rem" }}>
-                            Don't have an account?{" "}
-                            <Link to="/signup">
-                            <span style={{ color: "blue", cursor: "pointer" }}>Signup</span>
-                            </Link>
-                        </p>
-                    </div>
-                    <div className="other">
-                        <hr />
-                    </div>
-                    <div className="btn-Container">
-                        <div className="btn-facebook">
-                            <button>
-                                <div className="iconFacebook">
-                                    <FaFacebook fontSize={20} />
-                                    <span style={{ marginLeft: "4rem" }}>
-                                        Login with Facebook
-                                    </span>
-                                </div>
-                            </button>
+                        <div className="other">
+                            <hr />
                         </div>
-                        <div className="btn-google">
-                            <button>
-                                <div className="iconGoogle">
-                                    <FcGoogle fontSize={20} />
-                                    <span style={{ marginLeft: "4rem" }}>
-                                        Login with Google
-                                    </span>
-                                </div>
-                            </button>
+                        <div className="btn-Container">
+                            <div className="btn-facebook">
+                                <button>
+                                    <div className="iconFacebook">
+                                        <FaFacebook fontSize={20} />
+                                        <span className="sinup" >
+                                            Login with Facebook
+                                        </span>
+                                    </div>
+                                </button>
+                            </div>
+                            <div className="btn-google">
+                                <button>
+                                    <div className="iconGoogle">
+                                        <FcGoogle fontSize={20} />
+                                        <span className="sinup">
+                                            Login with Google
+                                        </span>
+                                    </div>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </>
-    );
+    )
 }
-
-
-
