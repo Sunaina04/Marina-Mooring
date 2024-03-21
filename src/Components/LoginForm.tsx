@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import "./LoginForm.css";
@@ -13,9 +13,11 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { setUserData } from "../store/Slice/userSlice";
 import { Link } from "react-router-dom";
+import { Toast } from "primereact/toast";
 
 export default function LoginForm() {
   const dispatch = useDispatch();
+  const toast = useRef<any>(null);
   const [loginPayload, setLoginPayload] = useState({
     username: "",
     password: "",
@@ -28,7 +30,7 @@ export default function LoginForm() {
     password: "",
   });
 
-  console.log("userData", userData)
+  console.log("userData", userData);
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setLoginPayload((prev) => ({
@@ -89,7 +91,6 @@ export default function LoginForm() {
   const [getEmployee] = useGetEmployeeMutation();
 
   const signInHandler = async () => {
-    
     if (!username) {
       setErrors((prev) => ({
         ...prev,
@@ -104,21 +105,28 @@ export default function LoginForm() {
       return;
     }
 
-    await login(loginPayload)
-      .unwrap()
-      .then(async (response) => {
-        const { status, message: msg, user, token } = response as LOGIN_RESPONSE;
-        if (status === 200) {
-          console.log("data", user , response);
-          dispatch(setUserData({ ...user }));
-          localStorage.setItem("token", token);
-        }
-      })
-      .catch((err) => {
-        if (err.data) {
-          const { message: msg } = err.data as ErrorResponse;
-        }
-      });
+    try {
+      const response = await login(loginPayload).unwrap();
+      const { status, user, token, message } = response as LOGIN_RESPONSE;
+      if (status === 200) {
+        console.log("data", user, response);
+        dispatch(setUserData({ ...user }));
+        localStorage.setItem("token", token);
+        setLoginPayload({
+          username: "",
+          password: "",
+        });
+        toast.current?.show({
+          severity: "success",
+          summary: message,
+        });
+      }
+    } catch (error : any) {
+      console.error("Error occurred during login:", error);
+      if (error.data) {
+        const { message: msg } = error.data as ErrorResponse;
+      }
+    }
   };
 
   const getEmployeeHandler = async () => {
@@ -159,7 +167,9 @@ export default function LoginForm() {
                   placeholder="Password"
                   className="px-4 py-2"
                 />
-                {errors.password && <p className="error">{errors.password}</p>}
+                {errors.password && (
+                  <p className="error">{errors.password}</p>
+                )}
               </div>
             </div>
             <div>
@@ -180,7 +190,9 @@ export default function LoginForm() {
                 Don`t have an account?
                 <Link to="/signup">
                   {" "}
-                <span style={{ color: "blue", cursor: "pointer" }}>Signup</span>
+                  <span style={{ color: "blue", cursor: "pointer" }}>
+                    Signup
+                  </span>
                 </Link>
               </p>
             </div>
@@ -209,6 +221,7 @@ export default function LoginForm() {
           </div>
         </div>
       </div>
+      <Toast ref={toast}></Toast>
     </>
   );
 }

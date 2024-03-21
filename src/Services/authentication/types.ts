@@ -8,7 +8,7 @@ export interface SIGNUP_PAYLOAD {
   firstname: string;
   lastname: string;
   phoneNumber: string;
-  emai: string;
+  email: string;
   password: string;
 }
 
