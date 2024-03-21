@@ -1,5 +1,10 @@
 import { userApi } from "../userApi";
-import { FORGOT_PASSWORD_PAYLOAD, LOGIN_PAYLOAD, RESET_PASSWORD_PAYLOAD, SIGNUP_PAYLOAD } from "./types";
+import {
+  FORGOT_PASSWORD_PAYLOAD,
+  LOGIN_PAYLOAD,
+  RESET_PASSWORD_PAYLOAD,
+  SIGNUP_PAYLOAD,
+} from "./types";
 
 const authApi = userApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -16,6 +21,13 @@ const authApi = userApi.injectEndpoints({
         url: "v1/mmm/employees/saveEmployee",
         method: "POST",
         body: payload,
+      }),
+    }),
+
+    getEmployee: builder.mutation({
+      query: () => ({
+        url: "v1/mmm/employees/getAllEmployees",
+        method: "GET",
       }),
     }),
 
@@ -37,4 +49,10 @@ const authApi = userApi.injectEndpoints({
   }),
 });
 
-export const { useLoginMutation, useSignupMutation,useForgotPasswordMutation, useResetPasswordMutation } = authApi;
+export const {
+  useLoginMutation,
+  useSignupMutation,
+  useForgotPasswordMutation,
+  useResetPasswordMutation,
+  useGetEmployeeMutation,
+} = authApi;

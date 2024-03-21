@@ -27,7 +27,6 @@ export const userSlice = createSlice({
     setUserData: (state, action: PayloadAction<UserData>) => {
       const data = action.payload;
       state.userData = data;
-      state.token = data.token as string;
     },
 
     setLogout: () => {
