@@ -12,6 +12,7 @@ import {
 } from "../Services/authentication/types";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserData } from "../store/Slice/userSlice";
+import { Link } from "react-router-dom";
 
 export default function LoginForm() {
   const dispatch = useDispatch();
@@ -176,8 +177,11 @@ export default function LoginForm() {
               <button onClick={signInHandler}>Login</button>
 
               <p style={{ fontSize: "0.90rem" }}>
-                Don`t have an account?{" "}
+                Don`t have an account?
+                <Link to="/signup">
+                  {" "}
                 <span style={{ color: "blue", cursor: "pointer" }}>Signup</span>
+                </Link>
               </p>
             </div>
             <div className="btn-Container">
