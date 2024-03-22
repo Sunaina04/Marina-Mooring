@@ -1,5 +1,6 @@
+import axios from 'axios';
 import { useInfiniteQuery } from 'react-query';
-import axios from '../service/axios';
+
 
 interface useInfiniteQueryProps {
     queryName: string;

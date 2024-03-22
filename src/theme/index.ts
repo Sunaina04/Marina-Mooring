@@ -1,5 +1,5 @@
 import { createTheme, responsiveFontSizes } from "@mui/material";
-import merge from "lodash.merge";
+// import merge from "lodash.merge";
 // import { THEMES } from "../constants";
 import {
   error,
@@ -417,20 +417,20 @@ export const customTheme = (config: {
     themeOption = themesOptions[THEMES.LIGHT];
   } //@ts-ignore
 
-  const merged = merge({}, baseOptions, themeOption, {
-    direction: config.direction,
-  }); //@ts-ignore
+  // const merged = merge({}, baseOptions, themeOption, {
+  //   direction: config.direction,
+  // }); //@ts-ignore
 
-  let theme = createTheme(merged);
+  // let theme = createTheme(merged);
 
-  if (config.responsiveFontSizes) {
-    theme = responsiveFontSizes(theme);
-  } // theme shadows
+  // if (config.responsiveFontSizes) {
+  //   theme = responsiveFontSizes(theme);
+  // } // theme shadows
 
-  theme.shadows[1] = "0px 4px 23px rgba(0, 0, 0, 0.12)";
-  theme.shadows[2] = "0px 0px 21px 1px rgba(0, 0, 0, 0.07)";
-  theme.shadows[3] = "0px 10px 30px rgba(0, 0, 0, 0.1)";
-  theme.shadows[4] = "0px 7px 30px 3px rgba(0, 0, 0, 0.05)"; // console.log(theme);
+  // theme.shadows[1] = "0px 4px 23px rgba(0, 0, 0, 0.12)";
+  // theme.shadows[2] = "0px 0px 21px 1px rgba(0, 0, 0, 0.07)";
+  // theme.shadows[3] = "0px 10px 30px rgba(0, 0, 0, 0.1)";
+  // theme.shadows[4] = "0px 7px 30px 3px rgba(0, 0, 0, 0.05)"; // console.log(theme);
 
-  return theme;
+  // return theme;
 };

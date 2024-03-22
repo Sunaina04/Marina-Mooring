@@ -1,11 +1,11 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
-import { TitleContextValue } from "../types";
+// import { TitleContextValue } from "../types";
 
 interface TitleContextProps {
   children: ReactNode;
 }
 
-export const TitleContext = createContext<TitleContextValue | undefined>(
+export const TitleContext = createContext<undefined>(
   undefined
 );
 
