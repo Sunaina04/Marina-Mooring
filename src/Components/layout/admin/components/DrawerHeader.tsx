@@ -1,6 +1,8 @@
 import { Avatar, IconButton, Typography, styled } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-// import logo from "../../../../assets/images";
+// import Moorfind from "../../../../../public/assets";
+
+// import logo from "../../../../assets/images/MoorFind.png";
 // import { useContext } from "react";
 
 const DrawerHeader: React.FC = () => {
@@ -9,7 +11,8 @@ const DrawerHeader: React.FC = () => {
    ****************************************************/
 
   const navigate = useNavigate();
-
+  // import logo from "../../../../assets/images/MoorFind.png";
+  
 //   const [, , uerProfile] = useContext(TitleContext) as any;
 //   const updatedProfile = uerProfile && JSON.parse(uerProfile)
 
@@ -33,7 +36,7 @@ const DrawerHeader: React.FC = () => {
     <DrawerHeader
       sx={{ justifyContent: "space-between", display: "flex", gap: "2px" }}
     >
-     <img src={"logo"} alt="logo"/>
+     <img src={"/assets/images/Moorfind.png"} alt="logo"/>
     </DrawerHeader>
   );
 };

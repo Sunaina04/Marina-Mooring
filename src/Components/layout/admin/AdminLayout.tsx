@@ -76,30 +76,30 @@ const AdminLayout = () => {
 
   useEffect(() => {
     if (open) {
-      filterModalStyle.left = "40vw"
-      style.left="58.2%"
+      filterModalStyle.left = "40vw";
+      style.left = "58.2%";
     } else {
-      filterModalStyle.left = "34vw"
-      style.left="52%"
+      filterModalStyle.left = "34vw";
+      style.left = "52%";
     }
   }, [open]);
 
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <Header/>
       <Drawer
         variant="permanent"
         open={open}
         sx={{
           "& .MuiPaper-root": {
-            background: `linear-gradient(${primary.bg}, #152844)`,
+            background: "#F2F2F2",
             borderRight: "none",
+            marginTop: "175px",
+            width: "296px",
           },
         }}
       >
-        <DrawerHeader/>
-        <List sx={{paddingTop:"0px"}}>
+        <List sx={{ paddingTop: "0px" }}>
           {SidebarMenu.map((itm) => (
             <ListItem
               key={itm.name}
@@ -107,15 +107,14 @@ const AdminLayout = () => {
               sx={{
                 display: "block",
                 paddingTop: "0px",
-                color: "#fff",
-                "& .active": {
-                  backgroundColor: "#f2f2f2",
-                  color: "#000",
-
-                  ".MuiListItemIcon-root": {
-                    color: "#000",
-                  },
-                },
+                border: "1px solid #B3B3B3",
+                color: "#212121",
+                fontFamily: "Roboto",
+                fontSize: "16px",
+                fontWeight: "700",
+                lineHeight: "18.75px",
+                letterSpacing: "0.20000000298023224px",
+                textAlign: "left",
               }}
             >
               <ListItemButton
@@ -137,25 +136,14 @@ const AdminLayout = () => {
                 }}
               >
                 <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                    color: "#fff",
-                  }}
+                  // sx={{
+                  //   minWidth: 0,
+                  //   mr: open ? 3 : "auto",
+                  //   justifyContent: "center",
+                  //   // color: "#fff",
+                  // }}
                 >
-                  {location.pathname.includes(itm.link) ? (
-                    <img src={"itm.iconHover"} alt="" width={30} />
-                  ) : (
-                    <img src={"itm.icon"} alt="" width={30} />
-                  )}
-                  {/* {({ isActive }) =>
-                    isActive ? (
-                      <img src={itm.icon} alt="" width={30} />
-                    ) : (
-                      <img src={itm.iconHover} alt="" width={30} />
-                    )
-                  } */}
+                  <img src={"itm.icon"} alt="" width={30} />
                 </ListItemIcon>
                 <ListItemText
                   primary={itm.name}
