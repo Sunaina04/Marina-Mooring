@@ -1,4 +1,65 @@
-* {
+/* * {
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bagColor: #FFFFFF;
+    --buttonBorderColor: #000000,
+
+}
+
+
+
+.Login_Container{
+
+
+}
+
+
+
+.Login-btn {
+
+    background-color: var(--buttonBorderColor);
+
+    color: var(--bagColor);
+
+
+} */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* * {
 
     margin: 0;
     padding: 0;
@@ -97,7 +158,6 @@
     margin: 1rem;
     cursor: pointer;
     background-color: white;
-    /* border: none; */
     border-radius: 5px;
     border: 1px solid gray;
     color: gray;
@@ -145,11 +205,11 @@
 .sinup {
 
     margin-left: 7rem;
-}
+} */
 
 /* responsiveness */
 
-
+/* 
 @media screen and (min-width: 320px) {
     .login_Form {
 
@@ -669,4 +729,4 @@
     }
 
 
-}
+} */

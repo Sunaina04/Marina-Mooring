@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import "./LoginForm.css";
+
 import {
   useGetEmployeeMutation,
   useLoginMutation,
@@ -14,6 +15,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUserData } from "../../store/Slice/userSlice";
 import { Link } from "react-router-dom";
 import { Toast } from "primereact/toast";
+import ButtonComponent from "../Common/ButtonComponent";
+import InputComponent from "../Common/InputComponent";
+// import { MdEmail } from "react-icons/md";
 
 export default function LoginForm() {
   const dispatch = useDispatch();
@@ -121,7 +125,7 @@ export default function LoginForm() {
           summary: message,
         });
       }
-    } catch (error : any) {
+    } catch (error: any) {
       console.error("Error occurred during login:", error);
       if (error.data) {
         const { message: msg } = error.data as ErrorResponse;
@@ -140,88 +144,63 @@ export default function LoginForm() {
 
   return (
     <>
-      <div className="main-conatiner">
-        <div className="container">
-          <div className="login_Form">
-            <div>
-              <h1>Login</h1>
-            </div>
-            <div className="input">
-              <div className="email">
-                <input
-                  type="text"
-                  name="username"
-                  value={username}
-                  onChange={handleChange}
-                  placeholder="Email"
-                  className="px-4 py-2"
-                />
-                {errors.email && <p className="error">{errors.email}</p>}
-              </div>
-              <div className="password">
-                <input
-                  type="text"
-                  name="password"
-                  value={password}
-                  onChange={handleChange}
-                  placeholder="Password"
-                  className="px-4 py-2"
-                />
-                {errors.password && (
-                  <p className="error">{errors.password}</p>
-                )}
-              </div>
-            </div>
-            <div>
-              <p
-                style={{
-                  color: "blue",
-                  fontSize: "0.90rem",
-                  cursor: "pointer",
-                }}
-              >
-                Forgot password
-              </p>
-            </div>
-            <div className="login-btn">
-              <button onClick={signInHandler}>Login</button>
 
-              <p style={{ fontSize: "0.90rem" }}>
-                Don`t have an account?
-                <Link to="/signup">
-                  {" "}
-                  <span style={{ color: "blue", cursor: "pointer" }}>
-                    Signup
-                  </span>
-                </Link>
-              </p>
+      <div className="w-full h-screen flex justify-center items-center">
+
+        <div className="w-[35vw] h-72   flex justify-center items-center">
+
+          <div>
+
+            <div className="flex justify-center">
+              <img src="" alt="Logo" />
             </div>
-            <div className="btn-Container">
-              <div className="btn-facebook">
-                <button>
-                  <div className="iconFacebook">
-                    <FaFacebook fontSize={20} />
-                    <span style={{ marginLeft: "4rem" }}>
-                      Login with Facebook
-                    </span>
-                  </div>
-                </button>
-              </div>
-              <div className="btn-google">
-                <button>
-                  <div className="iconGoogle">
-                    <FcGoogle fontSize={20} />
-                    <span style={{ marginLeft: "4rem" }}>
-                      Login with Google
-                    </span>
-                  </div>
-                </button>
+            <div>
+              <span className="p-input-icon-left">
+
+                {/* <MdEmail className="mr-24 text-2xl" /> */}
+                <InputComponent
+
+                  placeholder={"Enter you email"}
+                  type={"email"}
+                  style={{ width: "30vw", height: "auto", padding: "0.80rem 2rem", border: "1px solid gray", }}
+
+                />
+              </span>
+
+            </div>
+
+            <div className="mt-5">
+              <span className="p-input-icon-left">
+                {/* <i className="pi pi-search" /> */}
+                <InputComponent
+                  placeholder={"Password"}
+                  type={"password"}
+                  style={{ width: "30vw", height: "5vh", padding: "1.50rem", fontSize: "1rem", border: "1px solid gray" }} />
+              </span>
+
+              <div className="flex justify-end mt-4">
+                <p>Forgot passwrod?</p>
+
               </div>
             </div>
+
+            <div className="flex justify-center items-center mt-5">
+              <ButtonComponent
+                style={{ backgroundColor: "black", border: "1px solid black", width: "9rem", color: "white" }}
+                onClick={function (): void {
+                  throw new Error("Function not implemented.");
+                }} label={"Login"} />
+            </div>
+
           </div>
+
         </div>
+
       </div>
-      <Toast ref={toast}></Toast>
+
     </>
   );
 }
+
+
+
