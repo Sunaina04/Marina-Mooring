@@ -5,13 +5,13 @@ import "./LoginForm.css";
 import {
   useGetEmployeeMutation,
   useLoginMutation,
-} from "../Services/authentication/authApi";
+} from "../../Services/authentication/authApi";
 import {
   ErrorResponse,
   LOGIN_RESPONSE,
-} from "../Services/authentication/types";
+} from "../../Services/authentication/types";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserData } from "../store/Slice/userSlice";
+import { setUserData } from "../../store/Slice/userSlice";
 import { Link } from "react-router-dom";
 import { Toast } from "primereact/toast";
 

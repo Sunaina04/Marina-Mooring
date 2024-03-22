@@ -14,9 +14,9 @@ const EmployeeManagement = () => {
 
     const handleClick = () => {
         if (user === "admin") {
-            navigate('/admin'); 
+            navigate('/login'); 
         } else if (user === "customer") {
-            navigate('/customer'); 
+            navigate('/login'); 
         }
     }
 

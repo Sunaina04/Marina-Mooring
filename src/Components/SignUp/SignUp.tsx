@@ -2,8 +2,8 @@ import "./SignUp.css";
 import { FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
-import { useSignupMutation } from "../Services/authentication/authApi";
-import { SIGNUP_PAYLOAD, SIGNUP_RESPONSE } from "../Services/authentication/types";
+import { useSignupMutation } from "../../Services/authentication/authApi";
+import { SIGNUP_PAYLOAD, SIGNUP_RESPONSE } from "../../Services/authentication/types";
 import { useState, ChangeEvent, FormEvent, useRef } from "react";
 import { Toast } from 'primereact/toast';
 
