@@ -14,6 +14,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUserData } from "../../store/Slice/userSlice";
 import { Link } from "react-router-dom";
 import { Toast } from "primereact/toast";
+import ButtonComponent from "../Common/ButtonComponent";
+import InputComponent from "../Common/InputComponent";
+import { MdEmail } from "react-icons/md";
 
 export default function LoginForm() {
   const dispatch = useDispatch();
@@ -121,7 +124,7 @@ export default function LoginForm() {
           summary: message,
         });
       }
-    } catch (error : any) {
+    } catch (error: any) {
       console.error("Error occurred during login:", error);
       if (error.data) {
         const { message: msg } = error.data as ErrorResponse;
@@ -140,7 +143,50 @@ export default function LoginForm() {
 
   return (
     <>
-      <div className="main-conatiner">
+
+      <div className="w-full h-screen flex justify-center items-center">
+
+        <div className="Login_Container">
+          <div>
+            Logo
+          </div>
+
+          <div>
+            <span className="p-input-icon-left">
+              <MdEmail />
+              <InputComponent placeholder={"Enter you email"} type={"email"} />
+            </span>
+
+          </div>
+          <div>
+            <span className="p-input-icon-left">
+              <i className="pi pi-search" />
+              <InputComponent placeholder={"Enter you email"} type={"password"} />
+            </span>
+
+          </div>
+
+          <div className="Login-btn">
+            <ButtonComponent onClick={function (): void {
+              throw new Error("Function not implemented.");
+            }} label={"Login"} />
+          </div>
+
+
+
+        </div>
+
+      </div>
+
+    </>
+  );
+}
+
+
+
+
+
+{/* <div className="main-conatiner">
         <div className="container">
           <div className="login_Form">
             <div>
@@ -221,7 +267,4 @@ export default function LoginForm() {
           </div>
         </div>
       </div>
-      <Toast ref={toast}></Toast>
-    </>
-  );
-}
+      <Toast ref={toast}></Toast> */}

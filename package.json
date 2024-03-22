@@ -51,6 +51,10 @@
     ]
   },
   "devDependencies": {
+<<<<<<< Updated upstream
     "@types/lodash.merge": "^4.6.9"
+=======
+    "tailwindcss": "^3.4.1"
+>>>>>>> Stashed changes
   }
 }
