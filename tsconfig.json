@@ -15,7 +15,11 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "downlevelIteration": true
+    "downlevelIteration": true,
+    "baseUrl": ".",
+    "paths": {
+      "@mui/icons-material": ["node_modules/@mui/icons-material"]
+    }
   },
   "include": ["src"]
 }
