@@ -2,162 +2,190 @@ import * as React from "react";
 import {
   Box,
   CssBaseline,
-  CSSObject,
+  Divider,
   List,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
   styled,
-  Theme,
   Toolbar,
 } from "@mui/material";
-import { useEffect } from "react";
 import MuiDrawer from "@mui/material/Drawer";
-import Header from "./components/Header";
-import { NavLink, NavLinkProps, Outlet, useLocation } from "react-router-dom";
-import DrawerHeader from "./components/DrawerHeader";
+import { NavLink, NavLinkProps, Outlet } from "react-router-dom";
 import { drawerWidth } from "../../constants";
-import { filterModalStyle } from "../../style";
-import { style } from "../../customComponent/CustomModal";
-import { primary } from "../../../theme/themeColors";
 import { SidebarMenu } from "./components/SidebarMenu";
-
-const openedMixin = (theme: Theme): CSSObject => ({
-  width: drawerWidth,
-  transition: theme.transitions.create("width", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen,
-  }),
-  overflowX: "hidden",
-});
-
-const closedMixin = (theme: Theme): CSSObject => ({
-  transition: theme.transitions.create("width", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  overflowX: "hidden",
-  width: `calc(${theme.spacing(7)} + 1px)`,
-  [theme.breakpoints.up("sm")]: {
-    width: `calc(${theme.spacing(8)} + 1px)`,
-  },
-});
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
+})(() => ({
   width: drawerWidth,
   flexShrink: 0,
   whiteSpace: "nowrap",
   boxSizing: "border-box",
-  ...(open && {
-    ...openedMixin(theme),
-    "& .MuiDrawer-paper": openedMixin(theme),
-  }),
-  ...(!open && {
-    ...closedMixin(theme),
-    "& .MuiDrawer-paper": closedMixin(theme),
-  }),
 }));
 
 const AdminLayout = () => {
-  const [open, setOpen] = React.useState(true);
+  const [openSubMenus, setOpenSubMenus] = React.useState(
+    new Array(SidebarMenu.length).fill(false)
+  );
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
+  const handleExpand = (index: number) => {
+    setOpenSubMenus((prev) => {
+      const updatedSubMenus = new Array(SidebarMenu.length).fill(false);
+      updatedSubMenus[index] = !prev[index];
+      return updatedSubMenus;
+    });
   };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
-  const location = useLocation();
-
-  useEffect(() => {
-    if (open) {
-      filterModalStyle.left = "40vw";
-      style.left = "58.2%";
-    } else {
-      filterModalStyle.left = "34vw";
-      style.left = "52%";
-    }
-  }, [open]);
+  
 
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <Drawer
         variant="permanent"
-        open={open}
+        open={true}
         sx={{
           "& .MuiPaper-root": {
             background: "#F2F2F2",
             borderRight: "none",
-            marginTop: "175px",
-            width: "296px",
+            marginTop: "70px",
+            width: "200px",
           },
         }}
       >
         <List sx={{ paddingTop: "0px" }}>
-          {SidebarMenu.map((itm) => (
-            <ListItem
-              key={itm.name}
-              disablePadding
-              sx={{
-                display: "block",
-                paddingTop: "0px",
-                border: "1px solid #B3B3B3",
-                color: "#212121",
-                fontFamily: "Roboto",
-                fontSize: "16px",
-                fontWeight: "700",
-                lineHeight: "18.75px",
-                letterSpacing: "0.20000000298023224px",
-                textAlign: "left",
-              }}
-            >
-              <ListItemButton
-                component={NavLink as React.FC<NavLinkProps>}
-                to={itm.link}
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                  // borderBottom: "1px solid #fff",
-                  "&::before": {
-                    content: '""',
-                    position: "absolute",
-                    bottom: 0,
-                    width: "90%",
-                    height: "0.5px",
-                    backgroundColor: "rgba(255, 255, 255, 0.5)",
-                  },
-                }}
-              >
-                <ListItemIcon
-                  // sx={{
-                  //   minWidth: 0,
-                  //   mr: open ? 3 : "auto",
-                  //   justifyContent: "center",
-                  //   // color: "#fff",
-                  // }}
+          {SidebarMenu.map((item, index) => (
+            <React.Fragment key={index}>
+              {item.name && (
+                <ListItem
+                  key={item.name}
+                  disablePadding
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    border: "1px solid #B3B3B3",
+                    background: "#D9D9D9",
+                  }}
                 >
-                  <img src={"itm.icon"} alt="" width={30} />
-                </ListItemIcon>
-                <ListItemText
-                  primary={itm.name}
-                  sx={{ opacity: open ? 1 : 0 }}
-                />
-              </ListItemButton>
-            </ListItem>
+                  <ListItemButton
+                    component={NavLink as React.FC<NavLinkProps>}
+                    to={item.link}
+                    sx={{
+                      width: "100%",
+                      height: "auto",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      padding: "8px 16px",
+                      "&:hover": {
+                        backgroundColor: "#EDEDED",
+                      },
+                    }}
+                  >
+                    <ListItemIcon sx={{ minWidth: "auto" }}>
+                      <img
+                        src={item.icon}
+                        alt=""
+                        width={15}
+                        style={{ marginRight: "8px" }}
+                      />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={item.name}
+                      primaryTypographyProps={{
+                        sx: {
+                          fontSize: "10px",
+                          fontWeight: 700,
+                          lineHeight: "1.5",
+                          letterSpacing: "0.2px",
+                          textAlign: "left",
+                        },
+                      }}
+                      onClick={() => handleExpand(index)}
+                    />
+                    {item.subcategories && (
+                      // <ListItemButton>
+                        <ListItemIcon sx={{ minWidth: "auto" }}>
+                          {openSubMenus[index] ? (
+                            <img
+                              src="/assets/images/minus.png"
+                              alt="Minus"
+                              style={{ width: "10px", marginLeft: "8px" }}
+                            />
+                          ) : (
+                            <img
+                              src="/assets/images/plus.png"
+                              alt="Plus"
+                              style={{ width: "10px", marginLeft: "8px" }}
+                            />
+                          )}
+                        </ListItemIcon>
+                      // </ListItemButton>
+                    )}
+                  </ListItemButton>
+
+                  {item.subcategories && openSubMenus[index] && (
+                    <List disablePadding>
+                      {item.subcategories.map((subcategory, subIndex) => (
+                        <ListItem
+                          key={subIndex}
+                          disablePadding
+                          sx={{
+                            display: "flex",
+                            background: "#F2F2F2",
+                            marginRight: "70px",
+                          }}
+                        >
+                          <ListItemButton
+                            component={NavLink as React.FC<NavLinkProps>}
+                            to={subcategory.link}
+                            sx={{
+                              width: "100%",
+                              height: "auto",
+                              justifyContent: "flex-start",
+                              alignItems: "center",
+                              padding: "8px 16px",
+                              "&:hover": {
+                                backgroundColor: "#EDEDED",
+                              },
+                            }}
+                          >
+                            <ListItemIcon sx={{ marginLeft: "60px" }}>
+                              <img
+                                src={subcategory.icon}
+                                alt=""
+                                width={15}
+                                style={{ marginRight: "8px" }} // Added marginRight style
+                              />
+                            </ListItemIcon>
+                            <ListItemText
+                              primary={subcategory.name}
+                              primaryTypographyProps={{
+                                sx: {
+                                  fontSize: "10px",
+                                  fontWeight: 200,
+                                  lineHeight: "1.5",
+                                  letterSpacing: "0.2px",
+                                  textAlign: "left",
+                                  marginLeft: "-30px",
+
+                                },
+                              }}
+                            />
+                          </ListItemButton>
+                        </ListItem>
+                      ))}
+                    </List>
+                  )}
+                </ListItem>
+              )}
+              {index !== SidebarMenu.length - 1 && (
+                <Divider sx={{ height: "15px" }} />
+              )}
+            </React.Fragment>
           ))}
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 0, width: "82%" }}>
-        <Toolbar />
-        <Outlet />
-      </Box>
     </Box>
   );
 };

@@ -1,4 +1,5 @@
 import ForgotPassword from "./Components/ForgotPassword/ForgotPassword";
+import Dashboard from "./Components/Dashboard/Dashboard";
 import LoginForm from "./Components/Login/LoginForm";
 import LoginMain from "./Components/Login/LoginMain";
 import ResetPassword from "./Components/ResetPassword/ResetPassword";
@@ -24,7 +25,6 @@ const routes: Route[] = [
     path: "signup",
     element: <SignUp />,
   },
-
   {
     path: "resetPass",
     element: <ResetPassword />,
@@ -34,6 +34,10 @@ const routes: Route[] = [
     path: "forgotPass",
     element: <ForgotPassword />,
   },
+  {
+    path: "dashboard",
+    element: <Dashboard />,
+  }
 ];
 
 export default routes;

@@ -1,6 +1,11 @@
-const Dashboard = () => { 
-    return (
-        <h1>This is Dashboard</h1>
-    )
-}
-export default Dashboard
+import ServiceTable from "./ServiceTable";
+
+const Dashboard = () => {
+  return (
+    <>
+      <h1>Dashboard</h1>
+      <ServiceTable />
+    </>
+  );
+};
+export default Dashboard;

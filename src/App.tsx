@@ -18,6 +18,7 @@ function App() {
     <Provider store={store}>
       <Router>
         <Header />
+        {/* <AdminLayout/> */}
         <Routes>
           <Route path="/" element={<EmployeeManagement />} />
           <Route path="/login" element={<LoginMain />} />
@@ -29,7 +30,7 @@ function App() {
             <Route path="dashboard" element={<Dashboard />} />
           </Route>
         </Routes>
-        <Footer />
+        {/* <Footer /> */}
       </Router>
     </Provider>
   );
