@@ -18,7 +18,7 @@ function App() {
     <Provider store={store}>
       <Router>
         <Header />
-        {/* <AdminLayout/> */}
+        <AdminLayout/>
         <Routes>
           <Route path="/" element={<EmployeeManagement />} />
           <Route path="/login" element={<LoginMain />} />
