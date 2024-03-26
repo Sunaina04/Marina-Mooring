@@ -1,5 +1,8 @@
+import ForgotPassword from "./Components/ForgotPassword/ForgotPassword";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import LoginForm from "./Components/Login/LoginForm";
+import LoginMain from "./Components/Login/LoginMain";
+import ResetPassword from "./Components/ResetPassword/ResetPassword";
 import SignUp from "./Components/SignUp/SignUp";
 import Home from "./Pages/Home";
 import { ReactElement } from "react";
@@ -16,11 +19,20 @@ const routes: Route[] = [
   },
   {
     path: "login",
-    element: <LoginForm />,
+    element: <LoginMain />,
   },
   {
     path: "signup",
     element: <SignUp />,
+  },
+  {
+    path: "resetPass",
+    element: <ResetPassword />,
+  },
+
+  {
+    path: "forgotPass",
+    element: <ForgotPassword />,
   },
   {
     path: "dashboard",
