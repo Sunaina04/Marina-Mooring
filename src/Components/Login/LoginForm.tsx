@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import "./LoginForm.css";
-
 import {
   useGetEmployeeMutation,
   useLoginMutation,
@@ -13,13 +12,25 @@ import {
 } from "../../Services/authentication/types";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserData } from "../../store/Slice/userSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Toast } from "primereact/toast";
 import ButtonComponent from "../Common/ButtonComponent";
 import InputComponent from "../Common/InputComponent";
-// import { MdEmail } from "react-icons/md";
+import SignUp from "../SignUp/SignUp";
 
-export default function LoginForm() {
+interface LoginFormProps {
+  Label: string;
+  typeEmail: string;
+  typePass: string;
+  showSinUp: boolean;
+}
+
+export default function LoginForm({
+  Label,
+  typeEmail,
+  typePass,
+  showSinUp,
+}: LoginFormProps) {
   const dispatch = useDispatch();
   const toast = useRef<any>(null);
   const [loginPayload, setLoginPayload] = useState({
@@ -144,63 +155,123 @@ export default function LoginForm() {
 
   return (
     <>
-
       <div className="w-full h-screen flex justify-center items-center">
-
-        <div className="w-[35vw] h-72   flex justify-center items-center">
-
-          <div>
-
-            <div className="flex justify-center">
-              <img src="" alt="Logo" />
-            </div>
+        <div className="text-center">
+          <div className="mb-3">
             <div>
-              <span className="p-input-icon-left">
-
-                {/* <MdEmail className="mr-24 text-2xl" /> */}
-                <InputComponent
-
-                  placeholder={"Enter you email"}
-                  type={"email"}
-                  style={{ width: "30vw", height: "auto", padding: "0.80rem 2rem", border: "1px solid gray", }}
-
+              <img
+                src="/assets/images/Moorfind.png"
+                alt="Logo"
+                className="w-full h-80 bg-black mb-5"
+              />
+            </div>
+            <div className="p-input-icon-left">
+              {showSinUp ? (
+                <img
+                  src="/assets/images/key.png"
+                  alt="icon"
+                  className="p-icon w-5"
                 />
-              </span>
+              ) : (
+                <img
+                  src="/assets/images/email.png"
+                  alt="icon"
+                  className="p-icon w-5"
+                />
+              )}
 
+              <InputComponent
+                style={{
+                  width: "40vw",
+                  height: "6vh",
+                  padding: "0 3rem",
+                  border: "1px solid gray",
+                  fontSize: "1.20vw",
+                  // fontFamily: "Roboto",
+                }}
+                type={
+                  showSinUp
+                    ? typeEmail === "password"
+                      ? "password"
+                      : "text"
+                    : typeEmail === "email"
+                    ? "email"
+                    : "text"
+                }
+                placeholder={showSinUp ? "New Password" : "Enter Your Email"}
+                name="Email"
+                onChange={handleChange}
+              />
             </div>
-
-            <div className="mt-5">
-              <span className="p-input-icon-left">
-                {/* <i className="pi pi-search" /> */}
-                <InputComponent
-                  placeholder={"Password"}
-                  type={"password"}
-                  style={{ width: "30vw", height: "5vh", padding: "1.50rem", fontSize: "1rem", border: "1px solid gray" }} />
-              </span>
-
-              <div className="flex justify-end mt-4">
-                <p>Forgot passwrod?</p>
-
-              </div>
-            </div>
-
-            <div className="flex justify-center items-center mt-5">
-              <ButtonComponent
-                style={{ backgroundColor: "black", border: "1px solid black", width: "9rem", color: "white" }}
-                onClick={function (): void {
-                  throw new Error("Function not implemented.");
-                }} label={"Login"} />
-            </div>
-
           </div>
 
+          <div className="mb-6">
+            <div className="p-input-icon-left">
+              <img
+                src="/assets/images/key.png"
+                alt="icon"
+                className="p-icon  w-5"
+              />
+
+              <InputComponent
+                style={{
+                  width: "40vw",
+                  height: "6vh",
+                  padding: "0 3rem",
+                  border: "1px solid gray",
+                  fontSize: "1.20vw",
+                  // fontFamily: "Roboto",
+                }}
+                type={
+                  showSinUp
+                    ? typePass === "password"
+                      ? "password"
+                      : "text"
+                    : typePass === "password"
+                    ? "password"
+                    : "text"
+                }
+                placeholder={showSinUp ? "Confirm Password" : "Password"}
+                onChange={handleChange}
+                name="Password"
+              />
+            </div>
+            {showSinUp ? (
+              " "
+            ) : (
+              <>
+                <div className="flex justify-end mt-8 cursor-pointer ">
+                  <Link to={"/forgotPass"}>
+                    <p className="font-normal font-['Roboto']">
+                      Forgot Password ?
+                    </p>
+                  </Link>
+                </div>
+
+                <div className="flex justify-end">
+                  <span className="w-[7.40rem] h-[0.50px] bg-black text-black "></span>
+                </div>
+              </>
+            )}
+          </div>
+
+          <ButtonComponent
+            style={{
+              width: "10vw",
+              height: "6vh",
+              backgroundColor: "black",
+              color: "white",
+              border: "1px solid black",
+              fontWeight: "700",
+              letterSpacing: "0.2px",
+              fontSize: "1.50vw",
+              // fontFamily: "Roboto",
+            }}
+            label={showSinUp ? Label : Label}
+            onClick={signInHandler}
+          />
         </div>
-
       </div>
-
     </>
   );
 }
-
-
-
