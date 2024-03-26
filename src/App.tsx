@@ -16,12 +16,13 @@ function App() {
     <Provider store={store}>
       <Router>
         <Header />
-        <AdminLayout/>
+        {/* <AdminLayout/> */}
         <Routes>
           <Route path="/" element={<EmployeeManagement />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/employee" element={<EmployeeManagement/>} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/admin/*" element={<AdminLayout />}> {/* Use wildcard for nested routes */}
             <Route path="dashboard" element={<Dashboard />} /> {/* Render Dashboard inside AdminLayout */}
           </Route>
