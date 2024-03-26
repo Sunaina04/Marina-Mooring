@@ -16,6 +16,7 @@ function App() {
     <Provider store={store}>
       <Router>
         <Header />
+        <AdminLayout/>
         <Routes>
           <Route path="/" element={<EmployeeManagement />} />
           <Route path="/login" element={<LoginForm />} />
@@ -25,7 +26,7 @@ function App() {
             <Route path="dashboard" element={<Dashboard />} /> {/* Render Dashboard inside AdminLayout */}
           </Route>
         </Routes>
-        <Footer />
+        {/* <Footer /> */}
       </Router>
     </Provider>
   );
