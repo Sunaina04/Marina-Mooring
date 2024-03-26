@@ -1,3 +1,4 @@
+import Dashboard from "./Components/Dashboard/Dashboard";
 import LoginForm from "./Components/Login/LoginForm";
 import SignUp from "./Components/SignUp/SignUp";
 import Home from "./Pages/Home";
@@ -21,6 +22,10 @@ const routes: Route[] = [
     path: "signup",
     element: <SignUp />,
   },
+  {
+    path: "dashboard",
+    element: <Dashboard />,
+  }
 ];
 
 export default routes;
