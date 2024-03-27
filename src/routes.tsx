@@ -134,7 +134,7 @@ const routes: Route[] = [
         element: <Forms />,
       },
       {
-        path: "reports",
+        path: "moorserve/reports",
         element: <ReportsMoorserve />,
       },
       //   ],
