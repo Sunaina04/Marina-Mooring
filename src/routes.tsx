@@ -93,54 +93,81 @@ const routes: Route[] = [
           },
         ],
       },
+      // children: [
+      {
+        path: "moormanage/customer",
+        element: <Moormanage />,
+      },
+      {
+        path: "moormanage/mooring",
+        element: <Moorings />,
+      },
+      {
+        path: "moormanage/vendors",
+        element: <Vendors />,
+      },
+      {
+        path: "moormanage/technicians",
+        element: <Technicians />,
+      },
+      {
+        path: "moormanage/boatyards",
+        element: <BoatYards />,
+      },
+      {
+        path: "moormanage/reports",
+        element: <Reports />,
+      },
+      // ],
+      // },
       {
         path: "moorpay",
         element: <Moorpay />,
-        children: [
-          {
-            path: "accountReceivable",
-            element: <AccountRecievable />,
-          },
-          {
-            path: "accountPayable",
-            element: <AccountPayable />,
-          },
-          {
-            path: "reports",
-            element: <ReportsMoorpay />,
-          },
-        ],
       },
+      // children: [
+      {
+        path: "moorpay/accountReceivable",
+        element: <AccountRecievable />,
+      },
+      {
+        path: "moorpay/accountPayable",
+        element: <AccountPayable />,
+      },
+      {
+        path: "moorpay/reports",
+        element: <ReportsMoorpay />,
+      },
+      // ],
+      // },
       {
         path: "moorserve",
         element: <MoorServe />,
-        children: [
-          {
-            path: "workOrders",
-            element: <WorkOrders />,
-          },
-          {
-            path: "estimates",
-            element: <Estimates />,
-          },
-          {
-            path: "timeCards",
-            element: <TimeCards />,
-          },
-          {
-            path: "forms",
-            element: <Forms />,
-          },
-          {
-            path: "reports",
-            element: <ReportsMoorserve />,
-          },
-        ],
       },
+      // children: [
+      {
+        path: "moorserve/workOrders",
+        element: <WorkOrders />,
+      },
+      {
+        path: "moorserve/estimates",
+        element: <Estimates />,
+      },
+      {
+        path: "moorserve/timeCards",
+        element: <TimeCards />,
+      },
+      {
+        path: "moorserve/forms",
+        element: <Forms />,
+      },
+      {
+        path: "moorserve/reports",
+        element: <ReportsMoorserve />,
+      },
+      //   ],
+      // },
     ],
   },
 ];
 
 export default routes;
-
-
