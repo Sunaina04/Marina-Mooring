@@ -15,6 +15,7 @@ import MuiDrawer from "@mui/material/Drawer";
 import { NavLink, NavLinkProps, Outlet } from "react-router-dom";
 import { drawerWidth } from "../../constants";
 import { SidebarMenu } from "./components/SidebarMenu";
+import Header from "./components/Header";
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -37,7 +38,6 @@ const AdminLayout = () => {
       return updatedSubMenus;
     });
   };
-  
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -81,6 +81,7 @@ const AdminLayout = () => {
                         backgroundColor: "#EDEDED",
                       },
                     }}
+                    onClick={() => item.subcategories && handleExpand(index)} // Only handle the click event if subcategories exist
                   >
                     <ListItemIcon sx={{ minWidth: "auto" }}>
                       <img
@@ -101,26 +102,24 @@ const AdminLayout = () => {
                           textAlign: "left",
                         },
                       }}
-                      onClick={() => handleExpand(index)}
+                      onClick={() => item.subcategories && handleExpand(index)} // Only handle the click event if subcategories exist
                     />
                     {item.subcategories && (
-                      // <ListItemButton>
-                        <ListItemIcon sx={{ minWidth: "auto" }}>
-                          {openSubMenus[index] ? (
-                            <img
-                              src="/assets/images/minus.png"
-                              alt="Minus"
-                              style={{ width: "10px", marginLeft: "8px" }}
-                            />
-                          ) : (
-                            <img
-                              src="/assets/images/plus.png"
-                              alt="Plus"
-                              style={{ width: "10px", marginLeft: "8px" }}
-                            />
-                          )}
-                        </ListItemIcon>
-                      // </ListItemButton>
+                      <ListItemIcon sx={{ minWidth: "auto" }}>
+                        {openSubMenus[index] ? (
+                          <img
+                            src="/assets/images/minus.png"
+                            alt="Minus"
+                            style={{ width: "10px", marginLeft: "8px" }}
+                          />
+                        ) : (
+                          <img
+                            src="/assets/images/plus.png"
+                            alt="Plus"
+                            style={{ width: "10px", marginLeft: "8px" }}
+                          />
+                        )}
+                      </ListItemIcon>
                     )}
                   </ListItemButton>
 
@@ -168,7 +167,6 @@ const AdminLayout = () => {
                                   letterSpacing: "0.2px",
                                   textAlign: "left",
                                   marginLeft: "-30px",
-
                                 },
                               }}
                             />
@@ -186,6 +184,10 @@ const AdminLayout = () => {
           ))}
         </List>
       </Drawer>
+      <Box component="main" sx={{ flexGrow: 1, p: 0, width: "82%" }}>
+        <Toolbar />
+        <Outlet />
+      </Box>
     </Box>
   );
 };
