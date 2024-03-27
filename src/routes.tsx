@@ -25,6 +25,8 @@ import Estimates from "./Components/Moorserve/Estimates/estimates";
 import TimeCards from "./Components/Moorserve/TimeCards/timeCards";
 import Forms from "./Components/Moorserve/Forms/forms";
 import ReportsMoorserve from "./Components/Moorserve/Reports/reports";
+import Customer from "./Components/EmployeeManagement/Customer";
+import CustomModal from "./Components/customComponent/CustomModal";
 
 interface Route {
   path: string;
@@ -140,3 +142,5 @@ const routes: Route[] = [
 ];
 
 export default routes;
+
+
