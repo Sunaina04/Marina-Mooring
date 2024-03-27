@@ -53,23 +53,6 @@ const Moorings = () => {
     setIsModalOpen(true);
   };
 
-  const CustomerHeader = (
-    <div className="flex flex-wrap align-items-center justify-between gap-2 p-4">
-      <span className="text-xl font-bold">Moorings Coming up for Service</span>
-      <span
-        style={{
-          fontFamily: "Lato",
-          fontSize: "14px",
-          fontWeight: 700,
-          lineHeight: "16.8px",
-          letterSpacing: "0.4837472140789032px",
-          textAlign: "right",
-        }}
-      >
-        View All
-      </span>
-    </div>
-  );
 
   return (
     <>
@@ -126,7 +109,6 @@ const Moorings = () => {
       >
         <DataTable
           value={boatData}
-          header={CustomerHeader}
           tableStyle={{
             minWidth: "50rem",
           }}
@@ -136,8 +118,8 @@ const Moorings = () => {
             field="id"
             style={{ width: "3rem", textAlign: "center" }}
           ></Column>
-          <Column field="boatName" header="Boat Name"></Column>
-          <Column field="name" header="Name"></Column>
+          <Column field="boatName" header="Moorings"></Column>
+          <Column field="name" header="Customer Name"></Column>
           <Column field="date" header="Date"></Column>
           <Column field="measurement" header="Measurement"></Column>
           <Column field="place" header="Place"></Column>
