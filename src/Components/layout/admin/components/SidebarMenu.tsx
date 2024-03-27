@@ -95,9 +95,9 @@ export const SidebarMenu = [
       },
     ],
   },
-  {
-    icon: "/assets/images/square.png",
-    name: "Logout",
-    link: "logout",
-  },
+  // {
+  //   icon: "/assets/images/square.png",
+  //   name: "Logout",
+  //   link: "logout",
+  // },
 ];

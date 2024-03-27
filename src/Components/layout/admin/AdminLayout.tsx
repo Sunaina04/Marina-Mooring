@@ -81,7 +81,7 @@ const AdminLayout = () => {
                         backgroundColor: "#EDEDED",
                       },
                     }}
-                    onClick={() => item.subcategories && handleExpand(index)} // Only handle the click event if subcategories exist
+                    onClick={() => item.subcategories && handleExpand(index)}
                   >
                     <ListItemIcon sx={{ minWidth: "auto" }}>
                       <img
@@ -95,14 +95,14 @@ const AdminLayout = () => {
                       primary={item.name}
                       primaryTypographyProps={{
                         sx: {
-                          fontSize: "10px",
+                          fontSize: "14px",
                           fontWeight: 700,
                           lineHeight: "1.5",
                           letterSpacing: "0.2px",
                           textAlign: "left",
                         },
                       }}
-                      onClick={() => item.subcategories && handleExpand(index)} // Only handle the click event if subcategories exist
+                      onClick={() => item.subcategories && handleExpand(index)}
                     />
                     {item.subcategories && (
                       <ListItemIcon sx={{ minWidth: "auto" }}>
@@ -154,14 +154,14 @@ const AdminLayout = () => {
                                 src={subcategory.icon}
                                 alt=""
                                 width={15}
-                                style={{ marginRight: "8px" }} // Added marginRight style
+                                style={{ marginRight: "8px" }}
                               />
                             </ListItemIcon>
                             <ListItemText
                               primary={subcategory.name}
                               primaryTypographyProps={{
                                 sx: {
-                                  fontSize: "10px",
+                                  fontSize: "14px",
                                   fontWeight: 200,
                                   lineHeight: "1.5",
                                   letterSpacing: "0.2px",
@@ -183,8 +183,50 @@ const AdminLayout = () => {
             </React.Fragment>
           ))}
         </List>
+        <Box
+          sx={{
+            padding: "8px 16px",
+            background: "#D9D9D9",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-start",
+            marginTop: "28rem",
+            border: "1px solid #B3B3B3",
+          }}
+        >
+          <ListItemIcon sx={{ minWidth: "auto" }}>
+            <img
+              src="/assets/images/square.png"
+              alt="Logout"
+              width={15}
+              style={{ marginRight: "8px" }}
+            />
+          </ListItemIcon>
+          <ListItemText
+            primary="Logout"
+            primaryTypographyProps={{
+              sx: {
+                fontSize: "14px",
+                fontWeight: 700,
+                lineHeight: "1.5",
+                letterSpacing: "0.2px",
+                textAlign: "left",
+              },
+            }}
+          />
+        </Box>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 0, width: "82%" }}>
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          p: 0,
+          width: "82%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+        }}
+      >
         <Toolbar />
         <Outlet />
       </Box>
