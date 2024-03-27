@@ -24,8 +24,9 @@ import Estimates from "./Components/Moorserve/Estimates/estimates";
 import TimeCards from "./Components/Moorserve/TimeCards/timeCards";
 import Forms from "./Components/Moorserve/Forms/forms";
 import ReportsMoorserve from "./Components/Moorserve/Reports/reports";
-import Customer from "./Components/EmployeeManagement/Customer";
+
 import CustomModal from "./Components/customComponent/CustomModal";
+import Customer from "./Components/Moormanage/Customer/Customer";
 
 interface Route {
   path: string;
@@ -65,6 +66,32 @@ const routes: Route[] = [
       {
         path: "moormanage",
         element: <Moormanage />,
+        children: [
+          {
+            path: "customer",
+            element: <Customer/>,
+          },
+          {
+            path: "mooring",
+            element: <Moorings />,
+          },
+          {
+            path: "vendors",
+            element: <Vendors />,
+          },
+          {
+            path: "technicians",
+            element: <Technicians />,
+          },
+          {
+            path: "boatyards",
+            element: <BoatYards />,
+          },
+          {
+            path: "reports",
+            element: <Reports />,
+          },
+        ],
       },
       // children: [
       {
@@ -115,6 +142,30 @@ const routes: Route[] = [
       {
         path: "moorserve",
         element: <MoorServe />,
+        children: [
+          {
+            path: "workOrders",
+            element: <WorkOrders />,
+          },
+          {
+            path: "estimates",
+            element: <Estimates />,
+          },
+          {
+            path: "timeCards",
+            element: <TimeCards />,
+          },
+          {
+            path: "forms",
+            element: <Forms />,
+          },
+          {
+            path: "reports",
+            element: <ReportsMoorserve />,
+          },
+
+         
+        ],
       },
       // children: [
       {

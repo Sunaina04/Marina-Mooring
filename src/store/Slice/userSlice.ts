@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
 import { RootState } from "../store";
 import { ApiPayload, INITIAl_STATE, PropertyUpdate } from "./types";
 import { UserData } from "../../Services/authentication/types";

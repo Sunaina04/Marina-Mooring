@@ -75,7 +75,7 @@ const Moormanage = () => {
   return (
     <>
       {" "}
-      
+
       <div className="flex justify-between items-center">
         <div>
           <h1
@@ -89,8 +89,8 @@ const Moormanage = () => {
             Moormanage/Customer
           </h1>
         </div>
-        <div className="p-input-icon-left">
-          <ButtonComponent
+        <div className="mr-36 mb-9">
+          {/* <ButtonComponent
             label={"ADD NEW"}
             style={{
               width: "7vw",
@@ -113,7 +113,13 @@ const Moormanage = () => {
               }}
             />
           </ButtonComponent>
+ */}
+          <Customer />
+
+
         </div>
+
+
       </div>
       <div
         style={{
