@@ -1,12 +1,15 @@
 import { Button } from "primereact/button";
-import React from "react";
+import React, { ReactNode } from "react";
 
 interface ButtonCompProps {
   onClick: () => void;
   disabled?: boolean;
   label: string;
-  style?: React.CSSProperties; // Add style prop for custom styles
+  style?: React.CSSProperties; 
   size?: "small" | "large";
+  icon?: JSX.Element; 
+  color?: string; 
+  children?: ReactNode;
 }
 
 const ButtonComponent: React.FC<ButtonCompProps> = ({
@@ -15,6 +18,9 @@ const ButtonComponent: React.FC<ButtonCompProps> = ({
   label,
   style,
   size,
+  icon,
+  color,
+  children
 }) => {
   return (
     <Button
@@ -23,6 +29,9 @@ const ButtonComponent: React.FC<ButtonCompProps> = ({
       label={label}
       style={style}
       size={size}
+      icon={icon} 
+      color={color}
+      children={children}
     />
   );
 };

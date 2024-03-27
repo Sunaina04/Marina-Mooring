@@ -6,6 +6,8 @@ import ResetPassword from "./Components/ResetPassword/ResetPassword";
 import SignUp from "./Components/SignUp/SignUp";
 import Home from "./Pages/Home";
 import { ReactElement } from "react";
+import Customer from "./Components/EmployeeManagement/Customer";
+import CustomModal from "./Components/customComponent/CustomModal";
 
 interface Route {
   path: string;
@@ -37,7 +39,15 @@ const routes: Route[] = [
   {
     path: "dashboard",
     element: <Dashboard />,
-  }
+  },
+  {
+    path: "customer",
+    element: <Customer />,
+  },
+  
+
 ];
 
 export default routes;
+
+

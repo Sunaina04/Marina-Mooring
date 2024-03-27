@@ -12,6 +12,8 @@ import Dashboard from "./Components/Dashboard/Dashboard";
 import LoginMain from "./Components/Login/LoginMain";
 import ResetPassword from "./Components/ResetPassword/ResetPassword";
 import ForgotPassword from "./Components/ForgotPassword/ForgotPassword";
+import Customer from "./Components/EmployeeManagement/Customer";
+import CustomModal from "./Components/customComponent/CustomModal";
 
 function App() {
   return (
@@ -25,6 +27,10 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/resetPass" element={<ResetPassword />} />
           <Route path="/forgotPass" element={<ForgotPassword />} />
+          <Route path="/customer" element={<Customer />} />
+          <Route path="/modal" element={<CustomModal open={false} setOpen={function (open: boolean): void {
+            throw new Error("Function not implemented.");
+          } } children={undefined}/>} />
           <Route path="/employee" element={<EmployeeManagement />} />
           <Route path="/admin/*" element={<AdminLayout />}>
             <Route path="dashboard" element={<Dashboard />} />
