@@ -8,7 +8,6 @@ import Home from "./Pages/Home";
 import { ReactElement } from "react";
 import AdminLayout from "./Components/layout/admin/AdminLayout";
 import Header from "./Components/layout/admin/components/Header";
-import Customer from "./Components/Moormanage/Customer/Customer";
 import Moorings from "./Components/Moormanage/Moorings/moorings";
 import Vendors from "./Components/Moormanage/Vendors/vendors";
 import Moormanage from "./Components/Moormanage/moormanage";
