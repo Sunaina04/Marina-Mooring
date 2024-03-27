@@ -28,7 +28,6 @@ const Customer = () => {
 
 
         <CustomModal open={isModalOpen} setOpen={setIsModalOpen}>
-
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur enim totam in maiores quaerat velit placeat culpa! Iure saepe optio, minima nam debitis facilis modi cupiditate, praesentium, velit ipsa eum.</p>
         </CustomModal>
       </div>
