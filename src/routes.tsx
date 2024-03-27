@@ -142,6 +142,30 @@ const routes: Route[] = [
       {
         path: "moorserve",
         element: <MoorServe />,
+        children: [
+          {
+            path: "workOrders",
+            element: <WorkOrders />,
+          },
+          {
+            path: "estimates",
+            element: <Estimates />,
+          },
+          {
+            path: "timeCards",
+            element: <TimeCards />,
+          },
+          {
+            path: "forms",
+            element: <Forms />,
+          },
+          {
+            path: "reports",
+            element: <ReportsMoorserve />,
+          },
+
+         
+        ],
       },
       // children: [
       {
