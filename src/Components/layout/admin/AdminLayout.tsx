@@ -16,6 +16,7 @@ import { NavLink, NavLinkProps, Outlet } from "react-router-dom";
 import { drawerWidth } from "../../constants";
 import { SidebarMenu } from "./components/SidebarMenu";
 import Header from "./components/Header";
+import DrawerHeader from "./components/DrawerHeader";
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -42,6 +43,7 @@ const AdminLayout = () => {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
+      <Header/>
       <Drawer
         variant="permanent"
         open={true}
@@ -49,11 +51,12 @@ const AdminLayout = () => {
           "& .MuiPaper-root": {
             background: "#F2F2F2",
             borderRight: "none",
-            marginTop: "70px",
+            marginTop: "90px",
             width: "200px",
           },
         }}
       >
+        {/* <DrawerHeader/> */}
         <List sx={{ paddingTop: "0px" }}>
           {SidebarMenu.map((item, index) => (
             <React.Fragment key={index}>

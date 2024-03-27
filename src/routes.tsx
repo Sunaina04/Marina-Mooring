@@ -57,7 +57,7 @@ const routes: Route[] = [
     path: "admin",
     element: (
       <>
-        <Header />
+        {/* <Header /> */}
         <AdminLayout />
       </>
     ),
