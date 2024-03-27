@@ -1,5 +1,7 @@
+import Customer from "./Customer/Customer";
+
 const Moormanage = () => {
-    return <></>;
+    return (<><Customer/></>);
   };
   
   export default Moormanage;
