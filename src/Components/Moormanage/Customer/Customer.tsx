@@ -4,6 +4,8 @@ import CustomModal from "../../customComponent/CustomModal";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Outlet } from "react-router-dom";
+import AddCustomer from "./AddCustomer";
+import { Button } from "primereact/button";
 
 interface CustomerData {
   id: string;
@@ -79,7 +81,7 @@ const Customer = () => {
         <div>
           <h1
             style={{
-              marginTop: "40px",
+              marginTop: "80px",
               opacity: "0.3",
               fontSize: "26px",
               fontWeight: "400",
@@ -89,39 +91,36 @@ const Customer = () => {
           </h1>
         </div>
         <div className="flex flex-col items-center">
-          <div className="p-input-icon-left">
-            <ButtonComponent
+          <div>
+            <Button
               label={"ADD NEW"}
               style={{
-                width: "7vw",
+                width: "121px",
+                height: "44px",
+                top: "50px",
+                right: "100px",
                 backgroundColor: "black",
                 cursor: "pointer",
+                fontSize: "14px",
                 fontWeight: "bold",
+                color: "white"
               }}
               onClick={handleButtonClick}
             >
               <img
                 src="/assets/images/plus.png"
                 alt="icon"
-                className="p-icon  w-4 mr-4 "
+                className="p-icon w-4 mr-4"
                 style={{
                   filter: "invert(100%)",
                   color: "whitesmoke",
-                  fontWeight: "bolder",
-                  padding: "",
+                  fontWeight: 900,
+                  fontFamily: "Font Awesome 6 Pro",
+                  marginLeft:"-10px",
                 }}
               />
-            </ButtonComponent>
+            </Button>
           </div>
-
-          {/* <CustomModal open={isModalOpen} setOpen={setIsModalOpen}>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur
-              enim totam in maiores quaerat velit placeat culpa! Iure saepe
-              optio, minima nam debitis facilis modi cupiditate, praesentium,
-              velit ipsa eum.
-            </p>
-          </CustomModal> */}
         </div>
       </div>
       <div
@@ -168,6 +167,7 @@ const Customer = () => {
           ></Column>
         </DataTable>
       </div>
+      {isModalOpen && <AddCustomer />}
     </>
   );
 };
