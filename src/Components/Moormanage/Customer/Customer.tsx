@@ -3,6 +3,7 @@ import ButtonComponent from "../../Common/ButtonComponent";
 import CustomModal from "../../customComponent/CustomModal";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+import { Outlet } from "react-router-dom";
 
 interface CustomerData {
   id: string;

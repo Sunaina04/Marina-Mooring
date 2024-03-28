@@ -64,7 +64,7 @@ const routes: Route[] = [
       },
       {
         path: "moormanage",
-        element: <Customer />,
+        element: <Moormanage />,
         children: [
           {
             path: "customer",
@@ -94,7 +94,7 @@ const routes: Route[] = [
       },
       {
         path: "moorpay",
-        element: <AccountRecievable />,
+        element: <Moorpay />,
         children: [
           {
             path: "accountReceivable",
@@ -112,7 +112,7 @@ const routes: Route[] = [
       },
       {
         path: "moorserve",
-        element: <WorkOrders />,
+        element: <MoorServe />,
         children: [
           {
             path: "workOrders",

@@ -7,7 +7,7 @@ export const SidebarMenu = [
   {
     icon: "/assets/images/square.png",
     name: "Moormanage",
-    link: "moormanage",
+    link: "moormanage/customer",
     subcategories: [
       {
         icon: "/assets/images/square.png",
@@ -44,7 +44,7 @@ export const SidebarMenu = [
   {
     icon: "/assets/images/square.png",
     name: "Moorpay",
-    link: "moorpay",
+    link: "moorpay/accountReceivable",
     subcategories: [
       {
         icon: "/assets/images/square.png",
@@ -66,7 +66,7 @@ export const SidebarMenu = [
   {
     icon: "/assets/images/square.png",
     name: "Moorserve",
-    link: "moorserve",
+    link: "moorserve/workOrders",
     subcategories: [
       {
         icon: "/assets/images/square.png",
