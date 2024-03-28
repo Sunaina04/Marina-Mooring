@@ -247,7 +247,7 @@ export default function LoginForm({
                 <div className="flex justify-end mt-8 cursor-pointer ">
                   <Link to={"/forgotPass"}>
                     <p className="font-normal font-['Roboto']">
-                      Forgot Password ?
+                    Forgot Password?
                     </p>
                   </Link>
                 </div>
