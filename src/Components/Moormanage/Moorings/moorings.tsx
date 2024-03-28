@@ -53,50 +53,49 @@ const Moorings = () => {
     setIsModalOpen(true);
   };
 
-
   return (
     <>
       {" "}
       {/* <div className="flex"> */}
-        <div className="flex justify-between items-center">
-          <div>
-            <h1
-              style={{
-                marginTop: "40px",
-                opacity: "0.3",
-                fontSize: "26px",
-                fontWeight: "400",
-              }}
-            >
-              Moormanage/Moorings
-            </h1>
-          </div>
-          <div className="p-input-icon-left">
-            <ButtonComponent
-              label={"ADD NEW"}
-              style={{
-                width: "7vw",
-                backgroundColor: "black",
-                cursor: "pointer",
-                fontWeight: "bold",
-                marginTop: "40px", // Adjust margin top here
-              }}
-              onClick={handleButtonClick}
-            >
-              <img
-                src="/assets/images/plus.png"
-                alt="icon"
-                className="p-icon w-4 mr-4"
-                style={{
-                  filter: "invert(100%)",
-                  color: "whitesmoke",
-                  fontWeight: "bolder",
-                  padding: "",
-                }}
-              />
-            </ButtonComponent>
-          </div>
+      <div className="flex justify-between items-center">
+        <div>
+          <h1
+            style={{
+              marginTop: "40px",
+              opacity: "0.3",
+              fontSize: "26px",
+              fontWeight: "400",
+            }}
+          >
+            Moormanage/Moorings
+          </h1>
         </div>
+        <div className="p-input-icon-left">
+          <ButtonComponent
+            label={"ADD NEW"}
+            style={{
+              width: "7vw",
+              backgroundColor: "black",
+              cursor: "pointer",
+              fontWeight: "bold",
+              marginTop: "40px", // Adjust margin top here
+            }}
+            onClick={handleButtonClick}
+          >
+            <img
+              src="/assets/images/plus.png"
+              alt="icon"
+              className="p-icon w-4 mr-4"
+              style={{
+                filter: "invert(100%)",
+                color: "whitesmoke",
+                fontWeight: "bolder",
+                padding: "",
+              }}
+            />
+          </ButtonComponent>
+        </div>
+      </div>
       {/* </div> */}
       <div
         style={{

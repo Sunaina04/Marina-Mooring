@@ -1,6 +1,11 @@
+import { Outlet } from "react-router-dom";
+
 const Moorpay = () => {
-    return <></>;
-  };
-  
-  export default Moorpay;
-  
+  return (
+    <>
+      <Outlet />
+    </>
+  );
+};
+
+export default Moorpay;

@@ -39,6 +39,7 @@ export default function LoginForm({
   });
   const { username, password } = loginPayload;
   const userData = useSelector((state: any) => state.user?.userData);
+  const navigate = useNavigate();
 
   const [errors, setErrors] = useState({
     email: "",
@@ -106,6 +107,8 @@ export default function LoginForm({
   const [getEmployee] = useGetEmployeeMutation();
 
   const signInHandler = async () => {
+    console.log("IN SIGN IN");
+    navigate("/admin");
     if (!username) {
       setErrors((prev) => ({
         ...prev,
@@ -135,6 +138,7 @@ export default function LoginForm({
           severity: "success",
           summary: message,
         });
+        navigate("/admin");
       }
     } catch (error: any) {
       console.error("Error occurred during login:", error);

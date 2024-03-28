@@ -1,6 +1,11 @@
+import { Outlet } from "react-router-dom";
+
 const MoorServe = () => {
-    return <></>;
-  };
-  
-  export default MoorServe;
-  
+  return (
+    <>
+      <Outlet />
+    </>
+  );
+};
+
+export default MoorServe;

@@ -24,8 +24,8 @@ import Estimates from "./Components/Moorserve/Estimates/estimates";
 import TimeCards from "./Components/Moorserve/TimeCards/timeCards";
 import Forms from "./Components/Moorserve/Forms/forms";
 import ReportsMoorserve from "./Components/Moorserve/Reports/reports";
-import Customer from "./Components/EmployeeManagement/Customer";
 import CustomModal from "./Components/customComponent/CustomModal";
+import Customer from "./Components/Moormanage/Customer/Customer";
 
 interface Route {
   path: string;
@@ -36,7 +36,7 @@ interface Route {
 const routes: Route[] = [
   {
     path: "",
-    element: <Home />,
+    element: <LoginMain />,
   },
   {
     path: "login",
@@ -64,81 +64,78 @@ const routes: Route[] = [
       },
       {
         path: "moormanage",
-        element: <Moormanage />,
+        element: <Customer />,
+        children: [
+          {
+            path: "customer",
+            element: <Customer />,
+          },
+          {
+            path: "mooring", // Moved inside the children array of "moormanage"
+            element: <Moorings />,
+          },
+          {
+            path: "vendors",
+            element: <Vendors />,
+          },
+          {
+            path: "technicians",
+            element: <Technicians />,
+          },
+          {
+            path: "boatyards",
+            element: <BoatYards />,
+          },
+          {
+            path: "reports",
+            element: <Reports />,
+          },
+        ],
       },
-      // children: [
-      {
-        path: "moormanage/customer",
-        element: <Moormanage />,
-      },
-      {
-        path: "moormanage/mooring",
-        element: <Moorings />,
-      },
-      {
-        path: "moormanage/vendors",
-        element: <Vendors />,
-      },
-      {
-        path: "moormanage/technicians",
-        element: <Technicians />,
-      },
-      {
-        path: "moormanage/boatyards",
-        element: <BoatYards />,
-      },
-      {
-        path: "moormanage/reports",
-        element: <Reports />,
-      },
-      // ],
-      // },
       {
         path: "moorpay",
-        element: <Moorpay />,
-      },
-      // children: [
-      {
-        path: "moorpay/accountReceivable",
         element: <AccountRecievable />,
+        children: [
+          {
+            path: "accountReceivable",
+            element: <AccountRecievable />,
+          },
+          {
+            path: "accountPayable",
+            element: <AccountPayable />,
+          },
+          {
+            path: "reports",
+            element: <ReportsMoorpay />,
+          },
+        ],
       },
-      {
-        path: "moorpay/accountPayable",
-        element: <AccountPayable />,
-      },
-      {
-        path: "moorpay/reports",
-        element: <ReportsMoorpay />,
-      },
-      // ],
-      // },
       {
         path: "moorserve",
-        element: <MoorServe />,
-      },
-      // children: [
-      {
-        path: "moorserve/workOrders",
         element: <WorkOrders />,
+        children: [
+          {
+            path: "workOrders",
+            element: <WorkOrders />,
+          },
+          {
+            path: "estimates",
+            element: <Estimates />,
+          },
+          {
+            path: "timeCards",
+            element: <TimeCards />,
+          },
+          {
+            path: "forms",
+            element: <Forms />,
+          },
+          {
+            path: "reports",
+            element: <ReportsMoorserve />,
+          },
+        ],
       },
-      {
-        path: "moorserve/estimates",
-        element: <Estimates />,
-      },
-      {
-        path: "moorserve/timeCards",
-        element: <TimeCards />,
-      },
-      {
-        path: "moorserve/forms",
-        element: <Forms />,
-      },
-      {
-        path: "moorserve/reports",
-        element: <ReportsMoorserve />,
-      },
-      //   ],
-      // },
     ],
   },
 ];
