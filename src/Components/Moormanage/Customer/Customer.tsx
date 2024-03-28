@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Button } from "@mui/material";
 import ButtonComponent from "../../Common/ButtonComponent";
 import CustomModal from "../../customComponent/CustomModal";
 import { DataTable } from "primereact/datatable";
@@ -114,14 +113,14 @@ const Customer = () => {
             </ButtonComponent>
           </div>
 
-          <CustomModal open={isModalOpen} setOpen={setIsModalOpen}>
+          {/* <CustomModal open={isModalOpen} setOpen={setIsModalOpen}>
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur
               enim totam in maiores quaerat velit placeat culpa! Iure saepe
               optio, minima nam debitis facilis modi cupiditate, praesentium,
               velit ipsa eum.
             </p>
-          </CustomModal>
+          </CustomModal> */}
         </div>
       </div>
       <div

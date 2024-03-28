@@ -6,8 +6,9 @@ interface InputStyle {
   height?: string;
   padding?: string;
   fontSize?: string;
-  border?: any;
+  border?: string; // Adjusted type
   fontFamily?: string;
+  borderRadius?: string; // Corrected typo
 }
 
 interface InputComponentProps {
@@ -19,7 +20,7 @@ interface InputComponentProps {
   required?: boolean;
   autoFocus?: boolean;
   style?: InputStyle;
-  name?:string
+  name?: string;
 }
 
 const InputComponent: React.FC<InputComponentProps> = ({
