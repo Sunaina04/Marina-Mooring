@@ -1,11 +1,9 @@
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { Rating } from "primereact/rating";
-import { Tag } from "primereact/tag";
-import { useEffect, useState } from "react";
-import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
 import { Box } from "@mui/material";
+import { useState } from "react";
+import { Nullable } from "primereact/ts-helpers";
 
 interface BoatData {
   id: string;
@@ -25,16 +23,8 @@ interface BillsData {
 }
 
 const Dashboard = () => {
-  const [date, setDate] = useState(null);
+  const [date, setDate] = useState<Nullable<(Date | null)[]>>(null);
   const [boatData, setBoatData] = useState<BoatData[]>([
-    {
-      id: "01",
-      boatName: "Suncatcher",
-      name: "John Smith",
-      date: "15, March 2024 to 15, March 2024",
-      measurement: "Length: 10m, Width: 3.8m",
-      place: "Boatyard",
-    },
     {
       id: "01",
       boatName: "Suncatcher",
@@ -155,115 +145,132 @@ const Dashboard = () => {
           </h1>
         </div>
       </div>
+
       <div
+        className="container"
         style={{
-          background: "#F2F2F2",
-          borderRadius: "6px",
-          border: "1px solid #D1D1D1",
-          maxWidth: "76rem",
-          marginTop: "40px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "20px",
         }}
       >
-        <DataTable
-          value={boatData}
-          header={Boatsheader}
-          tableStyle={{
-            minWidth: "50rem",
-          }}
-        >
-          <Column
-            header=""
-            field="id"
-            style={{ width: "3rem", textAlign: "center" }}
-          ></Column>
-          <Column field="boatName" header="Boat Name"></Column>
-          <Column field="name" header="Name"></Column>
-          <Column field="date" header="Date"></Column>
-          <Column field="measurement" header="Measurement"></Column>
-          <Column field="place" header="Place"></Column>
-          <Column
-            header="Actions"
-            body={() => (
-              <div className="flex gap-2">
-                <span className="text-black underline cursor-pointer">
-                  Edit
-                </span>
-                <span className="text-red-500 underline cursor-pointer">
-                  Delete
-                </span>
-              </div>
-            )}
-          ></Column>
-        </DataTable>
-      </div>
-      <div style={{ display: "flex" }}>
-        <div
-          style={{
-            background: "#F2F2F2",
-            borderRadius: "6px",
-            border: "1px solid #D1D1D1",
-            maxWidth: "45rem",
-            marginTop: "40px",
-          }}
-        >
-          <DataTable
-            value={billsData}
-            header={Billsheader}
-            tableStyle={{
-              minWidth: "50rem",
+        {/* Boat Data DataTable */}
+        <div>
+          <div
+            style={{
+              background: "#F2F2F2",
+              borderRadius: "6px",
+              border: "1px solid #D1D1D1",
+              padding: "20px",
             }}
           >
-            <Column field="billNo" header="Bill no"></Column>
-            <Column field="mooring" header="Mooring"></Column>
-            <Column field="name" header="Name"></Column>
-            <Column field="amount" header="amount"></Column>
-            <Column field="date" header="Date"></Column>
-            <Column
-              header=""
-              body={() => (
-                <div className="flex gap-2">
-                  <span className="text-black underline cursor-pointer">
-                    Edit
-                  </span>
-                  <span className="text-red-500 underline cursor-pointer">
-                    Delete
-                  </span>
-                </div>
-              )}
-            ></Column>
-          </DataTable>
+            <DataTable
+              value={boatData}
+              header={Boatsheader}
+              tableStyle={{
+                minWidth: "50rem",
+              }}
+            >
+              <Column field="id" header=""></Column>
+              <Column field="boatName" header="Boat Name"></Column>
+              <Column field="name" header="Name"></Column>
+              <Column field="date" header="Date"></Column>
+              <Column field="measurement" header="Measurement"></Column>
+              <Column field="place" header="Place"></Column>
+              <Column
+                header="Action"
+                body={() => (
+                  <div className="flex gap-2">
+                    <span className="text-black underline cursor-pointer">
+                      Edit
+                    </span>
+                    <span className="text-red-500 underline cursor-pointer">
+                      delete
+                    </span>
+                  </div>
+                )}
+              ></Column>
+            </DataTable>
+          </div>
         </div>
-        <Box
-          className="p-my-4" // Optional: Add margin top and bottom
+
+        {/* Bills Data DataTable and Calendar */}
+        <div
           style={{
-            border: "1px solid #D1D1D1",
-            padding: "20px",
-            marginLeft: "30px",
-            marginTop: "40px",
+            display: "flex",
+            gap: "20px",
           }}
         >
           <div
             style={{
-              color: "#000000",
-              fontSize: "20px",
-              fontWeight: 700,
-              lineHeight: "24px",
-              letterSpacing: "0.4837472140789032px",
-              textAlign: "left",
-              marginBottom: "20px",
+              background: "#F2F2F2",
+              borderRadius: "6px",
+              border: "1px solid #D1D1D1",
+              padding: "20px",
+              flex: "1",
             }}
           >
-            Calendar
+            <DataTable
+              value={billsData}
+              header={Billsheader}
+              tableStyle={{
+                width: "100%", // Set width to 100%
+              }}
+            >
+              <Column field="billNo" header="Bill No"></Column>
+              <Column field="mooring" header="Mooring"></Column>
+              <Column field="name" header="Name"></Column>
+              <Column field="amount" header="Amount"></Column>
+              <Column field="date" header="Date"></Column>
+              <Column
+                header=""
+                body={() => (
+                  <div className="flex gap-2">
+                    <span className="text-black underline cursor-pointer">
+                      View
+                    </span>
+                    <span className="text-red-500 underline cursor-pointer">
+                      Edit
+                    </span>
+                  </div>
+                )}
+              ></Column>
+            </DataTable>
           </div>
-          <div className="card flex justify-content-center">
-            <Calendar
-              value={date}
-              onChange={(e: any) => setDate(e.value)}
-              inline
-              showWeek
-            />
-          </div>
-        </Box>
+
+          <Box
+            className="p-my-4"
+            style={{
+              border: "1px solid #D1D1D1",
+              padding: "20px",
+              flex: "1",
+            }}
+          >
+            <div
+              style={{
+                color: "#000000",
+                fontSize: "20px",
+                fontWeight: 700,
+                lineHeight: "24px",
+                letterSpacing: "0.4837472140789032px",
+                textAlign: "left",
+                marginBottom: "20px",
+              }}
+            >
+              Calendar
+            </div>
+            <div className="card flex justify-content-center">
+              <Calendar
+                value={date}
+                onChange={(e) => setDate(e.value)}
+                inline
+                showWeek
+                selectionMode="range"
+                style={{ width: "100%" }} // Set width to 100%
+              />
+            </div>
+          </Box>
+        </div>
       </div>
     </>
   );

@@ -176,7 +176,7 @@ const AdminLayout = () => {
                                   letterSpacing: "0.2px",
                                   textAlign: "left",
                                   marginLeft: "-30px",
-                                  color: selectedSubcategory === subIndex ? "#000000" : "#00000080",
+                                  color: "#0000000",
                                 },
                               }}
                             />
