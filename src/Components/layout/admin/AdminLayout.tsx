@@ -31,6 +31,7 @@ const AdminLayout = () => {
   const [openSubMenus, setOpenSubMenus] = React.useState(
     new Array(SidebarMenu.length).fill(false)
   );
+  const [selectedSubcategory, setSelectedSubcategory] = React.useState<any>(null);
 
   const handleExpand = (index: number) => {
     setOpenSubMenus((prev) => {
@@ -43,7 +44,7 @@ const AdminLayout = () => {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <Header/>
+      <Header />
       <Drawer
         variant="permanent"
         open={true}
@@ -56,7 +57,6 @@ const AdminLayout = () => {
           },
         }}
       >
-        {/* <DrawerHeader/> */}
         <List sx={{ paddingTop: "0px" }}>
           {SidebarMenu.map((item, index) => (
             <React.Fragment key={index}>
@@ -84,7 +84,11 @@ const AdminLayout = () => {
                         backgroundColor: "#EDEDED",
                       },
                     }}
-                    onClick={() => item.subcategories && handleExpand(index)}
+                    onClick={() => {
+                      setSelectedSubcategory(null);
+                      setSelectedSubcategory(0);
+                      item.subcategories && handleExpand(index);
+                    }}
                   >
                     <ListItemIcon sx={{ minWidth: "auto" }}>
                       <img
@@ -103,9 +107,9 @@ const AdminLayout = () => {
                           lineHeight: "1.5",
                           letterSpacing: "0.2px",
                           textAlign: "left",
+                          color: "#000000",
                         },
                       }}
-                      onClick={() => item.subcategories && handleExpand(index)}
                     />
                     {item.subcategories && (
                       <ListItemIcon sx={{ minWidth: "auto" }}>
@@ -151,6 +155,7 @@ const AdminLayout = () => {
                                 backgroundColor: "#EDEDED",
                               },
                             }}
+                            onClick={() => setSelectedSubcategory(subIndex)}
                           >
                             <ListItemIcon sx={{ marginLeft: "60px" }}>
                               <img
@@ -165,11 +170,13 @@ const AdminLayout = () => {
                               primaryTypographyProps={{
                                 sx: {
                                   fontSize: "14px",
-                                  fontWeight: 200,
+                                  fontWeight:
+                                    selectedSubcategory === subIndex ? 700 : 400,
                                   lineHeight: "1.5",
                                   letterSpacing: "0.2px",
                                   textAlign: "left",
                                   marginLeft: "-30px",
+                                  color: selectedSubcategory === subIndex ? "#000000" : "#00000080",
                                 },
                               }}
                             />
