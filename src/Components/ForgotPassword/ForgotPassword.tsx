@@ -30,12 +30,12 @@ const ForgotPassword = () => {
                   fontSize: "1.20rem",
                 }}
                 type="email"
-                placeholder="Enter Your Ragistered email"
+                placeholder="Enter Your Registered email"
               />
             </div>
             <div className="flex  mt-8 cursor-pointer ">
               <p>
-                A link will shared on you ragistered email address from where
+                A link will shared on you Registered email address from where
                 you can change the password
               </p>
             </div>

@@ -1,6 +1,6 @@
-import React from 'react';
-import { Calendar } from 'primereact/calendar';
-import { Nullable } from 'primereact/ts-helpers';
+import React from "react";
+import { Calendar } from "primereact/calendar";
+import { Nullable } from "primereact/ts-helpers";
 
 interface DatePickerComponentProps {
   value?: Nullable<Date>;
@@ -15,7 +15,7 @@ const DatePickerComponent: React.FC<DatePickerComponentProps> = ({
   value,
   style,
   onChange,
-  showIcon = true, 
+  showIcon,
 }) => {
   return (
     <div>
@@ -24,7 +24,7 @@ const DatePickerComponent: React.FC<DatePickerComponentProps> = ({
           showIcon={showIcon}
           value={value}
           style={style}
-          onChange={(e) => onChange(e.value as Date)} 
+          onChange={(e) => onChange(e.value as Date)}
         />
       </div>
     </div>

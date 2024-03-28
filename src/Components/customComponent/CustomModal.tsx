@@ -1,63 +1,72 @@
-
 import React, { useState } from "react";
-import { Button } from 'primereact/button';
-import { Dialog } from 'primereact/dialog';
+import { Button } from "primereact/button";
+import { Dialog } from "primereact/dialog";
+import ButtonComponent from "../Common/ButtonComponent";
 
 interface CustomModalProps {
-    onClick: () => void;
-    visible: boolean;
-    style?: React.CSSProperties;
-    onHide: () => void;
-    children?: React.ReactNode; 
-    header?:string
+  onClick: () => void;
+  visible: boolean;
+  style?: React.CSSProperties;
+  onHide: () => void;
+  children?: React.ReactNode;
+  header?: string;
+  label?: string;
 }
 
-const CustomModal: React.FC<CustomModalProps> = ({ onClick, visible, style, onHide,children , header}) => {
-    const [internalVisible, setInternalVisible] = useState<boolean>(false);
+const CustomModal: React.FC<CustomModalProps> = ({
+  onClick,
+  visible,
+  style,
+  onHide,
+  children,
+  header,
+  label,
+}) => {
+  const [internalVisible, setInternalVisible] = useState<boolean>(false);
 
-    return (
-        <div className="card flex justify-content-center">
-            <Button label="Show" icon="pi pi-external-link" onClick={() => { onClick(); setInternalVisible(true); }} />
-            <Dialog header={header} visible={visible || internalVisible}  style={style} onHide={() => { onHide(); setInternalVisible(false); }}>
-               {children}
-            </Dialog>
-        </div>
-    );
-}
+  return (
+    <>
+      <ButtonComponent
+        label={"ADD NEW"}
+        onClick={() => {
+          onClick();
+          setInternalVisible(true);
+        }}
+        style={{
+          width: "7vw",
+          height: "5vh",
+          backgroundColor: "black",
+          cursor: "pointer",
+          color: "white",
+          fontWeight: "bold",
+          fontSize: "0.80vw",
+        }}
+      >
+        <img
+          src="/assets/images/plus.png"
+          alt="icon"
+          className="p-icon  w-4 mr-4 "
+          style={{
+            filter: "invert(100%)",
+            color: "whitesmoke",
+            fontWeight: "bolder",
+          }}
+        />
+      </ButtonComponent>
+
+      <Dialog
+        header={header}
+        visible={visible || internalVisible}
+        style={style}
+        onHide={() => {
+          onHide();
+          setInternalVisible(false);
+        }}
+      >
+        {children}
+      </Dialog>
+    </>
+  );
+};
 
 export default CustomModal;
-
-// import React from "react";
-// import { CSSProperties } from 'react';
-// import { Dialog } from 'primereact/dialog';
-
-// interface ButtonProps {
-//     label: string;
-//     icon?: string;
-//     onClick?: () => void;
-// }
-
-// interface CustomModalProps {
-//     onClick?: () => void; // Add onClick prop
-//     visible: boolean;
-//     style?: CSSProperties;
-//     onHide: () => void;
-//     children?: React.ReactNode; 
-//     header?: string;
-//     buttonProps?: ButtonProps; // Add buttonProps prop
-// }
-
-// const CustomModal: React.FC<CustomModalProps> = ({ onClick, visible, style, onHide, children, header, buttonProps }) => {
-//     const [internalVisible, setInternalVisible] = React.useState<boolean>(false);
-
-//     return (
-//         <div className="card flex justify-content-center">
-//             {buttonProps && <button {...buttonProps} onClick={() => { buttonProps.onClick && buttonProps.onClick(); setInternalVisible(true); }} />} {/* Render button if buttonProps provided */}
-//             <Dialog header={header} visible={visible || internalVisible} style={style} onHide={() => { onHide(); setInternalVisible(false); }}>
-//                {children}
-//             </Dialog>
-//         </div>
-//     );
-// }
-
-// export default CustomModal;

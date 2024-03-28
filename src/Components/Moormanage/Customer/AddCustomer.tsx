@@ -1,131 +1,223 @@
-
 import InputComponent from "../../Common/InputComponent";
 import DatePickerComponent from "../../Common/DatePickerComponent";
 import TextAreaComponent from "../../Common/TextAreaComponent";
 import ButtonComponent from "../../Common/ButtonComponent";
 
+import "./AddCustomer.css";
+
 const AddCustomer = () => {
-    return (
-        <div className="w-full h-full ">
-            <h1 className="ml-6 text-lg font-bold">Add Customer</h1>
+  return (
+    <div className="w-full h-full  ">
+      <h1 className="ml-6 text-lg font-bold">Add Customer</h1>
 
-            <div className="flex justify-around mt-8">
-                <div>
-                    <span>Mooring Name</span>
-                    <InputComponent placeholder="Enter mooring name" type="text" 
-                    style={{width:"13vw", height:"5vh",border:"1px solid gray",borderRadius:"0.50rem" }}/>
-                </div>
-
-                <div>
-                    <span>Customer ID</span>
-                    <InputComponent placeholder="Enter customer ID" type="text" 
-                    style={{width:"13vw", height:"5vh",border:"1px solid gray",borderRadius:"0.50rem" }}/>
-                    
-                    
-                </div>
-
-                <div>
-                    <span>Owner Name</span>
-                    <InputComponent placeholder="Enter owner name" type="text" 
-                    
-                    style={{width:"13vw", height:"5vh",border:"1px solid gray",borderRadius:"0.50rem" }}/>
-                    
-                    
-                </div>
-            </div>
-
-            <div className="mt-11 ml-7 ">
-
-                <div>
-                    <h1>Select Date</h1>
-                </div>
-
-                <div className="flex  ">
-                    <div className="">
-                        <DatePickerComponent
-                            onChange={(newValue: Date) => {
-                                console.log(newValue);
-                            }}
-                        />
-                    </div>
-
-                    <div>
-
-                        <DatePickerComponent
-                            onChange={(newValue: Date) => {
-                                console.log(newValue);
-                            }}
-                        />
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div>
-                <div>
-
-                    <h1>About Mooring</h1>
-                </div>
-
-                <div className="flex justify-around">
-                    <div>
-                        <span>Boat Type</span>
-                        <InputComponent placeholder="" type="text" />
-                    </div>
-
-                    <div>
-                        <span>Boat Length(m)</span>
-                        <InputComponent placeholder="" type="text" />
-                    </div>
-
-                    <div>
-                        <span>Boat Width(m)</span>
-                        <InputComponent placeholder="" type="text" />
-                    </div>
-
-                    <div>
-                        <span>Draft(m)</span>
-                        <InputComponent placeholder="" type="text" />
-                    </div>
-
-                    <div>
-                        <span>Boat Weight(Kg)</span>
-                        <InputComponent placeholder="" type="text" />
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div>
-                <span>Address</span>
-                <TextAreaComponent onChange={function (value: string): void {
-                    throw new Error("Function not implemented.");
-                }} />
-
-            </div>
-
-            <div className="flex gap-3">
-
-                <ButtonComponent onClick={function (): void {
-                    throw new Error("Function not implemented.");
-                } } label={"Save"}
-                
-                style={{backgroundColor:"black", cursor:"pointer",border:"1px solid  gray"}}
-                />
-                <ButtonComponent onClick={function (): void {
-                    throw new Error("Function not implemented.");
-                } } label={"Back"} 
-                style={{backgroundColor:"white", color:"black"}}
-                />
-            </div>
-
-
-
+      <div className="flex justify-around mt-5">
+        <div>
+          <span className="font-semibold text-sm">Mooring Name</span>
+          <div className="mt-2">
+            <InputComponent
+              placeholder="Enter mooring name"
+              type="text"
+              style={{
+                width: "13vw",
+                height: "5vh",
+                border: "1px solid gray",
+                borderRadius: "0.50rem",
+                fontSize: "0.80vw",
+              }}
+            />
+          </div>
         </div>
-    );
+
+        <div>
+          <span className="font-semibold text-sm">Customer ID</span>
+          <div className="mt-2">
+            <InputComponent
+              placeholder="Enter customer ID"
+              type="text"
+              style={{
+                width: "13vw",
+                height: "5vh",
+                border: "1px solid gray",
+                borderRadius: "0.50rem",
+                fontSize: "0.80vw",
+              }}
+            />
+          </div>
+        </div>
+
+        <div>
+          <span className="font-semibold text-sm">Owner Name</span>
+          <div className="mt-2">
+            <InputComponent
+              placeholder="Enter owner name"
+              type="text"
+              style={{
+                width: "13vw",
+                height: "5vh",
+                border: "1px solid gray",
+                borderRadius: "0.50rem",
+                fontSize: "0.80vw",
+              }}
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-5 ml-7 ">
+        <div className="ml-1">
+          <h1 className="text-sm font-semibold">Select Date</h1>
+        </div>
+
+        <div className="flex gap-16 mt-2">
+          <DatePickerComponent
+            onChange={function (newValue: Date): void {
+              throw new Error("Function not implemented.");
+            }}
+            showIcon={true}
+            // style={{  borderRadius: "0.50rem", border: "1px solid gray" }}
+          />
+
+          <DatePickerComponent
+            onChange={function (newValue: Date): void {
+              throw new Error("Function not implemented.");
+            }}
+            showIcon={true}
+            // style={{ width: "13vw", height: "5vh", borderRadius: "0.50rem", border: "1px solid gray" }}
+          />
+        </div>
+      </div>
+
+      <div className="">
+        <div className="mt-2 ml-7">
+          <h1 className="text-sm font-bold">About Mooring</h1>
+        </div>
+
+        <div className="flex justify-around ml-7 mt-8 ">
+          <div>
+            <span className="font-semibold text-sm">Boat Type</span>
+            <div className="mt-2">
+              <InputComponent
+                placeholder=""
+                type="text"
+                style={{
+                  width: "9vw",
+                  height: "4vh",
+                  border: "1px solid gray",
+                  borderRadius: "0.50rem",
+                }}
+              />
+            </div>
+          </div>
+
+          <div>
+            <span className="font-semibold text-sm">Boat Length(m)</span>
+            <div className="mt-2">
+              <InputComponent
+                placeholder=""
+                type="number"
+                style={{
+                  width: "9vw",
+                  height: "4vh",
+                  border: "1px solid gray",
+                  borderRadius: "0.50rem",
+                }}
+              />
+            </div>
+          </div>
+
+          <div>
+            <span className="font-semibold text-sm">Boat Width(m)</span>
+            <div className="mt-2">
+              <InputComponent
+                placeholder=""
+                type="number"
+                style={{
+                  width: "9vw",
+                  height: "4vh",
+                  border: "1px solid gray",
+                  borderRadius: "0.50rem",
+                }}
+              />
+            </div>
+          </div>
+
+          <div>
+            <span className="font-semibold text-sm">Draft(m)</span>
+            <div className="mt-2">
+              <InputComponent
+                placeholder=""
+                type="number"
+                style={{
+                  width: "9vw",
+                  height: "4vh",
+                  border: "1px solid gray",
+                  borderRadius: "0.50rem",
+                }}
+              />
+            </div>
+          </div>
+
+          <div>
+            <span className="font-semibold text-sm">Boat Weight(Kg)</span>
+            <div className="mt-2">
+              <InputComponent
+                placeholder=""
+                type="number"
+                style={{
+                  width: "9vw",
+                  height: "4vh",
+                  border: "1px solid gray",
+                  borderRadius: "0.50rem",
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="ml-8">
+        <div className="mt-4">
+          <span className="text-sm font-bold">Address</span>
+        </div>
+
+        <div className="mt-4">
+          <TextAreaComponent
+            onChange={function (value: string): void {
+              throw new Error("Function not implemented.");
+            }}
+            style={{ width: "100%", borderRadius: "0.50rem" }}
+          />
+        </div>
+      </div>
+
+      <div className="flex gap-3 mt-4 ml-8">
+        <ButtonComponent
+          onClick={function (): void {
+            throw new Error("Function not implemented.");
+          }}
+          label={"Save"}
+          style={{
+            width: "5vw",
+            backgroundColor: "black",
+            cursor: "pointer",
+            fontWeight: "bolder",
+            fontSize: "1vw",
+            border: "1px solid  gray",
+            color: "white",
+            borderRadius: "0.50rem",
+          }}
+        />
+        <ButtonComponent
+          onClick={function (): void {
+            throw new Error("Function not implemented.");
+          }}
+          label={"Back"}
+          text={true}
+          style={{ backgroundColor: "white", color: "black", border: "none" }}
+        />
+      </div>
+    </div>
+  );
 };
 
 export default AddCustomer;

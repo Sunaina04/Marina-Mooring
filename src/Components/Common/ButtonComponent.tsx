@@ -10,6 +10,7 @@ interface ButtonCompProps {
   icon?: JSX.Element; 
   color?: string; 
   children?: ReactNode;
+  text?: boolean;
 }
 
 const ButtonComponent: React.FC<ButtonCompProps> = ({
@@ -21,6 +22,8 @@ const ButtonComponent: React.FC<ButtonCompProps> = ({
   icon,
   color,
   children
+
+  
 }) => {
   return (
     <Button
@@ -33,7 +36,11 @@ const ButtonComponent: React.FC<ButtonCompProps> = ({
       color={color}
       children={children}
     />
+
+  
   );
 };
 
 export default ButtonComponent;
+
+
