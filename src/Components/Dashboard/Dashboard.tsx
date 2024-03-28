@@ -110,24 +110,36 @@ const Dashboard = () => {
   const Billsheader = (
     <div className="flex flex-wrap align-items-center justify-between gap-2 p-4">
       <span className="text-xl font-bold">Bills</span>
-      <span
-        style={{
-          background: "#000000",
-          color: "white",
-        }}
-      >
-        Pending
-      </span>
-      <span
-        style={{
-          textAlign: "right",
-          background: "#D9D9D9",
-        }}
-      >
-        Cleared
-      </span>
+      <div className="flex gap-2" style={{border: "1px solid black" , width: "130px"}}>
+        <span
+          style={{
+            background: "#000000",
+            color: "white",
+            border: "1px solid black", // Adding border property
+            padding: "3px",
+            fontSize: "14px",
+            fontWeight: 400,
+            textAlign: "left",
+            marginRight: "-8px",
+          }}
+        >
+          Pending
+        </span>
+        <span
+          style={{
+            background: "#D9D9D9",
+            padding: "3px", // Adding padding for better appearance
+            fontSize: "14px",
+            fontWeight: 400,
+            textAlign: "left",
+          }}
+        >
+          Cleared
+        </span>
+      </div>
     </div>
   );
+  
 
   return (
     <>
@@ -135,7 +147,7 @@ const Dashboard = () => {
         <div>
           <h1
             style={{
-              marginTop: "40px",
+              marginTop: "50px",
               opacity: "0.3",
               fontSize: "26px",
               fontWeight: "400",
@@ -162,14 +174,16 @@ const Dashboard = () => {
               borderRadius: "6px",
               border: "1px solid #D1D1D1",
               padding: "20px",
+              marginTop: "50px",
             }}
           >
             <DataTable
               value={boatData}
               header={Boatsheader}
               tableStyle={{
-                minWidth: "50rem",
+                width: "73rem",
               }}
+              scrollable={true}
             >
               <Column field="id" header=""></Column>
               <Column field="boatName" header="Boat Name"></Column>
@@ -214,8 +228,9 @@ const Dashboard = () => {
               value={billsData}
               header={Billsheader}
               tableStyle={{
-                width: "100%", // Set width to 100%
+                width: "40rem", // Set width to 100%
               }}
+              scrollable={true}
             >
               <Column field="billNo" header="Bill No"></Column>
               <Column field="mooring" header="Mooring"></Column>
