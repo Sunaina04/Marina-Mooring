@@ -17,7 +17,7 @@ interface CustomerData {
 }
 
 const Customer = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
   const [boatData, setBoatData] = useState<CustomerData[]>([
     {
       id: "01",
@@ -72,54 +72,38 @@ const Customer = () => {
   );
 
   const handleButtonClick = () => {
-    setIsModalOpen(true);
+    setModalVisible(true);
   };
 
+  const handleModalClose = () => {
+    setModalVisible(false);
+  };
   return (
     <>
       <div className="flex justify-between items-center">
         <div>
-          <h1
-            style={{
-              marginTop: "80px",
-              opacity: "0.3",
-              fontSize: "26px",
-              fontWeight: "400",
-            }}
-          >
-            Moormanage/Customer
-          </h1>
+          <h1 className="mt-12 mr-10">Moormanage/Customer</h1>
         </div>
-        <div className="flex flex-col items-center">
-          <div>
-            <Button
+        <div className="flex flex-col items-center mr-4 mt-10">
+          <div className="">
+            <CustomModal
               label={"ADD NEW"}
               style={{
-                width: "121px",
-                height: "44px",
-                top: "50px",
-                right: "100px",
+                width: "50vw",
+                height: "80vh",
                 backgroundColor: "black",
                 cursor: "pointer",
                 fontSize: "14px",
                 fontWeight: "bold",
-                color: "white"
+                color: "white",
               }}
               onClick={handleButtonClick}
+              visible={modalVisible}
+              onHide={handleModalClose}
+              header="Add New Customer"
             >
-              <img
-                src="/assets/images/plus.png"
-                alt="icon"
-                className="p-icon w-4 mr-4"
-                style={{
-                  filter: "invert(100%)",
-                  color: "whitesmoke",
-                  fontWeight: 900,
-                  fontFamily: "Font Awesome 6 Pro",
-                  marginLeft:"-10px",
-                }}
-              />
-            </Button>
+              <AddCustomer />
+            </CustomModal>
           </div>
         </div>
       </div>
@@ -167,7 +151,6 @@ const Customer = () => {
           ></Column>
         </DataTable>
       </div>
-      {isModalOpen && <AddCustomer />}
     </>
   );
 };
