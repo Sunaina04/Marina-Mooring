@@ -1,5 +1,4 @@
 import { useState } from "react";
-import ButtonComponent from "../../Common/ButtonComponent";
 import CustomModal from "../../customComponent/CustomModal";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
@@ -53,24 +52,6 @@ const Customer = () => {
     },
   ]);
 
-  const CustomerHeader = (
-    <div className="flex flex-wrap align-items-center justify-between gap-2 p-4">
-      <span className="text-xl font-bold">Moorings Coming up for Service</span>
-      <span
-        style={{
-          fontFamily: "Lato",
-          fontSize: "14px",
-          fontWeight: 700,
-          lineHeight: "16.8px",
-          letterSpacing: "0.4837472140789032px",
-          textAlign: "right",
-        }}
-      >
-        View All
-      </span>
-    </div>
-  );
-
   const handleButtonClick = () => {
     setModalVisible(true);
   };
@@ -107,43 +88,57 @@ const Customer = () => {
           </div>
         </div>
       </div>
-      <div
-        style={{
-          background: "#F2F2F2",
-          borderRadius: "6px",
-          border: "1px solid #D1D1D1",
-          maxWidth: "76rem",
-          marginTop: "40px",
-        }}
-      >
+      <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300  w-[65vw] mt-11 ">
         <DataTable
           value={boatData}
-          header={CustomerHeader}
+          header={""}
           tableStyle={{
-            minWidth: "50rem",
+            minWidth: "20rem",
+            fontSize: "12px",
+            color: "#000000",
+            fontWeight: 600,
+            backgroundColor: "#D1D1D1",
           }}
+          size="small"
         >
           <Column
             header=""
             field="id"
-            style={{ width: "3rem", textAlign: "center" }}
+            style={{ textAlign: "center", width: "3vw" }}
           ></Column>
-          <Column field="boatName" header="Boat Name"></Column>
-          <Column field="name" header="Name"></Column>
-          <Column field="date" header="Date"></Column>
-          <Column field="measurement" header="Measurement"></Column>
-          <Column field="place" header="Place"></Column>
+          <Column
+            style={{ width: "8vw" }}
+            field="boatName"
+            header="Moorings"
+          ></Column>
+          <Column
+            style={{ width: "8vw" }}
+            field="name"
+            header="Customer Name"
+          ></Column>
+          <Column style={{ width: "15vw" }} field="date" header="Date"></Column>
+          <Column
+            style={{ width: "11vw" }}
+            field="measurement"
+            header="Measurement"
+          ></Column>
+          <Column
+            style={{ width: "7vw" }}
+            field="place"
+            header="Place"
+          ></Column>
           <Column
             header="Actions"
             body={() => (
-              <div className="flex gap-2">
-                <span className="text-black underline cursor-pointer">
+              <div className="flex gap-5">
+                <span className="text-black  font-bold underline cursor-pointer">
                   Edit
                 </span>
-                <span className="text-black underline cursor-pointer">
+                <span className="text-black  font-bold underline cursor-pointer">
                   Activate
                 </span>
-                <span className="text-red-500 underline cursor-pointer">
+
+                <span className="text-red-600 font-bold underline cursor-pointer">
                   Deactivate
                 </span>
               </div>
