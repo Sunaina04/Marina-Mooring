@@ -108,7 +108,7 @@ export default function LoginForm({
 
   const signInHandler = async () => {
     console.log("IN SIGN IN");
-    navigate("/admin");
+    navigate("/admin/dashboard");
     if (!username) {
       setErrors((prev) => ({
         ...prev,
