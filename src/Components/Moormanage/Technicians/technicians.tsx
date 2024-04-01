@@ -9,87 +9,105 @@ import { Nullable } from "primereact/ts-helpers";
 
 interface BoatData {
   id: string;
-  boatName: string;
-  name: string;
+  techniciansName: string;
+  mooring: string;
   date: string;
-  measurement: string;
-  place: string;
+  price: string;
+  completedJob: number;
+  noOfJob: number;
 }
 
 interface BillsData {
-  billNo: string;
+  id: number;
   mooring: string;
-  name: string;
+  techniciansName: string;
   amount: string;
-  date: string;
 }
 
 const Technicians = () => {
   const [date, setDate] = useState<Nullable<(Date | null)[]>>(null);
   const options: string[] = ["Pending", "Cleared"];
   const [value, setValue] = useState<string>(options[0]);
+  const [modalVisible, setModalVisible] = useState(false);
   const [boatData, setBoatData] = useState<BoatData[]>([
     {
       id: "01",
-      boatName: "Suncatcher",
-      name: "John Smith",
-      date: "15, March 2024 to 15, March 2024",
-      measurement: "Length: 10m, Width: 3.8m",
-      place: "Boatyard",
+      techniciansName: "Jon Smith",
+      mooring: "Suncatcher",
+      price: "$5",
+      date: "Mon 13.01:30pm",
+      noOfJob: 5,
+      completedJob: 10,
     },
     {
       id: "01",
-      boatName: "Suncatcher",
-      name: "John Smith",
-      date: "15, March 2024 to 15, March 2024",
-      measurement: "Length: 10m, Width: 3.8m",
-      place: "Boatyard",
+      techniciansName: "Jon Smith",
+      mooring: "Suncatcher",
+      price: "$5",
+      date: "Mon 13.01:30pm",
+      noOfJob: 5,
+      completedJob: 10,
     },
     {
       id: "01",
-      boatName: "Suncatcher",
-      name: "John Smith",
-      date: "15, March 2024 to 15, March 2024",
-      measurement: "Length: 10m, Width: 3.8m",
-      place: "Boatyard",
+      techniciansName: "Jon Smith",
+      mooring: "Suncatcher",
+      price: "$5",
+      date: "Mon 13.01:30pm",
+      noOfJob: 5,
+      completedJob: 10,
+    },
+    {
+      id: "01",
+      techniciansName: "Jon Smith",
+      mooring: "Suncatcher",
+      price: "$5",
+      date: "Mon 13.01:30pm",
+      noOfJob: 5,
+      completedJob: 10,
+    },
+    {
+      id: "01",
+      techniciansName: "Jon Smith",
+      mooring: "Suncatcher",
+      price: "$5",
+      date: "Mon 13.01:30pm",
+      noOfJob: 5,
+      completedJob: 10,
     },
   ]);
 
   const [billsData, setBillsData] = useState<BillsData[]>([
     {
-      billNo: "B0210",
+      id: 0,
       mooring: "Suncatcher",
-      name: "John Smith",
+      techniciansName: "John Smith",
       amount: "$50",
-      date: "15, March 2024",
+    },
+
+    {
+      id: 0,
+      mooring: "Suncatcher",
+      techniciansName: "John Smith",
+      amount: "$50",
     },
     {
-      billNo: "B0210",
+      id: 0,
       mooring: "Suncatcher",
-      name: "John Smith",
+      techniciansName: "John Smith",
       amount: "$50",
-      date: "15, March 2024",
     },
     {
-      billNo: "B0210",
+      id: 0,
       mooring: "Suncatcher",
-      name: "John Smith",
+      techniciansName: "John Smith",
       amount: "$50",
-      date: "15, March 2024",
     },
     {
-      billNo: "B0210",
+      id: 0,
       mooring: "Suncatcher",
-      name: "John Smith",
+      techniciansName: "John Smith",
       amount: "$50",
-      date: "15, March 2024",
-    },
-    {
-      billNo: "B0210",
-      mooring: "Suncatcher",
-      name: "John Smith",
-      amount: "$50",
-      date: "15, March 2024",
     },
   ]);
 
@@ -114,7 +132,7 @@ const Technicians = () => {
 
   const Billsheader = (
     <div className="flex flex-wrap align-items-center justify-between gap-2 ">
-      <span className="text-sm font-bold">Bills</span>
+      <span className="text-lg font-bold">Services</span>
       <div className=" ">
         {/* <span
           style={{
@@ -152,131 +170,80 @@ const Technicians = () => {
         </div>
       </div>
     </div>
-  )
+  );
+
+  const handleButtonClick = () => {
+    setModalVisible(true);
+  };
+
+  const handleModalClose = () => {
+    setModalVisible(false);
+  };
   return (
     <>
       {" "}
       {/* <div className="flex"> */}
-        <div className="flex justify-between  items-center mr-4 mt-10">
-          <div>
-            <h1
-              style={{
-                marginTop: "40px",
-                opacity: "0.3",
-                fontSize: "26px",
-                fontWeight: "400",
-              }}
-            >
-              Moormanage/Technicians
-            </h1>
-          </div>
-          <div className="p-input-icon-left">
-           <CustomModal onClick={function (): void {
-            throw new Error("Function not implemented.");
-          } } visible={false} onHide={function (): void {
-            throw new Error("Function not implemented.");
-          } }>
-
-
-            
-           </CustomModal>
-          </div>
+      <div className="flex justify-between  items-center mr-4 mt-10">
+        <div>
+          <h1
+            style={{
+              marginTop: "40px",
+              opacity: "0.3",
+              fontSize: "26px",
+              fontWeight: "400",
+            }}
+          >
+            Moormanage/Technicians
+          </h1>
         </div>
+        <div className="p-input-icon-left">
+          <CustomModal
+            onClick={handleButtonClick}
+            visible={false}
+            onHide={handleModalClose}
+          ></CustomModal>
+        </div>
+      </div>
       {/* </div> */}
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-5 mt-10 ">
         {/* Boat Data DataTable */}
 
-        <div className="bg-[#F2F2F2] rounded-md border-[1px] border-[#D1D1D1] p-2 mt-12 w-[60vw] ">
-          <DataTable
-            value={boatData}
-            header={Boatsheader}
-            tableStyle={
-              {
-                // width: "73rem",
-              }
-            }
-            scrollable={true}
-          >
-            <Column style={{ width: "5vw" }} field="id" header=""></Column>
-            <Column
-              style={{ width: "7vw" }}
-              field="boatName"
-              header="Boat Name"
-            ></Column>
-            <Column
-              style={{ width: "7vw" }}
-              field="name"
-              header="Name"
-            ></Column>
-            <Column
-              style={{ width: "11vw" }}
-              field="date"
-              header="Date"
-            ></Column>
-            <Column
-              style={{ width: "13vw" }}
-              field="measurement"
-              header="Measurement"
-            ></Column>
-            <Column
-              style={{ width: "8vw" }}
-              field="place"
-              header="Place"
-            ></Column>
-            <Column
-              header="Action"
-              body={() => (
-                <div className="flex gap-4">
-                  <span className="text-black underline cursor-pointer">
-                    Edit
-                  </span>
-                  <span className="text-red-500 underline cursor-pointer">
-                    Delete
-                  </span>
-                </div>
-              )}
-            ></Column>
-          </DataTable>
-        </div>
-
         {/* Bills Data DataTable and Calendar */}
-        <div className="flex gap-2">
-          <div className="bg-[#F2F2F2] rounded-md border-[1px]  border-[#D1D1D1] p-5   w-[39.70vw] mb-5">
+        <div className="flex gap-8">
+          <div className="bg-[#F2F2F2] rounded-md border-[1px]  border-[#D1D1D1] p-5   w-[47vw] mb-5">
             <DataTable value={billsData} header={Billsheader} scrollable={true}>
+              <Column style={{ width: "5vw" }} field="id" header="ID"></Column>
               <Column
-                style={{ width: "5vw" }}
-                field="billNo"
-                header="Bill No"
-              ></Column>
-              <Column
-                style={{ width: "6vw" }}
+                style={{ width: "8vw" }}
                 field="mooring"
                 header="Mooring"
               ></Column>
               <Column
-                style={{ width: "7vw" }}
-                field="name"
-                header="Name"
+                style={{ width: "10vw" }}
+                field="techniciansName"
+                header="Technicians Name"
               ></Column>
               <Column
                 style={{ width: "6vw" }}
                 field="amount"
                 header="Amount"
               ></Column>
+
               <Column
-                style={{ width: "8vw" }}
-                field="date"
-                header="Date"
-              ></Column>
-              <Column
-                header=""
+                header="Service Record"
                 body={() => (
-                  <div className="flex gap-4 ">
+                  <div className="flex gap-5 ">
                     <span className="text-black underline cursor-pointer">
                       View
                     </span>
-                    <span className="text-red-500 underline cursor-pointer">
-                      Edit
+                    <span className="text-green-500 bg-green-100 opacity-[1rem] cursor-pointer">
+                      Confirm
+                    </span>
+                    <span className="text-red-500 bg-red-100 cursor-pointer">
+                      Cancel
+                    </span>
+                    <span className="text-blue-500 bg-blue-100 cursor-pointer">
+                      Modify
                     </span>
                   </div>
                 )}
@@ -304,6 +271,68 @@ const Technicians = () => {
               />
             </div>
           </div>
+        </div>
+
+        <div className="bg-[#F2F2F2] rounded-md border-[1px] border-[#D1D1D1] p-2  w-[69vw] mb-4">
+          <DataTable
+            value={boatData}
+            header={""}
+            tableStyle={
+              {
+                // width: "73rem",
+              }
+            }
+            scrollable={true}
+          >
+            <Column style={{ width: "5vw" }} field="id" header="Id"></Column>
+            <Column
+              style={{ width: "12vw" }}
+              field="techniciansName"
+              header="Technicians Name"
+            ></Column>
+            <Column
+              style={{ width: "9vw" }}
+              field="date"
+              header="Slot & Date"
+            ></Column>
+
+            <Column
+              style={{ width: "10vw" }}
+              field="mooring"
+              header="Moorings"
+            ></Column>
+            <Column
+              style={{ width: "9vw" }}
+              field="noOfJob"
+              header="No.of jobs"
+            ></Column>
+
+            <Column
+              style={{ width: "9vw" }}
+              field="completedJob"
+              header="Completed jobs"
+            ></Column>
+
+            <Column
+              style={{ width: "6vw" }}
+              field="price"
+              header="Price"
+            ></Column>
+
+            <Column
+              header="Action"
+              body={() => (
+                <div className="flex gap-4">
+                  <span className="text-green-500 underline cursor-pointer">
+                    Edit
+                  </span>
+                  <span className="text-red-500 underline cursor-pointer">
+                    Delete
+                  </span>
+                </div>
+              )}
+            ></Column>
+          </DataTable>
         </div>
       </div>
     </>

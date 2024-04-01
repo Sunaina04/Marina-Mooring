@@ -77,15 +77,15 @@ const Moorings = () => {
           </h1>
         </div>
         <div className="p-input-icon-left mt-8 mr-5">
-
-          <CustomModal onClick={handleButtonClick}
+          <CustomModal
+            onClick={handleButtonClick}
             visible={false}
-            onHide={handleModalClose}>
+            onHide={handleModalClose}
+          >
             <AddCustomer />
           </CustomModal>
         </div>
       </div>
-
       <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300  w-[65vw] mt-11 ">
         <DataTable
           value={boatData}
@@ -144,7 +144,6 @@ const Moorings = () => {
           ></Column>
         </DataTable>
       </div>
-
     </>
   );
 };
