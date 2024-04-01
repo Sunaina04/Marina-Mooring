@@ -12,7 +12,7 @@ interface InputStyle {
 }
 
 interface InputComponentProps {
-  placeholder: string;
+  placeholder?: string;
   type?: "text" | "password" | "number" | "email" | "date";
   value?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;

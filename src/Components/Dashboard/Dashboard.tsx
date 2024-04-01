@@ -4,6 +4,7 @@ import { Calendar } from "primereact/calendar";
 import { Box } from "@mui/material";
 import { useState } from "react";
 import { Nullable } from "primereact/ts-helpers";
+import { Datepicker } from "@mobiscroll/react";
 
 interface BoatData {
   id: string;
@@ -110,7 +111,10 @@ const Dashboard = () => {
   const Billsheader = (
     <div className="flex flex-wrap align-items-center justify-between gap-2 p-4">
       <span className="text-xl font-bold">Bills</span>
-      <div className="flex gap-2" style={{border: "1px solid black" , width: "130px"}}>
+      <div
+        className="flex gap-2"
+        style={{ border: "1px solid black", width: "130px" }}
+      >
         <span
           style={{
             background: "#000000",
@@ -139,7 +143,6 @@ const Dashboard = () => {
       </div>
     </div>
   );
-  
 
   return (
     <>
@@ -275,14 +278,20 @@ const Dashboard = () => {
               Calendar
             </div>
             <div className="card flex justify-content-center">
-              <Calendar
+              <Datepicker
+                controls={["calendar"]}
+                // select="range"
+                display="inline"
+                touchUi={true}
+              />
+              {/* <Calendar
                 value={date}
                 onChange={(e) => setDate(e.value)}
                 inline
                 showWeek
                 selectionMode="range"
                 style={{ width: "100%" }} // Set width to 100%
-              />
+              /> */}
             </div>
           </Box>
         </div>

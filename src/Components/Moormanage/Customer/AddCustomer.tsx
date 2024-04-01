@@ -1,11 +1,19 @@
+import React, { useState } from "react";
+import { Datepicker, Input } from "@mobiscroll/react";
+import { Calendar } from "primereact/calendar";
 import InputComponent from "../../Common/InputComponent";
 import DatePickerComponent from "../../Common/DatePickerComponent";
 import TextAreaComponent from "../../Common/TextAreaComponent";
 import ButtonComponent from "../../Common/ButtonComponent";
-
+import "@mobiscroll/react/dist/css/mobiscroll.min.css";
 import "./AddCustomer.css";
 
 const AddCustomer = () => {
+  const [date, setDate] = useState(null);
+
+  const [start, startRef] = React.useState(null);
+  const [end, endRef] = React.useState(null);
+
   return (
     <div className="w-full h-full  ">
       <h1 className="ml-6 text-lg font-bold">Add Customer</h1>
@@ -15,8 +23,6 @@ const AddCustomer = () => {
           <span className="font-semibold text-sm">Mooring Name</span>
           <div className="mt-2">
             <InputComponent
-              placeholder="Enter mooring name"
-              type="text"
               style={{
                 width: "13vw",
                 height: "5vh",
@@ -32,8 +38,8 @@ const AddCustomer = () => {
           <span className="font-semibold text-sm">Customer ID</span>
           <div className="mt-2">
             <InputComponent
-              placeholder="Enter customer ID"
-              type="text"
+              // placeholder="Enter customer ID"
+              // type="text"
               style={{
                 width: "13vw",
                 height: "5vh",
@@ -49,8 +55,8 @@ const AddCustomer = () => {
           <span className="font-semibold text-sm">Owner Name</span>
           <div className="mt-2">
             <InputComponent
-              placeholder="Enter owner name"
-              type="text"
+              // placeholder="Enter owner name"
+              // type="text"
               style={{
                 width: "13vw",
                 height: "5vh",
@@ -69,12 +75,23 @@ const AddCustomer = () => {
         </div>
 
         <div className="flex gap-16 mt-2">
-          <DatePickerComponent
-            onChange={function (newValue: Date): void {
-              throw new Error("Function not implemented.");
-            }}
-            showIcon={true}
-            // style={{  borderRadius: "0.50rem", border: "1px solid gray" }}
+          <Datepicker select="range" startInput={start} endInput={end} />
+          {/* <Input
+            ref={startRef}
+            // label="Start"
+            placeholder="Please Select..."
+          ></Input>
+          <Input
+            ref={endRef}
+            // label="End"
+            placeholder="Please Select..."
+          ></Input> */}
+
+          <Calendar
+            id="from"
+            value={date}
+            onChange={(e: any) => setDate(e.value)}
+            showIcon
           />
 
           <DatePickerComponent
@@ -97,8 +114,8 @@ const AddCustomer = () => {
             <span className="font-semibold text-sm">Boat Type</span>
             <div className="mt-2">
               <InputComponent
-                placeholder=""
-                type="text"
+                // placeholder=""
+                // type="text"
                 style={{
                   width: "9vw",
                   height: "4vh",
