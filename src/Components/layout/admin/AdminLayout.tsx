@@ -31,7 +31,8 @@ const AdminLayout = () => {
   const [openSubMenus, setOpenSubMenus] = React.useState(
     new Array(SidebarMenu.length).fill(false)
   );
-  const [selectedSubcategory, setSelectedSubcategory] = React.useState<any>(null);
+  const [selectedSubcategory, setSelectedSubcategory] =
+    React.useState<any>(null);
 
   const handleExpand = (index: number) => {
     setOpenSubMenus((prev) => {
@@ -171,7 +172,9 @@ const AdminLayout = () => {
                                 sx: {
                                   fontSize: "14px",
                                   fontWeight:
-                                    selectedSubcategory === subIndex ? 700 : 400,
+                                    selectedSubcategory === subIndex
+                                      ? 700
+                                      : 400,
                                   lineHeight: "1.5",
                                   letterSpacing: "0.2px",
                                   textAlign: "left",
@@ -195,12 +198,58 @@ const AdminLayout = () => {
         </List>
         <Box
           sx={{
+            background: "#D9D9D9",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-start",
+            marginTop: "22rem",
+            border: "1px solid #B3B3B3",
+          }}
+        >
+          <ListItemButton
+            component={NavLink as React.FC<NavLinkProps>}
+            to={"/admin/permission"}
+            sx={{
+              width: "100%",
+              height: "auto",
+              justifyContent: "flex-start",
+              alignItems: "center",
+              padding: "8px 16px",
+              "&:hover": {
+                backgroundColor: "#EDEDED",
+              },
+            }}
+          >
+            <ListItemIcon sx={{ minWidth: "auto" }}>
+              <img
+                src="/assets/images/square.png"
+                alt="Logout"
+                width={15}
+                style={{ marginRight: "8px" }}
+              />
+            </ListItemIcon>
+            <ListItemText
+              primary="Permission"
+              primaryTypographyProps={{
+                sx: {
+                  fontSize: "14px",
+                  fontWeight: 700,
+                  lineHeight: "1.5",
+                  letterSpacing: "0.2px",
+                  textAlign: "left",
+                },
+              }}
+            />
+          </ListItemButton>
+        </Box>
+        <Box
+          sx={{
             padding: "8px 16px",
             background: "#D9D9D9",
             display: "flex",
             alignItems: "center",
             justifyContent: "flex-start",
-            marginTop: "28rem",
+            marginTop: "1rem",
             border: "1px solid #B3B3B3",
           }}
         >
