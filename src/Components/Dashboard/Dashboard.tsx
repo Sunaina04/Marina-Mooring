@@ -1,5 +1,5 @@
 import { DataTable } from "primereact/datatable";
-import { Datepicker, Input } from "@mobiscroll/react";
+import { Datepicker } from "@mobiscroll/react";
 import { Column } from "primereact/column";
 import { Calendar } from "primereact/calendar";
 import { Box } from "@mui/material";
@@ -117,33 +117,6 @@ const Dashboard = () => {
   const Billsheader = (
     <div className="flex flex-wrap align-items-center justify-between gap-2 ">
       <span className="text-sm font-bold">Bills</span>
-      <div className=" ">
-        {/* <span
-          style={{
-            background: "#000000",
-            color: "white",
-            border: "1px solid black", // Adding border property
-            padding: "3px",
-            fontSize: "14px",
-            fontWeight: 400,
-            textAlign: "left",
-            marginRight: "-8px",
-          }}
-        >
-          Pending
-        </span>
-        <span
-          style={{
-            background: "#D9D9D9",
-            padding: "3px", // Adding padding for better appearance
-            fontSize: "14px",
-            fontWeight: 400,
-            textAlign: "left",
-          }}
-        >
-          Cleared
-        </span> */}
-
         <div className="ml-40 ">
           <SelectButton
             style={{ height: "2vh", fontSize: "0.50rem", fontWeight: "bolder" }}
@@ -152,7 +125,6 @@ const Dashboard = () => {
             options={options}
           />
         </div>
-      </div>
     </div>
   );
 

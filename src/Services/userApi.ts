@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery, BaseQueryApi, FetchArgs } from "@reduxjs/too
 import { RootState } from "../store/store";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://ae9c-2405-201-5023-4822-c44e-29cf-47c9-b130.ngrok-free.app/",
+  baseUrl: "https://mhtjnn.github.io/marina-mooring-management/",
   prepareHeaders: (headers) => {
     const token = localStorage.getItem("token");
     if (token) {

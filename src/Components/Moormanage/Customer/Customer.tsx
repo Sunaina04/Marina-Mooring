@@ -7,13 +7,15 @@ import AddCustomer from "./AddCustomer";
 import { Button } from "primereact/button";
 import StatCard from "../../StatCard/StatCard";
 
+import { InputText } from "primereact/inputtext";
+import { PrimeIcons } from "primereact/api";
+
 interface CustomerData {
   id: string;
-  boatName: string;
-  name: string;
-  date: string;
-  measurement: string;
-  place: string;
+  customerName: string;
+  email: string;
+  phone: number;
+  address: string;
 }
 
 const Customer = () => {
@@ -21,35 +23,31 @@ const Customer = () => {
   const [boatData, setBoatData] = useState<CustomerData[]>([
     {
       id: "01",
-      boatName: "Suncatcher",
-      name: "John Smith",
-      date: "15, March 2024 to 15, March 2024",
-      measurement: "Length: 10m, Width: 3.8m",
-      place: "Boatyard",
+      customerName: "Ram",
+      email: "John@gmail.com",
+      phone: 1456852896,
+      address: "Punjab",
     },
     {
       id: "01",
-      boatName: "Suncatcher",
-      name: "John Smith",
-      date: "15, March 2024 to 15, March 2024",
-      measurement: "Length: 10m, Width: 3.8m",
-      place: "Boatyard",
+      customerName: "Ram",
+      email: "John@gmail.com",
+      phone: 1456852896,
+      address: "Punjab",
     },
     {
       id: "01",
-      boatName: "Suncatcher",
-      name: "John Smith",
-      date: "15, March 2024 to 15, March 2024",
-      measurement: "Length: 10m, Width: 3.8m",
-      place: "Boatyard",
+      customerName: "Ram",
+      email: "John@gmail.com",
+      phone: 1456852896,
+      address: "Punjab",
     },
     {
       id: "01",
-      boatName: "Suncatcher",
-      name: "John Smith",
-      date: "15, March 2024 to 15, March 2024",
-      measurement: "Length: 10m, Width: 3.8m",
-      place: "Boatyard",
+      customerName: "Ram",
+      email: "John@gmail.com",
+      phone: 1456852896,
+      address: "Punjab",
     },
   ]);
 
@@ -62,11 +60,18 @@ const Customer = () => {
   };
 
   const statCardsData = [
-    { title: "Total Customers", percentage: 17 , count: 42324 },
+    [
+      { title: "Total Customers", percentage: 17, count: 42324 },
+      { title: "Total Customers", percentage: 17, count: 43324 },
+      { title: "Total Customers", percentage: 17, count: 44324 },
+      { title: "Total Customers", percentage: 17, count: 58765 },
+      { title: "Total Customers", percentage: 17, count: 42324 },
+      { title: "Total Customers", percentage: 17, count: 46789 },
+    ],
 
-    { title: "Services", percentage: 25 , count: 34576 },
+    [{ title: "Services", percentage: 25, count: 34576 }],
 
-    { title: "Work Orders", percentage: 58 , count: 8421 },
+    [{ title: "Work Orders", percentage: 58, count: 8421 }],
   ];
 
   return (
@@ -100,12 +105,12 @@ const Customer = () => {
       </div>
 
       <div className="flex gap-6 mt-5">
-        {statCardsData.map((item) => (
-          <StatCard key={item.title} {...item} />
+        {statCardsData.map((items) => (
+          <StatCard key={items[0].title} items={items} />
         ))}
       </div>
 
-      <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300  w-[65vw] mt-11 ">
+      <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300  w-[80vw] mt-11 ">
         <DataTable
           value={boatData}
           header={""}
@@ -119,30 +124,29 @@ const Customer = () => {
           size="small"
         >
           <Column
-            header=""
+            header="ID"
             field="id"
             style={{ textAlign: "center", width: "3vw" }}
           ></Column>
           <Column
             style={{ width: "8vw" }}
-            field="boatName"
-            header="Moorings"
+            field="customerName"
+            header="Customer Name"
           ></Column>
           <Column
             style={{ width: "8vw" }}
-            field="name"
-            header="Customer Name"
+            field="email"
+            header="Email"
           ></Column>
-          <Column style={{ width: "15vw" }} field="date" header="Date"></Column>
           <Column
             style={{ width: "11vw" }}
-            field="measurement"
-            header="Measurement"
+            field="phone"
+            header="Phone"
           ></Column>
           <Column
             style={{ width: "7vw" }}
-            field="place"
-            header="Place"
+            field="address"
+            header="Address"
           ></Column>
           <Column
             header="Actions"
@@ -151,12 +155,9 @@ const Customer = () => {
                 <span className="text-black  font-bold underline cursor-pointer">
                   Edit
                 </span>
-                <span className="text-black  font-bold underline cursor-pointer">
-                  Activate
-                </span>
 
                 <span className="text-red-600 font-bold underline cursor-pointer">
-                  Deactivate
+                  Delete
                 </span>
               </div>
             )}

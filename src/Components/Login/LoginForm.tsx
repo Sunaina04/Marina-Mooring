@@ -138,7 +138,7 @@ export default function LoginForm({
           severity: "success",
           summary: message,
         });
-        navigate("/admin");
+         navigate("/admin/dashboard");
       }
     } catch (error: any) {
       console.error("Error occurred during login:", error);
