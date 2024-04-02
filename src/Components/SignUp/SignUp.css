@@ -1,4 +1,4 @@
-* {
+/* * {
 
     margin: 0;
     padding: 0;
@@ -122,14 +122,13 @@
     margin: 1rem;
     cursor: pointer;
     background-color: white;
-    /* border: none; */
     border-radius: 5px;
     border: 1px solid gray;
     color: gray;
     font-weight: bold;
 
-}
-
+} */
+/* 
 .other {
     margin-top: 0.80rem;
 }
@@ -180,4 +179,4 @@ input[type=text], input[type=password]{
     cursor: pointer;
     border-radius: 8px;
   }
- 
+  */

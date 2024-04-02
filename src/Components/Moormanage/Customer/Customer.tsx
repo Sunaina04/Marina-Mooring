@@ -6,10 +6,10 @@ import { Outlet } from "react-router-dom";
 import AddCustomer from "./AddCustomer";
 import { Button } from "primereact/button";
 import StatCard from "../../StatCard/StatCard";
-
+ 
 import { InputText } from "primereact/inputtext";
 import { PrimeIcons } from "primereact/api";
-
+ 
 interface CustomerData {
   id: string;
   customerName: string;
@@ -17,7 +17,7 @@ interface CustomerData {
   phone: number;
   address: string;
 }
-
+ 
 const Customer = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [boatData, setBoatData] = useState<CustomerData[]>([
@@ -50,15 +50,15 @@ const Customer = () => {
       address: "Punjab",
     },
   ]);
-
+ 
   const handleButtonClick = () => {
     setModalVisible(true);
   };
-
+ 
   const handleModalClose = () => {
     setModalVisible(false);
   };
-
+ 
   const statCardsData = [
     [
       { title: "Total Customers", percentage: 17, count: 42324 },
@@ -68,12 +68,12 @@ const Customer = () => {
       { title: "Total Customers", percentage: 17, count: 42324 },
       { title: "Total Customers", percentage: 17, count: 46789 },
     ],
-
+ 
     [{ title: "Services", percentage: 25, count: 34576 }],
-
+ 
     [{ title: "Work Orders", percentage: 58, count: 8421 }],
   ];
-
+ 
   return (
     <>
       <div className="flex justify-between items-center">
@@ -103,13 +103,13 @@ const Customer = () => {
           </div>
         </div>
       </div>
-
+ 
       <div className="flex gap-6 mt-5">
         {statCardsData.map((items) => (
           <StatCard key={items[0].title} items={items} />
         ))}
       </div>
-
+ 
       <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300  w-[80vw] mt-11 ">
         <DataTable
           value={boatData}
@@ -155,7 +155,7 @@ const Customer = () => {
                 <span className="text-black  font-bold underline cursor-pointer">
                   Edit
                 </span>
-
+ 
                 <span className="text-red-600 font-bold underline cursor-pointer">
                   Delete
                 </span>
@@ -167,5 +167,5 @@ const Customer = () => {
     </>
   );
 };
-
+ 
 export default Customer;

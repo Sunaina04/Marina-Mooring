@@ -1,7 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { FaFacebook } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
-import "./LoginForm.css";
 import {
   useGetEmployeeMutation,
   useLoginMutation,
@@ -17,6 +14,7 @@ import { Toast } from "primereact/toast";
 import ButtonComponent from "../Common/ButtonComponent";
 import InputComponent from "../Common/InputComponent";
 import SignUp from "../SignUp/SignUp";
+import { InputText } from "primereact/inputtext";
 
 interface LoginFormProps {
   Label: string;
@@ -138,7 +136,7 @@ export default function LoginForm({
           severity: "success",
           summary: message,
         });
-         navigate("/admin/dashboard");
+        navigate("/admin/dashboard");
       }
     } catch (error: any) {
       console.error("Error occurred during login:", error);
@@ -169,29 +167,14 @@ export default function LoginForm({
                 className="w-full h-80 bg-black mb-5"
               />
             </div>
-            <div className="p-input-icon-left">
-              {showSinUp ? (
-                <img
-                  src="/assets/images/key.png"
-                  alt="icon"
-                  className="p-icon w-5"
-                />
-              ) : (
-                <img
-                  src="/assets/images/email.png"
-                  alt="icon"
-                  className="p-icon w-5"
-                />
-              )}
-
-              <InputComponent
+            <div className="p-input-icon-left" style={{ position: "relative" }}>
+              <InputText
                 style={{
                   width: "40vw",
                   height: "6vh",
-                  padding: "0 3rem",
+                  padding: "0 4rem 0 3rem",
                   border: "1px solid gray",
-                  fontSize: "1.20vw",
-                  // fontFamily: "Roboto",
+                  fontSize: "1.10vw",
                 }}
                 type={
                   showSinUp
@@ -206,25 +189,30 @@ export default function LoginForm({
                 name="Email"
                 onChange={handleChange}
               />
+              <span
+                className="w-5 h-5 absolute top-1/2 transform -translate-y-1/2 left-3  text-gray-400"
+                style={{
+                  backgroundImage: `url(${
+                    showSinUp
+                      ? "/assets/images/key.png"
+                      : "/assets/images/email.png"
+                  })`,
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: "contain",
+                }}
+              ></span>
             </div>
           </div>
 
-          <div className="mb-6">
-            <div className="p-input-icon-left">
-              <img
-                src="/assets/images/key.png"
-                alt="icon"
-                className="p-icon  w-5"
-              />
-
-              <InputComponent
+          <div className="mb-3">
+            <div className="p-input-icon-left" style={{ position: "relative" }}>
+              <InputText
                 style={{
                   width: "40vw",
                   height: "6vh",
-                  padding: "0 3rem",
+                  padding: "0 4rem 0 3rem",
                   border: "1px solid gray",
-                  fontSize: "1.20vw",
-                  // fontFamily: "Roboto",
+                  fontSize: "1.10vw",
                 }}
                 type={
                   showSinUp
@@ -236,18 +224,25 @@ export default function LoginForm({
                     : "text"
                 }
                 placeholder={showSinUp ? "Confirm Password" : "Password"}
-                onChange={handleChange}
                 name="Password"
+                onChange={handleChange}
               />
+              <span
+                className="w-5 h-5 absolute top-1/2 transform -translate-y-1/2 left-3 text-gray-400"
+                style={{
+                  backgroundImage: `url(assets/images/key.png)`,
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: "contain",
+                }}
+              ></span>
             </div>
-            {showSinUp ? (
-              " "
-            ) : (
+
+            {!showSinUp && (
               <>
                 <div className="flex justify-end mt-8 cursor-pointer ">
                   <Link to={"/forgotPass"}>
                     <p className="font-normal font-['Roboto']">
-                    Forgot Password?
+                      Forgot Password?
                     </p>
                   </Link>
                 </div>
@@ -258,7 +253,6 @@ export default function LoginForm({
               </>
             )}
           </div>
-
           <ButtonComponent
             style={{
               width: "10vw",

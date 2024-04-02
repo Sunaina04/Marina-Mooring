@@ -8,7 +8,6 @@ import { Nullable } from "primereact/ts-helpers";
 import { SelectButton, SelectButtonChangeEvent } from "primereact/selectbutton";
 import "@mobiscroll/react/dist/css/mobiscroll.min.css";
 
-
 interface BoatData {
   id: string;
   boatName: string;
@@ -97,7 +96,9 @@ const Dashboard = () => {
 
   const Boatsheader = (
     <div className="flex flex-wrap align-items-center justify-between gap-2 p-4">
-      <span className="text-xl font-bold">Moorings Coming up for Service</span>
+      <span className="text-xl font-extrabold">
+        Moorings Coming up for Service
+      </span>
       <span
         style={{
           fontFamily: "Lato",
@@ -117,14 +118,14 @@ const Dashboard = () => {
   const Billsheader = (
     <div className="flex flex-wrap align-items-center justify-between gap-2 ">
       <span className="text-sm font-bold">Bills</span>
-        <div className="ml-40 ">
-          <SelectButton
-            style={{ height: "2vh", fontSize: "0.50rem", fontWeight: "bolder" }}
-            value={value}
-            onChange={(e: SelectButtonChangeEvent) => setValue(e.value)}
-            options={options}
-          />
-        </div>
+      <div className="ml-40 ">
+        <SelectButton
+          style={{ height: "2vh", fontSize: "0.50rem", fontWeight: "bolder" }}
+          value={value}
+          onChange={(e: SelectButtonChangeEvent) => setValue(e.value)}
+          options={options}
+        />
+      </div>
     </div>
   );
 
@@ -139,15 +140,15 @@ const Dashboard = () => {
       <div className="flex flex-col gap-5">
         {/* Boat Data DataTable */}
 
-        <div className="bg-[#F2F2F2] rounded-md border-[1px] border-[#D1D1D1] p-2 mt-12 w-[60vw] ">
+        <div className="bg-[#F2F2F2] rounded-xl border-[1px] border-[#D1D1D1] p-2 mt-12 w-[60vw] ">
           <DataTable
             value={boatData}
             header={Boatsheader}
-            tableStyle={
-              {
-                // width: "73rem",
-              }
-            }
+            tableStyle={{
+              // width: "73rem",
+              fontSize: "0.90rem",
+              fontWeight: "bold",
+            }}
             scrollable={true}
           >
             <Column style={{ width: "5vw" }} field="id" header=""></Column>
@@ -194,8 +195,17 @@ const Dashboard = () => {
 
         {/* Bills Data DataTable and Calendar */}
         <div className="flex gap-2">
-          <div className="bg-[#F2F2F2] rounded-md border-[1px]  border-[#D1D1D1] p-5   w-[39.70vw] mb-5">
-            <DataTable value={billsData} header={Billsheader} scrollable={true}>
+          <div className="bg-[#F2F2F2] rounded-xl border-[1px]  border-[#D1D1D1] p-5   w-[39.70vw] mb-5">
+            <DataTable
+              value={billsData}
+              header={Billsheader}
+              scrollable={true}
+              tableStyle={{
+                // width: "73rem",
+                fontSize: "0.90rem",
+                fontWeight: "bold",
+              }}
+            >
               <Column
                 style={{ width: "5vw" }}
                 field="billNo"
@@ -237,7 +247,7 @@ const Dashboard = () => {
             </DataTable>
           </div>
 
-          <Box className="w-96 border-[1px] border-[#D1D1D1] p-5 rounded-md mb-6">
+          <Box className="w-96 border-[1px] border-[#D1D1D1] p-5 rounded-xl mb-6">
             <div className="text-[#000000] text-lg font-bold tracking-tighter text-left mb-5">
               Calendar
             </div>
