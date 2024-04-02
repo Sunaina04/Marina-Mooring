@@ -66,7 +66,7 @@ const Header: React.FC = () => {
             <img
               alt="Logo"
               src={"/assets/images/Moorfind.png"}
-              style={{ width: 100, height: 85, marginRight: 8 }}
+              style={{ width: 100, height: 80, marginRight: 8 }}
             />
           </Box>
 

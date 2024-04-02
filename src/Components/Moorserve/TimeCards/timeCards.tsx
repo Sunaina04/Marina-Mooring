@@ -2,6 +2,8 @@ import { useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import ButtonComponent from "../../Common/ButtonComponent";
+import CustomModal from "../../customComponent/CustomModal";
+import AddCustomer from "../../Moormanage/Customer/AddCustomer";
 
 interface CustomerData {
   id: string;
@@ -53,6 +55,9 @@ const Timecards = () => {
     setIsModalOpen(true);
   };
 
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
 
   const header = (
     <div className="flex flex-wrap align-items-center justify-between gap-2 p-4">
@@ -75,56 +80,15 @@ const Timecards = () => {
   return (
     <>
       {" "}
-      {/* <div className="flex"> */}
-        <div className="flex justify-between items-center">
-          <div>
-            <h1
-              style={{
-                marginTop: "40px",
-                opacity: "0.3",
-                fontSize: "26px",
-                fontWeight: "400",
-              }}
-            >
-              Moorserve/Time Cards
-            </h1>
-          </div>
-          <div className="p-input-icon-left">
-            <ButtonComponent
-              label={"ADD NEW"}
-              style={{
-                width: "7vw",
-                backgroundColor: "black",
-                cursor: "pointer",
-                fontWeight: "bold",
-                marginTop: "40px", // Adjust margin top here
-              }}
-              onClick={handleButtonClick}
-            >
-              <img
-                src="/assets/images/plus.png"
-                alt="icon"
-                className="p-icon w-4 mr-4"
-                style={{
-                  filter: "invert(100%)",
-                  color: "whitesmoke",
-                  fontWeight: "bolder",
-                  padding: "",
-                }}
-              />
-            </ButtonComponent>
-          </div>
+      {/* <div className="flex ml-12"> */}
+      <div className="flex justify-between items-center ml-12">
+        <div>
+          <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">
+            Moormanage/Time Cards
+          </h1>
         </div>
-      {/* </div> */}
-      <div
-        style={{
-          background: "#F2F2F2",
-          borderRadius: "6px",
-          border: "1px solid #D1D1D1",
-          maxWidth: "76rem",
-          marginTop: "40px",
-        }}
-      >
+      </div>
+      <div className="bg-[#F2F2F2] rounded-md border-[1px] border-[#D1D1D1] p-2 mt-12 w-[60vw] ml-20">
         <DataTable
           value={boatData}
           header={header}

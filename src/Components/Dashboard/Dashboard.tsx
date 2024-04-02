@@ -130,13 +130,13 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="flex">
+      <div className="flex ml-12">
         <div>
-          <h1 className="mt-14  opacity-30 text-2xl font-normal">Dashboard</h1>
+          <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">Dashboard</h1>
         </div>
       </div>
 
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-5 ml-20">
         {/* Boat Data DataTable */}
 
         <div className="bg-[#F2F2F2] rounded-md border-[1px] border-[#D1D1D1] p-2 mt-12 w-[60vw] ">
