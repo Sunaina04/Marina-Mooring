@@ -26,6 +26,7 @@ import Forms from "./Components/Moorserve/Forms/forms";
 import ReportsMoorserve from "./Components/Moorserve/Reports/reports";
 import CustomModal from "./Components/customComponent/CustomModal";
 import Customer from "./Components/Moormanage/Customer/Customer";
+import Permission from "./Components/Permission/permission";
 
 interface Route {
   path: string;
@@ -136,6 +137,10 @@ const routes: Route[] = [
           },
         ],
       },
+      {
+        path: "permission",
+        element: <Permission/>,
+      }
     ],
   },
 ];
