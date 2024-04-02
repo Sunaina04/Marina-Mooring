@@ -5,10 +5,10 @@ interface ButtonCompProps {
   onClick: () => void;
   disabled?: boolean;
   label: string;
-  style?: React.CSSProperties; 
+  style?: React.CSSProperties;
   size?: "small" | "large";
-  icon?: JSX.Element; 
-  color?: string; 
+  icon?: JSX.Element;
+  color?: string;
   children?: ReactNode;
   text?: boolean;
 }
@@ -23,21 +23,29 @@ const ButtonComponent: React.FC<ButtonCompProps> = ({
   color,
   children
 
-  
+
 }) => {
   return (
-    <Button
-      onClick={onClick}
-      disabled={disabled}
-      label={label}
-      style={style}
-      size={size}
-      icon={icon} 
-      color={color}
-      children={children}
-    />
+    <div>
+      <div>
 
-  
+        <img src="" alt="" />
+      </div>
+      <Button
+        onClick={onClick}
+        disabled={disabled}
+        label={label}
+        style={style}
+        size={size}
+        icon={icon}
+        color={color}
+        children={children}
+      />
+
+    </div>
+
+
+
   );
 };
 

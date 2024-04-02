@@ -8,10 +8,12 @@ import AddCustomer from "../../Moormanage/Customer/AddCustomer";
 interface CustomerData {
   id: string;
   boatName: string;
-  name: string;
-  date: string;
-  measurement: string;
-  place: string;
+  ownername: string;
+  type: string;
+  condition: string;
+  mesurmement: string;
+  email: string;
+  phone: string;
 }
 
 const Estimates = () => {
@@ -20,34 +22,45 @@ const Estimates = () => {
     {
       id: "01",
       boatName: "Suncatcher",
-      name: "John Smith",
-      date: "15, March 2024 to 15, March 2024",
-      measurement: "Length: 10m, Width: 3.8m",
-      place: "Boatyard",
+      ownername: "Suncatcher",
+      type: "Marina",
+      condition: "Good",
+      mesurmement: "Length: 10m, Width: 3.8m",
+      email: "hello@gmail.com",
+      phone: "1456789521",
     },
+
     {
       id: "01",
       boatName: "Suncatcher",
-      name: "John Smith",
-      date: "15, March 2024 to 15, March 2024",
-      measurement: "Length: 10m, Width: 3.8m",
-      place: "Boatyard",
+      ownername: "Suncatcher",
+      type: "Marina",
+      condition: "Good",
+      mesurmement: "Length: 10m, Width: 3.8m",
+      email: "hello@gmail.com",
+      phone: "1456789521",
     },
+
     {
       id: "01",
       boatName: "Suncatcher",
-      name: "John Smith",
-      date: "15, March 2024 to 15, March 2024",
-      measurement: "Length: 10m, Width: 3.8m",
-      place: "Boatyard",
+      ownername: "Suncatcher",
+      type: "Marina",
+      condition: "Good",
+      mesurmement: "Length: 10m, Width: 3.8m",
+      email: "hello@gmail.com",
+      phone: "1456789521",
     },
+
     {
       id: "01",
       boatName: "Suncatcher",
-      name: "John Smith",
-      date: "15, March 2024 to 15, March 2024",
-      measurement: "Length: 10m, Width: 3.8m",
-      place: "Boatyard",
+      ownername: "Suncatcher",
+      type: "Marina",
+      condition: "Good",
+      mesurmement: "Length: 10m, Width: 3.8m",
+      email: "hello@gmail.com",
+      phone: "1456789521",
     },
   ]);
 
@@ -82,7 +95,7 @@ const Estimates = () => {
       {" "}
       <div className="flex justify-between items-center ml-12">
         <div>
-          <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">
+          <h1 className="mt-14 ml-[17.50vw] opacity-30 text-2xl font-normal">
             Moormanage/Estimates
           </h1>
         </div>
@@ -96,24 +109,28 @@ const Estimates = () => {
           </CustomModal>
         </div>
       </div>
-      <div className="bg-[#F2F2F2] rounded-md border-[1px] border-[#D1D1D1] p-2 mt-12 w-[60vw] ml-20">
+      <div className="bg-[#F2F2F2] rounded-xl border-[1px] border-[#D1D1D1] ml-96 p-2 mt-12 w-[62.50vw]">
         <DataTable
           value={boatData}
           header={header}
           tableStyle={{
-            minWidth: "50rem",
+            fontSize: "0.80rem",
+            fontWeight: "bold",
           }}
         >
           <Column
-            header=""
+            header="ID"
             field="id"
             style={{ width: "3rem", textAlign: "center" }}
           ></Column>
           <Column field="boatName" header="Boat Name"></Column>
-          <Column field="name" header="Customer Name"></Column>
-          <Column field="date" header="Date"></Column>
-          <Column field="measurement" header="Measurement"></Column>
-          <Column field="place" header="Place"></Column>
+          <Column field="ownername" header="Owner Name"></Column>
+          <Column field="type" header="Type"></Column>
+          <Column field="type" header="Condition"></Column>
+          <Column field="mesurmement" header="Measurement"></Column>
+          <Column field="email" header="Email"></Column>
+          <Column field="phone" header="Phone"></Column>
+
           <Column
             header="Actions"
             body={() => (

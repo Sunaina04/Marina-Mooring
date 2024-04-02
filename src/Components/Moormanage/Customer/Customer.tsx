@@ -78,7 +78,7 @@ const Customer = () => {
     <>
       <div className="flex justify-between items-center ml-12">
         <div>
-        <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">Moormanage/Customer</h1>
+        <h1 className="mt-14 ml-72 opacity-30 text-2xl font-normal">Moormanage/Customer</h1>
         </div>
         <div className="flex flex-col items-center mr-20 mt-14">
           <div className="">
@@ -104,13 +104,13 @@ const Customer = () => {
         </div>
       </div>
 
-      <div className="flex gap-6 mt-10 ml-12 mr-20">
+      <div className="flex gap-6 mt-10 ml-72 mr-20">
         {statCardsData.map((items) => (
           <StatCard key={items[0].title} items={items} />
         ))}
       </div>
 
-      <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[73vw] ml-20 mt-10">
+      <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[66vw] ml-80 mt-10">
         <DataTable
           value={boatData}
           header={""}
@@ -126,32 +126,32 @@ const Customer = () => {
           <Column
             header="ID"
             field="id"
-            style={{ textAlign: "center", width: "3vw" }}
+            style={{ width: "8vw" }}
           ></Column>
           <Column
-            style={{ width: "8vw" }}
+            style={{ width: "12vw" }}
             field="customerName"
             header="Customer Name"
           ></Column>
           <Column
-            style={{ width: "8vw" }}
+            style={{ width: "12vw" }}
             field="email"
             header="Email"
           ></Column>
           <Column
-            style={{ width: "11vw" }}
+            style={{ width: "14vw" }}
             field="phone"
             header="Phone"
           ></Column>
           <Column
-            style={{ width: "7vw" }}
+            style={{ width: "12vw" }}
             field="address"
             header="Address"
           ></Column>
           <Column
             header="Actions"
             body={() => (
-              <div className="flex gap-5">
+              <div className="flex gap-8">
                 <span className="text-black  font-bold underline cursor-pointer">
                   Edit
                 </span>

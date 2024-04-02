@@ -112,25 +112,6 @@ const Technicians = () => {
     },
   ]);
 
-  const Boatsheader = (
-    <div className="flex flex-wrap align-items-center justify-between gap-2 p-4">
-      <span className="text-xl font-bold">Moorings Coming up for Service</span>
-      <span
-        style={{
-          fontFamily: "Lato",
-          fontSize: "14px",
-          fontWeight: 700,
-          lineHeight: "16.8px",
-          letterSpacing: "0.4837472140789032px",
-          textAlign: "right",
-        }}
-        className="font-[Lato], font-bold leading-4 text-right tracking-tight"
-      >
-        View All
-      </span>
-    </div>
-  );
-
   const Billsheader = (
     <div className="flex flex-wrap align-items-center justify-between gap-2 ">
       <span className="text-lg font-bold">Services</span>
@@ -185,7 +166,7 @@ const Technicians = () => {
       {" "}
       <div className="flex justify-between items-center ml-12">
         <div>
-          <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">
+          <h1 className="mt-14 ml-52 opacity-30 text-2xl font-normal">
             Moormanage/Technicians
           </h1>
         </div>
@@ -204,7 +185,7 @@ const Technicians = () => {
 
         {/* Bills Data DataTable and Calendar */}
         <div className="flex gap-8">
-          <div className="bg-[#F2F2F2] rounded-md border-[1px]  border-[#D1D1D1] p-5   w-[47vw] mb-5">
+          <div className="bg-[#F2F2F2] rounded-md border-[1px]  border-[#D1D1D1] p-5 ml-44  w-[47vw] mb-5">
             <DataTable value={billsData} header={Billsheader} scrollable={true}>
               <Column style={{ width: "5vw" }} field="id" header="ID"></Column>
               <Column
@@ -267,7 +248,7 @@ const Technicians = () => {
           </div>
         </div>
 
-        <div className="bg-[#F2F2F2] rounded-md border-[1px] border-[#D1D1D1] p-2  w-[69vw] mb-4">
+        <div className="bg-[#F2F2F2] rounded-md border-[1px] border-[#D1D1D1] p-2  ml-44 w-[69vw] mb-4">
           <DataTable
             value={boatData}
             header={""}
