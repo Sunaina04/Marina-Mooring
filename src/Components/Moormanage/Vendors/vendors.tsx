@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import ButtonComponent from "../../Common/ButtonComponent";
 import CustomModal from "../../customComponent/CustomModal";
 interface CustomerData {
   id: string;
@@ -21,7 +20,6 @@ const Vendor = () => {
 
       email: "test@gmail.com",
       InventoryItems: 12,
-
     },
 
     {
@@ -31,7 +29,6 @@ const Vendor = () => {
 
       email: "test@gmail.com",
       InventoryItems: 12,
-
     },
     {
       id: "01",
@@ -40,7 +37,6 @@ const Vendor = () => {
 
       email: "test@gmail.com",
       InventoryItems: 12,
-
     },
     {
       id: "01",
@@ -49,7 +45,6 @@ const Vendor = () => {
 
       email: "test@gmail.com",
       InventoryItems: 12,
-
     },
     {
       id: "01",
@@ -58,7 +53,6 @@ const Vendor = () => {
 
       email: "test@gmail.com",
       InventoryItems: 12,
-
     },
   ]);
 
@@ -110,11 +104,7 @@ const Vendor = () => {
           }}
           size="small"
         >
-          <Column
-            header="ID"
-            field="id"
-            style={{ width: "3vw" }}
-          ></Column>
+          <Column header="ID" field="id" style={{ width: "3vw" }}></Column>
           <Column
             style={{ width: "8vw" }}
             field="name"
@@ -160,4 +150,3 @@ const Vendor = () => {
 };
 
 export default Vendor;
-
