@@ -11,7 +11,7 @@ import Vendors from "./Components/Moormanage/Vendors/vendors";
 import Moormanage from "./Components/Moormanage/moormanage";
 import Moorpay from "./Components/Moorpay/moorPay";
 import Technicians from "./Components/Moormanage/Technicians/technicians";
-import BoatYards from "./Components/Moormanage/Boatyards/boatyards";
+import Boatyards from "./Components/Moormanage/Boatyards/Boatyards";
 import Reports from "./Components/Moormanage/Reports/reports";
 import AccountPayable from "./Components/Moorpay/AccountPayable/accountPayable";
 import AccountRecievable from "./Components/Moorpay/AccountReceivable/accountRecievable";
@@ -82,7 +82,7 @@ const routes: Route[] = [
           },
           {
             path: "boatyards",
-            element: <BoatYards />,
+            element: <Boatyards />,
           },
           {
             path: "reports",
@@ -136,8 +136,8 @@ const routes: Route[] = [
       },
       {
         path: "permission",
-        element: <Permission/>,
-      }
+        element: <Permission />,
+      },
     ],
   },
 ];

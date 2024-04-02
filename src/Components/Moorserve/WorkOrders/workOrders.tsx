@@ -4,6 +4,8 @@ import { Column } from "primereact/column";
 import ButtonComponent from "../../Common/ButtonComponent";
 import CustomModal from "../../customComponent/CustomModal";
 import AddCustomer from "../../Moormanage/Customer/AddCustomer";
+import { InputText } from "primereact/inputtext";
+import { Dialog } from "primereact/dialog";
 
 interface CustomerData {
   id: string;
@@ -57,22 +59,12 @@ const WorkOrders = () => {
 
   const handleModalClose = () => {
     setIsModalOpen(false);
-  }
-
+  };
 
   const header = (
     <div className="flex flex-wrap align-items-center justify-between gap-2 p-4">
       <span className="text-xl font-bold">Work Orders</span>
-      <span
-        style={{
-          fontFamily: "Lato",
-          fontSize: "14px",
-          fontWeight: 700,
-          lineHeight: "16.8px",
-          letterSpacing: "0.4837472140789032px",
-          textAlign: "right",
-        }}
-      >
+      <span className="font-[Lato] text-[14px] font-bold text-left ">
         View All
       </span>
     </div>
@@ -80,56 +72,108 @@ const WorkOrders = () => {
 
   return (
     <>
-      {" "}
-      <div className="flex justify-between items-center ml-12">
-        <div>
-          <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">
-            Moormanage/Work Orders
-          </h1>
-        </div>
-        <div className="flex flex-col items-center mr-20 mt-14">
-          <CustomModal
-            onClick={handleButtonClick}
-            visible={false}
-            onHide={handleModalClose}
-          >
-            <AddCustomer />
-          </CustomModal>
-        </div>
-      </div>
-      <div className="bg-[#F2F2F2] rounded-md border-[1px] border-[#D1D1D1] p-2 mt-12 w-[60vw] ml-20">
-       
-       <DataTable
-          value={boatData}
-          header={header}
-          tableStyle={{
-            minWidth: "50rem",
-          }}
-        >
-          <Column
-            header=""
-            field="id"
-            style={{ width: "3rem", textAlign: "center" }}
-          ></Column>
-          <Column field="boatName" header="Boat Name"></Column>
-          <Column field="name" header="Customer Name"></Column>
-          <Column field="date" header="Date"></Column>
-          <Column field="measurement" header="Measurement"></Column>
-          <Column field="place" header="Place"></Column>
-          <Column
-            header="Actions"
-            body={() => (
-              <div className="flex gap-2">
-                <span className="text-green underline cursor-pointer">
-                  Proceed
-                </span>
-                <span className="text-red-500 underline cursor-pointer">
-                  Edit
-                </span>
+      <div className="">
+        <div className="flex justify-between gap-4 mr-4 mt-24">
+          <div>
+            <h1 className="mt-6 opacity-30 text-2xl ml-96 font-normal">
+              Moorserve/Work Orders
+            </h1>
+          </div>
+          <div className="flex mr-10 gap-4">
+            <div>
+              <div className="p-input-icon-left">
+                <i className="pi pi-search text-[#D2D2D2] " />
+                <InputText
+                  placeholder="Search"
+                  className="h-[5vh] cursor-pointer font-bold"
+                />
               </div>
-            )}
-          ></Column>
-        </DataTable>
+            </div>
+
+            <div>
+              <ButtonComponent
+                label={"Filter"}
+                onClick={() => {}}
+                style={{
+                  width: "7vw",
+                  height: "5vh",
+                  backgroundColor: "black",
+                  cursor: "pointer",
+                  color: "white",
+                  fontWeight: "bold",
+                  fontSize: "0.80vw",
+                }}
+              >
+                <img
+                  src="/assets/images/more.png"
+                  alt="icon"
+                  className="p-icon  w-4 ml-3 "
+                  style={{
+                    filter: "invert(100%)",
+                    color: "whitesmoke",
+                    fontWeight: "bolder",
+                  }}
+                />
+              </ButtonComponent>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-[#F2F2F2] rounded-xl border-[1px] border-[#D1D1D1] ml-96 p-2 mt-12 w-[64vw] ">
+          <DataTable
+            value={boatData}
+            header={header}
+            tableStyle={{
+              // width: "73rem",
+              fontSize: "0.80rem",
+              fontWeight: "bold",
+            }}
+            scrollable={true}
+          >
+            <Column style={{ width: "4vw" }} field="id" header="ID"></Column>
+            <Column
+              style={{ width: "7vw" }}
+              field="boatName"
+              header="Boat Name"
+            ></Column>
+            <Column
+              style={{ width: "7vw" }}
+              field="name"
+              header="Name"
+            ></Column>
+            <Column
+              style={{ width: "15vw" }}
+              field="date"
+              header="Date"
+            ></Column>
+            <Column
+              style={{ width: "13vw" }}
+              field="measurement"
+              header="Measurement"
+            ></Column>
+            <Column
+              style={{ width: "6vw" }}
+              field="place"
+              header="Place"
+            ></Column>
+            <Column
+              header="Action"
+              body={() => (
+                <div className="flex gap-4">
+                  <span className="text-green underline cursor-pointer">
+                    Approve
+                  </span>
+                  <span className="text-red-500 underline cursor-pointer">
+                    Reject
+                  </span>
+                  <span className="text-green underline cursor-pointer">
+                    Edit
+                  </span>
+                </div>
+              )}
+            ></Column>
+          </DataTable>
+        </div>
       </div>
     </>
   );

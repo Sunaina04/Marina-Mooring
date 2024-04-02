@@ -1,7 +1,8 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import CustomModal from "../../customComponent/CustomModal";
+
 interface CustomerData {
   id: string;
   name: string;
@@ -9,15 +10,21 @@ interface CustomerData {
   email: string;
   InventoryItems: number;
 }
-
-const Vendor = () => {
+const Boatyards = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [boatData, setBoatData] = useState<CustomerData[]>([
+
+  const [boatData] = useState<CustomerData[]>([
     {
       id: "01",
       name: "Ram",
       phoneNumber: 4564546897,
-
+      email: "test@gmail.com",
+      InventoryItems: 12,
+    },
+    {
+      id: "01",
+      name: "Ram",
+      phoneNumber: 4564546897,
       email: "test@gmail.com",
       InventoryItems: 12,
     },
@@ -26,7 +33,14 @@ const Vendor = () => {
       id: "01",
       name: "Ram",
       phoneNumber: 4564546897,
+      email: "test@gmail.com",
+      InventoryItems: 12,
+    },
 
+    {
+      id: "01",
+      name: "Ram",
+      phoneNumber: 4564546897,
       email: "test@gmail.com",
       InventoryItems: 12,
     },
@@ -34,23 +48,6 @@ const Vendor = () => {
       id: "01",
       name: "Ram",
       phoneNumber: 4564546897,
-
-      email: "test@gmail.com",
-      InventoryItems: 12,
-    },
-    {
-      id: "01",
-      name: "Ram",
-      phoneNumber: 4564546897,
-
-      email: "test@gmail.com",
-      InventoryItems: 12,
-    },
-    {
-      id: "01",
-      name: "Ram",
-      phoneNumber: 4564546897,
-
       email: "test@gmail.com",
       InventoryItems: 12,
     },
@@ -66,28 +63,22 @@ const Vendor = () => {
 
   return (
     <>
-      {" "}
-      {/* <div className="flex ml-12"> */}
       <div className="flex justify-between items-center ml-12">
-        <div>
-          <h1 className="mt-14 ml-52 opacity-30 text-2xl font-normal">
-            Moormanage/Vendor
-          </h1>
-        </div>
-
+        <h1 className="mt-14 ml-52 opacity-30 text-2xl font-normal">
+          Moormanage/Vendor
+        </h1>
         <div className="flex flex-col items-center mr-20 mt-14">
           <CustomModal
             onClick={handleButtonClick}
             visible={false}
             onHide={handleModalClose}
-          ></CustomModal>
+          />
         </div>
       </div>
-      {/* </div> */}
+
       <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[69.40vw] p-1 ml-64 mt-10">
         <DataTable
           value={boatData}
-          header={""}
           tableStyle={{
             minWidth: "20rem",
             fontSize: "12px",
@@ -97,49 +88,43 @@ const Vendor = () => {
           }}
           size="small"
         >
-          <Column header="ID" field="id" style={{ width: "8vw" }}></Column>
-          <Column
-            style={{ width: "12vw" }}
-            field="name"
-            header="Vendor Name"
-          ></Column>
+          <Column header="ID" field="id" style={{ width: "8vw" }} />
+          <Column style={{ width: "12vw" }} field="name" header="Vendor Name" />
           <Column
             style={{ width: "12vw" }}
             field="phoneNumber"
             header="Phone Number"
-          ></Column>
-
+          />
           <Column
             style={{ width: "12vw" }}
             field="email"
             header="Email Address"
-          ></Column>
+          />
           <Column
             style={{ width: "12vw" }}
             field="InventoryItems"
             header="Inventory Items"
-          ></Column>
+          />
           <Column
             header="Actions"
             body={() => (
               <div className="flex gap-6">
-                <span className="text-black  font-bold underline cursor-pointer">
-                  View Invetory
+                <span className="text-black font-bold underline cursor-pointer">
+                  View Inventory
                 </span>
-                <span className="text-green-600  font-bold underline cursor-pointer">
+                <span className="text-green-600 font-bold underline cursor-pointer">
                   Edit
                 </span>
-
                 <span className="text-red-600 font-bold underline cursor-pointer">
                   Delete
                 </span>
               </div>
             )}
-          ></Column>
+          />
         </DataTable>
       </div>
     </>
   );
 };
 
-export default Vendor;
+export default Boatyards;
