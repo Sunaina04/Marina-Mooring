@@ -6,7 +6,7 @@ export const SidebarMenu = [
   },
   {
     icon: "/assets/images/square.png",
-    name: "Moormanage",
+    name: "MOORMANAGE",
     link: "moormanage/customer",
     subcategories: [
       {
@@ -16,7 +16,7 @@ export const SidebarMenu = [
       },
       {
         icon: "/assets/images/square.png",
-        name: "Mooring",
+        name: "Moorings",
         link: "moormanage/mooring",
       },
       {
@@ -43,7 +43,7 @@ export const SidebarMenu = [
   },
   {
     icon: "/assets/images/square.png",
-    name: "Moorpay",
+    name: "MOORPAY",
     link: "moorpay/accountReceivable",
     subcategories: [
       {
@@ -65,7 +65,7 @@ export const SidebarMenu = [
   },
   {
     icon: "/assets/images/square.png",
-    name: "Moorserve",
+    name: "MOORSERVE",
     link: "moorserve/workOrders",
     subcategories: [
       {

@@ -80,29 +80,22 @@ const Reports = () => {
 
   return (
     <>
-      <div className="flex justify-between items-center">
+      {" "}
+      <div className="flex justify-between items-center ml-12">
         <div>
-          <h1
-            style={{
-              marginTop: "40px",
-              opacity: "0.3",
-              fontSize: "26px",
-              fontWeight: "400",
-            }}
-          >
+          <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">
             Moormanage/Reports
           </h1>
         </div>
       </div>
-
-      <div className="flex gap-6 mt-5">
+      <div className="flex gap-6 mt-5 ml-12">
         {statCardsData.map((items) => (
           <StatCard key={items[0].title} items={items} />
         ))}
       </div>
-      <div className="flex gap-4">
+      <div className="flex gap-4 ml-20">
         <div className="p-2 mt-12 w-[50vw]">
-          <div className="flex flex-wrap align-items-center justify-between gap-2 ">
+          <div className="flex flex-wrap align-items-center justify-between gap-2 mr-12">
             <span className="text-sm font-bold">Services</span>
             <div>
               <SelectButton
@@ -110,6 +103,8 @@ const Reports = () => {
                   height: "2vh",
                   fontSize: "0.50rem",
                   fontWeight: "bolder",
+                  marginRight: "35px",
+                  marginLeft: "10px",
                 }}
                 value={value}
                 onChange={(e: SelectButtonChangeEvent) => setValue(e.value)}
@@ -117,7 +112,7 @@ const Reports = () => {
               />
             </div>
           </div>
-          <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300  w-[50vw] mt-11 ">
+          <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[45vw] ml-15 mt-5">
             <DataTable
               value={boatData}
               header={""}
@@ -196,11 +191,13 @@ const Reports = () => {
             </DataTable>
           </div>
         </div>
-        <div className="p-2 mt-12 w-[20vw]">
-          <span className="text-sm font-bold">Current Activity</span>
-          <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300  w-[30vw] mt-11 ">
-            <span className="text-sm font-bold">Monthly Progress</span>
-            <span className="text-sm">
+        <div className="p-2 mt-12">
+          <span className="text-sm font-bold ml-10 mr-50">
+            Current Activity
+          </span>
+          <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[30vw] mt-5 p-4 flex flex-col items-left">
+            <span className="text-sm font-bold mb-2">Monthly Progress</span>
+            <span className="text-sm mb-2">
               This chart is for total orders & total sales.
             </span>
             <VerticalBar />

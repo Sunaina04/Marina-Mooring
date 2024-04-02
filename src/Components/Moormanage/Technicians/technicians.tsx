@@ -6,6 +6,7 @@ import CustomModal from "../../customComponent/CustomModal";
 import { Calendar } from "primereact/calendar";
 import { SelectButton, SelectButtonChangeEvent } from "primereact/selectbutton";
 import { Nullable } from "primereact/ts-helpers";
+import AddCustomer from "../Customer/AddCustomer";
 
 interface BoatData {
   id: string;
@@ -182,30 +183,23 @@ const Technicians = () => {
   return (
     <>
       {" "}
-      {/* <div className="flex"> */}
-      <div className="flex justify-between  items-center mr-4 mt-10">
+      <div className="flex justify-between items-center ml-12">
         <div>
-          <h1
-            style={{
-              marginTop: "40px",
-              opacity: "0.3",
-              fontSize: "26px",
-              fontWeight: "400",
-            }}
-          >
+          <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">
             Moormanage/Technicians
           </h1>
         </div>
-        <div className="p-input-icon-left">
+        <div className="flex flex-col items-center mr-20 mt-14">
           <CustomModal
             onClick={handleButtonClick}
             visible={false}
             onHide={handleModalClose}
-          ></CustomModal>
+          >
+            <AddCustomer />
+          </CustomModal>
         </div>
       </div>
-      {/* </div> */}
-      <div className="flex flex-col gap-5 mt-10 ">
+      <div className="flex flex-col gap-5 mt-10 ml-20">
         {/* Boat Data DataTable */}
 
         {/* Bills Data DataTable and Calendar */}

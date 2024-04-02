@@ -4,10 +4,8 @@ import Dashboard from "./Components/Dashboard/Dashboard";
 import LoginMain from "./Components/Login/LoginMain";
 import ResetPassword from "./Components/ResetPassword/ResetPassword";
 import SignUp from "./Components/SignUp/SignUp";
-import Home from "./Pages/Home";
 import { ReactElement } from "react";
 import AdminLayout from "./Components/layout/admin/AdminLayout";
-import Header from "./Components/layout/admin/components/Header";
 import Moorings from "./Components/Moormanage/Moorings/moorings";
 import Vendors from "./Components/Moormanage/Vendors/vendors";
 import Moormanage from "./Components/Moormanage/moormanage";
@@ -24,7 +22,6 @@ import Estimates from "./Components/Moorserve/Estimates/estimates";
 import TimeCards from "./Components/Moorserve/TimeCards/timeCards";
 import Forms from "./Components/Moorserve/Forms/forms";
 import ReportsMoorserve from "./Components/Moorserve/Reports/reports";
-import CustomModal from "./Components/customComponent/CustomModal";
 import Customer from "./Components/Moormanage/Customer/Customer";
 import Permission from "./Components/Permission/permission";
 

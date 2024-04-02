@@ -56,11 +56,13 @@ const Permission = () => {
   };
   return (
     <>
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center ml-12">
         <div>
-          <h1 className="mt-12 mr-10">Moormanage/Permission</h1>
+          <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">
+            Moormanage/Permission
+          </h1>
         </div>
-        <div className="flex flex-col items-center mr-4 mt-10">
+        <div className="flex flex-col items-center mr-20 mt-14">
           <div className="">
             <CustomModal
               label={"ADD NEW"}
@@ -83,7 +85,7 @@ const Permission = () => {
           </div>
         </div>
       </div>
-      <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300  w-[65vw] mt-11 ">
+      <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[73vw] ml-20 mt-10">
         <DataTable
           value={boatData}
           header={""}
@@ -97,11 +99,7 @@ const Permission = () => {
           size="small"
           scrollable={true}
         >
-          <Column
-            header="ID"
-            field="id"
-            style={{ width: "6vw" }}
-          ></Column>
+          <Column header="ID" field="id" style={{ width: "6vw" }}></Column>
           <Column style={{ width: "10vw" }} field="name" header="Name"></Column>
           <Column
             style={{ width: "12vw" }}

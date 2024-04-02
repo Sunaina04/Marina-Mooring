@@ -76,11 +76,11 @@ const Customer = () => {
  
   return (
     <>
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center ml-12">
         <div>
-          <h1 className="mt-12 mr-10">Moormanage/Customer</h1>
+        <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">Moormanage/Customer</h1>
         </div>
-        <div className="flex flex-col items-center mr-4 mt-10">
+        <div className="flex flex-col items-center mr-20 mt-14">
           <div className="">
             <CustomModal
               label={"ADD NEW"}
@@ -103,14 +103,14 @@ const Customer = () => {
           </div>
         </div>
       </div>
- 
-      <div className="flex gap-6 mt-5">
+
+      <div className="flex gap-6 mt-10 ml-12 mr-20">
         {statCardsData.map((items) => (
           <StatCard key={items[0].title} items={items} />
         ))}
       </div>
- 
-      <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300  w-[80vw] mt-11 ">
+
+      <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[73vw] ml-20 mt-10">
         <DataTable
           value={boatData}
           header={""}

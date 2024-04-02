@@ -7,7 +7,7 @@ import {
 } from "./types";
 
 const authApi = userApi.injectEndpoints({
-  endpoints: (builder) => ({
+  endpoints: (builder : any) => ({
     login: builder.mutation({
       query: (payload: LOGIN_PAYLOAD) => ({
         url: "api/v1/auth/login",

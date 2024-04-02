@@ -16,7 +16,6 @@ import { NavLink, NavLinkProps, Outlet } from "react-router-dom";
 import { drawerWidth } from "../../constants";
 import { SidebarMenu } from "./components/SidebarMenu";
 import Header from "./components/Header";
-import DrawerHeader from "./components/DrawerHeader";
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -53,12 +52,12 @@ const AdminLayout = () => {
           "& .MuiPaper-root": {
             background: "#F2F2F2",
             borderRight: "none",
-            marginTop: "90px",
-            width: "200px",
+            marginTop: "80px",
+            width: "290px",
           },
         }}
       >
-        <List sx={{ paddingTop: "0px" }}>
+        <List disablePadding>
           {SidebarMenu.map((item, index) => (
             <React.Fragment key={index}>
               {item.name && (
@@ -67,9 +66,9 @@ const AdminLayout = () => {
                   disablePadding
                   sx={{
                     display: "flex",
+                    background: "#D9D9D9",
                     flexDirection: "column",
                     border: "1px solid #B3B3B3",
-                    background: "#D9D9D9",
                   }}
                 >
                   <ListItemButton
@@ -80,7 +79,7 @@ const AdminLayout = () => {
                       height: "auto",
                       justifyContent: "flex-start",
                       alignItems: "center",
-                      padding: "8px 16px",
+                      padding: "3px 16px",
                       "&:hover": {
                         backgroundColor: "#EDEDED",
                       },
@@ -95,15 +94,15 @@ const AdminLayout = () => {
                       <img
                         src={item.icon}
                         alt=""
-                        width={15}
-                        style={{ marginRight: "8px" }}
+                        width={17}
+                        style={{ marginRight: "12.5px", marginLeft: "10px" }}
                       />
                     </ListItemIcon>
                     <ListItemText
                       primary={item.name}
                       primaryTypographyProps={{
                         sx: {
-                          fontSize: "14px",
+                          fontSize: "12.5px",
                           fontWeight: 700,
                           lineHeight: "1.5",
                           letterSpacing: "0.2px",
@@ -140,7 +139,8 @@ const AdminLayout = () => {
                           sx={{
                             display: "flex",
                             background: "#F2F2F2",
-                            marginRight: "70px",
+                            marginRight: "100px",
+                            border : "1px solid #B3B3B3",
                           }}
                         >
                           <ListItemButton
@@ -151,18 +151,20 @@ const AdminLayout = () => {
                               height: "auto",
                               justifyContent: "flex-start",
                               alignItems: "center",
-                              padding: "8px 16px",
+                              padding: "3px 16px",
                               "&:hover": {
                                 backgroundColor: "#EDEDED",
                               },
                             }}
                             onClick={() => setSelectedSubcategory(subIndex)}
                           >
-                            <ListItemIcon sx={{ marginLeft: "60px" }}>
+                            <ListItemIcon
+                              sx={{ marginLeft: "60px", marginRight: "10px" }}
+                            >
                               <img
                                 src={subcategory.icon}
                                 alt=""
-                                width={15}
+                                width={17}
                                 style={{ marginRight: "8px" }}
                               />
                             </ListItemIcon>
@@ -170,7 +172,7 @@ const AdminLayout = () => {
                               primary={subcategory.name}
                               primaryTypographyProps={{
                                 sx: {
-                                  fontSize: "14px",
+                                  fontSize: "12.5px",
                                   fontWeight:
                                     selectedSubcategory === subIndex
                                       ? 700
@@ -191,7 +193,7 @@ const AdminLayout = () => {
                 </ListItem>
               )}
               {index !== SidebarMenu.length - 1 && (
-                <Divider sx={{ height: "15px" }} />
+                <Divider sx={{ height: "25px" }} />
               )}
             </React.Fragment>
           ))}
@@ -202,8 +204,7 @@ const AdminLayout = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "flex-start",
-            marginTop: "22rem",
-            border: "1px solid #B3B3B3",
+            marginTop: "9rem",
           }}
         >
           <ListItemButton
@@ -214,7 +215,7 @@ const AdminLayout = () => {
               height: "auto",
               justifyContent: "flex-start",
               alignItems: "center",
-              padding: "8px 16px",
+              padding: "3px 16px",
               "&:hover": {
                 backgroundColor: "#EDEDED",
               },
@@ -224,15 +225,15 @@ const AdminLayout = () => {
               <img
                 src="/assets/images/square.png"
                 alt="Logout"
-                width={15}
-                style={{ marginRight: "8px" }}
+                width={17}
+                style={{ marginRight: "12.5px", marginLeft: "10px" }}
               />
             </ListItemIcon>
             <ListItemText
-              primary="Permission"
+              primary="Permissions"
               primaryTypographyProps={{
                 sx: {
-                  fontSize: "14px",
+                  fontSize: "12.5px",
                   fontWeight: 700,
                   lineHeight: "1.5",
                   letterSpacing: "0.2px",
@@ -244,28 +245,27 @@ const AdminLayout = () => {
         </Box>
         <Box
           sx={{
-            padding: "8px 16px",
+            padding: "4px 16px",
             background: "#D9D9D9",
             display: "flex",
             alignItems: "center",
             justifyContent: "flex-start",
             marginTop: "1rem",
-            border: "1px solid #B3B3B3",
           }}
         >
           <ListItemIcon sx={{ minWidth: "auto" }}>
             <img
               src="/assets/images/square.png"
               alt="Logout"
-              width={15}
-              style={{ marginRight: "8px" }}
+              width={17}
+              style={{ marginRight: "12.5px", marginLeft: "10px" }}
             />
           </ListItemIcon>
           <ListItemText
             primary="Logout"
             primaryTypographyProps={{
               sx: {
-                fontSize: "14px",
+                fontSize: "12.5px",
                 fontWeight: 700,
                 lineHeight: "1.5",
                 letterSpacing: "0.2px",

@@ -1,7 +1,7 @@
 const ServiceTable = () => {
   return (
     <>
-      <div className="flex">
+      <div className="flex ml-12">
         <div>
           <h1
             style={{
