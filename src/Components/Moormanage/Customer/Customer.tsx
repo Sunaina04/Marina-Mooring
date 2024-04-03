@@ -76,12 +76,11 @@ const Customer = () => {
  
   return (
     <>
-      <div className="flex justify-between items-center ml-12">
+      <div className="flex  items-center ml-9">
         <div>
-        <h1 className="mt-14 ml-72 opacity-30 text-2xl font-normal">Moormanage/Customer</h1>
+        <h1 className="mt-14 ml-12 opacity-30 text-2xl font-normal">Moormanage/Customer</h1>
         </div>
-        <div className="flex flex-col items-center mr-20 mt-14">
-          <div className="">
+          <div className="mt-14 ml-[20.60rem]">
             <CustomModal
               label={"ADD NEW"}
               style={{
@@ -96,17 +95,23 @@ const Customer = () => {
               onClick={handleButtonClick}
               visible={modalVisible}
               onHide={handleModalClose}
-              header="Add New Customer"
+
             >
               <AddCustomer />
             </CustomModal>
           </div>
-        </div>
+       
       </div>
 
-      <div className="flex gap-6 mt-10 ml-72 mr-20">
+      <div className="flex  mt-10 ml-12 mr-20">
         {statCardsData.map((items) => (
-          <StatCard key={items[0].title} items={items} />
+          <StatCard 
+        
+          key={items[0].title} items={items}
+          
+          />
+
+        
         ))}
       </div>
 
@@ -115,7 +120,7 @@ const Customer = () => {
           value={boatData}
           header={""}
           tableStyle={{
-            minWidth: "20rem",
+            // minWidth: "20rem",
             fontSize: "12px",
             color: "#000000",
             fontWeight: 600,
@@ -139,12 +144,12 @@ const Customer = () => {
             header="Email"
           ></Column>
           <Column
-            style={{ width: "14vw" }}
+            style={{ width: "12vw" }}
             field="phone"
             header="Phone"
           ></Column>
           <Column
-            style={{ width: "12vw" }}
+            style={{ width: "10vw" }}
             field="address"
             header="Address"
           ></Column>

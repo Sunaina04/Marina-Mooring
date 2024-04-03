@@ -68,14 +68,14 @@ const Vendor = () => {
     <>
       {" "}
       {/* <div className="flex ml-12"> */}
-      <div className="flex justify-between items-center ml-12">
+      <div className="flex justify-between items-center ml-2">
         <div>
-          <h1 className="mt-14 ml-52 opacity-30 text-2xl font-normal">
+          <h1 className="mt-14 ml-[7.50rem] opacity-30 text-2xl font-normal">
             Moormanage/Vendor
           </h1>
         </div>
 
-        <div className="flex flex-col items-center mr-20 mt-14">
+        <div className="flex flex-col items-center mr-[8rem] mt-14">
           <CustomModal
             onClick={handleButtonClick}
             visible={false}
@@ -84,7 +84,7 @@ const Vendor = () => {
         </div>
       </div>
       {/* </div> */}
-      <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[69.40vw] p-1 ml-64 mt-10">
+      <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[67vw] p-1 ml-32 mt-10">
         <DataTable
           value={boatData}
           header={""}
@@ -99,30 +99,30 @@ const Vendor = () => {
         >
           <Column header="ID" field="id" style={{ width: "8vw" }}></Column>
           <Column
-            style={{ width: "12vw" }}
+            style={{ width: "11vw" }}
             field="name"
             header="Vendor Name"
           ></Column>
           <Column
-            style={{ width: "12vw" }}
+            style={{ width: "11vw" }}
             field="phoneNumber"
             header="Phone Number"
           ></Column>
 
           <Column
-            style={{ width: "12vw" }}
+            style={{ width: "11vw" }}
             field="email"
             header="Email Address"
           ></Column>
           <Column
-            style={{ width: "12vw" }}
+            style={{ width: "11vw" }}
             field="InventoryItems"
             header="Inventory Items"
           ></Column>
           <Column
             header="Actions"
             body={() => (
-              <div className="flex gap-6">
+              <div className="flex gap-5">
                 <span className="text-black  font-bold underline cursor-pointer">
                   View Invetory
                 </span>
