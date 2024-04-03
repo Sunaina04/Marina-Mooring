@@ -17,7 +17,7 @@ const StatCard: React.FC<StatCardProps> = ({ items }) => {
 
   return (
     <div
-      className="bg-white shadow-md rounded-md p-4 ml-8 mb-4 w-[43vh]"
+      className="bg-white shadow-md rounded-md p-4 ml-8 mb-4 w-[42vh]"
       style={{ border: "2px solid #B3B3B3" }}
     >
       <div className="flex justify-between items-center mb-2">

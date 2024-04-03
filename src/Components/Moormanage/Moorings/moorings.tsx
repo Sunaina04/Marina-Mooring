@@ -4,6 +4,7 @@ import { Column } from "primereact/column";
 import ButtonComponent from "../../Common/ButtonComponent";
 import CustomModal from "../../customComponent/CustomModal";
 import AddCustomer from "../Customer/AddCustomer";
+import AddMoorings from "./AddMoorings";
 
 interface CustomerData {
   id: string;
@@ -74,7 +75,7 @@ const Moorings = () => {
             visible={false}
             onHide={handleModalClose}
           >
-            <AddCustomer />
+            <AddMoorings />
           </CustomModal>
         </div>
       </div>
