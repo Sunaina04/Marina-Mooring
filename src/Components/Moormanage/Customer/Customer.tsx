@@ -110,7 +110,7 @@ const Customer = () => {
         ))}
       </div>
 
-      <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[66vw] ml-80 mt-10">
+      <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[66vw] ml-20 mt-10">
         <DataTable
           value={boatData}
           header={""}

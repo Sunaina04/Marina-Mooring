@@ -51,7 +51,7 @@ export default function LoginForm({
       ...prev,
       [name]: value,
     }));
-    if (name === "Email") {
+    if (name === "username") {
       if (!value) {
         setErrors((prev) => ({
           ...prev,
@@ -73,7 +73,7 @@ export default function LoginForm({
       }
     }
 
-    if (name === "Password") {
+    if (name === "password") {
       if (!value) {
         setErrors((prev) => ({
           ...prev,
@@ -86,7 +86,7 @@ export default function LoginForm({
           setErrors((prev) => ({
             ...prev,
             password:
-              "Password must be at least 8 characters long and include letters, numbers, and symbols.",
+              "password must be at least 8 characters long and include letters, numbers, and symbols.",
           }));
         } else {
           setErrors((prev) => ({
@@ -106,20 +106,20 @@ export default function LoginForm({
 
   const signInHandler = async () => {
     console.log("IN SIGN IN");
-    navigate("/admin/dashboard");
-    if (!username) {
-      setErrors((prev) => ({
-        ...prev,
-        email: "Email is required",
-      }));
-      return;
-    } else if (!password) {
-      setErrors((prev) => ({
-        ...prev,
-        password: "Password is required",
-      }));
-      return;
-    }
+    // navigate("/admin/dashboard");
+    // if (!username) {
+    //   setErrors((prev) => ({
+    //     ...prev,
+    //     email: "username is required",
+    //   }));
+    //   return;
+    // } else if (!password) {
+    //   setErrors((prev) => ({
+    //     ...prev,
+    //     password: "password is required",
+    //   }));
+    //   return;
+    // }
 
     try {
       const response = await login(loginPayload).unwrap();
@@ -136,7 +136,7 @@ export default function LoginForm({
           severity: "success",
           summary: message,
         });
-        navigate("/admin/dashboard");
+        navigate("/dashboard");
       }
     } catch (error: any) {
       console.error("Error occurred during login:", error);
@@ -185,8 +185,8 @@ export default function LoginForm({
                     ? "email"
                     : "text"
                 }
-                placeholder={showSinUp ? "New Password" : "Enter Your Email"}
-                name="Email"
+                placeholder={showSinUp ? "New password" : "Enter Your username"}
+                name="username"
                 onChange={handleChange}
               />
               <span
@@ -223,8 +223,8 @@ export default function LoginForm({
                     ? "password"
                     : "text"
                 }
-                placeholder={showSinUp ? "Confirm Password" : "Password"}
-                name="Password"
+                placeholder={showSinUp ? "Confirm password" : "password"}
+                name="password"
                 onChange={handleChange}
               />
               <span
@@ -242,7 +242,7 @@ export default function LoginForm({
                 <div className="flex justify-end mt-8 cursor-pointer ">
                   <Link to={"/forgotPass"}>
                     <p className="font-normal font-['Roboto']">
-                      Forgot Password?
+                      Forgot password?
                     </p>
                   </Link>
                 </div>

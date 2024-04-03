@@ -26,7 +26,7 @@ const authApi = userApi.injectEndpoints({
 
     getEmployee: builder.mutation({
       query: () => ({
-        url: "v1/mmm/employees/getAllEmployees",
+        url: "api/v1/users",
         method: "GET",
       }),
     }),
