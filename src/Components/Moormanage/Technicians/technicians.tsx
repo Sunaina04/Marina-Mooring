@@ -1,14 +1,12 @@
 import { useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import ButtonComponent from "../../Common/ButtonComponent";
 import CustomModal from "../../customComponent/CustomModal";
-import { Calendar } from "primereact/calendar";
 import { SelectButton, SelectButtonChangeEvent } from "primereact/selectbutton";
 import { Nullable } from "primereact/ts-helpers";
-import AddCustomer from "../Customer/AddCustomer";
 import { Box } from "@mui/material";
 import { Datepicker } from "@mobiscroll/react";
+import AddTechnication from "./AddTechnician";
 
 interface BoatData {
   id: string;
@@ -178,7 +176,7 @@ const Technicians = () => {
             visible={false}
             onHide={handleModalClose}
           >
-            <AddCustomer />
+            <AddTechnication />
           </CustomModal>
         </div>
       </div>
@@ -227,7 +225,7 @@ const Technicians = () => {
               ></Column>
             </DataTable>
           </div>
-          
+
           <Box className="w-96 border-[1px] border-[#D1D1D1] p-5 rounded-xl mb-6">
             <div className="text-[#000000] text-lg font-bold tracking-tighter text-left mb-5">
               Calendar
@@ -249,8 +247,6 @@ const Technicians = () => {
               /> */}
             </div>
           </Box>
-
-
         </div>
 
         <div className="bg-[#F2F2F2] rounded-md border-[1px] border-[#D1D1D1] p-2  ml-44 w-[69vw] mb-4">

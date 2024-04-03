@@ -2,6 +2,7 @@ import { useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import CustomModal from "../../customComponent/CustomModal";
+import AddVendor from "./AddVendor";
 interface CustomerData {
   id: string;
   name: string;
@@ -80,7 +81,10 @@ const Vendor = () => {
             onClick={handleButtonClick}
             visible={false}
             onHide={handleModalClose}
-          ></CustomModal>
+          >
+
+            <AddVendor/>
+          </CustomModal>
         </div>
       </div>
       {/* </div> */}
