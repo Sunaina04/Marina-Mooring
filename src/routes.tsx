@@ -25,13 +25,7 @@ import ReportsMoorserve from "./Components/Moorserve/Reports/reports";
 import Customer from "./Components/Moormanage/Customer/Customer";
 import Permission from "./Components/Permission/permission";
 
-interface Route {
-  path: string;
-  element: ReactElement; // Update the type to ReactElement
-  children?: Route[]; // Define children routes
-}
-
-const routes: Route[] = [
+const routes = [
   {
     path: "",
     element: <LoginMain />,
@@ -53,7 +47,7 @@ const routes: Route[] = [
     element: <ForgotPassword />,
   },
   {
-    path: "admin",
+    path: "",
     element: <AdminLayout />,
     children: [
       {

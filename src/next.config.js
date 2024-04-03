@@ -4,7 +4,7 @@
 // }
 exports.baseUrl = {
     // basePath: 'http://localhost:3003/',
-    basePath: 'https://mhtjnn.github.io/marina-mooring-management/',
+    basePath: 'http://localhost:8082/',
 };
 
 

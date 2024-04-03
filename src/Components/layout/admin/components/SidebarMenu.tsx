@@ -2,7 +2,7 @@ export const SidebarMenu = [
   {
     icon: "/assets/images/square.png",
     name: "Dashboard",
-    link: "dashboard",
+    link: "/dashboard",
   },
   {
     icon: "/assets/images/square.png",
