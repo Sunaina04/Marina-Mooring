@@ -209,7 +209,7 @@ const AdminLayout = () => {
         >
           <ListItemButton
             component={NavLink as React.FC<NavLinkProps>}
-            to={"/admin/permission"}
+            to={"/permission"}
             sx={{
               width: "100%",
               height: "auto",
