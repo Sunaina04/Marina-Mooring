@@ -7,6 +7,8 @@ import { Calendar } from "primereact/calendar";
 import { SelectButton, SelectButtonChangeEvent } from "primereact/selectbutton";
 import { Nullable } from "primereact/ts-helpers";
 import AddCustomer from "../Customer/AddCustomer";
+import { Box } from "@mui/material";
+import { Datepicker } from "@mobiscroll/react";
 
 interface BoatData {
   id: string;
@@ -225,27 +227,30 @@ const Technicians = () => {
               ></Column>
             </DataTable>
           </div>
-
-          <div className="w-96 border-[1px] border-[#D1D1D1] p-5 rounded-md mb-6">
+          
+          <Box className="w-96 border-[1px] border-[#D1D1D1] p-5 rounded-xl mb-6">
             <div className="text-[#000000] text-lg font-bold tracking-tighter text-left mb-5">
               Calendar
             </div>
             <div className="card flex justify-content-center">
-              <Calendar
+              <Datepicker
+                controls={["calendar"]}
+                // select="range"
+                display="inline"
+                touchUi={true}
+              />
+              {/* <Calendar
                 value={date}
                 onChange={(e) => setDate(e.value)}
                 inline
                 showWeek
                 selectionMode="range"
-                style={{
-                  width: "100%",
-                  height: "40vh",
-                  fontSize: "5rem",
-                  borderRadius: "1rem",
-                }}
-              />
+                style={{ width: "100%" }} // Set width to 100%
+              /> */}
             </div>
-          </div>
+          </Box>
+
+
         </div>
 
         <div className="bg-[#F2F2F2] rounded-md border-[1px] border-[#D1D1D1] p-2  ml-44 w-[69vw] mb-4">

@@ -39,7 +39,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
         </div>
 
         <div>
-          <ButtonComponent
+          {/* <Button
             label={"ADD NEW"}
             onClick={() => {
               onClick();
@@ -51,8 +51,9 @@ const CustomModal: React.FC<CustomModalProps> = ({
               backgroundColor: "black",
               cursor: "pointer",
               color: "white",
-              fontWeight: "bold",
-              fontSize: "0.80vw",
+              fontWeight: "bolder",
+              fontSize: "0.65vw",
+           
             }}
           >
             <img
@@ -65,7 +66,71 @@ const CustomModal: React.FC<CustomModalProps> = ({
                 fontWeight: "bolder",
               }}
             />
-          </ButtonComponent>
+          </Button> */}
+          {/* <ButtonComponent
+
+
+
+            label={"ADD NEW"}
+            onClick={() => {
+              setInternalVisible(true);
+
+
+            }}
+            style={{
+              width: "10vw",
+              height: "5vh",
+              backgroundColor: "black",
+              cursor: "pointer",
+              color: "white",
+              fontWeight: "bold",
+              fontSize: "0.80vw",
+            }}
+          >
+            <img
+              src="/assets/images/more.png"
+              alt="icon"
+              className="p-icon  w-4 ml-3 "
+              style={{
+                filter: "invert(100%)",
+                color: "whitesmoke",
+                fontWeight: "bolder",
+              }}
+            />
+          </ButtonComponent> */}
+
+<ButtonComponent
+  onClick={() => {
+    setInternalVisible(true);
+  }}
+  style={{
+    width: "7vw",
+    height: "5vh",
+    backgroundColor: "black",
+    cursor: "pointer",
+    color: "white",
+    fontWeight: "bold",
+    fontSize: "0.50rem",
+    position: "relative",
+    display: "flex", 
+ 
+
+    
+  }}
+  label=""
+>
+  <img
+    src="/assets/images/plus.png"
+    alt="icon"
+    className="w-3 mr-3" // Adjust margin to your preference
+    style={{
+      filter: "invert(100%)",
+      color: "whitesmoke",
+      fontWeight: "bolder",
+    }}
+  />
+  ADD NEW
+</ButtonComponent>
 
           <Dialog
             header={header}
