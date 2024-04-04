@@ -10,7 +10,7 @@ const DrawerHeader = () => {
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
   }));
-  
+
   return (
     <header>
       <DrawerHeader>
