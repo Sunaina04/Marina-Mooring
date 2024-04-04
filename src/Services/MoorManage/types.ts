@@ -17,3 +17,4 @@ export interface CUSTOMER_RESPONSE {
   time: null;
   content: null;
 }
+
