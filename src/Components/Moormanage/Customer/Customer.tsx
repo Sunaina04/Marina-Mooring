@@ -9,7 +9,10 @@ import StatCard from "../../StatCard/StatCard";
 
 import { InputText } from "primereact/inputtext";
 import { PrimeIcons } from "primereact/api";
-import { useDeleteCustomerMutation, useGetCustomerMutation } from "../../../Services/MoorManage/moormanage";
+import {
+  useDeleteCustomerMutation,
+  useGetCustomerMutation,
+} from "../../../Services/MoorManage/moormanage";
 import { ErrorResponse } from "../../../Services/authentication/types";
 import {
   CUSTOMER_PAYLOAD,
@@ -19,7 +22,8 @@ import {
 const Customer = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [boatData, setBoatData] = useState<CUSTOMER_PAYLOAD[]>([]);
-  const [selectedId, setSelectedId] = useState<number>();
+  const [editMode, setEditMode] = useState(false);
+  const [selectedCustomer, setSelectedCustomer] = useState<any>(null);
 
   const [getCustomer] = useGetCustomerMutation();
   const [deleteCustomer] = useDeleteCustomerMutation();
@@ -30,6 +34,7 @@ const Customer = () => {
 
   const handleModalClose = () => {
     setModalVisible(false);
+    setEditMode(false);
   };
 
   const statCardsData = [
@@ -64,19 +69,24 @@ const Customer = () => {
     }
   };
 
-  const handleEdit = (rowData : any) => {
-    // Handle edit action here, using the data from rowData if necessary
-    console.log("Edit clicked for:", rowData);
-  };
-  
-  const handleDelete = async (rowData : any) => {
-    // Handle delete action here, using the data from rowData if necessary
-    console.log("Delete clicked for:", rowData , rowData?.id);
-    const response = await deleteCustomer(rowData?.id);
-    console.log("RESPONSE", response)
+  const handleEdit = (rowData: any) => {
+    setSelectedCustomer(rowData);
+    setEditMode(true);
   };
 
-  
+  const handleDelete = async (rowData: any) => {
+    // Handle delete action here, using the data from rowData if necessary
+    console.log("Delete clicked for:", rowData, rowData?.id);
+
+    try {
+      const response = await deleteCustomer({ id: rowData?.id });
+      console.log("RESPONSE", response);
+      getCustomerData();
+    } catch (error) {
+      console.error("Error deleting customer:", error);
+    }
+  };
+
   useEffect(() => {
     getCustomerData();
   }, []);
@@ -102,10 +112,10 @@ const Customer = () => {
               color: "white",
             }}
             onClick={handleButtonClick}
-            visible={modalVisible}
+            visible={modalVisible || editMode}
             onHide={handleModalClose}
           >
-            <AddCustomer />
+            <AddCustomer customer={selectedCustomer} editMode={editMode} closeModal={handleModalClose} getCustomer={getCustomerData}/>
           </CustomModal>
         </div>
       </div>

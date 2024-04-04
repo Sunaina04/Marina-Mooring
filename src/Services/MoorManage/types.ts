@@ -1,4 +1,5 @@
 export interface CUSTOMER_PAYLOAD {
+  customerName: string;
   customerId: string;
   phone: string;
   emailAddress: string;
