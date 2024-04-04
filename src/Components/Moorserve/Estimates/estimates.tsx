@@ -4,6 +4,7 @@ import { Column } from "primereact/column";
 import ButtonComponent from "../../Common/ButtonComponent";
 import CustomModal from "../../customComponent/CustomModal";
 import AddCustomer from "../../Moormanage/Customer/AddCustomer";
+import AddEstimates from "./AddEstimates";
 
 interface CustomerData {
   id: string;
@@ -95,7 +96,7 @@ const Estimates = () => {
       {" "}
       <div className="flex justify-between items-center ml-12">
         <div>
-          <h1 className="mt-14 ml-[17.50vw] opacity-30 text-2xl font-normal">
+          <h1 className="mt-14 ml-[13vw] opacity-30 text-2xl font-normal">
             Moormanage/Estimates
           </h1>
         </div>
@@ -105,11 +106,11 @@ const Estimates = () => {
             visible={false}
             onHide={handleModalClose}
           >
-            <AddCustomer />
+            <AddEstimates />
           </CustomModal>
         </div>
       </div>
-      <div className="bg-[#F2F2F2] rounded-xl border-[1px] border-[#D1D1D1] ml-96 p-2 mt-12 w-[62.50vw]">
+      <div className="bg-[#F2F2F2] rounded-xl border-[1px] border-[#D1D1D1] ml-60  mb-3 p-2 mt-12 w-[62.50vw]">
         <DataTable
           value={boatData}
           header={header}

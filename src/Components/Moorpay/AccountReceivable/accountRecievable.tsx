@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import ButtonComponent from "../../Common/ButtonComponent";
 import CustomModal from "../../customComponent/CustomModal";
 import AddCustomer from "../../Moormanage/Customer/AddCustomer";
 
@@ -118,8 +117,11 @@ const AccountRecievable = () => {
             header="Actions"
             body={() => (
               <div className="flex gap-2">
-                <span className="text-green underline cursor-pointer">
-                  Recieved
+                <span className="text-green-500 underline cursor-pointer">
+                  Proceed
+                </span>
+                <span className="text-red-500 underline cursor-pointer">
+                  Edit
                 </span>
               </div>
             )}

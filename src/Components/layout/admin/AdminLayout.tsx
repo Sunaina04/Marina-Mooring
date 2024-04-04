@@ -140,7 +140,7 @@ const AdminLayout = () => {
                             display: "flex",
                             background: "#F2F2F2",
                             marginRight: "100px",
-                            border : "1px solid #B3B3B3",
+                            border: "1px solid #B3B3B3",
                           }}
                         >
                           <ListItemButton

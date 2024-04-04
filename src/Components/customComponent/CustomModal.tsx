@@ -99,43 +99,43 @@ const CustomModal: React.FC<CustomModalProps> = ({
             />
           </ButtonComponent> */}
 
-<ButtonComponent
-  onClick={() => {
-    setInternalVisible(true);
-  }}
-  style={{
-    width: "7vw",
-    height: "5vh",
-    backgroundColor: "black",
-    cursor: "pointer",
-    color: "white",
-    fontWeight: "bold",
-    fontSize: "0.50rem",
-    position: "relative",
-    display: "flex", 
- 
+          <ButtonComponent
+            onClick={() => {
+              setInternalVisible(true);
+            }}
+            style={{
+              width: "7vw",
+              height: "5vh",
+              backgroundColor: "black",
+              cursor: "pointer",
+              color: "white",
+              fontWeight: "bold",
+              fontSize: "0.50rem",
+              position: "relative",
+              display: "flex",
 
-    
-  }}
-  label=""
->
-  <img
-    src="/assets/images/plus.png"
-    alt="icon"
-    className="w-3 mr-3" // Adjust margin to your preference
-    style={{
-      filter: "invert(100%)",
-      color: "whitesmoke",
-      fontWeight: "bolder",
-    }}
-  />
-  ADD NEW
-</ButtonComponent>
+
+
+            }}
+            label=""
+          >
+            <img
+              src="/assets/images/plus.png"
+              alt="icon"
+              className="w-3 mr-3" // Adjust margin to your preference
+              style={{
+                filter: "invert(100%)",
+                color: "whitesmoke",
+                fontWeight: "bolder",
+              }}
+            />
+            ADD NEW
+          </ButtonComponent>
 
           <Dialog
             header={header}
             visible={visible || internalVisible}
-            style={style}
+            style={style} // Add borderRadius style property
             onHide={() => {
               onHide();
               setInternalVisible(false);
@@ -143,6 +143,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
           >
             {children}
           </Dialog>
+
         </div>
       </div>
     </>

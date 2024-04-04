@@ -76,13 +76,13 @@ const Vendor = () => {
           </h1>
         </div>
 
-        <div className="flex flex-col items-center mr-[8rem] mt-14">
+        <div className="flex flex-col items-center  mr-[8rem] mt-14">
           <CustomModal
             onClick={handleButtonClick}
             visible={false}
             onHide={handleModalClose}
+            style={{borderRadius:"2rem"}}
           >
-
             <AddVendor/>
           </CustomModal>
         </div>

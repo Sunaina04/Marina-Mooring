@@ -74,6 +74,7 @@ const Moorings = () => {
             onClick={handleButtonClick}
             visible={false}
             onHide={handleModalClose}
+            style={{ borderRadius: "1rem", overflow: "hidden" }}
           >
             <AddMoorings />
           </CustomModal>
