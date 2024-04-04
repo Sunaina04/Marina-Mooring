@@ -5,7 +5,7 @@ const moormanageApi = userApi.injectEndpoints({
   endpoints: (builder : any) => ({
     addCustomer: builder.mutation({
         query: (payload : CUSTOMER_PAYLOAD) => ({
-          url: "api/v1/customer",
+          url: "api/v1/customer/",
           method: "POST",
           body: payload,
         }),
@@ -13,23 +13,23 @@ const moormanageApi = userApi.injectEndpoints({
 
     getCustomer: builder.mutation({
       query: ({}) => ({
-        url: "api/v1/customer",
+        url: "api/v1/customer/",
         method: "GET"
       }),
     }),
 
-    signup: builder.mutation({
-      query: (payload: "") => ({
-        url: "v1/mmm/employees/saveEmployee",
-        method: "POST",
-        body: payload,
+    deleteCustomer: builder.mutation({
+      query: (id: number | undefined) => ({
+        url: `api/v1/customer/`,
+        method: "DELETE",
+        body: {id},
       }),
     }),
 
-    getEmployee: builder.mutation({
+    updateCustomer: builder.mutation({
       query: () => ({
         url: "api/v1/users",
-        method: "GET",
+        method: "PUT",
       }),
     }),
 
@@ -38,4 +38,7 @@ const moormanageApi = userApi.injectEndpoints({
 });
 
 export const {
+  useGetCustomerMutation,
+  useAddCustomerMutation,
+  useDeleteCustomerMutation
 } = moormanageApi;

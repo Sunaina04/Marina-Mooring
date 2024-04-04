@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomModal from "../../customComponent/CustomModal";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
@@ -6,59 +6,32 @@ import { Outlet } from "react-router-dom";
 import AddCustomer from "./AddCustomer";
 import { Button } from "primereact/button";
 import StatCard from "../../StatCard/StatCard";
- 
+
 import { InputText } from "primereact/inputtext";
 import { PrimeIcons } from "primereact/api";
- 
-interface CustomerData {
-  id: string;
-  customerName: string;
-  email: string;
-  phone: number;
-  address: string;
-}
- 
+import { useDeleteCustomerMutation, useGetCustomerMutation } from "../../../Services/MoorManage/moormanage";
+import { ErrorResponse } from "../../../Services/authentication/types";
+import {
+  CUSTOMER_PAYLOAD,
+  CUSTOMER_RESPONSE,
+} from "../../../Services/MoorManage/types";
+
 const Customer = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [boatData, setBoatData] = useState<CustomerData[]>([
-    {
-      id: "01",
-      customerName: "Ram",
-      email: "John@gmail.com",
-      phone: 1456852896,
-      address: "Punjab",
-    },
-    {
-      id: "01",
-      customerName: "Ram",
-      email: "John@gmail.com",
-      phone: 1456852896,
-      address: "Punjab",
-    },
-    {
-      id: "01",
-      customerName: "Ram",
-      email: "John@gmail.com",
-      phone: 1456852896,
-      address: "Punjab",
-    },
-    {
-      id: "01",
-      customerName: "Ram",
-      email: "John@gmail.com",
-      phone: 1456852896,
-      address: "Punjab",
-    },
-  ]);
- 
+  const [boatData, setBoatData] = useState<CUSTOMER_PAYLOAD[]>([]);
+  const [selectedId, setSelectedId] = useState<number>();
+
+  const [getCustomer] = useGetCustomerMutation();
+  const [deleteCustomer] = useDeleteCustomerMutation();
+
   const handleButtonClick = () => {
     setModalVisible(true);
   };
- 
+
   const handleModalClose = () => {
     setModalVisible(false);
   };
- 
+
   const statCardsData = [
     [
       { title: "Total Customers", percentage: 17, count: 42324 },
@@ -68,50 +41,78 @@ const Customer = () => {
       { title: "Total Customers", percentage: 17, count: 42324 },
       { title: "Total Customers", percentage: 17, count: 46789 },
     ],
- 
+
     [{ title: "Services", percentage: 25, count: 34576 }],
- 
+
     [{ title: "Work Orders", percentage: 58, count: 8421 }],
   ];
- 
+
+  const getCustomerData = async () => {
+    console.log("response customer");
+
+    try {
+      const response = await getCustomer({}).unwrap();
+      console.log("response", response);
+      // const { data } = response as CUSTOMER_RESPONSE;
+      // console.log("DATAT" , data)
+      setBoatData(response as CUSTOMER_PAYLOAD[]);
+    } catch (error: any) {
+      console.error("Error occurred during login:", error);
+      if (error.data) {
+        const { message: msg } = error.data as ErrorResponse;
+      }
+    }
+  };
+
+  const handleEdit = (rowData : any) => {
+    // Handle edit action here, using the data from rowData if necessary
+    console.log("Edit clicked for:", rowData);
+  };
+  
+  const handleDelete = async (rowData : any) => {
+    // Handle delete action here, using the data from rowData if necessary
+    console.log("Delete clicked for:", rowData , rowData?.id);
+    const response = await deleteCustomer(rowData?.id);
+    console.log("RESPONSE", response)
+  };
+
+  
+  useEffect(() => {
+    getCustomerData();
+  }, []);
+
   return (
     <>
       <div className="flex  items-center ml-9">
         <div>
-        <h1 className="mt-14 ml-12 opacity-30 text-2xl font-normal">Moormanage/Customer</h1>
+          <h1 className="mt-14 ml-12 opacity-30 text-2xl font-normal">
+            Moormanage/Customer
+          </h1>
         </div>
-          <div className="mt-14 ml-[20.60rem]">
-            <CustomModal
-              label={"ADD NEW"}
-              style={{
-                width: "50vw",
-                height: "80vh",
-                backgroundColor: "black",
-                cursor: "pointer",
-                fontSize: "14px",
-                fontWeight: "bold",
-                color: "white",
-              }}
-              onClick={handleButtonClick}
-              visible={modalVisible}
-              onHide={handleModalClose}
-
-            >
-              <AddCustomer />
-            </CustomModal>
-          </div>
-       
+        <div className="mt-14 ml-[20.60rem]">
+          <CustomModal
+            label={"ADD NEW"}
+            style={{
+              width: "50vw",
+              height: "80vh",
+              backgroundColor: "black",
+              cursor: "pointer",
+              fontSize: "14px",
+              fontWeight: "bold",
+              color: "white",
+            }}
+            onClick={handleButtonClick}
+            visible={modalVisible}
+            onHide={handleModalClose}
+          >
+            <AddCustomer />
+          </CustomModal>
+        </div>
       </div>
 
       <div className="flex  mt-10 ml-12 mr-20">
         {statCardsData.map((items) => (
-          <StatCard 
-        
-          key={items[0].title} items={items}
-          
-          />
-
-        
+          <StatCard key={items[0].title} items={items} />
         ))}
       </div>
 
@@ -130,7 +131,7 @@ const Customer = () => {
         >
           <Column
             header="ID"
-            field="id"
+            field="customerId"
             style={{ width: "8vw" }}
           ></Column>
           <Column
@@ -140,7 +141,7 @@ const Customer = () => {
           ></Column>
           <Column
             style={{ width: "12vw" }}
-            field="email"
+            field="emailAddress"
             header="Email"
           ></Column>
           <Column
@@ -155,15 +156,18 @@ const Customer = () => {
           ></Column>
           <Column
             header="Actions"
-            body={() => (
-              <div className="flex gap-8">
-                <span className="text-black  font-bold underline cursor-pointer">
-                  Edit
-                </span>
- 
-                <span className="text-red-600 font-bold underline cursor-pointer">
-                  Delete
-                </span>
+            body={(rowData) => (
+              <div className="flex gap-2">
+                <Button
+                  label="Edit"
+                  className="p-button-text p-button-info"
+                  onClick={() => handleEdit(rowData)}
+                />
+                <Button
+                  label="Delete"
+                  className="p-button-text p-button-danger"
+                  onClick={() => handleDelete(rowData)}
+                />
               </div>
             )}
           ></Column>
@@ -172,5 +176,5 @@ const Customer = () => {
     </>
   );
 };
- 
+
 export default Customer;
