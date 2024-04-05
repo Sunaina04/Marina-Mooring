@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
@@ -7,6 +8,7 @@ import { SelectButton, SelectButtonChangeEvent } from "primereact/selectbutton";
 import VerticalBar from "../../StatCard/VerticalBar";
 
 const Reports = () => {
+
   const [modalVisible, setModalVisible] = useState(false);
   const options: string[] = ["Pending", "Cleared"];
   const [value, setValue] = useState<string>(options[0]);
@@ -188,9 +190,9 @@ const Reports = () => {
             <VerticalBar />
           </div>
         </div>
-      </div>
+      </div>  
     </>
-  );
-};
+  )
+}
 
-export default Reports;
+export default Reports

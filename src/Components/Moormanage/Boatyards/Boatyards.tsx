@@ -3,6 +3,7 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import CustomModal from "../../customComponent/CustomModal";
 import AddBoatyards from "./AddBoatyards";
+import { InputText } from "primereact/inputtext";
 
 interface CustomerData {
   id: string;
@@ -68,7 +69,17 @@ const Boatyards = () => {
         <h1 className="mt-14 ml-28 opacity-30 text-2xl font-normal">
           Moormanage/Boatyards
         </h1>
-        <div className="flex flex-col items-center mr-12 mt-14">
+        <div className="flex gap-4 items-center mr-12 mt-14">
+        <div>
+          <div className="p-input-icon-left">
+            <i className="pi pi-search text-[#D2D2D2]" />
+            <InputText
+              placeholder="Search"
+              className="h-[5vh] cursor-pointer font-bold"
+            />
+          </div>
+        </div>
+
           <CustomModal onClick={handleButtonClick}
             visible={false}
             onHide={handleModalClose}>

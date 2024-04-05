@@ -9,11 +9,12 @@
   background-color: black;
 } */
 
- .p-dialog {
-  border-radius:10px;
+.p-dialog {
+  border-radius: 10px;
   border: 2px solid #f5efef;
-    overflow: hidden;
-} 
+  overflow: hidden;
+}
 
-
-
+.p-button.p-component {
+  border: none;
+}
