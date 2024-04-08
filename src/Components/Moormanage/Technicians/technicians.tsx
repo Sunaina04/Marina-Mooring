@@ -7,6 +7,7 @@ import { Nullable } from "primereact/ts-helpers";
 import { Box } from "@mui/material";
 import { Datepicker } from "@mobiscroll/react";
 import AddTechnication from "./AddTechnician";
+import { InputText } from "primereact/inputtext";
 
 interface BoatData {
   id: string;
@@ -144,7 +145,7 @@ const Technicians = () => {
 
         <div className="ml-40 ">
           <SelectButton
-            style={{ height: "2vh", fontSize: "0.50rem", fontWeight: "bolder" }}
+            style={{ fontSize: "0.2rem", fontWeight: "bolder" }}
             value={value}
             onChange={(e: SelectButtonChangeEvent) => setValue(e.value)}
             options={options}
@@ -166,11 +167,22 @@ const Technicians = () => {
       {" "}
       <div className="flex justify-between items-center ml-12">
         <div>
-          <h1 className="mt-14 ml-52 opacity-30 text-2xl font-normal">
+          <h1 className="mt-14 ml-20 opacity-30 text-2xl font-normal">
             Moormanage/Technicians
           </h1>
         </div>
-        <div className="flex flex-col items-center mr-20 mt-14">
+        <div className="flex gap-4 items-center mr-10 mt-14">
+          <div>
+            <div className="p-input-icon-left">
+              <i className="pi pi-search text-[#D2D2D2]" />
+              <InputText
+                placeholder="Search"
+                className="h-[5vh] cursor-pointer font-bold"
+              />
+            </div>
+          </div>
+
+
           <CustomModal
             onClick={handleButtonClick}
             visible={false}
@@ -185,27 +197,28 @@ const Technicians = () => {
 
         {/* Bills Data DataTable and Calendar */}
         <div className="flex gap-8">
-          <div className="bg-[#F2F2F2] rounded-md border-[1px]  border-[#D1D1D1] p-5 ml-44  w-[47vw] mb-5">
+          <div className="bg-[#F2F2F2] rounded-md border-[1px]  border-[#D1D1D1] p-5 ml-10  w-[50vw] mb-5">
             <DataTable value={billsData} header={Billsheader} scrollable={true}>
-              <Column style={{ width: "5vw" }} field="id" header="ID"></Column>
+              <Column style={{ width: "1vw", fontSize: "0.75rem" }} field="id" header="ID"></Column>
               <Column
-                style={{ width: "8vw" }}
+                style={{ width: "3vw", fontSize: "0.75rem" }}
                 field="mooring"
                 header="Mooring"
               ></Column>
               <Column
-                style={{ width: "10vw" }}
+                style={{ width: "4vw", fontSize: "0.75rem" }}
                 field="techniciansName"
                 header="Technicians Name"
               ></Column>
               <Column
-                style={{ width: "6vw" }}
+                style={{ width: "2vw", fontSize: "0.75rem" }}
                 field="amount"
                 header="Amount"
               ></Column>
 
               <Column
                 header="Service Record"
+                style={{ width: "5vw", fontSize: "0.75rem" }}
                 body={() => (
                   <div className="flex gap-5 ">
                     <span className="text-black underline cursor-pointer">
@@ -225,8 +238,7 @@ const Technicians = () => {
               ></Column>
             </DataTable>
           </div>
-
-          <Box className="w-96 border-[1px] border-[#D1D1D1] p-5 rounded-xl mb-6">
+          <Box className="w-50 h-[58vh] border-[1px] border-[#D1D1D1] p-5 rounded-xl ">
             <div className="text-[#000000] text-lg font-bold tracking-tighter text-left mb-5">
               Calendar
             </div>
@@ -249,54 +261,59 @@ const Technicians = () => {
           </Box>
         </div>
 
-        <div className="bg-[#F2F2F2] rounded-md border-[1px] border-[#D1D1D1] p-2  ml-44 w-[69vw] mb-4">
+        <div className="bg-[#F2F2F2] rounded-md border-[1px] border-[#D1D1D1] p-2  ml-10 w-[72.50vw] mb-4">
           <DataTable
             value={boatData}
             header={""}
             tableStyle={
               {
-                // width: "73rem",
+
               }
             }
             scrollable={true}
           >
-            <Column style={{ width: "5vw" }} field="id" header="Id"></Column>
             <Column
-              style={{ width: "12vw" }}
+              style={{ width: "5vw", fontSize: "0.80rem" }}
+              field="id"
+              header="Id"
+            ></Column>
+            <Column
+              style={{ width: "10vw", fontSize: "0.80rem" }}
               field="techniciansName"
               header="Technicians Name"
             ></Column>
             <Column
-              style={{ width: "9vw" }}
+              style={{ width: "10vw", fontSize: "0.80rem" }}
               field="date"
               header="Slot & Date"
             ></Column>
 
             <Column
-              style={{ width: "10vw" }}
+              style={{ width: "10vw", fontSize: "0.80rem" }}
               field="mooring"
               header="Moorings"
             ></Column>
             <Column
-              style={{ width: "9vw" }}
+              style={{ width: "8vw", fontSize: "0.80rem" }}
               field="noOfJob"
               header="No.of jobs"
             ></Column>
 
             <Column
-              style={{ width: "9vw" }}
+              style={{ width: "11vw", fontSize: "0.80rem" }}
               field="completedJob"
               header="Completed jobs"
             ></Column>
 
             <Column
-              style={{ width: "6vw" }}
+              style={{ width: "4vw", fontSize: "0.80rem" }}
               field="price"
               header="Price"
             ></Column>
 
             <Column
               header="Action"
+              style={{ width: "8vw", fontSize: "0.80rem" }}
               body={() => (
                 <div className="flex gap-4">
                   <span className="text-green-500 underline cursor-pointer">

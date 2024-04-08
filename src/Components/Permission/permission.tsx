@@ -4,7 +4,8 @@ import { Column } from "primereact/column";
 import { Outlet } from "react-router-dom";
 import { Button } from "primereact/button";
 import CustomModal from "../customComponent/CustomModal";
-import AddCustomer from "../Moormanage/Customer/AddCustomer";
+import ButtonComponent from "../Common/ButtonComponent";
+import AddPermission from "./AddPermission";
 
 interface PermissionData {
   id: string;
@@ -62,7 +63,39 @@ const Permission = () => {
             Moormanage/Permission
           </h1>
         </div>
-        <div className="flex flex-col items-center mr-20 mt-14">
+
+        <div className="mt-14 ml-64">
+          <ButtonComponent
+            label={""}
+            onClick={() => {}}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              width: "7vw",
+              height: "5vh",
+              backgroundColor: "black",
+              cursor: "pointer",
+              color: "white",
+              fontWeight: "bold",
+              fontSize: "0.80vw",
+              justifyContent: "space-between",
+            }}
+          >
+            <img
+              src="/assets/images/more.png"
+              alt="icon"
+              className="p-icon w-4"
+              style={{
+                filter: "invert(100%)",
+                color: "whitesmoke",
+                fontWeight: "bolder",
+              }}
+            />
+            <span className="mr-4">Filter</span>
+          </ButtonComponent>
+        </div>
+
+        <div className="flex  items-center mr-[23rem] mt-14">
           <div className="">
             <CustomModal
               label={"ADD NEW"}
@@ -78,14 +111,14 @@ const Permission = () => {
               onClick={handleButtonClick}
               visible={modalVisible}
               onHide={handleModalClose}
-              header="Add New Permission"
+              header=""
             >
-              <AddCustomer />
+              <AddPermission />
             </CustomModal>
           </div>
         </div>
       </div>
-      <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[73vw] ml-20 mt-10">
+      <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[54vw] ml-20 mt-10">
         <DataTable
           value={boatData}
           header={""}

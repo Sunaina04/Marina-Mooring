@@ -3,6 +3,7 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import CustomModal from "../../customComponent/CustomModal";
 import AddVendor from "./AddVendor";
+import { InputText } from "primereact/inputtext";
 interface CustomerData {
   id: string;
   name: string;
@@ -76,14 +77,24 @@ const Vendor = () => {
           </h1>
         </div>
 
-        <div className="flex flex-col items-center mr-[8rem] mt-14">
+        <div className="flex gap-4 items-center  mr-[8rem] mt-14">
+          <div>
+            <div className="p-input-icon-left">
+              <i className="pi pi-search text-[#D2D2D2]" />
+              <InputText
+                placeholder="Search"
+                className="h-[5vh] cursor-pointer font-bold"
+              />
+            </div>
+          </div>
+
           <CustomModal
             onClick={handleButtonClick}
             visible={false}
             onHide={handleModalClose}
+            style={{ borderRadius: "2rem" }}
           >
-
-            <AddVendor/>
+            <AddVendor />
           </CustomModal>
         </div>
       </div>

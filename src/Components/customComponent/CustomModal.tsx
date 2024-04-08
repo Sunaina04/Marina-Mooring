@@ -4,6 +4,20 @@ import { Dialog } from "primereact/dialog";
 import ButtonComponent from "../Common/ButtonComponent";
 import { InputText } from "primereact/inputtext";
 
+export const style = {
+  position: "absolute" as "absolute",
+  top: "50%",
+  left: "''",
+  transform: "translate(-50%, -50%)",
+  // width: "50%",
+  bgcolor: "background.white",
+  borderRadius: "25px",
+  p: 3,
+  maxHeight: "90vh",
+  overflowY: "auto",
+};
+
+
 interface CustomModalProps {
   onClick: () => void;
   visible: boolean;
@@ -28,7 +42,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
   return (
     <>
       <div className="flex gap-4">
-        <div>
+        {/* <div>
           <div className="p-input-icon-left">
             <i className="pi pi-search text-[#D2D2D2]" />
             <InputText
@@ -36,9 +50,14 @@ const CustomModal: React.FC<CustomModalProps> = ({
               className="h-[5vh] cursor-pointer font-bold"
             />
           </div>
-        </div>
+        </div> */}
 
         <div>
+
+          {
+
+          
+          }
           {/* <Button
             label={"ADD NEW"}
             onClick={() => {
@@ -99,43 +118,43 @@ const CustomModal: React.FC<CustomModalProps> = ({
             />
           </ButtonComponent> */}
 
-<ButtonComponent
-  onClick={() => {
-    setInternalVisible(true);
-  }}
-  style={{
-    width: "7vw",
-    height: "5vh",
-    backgroundColor: "black",
-    cursor: "pointer",
-    color: "white",
-    fontWeight: "bold",
-    fontSize: "0.50rem",
-    position: "relative",
-    display: "flex", 
- 
+          <ButtonComponent
+            onClick={() => {
+              setInternalVisible(true);
+            }}
+            style={{
+              width: "7vw",
+              height: "5vh",
+              backgroundColor: "black",
+              cursor: "pointer",
+              color: "white",
+              fontWeight: "bold",
+              fontSize: "0.50rem",
+              position: "relative",
+              display: "flex",
 
-    
-  }}
-  label=""
->
-  <img
-    src="/assets/images/plus.png"
-    alt="icon"
-    className="w-3 mr-3" // Adjust margin to your preference
-    style={{
-      filter: "invert(100%)",
-      color: "whitesmoke",
-      fontWeight: "bolder",
-    }}
-  />
-  ADD NEW
-</ButtonComponent>
+
+
+            }}
+            label=""
+          >
+            <img
+              src="/assets/images/plus.png"
+              alt="icon"
+              className="w-3 mr-3" // Adjust margin to your preference
+              style={{
+                filter: "invert(100%)",
+                color: "whitesmoke",
+                fontWeight: "bolder",
+              }}
+            />
+            ADD NEW
+          </ButtonComponent>
 
           <Dialog
             header={header}
             visible={visible || internalVisible}
-            style={style}
+            style={style} // Add borderRadius style property
             onHide={() => {
               onHide();
               setInternalVisible(false);
@@ -143,6 +162,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
           >
             {children}
           </Dialog>
+
         </div>
       </div>
     </>

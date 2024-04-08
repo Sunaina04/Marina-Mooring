@@ -2,43 +2,42 @@ import { userApi } from "../userApi";
 import { CUSTOMER_PAYLOAD } from "./types";
 
 const moormanageApi = userApi.injectEndpoints({
-  endpoints: (builder : any) => ({
+  endpoints: (builder: any) => ({
     addCustomer: builder.mutation({
-        query: (payload : CUSTOMER_PAYLOAD) => ({
-          url: "api/v1/customer/",
-          method: "POST",
-          body: payload,
-        }),
+      query: (payload: CUSTOMER_PAYLOAD) => ({
+        url: "api/v1/customer/",
+        method: "POST",
+        body: payload,
       }),
+    }),
 
     getCustomer: builder.mutation({
       query: ({}) => ({
         url: "api/v1/customer/",
-        method: "GET"
+        method: "GET",
       }),
     }),
 
     deleteCustomer: builder.mutation({
-      query: (id: number | undefined) => ({
-        url: `api/v1/customer/`,
+      query: ({ id }: { id?: number }) => ({
+        url: `api/v1/customer/${id}`, // Append the id to the URL
         method: "DELETE",
-        body: {id},
       }),
     }),
 
     updateCustomer: builder.mutation({
-      query: () => ({
-        url: "api/v1/users",
+      query: (payload: CUSTOMER_PAYLOAD) => ({
+        url: "api/v1/customer/",
         method: "PUT",
+        body: payload,
       }),
     }),
-
-   
   }),
 });
 
 export const {
   useGetCustomerMutation,
   useAddCustomerMutation,
-  useDeleteCustomerMutation
+  useDeleteCustomerMutation,
+  useUpdateCustomerMutation,
 } = moormanageApi;

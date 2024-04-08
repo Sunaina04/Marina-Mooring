@@ -1,17 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+/* 
 .p-selectbutton .p-button.p-highlight {
   background-color: black;
 }
 .p-selectbutton .p-button.p-highlight:hover {
   background-color: black;
+} */
+
+.p-dialog {
+  border-radius: 10px;
+  border: 2px solid #f5efef;
+  overflow: hidden;
 }
 
-/* .p-datatable-thead{
+.p-button.p-component {
+  border: none;
+}
 
-  border: 2px solid gray;
-  width: 100%;
-  opacity: 0.5px;
-} */

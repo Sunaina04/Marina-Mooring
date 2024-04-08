@@ -75,11 +75,11 @@ const WorkOrders = () => {
       <div className="">
         <div className="flex justify-between gap-4 mr-4 mt-24">
           <div>
-            <h1 className="mt-6 opacity-30 text-2xl ml-96 font-normal">
+            <h1 className="mt-6 opacity-30 text-2xl ml-36 font-normal">
               Moorserve/Work Orders
             </h1>
           </div>
-          <div className="flex mr-10 gap-4">
+          <div className="flex mr-36 gap-4">
             <div>
               <div className="p-input-icon-left">
                 <i className="pi pi-search text-[#D2D2D2] " />
@@ -119,7 +119,7 @@ const WorkOrders = () => {
           </div>
         </div>
 
-        <div className="bg-[#F2F2F2] rounded-xl border-[1px] border-[#D1D1D1] ml-96 p-2 mt-12 w-[64vw] ">
+        <div className="bg-[#F2F2F2] rounded-xl border-[1px] border-[#D1D1D1] ml-36 p-2 mt-12 w-[64vw] ">
           <DataTable
             value={boatData}
             header={header}

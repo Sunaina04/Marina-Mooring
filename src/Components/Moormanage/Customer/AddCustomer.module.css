@@ -1,18 +1,4 @@
 
-.p-dialog .p-dialog-header {
-  padding: 1.5rem;
-  border-top-right-radius: 20px;
-  border-top-left-radius: 20px;
-}
-.p-dialog {
-  border-top-right-radius: 20px;
-  border-top-left-radius: 20px;
-}
-.p-dialog-content {
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 80px;
-}
-
 .p-dialog {
   border-radius: 20px;
   border: 2.5px solid #f5efef;

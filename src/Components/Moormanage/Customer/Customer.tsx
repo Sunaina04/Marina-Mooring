@@ -9,7 +9,10 @@ import StatCard from "../../StatCard/StatCard";
 
 import { InputText } from "primereact/inputtext";
 import { PrimeIcons } from "primereact/api";
-import { useDeleteCustomerMutation, useGetCustomerMutation } from "../../../Services/MoorManage/moormanage";
+import {
+  useDeleteCustomerMutation,
+  useGetCustomerMutation,
+} from "../../../Services/MoorManage/moormanage";
 import { ErrorResponse } from "../../../Services/authentication/types";
 import {
   CUSTOMER_PAYLOAD,
@@ -19,7 +22,8 @@ import {
 const Customer = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [boatData, setBoatData] = useState<CUSTOMER_PAYLOAD[]>([]);
-  const [selectedId, setSelectedId] = useState<number>();
+  const [editMode, setEditMode] = useState(false);
+  const [selectedCustomer, setSelectedCustomer] = useState<any>(null);
 
   const [getCustomer] = useGetCustomerMutation();
   const [deleteCustomer] = useDeleteCustomerMutation();
@@ -30,6 +34,7 @@ const Customer = () => {
 
   const handleModalClose = () => {
     setModalVisible(false);
+    setEditMode(false);
   };
 
   const statCardsData = [
@@ -52,28 +57,43 @@ const Customer = () => {
 
     try {
       const response = await getCustomer({}).unwrap();
-      console.log("response", response);
-      // const { data } = response as CUSTOMER_RESPONSE;
-      // console.log("DATAT" , data)
-      setBoatData(response as CUSTOMER_PAYLOAD[]);
-    } catch (error: any) {
-      console.error("Error occurred during login:", error);
-      if (error.data) {
+      console.log("Response:", response);
+  
+      if (typeof response === 'object' && response !== null && 'data' in response) {
+        console.log("Response data:", response.data);
+        setBoatData(response.data as CUSTOMER_PAYLOAD[]);
+      } else {
+        console.error("Invalid response format");
+      }
+    } catch (error) {
+      console.error("Error occurred while fetching customer data:", error);
+  
+      if (typeof error === 'object' && error !== null && 'data' in error) {
         const { message: msg } = error.data as ErrorResponse;
+        console.error("Error message:", msg);
+      } else {
+        console.error("Unknown error occurred");
       }
     }
   };
 
-  const handleEdit = (rowData : any) => {
-    // Handle edit action here, using the data from rowData if necessary
-    console.log("Edit clicked for:", rowData);
+  const handleEdit = (rowData: any) => {
+    setSelectedCustomer(rowData);
+    setEditMode(true);
   };
 
-  const handleDelete = async (rowData : any) => {
+
+  const handleDelete = async (rowData: any) => 
     // Handle delete action here, using the data from rowData if necessary
-    console.log("Delete clicked for:", rowData , rowData?.id);
-    const response = await deleteCustomer(rowData?.id);
-    console.log("RESPONSE", response)
+    console.log("Delete clicked for:", rowData, rowData?.id);
+
+    try {
+      const response = await deleteCustomer({ id: rowData?.id });
+      console.log("RESPONSE", response);
+      getCustomerData();
+    } catch (error) {
+      console.error("Error deleting customer:", error);
+    }
   };
 
   useEffect(() => {
@@ -88,7 +108,18 @@ const Customer = () => {
             Moormanage/Customer
           </h1>
         </div>
-        <div className="mt-14 ml-[20.60rem]">
+        <div className="flex gap-4 mt-14 ml-[20.60rem]">
+
+        <div>
+          <div className="p-input-icon-left">
+            <i className="pi pi-search text-[#D2D2D2]" />
+            <InputText
+              placeholder="Search"
+              className="h-[5vh] cursor-pointer font-bold"
+            />
+          </div>
+        </div>
+
           <CustomModal
             label={"ADD NEW"}
             style={{
@@ -99,12 +130,13 @@ const Customer = () => {
               fontSize: "14px",
               fontWeight: "bold",
               color: "white",
+              borderRadius: "1rem",
             }}
             onClick={handleButtonClick}
-            visible={modalVisible}
+            visible={modalVisible || editMode}
             onHide={handleModalClose}
           >
-            <AddCustomer />
+            <AddCustomer customer={selectedCustomer} editMode={editMode} closeModal={handleModalClose} getCustomer={getCustomerData}/>
           </CustomModal>
         </div>
       </div>
@@ -115,7 +147,7 @@ const Customer = () => {
         ))}
       </div>
 
-      <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[66vw] ml-20 mt-10">
+      <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[63.50vw] ml-20 mt-10">
         <DataTable
           value={boatData}
           header={""}
