@@ -82,8 +82,7 @@ const Customer = () => {
     setEditMode(true);
   };
 
-
-  const handleDelete = async (rowData: any) => 
+  const handleDelete = async (rowData: any) => {
     // Handle delete action here, using the data from rowData if necessary
     console.log("Delete clicked for:", rowData, rowData?.id);
 
@@ -209,5 +208,3 @@ const Customer = () => {
 };
 
 export default Customer;
-
-
