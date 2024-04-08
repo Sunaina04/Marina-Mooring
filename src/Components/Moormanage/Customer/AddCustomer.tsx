@@ -19,10 +19,10 @@ interface City {
   code: string;
 }
 
-const AddCustomer: React.FC<Props> = ({ customer, editMode, closeModal , getCustomer }) => {
+const AddCustomer: React.FC<Props> = ({ customer, editMode, closeModal, getCustomer }) => {
   const [value, setValue] = useState<string>("");
-  const [selectedCountry, setSelectedCountry] = useState<City | null>(null); 
-  const [selectedState, setSelectedState] = useState<City | null>(null); 
+  const [selectedCountry, setSelectedCountry] = useState<City | null>(null);
+  const [selectedState, setSelectedState] = useState<City | null>(null);
   const [customerName, setCustomerName] = useState<string>("");
   const [customerId, setCustomerId] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
@@ -59,7 +59,7 @@ const AddCustomer: React.FC<Props> = ({ customer, editMode, closeModal , getCust
     const response = await addCustomer(payload);
     closeModal();
     getCustomer();
-    console.log("RESPONSE" , response);
+    console.log("RESPONSE", response);
   }
 
   const UpdateCustomer = async () => {
@@ -78,7 +78,7 @@ const AddCustomer: React.FC<Props> = ({ customer, editMode, closeModal , getCust
     const response = await updateCustomer(payload);
     closeModal();
     getCustomer();
-    console.log("RESPONSE" , response);
+    console.log("RESPONSE", response);
   }
 
   useEffect(() => {
@@ -163,24 +163,82 @@ const AddCustomer: React.FC<Props> = ({ customer, editMode, closeModal , getCust
         </div>
       </div>
 
-      <div className="mt-4 ml-5 ">
-        <span className="font-semibold text-sm">Email Address</span>
-        <div className="mt-2">
-          <InputText
-            value={email}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setEmail(e.target.value)
-            }
-            style={{
-              width: "13vw",
-              height: "4vh",
-              border: "1px solid gray",
-              borderRadius: "0.50rem",
-              fontSize: "0.80vw",
-            }}
-          />
+
+
+
+
+      <div className="flex gap-10">
+        <div className="mt-4 ml-5 ">
+
+          <div>
+            <div>
+              <span className="font-semibold text-sm">Boatyard</span>
+            </div>
+
+            <div className="mt-2">
+              <InputText
+                value={email}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setEmail(e.target.value)
+                }
+                style={{
+                  width: "13vw",
+                  height: "4vh",
+                  border: "1px solid gray",
+                  borderRadius: "0.50rem",
+                  fontSize: "0.80vw",
+                }}
+              />
+            </div>
+
+          </div>
+
         </div>
+
+
+        <div className=" ">
+
+          <div className="mt-4">
+            <span className="font-semibold text-sm ">Email Address</span>
+          </div>
+
+          <div className="mt-2">
+            <Dropdown
+              value={selectedState}
+              onChange={(e: DropdownChangeEvent) =>
+                setSelectedState(e.value)
+              }
+              options={cities}
+              optionLabel="name"
+              editable
+              placeholder="State"
+              style={{
+                width: "13vw",
+                height: "4vh",
+                border: "1px solid gray",
+                borderRadius: "0.50rem",
+              }}
+            />
+
+          </div>
+
+        </div>
+
+
+
+
+
       </div>
+
+
+
+
+
+
+
+
+
+
 
       <div className="">
         <div className="mt-4 ml-5">
@@ -304,7 +362,7 @@ const AddCustomer: React.FC<Props> = ({ customer, editMode, closeModal , getCust
 
       <div className="flex gap-3 mt-4 ml-6">
         <ButtonComponent
-          onClick={ editMode ? UpdateCustomer : SaveCustomer}
+          onClick={editMode ? UpdateCustomer : SaveCustomer}
           label={"Save"}
           style={{
             width: "5vw",

@@ -168,7 +168,6 @@ const AddMoorings = () => {
                   }}
                 />
               </div>
-              <div></div>
             </div>
 
             <div>
@@ -191,65 +190,143 @@ const AddMoorings = () => {
         </div>
 
         <div className="">
-          <div className="">
-            <div className="flex gap-4 mt-3 ml-4">
+          <div className="flex gap-4 mt-3 ml-4">
+            <div>
               <div>
-                <div>
-                  <span className="font-semibold text-sm">
-                    Condition of Eye
-                  </span>
-                </div>
-
-                <div>
-                  <Dropdown
-                    value={selectedCity}
-                    onChange={(e: DropdownChangeEvent) =>
-                      setSelectedCity(e.value)
-                    }
-                    options={cities}
-                    optionLabel="name"
-                    editable
-                    placeholder="Select"
-                    style={{
-                      width: "13vw",
-                      height: "4vh",
-                      border: "1px solid gray",
-                      borderRadius: "0.50rem",
-                    }}
-                  />
-                </div>
-                <div></div>
+                <span className="font-semibold text-sm">Size of Weight</span>
               </div>
 
-              <div className="ml-4">
-                <div>
-                  <span className="font-semibold text-sm">
-                    Bootom Chain Condition
-                  </span>
-                </div>
+              <div>
+                <Dropdown
+                  value={selectedCity}
+                  onChange={(e: DropdownChangeEvent) =>
+                    setSelectedCity(e.value)
+                  }
+                  options={cities}
+                  optionLabel="name"
+                  editable
+                  placeholder="Select"
+                  style={{
+                    width: "13vw",
+                    height: "4vh",
+                    border: "1px solid gray",
+                    borderRadius: "0.50rem",
+                  }}
+                />
+              </div>
+            </div>
 
-                <div>
-                  <Dropdown
-                    value={selectedCity}
-                    onChange={(e: DropdownChangeEvent) =>
-                      setSelectedCity(e.value)
-                    }
-                    options={cities}
-                    optionLabel="name"
-                    editable
-                    placeholder="Select"
-                    style={{
-                      width: "14vw",
-                      height: "4vh",
-                      border: "1px solid gray",
-                      borderRadius: "0.50rem",
-                    }}
-                  />
-                </div>
-                <div></div>
+            <div className="ml-4">
+              <div>
+                <span className="font-semibold text-sm">Type of Weight</span>
               </div>
 
-              <div className="ml-2">
+              <div>
+                <Dropdown
+                  value={selectedCity}
+                  onChange={(e: DropdownChangeEvent) =>
+                    setSelectedCity(e.value)
+                  }
+                  options={cities}
+                  optionLabel="name"
+                  editable
+                  placeholder="Select"
+                  style={{
+                    width: "14vw",
+                    height: "4vh",
+                    border: "1px solid gray",
+                    borderRadius: "0.50rem",
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className="ml-2">
+              <div>
+                <span className="font-semibold text-sm">
+                  Top Chain Condition
+                </span>
+              </div>
+
+              <div>
+                <Dropdown
+                  value={selectedCity}
+                  onChange={(e: DropdownChangeEvent) =>
+                    setSelectedCity(e.value)
+                  }
+                  options={cities}
+                  optionLabel="name"
+                  editable
+                  placeholder="Select"
+                  style={{
+                    width: "13.50vw",
+                    height: "4vh",
+                    border: "1px solid gray",
+                    borderRadius: "0.50rem",
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="">
+          <div className="flex gap-4 mt-3 ml-4">
+            <div>
+              <div>
+                <span className="font-semibold text-sm">Condition of Eye</span>
+              </div>
+
+              <div>
+                <Dropdown
+                  value={selectedCity}
+                  onChange={(e: DropdownChangeEvent) =>
+                    setSelectedCity(e.value)
+                  }
+                  options={cities}
+                  optionLabel="name"
+                  editable
+                  placeholder="Select"
+                  style={{
+                    width: "13vw",
+                    height: "4vh",
+                    border: "1px solid gray",
+                    borderRadius: "0.50rem",
+                  }}
+                />
+              </div>
+              <div></div>
+            </div>
+
+            <div className="ml-4">
+              <div>
+                <span className="font-semibold text-sm">
+                  Bootom Chain Condition
+                </span>
+              </div>
+
+              <div>
+                <Dropdown
+                  value={selectedCity}
+                  onChange={(e: DropdownChangeEvent) =>
+                    setSelectedCity(e.value)
+                  }
+                  options={cities}
+                  optionLabel="name"
+                  editable
+                  placeholder="Select"
+                  style={{
+                    width: "14vw",
+                    height: "4vh",
+                    border: "1px solid gray",
+                    borderRadius: "0.50rem",
+                  }}
+                />
+              </div>
+              <div></div>
+            </div>
+
+            {/* <div className="ml-2">
                 <div>
                   <span className="font-semibold text-sm">
                     Top Chain Condition
@@ -275,76 +352,93 @@ const AddMoorings = () => {
                   />
                 </div>
                 <div></div>
-              </div>
-            </div>
+              </div> */}
           </div>
         </div>
 
         <div className="">
-          <div className="">
-            <div className="flex justify-around mt-3">
-              <div className="">
-                <div>
-                  <span className="font-semibold text-sm">
-                    Shackle,Swivel Condition
-                  </span>
-                </div>
-
-                <div>
-                  <Dropdown
-                    value={selectedCity}
-                    onChange={(e: DropdownChangeEvent) =>
-                      setSelectedCity(e.value)
-                    }
-                    options={cities}
-                    optionLabel="name"
-                    editable
-                    placeholder="Select"
-                    style={{
-                      width: "13vw",
-                      height: "4vh",
-                      border: "1px solid gray",
-                      borderRadius: "0.50rem",
-                    }}
-                  />
-                </div>
-              </div>
-
-              <div className="mr-28">
-                <div>
-                  <span className="font-semibold text-sm">
-                    Pennant Condition
-                  </span>
-                </div>
-
-                <div>
-                  <Dropdown
-                    value={selectedCity}
-                    onChange={(e: DropdownChangeEvent) =>
-                      setSelectedCity(e.value)
-                    }
-                    options={cities}
-                    optionLabel="name"
-                    editable
-                    placeholder="Select"
-                    style={{
-                      width: "14vw",
-                      height: "4vh",
-                      border: "1px solid gray",
-                      borderRadius: "0.50rem",
-                    }}
-                  />
-                </div>
+          <div className="flex justify-around mt-3">
+            <div className="">
+              <div>
+                <span className="font-semibold text-sm">
+                  Shackle,Swivel Condition
+                </span>
               </div>
 
               <div>
-                <div>
-                  <span className="font-semibold text-sm">Pin on Map</span>
-                </div>
-
-                <div></div>
+                <Dropdown
+                  value={selectedCity}
+                  onChange={(e: DropdownChangeEvent) =>
+                    setSelectedCity(e.value)
+                  }
+                  options={cities}
+                  optionLabel="name"
+                  editable
+                  placeholder="Select"
+                  style={{
+                    width: "13vw",
+                    height: "4vh",
+                    border: "1px solid gray",
+                    borderRadius: "0.50rem",
+                  }}
+                />
               </div>
             </div>
+
+            <div className="mr-10">
+              <div>
+                <span className="font-semibold text-sm">Pennant Condition</span>
+              </div>
+
+              <div>
+                <Dropdown
+                  value={selectedCity}
+                  onChange={(e: DropdownChangeEvent) =>
+                    setSelectedCity(e.value)
+                  }
+                  options={cities}
+                  optionLabel="name"
+                  editable
+                  placeholder="Select"
+                  style={{
+                    width: "14vw",
+                    height: "4vh",
+                    border: "1px solid gray",
+                    borderRadius: "0.50rem",
+                  }}
+                />
+              </div>
+            </div>
+
+            <div></div>
+
+            <div>
+              <div>
+                <span className="font-semibold text-sm">Pin on Map</span>
+              </div>
+
+              <div></div>
+            </div>
+          </div>
+        </div>
+
+        <div className="ml-4">
+          <div className="mt-2 ml-1">
+            <span className="font-semibold text-sm">
+              Dept at Mean High Water
+            </span>
+          </div>
+
+          <div className="mt-2 ml-1">
+            <InputText
+              style={{
+                width: "13vw",
+                height: "4vh",
+                border: "1px solid gray",
+                borderRadius: "0.50rem",
+                fontSize: "0.80vw",
+              }}
+            />
           </div>
         </div>
 

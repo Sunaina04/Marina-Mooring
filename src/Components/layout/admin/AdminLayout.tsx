@@ -286,7 +286,7 @@ const AdminLayout = () => {
             sx={{
               position: "fixed",
               top: "85%",
-              // width: "18rem",
+              width: open ? "16rem" : "4rem",
               display: "flex",
               flexDirection: "column",
               gap: "1rem",

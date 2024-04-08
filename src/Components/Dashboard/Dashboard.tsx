@@ -46,7 +46,7 @@ const Dashboard = () => {
       id: "01",
       boatName: "Suncatcher",
       name: "John Smith",
-      date: "15, March 2024 to 15, March 2024",
+      date: "15, March 2024",
       measurement: "Length: 10m, Width: 3.8m",
       place: "Boatyard",
     },
@@ -54,7 +54,7 @@ const Dashboard = () => {
       id: "01",
       boatName: "Suncatcher",
       name: "John Smith",
-      date: "15, March 2024 to 15, March 2024",
+      date: "15, March 2024",
       measurement: "Length: 10m, Width: 3.8m",
       place: "Boatyard",
     },
@@ -62,7 +62,7 @@ const Dashboard = () => {
       id: "01",
       boatName: "Suncatcher",
       name: "John Smith",
-      date: "15, March 2024 to 15, March 2024",
+      date: "15, March 2024",
       measurement: "Length: 10m, Width: 3.8m",
       place: "Boatyard",
     },
@@ -370,13 +370,13 @@ const Dashboard = () => {
                 <FileCopyIcon sx={{ marginRight: "8px" }} /> Open Work Orders
               </AccordionSummary>
               <AccordionDetails>
-                <div className="bg-[#F2F2F2] rounded-xl border-[1px] border-[#D1D1D1] p-2  ">
+                <div className="w-full p-2  ">
                   <DataTable
                     value={boatData}
                     header={""}
                     tableStyle={{
                       // width: "73rem",
-                      fontSize: "0.90rem",
+                      fontSize: "0.60rem",
                       fontWeight: "bold",
                     }}
                     scrollable={true}
@@ -387,27 +387,27 @@ const Dashboard = () => {
                       header="Order no"
                     ></Column>
                     <Column
-                      style={{ width: "7vw" }}
+                      style={{ width: "5vw" }}
                       field="boatName"
                       header="Mooring"
                     ></Column>
                     <Column
-                      style={{ width: "7vw" }}
+                      style={{ width: "8vw" }}
                       field="name"
                       header="Customer Name"
                     ></Column>
                     <Column
-                      style={{ width: "11vw" }}
+                      style={{ width: "7vw" }}
                       field="date"
                       header="Date"
                     ></Column>
 
                     <Column
-                      header="Action"
+                      header=""
                       body={() => (
                         <div className="flex gap-4">
                           <span className="text-black underline cursor-pointer">
-                            Edit
+                            View
                           </span>
                         </div>
                       )}
