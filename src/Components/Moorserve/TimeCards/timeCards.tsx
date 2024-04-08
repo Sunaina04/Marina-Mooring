@@ -88,35 +88,41 @@ const Timecards = () => {
           </h1>
         </div>
       </div>
-      <div className="bg-[#F2F2F2] rounded-md border-[1px] border-[#D1D1D1] p-2 mt-12 w-[60vw] ml-20">
+      <div className="bg-[#F2F2F2] rounded-md border-[1px] border-[#D1D1D1] p-2 mt-12 w-[65vw] ml-20">
         <DataTable
           value={boatData}
           header={header}
           tableStyle={{
-            minWidth: "50rem",
+          
           }}
         >
           <Column
-            header=""
+            header="ID"
             field="id"
-            style={{ width: "3rem", textAlign: "center" }}
+            style={{ width: "5vw",fontSize:"0.80rem"}}
           ></Column>
-          <Column field="boatName" header="Boat Name"></Column>
-          <Column field="name" header="Customer Name"></Column>
-          <Column field="date" header="Date"></Column>
-          <Column field="measurement" header="Measurement"></Column>
-          <Column field="place" header="Place"></Column>
+          <Column field="boatName" header="Boat Name"  style={{ width: "8vw", fontSize:"0.80rem"}}></Column>
+          <Column field="name" header="Name" style={{ width: "8vw",fontSize:"0.80rem"}}></Column>
+          <Column field="date" header="Date" style={{ width: "12vw",fontSize:"0.80rem" }}></Column>
+          <Column field="measurement" header="Measurement" style={{ width: "8vw",fontSize:"0.80rem" }}></Column>
+          <Column field="place" header="Place" style={{ width: "5vw",fontSize:"0.80rem" }}></Column>
           <Column
             header="Actions"
             body={() => (
               <div className="flex gap-2">
-                <span className="text-green underline cursor-pointer">
-                  Proceed
+                <span className="text-green text-green-500 underline cursor-pointer">
+                  Approved
+                </span>
+                <span className="text-[#E1A325] underline cursor-pointer">
+                  Pending
                 </span>
                 <span className="text-red-500 underline cursor-pointer">
-                  Edit
+                  Cancle
                 </span>
               </div>
+
+
+
             )}
           ></Column>
         </DataTable>

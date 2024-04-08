@@ -6,48 +6,54 @@ import CustomModal from "../../customComponent/CustomModal";
 import AddCustomer from "../../Moormanage/Customer/AddCustomer";
 
 interface CustomerData {
-  id: string;
-  boatName: string;
+  invoice: string;
+  mooringid: string;
   name: string;
-  date: string;
-  measurement: string;
-  place: string;
+  technicianName: string;
+  services: string;
+  time: string;
+  amount: string;
 }
 
-const Forms = () => {
+const AccountPayable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [boatData, setBoatData] = useState<CustomerData[]>([
     {
-      id: "01",
-      boatName: "Suncatcher",
+      invoice: "#425",
+      mooringid: "#6658",
       name: "John Smith",
-      date: "15, March 2024 to 15, March 2024",
-      measurement: "Length: 10m, Width: 3.8m",
-      place: "Boatyard",
+      technicianName: "jim Carry",
+      services: "Regular Services",
+      time: "2hrs",
+      amount: "$12",
+    },
+
+    {
+      invoice: "#425",
+      mooringid: "#6658",
+      name: "John Smith",
+      technicianName: "jim Carry",
+      services: "Regular Services",
+      time: "2hrs",
+      amount: "$12",
     },
     {
-      id: "01",
-      boatName: "Suncatcher",
+      invoice: "#425",
+      mooringid: "#6658",
       name: "John Smith",
-      date: "15, March 2024 to 15, March 2024",
-      measurement: "Length: 10m, Width: 3.8m",
-      place: "Boatyard",
+      technicianName: "jim Carry",
+      services: "Regular Services",
+      time: "2hrs",
+      amount: "$12",
     },
     {
-      id: "01",
-      boatName: "Suncatcher",
+      invoice: "#425",
+      mooringid: "#6658",
       name: "John Smith",
-      date: "15, March 2024 to 15, March 2024",
-      measurement: "Length: 10m, Width: 3.8m",
-      place: "Boatyard",
-    },
-    {
-      id: "01",
-      boatName: "Suncatcher",
-      name: "John Smith",
-      date: "15, March 2024 to 15, March 2024",
-      measurement: "Length: 10m, Width: 3.8m",
-      place: "Boatyard",
+      technicianName: "jim Carry",
+      services: "Regular Services",
+      time: "2hrs",
+      amount: "$12",
     },
   ]);
 
@@ -60,8 +66,8 @@ const Forms = () => {
   };
 
   const header = (
-    <div className="flex flex-wrap align-items-center justify-between gap-2 p-4">
-      <span className="text-xl font-bold">Forms</span>
+    <div className="flex flex-wrap align-items-center justify-between gap-2 ">
+      <span className="text-xl font-bold">Account Payable</span>
       <span
         style={{
           fontFamily: "Lato",
@@ -76,19 +82,17 @@ const Forms = () => {
       </span>
     </div>
   );
-
   return (
     <>
       {" "}
-      {/* <div className="flex ml-12"> */}
       <div className="flex justify-between items-center ml-12">
         <div>
           <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">
-            Moormanage/Forms
+            Moormanage/Account Payable
           </h1>
         </div>
 
-        <div className="flex flex-wrap ml-[18rem] text-[gray] font-extrabold mt-14">
+        <div className="flex gap-1 ml-[18rem] text-[gray] font-extrabold mt-14">
           <div>
             <img
               src="/assets/images/download.png"
@@ -102,9 +106,9 @@ const Forms = () => {
             <h1>DownLoad Excel</h1>
           </div>
 
+          <div></div>
         </div>
-
-        <div className="flex flex-col items-center mr-64 mt-14">
+        <div className="items-center mr-[10rem] mt-14">
           <CustomModal
             onClick={handleButtonClick}
             visible={false}
@@ -118,33 +122,48 @@ const Forms = () => {
           </CustomModal>
         </div>
       </div>
-      <div className="bg-[#F2F2F2] rounded-md border-[1px] border-[#D1D1D1] p-2 mt-12 w-[61vw] ml-20">
-        <DataTable
-          value={boatData}
-          header={header}
-          tableStyle={{
-            minWidth: "50rem",
-          }}
-        >
+      <div className="bg-[#F2F2F2] rounded-md border-[1px] border-[#D1D1D1] p-2 mt-12 w-[68vw] ml-20">
+        <DataTable value={boatData} header={header} tableStyle={{}}>
           <Column
-            header=""
-            field="id"
-            style={{ width: "3rem", textAlign: "center" }}
+            header="invoice"
+            field="invoice"
+            style={{ width: "5rem" }}
           ></Column>
-          <Column field="boatName" header="Boat Name"></Column>
-          <Column field="name" header="Name"></Column>
-          <Column field="date" header="Date"></Column>
-          <Column field="measurement" header="Measurement"></Column>
-          <Column field="place" header="Place"></Column>
+          <Column
+            field="mooringid"
+            header="Mooring ID"
+            style={{ width: "8rem" }}
+          ></Column>
+          <Column
+            field="name"
+            header="Customer Name"
+            style={{ width: "11rem" }}
+          ></Column>
+          <Column
+            field="technicianName"
+            header="Technician name"
+            style={{ width: "11rem" }}
+          ></Column>
+          <Column
+            field="services"
+            header="Services"
+            style={{ width: "8rem" }}
+          ></Column>
+          <Column field="time" header="Time" style={{ width: "5rem" }}></Column>
+          <Column
+            field="amount"
+            header="Amount"
+            style={{ width: "6rem" }}
+          ></Column>
           <Column
             header="Actions"
             body={() => (
-              <div className="flex gap-2">
-                <span className="text-green underline cursor-pointer">
-                  Edit
+              <div className="flex gap-4">
+                <span className="text-green-500 underline cursor-pointer">
+                  Approve
                 </span>
                 <span className="text-red-500 underline cursor-pointer">
-                  Delete
+                  Deny
                 </span>
               </div>
             )}
@@ -155,4 +174,4 @@ const Forms = () => {
   );
 };
 
-export default Forms;
+export default AccountPayable;

@@ -1,10 +1,15 @@
-import { useState } from "react";
+
 import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
+
 import ButtonComponent from "../../Common/ButtonComponent";
 import CustomModal from "../../customComponent/CustomModal";
 import AddCustomer from "../Customer/AddCustomer";
 import AddMoorings from "./AddMoorings";
+import { InputText } from "primereact/inputtext";
+import React, { useState, useEffect } from 'react';
+import { TreeTable } from 'primereact/treetable';
+import { Column } from 'primereact/column';
+import { TreeNode } from 'primereact/treenode';
 
 interface CustomerData {
   id: string;
@@ -60,6 +65,40 @@ const Moorings = () => {
     setModalVisible(false);
   };
 
+
+  const [nodes, setNodes] = useState<TreeNode[]>([]);
+
+  useEffect(() => {
+      let files = [];
+
+      for (let i = 0; i < 5; i++) {
+          let node = {
+              key: i,
+              data: {
+                  name: 'Item ' + i,
+                  size: Math.floor(Math.random() * 1000) + 1 + 'kb',
+                  type: 'Type ' + i
+              },
+              children: [
+                  {
+                      key: i + ' - 0',
+                      data: {
+                          name: 'Item ' + i + ' - 0',
+                          size: Math.floor(Math.random() * 1000) + 1 + 'kb',
+                          type: 'Type ' + i
+                      }
+                  }
+              ]
+          };
+
+          files.push(node);
+      }
+
+      setNodes(files);
+  }, []);
+
+
+
   return (
     <>
       {" "}
@@ -69,7 +108,19 @@ const Moorings = () => {
             Moormanage/Moorings
           </h1>
         </div>
-        <div className="flex flex-col items-center mr-20 mt-14">
+        <div className="flex gap-4 items-center mr-20 mt-14">
+
+
+        <div>
+          <div className="p-input-icon-left">
+            <i className="pi pi-search text-[#D2D2D2]" />
+            <InputText
+              placeholder="Search"
+              className="h-[5vh] cursor-pointer font-bold"
+            />
+          </div>
+        </div>
+
           <CustomModal
             onClick={handleButtonClick}
             visible={false}
@@ -81,62 +132,13 @@ const Moorings = () => {
         </div>
       </div>
       <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[73vw] ml-20 mt-10">
-        <DataTable
-          value={boatData}
-          header={""}
-          tableStyle={{
-            minWidth: "20rem",
-            fontSize: "12px",
-            color: "#000000",
-            fontWeight: 600,
-            backgroundColor: "#D1D1D1",
-          }}
-          size="small"
-        >
-          <Column
-            header="ID"
-            field="id"
-            style={{ textAlign: "center", width: "3vw" }}
-          ></Column>
-          <Column
-            style={{ width: "8vw" }}
-            field="boatName"
-            header="boatName"
-          ></Column>
-          <Column
-            style={{ width: "8vw" }}
-            field="Customer Name"
-            header="Customer Name"
-          ></Column>
-          <Column style={{ width: "15vw" }} field="date" header="Date"></Column>
-          <Column
-            style={{ width: "11vw" }}
-            field="measurement"
-            header="Measurement"
-          ></Column>
-          <Column
-            style={{ width: "7vw" }}
-            field="place"
-            header="Place"
-          ></Column>
-          <Column
-            header="Actions"
-            body={() => (
-              <div className="flex gap-5">
-                <span className="text-black  font-bold underline cursor-pointer">
-                  Edit
-                </span>
-                <span className="text-black  font-bold underline cursor-pointer">
-                  Activate
-                </span>
-
-                <span className="text-red-600 font-bold underline cursor-pointer">
-                  Deactivate
-                </span>
-              </div>
-            )}
-          ></Column>
-        </DataTable>
+      <div className="card">
+            <TreeTable value={nodes}  tableStyle={{ minWidth: '50rem' }}>
+                <Column field="name" header="Name" expander></Column>
+                <Column field="size" header="Size"></Column>
+                <Column field="type" header="Type"></Column>
+            </TreeTable>
+        </div>
       </div>
     </>
   );

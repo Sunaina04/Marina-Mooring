@@ -57,14 +57,22 @@ const Customer = () => {
 
     try {
       const response = await getCustomer({}).unwrap();
-      console.log("response", response);
-      // const { data } = response as CUSTOMER_RESPONSE;
-      // console.log("DATAT" , data)
-      setBoatData(response as CUSTOMER_PAYLOAD[]);
-    } catch (error: any) {
-      console.error("Error occurred during login:", error);
-      if (error.data) {
+      console.log("Response:", response);
+  
+      if (typeof response === 'object' && response !== null && 'data' in response) {
+        console.log("Response data:", response.data);
+        setBoatData(response.data as CUSTOMER_PAYLOAD[]);
+      } else {
+        console.error("Invalid response format");
+      }
+    } catch (error) {
+      console.error("Error occurred while fetching customer data:", error);
+  
+      if (typeof error === 'object' && error !== null && 'data' in error) {
         const { message: msg } = error.data as ErrorResponse;
+        console.error("Error message:", msg);
+      } else {
+        console.error("Unknown error occurred");
       }
     }
   };
@@ -99,7 +107,18 @@ const Customer = () => {
             Moormanage/Customer
           </h1>
         </div>
-        <div className="mt-14 ml-[20.60rem]">
+        <div className="flex gap-4 mt-14 ml-[20.60rem]">
+
+        <div>
+          <div className="p-input-icon-left">
+            <i className="pi pi-search text-[#D2D2D2]" />
+            <InputText
+              placeholder="Search"
+              className="h-[5vh] cursor-pointer font-bold"
+            />
+          </div>
+        </div>
+
           <CustomModal
             label={"ADD NEW"}
             style={{

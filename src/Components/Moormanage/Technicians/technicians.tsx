@@ -7,6 +7,7 @@ import { Nullable } from "primereact/ts-helpers";
 import { Box } from "@mui/material";
 import { Datepicker } from "@mobiscroll/react";
 import AddTechnication from "./AddTechnician";
+import { InputText } from "primereact/inputtext";
 
 interface BoatData {
   id: string;
@@ -144,7 +145,7 @@ const Technicians = () => {
 
         <div className="ml-40 ">
           <SelectButton
-            style={{fontSize: "0.2rem", fontWeight: "bolder" }}
+            style={{ fontSize: "0.2rem", fontWeight: "bolder" }}
             value={value}
             onChange={(e: SelectButtonChangeEvent) => setValue(e.value)}
             options={options}
@@ -170,7 +171,18 @@ const Technicians = () => {
             Moormanage/Technicians
           </h1>
         </div>
-        <div className="flex flex-col items-center mr-10 mt-14">
+        <div className="flex gap-4 items-center mr-10 mt-14">
+          <div>
+            <div className="p-input-icon-left">
+              <i className="pi pi-search text-[#D2D2D2]" />
+              <InputText
+                placeholder="Search"
+                className="h-[5vh] cursor-pointer font-bold"
+              />
+            </div>
+          </div>
+
+
           <CustomModal
             onClick={handleButtonClick}
             visible={false}
@@ -187,26 +199,26 @@ const Technicians = () => {
         <div className="flex gap-8">
           <div className="bg-[#F2F2F2] rounded-md border-[1px]  border-[#D1D1D1] p-5 ml-10  w-[50vw] mb-5">
             <DataTable value={billsData} header={Billsheader} scrollable={true}>
-              <Column style={{ width: "1vw", fontSize:"0.75rem" }} field="id" header="ID"></Column>
+              <Column style={{ width: "1vw", fontSize: "0.75rem" }} field="id" header="ID"></Column>
               <Column
-                style={{width: "3vw", fontSize:"0.75rem" }}
+                style={{ width: "3vw", fontSize: "0.75rem" }}
                 field="mooring"
                 header="Mooring"
               ></Column>
               <Column
-                style={{ width: "4vw", fontSize:"0.75rem" }}
+                style={{ width: "4vw", fontSize: "0.75rem" }}
                 field="techniciansName"
                 header="Technicians Name"
               ></Column>
               <Column
-                style={{width: "2vw", fontSize:"0.75rem"}}
+                style={{ width: "2vw", fontSize: "0.75rem" }}
                 field="amount"
                 header="Amount"
               ></Column>
 
               <Column
                 header="Service Record"
-                style={{width: "5vw", fontSize:"0.75rem"}}
+                style={{ width: "5vw", fontSize: "0.75rem" }}
                 body={() => (
                   <div className="flex gap-5 ">
                     <span className="text-black underline cursor-pointer">
@@ -255,7 +267,7 @@ const Technicians = () => {
             header={""}
             tableStyle={
               {
-          
+
               }
             }
             scrollable={true}

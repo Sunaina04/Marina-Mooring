@@ -28,7 +28,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
   return (
     <>
       <div className="flex gap-4">
-        <div>
+        {/* <div>
           <div className="p-input-icon-left">
             <i className="pi pi-search text-[#D2D2D2]" />
             <InputText
@@ -36,9 +36,14 @@ const CustomModal: React.FC<CustomModalProps> = ({
               className="h-[5vh] cursor-pointer font-bold"
             />
           </div>
-        </div>
+        </div> */}
 
         <div>
+
+          {
+
+          
+          }
           {/* <Button
             label={"ADD NEW"}
             onClick={() => {
