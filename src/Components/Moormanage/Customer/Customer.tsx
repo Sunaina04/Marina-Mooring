@@ -68,7 +68,7 @@ const Customer = () => {
     // Handle edit action here, using the data from rowData if necessary
     console.log("Edit clicked for:", rowData);
   };
-  
+
   const handleDelete = async (rowData : any) => {
     // Handle delete action here, using the data from rowData if necessary
     console.log("Delete clicked for:", rowData , rowData?.id);
@@ -76,7 +76,6 @@ const Customer = () => {
     console.log("RESPONSE", response)
   };
 
-  
   useEffect(() => {
     getCustomerData();
   }, []);
@@ -178,3 +177,5 @@ const Customer = () => {
 };
 
 export default Customer;
+
+

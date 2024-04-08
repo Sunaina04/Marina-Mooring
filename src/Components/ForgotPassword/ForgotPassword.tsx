@@ -34,9 +34,11 @@ const ForgotPassword = () => {
               />
             </div>
             <div className="flex  mt-8 cursor-pointer ">
-              <p>
-                A link will shared on you Registered email address from where
-                you can change the password
+              <p className="w-[42vw] text-xs font-bold">
+                If you are having trouble logging in, please enter the email
+                address registered with MOORFIND. If it is a valid email
+                address, you will be sent an email allowing you to resest your
+                password.
               </p>
             </div>
           </div>

@@ -39,6 +39,7 @@ export default function LoginForm({
   const userData = useSelector((state: any) => state.user?.userData);
   const navigate = useNavigate();
 
+
   const [errors, setErrors] = useState({
     email: "",
     password: "",
@@ -264,10 +265,21 @@ export default function LoginForm({
               letterSpacing: "0.2px",
               fontSize: "1.50vw",
               // fontFamily: "Roboto",
+              marginBottom: "0"
             }}
             label={showSinUp ? Label : Label}
             onClick={signInHandler}
           />
+        </div>
+      </div>
+      <div className="flex justify-center items-center mt-0">
+        <div className="text-center mx-auto" style={{ width: "40vw" }}>
+          <p  className="text-xs font-bold">
+            Just testing the waters? If you do not have an account{" "}
+            <span className="underline font-bolder">CLICK HERE</span> to let us know you
+            would like to connect and see if MOORFIND can work for you and your
+            business.
+          </p>
         </div>
       </div>
     </>
