@@ -4,6 +4,20 @@ import { Dialog } from "primereact/dialog";
 import ButtonComponent from "../Common/ButtonComponent";
 import { InputText } from "primereact/inputtext";
 
+export const style = {
+  position: "absolute" as "absolute",
+  top: "50%",
+  left: "''",
+  transform: "translate(-50%, -50%)",
+  // width: "50%",
+  bgcolor: "background.white",
+  borderRadius: "25px",
+  p: 3,
+  maxHeight: "90vh",
+  overflowY: "auto",
+};
+
+
 interface CustomModalProps {
   onClick: () => void;
   visible: boolean;

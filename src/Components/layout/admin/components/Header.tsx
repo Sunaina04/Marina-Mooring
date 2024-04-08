@@ -13,6 +13,11 @@ import {
 } from "@mui/material";
 import { drawerWidth } from "../../../constants";
 
+interface HeaderProps {
+  openHeader: boolean;
+  handleDrawerOpen: () => void;
+}
+
 const Header: React.FC = () => {
   interface AppBarProps extends MuiAppBarProps {
     open?: boolean;
@@ -81,7 +86,11 @@ const Header: React.FC = () => {
           >
             {/* Add user's name and image*/}
             <Avatar alt="user" src="" />
-            <Typography variant="body1" color="inherit" sx={{ marginRight: -3 }}>
+            <Typography
+              variant="body1"
+              color="inherit"
+              sx={{ marginRight: -3 }}
+            >
               John Smith
             </Typography>
             {/* Add the expandable icon (ExpandMore) */}
