@@ -199,9 +199,16 @@ const AdminLayout = () => {
           ))}
         </List>
 
-
-        <Box sx={{ position: "fixed", top: "85%", width: "19%", display:"flex", flexDirection:"column", gap:"1rem"}}>
-          
+        <Box
+          sx={{
+            position: "fixed",
+            top: "85%",
+            width: "18rem",
+            display: "flex",
+            flexDirection: "column",
+            gap: "1rem",
+          }}
+        >
           <Box
             sx={{
               background: "#D9D9D9",
@@ -209,7 +216,7 @@ const AdminLayout = () => {
               alignItems: "center",
               justifyContent: "flex-start",
 
-              gap:"1rem"
+              gap: "1rem",
             }}
           >
             <ListItemButton
@@ -249,7 +256,6 @@ const AdminLayout = () => {
             </ListItemButton>
           </Box>
 
-
           <Box
             sx={{
               background: "#D9D9D9",
@@ -257,7 +263,7 @@ const AdminLayout = () => {
               alignItems: "center",
               justifyContent: "flex-start",
 
-              gap:"1rem"
+              gap: "1rem",
             }}
           >
             <ListItemButton
@@ -296,25 +302,7 @@ const AdminLayout = () => {
               />
             </ListItemButton>
           </Box>
-
-
-
-        </Box> 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        </Box>
       </Drawer>
       <Box
         component="main"
