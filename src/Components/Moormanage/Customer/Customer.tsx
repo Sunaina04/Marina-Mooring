@@ -58,8 +58,13 @@ const Customer = () => {
     try {
       const response = await getCustomer({}).unwrap();
       console.log("Response:", response);
-  
-      if (typeof response === 'object' && response !== null && 'data' in response) {
+      setBoatData(response as CUSTOMER_PAYLOAD[]);
+
+      if (
+        typeof response === "object" &&
+        response !== null &&
+        "data" in response
+      ) {
         console.log("Response data:", response.data);
         setBoatData(response.data as CUSTOMER_PAYLOAD[]);
       } else {
@@ -67,8 +72,8 @@ const Customer = () => {
       }
     } catch (error) {
       console.error("Error occurred while fetching customer data:", error);
-  
-      if (typeof error === 'object' && error !== null && 'data' in error) {
+
+      if (typeof error === "object" && error !== null && "data" in error) {
         const { message: msg } = error.data as ErrorResponse;
         console.error("Error message:", msg);
       } else {
@@ -82,8 +87,7 @@ const Customer = () => {
     setEditMode(true);
   };
 
-
-  const handleDelete = async (rowData: any) => 
+  const handleDelete = async (rowData: any) => {
     // Handle delete action here, using the data from rowData if necessary
     console.log("Delete clicked for:", rowData, rowData?.id);
 
@@ -96,6 +100,23 @@ const Customer = () => {
     }
   };
 
+  const CustomerHeader = () => {
+    return (
+      <div className="flex flex-col">
+        <span className="text-sm font-extrabold mb-2">Customers</span>
+        <div className="flex items-center gap-2 p-2">
+          <div className="p-input-icon-left">
+            <i className="pi pi-search text-[#D2D2D2]" />
+            <InputText
+              placeholder="Search by name, ID, mooring no, boat name, phone no..."
+              className="h-[5vh] w-[48vh] cursor-pointer text-sm"
+            />
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   useEffect(() => {
     getCustomerData();
   }, []);
@@ -105,12 +126,11 @@ const Customer = () => {
       <div className="flex  items-center ml-9">
         <div>
           <h1 className="mt-14 ml-12 opacity-30 text-2xl font-normal">
-            Moormanage/Customer
+            MOORMANAGE/Customer
           </h1>
         </div>
         <div className="flex gap-4 mt-14 ml-[20.60rem]">
-
-        <div>
+          {/* <div>
           <div className="p-input-icon-left">
             <i className="pi pi-search text-[#D2D2D2]" />
             <InputText
@@ -118,7 +138,7 @@ const Customer = () => {
               className="h-[5vh] cursor-pointer font-bold"
             />
           </div>
-        </div>
+        </div> */}
 
           <CustomModal
             label={"ADD NEW"}
@@ -136,21 +156,27 @@ const Customer = () => {
             visible={modalVisible || editMode}
             onHide={handleModalClose}
           >
-            <AddCustomer customer={selectedCustomer} editMode={editMode} closeModal={handleModalClose} getCustomer={getCustomerData}/>
+            <AddCustomer
+              customer={selectedCustomer}
+              editMode={editMode}
+              closeModal={handleModalClose}
+              getCustomer={getCustomerData}
+            />
           </CustomModal>
         </div>
       </div>
 
-      <div className="flex  mt-10 ml-12 mr-20">
+      {/* <div className="flex  mt-10 ml-12 mr-20">
         {statCardsData.map((items) => (
           <StatCard key={items[0].title} items={items} />
         ))}
-      </div>
+      </div> */}
 
-      <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[63.50vw] ml-20 mt-10">
+      <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[28vw] ml-20 mt-10">
         <DataTable
           value={boatData}
-          header={""}
+          header={CustomerHeader}
+          scrollable={true}
           tableStyle={{
             // minWidth: "20rem",
             fontSize: "12px",
@@ -161,26 +187,26 @@ const Customer = () => {
           size="small"
         >
           <Column
-            header="ID"
+            header="ID:"
             field="customerId"
-            style={{ width: "8vw" }}
+            style={{ width: "6vw" }}
           ></Column>
           <Column
-            style={{ width: "12vw" }}
+            style={{ width: "6vw" }}
             field="customerName"
-            header="Customer Name"
+            header="Name:"
           ></Column>
           <Column
-            style={{ width: "12vw" }}
+            style={{ width: "10vw" }}
             field="emailAddress"
-            header="Email"
+            header="Email:"
           ></Column>
           <Column
-            style={{ width: "12vw" }}
+            style={{ width: "5vw" }}
             field="phone"
-            header="Phone"
+            header="Phone:"
           ></Column>
-          <Column
+          {/* <Column
             style={{ width: "10vw" }}
             field="address"
             header="Address"
@@ -201,7 +227,7 @@ const Customer = () => {
                 />
               </div>
             )}
-          ></Column>
+          ></Column> */}
         </DataTable>
       </div>
     </>
@@ -209,5 +235,3 @@ const Customer = () => {
 };
 
 export default Customer;
-
-
