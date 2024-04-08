@@ -199,41 +199,56 @@ const AdminLayout = () => {
           ))}
         </List>
 
-        <Box sx={{ position: "fixed", top: "85%", width: "19%" }}>
+
+        <Box sx={{ position: "fixed", top: "85%", width: "19%", display:"flex", flexDirection:"column", gap:"1rem"}}>
+          
           <Box
             sx={{
               background: "#D9D9D9",
               display: "flex",
               alignItems: "center",
               justifyContent: "flex-start",
-              padding: "3px 16px",
-              "&:hover": {
-                backgroundColor: "#EDEDED",
-              },
-              marginBottom: "1rem", // Added margin bottom for spacing between buttons
+
+              gap:"1rem"
             }}
           >
-            <ListItemIcon sx={{ minWidth: "auto" }}>
-              <img
-                src="/assets/images/square.png"
-                alt="Permissions"
-                width={17}
-                style={{ marginRight: "12.5px", marginLeft: "10px" }}
-              />
-            </ListItemIcon>
-            <ListItemText
-              primary="Permissions"
-              primaryTypographyProps={{
-                sx: {
-                  fontSize: "12.5px",
-                  fontWeight: 700,
-                  lineHeight: "1.5",
-                  letterSpacing: "0.2px",
-                  textAlign: "left",
+            <ListItemButton
+              component={NavLink as React.FC<NavLinkProps>}
+              to={"/permission"}
+              sx={{
+                width: "100%",
+                height: "auto",
+                justifyContent: "flex-start",
+                alignItems: "center",
+                padding: "3px 16px",
+                "&:hover": {
+                  backgroundColor: "#EDEDED",
                 },
               }}
-            />
+            >
+              <ListItemIcon sx={{ minWidth: "auto" }}>
+                <img
+                  src="/assets/images/square.png"
+                  alt="Logout"
+                  width={17}
+                  style={{ marginRight: "12.5px", marginLeft: "10px" }}
+                />
+              </ListItemIcon>
+              <ListItemText
+                primary="Permissions"
+                primaryTypographyProps={{
+                  sx: {
+                    fontSize: "12.5px",
+                    fontWeight: 700,
+                    lineHeight: "1.5",
+                    letterSpacing: "0.2px",
+                    textAlign: "left",
+                  },
+                }}
+              />
+            </ListItemButton>
           </Box>
+
 
           <Box
             sx={{
@@ -241,34 +256,65 @@ const AdminLayout = () => {
               display: "flex",
               alignItems: "center",
               justifyContent: "flex-start",
-              padding: "4px 16px",
-              "&:hover": {
-                backgroundColor: "#EDEDED",
-              },
+
+              gap:"1rem"
             }}
           >
-            <ListItemIcon sx={{ minWidth: "auto" }}>
-              <img
-                src="/assets/images/square.png"
-                alt="Logout"
-                width={17}
-                style={{ marginRight: "12.5px", marginLeft: "10px" }}
-              />
-            </ListItemIcon>
-            <ListItemText
-              primary="Logout"
-              primaryTypographyProps={{
-                sx: {
-                  fontSize: "12.5px",
-                  fontWeight: 700,
-                  lineHeight: "1.5",
-                  letterSpacing: "0.2px",
-                  textAlign: "left",
+            <ListItemButton
+              component={NavLink as React.FC<NavLinkProps>}
+              to={""}
+              sx={{
+                width: "100%",
+                height: "auto",
+                justifyContent: "flex-start",
+                alignItems: "center",
+                padding: "3px 16px",
+                "&:hover": {
+                  backgroundColor: "#EDEDED",
                 },
               }}
-            />
+            >
+              <ListItemIcon sx={{ minWidth: "auto" }}>
+                <img
+                  src="/assets/images/square.png"
+                  alt="Logout"
+                  width={17}
+                  style={{ marginRight: "12.5px", marginLeft: "10px" }}
+                />
+              </ListItemIcon>
+              <ListItemText
+                primary="Logout"
+                primaryTypographyProps={{
+                  sx: {
+                    fontSize: "12.5px",
+                    fontWeight: 700,
+                    lineHeight: "1.5",
+                    letterSpacing: "0.2px",
+                    textAlign: "left",
+                  },
+                }}
+              />
+            </ListItemButton>
           </Box>
-        </Box>
+
+
+
+        </Box> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       </Drawer>
       <Box
         component="main"
