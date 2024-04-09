@@ -4,7 +4,7 @@
 // }
 exports.baseUrl = {
     // basePath: 'http://localhost:3003/',
-    basePath: 'http://localhost:8082/',
+    basePath: 'http://localhost:8084/',
 };
 
 
