@@ -203,7 +203,7 @@ const Reports = () => {
             <div className="bg-[#F2F2F2] rounded-md border-[1px]  border-[#D1D1D1] p-5 ml-10  w-[40vw] mb-5">
               <DataTable
                 value={billsData}
-                header={Billsheader}
+                header={"Customers"}
                 scrollable={true}
               >
                 <Column
@@ -241,51 +241,11 @@ const Reports = () => {
               </DataTable>
             </div>
 
-            <div>
-              <div className="bg-[#F2F2F2] rounded-md border-[1px]  border-[#D1D1D1] p-5 ml-10  w-[40vw] mb-5">
-                <DataTable
-                  value={billsData}
-                  header={Billsheader}
-                  scrollable={true}
-                >
-                  <Column
-                    style={{ width: "2vw", fontSize: "0.75rem" }}
-                    field="id"
-                    header="ID"
-                  ></Column>
-                  <Column
-                    style={{ width: "4vw", fontSize: "0.75rem" }}
-                    field="mooring"
-                    header="Mooring"
-                  ></Column>
-                  <Column
-                    style={{ width: "6vw", fontSize: "0.75rem" }}
-                    field="techniciansName"
-                    header="Technicians Name"
-                  ></Column>
-                  <Column
-                    style={{ width: "4vw", fontSize: "0.75rem" }}
-                    field="amount"
-                    header="Boatyard"
-                  ></Column>
-
-                  <Column
-                    header="Action"
-                    style={{ width: "5vw", fontSize: "0.75rem" }}
-                    body={() => (
-                      <div className="flex gap-5 ">
-                        <span className="text-black  cursor-pointer">View</span>
-                      </div>
-                    )}
-                  ></Column>
-                </DataTable>
-              </div>
-            </div>
           </div>
 
           <div>
             <div className="bg-[#F2F2F2] rounded-md border-[1px]  border-[#D1D1D1] p-5 ml-8  w-[25vw]  mb-5">
-              <DataTable value={bill} header={"Estimates"} scrollable={true}>
+              <DataTable value={bill} header={"Customer by Mooring"} scrollable={true}>
                 <Column
                   style={{ width: "2vw", fontSize: "0.75rem" }}
                   field="id"
@@ -301,11 +261,7 @@ const Reports = () => {
                   field="techniciansName"
                   header="Customer Name"
                 ></Column>
-                <Column
-                  style={{ width: "6vw", fontSize: "0.75rem" }}
-                  field="amount"
-                  header="Approved"
-                ></Column>
+              
 
                 <Column
                   header="Action"
@@ -320,6 +276,49 @@ const Reports = () => {
                 ></Column>
               </DataTable>
             </div>
+
+
+
+
+            <div className="bg-[#F2F2F2] rounded-md border-[1px]  border-[#D1D1D1] p-5 ml-8  w-[25vw]  mb-5">
+              <DataTable value={bill} header={"Technicians"} scrollable={true}>
+                <Column
+                  style={{ width: "2vw", fontSize: "0.75rem" }}
+                  field="id"
+                  header="ID"
+                ></Column>
+                <Column
+                  style={{ width: "8vw", fontSize: "0.75rem" }}
+                  field="mooring"
+                  header="Boat Name"
+                ></Column>
+                <Column
+                  style={{ width: "9vw", fontSize: "0.75rem" }}
+                  field="techniciansName"
+                  header="Customer Name"
+                ></Column>
+             
+
+                <Column
+                  header="Action"
+                  style={{ width: "5vw", fontSize: "0.75rem" }}
+                  body={() => (
+                    <div className="flex gap-5 ">
+                      <span className="text-black underline cursor-pointer">
+                        Converted
+                      </span>
+                    </div>
+                  )}
+                ></Column>
+              </DataTable>
+            </div>
+
+
+
+
+
+
+
           </div>
         </div>
       </div>
