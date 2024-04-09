@@ -474,12 +474,12 @@ const AddMoorings: React.FC<Props> = ({ moorings, editMode }) => {
               </div>
             </div>
 
-            <div className="mr-10">
-              <div>
+            <div className="mr-14">
+              <div className="mr-3">
                 <span className="font-semibold text-sm">Pennant Condition</span>
               </div>
 
-              <div>
+              <div className="mr-4">
                 <Dropdown
                   value={selectedCity}
                   onChange={(e: DropdownChangeEvent) =>

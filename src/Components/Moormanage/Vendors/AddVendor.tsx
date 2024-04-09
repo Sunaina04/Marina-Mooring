@@ -22,17 +22,17 @@ const AddVendor = () => {
   return (
     <>
       <div className="main">
-        <h1 className=" text-lg font-bold">Add Vendor</h1>
+        <h1 className=" text-lg font-bold">Add Company</h1>
 
         <div className="flex">
           <div className="flex mt-3 gap-8">
             <div>
               <div>
-                <span className="font-semibold text-sm">Vendor Name</span>
+                <span className="font-semibold text-sm">Company Name</span>
                 <div className="mt-2">
                   <InputComponent
                     style={{
-                      width: "13vw",
+                      width: "14vw",
                       height: "4vh",
                       border: "1px solid gray",
                       borderRadius: "0.50rem",
@@ -42,82 +42,69 @@ const AddVendor = () => {
                 </div>
               </div>
 
-              <div>
-                <div className="mt-2">
-                  <span className="font-semibold text-sm ">Email</span>
-                </div>
 
-                <div className="mt-2">
-                  <InputComponent
-                    // placeholder="Enter customer ID"
-                    // type="text"
-                    style={{
-                      width: "13vw",
-                      height: "4vh",
-                      border: "1px solid gray",
-                      borderRadius: "0.50rem",
-                      fontSize: "0.80vw",
-                    }}
-                  />
-                </div>
-              </div>
 
-              <div></div>
+
+
+
+
+
+
             </div>
 
-            <div className="">
-              <div>
-                <span className="font-semibold text-sm">Vendor ID</span>
-                <div className="mt-2">
-                  <InputComponent
-                    style={{
-                      width: "13vw",
-                      height: "4vh",
-                      border: "1px solid gray",
-                      borderRadius: "0.50rem",
-                      fontSize: "0.80vw",
-                    }}
-                  />
-                </div>
-              </div>
 
-              <div>
-                <div className="mt-2">
-                  <span className="font-semibold text-sm">Phone</span>
-                </div>
-
-                <div className="mt-2">
-                  <InputComponent
-                    // placeholder="Enter customer ID"
-                    // type="text"
-                    style={{
-                      width: "13vw",
-                      height: "4vh",
-                      border: "1px solid gray",
-                      borderRadius: "0.50rem",
-                      fontSize: "0.80vw",
-                    }}
-                  />
-                </div>
+            <div>
+              <span className="font-semibold text-sm">Phone</span>
+              <div className="mt-2">
+                <InputComponent
+                  style={{
+                    width: "14vw",
+                    height: "4vh",
+                    border: "1px solid gray",
+                    borderRadius: "0.50rem",
+                    fontSize: "0.80vw",
+                  }}
+                />
               </div>
             </div>
+
+            <div>
+              <div className="">
+                <span className="font-semibold text-sm">Website</span>
+              </div>
+
+              <div className="mt-2">
+                <InputComponent
+                  // placeholder="Enter customer ID"
+                  // type="text"
+                  style={{
+                    width: "14vw",
+                    height: "4vh",
+                    border: "1px solid gray",
+                    borderRadius: "0.50rem",
+                    fontSize: "0.80vw",
+                  }}
+                />
+              </div>
+            </div>
+
+
+
+
           </div>
 
-          <div className="w-4 h-4 rounded-full mr-3 border-5 border-[red] mt-20 ml-14">
-            image
-          </div>
         </div>
 
         <div className="">
-          <div className="mt-4 ">
+          <div className="mt-3 ml-1">
             <h1 className="text-sm font-bold">Address</h1>
           </div>
 
-          <div className="flex justify-around  mt-2 gap-4 ">
+          <div className="flex   mt-2  ">
             <div>
-              <div className="mt-2">
+              <div className="mt-2 mr-9">
                 <InputText
-                  placeholder="Street/house"
+                  placeholder="Street"
                   // type="text"
                   style={{
                     width: "14vw",
@@ -132,19 +119,21 @@ const AddVendor = () => {
             <div>
               <div className="mt-2">
                 <InputText
-                  placeholder="Sector/Block"
+                  placeholder="Apt/Suite"
                   type="text"
                   style={{
                     width: "14vw",
                     height: "4vh",
                     border: "1px solid gray",
                     borderRadius: "0.50rem",
+                  
                   }}
+                  className="mr-4"
                 />
               </div>
             </div>
 
-            <div className="card flex justify-content-center mt-2 ">
+            <div className="mt-2 ml-4">
               <Dropdown
                 value={selectedCity}
                 onChange={(e: DropdownChangeEvent) => setSelectedCity(e.value)}
@@ -162,8 +151,8 @@ const AddVendor = () => {
             </div>
           </div>
 
-          <div className="flex mt-5 gap-5">
-            <div className="card flex justify-content-center">
+          <div className="flex mt-5 gap-9">
+            <div className="">
               <Dropdown
                 value={selectedCity}
                 onChange={(e: DropdownChangeEvent) => setSelectedCity(e.value)}
@@ -180,8 +169,52 @@ const AddVendor = () => {
                 }}
               />
             </div>
+            <div>
             <InputText
-              placeholder="Pincode"
+              placeholder="Zipcode"
+              style={{
+                width: "14vw",
+                height: "4vh",
+                border: "1px solid gray",
+                borderRadius: "0.50rem",
+              }}
+            />
+            </div>
+           
+
+            
+              <div className="">
+                <InputText
+                  placeholder="Email Address"
+                  type="text"
+                  style={{
+                    width: "14vw",
+                    height: "4vh",
+                    border: "1px solid gray",
+                    borderRadius: "0.50rem",
+                  }}
+                />
+              </div>
+         
+
+
+
+          </div>
+        </div>
+
+
+
+
+        <div>
+          <div className="mt-2">
+            <div className="ml-1">
+              <span>Account Number</span>
+
+            </div>
+
+            <InputText
+              placeholder="Sector/Block"
+              type="text"
               style={{
                 width: "14vw",
                 height: "4vh",
@@ -192,15 +225,95 @@ const AddVendor = () => {
           </div>
         </div>
 
+
         <div className="">
-          <div className="mt-4">
-            <span className="text-sm font-bold">Note</span>
+          <div className="mt-4 ">
+            <h1 className="text-sm font-bold">Sales Representative</h1>
           </div>
 
-          <div className="mt-4">
-            <div className="card flex justify-content-center">
+          <div className="flex   mt-2 gap-8 ">
+            <div className="mt-2">
+              <div>
+                <span>First Name</span>
+              </div>
+              <InputText
+                placeholder=""
+                type="text"
+                style={{
+                  width: "14vw",
+                  height: "4vh",
+                  border: "1px solid gray",
+                  borderRadius: "0.50rem",
+                }}
+              />
+            </div>
+
+
+            <div>
+              <div className="mt-2">
+                <div>
+                  <span>Last Name</span>
+                </div>
+                <InputText
+                  placeholder=""
+                  type="text"
+                  style={{
+                    width: "14vw",
+                    height: "4vh",
+                    border: "1px solid gray",
+                    borderRadius: "0.50rem",
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className="card flex justify-content-center mt-2 ">
+              <div className="">
+                <div>
+                  <span>Phone</span>
+                </div>
+                <InputText
+                  placeholder=""
+                  type="text"
+                  style={{
+                    width: "14vw",
+                    height: "4vh",
+                    border: "1px solid gray",
+                    borderRadius: "0.50rem",
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="flex mt-5 gap-4">
+
+            <div className="mt-2">
+              <div>
+                <span>Email</span>
+              </div>
+              <InputText
+                placeholder=""
+                type="text"
+                style={{
+                  width: "14vw",
+                  height: "4vh",
+                  border: "1px solid gray",
+                  borderRadius: "0.50rem",
+                }}
+              />
+            </div>
+
+            <div>
+
+            </div>
+
+            <div className="mt-1">
+              <div>
+                <span>Note</span>
+              </div>
               <InputTextarea
-                className="w-full h-14"
+                className="w-[30vw] h-[1vh] rounded-lg  border-[1px] border-gray-500"
                 autoResize
                 value={value}
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
@@ -210,8 +323,12 @@ const AddVendor = () => {
                 cols={30}
               />
             </div>
+
           </div>
         </div>
+
+
+
 
         <div className="flex gap-3 mt-4 ">
           <ButtonComponent
