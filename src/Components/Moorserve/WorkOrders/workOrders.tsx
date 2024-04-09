@@ -62,11 +62,18 @@ const WorkOrders = () => {
   };
 
   const header = (
-    <div className="flex flex-wrap align-items-center justify-between gap-2 p-4">
+    <div className="flex flex-wrap align-items-center justify-between  p-4">
       <span className="text-xl font-bold">Work Orders</span>
-      <span className="font-[Lato] text-[14px] font-bold text-left ">
-        View All
-      </span>
+      <div className="">
+              <div className="p-input-icon-left">
+                <i className="pi pi-search text-[#D2D2D2] " />
+                <InputText
+                  placeholder="Search"
+                  className="h-[5vh] cursor-pointer font-bold"
+                />
+              </div>
+            </div>
+
     </div>
   );
 
@@ -80,19 +87,10 @@ const WorkOrders = () => {
             </h1>
           </div>
           <div className="flex mr-36 gap-4">
-            <div>
-              <div className="p-input-icon-left">
-                <i className="pi pi-search text-[#D2D2D2] " />
-                <InputText
-                  placeholder="Search"
-                  className="h-[5vh] cursor-pointer font-bold"
-                />
-              </div>
-            </div>
-
+            
             <div>
               <ButtonComponent
-                label={"Filter"}
+                label={"Create New"}
                 onClick={() => {}}
                 style={{
                   width: "7vw",
@@ -104,16 +102,7 @@ const WorkOrders = () => {
                   fontSize: "0.80vw",
                 }}
               >
-                <img
-                  src="/assets/images/more.png"
-                  alt="icon"
-                  className="p-icon  w-4 ml-3 "
-                  style={{
-                    filter: "invert(100%)",
-                    color: "whitesmoke",
-                    fontWeight: "bolder",
-                  }}
-                />
+                
               </ButtonComponent>
             </div>
           </div>
@@ -134,38 +123,36 @@ const WorkOrders = () => {
             <Column
               style={{ width: "7vw" }}
               field="boatName"
-              header="Boat Name"
+              header="Customer Name"
             ></Column>
             <Column
               style={{ width: "7vw" }}
               field="name"
-              header="Name"
+              header="Mooring Number"
             ></Column>
             <Column
               style={{ width: "15vw" }}
               field="date"
-              header="Date"
+              header="Boatyard"
             ></Column>
             <Column
               style={{ width: "13vw" }}
               field="measurement"
-              header="Measurement"
+              header="Assigned to"
             ></Column>
             <Column
               style={{ width: "6vw" }}
               field="place"
-              header="Place"
+              header="Due date"
             ></Column>
             <Column
               header="Action"
               body={() => (
                 <div className="flex gap-4">
-                  <span className="text-green underline cursor-pointer">
-                    Approve
+                  <span className="text-green  cursor-pointer">
+                    New Request
                   </span>
-                  <span className="text-red-500 underline cursor-pointer">
-                    Reject
-                  </span>
+              
                   <span className="text-green underline cursor-pointer">
                     Edit
                   </span>

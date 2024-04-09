@@ -16,17 +16,26 @@ const StatCard: React.FC<StatCardProps> = ({ items }) => {
   const color2 = "rgba(255, 255, 255, 0)";
 
   return (
-    <div
-      className="bg-white shadow-md rounded-md p-4 ml-8 mb-4 w-[42vh]"
-      style={{ border: "2px solid #B3B3B3" }}
-    >
+    <div>
       <div className="flex justify-between items-center mb-2">
-        <div className="text-sm font-bold" style={{ color : "#A6A6A6"}}>{items[0].title}</div>
-        <div className="text-gray-600 text-sm">{items[0].percentage}%<ArrowUpward style={{rotate : "40deg" , color :"#858EBD"}}/></div>
+        <div
+          className="text-[2rem] font-extrabold text-[#A6A6A6]"
+          style={{ fontWeight: "bolder" }}
+        >
+          {items[0].title}
+        </div>
+        <div className="text-gray-400 text-[2.50rem] font-extrabold">
+          {items[0].percentage}%
+          <ArrowUpward
+            style={{ rotate: "40deg", color: "#A6A6A6", fontSize: "5rem" }}
+          />
+        </div>
       </div>
       <div className="flex justify-between items-center ml-12">
-        <div className="text-2xl font-bold" style={{color : "#00000"}}>{items[0].count}</div>
-        <div style={{ width: "50%", height: 100}}>
+        <div className=" font-extrabold text-[#000]  text-[3rem]">
+          {items[0].count}
+        </div>
+        <div style={{ width: "50%", height: 100, fontWeight: "bolder" }}>
           <ResponsiveContainer>
             <AreaChart
               data={items}

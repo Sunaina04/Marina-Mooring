@@ -200,13 +200,9 @@ const Dashboard = () => {
                 <Column
                   style={{ width: "7vw" }}
                   field="name"
-                  header="Name"
+                  header="Customer Name"
                 ></Column>
-                <Column
-                  style={{ width: "11vw" }}
-                  field="date"
-                  header="Date"
-                ></Column>
+               
                 <Column
                   style={{ width: "13vw" }}
                   field="measurement"
@@ -218,14 +214,14 @@ const Dashboard = () => {
                   header="Place"
                 ></Column>
                 <Column
-                  header="Action"
+                  header="Status"
                   body={() => (
                     <div className="flex gap-4">
+                      <span className="text-green-500  cursor-pointer">
+                        Complete
+                      </span>
                       <span className="text-black underline cursor-pointer">
                         Edit
-                      </span>
-                      <span className="text-red-500 underline cursor-pointer">
-                        Delete
                       </span>
                     </div>
                   )}
@@ -326,10 +322,9 @@ const Dashboard = () => {
 
           <div>
             <Accordion
-            
               expanded={expanded === "panel1"}
               onChange={handleChange("panel1")}
-              sx={{ width: "30vw",   }}
+              sx={{ width: "30vw" }}
             >
               <AccordionSummary
                 expandIcon={
@@ -338,9 +333,7 @@ const Dashboard = () => {
                 aria-controls="panel1-content"
                 id="panel1-header"
               >
-                {/* <CalendarTodayIcon sx={{ marginRight: "8px" , color:"black"}} /> */}
-
-                <img src="/assets/images/Clander.png" alt="icon" style={{ marginRight: "8px", width:"5%" }} />  Calendar
+                <CalendarTodayIcon sx={{ marginRight: "8px" }} /> Calendar
               </AccordionSummary>
               <AccordionDetails>
                 <div className="flex gap-2">
@@ -371,9 +364,7 @@ const Dashboard = () => {
                 id="panel2-header"
               >
                 <FileCopyIcon sx={{ marginRight: "8px" }} /> Open Work Orders
-             
               </AccordionSummary>
-
               <AccordionDetails>
                 <div className="w-full p-2  ">
                   <DataTable
@@ -434,12 +425,17 @@ const Dashboard = () => {
                 aria-controls="panel3-content"
                 id="panel3-header"
               >
-                <img src="/assets/images/ship.png" alt="icon" style={{ marginRight: "8px", width:"7%" }} /> Total Moorings
+                <CalendarTodayIcon sx={{ marginRight: "8px" }} /> Total Moorings
               </AccordionSummary>
               <AccordionDetails>
                 <div>
                   {statCardsData.map((items) => (
-                    <StatCard key={items[0].title} items={items} />
+                    <StatCard 
+                    
+                    key={items[0].title} items={items}
+                    
+                    
+                    />
                   ))}
                 </div>
               </AccordionDetails>
