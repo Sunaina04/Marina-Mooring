@@ -13,7 +13,7 @@ export interface CUSTOMER_PAYLOAD {
 
 export interface CUSTOMER_RESPONSE {
   // data : [
-    id: string;
+  id: string;
   customerName: string;
   customerId: string;
   phone: string;
@@ -27,3 +27,28 @@ export interface CUSTOMER_RESPONSE {
   // ]
 }
 
+export interface MOORING_PAYLOAD {
+  id: string;
+  mooringNumber: string;
+  ownerName: string;
+  harbor: string;
+  waterDepth: string;
+  gpsCoordinates: string;
+  boatName: string;
+  boatSize: string;
+  boatType: string;
+  boatWeight: string;
+  conditionOfEye: string;
+  bottomChainCondition: string;
+  topChainCondition: string;
+  shackleSwivelCondition: string;
+  pennantCondition: string;
+}
+
+export interface MOORING_RESPONSE {
+  message: string;
+  status: number;
+  errorList: string[];
+  time: string;
+  content: {};
+}

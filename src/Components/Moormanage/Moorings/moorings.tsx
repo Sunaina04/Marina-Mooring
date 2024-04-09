@@ -7,9 +7,8 @@ import AddCustomer from "../Customer/AddCustomer";
 import AddMoorings from "./AddMoorings";
 import { InputText } from "primereact/inputtext";
 import React, { useState, useEffect } from 'react';
-import { TreeTable } from 'primereact/treetable';
 import { Column } from 'primereact/column';
-import { TreeNode } from 'primereact/treenode';
+import { useGetMooringsMutation } from "../../../Services/MoorManage/moormanage";
 
 interface CustomerData {
   id: string;
@@ -22,41 +21,9 @@ interface CustomerData {
 
 const Moorings = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [boatData, setBoatData] = useState<CustomerData[]>([
-    {
-      id: "01",
-      boatName: "Suncatcher",
-      name: "John Smith",
-      date: "15, March 2024 to 15, March 2024",
-      measurement: "Length: 10m, Width: 3.8m",
-      place: "Boatyard",
-    },
-    {
-      id: "01",
-      boatName: "Suncatcher",
-      name: "John Smith",
-      date: "15, March 2024 to 15, March 2024",
-      measurement: "Length: 10m, Width: 3.8m",
-      place: "Boatyard",
-    },
-    {
-      id: "01",
-      boatName: "Suncatcher",
-      name: "John Smith",
-      date: "15, March 2024 to 15, March 2024",
-      measurement: "Length: 10m, Width: 3.8m",
-      place: "Boatyard",
-    },
-    {
-      id: "01",
-      boatName: "Suncatcher",
-      name: "John Smith",
-      date: "15, March 2024 to 15, March 2024",
-      measurement: "Length: 10m, Width: 3.8m",
-      place: "Boatyard",
-    },
-  ]);
-
+  const [boatData, setBoatData] = useState<CustomerData[]>([]);
+  const [getMoorings] = useGetMooringsMutation();
+ 
   const handleButtonClick = () => {
     setModalVisible(true);
   };
@@ -66,38 +33,31 @@ const Moorings = () => {
   };
 
 
-  const [nodes, setNodes] = useState<TreeNode[]>([]);
+  const MooringsHeader = () => {
+    return (
+      <div className="flex flex-col">
+        <span className="text-sm font-extrabold mb-2">Moorings</span>
+        <div className="flex items-center gap-2 p-2">
+          <div className="p-input-icon-left">
+            <i className="pi pi-search text-[#D2D2D2]" />
+            <InputText
+              placeholder="Search by name, ID, mooring no, boat name, phone no..."
+              className="h-[5vh] w-[48vh] cursor-pointer text-sm"
+            />
+          </div>
+        </div>
+      </div>
+    );
+  };
 
-  useEffect(() => {
-      let files = [];
+  const getMooringsData = async () => {
+    const response =  await getMoorings({});
+    console.log("RESPONSE" , response)
+  }
 
-      for (let i = 0; i < 5; i++) {
-          let node = {
-              key: i,
-              data: {
-                  name: 'Item ' + i,
-                  size: Math.floor(Math.random() * 1000) + 1 + 'kb',
-                  type: 'Type ' + i
-              },
-              children: [
-                  {
-                      key: i + ' - 0',
-                      data: {
-                          name: 'Item ' + i + ' - 0',
-                          size: Math.floor(Math.random() * 1000) + 1 + 'kb',
-                          type: 'Type ' + i
-                      }
-                  }
-              ]
-          };
-
-          files.push(node);
-      }
-
-      setNodes(files);
-  }, []);
-
-
+  useEffect (() => {
+    getMooringsData();
+  },[])
 
   return (
     <>
@@ -110,17 +70,6 @@ const Moorings = () => {
         </div>
         <div className="flex gap-4 items-center mr-20 mt-14">
 
-
-        <div>
-          <div className="p-input-icon-left">
-            <i className="pi pi-search text-[#D2D2D2]" />
-            <InputText
-              placeholder="Search"
-              className="h-[5vh] cursor-pointer font-bold"
-            />
-          </div>
-        </div>
-
           <CustomModal
             onClick={handleButtonClick}
             visible={false}
@@ -131,14 +80,64 @@ const Moorings = () => {
           </CustomModal>
         </div>
       </div>
-      <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[73vw] ml-20 mt-10">
-      <div className="card">
-            <TreeTable value={nodes}  tableStyle={{ minWidth: '50rem' }}>
-                <Column field="name" header="Name" expander></Column>
-                <Column field="size" header="Size"></Column>
-                <Column field="type" header="Type"></Column>
-            </TreeTable>
-        </div>
+
+      <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[28vw] ml-20 mt-10">
+        <DataTable
+          value={boatData}
+          header={MooringsHeader}
+          scrollable={true}
+          tableStyle={{
+            // minWidth: "20rem",
+            fontSize: "12px",
+            color: "#000000",
+            fontWeight: 600,
+            backgroundColor: "#D1D1D1",
+          }}
+          size="small"
+        >
+          <Column
+            header="ID:"
+            field="customerId"
+            style={{ width: "6vw" }}
+          ></Column>
+          <Column
+            style={{ width: "6vw" }}
+            field="customerName"
+            header="Name:"
+          ></Column>
+          <Column
+            style={{ width: "10vw" }}
+            field="emailAddress"
+            header="Email:"
+          ></Column>
+          <Column
+            style={{ width: "5vw" }}
+            field="phone"
+            header="Phone:"
+          ></Column>
+          {/* <Column
+            style={{ width: "10vw" }}
+            field="address"
+            header="Address"
+          ></Column>
+          <Column
+            header="Actions"
+            body={(rowData) => (
+              <div className="flex gap-2">
+                <Button
+                  label="Edit"
+                  className="p-button-text p-button-info"
+                  onClick={() => handleEdit(rowData)}
+                />
+                <Button
+                  label="Delete"
+                  className="p-button-text p-button-danger"
+                  onClick={() => handleDelete(rowData)}
+                />
+              </div>
+            )}
+          ></Column> */}
+        </DataTable>
       </div>
     </>
   );
