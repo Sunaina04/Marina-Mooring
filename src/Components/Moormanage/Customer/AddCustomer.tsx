@@ -166,14 +166,12 @@ const AddCustomer: React.FC<Props> = ({ customer, editMode, closeModal, getCusto
 
 
 
-
-
       <div className="flex gap-10">
         <div className="mt-4 ml-5 ">
 
           <div>
             <div>
-              <span className="font-semibold text-sm">Boatyard</span>
+              <span className="font-semibold text-sm">Email Address</span>
             </div>
 
             <div className="mt-2">
@@ -200,9 +198,9 @@ const AddCustomer: React.FC<Props> = ({ customer, editMode, closeModal, getCusto
         <div className=" ">
 
           <div className="mt-4">
-            <span className="font-semibold text-sm ">Email Address</span>
+            <span className="font-semibold text-sm ">Boatyard</span>
           </div>
-
+      
           <div className="mt-2">
             <Dropdown
               value={selectedState}

@@ -114,11 +114,7 @@ const AccountPayable = () => {
             visible={false}
             onHide={handleModalClose}
           >
-            <AddCustomer customer={undefined} editMode={false} closeModal={function (): void {
-              throw new Error("Function not implemented.");
-            } } getCustomer={function (): void {
-              throw new Error("Function not implemented.");
-            } } />
+           
           </CustomModal>
         </div>
       </div>
