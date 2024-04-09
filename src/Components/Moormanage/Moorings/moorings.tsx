@@ -1,4 +1,3 @@
-
 import { DataTable } from "primereact/datatable";
 
 import ButtonComponent from "../../Common/ButtonComponent";
@@ -6,9 +5,14 @@ import CustomModal from "../../customComponent/CustomModal";
 import AddCustomer from "../Customer/AddCustomer";
 import AddMoorings from "./AddMoorings";
 import { InputText } from "primereact/inputtext";
-import React, { useState, useEffect } from 'react';
-import { Column } from 'primereact/column';
+import React, { useState, useEffect } from "react";
+import { Column } from "primereact/column";
+import { Button } from "primereact/button";
 import { useGetMooringsMutation } from "../../../Services/MoorManage/moormanage";
+import {
+  MOORING_PAYLOAD,
+  MOORING_RESPONSE,
+} from "../../../Services/MoorManage/types";
 
 interface CustomerData {
   id: string;
@@ -21,9 +25,12 @@ interface CustomerData {
 
 const Moorings = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [boatData, setBoatData] = useState<CustomerData[]>([]);
+  const [boatData, setBoatData] = useState<MOORING_PAYLOAD[]>([]);
+  const [selectedCustomer, setSelectedCustomer] = useState<any>(null);
+  const [editMode, setEditMode] = useState(false);
+
   const [getMoorings] = useGetMooringsMutation();
- 
+
   const handleButtonClick = () => {
     setModalVisible(true);
   };
@@ -31,7 +38,6 @@ const Moorings = () => {
   const handleModalClose = () => {
     setModalVisible(false);
   };
-
 
   const MooringsHeader = () => {
     return (
@@ -51,13 +57,24 @@ const Moorings = () => {
   };
 
   const getMooringsData = async () => {
-    const response =  await getMoorings({});
-    console.log("RESPONSE" , response)
-  }
+    await getMoorings({})
+      .unwrap()
+      .then(async (response) => {
+        console.log("RESPONSE", response);
+        const { status , content } = response as MOORING_RESPONSE;
+        if ( status === 200) 
+        setBoatData(content as MOORING_PAYLOAD[]);
+      });
+  };
 
-  useEffect (() => {
+  const handleEdit = (rowData: any) => {
+    setSelectedCustomer(rowData);
+    setEditMode(true);
+  };
+
+  useEffect(() => {
     getMooringsData();
-  },[])
+  }, []);
 
   return (
     <>
@@ -69,18 +86,16 @@ const Moorings = () => {
           </h1>
         </div>
         <div className="flex gap-4 items-center mr-20 mt-14">
-
           <CustomModal
             onClick={handleButtonClick}
             visible={false}
             onHide={handleModalClose}
             style={{ borderRadius: "1rem", overflow: "hidden" }}
           >
-            <AddMoorings />
+            <AddMoorings moorings={selectedCustomer} editMode={editMode} />
           </CustomModal>
         </div>
       </div>
-
       <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[28vw] ml-20 mt-10">
         <DataTable
           value={boatData}
@@ -97,12 +112,12 @@ const Moorings = () => {
         >
           <Column
             header="ID:"
-            field="customerId"
+            field="id"
             style={{ width: "6vw" }}
           ></Column>
           <Column
             style={{ width: "6vw" }}
-            field="customerName"
+            field="ownerName"
             header="Name:"
           ></Column>
           <Column
@@ -119,8 +134,8 @@ const Moorings = () => {
             style={{ width: "10vw" }}
             field="address"
             header="Address"
-          ></Column>
-          <Column
+          ></Column> */}
+          {/* <Column
             header="Actions"
             body={(rowData) => (
               <div className="flex gap-2">

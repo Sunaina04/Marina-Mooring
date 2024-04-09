@@ -1,16 +1,72 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ButtonComponent from "../../Common/ButtonComponent";
 import { InputTextarea } from "primereact/inputtextarea";
 import { InputText } from "primereact/inputtext";
 import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
 import InputComponent from "../../Common/InputComponent";
+import { useAddMooringsMutation } from "../../../Services/MoorManage/moormanage";
+import { MOORING_PAYLOAD } from "../../../Services/MoorManage/types";
+
+interface Props {
+  moorings: MOORING_PAYLOAD;
+  editMode: boolean;
+}
+
 interface City {
   name: string;
   code: string;
 }
-const AddMoorings = () => {
+
+const AddMoorings: React.FC<Props> = ({ moorings, editMode }) => {
   const [value, setValue] = useState<string>("");
   const [selectedCity, setSelectedCity] = useState<City | null>(null);
+  const [saveMoorings] = useAddMooringsMutation();
+ console.log("MOORINGS", moorings)
+  const [formData, setFormData] = useState<any>({
+    ownerName: "",
+    mooringNumber: "",
+    harbor: "",
+    waterDepth: "",
+    gpsCoordinates: "",
+    boatName: "",
+    boatSize: "",
+    weight: "",
+    sizeOfWeight: "",
+    typeOfWeight: "",
+    topChainCondition: "",
+    conditionOfEye: "",
+    bottomChainCondition: "",
+    shackleSwivelCondition: "",
+    pennantCondition: "",
+    deptAtMeanHighWater: "",
+    note: "",
+  });
+
+  useEffect(() => {
+    if (editMode && moorings) {
+      // Prefill fields with data from props when in edit mode
+      setFormData({
+        ownerName: moorings.ownerName || "",
+        mooringNumber: moorings.mooringNumber || "",
+        harbor: moorings.harbor || "",
+        waterDepth: moorings.waterDepth || "",
+        gpsCoordinates: moorings.gpsCoordinates || "",
+        boatName: moorings.boatName || "",
+        boatSize: moorings.boatSize || "",
+        weight: moorings.weight || "",
+        sizeOfWeight: moorings.sizeOfWeight || "",
+        typeOfWeight: moorings.typeOfWeight || "",
+        topChainCondition: moorings.topChainCondition || "",
+        conditionOfEye: moorings.conditionOfEye || "",
+        bottomChainCondition: moorings.bottomChainCondition || "",
+        shackleSwivelCondition: moorings.shackleSwivelCondition || "",
+        pennantCondition: moorings.pennantCondition || "",
+        deptAtMeanHighWater: moorings.deptAtMeanHighWater || "",
+        note: moorings.note || "",
+      });
+    }
+  }, [editMode, moorings]);
+
   const cities: City[] = [
     { name: "New York", code: "NY" },
     { name: "Rome", code: "RM" },
@@ -18,6 +74,21 @@ const AddMoorings = () => {
     { name: "Istanbul", code: "IST" },
     { name: "Paris", code: "PRS" },
   ];
+
+  const handleInputChange = (field: string, value: any) => {
+    setFormData({
+      ...formData,
+      [field]: value,
+    });
+  };
+
+  const SaveMoorings = async () => {
+    const payload = {
+      ...formData,
+    };
+    const response = await saveMoorings(payload);
+    console.log("RESPONSE", response);
+  };
 
   return (
     <>
@@ -29,6 +100,8 @@ const AddMoorings = () => {
             <span className="font-semibold text-sm">Owner Name</span>
             <div className="mt-2">
               <InputComponent
+                value={formData.ownerName}
+                onChange={(e) => handleInputChange("ownerName", e.target.value)}
                 style={{
                   width: "13vw",
                   height: "4vh",
@@ -46,6 +119,10 @@ const AddMoorings = () => {
               <InputComponent
                 // placeholder="Enter customer ID"
                 // type="text"
+                value={formData.mooringNumber}
+                onChange={(e) =>
+                  handleInputChange("mooringNumber", e.target.value)
+                }
                 style={{
                   width: "13vw",
                   height: "4vh",
@@ -63,6 +140,8 @@ const AddMoorings = () => {
               <InputComponent
                 // placeholder="Enter owner name"
                 // type="text"
+                value={formData.harbor}
+                onChange={(e) => handleInputChange("harbor", e.target.value)}
                 style={{
                   width: "13vw",
                   height: "4vh",
@@ -81,6 +160,10 @@ const AddMoorings = () => {
               <span className="font-semibold text-sm">Water Depth</span>
               <div className="mt-2">
                 <InputComponent
+                  value={formData.waterDepth}
+                  onChange={(e) =>
+                    handleInputChange("waterDepth", e.target.value)
+                  }
                   style={{
                     width: "13vw",
                     height: "4vh",
@@ -98,6 +181,10 @@ const AddMoorings = () => {
                 <InputComponent
                   // placeholder="Enter customer ID"
                   // type="text"
+                  value={formData.gpsCoordinates}
+                  onChange={(e) =>
+                    handleInputChange("gpsCoordinates", e.target.value)
+                  }
                   style={{
                     width: "13vw",
                     height: "4vh",
@@ -115,6 +202,10 @@ const AddMoorings = () => {
                 <InputComponent
                   // placeholder="Enter owner name"
                   // type="text"
+                  value={formData.boatName}
+                  onChange={(e) =>
+                    handleInputChange("boatName", e.target.value)
+                  }
                   style={{
                     width: "13vw",
                     height: "4vh",
@@ -134,6 +225,10 @@ const AddMoorings = () => {
               <span className="font-semibold text-sm">Boat Size</span>
               <div className="mt-2">
                 <InputComponent
+                  value={formData.boatSize}
+                  onChange={(e) =>
+                    handleInputChange("boatSize", e.target.value)
+                  }
                   style={{
                     width: "13vw",
                     height: "4vh",
@@ -152,10 +247,8 @@ const AddMoorings = () => {
 
               <div className="mt-2">
                 <Dropdown
-                  value={selectedCity}
-                  onChange={(e: DropdownChangeEvent) =>
-                    setSelectedCity(e.value)
-                  }
+                  value={formData.typeOfWeight}
+                  onChange={(e) => handleInputChange("typeOfWeight", e.value)}
                   options={cities}
                   optionLabel="name"
                   editable
@@ -176,6 +269,8 @@ const AddMoorings = () => {
                 <InputComponent
                   // placeholder="Enter owner name"
                   // type="text"
+                  value={formData.weight}
+                  onChange={(e) => handleInputChange("weight", e.target.value)}
                   style={{
                     width: "13vw",
                     height: "4vh",
@@ -198,10 +293,8 @@ const AddMoorings = () => {
 
               <div>
                 <Dropdown
-                  value={selectedCity}
-                  onChange={(e: DropdownChangeEvent) =>
-                    setSelectedCity(e.value)
-                  }
+                  value={formData.sizeOfWeight}
+                  onChange={(e) => handleInputChange("sizeOfWeight", e.value)}
                   options={cities}
                   optionLabel="name"
                   editable
@@ -223,10 +316,8 @@ const AddMoorings = () => {
 
               <div>
                 <Dropdown
-                  value={selectedCity}
-                  onChange={(e: DropdownChangeEvent) =>
-                    setSelectedCity(e.value)
-                  }
+                  value={formData.typeOfWeight}
+                  onChange={(e) => handleInputChange("typeOfWeight", e.value)}
                   options={cities}
                   optionLabel="name"
                   editable
@@ -250,9 +341,9 @@ const AddMoorings = () => {
 
               <div>
                 <Dropdown
-                  value={selectedCity}
-                  onChange={(e: DropdownChangeEvent) =>
-                    setSelectedCity(e.value)
+                  value={formData.topChainCondition}
+                  onChange={(e) =>
+                    handleInputChange("topChainCondition", e.value)
                   }
                   options={cities}
                   optionLabel="name"
@@ -279,10 +370,8 @@ const AddMoorings = () => {
 
               <div>
                 <Dropdown
-                  value={selectedCity}
-                  onChange={(e: DropdownChangeEvent) =>
-                    setSelectedCity(e.value)
-                  }
+                  value={formData.conditionOfEye}
+                  onChange={(e) => handleInputChange("conditionOfEye", e.value)}
                   options={cities}
                   optionLabel="name"
                   editable
@@ -307,9 +396,9 @@ const AddMoorings = () => {
 
               <div>
                 <Dropdown
-                  value={selectedCity}
-                  onChange={(e: DropdownChangeEvent) =>
-                    setSelectedCity(e.value)
+                  value={formData.bottomChainCondition}
+                  onChange={(e) =>
+                    handleInputChange("bottomChainCondition", e.value)
                   }
                   options={cities}
                   optionLabel="name"
@@ -431,6 +520,10 @@ const AddMoorings = () => {
 
           <div className="mt-2 ml-1">
             <InputText
+              value={formData.deptAtMeanHighWater}
+              onChange={(e) =>
+                handleInputChange("deptAtMeanHighWater", e.target.value)
+              }
               style={{
                 width: "13vw",
                 height: "4vh",
@@ -465,9 +558,7 @@ const AddMoorings = () => {
 
         <div className="flex gap-3 mt-4 ml-6">
           <ButtonComponent
-            onClick={function (): void {
-              throw new Error("Function not implemented.");
-            }}
+            onClick={SaveMoorings}
             label={"Save"}
             style={{
               width: "5vw",

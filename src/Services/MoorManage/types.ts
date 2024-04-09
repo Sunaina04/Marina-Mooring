@@ -43,6 +43,11 @@ export interface MOORING_PAYLOAD {
   topChainCondition: string;
   shackleSwivelCondition: string;
   pennantCondition: string;
+  weight: string;
+  sizeOfWeight: string;
+  typeOfWeight: string;
+  deptAtMeanHighWater: string;
+  note: string;
 }
 
 export interface MOORING_RESPONSE {
