@@ -4,11 +4,15 @@ import { Column } from "primereact/column";
 import CustomModal from "../../customComponent/CustomModal";
 import AddVendor from "./AddVendor";
 import { InputText } from "primereact/inputtext";
-import { useGetVendorsMutation } from "../../../Services/MoorManage/moormanage";
+import {
+  useDeleteVendorMutation,
+  useGetVendorsMutation,
+} from "../../../Services/MoorManage/moormanage";
 import {
   VENDOR_PAYLOAD,
   VENDOR_RESPONSE,
 } from "../../../Services/MoorManage/types";
+import { Button } from "primereact/button";
 
 const Vendor = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -17,6 +21,7 @@ const Vendor = () => {
   const [editMode, setEditMode] = useState(false);
 
   const [getVendors] = useGetVendorsMutation();
+  const [deleteVendor] = useDeleteVendorMutation();
 
   const handleButtonClick = () => {
     setModalVisible(true);
@@ -28,7 +33,7 @@ const Vendor = () => {
       .then(async (response) => {
         console.log("RESPONSE", response);
         const { status, content } = response as VENDOR_RESPONSE;
-        console.log("CONTENT", content , status)
+        console.log("CONTENT", content, status);
         if (status === 200 && Array.isArray(content)) {
           setVendorData(content);
         }
@@ -38,6 +43,19 @@ const Vendor = () => {
   const handleEdit = (rowData: any) => {
     setSelectedCustomer(rowData);
     setEditMode(true);
+  };
+
+  const handleDelete = async (rowData: any) => {
+    // Handle delete action here, using the data from rowData if necessary
+    console.log("Delete clicked for:", rowData, rowData?.id);
+
+    try {
+      const response = await deleteVendor({ id: rowData?.id });
+      console.log("RESPONSE", response);
+      getVendorData();
+    } catch (error) {
+      console.error("Error deleting customer:", error);
+    }
   };
 
   const handleModalClose = () => {
@@ -77,8 +95,12 @@ const Vendor = () => {
             onHide={handleModalClose}
             style={{ borderRadius: "2rem" }}
           >
-            <AddVendor vendors={selectedCustomer} editMode={editMode} closeModal={handleModalClose}
-              getVendor={getVendorData} />
+            <AddVendor
+              vendors={selectedCustomer}
+              editMode={editMode}
+              closeModal={handleModalClose}
+              getVendor={getVendorData}
+            />
           </CustomModal>
         </div>
       </div>
@@ -118,20 +140,40 @@ const Vendor = () => {
             field="InventoryItems"
             header="Inventory Items"
           ></Column>
+
           <Column
             header="Actions"
-            body={() => (
+            body={(rowData) => (
               <div className="flex gap-5">
-                <span className="text-black  font-bold underline cursor-pointer">
-                  View Invetory
-                </span>
-                <span className="text-green-600  font-bold underline cursor-pointer" onClick={handleEdit}>
-                  Edit
-                </span>
-
-                <span className="text-red-600 font-bold underline cursor-pointer">
-                  Delete
-                </span>
+                <Button
+                  label="View Inventory"
+                  style={{
+                    fontWeight: "bold",
+                    textDecoration: "underline",
+                    cursor: "pointer",
+                  }}
+                  // onClick={handleViewInventory}
+                />
+                <Button
+                  label="Edit"
+                  style={{
+                    fontWeight: "bold",
+                    textDecoration: "underline",
+                    color: "green",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => handleEdit(rowData)}
+                />
+                <Button
+                  label="Delete"
+                  style={{
+                    fontWeight: "bold",
+                    textDecoration: "underline",
+                    color: "red",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => handleDelete(rowData)}
+                />
               </div>
             )}
           ></Column>
