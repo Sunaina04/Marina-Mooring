@@ -5,14 +5,22 @@ import InputComponent from "../../Common/InputComponent";
 import { InputText } from "primereact/inputtext";
 import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
 import { Checkbox } from "primereact/checkbox";
+import { VENDOR_PAYLOAD } from "../../../Services/MoorManage/types";
 interface City {
   name: string;
   code: string;
 }
-const AddVendor = () => {
+
+interface Props {
+  vendors: VENDOR_PAYLOAD;
+  editMode: boolean;
+}
+
+const AddVendor: React.FC<Props> = ({ vendors, editMode }) => {
   const [value, setValue] = useState<string>("");
   const [selectedCity, setSelectedCity] = useState<City | null>(null);
   const [checked, setChecked] = useState<boolean>(false);
+
   const cities: City[] = [
     { name: "New York", code: "NY" },
     { name: "Rome", code: "RM" },

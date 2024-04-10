@@ -10,6 +10,9 @@ import { VENDOR_PAYLOAD, VENDOR_RESPONSE } from "../../../Services/MoorManage/ty
 const Vendor = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [vendorData, setVendorData] = useState<VENDOR_PAYLOAD[]>([]);
+  const [selectedCustomer, setSelectedCustomer] = useState<any>(null);
+  const [editMode, setEditMode] = useState(false);
+
   const [getVendors] = useGetVendorsMutation();
 
   const handleButtonClick = () => {
@@ -26,13 +29,9 @@ const Vendor = () => {
       .then(async (response) => {
         console.log("RESPONSE", response);
         const { status, content } = response as VENDOR_RESPONSE;
+        console.log("CONTENT", content , status)
         if (status === 200 && Array.isArray(content)) {
-          const flattenedData = content.reduce(
-            (acc, curr) => acc.concat(curr),
-            []
-          );
-          setVendorData(flattenedData);
-          console.log("RESPONSE boat data", vendorData);
+          setVendorData(content);
         }
       });
   };
@@ -69,7 +68,7 @@ const Vendor = () => {
             onHide={handleModalClose}
             style={{ borderRadius: "2rem" }}
           >
-            <AddVendor />
+            <AddVendor vendors={selectedCustomer} editMode={editMode} />
           </CustomModal>
         </div>
       </div>
