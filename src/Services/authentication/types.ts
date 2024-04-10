@@ -1,4 +1,3 @@
-
 export interface LOGIN_PAYLOAD {
   username: string;
   password: string;
@@ -13,9 +12,8 @@ export interface SIGNUP_PAYLOAD {
 }
 
 export interface RESET_PASSWORD_PAYLOAD {
-  email: string;
-  new_password: string;
-  confirm_password: string;
+  newPassword: string;
+  confirmPassword: string;
 }
 
 export interface FORGOT_PASSWORD_PAYLOAD {
@@ -80,4 +78,12 @@ export interface AuthenticationData {
 export interface ErrorResponse {
   status: number;
   message: string;
+}
+
+export interface validateEmailResponse {
+  message: string;
+  status: number;
+  errorList: [""];
+  time: number;
+  content: null;
 }

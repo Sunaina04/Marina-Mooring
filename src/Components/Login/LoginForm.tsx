@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   useGetEmployeeMutation,
   useLoginMutation,
+  useResetPasswordMutation,
 } from "../../Services/authentication/authApi";
 import {
   ErrorResponse,
@@ -38,7 +39,6 @@ export default function LoginForm({
   const { username, password } = loginPayload;
   const userData = useSelector((state: any) => state.user?.userData);
   const navigate = useNavigate();
-
 
   const [errors, setErrors] = useState({
     email: "",
@@ -104,24 +104,10 @@ export default function LoginForm({
    ****************************************************/
   const [login] = useLoginMutation();
   const [getEmployee] = useGetEmployeeMutation();
+  const [ResetPassword] = useResetPasswordMutation();
 
   const signInHandler = async () => {
     console.log("IN SIGN IN");
-    // navigate("/admin/dashboard");
-    // if (!username) {
-    //   setErrors((prev) => ({
-    //     ...prev,
-    //     email: "username is required",
-    //   }));
-    //   return;
-    // } else if (!password) {
-    //   setErrors((prev) => ({
-    //     ...prev,
-    //     password: "password is required",
-    //   }));
-    //   return;
-    // }
-
     try {
       const response = await login(loginPayload).unwrap();
       const { status, user, token, message } = response as LOGIN_RESPONSE;
@@ -146,6 +132,10 @@ export default function LoginForm({
       }
     }
   };
+
+  const ResetPasswordHandler = async () => {
+
+  }
 
   const getEmployeeHandler = async () => {
     const response = await getEmployee({});
@@ -265,20 +255,61 @@ export default function LoginForm({
               letterSpacing: "0.2px",
               fontSize: "1.50vw",
               // fontFamily: "Roboto",
-              marginBottom: "0"
+              marginBottom: "0",
             }}
             label={showSinUp ? Label : Label}
-            onClick={signInHandler}
+            onClick={ showSinUp ? ResetPasswordHandler : signInHandler}
           />
+
+          {/* {showSinUp ? (
+            <ButtonComponent
+              style={{
+                width: "10vw",
+                height: "6vh",
+                backgroundColor: "black",
+                color: "white",
+                border: "1px solid black",
+                fontWeight: "700",
+                letterSpacing: "0.2px",
+                fontSize: "1.50vw",
+                // fontFamily: "Roboto",
+                marginBottom: "0",
+              }}
+              label={Label}
+              onclick={signInHandler}
+            />
+          ) : (
+            <ButtonComponent
+              style={{
+                width: "10vw",
+                height: "6vh",
+                backgroundColor: "black",
+                color: "white",
+                border: "1px solid black",
+                fontWeight: "700",
+                letterSpacing: "0.2px",
+                fontSize: "1.50vw",
+                // fontFamily: "Roboto",
+                marginBottom: "0",
+              }}
+              label={Label}
+              onclick={() => {
+              if (ResetPasswordHandler) {
+                  ResetPasswordHandler();
+                }
+              }}
+            />
+          )}
+           */}
         </div>
       </div>
       <div className="flex justify-center items-center mt-0">
         <div className="text-center mx-auto" style={{ width: "40vw" }}>
-          <p  className="text-xs font-bold">
+          <p className="text-xs font-bold">
             Just testing the waters? If you do not have an account{" "}
-            <span className="underline font-bolder">CLICK HERE</span> to let us know you
-            would like to connect and see if MOORFIND can work for you and your
-            business.
+            <span className="underline font-bolder">CLICK HERE</span> to let us
+            know you would like to connect and see if MOORFIND can work for you
+            and your business.
           </p>
         </div>
       </div>

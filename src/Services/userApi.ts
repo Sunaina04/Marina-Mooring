@@ -9,10 +9,10 @@ import { RootState } from "../store/store";
 const baseQuery = fetchBaseQuery({
   baseUrl: "http://localhost:8082/",
   prepareHeaders: (headers, { getState }) => {
-    // const token = getState().auth.token; // Assuming you have a slice in your Redux store for authentication
-    // if (token) {
-      // headers.set("Authorization", `Bearer ${token}`);
-    // }
+    const token = localStorage.getItem("token"); 
+    if (token) {
+      headers.set("Authorization", `Bearer ${token}`);
+    }
     return headers;
   },
 });

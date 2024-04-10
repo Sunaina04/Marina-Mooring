@@ -21,18 +21,17 @@ const ButtonComponent: React.FC<ButtonCompProps> = ({
   size,
   icon,
   color,
-  children
-
-
+  children,
 }) => {
   return (
     <div>
       <div>
-
         <img src="" alt="" />
       </div>
       <Button
-        onClick={onClick}
+        onClick={() => {
+          onClick;
+        }}
         disabled={disabled}
         label={label}
         style={style}
@@ -41,14 +40,8 @@ const ButtonComponent: React.FC<ButtonCompProps> = ({
         color={color}
         children={children}
       />
-
     </div>
-
-
-
   );
 };
 
 export default ButtonComponent;
-
-
