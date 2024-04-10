@@ -1,62 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import CustomModal from "../../customComponent/CustomModal";
 import AddVendor from "./AddVendor";
 import { InputText } from "primereact/inputtext";
-interface CustomerData {
-  id: string;
-  name: string;
-  phoneNumber: number;
-  email: string;
-  InventoryItems: number;
-}
+import { useGetVendorsMutation } from "../../../Services/MoorManage/moormanage";
+import { VENDOR_PAYLOAD, VENDOR_RESPONSE } from "../../../Services/MoorManage/types";
 
 const Vendor = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [boatData, setBoatData] = useState<CustomerData[]>([
-    {
-      id: "01",
-      name: "Ram",
-      phoneNumber: 4564546897,
-
-      email: "test@gmail.com",
-      InventoryItems: 12,
-    },
-
-    {
-      id: "01",
-      name: "Ram",
-      phoneNumber: 4564546897,
-
-      email: "test@gmail.com",
-      InventoryItems: 12,
-    },
-    {
-      id: "01",
-      name: "Ram",
-      phoneNumber: 4564546897,
-
-      email: "test@gmail.com",
-      InventoryItems: 12,
-    },
-    {
-      id: "01",
-      name: "Ram",
-      phoneNumber: 4564546897,
-
-      email: "test@gmail.com",
-      InventoryItems: 12,
-    },
-    {
-      id: "01",
-      name: "Ram",
-      phoneNumber: 4564546897,
-
-      email: "test@gmail.com",
-      InventoryItems: 12,
-    },
-  ]);
+  const [vendorData, setVendorData] = useState<VENDOR_PAYLOAD[]>([]);
+  const [getVendors] = useGetVendorsMutation();
 
   const handleButtonClick = () => {
     setModalVisible(true);
@@ -65,6 +19,27 @@ const Vendor = () => {
   const handleModalClose = () => {
     setModalVisible(false);
   };
+
+  const getVendorData = async () => {
+    await getVendors({})
+      .unwrap()
+      .then(async (response) => {
+        console.log("RESPONSE", response);
+        const { status, content } = response as VENDOR_RESPONSE;
+        if (status === 200 && Array.isArray(content)) {
+          const flattenedData = content.reduce(
+            (acc, curr) => acc.concat(curr),
+            []
+          );
+          setVendorData(flattenedData);
+          console.log("RESPONSE boat data", vendorData);
+        }
+      });
+  };
+
+  useEffect(() => {
+    getVendorData();
+  }, []);
 
   return (
     <>
@@ -101,7 +76,7 @@ const Vendor = () => {
       {/* </div> */}
       <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[67vw] p-1 ml-32 mt-10">
         <DataTable
-          value={boatData}
+          value={vendorData}
           header={""}
           tableStyle={{
             minWidth: "20rem",
@@ -116,7 +91,7 @@ const Vendor = () => {
           <Column
             style={{ width: "11vw" }}
             field="name"
-            header="Vendor Name"
+            header="Company Name"
           ></Column>
           <Column
             style={{ width: "11vw" }}
