@@ -5,7 +5,10 @@ import CustomModal from "../../customComponent/CustomModal";
 import AddVendor from "./AddVendor";
 import { InputText } from "primereact/inputtext";
 import { useGetVendorsMutation } from "../../../Services/MoorManage/moormanage";
-import { VENDOR_PAYLOAD, VENDOR_RESPONSE } from "../../../Services/MoorManage/types";
+import {
+  VENDOR_PAYLOAD,
+  VENDOR_RESPONSE,
+} from "../../../Services/MoorManage/types";
 
 const Vendor = () => {
   const [modalVisible, setModalVisible] = useState(false);

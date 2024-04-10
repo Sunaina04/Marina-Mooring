@@ -12,7 +12,7 @@ import AddCustomer from "../Customer/AddCustomer";
 import { SelectButton, SelectButtonChangeEvent } from "primereact/selectbutton";
 import VerticalBar from "../../StatCard/VerticalBar";
 import ButtonComponent from "../../Common/ButtonComponent";
-
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 interface ReportsData {
   id: string;
   mooring: string;
@@ -193,11 +193,19 @@ const Reports = () => {
   return (
     <>
       <div className="flex flex-col  ml-12">
-        <div>
-          <h1 className="mt-14 ml-10 opacity-30 text-2xl font-normal">
-            Moormanage/Reports
-          </h1>
+        <div className="flex justify-between">
+          <div>
+            <h1 className="mt-14 ml-10 opacity-10 text-2xl font-normal">
+              Moormanage/Reports
+            </h1>
+          </div>
+          <div>
+            <h1 className="mt-14 mr-4 opacity-30 text-lg font-normal text-black">
+              Download Reports {<ExpandMoreIcon />}
+            </h1>
+          </div>
         </div>
+
         <div className="flex mt-6">
           <div>
             <div className="bg-[#F2F2F2] rounded-md border-[1px]  border-[#D1D1D1] p-5 ml-10  w-[40vw] mb-5">
@@ -240,12 +248,15 @@ const Reports = () => {
                 ></Column>
               </DataTable>
             </div>
-
           </div>
 
           <div>
             <div className="bg-[#F2F2F2] rounded-md border-[1px]  border-[#D1D1D1] p-5 ml-8  w-[25vw]  mb-5">
-              <DataTable value={bill} header={"Customer by Mooring"} scrollable={true}>
+              <DataTable
+                value={bill}
+                header={"Customer by Mooring"}
+                scrollable={true}
+              >
                 <Column
                   style={{ width: "2vw", fontSize: "0.75rem" }}
                   field="id"
@@ -261,7 +272,6 @@ const Reports = () => {
                   field="techniciansName"
                   header="Customer Name"
                 ></Column>
-              
 
                 <Column
                   header="Action"
@@ -276,9 +286,6 @@ const Reports = () => {
                 ></Column>
               </DataTable>
             </div>
-
-
-
 
             <div className="bg-[#F2F2F2] rounded-md border-[1px]  border-[#D1D1D1] p-5 ml-8  w-[25vw]  mb-5">
               <DataTable value={bill} header={"Technicians"} scrollable={true}>
@@ -297,7 +304,6 @@ const Reports = () => {
                   field="techniciansName"
                   header="Customer Name"
                 ></Column>
-             
 
                 <Column
                   header="Action"
@@ -312,13 +318,6 @@ const Reports = () => {
                 ></Column>
               </DataTable>
             </div>
-
-
-
-
-
-
-
           </div>
         </div>
       </div>

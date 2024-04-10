@@ -52,7 +52,7 @@ const AddBoatyards = () => {
       <div className="w-full h-full  ">
         <h1 className=" text-lg font-bold">Add Boatyard</h1>
 
-        <div className="flex justify-around mt-3">
+        <div className="flex gap-8 mt-3">
           <div>
             <span className="font-semibold text-sm">Boatyard ID</span>
             <div className="mt-2">
@@ -69,7 +69,7 @@ const AddBoatyards = () => {
           </div>
 
           <div>
-            <span className="font-semibold text-sm">Mooring name</span>
+            <span className="font-semibold text-sm">Main Contact</span>
             <div className="mt-2">
               <InputComponent
                 // placeholder="Enter customer ID"
@@ -85,25 +85,10 @@ const AddBoatyards = () => {
             </div>
           </div>
 
-          <div>
-            <span className="font-semibold text-sm">Owner name</span>
-            <div className="mt-2">
-              <InputComponent
-                // placeholder="Enter customer ID"
-                // type="text"
-                style={{
-                  width: "13vw",
-                  height: "4vh",
-                  border: "1px solid gray",
-                  borderRadius: "0.50rem",
-                  fontSize: "0.80vw",
-                }}
-              />
-            </div>
-          </div>
+
         </div>
 
-        <div className="flex gap-2 mt-4">
+        <div className="flex gap-8 mt-4">
           <div>
             <div>
               <span className="font-semibold text-sm">Email Address</span>
@@ -147,7 +132,7 @@ const AddBoatyards = () => {
         </div>
 
         <div>
-          <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[40vw] mt-10">
+          <div className="bg-[#ECECEC] rounded-md border-[1px] p-1 border-gray-300 w-[40vw] mt-10">
             <DataTable
               value={boatData}
               header={"Existing Sites"}
@@ -177,24 +162,15 @@ const AddBoatyards = () => {
                 field="address"
                 header=""
               ></Column>
-              <Column
-                header=""
-                body={() => (
-                  <div className="flex gap-8">
-                    <span className="text-red-600 font-bold underline cursor-pointer">
-                      Delete
-                    </span>
-                  </div>
-                )}
-              ></Column>
+
             </DataTable>
 
             <ButtonComponent
-              onClick={() => {}}
+              onClick={() => { }}
               style={{
                 width: "100%",
                 height: "4vh",
-                backgroundColor: "black",
+                backgroundColor: "#ECECEC",
                 cursor: "pointer",
                 color: "#6B6B6B",
                 fontWeight: "bolder",
@@ -210,11 +186,12 @@ const AddBoatyards = () => {
                 alt="icon"
                 className="w-3 mr-1"
                 style={{
-                  filter: "invert(100%)",
-                  color: "#6B6B6B",
+                  color: "black",
                   fontWeight: "bolder",
                 }}
               />
+
+
               ADD NEW
             </ButtonComponent>
           </div>
