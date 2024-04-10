@@ -6,7 +6,10 @@ import "@mobiscroll/react/dist/css/mobiscroll.min.css";
 import { InputText } from "primereact/inputtext";
 import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
 import { InputTextarea } from "primereact/inputtextarea";
-import { useAddCustomerMutation, useUpdateCustomerMutation } from "../../../Services/MoorManage/moormanage";
+import {
+  useAddCustomerMutation,
+  useUpdateCustomerMutation,
+} from "../../../Services/MoorManage/moormanage";
 
 interface Props {
   customer: any;
@@ -20,7 +23,12 @@ interface City {
   code: string;
 }
 
-const AddCustomer: React.FC<Props> = ({ customer, editMode, closeModal, getCustomer }) => {
+const AddCustomer: React.FC<Props> = ({
+  customer,
+  editMode,
+  closeModal,
+  getCustomer,
+}) => {
   const [value, setValue] = useState<string>("");
   const [selectedCountry, setSelectedCountry] = useState<City | null>(null);
   const [selectedState, setSelectedState] = useState<City | null>(null);
@@ -55,13 +63,13 @@ const AddCustomer: React.FC<Props> = ({ customer, editMode, closeModal, getCusto
       state: selectedState?.name || "",
       country: selectedCountry?.name || "",
       pinCode,
-      note: value
+      note: value,
     };
     const response = await addCustomer(payload);
     closeModal();
     getCustomer();
     console.log("RESPONSE", response);
-  }
+  };
 
   const UpdateCustomer = async () => {
     const payload = {
@@ -74,13 +82,13 @@ const AddCustomer: React.FC<Props> = ({ customer, editMode, closeModal, getCusto
       state: selectedState?.name || "",
       country: selectedCountry?.name || "",
       pinCode,
-      note: value
+      note: value,
     };
     const response = await updateCustomer(payload);
     closeModal();
     getCustomer();
     console.log("RESPONSE", response);
-  }
+  };
 
   useEffect(() => {
     if (editMode && customer) {
@@ -93,10 +101,12 @@ const AddCustomer: React.FC<Props> = ({ customer, editMode, closeModal, getCusto
       setSectorBlock(customer.sectorBlock || "");
       setPinCode(customer.pinCode || "");
 
-      const selectedCountry = cities.find(city => city.name === customer.country);
+      const selectedCountry = cities.find(
+        (city) => city.name === customer.country
+      );
       setSelectedCountry(selectedCountry || null);
 
-      const selectedState = cities.find(city => city.name === customer.state);
+      const selectedState = cities.find((city) => city.name === customer.state);
       setSelectedState(selectedState || null);
     }
   }, [editMode, customer]);
@@ -164,11 +174,8 @@ const AddCustomer: React.FC<Props> = ({ customer, editMode, closeModal, getCusto
         </div>
       </div>
 
-
-
       <div className="flex gap-10">
         <div className="mt-4 ml-5 ">
-
           <div>
             <div>
               <span className="font-semibold text-sm">Email Address</span>
@@ -189,24 +196,18 @@ const AddCustomer: React.FC<Props> = ({ customer, editMode, closeModal, getCusto
                 }}
               />
             </div>
-
           </div>
-
         </div>
 
-
         <div className=" ">
-
           <div className="mt-4">
             <span className="font-semibold text-sm ">Boatyard</span>
           </div>
-      
+
           <div className="mt-2">
             <Dropdown
               value={selectedState}
-              onChange={(e: DropdownChangeEvent) =>
-                setSelectedState(e.value)
-              }
+              onChange={(e: DropdownChangeEvent) => setSelectedState(e.value)}
               options={cities}
               optionLabel="name"
               editable
@@ -218,26 +219,9 @@ const AddCustomer: React.FC<Props> = ({ customer, editMode, closeModal, getCusto
                 borderRadius: "0.50rem",
               }}
             />
-
           </div>
-
         </div>
-
-
-
-
-
       </div>
-
-
-
-
-
-
-
-
-
-
 
       <div className="">
         <div className="mt-4 ml-5">
@@ -285,9 +269,7 @@ const AddCustomer: React.FC<Props> = ({ customer, editMode, closeModal, getCusto
           <div className="card flex justify-content-center mt-2 ">
             <Dropdown
               value={selectedState}
-              onChange={(e: DropdownChangeEvent) =>
-                setSelectedState(e.value)
-              }
+              onChange={(e: DropdownChangeEvent) => setSelectedState(e.value)}
               options={cities}
               optionLabel="name"
               editable
@@ -306,9 +288,7 @@ const AddCustomer: React.FC<Props> = ({ customer, editMode, closeModal, getCusto
           <div className="card flex justify-content-center">
             <Dropdown
               value={selectedCountry}
-              onChange={(e: DropdownChangeEvent) =>
-                setSelectedCountry(e.value)
-              }
+              onChange={(e: DropdownChangeEvent) => setSelectedCountry(e.value)}
               options={cities}
               optionLabel="name"
               editable

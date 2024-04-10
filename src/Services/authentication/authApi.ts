@@ -7,7 +7,7 @@ import {
 } from "./types";
 
 const authApi = userApi.injectEndpoints({
-  endpoints: (builder : any) => ({
+  endpoints: (builder: any) => ({
     login: builder.mutation({
       query: (payload: LOGIN_PAYLOAD) => ({
         url: "api/v1/auth/login",
@@ -33,17 +33,32 @@ const authApi = userApi.injectEndpoints({
 
     forgotPassword: builder.mutation({
       query: (payload: FORGOT_PASSWORD_PAYLOAD) => ({
-        url: "",
+        url: "api/v1/auth/forgetPassword",
         method: "POST",
         body: payload,
       }),
     }),
 
     resetPassword: builder.mutation({
-      query: (payload: RESET_PASSWORD_PAYLOAD) => ({
-        url: "",
+      query: ({
+        payload,
+        token,
+      }: {
+        payload: RESET_PASSWORD_PAYLOAD;
+        token: string;
+      }) => ({
+        url: "api/v1/auth/resetPassword",
         method: "POST",
         body: payload,
+        params: { token },
+      }),
+    }),
+
+    validateEmail: builder.mutation({
+      query: ({ token }: { token: string }) => ({
+        url: "api/v1/auth/resetPassword",
+        method: "GET",
+        params: { token },
       }),
     }),
   }),
@@ -55,4 +70,5 @@ export const {
   useForgotPasswordMutation,
   useResetPasswordMutation,
   useGetEmployeeMutation,
+  useValidateEmailMutation,
 } = authApi;

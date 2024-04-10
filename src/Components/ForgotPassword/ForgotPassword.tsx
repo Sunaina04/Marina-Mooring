@@ -2,9 +2,21 @@ import React from "react";
 import InputComponent from "../Common/InputComponent";
 import ButtonComponent from "../Common/ButtonComponent";
 import { useNavigate } from "react-router-dom";
+import { useValidateEmailMutation } from "../../Services/authentication/authApi";
+import { validateEmailResponse } from "../../Services/authentication/types";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
+  const [validateEmail] = useValidateEmailMutation();
+  const token =  localStorage.getItem("token");
+  
+  const validateEmailHandler =  async() => {
+    const response = await validateEmail({token});
+    console.log("RESPONSE" , response)
+    navigate("/resetpass")
+    // const {status} = response as validateEmailResponse;
+  }
+
   return (
     <>
       <div className="w-full h-screen flex justify-center items-center">
@@ -54,9 +66,7 @@ const ForgotPassword = () => {
               fontSize: "1.50rem",
             }}
             label={"Submit"}
-            onClick={function (): void {
-              navigate("/resetPass");
-            }}
+            onClick={validateEmailHandler}
           />
 
           <div className="flex justify-center flex-col mt-4">
