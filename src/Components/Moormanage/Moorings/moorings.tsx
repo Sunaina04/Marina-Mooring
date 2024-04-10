@@ -66,9 +66,7 @@ const Moorings = () => {
         console.log("RESPONSE", response);
         const { status, content } = response as MOORING_RESPONSE;
         if (status === 200 && Array.isArray(content)) {
-          const flattenedData = content.reduce((acc, curr) => acc.concat(curr), []);
-          setMooringData(flattenedData);
-          console.log("RESPONSE boat data", mooringData);
+          setMooringData(content);
         }
       });
   };
@@ -126,7 +124,7 @@ const Moorings = () => {
             ></Column>
             <Column
               style={{ width: "10vw" }}
-              field="emailAddress"
+              field="gpsCoordinates"
               header="GPS Coordinates"
             ></Column>
             {/* <Column

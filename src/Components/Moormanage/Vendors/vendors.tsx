@@ -4,23 +4,27 @@ import { Column } from "primereact/column";
 import CustomModal from "../../customComponent/CustomModal";
 import AddVendor from "./AddVendor";
 import { InputText } from "primereact/inputtext";
-import { useGetVendorsMutation } from "../../../Services/MoorManage/moormanage";
+import {
+  useDeleteVendorMutation,
+  useGetVendorsMutation,
+} from "../../../Services/MoorManage/moormanage";
 import {
   VENDOR_PAYLOAD,
   VENDOR_RESPONSE,
 } from "../../../Services/MoorManage/types";
+import { Button } from "primereact/button";
 
 const Vendor = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [vendorData, setVendorData] = useState<VENDOR_PAYLOAD[]>([]);
+  const [selectedCustomer, setSelectedCustomer] = useState<any>(null);
+  const [editMode, setEditMode] = useState(false);
+
   const [getVendors] = useGetVendorsMutation();
+  const [deleteVendor] = useDeleteVendorMutation();
 
   const handleButtonClick = () => {
     setModalVisible(true);
-  };
-
-  const handleModalClose = () => {
-    setModalVisible(false);
   };
 
   const getVendorData = async () => {
@@ -29,15 +33,34 @@ const Vendor = () => {
       .then(async (response) => {
         console.log("RESPONSE", response);
         const { status, content } = response as VENDOR_RESPONSE;
+        console.log("CONTENT", content, status);
         if (status === 200 && Array.isArray(content)) {
-          const flattenedData = content.reduce(
-            (acc, curr) => acc.concat(curr),
-            []
-          );
-          setVendorData(flattenedData);
-          console.log("RESPONSE boat data", vendorData);
+          setVendorData(content);
         }
       });
+  };
+
+  const handleEdit = (rowData: any) => {
+    setSelectedCustomer(rowData);
+    setEditMode(true);
+  };
+
+  const handleDelete = async (rowData: any) => {
+    // Handle delete action here, using the data from rowData if necessary
+    console.log("Delete clicked for:", rowData, rowData?.id);
+
+    try {
+      const response = await deleteVendor({ id: rowData?.id });
+      console.log("RESPONSE", response);
+      getVendorData();
+    } catch (error) {
+      console.error("Error deleting customer:", error);
+    }
+  };
+
+  const handleModalClose = () => {
+    setModalVisible(false);
+    setEditMode(false);
   };
 
   useEffect(() => {
@@ -68,11 +91,16 @@ const Vendor = () => {
 
           <CustomModal
             onClick={handleButtonClick}
-            visible={false}
+            visible={modalVisible || editMode}
             onHide={handleModalClose}
             style={{ borderRadius: "2rem" }}
           >
-            <AddVendor />
+            <AddVendor
+              vendors={selectedCustomer}
+              editMode={editMode}
+              closeModal={handleModalClose}
+              getVendor={getVendorData}
+            />
           </CustomModal>
         </div>
       </div>
@@ -93,18 +121,18 @@ const Vendor = () => {
           <Column header="ID" field="id" style={{ width: "8vw" }}></Column>
           <Column
             style={{ width: "11vw" }}
-            field="name"
+            field="companyName"
             header="Company Name"
           ></Column>
           <Column
             style={{ width: "11vw" }}
-            field="phoneNumber"
+            field="companyPhoneNumber"
             header="Phone Number"
           ></Column>
 
           <Column
             style={{ width: "11vw" }}
-            field="email"
+            field="companyEmail"
             header="Email Address"
           ></Column>
           <Column
@@ -112,20 +140,40 @@ const Vendor = () => {
             field="InventoryItems"
             header="Inventory Items"
           ></Column>
+
           <Column
             header="Actions"
-            body={() => (
+            body={(rowData) => (
               <div className="flex gap-5">
-                <span className="text-black  font-bold underline cursor-pointer">
-                  View Invetory
-                </span>
-                <span className="text-green-600  font-bold underline cursor-pointer">
-                  Edit
-                </span>
-
-                <span className="text-red-600 font-bold underline cursor-pointer">
-                  Delete
-                </span>
+                <Button
+                  label="View Inventory"
+                  style={{
+                    fontWeight: "bold",
+                    textDecoration: "underline",
+                    cursor: "pointer",
+                  }}
+                  // onClick={handleViewInventory}
+                />
+                <Button
+                  label="Edit"
+                  style={{
+                    fontWeight: "bold",
+                    textDecoration: "underline",
+                    color: "green",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => handleEdit(rowData)}
+                />
+                <Button
+                  label="Delete"
+                  style={{
+                    fontWeight: "bold",
+                    textDecoration: "underline",
+                    color: "red",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => handleDelete(rowData)}
+                />
               </div>
             )}
           ></Column>
