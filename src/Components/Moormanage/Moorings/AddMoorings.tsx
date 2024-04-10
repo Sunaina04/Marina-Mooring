@@ -23,14 +23,14 @@ const AddMoorings: React.FC<Props> = ({ moorings, editMode }) => {
   const [saveMoorings] = useAddMooringsMutation();
  console.log("MOORINGS", moorings)
   const [formData, setFormData] = useState<any>({
-    ownerName: "",
+    customerName: "",
     mooringNumber: "",
     harbor: "",
     waterDepth: "",
     gpsCoordinates: "",
     boatName: "",
     boatSize: "",
-    weight: "",
+    boatWeight: "",
     sizeOfWeight: "",
     typeOfWeight: "",
     topChainCondition: "",
@@ -46,14 +46,14 @@ const AddMoorings: React.FC<Props> = ({ moorings, editMode }) => {
     if (editMode && moorings) {
       // Prefill fields with data from props when in edit mode
       setFormData({
-        ownerName: moorings.ownerName || "",
+        customerName: moorings.customerName || "",
         mooringNumber: moorings.mooringNumber || "",
         harbor: moorings.harbor || "",
         waterDepth: moorings.waterDepth || "",
         gpsCoordinates: moorings.gpsCoordinates || "",
         boatName: moorings.boatName || "",
         boatSize: moorings.boatSize || "",
-        weight: moorings.weight || "",
+        boatWeight: moorings.boatWeight || "",
         sizeOfWeight: moorings.sizeOfWeight || "",
         typeOfWeight: moorings.typeOfWeight || "",
         topChainCondition: moorings.topChainCondition || "",
@@ -62,7 +62,6 @@ const AddMoorings: React.FC<Props> = ({ moorings, editMode }) => {
         shackleSwivelCondition: moorings.shackleSwivelCondition || "",
         pennantCondition: moorings.pennantCondition || "",
         deptAtMeanHighWater: moorings.deptAtMeanHighWater || "",
-        note: moorings.note || "",
       });
     }
   }, [editMode, moorings]);
@@ -100,8 +99,8 @@ const AddMoorings: React.FC<Props> = ({ moorings, editMode }) => {
             <span className="font-semibold text-sm">Owner Name</span>
             <div className="mt-2">
               <InputComponent
-                value={formData.ownerName}
-                onChange={(e) => handleInputChange("ownerName", e.target.value)}
+                value={formData.customerName}
+                onChange={(e) => handleInputChange("customerName", e.target.value)}
                 style={{
                   width: "13vw",
                   height: "4vh",
@@ -269,8 +268,8 @@ const AddMoorings: React.FC<Props> = ({ moorings, editMode }) => {
                 <InputComponent
                   // placeholder="Enter owner name"
                   // type="text"
-                  value={formData.weight}
-                  onChange={(e) => handleInputChange("weight", e.target.value)}
+                  value={formData.boatWeight}
+                  onChange={(e) => handleInputChange("boatWeight", e.target.value)}
                   style={{
                     width: "13vw",
                     height: "4vh",

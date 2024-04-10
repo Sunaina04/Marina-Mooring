@@ -28,7 +28,7 @@ interface CustomerData {
 
 const Moorings = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [boatData, setBoatData] = useState<MOORING_PAYLOAD[]>([]);
+  const [mooringData, setMooringData] = useState<MOORING_PAYLOAD[]>([]);
   const [selectedCustomer, setSelectedCustomer] = useState<any>(null);
   const [editMode, setEditMode] = useState(false);
 
@@ -65,9 +65,14 @@ const Moorings = () => {
       .then(async (response) => {
         console.log("RESPONSE", response);
         const { status, content } = response as MOORING_RESPONSE;
-        if (status === 200) setBoatData(content as MOORING_PAYLOAD[]);
+        if (status === 200 && Array.isArray(content)) {
+          const flattenedData = content.reduce((acc, curr) => acc.concat(curr), []);
+          setMooringData(flattenedData);
+          console.log("RESPONSE boat data", mooringData);
+        }
       });
   };
+  
 
   const handleEdit = (rowData: any) => {
     setSelectedCustomer(rowData);
@@ -101,7 +106,7 @@ const Moorings = () => {
       <div className="flex overflow-hidden ml-12">
         <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[28vw] mt-10">
           <DataTable
-            value={boatData}
+            value={mooringData}
             header={MooringsHeader}
             scrollable={true}
             tableStyle={{
@@ -117,18 +122,18 @@ const Moorings = () => {
             <Column
               style={{ width: "6vw" }}
               field="ownerName"
-              header="Name:"
+              header="Mooring Name"
             ></Column>
             <Column
               style={{ width: "10vw" }}
               field="emailAddress"
-              header="Email:"
+              header="GPS Coordinates"
             ></Column>
-            <Column
+            {/* <Column
               style={{ width: "5vw" }}
               field="phone"
               header="Phone:"
-            ></Column>
+            ></Column> */}
             {/* <Column
             style={{ width: "10vw" }}
             field="address"

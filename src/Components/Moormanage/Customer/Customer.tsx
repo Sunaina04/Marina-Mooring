@@ -24,7 +24,7 @@ import {
 
 const Customer = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [boatData, setBoatData] = useState<CUSTOMER_PAYLOAD[]>([]);
+  const [customerData, setCustomerData] = useState<CUSTOMER_PAYLOAD[]>([]);
   const [editMode, setEditMode] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState<any>(null);
 
@@ -61,7 +61,7 @@ const Customer = () => {
     try {
       const response = await getCustomer({}).unwrap();
       console.log("Response:", response);
-      setBoatData(response as CUSTOMER_PAYLOAD[]);
+      setCustomerData(response as CUSTOMER_PAYLOAD[]);
 
       if (
         typeof response === "object" &&
@@ -69,7 +69,7 @@ const Customer = () => {
         "data" in response
       ) {
         console.log("Response data:", response.data);
-        setBoatData(response.data as CUSTOMER_PAYLOAD[]);
+        setCustomerData(response.data as CUSTOMER_PAYLOAD[]);
       } else {
         console.error("Invalid response format");
       }
@@ -178,7 +178,7 @@ const Customer = () => {
       <div className="flex overflow-hidden ml-12">
         <div className=" bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[28vw]  mt-10">
           <DataTable
-            value={boatData}
+            value={customerData}
             header={CustomerHeader}
             scrollable={true}
             tableStyle={{
