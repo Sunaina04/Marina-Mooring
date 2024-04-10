@@ -19,10 +19,6 @@ const Vendor = () => {
     setModalVisible(true);
   };
 
-  const handleModalClose = () => {
-    setModalVisible(false);
-  };
-
   const getVendorData = async () => {
     await getVendors({})
       .unwrap()
@@ -34,6 +30,16 @@ const Vendor = () => {
           setVendorData(content);
         }
       });
+  };
+
+  const handleEdit = (rowData: any) => {
+    setSelectedCustomer(rowData);
+    setEditMode(true);
+  };
+
+  const handleModalClose = () => {
+    setModalVisible(false);
+    setEditMode(false);
   };
 
   useEffect(() => {
@@ -64,11 +70,12 @@ const Vendor = () => {
 
           <CustomModal
             onClick={handleButtonClick}
-            visible={false}
+            visible={modalVisible || editMode}
             onHide={handleModalClose}
             style={{ borderRadius: "2rem" }}
           >
-            <AddVendor vendors={selectedCustomer} editMode={editMode} />
+            <AddVendor vendors={selectedCustomer} editMode={editMode} closeModal={handleModalClose}
+              getVendor={getVendorData} />
           </CustomModal>
         </div>
       </div>
@@ -89,18 +96,18 @@ const Vendor = () => {
           <Column header="ID" field="id" style={{ width: "8vw" }}></Column>
           <Column
             style={{ width: "11vw" }}
-            field="name"
+            field="companyName"
             header="Company Name"
           ></Column>
           <Column
             style={{ width: "11vw" }}
-            field="phoneNumber"
+            field="companyPhoneNumber"
             header="Phone Number"
           ></Column>
 
           <Column
             style={{ width: "11vw" }}
-            field="email"
+            field="companyEmail"
             header="Email Address"
           ></Column>
           <Column
@@ -115,7 +122,7 @@ const Vendor = () => {
                 <span className="text-black  font-bold underline cursor-pointer">
                   View Invetory
                 </span>
-                <span className="text-green-600  font-bold underline cursor-pointer">
+                <span className="text-green-600  font-bold underline cursor-pointer" onClick={handleEdit}>
                   Edit
                 </span>
 
