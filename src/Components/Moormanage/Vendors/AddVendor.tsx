@@ -4,6 +4,7 @@ import { InputTextarea } from "primereact/inputtextarea";
 import InputComponent from "../../Common/InputComponent";
 import { InputText } from "primereact/inputtext";
 import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
+import { Checkbox } from "primereact/checkbox";
 interface City {
   name: string;
   code: string;
@@ -11,6 +12,7 @@ interface City {
 const AddVendor = () => {
   const [value, setValue] = useState<string>("");
   const [selectedCity, setSelectedCity] = useState<City | null>(null);
+  const [checked, setChecked] = useState<boolean>(false);
   const cities: City[] = [
     { name: "New York", code: "NY" },
     { name: "Rome", code: "RM" },
@@ -41,17 +43,7 @@ const AddVendor = () => {
                   />
                 </div>
               </div>
-
-
-
-
-
-
-
-
-
             </div>
-
 
             <div>
               <span className="font-semibold text-sm">Phone</span>
@@ -87,24 +79,24 @@ const AddVendor = () => {
                 />
               </div>
             </div>
-
-
-
-
           </div>
-
         </div>
 
         <div className="">
-          <div className="mt-3 ml-1">
-            <h1 className="text-sm font-bold">Address</h1>
+          <div className="mt-3 ml-1 flex justify-between">
+            <div>
+              <h1 className="text-sm font-bold">Address</h1>
+            </div>
+            <div className="">
+              <h1 className="text-sm font-bold">Remit Address</h1>
+            </div>
           </div>
 
-          <div className="flex   mt-2  ">
+          <div className="flex  justify-between mt-2  ">
             <div>
-              <div className="mt-2 mr-9">
+              <div className="mt-2 ">
                 <InputText
-                  placeholder="Street"
+                  placeholder="Street/Building"
                   // type="text"
                   style={{
                     width: "14vw",
@@ -126,32 +118,44 @@ const AddVendor = () => {
                     height: "4vh",
                     border: "1px solid gray",
                     borderRadius: "0.50rem",
-                  
                   }}
                   className="mr-4"
                 />
               </div>
             </div>
 
-            <div className="mt-2 ml-4">
-              <Dropdown
-                value={selectedCity}
-                onChange={(e: DropdownChangeEvent) => setSelectedCity(e.value)}
-                options={cities}
-                optionLabel="name"
-                editable
-                placeholder="State"
-                style={{
-                  width: "14vw",
-                  height: "4vh",
-                  border: "1px solid gray",
-                  borderRadius: "0.50rem",
-                }}
-              />
+            <div>
+              <div className="mt-2">
+                <InputText
+                  placeholder="Street/Building"
+                  type="text"
+                  style={{
+                    width: "14vw",
+                    height: "4vh",
+                    border: "1px solid gray",
+                    borderRadius: "0.50rem",
+                  }}
+                  className="mr-4"
+                />
+              </div>
+            </div>
+            <div>
+              <div className="mt-2">
+                <InputText
+                  placeholder="Apt/Suite"
+                  type="text"
+                  style={{
+                    width: "14vw",
+                    height: "4vh",
+                    border: "1px solid gray",
+                    borderRadius: "0.50rem",
+                  }}
+                />
+              </div>
             </div>
           </div>
 
-          <div className="flex mt-5 gap-9">
+          <div className="flex mt-5 justify-between">
             <div className="">
               <Dropdown
                 value={selectedCity}
@@ -170,23 +174,17 @@ const AddVendor = () => {
               />
             </div>
             <div>
-            <InputText
-              placeholder="Zipcode"
-              style={{
-                width: "14vw",
-                height: "4vh",
-                border: "1px solid gray",
-                borderRadius: "0.50rem",
-              }}
-            />
-            </div>
-           
-
-            
-              <div className="">
-                <InputText
-                  placeholder="Email Address"
-                  type="text"
+              <div className="ml-2">
+                <Dropdown
+                  value={selectedCity}
+                  onChange={(e: DropdownChangeEvent) =>
+                    setSelectedCity(e.value)
+                  }
+                  options={cities}
+                  optionLabel="name"
+                  editable
+                  placeholder="State"
+                  className=""
                   style={{
                     width: "14vw",
                     height: "4vh",
@@ -195,21 +193,114 @@ const AddVendor = () => {
                   }}
                 />
               </div>
-         
+            </div>
 
+            <div className="mr-6">
+              <Dropdown
+                value={selectedCity}
+                onChange={(e: DropdownChangeEvent) => setSelectedCity(e.value)}
+                options={cities}
+                optionLabel="name"
+                editable
+                placeholder="Country"
+                className=""
+                style={{
+                  width: "14vw",
+                  height: "4vh",
+                  border: "1px solid gray",
+                  borderRadius: "0.50rem",
+                }}
+              />
+            </div>
 
-
+            <div className="">
+              <Dropdown
+                value={selectedCity}
+                onChange={(e: DropdownChangeEvent) => setSelectedCity(e.value)}
+                options={cities}
+                optionLabel="name"
+                editable
+                placeholder="State"
+                className=""
+                style={{
+                  width: "14vw",
+                  height: "4vh",
+                  border: "1px solid gray",
+                  borderRadius: "0.50rem",
+                }}
+              />
+            </div>
           </div>
         </div>
 
+        <div className="flex  gap-4 mt-2 justify-between ">
+          <div>
+            <div className="mt-2 ">
+              <InputText
+                placeholder="Zip Code"
+                // type="text"
+                style={{
+                  width: "14vw",
+                  height: "4vh",
+                  border: "1px solid gray",
+                  borderRadius: "0.50rem",
+                }}
+              />
+            </div>
+          </div>
 
+          <div>
+            <div className="mt-2">
+              <InputText
+                placeholder="Email Address"
+                type="text"
+                style={{
+                  width: "14vw",
+                  height: "4vh",
+                  border: "1px solid gray",
+                  borderRadius: "0.50rem",
+                }}
+                className="mr-4"
+              />
+            </div>
+          </div>
 
+          <div>
+            <div className="mt-2 ">
+              <InputText
+                placeholder="Zip Code"
+                type="text"
+                style={{
+                  width: "14vw",
+                  height: "4vh",
+                  border: "1px solid gray",
+                  borderRadius: "0.50rem",
+                }}
+                className="mr-4"
+              />
+            </div>
+          </div>
+          <div>
+            <div className="mt-2">
+              <InputText
+                placeholder="Email Address"
+                type="text"
+                style={{
+                  width: "14vw",
+                  height: "4vh",
+                  border: "1px solid gray",
+                  borderRadius: "0.50rem",
+                }}
+                className="mr-4"
+              />
+            </div>
+          </div>
+        </div>
 
         <div>
           <div className="mt-2">
             <div className="ml-1">
               <span>Account Number</span>
-
             </div>
 
             <InputText
@@ -224,7 +315,6 @@ const AddVendor = () => {
             />
           </div>
         </div>
-
 
         <div className="">
           <div className="mt-4 ">
@@ -247,7 +337,6 @@ const AddVendor = () => {
                 }}
               />
             </div>
-
 
             <div>
               <div className="mt-2">
@@ -287,7 +376,6 @@ const AddVendor = () => {
           </div>
 
           <div className="flex mt-5 gap-4">
-
             <div className="mt-2">
               <div>
                 <span>Email</span>
@@ -304,9 +392,7 @@ const AddVendor = () => {
               />
             </div>
 
-            <div>
-
-            </div>
+            <div></div>
 
             <div className="mt-1">
               <div>
@@ -323,12 +409,19 @@ const AddVendor = () => {
                 cols={30}
               />
             </div>
-
           </div>
         </div>
 
+        <div className="card flex justify-content-center gap-3">
+          <Checkbox
+            onChange={(e) => setChecked(e.checked ?? false)}
+            checked={checked}
+          ></Checkbox>
 
-
+          <div>
+            <p>Primary Sales Representative</p>
+          </div>
+        </div>
 
         <div className="flex gap-3 mt-4 ">
           <ButtonComponent
