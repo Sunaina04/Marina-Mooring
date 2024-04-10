@@ -10,8 +10,11 @@ import { InputText } from "primereact/inputtext";
 import { PrimeIcons } from "primereact/api";
 import { FaEdit } from "react-icons/fa";
 import { RiDeleteBin5Fill } from "react-icons/ri";
+import { AiFillCheckCircle } from "react-icons/ai";
 import { FaCircle } from "react-icons/fa6";
+import { FaLocationPin } from "react-icons/fa6";
 import { Avatar } from "primereact/avatar";
+import Timeline from "../../customComponent/Timeline";
 import {
   useDeleteCustomerMutation,
   useGetCustomerMutation,
@@ -21,6 +24,13 @@ import {
   CUSTOMER_PAYLOAD,
   CUSTOMER_RESPONSE,
 } from "../../../Services/MoorManage/types";
+
+interface CustomerData {
+  id: string;
+  name: string;
+  phoneNumber: number;
+  email: string;
+}
 
 const Customer = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -39,6 +49,95 @@ const Customer = () => {
     setModalVisible(false);
     setEditMode(false);
   };
+  const [clientData] = useState<CustomerData[]>([
+    {
+      id: "01",
+      name: "Ram",
+      phoneNumber: 4564546897,
+      email: "test@gmail.com"
+    },
+    {
+      id: "01",
+      name: "Ram",
+      phoneNumber: 4564546897,
+      email: "test@gmail.com"
+    },
+
+    {
+      id: "01",
+      name: "Ram",
+      phoneNumber: 4564546897,
+      email: "test@gmail.com"
+    },
+
+    {
+      id: "01",
+      name: "Ram",
+      phoneNumber: 4564546897,
+      email: "test@gmail.com"
+    },
+    {
+      id: "01",
+      name: "Ram",
+      phoneNumber: 4564546897,
+      email: "test@gmail.com"
+    },
+    {
+      id: "01",
+      name: "Ram",
+      phoneNumber: 4564546897,
+      email: "test@gmail.com"
+    },
+    {
+      id: "01",
+      name: "Ram",
+      phoneNumber: 4564546897,
+      email: "test@gmail.com"
+    },
+    {
+      id: "01",
+      name: "Ram",
+      phoneNumber: 4564546897,
+      email: "test@gmail.com"
+    },
+    {
+      id: "01",
+      name: "Ram",
+      phoneNumber: 4564546897,
+      email: "test@gmail.com"
+    },
+    {
+      id: "01",
+      name: "Ram",
+      phoneNumber: 4564546897,
+      email: "test@gmail.com"
+    },
+    {
+      id: "01",
+      name: "Ram",
+      phoneNumber: 4564546897,
+      email: "test@gmail.com"
+    },
+    {
+      id: "01",
+      name: "Ram",
+      phoneNumber: 4564546897,
+      email: "test@gmail.com"
+    },
+    {
+      id: "01",
+      name: "Ram",
+      phoneNumber: 4564546897,
+      email: "test@gmail.com"
+    },
+    {
+      id: "01",
+      name: "Ram",
+      phoneNumber: 4564546897,
+      email: "test@gmail.com"
+    },
+  ]);
+
 
   const statCardsData = [
     [
@@ -175,10 +274,10 @@ const Customer = () => {
         ))}
       </div> */}
 
-      <div className="flex overflow-hidden ml-12">
-        <div className=" bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[28vw]  mt-10">
+      <div className="flex ml-12">
+        <div className=" bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[28vw] h-[100vh]  mt-10">
           <DataTable
-            value={customerData}
+            value={clientData}
             header={CustomerHeader}
             scrollable={true}
             tableStyle={{
@@ -192,22 +291,22 @@ const Customer = () => {
           >
             <Column
               header="ID:"
-              field="customerId"
+              field="id"
               style={{ width: "6vw" }}
             ></Column>
             <Column
               style={{ width: "6vw" }}
-              field="customerName"
+              field="name"
               header="Name:"
             ></Column>
             <Column
               style={{ width: "10vw" }}
-              field="emailAddress"
+              field="email"
               header="Email:"
             ></Column>
             <Column
               style={{ width: "5vw" }}
-              field="phone"
+              field="phoneNumber"
               header="Phone:"
             ></Column>
             {/* <Column
@@ -235,8 +334,21 @@ const Customer = () => {
           </DataTable>
         </div>
         {/* middle container */}
-        <div className=" flex flex-col rounded-md border-[1px] p-1 border-gray-300 w-[28vw] ml-5 mt-10 h-[86vh]">
-          <div className="rounded-md border-[1px] p-1 border-gray-300  w-[22vw] ml-2 mt-auto h-[17vh] bg-gray-800">
+        <div className="relative">
+          <img
+            src="/assets/images/Sea-img.png"
+            className="w-[30vw] h-[100vh] object-cover bg-no-repeat rounded-md border-[1px] border-gray-300 ml-5 mt-10"
+            alt="Sea Image"
+          />
+
+          <div className="-translate-y-[85vh] relative">
+            <Timeline />
+          </div>
+          <div className="-translate-y-[55vh] flex justify-end relative">
+            <Timeline />
+          </div>
+
+          <div className="absolute -translate-y-[30vh] bottom-2  rounded-md border-[1px] p-1 border-gray-300 w-[22vw] ml-14 mt-auto h-[17vh] bg-gray-800">
             <p className="text-xs ml-2 mt-2 text-white">Status</p>
             <hr className="m-2" />
             <div className="flex justify-between">
@@ -265,17 +377,20 @@ const Customer = () => {
         </div>
         {/* last container */}
         <div className="ml-5">
-          <div className=" rounded-md border-[1px] p-1 border-gray-300 w-[28vw]  mt-10 h-[40vh]">
+          <div className=" rounded-md border-[1px] p-1 border-gray-300 w-[28vw]  mt-10 h-[50vh]">
             <div className="bg-[#D9D9D9] flex justify-between">
               <div>
                 <p className="font-bold">Customers Record</p>
               </div>
               <div className="flex">
-                <FaEdit className="mr-2" />
-                <RiDeleteBin5Fill className="text-red-500" />
+                <FaEdit onClick={handleEdit} className="mr-2" />
+                <RiDeleteBin5Fill
+                  onClick={handleDelete}
+                  className="text-red-500"
+                />
               </div>
             </div>
-            <div className="mt-4 flex">
+            <div className="mt-4 flex bg-gray-200">
               <div>
                 <Avatar size="xlarge" shape="circle" />
               </div>
@@ -311,14 +426,56 @@ const Customer = () => {
                 <p className=" bg-gray-300 ml-2">03Pioneer</p>
               </div>
             </div>
+            <div className=" flex mt-4 ml-2 bg-gray-400">
+              <div className="mt-3">
+                <p>Moorings:</p>
+              </div>
+              <div className="ml-4 mt-2">
+                <div className=" bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-500 w-[19vw] h-[8vh] flex items-center">
+                  <div>
+                    <AiFillCheckCircle className="h-10 w-6 bg-black text-white" />
+                  </div>
+                  <div className="flex mt-o">
+                    <div>
+                      <p className="text-xs tracking-tighter ml-2">
+                        <span>Mooring No:</span> 54342
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-xs tracking-tighter ml-3">
+                        <span>Boat Name:</span> Suriase
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className=" bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-500 w-[19vw] h-[9vh] mt-2 mb-2 flex items-center ">
+                  <div>
+                    <AiFillCheckCircle className="h-10 w-6 bg-black text-white" />
+                  </div>
+                  <div className="flex">
+                    <div>
+                      <p className="text-xs tracking-tighter ml-2">
+                        <span>Mooring No:</span> 54342
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-xs tracking-tighter ml-3">
+                        <span>Boat Name:</span> Suriase
+                      </p>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[28vw]  mt-10 h-[40vh]">
+          <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[28vw]  mt-10 h-[44vh]">
             <div className=" flex justify-between bg-gray-300">
               <div>
                 <p>Mooring Information</p>
               </div>
               <div>
-                <FaEdit />
+                <FaEdit onClick={handleEdit} />
               </div>
             </div>
             <div className="flex mt-4">

@@ -65,15 +65,14 @@ const WorkOrders = () => {
     <div className="flex flex-wrap align-items-center justify-between  p-4">
       <span className="text-xl font-bold">Work Orders</span>
       <div className="">
-              <div className="p-input-icon-left">
-                <i className="pi pi-search text-[#D2D2D2] " />
-                <InputText
-                  placeholder="Search"
-                  className="h-[5vh] cursor-pointer font-bold"
-                />
-              </div>
-            </div>
-
+        <div className="p-input-icon-left">
+          <i className="pi pi-search text-[#D2D2D2] " />
+          <InputText
+            placeholder="Search"
+            className="h-[5vh] cursor-pointer font-bold"
+          />
+        </div>
+      </div>
     </div>
   );
 
@@ -87,7 +86,6 @@ const WorkOrders = () => {
             </h1>
           </div>
           <div className="flex mr-36 gap-4">
-            
             <div>
               <ButtonComponent
                 label={"Create New"}
@@ -101,9 +99,7 @@ const WorkOrders = () => {
                   fontWeight: "bold",
                   fontSize: "0.80vw",
                 }}
-              >
-                
-              </ButtonComponent>
+              ></ButtonComponent>
             </div>
           </div>
         </div>
@@ -152,7 +148,7 @@ const WorkOrders = () => {
                   <span className="text-green  cursor-pointer">
                     New Request
                   </span>
-              
+
                   <span className="text-green underline cursor-pointer">
                     Edit
                   </span>

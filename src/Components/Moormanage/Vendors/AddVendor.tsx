@@ -21,6 +21,7 @@ interface Props {
 }
 
 const AddVendor: React.FC<Props> = ({ vendors, editMode , closeModal , getVendor}) => {
+  const [checked , setChecked] = useState<boolean>(false);
   const [companyName, setCompanyName] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
   const [website, setWebsite] = useState<string>("");
@@ -117,7 +118,7 @@ const AddVendor: React.FC<Props> = ({ vendors, editMode , closeModal , getVendor
                       setCompanyName(e.target.value)
                     }
                     style={{
-                      width: "14vw",
+                      width: "12vw",
                       height: "4vh",
                       border: "1px solid gray",
                       borderRadius: "0.50rem",
@@ -137,7 +138,7 @@ const AddVendor: React.FC<Props> = ({ vendors, editMode , closeModal , getVendor
                     setPhone(e.target.value)
                   }
                   style={{
-                    width: "14vw",
+                    width: "12vw",
                     height: "4vh",
                     border: "1px solid gray",
                     borderRadius: "0.50rem",
@@ -159,7 +160,7 @@ const AddVendor: React.FC<Props> = ({ vendors, editMode , closeModal , getVendor
                     setWebsite(e.target.value)
                   }
                   style={{
-                    width: "14vw",
+                    width: "10vw",
                     height: "4vh",
                     border: "1px solid gray",
                     borderRadius: "0.50rem",
@@ -171,260 +172,272 @@ const AddVendor: React.FC<Props> = ({ vendors, editMode , closeModal , getVendor
           </div>
         </div>
 
-        <div className="">
-          <div className="mt-3 ml-1 flex justify-between">
-            <div>
-              <h1 className="text-sm font-bold">Address</h1>
-            </div>
-            <div className="">
-              <h1 className="text-sm font-bold">Remit Address</h1>
-            </div>
-          </div>
 
-          <div className="flex  justify-between mt-2  ">
-            <div>
-              <div className="mt-2 ">
-                <InputText
-                  value={streetBuilding}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setStreetBuilding(e.target.value)
-                  }
-                  placeholder="Street/Building"
-                  style={{
-                    width: "14vw",
-                    height: "4vh",
-                    border: "1px solid gray",
-                    borderRadius: "0.50rem",
-                  }}
-                />
+
+        <div>
+
+          <div className="">
+            <div className="mt-3 ml-1 flex ">
+              <div>
+                <h1 className="text-sm font-bold">Address</h1>
+              </div>
+              <div className="ml-[16.50rem]">
+                <h1 className="text-sm font-bold">Remit Address</h1>
               </div>
             </div>
 
-            <div>
-              <div className="mt-2">
-                <InputText
-                  value={aptSuite}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setAptSuite(e.target.value)
-                  }
-                  placeholder="Apt/Suite"
-                  type="text"
-                  style={{
-                    width: "14vw",
-                    height: "4vh",
-                    border: "1px solid gray",
-                    borderRadius: "0.50rem",
-                  }}
-                  className="mr-4"
-                />
+            <div className="flex  gap-2 mt-2">
+              <div>
+                <div className="mt-2 ">
+                  <InputText
+                    placeholder="Street/Building"
+                    // type="text"
+                    style={{
+                      width: "10vw",
+                      height: "4vh",
+                      border: "1px solid gray",
+                      borderRadius: "0.50rem",
+                      fontSize: "0.70rem"
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <div className="mt-2">
+                  <InputText
+                    placeholder="Apt/Suite"
+                    type="text"
+                    style={{
+                      width: "10vw",
+                      height: "4vh",
+                      border: "1px solid gray",
+                      borderRadius: "0.50rem",
+                      fontSize: "0.70rem"
+                    }}
+
+                  />
+                </div>
+              </div>
+
+              <div>
+                <div className="mt-2">
+                  <InputText
+                    placeholder="Street/Building"
+                    type="text"
+                    style={{
+                      width: "10vw",
+                      height: "4vh",
+                      border: "1px solid gray",
+                      borderRadius: "0.50rem",
+                      fontSize: "0.70rem"
+                    }}
+
+                  />
+                </div>
+              </div>
+              <div>
+                <div className="mt-2">
+                  <InputText
+                    placeholder="Apt/Suite"
+                    type="text"
+                    style={{
+                      width: "10vw",
+                      height: "4vh",
+                      border: "1px solid gray",
+                      borderRadius: "0.50rem",
+                      fontSize: "0.70rem"
+                    }}
+                  />
+                </div>
               </div>
             </div>
 
-            <div>
-              <div className="mt-2">
-                <InputText
-                  value={streetBuilding}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setStreetBuilding(e.target.value)
-                  }
-                  placeholder="Street/Building"
-                  type="text"
-                  style={{
-                    width: "14vw",
-                    height: "4vh",
-                    border: "1px solid gray",
-                    borderRadius: "0.50rem",
-                  }}
-                  className="mr-4"
-                />
-              </div>
-            </div>
-            <div>
-              <div className="mt-2">
-                <InputText
-                  value={aptSuite}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setAptSuite(e.target.value)
-                  }
-                  placeholder="Apt/Suite"
-                  type="text"
-                  style={{
-                    width: "14vw",
-                    height: "4vh",
-                    border: "1px solid gray",
-                    borderRadius: "0.50rem",
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="flex mt-5 justify-between">
-            <div className="">
-              <Dropdown
-                value={selectedCity}
-                onChange={(e: DropdownChangeEvent) =>
-                  setSelectedCity(e.value as City)
-                }
-                options={cities}
-                optionLabel="name"
-                editable
-                placeholder="Country"
-                className=""
-                style={{
-                  width: "14vw",
-                  height: "4vh",
-                  border: "1px solid gray",
-                  borderRadius: "0.50rem",
-                }}
-              />
-            </div>
-            <div>
-              <div className="ml-2">
+            <div className="flex mt-5 gap-2">
+              <div className="">
                 <Dropdown
                   value={selectedCity}
-                  onChange={(e: DropdownChangeEvent) =>
-                    setSelectedCity(e.value as City)
-                  }
+                  onChange={(e: DropdownChangeEvent) => setSelectedCity(e.value)}
+                  options={cities}
+                  optionLabel="name"
+                  editable
+                  placeholder="Country"
+                  className=""
+                  style={{
+                    width: "10vw",
+                    height: "4vh",
+                    border: "1px solid gray",
+                    borderRadius: "0.50rem",
+                    fontSize: "0.40rem"
+                  }}
+                />
+              </div>
+              <div>
+                <div className="">
+                  <Dropdown
+                    value={selectedCity}
+                    onChange={(e: DropdownChangeEvent) =>
+                      setSelectedCity(e.value)
+                    }
+                    options={cities}
+                    optionLabel="name"
+                    editable
+                    placeholder="State"
+                    className=""
+                    style={{
+                      width: "10vw",
+                      height: "4vh",
+                      border: "1px solid gray",
+                      borderRadius: "0.50rem",
+                      fontSize: "0.70rem"
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div className="">
+                <Dropdown
+                  value={selectedCity}
+                  onChange={(e: DropdownChangeEvent) => setSelectedCity(e.value)}
+                  options={cities}
+                  optionLabel="name"
+                  editable
+                  placeholder="Country"
+                  className=""
+                  style={{
+                    width: "10vw",
+                    height: "4vh",
+                    border: "1px solid gray",
+                    borderRadius: "0.50rem",
+                    fontSize: "0.70rem"
+                  }}
+                />
+              </div>
+
+              <div className="">
+                <Dropdown
+                  value={selectedCity}
+                  onChange={(e: DropdownChangeEvent) => setSelectedCity(e.value)}
                   options={cities}
                   optionLabel="name"
                   editable
                   placeholder="State"
                   className=""
                   style={{
-                    width: "14vw",
+                    width: "10vw",
                     height: "4vh",
                     border: "1px solid gray",
                     borderRadius: "0.50rem",
+                    fontSize: "0.70rem"
                   }}
                 />
               </div>
-            </div>
 
-            <div className="mr-6">
-              <Dropdown
-                value={selectedCity}
-                onChange={(e: DropdownChangeEvent) =>
-                  setSelectedCity(e.value as City)
-                }
-                options={cities}
-                optionLabel="name"
-                editable
-                placeholder="Country"
-                className=""
-                style={{
-                  width: "14vw",
-                  height: "4vh",
-                  border: "1px solid gray",
-                  borderRadius: "0.50rem",
-                }}
-              />
-            </div>
-
-            <div className="">
-              <Dropdown
-                value={selectedCity}
-                onChange={(e: DropdownChangeEvent) =>
-                  setSelectedCity(e.value as City)
-                }
-                options={cities}
-                optionLabel="name"
-                editable
-                placeholder="State"
-                className=""
-                style={{
-                  width: "14vw",
-                  height: "4vh",
-                  border: "1px solid gray",
-                  borderRadius: "0.50rem",
-                }}
-              />
             </div>
           </div>
+
+
+
         </div>
 
-        <div className="flex  gap-4 mt-2 justify-between ">
-          <div>
-            <div className="mt-2 ">
-              <InputText
-                value={zipCode !== undefined ? zipCode.toString() : ""}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setZipCode(parseInt(e.target.value, 10))
-                }
-                placeholder="Zip Code"
-                style={{
-                  width: "14vw",
-                  height: "4vh",
-                  border: "1px solid gray",
-                  borderRadius: "0.50rem",
-                }}
-              />
-            </div>
+
+
+
+
+
+
+
+
+        <div className="flex  mt-2 gap-2">
+
+          <div className="mt-2 ">
+            <InputText
+              placeholder="Zip Code"
+              // type="text"
+              style={{
+                width: "10vw",
+                height: "4vh",
+                border: "1px solid gray",
+                borderRadius: "0.50rem",
+                fontSize: "0.70rem"
+              }}
+            />
           </div>
 
-          <div>
-            <div className="mt-2">
-              <InputText
-                value={emailAddress}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setEmailAddress(e.target.value)
-                }
-                placeholder="Email Address"
-                type="text"
-                style={{
-                  width: "14vw",
-                  height: "4vh",
-                  border: "1px solid gray",
-                  borderRadius: "0.50rem",
-                }}
-                className="mr-4"
-              />
-            </div>
+
+
+          <div className="mt-2 ">
+            <InputText
+              placeholder="Email Address"
+              type="text"
+              style={{
+                width: "10vw",
+                height: "4vh",
+                border: "1px solid gray",
+                borderRadius: "0.50rem",
+                fontSize: "0.70rem"
+              }}
+
+            />
           </div>
 
-          <div>
-            <div className="mt-2 ">
-              <InputText
-                value={zipCode !== undefined ? zipCode.toString() : ""}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setZipCode(parseInt(e.target.value, 10))
-                }
-                placeholder="Zip Code"
-                style={{
-                  width: "14vw",
-                  height: "4vh",
-                  border: "1px solid gray",
-                  borderRadius: "0.50rem",
-                }}
-              />
-            </div>
+
+          <div className="mt-2 ">
+            <InputText
+              placeholder="Zip Code"
+              type="text"
+              style={{
+                width: "10vw",
+                height: "4vh",
+                border: "1px solid gray",
+                borderRadius: "0.50rem",
+                fontSize: "0.70rem"
+              }}
+
+            />
           </div>
-          <div>
-            <div className="mt-2">
-              <InputText
-                value={emailAddress}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setEmailAddress(e.target.value)
-                }
-                placeholder="Email Address"
-                type="text"
-                style={{
-                  width: "14vw",
-                  height: "4vh",
-                  border: "1px solid gray",
-                  borderRadius: "0.50rem",
-                }}
-                className="mr-4"
-              />
-            </div>
+
+
+          <div className="mt-2 ">
+            <InputText
+              placeholder="Email Address"
+              type="text"
+              style={{
+                width: "10vw",
+                height: "4vh",
+                border: "1px solid gray",
+                borderRadius: "0.50rem",
+                fontSize: "0.70rem"
+              }}
+
+            />
           </div>
+
+
+
         </div>
 
-        <div>
-          <div className="mt-2">
-            <div className="ml-1">
-              <span>Account Number</span>
-            </div>
+
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <div>
+        <div className="mt-2">
+          <div className="ml-1">
+            <span>Account Number</span>
+          </div>
+          <div className="mt-1">
 
             <InputText
               value={accountNumber}
@@ -438,21 +451,46 @@ const AddVendor: React.FC<Props> = ({ vendors, editMode , closeModal , getVendor
                 height: "4vh",
                 border: "1px solid gray",
                 borderRadius: "0.50rem",
+                fontSize: "0.70rem"
               }}
             />
           </div>
         </div>
+      </div>
 
-        <div className="">
-          <div className="mt-4 ">
-            <h1 className="text-sm font-bold">Sales Representative</h1>
+      <div className="">
+        <div className="mt-4 ">
+          <h1 className="text-sm font-bold">Sales Representative</h1>
+        </div>
+
+        <div className="flex   mt-2 gap-2 ">
+          <div className="mt-2">
+            <div>
+              <span>First Name</span>
+            </div>
+            <div className="mt-1">
+
+            <InputText
+              placeholder=""
+              type="text"
+              style={{
+                width: "12vw",
+                height: "4vh",
+                border: "1px solid gray",
+                borderRadius: "0.50rem",
+                fontSize: "0.70rem"
+              }}
+            />
+            </div>
+            
           </div>
 
-          <div className="flex   mt-2 gap-8 ">
+          <div>
             <div className="mt-2">
               <div>
-                <span>First Name</span>
+                <span>Last Name</span>
               </div>
+              <div className="mt-1">
               <InputText
                 value={firstName}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -461,64 +499,24 @@ const AddVendor: React.FC<Props> = ({ vendors, editMode , closeModal , getVendor
                 placeholder=""
                 type="text"
                 style={{
-                  width: "14vw",
+                  width: "12vw",
                   height: "4vh",
                   border: "1px solid gray",
                   borderRadius: "0.50rem",
+                  fontSize: "0.70rem"
                 }}
               />
-            </div>
-
-            <div>
-              <div className="mt-2">
-                <div>
-                  <span>Last Name</span>
-                </div>
-                <InputText
-                  value={lastName}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setLastName(e.target.value)
-                  }
-                  placeholder=""
-                  type="text"
-                  style={{
-                    width: "14vw",
-                    height: "4vh",
-                    border: "1px solid gray",
-                    borderRadius: "0.50rem",
-                  }}
-                />
               </div>
-            </div>
-
-            <div className="card flex justify-content-center mt-2 ">
-              <div className="">
-                <div>
-                  <span>Phone</span>
-                </div>
-                <InputText
-                  value={salesRepPhone}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setSalesRepPhone(e.target.value)
-                  }
-                  placeholder=""
-                  type="text"
-                  style={{
-                    width: "14vw",
-                    height: "4vh",
-                    border: "1px solid gray",
-                    borderRadius: "0.50rem",
-                  }}
-                />
-              </div>
+           
             </div>
           </div>
 
-          <div className="flex mt-5 gap-4">
-            <div className="mt-2">
+          <div className="card flex justify-content-center mt-2 ">
+            <div className="">
               <div>
-                <span>Email</span>
+                <span>Phone</span>
               </div>
+              <div className="mt-1">
               <InputText
                 value={salesRepEmail}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -527,22 +525,50 @@ const AddVendor: React.FC<Props> = ({ vendors, editMode , closeModal , getVendor
                 placeholder=""
                 type="text"
                 style={{
-                  width: "14vw",
+                  width: "12vw",
                   height: "4vh",
                   border: "1px solid gray",
                   borderRadius: "0.50rem",
+                  fontSize: "0.70rem"
                 }}
               />
-            </div>
-
-            <div></div>
-
-            <div className="mt-1">
-              <div>
-                <span>Note</span>
               </div>
+             
+            </div>
+          </div>
+        </div>
+
+        <div className="flex mt-5 gap-4">
+          <div className="mt-2">
+            <div>
+              <span>Email</span>
+            </div>
+            <div className="mt-1">
+            <InputText
+              placeholder=""
+              type="text"
+              style={{
+                width: "14vw",
+                height: "4vh",
+                border: "1px solid gray",
+                borderRadius: "0.50rem",
+                fontSize: "0.70rem"
+              }}
+            />
+
+            </div>
+           
+          </div>
+
+          <div></div>
+
+          <div className="mt-1">
+            <div className="">
+              <span>Note</span>
+            </div>
+            <div className="mt-1">
               <InputTextarea
-                className="w-[30vw] h-[1vh] rounded-lg  border-[1px] border-gray-500"
+                className="w-[25vw] h-[1vh] rounded-lg  border-[1px] border-gray-500"
                 autoResize
                 value={note}
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
@@ -552,36 +578,50 @@ const AddVendor: React.FC<Props> = ({ vendors, editMode , closeModal , getVendor
                 cols={30}
               />
             </div>
+
           </div>
         </div>
+      </div>
 
-        <div className="flex gap-3 mt-4 ">
-          <ButtonComponent
-            onClick={() => {
-             saveVendor()
-            }}
-            label={"Save"}
-            style={{
-              width: "5vw",
-              backgroundColor: "black",
-              cursor: "pointer",
-              fontWeight: "bolder",
-              fontSize: "1vw",
-              border: "1px solid  gray",
-              color: "white",
-              borderRadius: "0.50rem",
-            }}
-          />
-          <ButtonComponent
-            onClick={() => {
-              // Handle Back
-            }}
-            label={"Back"}
-            text={true}
-            style={{ backgroundColor: "white", color: "black", border: "none" }}
-          />
+      <div className="card flex justify-content-center gap-3">
+        <Checkbox
+          onChange={(e) => setChecked(e.checked ?? false)}
+          checked={checked}
+        ></Checkbox>
+
+        <div>
+          <p>Primary Sales Representative</p>
         </div>
       </div>
+
+      <div className="flex gap-3 mt-4 ">
+        <ButtonComponent
+          onClick={function (): void {
+            throw new Error("Function not implemented.");
+          }}
+          label={"Save"}
+          style={{
+            width: "5vw",
+            backgroundColor: "black",
+            cursor: "pointer",
+            fontWeight: "bolder",
+            fontSize: "1vw",
+            border: "1px solid  gray",
+            color: "white",
+            borderRadius: "0.50rem",
+          }}
+        />
+        <ButtonComponent
+          onClick={function (): void {
+            throw new Error("Function not implemented.");
+          }}
+          label={"Back"}
+          text={true}
+          style={{ backgroundColor: "white", color: "black", border: "none" }}
+        />
+
+      </div>
+
     </>
   );
 };
