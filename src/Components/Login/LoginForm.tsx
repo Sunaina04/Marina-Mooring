@@ -7,6 +7,7 @@ import {
 import {
   ErrorResponse,
   LOGIN_RESPONSE,
+  RESET_PASSSWORD_RESPONSE,
 } from "../../Services/authentication/types";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserData } from "../../store/Slice/userSlice";
@@ -16,6 +17,7 @@ import ButtonComponent from "../Common/ButtonComponent";
 import InputComponent from "../Common/InputComponent";
 import SignUp from "../SignUp/SignUp";
 import { InputText } from "primereact/inputtext";
+import { Button } from "primereact/button";
 
 interface LoginFormProps {
   Label: string;
@@ -38,6 +40,7 @@ export default function LoginForm({
   });
   const { username, password } = loginPayload;
   const userData = useSelector((state: any) => state.user?.userData);
+  const token = localStorage?.getItem("token");
   const navigate = useNavigate();
 
   const [errors, setErrors] = useState({
@@ -87,7 +90,7 @@ export default function LoginForm({
           setErrors((prev) => ({
             ...prev,
             password:
-              "password must be at least 8 characters long and include letters, numbers, and symbols.",
+              "Password must be at least 8 characters long and include letters, numbers, and symbols.",
           }));
         } else {
           setErrors((prev) => ({
@@ -104,7 +107,7 @@ export default function LoginForm({
    ****************************************************/
   const [login] = useLoginMutation();
   const [getEmployee] = useGetEmployeeMutation();
-  const [ResetPassword] = useResetPasswordMutation();
+  const [resetPassword] = useResetPasswordMutation();
 
   const signInHandler = async () => {
     console.log("IN SIGN IN");
@@ -134,8 +137,28 @@ export default function LoginForm({
   };
 
   const ResetPasswordHandler = async () => {
-
-  }
+    console.log("RESET PASSWORD");
+    const resetPassPayload = {
+      newPassword: "", // Add your new password here
+      confirmPassword: "", // Add your confirm password here
+    };
+    try {
+      const response = await resetPassword({
+        payload: resetPassPayload,
+        token: token, // Make sure 'token' is defined in your scope
+      }).unwrap();
+      const { status, content, message } = response as RESET_PASSSWORD_RESPONSE;
+      if (status === 200) {
+        navigate("/dashboard");
+      }
+    } catch (error: any) {
+      console.error("Error occurred during password reset:", error);
+      if (error.data) {
+        const { message: msg } = error.data as ErrorResponse;
+        // Handle error message if needed
+      }
+    }
+  };
 
   const getEmployeeHandler = async () => {
     const response = await getEmployee({});
@@ -178,6 +201,7 @@ export default function LoginForm({
                 }
                 placeholder={showSinUp ? "New password" : "Enter Your username"}
                 name="username"
+                value={username} // Bind value to username state
                 onChange={handleChange}
               />
               <span
@@ -214,8 +238,9 @@ export default function LoginForm({
                     ? "password"
                     : "text"
                 }
-                placeholder={showSinUp ? "Confirm password" : "password"}
+                placeholder={showSinUp ? "Confirm password" : "Password"}
                 name="password"
+                value={password} // Bind value to password state
                 onChange={handleChange}
               />
               <span
@@ -244,7 +269,7 @@ export default function LoginForm({
               </>
             )}
           </div>
-          <ButtonComponent
+          <Button
             style={{
               width: "10vw",
               height: "6vh",
@@ -257,12 +282,28 @@ export default function LoginForm({
               // fontFamily: "Roboto",
               marginBottom: "0",
             }}
-            label={showSinUp ? Label : Label}
-            onClick={ showSinUp ? ResetPasswordHandler : signInHandler}
+            label={Label}
+            onClick={showSinUp ? ResetPasswordHandler : signInHandler}
           />
-
           {/* {showSinUp ? (
-            <ButtonComponent
+            <Button
+              style={{
+                width: "10vw",
+                height: "6vh",
+                backgroundColor: "black",
+                color: "white",
+                border: "1px solid black",
+                fontWeight: "700",
+                letterSpacing: "0.2px",
+                fontSize: "1.50vw",
+                // fontFamily: "Roboto",
+                marginBottom: "0",
+              }}
+              label={Label}
+              onclick={ResetPasswordHandler}
+            />
+          ) : (
+            <Button
               style={{
                 width: "10vw",
                 height: "6vh",
@@ -278,29 +319,7 @@ export default function LoginForm({
               label={Label}
               onclick={signInHandler}
             />
-          ) : (
-            <ButtonComponent
-              style={{
-                width: "10vw",
-                height: "6vh",
-                backgroundColor: "black",
-                color: "white",
-                border: "1px solid black",
-                fontWeight: "700",
-                letterSpacing: "0.2px",
-                fontSize: "1.50vw",
-                // fontFamily: "Roboto",
-                marginBottom: "0",
-              }}
-              label={Label}
-              onclick={() => {
-              if (ResetPasswordHandler) {
-                  ResetPasswordHandler();
-                }
-              }}
-            />
-          )}
-           */}
+          )} */}
         </div>
       </div>
       <div className="flex justify-center items-center mt-0">
