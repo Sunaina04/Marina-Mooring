@@ -49,94 +49,94 @@ const Customer = () => {
     setModalVisible(false);
     setEditMode(false);
   };
-  const [clientData] = useState<CustomerData[]>([
-    {
-      id: "01",
-      name: "Ram",
-      phoneNumber: 4564546897,
-      email: "test@gmail.com"
-    },
-    {
-      id: "01",
-      name: "Ram",
-      phoneNumber: 4564546897,
-      email: "test@gmail.com"
-    },
+  // const [clientData] = useState<CustomerData[]>([
+  //   {
+  //     id: "01",
+  //     name: "Ram",
+  //     phoneNumber: 4564546897,
+  //     email: "test@gmail.com"
+  //   },
+  //   {
+  //     id: "01",
+  //     name: "Ram",
+  //     phoneNumber: 4564546897,
+  //     email: "test@gmail.com"
+  //   },
 
-    {
-      id: "01",
-      name: "Ram",
-      phoneNumber: 4564546897,
-      email: "test@gmail.com"
-    },
+  //   {
+  //     id: "01",
+  //     name: "Ram",
+  //     phoneNumber: 4564546897,
+  //     email: "test@gmail.com"
+  //   },
 
-    {
-      id: "01",
-      name: "Ram",
-      phoneNumber: 4564546897,
-      email: "test@gmail.com"
-    },
-    {
-      id: "01",
-      name: "Ram",
-      phoneNumber: 4564546897,
-      email: "test@gmail.com"
-    },
-    {
-      id: "01",
-      name: "Ram",
-      phoneNumber: 4564546897,
-      email: "test@gmail.com"
-    },
-    {
-      id: "01",
-      name: "Ram",
-      phoneNumber: 4564546897,
-      email: "test@gmail.com"
-    },
-    {
-      id: "01",
-      name: "Ram",
-      phoneNumber: 4564546897,
-      email: "test@gmail.com"
-    },
-    {
-      id: "01",
-      name: "Ram",
-      phoneNumber: 4564546897,
-      email: "test@gmail.com"
-    },
-    {
-      id: "01",
-      name: "Ram",
-      phoneNumber: 4564546897,
-      email: "test@gmail.com"
-    },
-    {
-      id: "01",
-      name: "Ram",
-      phoneNumber: 4564546897,
-      email: "test@gmail.com"
-    },
-    {
-      id: "01",
-      name: "Ram",
-      phoneNumber: 4564546897,
-      email: "test@gmail.com"
-    },
-    {
-      id: "01",
-      name: "Ram",
-      phoneNumber: 4564546897,
-      email: "test@gmail.com"
-    },
-    {
-      id: "01",
-      name: "Ram",
-      phoneNumber: 4564546897,
-      email: "test@gmail.com"
-    },
-  ]);
+  //   {
+  //     id: "01",
+  //     name: "Ram",
+  //     phoneNumber: 4564546897,
+  //     email: "test@gmail.com"
+  //   },
+  //   {
+  //     id: "01",
+  //     name: "Ram",
+  //     phoneNumber: 4564546897,
+  //     email: "test@gmail.com"
+  //   },
+  //   {
+  //     id: "01",
+  //     name: "Ram",
+  //     phoneNumber: 4564546897,
+  //     email: "test@gmail.com"
+  //   },
+  //   {
+  //     id: "01",
+  //     name: "Ram",
+  //     phoneNumber: 4564546897,
+  //     email: "test@gmail.com"
+  //   },
+  //   {
+  //     id: "01",
+  //     name: "Ram",
+  //     phoneNumber: 4564546897,
+  //     email: "test@gmail.com"
+  //   },
+  //   {
+  //     id: "01",
+  //     name: "Ram",
+  //     phoneNumber: 4564546897,
+  //     email: "test@gmail.com"
+  //   },
+  //   {
+  //     id: "01",
+  //     name: "Ram",
+  //     phoneNumber: 4564546897,
+  //     email: "test@gmail.com"
+  //   },
+  //   {
+  //     id: "01",
+  //     name: "Ram",
+  //     phoneNumber: 4564546897,
+  //     email: "test@gmail.com"
+  //   },
+  //   {
+  //     id: "01",
+  //     name: "Ram",
+  //     phoneNumber: 4564546897,
+  //     email: "test@gmail.com"
+  //   },
+  //   {
+  //     id: "01",
+  //     name: "Ram",
+  //     phoneNumber: 4564546897,
+  //     email: "test@gmail.com"
+  //   },
+  //   {
+  //     id: "01",
+  //     name: "Ram",
+  //     phoneNumber: 4564546897,
+  //     email: "test@gmail.com"
+  //   },
+  // ]);
 
 
   const statCardsData = [
@@ -277,7 +277,7 @@ const Customer = () => {
       <div className="flex gap-4 ml-12">
         <div className=" bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[28vw] h-[100vh]  mt-10">
           <DataTable
-            value={clientData}
+            value={customerData}
             header={CustomerHeader}
             scrollable={true}
             tableStyle={{
