@@ -18,8 +18,10 @@ import Button from "@mui/material/Button";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import { FaCircle } from "react-icons/fa6";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
+import Timeline from "../customComponent/Timeline";
 interface BoatData {
   id: string;
   customerName: string;
@@ -167,19 +169,50 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className="flex justify-between p-4 ml-20">
+      <div className="flex justify-between p-4 ml-8">
         {/* Boat Data DataTable */}
 
         {/* right section */}
-        <div className="flex flex-col">
-          <div className="bg-[#F2F2F2] rounded-xl border-[1px] border-[#D1D1D1] p-2 mt-12 w-[40vw] ">
-            Map
+        <div className="flex flex-col ">
+          <div className="w-[43vw] h-14 mt-11">
+            <img src='/assets/images/Sea-img.png'/>
+            <div className="-translate-y-[45vh]">
+            <Timeline/>
+            </div>
+            <div className="-translate-y-[45vh] translate-x-[20vw]">
+            <Timeline/>
+            </div>
           </div>
-
+          <div className="absolute -translate-y-[20vh] translate-x-20 bottom-2  rounded-md border-[1px] p-1 border-gray-300 w-[22vw]  mt-auto h-[17vh] bg-white">
+            <p className="text-xs ml-2 mt-2 text-black">Status</p>
+            <hr className="m-2 border-black" />
+            <div className="flex justify-between">
+              <div>
+                <FaCircle className="h-2 text-red-600 mt-1" />
+                <FaCircle className="h-2 text-green-600 mt-7" />
+              </div>
+              <div>
+                <p className="text-xs text-black">Need inspection</p>
+                <p className="text-xs text-black tracking-tighter mt-5">
+                  Gear On (in the water)
+                </p>
+              </div>
+              <div>
+                <FaCircle className="h-2 text-violet-600 mt-1 " />
+                <FaCircle className="h-2 text-gray-500 mt-7" />
+              </div>
+              <div>
+                <p className="text-xs text-black tracking-tighter">
+                  Gear Off (out of the water)
+                </p>
+                <p className="text-xs text-black mt-5">Not in Use</p>
+              </div>
+            </div>
+          </div>
           <div>
             {/* dataTable */}
 
-            <div className="bg-[#F2F2F2] rounded-xl border-[1px] border-[#D1D1D1] p-2 mt-12 w-[40vw] ">
+            <div className="bg-[#F2F2F2] rounded-xl border-[1px] border-[#D1D1D1] p- mt-[20rem] w-[43vw] ">
               <DataTable
                 value={boatData}
                 header={Boatsheader}
