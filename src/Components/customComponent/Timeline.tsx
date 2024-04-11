@@ -8,11 +8,11 @@ const Timeline = () => {
       <div>
         <div className="w-[12vw] ml-7 p-1 bg-black rounded-lg flex">
           <div>
-            <h2 className="text-lg font-bold text-white">B45</h2>
-            <p className="text-xs tracking-tighter text-white">
+            <h2 className="text-lg font-bold text-white mb-0">B45</h2>
+            <p className="text-xs tracking-tighter text-white mt-0">
               Suncatcher
             </p>
-            <p className="text-xs tracking-tighter text-white">GPS Cordinates:</p>
+            <p className="text-xs tracking-tighter text-white mt-2">GPS Cordinates:</p>
             <p className="text-xs tracking-tighter text-white">38 21.806   144 44.959</p>
           </div>
           <div className="text-xs tracking-tighter text-white">
