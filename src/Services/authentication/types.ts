@@ -58,10 +58,9 @@ export interface SIGNUP_RESPONSE {
 export interface RESET_PASSSWORD_RESPONSE {
   status: number;
   message: string;
-  data: {
-    status: number;
-    message: string;
-  };
+  errorList: [string];
+  time: string;
+  content: {};
 }
 
 export interface FORGOT_PASSSWORD_RESPONSE {
@@ -83,7 +82,7 @@ export interface ErrorResponse {
 export interface validateEmailResponse {
   message: string;
   status: number;
-  errorList: [""];
+  errorList: [string];
   time: number;
   content: null;
 }

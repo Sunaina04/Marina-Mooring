@@ -1,21 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import InputComponent from "../Common/InputComponent";
 import ButtonComponent from "../Common/ButtonComponent";
 import { useNavigate } from "react-router-dom";
 import { useValidateEmailMutation } from "../../Services/authentication/authApi";
 import { validateEmailResponse } from "../../Services/authentication/types";
+import { Button } from "primereact/button";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
+  const [error, setError] = useState<boolean>(false);
   const [validateEmail] = useValidateEmailMutation();
-  const token =  localStorage.getItem("token");
-  
-  const validateEmailHandler =  async() => {
-    const response = await validateEmail({token});
-    console.log("RESPONSE" , response)
-    navigate("/resetpass")
-    // const {status} = response as validateEmailResponse;
-  }
+  const token = localStorage.getItem("token");
+
+  const validateEmailHandler = async () => {
+    console.log("CLICKED ", token);
+    const response = await validateEmail({ token }).unwrap();
+    console.log("RESPONSE", response);
+
+    const { status, content, message } = response as validateEmailResponse;
+    if (status === 200) {
+      navigate("/resetpass");
+    } else {
+      setError(true);
+    }
+  };
 
   return (
     <>
@@ -30,6 +38,13 @@ const ForgotPassword = () => {
               />
             </div>
           </div>
+
+          {error && (
+            <span>
+              Entered email is not registered with us, Please enter the valid
+              email.
+            </span>
+          )}
 
           <div className="mb-4">
             <div className="p-input-icon-left">
@@ -55,7 +70,7 @@ const ForgotPassword = () => {
             </div>
           </div>
 
-          <ButtonComponent
+          <Button
             style={{
               width: "10vw",
               height: "6vh",
@@ -66,7 +81,9 @@ const ForgotPassword = () => {
               fontSize: "1.50rem",
             }}
             label={"Submit"}
-            onClick={validateEmailHandler}
+            onClick={() => {
+              validateEmailHandler();
+            }}
           />
 
           <div className="flex justify-center flex-col mt-4">
