@@ -13,6 +13,7 @@ import { SelectButton, SelectButtonChangeEvent } from "primereact/selectbutton";
 import VerticalBar from "../../StatCard/VerticalBar";
 import ButtonComponent from "../../Common/ButtonComponent";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import "./Reports.module.css";
 interface ReportsData {
   id: string;
   mooring: string;
@@ -60,110 +61,97 @@ const Reports = () => {
   const [billsData, setBillsData] = useState<any[]>([
     {
       id: 0,
-      mooring: "Suncatcher",
-      techniciansName: "John Smith",
-      amount: "$50",
-    },
-
-    {
-      id: 0,
-      mooring: "Suncatcher",
-      techniciansName: "John Smith",
-      amount: "$50",
+      name: "Suncatcher",
+      email: "JohnSmith@gmail.com",
+      phone: "7258807043",
+      address: "delhi",
     },
     {
       id: 0,
-      mooring: "Suncatcher",
-      techniciansName: "John Smith",
-      amount: "$50",
+      name: "Suncatcher",
+      email: "JohnSmith@gmail.com",
+      phone: "7258807043",
+      address: "delhi",
     },
     {
       id: 0,
-      mooring: "Suncatcher",
-      techniciansName: "John Smith",
-      amount: "$50",
+      name: "Suncatcher",
+      email: "JohnSmith@gmail.com",
+      phone: "7258807043",
+      address: "delhi",
     },
     {
       id: 0,
-      mooring: "Suncatcher",
-      techniciansName: "John Smith",
-      amount: "$50",
+      name: "Suncatcher",
+      email: "JohnSmith@gmail.com",
+      phone: "7258807043",
+      address: "delhi",
     },
   ]);
 
   const [bill, setBill] = useState<any[]>([
     {
       id: 0,
-      mooring: "Suncatcher",
-      techniciansName: "John Smith",
-      amount: "$50",
+      customerName: "Suncatcher",
+      mooringNumber: "BD6,B23",
+      inspectionDate: "15,March 2024",
+      mooringLocation: "38 21.806 14444.959",
+    },
+    {
+      id: 0,
+      customerName: "Suncatcher",
+      mooringNumber: "BD6,B23",
+      inspectionDate: "15,March 2024",
+      mooringLocation: "38 21.806 14444.959",
+    },
+    {
+      id: 0,
+      customerName: "Suncatcher",
+      mooringNumber: "BD6,B23",
+      inspectionDate: "15,March 2024",
+      mooringLocation: "38 21.806 14444.959",
+    },
+    {
+      id: 0,
+      customerName: "Suncatcher",
+      mooringNumber: "BD6,B23",
+      inspectionDate: "15,March 2024",
+      mooringLocation: "38 21.806 14444.959",
+    },
+  ]);
+
+  const [bills, setBills] = useState<any[]>([
+    {
+      technicianName: "Suncatcher",
+      workOrder: "5",
+      mooring: "Pionner",
+      BillableHours: "15 hours",
     },
 
     {
-      id: 0,
-      mooring: "Mooring",
-      techniciansName: "John Smith",
-      amount: "$50",
+      technicianName: "Suncatcher",
+      workOrder: "5",
+      mooring: "Pionner",
+      BillableHours: "15 hours",
+    },
+
+    {
+      technicianName: "Suncatcher",
+      workOrder: "5",
+      mooring: "Pionner",
+      BillableHours: "15 hours",
     },
     {
-      id: 0,
-      mooring: "Technicians ",
-      techniciansName: "John Smith",
-      amount: "$50",
-    },
-    {
-      id: 0,
-      mooring: "Suncatcher",
-      techniciansName: "John Smith",
-      amount: "$50",
-    },
-    {
-      id: 0,
-      mooring: "Suncatcher",
-      techniciansName: "John Smith",
-      amount: "$50",
+      technicianName: "Suncatcher",
+      workOrder: "5",
+      mooring: "Pionner",
+      BillableHours: "15 hours",
     },
   ]);
 
   const Billsheader = (
-    <div className="flex flex-wrap justify-between align-items-center gap-4 ">
-      <span className="text-lg font-bold">Services</span>
-      <div className=" ">
-        {/* <span
-          style={{
-            background: "#000000",
-            color: "white",
-            border: "1px solid black", // Adding border property
-            padding: "3px",
-            fontSize: "14px",
-            fontWeight: 400,
-            textAlign: "left",
-            marginRight: "-8px",
-          }}
-        >
-          Pending
-        </span>
-        <span
-          style={{
-            background: "#D9D9D9",
-            padding: "3px", // Adding padding for better appearance
-            fontSize: "14px",
-            fontWeight: 400,
-            textAlign: "left",
-          }}
-        >
-          Cleared
-        </span> */}
-
-        <div className="">
-          <SelectButton
-            style={{ fontSize: "0.2rem", fontWeight: "bolder", height: "2rem" }}
-            value={value}
-            onChange={(e: SelectButtonChangeEvent) => setValue(e.value)}
-            options={options}
-          />
-        </div>
-      </div>
+    <div className="flex flex-wrap justify-between align-items-center  ">
+      <span className="text-lg font-bold">Customers</span>
     </div>
   );
 
@@ -192,15 +180,15 @@ const Reports = () => {
 
   return (
     <>
-      <div className="flex flex-col  ml-12">
+      <div className="flex flex-col  ml-36">
         <div className="flex justify-between">
           <div>
-            <h1 className="mt-14 ml-10 opacity-10 text-2xl font-normal">
-              Moormanage/Reports
+            <h1 className="mt-14 ml-10 opacity-40 text-2xl font-normal">
+              MOORMANAGE/Reports
             </h1>
           </div>
           <div>
-            <h1 className="mt-14 mr-4 opacity-30 text-lg font-normal text-black">
+            <h1 className="mt-14 mr-10 opacity-60 text-sm font-bold text-black">
               Download Reports {<ExpandMoreIcon />}
             </h1>
           </div>
@@ -208,10 +196,10 @@ const Reports = () => {
 
         <div className="flex mt-6">
           <div>
-            <div className="bg-[#F2F2F2] rounded-md border-[1px]  border-[#D1D1D1] p-5 ml-10  w-[40vw] mb-5">
+            <div className="bg-[#F2F2F2] rounded-md border-[1px]  border-[#D1D1D1] p-5 ml-10  w-[30vw] mb-5">
               <DataTable
                 value={billsData}
-                header={"Customers"}
+                header={Billsheader}
                 scrollable={true}
               >
                 <Column
@@ -220,101 +208,81 @@ const Reports = () => {
                   header="ID"
                 ></Column>
                 <Column
-                  style={{ width: "4vw", fontSize: "0.75rem" }}
-                  field="mooring"
-                  header="Mooring"
-                ></Column>
-                <Column
-                  style={{ width: "6vw", fontSize: "0.75rem" }}
-                  field="techniciansName"
-                  header="Technicians Name"
-                ></Column>
-                <Column
-                  style={{ width: "4vw", fontSize: "0.75rem" }}
-                  field="amount"
-                  header="Amount"
-                ></Column>
-
-                <Column
-                  header="Work Order"
                   style={{ width: "5vw", fontSize: "0.75rem" }}
-                  body={() => (
-                    <div className="flex gap-5 ">
-                      <span className="text-green-500 bg-green-100  cursor-pointer">
-                        Confirmed
-                      </span>
-                    </div>
-                  )}
+                  field="name"
+                  header="Name"
+                ></Column>
+                <Column
+                  style={{ width: "8vw", fontSize: "0.75rem" }}
+                  field="email"
+                  header="Email"
+                ></Column>
+                <Column
+                  style={{ width: "5vw", fontSize: "0.75rem" }}
+                  field="phone"
+                  header="Phone"
+                ></Column>
+                <Column
+                  style={{ width: "4vw", fontSize: "0.75rem" }}
+                  field="address"
+                  header="Address"
                 ></Column>
               </DataTable>
             </div>
           </div>
 
           <div>
-            <div className="bg-[#F2F2F2] rounded-md border-[1px]  border-[#D1D1D1] p-5 ml-8  w-[25vw]  mb-5">
+            <div className="bg-[#F2F2F2] rounded-md border-[1px]  border-[#D1D1D1] p-5 ml-8  w-[35vw]  mb-5">
               <DataTable
                 value={bill}
                 header={"Customer by Mooring"}
                 scrollable={true}
               >
                 <Column
-                  style={{ width: "2vw", fontSize: "0.75rem" }}
-                  field="id"
-                  header="ID"
-                ></Column>
-                <Column
-                  style={{ width: "8vw", fontSize: "0.75rem" }}
-                  field="mooring"
-                  header="Boat Name"
-                ></Column>
-                <Column
-                  style={{ width: "9vw", fontSize: "0.75rem" }}
-                  field="techniciansName"
+                  style={{ width: "10vw", fontSize: "0.75rem" }}
+                  field="customerName"
                   header="Customer Name"
+                ></Column>
+                <Column
+                  style={{ width: "10vw", fontSize: "0.75rem" }}
+                  field="mooringNumber"
+                  header="Mooring Number"
+                ></Column>
+                <Column
+                  style={{ width: "10vw", fontSize: "0.75rem" }}
+                  field="inspectionDate"
+                  header="Inspection date"
                 ></Column>
 
                 <Column
-                  header="Action"
-                  style={{ width: "5vw", fontSize: "0.75rem" }}
-                  body={() => (
-                    <div className="flex gap-5 ">
-                      <span className="text-black underline cursor-pointer">
-                        Converted
-                      </span>
-                    </div>
-                  )}
+                  style={{ width: "9vw", fontSize: "0.75rem" }}
+                  field="mooringLocation"
+                  header="Mooring location"
                 ></Column>
               </DataTable>
             </div>
 
-            <div className="bg-[#F2F2F2] rounded-md border-[1px]  border-[#D1D1D1] p-5 ml-8  w-[25vw]  mb-5">
-              <DataTable value={bill} header={"Technicians"} scrollable={true}>
+            <div className="bg-[#F2F2F2] rounded-md border-[1px]  border-[#D1D1D1] p-5 ml-8  w-[35vw]  mb-5">
+              <DataTable value={bills} header={"Technicians"} scrollable={true}>
                 <Column
-                  style={{ width: "2vw", fontSize: "0.75rem" }}
-                  field="id"
-                  header="ID"
+                  style={{ width: "10vw", fontSize: "0.75rem" }}
+                  field="technicianName"
+                  header="Technician Name"
                 ></Column>
                 <Column
                   style={{ width: "8vw", fontSize: "0.75rem" }}
+                  field="workOrder"
+                  header="Work Orders"
+                ></Column>
+                <Column
+                  style={{ width: "5vw", fontSize: "0.75rem" }}
                   field="mooring"
-                  header="Boat Name"
+                  header="Mooring"
                 ></Column>
                 <Column
                   style={{ width: "9vw", fontSize: "0.75rem" }}
-                  field="techniciansName"
-                  header="Customer Name"
-                ></Column>
-
-                <Column
-                  header="Action"
-                  style={{ width: "5vw", fontSize: "0.75rem" }}
-                  body={() => (
-                    <div className="flex gap-5 ">
-                      <span className="text-black underline cursor-pointer">
-                        Converted
-                      </span>
-                    </div>
-                  )}
+                  field="BillableHours"
+                  header="Billable Hours"
                 ></Column>
               </DataTable>
             </div>

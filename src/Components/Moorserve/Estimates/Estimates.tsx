@@ -9,12 +9,8 @@ import AddEstimates from "./AddEstimates";
 interface CustomerData {
   id: string;
   boatName: string;
-  ownername: string;
-  type: string;
-  condition: string;
-  mesurmement: string;
-  email: string;
-  phone: string;
+  customerName: string;
+  approved: string
 }
 
 const Estimates = () => {
@@ -23,46 +19,32 @@ const Estimates = () => {
     {
       id: "01",
       boatName: "Suncatcher",
-      ownername: "Suncatcher",
-      type: "Marina",
-      condition: "Good",
-      mesurmement: "Length: 10m, Width: 3.8m",
-      email: "hello@gmail.com",
-      phone: "1456789521",
-    },
+      customerName: "Suncatcher",
+      approved: "yes",
 
+    },
     {
       id: "01",
       boatName: "Suncatcher",
-      ownername: "Suncatcher",
-      type: "Marina",
-      condition: "Good",
-      mesurmement: "Length: 10m, Width: 3.8m",
-      email: "hello@gmail.com",
-      phone: "1456789521",
-    },
+      customerName: "Suncatcher",
+      approved: "yes",
 
+    },
     {
       id: "01",
       boatName: "Suncatcher",
-      ownername: "Suncatcher",
-      type: "Marina",
-      condition: "Good",
-      mesurmement: "Length: 10m, Width: 3.8m",
-      email: "hello@gmail.com",
-      phone: "1456789521",
-    },
+      customerName: "Suncatcher",
+      approved: "yes",
 
+    },
     {
       id: "01",
       boatName: "Suncatcher",
-      ownername: "Suncatcher",
-      type: "Marina",
-      condition: "Good",
-      mesurmement: "Length: 10m, Width: 3.8m",
-      email: "hello@gmail.com",
-      phone: "1456789521",
+      customerName: "Suncatcher",
+      approved: "yes",
+
     },
+
   ]);
 
   const handleButtonClick = () => {
@@ -75,7 +57,7 @@ const Estimates = () => {
 
   const header = (
     <div className="flex flex-wrap align-items-center justify-between gap-2 p-4">
-      <span className="text-xl font-bold">Estimates</span>
+      <span className="text-xl font-bold">Estimate</span>
       <span
         style={{
           fontFamily: "Lato",
@@ -96,21 +78,50 @@ const Estimates = () => {
       {" "}
       <div className="flex justify-between items-center ml-12">
         <div>
-          <h1 className="mt-14 ml-[13vw] opacity-30 text-2xl font-normal">
-            Moormanage/Estimates
+          <h1 className="mt-14 ml-[7.50vw] opacity-30 text-2xl font-normal">
+            MOORSERVE/Estimates
           </h1>
         </div>
-        <div className="flex flex-col items-center mr-20 mt-14">
+
+
+
+        <div className="flex gap-1 ml-[25rem] text-[gray] font-extrabold mt-14">
+          <div>
+            <img
+              src="/assets/images/download.png"
+              alt=""
+              className="w-5 "
+              style={{ filter: "grayscale(100%)", color: "gray" }}
+            />
+          </div>
+
+          <div>
+            <h1>DownLoad </h1>
+          </div>
+
+          <div></div>
+        </div>
+        <div className="items-center mr-[10rem] mt-14">
           <CustomModal
             onClick={handleButtonClick}
             visible={false}
             onHide={handleModalClose}
           >
-            <AddEstimates />
+            <AddCustomer
+              customer={undefined}
+              editMode={false}
+              closeModal={function (): void {
+                throw new Error("Function not implemented.");
+              }}
+              getCustomer={function (): void {
+                throw new Error("Function not implemented.");
+              }}
+            />
           </CustomModal>
         </div>
+
       </div>
-      <div className="bg-[#F2F2F2] rounded-xl border-[1px] border-[#D1D1D1] ml-60  mb-3 p-2 mt-12 w-[62.50vw]">
+      <div className="bg-[#F2F2F2] rounded-xl border-[1px] border-[#D1D1D1] ml-40  mb-3 p-2 mt-12 w-[45vw]">
         <DataTable
           value={boatData}
           header={header}
@@ -122,26 +133,28 @@ const Estimates = () => {
           <Column
             header="ID"
             field="id"
-            style={{ width: "3rem", textAlign: "center" }}
+            style={{ width: "5vw" }}
           ></Column>
-          <Column field="boatName" header="Boat Name"></Column>
-          <Column field="ownername" header="Owner Name"></Column>
-          <Column field="type" header="Type"></Column>
-          <Column field="type" header="Condition"></Column>
-          <Column field="mesurmement" header="Measurement"></Column>
-          <Column field="email" header="Email"></Column>
-          <Column field="phone" header="Phone"></Column>
+          <Column field="boatName" header="Boat Name" style={{ width: "8vw" }}>
 
+          </Column>
+          <Column field="customerName" header="Customer Name" style={{ width: "9vw", }}></Column>
+          <Column field="approved" header="Approved" style={{ width: "8vw" }}></Column>
           <Column
             header="Actions"
             body={() => (
-              <div className="flex gap-2">
-                <span className="text-green underline cursor-pointer">
-                  Proceed
+              <div className="flex gap-4">
+                <span className="text-black underline cursor-pointer">
+                  Convert
                 </span>
-                <span className="text-red-500 underline cursor-pointer">
+                <span className="text-black underline cursor-pointer">
                   Edit
                 </span>
+
+                <span className="text-red-500 underline cursor-pointer">
+                  Delete
+                </span>
+
               </div>
             )}
           ></Column>

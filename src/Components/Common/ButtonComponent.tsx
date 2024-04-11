@@ -29,9 +29,7 @@ const ButtonComponent: React.FC<ButtonCompProps> = ({
         <img src="" alt="" />
       </div>
       <Button
-        onClick={() => {
-          onClick;
-        }}
+        onClick={()=>{}}
         disabled={disabled}
         label={label}
         style={style}

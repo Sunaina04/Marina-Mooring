@@ -6,12 +6,14 @@ import { Column } from "primereact/column";
 import StatCard from "../../StatCard/StatCard";
 import { SelectButton, SelectButtonChangeEvent } from "primereact/selectbutton";
 import VerticalBar from "../../StatCard/VerticalBar";
-
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 const ReportsMoorserve = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const options: string[] = ["Open", "Closed"];
+  const weekOption: string[] = ["Weekly", "Monthly"];
 
   const [value, setValue] = useState<string>(options[0]);
+  const [value2, setValue2] = useState<string>(options[0]);
   const [boatData, setBoatData] = useState<any[]>([
     {
       id: "01",
@@ -147,11 +149,35 @@ const ReportsMoorserve = () => {
             value={value}
             onChange={(e: SelectButtonChangeEvent) => setValue(e.value)}
             options={options}
+            defaultChecked
           />
         </div>
       </div>
     </div>
   );
+
+
+  const Billsheader1 = (
+    <div className="flex flex-wrap justify-between align-items-center gap-4 ">
+      <span className="text-lg font-bold">Inspections</span>
+      <div className=" ">
+
+        <div className="">
+          <SelectButton
+            style={{ fontSize: "0.2rem", fontWeight: "bolder", height: "2rem" }}
+            value={value2}
+            onChange={(e: SelectButtonChangeEvent) => setValue2(e.value)}
+            options={weekOption}
+            defaultChecked
+          />
+        </div>
+      </div>
+    </div>
+  );
+
+
+
+
 
   const handleButtonClick = () => {
     setModalVisible(true);
@@ -179,10 +205,18 @@ const ReportsMoorserve = () => {
   return (
     <>
       <div className="flex flex-col  ml-12">
-        <div>
+        <div className="flex justify-between
+        ">
           <h1 className="mt-14 ml-10 opacity-30 text-2xl font-normal">
-            MoorServe/Reports
+            MOORSERVE/Reports
           </h1>
+
+          <div>
+            <h1 className="mt-14 mr-36 opacity-30 text-lg font-normal text-black">
+              Download Reports {<ExpandMoreIcon />}
+            </h1>
+          </div>
+
         </div>
         <div className="flex mt-6">
           <div>
@@ -218,6 +252,10 @@ const ReportsMoorserve = () => {
                   style={{ width: "5vw", fontSize: "0.75rem" }}
                   body={() => (
                     <div className="flex gap-5 ">
+
+                      <span className="text-black  underline cursor-pointer">
+                        view
+                      </span>
                       <span className="text-green-500 bg-green-100  cursor-pointer">
                         Confirmed
                       </span>
@@ -231,7 +269,7 @@ const ReportsMoorserve = () => {
               <div className="bg-[#F2F2F2] rounded-md border-[1px]  border-[#D1D1D1] p-5 ml-10  w-[40vw] mb-5">
                 <DataTable
                   value={billsData}
-                  header={Billsheader}
+                  header={Billsheader1}
                   scrollable={true}
                 >
                   <Column

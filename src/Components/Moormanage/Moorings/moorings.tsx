@@ -9,6 +9,7 @@ import React, { useState, useEffect } from "react";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { useGetMooringsMutation } from "../../../Services/MoorManage/moormanage";
+import Timeline from "../../customComponent/Timeline";
 import {
   MOORING_PAYLOAD,
   MOORING_RESPONSE,
@@ -16,6 +17,7 @@ import {
 import { FaCircle, FaEdit } from "react-icons/fa";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { Avatar } from "primereact/avatar";
+import { AiFillCheckCircle } from "react-icons/ai";
 
 interface CustomerData {
   id: string;
@@ -70,7 +72,6 @@ const Moorings = () => {
         }
       });
   };
-  
 
   const handleEdit = (rowData: any) => {
     setSelectedCustomer(rowData);
@@ -101,8 +102,8 @@ const Moorings = () => {
         </div>
       </div>
 
-      <div className="flex overflow-hidden ml-12">
-        <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[28vw] mt-10">
+      <div className="flex ml-12 mt-10 gap-5">
+        <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[28vw] h-[105vh]">
           <DataTable
             value={mooringData}
             header={MooringsHeader}
@@ -156,7 +157,200 @@ const Moorings = () => {
           ></Column> */}
           </DataTable>
         </div>
-        {/* middle container */}
+        <div>
+          <img
+            src="/assets/images/Sea-img.png"
+            className="bg-no-repeat object-cover bg-auto rounded-md w-full h-[105vh]"
+          />
+          <div className="-translate-y-[45vh] translate-x-32">
+            <Timeline />
+            <div className="rounded-md border-[1px] p-1 border-gray-300  w-[22vw] mt-4 h-[17vh] bg-gray-800">
+              <p className="text-xs ml-2 mt-2 text-white">Status</p>
+              <hr className="m-2" />
+              <div className="flex justify-between">
+                <div>
+                  <FaCircle className="h-2 text-red-600 mt-1" />
+                  <FaCircle className="h-2 text-green-600 mt-7" />
+                </div>
+                <div>
+                  <p className="text-xs text-white">Need inspection</p>
+                  <p className="text-xs text-white tracking-tighter mt-5">
+                    Gear On (in the water)
+                  </p>
+                </div>
+                <div>
+                  <FaCircle className="h-2 text-violet-600 mt-1 " />
+                  <FaCircle className="h-2 text-gray-300 mt-7" />
+                </div>
+                <div>
+                  <p className="text-xs text-white tracking-tighter">
+                    Gear Off (out of the water)
+                  </p>
+                  <p className="text-xs text-white mt-5">Not in Use</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className=" rounded-md border-[1px]  border-gray-400 w-[28vw]  h-[50vh] -translate-y-[138vh] translate-x-[35vw]">
+            <div className="bg-[#D9D9D9] h-10 flex justify-between">
+              <div>
+                <p className="font-bold text-sm mt-3 ml-3">Customers Record</p>
+              </div>
+              <div className="flex">
+                <FaEdit onClick={handleEdit} className="mr-2 mt-3" />
+              </div>
+            </div>
+            <div className="bg-[#F2F2F2]">
+              <div className=" flex ">
+                <div className="mt-2 ml-3">
+                  <Avatar size="xlarge" shape="circle" />
+                </div>
+                <div className="ml-4 mt-4">
+                  <p className="text-xs font-extrabold tracking-tighter ">
+                    ID: <span className="font-bold"> #4645</span>
+                  </p>
+                  <p className="text-xs font-extrabold tracking-tighter mt-3">
+                    Name:<span className="font-bold"> John Smith</span>
+                  </p>
+                </div>
+                <div className="ml-4">
+                  <p className="text-xs font-extrabold tracking-tighter mt-2">
+                    Phone:<span className="font-bold"> +1 234 543 4324</span>
+                  </p>
+                  <p className="text-xs font-extrabold tracking-tighter mt-3">
+                    Email:<span className="font-bold"> Demo@gamil.com</span>
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-3 ml-3">
+                <p className="text-sm font-extrabold tracking-tighter">
+                  Address:
+                  <span className="font-bold">
+                    Suite 333 17529 Miller Spur, South Ervinstad
+                  </span>
+                </p>
+                <div className="flex mt-2">
+                  <div>
+                    <p className="text-sm font-extrabold">Boatyard:</p>
+                  </div>
+                  <div className="flex text-xs ml-2 font-bold">
+                    <p className=" bg-gray-300 ">Pioneer</p>
+                    <p className=" bg-gray-300 ml-2">02Pioneer</p>
+                    <p className=" bg-gray-300 ml-2">03Pioneer</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className=" flex bg-[#E9E9E9]">
+              <div className="mt-3 ml-3">
+                <p>Moorings:</p>
+              </div>
+              <div className="ml-4 mt-2">
+                <div className=" bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-500 w-[19vw] h-[8vh] flex items-center">
+                  <div>
+                    <AiFillCheckCircle className="h-10 w-6 bg-black text-white" />
+                  </div>
+                  <div className="flex mt-o">
+                    <div>
+                      <p className="text-xs tracking-tighter ml-2">
+                        <span>Mooring No:</span> 54342
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-xs tracking-tighter ml-3">
+                        <span>Boat Name:</span> Suriase
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className=" bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-500 w-[19vw] h-[9vh] mt-2 mb-2 flex items-center ">
+                  <div>
+                    <AiFillCheckCircle className="h-10 w-6 bg-black text-white" />
+                  </div>
+                  <div className="flex">
+                    <div>
+                      <p className="text-xs tracking-tighter ml-2">
+                        <span>Mooring No:</span> 54342
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-xs tracking-tighter ml-3">
+                        <span>Boat Name:</span> Suriase
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[28vw]  mt-3 h-[44vh]">
+              <div className=" flex justify-between bg-[#D9D9D9] h-10">
+                <div>
+                  <p className="font-bold text-sm mt-3 ml-3">Mooring Information</p>
+                </div>
+                <div>
+                  <FaEdit onClick={handleEdit} className="mr-2 mt-3" />
+                </div>
+              </div>
+              <div className="flex bg-[#F2F2F2]">
+                <div className="text-sm tracking-tighter ml-2 mt-2">
+                  <p className="mb-2">
+                    <span className="font-bold">Mooring No:</span> 52325
+                  </p>
+                  <p className="mb-2">
+                    <span className="font-bold">Harbor:</span> Houston
+                  </p>
+                  <p className="mb-2">
+                    <span className="font-bold">Type & Weight:</span>{" "}
+                    Skiff(321kg)
+                  </p>
+                  <p className="mb-2">
+                    <span className="font-bold">Boat Size:</span> length:10m,
+                    width:3.8m
+                  </p>
+                  <p className="mb-2">
+                    <span className="font-bold">
+                      Shackle, Swivel Condition:
+                    </span>{" "}
+                    none
+                  </p>
+                  <p className="mb-2">
+                    <span className="font-bold">
+                      Type, Length & Condition of Bottom Chain:
+                    </span>{" "}
+                    Skiff(321kg)
+                  </p>
+                  <p className="mb-2">
+                    <span className="font-bold">
+                      Type, Length & Condition of Top Chain:
+                    </span>{" "}
+                    none
+                  </p>
+                  <p className="mb-2">
+                    <span className="font-bold">
+                      Type, Length & Condition of Pennant:
+                    </span>{" "}
+                    none
+                  </p>
+                </div>
+                <div className="text-sm tracking-tighter ml-2 mt-2">
+                  <p className="mb-2">
+                    <span className="font-bold">Boat Name:</span> Sunriase
+                  </p>
+                  <p className="mb-2">
+                    <span className="font-bold">Water Depth:</span> 100m
+                  </p>
+                  <p className="mb-2">
+                    <span className="font-bold">Condition of Eye:</span> none
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* middle container
         <div className=" flex flex-col rounded-md border-[1px] p-1 border-gray-300 w-[28vw] ml-5 mt-10 h-[86vh]">
           <div className="rounded-md border-[1px] p-1 border-gray-300  w-[22vw] ml-2 mt-auto h-[17vh] bg-gray-800">
             <p className="text-xs ml-2 mt-2 text-white">Status</p>
@@ -184,9 +378,9 @@ const Moorings = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
         {/* last container */}
-        <div className="ml-5">
+        {/* <div className="ml-5">
           <div className=" rounded-md border-[1px] p-1 border-gray-300 w-[28vw]  mt-10 h-[40vh]">
             <div className="bg-[#D9D9D9] flex justify-between">
               <div>
@@ -294,7 +488,7 @@ const Moorings = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );
