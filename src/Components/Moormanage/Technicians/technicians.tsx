@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import CustomModal from "../../customComponent/CustomModal";
 import { SelectButton, SelectButtonChangeEvent } from "primereact/selectbutton";
 import { Nullable } from "primereact/ts-helpers";
 import { Box } from "@mui/material";
@@ -29,7 +28,7 @@ interface BillsData {
 
 const Technicians = () => {
   const [date, setDate] = useState<Nullable<(Date | null)[]>>(null);
-  const options: string[] = ["Pending", "Cleared"];
+  const options: string[] = ["Open", "Closed"];
   const [value, setValue] = useState<string>(options[0]);
   const [modalVisible, setModalVisible] = useState(false);
   const [boatData, setBoatData] = useState<BoatData[]>([
@@ -116,7 +115,7 @@ const Technicians = () => {
 
   const Billsheader = (
     <div className="flex flex-wrap align-items-center gap-4 ">
-      <span className="text-lg font-bold">Services</span>
+      <span className="text-sm font-bold text-[black]">Work Orders</span>
       <div className=" ">
         {/* <span
           style={{
@@ -160,7 +159,12 @@ const Technicians = () => {
             throw new Error("Function not implemented.");
           }}
           label={"Add New"}
-          style={{ backgroundColor: "black", height: "5vh" }}
+          style={{
+            backgroundColor: "black",
+            height: "4vh",
+            fontSize: "0.75rem",
+            borderRadius: "0.20rem",
+          }}
         />
       </div>
     </div>
@@ -172,16 +176,16 @@ const Technicians = () => {
       <div className="flex justify-between items-center ml-12">
         <div>
           <h1 className="mt-14 ml-20 opacity-30 text-2xl font-normal">
-            Moormanage/Technicians
+            MOORMANAGE/Technicians
           </h1>
         </div>
         <div className="flex gap-4 items-center mr-10 mt-14">
           <div>
             <div className="p-input-icon-left">
-              <i className="pi pi-search text-[#D2D2D2]" />
+              <i className="pi pi-search text-[#D2D2D2] text-sm" />
               <InputText
                 placeholder="Search"
-                className="h-[5vh] cursor-pointer font-bold"
+                className="h-[5vh] cursor-pointer font-bold text-[sm]"
               />
             </div>
           </div>
@@ -216,7 +220,7 @@ const Technicians = () => {
               ></Column>
 
               <Column
-                header="Service Record"
+                header="Work Order"
                 style={{ width: "5vw", fontSize: "0.75rem" }}
                 body={() => (
                   <div className="flex gap-5 ">
@@ -237,7 +241,8 @@ const Technicians = () => {
               ></Column>
             </DataTable>
           </div>
-          <Box className="w-50 h-[58vh] border-[1px] border-[#D1D1D1] p-5 rounded-xl ">
+          <div></div>
+          <Box className="w-50 h-[57vh] border-[1px] border-[#D1D1D1] p-5 rounded-xl ">
             <div className="text-[#000000] text-lg font-bold tracking-tighter text-left mb-5">
               Calendar
             </div>
@@ -291,13 +296,7 @@ const Technicians = () => {
             ></Column>
 
             <Column
-              style={{ width: "4vw", fontSize: "0.80rem" }}
-              field="price"
               header="Modify"
-            ></Column>
-
-            <Column
-              header="Action"
               style={{ width: "8vw", fontSize: "0.80rem" }}
               body={() => (
                 <div className="flex gap-4">

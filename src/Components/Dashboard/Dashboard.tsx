@@ -22,18 +22,15 @@ import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 interface BoatData {
   id: string;
-  boatName: string;
-  name: string;
-  date: string;
-  measurement: string;
-  place: string;
+  customerName: string;
+  mooringServiceDate: string;
+  mooringLocation : string;
 }
 
 interface BillsData {
-  billNo: string;
-  mooring: string;
-  name: string;
-  amount: string;
+  workOrderNo: string;
+  customerName: string;
+  assignedTo: string;
   date: string;
 }
 
@@ -44,72 +41,74 @@ const Dashboard = () => {
   const [boatData, setBoatData] = useState<BoatData[]>([
     {
       id: "01",
-      boatName: "Suncatcher",
-      name: "John Smith",
-      date: "15, March 2024",
-      measurement: "Length: 10m, Width: 3.8m",
-      place: "Boatyard",
+      customerName: "Suncatcher",
+      mooringServiceDate: "John Smith",
+      mooringLocation: "15, March 2024",
+  
+     
+    },
+
+    {
+      id: "01",
+      customerName: "Suncatcher",
+      mooringServiceDate: "15,march,2024",
+      mooringLocation: "38 21.806 144 44.959",
+  
+     
     },
     {
       id: "01",
-      boatName: "Suncatcher",
-      name: "John Smith",
-      date: "15, March 2024",
-      measurement: "Length: 10m, Width: 3.8m",
-      place: "Boatyard",
+      customerName: "Suncatcher",
+      mooringServiceDate: "15,march,2024",
+      mooringLocation: "38 21.806 144 44.959",
+  
+     
     },
     {
       id: "01",
-      boatName: "Suncatcher",
-      name: "John Smith",
-      date: "15, March 2024",
-      measurement: "Length: 10m, Width: 3.8m",
-      place: "Boatyard",
+      customerName: "Suncatcher",
+      mooringServiceDate: "15,march,2024",
+      mooringLocation: "38 21.806 144 44.959",
+  
+     
     },
+
+    
   ]);
 
   const [billsData, setBillsData] = useState<BillsData[]>([
     {
-      billNo: "B0210",
-      mooring: "Suncatcher",
-      name: "John Smith",
-      amount: "$50",
+      workOrderNo: "B0210",
+      customerName: "Suncatcher",
+      assignedTo: "John Smith",
       date: "15, March 2024",
     },
     {
-      billNo: "B0210",
-      mooring: "Suncatcher",
-      name: "John Smith",
-      amount: "$50",
+      workOrderNo: "B0210",
+      customerName: "Suncatcher",
+      assignedTo: "John Smith",
+      date: "15, March 2024",
+    },
+
+    {
+      workOrderNo: "B0210",
+      customerName: "Suncatcher",
+      assignedTo: "John Smith",
       date: "15, March 2024",
     },
     {
-      billNo: "B0210",
-      mooring: "Suncatcher",
-      name: "John Smith",
-      amount: "$50",
+      workOrderNo: "B0210",
+      customerName: "Suncatcher",
+      assignedTo: "John Smith",
       date: "15, March 2024",
     },
-    {
-      billNo: "B0210",
-      mooring: "Suncatcher",
-      name: "John Smith",
-      amount: "$50",
-      date: "15, March 2024",
-    },
-    {
-      billNo: "B0210",
-      mooring: "Suncatcher",
-      name: "John Smith",
-      amount: "$50",
-      date: "15, March 2024",
-    },
+  
   ]);
 
   const Boatsheader = (
     <div className="flex flex-wrap align-items-center justify-between gap-2 p-4">
       <span className="text-xl font-extrabold">
-        Moorings Coming up for Service
+        Moorings Due for Service
       </span>
       <span
         style={{
@@ -191,30 +190,31 @@ const Dashboard = () => {
                 }}
                 scrollable={true}
               >
-                <Column style={{ width: "5vw" }} field="id" header=""></Column>
+               
                 <Column
-                  style={{ width: "7vw" }}
-                  field="boatName"
-                  header="Boat Name"
+                  style={{ width: "4vw" }}
+                  field="id"
+                  header="ID"
                 ></Column>
                 <Column
-                  style={{ width: "7vw" }}
-                  field="name"
+                  style={{ width: "12vw" }}
+                  field="customerName"
                   header="Customer Name"
                 ></Column>
                
                 <Column
-                  style={{ width: "13vw" }}
-                  field="measurement"
-                  header="Measurement"
+                  style={{ width: "15vw" }}
+                  field="mooringServiceDate"
+                  header="Mooring service Date"
                 ></Column>
                 <Column
-                  style={{ width: "8vw" }}
-                  field="place"
-                  header="Place"
+                  style={{ width: "12vw" }}
+                  field="mooringLocation"
+                  header="Mooring Location"
                 ></Column>
                 <Column
                   header="Status"
+                  style={{ width: "15vw" }}
                   body={() => (
                     <div className="flex gap-4">
                       <span className="text-green-500  cursor-pointer">
@@ -368,7 +368,7 @@ const Dashboard = () => {
               <AccordionDetails>
                 <div className="w-full p-2  ">
                   <DataTable
-                    value={boatData}
+                    value={billsData}
                     header={""}
                     tableStyle={{
                       // width: "73rem",
@@ -378,19 +378,19 @@ const Dashboard = () => {
                     scrollable={true}
                   >
                     <Column
-                      style={{ width: "5vw" }}
-                      field="id"
-                      header="Order no"
-                    ></Column>
-                    <Column
-                      style={{ width: "5vw" }}
-                      field="boatName"
-                      header="Mooring"
+                      style={{ width: "7vw" }}
+                      field="workOrderNo"
+                      header="Work Order No"
                     ></Column>
                     <Column
                       style={{ width: "8vw" }}
-                      field="name"
+                      field="customerName"
                       header="Customer Name"
+                    ></Column>
+                    <Column
+                      style={{ width: "8vw" }}
+                      field="assignedTo"
+                      header="Assigned To"
                     ></Column>
                     <Column
                       style={{ width: "7vw" }}

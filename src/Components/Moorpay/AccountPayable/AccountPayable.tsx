@@ -156,11 +156,9 @@ const AccountPayable = () => {
             body={() => (
               <div className="flex gap-4">
                 <span className="text-green-500 underline cursor-pointer">
-                  Approve
+                  Paid
                 </span>
-                <span className="text-red-500 underline cursor-pointer">
-                  Deny
-                </span>
+               
               </div>
             )}
           ></Column>
