@@ -82,7 +82,7 @@ const WorkOrders = () => {
         <div className="flex justify-between gap-4 mr-4 mt-24">
           <div>
             <h1 className="mt-6 opacity-30 text-2xl ml-36 font-normal">
-              Moorserve/Work Orders
+              MOORSERVE/Work Orders
             </h1>
           </div>
           <div className="flex mr-36 gap-4">

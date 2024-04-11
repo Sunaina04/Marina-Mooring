@@ -19,4 +19,23 @@
   border: none;
 }
 
+.p-selectbutton  .p-component{
+
+width: 50%;
+font-size:8px;
+text-align:center;
+border-radius: 5px;
+
+}
+
+.p-selectbutton .p-button.p-highlight{
+
+  background-color: black;
+  
+}
+
+.headerClass{
+
+  background-color: black;
+}
 
