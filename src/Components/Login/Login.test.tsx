@@ -77,8 +77,8 @@ describe("Login Page testCases", () => {
       </BrowserRouter>
     );
 
-    const inputText = screen.getAllByRole("button");
-    expect(inputText.length).toBe(1);
+    const btn = screen.getAllByRole("button");
+    expect(btn.length).toBe(1);
   });
 
   it("should render button text ", () => {
