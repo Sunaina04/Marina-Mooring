@@ -8,8 +8,8 @@ const Timeline = () => {
       <div>
         <div className="w-[12vw] ml-7 p-1 bg-black rounded-lg flex">
           <div>
-            <h2 className="text-lg font-bold text-white mb-0">B45</h2>
-            <p className="text-xs tracking-tighter text-white mt-0">
+            <h2 className="text-lg font-bold text-white">B45</h2>
+            <p className="text-[0.6rem] tracking-tighter text-white">
               Suncatcher
             </p>
             <p className="text-xs tracking-tighter text-white mt-2">GPS Cordinates:</p>
@@ -17,7 +17,7 @@ const Timeline = () => {
           </div>
           <div className="text-xs tracking-tighter text-white">
             <p className="bg-gray-300 text-black  cursor-pointer" onClick={viewEdit}>View/edit</p>
-            <p>ID:#4645</p>
+            <p className="mt-1">ID:#4645</p>
           </div>
         </div>
       </div>

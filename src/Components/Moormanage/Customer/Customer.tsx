@@ -258,7 +258,7 @@ const Customer = () => {
 
   return (
     <>
-      <div className="flex  items-center ml-9">
+      <div className="flex  items-center justify-between ml-3 mr-3">
         <div>
           <h1 className="mt-14 ml-12 opacity-30 text-2xl font-normal">
             MOORMANAGE/Customer
@@ -307,8 +307,8 @@ const Customer = () => {
         ))}
       </div> */}
 
-      <div className="flex gap-4 ml-12">
-        <div className=" bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[28vw] h-[100vh]  mt-10">
+      <div className="flex gap-4 ml-12 h-[110vh] mt-10" >
+        <div className=" bg-[#F2F2F2] w-[30vw] rounded-md border-[1px] ">
           <DataTable
             value={filteredCustomerData}
             header={CustomerHeader}
@@ -363,10 +363,10 @@ const Customer = () => {
           </DataTable>
         </div>
         {/* middle container */}
-        <div className="relative">
+        <div className="relative w-[30vw]">
           <img
             src="/assets/images/Sea-img.png"
-            className=" ] h-[100vh] object-cover bg-now-[30vw-repeat rounded-md border-[1px] border-gray-300 mt-10"
+            className=" h-full object-cover rounded-md border-[1px] border-gray-300"
             alt="Sea Image"
           />
 
@@ -377,96 +377,100 @@ const Customer = () => {
             <Timeline />
           </div>
 
-          <div className="absolute -translate-y-[30vh] translate-x-20 bottom-2  rounded-md border-[1px] p-1 border-gray-300 w-[22vw]  mt-auto h-[17vh] bg-white">
-            <p className="text-xs ml-2 mt-2 text-black">Status</p>
-            <hr className="m-2 border-black" />
+          <div className="absolute  translate-x-6 bottom-4  rounded-md border-[1px] p-1 border-gray-300 w-[17vw]  mt-auto h-[13vh] bg-white">
+            <p className="text-[0.7rem] ml-1 text-black">Status</p>
+            <hr className="m-1 border-black" />
             <div className="flex justify-between">
               <div>
-                <FaCircle className="h-2 text-red-600 mt-1" />
-                <FaCircle className="h-2 text-green-600 mt-7" />
+                <FaCircle className="h-3 text-red-600 mt-1" />
+                <FaCircle className="h-3 text-green-600 mt-4" />
               </div>
               <div>
-                <p className="text-xs text-black">Need inspection</p>
-                <p className="text-xs text-black tracking-tighter mt-5">
+                <p className="text-[0.6rem] text-black mt-1">Need inspection</p>
+                <p className="text-[0.6rem] text-black tracking-tighter mt-[0.9rem]">
                   Gear On (in the water)
                 </p>
               </div>
-              <div>
-                <FaCircle className="h-2 text-violet-600 mt-1 " />
-                <FaCircle className="h-2 text-gray-500 mt-7" />
+              <div className="ml-1">
+                <FaCircle className="h-3 text-violet-600 mt-1 " />
+                <FaCircle className="h-3 text-gray-500 mt-4" />
               </div>
               <div>
-                <p className="text-xs text-black tracking-tighter">
+                <p className="text-[0.6rem] text-black tracking-tighter mt-1">
                   Gear Off (out of the water)
                 </p>
-                <p className="text-xs text-black mt-5">Not in Use</p>
+                <p className="text-[0.6rem] text-black mt-[0.9rem]">
+                  Not in Use
+                </p>
               </div>
             </div>
           </div>
         </div>
         {/* last container */}
-        <div className=" rounded-md border-[1px] p-1 border-gray-300 w-[28vw]  mt-10 h-[50vh] ">
-          <div>
-            <div className="bg-[#D9D9D9] flex justify-between">
+        <div className="w-[30vw]">
+          <div className="rounded-md border">
+            <div className="bg-[#D9D9D9] h-10 flex justify-between">
               <div>
-                <p className="font-bold">Customers Record</p>
+                <p className="font-bold text-sm mt-3 ml-3">Customers Record</p>
               </div>
               <div className="flex">
-                <FaEdit onClick={handleEdit} className="mr-2" />
+                <FaEdit onClick={handleEdit} className="mr-3 mt-3" />
                 <RiDeleteBin5Fill
                   onClick={handleDelete}
-                  className="text-red-500"
+                  className="text-red-500 mr-2 mt-3"
                 />
               </div>
             </div>
-            <div className="mt-4 flex bg-gray-200">
-              <div>
-                <Avatar size="xlarge" shape="circle" />
+            <div className="bg-[#F2F2F2]">
+              <div className="flex ">
+                <div className="mt-2 ml-3">
+                  <Avatar size="xlarge" shape="circle" />
+                </div>
+                <div className="ml-4 mt-4">
+                  <p className="text-xs font-extrabold tracking-tighter mt-2">
+                    ID: <span className="font-bold"> #4645</span>
+                  </p>
+                  <p className="text-xs font-extrabold tracking-tighter mt-3">
+                    Name:<span className="font-bold"> John Smith</span>
+                  </p>
+                </div>
+                <div className="ml-4 mt-4">
+                  <p className="text-xs font-extrabold tracking-tighter mt-2">
+                    Phone:<span className="font-bold"> +1 234 543 4324</span>
+                  </p>
+                  <p className="text-xs font-extrabold tracking-tighter mt-3">
+                    Email:<span className="font-bold"> Demo@gamil.com</span>
+                  </p>
+                </div>
               </div>
-              <div className="ml-4">
-                <p className="text-xs font-extrabold tracking-tighter mt-2">
-                  ID: <span className="font-bold"> #4645</span>
+
+              <div className="mt-3 ml-3">
+                <p className="text-sm font-extrabold tracking-tighter">
+                  Address:
+                  <span className="font-bold">
+                    Suite 333 17529 Miller Spur, South Ervinstad
+                  </span>
                 </p>
-                <p className="text-xs font-extrabold tracking-tighter mt-3">
-                  Name:<span className="font-bold"> John Smith</span>
-                </p>
-              </div>
-              <div className="ml-4">
-                <p className="text-xs font-extrabold tracking-tighter mt-2">
-                  Phone:<span className="font-bold"> +1 234 543 4324</span>
-                </p>
-                <p className="text-xs font-extrabold tracking-tighter mt-3">
-                  Email:<span className="font-bold"> Demo@gamil.com</span>
-                </p>
+                <div className="flex mt-2">
+                  <div>
+                    <p className="text-sm font-extrabold">Boatyard:</p>
+                  </div>
+                  <div className="flex text-xs ml-2 font-bold">
+                    <p className=" bg-gray-300 ">Pioneer</p>
+                    <p className=" bg-gray-300 ml-2">02Pioneer</p>
+                    <p className=" bg-gray-300 ml-2">03Pioneer</p>
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="ml-2 mt-2">
-              <p className="text-xs font-extrabold tracking-tighter">
-                Address:
-                <span className="font-bold">
-                  {" "}
-                  Suite 333 17529 Miller Spur, South Ervinstad
-                </span>
-              </p>
-            </div>
-            <div className="flex mt-2 ml-2">
-              <div>
-                <p className="text-xs font-extrabold">Boatyard:</p>
-              </div>
-              <div className="flex text-xs ml-2 font-bold">
-                <p className=" bg-gray-300 ">Pioneer</p>
-                <p className=" bg-gray-300 ml-2">02Pioneer</p>
-                <p className=" bg-gray-300 ml-2">03Pioneer</p>
-              </div>
-            </div>
-            <div className=" flex mt-4 ml-2 bg-gray-400">
-              <div className="mt-3">
+            <div className=" flex bg-[#E9E9E9]">
+              <div className="mt-3 ml-3">
                 <p>Moorings:</p>
               </div>
               <div className="ml-4 mt-2">
-                <div className=" bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-500 w-[19vw] h-[8vh] flex items-center">
+                <div className=" rounded-md border-[1px]  border-gray-500 w-[19vw] h-[8vh] flex items-center">
                   <div>
-                    <AiFillCheckCircle className="h-10 w-6 bg-black text-white" />
+                    <AiFillCheckCircle className="h-12 rounded-md w-6 bg-black text-white" />
                   </div>
                   <div className="flex mt-o">
                     <div>
@@ -481,9 +485,9 @@ const Customer = () => {
                     </div>
                   </div>
                 </div>
-                <div className=" bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-500 w-[19vw] h-[9vh] mt-2 mb-2 flex items-center ">
+                <div className="rounded-md border-[1px] border-gray-500 w-[19vw] h-[8vh] mt-2 mb-2 flex items-center ">
                   <div>
-                    <AiFillCheckCircle className="h-10 w-6 bg-black text-white" />
+                    <AiFillCheckCircle className="h-12 rounded-md w-6 bg-black text-white" />
                   </div>
                   <div className="flex">
                     <div>
@@ -501,17 +505,19 @@ const Customer = () => {
               </div>
             </div>
           </div>
-          <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[28vw]  mt-10 h-[44vh]">
-            <div className=" flex justify-between bg-gray-300">
+          <div className="mt-5">
+            <div className=" flex justify-between bg-[#D9D9D9] h-10">
               <div>
-                <p>Mooring Information</p>
+                <p className="font-bold text-sm mt-3 ml-3">
+                  Mooring Information
+                </p>
               </div>
-              <div>
+              <div className="mt-3 mr-3">
                 <FaEdit onClick={handleEdit} />
               </div>
             </div>
-            <div className="flex mt-4">
-              <div className="text-xs tracking-tighter ml-2">
+            <div className="flex bg-[#F2F2F2]">
+              <div className="text-sm tracking-tighter ml-2 mt-2">
                 <p className="mb-2">
                   <span className="font-bold">Mooring No:</span> 52325
                 </p>
@@ -548,7 +554,7 @@ const Customer = () => {
                   none
                 </p>
               </div>
-              <div className="text-xs tracking-tighter">
+              <div className="text-sm tracking-tighter mt-2">
                 <p className="mb-2">
                   <span className="font-bold">Boat Name:</span> Sunriase
                 </p>

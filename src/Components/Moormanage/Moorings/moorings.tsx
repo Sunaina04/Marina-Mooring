@@ -108,13 +108,13 @@ const Moorings = () => {
 
   return (
     <>
-      <div className="flex items-center ml-12">
+      <div className="flex items-center justify-between ml-12 overflow-hidden">
         <div>
           <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">
             Moormanage/Moorings
           </h1>
         </div>
-        <div className="flex gap-4 items-center mr-20 mt-14">
+        <div className="flex gap-4 items-center mr-20  mt-14">
           <CustomModal
             onClick={handleButtonClick}
             visible={false}
@@ -126,7 +126,7 @@ const Moorings = () => {
         </div>
       </div>
 
-      <div className="flex ml-12 mt-10 gap-5">
+      <div className="flex ml-12 gap-4 mt-10">
         <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[28vw] h-[105vh]">
           <DataTable
             value={filteredMooringData}
@@ -181,42 +181,44 @@ const Moorings = () => {
           ></Column> */}
           </DataTable>
         </div>
-        <div>
+        <div  className="w-[28vw]">
           <img
             src="/assets/images/Sea-img.png"
             className="bg-no-repeat object-cover bg-auto rounded-md w-full h-[105vh]"
           />
-          <div className="-translate-y-[45vh] translate-x-32">
+          <div className="-translate-y-[45vh] -translate-x-30 ml-10 ">
+            <div className="translate-x-[7rem]">
             <Timeline />
-            <div className="rounded-md border-[1px] p-1 border-gray-300  w-[22vw] mt-4 h-[17vh] bg-gray-800">
-              <p className="text-xs ml-2 mt-2 text-white">Status</p>
-              <hr className="m-2" />
-              <div className="flex justify-between">
+            </div>
+            <div className="rounded-md border-[1px] p-1 border-gray-300  w-[17vw] mt-20 h-[13vh] bg-white">
+              <p className="text-[0.7rem] ml-1 text-black">Status</p>
+              <hr className="m-1 border-black" />
+              <div className="flex">
                 <div>
-                  <FaCircle className="h-2 text-red-600 mt-1" />
-                  <FaCircle className="h-2 text-green-600 mt-7" />
+                  <FaCircle className="h-3 text-red-600 mt-1" />
+                  <FaCircle className="h-3 text-green-600 mt-4" />
                 </div>
                 <div>
-                  <p className="text-xs text-white">Need inspection</p>
-                  <p className="text-xs text-white tracking-tighter mt-5">
+                  <p className="text-[0.6rem] text-black mt-1">Need inspection</p>
+                  <p className="text-[0.6rem] text-black tracking-tighter mt-[0.8rem]">
                     Gear On (in the water)
                   </p>
                 </div>
-                <div>
-                  <FaCircle className="h-2 text-violet-600 mt-1 " />
-                  <FaCircle className="h-2 text-gray-300 mt-7" />
+                <div className="ml-1">
+                  <FaCircle className="h-3 text-violet-600 mt-1 " />
+                  <FaCircle className="h-3 text-gray-500 mt-4" />
                 </div>
                 <div>
-                  <p className="text-xs text-white tracking-tighter">
+                  <p className="text-[0.6rem] text-black tracking-tighter mt-1">
                     Gear Off (out of the water)
                   </p>
-                  <p className="text-xs text-white mt-5">Not in Use</p>
+                  <p className="text-[0.6rem] text-black mt-[0.8rem]">Not in Use</p>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className=" rounded-md border-[1px]  border-gray-400 w-[28vw]  h-[50vh] -translate-y-[138vh] translate-x-[35vw]">
+          <div className=" rounded-md border-[1px]  border-gray-400 w-[28vw]  h-[50vh] -translate-y-[145vh] translate-x-[30vw]">
             <div className="bg-[#D9D9D9] h-10 flex justify-between">
               <div>
                 <p className="font-bold text-sm mt-3 ml-3">Customers Record</p>
@@ -231,14 +233,14 @@ const Moorings = () => {
                   <Avatar size="xlarge" shape="circle" />
                 </div>
                 <div className="ml-4 mt-4">
-                  <p className="text-xs font-extrabold tracking-tighter ">
+                  <p className="text-xs font-extrabold tracking-tighter mt-2 ">
                     ID: <span className="font-bold"> #4645</span>
                   </p>
                   <p className="text-xs font-extrabold tracking-tighter mt-3">
                     Name:<span className="font-bold"> John Smith</span>
                   </p>
                 </div>
-                <div className="ml-4">
+                <div className="ml-4 mt-4">
                   <p className="text-xs font-extrabold tracking-tighter mt-2">
                     Phone:<span className="font-bold"> +1 234 543 4324</span>
                   </p>
@@ -272,7 +274,7 @@ const Moorings = () => {
                 <p>Moorings:</p>
               </div>
               <div className="ml-4 mt-2">
-                <div className=" bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-500 w-[19vw] h-[8vh] flex items-center">
+                <div className="rounded-md border-[1px] p-1 border-gray-500 w-[19vw] h-[8vh] flex items-center">
                   <div>
                     <AiFillCheckCircle className="h-10 w-6 bg-black text-white" />
                   </div>
@@ -289,7 +291,8 @@ const Moorings = () => {
                     </div>
                   </div>
                 </div>
-                <div className=" bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-500 w-[19vw] h-[9vh] mt-2 mb-2 flex items-center ">
+                {/* last container bottom div */}
+                <div className="rounded-md border-[1px] border-gray-500 w-[19vw] h-[10vh] mt-2 mb-2 flex items-center ">
                   <div>
                     <AiFillCheckCircle className="h-10 w-6 bg-black text-white" />
                   </div>
@@ -301,7 +304,7 @@ const Moorings = () => {
                     </div>
                     <div>
                       <p className="text-xs tracking-tighter ml-3">
-                        <span>Boat Name:</span> Suriase
+                        <span>Boat Name:</span> Sunriase
                       </p>
                     </div>
                   </div>
@@ -309,7 +312,7 @@ const Moorings = () => {
               </div>
             </div>
 
-            <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[28vw]  mt-3 h-[44vh]">
+            <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[28vw]  mt-3 h-[44vh] ">
               <div className=" flex justify-between bg-[#D9D9D9] h-10">
                 <div>
                   <p className="font-bold text-sm mt-3 ml-3">Mooring Information</p>
