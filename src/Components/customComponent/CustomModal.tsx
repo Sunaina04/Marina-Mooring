@@ -42,82 +42,6 @@ const CustomModal: React.FC<CustomModalProps> = ({
   return (
     <>
       <div className="flex gap-4">
-        {/* <div>
-          <div className="p-input-icon-left">
-            <i className="pi pi-search text-[#D2D2D2]" />
-            <InputText
-              placeholder="Search"
-              className="h-[5vh] cursor-pointer font-bold"
-            />
-          </div>
-        </div> */}
-
-        <div>
-
-          {
-
-          
-          }
-          {/* <Button
-            label={"ADD NEW"}
-            onClick={() => {
-              onClick();
-              setInternalVisible(true);
-            }}
-            style={{
-              width: "7vw",
-              height: "5vh",
-              backgroundColor: "black",
-              cursor: "pointer",
-              color: "white",
-              fontWeight: "bolder",
-              fontSize: "0.65vw",
-           
-            }}
-          >
-            <img
-              src="/assets/images/plus.png"
-              alt="icon"
-              className="p-icon  w-4 mr-4 "
-              style={{
-                filter: "invert(100%)",
-                color: "whitesmoke",
-                fontWeight: "bolder",
-              }}
-            />
-          </Button> */}
-          {/* <ButtonComponent
-
-
-
-            label={"ADD NEW"}
-            onClick={() => {
-              setInternalVisible(true);
-
-
-            }}
-            style={{
-              width: "10vw",
-              height: "5vh",
-              backgroundColor: "black",
-              cursor: "pointer",
-              color: "white",
-              fontWeight: "bold",
-              fontSize: "0.80vw",
-            }}
-          >
-            <img
-              src="/assets/images/more.png"
-              alt="icon"
-              className="p-icon  w-4 ml-3 "
-              style={{
-                filter: "invert(100%)",
-                color: "whitesmoke",
-                fontWeight: "bolder",
-              }}
-            />
-          </ButtonComponent> */}
-
           <ButtonComponent
             onClick={() => {
               setInternalVisible(true);
@@ -164,7 +88,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
           </Dialog>
 
         </div>
-      </div>
+
     </>
   );
 };
