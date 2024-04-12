@@ -28,7 +28,7 @@ export interface CUSTOMER_RESPONSE {
 }
 
 export interface MOORING_PAYLOAD {
-  id: string;
+  id: number;
   mooringNumber: string;
   customerName: string;
   harbor: string;

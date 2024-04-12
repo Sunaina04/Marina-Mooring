@@ -37,6 +37,10 @@ const Customer = () => {
   const [customerData, setCustomerData] = useState<CUSTOMER_PAYLOAD[]>([]);
   const [editMode, setEditMode] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState<any>(null);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [filteredCustomerData, setFilteredCustomerData] = useState<
+    CUSTOMER_PAYLOAD[]
+  >([]);
 
   const [getCustomer] = useGetCustomerMutation();
   const [deleteCustomer] = useDeleteCustomerMutation();
@@ -138,7 +142,6 @@ const Customer = () => {
   //   },
   // ]);
 
-
   const statCardsData = [
     [
       { title: "Total Customers", percentage: 17, count: 42324 },
@@ -154,6 +157,33 @@ const Customer = () => {
     [{ title: "Work Orders", percentage: 58, count: 8421 }],
   ];
 
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const query = event.target.value;
+    setSearchQuery(query);
+    const filteredData = customerData.filter((data) => {
+      // Check if data.id is a string before calling toLowerCase()
+      const id =
+        typeof data.customerId === "string"
+          ? data.customerId.toLowerCase()
+          : "";
+      const customerName =
+        typeof data.customerName === "string"
+          ? data.customerName.toLowerCase()
+          : "";
+      const emailAddress =
+        typeof data.emailAddress === "string"
+          ? data.emailAddress.toLowerCase()
+          : "";
+      // Implement your custom filtering logic here
+      return (
+        id.includes(query.toLowerCase()) ||
+        customerName.includes(query.toLowerCase()) ||
+        emailAddress.includes(query.toLowerCase())
+      );
+    });
+    setFilteredCustomerData(filteredData);
+  };
+
   const getCustomerData = async () => {
     console.log("response customer");
 
@@ -161,6 +191,7 @@ const Customer = () => {
       const response = await getCustomer({}).unwrap();
       console.log("Response:", response);
       setCustomerData(response as CUSTOMER_PAYLOAD[]);
+      setFilteredCustomerData(response as CUSTOMER_PAYLOAD[]);
 
       if (
         typeof response === "object" &&
@@ -212,6 +243,8 @@ const Customer = () => {
             <InputText
               placeholder="Search by name, ID, mooring no, boat name, phone no..."
               className="h-[5vh] w-[48vh] cursor-pointer text-sm"
+              value={searchQuery}
+              onChange={handleSearchChange}
             />
           </div>
         </div>
@@ -277,7 +310,7 @@ const Customer = () => {
       <div className="flex gap-4 ml-12">
         <div className=" bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[28vw] h-[100vh]  mt-10">
           <DataTable
-            value={customerData}
+            value={filteredCustomerData}
             header={CustomerHeader}
             scrollable={true}
             tableStyle={{
@@ -289,11 +322,7 @@ const Customer = () => {
             }}
             size="small"
           >
-            <Column
-              header="ID:"
-              field="id"
-              style={{ width: "6vw" }}
-            ></Column>
+            <Column header="ID:" field="id" style={{ width: "6vw" }}></Column>
             <Column
               style={{ width: "6vw" }}
               field="name"
@@ -377,7 +406,7 @@ const Customer = () => {
         </div>
         {/* last container */}
         <div className=" rounded-md border-[1px] p-1 border-gray-300 w-[28vw]  mt-10 h-[50vh] ">
-          <div >
+          <div>
             <div className="bg-[#D9D9D9] flex justify-between">
               <div>
                 <p className="font-bold">Customers Record</p>
@@ -413,7 +442,11 @@ const Customer = () => {
             </div>
             <div className="ml-2 mt-2">
               <p className="text-xs font-extrabold tracking-tighter">
-                Address:<span className="font-bold"> Suite 333 17529 Miller Spur, South Ervinstad</span> 
+                Address:
+                <span className="font-bold">
+                  {" "}
+                  Suite 333 17529 Miller Spur, South Ervinstad
+                </span>
               </p>
             </div>
             <div className="flex mt-2 ml-2">
@@ -463,7 +496,6 @@ const Customer = () => {
                         <span>Boat Name:</span> Suriase
                       </p>
                     </div>
-                    
                   </div>
                 </div>
               </div>
