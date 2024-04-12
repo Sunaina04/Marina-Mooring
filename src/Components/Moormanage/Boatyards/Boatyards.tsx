@@ -18,6 +18,9 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Widgets } from "@mui/icons-material";
+import MooringTable from "./BoatyardTable";
+import { BOATYARD_DATA } from "../../../Services/MoorManage/types";
+import BoatyardTable from "./BoatyardTable";
 interface CustomerData {
   id: string;
   name: string;
@@ -68,6 +71,161 @@ const Boatyards = () => {
     },
   ]);
 
+  const moorings: BOATYARD_DATA[] = [
+    {
+      id: "#9715",
+      moorings: "Pioneer",
+      boatyards: 2,
+      name: "John smith",
+      phoneNumber: "+1 234 543 4324",
+      email: "demo@gmail.com",
+      boatyardDetails: [
+        {
+          id: 1,
+          name: "Pioneer",
+          address: "123 Elm St",
+          phone: "+1 234 543 4324",
+          mooring: 15,
+          mooringDetails: [
+            {
+              id: "#46645",
+              mainContact: "Maxwell",
+              mooringNumber: "54345",
+              boatName: "Sunriase",
+            },
+            {
+              id: "#46645",
+              mainContact: "Maxwell",
+              mooringNumber: "54345",
+              boatName: "Sunriase",
+            },
+            {
+              id: "#46645",
+              mainContact: "Maxwell",
+              mooringNumber: "54345",
+              boatName: "Sunriase",
+            },
+            {
+              id: "#46645",
+              mainContact: "Maxwell",
+              mooringNumber: "54345",
+              boatName: "Sunriase",
+            },
+          ],
+        },
+        {
+          id: 1,
+          name: "Pioneer",
+          address: "123 Elm St",
+          phone: "+1 234 543 4324",
+          mooring: 15,
+          mooringDetails: [
+            {
+              id: "#46645",
+              mainContact: "Maxwell",
+              mooringNumber: "54345",
+              boatName: "Sunriase",
+            },
+            {
+              id: "#46645",
+              mainContact: "Maxwell",
+              mooringNumber: "54345",
+              boatName: "Sunriase",
+            },
+            {
+              id: "#46645",
+              mainContact: "Maxwell",
+              mooringNumber: "54345",
+              boatName: "Sunriase",
+            },
+            {
+              id: "#46645",
+              mainContact: "Maxwell",
+              mooringNumber: "54345",
+              boatName: "Sunriase",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: "#9715",
+      moorings: "Pioneer",
+      boatyards: 2,
+      name: "John smith",
+      phoneNumber: "+1 234 543 4324",
+      email: "demo@gmail.com",
+      boatyardDetails: [
+        {
+          id: 1,
+          name: "Pioneer",
+          address: "123 Elm St",
+          phone: "+1 234 543 4324",
+          mooring: 15,
+          mooringDetails: [
+            {
+              id: "#46645",
+              mainContact: "Maxwell",
+              mooringNumber: "54345",
+              boatName: "Sunriase",
+            },
+            {
+              id: "#46645",
+              mainContact: "Maxwell",
+              mooringNumber: "54345",
+              boatName: "Sunriase",
+            },
+            {
+              id: "#46645",
+              mainContact: "Maxwell",
+              mooringNumber: "54345",
+              boatName: "Sunriase",
+            },
+            {
+              id: "#46645",
+              mainContact: "Maxwell",
+              mooringNumber: "54345",
+              boatName: "Sunriase",
+            },
+          ],
+        },
+        {
+          id: 1,
+          name: "Pioneer",
+          address: "123 Elm St",
+          phone: "+1 234 543 4324",
+          mooring: 15,
+          mooringDetails: [
+            {
+              id: "#46645",
+              mainContact: "Maxwell",
+              mooringNumber: "54345",
+              boatName: "Sunriase",
+            },
+            {
+              id: "#46645",
+              mainContact: "Maxwell",
+              mooringNumber: "54345",
+              boatName: "Sunriase",
+            },
+            {
+              id: "#46645",
+              mainContact: "Maxwell",
+              mooringNumber: "54345",
+              boatName: "Sunriase",
+            },
+            {
+              id: "#46645",
+              mainContact: "Maxwell",
+              mooringNumber: "54345",
+              boatName: "Sunriase",
+            },
+          ],
+        },
+      ],
+    },
+  ];
+
   const handleButtonClick = () => {
     setModalVisible(true);
   };
@@ -102,113 +260,8 @@ const Boatyards = () => {
           </CustomModal>
         </div>
       </div>
-      {/* 
-      <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[69.40vw] p-1 ml-40 mt-10">
-        <DataTable
-          value={boatData}
-          tableStyle={{
-            minWidth: "20rem",
-            fontSize: "12px",
-            color: "#000000",
-            fontWeight: 600,
-            backgroundColor: "#D1D1D1",
-          }}
-          size="small"
-        >
-          <Column header="ID" field="id" style={{ width: "8vw" }} />
-          <Column style={{ width: "12vw" }} field="name" header="Vendor Name" />
-          <Column
-            style={{ width: "12vw" }}
-            field="phoneNumber"
-            header="Phone Number"
-          />
-          <Column
-            style={{ width: "12vw" }}
-            field="email"
-            header="Email Address"
-          />
-          <Column
-            style={{ width: "11vw" }}
-            field="InventoryItems"
-            header="Inventory Items"
-          />
-          <Column
-            header="Actions"
-            body={() => (
-              <div className="flex gap-6">
-               
-                <span className="text-red-600 font-bold underline cursor-pointer">
-                  Edit
-                </span>
-              </div>
-            )}
-          />
-        </DataTable>
-      </div>  */}
-      <div className=" ml-60 text-center">
-        <TableContainer sx={{ border: "1px solid gray", width: "50vw" }}>
-          <Table>
-            <TableHead
-              sx={{
-                border: "1px solid gray",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <TableRow
-                sx={{
-                  display: "flex",
-                  textAlign: "center",
-                  marginLeft: "10px",
-                  gap: "4px",
-                }}
-              >
-                <TableCell sx={{ fontSize: "12px", textAlign: "center" }}>
-                  ID
-                </TableCell>
-                <TableCell sx={{ fontSize: "12px", textAlign: "center" }}>
-                  Name
-                </TableCell>
-                <TableCell sx={{ fontSize: "12px", textAlign: "center" }}>
-                  Email
-                </TableCell>
-                <TableCell sx={{ fontSize: "12px", textAlign: "center" }}>
-                  Phone
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {boatData.map((row) => (
-                <Accordion key={row.id}>
-                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                    <TableRow>
-                      <TableCell sx={{ fontSize: "12px", textAlign: "center" }}>
-                        {row.id}
-                      </TableCell>
-                      <TableCell sx={{ fontSize: "12px", textAlign: "center" }}>
-                        {row.name}
-                      </TableCell>
-                      <TableCell sx={{ fontSize: "12px", textAlign: "center" }}>
-                        {row.email}
-                      </TableCell>
-                      <TableCell sx={{ fontSize: "12px", textAlign: "center" }}>
-                        {row.phoneNumber}
-                      </TableCell>
-                    </TableRow>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Typography>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. A
-                      tenetur ut quis modi nihil iusto quibusdam id dignissimos
-                      nemo aut. Inventore perspiciatis totam animi mollitia
-                      adipisci, magnam possimus aut dolor.
-                    </Typography>
-                  </AccordionDetails>
-                </Accordion>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+      <div className="ml-10">
+        <BoatyardTable moorings={moorings as BOATYARD_DATA[]} />
       </div>
     </>
   );
