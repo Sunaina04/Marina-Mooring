@@ -33,6 +33,8 @@ const Moorings = () => {
   const [mooringData, setMooringData] = useState<MOORING_PAYLOAD[]>([]);
   const [selectedCustomer, setSelectedCustomer] = useState<any>(null);
   const [editMode, setEditMode] = useState(false);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [filteredMooringData, setFilteredMooringData] = useState<MOORING_PAYLOAD[]>([]);
 
   const [getMoorings] = useGetMooringsMutation();
 
@@ -44,6 +46,25 @@ const Moorings = () => {
     setModalVisible(false);
   };
 
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const query = event.target.value;
+    setSearchQuery(query);
+    const filteredData = mooringData.filter((data) => {
+      // Check if data.id is a string before calling toLowerCase()
+      const id = typeof data.id === 'number' ? data.id.toString() : '';
+      const customerName = typeof data.customerName === 'string' ? data.customerName.toLowerCase() : '';
+      const gpsCoordinates = typeof data.gpsCoordinates === 'string' ? data.gpsCoordinates.toLowerCase() : '';
+      // Implement your custom filtering logic here
+      return (
+        id.includes(query.toLowerCase()) ||
+        customerName.includes(query.toLowerCase()) ||
+        gpsCoordinates.includes(query.toLowerCase())
+      );
+    });
+    setFilteredMooringData(filteredData);
+  };
+  
+
   const MooringsHeader = () => {
     return (
       <div className="flex flex-col">
@@ -54,6 +75,8 @@ const Moorings = () => {
             <InputText
               placeholder="Search by name, ID, mooring no, boat name, phone no..."
               className="h-[5vh] w-[48vh] cursor-pointer text-sm"
+              value={searchQuery}
+              onChange={handleSearchChange}
             />
           </div>
         </div>
@@ -69,6 +92,7 @@ const Moorings = () => {
         const { status, content } = response as MOORING_RESPONSE;
         if (status === 200 && Array.isArray(content)) {
           setMooringData(content);
+          setFilteredMooringData(content); // Initialize filtered data with all data
         }
       });
   };
@@ -105,7 +129,7 @@ const Moorings = () => {
       <div className="flex ml-12 mt-10 gap-5">
         <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[28vw] h-[105vh]">
           <DataTable
-            value={mooringData}
+            value={filteredMooringData}
             header={MooringsHeader}
             scrollable={true}
             tableStyle={{
