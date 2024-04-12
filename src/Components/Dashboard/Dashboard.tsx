@@ -176,36 +176,36 @@ const Dashboard = () => {
         <div className="flex flex-col ">
           <div className="w-[43vw] h-14 mt-11">
             <img src='/assets/images/Sea-img.png'/>
-            <div className="-translate-y-[45vh]">
+            <div className="-translate-y-[45vh] translate-x-[5vw]">
             <Timeline/>
             </div>
             <div className="-translate-y-[45vh] translate-x-[20vw]">
             <Timeline/>
             </div>
           </div>
-          <div className="absolute -translate-y-[20vh] translate-x-20 bottom-2  rounded-md border-[1px] p-1 border-gray-300 w-[22vw]  mt-auto h-[17vh] bg-white">
-            <p className="text-xs ml-2 mt-2 text-black">Status</p>
-            <hr className="m-2 border-black" />
-            <div className="flex justify-between">
+          <div className="absolute -translate-y-[19vh] translate-x-[25vw] bottom-0  rounded-md border-[1px] p-1 border-gray-300 w-[17vw] h-[13vh] bg-white">
+            <p className="text-[0.7rem] ml-1  text-black">Status</p>
+            <hr className="m-1 border-black" />
+            <div className="flex">
               <div>
-                <FaCircle className="h-2 text-red-600 mt-1" />
-                <FaCircle className="h-2 text-green-600 mt-7" />
+                <FaCircle className="h-3 text-red-600 mt-1" />
+                <FaCircle className="h-3 text-green-600 mt-4" />
               </div>
               <div>
-                <p className="text-xs text-black">Need inspection</p>
-                <p className="text-xs text-black tracking-tighter mt-5">
+                <p className="text-[0.6rem] text-black mt-1">Need inspection</p>
+                <p className="text-[0.6rem] text-black tracking-tighter mt-[0.9rem]">
                   Gear On (in the water)
                 </p>
               </div>
-              <div>
-                <FaCircle className="h-2 text-violet-600 mt-1 " />
-                <FaCircle className="h-2 text-gray-500 mt-7" />
+              <div className="ml-1">
+                <FaCircle className="h-3 text-violet-600 mt-1 " />
+                <FaCircle className="h-3 text-gray-500 mt-4" />
               </div>
               <div>
-                <p className="text-xs text-black tracking-tighter">
+                <p className="text-[0.6rem] text-black tracking-tighter mt-1">
                   Gear Off (out of the water)
                 </p>
-                <p className="text-xs text-black mt-5">Not in Use</p>
+                <p className="text-[0.6rem] text-black tracking-tighter mt-[0.9rem]">Not in Use</p>
               </div>
             </div>
           </div>
