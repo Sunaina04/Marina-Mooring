@@ -122,27 +122,24 @@ export interface VENDOR_RESPONSE {
 }
 
 export interface BOATYARD_DATA {
-  id: number;
+  id: string;
   moorings: string;
   boatyards: number;
   name: string;
   phoneNumber: string;
   email: string;
-  boatyardDetails: [
-    {
-      id: number;
-      name: string;
-      address: string;
-      boats: [
-        {
-          mooringNumber: number;
-          boatName: string;
-        },
-        {
-          mooringNumber: number;
-          boatName: string;
-        }
-      ];
-    }
-  ];
+  boatyardDetails: {
+    id: number;
+    name: string;
+    address: string;
+    phone: string;
+    mooring: number;
+    mooringDetails: {
+      id: string;
+      mainContact: string;
+      mooringNumber: string;
+      boatName: string;
+    }[];
+  }[];
 }
+

@@ -73,25 +73,152 @@ const Boatyards = () => {
 
   const moorings: BOATYARD_DATA[] = [
     {
-      id: 9715,
+      id: "#9715",
       moorings: "Pioneer",
       boatyards: 2,
-      name: "John smith", // Add name property
-      phoneNumber: "+1 234 543 4324", // Add phoneNumber property
-      email: "demo@gmail.com", // Add email property
+      name: "John smith",
+      phoneNumber: "+1 234 543 4324",
+      email: "demo@gmail.com",
       boatyardDetails: [
         {
           id: 1,
           name: "Pioneer",
-          address: "01",
-          boats: [
+          address: "123 Elm St",
+          phone: "+1 234 543 4324",
+          mooring: 15,
+          mooringDetails: [
             {
-              mooringNumber: 15,
-              boatName: "123 Elm St",
+              id: "#46645",
+              mainContact: "Maxwell",
+              mooringNumber: "54345",
+              boatName: "Sunriase",
             },
             {
-              mooringNumber: 16,
-              boatName: "45 Chicken Rd",
+              id: "#46645",
+              mainContact: "Maxwell",
+              mooringNumber: "54345",
+              boatName: "Sunriase",
+            },
+            {
+              id: "#46645",
+              mainContact: "Maxwell",
+              mooringNumber: "54345",
+              boatName: "Sunriase",
+            },
+            {
+              id: "#46645",
+              mainContact: "Maxwell",
+              mooringNumber: "54345",
+              boatName: "Sunriase",
+            },
+          ],
+        },
+        {
+          id: 1,
+          name: "Pioneer",
+          address: "123 Elm St",
+          phone: "+1 234 543 4324",
+          mooring: 15,
+          mooringDetails: [
+            {
+              id: "#46645",
+              mainContact: "Maxwell",
+              mooringNumber: "54345",
+              boatName: "Sunriase",
+            },
+            {
+              id: "#46645",
+              mainContact: "Maxwell",
+              mooringNumber: "54345",
+              boatName: "Sunriase",
+            },
+            {
+              id: "#46645",
+              mainContact: "Maxwell",
+              mooringNumber: "54345",
+              boatName: "Sunriase",
+            },
+            {
+              id: "#46645",
+              mainContact: "Maxwell",
+              mooringNumber: "54345",
+              boatName: "Sunriase",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: "#9715",
+      moorings: "Pioneer",
+      boatyards: 2,
+      name: "John smith",
+      phoneNumber: "+1 234 543 4324",
+      email: "demo@gmail.com",
+      boatyardDetails: [
+        {
+          id: 1,
+          name: "Pioneer",
+          address: "123 Elm St",
+          phone: "+1 234 543 4324",
+          mooring: 15,
+          mooringDetails: [
+            {
+              id: "#46645",
+              mainContact: "Maxwell",
+              mooringNumber: "54345",
+              boatName: "Sunriase",
+            },
+            {
+              id: "#46645",
+              mainContact: "Maxwell",
+              mooringNumber: "54345",
+              boatName: "Sunriase",
+            },
+            {
+              id: "#46645",
+              mainContact: "Maxwell",
+              mooringNumber: "54345",
+              boatName: "Sunriase",
+            },
+            {
+              id: "#46645",
+              mainContact: "Maxwell",
+              mooringNumber: "54345",
+              boatName: "Sunriase",
+            },
+          ],
+        },
+        {
+          id: 1,
+          name: "Pioneer",
+          address: "123 Elm St",
+          phone: "+1 234 543 4324",
+          mooring: 15,
+          mooringDetails: [
+            {
+              id: "#46645",
+              mainContact: "Maxwell",
+              mooringNumber: "54345",
+              boatName: "Sunriase",
+            },
+            {
+              id: "#46645",
+              mainContact: "Maxwell",
+              mooringNumber: "54345",
+              boatName: "Sunriase",
+            },
+            {
+              id: "#46645",
+              mainContact: "Maxwell",
+              mooringNumber: "54345",
+              boatName: "Sunriase",
+            },
+            {
+              id: "#46645",
+              mainContact: "Maxwell",
+              mooringNumber: "54345",
+              boatName: "Sunriase",
             },
           ],
         },
@@ -133,71 +260,8 @@ const Boatyards = () => {
           </CustomModal>
         </div>
       </div>
-      <div className=" ml-60 text-center">
+      <div className="ml-10">
         <BoatyardTable moorings={moorings as BOATYARD_DATA[]} />
-        {/* <TableContainer sx={{ border: "1px solid gray", width: "50vw" }}>
-          <Table>
-            <TableHead
-              sx={{
-                border: "1px solid gray",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <TableRow
-                sx={{
-                  display: "flex",
-                  textAlign: "center",
-                  marginLeft: "10px",
-                  gap: "4px",
-                }}
-              >
-                <TableCell sx={{ fontSize: "12px", textAlign: "center" }}>
-                  ID
-                </TableCell>
-                <TableCell sx={{ fontSize: "12px", textAlign: "center" }}>
-                  Name
-                </TableCell>
-                <TableCell sx={{ fontSize: "12px", textAlign: "center" }}>
-                  Email
-                </TableCell>
-                <TableCell sx={{ fontSize: "12px", textAlign: "center" }}>
-                  Phone
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {boatData.map((row) => (
-                <Accordion key={row.id}>
-                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                    <TableRow>
-                      <TableCell sx={{ fontSize: "12px", textAlign: "center" }}>
-                        {row.id}
-                      </TableCell>
-                      <TableCell sx={{ fontSize: "12px", textAlign: "center" }}>
-                        {row.name}
-                      </TableCell>
-                      <TableCell sx={{ fontSize: "12px", textAlign: "center" }}>
-                        {row.email}
-                      </TableCell>
-                      <TableCell sx={{ fontSize: "12px", textAlign: "center" }}>
-                        {row.phoneNumber}
-                      </TableCell>
-                    </TableRow>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Typography>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. A
-                      tenetur ut quis modi nihil iusto quibusdam id dignissimos
-                      nemo aut. Inventore perspiciatis totam animi mollitia
-                      adipisci, magnam possimus aut dolor.
-                    </Typography>
-                  </AccordionDetails>
-                </Accordion>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer> */}
       </div>
     </>
   );
