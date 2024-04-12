@@ -18,6 +18,9 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Widgets } from "@mui/icons-material";
+import MooringTable from "./BoatyardTable";
+import { BOATYARD_DATA } from "../../../Services/MoorManage/types";
+import BoatyardTable from "./BoatyardTable";
 interface CustomerData {
   id: string;
   name: string;
@@ -68,6 +71,34 @@ const Boatyards = () => {
     },
   ]);
 
+  const moorings: BOATYARD_DATA[] = [
+    {
+      id: 9715,
+      moorings: "Pioneer",
+      boatyards: 2,
+      name: "John smith", // Add name property
+      phoneNumber: "+1 234 543 4324", // Add phoneNumber property
+      email: "demo@gmail.com", // Add email property
+      boatyardDetails: [
+        {
+          id: 1,
+          name: "Pioneer",
+          address: "01",
+          boats: [
+            {
+              mooringNumber: 15,
+              boatName: "123 Elm St",
+            },
+            {
+              mooringNumber: 16,
+              boatName: "45 Chicken Rd",
+            },
+          ],
+        },
+      ],
+    },
+  ];
+
   const handleButtonClick = () => {
     setModalVisible(true);
   };
@@ -102,51 +133,9 @@ const Boatyards = () => {
           </CustomModal>
         </div>
       </div>
-      {/* 
-      <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[69.40vw] p-1 ml-40 mt-10">
-        <DataTable
-          value={boatData}
-          tableStyle={{
-            minWidth: "20rem",
-            fontSize: "12px",
-            color: "#000000",
-            fontWeight: 600,
-            backgroundColor: "#D1D1D1",
-          }}
-          size="small"
-        >
-          <Column header="ID" field="id" style={{ width: "8vw" }} />
-          <Column style={{ width: "12vw" }} field="name" header="Vendor Name" />
-          <Column
-            style={{ width: "12vw" }}
-            field="phoneNumber"
-            header="Phone Number"
-          />
-          <Column
-            style={{ width: "12vw" }}
-            field="email"
-            header="Email Address"
-          />
-          <Column
-            style={{ width: "11vw" }}
-            field="InventoryItems"
-            header="Inventory Items"
-          />
-          <Column
-            header="Actions"
-            body={() => (
-              <div className="flex gap-6">
-               
-                <span className="text-red-600 font-bold underline cursor-pointer">
-                  Edit
-                </span>
-              </div>
-            )}
-          />
-        </DataTable>
-      </div>  */}
       <div className=" ml-60 text-center">
-        <TableContainer sx={{ border: "1px solid gray", width: "50vw" }}>
+        <BoatyardTable moorings={moorings as BOATYARD_DATA[]} />
+        {/* <TableContainer sx={{ border: "1px solid gray", width: "50vw" }}>
           <Table>
             <TableHead
               sx={{
@@ -208,7 +197,7 @@ const Boatyards = () => {
               ))}
             </TableBody>
           </Table>
-        </TableContainer>
+        </TableContainer> */}
       </div>
     </>
   );

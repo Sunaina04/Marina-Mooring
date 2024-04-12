@@ -120,3 +120,29 @@ export interface VENDOR_RESPONSE {
     primarySalesRep: boolean;
   };
 }
+
+export interface BOATYARD_DATA {
+  id: number;
+  moorings: string;
+  boatyards: number;
+  name: string;
+  phoneNumber: string;
+  email: string;
+  boatyardDetails: [
+    {
+      id: number;
+      name: string;
+      address: string;
+      boats: [
+        {
+          mooringNumber: number;
+          boatName: string;
+        },
+        {
+          mooringNumber: number;
+          boatName: string;
+        }
+      ];
+    }
+  ];
+}
