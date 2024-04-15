@@ -461,7 +461,7 @@ const Dashboard = () => {
                 <CalendarTodayIcon sx={{ marginRight: "8px" }} /> Total Moorings
               </AccordionSummary>
               <AccordionDetails>
-                <div>
+                {/* <div>
                   {statCardsData.map((items) => (
                     <StatCard 
                     
@@ -470,10 +470,12 @@ const Dashboard = () => {
                     
                     />
                   ))}
-                </div>
+                </div> */}
               </AccordionDetails>
             </Accordion>
           </div>
+
+          
         </div>
       </div>
     </>

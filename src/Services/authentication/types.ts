@@ -80,9 +80,8 @@ export interface ErrorResponse {
 }
 
 export interface validateEmailResponse {
-  message: string;
+  response: string;
   status: number;
-  errorList: [string];
-  time: number;
-  content: null;
+  success:boolean
+
 }
