@@ -18,11 +18,14 @@ import Timeline from "../../customComponent/Timeline";
 import {
   useDeleteCustomerMutation,
   useGetCustomerMutation,
+  useGetMooringsMutation,
 } from "../../../Services/MoorManage/moormanage";
 import { ErrorResponse } from "../../../Services/authentication/types";
 import {
   CUSTOMER_PAYLOAD,
   CUSTOMER_RESPONSE,
+  MOORING_PAYLOAD,
+  MOORING_RESPONSE,
 } from "../../../Services/MoorManage/types";
 
 interface CustomerData {
@@ -30,6 +33,13 @@ interface CustomerData {
   name: string;
   phoneNumber: number;
   email: string;
+}
+interface CustomerProps {
+  id: string;
+  name: string;
+  phone: string;
+  email: string;
+  address: string;
 }
 
 const Customer = () => {
@@ -41,9 +51,20 @@ const Customer = () => {
   const [filteredCustomerData, setFilteredCustomerData] = useState<
     CUSTOMER_PAYLOAD[]
   >([]);
+  const [mooringData, setMooringData] = useState<MOORING_PAYLOAD[]>([]);
 
   const [getCustomer] = useGetCustomerMutation();
   const [deleteCustomer] = useDeleteCustomerMutation();
+
+  const [getMoorings] = useGetMooringsMutation(); 
+
+  const [edited, setEdited] = useState<CustomerProps>({
+    id: "#43453",
+    name: "John Smith",
+    phone: "+1 234 543 4324",
+    email: "john@gmail.com",
+    address: "Suite 333 17529 Miller Spur South Ervinstad",
+  });
 
   const handleButtonClick = () => {
     setModalVisible(true);
@@ -252,8 +273,22 @@ const Customer = () => {
     );
   };
 
+  const getMooringsData = async () => {
+    await getMoorings({})
+      .unwrap()
+      .then(async (response) => {
+        console.log("RESPONSE", response);
+        const { status, content } = response as MOORING_RESPONSE;
+        if (status === 200 && Array.isArray(content)) {
+          setMooringData(content);
+          // setFilteredMooringData(content); // Initialize filtered data with all data
+        }
+      });
+  };
+
   useEffect(() => {
     getCustomerData();
+    getMooringsData();
   }, []);
 
   return (
@@ -307,7 +342,7 @@ const Customer = () => {
         ))}
       </div> */}
 
-      <div className="flex gap-4 ml-12 h-[110vh] mt-10" >
+      <div className="flex gap-4 ml-12 h-[110vh] mt-10">
         <div className=" bg-[#F2F2F2] w-[30vw] rounded-md border-[1px] ">
           <DataTable
             value={filteredCustomerData}
@@ -421,151 +456,52 @@ const Customer = () => {
                 />
               </div>
             </div>
-            <div className="bg-[#F2F2F2]">
-              <div className="flex ">
-                <div className="mt-2 ml-3">
-                  <Avatar size="xlarge" shape="circle" />
-                </div>
-                <div className="ml-4 mt-4">
-                  <p className="text-xs font-extrabold tracking-tighter mt-2">
-                    ID: <span className="font-bold"> #4645</span>
-                  </p>
-                  <p className="text-xs font-extrabold tracking-tighter mt-3">
-                    Name:<span className="font-bold"> John Smith</span>
-                  </p>
-                </div>
-                <div className="ml-4 mt-4">
-                  <p className="text-xs font-extrabold tracking-tighter mt-2">
-                    Phone:<span className="font-bold"> +1 234 543 4324</span>
-                  </p>
-                  <p className="text-xs font-extrabold tracking-tighter mt-3">
-                    Email:<span className="font-bold"> Demo@gamil.com</span>
-                  </p>
-                </div>
-              </div>
 
-              <div className="mt-3 ml-3">
-                <p className="text-sm font-extrabold tracking-tighter">
-                  Address:
-                  <span className="font-bold">
-                    Suite 333 17529 Miller Spur, South Ervinstad
-                  </span>
+            <div className="bg-[#F2F2F2]">
+              <div className="flex gap-32 mt-4 ">
+                <div className="font-bold text-sm">
+                  <p>ID:{edited.id}</p>
+                  <p>Phone:{edited.phone}</p>
+                </div>
+                <div className="font-bold text-sm">
+                  <p>Name:{edited.name}</p>
+                  <p>Email:{edited.email}</p>
+                </div>
+              </div>
+              <div className="font-bold text-sm mt-2">
+                <p>Address:{edited.address}</p>
+              </div>
+              <div className="font-bold text-sm mt-2">
+                <p>
+                  Boatyard:<span className="bg-[#D9D9D9] ml-2">Pioneer</span>{" "}
+                  <span className="bg-[#D9D9D9] ml-2">02Pioneer</span>{" "}
+                  <span className="bg-[#D9D9D9] ml-2">Pioneer</span>
                 </p>
-                <div className="flex mt-2">
-                  <div>
-                    <p className="text-sm font-extrabold">Boatyard:</p>
-                  </div>
-                  <div className="flex text-xs ml-2 font-bold">
-                    <p className=" bg-gray-300 ">Pioneer</p>
-                    <p className=" bg-gray-300 ml-2">02Pioneer</p>
-                    <p className=" bg-gray-300 ml-2">03Pioneer</p>
-                  </div>
-                </div>
               </div>
             </div>
-            <div className=" flex bg-[#E9E9E9]">
-              <div className="mt-3 ml-3">
-                <p>Moorings:</p>
-              </div>
-              <div className="ml-4 mt-2">
-                <div className=" rounded-md border-[1px]  border-gray-500 w-[19vw] h-[8vh] flex items-center">
-                  <div>
-                    <AiFillCheckCircle className="h-12 rounded-md w-6 bg-black text-white" />
-                  </div>
-                  <div className="flex mt-o">
-                    <div>
-                      <p className="text-xs tracking-tighter ml-2">
-                        <span>Mooring No:</span> 54342
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-xs tracking-tighter ml-3">
-                        <span>Boat Name:</span> Suriase
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="rounded-md border-[1px] border-gray-500 w-[19vw] h-[8vh] mt-2 mb-2 flex items-center ">
-                  <div>
-                    <AiFillCheckCircle className="h-12 rounded-md w-6 bg-black text-white" />
-                  </div>
-                  <div className="flex">
-                    <div>
-                      <p className="text-xs tracking-tighter ml-2">
-                        <span>Mooring No:</span> 54342
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-xs tracking-tighter ml-3">
-                        <span>Boat Name:</span> Suriase
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+
+          
           </div>
-          <div className="mt-5">
-            <div className=" flex justify-between bg-[#D9D9D9] h-10">
-              <div>
-                <p className="font-bold text-sm mt-3 ml-3">
-                  Mooring Information
-                </p>
-              </div>
-              <div className="mt-3 mr-3">
-                <FaEdit onClick={handleEdit} />
-              </div>
-            </div>
-            <div className="flex bg-[#F2F2F2]">
-              <div className="text-sm tracking-tighter ml-2 mt-2">
-                <p className="mb-2">
-                  <span className="font-bold">Mooring No:</span> 52325
-                </p>
-                <p className="mb-2">
-                  <span className="font-bold">Harbor:</span> Houston
-                </p>
-                <p className="mb-2">
-                  <span className="font-bold">Type & Weight:</span> Skiff(321kg)
-                </p>
-                <p className="mb-2">
-                  <span className="font-bold">Boat Size:</span> length:10m,
-                  width:3.8m
-                </p>
-                <p className="mb-2">
-                  <span className="font-bold">Shackle, Swivel Condition:</span>{" "}
-                  none
-                </p>
-                <p className="mb-2">
-                  <span className="font-bold">
-                    Type, Length & Condition of Bottom Chain:
-                  </span>{" "}
-                  Skiff(321kg)
-                </p>
-                <p className="mb-2">
-                  <span className="font-bold">
-                    Type, Length & Condition of Top Chain:
-                  </span>{" "}
-                  none
-                </p>
-                <p className="mb-2">
-                  <span className="font-bold">
-                    Type, Length & Condition of Pennant:
-                  </span>{" "}
-                  none
-                </p>
-              </div>
-              <div className="text-sm tracking-tighter mt-2">
-                <p className="mb-2">
-                  <span className="font-bold">Boat Name:</span> Sunriase
-                </p>
-                <p className="mb-2">
-                  <span className="font-bold">Water Depth:</span> 100m
-                </p>
-                <p className="mb-2">
-                  <span className="font-bold">Condition of Eye:</span> none
-                </p>
-              </div>
-            </div>
+
+          <div className="">
+            <h3 className="bg-[#D9D9D9] font-bold h12 p-4">Moorings</h3>
+            <DataTable
+              tableStyle={{ minWidth: "20rem" }}
+              className="bg[#F2F2F2]"
+              value={mooringData}
+            >
+              <Column field="id" header="ID" headerClassName="text-sm"></Column>
+              <Column
+                field="mooringName"
+                header="Mooring Name"
+                headerStyle={{ fontSize: "0.875rem" }}
+              ></Column>
+              <Column
+                field="gpsCoordinates"
+                header="GPS Coordinate"
+                headerStyle={{ fontSize: "0.87rem" }}
+              ></Column>
+            </DataTable>
           </div>
         </div>
       </div>
