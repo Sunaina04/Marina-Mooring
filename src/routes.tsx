@@ -39,11 +39,11 @@ const routes = [
     element: <SignUp />,
   },
   {
-    path: "resetPass",
+    path: "resetPassword",
     element: <ResetPassword />,
   },
   {
-    path: "forgotPass",
+    path: "forgotPassword",
     element: <ForgotPassword />,
   },
   {

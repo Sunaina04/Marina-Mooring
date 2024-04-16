@@ -7,7 +7,7 @@ import {
 import { RootState } from "../store/store";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:8082/",
+  baseUrl: process.env.REACT_APP_BASE_URL,
   prepareHeaders: (headers, { getState }) => {
     // const token = localStorage.getItem("token"); 
     // if (token) {
