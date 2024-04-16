@@ -143,3 +143,25 @@ export interface BOATYARD_DATA {
   }[];
 }
 
+export interface BOATYARD_PAYLOAD {
+  id: number;
+  boatyardId: string;
+  mooringName: string;
+  ownerName: string;
+  emailAddress: string;
+  phone: string;
+}
+
+export interface TECHNICIAN_PAYLOAD {
+  id: number;
+  technicianName: string;
+  technicianId: string;
+  emailAddress: string;
+  phone: string;
+  streetHouse: string;
+  sectorBlock: string;
+  state: string;
+  country: string;
+  pincode: string;
+  note: string;
+}

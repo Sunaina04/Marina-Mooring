@@ -1,5 +1,5 @@
 import { userApi } from "../userApi";
-import { CUSTOMER_PAYLOAD, MOORING_PAYLOAD, VENDOR_PAYLOAD } from "./types";
+import { BOATYARD_PAYLOAD, CUSTOMER_PAYLOAD, MOORING_PAYLOAD, TECHNICIAN_PAYLOAD, VENDOR_PAYLOAD } from "./types";
 
 const moormanageApi = userApi.injectEndpoints({
   endpoints: (builder: any) => ({
@@ -120,6 +120,98 @@ const moormanageApi = userApi.injectEndpoints({
       }),
     }),
 
+
+    // Boatyards API
+    addBoatyards: builder.mutation({
+      query: (payload: BOATYARD_PAYLOAD) => ({
+        url: "api/v1/boatyards/",
+        method: "POST",
+        body: payload,
+      }),
+    }),
+
+    getBoatyards: builder.mutation({
+      query: ({
+        pageNumber,
+        pageSize,
+        sortBy,
+        sortDir,
+      }: {
+        pageNumber?: number;
+        pageSize?: number;
+        sortBy?: string;
+        sortDir?: string;
+      }) => ({
+        url: "api/v1/boatyards/",
+        method: "GET",
+        params: { pageNumber, pageSize, sortBy, sortDir },
+      }),
+    }),
+
+    deleteBoatyards: builder.mutation({
+      query: ({ id }: { id?: number }) => ({
+        url: `api/v1/boatyards/${id}`,
+        method: "DELETE",
+      }),
+    }),
+
+    updateBoatyards: builder.mutation({
+      query: ({ payload, id }: { payload: BOATYARD_PAYLOAD; id: number }) => ({
+        url: `api/v1/boatyards/${id}`,
+        method: "PUT",
+        body: payload,
+      }),
+    }),
+
+    // Technician API
+    addTechnician: builder.mutation({
+      query: (payload: TECHNICIAN_PAYLOAD) => ({
+        url: "api/v1/technician/",
+        method: "POST",
+        body: payload,
+      }),
+    }),
+
+    getTechnician: builder.mutation({
+      query: ({
+        pageNumber,
+        pageSize,
+        sortBy,
+        sortDir,
+      }: {
+        pageNumber?: number;
+        pageSize?: number;
+        sortBy?: string;
+        sortDir?: string;
+      }) => ({
+        url: "api/v1/technician/",
+        method: "GET",
+        params: { pageNumber, pageSize, sortBy, sortDir },
+      }),
+    }),
+
+    getTechnicianById: builder.mutation({
+      query: ({ id }: { id?: number }) => ({
+        url: `api/v1/technician/${id}`,
+        method: "GET",
+      }),
+    }),
+
+    deleteTechnician: builder.mutation({
+      query: ({ id }: { id?: number }) => ({
+        url: `api/v1/technician/${id}`,
+        method: "DELETE",
+      }),
+    }),
+
+    updateTechnician: builder.mutation({
+      query: ({ payload, id }: { payload: TECHNICIAN_PAYLOAD; id: number }) => ({
+        url: `api/v1/technician/${id}`,
+        method: "PUT",
+        body: payload,
+      }),
+    }),
+
   }),
 });
 
@@ -136,4 +228,13 @@ export const {
   useGetVendorsMutation,
   useDeleteVendorMutation,
   useUpdateVendorMutation,
+  useAddBoatyardsMutation,
+  useDeleteBoatyardsMutation,
+  useUpdateBoatyardsMutation,
+  useGetBoatyardsMutation,
+  useAddTechnicianMutation,
+  useGetTechnicianMutation,
+  useDeleteTechnicianMutation,
+  useUpdateTechnicianMutation,
+  useGetTechnicianByIdMutation,
 } = moormanageApi;
