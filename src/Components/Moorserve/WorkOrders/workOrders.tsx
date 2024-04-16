@@ -66,7 +66,7 @@ const WorkOrders = () => {
       <span className="text-xl font-bold">Work Orders</span>
       <div className="">
         <div className="p-input-icon-left">
-          <i className="pi pi-search text-[#D2D2D2] " />
+          <i className="pi pi-search text-[#D2D2D2] " data-testid="search-icon"  />
           <InputText
             placeholder="Search"
             className="h-[5vh] cursor-pointer font-bold"
