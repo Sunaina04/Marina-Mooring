@@ -3,11 +3,12 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { SelectButton, SelectButtonChangeEvent } from "primereact/selectbutton";
 import { Nullable } from "primereact/ts-helpers";
+import { BiCalendarAlt } from "react-icons/bi";
 import { Box } from "@mui/material";
-import { Datepicker } from "@mobiscroll/react";
 import AddTechnication from "./AddTechnician";
 import { InputText } from "primereact/inputtext";
 import ButtonComponent from "../../Common/ButtonComponent";
+import DatePickerComponent from "../../Common/DatePickerComponent";
 
 interface BoatData {
   id: string;
@@ -31,6 +32,8 @@ const Technicians = () => {
   const options: string[] = ["Open", "Closed"];
   const [value, setValue] = useState<string>(options[0]);
   const [modalVisible, setModalVisible] = useState(false);
+  const [globalFilter, setGlobalFilter] = useState<string | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [boatData, setBoatData] = useState<BoatData[]>([
     {
       id: "01",
@@ -113,6 +116,32 @@ const Technicians = () => {
     },
   ]);
 
+  const technicianHeader = (
+    <div>
+      <div className="p-input-icon-left">
+        <i className="pi pi-search" />
+        <input
+          type="search"
+          value={globalFilter as string}
+          onChange={(e) => setGlobalFilter(e.target.value)}
+          placeholder="Search By name, Id..."
+          className="border-[1px] w-[30vw] p-2 rounded-md"
+        />
+      </div>
+    </div>
+  );
+
+  const handleDateSelect = (date: Date) => {
+    setSelectedDate(date);
+  };
+
+  const handleDateUnselect = () => {
+    setSelectedDate(null);
+  };
+  // const workOrder = (
+  //   <div></div>
+  // )
+
   const Billsheader = (
     <div className="flex flex-wrap align-items-center gap-4 ">
       <span className="text-sm font-bold text-[black]">Work Orders</span>
@@ -172,7 +201,6 @@ const Technicians = () => {
 
   return (
     <>
-      {" "}
       <div className="flex justify-between items-center ml-12">
         <div>
           <h1 className="mt-14 ml-20 opacity-30 text-2xl font-normal">
@@ -180,134 +208,82 @@ const Technicians = () => {
           </h1>
         </div>
         <div className="flex gap-4 items-center mr-10 mt-14">
-          <div>
-            <div className="p-input-icon-left">
-              <i className="pi pi-search text-[#D2D2D2] text-sm" />
-              <InputText
-                placeholder="Search"
-                className="h-[5vh] cursor-pointer font-bold text-[sm]"
-              />
-            </div>
+          <div className="">
+            <p> Filter order by Date </p>
+          </div>
+          <div style={{ position: "relative" }}>
+            <DatePickerComponent
+              onChange={handleDateSelect}
+              value={selectedDate}
+            />
+            <span
+              style={{
+                position: "absolute",
+                top: "50%",
+                transform: "translateY(-50%)",
+                left: "10px",
+              }}
+            >
+              <BiCalendarAlt />
+            </span>
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-5 mt-10 ml-20">
-        {/* Boat Data DataTable */}
-
-        {/* Bills Data DataTable and Calendar */}
-        <div className="flex gap-8">
-          <div className="bg-[#F2F2F2] rounded-md border-[1px]  border-[#D1D1D1] p-5 ml-10  w-[50vw] mb-5">
-            <DataTable value={billsData} header={Billsheader} scrollable={true}>
-              <Column
-                style={{ width: "1vw", fontSize: "0.75rem" }}
-                field="id"
-                header="ID"
-              ></Column>
-              <Column
-                style={{ width: "3vw", fontSize: "0.75rem" }}
-                field="mooring"
-                header="Mooring"
-              ></Column>
-              <Column
-                style={{ width: "4vw", fontSize: "0.75rem" }}
-                field="techniciansName"
-                header="Technicians Name"
-              ></Column>
-              <Column
-                style={{ width: "2vw", fontSize: "0.75rem" }}
-                field="amount"
-                header="Amount"
-              ></Column>
-
-              <Column
-                header="Work Order"
-                style={{ width: "5vw", fontSize: "0.75rem" }}
-                body={() => (
-                  <div className="flex gap-5 ">
-                    <span className="text-black underline cursor-pointer">
-                      View
-                    </span>
-                    <span className="text-green-500 bg-green-100 opacity-[1rem] cursor-pointer">
-                      Confirm
-                    </span>
-                    <span className="text-red-500 bg-red-100 cursor-pointer">
-                      Cancel
-                    </span>
-                    <span className="text-blue-500 bg-blue-100 cursor-pointer">
-                      Modify
-                    </span>
-                  </div>
-                )}
-              ></Column>
-            </DataTable>
-          </div>
-          <div></div>
-          <Box className="w-50 h-[57vh] border-[1px] border-[#D1D1D1] p-5 rounded-xl ">
-            <div className="text-[#000000] text-lg font-bold tracking-tighter text-left mb-5">
-              Calendar
-            </div>
-            <div className="card flex justify-content-center">
-              <Datepicker
-                controls={["calendar"]}
-                // select="range"
-                display="inline"
-                touchUi={true}
-              />
-              {/* <Calendar
-                value={date}
-                onChange={(e) => setDate(e.value)}
-                inline
-                showWeek
-                selectionMode="range"
-                style={{ width: "100%" }} // Set width to 100%
-              /> */}
-            </div>
-          </Box>
-        </div>
-
-        <div className="bg-[#F2F2F2] rounded-md border-[1px]  border-[#D1D1D1] p-5 ml-10  w-[50vw] mb-5">
+      <div className="flex gap-5 mt-10 ml-20">
+        <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[35vw] ">
           <DataTable
-            value={boatData}
-            header={""}
-            tableStyle={{}}
+            // value={filteredMooringData}
+            header={technicianHeader}
             scrollable={true}
+            tableStyle={{
+              // minWidth: "20rem",
+              fontSize: "12px",
+              color: "#000000",
+              fontWeight: 600,
+              backgroundColor: "#D9D9D9",
+            }}
+            size="small"
           >
+            <Column header="ID:" field="id" style={{ width: "6vw" }}></Column>
             <Column
-              style={{ width: "5vw", fontSize: "0.80rem" }}
-              field="id"
-              header="Id"
+              style={{ width: "6vw" }}
+              field="ownerName"
+              header="Technician Name"
             ></Column>
             <Column
-              style={{ width: "10vw", fontSize: "0.80rem" }}
-              field="techniciansName"
-              header="Technicians Name"
-            ></Column>
-
-            <Column
-              style={{ width: "10vw", fontSize: "0.80rem" }}
-              field="noOfJob"
+              style={{ width: "10vw" }}
+              field="gpsCoordinates"
               header="Open Work Orders"
             ></Column>
-
             <Column
-              style={{ width: "10vw", fontSize: "0.80rem" }}
-              field="completedJob"
-              header="Completed jobs"
+              style={{ width: "10vw" }}
+              field="gpsCoordinates"
+              header="Completed Jobs"
             ></Column>
+          </DataTable>
+        </div>
 
+        <div className=" rounded-md border-[1px]  border-[#D1D1D1]  ml-10  w-[35vw] ">
+          <DataTable scrollable={true}>
             <Column
-              header="Modify"
-              style={{ width: "8vw", fontSize: "0.80rem" }}
-              body={() => (
-                <div className="flex gap-4">
-                  <span className="text-green-500 underline cursor-pointer">
-                    Edit
-                  </span>
-                  <span className="text-red-500 underline cursor-pointer">
-                    Delete
-                  </span>
-                </div>
-              )}
+              style={{ width: "1vw", fontSize: "0.75rem" }}
+              field="id"
+              header="ID"
+            ></Column>
+            <Column
+              style={{ width: "3vw", fontSize: "0.75rem" }}
+              field="mooring"
+              header="Mooring"
+            ></Column>
+            <Column
+              style={{ width: "4vw", fontSize: "0.75rem" }}
+              field="customerName"
+              header="Customer Name"
+            ></Column>
+            <Column
+              style={{ width: "2vw", fontSize: "0.75rem" }}
+              field="dueDate"
+              header="Due Date"
             ></Column>
           </DataTable>
         </div>

@@ -56,7 +56,7 @@ const Customer = () => {
   const [getCustomer] = useGetCustomerMutation();
   const [deleteCustomer] = useDeleteCustomerMutation();
 
-  const [getMoorings] = useGetMooringsMutation(); 
+  const [getMoorings] = useGetMooringsMutation();
 
   const [edited, setEdited] = useState<CustomerProps>({
     id: "#43453",
@@ -293,7 +293,7 @@ const Customer = () => {
 
   return (
     <>
-      <div className="flex  items-center justify-between ml-3 mr-3">
+      <div className="flex  items-center justify-between ml-3 mr-3 ">
         <div>
           <h1 className="mt-14 ml-12 opacity-30 text-2xl font-normal">
             MOORMANAGE/Customer
@@ -412,29 +412,29 @@ const Customer = () => {
             <Timeline />
           </div>
 
-          <div className="absolute  translate-x-6 bottom-4  rounded-md border-[1px] p-1 border-gray-300 w-[17vw]  mt-auto h-[13vh] bg-white">
+          <div className="absolute  translate-x-6 bottom-4  rounded-md border-[1px] pb-1 border-gray-300 w-[17vw]  mt-auto h-[13vh] bg-white">
             <p className="text-[0.7rem] ml-1 text-black">Status</p>
             <hr className="m-1 border-black" />
             <div className="flex justify-between">
               <div>
                 <FaCircle className="h-3 text-red-600 mt-1" />
-                <FaCircle className="h-3 text-green-600 mt-4" />
+                <FaCircle className="h-3 text-green-600 mt-2" />
               </div>
               <div>
                 <p className="text-[0.6rem] text-black mt-1">Need inspection</p>
-                <p className="text-[0.6rem] text-black tracking-tighter mt-[0.9rem]">
+                <p className="text-[0.6rem] text-black tracking-tighter mt-[0.3rem]">
                   Gear On (in the water)
                 </p>
               </div>
               <div className="ml-1">
                 <FaCircle className="h-3 text-violet-600 mt-1 " />
-                <FaCircle className="h-3 text-gray-500 mt-4" />
+                <FaCircle className="h-3 text-gray-500 mt-2" />
               </div>
               <div>
                 <p className="text-[0.6rem] text-black tracking-tighter mt-1">
                   Gear Off (out of the water)
                 </p>
-                <p className="text-[0.6rem] text-black mt-[0.9rem]">
+                <p className="text-[0.6rem] text-black mt-[0.3rem]">
                   Not in Use
                 </p>
               </div>
@@ -444,7 +444,7 @@ const Customer = () => {
         {/* last container */}
         <div className="w-[30vw]">
           <div className="rounded-md border">
-            <div className="bg-[#D9D9D9] h-10 flex justify-between">
+            <div className="bg-[#D9D9D9] flex justify-between pb-2">
               <div>
                 <p className="font-bold text-sm mt-3 ml-3">Customers Record</p>
               </div>
@@ -457,19 +457,34 @@ const Customer = () => {
               </div>
             </div>
 
-            <div className="bg-[#F2F2F2]">
-              <div className="flex gap-32 mt-4 ">
-                <div className="font-bold text-sm">
-                  <p>ID:{edited.id}</p>
-                  <p>Phone:{edited.phone}</p>
+            <div className="bg-[#F2F2F2] pt-2 px-3">
+              <div className="flex gap-32 ">
+                <div className=" text-sm">
+                  <p>
+                    <span className="font-bold">ID:</span>
+                    {edited.id}
+                  </p>
+                  <p>
+                    <span className="font-bold">Phone:</span>
+                    {edited.phone}
+                  </p>
                 </div>
-                <div className="font-bold text-sm">
-                  <p>Name:{edited.name}</p>
-                  <p>Email:{edited.email}</p>
+                <div className=" text-sm">
+                  <p>
+                    <span className="font-bold">Name:</span>
+                    {edited.name}
+                  </p>
+                  <p>
+                    <span className="font-bold">Email:</span>
+                    {edited.email}
+                  </p>
                 </div>
               </div>
-              <div className="font-bold text-sm mt-2">
-                <p>Address:{edited.address}</p>
+              <div className="text-sm mt-2">
+                <p>
+                  <span className="font-bold">Address:</span>
+                  {edited.address}
+                </p>
               </div>
               <div className="font-bold text-sm mt-2">
                 <p>
@@ -479,28 +494,33 @@ const Customer = () => {
                 </p>
               </div>
             </div>
-
-          
           </div>
 
-          <div className="">
-            <h3 className="bg-[#D9D9D9] font-bold h12 p-4">Moorings</h3>
+          <div style={{ maxWidth: "72vh" }} className="">
+            <h3 className="bg-[#D9D9D9] font-bold py-2 pl-3">Moorings</h3>
             <DataTable
               tableStyle={{ minWidth: "20rem" }}
               className="bg[#F2F2F2]"
               value={mooringData}
+              scrollable={true}
+              style={{ overflow: "scroll", maxHeight: "72vh" }}
             >
-              <Column field="id" header="ID" headerClassName="text-sm"></Column>
+              <Column
+                field="id"
+                header="ID"
+                headerClassName="text-sm"
+                style={{ fontSize: "0.75rem" }}
+              />
               <Column
                 field="mooringName"
                 header="Mooring Name"
-                headerStyle={{ fontSize: "0.875rem" }}
-              ></Column>
+                style={{ fontSize: "0.75rem" }}
+              />
               <Column
                 field="gpsCoordinates"
                 header="GPS Coordinate"
-                headerStyle={{ fontSize: "0.87rem" }}
-              ></Column>
+                style={{ fontSize: "0.75rem" }}
+              />
             </DataTable>
           </div>
         </div>

@@ -185,33 +185,6 @@ const Moorings = () => {
               field="gpsCoordinates"
               header="GPS Coordinates"
             ></Column>
-            {/* <Column
-              style={{ width: "5vw" }}
-              field="phone"
-              header="Phone:"
-            ></Column> */}
-            {/* <Column
-            style={{ width: "10vw" }}
-            field="address"
-            header="Address"
-          ></Column> */}
-            {/* <Column
-            header="Actions"
-            body={(rowData) => (
-              <div className="flex gap-2">
-                <Button
-                  label="Edit"
-                  className="p-button-text p-button-info"
-                  onClick={() => handleEdit(rowData)}
-                />
-                <Button
-                  label="Delete"
-                  className="p-button-text p-button-danger"
-                  onClick={() => handleDelete(rowData)}
-                />
-              </div>
-            )}
-          ></Column> */}
           </DataTable>
         </div>
         <div>
@@ -220,35 +193,35 @@ const Moorings = () => {
             className="bg-no-repeat object-cover bg-auto rounded-md w-full h-[105vh]"
             alt="Sea"
           />
-          <div className="-translate-y-[45vh] -translate-x-30 ml-10 ">
+          <div className="-translate-y-[46vh] -translate-x-30 ml-10 ">
             <div className="translate-x-[7rem]">
               <Timeline />
             </div>
-            <div className="rounded-md border-[1px] p-1 border-gray-300  w-[17vw] mt-20 h-[13vh] bg-white">
+            <div className="rounded-md border-[1px] pb-1 border-gray-300  w-[17vw] mt-20 h-[13vh] bg-white">
               <p className="text-[0.7rem] ml-1 text-black">Status</p>
               <hr className="m-1 border-black" />
               <div className="flex">
                 <div>
                   <FaCircle className="h-3 text-red-600 mt-1" />
-                  <FaCircle className="h-3 text-green-600 mt-4" />
+                  <FaCircle className="h-3 text-green-600 mt-2" />
                 </div>
                 <div>
                   <p className="text-[0.6rem] text-black mt-1">
                     Need inspection
                   </p>
-                  <p className="text-[0.6rem] text-black tracking-tighter mt-[0.8rem]">
+                  <p className="text-[0.6rem] text-black tracking-tighter mt-[0.3rem]">
                     Gear On (in the water)
                   </p>
                 </div>
                 <div className="ml-1">
                   <FaCircle className="h-3 text-violet-600 mt-1 " />
-                  <FaCircle className="h-3 text-gray-500 mt-4" />
+                  <FaCircle className="h-3 text-gray-500 mt-2" />
                 </div>
                 <div>
                   <p className="text-[0.6rem] text-black tracking-tighter mt-1">
                     Gear Off (out of the water)
                   </p>
-                  <p className="text-[0.6rem] text-black mt-[0.8rem]">
+                  <p className="text-[0.6rem] text-black mt-[0.3rem]">
                     Not in Use
                   </p>
                 </div>
@@ -257,14 +230,7 @@ const Moorings = () => {
           </div>
 
           <div className=" rounded-md  border-gray-400 w-[28vw]  -translate-y-[145vh] translate-x-[30vw]">
-            {/* <div className="bg-[#D9D9D9] h-12 flex justify-between">
-              <div>
-                <p className="font-bold text-sm mt-3 ml-3">Customers Record</p>
-              </div>
-              <div className="flex">
-                <FaEdit onClick={handleEdit} className="mr-2 mt-3" />
-              </div>
-            </div> */}
+            
             <Accordion className="border-none ">
               <AccordionDetails className="bg-[#D9D9D9] rounded-md pt-2 px-0">
                 <div className="flex justify-between items-center ml-4">
