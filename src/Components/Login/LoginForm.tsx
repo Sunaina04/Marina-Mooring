@@ -24,6 +24,7 @@ interface LoginFormProps {
   typeEmail: string;
   typePass: string;
   showSinUp: boolean;
+  admin?: boolean;
 }
 
 export default function LoginForm({
@@ -31,6 +32,7 @@ export default function LoginForm({
   typeEmail,
   typePass,
   showSinUp,
+  admin,
 }: LoginFormProps) {
   const dispatch = useDispatch();
   const toast = useRef<any>(null);
@@ -110,30 +112,56 @@ export default function LoginForm({
   const [resetPassword] = useResetPasswordMutation();
 
   const signInHandler = async () => {
-    console.log("IN SIGN IN");
-    try {
-      const response = await login(loginPayload).unwrap();
-      const { status, user, token, message } = response as LOGIN_RESPONSE;
-      if (status === 200) {
-        console.log("data", user, response);
-        dispatch(setUserData({ ...user }));
-        localStorage.setItem("token", token);
-        setLoginPayload({
-          username: "",
-          password: "",
-        });
-        toast.current?.show({
-          severity: "success",
-          summary: message,
-        });
-        navigate("/dashboard");
-      }
-    } catch (error: any) {
-      console.error("Error occurred during login:", error);
-      if (error.data) {
-        const { message: msg } = error.data as ErrorResponse;
+    if (admin) {
+ // try {
+      //   const response = await login(loginPayload).unwrap();
+      //   const { status, user, token, message } = response as LOGIN_RESPONSE;
+      //   if (status === 200) {
+      //     console.log("data", user, response);
+      //     dispatch(setUserData({ ...user }));
+      //     localStorage.setItem("token", token);
+      //     setLoginPayload({
+      //       username: "",
+      //       password: "",
+      //     });
+      //     toast.current?.show({
+      //       severity: "success",
+      //       summary: message,
+      //     });
+      navigate("/admin/login/permission");
+      //   }
+      // } catch (error: any) {
+      //   console.error("Error occurred during login:", error);
+      //   if (error.data) {
+      //     const { message: msg } = error.data as ErrorResponse;
+      //   }
+      // }
+    } else {
+      try {
+        const response = await login(loginPayload).unwrap();
+        const { status, user, token, message } = response as LOGIN_RESPONSE;
+        if (status === 200) {
+          console.log("data", user, response);
+          dispatch(setUserData({ ...user }));
+          localStorage.setItem("token", token);
+          setLoginPayload({
+            username: "",
+            password: "",
+          });
+          toast.current?.show({
+            severity: "success",
+            summary: message,
+          });
+          navigate("/dashboard");
+        }
+      } catch (error: any) {
+        console.error("Error occurred during login:", error);
+        if (error.data) {
+          const { message: msg } = error.data as ErrorResponse;
+        }
       }
     }
+    
   };
 
   const ResetPasswordHandler = async () => {
@@ -199,7 +227,7 @@ export default function LoginForm({
                     ? "email"
                     : "text"
                 }
-                placeholder={showSinUp ? "New password" : "Enter Your username"}
+                placeholder={showSinUp ? "New password" : "Enter Your email"}
                 name="username"
                 value={username} // Bind value to username state
                 onChange={handleChange}
@@ -246,14 +274,18 @@ export default function LoginForm({
               <span
                 className="w-5 h-5 absolute top-1/2 transform -translate-y-1/2 left-3 text-gray-400"
                 style={{
-                  backgroundImage: `url(assets/images/key.png)`,
+                  backgroundImage: `url(${
+                    admin
+                      ? "/assets/images/key.png"
+                      : "/assets/images/key.png"
+                  })`,
                   backgroundRepeat: "no-repeat",
                   backgroundSize: "contain",
                 }}
               ></span>
             </div>
 
-            {!showSinUp && (
+            {!showSinUp && !admin && (
               <>
                 <div className="flex justify-end mt-8 cursor-pointer ">
                   <Link to={"/forgotPass"}>
@@ -269,69 +301,29 @@ export default function LoginForm({
               </>
             )}
           </div>
-          <Button
-            style={{
-              width: "10vw",
-              height: "6vh",
-              backgroundColor: "black",
-              color: "white",
-              border: "1px solid black",
-              fontWeight: "700",
-              letterSpacing: "0.2px",
-              fontSize: "1.50vw",
-              // fontFamily: "Roboto",
-              marginBottom: "0",
-            }}
-            label={Label}
-            onClick={showSinUp ? ResetPasswordHandler : signInHandler}
-          />
-          {/* {showSinUp ? (
-            <Button
-              style={{
-                width: "10vw",
-                height: "6vh",
-                backgroundColor: "black",
-                color: "white",
-                border: "1px solid black",
-                fontWeight: "700",
-                letterSpacing: "0.2px",
-                fontSize: "1.50vw",
-                // fontFamily: "Roboto",
-                marginBottom: "0",
-              }}
-              label={Label}
-              onclick={ResetPasswordHandler}
-            />
-          ) : (
-            <Button
-              style={{
-                width: "10vw",
-                height: "6vh",
-                backgroundColor: "black",
-                color: "white",
-                border: "1px solid black",
-                fontWeight: "700",
-                letterSpacing: "0.2px",
-                fontSize: "1.50vw",
-                // fontFamily: "Roboto",
-                marginBottom: "0",
-              }}
-              label={Label}
-              onclick={signInHandler}
-            />
-          )} */}
+          <div className="flex flex-col items-center">
+            {admin && <span className="mb-8">For admin use only</span>}{" "}
+            <button
+              className="w-40 h-12 bg-black text-white border border-black font-bold text-sm"
+              onClick={showSinUp ? ResetPasswordHandler : signInHandler}
+            >
+              {Label}
+            </button>
+          </div>
         </div>
       </div>
-      <div className="flex justify-center items-center mt-0">
-        <div className="text-center mx-auto" style={{ width: "40vw" }}>
-          <p className="text-xs font-bold">
-            Just testing the waters? If you do not have an account{" "}
-            <span className="underline font-bolder">CLICK HERE</span> to let us
-            know you would like to connect and see if MOORFIND can work for you
-            and your business.
-          </p>
+      {!admin && (
+        <div className="flex justify-center items-center mt-0">
+          <div className="text-center mx-auto" style={{ width: "40vw" }}>
+            <p className="text-xs font-bold">
+              Just testing the waters? If you do not have an account{" "}
+              <span className="underline font-bolder">CLICK HERE</span> to let
+              us know you would like to connect and see if MOORFIND can work for
+              you and your business.
+            </p>
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 }

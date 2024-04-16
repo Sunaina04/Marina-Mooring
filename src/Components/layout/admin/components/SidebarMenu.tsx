@@ -34,11 +34,11 @@ export const SidebarMenu = [
         name: "Boatyards",
         link: "moormanage/boatyards",
       },
-      {
-        icon: "/assets/images/square.png",
-        name: "Reports",
-        link: "moormanage/reports",
-      },
+      // {
+      //   icon: "/assets/images/square.png",
+      //   name: "Reports",
+      //   link: "moormanage/reports",
+      // },
     ],
   },
   {
@@ -56,11 +56,11 @@ export const SidebarMenu = [
         name: "Account Payable",
         link: "moorpay/accountPayable",
       },
-      {
-        icon: "/assets/images/square.png",
-        name: "Reports",
-        link: "moorpay/reports",
-      },
+      // {
+      //   icon: "/assets/images/square.png",
+      //   name: "Reports",
+      //   link: "moorpay/reports",
+      // },
     ],
   },
   {
@@ -88,10 +88,22 @@ export const SidebarMenu = [
         name: "Forms",
         link: "moorserve/forms",
       },
+      // {
+      //   icon: "/assets/images/square.png",
+      //   name: "Reports",
+      //   link: "moorserve/reports",
+      // },
+    ],
+  },
+  {
+    icon: "/assets/images/square.png",
+    name: "ADMIN TOOLS",
+    link: "admin/login",
+    subcategories: [
       {
         icon: "/assets/images/square.png",
-        name: "Reports",
-        link: "moorserve/reports",
+        name: "Permission",
+        link: "/permission",
       },
     ],
   },

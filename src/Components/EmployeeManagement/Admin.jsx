@@ -1,11 +1,20 @@
-import React from 'react'
+import React from "react";
+import LoginForm from "../Login/LoginForm";
 
 const Admin = () => {
+  const Label = "Login";
+  const typeEmail = "email";
+  const typePass = "password";
   return (
     <div>
-      <h1>Admin Page</h1>
+      <LoginForm
+        Label={Label}
+        typeEmail={typeEmail}
+        typePass={typePass}
+        admin={true}
+      />
     </div>
-  )
-}
+  );
+};
 
-export default Admin
+export default Admin;
