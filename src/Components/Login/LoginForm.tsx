@@ -113,7 +113,7 @@ export default function LoginForm({
 
   const signInHandler = async () => {
     if (admin) {
- // try {
+      // try {
       //   const response = await login(loginPayload).unwrap();
       //   const { status, user, token, message } = response as LOGIN_RESPONSE;
       //   if (status === 200) {
@@ -161,7 +161,6 @@ export default function LoginForm({
         }
       }
     }
-    
   };
 
   const ResetPasswordHandler = async () => {
@@ -275,9 +274,7 @@ export default function LoginForm({
                 className="w-5 h-5 absolute top-1/2 transform -translate-y-1/2 left-3 text-gray-400"
                 style={{
                   backgroundImage: `url(${
-                    admin
-                      ? "/assets/images/key.png"
-                      : "/assets/images/key.png"
+                    admin ? "/assets/images/key.png" : "/assets/images/key.png"
                   })`,
                   backgroundRepeat: "no-repeat",
                   backgroundSize: "contain",
@@ -288,7 +285,7 @@ export default function LoginForm({
             {!showSinUp && !admin && (
               <>
                 <div className="flex justify-end mt-8 cursor-pointer ">
-                  <Link to={"/forgotPass"}>
+                  <Link to={"/forgotPassword"}>
                     <p className="font-normal font-['Roboto']">
                       Forgot password?
                     </p>

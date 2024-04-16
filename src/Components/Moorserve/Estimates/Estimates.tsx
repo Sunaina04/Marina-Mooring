@@ -82,9 +82,6 @@ const Estimates = () => {
             MOORSERVE/Estimates
           </h1>
         </div>
-
-
-
         <div className="flex gap-1 ml-[25rem] text-[gray] font-extrabold mt-14">
           <div>
             <img
@@ -103,6 +100,7 @@ const Estimates = () => {
         </div>
         <div className="items-center mr-[10rem] mt-14">
           <CustomModal
+           data-testid="modal" 
             onClick={handleButtonClick}
             visible={false}
             onHide={handleModalClose}

@@ -474,8 +474,6 @@ const Dashboard = () => {
               </AccordionDetails>
             </Accordion>
           </div>
-
-          
         </div>
       </div>
     </>

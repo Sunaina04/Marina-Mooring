@@ -27,6 +27,7 @@ import {
   MOORING_PAYLOAD,
   MOORING_RESPONSE,
 } from "../../../Services/MoorManage/types";
+import DatePickerComponent from "../../Common/DatePickerComponent";
 
 interface CustomerData {
   id: string;
@@ -524,6 +525,8 @@ const Customer = () => {
             </DataTable>
           </div>
         </div>
+
+        
       </div>
     </>
   );
