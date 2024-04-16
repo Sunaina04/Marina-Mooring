@@ -165,3 +165,23 @@ export interface TECHNICIAN_PAYLOAD {
   pincode: string;
   note: string;
 }
+
+export interface TECHNICIAN_RESPONSE {
+  status: number;
+  message: string;
+  errorList: [];
+  time: string;
+  content: {
+    id: number;
+    technicianName: string;
+    technicianId: string;
+    emailAddress: string;
+    phone: string;
+    streetHouse: string;
+    sectorBlock: string;
+    state: string;
+    country: string;
+    pincode: string;
+    note: string;
+  };
+}
