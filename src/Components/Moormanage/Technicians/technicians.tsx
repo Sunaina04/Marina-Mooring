@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { SelectButton, SelectButtonChangeEvent } from "primereact/selectbutton";
@@ -9,11 +9,13 @@ import AddTechnication from "./AddTechnician";
 import { InputText } from "primereact/inputtext";
 import ButtonComponent from "../../Common/ButtonComponent";
 import DatePickerComponent from "../../Common/DatePickerComponent";
+import { TECHNICIAN_PAYLOAD, TECHNICIAN_RESPONSE } from "../../../Services/MoorManage/types";
+import { useGetTechnicianMutation } from "../../../Services/MoorManage/moormanage";
 
 interface BoatData {
   id: string;
   techniciansName: string;
-  mooring: string;
+  technician: string;
   date: string;
   price: string;
   completedJob: number;
@@ -22,7 +24,7 @@ interface BoatData {
 
 interface BillsData {
   id: number;
-  mooring: string;
+  technician: string;
   techniciansName: string;
   amount: string;
 }
@@ -34,11 +36,17 @@ const Technicians = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [globalFilter, setGlobalFilter] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [technicianData, setTechnicianData] = useState<TECHNICIAN_PAYLOAD[]>([]);
+  const [filteredTechnicianData, setFilteredTechnicianData] = useState<
+    TECHNICIAN_PAYLOAD[]
+  >([]);
+  const [getTechnicians] = useGetTechnicianMutation();
+
   const [boatData, setBoatData] = useState<BoatData[]>([
     {
       id: "01",
       techniciansName: "Jon Smith",
-      mooring: "Suncatcher",
+      technician: "Suncatcher",
       price: "$5",
       date: "Mon 13.01:30pm",
       noOfJob: 5,
@@ -47,7 +55,7 @@ const Technicians = () => {
     {
       id: "01",
       techniciansName: "Jon Smith",
-      mooring: "Suncatcher",
+      technician: "Suncatcher",
       price: "$5",
       date: "Mon 13.01:30pm",
       noOfJob: 5,
@@ -56,7 +64,7 @@ const Technicians = () => {
     {
       id: "01",
       techniciansName: "Jon Smith",
-      mooring: "Suncatcher",
+      technician: "Suncatcher",
       price: "$5",
       date: "Mon 13.01:30pm",
       noOfJob: 5,
@@ -65,7 +73,7 @@ const Technicians = () => {
     {
       id: "01",
       techniciansName: "Jon Smith",
-      mooring: "Suncatcher",
+      technician: "Suncatcher",
       price: "$5",
       date: "Mon 13.01:30pm",
       noOfJob: 5,
@@ -74,7 +82,7 @@ const Technicians = () => {
     {
       id: "01",
       techniciansName: "Jon Smith",
-      mooring: "Suncatcher",
+      technician: "Suncatcher",
       price: "$5",
       date: "Mon 13.01:30pm",
       noOfJob: 5,
@@ -85,32 +93,32 @@ const Technicians = () => {
   const [billsData, setBillsData] = useState<BillsData[]>([
     {
       id: 0,
-      mooring: "Suncatcher",
+      technician: "Suncatcher",
       techniciansName: "John Smith",
       amount: "$50",
     },
 
     {
       id: 0,
-      mooring: "Suncatcher",
+      technician: "Suncatcher",
       techniciansName: "John Smith",
       amount: "$50",
     },
     {
       id: 0,
-      mooring: "Suncatcher",
+      technician: "Suncatcher",
       techniciansName: "John Smith",
       amount: "$50",
     },
     {
       id: 0,
-      mooring: "Suncatcher",
+      technician: "Suncatcher",
       techniciansName: "John Smith",
       amount: "$50",
     },
     {
       id: 0,
-      mooring: "Suncatcher",
+      technician: "Suncatcher",
       techniciansName: "John Smith",
       amount: "$50",
     },
@@ -198,6 +206,23 @@ const Technicians = () => {
       </div>
     </div>
   );
+
+  const getTechniciansData = async () => {
+    await getTechnicians({})
+      .unwrap()
+      .then(async (response) => {
+        console.log("RESPONSE", response);
+        const { status, content } = response as TECHNICIAN_RESPONSE;
+        if (status === 200 && Array.isArray(content)) {
+          setTechnicianData(content);
+          setFilteredTechnicianData(content); // Initialize filtered data with all data
+        }
+      });
+  };
+
+  useEffect(() => {
+    getTechniciansData();
+  }, []);
 
   return (
     <>

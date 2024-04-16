@@ -152,6 +152,21 @@ export interface BOATYARD_PAYLOAD {
   phone: string;
 }
 
+export interface BOATYARD_RESPONSE {
+  status: number;
+  message: string;
+  errorList: [];
+  time: string;
+  content: {
+    id: number;
+    boatyardId: string;
+    mooringName: string;
+    ownerName: string;
+    emailAddress: string;
+    phone: string;
+  };
+}
+
 export interface TECHNICIAN_PAYLOAD {
   id: number;
   technicianName: string;
@@ -164,4 +179,24 @@ export interface TECHNICIAN_PAYLOAD {
   country: string;
   pincode: string;
   note: string;
+}
+
+export interface TECHNICIAN_RESPONSE {
+  status: number;
+  message: string;
+  errorList: [];
+  time: string;
+  content: {
+    id: number;
+    technicianName: string;
+    technicianId: string;
+    emailAddress: string;
+    phone: string;
+    streetHouse: string;
+    sectorBlock: string;
+    state: string;
+    country: string;
+    pincode: string;
+    note: string;
+  };
 }
