@@ -24,6 +24,7 @@ import Forms from "./Components/Moorserve/Forms/forms";
 import ReportsMoorserve from "./Components/Moorserve/Reports/ReportsMoorserve";
 import Customer from "./Components/Moormanage/Customer/Customer";
 import Permission from "./Components/Permission/permission";
+import Admin from "./Components/EmployeeManagement/Admin";
 
 const routes = [
   {
@@ -46,6 +47,20 @@ const routes = [
     path: "forgotPass",
     element: <ForgotPassword />,
   },
+  {
+    path: "admin/login",
+    element: <Admin />,
+    children: [
+      {
+        path: "permisiion",
+        element: <Permission />,
+      },
+    ]
+  },
+  // {
+  //   path: "/permisiion",
+  //   element: <Permission />,
+  // },
   {
     path: "",
     element: <AdminLayout />,
@@ -129,7 +144,7 @@ const routes = [
         ],
       },
       {
-        path: "permission",
+        path: "admin/login/permission",
         element: <Permission />,
       },
     ],

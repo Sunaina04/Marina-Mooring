@@ -98,29 +98,34 @@ const AdminLayout = () => {
         <Button
           onClick={handleToggleDrawer}
           style={{
-            height: "40px",
-            minWidth: "15px",
+            height: "35px",
+            width: "20px",
+            minWidth: "5px",
             marginRight: "-20rem",
             marginLeft: open ? "16rem" : "4rem",
-            marginTop: "11rem",
+            marginTop: "10.8rem",
             border: "1px solid #B3B3B3",
             display: "inline-block",
             background: "#D9D9D9",
-            position: open ? "fixed" : "absolute",
+            position: "fixed",
           }}
         >
           {open ? (
-            <img
-              src="/assets/images/chevron_left.svg"
-              alt="ChevronLeft"
-              style={{ width: "30px", height: "30px" }}
-            />
+            <div style={{ width: "20px" , marginLeft: "-7px" }}>
+              <img
+                src="/assets/images/chevron_left.svg"
+                alt="ChevronLeft"
+                style={{ width: "100%", height: "100%" }}
+              />
+            </div>
           ) : (
-            <img
-              src="/assets/images/chevron_right.svg"
-              alt="ChevronRight"
-              style={{ width: "30px", height: "30px" }}
-            />
+            <div style={{ width: "20px" , marginLeft: "-7px" }}>
+              <img
+                src="/assets/images/chevron_right.svg"
+                alt="ChevronRight"
+                style={{ width: "100%", height: "100%" }}
+              />
+            </div>
           )}
         </Button>
 
@@ -156,7 +161,7 @@ const AdminLayout = () => {
                       to={item.link}
                       sx={{
                         width: "100%",
-                        height: "auto",
+                        height: "35px",
                         justifyContent: "flex-start",
                         alignItems: "center",
                         padding: "3px 16px",
@@ -175,7 +180,7 @@ const AdminLayout = () => {
                           src={item.icon}
                           alt=""
                           width={17}
-                          style={{ marginRight: "12.5px", marginLeft: "10px" }}
+                          style={{ marginRight: "15px", marginLeft: "8px" }}
                         />
                       </ListItemIcon>
                       <ListItemText
@@ -184,7 +189,6 @@ const AdminLayout = () => {
                           sx: {
                             fontSize: "12.5px",
                             fontWeight: 700,
-                            lineHeight: "1.5",
                             letterSpacing: "0.2px",
                             textAlign: "left",
                             color: "#000000",
@@ -228,8 +232,8 @@ const AdminLayout = () => {
                               component={NavLink as React.FC<NavLinkProps>}
                               to={subcategory.link}
                               sx={{
-                                // width: "100%",
-                                height: "auto",
+                                width: "100%",
+                                height: "35px",
                                 justifyContent: "flex-start",
                                 alignItems: "center",
                                 padding: "3px 16px",
@@ -240,7 +244,7 @@ const AdminLayout = () => {
                               onClick={() => setSelectedSubcategory(subIndex)}
                             >
                               <ListItemIcon
-                                sx={{ marginLeft: "60px", marginRight: "10px" }}
+                                sx={{ marginLeft: "50px", marginRight: "10px" }}
                               >
                                 <img
                                   src={subcategory.icon}
@@ -285,14 +289,14 @@ const AdminLayout = () => {
           <Box
             sx={{
               position: "fixed",
-              top: "85%",
+              top: "95%",
               width: open ? "16.38rem" : "4rem",
               display: "flex",
               flexDirection: "column",
               gap: "1rem",
             }}
           >
-            <Box
+            {/* <Box
               sx={{
                 background: "#D9D9D9",
                 display: "flex",
@@ -338,7 +342,7 @@ const AdminLayout = () => {
                   />
                 ) : null}
               </ListItemButton>
-            </Box>
+            </Box> */}
 
             <Box
               sx={{
@@ -354,13 +358,14 @@ const AdminLayout = () => {
                 to={""}
                 sx={{
                   // width: "100%",
-                  height: "auto",
+                  height: "35px",
                   justifyContent: "flex-start",
                   alignItems: "center",
                   padding: "3px 16px",
                   "&:hover": {
                     backgroundColor: "#EDEDED",
                   },
+                  border: "1px solid #B3B3B3",
                 }}
               >
                 <ListItemIcon sx={{ minWidth: "auto" }}>
@@ -368,7 +373,7 @@ const AdminLayout = () => {
                     src="/assets/images/square.png"
                     alt="Logout"
                     width={17}
-                    style={{ marginRight: "12.5px", marginLeft: "10px" }}
+                    style={{ marginRight: "15px", marginLeft: "10px" }}
                   />
                 </ListItemIcon>
                 {open ? (
@@ -378,7 +383,6 @@ const AdminLayout = () => {
                       sx: {
                         fontSize: "12.5px",
                         fontWeight: 700,
-                        lineHeight: "1.5",
                         letterSpacing: "0.2px",
                         textAlign: "left",
                       },

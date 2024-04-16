@@ -92,7 +92,7 @@ const ForgotPassword = () => {
                   height: "6vh",
                   padding: "0 3rem",
                   border: "1px solid gray",
-                  fontSize: "1.20rem",
+                  fontSize: "18px",
                 }}
                 value={email}
                 type="email"
