@@ -7,6 +7,7 @@ import CustomModal from "../customComponent/CustomModal";
 import ButtonComponent from "../Common/ButtonComponent";
 import AddPermission from "./AddPermission";
 
+
 interface PermissionData {
   id: string;
   email: string;

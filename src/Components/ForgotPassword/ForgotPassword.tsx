@@ -2,27 +2,66 @@ import React, { useState } from "react";
 import InputComponent from "../Common/InputComponent";
 import ButtonComponent from "../Common/ButtonComponent";
 import { useNavigate } from "react-router-dom";
-import { useValidateEmailMutation } from "../../Services/authentication/authApi";
+import {
+  useForgotPasswordMutation,
+  useValidateEmailMutation,
+} from "../../Services/authentication/authApi";
 import { validateEmailResponse } from "../../Services/authentication/types";
 import { Button } from "primereact/button";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
-  const [error, setError] = useState<boolean>(false);
-  const [validateEmail] = useValidateEmailMutation();
+  const navigateToLoginPage = useNavigate();
+  const [validateEmail] = useForgotPasswordMutation();
   const token = localStorage.getItem("token");
 
-  const validateEmailHandler = async () => {
-    console.log("CLICKED ", token);
-    const response = await validateEmail({ token }).unwrap();
-    console.log("RESPONSE", response);
+  const [email, setEmail] = useState("");
+  const [errors, setErrors] = useState<any>([]);
 
-    const { status, content, message } = response as validateEmailResponse;
-    if (status === 200) {
-      navigate("/resetpass");
-    } else {
-      setError(true);
+  const validateEmailHandler = async () => {
+    if (email.length === 0) {
+      setErrors("Please enter your Registered Email");
+      return;
     }
+    try {
+      const data = await validateEmail({ email, token }).unwrap();
+      // console.log("RESPONSE", data);
+      const { status, response } = data as validateEmailResponse;
+      console.log("data", response);
+
+      if (status === 200) {
+        navigate("/resetpass");
+      } else {
+        setErrors(response);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setErrors("Invalid email format");
+    } else {
+      setErrors("");
+    }
+
+    setEmail(" ");
+  };
+
+  const handleChange = (e: any) => {
+    console.log("email value", e.target.value);
+
+    const { value: inputValue } = e.target;
+
+    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    setEmail(inputValue);
+
+    // if (!emailRegex.test(inputValue)) {
+
+    //   setErrors('Invalid email format');
+    // } else {
+    //   setErrors('');
+    // }
   };
 
   return (
@@ -39,11 +78,10 @@ const ForgotPassword = () => {
             </div>
           </div>
 
-          {error && (
-            <span>
-              Entered email is not registered with us, Please enter the valid
-              email.
-            </span>
+          {errors && (
+            <div className="mb-4">
+              <span className=" mb-8 text-red-500">{errors}</span>
+            </div>
           )}
 
           <div className="mb-4">
@@ -56,8 +94,10 @@ const ForgotPassword = () => {
                   border: "1px solid gray",
                   fontSize: "1.20rem",
                 }}
+                value={email}
                 type="email"
                 placeholder="Enter Your Registered email"
+                onChange={handleChange}
               />
             </div>
             <div className="flex  mt-8 cursor-pointer ">
@@ -87,7 +127,12 @@ const ForgotPassword = () => {
           />
 
           <div className="flex justify-center flex-col mt-4">
-            <h1>Back</h1>
+            <h1
+              className="cursor-pointer"
+              onClick={() => navigateToLoginPage("/Login")}
+            >
+              Back
+            </h1>
           </div>
 
           <div className="flex justify-center ">
