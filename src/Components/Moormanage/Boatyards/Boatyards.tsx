@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import CustomModal from "../../customComponent/CustomModal";
@@ -19,8 +19,9 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Widgets } from "@mui/icons-material";
 import MooringTable from "./BoatyardTable";
-import { BOATYARD_DATA } from "../../../Services/MoorManage/types";
+import { BOATYARD_DATA, BOATYARD_PAYLOAD, BOATYARD_RESPONSE } from "../../../Services/MoorManage/types";
 import BoatyardTable from "./BoatyardTable";
+import { useGetBoatyardsMutation } from "../../../Services/MoorManage/moormanage";
 interface CustomerData {
   id: string;
   name: string;
@@ -30,6 +31,11 @@ interface CustomerData {
 }
 const Boatyards = () => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [boatyardsData, setboatyardsData] = useState<BOATYARD_PAYLOAD[]>([]);
+  const [filteredboatyardsData, setFilteredboatyardsData] = useState<
+    BOATYARD_PAYLOAD[]
+  >([]);
+  const [getBaotyards] = useGetBoatyardsMutation();
 
   const [boatData] = useState<CustomerData[]>([
     {
@@ -233,6 +239,23 @@ const Boatyards = () => {
   const handleModalClose = () => {
     setModalVisible(false);
   };
+
+  const getBaotyardsData = async () => {
+    await getBaotyards({})
+      .unwrap()
+      .then(async (response) => {
+        console.log("RESPONSE", response);
+        const { status, content } = response as BOATYARD_RESPONSE;
+        if (status === 200 && Array.isArray(content)) {
+          setboatyardsData(content);
+          setFilteredboatyardsData(content); // Initialize filtered data with all data
+        }
+      });
+  };
+
+  useEffect(() => {
+    getBaotyardsData();
+  }, []);
 
   return (
     <>

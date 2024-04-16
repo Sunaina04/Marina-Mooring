@@ -152,6 +152,21 @@ export interface BOATYARD_PAYLOAD {
   phone: string;
 }
 
+export interface BOATYARD_RESPONSE {
+  status: number;
+  message: string;
+  errorList: [];
+  time: string;
+  content: {
+    id: number;
+    boatyardId: string;
+    mooringName: string;
+    ownerName: string;
+    emailAddress: string;
+    phone: string;
+  };
+}
+
 export interface TECHNICIAN_PAYLOAD {
   id: number;
   technicianName: string;
