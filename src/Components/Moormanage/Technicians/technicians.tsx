@@ -6,6 +6,7 @@ import { Nullable } from "primereact/ts-helpers";
 import { BiCalendarAlt } from "react-icons/bi";
 import { Box } from "@mui/material";
 import AddTechnication from "./AddTechnician";
+import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import ButtonComponent from "../../Common/ButtonComponent";
 import DatePickerComponent from "../../Common/DatePickerComponent";
@@ -27,7 +28,7 @@ interface BillsData {
   id: number;
   technician: string;
   techniciansName: string;
-  amount: string;
+  dueDate: string;
 }
 
 const Technicians = () => {
@@ -96,33 +97,34 @@ const Technicians = () => {
       id: 0,
       technician: "Suncatcher",
       techniciansName: "John Smith",
-      amount: "$50",
+     // amount: "$50"
+     dueDate:"3-12-2024",
     },
 
-    {
-      id: 0,
-      technician: "Suncatcher",
-      techniciansName: "John Smith",
-      amount: "$50",
-    },
-    {
-      id: 0,
-      technician: "Suncatcher",
-      techniciansName: "John Smith",
-      amount: "$50",
-    },
-    {
-      id: 0,
-      technician: "Suncatcher",
-      techniciansName: "John Smith",
-      amount: "$50",
-    },
-    {
-      id: 0,
-      technician: "Suncatcher",
-      techniciansName: "John Smith",
-      amount: "$50",
-    },
+    // {
+    //   id: 0,
+    //   mooring: "Suncatcher",
+    //   techniciansName: "John Smith",
+    //   amount: "$50",
+    // },
+    // {
+    //   id: 0,
+    //   mooring: "Suncatcher",
+    //   techniciansName: "John Smith",
+    //   amount: "$50",
+    // },
+    // {
+    //   id: 0,
+    //   mooring: "Suncatcher",
+    //   techniciansName: "John Smith",
+    //   amount: "$50",
+    // },
+    // {
+    //   id: 0,
+    //   mooring: "Suncatcher",
+    //   techniciansName: "John Smith",
+    //   amount: "$50",
+    // },
   ]);
 
   const technicianHeader = (
@@ -134,7 +136,7 @@ const Technicians = () => {
           value={globalFilter as string}
           onChange={(e) => setGlobalFilter(e.target.value)}
           placeholder="Search By name, Id..."
-          className="border-[1px] w-[30vw] p-2 rounded-md"
+          className="border-[1px] w-[30vw] p-2 pl-10 rounded-md"
         />
       </div>
     </div>
@@ -147,9 +149,25 @@ const Technicians = () => {
   const handleDateUnselect = () => {
     setSelectedDate(null);
   };
-  // const workOrder = (
-  //   <div></div>
-  // )
+
+  //table header 2
+  const workOrder = (
+    <>
+      <div className="flex gap-40 rounded-md">
+        <div>
+          <p className="font-bold"> Work Orders </p>
+        </div>
+        <div className="flex">
+          <div className="bg-black text-xs text-white w-[5vw] pl-3">
+            <p>open()</p>
+          </div>
+          <div className="bg-[#D9D9D9] text-xs w-[6vw] pl-2">
+            <p>completed()</p>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 
   const Billsheader = (
     <div className="flex flex-wrap align-items-center gap-4 ">
@@ -238,17 +256,17 @@ const Technicians = () => {
             <p> Filter order by Date </p>
           </div>
           <div style={{ position: "relative" }}>
-            {/* <DatePickerComponent
+            <DatePickerComponent
               onChange={handleDateSelect}
               value={selectedDate}
-            /> */}
-             <Datepicker
+            />
+             {/* <Datepicker
                         controls={["calendar"]}
                         select="range"
                         display="inline"
                         touchUi={true}
                         
-                      />
+                      /> */}
             <span
               style={{
                 position: "absolute",
@@ -297,7 +315,7 @@ const Technicians = () => {
         </div>
 
         <div className=" rounded-md border-[1px]  border-[#D1D1D1]  ml-10  w-[35vw] ">
-          <DataTable scrollable={true}>
+          <DataTable header={workOrder} value={billsData} scrollable={true}>
             <Column
               style={{ width: "1vw", fontSize: "0.75rem" }}
               field="id"
@@ -310,13 +328,19 @@ const Technicians = () => {
             ></Column>
             <Column
               style={{ width: "4vw", fontSize: "0.75rem" }}
-              field="customerName"
+              field="techniciansName"
               header="Customer Name"
             ></Column>
             <Column
               style={{ width: "2vw", fontSize: "0.75rem" }}
               field="dueDate"
               header="Due Date"
+            ></Column>
+            <Column
+              style={{ width: "4vw" }}
+              body={(rowData) => (
+               <p className="underline">view</p>
+              )}
             ></Column>
           </DataTable>
         </div>

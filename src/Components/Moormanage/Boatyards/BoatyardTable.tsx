@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import BoatyardDetailsTable from "./BoatyardDetailsTable"; // Adjust import path if needed
 import { BOATYARD_DATA } from "../../../Services/MoorManage/types";
 import { Button } from "primereact/button";
 import {
