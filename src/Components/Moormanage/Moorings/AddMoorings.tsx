@@ -6,6 +6,7 @@ import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
 import InputComponent from "../../Common/InputComponent";
 import { useAddMooringsMutation } from "../../../Services/MoorManage/moormanage";
 import { MOORING_PAYLOAD } from "../../../Services/MoorManage/types";
+import { Button } from "primereact/button";
 
 interface Props {
   moorings: MOORING_PAYLOAD;
@@ -85,6 +86,8 @@ const AddMoorings: React.FC<Props> = ({ moorings, editMode }) => {
     const payload = {
       ...formData,
     };
+    console.log(" I AM IN SAVE" , payload)
+
     const response = await saveMoorings(payload);
     console.log("RESPONSE", response);
   };
@@ -556,7 +559,7 @@ const AddMoorings: React.FC<Props> = ({ moorings, editMode }) => {
         </div>
 
         <div className="flex gap-3 mt-4 ml-6">
-          <ButtonComponent
+          <Button
             onClick={SaveMoorings}
             label={"Save"}
             style={{
@@ -570,7 +573,7 @@ const AddMoorings: React.FC<Props> = ({ moorings, editMode }) => {
               borderRadius: "0.50rem",
             }}
           />
-          <ButtonComponent
+          <Button
             onClick={function (): void {
               throw new Error("Function not implemented.");
             }}

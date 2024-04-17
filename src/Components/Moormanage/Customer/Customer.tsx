@@ -68,6 +68,7 @@ const Customer = () => {
   });
 
   const handleButtonClick = () => {
+    console.log("Add New button clicked");
     setModalVisible(true);
   };
 
@@ -75,7 +76,6 @@ const Customer = () => {
     setModalVisible(false);
     setEditMode(false);
   };
-  // const [clientData] = useState<CustomerData[]>([
   //   {
   //     id: "01",
   //     name: "Ram",
@@ -301,16 +301,6 @@ const Customer = () => {
           </h1>
         </div>
         <div className="flex gap-4 mt-14 ml-[20.60rem]">
-          {/* <div>
-          <div className="p-input-icon-left">
-            <i className="pi pi-search text-[#D2D2D2]" />
-            <InputText
-              placeholder="Search"
-              className="h-[5vh] cursor-pointer font-bold"
-            />
-          </div>
-        </div> */}
-
           <CustomModal
             label={"ADD NEW"}
             style={{
@@ -329,7 +319,7 @@ const Customer = () => {
           >
             <AddCustomer
               customer={selectedCustomer}
-              editMode={editMode}
+              editMode={editMode || modalVisible}
               closeModal={handleModalClose}
               getCustomer={getCustomerData}
             />

@@ -17,7 +17,6 @@ export const style = {
   overflowY: "auto",
 };
 
-
 interface CustomModalProps {
   onClick: () => void;
   visible: boolean;
@@ -42,53 +41,48 @@ const CustomModal: React.FC<CustomModalProps> = ({
   return (
     <>
       <div className="flex gap-4">
-          <ButtonComponent
-            onClick={() => {
-              setInternalVisible(true);
-            }}
+        <Button
+          onClick={() => {
+            setInternalVisible(true);
+          }}
+          style={{
+            width: "7vw",
+            height: "5vh",
+            backgroundColor: "black",
+            cursor: "pointer",
+            color: "white",
+            fontWeight: "bold",
+            fontSize: "0.50rem",
+            position: "relative",
+            display: "flex",
+          }}
+          label=""
+        >
+          <img
+            src="/assets/images/plus.png"
+            alt="icon"
+            className="w-3 mr-3" // Adjust margin to your preference
             style={{
-              width: "7vw",
-              height: "5vh",
-              backgroundColor: "black",
-              cursor: "pointer",
-              color: "white",
-              fontWeight: "bold",
-              fontSize: "0.50rem",
-              position: "relative",
-              display: "flex",
-
-
-
+              filter: "invert(100%)",
+              color: "whitesmoke",
+              fontWeight: "bolder",
             }}
-            label=""
-          >
-            <img
-              src="/assets/images/plus.png"
-              alt="icon"
-              className="w-3 mr-3" // Adjust margin to your preference
-              style={{
-                filter: "invert(100%)",
-                color: "whitesmoke",
-                fontWeight: "bolder",
-              }}
-            />
-            ADD NEW
-          </ButtonComponent>
+          />
+          ADD NEW
+        </Button>
 
-          <Dialog
-            header={header}
-            visible={visible || internalVisible}
-            style={style} // Add borderRadius style property
-            onHide={() => {
-              onHide();
-              setInternalVisible(false);
-            }}
-          >
-            {children}
-          </Dialog>
-
-        </div>
-
+        <Dialog
+          header={header}
+          visible={visible || internalVisible}
+          style={style} // Add borderRadius style property
+          onHide={() => {
+            onHide();
+            setInternalVisible(false);
+          }}
+        >
+          {children}
+        </Dialog>
+      </div>
     </>
   );
 };
