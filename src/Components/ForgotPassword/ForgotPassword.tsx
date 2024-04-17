@@ -6,7 +6,7 @@ import {
   useForgotPasswordMutation,
   useValidateEmailMutation,
 } from "../../Services/authentication/authApi";
-import { validateEmailResponse } from "../../Services/authentication/types";
+import { ErrorResponse, validateEmailResponse } from "../../Services/authentication/types";
 import { Button } from "primereact/button";
 
 const ForgotPassword = () => {
@@ -17,6 +17,8 @@ const ForgotPassword = () => {
 
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState<any>([]);
+  console.log("errorData",errors);
+  
 
   const validateEmailHandler = async () => {
     if (email.length === 0) {
@@ -24,18 +26,23 @@ const ForgotPassword = () => {
       return;
     }
     try {
-      const data = await validateEmail({ email, token }).unwrap();
-      // console.log("RESPONSE", data);
-      const { status, response } = data as validateEmailResponse;
+      const data = await validateEmail({ email }).unwrap();
+  
+      const { response , } = data as validateEmailResponse;
       console.log("data", response);
 
-      if (status === 200) {
-        navigate("/resetpass");
-      } else {
-        setErrors(response);
-      }
+      // if (status === 200) {
+      //   navigate("/resetpass");
+      // } else {
+      //   setErrors(response);
+      // }
+
     } catch (error) {
-      console.error("Error:", error);
+      const {data,response} = error as ErrorResponse;
+      console.error("Error:",response);
+      
+      setErrors(data)
+      
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {

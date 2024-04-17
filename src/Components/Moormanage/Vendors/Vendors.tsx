@@ -14,7 +14,7 @@ import {
 } from "../../../Services/MoorManage/types";
 import { Button } from "primereact/button";
 
-const Vendor = () => {
+const Vendors = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [vendorData, setVendorData] = useState<VENDOR_PAYLOAD[]>([]);
   const [selectedCustomer, setSelectedCustomer] = useState<any>(null);
@@ -183,4 +183,4 @@ const Vendor = () => {
   );
 };
 
-export default Vendor;
+export default Vendors;

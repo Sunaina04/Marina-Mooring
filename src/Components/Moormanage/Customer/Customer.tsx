@@ -52,6 +52,9 @@ const Customer = () => {
   const [filteredCustomerData, setFilteredCustomerData] = useState<
     CUSTOMER_PAYLOAD[]
   >([]);
+
+  console.log("filterdata",filteredCustomerData);
+  
   const [mooringData, setMooringData] = useState<MOORING_PAYLOAD[]>([]);
 
   const [getCustomer] = useGetCustomerMutation();
@@ -396,10 +399,10 @@ const Customer = () => {
             alt="Sea Image"
           />
 
-          <div className="-translate-y-[85vh] relative">
+          <div className="-translate-y-[85vh] relative" data-testid="timeline1">
             <Timeline />
           </div>
-          <div className="-translate-y-[55vh] flex justify-end relative">
+          <div className="-translate-y-[55vh] flex justify-end relative" data-testid="timeline2">
             <Timeline />
           </div>
 
@@ -407,7 +410,7 @@ const Customer = () => {
             <p className="text-[0.7rem] ml-1 text-black">Status</p>
             <hr className="m-1 border-black" />
             <div className="flex justify-between">
-              <div>
+              <div data-testid="Facircle">
                 <FaCircle className="h-3 text-red-600 mt-1" />
                 <FaCircle className="h-3 text-green-600 mt-2" />
               </div>
@@ -440,10 +443,11 @@ const Customer = () => {
                 <p className="font-bold text-sm mt-3 ml-3">Customers Record</p>
               </div>
               <div className="flex">
-                <FaEdit onClick={handleEdit} className="mr-3 mt-3" />
+                <FaEdit onClick={handleEdit} className="mr-3 mt-3" data-testid="FaEdit" />
                 <RiDeleteBin5Fill
                   onClick={handleDelete}
                   className="text-red-500 mr-2 mt-3"
+                  data-testid="RiDeleteBin5Fill"
                 />
               </div>
             </div>
@@ -516,7 +520,6 @@ const Customer = () => {
           </div>
         </div>
 
-        
       </div>
     </>
   );
