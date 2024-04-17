@@ -60,6 +60,7 @@ const Moorings = () => {
   const [isChecked, setIsChecked] = useState(false);
   const [isDialogVisible, setIsDialogVisible] = useState(false);
   const [selectedMooring, setSelectedMooring] = useState<MOORING_PAYLOAD>();
+  console.log("selectedmooring", selectedMooring)
 
   const handleInputChange = (e: InputSwitchChangeEvent) => {
     // e.stopPropagation();
