@@ -3,14 +3,6 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { BOATYARD_DATA } from "../../../Services/MoorManage/types";
 import { Button } from "primereact/button";
-import {
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
-  Box,
-} from "@chakra-ui/react";
 
 interface DataProps {
   moorings: BOATYARD_DATA[];
@@ -59,23 +51,7 @@ const BoatyardTable: React.FC<DataProps> = ({ moorings }) => {
   return (
     <div>
       <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[35vw] h-[100vh]  mt-10">
-        <Accordion allowToggle>
-          {moorings.map((mooring) => (
-            <AccordionItem key={mooring.id}>
-              <AccordionButton>
-                <Box flex="1" textAlign="left">
-                  {mooring.id} - {mooring.moorings}
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
-              <AccordionPanel pb={4}>
-                <p>No. of Boatyards: {mooring.boatyards}</p>
-                <p>Total Mooring Inventoried: {mooring.name}</p>
-                {/* You can add more details here */}
-              </AccordionPanel>
-            </AccordionItem>
-          ))}
-        </Accordion>
+        
       </div>
     </div>
   );
