@@ -11,6 +11,7 @@ import ButtonComponent from "../../Common/ButtonComponent";
 import DatePickerComponent from "../../Common/DatePickerComponent";
 import { TECHNICIAN_PAYLOAD, TECHNICIAN_RESPONSE } from "../../../Services/MoorManage/types";
 import { useGetTechnicianMutation } from "../../../Services/MoorManage/moormanage";
+import { Datepicker } from "@mobiscroll/react";
 
 interface BoatData {
   id: string;
@@ -237,10 +238,17 @@ const Technicians = () => {
             <p> Filter order by Date </p>
           </div>
           <div style={{ position: "relative" }}>
-            <DatePickerComponent
+            {/* <DatePickerComponent
               onChange={handleDateSelect}
               value={selectedDate}
-            />
+            /> */}
+             <Datepicker
+                        controls={["calendar"]}
+                        select="range"
+                        display="inline"
+                        touchUi={true}
+                        
+                      />
             <span
               style={{
                 position: "absolute",
