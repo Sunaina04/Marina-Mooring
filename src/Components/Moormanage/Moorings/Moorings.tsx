@@ -152,8 +152,9 @@ const Moorings = () => {
             Moormanage/Moorings
           </h1>
         </div>
-        <div className="flex gap-4 items-center mr-20  mt-14">
+        <div className="flex gap-4 items-center mr-20  mt-14" >
           <CustomModal
+           
             label={"ADD NEW"}
             style={{
               width: "50vw",
@@ -169,7 +170,7 @@ const Moorings = () => {
             visible={modalVisible || editMode}
             onHide={handleModalClose}
           >
-            <AddMoorings moorings={selectedCustomer} editMode={editMode} />
+            <AddMoorings moorings={selectedCustomer} editMode={editMode}/>
           </CustomModal>
         </div>
       </div>
@@ -210,15 +211,15 @@ const Moorings = () => {
           />
           <div className="-translate-y-[46vh] -translate-x-30 ml-10 ">
             <div className="translate-x-[7rem]">
-              <Timeline />
+              <Timeline  data-testid="timeline"/>
             </div>
             <div className="rounded-md border-[1px] pb-1 border-gray-300  w-[17vw] mt-20 h-[13vh] bg-white">
               <p className="text-[0.7rem] ml-1 text-black">Status</p>
               <hr className="m-1 border-black" />
               <div className="flex">
                 <div>
-                  <FaCircle className="h-3 text-red-600 mt-1" />
-                  <FaCircle className="h-3 text-green-600 mt-2" />
+                  <FaCircle className="h-3 text-red-600 mt-1"  data-testid="Facircle1"/>
+                  <FaCircle className="h-3 text-green-600 mt-2" data-testid="Facircle2" />
                 </div>
                 <div>
                   <p className="text-[0.6rem] text-black mt-1">
@@ -229,8 +230,8 @@ const Moorings = () => {
                   </p>
                 </div>
                 <div className="ml-1">
-                  <FaCircle className="h-3 text-violet-600 mt-1 " />
-                  <FaCircle className="h-3 text-gray-500 mt-2" />
+                  <FaCircle className="h-3 text-violet-600 mt-1 " data-testid="Facircle3"/>
+                  <FaCircle className="h-3 text-gray-500 mt-2" data-testid="Facircle4"/>
                 </div>
                 <div>
                   <p className="text-[0.6rem] text-black tracking-tighter mt-1">
@@ -251,7 +252,7 @@ const Moorings = () => {
                   <div className="flex items-center">
                     <span className="font-bold">Customers Record</span>
                     <span>
-                      <FaEdit className="ml-2" onClick={handleEdit} />
+                      <FaEdit className="ml-2" onClick={handleEdit} data-testid="edit"/>
                     </span>
                     <InputSwitch
                       checked={isChecked}

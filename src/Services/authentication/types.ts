@@ -77,11 +77,13 @@ export interface AuthenticationData {
 export interface ErrorResponse {
   status: number;
   message: string;
+  data:string
+  response: string;
 }
 
 export interface validateEmailResponse {
   response: string;
-  status: number;
+  // status: number;
   success:boolean
 
 }
