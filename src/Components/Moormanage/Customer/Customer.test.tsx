@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import Customer from "./Customer";
 import { Provider } from "react-redux";
 import { store } from "../../../store/store";
+import user from "@testing-library/user-event";
 
 // global.fetch = jest.fn(() => {
 //     return Promise.resolve({
@@ -126,5 +127,18 @@ describe("Customer Component", () => {
       const headerElement = screen.getByText(headerText);
       expect(headerElement).toBeInTheDocument();
     });
+  });
+
+  it("test button on click", () => {
+    render(
+      <Provider store={store}>
+        <Customer />
+      </Provider>
+    );
+
+    const addButton = screen.getByText("ADD NEW");
+    user.click(addButton);
+
+    expect(addButton).toBeInTheDocument();
   });
 });

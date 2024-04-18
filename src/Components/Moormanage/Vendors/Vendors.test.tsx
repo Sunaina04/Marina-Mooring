@@ -25,4 +25,35 @@ describe("Vendors Component", () => {
 
     expect(screen.getByRole("textbox")).toBeInTheDocument();
   });
+
+
+  test('renders headers correctly in DataTable', () => {
+    render(
+      <Provider store={store}>
+        <Vendors />
+      </Provider>
+    );
+  
+    const headers = [
+      'ID',
+      'Company Name',
+      'Phone Number',
+      'Email Address',
+      'Inventory Items',
+      'Actions',
+    ];
+  
+    headers.forEach(headerText => {
+      const headerElement = screen.getByText(headerText);
+      expect(headerElement).toBeInTheDocument();
+    });
+  });
+  
+
+
+
+
+
+
+
 });
