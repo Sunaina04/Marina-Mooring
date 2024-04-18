@@ -336,7 +336,7 @@ const Customer = () => {
         ))}
       </div> */}
 
-      <div className="flex gap-4 ml-12 h-[110vh] mt-10">
+      <div className="flex gap-4 ml-12 mt-10">
         <div className=" bg-[#F2F2F2] w-[30vw] rounded-md border-[1px] ">
           <DataTable
             value={filteredCustomerData}
