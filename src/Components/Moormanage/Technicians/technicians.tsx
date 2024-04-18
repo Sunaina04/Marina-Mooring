@@ -9,7 +9,7 @@ import AddTechnication from "./AddTechnician";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import ButtonComponent from "../../Common/ButtonComponent";
-import DatePickerComponent from "../../Common/DatePickerComponent";
+import { Calendar } from 'primereact/calendar';
 import {
   TECHNICIAN_PAYLOAD,
   TECHNICIAN_RESPONSE,
@@ -33,13 +33,13 @@ interface BillsData {
 
 const Technicians = () => {
   const [date, setDate] = useState<Nullable<(Date | null)[]>>(null);
-  const options: string[] = ["Open", "Closed"];
+  const options: string[] = ["Open", "Completed"];
   const [value, setValue] = useState<string>(options[0]);
   const [dataVisible, setDataVisible] = useState(false);
   const [technicianRecord, setTechnicianRecord] = useState();
   console.log("sfsffas", technicianRecord)
   const [globalFilter, setGlobalFilter] = useState<string | null>(null);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [technicianData, setTechnicianData] = useState<TECHNICIAN_PAYLOAD[]>(
     []
   );
@@ -47,54 +47,6 @@ const Technicians = () => {
     TECHNICIAN_PAYLOAD[]
   >([]);
   const [getTechnicians] = useGetTechnicianMutation();
-
-  // const [boatData, setBoatData] = useState<BoatData[]>([
-  //   {
-  //     id: "01",
-  //     techniciansName: "Jon Smith",
-  //     technician: "Suncatcher",
-  //     price: "$5",
-  //     date: "Mon 13.01:30pm",
-  //     noOfJob: 5,
-  //     completedJob: 10,
-  //   },
-  //   {
-  //     id: "01",
-  //     techniciansName: "Jon Smith",
-  //     technician: "Suncatcher",
-  //     price: "$5",
-  //     date: "Mon 13.01:30pm",
-  //     noOfJob: 5,
-  //     completedJob: 10,
-  //   },
-  //   {
-  //     id: "01",
-  //     techniciansName: "Jon Smith",
-  //     technician: "Suncatcher",
-  //     price: "$5",
-  //     date: "Mon 13.01:30pm",
-  //     noOfJob: 5,
-  //     completedJob: 10,
-  //   },
-  //   {
-  //     id: "01",
-  //     techniciansName: "Jon Smith",
-  //     technician: "Suncatcher",
-  //     price: "$5",
-  //     date: "Mon 13.01:30pm",
-  //     noOfJob: 5,
-  //     completedJob: 10,
-  //   },
-  //   {
-  //     id: "01",
-  //     techniciansName: "Jon Smith",
-  //     technician: "Suncatcher",
-  //     price: "$5",
-  //     date: "Mon 13.01:30pm",
-  //     noOfJob: 5,
-  //     completedJob: 10,
-  //   },
-  // ]);
 
   const [billsData, setBillsData] = useState<BillsData[]>([
     {
@@ -163,6 +115,7 @@ const Technicians = () => {
     setSelectedDate(null);
   };
 
+
   //table header 2
   const workOrder = (
     <>
@@ -170,13 +123,8 @@ const Technicians = () => {
         <div>
           <p className="font-bold"> Work Orders </p>
         </div>
-        <div className="flex">
-          <div className="bg-black text-xs text-white w-[5vw] pl-3">
-            <p>open()</p>
-          </div>
-          <div className="bg-[#D9D9D9] text-xs w-[6vw] pl-2">
-            <p>completed()</p>
-          </div>
+        <div>
+        <SelectButton value={value} onChange={(e) => setValue(e.value)} options={options} />
         </div>
       </div>
     </>
@@ -268,23 +216,10 @@ const Technicians = () => {
           <div className="">
             <p> Filter order by Date </p>
           </div>
-          <div style={{ position: "relative" }}>
-            <DatePickerComponent
-              onChange={handleDateSelect}
-              value={selectedDate}
-            />
-
-            <span
-              style={{
-                position: "absolute",
-                top: "50%",
-                transform: "translateY(-50%)",
-                left: "10px",
-              }}
-            >
-              <BiCalendarAlt />
-            </span>
+          <div>
+          <Calendar value={date} onChange={(e) => setDate(e.value)} selectionMode="range" readOnlyInput  />
           </div>
+          
         </div>
       </div>
       <div className="flex gap-5 mt-10 ml-20">
