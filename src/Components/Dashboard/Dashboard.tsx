@@ -1,12 +1,10 @@
 import { DataTable } from "primereact/datatable";
-import { Datepicker } from "@mobiscroll/react";
 import { Column } from "primereact/column";
 import { Calendar } from "primereact/calendar";
 import { Box } from "@mui/material";
 import { SetStateAction, useState } from "react";
 import { Nullable } from "primereact/ts-helpers";
 import { SelectButton, SelectButtonChangeEvent } from "primereact/selectbutton";
-import "@mobiscroll/react/dist/css/mobiscroll.min.css";
 // import { Accordion, AccordionTab } from 'primereact/accordion';
 import StatCard from "../StatCard/StatCard";
 import Accordion from "@mui/material/Accordion";
@@ -273,12 +271,12 @@ const Dashboard = () => {
                 <div className="flex gap-2">
                   <Box className="w-[35vw] border-[1px] border-[#D1D1D1] flex justify-center p-4 rounded-xl">
                     <div className="card flex justify-content-center">
-                      <Datepicker
+                      {/* <Datepicker
                         controls={["calendar"]}
                         // select="range"
                         display="inline"
                         touchUi={true}
-                      />
+                      /> */}
                     </div>
                   </Box>
                 </div>

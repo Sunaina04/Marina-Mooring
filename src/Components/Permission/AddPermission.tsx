@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "@mobiscroll/react/dist/css/mobiscroll.min.css";
 import { InputText } from "primereact/inputtext";
 import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
 import { InputTextarea } from "primereact/inputtextarea";
