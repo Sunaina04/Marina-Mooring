@@ -14,6 +14,7 @@ import { AiFillCheckCircle } from "react-icons/ai";
 import { FaCircle } from "react-icons/fa6";
 import { FaLocationPin } from "react-icons/fa6";
 import { Avatar } from "primereact/avatar";
+import { Dialog } from "primereact/dialog";
 import Timeline from "../../customComponent/Timeline";
 import {
   useDeleteCustomerMutation,
@@ -52,10 +53,13 @@ const Customer = () => {
   const [filteredCustomerData, setFilteredCustomerData] = useState<
     CUSTOMER_PAYLOAD[]
   >([]);
+  // const [selectedMooring, setSelectedMooring] = useState<MOORING_PAYLOAD>();
 
-  console.log("filterdata",filteredCustomerData);
-  
+  console.log("filterdata", filteredCustomerData);
+
   const [mooringData, setMooringData] = useState<MOORING_PAYLOAD[]>([]);
+  const [customerRowData, setCustomerRowData] = useState<MOORING_PAYLOAD>();
+  const [dialogVisible, setDialogVisible] = useState(false);
 
   const [getCustomer] = useGetCustomerMutation();
   const [deleteCustomer] = useDeleteCustomerMutation();
@@ -402,7 +406,10 @@ const Customer = () => {
           <div className="-translate-y-[85vh] relative" data-testid="timeline1">
             <Timeline />
           </div>
-          <div className="-translate-y-[55vh] flex justify-end relative" data-testid="timeline2">
+          <div
+            className="-translate-y-[55vh] flex justify-end relative"
+            data-testid="timeline2"
+          >
             <Timeline />
           </div>
 
@@ -443,7 +450,11 @@ const Customer = () => {
                 <p className="font-bold text-sm mt-3 ml-3">Customers Record</p>
               </div>
               <div className="flex">
-                <FaEdit onClick={handleEdit} className="mr-3 mt-3" data-testid="FaEdit" />
+                <FaEdit
+                  onClick={handleEdit}
+                  className="mr-3 mt-3"
+                  data-testid="FaEdit"
+                />
                 <RiDeleteBin5Fill
                   onClick={handleDelete}
                   className="text-red-500 mr-2 mt-3"
@@ -454,7 +465,7 @@ const Customer = () => {
 
             <div className="bg-[#F2F2F2] pt-2 px-3">
               <div className="flex gap-32 ">
-                <div className=" text-sm">
+                <div className=" text-sm tracking-tighter">
                   <p>
                     <span className="font-bold">ID:</span>
                     {edited.id}
@@ -498,7 +509,12 @@ const Customer = () => {
               className="bg[#F2F2F2]"
               value={mooringData}
               scrollable={true}
+              selectionMode="single"
               style={{ overflow: "scroll", maxHeight: "72vh" }}
+              onRowSelect={(e) => {
+                setCustomerRowData(e.data);
+                setDialogVisible(true);
+              }}
             >
               <Column
                 field="id"
@@ -517,9 +533,121 @@ const Customer = () => {
                 style={{ fontSize: "0.75rem" }}
               />
             </DataTable>
+            {/* Dialog BOX */}
+            <Dialog
+              visible={dialogVisible}
+              onHide={() => setDialogVisible(false)}
+              header={
+                <div className="flex gap-4">
+                  <div className="font-bold">Mooring Information</div>
+                  <div className="font-bold mt-1">
+                    <FaEdit onClick={handleEdit}/>
+                  </div>
+                </div>
+              }
+            >
+              <hr className="border border-black  my-0 mx-0"></hr>
+              {customerRowData && (
+                <div className="flex leading-10 gap-4">
+                  <div>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>ID:</span>{" "}
+                      {customerRowData?.id}
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Mooring No:</span>{" "}
+                      {customerRowData?.mooringNumber}
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Boat Name:</span>{" "}
+                      {customerRowData?.boatName}
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Type:</span>{" "}
+                      {customerRowData?.boatType}
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>
+                        Size of Weight:
+                      </span>{" "}
+                      {customerRowData?.sizeOfWeight}
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>
+                        Top Chain Condition:
+                      </span>{" "}
+                      {customerRowData?.topChainCondition}
+                    </p>
+                    <p className="tracking-tighter">
+                      <span style={{ fontWeight: "bold" }}>
+                        Bottom Chain Condition:
+                      </span>{" "}
+                      {customerRowData?.bottomChainCondition}
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>
+                        Pennant Condition:
+                      </span>{" "}
+                      {customerRowData?.pennantCondition}
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Water Depth:</span>{" "}
+                      {customerRowData?.waterDepth}
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Harbor:</span>{" "}
+                      {customerRowData?.harbor}
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>
+                        G.P.S Coordinates:
+                      </span>{" "}
+                      {customerRowData?.gpsCoordinates}
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Boat Size:</span>{" "}
+                      {customerRowData?.boatSize}
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Weight:</span>{" "}
+                      {customerRowData?.boatWeight}
+                    </p>
+
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>
+                        Type of Weight:
+                      </span>{" "}
+                      {customerRowData?.typeOfWeight}
+                    </p>
+
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>
+                        Condition of Eye:
+                      </span>{" "}
+                      {customerRowData?.conditionOfEye}
+                    </p>
+
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>
+                        Shackle, Swivel Condition:
+                      </span>{" "}
+                      {customerRowData?.shackleSwivelCondition}
+                    </p>
+
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>
+                        Dept at Mean High Water:
+                      </span>{" "}
+                      {customerRowData?.deptAtMeanHighWater}
+                    </p>
+                  </div>
+                </div>
+              )}
+            </Dialog>
           </div>
         </div>
-
       </div>
     </>
   );
