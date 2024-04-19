@@ -39,6 +39,7 @@ const AddCustomer: React.FC<Props> = ({
   const [sectorBlock, setSectorBlock] = useState<string>("");
   const [pinCode, setPinCode] = useState<string>("");
   const [addCustomer] = useAddCustomerMutation();
+  const [selectedCity, setSelectedCity] = useState<City | null>(null);
   const [updateCustomer] = useUpdateCustomerMutation();
 
   const cities: City[] = [
@@ -50,6 +51,25 @@ const AddCustomer: React.FC<Props> = ({
     { name: "India", code: "IND" },
     { name: "Punjab", code: "PNB" },
   ];
+  const [formData, setFormData] = useState<any>({
+    customerName: "",
+    mooringNumber: "",
+    harbor: "",
+    waterDepth: "",
+    gpsCoordinates: "",
+    boatName: "",
+    boatSize: "",
+    boatWeight: "",
+    sizeOfWeight: "",
+    typeOfWeight: "",
+    topChainCondition: "",
+    conditionOfEye: "",
+    bottomChainCondition: "",
+    shackleSwivelCondition: "",
+    pennantCondition: "",
+    deptAtMeanHighWater: "",
+    note: "",
+  });
 
   const SaveCustomer = async () => {
     const payload = {
@@ -110,81 +130,25 @@ const AddCustomer: React.FC<Props> = ({
     }
   }, [editMode, customer]);
 
+  const handleInputChange = (field: string, value: any) => {
+    setFormData({
+      ...formData,
+      [field]: value,
+    });
+  };
+
   return (
     <div className="w-full h-full">
       <h1 className="ml-5 text-lg font-bold">Add Customer</h1>
-
-      <div className="flex justify-around mt-3">
-        <div>
-          <span className="font-semibold text-sm">Customer Name</span>
-          <div className="mt-2">
-            <InputComponent
-              value={customerName}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setCustomerName(e.target.value)
-              }
-              style={{
-                width: "13vw",
-                height: "4vh",
-                border: "1px solid gray",
-                borderRadius: "0.50rem",
-                fontSize: "0.80vw",
-              }}
-            />
-          </div>
-        </div>
-
-        <div>
-          <span className="font-semibold text-sm">Customer ID</span>
-          <div className="mt-2">
-            <InputComponent
-              value={customerId}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setCustomerId(e.target.value)
-              }
-              style={{
-                width: "13vw",
-                height: "4vh",
-                border: "1px solid gray",
-                borderRadius: "0.50rem",
-                fontSize: "0.80vw",
-              }}
-            />
-          </div>
-        </div>
-
-        <div>
-          <span className="font-semibold text-sm">Phone</span>
-          <div className="mt-2">
-            <InputComponent
-              value={phone}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setPhone(e.target.value)
-              }
-              style={{
-                width: "13vw",
-                height: "4vh",
-                border: "1px solid gray",
-                borderRadius: "0.50rem",
-                fontSize: "0.80vw",
-              }}
-            />
-          </div>
-        </div>
-      </div>
-
       <div className="flex gap-10">
-        <div className="mt-4 ml-5 ">
+        <div className=" mt-3">
           <div>
-            <div>
-              <span className="font-semibold text-sm">Email Address</span>
-            </div>
-
+            <span className="font-semibold text-sm">Customer Name</span>
             <div className="mt-2">
-              <InputText
-                value={email}
+              <InputComponent
+                value={customerName}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setEmail(e.target.value)
+                  setCustomerName(e.target.value)
                 }
                 style={{
                   width: "13vw",
@@ -196,28 +160,68 @@ const AddCustomer: React.FC<Props> = ({
               />
             </div>
           </div>
+          <div className="mt-4 ml-5 ">
+            <div>
+              <div>
+                <span className="font-semibold text-sm">Email Address</span>
+              </div>
+
+              <div className="mt-2">
+                <InputText
+                  value={email}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setEmail(e.target.value)
+                  }
+                  style={{
+                    width: "13vw",
+                    height: "4vh",
+                    border: "1px solid gray",
+                    borderRadius: "0.50rem",
+                    fontSize: "0.80vw",
+                  }}
+                />
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div className=" ">
-          <div className="mt-4">
-            <span className="font-semibold text-sm ">Boatyard</span>
+        <div className="mt-3">
+          <div>
+            <span className="font-semibold text-sm">Customer ID</span>
+            <div className="mt-2">
+              <InputComponent
+                value={customerId}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setCustomerId(e.target.value)
+                }
+                style={{
+                  width: "13vw",
+                  height: "4vh",
+                  border: "1px solid gray",
+                  borderRadius: "0.50rem",
+                  fontSize: "0.80vw",
+                }}
+              />
+            </div>
           </div>
 
-          <div className="mt-2">
-            <Dropdown
-              value={selectedState}
-              onChange={(e: DropdownChangeEvent) => setSelectedState(e.value)}
-              options={cities}
-              optionLabel="name"
-              editable
-              placeholder="State"
-              style={{
-                width: "13vw",
-                height: "4vh",
-                border: "1px solid gray",
-                borderRadius: "0.50rem",
-              }}
-            />
+          <div className="mt-4">
+            <span className="font-semibold text-sm">Phone</span>
+            <div className="mt-2">
+              <InputComponent
+                value={phone}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setPhone(e.target.value)
+                }
+                style={{
+                  width: "13vw",
+                  height: "4vh",
+                  border: "1px solid gray",
+                  borderRadius: "0.50rem",
+                  fontSize: "0.80vw",
+                }}
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -253,7 +257,7 @@ const AddCustomer: React.FC<Props> = ({
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setSectorBlock(e.target.value)
                 }
-                placeholder="Sector/Block"
+                placeholder="Apt/Suite"
                 type="text"
                 style={{
                   width: "14vw",
@@ -317,28 +321,456 @@ const AddCustomer: React.FC<Props> = ({
         </div>
       </div>
 
-      <div className="ml-6">
-        <div className="mt-4">
-          <span className="text-sm font-bold">Note</span>
+      <div className="mt-8 ml-4 text-lg font-extrabold">
+        Add Mooring
+      </div>
+      <div>
+        
+      <div className="flex justify-around mt-3">
+          <div>
+            <span className="font-semibold text-sm">Owner Name</span>
+            <div className="mt-2">
+              <InputComponent
+                value={formData.customerName}
+                onChange={(e) => handleInputChange("customerName", e.target.value)}
+                style={{
+                  width: "13vw",
+                  height: "4vh",
+                  border: "1px solid gray",
+                  borderRadius: "0.50rem",
+                  fontSize: "0.80vw",
+                }}
+              />
+            </div>
+          </div>
+
+          <div>
+            <span className="font-semibold text-sm">Mooring Number</span>
+            <div className="mt-2">
+              <InputComponent
+                // placeholder="Enter customer ID"
+                // type="text"
+                value={formData.mooringNumber}
+                onChange={(e) =>
+                  handleInputChange("mooringNumber", e.target.value)
+                }
+                style={{
+                  width: "13vw",
+                  height: "4vh",
+                  border: "1px solid gray",
+                  borderRadius: "0.50rem",
+                  fontSize: "0.80vw",
+                }}
+              />
+            </div>
+          </div>
+
+          <div>
+            <span className="font-semibold text-sm">Harbor</span>
+            <div className="mt-2">
+              <InputComponent
+                // placeholder="Enter owner name"
+                // type="text"
+                value={formData.harbor}
+                onChange={(e) => handleInputChange("harbor", e.target.value)}
+                style={{
+                  width: "13vw",
+                  height: "4vh",
+                  border: "1px solid gray",
+                  borderRadius: "0.50rem",
+                  fontSize: "0.80vw",
+                }}
+              />
+            </div>
+          </div>
         </div>
 
-        <div className="mt-4">
-          <div className="card flex justify-content-center">
-            <InputTextarea
-              className="w-full h-14"
-              autoResize
-              value={value}
-              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-                setValue(e.target.value)
+        <div className="mt-3  ">
+          <div className="flex justify-around mt-3">
+            <div>
+              <span className="font-semibold text-sm">Water Depth</span>
+              <div className="mt-2">
+                <InputComponent
+                  value={formData.waterDepth}
+                  onChange={(e) =>
+                    handleInputChange("waterDepth", e.target.value)
+                  }
+                  style={{
+                    width: "13vw",
+                    height: "4vh",
+                    border: "1px solid gray",
+                    borderRadius: "0.50rem",
+                    fontSize: "0.80vw",
+                  }}
+                />
+              </div>
+            </div>
+
+            <div>
+              <span className="font-semibold text-sm">G.P.S Cordinates</span>
+              <div className="mt-2">
+                <InputComponent
+                  // placeholder="Enter customer ID"
+                  // type="text"
+                  value={formData.gpsCoordinates}
+                  onChange={(e) =>
+                    handleInputChange("gpsCoordinates", e.target.value)
+                  }
+                  style={{
+                    width: "13vw",
+                    height: "4vh",
+                    border: "1px solid gray",
+                    borderRadius: "0.50rem",
+                    fontSize: "0.80vw",
+                  }}
+                />
+              </div>
+            </div>
+
+            <div>
+              <span className="font-semibold text-sm">Boat Name</span>
+              <div className="mt-2">
+                <InputComponent
+                  // placeholder="Enter owner name"
+                  // type="text"
+                  value={formData.boatName}
+                  onChange={(e) =>
+                    handleInputChange("boatName", e.target.value)
+                  }
+                  style={{
+                    width: "13vw",
+                    height: "4vh",
+                    border: "1px solid gray",
+                    borderRadius: "0.50rem",
+                    fontSize: "0.80vw",
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="">
+          <div className="flex justify-around ml-1 mt-3">
+            <div>
+              <span className="font-semibold text-sm">Boat Size</span>
+              <div className="mt-2">
+                <InputComponent
+                  value={formData.boatSize}
+                  onChange={(e) =>
+                    handleInputChange("boatSize", e.target.value)
+                  }
+                  style={{
+                    width: "13vw",
+                    height: "4vh",
+                    border: "1px solid gray",
+                    borderRadius: "0.50rem",
+                    fontSize: "0.80vw",
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className="ml-1">
+              <div>
+                <span className="font-semibold text-sm">Type</span>
+              </div>
+
+              <div className="mt-2">
+                <Dropdown
+                  value={formData.typeOfWeight}
+                  onChange={(e) => handleInputChange("typeOfWeight", e.value)}
+                  options={cities}
+                  optionLabel="name"
+                  editable
+                  placeholder="Skiff"
+                  style={{
+                    width: "14vw",
+                    height: "4vh",
+                    border: "1px solid gray",
+                    borderRadius: "0.50rem",
+                  }}
+                />
+              </div>
+            </div>
+
+            <div>
+              <span className="font-semibold text-sm">Weight</span>
+              <div className="mt-2">
+                <InputComponent
+                  // placeholder="Enter owner name"
+                  // type="text"
+                  value={formData.boatWeight}
+                  onChange={(e) => handleInputChange("boatWeight", e.target.value)}
+                  style={{
+                    width: "13vw",
+                    height: "4vh",
+                    border: "1px solid gray",
+                    borderRadius: "0.50rem",
+                    fontSize: "0.80vw",
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="">
+          <div className="flex gap-4 mt-3 ml-4">
+            <div>
+              <div>
+                <span className="font-semibold text-sm">Size of Weight</span>
+              </div>
+
+              <div>
+                <Dropdown
+                  value={formData.sizeOfWeight}
+                  onChange={(e) => handleInputChange("sizeOfWeight", e.value)}
+                  options={cities}
+                  optionLabel="name"
+                  editable
+                  placeholder="Select"
+                  style={{
+                    width: "13vw",
+                    height: "4vh",
+                    border: "1px solid gray",
+                    borderRadius: "0.50rem",
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className="ml-4">
+              <div>
+                <span className="font-semibold text-sm">Type of Weight</span>
+              </div>
+
+              <div>
+                <Dropdown
+                  value={formData.typeOfWeight}
+                  onChange={(e) => handleInputChange("typeOfWeight", e.value)}
+                  options={cities}
+                  optionLabel="name"
+                  editable
+                  placeholder="Select"
+                  style={{
+                    width: "14vw",
+                    height: "4vh",
+                    border: "1px solid gray",
+                    borderRadius: "0.50rem",
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className="ml-2">
+              <div>
+                <span className="font-semibold text-sm">
+                  Top Chain Condition
+                </span>
+              </div>
+
+              <div>
+                <Dropdown
+                  value={formData.topChainCondition}
+                  onChange={(e) =>
+                    handleInputChange("topChainCondition", e.value)
+                  }
+                  options={cities}
+                  optionLabel="name"
+                  editable
+                  placeholder="Select"
+                  style={{
+                    width: "13.50vw",
+                    height: "4vh",
+                    border: "1px solid gray",
+                    borderRadius: "0.50rem",
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="">
+          <div className="flex gap-4 mt-3 ml-4">
+            <div>
+              <div>
+                <span className="font-semibold text-sm">Condition of Eye</span>
+              </div>
+
+              <div>
+                <Dropdown
+                  value={formData.conditionOfEye}
+                  onChange={(e) => handleInputChange("conditionOfEye", e.value)}
+                  options={cities}
+                  optionLabel="name"
+                  editable
+                  placeholder="Select"
+                  style={{
+                    width: "13vw",
+                    height: "4vh",
+                    border: "1px solid gray",
+                    borderRadius: "0.50rem",
+                  }}
+                />
+              </div>
+              <div></div>
+            </div>
+
+            <div className="ml-4">
+              <div>
+                <span className="font-semibold text-sm">
+                  Bootom Chain Condition
+                </span>
+              </div>
+
+              <div>
+                <Dropdown
+                  value={formData.bottomChainCondition}
+                  onChange={(e) =>
+                    handleInputChange("bottomChainCondition", e.value)
+                  }
+                  options={cities}
+                  optionLabel="name"
+                  editable
+                  placeholder="Select"
+                  style={{
+                    width: "14vw",
+                    height: "4vh",
+                    border: "1px solid gray",
+                    borderRadius: "0.50rem",
+                  }}
+                />
+              </div>
+              <div></div>
+            </div>
+
+            <div className="ml-2">
+                <div>
+                  <span className="font-semibold text-sm">
+                    Top Chain Condition
+                  </span>
+                </div>
+
+                <div>
+                  <Dropdown
+                    value={selectedCity}
+                    onChange={(e: DropdownChangeEvent) =>
+                      setSelectedCity(e.value)
+                    }
+                    options={cities}
+                    optionLabel="name"
+                    editable
+                    placeholder="Select"
+                    style={{
+                      width: "13.50vw",
+                      height: "4vh",
+                      border: "1px solid gray",
+                      borderRadius: "0.50rem",
+                    }}
+                  />
+                </div>
+                <div></div>
+              </div>
+          </div>
+        </div>
+
+        <div className="">
+          <div className="flex justify-around mt-3">
+            <div className="">
+              <div>
+                <span className="font-semibold text-sm">
+                  Shackle,Swivel Condition
+                </span>
+              </div>
+
+              <div>
+                <Dropdown
+                  value={selectedCity}
+                  onChange={(e: DropdownChangeEvent) =>
+                    setSelectedCity(e.value)
+                  }
+                  options={cities}
+                  optionLabel="name"
+                  editable
+                  placeholder="Select"
+                  style={{
+                    width: "13vw",
+                    height: "4vh",
+                    border: "1px solid gray",
+                    borderRadius: "0.50rem",
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className="mr-14">
+              <div className="mr-3">
+                <span className="font-semibold text-sm">Pennant Condition</span>
+              </div>
+
+              <div className="mr-4">
+                <Dropdown
+                  value={selectedCity}
+                  onChange={(e: DropdownChangeEvent) =>
+                    setSelectedCity(e.value)
+                  }
+                  options={cities}
+                  optionLabel="name"
+                  editable
+                  placeholder="Select"
+                  style={{
+                    width: "14vw",
+                    height: "4vh",
+                    border: "1px solid gray",
+                    borderRadius: "0.50rem",
+                  }}
+                />
+              </div>
+            </div>
+
+            <div></div>
+
+            <div>
+              <div>
+                <span className="font-semibold text-sm">Pin on Map</span>
+              </div>
+
+              <div></div>
+            </div>
+          </div>
+        </div>
+
+        <div className="ml-4">
+          <div className="mt-2 ml-1">
+            <span className="font-semibold text-sm">
+              Dept at Mean High Water
+            </span>
+          </div>
+
+          <div className="mt-2 ml-1">
+            <InputText
+              value={formData.deptAtMeanHighWater}
+              onChange={(e) =>
+                handleInputChange("deptAtMeanHighWater", e.target.value)
               }
-              rows={5}
-              cols={30}
+              style={{
+                width: "13vw",
+                height: "4vh",
+                border: "1px solid gray",
+                borderRadius: "0.50rem",
+                fontSize: "0.80vw",
+              }}
             />
           </div>
         </div>
+
       </div>
 
-      <div className="flex gap-3 mt-4 ml-6">
+
+
+      <div className="flex gap-3 mt-6 ml-6">
         <ButtonComponent
           onClick={editMode ? UpdateCustomer : SaveCustomer}
           label={"Save"}
