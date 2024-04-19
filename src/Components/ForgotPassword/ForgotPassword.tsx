@@ -12,7 +12,7 @@ import {
   validateEmailResponse,
 } from "../../Services/authentication/types";
 import { Button } from "primereact/button";
-import { PasswordValidation } from "../utiles/PasswordValidation";
+import { PasswordValidation } from "../utils/PasswordValidation";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
