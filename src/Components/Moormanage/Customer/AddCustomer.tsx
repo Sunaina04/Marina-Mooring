@@ -143,8 +143,8 @@ const AddCustomer: React.FC<Props> = ({
       <div className="flex gap-10">
         <div className=" mt-3">
           <div>
-            <span className="font-semibold text-sm">Customer Name</span>
-            <div className="mt-2">
+            <span className="font-semibold text-sm ml-5">Customer Name</span>
+            <div className="mt-2 ml-5">
               <InputComponent
                 value={customerName}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -287,7 +287,7 @@ const AddCustomer: React.FC<Props> = ({
           </div>
         </div>
 
-        <div className="flex mt-5 gap-5 ml-6">
+        <div className="flex mt-5 gap-5 ml-5">
           <div className="card flex justify-content-center">
             <Dropdown
               value={selectedCountry}
@@ -317,6 +317,7 @@ const AddCustomer: React.FC<Props> = ({
               border: "1px solid gray",
               borderRadius: "0.50rem",
             }}
+            className="mr-2"
           />
         </div>
       </div>

@@ -1,6 +1,11 @@
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { Calendar } from "primereact/calendar";
+// import { StaticDateRangePicker } from "@mui/x-date-pickers-pro/StaticDateRangePicker";
+// import { DemoItem } from "@mui/x-date-pickers/internals/demo";
+// import dayjs from "dayjs";
+// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+// import { pickersLayoutClasses } from "@mui/x-date-pickers/PickersLayout";
 import { Box } from "@mui/material";
 import { SetStateAction, useState } from "react";
 import { Nullable } from "primereact/ts-helpers";
@@ -277,6 +282,24 @@ const Dashboard = () => {
                         display="inline"
                         touchUi={true}
                       /> */}
+                      {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DemoItem
+                          label="Static variant"
+                          component="StaticDateRangePicker"
+                        >
+                          <StaticDateRangePicker
+                            defaultValue={[
+                              dayjs("2022-04-17"),
+                              dayjs("2022-04-21"),
+                            ]}
+                            sx={{
+                              [`.${pickersLayoutClasses.contentWrapper}`]: {
+                                alignItems: "center",
+                              },
+                            }}
+                          />
+                        </DemoItem>
+                      </LocalizationProvider> */}
                     </div>
                   </Box>
                 </div>
