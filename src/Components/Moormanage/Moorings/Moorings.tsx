@@ -125,7 +125,7 @@ const Moorings = () => {
   const getMooringsData = async () => {
     await getMoorings({})
       .unwrap()
-      .then(async (response) => {
+      .then(async (response : any) => {
         // console.log("RESPONSE", response);
         const { status, content } = response as MOORING_RESPONSE;
         if (status === 200 && Array.isArray(content)) {
