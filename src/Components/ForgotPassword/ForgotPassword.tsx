@@ -12,6 +12,7 @@ import {
   validateEmailResponse,
 } from "../../Services/authentication/types";
 import { Button } from "primereact/button";
+import { PasswordValidation } from "../utiles/PasswordValidation";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ const ForgotPassword = () => {
   // console.log("errorData", errors);
 
   const validateEmailHandler = async () => {
+    const message=PasswordValidation(email,"","")
     if (email.length === 0) {
       setErrors("Please enter your Registered Email");
       return;
@@ -47,9 +49,8 @@ const ForgotPassword = () => {
         setErrors(errorMessage);
       }
     }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setErrors("Invalid email format");
+    if (email) {
+      setErrors(message);
     } 
 
     setEmail(" ");

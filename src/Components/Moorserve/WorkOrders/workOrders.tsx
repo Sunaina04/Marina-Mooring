@@ -6,6 +6,8 @@ import CustomModal from "../../customComponent/CustomModal";
 import AddCustomer from "../../Moormanage/Customer/AddCustomer";
 import { InputText } from "primereact/inputtext";
 import { Dialog } from "primereact/dialog";
+import { Button } from "primereact/button";
+import AddWorkOrders from "./AddWorkOrders";
 
 interface CustomerData {
   id: string;
@@ -17,7 +19,7 @@ interface CustomerData {
 }
 
 const WorkOrders = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [visible, setVisible] = useState(false);
   const [boatData, setBoatData] = useState<CustomerData[]>([
     {
       id: "01",
@@ -53,20 +55,15 @@ const WorkOrders = () => {
     },
   ]);
 
-  const handleButtonClick = () => {
-    setIsModalOpen(true);
-  };
 
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-  };
+
 
   const header = (
     <div className="flex flex-wrap align-items-center justify-between  p-4">
       <span className="text-xl font-bold">Work Orders</span>
       <div className="">
         <div className="p-input-icon-left">
-          <i className="pi pi-search text-[#D2D2D2] " data-testid="search-icon"  />
+          <i className="pi pi-search text-[#D2D2D2] " data-testid="search-icon" />
           <InputText
             placeholder="Search"
             className="h-[5vh] cursor-pointer font-bold"
@@ -87,19 +84,36 @@ const WorkOrders = () => {
           </div>
           <div className="flex mr-36 gap-4">
             <div>
-              <ButtonComponent
-                label={"Create New"}
-                onClick={() => {}}
-                style={{
-                  width: "7vw",
-                  height: "5vh",
-                  backgroundColor: "black",
-                  cursor: "pointer",
-                  color: "white",
-                  fontWeight: "bold",
-                  fontSize: "0.80vw",
-                }}
-              ></ButtonComponent>
+
+
+              <div className="flex gap-4">
+                <Button
+                  label={"Create New"}
+                  onClick={() => setVisible(true)}
+                  style={{
+                    width: "7vw",
+                    height: "5vh",
+                    backgroundColor: "black",
+                    cursor: "pointer",
+                    color: "white",
+                    fontWeight: "bold",
+                    fontSize: "0.80vw",
+                  }}
+                >
+                </Button>
+
+                <Dialog
+                  header={""}
+                  visible={visible}
+                  modal={false}
+
+                  style={{ width: '50vw' }} onHide={() => setVisible(false)}
+
+                >
+
+                  <AddWorkOrders />
+                </Dialog>
+              </div>
             </div>
           </div>
         </div>

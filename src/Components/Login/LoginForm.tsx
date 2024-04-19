@@ -18,7 +18,6 @@ import InputComponent from "../Common/InputComponent";
 import SignUp from "../SignUp/SignUp";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
-
 interface LoginFormProps {
   Label: string;
   typeEmail: string;
@@ -48,7 +47,12 @@ export default function LoginForm({
   const [errors, setErrors] = useState({
     email: "",
     password: "",
+
+    
   });
+
+
+  // console.log("email", errors);
 
   console.log("userData", userData);
   const handleChange = (e: any) => {
@@ -57,51 +61,7 @@ export default function LoginForm({
       ...prev,
       [name]: value,
     }));
-    if (name === "username") {
-      if (!value) {
-        setErrors((prev) => ({
-          ...prev,
-          email: "",
-        }));
-      } else {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(value)) {
-          setErrors((prev) => ({
-            ...prev,
-            email: "Invalid email format",
-          }));
-        } else {
-          setErrors((prev) => ({
-            ...prev,
-            email: "",
-          }));
-        }
-      }
-    }
 
-    if (name === "password") {
-      if (!value) {
-        setErrors((prev) => ({
-          ...prev,
-          password: "",
-        }));
-      } else {
-        const passwordRegex =
-          /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
-        if (!passwordRegex.test(value)) {
-          setErrors((prev) => ({
-            ...prev,
-            password:
-              "Password must be at least 8 characters long and include letters, numbers, and symbols.",
-          }));
-        } else {
-          setErrors((prev) => ({
-            ...prev,
-            password: "",
-          }));
-        }
-      }
-    }
   };
 
   /* ***************************************************
@@ -112,6 +72,24 @@ export default function LoginForm({
   const [resetPassword] = useResetPasswordMutation();
 
   const signInHandler = async () => {
+
+    if (loginPayload.username.length===0) {
+      setErrors((prev) => ({
+        ...prev,
+        email: "Email cannot be empty",
+      }));
+    }
+
+    if (loginPayload.password.length===0) {
+      setErrors((prev) => ({
+        ...prev,
+        password: "Password cannot be empty",
+      }));
+    
+    }
+    
+
+
     if (admin) {
       // try {
       //   const response = await login(loginPayload).unwrap();
@@ -161,6 +139,23 @@ export default function LoginForm({
         }
       }
     }
+
+    // const validationError = PasswordValidation(loginPayload.username, loginPayload.password, "");
+    // if (validationError) {
+    //   setErrors((prev) => ({
+    //     ...prev,
+    //     email: validationError,
+    //   }));
+
+    // }
+    // if (validationError) {
+    //   setErrors((prev) => ({
+    //     ...prev,
+    //     password: validationError,
+    //   }));
+    //   return;
+    // }
+
   };
 
   const ResetPasswordHandler = async () => {
@@ -208,6 +203,9 @@ export default function LoginForm({
                 className="w-full h-80 bg-black mb-5"
               />
             </div>
+            <div className="text-red-500">
+              {errors.email}
+            </div>
             <div className="p-input-icon-left" style={{ position: "relative" }}>
               <InputText
                 style={{
@@ -223,8 +221,8 @@ export default function LoginForm({
                       ? "password"
                       : "text"
                     : typeEmail === "email"
-                    ? "email"
-                    : "text"
+                      ? "email"
+                      : "text"
                 }
                 placeholder={showSinUp ? "New password" : "Enter Your email"}
                 name="username"
@@ -234,11 +232,10 @@ export default function LoginForm({
               <span
                 className="w-5 h-5 absolute top-1/2 transform -translate-y-1/2 left-3  text-gray-400"
                 style={{
-                  backgroundImage: `url(${
-                    showSinUp
-                      ? "/assets/images/key.png"
-                      : "/assets/images/email.png"
-                  })`,
+                  backgroundImage: `url(${showSinUp
+                    ? "/assets/images/key.png"
+                    : "/assets/images/email.png"
+                    })`,
                   backgroundRepeat: "no-repeat",
                   backgroundSize: "contain",
                 }}
@@ -262,8 +259,8 @@ export default function LoginForm({
                       ? "password"
                       : "text"
                     : typePass === "password"
-                    ? "password"
-                    : "text"
+                      ? "password"
+                      : "text"
                 }
                 placeholder={showSinUp ? "Confirm password" : "Password"}
                 name="password"
@@ -273,9 +270,8 @@ export default function LoginForm({
               <span
                 className="w-5 h-5 absolute top-1/2 transform -translate-y-1/2 left-3 text-gray-400"
                 style={{
-                  backgroundImage: `url(${
-                    admin ? "/assets/images/key.png" : "/assets/images/key.png"
-                  })`,
+                  backgroundImage: `url(${admin ? "/assets/images/key.png" : "/assets/images/key.png"
+                    })`,
                   backgroundRepeat: "no-repeat",
                   backgroundSize: "contain",
                 }}
