@@ -159,7 +159,7 @@ const Technicians = () => {
           Cleared
         </span> */}
 
-        <div className="">
+        <div className="" >
           <SelectButton
             style={{ fontSize: "0.2rem", fontWeight: "bolder", height: "2rem" }}
             value={value}
@@ -181,6 +181,7 @@ const Technicians = () => {
             fontSize: "0.75rem",
             borderRadius: "0.20rem",
           }}
+
         />
       </div>
     </div>
@@ -221,7 +222,10 @@ const Technicians = () => {
           
         </div>
       </div>
+
+
       <div className="flex gap-5 mt-10 ml-20">
+
         <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[35vw] ">
           <DataTable
             // value={filteredMooringData}
@@ -260,6 +264,10 @@ const Technicians = () => {
             ></Column>
           </DataTable>
         </div>
+
+
+
+
         {dataVisible && (
           <div className=" rounded-md border-[1px]  border-[#D1D1D1]  ml-10  w-[35vw] ">
             <DataTable

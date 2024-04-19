@@ -6,7 +6,11 @@ import {
   useForgotPasswordMutation,
   useValidateEmailMutation,
 } from "../../Services/authentication/authApi";
-import { ErrorResponse, validateEmailResponse } from "../../Services/authentication/types";
+import {
+  ErrorResponse,
+  ErrorResponseForgotPassword,
+  validateEmailResponse,
+} from "../../Services/authentication/types";
 import { Button } from "primereact/button";
 
 const ForgotPassword = () => {
@@ -14,11 +18,9 @@ const ForgotPassword = () => {
   const navigateToLoginPage = useNavigate();
   const [validateEmail] = useForgotPasswordMutation();
   const token = localStorage.getItem("token");
-
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState<any>([]);
-  console.log("errorData",errors);
-  
+  // console.log("errorData", errors);
 
   const validateEmailHandler = async () => {
     if (email.length === 0) {
@@ -27,48 +29,36 @@ const ForgotPassword = () => {
     }
     try {
       const data = await validateEmail({ email }).unwrap();
-  
-      const { response , } = data as validateEmailResponse;
+      console.log("dataaaaaa", data);
+
+      const { response, success } = data as validateEmailResponse;
       console.log("data", response);
 
-      // if (status === 200) {
-      //   navigate("/resetpass");
-      // } else {
-      //   setErrors(response);
-      // }
-
+      if (success === true) {
+        navigate("/resetpass");
+      } else {
+        setErrors(response);
+      }
     } catch (error) {
-      const {data,response} = error as ErrorResponse;
-      console.error("Error:",response);
-      
-      setErrors(data)
-      
+      const { data } = error as ErrorResponseForgotPassword;
+      if (data) {
+        const errorMessage = data?.response;
+        console.error("Error:", errorMessage);
+        setErrors(errorMessage);
+      }
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setErrors("Invalid email format");
-    } else {
-      setErrors("");
-    }
+    } 
 
     setEmail(" ");
   };
 
   const handleChange = (e: any) => {
-    console.log("email value", e.target.value);
-
     const { value: inputValue } = e.target;
 
-    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
     setEmail(inputValue);
-
-    // if (!emailRegex.test(inputValue)) {
-
-    //   setErrors('Invalid email format');
-    // } else {
-    //   setErrors('');
-    // }
   };
 
   return (

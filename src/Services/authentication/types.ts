@@ -78,12 +78,19 @@ export interface ErrorResponse {
   status: number;
   message: string;
   data:string
-  response: string;
+  // response: string;
 }
+
+export interface ErrorResponseForgotPassword {
+  data: {
+    response: string;
+  };
+}
+
 
 export interface validateEmailResponse {
   response: string;
-  // status: number;
+  status: number;
   success:boolean
 
 }
