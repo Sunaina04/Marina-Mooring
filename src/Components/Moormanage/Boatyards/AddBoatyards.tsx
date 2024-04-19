@@ -1,6 +1,5 @@
 import InputComponent from "../../Common/InputComponent";
 import ButtonComponent from "../../Common/ButtonComponent";
-import "@mobiscroll/react/dist/css/mobiscroll.min.css";
 import { InputText } from "primereact/inputtext";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";

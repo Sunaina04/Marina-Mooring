@@ -15,7 +15,6 @@ import {
   TECHNICIAN_RESPONSE,
 } from "../../../Services/MoorManage/types";
 import { useGetTechnicianMutation } from "../../../Services/MoorManage/moormanage";
-import { Datepicker } from "@mobiscroll/react";
 
 interface Technician_Data {
   id: string;

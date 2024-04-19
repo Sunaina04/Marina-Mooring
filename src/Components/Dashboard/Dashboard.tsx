@@ -1,12 +1,10 @@
 import { DataTable } from "primereact/datatable";
-import { Datepicker } from "@mobiscroll/react";
 import { Column } from "primereact/column";
 import { Calendar } from "primereact/calendar";
 import { Box } from "@mui/material";
 import { SetStateAction, useState } from "react";
 import { Nullable } from "primereact/ts-helpers";
 import { SelectButton, SelectButtonChangeEvent } from "primereact/selectbutton";
-import "@mobiscroll/react/dist/css/mobiscroll.min.css";
 // import { Accordion, AccordionTab } from 'primereact/accordion';
 import StatCard from "../StatCard/StatCard";
 import Accordion from "@mui/material/Accordion";
@@ -26,7 +24,7 @@ interface BoatData {
   id: string;
   customerName: string;
   mooringServiceDate: string;
-  mooringLocation : string;
+  mooringLocation: string;
 }
 
 interface BillsData {
@@ -46,8 +44,6 @@ const Dashboard = () => {
       customerName: "Suncatcher",
       mooringServiceDate: "John Smith",
       mooringLocation: "15, March 2024",
-  
-     
     },
 
     {
@@ -55,27 +51,19 @@ const Dashboard = () => {
       customerName: "Suncatcher",
       mooringServiceDate: "15,march,2024",
       mooringLocation: "38 21.806 144 44.959",
-  
-     
     },
     {
       id: "01",
       customerName: "Suncatcher",
       mooringServiceDate: "15,march,2024",
       mooringLocation: "38 21.806 144 44.959",
-  
-     
     },
     {
       id: "01",
       customerName: "Suncatcher",
       mooringServiceDate: "15,march,2024",
       mooringLocation: "38 21.806 144 44.959",
-  
-     
     },
-
-    
   ]);
 
   const [billsData, setBillsData] = useState<BillsData[]>([
@@ -104,14 +92,11 @@ const Dashboard = () => {
       assignedTo: "John Smith",
       date: "15, March 2024",
     },
-  
   ]);
 
   const Boatsheader = (
     <div className="flex flex-wrap align-items-center justify-between gap-2 p-4">
-      <span className="text-xl font-extrabold">
-        Moorings Due for Service
-      </span>
+      <span className="text-xl font-extrabold">Moorings Due for Service</span>
       <span
         style={{
           fontFamily: "Lato",
@@ -175,12 +160,12 @@ const Dashboard = () => {
         {/* right section */}
         <div className="flex flex-col ">
           <div className="w-[43vw] h-14 mt-11">
-            <img src='/assets/images/Sea-img.png'/>
+            <img src="/assets/images/Sea-img.png" />
             <div className="-translate-y-[45vh] translate-x-[5vw]">
-            <Timeline/>
+              <Timeline />
             </div>
             <div className="-translate-y-[45vh] translate-x-[20vw]">
-            <Timeline/>
+              <Timeline />
             </div>
           </div>
           <div className="absolute -translate-y-[19vh] translate-x-[25vw] bottom-0  rounded-md border-[1px] p-1 border-gray-300 w-[17vw] h-[13vh] bg-white">
@@ -205,7 +190,9 @@ const Dashboard = () => {
                 <p className="text-[0.6rem] text-black tracking-tighter mt-1">
                   Gear Off (out of the water)
                 </p>
-                <p className="text-[0.6rem] text-black tracking-tighter mt-[0.9rem]">Not in Use</p>
+                <p className="text-[0.6rem] text-black tracking-tighter mt-[0.9rem]">
+                  Not in Use
+                </p>
               </div>
             </div>
           </div>
@@ -223,7 +210,6 @@ const Dashboard = () => {
                 }}
                 scrollable={true}
               >
-               
                 <Column
                   style={{ width: "4vw" }}
                   field="id"
@@ -234,7 +220,7 @@ const Dashboard = () => {
                   field="customerName"
                   header="Customer Name"
                 ></Column>
-               
+
                 <Column
                   style={{ width: "15vw" }}
                   field="mooringServiceDate"
@@ -266,93 +252,6 @@ const Dashboard = () => {
 
         {/* leftSection */}
         <div className="mr-50 mt-11">
-          {/* <Accordion activeIndex={0}  className="custom-accordion">
-
-            <AccordionTab header={<span><i className="pi pi-calendar"></i> Calendar</span>}
-              className="mb-8"
-            >
-              <div className="flex gap-2">
-
-                <Box className="w-96 border-[1px] border-[#D1D1D1] flex justify-center p-4 rounded-xl">
-
-                  <div className="card flex justify-content-center">
-                    <Datepicker
-                      controls={["calendar"]}
-                      // select="range"
-                      display="inline"
-                      touchUi={true}
-                    />
-                  </div>
-                </Box>
-              </div>
-
-            </AccordionTab>
-            <AccordionTab header={<span><i className="pi pi-folder-open"></i> Open Work Orders</span>} className=" w-96 mb-8">
-
-
-              <div className="bg-[#F2F2F2] rounded-xl border-[1px] border-[#D1D1D1] p-2 mt-12  ">
-                <DataTable
-                  value={boatData}
-                  header={Boatsheader}
-                  tableStyle={{
-                    // width: "73rem",
-                    fontSize: "0.90rem",
-                    fontWeight: "bold",
-                  }}
-                  scrollable={true}
-                >
-                  <Column style={{ width: "5vw" }} field="id" header=""></Column>
-                  <Column
-                    style={{ width: "7vw" }}
-                    field="boatName"
-                    header="Boat Name"
-                  ></Column>
-                  <Column
-                    style={{ width: "7vw" }}
-                    field="name"
-                    header="Name"
-                  ></Column>
-                  <Column
-                    style={{ width: "11vw" }}
-                    field="date"
-                    header="Date"
-                  ></Column>
-                  <Column
-                    style={{ width: "13vw" }}
-                    field="measurement"
-                    header="Measurement"
-                  ></Column>
-                  <Column
-                    style={{ width: "8vw" }}
-                    field="place"
-                    header="Place"
-                  ></Column>
-                  <Column
-                    header="Action"
-                    body={() => (
-                      <div className="flex gap-4">
-                        <span className="text-black underline cursor-pointer">
-                          Edit
-                        </span>
-                        <span className="text-red-500 underline cursor-pointer">
-                          Delete
-                        </span>
-                      </div>
-                    )}
-                  ></Column>
-                </DataTable>
-              </div>
-
-            </AccordionTab>
-            <AccordionTab header={<span><i className="pi pi-chart-bar"></i> Total Moorings</span>} className="">
-              <div>
-                {statCardsData.map((items) => (
-                  <StatCard key={items[0].title} items={items} />
-                ))}
-              </div>
-            </AccordionTab>
-          </Accordion> */}
-
           <div>
             <Accordion
               expanded={expanded === "panel1"}
@@ -372,12 +271,12 @@ const Dashboard = () => {
                 <div className="flex gap-2">
                   <Box className="w-[35vw] border-[1px] border-[#D1D1D1] flex justify-center p-4 rounded-xl">
                     <div className="card flex justify-content-center">
-                      <Datepicker
+                      {/* <Datepicker
                         controls={["calendar"]}
                         // select="range"
                         display="inline"
                         touchUi={true}
-                      />
+                      /> */}
                     </div>
                   </Box>
                 </div>
@@ -458,19 +357,18 @@ const Dashboard = () => {
                 aria-controls="panel3-content"
                 id="panel3-header"
               >
-                <CalendarTodayIcon sx={{ marginRight: "8px" }} /> Total Moorings
+                <img
+                  src="/assets/images/ship.png"
+                  style={{ width: "23px", marginRight: "10px" }}
+                />{" "}
+                Total Moorings
               </AccordionSummary>
               <AccordionDetails>
-                {/* <div>
+                <div>
                   {statCardsData.map((items) => (
-                    <StatCard 
-                    
-                    key={items[0].title} items={items}
-                    
-                    
-                    />
+                    <StatCard key={items[0].title} items={items} />
                   ))}
-                </div> */}
+                </div>
               </AccordionDetails>
             </Accordion>
           </div>
@@ -481,4 +379,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
