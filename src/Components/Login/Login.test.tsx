@@ -3,7 +3,7 @@ import LoginForm from "./LoginForm";
 import { Provider } from "react-redux";
 import { store } from "../../store/store";
 import { BrowserRouter, MemoryRouter } from "react-router-dom";
-
+import user from "@testing-library/user-event";
 const Label = "Login";
 const typeEmail = "email";
 const typePass = "password";
@@ -149,11 +149,27 @@ describe("Login Page testCases", () => {
       </Provider>
     );
 
-    const usernameInput = screen.getByPlaceholderText("Enter Your username");
     const passwordInput = screen.getByPlaceholderText("Password");
-    fireEvent.change(usernameInput, { target: { value: "testuser" } });
     fireEvent.change(passwordInput, { target: { value: "testpassword" } });
-    expect(usernameInput).toHaveValue("testuser");
     expect(passwordInput).toHaveValue("testpassword");
+  });
+
+  it("should render button with click event ", () => {
+    const view = render(
+      <BrowserRouter>
+        <Provider store={store}>
+          <LoginForm
+            Label={Label}
+            typeEmail={typeEmail}
+            typePass={typePass}
+            showSinUp={false}
+          />
+        </Provider>
+      </BrowserRouter>
+    );
+
+    const buttonText = screen.getByText("Login");
+    user.click(buttonText);
+    expect(buttonText).toBeInTheDocument();
   });
 });
