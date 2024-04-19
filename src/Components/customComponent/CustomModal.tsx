@@ -25,6 +25,7 @@ interface CustomModalProps {
   children?: React.ReactNode;
   header?: string;
   label?: string;
+  icon?: boolean;
 }
 
 const CustomModal: React.FC<CustomModalProps> = ({
@@ -35,6 +36,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
   children,
   header,
   label,
+  icon,
 }) => {
   const [internalVisible, setInternalVisible] = useState<boolean>(false);
 
@@ -56,19 +58,21 @@ const CustomModal: React.FC<CustomModalProps> = ({
             position: "relative",
             display: "flex",
           }}
-          label=""
         >
-          <img
-            src="/assets/images/plus.png"
-            alt="icon"
-            className="w-3 mr-3" // Adjust margin to your preference
-            style={{
-              filter: "invert(100%)",
-              color: "whitesmoke",
-              fontWeight: "bolder",
-            }}
-          />
-          ADD NEW
+          { !icon && (
+            <img
+              src="/assets/images/plus.png"
+              alt="icon"
+              className="w-3 mr-3" // Adjust margin to your preference
+              style={{
+                filter: "invert(100%)",
+                color: "whitesmoke",
+                fontWeight: "bolder",
+              }}
+            />
+          )}
+
+          {label ? label : "ADD NEW"}
         </Button>
 
         <Dialog

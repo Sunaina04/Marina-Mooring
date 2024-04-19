@@ -90,6 +90,7 @@ const AddMoorings: React.FC<Props> = ({ moorings, editMode }) => {
 
     const response = await saveMoorings(payload);
     console.log("RESPONSE", response);
+    
   };
 
   return (

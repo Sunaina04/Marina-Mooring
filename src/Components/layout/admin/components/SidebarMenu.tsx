@@ -78,11 +78,11 @@ export const SidebarMenu = [
         name: "Estimates",
         link: "moorserve/estimates",
       },
-      {
-        icon: "/assets/images/square.png",
-        name: "Time cards",
-        link: "moorserve/timeCards",
-      },
+      // {
+      //   icon: "/assets/images/square.png",
+      //   name: "Time cards",
+      //   link: "moorserve/timeCards",
+      // },
       {
         icon: "/assets/images/square.png",
         name: "Forms",
