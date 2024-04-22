@@ -214,33 +214,30 @@ const Customer = () => {
   };
 
   const getCustomerData = async () => {
-    console.log("response customer");
-
     try {
       const response = await getCustomer({}).unwrap();
       console.log("Response:", response);
-      setCustomerData(response as CUSTOMER_PAYLOAD[]);
-      setFilteredCustomerData(response as CUSTOMER_PAYLOAD[]);
-
-      if (
-        typeof response === "object" &&
-        response !== null &&
-        "data" in response
-      ) {
-        console.log("Response data:", response.data);
-        setCustomerData(response.data as CUSTOMER_PAYLOAD[]);
+      if (response) {
+        setCustomerData(response as CUSTOMER_PAYLOAD[]);
+        setFilteredCustomerData(response as CUSTOMER_PAYLOAD[]);
       } else {
-        console.error("Invalid response format");
+        console.error("Error: Failed to fetch customer data");
+        // Set an error state or display a message to the user
       }
     } catch (error) {
       console.error("Error occurred while fetching customer data:", error);
 
-      if (typeof error === "object" && error !== null && "data" in error) {
-        const { message: msg } = error.data as ErrorResponse;
-        console.error("Error message:", msg);
+      if (error) {
+        console.error("Error message:", error);
+        // Set an error state or display the error message to the user
       } else {
         console.error("Unknown error occurred");
+        // Set an error state or display a generic error message to the user
       }
+
+      // Handle uncaught runtime errors to prevent UI crash
+      // For example, you can display a friendly error message to the user
+      // or set an error state to conditionally render an error component
     }
   };
 
@@ -541,7 +538,7 @@ const Customer = () => {
                 <div className="flex gap-4">
                   <div className="font-bold">Mooring Information</div>
                   <div className="font-bold mt-1">
-                    <FaEdit onClick={handleEdit}/>
+                    <FaEdit onClick={handleEdit} />
                   </div>
                 </div>
               }
