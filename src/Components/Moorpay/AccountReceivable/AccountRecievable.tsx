@@ -69,18 +69,7 @@ const AccountRecievable = () => {
   const header = (
     <div className="flex flex-wrap align-items-center justify-between gap-2 ">
       <span className="text-xl font-bold">Account Recievable</span>
-      <span
-        style={{
-          fontFamily: "Lato",
-          fontSize: "14px",
-          fontWeight: 700,
-          lineHeight: "16.8px",
-          letterSpacing: "0.4837472140789032px",
-          textAlign: "right",
-        }}
-      >
-        View All
-      </span>
+
     </div>
   );
 
@@ -130,46 +119,56 @@ const AccountRecievable = () => {
         </div>
       </div>
       <div className="bg-[#F2F2F2] rounded-md border-[1px] border-[#D1D1D1] p-2 mt-12 w-[68vw] ml-20">
-        <DataTable value={boatData} header={header} tableStyle={{}}>
+        <DataTable value={boatData} header={header} tableStyle={{
+
+          // backgroundColor:"#F2F2F2"
+
+        }}>
           <Column
             header="invoice"
             field="invoice"
-            style={{ width: "5rem" }}
+            style={{ width: "",fontSize:"0.80rem" }}
           ></Column>
           <Column
             field="mooringid"
             header="Mooring ID"
-            style={{ width: "8rem" }}
+            style={{ width: "",fontSize:"0.80rem" }}
           ></Column>
           <Column
             field="name"
             header="Customer Name"
-            style={{ width: "11rem" }}
+            style={{ width: "9vw",fontSize:"0.80rem" }}
           ></Column>
           <Column
             field="technicianName"
             header="Technician name"
-            style={{ width: "11rem" }}
+            style={{ width: "9vw" ,fontSize:"0.80rem"}}
           ></Column>
           <Column
             field="services"
             header="Services"
-            style={{ width: "8rem" }}
+            style={{ width: "9vw",fontSize:"0.80rem" }}
           ></Column>
-          <Column field="time" header="Time" style={{ width: "5rem" }}></Column>
+          <Column 
+          field="time"
+           header="Time" 
+           style={{ width: "" ,fontSize:"0.80rem"}}>
+
+          </Column>
           <Column
             field="amount"
             header="Amount"
-            style={{ width: "6rem" }}
+            style={{ width: "" ,fontSize:"0.80rem"}}
           ></Column>
           <Column
-            header="Actions"
+            header="Action"
+            style={{ width: "" ,fontSize:"0.80rem"}}
             body={() => (
               <div className="flex gap-4">
-                <span className="text-green-500 underline cursor-pointer">
+                <span className="text-green-500 bg-green-100 underline cursor-pointer">
                   Approve
                 </span>
-                <span className="text-red-500 underline cursor-pointer">
+                <span className="text-red-500 underline bg-red-100 cursor-pointer">
                   Deny
                 </span>
               </div>
