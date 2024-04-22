@@ -4,20 +4,6 @@ import { Column } from "primereact/column";
 import CustomModal from "../../customComponent/CustomModal";
 import AddBoatyards from "./AddBoatyards";
 import { InputText } from "primereact/inputtext";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Typography,
-} from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Widgets } from "@mui/icons-material";
 import MooringTable from "./BoatyardTable";
 import { BOATYARD_DATA, BOATYARD_PAYLOAD, BOATYARD_RESPONSE } from "../../../Services/MoorManage/types";
 import BoatyardTable from "./BoatyardTable";

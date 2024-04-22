@@ -3,7 +3,6 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import ButtonComponent from "../../Common/ButtonComponent";
 import CustomModal from "../../customComponent/CustomModal";
-import AddCustomer from "../../Moormanage/Customer/AddCustomer";
 import { InputText } from "primereact/inputtext";
 import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
@@ -14,18 +13,12 @@ import {
 } from "../../../Services/MoorServe/types";
 import { useGetWorkOrdersMutation } from "../../../Services/MoorServe/moorserve";
 
-interface CustomerData {
-  id: string;
-  boatName: string;
-  name: string;
-  date: string;
-  measurement: string;
-  place: string;
-}
-
 const WorkOrders = () => {
   const [visible, setVisible] = useState(false);
   const [workOrderData, setWorkOrderData] = useState<WorkOrder_PAYLOAD[]>([]);
+  const [selectedCustomer, setSelectedCustomer] = useState<any>(null);
+
+  const [editMode, setEditMode] = useState(false);
   const [getWorkOrder] = useGetWorkOrdersMutation();
 
   const header = (
@@ -59,7 +52,10 @@ const WorkOrders = () => {
       });
   };
 
-  const handleEdit = (rowData: any) => {};
+  const handleEdit = (rowData: any) => {
+    setSelectedCustomer(rowData);
+    setEditMode(true);
+  };
 
   useEffect(() => {
     getWorkOrderData();
@@ -98,7 +94,10 @@ const WorkOrders = () => {
                   style={{ width: "50vw" }}
                   onHide={() => setVisible(false)}
                 >
-                  <AddWorkOrders />
+                  <AddWorkOrders
+                    workOrderData={selectedCustomer}
+                    editMode={editMode}
+                  />
                 </Dialog>
               </div>
             </div>
@@ -118,7 +117,7 @@ const WorkOrders = () => {
           >
             <Column
               style={{ width: "4vw" }}
-              field="id"
+              field="customerId"
               header="Customer ID"
             ></Column>
             <Column
@@ -155,7 +154,7 @@ const WorkOrders = () => {
               header="Action"
               body={() => (
                 <div className="flex gap-4">
-                  <span className="text-black underline cursor-pointer">
+                  <span className="text-black underline cursor-pointer" onClick={handleEdit}>
                     Edit
                   </span>
                 </div>

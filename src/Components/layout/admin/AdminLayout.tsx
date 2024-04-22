@@ -1,73 +1,18 @@
-import * as React from "react";
-import {
-  Box,
-  Button,
-  CssBaseline,
-  CSSObject,
-  Divider,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  styled,
-  Theme,
-  Toolbar,
-} from "@mui/material";
-import MuiDrawer from "@mui/material/Drawer";
-import { NavLink, NavLinkProps, Outlet } from "react-router-dom";
-import { drawerWidth } from "../../constants";
+import React, { useState, useEffect } from "react";
+import { NavLink, Outlet } from "react-router-dom";
 import { SidebarMenu } from "./components/SidebarMenu";
 import Header from "./components/Header";
 import { filterModalStyle } from "../../style";
 import { style } from "../../customComponent/CustomModal";
 
-const openedMixin = (theme: Theme): CSSObject => ({
-  width: drawerWidth,
-  transition: theme.transitions.create("width", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen,
-  }),
-  overflowX: "hidden",
-});
-
-const closedMixin = (theme: Theme): CSSObject => ({
-  transition: theme.transitions.create("width", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  overflowX: "hidden",
-  width: `calc(${theme.spacing(7)} + 1px)`,
-  [theme.breakpoints.up("sm")]: {
-    width: `calc(${theme.spacing(8)} + 1px)`,
-  },
-});
-
-const Drawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
-  width: drawerWidth,
-  flexShrink: 0,
-  whiteSpace: "nowrap",
-  boxSizing: "border-box",
-  ...(open && {
-    ...openedMixin(theme),
-    "& .MuiDrawer-paper": openedMixin(theme),
-  }),
-  ...(!open && {
-    ...closedMixin(theme),
-    "& .MuiDrawer-paper": closedMixin(theme),
-  }),
-}));
-
 const AdminLayout = () => {
-  const [openSubMenus, setOpenSubMenus] = React.useState(
+  const [openSubMenus, setOpenSubMenus] = useState(
     new Array(SidebarMenu.length).fill(false)
   );
-  const [open, setOpen] = React.useState(true);
-
-  const [selectedSubcategory, setSelectedSubcategory] =
-    React.useState<any>(null);
+  const [open, setOpen] = useState(true);
+  const [selectedSubcategory, setSelectedSubcategory] = useState<number | null>(
+    null
+  ); // Adjusted the type here
 
   const handleExpand = (index: number) => {
     setOpenSubMenus((prev) => {
@@ -75,9 +20,10 @@ const AdminLayout = () => {
       updatedSubMenus[index] = !prev[index];
       return updatedSubMenus;
     });
+    setSelectedSubcategory(index); // Assigning the selected subcategory index
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (open) {
       filterModalStyle.left = "40vw";
       style.left = "58.2%";
@@ -94,320 +40,210 @@ const AdminLayout = () => {
   return (
     <>
       <Header />
-      <Box sx={{ display: "flex" }}>
-        <Button
+      <div style={{ display: "flex" }}>
+        <button
           onClick={handleToggleDrawer}
           style={{
             height: "35px",
             width: "20px",
             minWidth: "5px",
             marginRight: "-20rem",
-            marginLeft: open ? "16rem" : "4rem",
-            marginTop: "10.8rem",
+            marginLeft: open ? "16.4rem" : "4rem",
+            marginTop: "5rem",
             border: "1px solid #B3B3B3",
             display: "inline-block",
             background: "#D9D9D9",
             position: "fixed",
           }}
         >
-          {open ? (
-            <div style={{ width: "20px" , marginLeft: "-7px" }}>
-              <img
-                src="/assets/images/chevron_left.svg"
-                alt="ChevronLeft"
-                style={{ width: "100%", height: "100%" }}
-              />
-            </div>
-          ) : (
-            <div style={{ width: "20px" , marginLeft: "-7px" }}>
-              <img
-                src="/assets/images/chevron_right.svg"
-                alt="ChevronRight"
-                style={{ width: "100%", height: "100%" }}
-              />
-            </div>
-          )}
-        </Button>
+          <img
+            src={
+              open
+                ? "/assets/images/chevron_left.svg"
+                : "/assets/images/chevron_right.svg"
+            }
+            alt={open ? "ChevronLeft" : "ChevronRight"}
+            style={{ width: "100%", height: "100%", marginLeft: "-1px" }}
+          />
+        </button>
 
-        <CssBaseline />
-        <Drawer
-          variant="permanent"
-          open={open}
-          sx={{
-            "& .MuiPaper-root": {
-              background: "#F2F2F2",
-              borderRight: "none",
-              marginTop: "80px",
-              // width: "290px",
-            },
+        <div
+          style={{
+            width: open ? "16.38rem" : "4rem",
+            background: "#F2F2F2",
+            borderRight: "none",
+            transition: "width 0.3s ease-in-out",
           }}
         >
-          <List disablePadding>
-            {SidebarMenu.map((item, index) => (
-              <React.Fragment key={index}>
-                {item.name && (
-                  <ListItem
-                    key={item.name}
-                    disablePadding
-                    sx={{
-                      display: "flex",
-                      background: "#D9D9D9",
-                      flexDirection: "column",
-                      border: "1px solid #B3B3B3",
+          {SidebarMenu.map((item, index) => (
+            <div key={index}>
+              {item.name && (
+                <NavLink
+                  to={item.link}
+                  style={{
+                    textDecoration: "none",
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                    padding: "3px 16px",
+                    cursor: "pointer",
+                    background: "#D9D9D9",
+                    border: "1px solid #B3B3B3",
+                  }}
+                  onClick={() => {
+                    setSelectedSubcategory(null);
+                    handleExpand(index); // Call handleExpand directly
+                  }}
+                >
+                  <img
+                    src={item.icon}
+                    alt=""
+                    width={17}
+                    style={{ marginRight: "15px", marginLeft: "8px" }}
+                  />
+                  <span
+                    style={{
+                      fontSize: "12.5px",
+                      fontWeight: 700,
+                      letterSpacing: "0.2px",
+                      textAlign: "left",
+                      color: "#000000",
+                      display: open ? "flex" : "none",
                     }}
                   >
-                    <ListItemButton
-                      component={NavLink as React.FC<NavLinkProps>}
-                      to={item.link}
-                      sx={{
-                        width: "100%",
+                    {item.name}
+                  </span>
+                  {item.subcategories && (
+                    <img
+                      src={
+                        openSubMenus[index]
+                          ? "/assets/images/minus.png"
+                          : "/assets/images/plus.png"
+                      }
+                      alt={openSubMenus[index] ? "Minus" : "Plus"}
+                      style={{ width: "10px", marginLeft: "8px" }}
+                    />
+                  )}
+                </NavLink>
+              )}
+
+              {item.subcategories && openSubMenus[index] && (
+                <div>
+                  {item.subcategories.map((subcategory, subIndex) => (
+                    <NavLink
+                      to={subcategory.link}
+                      style={{ textDecoration: "none" }}
+                      key={subIndex}
+                    >
+                      <div
+                        style={{
+                          width: "100%",
+                          justifyContent: "flex-start",
+                          alignItems: "center",
+                          padding: "3px 16px",
+                          cursor: "pointer",
+                          background: "#F2F2F2",
+                          marginRight: open ? "100px" : "0px",
+                          border: "1px solid #B3B3B3",
+                        }}
+                        onClick={() => setSelectedSubcategory(subIndex)}
+                      >
+                        <img
+                          src={subcategory.icon}
+                          alt=""
+                          width={17}
+                          style={{ marginRight: "8px", marginLeft: "50px" }}
+                        />
+                        {open && (
+                          <span
+                            style={{
+                              fontSize: "12.5px",
+                              fontWeight:
+                                selectedSubcategory === subIndex ? 700 : 400,
+                              lineHeight: "1.5",
+                              letterSpacing: "0.2px",
+                              textAlign: "left",
+                              marginLeft: "-30px",
+                              color: "#0000000",
+                            }}
+                          >
+                            {subcategory.name}
+                          </span>
+                        )}
+                      </div>
+                    </NavLink>
+                  ))}
+                </div>
+              )}
+              {index !== SidebarMenu.length - 1 && (
+                <div style={{ height: "25px" }} />
+              )}
+              <div
+                style={{
+                  position: "fixed",
+                  top: "95%",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "1rem",
+                }}
+              >
+                <div
+                  style={{
+                    background: "#D9D9D9",
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                    gap: "1rem",
+                  }}
+                >
+                  <NavLink to={""} style={{ textDecoration: "none" }}>
+                    <div
+                      style={{
                         height: "35px",
                         justifyContent: "flex-start",
                         alignItems: "center",
                         padding: "3px 16px",
-                        "&:hover": {
-                          backgroundColor: "#EDEDED",
-                        },
-                      }}
-                      onClick={() => {
-                        setSelectedSubcategory(null);
-                        setSelectedSubcategory(0);
-                        item.subcategories && handleExpand(index);
+                        cursor: "pointer",
+                        border: "1px solid #B3B3B3",
                       }}
                     >
-                      <ListItemIcon sx={{ minWidth: "auto" }}>
-                        <img
-                          src={item.icon}
-                          alt=""
-                          width={17}
-                          style={{ marginRight: "15px", marginLeft: "8px" }}
-                        />
-                      </ListItemIcon>
-                      <ListItemText
-                        primary={item.name}
-                        primaryTypographyProps={{
-                          sx: {
+                      <img
+                        src="/assets/images/square.png"
+                        alt="Logout"
+                        width={17}
+                        style={{ marginRight: "15px", marginLeft: "10px" }}
+                      />
+                      {open && (
+                        <span
+                          style={{
                             fontSize: "12.5px",
                             fontWeight: 700,
                             letterSpacing: "0.2px",
                             textAlign: "left",
-                            color: "#000000",
-                            display: open ? "flex" : "none",
-                          },
-                        }}
-                      />
-                      {item.subcategories && (
-                        <ListItemIcon sx={{ minWidth: "auto" }}>
-                          {openSubMenus[index] ? (
-                            <img
-                              src="/assets/images/minus.png"
-                              alt="Minus"
-                              style={{ width: "10px", marginLeft: "8px" }}
-                            />
-                          ) : (
-                            <img
-                              src="/assets/images/plus.png"
-                              alt="Plus"
-                              style={{ width: "10px", marginLeft: "8px" }}
-                            />
-                          )}
-                        </ListItemIcon>
+                          }}
+                        >
+                          Logout
+                        </span>
                       )}
-                    </ListItemButton>
-
-                    {item.subcategories && openSubMenus[index] && (
-                      <List disablePadding>
-                        {item.subcategories.map((subcategory, subIndex) => (
-                          <ListItem
-                            key={subIndex}
-                            disablePadding
-                            sx={{
-                              display: "flex",
-                              background: "#F2F2F2",
-                              marginRight: open ? "100px" : "0px",
-                              border: "1px solid #B3B3B3",
-                            }}
-                          >
-                            <ListItemButton
-                              component={NavLink as React.FC<NavLinkProps>}
-                              to={subcategory.link}
-                              sx={{
-                                width: "100%",
-                                height: "35px",
-                                justifyContent: "flex-start",
-                                alignItems: "center",
-                                padding: "3px 16px",
-                                "&:hover": {
-                                  backgroundColor: "#EDEDED",
-                                },
-                              }}
-                              onClick={() => setSelectedSubcategory(subIndex)}
-                            >
-                              <ListItemIcon
-                                sx={{ marginLeft: "50px", marginRight: "10px" }}
-                              >
-                                <img
-                                  src={subcategory.icon}
-                                  alt=""
-                                  width={17}
-                                  style={{ marginRight: "8px" }}
-                                />
-                              </ListItemIcon>
-                              {open ? (
-                                <ListItemText
-                                  primary={subcategory.name}
-                                  primaryTypographyProps={{
-                                    sx: {
-                                      fontSize: "12.5px",
-                                      fontWeight:
-                                        selectedSubcategory === subIndex
-                                          ? 700
-                                          : 400,
-                                      lineHeight: "1.5",
-                                      letterSpacing: "0.2px",
-                                      textAlign: "left",
-                                      marginLeft: "-30px",
-                                      color: "#0000000",
-                                    },
-                                  }}
-                                />
-                              ) : null}
-                            </ListItemButton>
-                          </ListItem>
-                        ))}
-                      </List>
-                    )}
-                  </ListItem>
-                )}
-                {index !== SidebarMenu.length - 1 && (
-                  <Divider sx={{ height: "25px" }} />
-                )}
-              </React.Fragment>
-            ))}
-          </List>
-
-          <Box
-            sx={{
-              position: "fixed",
-              top: "95%",
-              width: open ? "16.38rem" : "4rem",
-              display: "flex",
-              flexDirection: "column",
-              gap: "1rem",
-            }}
-          >
-            {/* <Box
-              sx={{
-                background: "#D9D9D9",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "flex-start",
-                gap: "1rem",
-              }}
-            >
-              <ListItemButton
-                component={NavLink as React.FC<NavLinkProps>}
-                to={"/permission"}
-                sx={{
-                  width: "100%",
-                  height: "auto",
-                  justifyContent: "flex-start",
-                  alignItems: "center",
-                  padding: "3px 16px",
-                  "&:hover": {
-                    backgroundColor: "#EDEDED",
-                  },
-                }}
-              >
-                <ListItemIcon sx={{ minWidth: "auto" }}>
-                  <img
-                    src="/assets/images/square.png"
-                    alt="Logout"
-                    width={17}
-                    style={{ marginRight: "12.5px", marginLeft: "10px" }}
-                  />
-                </ListItemIcon>
-                {open ? (
-                  <ListItemText
-                    primary="Permissions"
-                    primaryTypographyProps={{
-                      sx: {
-                        fontSize: "12.5px",
-                        fontWeight: 700,
-                        lineHeight: "1.5",
-                        letterSpacing: "0.2px",
-                        textAlign: "left",
-                      },
-                    }}
-                  />
-                ) : null}
-              </ListItemButton>
-            </Box> */}
-
-            <Box
-              sx={{
-                background: "#D9D9D9",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "flex-start",
-                gap: "1rem",
-              }}
-            >
-              <ListItemButton
-                component={NavLink as React.FC<NavLinkProps>}
-                to={""}
-                sx={{
-                  // width: "100%",
-                  height: "35px",
-                  justifyContent: "flex-start",
-                  alignItems: "center",
-                  padding: "3px 16px",
-                  "&:hover": {
-                    backgroundColor: "#EDEDED",
-                  },
-                  border: "1px solid #B3B3B3",
-                }}
-              >
-                <ListItemIcon sx={{ minWidth: "auto" }}>
-                  <img
-                    src="/assets/images/square.png"
-                    alt="Logout"
-                    width={17}
-                    style={{ marginRight: "15px", marginLeft: "10px" }}
-                  />
-                </ListItemIcon>
-                {open ? (
-                  <ListItemText
-                    primary="Logout"
-                    primaryTypographyProps={{
-                      sx: {
-                        fontSize: "12.5px",
-                        fontWeight: 700,
-                        letterSpacing: "0.2px",
-                        textAlign: "left",
-                      },
-                    }}
-                  />
-                ) : null}
-              </ListItemButton>
-            </Box>
-          </Box>
-        </Drawer>
-        <Box
-          component="main"
-          sx={{
+                    </div>
+                  </NavLink>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div
+          style={{
             flexGrow: 1,
-            p: 0,
+            padding: 0,
             width: "82%",
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
           }}
         >
-          <Toolbar />
           <Outlet />
-        </Box>
-      </Box>
+        </div>
+      </div>
     </>
   );
 };

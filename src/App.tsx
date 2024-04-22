@@ -1,7 +1,6 @@
 import React from "react";
 import { useRoutes } from "react-router-dom";
 import { QueryClientProvider, QueryClient } from "react-query";
-import { CssBaseline, StyledEngineProvider } from "@mui/material";
 import routes from "./routes";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
@@ -22,16 +21,14 @@ const App: React.FC = () => {
     <>
       <Provider store={store}>
         <QueryClientProvider client={queryClient}>
-          <StyledEngineProvider injectFirst>
-            <Toaster toastOptions={toasterOptions} />
-            <CssBaseline />
-            {allPages}
-            <ToastContainer
-              hideProgressBar
-              autoClose={2000}
-              position="top-right"
-            />
-          </StyledEngineProvider>
+          <Toaster toastOptions={toasterOptions} />
+          {allPages}
+          <ToastContainer
+            hideProgressBar
+            autoClose={2000}
+            position="top-right"
+          />
+          ]{" "}
         </QueryClientProvider>
       </Provider>
     </>

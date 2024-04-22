@@ -6,7 +6,6 @@ import { Column } from "primereact/column";
 import StatCard from "../../StatCard/StatCard";
 import { SelectButton, SelectButtonChangeEvent } from "primereact/selectbutton";
 import VerticalBar from "../../StatCard/VerticalBar";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 const ReportsMoorserve = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const options: string[] = ["Open", "Closed"];
@@ -213,7 +212,7 @@ const ReportsMoorserve = () => {
 
           <div>
             <h1 className="mt-14 mr-36 opacity-30 text-lg font-normal text-black">
-              Download Reports {<ExpandMoreIcon />}
+              Download Reports
             </h1>
           </div>
 

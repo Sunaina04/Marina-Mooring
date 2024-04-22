@@ -1,4 +1,3 @@
-import { createTheme, responsiveFontSizes } from "@mui/material";
 // import merge from "lodash.merge";
 // import { THEMES } from "../constants";
 import {

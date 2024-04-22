@@ -4,7 +4,6 @@ import { InputText } from "primereact/inputtext";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { useState } from "react";
-import { Button } from "@mui/material";
 
 interface CustomerData {
   id: string;

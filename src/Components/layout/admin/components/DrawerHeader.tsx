@@ -1,39 +1,32 @@
 import React from "react";
-import { IconButton, styled } from "@mui/material";
-import { ChevronLeft as ChevronLeftIcon } from "@mui/icons-material";
+import { Button } from "primereact/button";
+import "primereact/resources/themes/saga-blue/theme.css";
+import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";
 
 interface DrawerHeaderProps {
   handleDrawerClose: () => void;
 }
 
 const DrawerHeader: React.FC<DrawerHeaderProps> = ({ handleDrawerClose }) => {
-  const DrawerHeader = styled("div")(({ theme }) => ({
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-  }));
-
   return (
     <header>
-      <DrawerHeader>
-        <IconButton onClick={handleDrawerClose}>
-          <ChevronLeftIcon sx={{ color: "#fff" }} />
-        </IconButton>
+      <div className="drawer-header">
+        <Button
+          icon="pi pi-chevron-left"
+          onClick={handleDrawerClose}
+          className="p-button-rounded p-button-text"
+        />
         <img
           src={"/assets/images/Moorfind.png"}
           alt="logo"
           style={{
             height: "120px",
             width: "120px",
-            // marginLeft: "20px",
-            // marginTop: "-20px",
-            background: "balck",
+            background: "black",
           }}
         />
-      </DrawerHeader>
+      </div>
     </header>
   );
 };
