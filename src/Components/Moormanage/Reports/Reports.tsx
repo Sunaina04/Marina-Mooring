@@ -12,7 +12,6 @@ import AddCustomer from "../Customer/AddCustomer";
 import { SelectButton, SelectButtonChangeEvent } from "primereact/selectbutton";
 import VerticalBar from "../../StatCard/VerticalBar";
 import ButtonComponent from "../../Common/ButtonComponent";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import "./Reports.module.css";
 interface ReportsData {
   id: string;
@@ -189,7 +188,7 @@ const Reports = () => {
           </div>
           <div>
             <h1 className="mt-14 mr-10 opacity-60 text-sm font-bold text-black">
-              Download Reports {<ExpandMoreIcon />}
+              Download Reports
             </h1>
           </div>
         </div>

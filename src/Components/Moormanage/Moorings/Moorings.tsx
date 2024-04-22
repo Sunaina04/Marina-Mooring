@@ -9,7 +9,6 @@ import React, { useState, useEffect } from "react";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { useGetMooringsMutation } from "../../../Services/MoorManage/moormanage";
-//import { Accordion, AccordionTab } from "primereact/accordion";
 import Timeline from "../../customComponent/Timeline";
 
 import { InputSwitch, InputSwitchChangeEvent } from "primereact/inputswitch";
@@ -125,7 +124,7 @@ const Moorings = () => {
   const getMooringsData = async () => {
     await getMoorings({})
       .unwrap()
-      .then(async (response : any) => {
+      .then(async (response: any) => {
         // console.log("RESPONSE", response);
         const { status, content } = response as MOORING_RESPONSE;
         if (status === 200 && Array.isArray(content)) {
@@ -257,225 +256,208 @@ const Moorings = () => {
           </div>
 
           <div className=" rounded-md  border-gray-400 -translate-y-[142vh] translate-x-[30vw]">
-            <Accordion className="w-[30vw]">
-              <AccordionDetails className="bg-[#D9D9D9] rounded-md pt-2 px-0">
-                <div className="flex justify-between items-center ml-4">
-                  <div className="flex items-center">
-                    <span className="font-bold">Customers Record</span>
-                    <span>
-                      <FaEdit
-                        className="ml-2"
-                        onClick={handleEdit}
-                        data-testid="edit"
-                      />
-                    </span>
-                    <InputSwitch
-                      checked={isChecked}
-                      onChange={handleInputChange}
-                      className="border-none ml-20"
-                    />
+            <div className="flex justify-between items-center ml-4">
+              <div className="flex items-center">
+                <span className="font-bold">Customers Record</span>
+                <span>
+                  <FaEdit
+                    className="ml-2"
+                    onClick={handleEdit}
+                    data-testid="edit"
+                  />
+                </span>
+                <InputSwitch
+                  checked={isChecked}
+                  onChange={handleInputChange}
+                  className="border-none ml-20"
+                />
+              </div>
+            </div>
+
+            {isChecked && (
+              <>
+                <div className="bg-[#F2F2F2] px-2">
+                  <div className="flex gap-32 mt-4 ">
+                    <div className="font-bold text-sm ml-2 tracking-tighter">
+                      <p>ID:{edit.id}</p>
+                      <p>Phone:{edit.phone}</p>
+                    </div>
+                    <div className="font-bold text-sm tracking-tighter">
+                      <p>Name:{edit.name}</p>
+                      <p>Email:{edit.email}</p>
+                    </div>
+                  </div>
+                  <div className="font-bold text-sm  ml-2 mt-2">
+                    <p>Address:{edit.address}</p>
+                  </div>
+                  <div className="font-bold text-sm mt-2 ml-2 pb-2">
+                    <p>
+                      Boatyard:
+                      <span className="bg-[#D9D9D9] ml-2">Pioneer</span>{" "}
+                      <span className="bg-[#D9D9D9] ml-2">02Pioneer</span>{" "}
+                      <span className="bg-[#D9D9D9] ml-2">Pioneer</span>
+                    </p>
                   </div>
                 </div>
+                <div className="">
+                  <h3 className="mt-2 bg-[#D9D9D9] font-bold h12 ml-4 pb-2">
+                    Moorings
+                  </h3>
+                  <DataTable
+                    // tableStyle={{ minWidth: "20rem" }}
+                    className="bg[#F2F2F2]"
+                    value={mooringData}
+                    scrollable={true}
+                    selectionMode="single"
+                    onRowSelect={(e) => {
+                      setSelectedMooring(e.data);
+                      setIsDialogVisible(true);
+                    }}
+                    style={{ overflow: "scroll", maxHeight: "60vh" }}
+                  >
+                    <Column
+                      field="id"
+                      header="ID"
+                      headerClassName="text-sm"
+                      style={{ fontSize: "0.75rem" }}
+                    ></Column>
+                    <Column
+                      field="mooringName"
+                      header="Mooring Name"
+                      headerStyle={{ fontSize: "0.875rem" }}
+                      style={{ fontSize: "0.75rem" }}
+                    ></Column>
+                    <Column
+                      field="gpsCoordinates"
+                      header="GPS Coordinate"
+                      headerStyle={{ fontSize: "0.87rem" }}
+                      style={{ fontSize: "0.75rem" }}
+                    ></Column>
+                  </DataTable>
+                  {/* Dialog */}
+                  <Dialog
+                    visible={isDialogVisible}
+                    onHide={() => setIsDialogVisible(false)}
+                    header={
+                      <div className="flex gap-4">
+                        <div className="font-bold">Mooring Information</div>
+                        <div className="font-bold mt-1">
+                          <FaEdit onClick={handleEdit} />
+                        </div>
+                      </div>
+                    }
+                  >
+                    <hr className="border border-black  my-0 mx-0"></hr>
+                    {selectedMooring && (
+                      <div className="flex leading-10 gap-4">
+                        <div>
+                          <p>
+                            <span style={{ fontWeight: "bold" }}>ID:</span>{" "}
+                            {selectedMooring?.id}
+                          </p>
+                          <p>
+                            <span style={{ fontWeight: "bold" }}>
+                              Mooring No:
+                            </span>{" "}
+                            {selectedMooring?.mooringNumber}
+                          </p>
+                          <p>
+                            <span style={{ fontWeight: "bold" }}>
+                              Boat Name:
+                            </span>{" "}
+                            {selectedMooring?.boatName}
+                          </p>
+                          <p>
+                            <span style={{ fontWeight: "bold" }}>Type:</span>{" "}
+                            {selectedMooring?.boatType}
+                          </p>
+                          <p>
+                            <span style={{ fontWeight: "bold" }}>
+                              Size of Weight:
+                            </span>{" "}
+                            {selectedMooring?.sizeOfWeight}
+                          </p>
+                          <p>
+                            <span style={{ fontWeight: "bold" }}>
+                              Top Chain Condition:
+                            </span>{" "}
+                            {selectedMooring?.topChainCondition}
+                          </p>
+                          <p className="tracking-tighter">
+                            <span style={{ fontWeight: "bold" }}>
+                              Bottom Chain Condition:
+                            </span>{" "}
+                            {selectedMooring?.bottomChainCondition}
+                          </p>
+                          <p>
+                            <span style={{ fontWeight: "bold" }}>
+                              Pennant Condition:
+                            </span>{" "}
+                            {selectedMooring?.pennantCondition}
+                          </p>
+                          <p>
+                            <span style={{ fontWeight: "bold" }}>
+                              Water Depth:
+                            </span>{" "}
+                            {selectedMooring?.waterDepth}
+                          </p>
+                        </div>
+                        <div>
+                          <p>
+                            <span style={{ fontWeight: "bold" }}>Harbor:</span>{" "}
+                            {selectedMooring?.harbor}
+                          </p>
+                          <p>
+                            <span style={{ fontWeight: "bold" }}>
+                              G.P.S Coordinates:
+                            </span>{" "}
+                            {selectedMooring?.gpsCoordinates}
+                          </p>
+                          <p>
+                            <span style={{ fontWeight: "bold" }}>
+                              Boat Size:
+                            </span>{" "}
+                            {selectedMooring?.boatSize}
+                          </p>
+                          <p>
+                            <span style={{ fontWeight: "bold" }}>Weight:</span>{" "}
+                            {selectedMooring?.boatWeight}
+                          </p>
 
-                {isChecked && (
-                  <>
-                    <div className="bg-[#F2F2F2] px-2">
-                      <div className="flex gap-32 mt-4 ">
-                        <div className="font-bold text-sm ml-2 tracking-tighter">
-                          <p>ID:{edit.id}</p>
-                          <p>Phone:{edit.phone}</p>
+                          <p>
+                            <span style={{ fontWeight: "bold" }}>
+                              Type of Weight:
+                            </span>{" "}
+                            {selectedMooring?.typeOfWeight}
+                          </p>
+
+                          <p>
+                            <span style={{ fontWeight: "bold" }}>
+                              Condition of Eye:
+                            </span>{" "}
+                            {selectedMooring?.conditionOfEye}
+                          </p>
+
+                          <p>
+                            <span style={{ fontWeight: "bold" }}>
+                              Shackle, Swivel Condition:
+                            </span>{" "}
+                            {selectedMooring?.shackleSwivelCondition}
+                          </p>
+
+                          <p>
+                            <span style={{ fontWeight: "bold" }}>
+                              Dept at Mean High Water:
+                            </span>{" "}
+                            {selectedMooring?.deptAtMeanHighWater}
+                          </p>
                         </div>
-                        <div className="font-bold text-sm tracking-tighter">
-                          <p>Name:{edit.name}</p>
-                          <p>Email:{edit.email}</p>
-                        </div>
                       </div>
-                      <div className="font-bold text-sm  ml-2 mt-2">
-                        <p>Address:{edit.address}</p>
-                      </div>
-                      <div className="font-bold text-sm mt-2 ml-2 pb-2">
-                        <p>
-                          Boatyard:
-                          <span className="bg-[#D9D9D9] ml-2">
-                            Pioneer
-                          </span>{" "}
-                          <span className="bg-[#D9D9D9] ml-2">02Pioneer</span>{" "}
-                          <span className="bg-[#D9D9D9] ml-2">Pioneer</span>
-                        </p>
-                      </div>
-                    </div>
-                    <div className="">
-                      <h3 className="mt-2 bg-[#D9D9D9] font-bold h12 ml-4 pb-2">
-                        Moorings
-                      </h3>
-                      <DataTable
-                        // tableStyle={{ minWidth: "20rem" }}
-                        className="bg[#F2F2F2]"
-                        value={mooringData}
-                        scrollable={true}
-                        selectionMode="single"
-                        onRowSelect={(e) => {
-                          setSelectedMooring(e.data);
-                          setIsDialogVisible(true);
-                        }}
-                        style={{ overflow: "scroll", maxHeight: "60vh" }}
-                      >
-                        <Column
-                          field="id"
-                          header="ID"
-                          headerClassName="text-sm"
-                          style={{ fontSize: "0.75rem" }}
-                        ></Column>
-                        <Column
-                          field="mooringName"
-                          header="Mooring Name"
-                          headerStyle={{ fontSize: "0.875rem" }}
-                          style={{ fontSize: "0.75rem" }}
-                        ></Column>
-                        <Column
-                          field="gpsCoordinates"
-                          header="GPS Coordinate"
-                          headerStyle={{ fontSize: "0.87rem" }}
-                          style={{ fontSize: "0.75rem" }}
-                        ></Column>
-                      </DataTable>
-                      {/* Dialog */}
-                      <Dialog
-                        visible={isDialogVisible}
-                        onHide={() => setIsDialogVisible(false)}
-                        header={
-                          <div className="flex gap-4" >
-                            <div className="font-bold">
-                              Mooring Information
-                            </div>
-                            <div className="font-bold mt-1">
-                              <FaEdit onClick={handleEdit}/>
-                            </div>
-                          </div>
-                        }
-                      >
-                        <hr className="border border-black  my-0 mx-0"></hr>
-                        {selectedMooring && (
-                          <div className="flex leading-10 gap-4">
-                            <div>
-                              <p>
-                                <span style={{ fontWeight: "bold" }}>ID:</span>{" "}
-                                {selectedMooring?.id}
-                              </p>
-                              <p>
-                                <span style={{ fontWeight: "bold" }}>
-                                  Mooring No:
-                                </span>{" "}
-                                {selectedMooring?.mooringNumber}
-                              </p>
-                              <p>
-                                <span style={{ fontWeight: "bold" }}>
-                                  Boat Name:
-                                </span>{" "}
-                                {selectedMooring?.boatName}
-                              </p>
-                              <p>
-                                <span style={{ fontWeight: "bold" }}>
-                                  Type:
-                                </span>{" "}
-                                {selectedMooring?.boatType}
-                              </p>
-                              <p>
-                                <span style={{ fontWeight: "bold" }}>
-                                  Size of Weight:
-                                </span>{" "}
-                                {selectedMooring?.sizeOfWeight}
-                              </p>
-                              <p>
-                                <span style={{ fontWeight: "bold" }}>
-                                  Top Chain Condition:
-                                </span>{" "}
-                                {selectedMooring?.topChainCondition}
-                              </p>
-                              <p className="tracking-tighter">
-                                <span style={{ fontWeight: "bold" }}>
-                                  Bottom Chain Condition:
-                                </span>{" "}
-                                {selectedMooring?.bottomChainCondition}
-                              </p>
-                              <p>
-                                <span style={{ fontWeight: "bold" }}>
-                                  Pennant Condition:
-                                </span>{" "}
-                                {selectedMooring?.pennantCondition}
-                              </p>
-                              <p>
-                                <span style={{ fontWeight: "bold" }}>
-                                  Water Depth:
-                                </span>{" "}
-                                {selectedMooring?.waterDepth}
-                              </p>
-                              
-                              
-                              
-                            </div>
-                            <div>
-                            <p>
-                                <span style={{ fontWeight: "bold" }}>
-                                  Harbor:
-                                </span>{" "}
-                                {selectedMooring?.harbor}
-                              </p>
-                              <p>
-                                <span style={{ fontWeight: "bold" }}>
-                                  G.P.S Coordinates:
-                                </span>{" "}
-                                {selectedMooring?.gpsCoordinates}
-                              </p>
-                              <p>
-                                <span style={{ fontWeight: "bold" }}>
-                                  Boat Size:
-                                </span>{" "}
-                                {selectedMooring?.boatSize}
-                              </p>
-                              <p>
-                                <span style={{ fontWeight: "bold" }}>
-                                  Weight:
-                                </span>{" "}
-                                {selectedMooring?.boatWeight}
-                              </p>
-                              
-                              <p>
-                                <span style={{ fontWeight: "bold" }}>
-                                  Type of Weight:
-                                </span>{" "}
-                                {selectedMooring?.typeOfWeight}
-                              </p>
-                              
-                              <p>
-                                <span style={{ fontWeight: "bold" }}>
-                                  Condition of Eye:
-                                </span>{" "}
-                                {selectedMooring?.conditionOfEye}
-                              </p>
-                              
-                              <p>
-                                <span style={{ fontWeight: "bold" }}>
-                                  Shackle, Swivel Condition:
-                                </span>{" "}
-                                {selectedMooring?.shackleSwivelCondition}
-                              </p>
-                              
-                              <p>
-                                <span style={{ fontWeight: "bold" }}>
-                                  Dept at Mean High Water:
-                                </span>{" "}
-                                {selectedMooring?.deptAtMeanHighWater}
-                              </p>
-                            </div>
-                          </div>
-                        )}
-                      </Dialog>
-                    </div>
-                  </>
-                )}
-              </AccordionDetails>
-            </Accordion>
+                    )}
+                  </Dialog>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>

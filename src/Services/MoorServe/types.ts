@@ -33,6 +33,7 @@ export interface WorkOrder_PAYLOAD {
   lastModifiedDate: string;
   lastModifiedBy: string;
   customerName: string;
+  customerId: string;
   mooringNumber: string;
   boatYard: string;
   assignedTo: string;
@@ -55,6 +56,7 @@ export interface WorkOrder_RESPONSE {
     lastModifiedDate: string;
     lastModifiedBy: string;
     customerName: string;
+    customerId: string;
     mooringNumber: string;
     boatYard: string;
     assignedTo: string;

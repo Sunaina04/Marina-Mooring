@@ -4,7 +4,6 @@ import { Column } from "primereact/column";
 import { SelectButton, SelectButtonChangeEvent } from "primereact/selectbutton";
 import { Nullable } from "primereact/ts-helpers";
 import { BiCalendarAlt } from "react-icons/bi";
-import { Box } from "@mui/material";
 import AddTechnication from "./AddTechnician";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";

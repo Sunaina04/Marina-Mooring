@@ -1,4 +1,3 @@
-import { ArrowUpward } from "@mui/icons-material";
 import { Chart } from "primereact/chart";
 import React from "react";
 import { AreaChart, Area, Tooltip, ResponsiveContainer } from "recharts";
@@ -21,12 +20,22 @@ const StatCard: React.FC<StatCardProps> = ({ items }) => {
       style={{ border: "2px solid #B3B3B3" }}
     >
       <div className="flex justify-between items-center mb-2">
-        <div className="text-sm font-bold" style={{ color : "#A6A6A6",fontWeight:"bolder"}}>{items[0].title}</div>
-        <div className="text-gray-600 text-sm ">{items[0].percentage}%<ArrowUpward style={{rotate : "40deg" , color :"#858EBD"}}/></div>
+        <div
+          className="text-sm font-bold"
+          style={{ color: "#A6A6A6", fontWeight: "bolder" }}
+        >
+          {items[0].title}
+        </div>
+        <div className="text-gray-600 text-sm ">
+          {items[0].percentage}%
+          {/* <ArrowUpward style={{rotate : "40deg" , color :"#858EBD"}}/> */}
+        </div>
       </div>
       <div className="flex justify-between items-center ml-12">
-        <div className=" font-extrabold " style={{color : "#00000",}}>{items[0].count}</div>
-        <div style={{ width: "50%", height: 100}}>
+        <div className=" font-extrabold " style={{ color: "#00000" }}>
+          {items[0].count}
+        </div>
+        <div style={{ width: "50%", height: 100 }}>
           <ResponsiveContainer>
             <AreaChart
               data={items}

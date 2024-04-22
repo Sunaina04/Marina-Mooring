@@ -4,7 +4,6 @@ import { Column } from "primereact/column";
 import CustomModal from "../../customComponent/CustomModal";
 import AddCustomer from "../../Moormanage/Customer/AddCustomer";
 import { InputText } from "primereact/inputtext";
-import { Button } from "@mui/material";
 import ButtonComponent from "../../Common/ButtonComponent";
 
 interface CustomerData {
