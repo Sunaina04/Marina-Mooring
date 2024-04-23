@@ -241,125 +241,85 @@ const Dashboard = () => {
 
         {/* leftSection */}
         <div className="mr-50 mt-11">
-          <div>
-            <Accordion
-              // expanded={expanded === "panel1"}
-              // onChange={handleChange("panel1")}
-              // sx={{ width: "30vw" }}
-            >
-              {/* <AccordionSummary
-                expandIcon={
-                  expanded === "panel1" ? <RemoveIcon /> : <AddIcon />
-                }
-                aria-controls="panel1-content"
-                id="panel1-header"
-              >
-                <CalendarTodayIcon sx={{ marginRight: "8px" }} /> Calendar
-              </AccordionSummary> */}
-                <div className="flex gap-2">
-                  {/* <Box className="w-[35vw] border-[1px] border-[#D1D1D1] flex justify-center p-4 rounded-xl"> */}
-                    <div className="card flex justify-content-center">
-                      {/* <Datepicker
-                        controls={["calendar"]}
-                        // select="range"
-                        display="inline"
-                        touchUi={true}
-                      /> */}
-                      
-                    </div>
-                  {/* </Box> */}
+          <Accordion activeIndex={0} className="w-[30vw]">
+            <AccordionTab className="m-2" header={
+              <div>
+                {/* <CalendarTodayIcon sx={{ marginRight: "8px" }} /> Calendar */}
+              </div>
+            }>
+              <div className="flex gap-2">
+                <div className="w-[35vw] border-[1px] border-[#D1D1D1] flex justify-center p-4 rounded-xl">
+                  <div className="card flex justify-content-center">
+                   
+                  </div>
                 </div>
-            </Accordion>
+              </div>
+            </AccordionTab>
+            <AccordionTab className="m-2" header={
+              <div>
+                {/* <FileCopyIcon sx={{ marginRight: "8px" }} /> Open Work Orders */}
+              </div>
+            }>
+              <div className="w-full p-2">
+                <DataTable
+                  value={billsData}
+                  header={""}
+                  tableStyle={{
+                    // width: "73rem",
+                    fontSize: "0.60rem",
+                    fontWeight: "bold",
+                  }}
+                  scrollable={true}
+                >
+                  <Column
+                    style={{ width: "7vw" }}
+                    field="workOrderNo"
+                    header="Work Order No"
+                  ></Column>
+                  <Column
+                    style={{ width: "8vw" }}
+                    field="customerName"
+                    header="Customer Name"
+                  ></Column>
+                  <Column
+                    style={{ width: "8vw" }}
+                    field="assignedTo"
+                    header="Assigned To"
+                  ></Column>
+                  <Column style={{ width: "7vw" }} field="date" header="Date"></Column>
 
-            <Accordion
-              // expanded={expanded === "panel2"}
-              // onChange={handleChange("panel2")}
-              // sx={{ marginTop: "1rem", width: "30vw" }}
-            >
-              {/* <AccordionSummary
-                expandIcon={
-                  expanded === "panel2" ? <RemoveIcon /> : <AddIcon />
-                }
-                aria-controls="panel2-content"
-                id="panel2-header"
-              >
-                <FileCopyIcon sx={{ marginRight: "8px" }} /> Open Work Orders
-              </AccordionSummary> */}
-              {/* <AccordionDetails> */}
-                <div className="w-full p-2  ">
-                  <DataTable
-                    value={billsData}
-                    header={""}
-                    tableStyle={{
-                      // width: "73rem",
-                      fontSize: "0.60rem",
-                      fontWeight: "bold",
-                    }}
-                    scrollable={true}
-                  >
-                    <Column
-                      style={{ width: "7vw" }}
-                      field="workOrderNo"
-                      header="Work Order No"
-                    ></Column>
-                    <Column
-                      style={{ width: "8vw" }}
-                      field="customerName"
-                      header="Customer Name"
-                    ></Column>
-                    <Column
-                      style={{ width: "8vw" }}
-                      field="assignedTo"
-                      header="Assigned To"
-                    ></Column>
-                    <Column
-                      style={{ width: "7vw" }}
-                      field="date"
-                      header="Date"
-                    ></Column>
-
-                    <Column
-                      header=""
-                      body={() => (
-                        <div className="flex gap-4">
-                          <span className="text-black underline cursor-pointer">
-                            View
-                          </span>
-                        </div>
-                      )}
-                    ></Column>
-                  </DataTable>
-                </div>
-              {/* </AccordionDetails> */}
-            </Accordion>
-
-            <Accordion
-              // expanded={expanded === "panel3"}
-              // onChange={handleChange("panel3")}
-              // sx={{ marginTop: "1rem", width: "30vw" }}
-            >
-              {/* <AccordionSummary
-                expandIcon={
-                  expanded === "panel3" ? <RemoveIcon /> : <AddIcon />
-                }
-                aria-controls="panel3-content"
-                id="panel3-header"
-              >
+                  <Column
+                    header=""
+                    body={() => (
+                      <div className="flex gap-4">
+                        <span className="text-black underline cursor-pointer">
+                          View
+                        </span>
+                      </div>
+                    )}
+                  ></Column>
+                </DataTable>
+              </div>
+            </AccordionTab>
+            <AccordionTab className="m-2" header={
+              <div className="flex">
                 <img
                   src="/assets/images/ship.png"
                   style={{ width: "23px", marginRight: "10px" }}
                 />{" "}
                 Total Moorings
-              </AccordionSummary> */}
-              {/* <AccordionDetails> */}
-                <div>
-                  {statCardsData.map((items) => (
-                    <StatCard key={items[0].title} items={items} />
-                  ))}
-                </div>
-              {/* </AccordionDetails> */}
-            </Accordion>
-          </div>
+              </div>
+            }>
+              <div>
+                {statCardsData.map((items) => (
+                  <StatCard key={items[0].title} items={items} />
+                ))}
+              </div>
+            </AccordionTab>
+          </Accordion>
+
+
+
         </div>
       </div>
     </>
