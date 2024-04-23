@@ -133,6 +133,7 @@ const Dashboard = () => {
       { title: "Total Customers", percentage: 17, count: 46789 },
     ],
   ];
+ 
   return (
     <>
       <div className="flex ml-12">
