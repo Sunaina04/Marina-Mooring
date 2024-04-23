@@ -1,5 +1,4 @@
-import { DataTable } from "primereact/datatable";
-
+import { DataTable } from "primereact/datatable"; 
 import ButtonComponent from "../../Common/ButtonComponent";
 import CustomModal from "../../customComponent/CustomModal";
 import AddCustomer from "../Customer/AddCustomer";
@@ -10,9 +9,9 @@ import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { useGetMooringsMutation } from "../../../Services/MoorManage/moormanage";
 import Timeline from "../../customComponent/Timeline";
-
+ 
 import { InputSwitch, InputSwitchChangeEvent } from "primereact/inputswitch";
-
+ 
 import {
   MOORING_PAYLOAD,
   MOORING_RESPONSE,
@@ -22,7 +21,7 @@ import { RiDeleteBin5Fill } from "react-icons/ri";
 import { Avatar } from "primereact/avatar";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { Dialog } from "primereact/dialog";
-
+ 
 interface CustomerData {
   id: string;
   boatName: string;
@@ -38,7 +37,7 @@ interface CustomerProps {
   email: string;
   address: string;
 }
-
+ 
 const Moorings = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [mooringData, setMooringData] = useState<MOORING_PAYLOAD[]>([]);
@@ -59,24 +58,24 @@ const Moorings = () => {
   const [isDialogVisible, setIsDialogVisible] = useState(false);
   const [selectedMooring, setSelectedMooring] = useState<MOORING_PAYLOAD>();
   console.log("selectedmooring", selectedMooring);
-
+ 
   const handleInputChange = (e: InputSwitchChangeEvent) => {
     // e.stopPropagation();
     console.log(e.value);
     setIsChecked(e.value);
   };
-
+ 
   const [getMoorings] = useGetMooringsMutation();
-
+ 
   const handleButtonClick = () => {
     setModalVisible(true);
   };
-
+ 
   const handleModalClose = () => {
     setModalVisible(false);
     setEditMode(false);
   };
-
+ 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const query = event.target.value;
     setSearchQuery(query);
@@ -100,7 +99,7 @@ const Moorings = () => {
     });
     setFilteredMooringData(filteredData);
   };
-
+ 
   const MooringsHeader = () => {
     return (
       <div className="flex flex-col">
@@ -119,7 +118,7 @@ const Moorings = () => {
       </div>
     );
   };
-
+ 
   const getMooringsData = async () => {
     await getMoorings({})
       .unwrap()
@@ -132,16 +131,16 @@ const Moorings = () => {
         }
       });
   };
-
+ 
   const handleEdit = (rowData: any) => {
     setSelectedCustomer(rowData);
     setEditMode(true);
   };
-
+ 
   useEffect(() => {
     getMooringsData();
   }, []);
-
+ 
   return (
     <>
       <div className="flex items-center justify-between ml-12 overflow-hidden">
@@ -171,7 +170,7 @@ const Moorings = () => {
           </CustomModal>
         </div>
       </div>
-
+ 
       <div className="flex ml-12 gap-4 mt-10">
         <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[28vw] h-[105vh]">
           <DataTable
@@ -200,17 +199,17 @@ const Moorings = () => {
             ></Column>
           </DataTable>
         </div>
-        <div>
+        <div className="relative">
           <img
             src="/assets/images/Sea-img.png"
             className="bg-no-repeat object-cover bg-auto rounded-md w-full h-[105vh]"
             alt="Sea"
           />
-          <div className="-translate-y-[46vh] -translate-x-30 ml-10 ">
-            <div className="translate-x-[7rem]">
+          <div className=" absolute top-72   ">
+            <div className="">
               <Timeline data-testid="timeline" />
             </div>
-            <div className="rounded-md border-[1px] pb-1 border-gray-300  w-[17vw] mt-20 h-[13vh] bg-white">
+            <div className="rounded-md border-[1px] pb-1 border-gray-300 mt-16 ml-10 w-[17vw]  h-[13vh] bg-white">
               <p className="text-[0.7rem] ml-1 text-black">Status</p>
               <hr className="m-1 border-black" />
               <div className="flex">
@@ -253,9 +252,9 @@ const Moorings = () => {
               </div>
             </div>
           </div>
-
-          <div className=" rounded-md  border-gray-400 -translate-y-[142vh] translate-x-[30vw]">
-            <div className="flex justify-between items-center ml-4">
+ 
+          <div className=" border-gray-300 absolute top-5 right-5  w-[25em]  ">
+            <div className="flex rounded-md bg-gray-500  py-3 pl-4 ">
               <div className="flex items-center">
                 <span className="font-bold">Customers Record</span>
                 <span>
@@ -272,11 +271,11 @@ const Moorings = () => {
                 />
               </div>
             </div>
-
+ 
             {isChecked && (
               <>
                 <div className="bg-[#F2F2F2] px-2">
-                  <div className="flex gap-32 mt-4 ">
+                  <div className="flex gap-32 ">
                     <div className="font-bold text-sm ml-2 tracking-tighter">
                       <p>ID:{edit.id}</p>
                       <p>Phone:{edit.phone}</p>
@@ -299,7 +298,7 @@ const Moorings = () => {
                   </div>
                 </div>
                 <div className="">
-                  <h3 className="mt-2 bg-[#D9D9D9] font-bold h12 ml-4 pb-2">
+                  <h3 className="bg-[#D9D9D9] font-bold h12 py-4 pl-2 ">
                     Moorings
                   </h3>
                   <DataTable
@@ -422,28 +421,28 @@ const Moorings = () => {
                             <span style={{ fontWeight: "bold" }}>Weight:</span>{" "}
                             {selectedMooring?.boatWeight}
                           </p>
-
+ 
                           <p>
                             <span style={{ fontWeight: "bold" }}>
                               Type of Weight:
                             </span>{" "}
                             {selectedMooring?.typeOfWeight}
                           </p>
-
+ 
                           <p>
                             <span style={{ fontWeight: "bold" }}>
                               Condition of Eye:
                             </span>{" "}
                             {selectedMooring?.conditionOfEye}
                           </p>
-
+ 
                           <p>
                             <span style={{ fontWeight: "bold" }}>
                               Shackle, Swivel Condition:
                             </span>{" "}
                             {selectedMooring?.shackleSwivelCondition}
                           </p>
-
+ 
                           <p>
                             <span style={{ fontWeight: "bold" }}>
                               Dept at Mean High Water:
@@ -463,5 +462,6 @@ const Moorings = () => {
     </>
   );
 };
-
+ 
 export default Moorings;
+ 

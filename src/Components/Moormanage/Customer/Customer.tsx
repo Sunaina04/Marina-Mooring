@@ -400,11 +400,11 @@ const Customer = () => {
             alt="Sea Image"
           />
 
-          <div className="-translate-y-[85vh] relative" data-testid="timeline1">
+          <div className="absolute top-5 left-0"  data-testid="timeline1">
             <Timeline />
           </div>
           <div
-            className="-translate-y-[55vh] flex justify-end relative"
+            className="absolute top-20 right-0"
             data-testid="timeline2"
           >
             <Timeline />
