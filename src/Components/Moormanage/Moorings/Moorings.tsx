@@ -172,7 +172,7 @@ const Moorings = () => {
       </div>
  
       <div className="flex ml-12 gap-4 mt-10">
-        <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[28vw] h-[105vh]">
+        <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[28vw] h-[4vh]">
           <DataTable
             value={filteredMooringData}
             header={MooringsHeader}

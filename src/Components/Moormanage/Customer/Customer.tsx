@@ -298,9 +298,9 @@ const Customer = () => {
 
   return (
     <>
-      <div className="flex  items-center justify-between ml-3 mr-3 ">
+      <div className="flex  items-center justify-between ml-3 mr-3 overflow-hidden">
         <div>
-          <h1 className="mt-14 ml-12 opacity-30 text-2xl font-normal">
+          <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">
             MOORMANAGE/Customer
           </h1>
         </div>
@@ -336,9 +336,9 @@ const Customer = () => {
           <StatCard key={items[0].title} items={items} />
         ))}
       </div> */}
-
-      <div className="flex gap-4 ml-12 mt-10">
-        <div className=" bg-[#F2F2F2] w-[30vw] rounded-md border-[1px] ">
+      
+      <div className="flex ml-12 gap-4 mt-10">
+        <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[28vw] h-[105vh]">
           <DataTable
             value={filteredCustomerData}
             header={CustomerHeader}
@@ -400,13 +400,10 @@ const Customer = () => {
             alt="Sea Image"
           />
 
-          <div className="absolute top-5 left-0"  data-testid="timeline1">
+          <div className="absolute top-5 left-0" data-testid="timeline1">
             <Timeline />
           </div>
-          <div
-            className="absolute top-20 right-0"
-            data-testid="timeline2"
-          >
+          <div className="absolute top-20 right-0" data-testid="timeline2">
             <Timeline />
           </div>
 
