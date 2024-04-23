@@ -4,13 +4,13 @@ import dayjs from "dayjs";
 import { SetStateAction, useState } from "react";
 import { Nullable } from "primereact/ts-helpers";
 import { SelectButton, SelectButtonChangeEvent } from "primereact/selectbutton";
-import { Accordion, AccordionTab } from 'primereact/accordion';
+import { Accordion, AccordionTab } from "primereact/accordion";
 import StatCard from "../StatCard/StatCard";
 import { BsFileCheckFill } from "react-icons/bs";
 import { FaCircle } from "react-icons/fa6";
 import Timeline from "../customComponent/Timeline";
 import { FaCalendar } from "react-icons/fa";
-import "./Dashboard.css"
+import "./Dashboard.css";
 interface BoatData {
   id: string;
   customerName: string;
@@ -135,7 +135,19 @@ const Dashboard = () => {
       { title: "Total Customers", percentage: 17, count: 46789 },
     ],
   ];
- 
+
+  const events = [
+    { title: "Open Work Order", start: "2024-03-27", end: "2024-03-27" },
+
+    { title: "Total Moorings", start: "2024-03-27", end: "2024-03-27" },
+
+    { title: "Open Work Order", start: "2024-03-28", end: "2024-03-28" },
+
+    { title: "Total Moorings", start: "2024-03-28", end: "2024-03-28" },
+
+    // Add more events here
+  ];
+
   return (
     <>
       <div className="flex ml-12 hello">
@@ -244,83 +256,8 @@ const Dashboard = () => {
 
         {/* leftSection */}
 
-
-        {/* <div className="mr-50 mt-11">
-          <Accordion activeIndex={0} className="w-[30vw] flex flex-col gap-12">
-            <AccordionTab className="" header={
-              <div className="flex">
-                <FaCalendar style={{ marginRight: "8px" }} /> Calendar
-              </div>
-            }>
-            </AccordionTab>
-            <AccordionTab className="" header={
-              <div className="flex">
-                <BsFileCheckFill style={{ marginRight: "8px" }} />  Open Work Orders
-              </div>
-            }>
-              <div className="">
-                <DataTable
-                  value={billsData}
-                  header={""}
-                  tableStyle={{
-                    // width: "73rem",
-                    fontSize: "0.60rem",
-                    fontWeight: "bold",
-                  }}
-                  scrollable={true}
-                >
-                  <Column
-                    style={{ width: "7vw" }}
-                    field="workOrderNo"
-                    header="Work Order No"
-                  ></Column>
-                  <Column
-                    style={{ width: "8vw" }}
-                    field="customerName"
-                    header="Customer Name"
-                  ></Column>
-                  <Column
-                    style={{ width: "8vw" }}
-                    field="assignedTo"
-                    header="Assigned To"
-                  ></Column>
-                  <Column style={{ width: "7vw" }} field="date" header="Date"></Column>
-
-                  <Column
-                    header=""
-                    body={() => (
-                      <div className="flex gap-4">
-                        <span className="text-black underline cursor-pointer">
-                          View
-                        </span>
-                      </div>
-                    )}
-                  ></Column>
-                </DataTable>
-              </div>
-            </AccordionTab>
-            <AccordionTab className="" header={
-              <div className="flex">
-                <img
-                  src="/assets/images/ship.png"
-                  style={{ width: "23px", marginRight: "10px" }}
-                />{" "}
-                Total Moorings
-              </div>
-            }>
-              <div>
-                {statCardsData.map((items) => (
-                  <StatCard key={items[0].title} items={items} />
-                ))}
-              </div>
-            </AccordionTab>
-          </Accordion>
-
-
-
-        </div> */}
-
         <div className="mr-50 mt-11">
+          <div className="card"></div>
           <Accordion activeIndex={0} className="w-[30vw] flex flex-col gap-12">
             <AccordionTab
               className=""
@@ -372,7 +309,11 @@ const Dashboard = () => {
                     field="assignedTo"
                     header="Assigned To"
                   ></Column>
-                  <Column style={{ width: "7vw" }} field="date" header="Date"></Column>
+                  <Column
+                    style={{ width: "7vw" }}
+                    field="date"
+                    header="Date"
+                  ></Column>
 
                   <Column
                     header=""
@@ -410,16 +351,9 @@ const Dashboard = () => {
             </AccordionTab>
           </Accordion>
         </div>
-
-
-
-
       </div>
     </>
   );
 };
 
 export default Dashboard;
-
-
-

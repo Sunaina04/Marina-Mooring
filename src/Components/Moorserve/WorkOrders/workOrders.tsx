@@ -40,17 +40,20 @@ const WorkOrders = () => {
   );
 
   const getWorkOrderData = async () => {
-    await getWorkOrder({})
-      .unwrap()
-      .then(async (response: any) => {
-        console.log("RESPONSE", response);
-        const { status, content } = response as WorkOrder_RESPONSE;
-        if (status === 200 && Array.isArray(content)) {
-          setWorkOrderData(content);
-          // setFilteredMooringData(content); // Initialize filtered data with all data
-        }
-      });
+    console.log("I AM IN");
+    try {
+      const response = await getWorkOrder({}).unwrap();
+      console.log("RESPONSE", response);
+      const { status, content } = response as WorkOrder_RESPONSE;
+      if (status === 200 && Array.isArray(content)) {
+        setWorkOrderData(content);
+        // setFilteredMooringData(content); // Initialize filtered data with all data
+      }
+    } catch (error) {
+      console.error("Error fetching work order data:", error);
+    }
   };
+  
 
   const handleEdit = (rowData: any) => {
     setSelectedCustomer(rowData);
@@ -154,7 +157,10 @@ const WorkOrders = () => {
               header="Action"
               body={() => (
                 <div className="flex gap-4">
-                  <span className="text-black underline cursor-pointer" onClick={handleEdit}>
+                  <span
+                    className="text-black underline cursor-pointer"
+                    onClick={handleEdit}
+                  >
                     Edit
                   </span>
                 </div>
