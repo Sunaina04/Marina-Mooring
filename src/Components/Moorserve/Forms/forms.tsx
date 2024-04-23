@@ -35,9 +35,11 @@ const Forms = () => {
   };
 
   const handleDownload = async (rowData: any) => {
-    console.log("ROW DATA" , rowData.formName)
+    console.log("ROW DATA", rowData.formName);
     try {
-      const response = await downloadForms({ filename : rowData.formName}).unwrap();
+      const response = await downloadForms({
+        filename: rowData.formName,
+      }).unwrap();
       console.log("Form downloaded successfully:", response);
     } catch (error) {
       console.error("Error fetching forms:", error);
@@ -124,142 +126,107 @@ const Forms = () => {
           </h1>
         </div>
 
-        <div className="flex flex-col items-center mr-64 mt-14">
+        <div className=" mr-64 mt-14">
           <CustomModal
+           header="Form Details"
             onClick={handleButtonClick}
             visible={isModalOpen}
             onHide={handleModalClose}
             label="Upload New"
             icon={true}
           >
-            <div className="p-6">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label
-                    htmlFor="customerName"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Customer Name:
-                  </label>
-                  <input
-                    type="text"
-                    id="customerName"
-                    name="customerName"
-                    value={customerName}
-                    onChange={(e) => setCustomerName(e.target.value)}
-                    className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="customerID"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Customer ID:
-                  </label>
-                  <input
-                    type="text"
-                    id="customerID"
-                    name="customerID"
-                    value={customerID}
-                    onChange={(e) => setCustomerID(e.target.value)}
-                    className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                  />
-                </div>
+            <div className="flex gap-4">
+              <div>
+                <label
+                  htmlFor="customerName"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Customer Name
+                </label>
+                <InputText
+                  type="text"
+                  id="customerName"
+                  name="customerName"
+                  value={customerName}
+                  style={{
+                    width: "13vw",
+                    height: "4vh",
+                    border: "1px solid gray",
+                    borderRadius: "0.50rem",
+                  }}
+                  onChange={(e) => setCustomerName(e.target.value)}
+                  className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                />
               </div>
-              <div className="mt-4">
+
+              <div>
+                <label
+                  htmlFor="customerID"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                   ID
+                </label>
+                <InputText
+                  type="text"
+                  id="customerID"
+                  name="customerID"
+                  value={customerID}
+                  style={{
+                    width: "13vw",
+                    height: "4vh",
+                    border: "1px solid gray",
+                    borderRadius: "0.50rem",
+                  }}
+                  onChange={(e) => setCustomerID(e.target.value)}
+                  className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                />
+              </div>
+
+              <div className="">
                 <label
                   htmlFor="formName"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Form Name:
+                  Form Name
                 </label>
-                <input
+                <InputText
                   type="text"
                   id="formName"
                   name="formName"
+                  style={{
+                    width: "13vw",
+                    height: "4vh",
+                    border: "1px solid gray",
+                    borderRadius: "0.50rem",
+                  }}
                   value={formName}
                   onChange={(e) => setFormName(e.target.value)}
                   className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 />
               </div>
-              <div className="mt-4">
-                <label
-                  htmlFor="fileUpload"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Upload File:
-                </label>
-                <input
-                  type="file"
-                  id="fileUpload"
-                  name="fileUpload"
-                  onChange={(e) => setFile(e.target.files?.[0] || null)}
-                  className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                />
-              </div>
-              <div className="mt-6 flex justify-end">
-                <Button
-                  type="button"
-                  onClick={handleSave}
-                  label={"Save"}
-                  style={{
-                    width: "5vw",
-                    backgroundColor: "black",
-                    cursor: "pointer",
-                    fontWeight: "bolder",
-                    fontSize: "1vw",
-                    border: "1px solid  gray",
-                    color: "white",
-                    borderRadius: "0.50rem",
-                  }}
-                />
-
-                <Button
-                  type="button"
-                  onClick={handleModalClose}
-                  label={"Cancel"}
-                  style={{
-                    width: "5vw",
-                    backgroundColor: "black",
-                    cursor: "pointer",
-                    fontWeight: "bolder",
-                    fontSize: "1vw",
-                    border: "1px solid  gray",
-                    color: "white",
-                    borderRadius: "0.50rem",
-                  }}
-                />
-              </div>
             </div>
-          </CustomModal>
-        </div>
-      </div>
-      <div className="bg-[#F2F2F2] rounded-md border-[1px] border-[#D1D1D1] p-2 mt-12 w-[61vw] ml-20">
-        <DataTable value={formsData} header={header} tableStyle={{}}>
-          <Column header="ID" field="id" style={{ width: "3vw" }}></Column>
-          <Column
-            field="submittedBy"
-            header="Submitted by"
-            style={{ width: "8vw" }}
-          ></Column>
-          <Column
-            field="formName"
-            header="Form Name"
-            style={{ width: "11vw" }}
-          ></Column>
-          <Column
-            field="submittedDate"
-            header="Submitted Date"
-            style={{ width: "9vw" }}
-          ></Column>
-          <Column
-            header="Action"
-            body={(rowData) => (
+
+            <div className="mt-4">
+              <label
+                htmlFor="fileUpload"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Upload File
+              </label>
+              <InputText
+                type="file"
+                id="fileUpload"
+                name="fileUpload"
+                onChange={(e) => setFile(e.target.files?.[0] || null)}
+                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+              />
+            </div>
+
+            <div className="mt-6 flex ">
               <Button
                 type="button"
-                onClick={() => handleDownload(rowData)}
-                label={"Downloads"}
+                onClick={handleSave}
+                label={"Save"}
                 style={{
                   width: "5vw",
                   backgroundColor: "black",
@@ -271,6 +238,75 @@ const Forms = () => {
                   borderRadius: "0.50rem",
                 }}
               />
+
+              <Button
+                type="button"
+                onClick={handleModalClose}
+                label={"Cancel"}
+                style={{
+                  width: "5vw",
+                  backgroundColor: "black",
+                  cursor: "pointer",
+                  fontWeight: "bolder",
+                  fontSize: "1vw",
+                  border: "1px solid  gray",
+                  color: "white",
+                  borderRadius: "0.50rem",
+                }}
+              />
+            </div>
+          </CustomModal>
+        </div>
+      </div>
+      <div className="bg-[#F2F2F2] rounded-md border-[1px] border-[#D1D1D1] p-2 mt-12 w-[61vw] ml-20">
+        <DataTable value={formsData} header={header} tableStyle={{}}>
+          <Column header="ID" field="id" style={{ width: "4vw" }}></Column>
+          <Column
+            field="submittedBy"
+            header="Submitted by"
+            style={{ width: "12vw" }}
+          ></Column>
+          <Column
+            field="formName"
+            header="Form Name"
+            style={{ width: "11vw" }}
+          ></Column>
+          <Column
+            field="submittedDate"
+            header="Submitted Date"
+            style={{ width: "12vw" }}
+          ></Column>
+          <Column
+            header="Action"
+            style={{ width: "12vw" }}
+            body={(rowData) => (
+              // <Button
+              //   type="button"
+              //   onClick={() => handleDownload(rowData)}
+              //   label={"Downloads"}
+              //   style={{
+              //     width: "5vw",
+              //     backgroundColor: "black",
+              //     cursor: "pointer",
+              //     fontWeight: "bolder",
+              //     fontSize: "1vw",
+              //     border: "1px solid  gray",
+              //     color: "white",
+              //     borderRadius: "0.50rem",
+              //   }}
+
+              // />
+              <p
+                onClick={() => handleDownload(rowData)}
+                style={{
+                  width: "5vw",
+                  cursor: "pointer",
+                  fontWeight: "bolder",
+                  fontSize: "1vw",
+                }}
+              >
+                DownLoad
+              </p>
             )}
           ></Column>
         </DataTable>

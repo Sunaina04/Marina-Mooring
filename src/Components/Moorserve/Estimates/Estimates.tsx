@@ -5,45 +5,67 @@ import ButtonComponent from "../../Common/ButtonComponent";
 import CustomModal from "../../customComponent/CustomModal";
 import AddCustomer from "../../Moormanage/Customer/AddCustomer";
 import AddEstimates from "./AddEstimates";
+import { InputText } from "primereact/inputtext";
 
 interface CustomerData {
-  id: string;
-  boatName: string;
+  customerId:string
   customerName: string;
-  approved: string
+  mooringId:string
+  boatyard:string
+  assigned:string
+  duedate:string
+
 }
 
 const Estimates = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [boatData, setBoatData] = useState<CustomerData[]>([
     {
-      id: "01",
-      boatName: "Suncatcher",
-      customerName: "Suncatcher",
-      approved: "yes",
+      customerId:"1",
+      customerName: "jon Smith",
+      mooringId:"#75677",
+      boatyard:"pioneer",
+      assigned:"Clara Ortiz",
+      duedate:"15,March 2024"
+      
+
+
+    },
+
+    {
+      customerId:"1",
+      customerName: "jon Smith",
+      mooringId:"#75677",
+      boatyard:"pioneer",
+      assigned:"Clara Ortiz",
+      duedate:"15,March 2024"
+      
+
 
     },
     {
-      id: "01",
-      boatName: "Suncatcher",
-      customerName: "Suncatcher",
-      approved: "yes",
+      customerId:"1",
+      customerName: "jon Smith",
+      mooringId:"#75677",
+      boatyard:"pioneer",
+      assigned:"Clara Ortiz",
+      duedate:"15,March 2024"
+      
+
 
     },
     {
-      id: "01",
-      boatName: "Suncatcher",
-      customerName: "Suncatcher",
-      approved: "yes",
+      customerId:"1",
+      customerName: "jon Smith",
+      mooringId:"#75677",
+      boatyard:"pioneer",
+      assigned:"Clara Ortiz",
+      duedate:"15,March 2024"
+      
+
 
     },
-    {
-      id: "01",
-      boatName: "Suncatcher",
-      customerName: "Suncatcher",
-      approved: "yes",
-
-    },
+    
 
   ]);
 
@@ -68,7 +90,17 @@ const Estimates = () => {
           textAlign: "right",
         }}
       >
-        View All
+    <div className="flex  items-center  ">
+          <div>
+            <div className="p-input-icon-left">
+              <i className="pi pi-search text-[#D2D2D2]" />
+              <InputText
+                placeholder="Search"
+                className="h-[5vh] cursor-pointer rounded-lg bg-white font-bold"
+              />
+            </div>
+          </div>
+        </div>
       </span>
     </div>
   );
@@ -82,7 +114,7 @@ const Estimates = () => {
             MOORSERVE/Estimates
           </h1>
         </div>
-        <div className="flex gap-1 ml-[25rem] text-[gray] font-extrabold mt-14">
+        <div className="flex gap-1 ml-[15rem] text-[gray] font-extrabold mt-14">
           <div>
             <img
               src="/assets/images/download.png"
@@ -105,21 +137,12 @@ const Estimates = () => {
             visible={false}
             onHide={handleModalClose}
           >
-            <AddCustomer
-              customer={undefined}
-              editMode={false}
-              closeModal={function (): void {
-                throw new Error("Function not implemented.");
-              }}
-              getCustomer={function (): void {
-                throw new Error("Function not implemented.");
-              }}
-            />
+            <AddEstimates/>
           </CustomModal>
         </div>
 
       </div>
-      <div className="bg-[#F2F2F2] rounded-xl border-[1px] border-[#D1D1D1] ml-40  mb-3 p-2 mt-12 w-[45vw]">
+      <div className="bg-[#F2F2F2] rounded-xl border-[1px] border-[#D1D1D1] ml-40  mb-3 p-2 mt-12 w-[55vw]">
         <DataTable
           value={boatData}
           header={header}
@@ -129,15 +152,17 @@ const Estimates = () => {
           }}
         >
           <Column
-            header="ID"
-            field="id"
+            header="Customer ID"
+            field="customerId"
             style={{ width: "5vw" }}
           ></Column>
-          <Column field="boatName" header="Boat Name" style={{ width: "8vw" }}>
+          <Column field="customerName" header="Customer Name" style={{ width: "8vw" }}>
 
           </Column>
-          <Column field="customerName" header="Customer Name" style={{ width: "9vw", }}></Column>
-          <Column field="approved" header="Approved" style={{ width: "8vw" }}></Column>
+          <Column field="mooringId" header="Mooring ID" style={{ width: "9vw", }}></Column>
+          <Column field="boatyard" header="Boatyard" style={{ width: "8vw" }}></Column>
+          <Column field="assigned" header="Assigned to" style={{ width: "8vw" }}></Column>
+          <Column field="duedate" header="Due date" style={{ width: "8vw" }}></Column>
           <Column
             header="Actions"
             body={() => (
@@ -148,11 +173,6 @@ const Estimates = () => {
                 <span className="text-black underline cursor-pointer">
                   Edit
                 </span>
-
-                <span className="text-red-500 underline cursor-pointer">
-                  Delete
-                </span>
-
               </div>
             )}
           ></Column>

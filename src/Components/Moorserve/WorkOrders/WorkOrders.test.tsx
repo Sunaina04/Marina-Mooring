@@ -1,6 +1,7 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import WorkOrders from "../WorkOrders/workOrders";
+import { values } from "lodash";
 
 describe("WorkOrder Components", () => {
   it("should render the text in the workOrdersComponents", () => {
@@ -55,9 +56,14 @@ describe("WorkOrder Components", () => {
 
   it("should render the inputComponets", () => {
     render(<WorkOrders />);
-    const headerElement = screen.getByRole("textbox");
+    const headerElement = screen.getByRole("textbox") as HTMLInputElement;
     expect(headerElement).toBeInTheDocument();
+    fireEvent.change(headerElement, { target: { value: 'hello' } });
+    expect(headerElement.value).toBe("hello");
+
   });
+
+
 
   test("renders search icon with correct class and color", () => {
     render(<WorkOrders />);
@@ -71,5 +77,5 @@ describe("WorkOrder Components", () => {
 
 
 
-  
+
 });
