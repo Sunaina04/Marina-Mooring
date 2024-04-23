@@ -1,7 +1,6 @@
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import WorkOrders from "../WorkOrders/workOrders";
-import { values } from "lodash";
 
 describe("WorkOrder Components", () => {
   it("should render the text in the workOrdersComponents", () => {
