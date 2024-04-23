@@ -1,31 +1,14 @@
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { StaticDateRangePicker } from "@mui/x-date-pickers-pro/StaticDateRangePicker";
-import { DemoItem } from "@mui/x-date-pickers/internals/demo";
 import dayjs from "dayjs";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { pickersLayoutClasses } from "@mui/x-date-pickers/PickersLayout";
-import { Box } from "@mui/material";
 import { SetStateAction, useState } from "react";
 import { Nullable } from "primereact/ts-helpers";
 import { SelectButton, SelectButtonChangeEvent } from "primereact/selectbutton";
-// import { Accordion, AccordionTab } from 'primereact/accordion';
-import StatCard from "../StatCard/StatCard";
-
-import AccordionActions from "@mui/material/AccordionActions";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Button from "@mui/material/Button";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
-import { FaCircle } from "react-icons/fa6";
-import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
-import FileCopyIcon from "@mui/icons-material/FileCopy";
-import Timeline from "../customComponent/Timeline";
 import { Accordion, AccordionTab } from 'primereact/accordion';
+import StatCard from "../StatCard/StatCard";
+import { FaCircle } from "react-icons/fa6";
+import Timeline from "../customComponent/Timeline";
+
 interface BoatData {
   id: string;
   customerName: string;
@@ -261,37 +244,20 @@ const Dashboard = () => {
           <Accordion activeIndex={0} className="w-[30vw]">
             <AccordionTab className="m-2" header={
               <div>
-                <CalendarTodayIcon sx={{ marginRight: "8px" }} /> Calendar
+                {/* <CalendarTodayIcon sx={{ marginRight: "8px" }} /> Calendar */}
               </div>
             }>
               <div className="flex gap-2">
-                <Box className="w-[35vw] border-[1px] border-[#D1D1D1] flex justify-center p-4 rounded-xl">
+                <div className="w-[35vw] border-[1px] border-[#D1D1D1] flex justify-center p-4 rounded-xl">
                   <div className="card flex justify-content-center">
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoItem
-                        label="Static variant"
-                        component="StaticDateRangePicker"
-                      >
-                        <StaticDateRangePicker
-                          defaultValue={[
-                            dayjs("2022-04-17"),
-                            dayjs("2022-04-21"),
-                          ]}
-                          sx={{
-                            [`.${pickersLayoutClasses.contentWrapper}`]: {
-                              alignItems: "center",
-                            },
-                          }}
-                        />
-                      </DemoItem>
-                    </LocalizationProvider>
+                   
                   </div>
-                </Box>
+                </div>
               </div>
             </AccordionTab>
             <AccordionTab className="m-2" header={
               <div>
-                <FileCopyIcon sx={{ marginRight: "8px" }} /> Open Work Orders
+                {/* <FileCopyIcon sx={{ marginRight: "8px" }} /> Open Work Orders */}
               </div>
             }>
               <div className="w-full p-2">

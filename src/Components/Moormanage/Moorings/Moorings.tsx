@@ -21,7 +21,6 @@ import { FaCircle, FaEdit } from "react-icons/fa";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { Avatar } from "primereact/avatar";
 import { AiFillCheckCircle } from "react-icons/ai";
-import { Accordion, AccordionDetails } from "@mui/material";
 import { Dialog } from "primereact/dialog";
 
 interface CustomerData {
