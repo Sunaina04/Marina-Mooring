@@ -1,30 +1,14 @@
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { StaticDateRangePicker } from "@mui/x-date-pickers-pro/StaticDateRangePicker";
-import { DemoItem } from "@mui/x-date-pickers/internals/demo";
 import dayjs from "dayjs";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { pickersLayoutClasses } from "@mui/x-date-pickers/PickersLayout";
-import { Box } from "@mui/material";
 import { SetStateAction, useState } from "react";
 import { Nullable } from "primereact/ts-helpers";
 import { SelectButton, SelectButtonChangeEvent } from "primereact/selectbutton";
-// import { Accordion, AccordionTab } from 'primereact/accordion';
+import { Accordion, AccordionTab } from 'primereact/accordion';
 import StatCard from "../StatCard/StatCard";
-import Accordion from "@mui/material/Accordion";
-import AccordionActions from "@mui/material/AccordionActions";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Button from "@mui/material/Button";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
 import { FaCircle } from "react-icons/fa6";
-import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
-import FileCopyIcon from "@mui/icons-material/FileCopy";
 import Timeline from "../customComponent/Timeline";
+
 interface BoatData {
   id: string;
   customerName: string;
@@ -259,11 +243,11 @@ const Dashboard = () => {
         <div className="mr-50 mt-11">
           <div>
             <Accordion
-              expanded={expanded === "panel1"}
-              onChange={handleChange("panel1")}
-              sx={{ width: "30vw" }}
+              // expanded={expanded === "panel1"}
+              // onChange={handleChange("panel1")}
+              // sx={{ width: "30vw" }}
             >
-              <AccordionSummary
+              {/* <AccordionSummary
                 expandIcon={
                   expanded === "panel1" ? <RemoveIcon /> : <AddIcon />
                 }
@@ -271,10 +255,9 @@ const Dashboard = () => {
                 id="panel1-header"
               >
                 <CalendarTodayIcon sx={{ marginRight: "8px" }} /> Calendar
-              </AccordionSummary>
-              <AccordionDetails>
+              </AccordionSummary> */}
                 <div className="flex gap-2">
-                  <Box className="w-[35vw] border-[1px] border-[#D1D1D1] flex justify-center p-4 rounded-xl">
+                  {/* <Box className="w-[35vw] border-[1px] border-[#D1D1D1] flex justify-center p-4 rounded-xl"> */}
                     <div className="card flex justify-content-center">
                       {/* <Datepicker
                         controls={["calendar"]}
@@ -282,36 +265,18 @@ const Dashboard = () => {
                         display="inline"
                         touchUi={true}
                       /> */}
-                      <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DemoItem
-                          label="Static variant"
-                          component="StaticDateRangePicker"
-                        >
-                          <StaticDateRangePicker
-                            defaultValue={[
-                              dayjs("2022-04-17"),
-                              dayjs("2022-04-21"),
-                            ]}
-                            sx={{
-                              [`.${pickersLayoutClasses.contentWrapper}`]: {
-                                alignItems: "center",
-                              },
-                            }}
-                          />
-                        </DemoItem>
-                      </LocalizationProvider>
+                      
                     </div>
-                  </Box>
+                  {/* </Box> */}
                 </div>
-              </AccordionDetails>
             </Accordion>
 
             <Accordion
-              expanded={expanded === "panel2"}
-              onChange={handleChange("panel2")}
-              sx={{ marginTop: "1rem", width: "30vw" }}
+              // expanded={expanded === "panel2"}
+              // onChange={handleChange("panel2")}
+              // sx={{ marginTop: "1rem", width: "30vw" }}
             >
-              <AccordionSummary
+              {/* <AccordionSummary
                 expandIcon={
                   expanded === "panel2" ? <RemoveIcon /> : <AddIcon />
                 }
@@ -319,8 +284,8 @@ const Dashboard = () => {
                 id="panel2-header"
               >
                 <FileCopyIcon sx={{ marginRight: "8px" }} /> Open Work Orders
-              </AccordionSummary>
-              <AccordionDetails>
+              </AccordionSummary> */}
+              {/* <AccordionDetails> */}
                 <div className="w-full p-2  ">
                   <DataTable
                     value={billsData}
@@ -365,15 +330,15 @@ const Dashboard = () => {
                     ></Column>
                   </DataTable>
                 </div>
-              </AccordionDetails>
+              {/* </AccordionDetails> */}
             </Accordion>
 
             <Accordion
-              expanded={expanded === "panel3"}
-              onChange={handleChange("panel3")}
-              sx={{ marginTop: "1rem", width: "30vw" }}
+              // expanded={expanded === "panel3"}
+              // onChange={handleChange("panel3")}
+              // sx={{ marginTop: "1rem", width: "30vw" }}
             >
-              <AccordionSummary
+              {/* <AccordionSummary
                 expandIcon={
                   expanded === "panel3" ? <RemoveIcon /> : <AddIcon />
                 }
@@ -385,14 +350,14 @@ const Dashboard = () => {
                   style={{ width: "23px", marginRight: "10px" }}
                 />{" "}
                 Total Moorings
-              </AccordionSummary>
-              <AccordionDetails>
+              </AccordionSummary> */}
+              {/* <AccordionDetails> */}
                 <div>
                   {statCardsData.map((items) => (
                     <StatCard key={items[0].title} items={items} />
                   ))}
                 </div>
-              </AccordionDetails>
+              {/* </AccordionDetails> */}
             </Accordion>
           </div>
         </div>
