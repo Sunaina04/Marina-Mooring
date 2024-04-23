@@ -6,9 +6,11 @@ import { Nullable } from "primereact/ts-helpers";
 import { SelectButton, SelectButtonChangeEvent } from "primereact/selectbutton";
 import { Accordion, AccordionTab } from 'primereact/accordion';
 import StatCard from "../StatCard/StatCard";
+import { BsFileCheckFill } from "react-icons/bs";
 import { FaCircle } from "react-icons/fa6";
 import Timeline from "../customComponent/Timeline";
-
+import { FaCalendar } from "react-icons/fa";
+import "./Dashboard.css"
 interface BoatData {
   id: string;
   customerName: string;
@@ -136,7 +138,7 @@ const Dashboard = () => {
  
   return (
     <>
-      <div className="flex ml-12">
+      <div className="flex ml-12 hello">
         <div>
           <h1 className="mt-14 ml-12 opacity-30 text-2xl font-normal">
             Dashboard
@@ -241,27 +243,22 @@ const Dashboard = () => {
         </div>
 
         {/* leftSection */}
-        <div className="mr-50 mt-11">
-          <Accordion activeIndex={0} className="w-[30vw]">
-            <AccordionTab className="m-2" header={
-              <div>
-                {/* <CalendarTodayIcon sx={{ marginRight: "8px" }} /> Calendar */}
+
+
+        {/* <div className="mr-50 mt-11">
+          <Accordion activeIndex={0} className="w-[30vw] flex flex-col gap-12">
+            <AccordionTab className="" header={
+              <div className="flex">
+                <FaCalendar style={{ marginRight: "8px" }} /> Calendar
               </div>
             }>
-              <div className="flex gap-2">
-                <div className="w-[35vw] border-[1px] border-[#D1D1D1] flex justify-center p-4 rounded-xl">
-                  <div className="card flex justify-content-center">
-                   
-                  </div>
-                </div>
-              </div>
             </AccordionTab>
-            <AccordionTab className="m-2" header={
-              <div>
-                {/* <FileCopyIcon sx={{ marginRight: "8px" }} /> Open Work Orders */}
+            <AccordionTab className="" header={
+              <div className="flex">
+                <BsFileCheckFill style={{ marginRight: "8px" }} />  Open Work Orders
               </div>
             }>
-              <div className="w-full p-2">
+              <div className="">
                 <DataTable
                   value={billsData}
                   header={""}
@@ -302,7 +299,7 @@ const Dashboard = () => {
                 </DataTable>
               </div>
             </AccordionTab>
-            <AccordionTab className="m-2" header={
+            <AccordionTab className="" header={
               <div className="flex">
                 <img
                   src="/assets/images/ship.png"
@@ -321,7 +318,102 @@ const Dashboard = () => {
 
 
 
+        </div> */}
+
+        <div className="mr-50 mt-11">
+          <Accordion activeIndex={0} className="w-[30vw] flex flex-col gap-12">
+            <AccordionTab
+              className=""
+              // style={{border:"1px solid #D1D1D1", borderRadius:"12px"}}
+              header={
+                <div className="flex items-center">
+                  <span className="">
+                    <FaCalendar style={{ marginRight: "8px" }} />
+                  </span>
+                  Calendar
+                </div>
+              }
+            ></AccordionTab>
+            <AccordionTab
+              className=""
+              // style={{border:"1px solid #D1D1D1", borderRadius:"12px"}}
+              header={
+                <div className="flex items-center">
+                  <span className="p-accordion-toggle-icon">
+                    <BsFileCheckFill style={{ marginRight: "8px" }} />
+                  </span>
+                  Open Work Orders
+                </div>
+              }
+            >
+              <div className="">
+                <DataTable
+                  value={billsData}
+                  header={""}
+                  tableStyle={{
+                    // width: "73rem",
+                    fontSize: "0.60rem",
+                    fontWeight: "bold",
+                  }}
+                  scrollable={true}
+                >
+                  <Column
+                    style={{ width: "7vw" }}
+                    field="workOrderNo"
+                    header="Work Order No"
+                  ></Column>
+                  <Column
+                    style={{ width: "8vw" }}
+                    field="customerName"
+                    header="Customer Name"
+                  ></Column>
+                  <Column
+                    style={{ width: "8vw" }}
+                    field="assignedTo"
+                    header="Assigned To"
+                  ></Column>
+                  <Column style={{ width: "7vw" }} field="date" header="Date"></Column>
+
+                  <Column
+                    header=""
+                    body={() => (
+                      <div className="flex gap-4">
+                        <span className="text-black underline cursor-pointer">
+                          View
+                        </span>
+                      </div>
+                    )}
+                  ></Column>
+                </DataTable>
+              </div>
+            </AccordionTab>
+            <AccordionTab
+              className=""
+              // style={{border:"1px solid #D1D1D1", borderRadius:"12px"}}
+              header={
+                <div className="flex items-center">
+                  <span className="p-accordion-toggle-icon">
+                    <img
+                      src="/assets/images/ship.png"
+                      style={{ width: "23px", marginRight: "10px" }}
+                    />
+                  </span>
+                  Total Moorings
+                </div>
+              }
+            >
+              <div>
+                {statCardsData.map((items) => (
+                  <StatCard key={items[0].title} items={items} />
+                ))}
+              </div>
+            </AccordionTab>
+          </Accordion>
         </div>
+
+
+
+
       </div>
     </>
   );
