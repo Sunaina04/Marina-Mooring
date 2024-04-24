@@ -5,13 +5,27 @@ import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import { IoIosAdd } from "react-icons/io";
 import { GrFormSubtract } from "react-icons/gr";
-import { WorkOrder_PAYLOAD } from "../../../Services/MoorServe/types";
+import {
+  WorkOrder_PAYLOAD,
+  WorkOrder_RESPONSE,
+} from "../../../Services/MoorServe/types";
+import {
+  useAddWorkOrderMutation,
+  useUpdateWorkOrderMutation,
+} from "../../../Services/MoorServe/moorserve";
+import { Button } from "primereact/button";
 
 interface Props {
   workOrderData: WorkOrder_PAYLOAD;
   editMode: boolean;
+  setVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
-const AddWorkOrders: React.FC<Props> = ({ workOrderData, editMode }) => {
+
+const AddWorkOrders: React.FC<Props> = ({
+  workOrderData,
+  editMode,
+  setVisible,
+}) => {
   const [value, setValue] = useState<string>("");
   const [customerName, setCustomerName] = useState<string>("");
   const [customerId, setCustomerId] = useState<string>("");
@@ -20,12 +34,53 @@ const AddWorkOrders: React.FC<Props> = ({ workOrderData, editMode }) => {
   const [assignedTo, setAssignedTo] = useState<string>("");
   const [dueDate, setDueDate] = useState<string>("");
   const [scheduleDate, setScheduleDate] = useState<string>("");
-  const [status, setStatus] = useState<string>("");
+  const [workOrderStatus, setWorkOrderStatus] = useState<string>("");
+  const [saveWorkOrder] = useAddWorkOrderMutation();
+  const [updateWorkOrder] = useUpdateWorkOrderMutation();
+
+  console.log("workOrderData.id" ,workOrderData,  workOrderData.id)
+
+  const SaveWorkOrder = async () => {
+    const payload = {
+      customerName,
+      customerId,
+      mooringNumber: mooringId,
+      boatYard: boatyards,
+      assignedTo,
+      dueDate,
+      scheduleDate,
+      workOrderStatus,
+      time: "00:25",
+      reportProblem: value,
+    };
+
+    const response = await saveWorkOrder(payload).unwrap();
+    console.log("response" , response)
+    const { content, status } = response as WorkOrder_RESPONSE;
+    if (status === 200) {
+
+    }
+  };
+
+  const UpdateWorkOrder = async () => {
+    const payload = {
+      id: workOrderData.id,
+      customerName,
+      customerId,
+      mooringNumber: mooringId,
+      boatYard: boatyards,
+      assignedTo,
+      dueDate,
+      scheduleDate,
+      workOrderStatus,
+      time: "00:25",
+      reportProblem: value,
+    };
+    const response = await updateWorkOrder({id : workOrderData.id, payload : payload});
+  };
 
   useEffect(() => {
-    // Check if workOrderData exists and is not empty to determine edit mode
     if (workOrderData && Object.keys(workOrderData).length !== 0) {
-      // Prefill fields if in edit mode
       setCustomerName(workOrderData.customerName);
       setCustomerId(workOrderData.customerId);
       setMooringId(workOrderData.mooringNumber);
@@ -33,10 +88,9 @@ const AddWorkOrders: React.FC<Props> = ({ workOrderData, editMode }) => {
       setAssignedTo(workOrderData.assignedTo);
       setDueDate(workOrderData.dueDate);
       setScheduleDate(workOrderData.scheduleDate);
-      setStatus(workOrderData.status);
+      setWorkOrderStatus(workOrderData.status);
       setValue(workOrderData.reportProblem);
     } else {
-      // Clear fields if not in edit mode
       setCustomerName("");
       setCustomerId("");
       setMooringId("");
@@ -44,7 +98,7 @@ const AddWorkOrders: React.FC<Props> = ({ workOrderData, editMode }) => {
       setAssignedTo("");
       setDueDate("");
       setScheduleDate("");
-      setStatus("");
+      setWorkOrderStatus("");
       setValue("");
     }
   }, [workOrderData]);
@@ -115,7 +169,7 @@ const AddWorkOrders: React.FC<Props> = ({ workOrderData, editMode }) => {
             </div>
           </div>
         </div>
-        // Existing code...
+
         {/* Boatyards */}
         <div>
           <span className="font-semibold text-sm">Boatyards</span>
@@ -199,8 +253,8 @@ const AddWorkOrders: React.FC<Props> = ({ workOrderData, editMode }) => {
           <span className="font-semibold text-sm">Status</span>
           <div className="mt-2">
             <Dropdown
-              value={status}
-              onChange={(e) => setStatus(e.value)}
+              value={workOrderStatus}
+              onChange={(e) => setWorkOrderStatus(e.value)}
               options={[]}
               optionLabel="name"
               editable
@@ -257,8 +311,8 @@ const AddWorkOrders: React.FC<Props> = ({ workOrderData, editMode }) => {
         </div>
         {/* Save and Back buttons */}
         <div className="flex gap-3 mt-4 ml-6">
-          <ButtonComponent
-            onClick={() => {}}
+          <Button
+            onClick={editMode ? UpdateWorkOrder : SaveWorkOrder}
             label={"Save"}
             style={{
               width: "5vw",
@@ -271,8 +325,10 @@ const AddWorkOrders: React.FC<Props> = ({ workOrderData, editMode }) => {
               borderRadius: "0.50rem",
             }}
           />
-          <ButtonComponent
-            onClick={() => {}}
+          <Button
+            onClick={() => {
+              setVisible(false);
+            }}
             label={"Back"}
             text={true}
             style={{ backgroundColor: "white", color: "black", border: "none" }}

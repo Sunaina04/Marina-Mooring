@@ -86,11 +86,8 @@ const AddMoorings: React.FC<Props> = ({ moorings, editMode }) => {
     const payload = {
       ...formData,
     };
-    console.log(" I AM IN SAVE" , payload)
-
     const response = await saveMoorings(payload);
     console.log("RESPONSE", response);
-    
   };
 
   return (
