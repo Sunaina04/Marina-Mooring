@@ -44,6 +44,7 @@ const Moorings = () => {
   const [selectedCustomer, setSelectedCustomer] = useState<any>(null);
   const [editMode, setEditMode] = useState(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
+
   const [filteredMooringData, setFilteredMooringData] = useState<
     MOORING_PAYLOAD[]
   >([]);
@@ -264,11 +265,13 @@ const Moorings = () => {
                     data-testid="edit"
                   />
                 </span>
-                <InputSwitch
+                {/* <InputSwitch
                   checked={isChecked}
                   onChange={(e) => setIsChecked(e.value)}
                   className="border-none ml-20"
-                />
+                /> */}
+
+                
               </div>
             </div>
 
