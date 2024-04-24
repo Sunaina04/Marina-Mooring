@@ -6,6 +6,9 @@ import { Provider } from "react-redux";
 import { store } from "./store/store";
 import { ToastContainer } from "react-toastify";
 import { Toaster } from "react-hot-toast";
+import { PrimeReactProvider } from "primereact/api";
+import 'primereact/resources/themes/saga-blue/theme.css';
+import 'primereact/resources/primereact.min.css';
 
 const queryClient = new QueryClient();
 const App: React.FC = () => {
@@ -20,16 +23,17 @@ const App: React.FC = () => {
   return (
     <>
       <Provider store={store}>
-        <QueryClientProvider client={queryClient}>
-          <Toaster toastOptions={toasterOptions} />
-          {allPages}
-          <ToastContainer
-            hideProgressBar
-            autoClose={2000}
-            position="top-right"
-          />
-          ]{" "}
-        </QueryClientProvider>
+        <PrimeReactProvider value={{ cssTransition: true }}>
+          <QueryClientProvider client={queryClient}>
+            <Toaster toastOptions={toasterOptions} />
+            {allPages}
+            <ToastContainer
+              hideProgressBar
+              autoClose={2000}
+              position="top-right"
+            />
+          </QueryClientProvider>
+        </PrimeReactProvider>
       </Provider>
     </>
   );
