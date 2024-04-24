@@ -11,6 +11,7 @@ import { FaCircle } from "react-icons/fa6";
 import Timeline from "../customComponent/Timeline";
 import { FaCalendar } from "react-icons/fa";
 import "./Dashboard.css";
+import Accordition from "../customComponent/Accordion";
 interface BoatData {
   id: string;
   customerName: string;
@@ -257,100 +258,44 @@ const Dashboard = () => {
         {/* leftSection */}
 
         <div className="mr-50 mt-11">
-          <div className="card"></div>
-          <Accordion activeIndex={0} className="w-[30vw] flex flex-col gap-12">
-            <AccordionTab
-              className=""
-              // style={{border:"1px solid #D1D1D1", borderRadius:"12px"}}
-              header={
-                <div className="flex items-center">
-                  <span className="">
-                    <FaCalendar style={{ marginRight: "8px" }} />
-                  </span>
-                  Calendar
-                </div>
-              }
-            ></AccordionTab>
-            <AccordionTab
-              className=""
-              // style={{border:"1px solid #D1D1D1", borderRadius:"12px"}}
-              header={
-                <div className="flex items-center">
-                  <span className="p-accordion-toggle-icon">
-                    <BsFileCheckFill style={{ marginRight: "8px" }} />
-                  </span>
-                  Open Work Orders
-                </div>
-              }
-            >
-              <div className="">
-                <DataTable
-                  value={billsData}
-                  header={""}
-                  tableStyle={{
-                    // width: "73rem",
-                    fontSize: "0.60rem",
-                    fontWeight: "bold",
-                  }}
-                  scrollable={true}
-                >
-                  <Column
-                    style={{ width: "7vw" }}
-                    field="workOrderNo"
-                    header="Work Order No"
-                  ></Column>
-                  <Column
-                    style={{ width: "8vw" }}
-                    field="customerName"
-                    header="Customer Name"
-                  ></Column>
-                  <Column
-                    style={{ width: "8vw" }}
-                    field="assignedTo"
-                    header="Assigned To"
-                  ></Column>
-                  <Column
-                    style={{ width: "7vw" }}
-                    field="date"
-                    header="Date"
-                  ></Column>
 
-                  <Column
-                    header=""
-                    body={() => (
-                      <div className="flex gap-4">
-                        <span className="text-black underline cursor-pointer">
-                          View
-                        </span>
-                      </div>
-                    )}
-                  ></Column>
-                </DataTable>
-              </div>
-            </AccordionTab>
-            <AccordionTab
-              className=""
-              // style={{border:"1px solid #D1D1D1", borderRadius:"12px"}}
-              header={
-                <div className="flex items-center">
-                  <span className="p-accordion-toggle-icon">
-                    <img
-                      src="/assets/images/ship.png"
-                      style={{ width: "23px", marginRight: "10px" }}
-                    />
-                  </span>
-                  Total Moorings
-                </div>
-              }
-            >
-              <div>
-                {statCardsData.map((items) => (
-                  <StatCard key={items[0].title} items={items} />
-                ))}
-              </div>
-            </AccordionTab>
-          </Accordion>
+
+          <Accordition />
+
+
         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       </div>
     </>
   );

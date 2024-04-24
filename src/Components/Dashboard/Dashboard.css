@@ -41,9 +41,3 @@
   border: 1px solid #d1d1d1;
 }
 
-.p-icon .p-accordion-toggle-icon {
-  margin-left: 10rem;
-}
-.accordion-header .p-accordion-toggle-icon {
-  left: 10rem !important;
-}
