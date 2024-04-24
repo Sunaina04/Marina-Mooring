@@ -40,14 +40,11 @@ const WorkOrders = () => {
   );
 
   const getWorkOrderData = async () => {
-    console.log("I AM IN");
     try {
       const response = await getWorkOrder({}).unwrap();
-      console.log("RESPONSE", response);
       const { status, content } = response as WorkOrder_RESPONSE;
       if (status === 200 && Array.isArray(content)) {
         setWorkOrderData(content);
-        // setFilteredMooringData(content); // Initialize filtered data with all data
       }
     } catch (error) {
       console.error("Error fetching work order data:", error);
@@ -58,6 +55,7 @@ const WorkOrders = () => {
   const handleEdit = (rowData: any) => {
     setSelectedCustomer(rowData);
     setEditMode(true);
+    setVisible(true);
   };
 
   useEffect(() => {
@@ -100,6 +98,7 @@ const WorkOrders = () => {
                   <AddWorkOrders
                     workOrderData={selectedCustomer}
                     editMode={editMode}
+                    setVisible = {setVisible}
                   />
                 </Dialog>
               </div>
@@ -155,11 +154,11 @@ const WorkOrders = () => {
             ></Column>
             <Column
               header="Action"
-              body={() => (
+              body={(rowData) => (
                 <div className="flex gap-4">
                   <span
                     className="text-black underline cursor-pointer"
-                    onClick={handleEdit}
+                    onClick={ () => handleEdit(rowData)}
                   >
                     Edit
                   </span>

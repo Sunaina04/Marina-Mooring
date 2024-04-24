@@ -30,12 +30,10 @@ const Forms = () => {
   };
 
   const handleModalClose = () => {
-    console.log("CLICKED");
     setIsModalOpen(false);
   };
 
   const handleDownload = async (rowData: any) => {
-    console.log("ROW DATA", rowData.formName);
     try {
       const response = await downloadForms({
         filename: rowData.formName,
@@ -91,7 +89,6 @@ const Forms = () => {
       }
     } catch (error) {
       console.error("Error uploading form:", error);
-      // Handle error
     }
   };
 
@@ -102,18 +99,6 @@ const Forms = () => {
   const header = (
     <div className="flex flex-wrap align-items-center justify-between gap-2 p-4">
       <span className="text-xl font-bold">Forms</span>
-      {/* <span
-        style={{
-          fontFamily: "Lato",
-          fontSize: "14px",
-          fontWeight: 700,
-          lineHeight: "16.8px",
-          letterSpacing: "0.4837472140789032px",
-          textAlign: "right",
-        }}
-      >
-        View All
-      </span> */}
     </div>
   );
 
@@ -128,7 +113,7 @@ const Forms = () => {
 
         <div className=" mr-64 mt-14">
           <CustomModal
-           header="Form Details"
+            header="Form Details"
             onClick={handleButtonClick}
             visible={isModalOpen}
             onHide={handleModalClose}
@@ -164,7 +149,7 @@ const Forms = () => {
                   htmlFor="customerID"
                   className="block text-sm font-medium text-gray-700"
                 >
-                   ID
+                  ID
                 </label>
                 <InputText
                   type="text"
@@ -280,22 +265,6 @@ const Forms = () => {
             header="Action"
             style={{ width: "12vw" }}
             body={(rowData) => (
-              // <Button
-              //   type="button"
-              //   onClick={() => handleDownload(rowData)}
-              //   label={"Downloads"}
-              //   style={{
-              //     width: "5vw",
-              //     backgroundColor: "black",
-              //     cursor: "pointer",
-              //     fontWeight: "bolder",
-              //     fontSize: "1vw",
-              //     border: "1px solid  gray",
-              //     color: "white",
-              //     borderRadius: "0.50rem",
-              //   }}
-
-              // />
               <p
                 onClick={() => handleDownload(rowData)}
                 style={{
