@@ -21,9 +21,14 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src"
-, "public/assets"  ],
-  "types": ["node", "react"],
-
+    "src",
+    "public/assets",
+    "./eslint.config.mjs",
+    "./tailwind.config.js"
+  ],
+  "types": [
+    "node",
+    "react"
+  ]
 }
 
