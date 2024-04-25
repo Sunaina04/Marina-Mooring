@@ -58,7 +58,7 @@ const Moorings = () => {
   const [selectedMooring, setSelectedMooring] = useState<MOORING_PAYLOAD>();
   console.log("selectedmooring", selectedMooring);
 
-  const handleInputChange = (e: any) => {
+  const handleInputChange = (e: InputSwitchChangeEvent) => {
     // e.stopPropagation();
     console.log("value", e.value);
     setIsChecked((prev) => !prev);
