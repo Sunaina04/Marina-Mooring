@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import InputComponent from "../../Common/InputComponent";
-import ButtonComponent from "../../Common/ButtonComponent";
-
 import { InputText } from "primereact/inputtext";
 import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
-import { InputTextarea } from "primereact/inputtextarea";
 import {
   useAddCustomerMutation,
   useUpdateCustomerMutation,
 } from "../../../Services/MoorManage/moormanage";
+import { Button } from "primereact/button";
 
 interface Props {
   customer: any;
@@ -736,7 +734,7 @@ const AddCustomer: React.FC<Props> = ({
       </div>
 
       <div className="flex gap-3 mt-6 ml-6">
-        <ButtonComponent
+        <Button
           onClick={editMode ? UpdateCustomer : SaveCustomer}
           label={"Save"}
           style={{
@@ -750,7 +748,7 @@ const AddCustomer: React.FC<Props> = ({
             borderRadius: "0.50rem",
           }}
         />
-        <ButtonComponent
+        <Button
           onClick={closeModal}
           label={"Back"}
           text={true}

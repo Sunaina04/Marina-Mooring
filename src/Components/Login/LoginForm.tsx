@@ -12,12 +12,8 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { setUserData } from "../../store/Slice/userSlice";
 import { Link, useNavigate } from "react-router-dom";
-import { Toast } from "primereact/toast";
-import ButtonComponent from "../Common/ButtonComponent";
-import InputComponent from "../Common/InputComponent";
-import SignUp from "../SignUp/SignUp";
 import { InputText } from "primereact/inputtext";
-import { Button } from "primereact/button";
+
 interface LoginFormProps {
   Label: string;
   typeEmail: string;
@@ -47,21 +43,14 @@ export default function LoginForm({
   const [errors, setErrors] = useState({
     email: "",
     password: "",
-
-    
   });
 
-
-  // console.log("email", errors);
-
-  console.log("userData", userData);
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setLoginPayload((prev) => ({
       ...prev,
       [name]: value,
     }));
-
   };
 
   /* ***************************************************
@@ -88,8 +77,6 @@ export default function LoginForm({
     
     }
     
-
-
     if (admin) {
       // try {
       //   const response = await login(loginPayload).unwrap();

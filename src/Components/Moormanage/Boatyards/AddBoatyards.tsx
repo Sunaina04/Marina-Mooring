@@ -1,9 +1,9 @@
 import InputComponent from "../../Common/InputComponent";
 import ButtonComponent from "../../Common/ButtonComponent";
-import { InputText } from "primereact/inputtext";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { useState } from "react";
+import { Button } from "primereact/button";
 
 interface CustomerData {
   id: string;
@@ -163,8 +163,7 @@ const AddBoatyards = () => {
 
             </DataTable>
 
-            <ButtonComponent
-              onClick={() => { }}
+            <Button
               style={{
                 width: "100%",
                 height: "4vh",
@@ -191,15 +190,12 @@ const AddBoatyards = () => {
 
 
               ADD NEW
-            </ButtonComponent>
+            </Button>
           </div>
         </div>
 
         <div className="flex gap-3 mt-4 ml-6">
-          <ButtonComponent
-            onClick={function (): void {
-              throw new Error("Function not implemented.");
-            }}
+          <Button
             label={"Save"}
             style={{
               width: "5vw",
@@ -212,10 +208,7 @@ const AddBoatyards = () => {
               borderRadius: "0.50rem",
             }}
           />
-          <ButtonComponent
-            onClick={function (): void {
-              throw new Error("Function not implemented.");
-            }}
+          <Button
             label={"Back"}
             text={true}
             style={{ backgroundColor: "white", color: "black", border: "none" }}

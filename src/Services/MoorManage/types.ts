@@ -1,9 +1,9 @@
 export interface CUSTOMER_PAYLOAD {
   id: number;
   creationDate: string;
-  createdBy: null;
+  createdBy: string;
   lastModifiedDate: string;
-  lastModifiedBy: null;
+  lastModifiedBy: string;
   customerName: string;
   customerId: string;
   phone: string;
@@ -31,44 +31,24 @@ export interface ADD_CUSTOMER_PAYLOAD {
 export interface CUSTOMER_RESPONSE {
   message: string;
   status: number;
-  errorList: null;
+  errorList: [];
   time: string;
-  content: [
-    [
-      {
-        id: number;
-        creationDate: string;
-        createdBy: null;
-        lastModifiedDate: string;
-        lastModifiedBy: null;
-        customerName: string;
-        customerId: string;
-        phone: string;
-        emailAddress: string;
-        streetHouse: string;
-        aptSuite: string;
-        state: string;
-        country: string;
-        zipCode: string;
-      }
-    ],
-    {
-      id: number;
-      creationDate: string;
-      createdBy: null;
-      lastModifiedDate: string;
-      lastModifiedBy: null;
-      customerName: string;
-      customerId: string;
-      phone: string;
-      emailAddress: string;
-      streetHouse: string;
-      aptSuite: string;
-      state: string;
-      country: string;
-      zipCode: string;
-    }
-  ];
+  content: {
+    id: number;
+    creationDate: string;
+    createdBy: string;
+    lastModifiedDate: string;
+    lastModifiedBy: string;
+    customerName: string;
+    customerId: string;
+    phone: string;
+    emailAddress: string;
+    streetHouse: string;
+    aptSuite: string;
+    state: string;
+    country: string;
+    zipCode: string;
+  };
 }
 
 export interface MOORING_PAYLOAD {
@@ -95,7 +75,7 @@ export interface MOORING_PAYLOAD {
 export interface MOORING_RESPONSE {
   message: string;
   status: number;
-  errorList: string[];
+  errorList: [];
   time: string;
   content: {
     id: string;
@@ -116,7 +96,7 @@ export interface MOORING_RESPONSE {
     sizeOfWeight: string;
     typeOfWeight: string;
     deptAtMeanHighWater: string;
-  };
+  }
 }
 
 export interface VENDOR_PAYLOAD {
@@ -136,13 +116,13 @@ export interface VENDOR_PAYLOAD {
   salesRepPhoneNumber: string;
   salesRepEmail: string;
   salesRepNote: string;
-  primarySalesRep: boolean;
+  primarySalesRep: boolean
 }
 
 export interface VENDOR_RESPONSE {
   message: string;
   status: number;
-  errorList: string[];
+  errorList: [];
   time: string;
   content: {
     id: number;
@@ -161,8 +141,8 @@ export interface VENDOR_RESPONSE {
     salesRepPhoneNumber: string;
     salesRepEmail: string;
     salesRepNote: string;
-    primarySalesRep: boolean;
-  };
+    primarySalesRep: boolean
+  }
 }
 
 export interface BOATYARD_DATA {
@@ -183,8 +163,8 @@ export interface BOATYARD_DATA {
       mainContact: string;
       mooringNumber: string;
       boatName: string;
-    }[];
-  }[];
+    }[]
+  }[]
 }
 
 export interface BOATYARD_PAYLOAD {
@@ -199,7 +179,7 @@ export interface BOATYARD_PAYLOAD {
 export interface BOATYARD_RESPONSE {
   status: number;
   message: string;
-  errorList: [];
+  errorList: []
   time: string;
   content: {
     id: number;
@@ -208,7 +188,7 @@ export interface BOATYARD_RESPONSE {
     ownerName: string;
     emailAddress: string;
     phone: string;
-  };
+  }
 }
 
 export interface TECHNICIAN_PAYLOAD {
@@ -228,7 +208,7 @@ export interface TECHNICIAN_PAYLOAD {
 export interface TECHNICIAN_RESPONSE {
   status: number;
   message: string;
-  errorList: [];
+  errorList: []
   time: string;
   content: {
     id: number;
@@ -242,5 +222,5 @@ export interface TECHNICIAN_RESPONSE {
     country: string;
     pincode: string;
     note: string;
-  };
+  }
 }
