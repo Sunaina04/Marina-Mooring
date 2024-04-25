@@ -1,0 +1,9 @@
+# Ignore build directories
+build/
+
+# Ignore node_modules directory
+node_modules/
+
+tsconfig.json
+tailwind.config.js
+eslint.config.mjs
