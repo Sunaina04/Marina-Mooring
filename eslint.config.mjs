@@ -20,6 +20,7 @@ export default tseslint.config(
  {
      files: ['**/*.{ts,tsx,mts,cts,mjs}'],
      extends: [tseslint.configs.disableTypeChecked],
-     ignores: ["./tailwind.config.js"]
+     ignores: ["./tailwind.config.js", "./prettier.config.js"],
+     rules: {},
  },
 );

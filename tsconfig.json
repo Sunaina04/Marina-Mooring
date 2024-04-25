@@ -24,7 +24,8 @@
     "src",
     "public/assets",
     "./eslint.config.mjs",
-    "./tailwind.config.js"
+    "./tailwind.config.js",
+    "./prettier.config.js"
   ],
   "types": [
     "node",
