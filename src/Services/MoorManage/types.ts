@@ -1,30 +1,74 @@
 export interface CUSTOMER_PAYLOAD {
+  id: number;
+  creationDate: string;
+  createdBy: null;
+  lastModifiedDate: string;
+  lastModifiedBy: null;
   customerName: string;
   customerId: string;
   phone: string;
   emailAddress: string;
   streetHouse: string;
-  sectorBlock: string;
+  aptSuite: string;
   state: string;
   country: string;
-  pinCode: string;
-  note: string;
+  zipCode: string;
+}
+
+export interface ADD_CUSTOMER_PAYLOAD {
+  id: number;
+  customerName: string;
+  customerId: string;
+  phone: string;
+  emailAddress: string;
+  streetHouse: string;
+  aptSuite: string;
+  state: string;
+  country: string;
+  zipCode: string;
 }
 
 export interface CUSTOMER_RESPONSE {
-  // data : [
-  id: string;
-  customerName: string;
-  customerId: string;
-  phone: string;
-  emailAddress: string;
-  streetHouse: string;
-  sectorBlock: string;
-  state: string;
-  country: string;
-  pinCode: string;
-  note: string;
-  // ]
+  message: string;
+  status: number;
+  errorList: null;
+  time: string;
+  content: [
+    [
+      {
+        id: number;
+        creationDate: string;
+        createdBy: null;
+        lastModifiedDate: string;
+        lastModifiedBy: null;
+        customerName: string;
+        customerId: string;
+        phone: string;
+        emailAddress: string;
+        streetHouse: string;
+        aptSuite: string;
+        state: string;
+        country: string;
+        zipCode: string;
+      }
+    ],
+    {
+      id: number;
+      creationDate: string;
+      createdBy: null;
+      lastModifiedDate: string;
+      lastModifiedBy: null;
+      customerName: string;
+      customerId: string;
+      phone: string;
+      emailAddress: string;
+      streetHouse: string;
+      aptSuite: string;
+      state: string;
+      country: string;
+      zipCode: string;
+    }
+  ];
 }
 
 export interface MOORING_PAYLOAD {

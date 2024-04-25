@@ -153,8 +153,8 @@ const Dashboard = () => {
     <>
       <div className="flex ml-12 hello">
         <div>
-          <h1 className="mt-14 ml-12 opacity-30 text-2xl font-normal">
-            Dashboard
+          <h1 className="mt-12 ml-12 opacity-30 text-2xl font-normal">
+            DASHBOARD
           </h1>
         </div>
       </div>
@@ -258,44 +258,8 @@ const Dashboard = () => {
         {/* leftSection */}
 
         <div className="mr-50 mt-11">
-
-
           <Accordition />
-
-
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       </div>
     </>
   );

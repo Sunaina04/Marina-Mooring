@@ -2,18 +2,11 @@ import { useEffect, useState } from "react";
 import CustomModal from "../../customComponent/CustomModal";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { Outlet } from "react-router-dom";
 import AddCustomer from "./AddCustomer";
-import { Button } from "primereact/button";
-import StatCard from "../../StatCard/StatCard";
 import { InputText } from "primereact/inputtext";
-import { PrimeIcons } from "primereact/api";
 import { FaEdit } from "react-icons/fa";
 import { RiDeleteBin5Fill } from "react-icons/ri";
-import { AiFillCheckCircle } from "react-icons/ai";
 import { FaCircle } from "react-icons/fa6";
-import { FaLocationPin } from "react-icons/fa6";
-import { Avatar } from "primereact/avatar";
 import { Dialog } from "primereact/dialog";
 import Timeline from "../../customComponent/Timeline";
 import {
@@ -21,21 +14,13 @@ import {
   useGetCustomerMutation,
   useGetMooringsMutation,
 } from "../../../Services/MoorManage/moormanage";
-import { ErrorResponse } from "../../../Services/authentication/types";
 import {
   CUSTOMER_PAYLOAD,
   CUSTOMER_RESPONSE,
   MOORING_PAYLOAD,
   MOORING_RESPONSE,
 } from "../../../Services/MoorManage/types";
-import DatePickerComponent from "../../Common/DatePickerComponent";
 
-interface CustomerData {
-  id: string;
-  name: string;
-  phoneNumber: number;
-  email: string;
-}
 interface CustomerProps {
   id: string;
   name: string;
@@ -53,9 +38,6 @@ const Customer = () => {
   const [filteredCustomerData, setFilteredCustomerData] = useState<
     CUSTOMER_PAYLOAD[]
   >([]);
-  // const [selectedMooring, setSelectedMooring] = useState<MOORING_PAYLOAD>();
-
-  console.log("filterdata", filteredCustomerData);
 
   const [mooringData, setMooringData] = useState<MOORING_PAYLOAD[]>([]);
   const [customerRowData, setCustomerRowData] = useState<MOORING_PAYLOAD>();
@@ -75,7 +57,6 @@ const Customer = () => {
   });
 
   const handleButtonClick = () => {
-    console.log("Add New button clicked");
     setModalVisible(true);
   };
 
@@ -83,93 +64,6 @@ const Customer = () => {
     setModalVisible(false);
     setEditMode(false);
   };
-  //   {
-  //     id: "01",
-  //     name: "Ram",
-  //     phoneNumber: 4564546897,
-  //     email: "test@gmail.com"
-  //   },
-  //   {
-  //     id: "01",
-  //     name: "Ram",
-  //     phoneNumber: 4564546897,
-  //     email: "test@gmail.com"
-  //   },
-
-  //   {
-  //     id: "01",
-  //     name: "Ram",
-  //     phoneNumber: 4564546897,
-  //     email: "test@gmail.com"
-  //   },
-
-  //   {
-  //     id: "01",
-  //     name: "Ram",
-  //     phoneNumber: 4564546897,
-  //     email: "test@gmail.com"
-  //   },
-  //   {
-  //     id: "01",
-  //     name: "Ram",
-  //     phoneNumber: 4564546897,
-  //     email: "test@gmail.com"
-  //   },
-  //   {
-  //     id: "01",
-  //     name: "Ram",
-  //     phoneNumber: 4564546897,
-  //     email: "test@gmail.com"
-  //   },
-  //   {
-  //     id: "01",
-  //     name: "Ram",
-  //     phoneNumber: 4564546897,
-  //     email: "test@gmail.com"
-  //   },
-  //   {
-  //     id: "01",
-  //     name: "Ram",
-  //     phoneNumber: 4564546897,
-  //     email: "test@gmail.com"
-  //   },
-  //   {
-  //     id: "01",
-  //     name: "Ram",
-  //     phoneNumber: 4564546897,
-  //     email: "test@gmail.com"
-  //   },
-  //   {
-  //     id: "01",
-  //     name: "Ram",
-  //     phoneNumber: 4564546897,
-  //     email: "test@gmail.com"
-  //   },
-  //   {
-  //     id: "01",
-  //     name: "Ram",
-  //     phoneNumber: 4564546897,
-  //     email: "test@gmail.com"
-  //   },
-  //   {
-  //     id: "01",
-  //     name: "Ram",
-  //     phoneNumber: 4564546897,
-  //     email: "test@gmail.com"
-  //   },
-  //   {
-  //     id: "01",
-  //     name: "Ram",
-  //     phoneNumber: 4564546897,
-  //     email: "test@gmail.com"
-  //   },
-  //   {
-  //     id: "01",
-  //     name: "Ram",
-  //     phoneNumber: 4564546897,
-  //     email: "test@gmail.com"
-  //   },
-  // ]);
 
   const statCardsData = [
     [
@@ -190,7 +84,6 @@ const Customer = () => {
     const query = event.target.value;
     setSearchQuery(query);
     const filteredData = customerData.filter((data) => {
-      // Check if data.id is a string before calling toLowerCase()
       const id =
         typeof data.customerId === "string"
           ? data.customerId.toLowerCase()
@@ -203,7 +96,6 @@ const Customer = () => {
         typeof data.emailAddress === "string"
           ? data.emailAddress.toLowerCase()
           : "";
-      // Implement your custom filtering logic here
       return (
         id.includes(query.toLowerCase()) ||
         customerName.includes(query.toLowerCase()) ||
@@ -217,27 +109,14 @@ const Customer = () => {
     try {
       const response = await getCustomer({}).unwrap();
       console.log("Response:", response);
-      if (response) {
-        setCustomerData(response as CUSTOMER_PAYLOAD[]);
-        setFilteredCustomerData(response as CUSTOMER_PAYLOAD[]);
-      } else {
-        console.error("Error: Failed to fetch customer data");
-        // Set an error state or display a message to the user
+      const { status, content } = response as CUSTOMER_RESPONSE;
+      if (status === 200 && Array.isArray(content)) {
+        const customerPayloadArray = content[0]; // Extract the array of customer data
+        setCustomerData(customerPayloadArray);
+        console.log("CUSTOMER DATA" , customerData[0])
       }
     } catch (error) {
       console.error("Error occurred while fetching customer data:", error);
-
-      if (error) {
-        console.error("Error message:", error);
-        // Set an error state or display the error message to the user
-      } else {
-        console.error("Unknown error occurred");
-        // Set an error state or display a generic error message to the user
-      }
-
-      // Handle uncaught runtime errors to prevent UI crash
-      // For example, you can display a friendly error message to the user
-      // or set an error state to conditionally render an error component
     }
   };
 
@@ -247,7 +126,6 @@ const Customer = () => {
   };
 
   const handleDelete = async (rowData: any) => {
-    // Handle delete action here, using the data from rowData if necessary
     console.log("Delete clicked for:", rowData, rowData?.id);
 
     try {
@@ -286,7 +164,6 @@ const Customer = () => {
         const { status, content } = response as MOORING_RESPONSE;
         if (status === 200 && Array.isArray(content)) {
           setMooringData(content);
-          // setFilteredMooringData(content); // Initialize filtered data with all data
         }
       });
   };
@@ -300,7 +177,7 @@ const Customer = () => {
     <>
       <div className="flex  items-center justify-between ml-3 mr-3 overflow-hidden">
         <div>
-          <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">
+          <h1 className="mt-12 ml-8 opacity-30 text-2xl font-normal">
             MOORMANAGE/Customer
           </h1>
         </div>
@@ -331,14 +208,8 @@ const Customer = () => {
         </div>
       </div>
 
-      {/* <div className="flex  mt-10 ml-12 mr-20">
-        {statCardsData.map((items) => (
-          <StatCard key={items[0].title} items={items} />
-        ))}
-      </div> */}
-      
-      <div className="flex ml-12 gap-4 mt-10">
-        <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[28vw] h-[105vh]">
+      <div className="flex ml-12 gap-4">
+        <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[28vw] h-[85vh]">
           <DataTable
             value={filteredCustomerData}
             header={CustomerHeader}
@@ -368,30 +239,9 @@ const Customer = () => {
               field="phoneNumber"
               header="Phone:"
             ></Column>
-            {/* <Column
-            style={{ width: "10vw" }}
-            field="address"
-            header="Address"
-          ></Column>
-          <Column
-            header="Actions"
-            body={(rowData) => (
-              <div className="flex gap-2">
-                <Button
-                  label="Edit"
-                  className="p-button-text p-button-info"
-                  onClick={() => handleEdit(rowData)}
-                />
-                <Button
-                  label="Delete"
-                  className="p-button-text p-button-danger"
-                  onClick={() => handleDelete(rowData)}
-                />
-              </div>
-            )}
-          ></Column> */}
           </DataTable>
         </div>
+
         {/* middle container */}
         <div className="relative w-[30vw]">
           <img
