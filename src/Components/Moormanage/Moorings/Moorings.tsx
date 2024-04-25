@@ -9,7 +9,6 @@ import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { useGetMooringsMutation } from "../../../Services/MoorManage/moormanage";
 import Timeline from "../../customComponent/Timeline";
-
 import { InputSwitch, InputSwitchChangeEvent } from "primereact/inputswitch";
 
 import {
@@ -44,7 +43,6 @@ const Moorings = () => {
   const [selectedCustomer, setSelectedCustomer] = useState<any>(null);
   const [editMode, setEditMode] = useState(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
-
   const [filteredMooringData, setFilteredMooringData] = useState<
     MOORING_PAYLOAD[]
   >([]);
@@ -60,10 +58,10 @@ const Moorings = () => {
   const [selectedMooring, setSelectedMooring] = useState<MOORING_PAYLOAD>();
   console.log("selectedmooring", selectedMooring);
 
-  const handleInputChange = (e: InputSwitchChangeEvent) => {
+  const handleInputChange = (e: any) => {
     // e.stopPropagation();
-    console.log(e.value);
-    setIsChecked(e.value);
+    console.log("value", e.value);
+    setIsChecked((prev) => !prev);
   };
 
   const [getMoorings] = useGetMooringsMutation();
@@ -265,13 +263,11 @@ const Moorings = () => {
                     data-testid="edit"
                   />
                 </span>
-                {/* <InputSwitch
+                <InputSwitch
                   checked={isChecked}
-                  onChange={(e) => setIsChecked(e.value)}
+                  onChange={handleInputChange}
                   className="border-none ml-20"
-                /> */}
-
-                
+                />
               </div>
             </div>
 
