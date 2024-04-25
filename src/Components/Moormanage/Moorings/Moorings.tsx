@@ -9,6 +9,7 @@ import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { useGetMooringsMutation } from "../../../Services/MoorManage/moormanage";
 import Timeline from "../../customComponent/Timeline";
+
 import { InputSwitch, InputSwitchChangeEvent } from "primereact/inputswitch";
 
 import {
@@ -20,15 +21,15 @@ import { RiDeleteBin5Fill } from "react-icons/ri";
 import { Avatar } from "primereact/avatar";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { Dialog } from "primereact/dialog";
+import DataTableSearchFieldComponent from "../../Common/ DataTableSearchFieldComponent";
 
 interface CustomerData {
   id: string;
-  boatName: string;
   name: string;
-  date: string;
-  measurement: string;
-  place: string;
+  email: string;
+  phone: number;
 }
+
 interface CustomerProps {
   id: string;
   name: string;
@@ -58,10 +59,10 @@ const Moorings = () => {
   const [selectedMooring, setSelectedMooring] = useState<MOORING_PAYLOAD>();
   console.log("selectedmooring", selectedMooring);
 
-  const handleInputChange = (e: any) => {
+  const handleInputChange = (e: InputSwitchChangeEvent) => {
     // e.stopPropagation();
-    console.log("value", e.value);
-    setIsChecked((prev) => !prev);
+    console.log(e.value);
+    setIsChecked(e.value);
   };
 
   const [getMoorings] = useGetMooringsMutation();
@@ -108,7 +109,8 @@ const Moorings = () => {
             <i className="pi pi-search text-[#D2D2D2]" />
             <InputText
               placeholder="Search by name, ID, mooring no, boat name, phone no..."
-              className="h-[5vh] w-[48vh] cursor-pointer text-sm"
+              className="h-[5vh]
+               w-[48vh] cursor-pointer text-[0.65rem] text-center border-1 border-[1px] border-[#9F9F9F] rounded-sm "
               value={searchQuery}
               onChange={handleSearchChange}
             />
@@ -117,6 +119,56 @@ const Moorings = () => {
       </div>
     );
   };
+
+  const boatData: CustomerData[] = [
+    {
+      id: "#001",
+      email: "M001",
+      name: "John Doe",
+      phone: 9789756452,
+    },
+    {
+      id: "#001",
+      email: "M001",
+      name: "John Doe",
+      phone: 9789756452,
+    },
+    {
+      id: "#001",
+      email: "M001",
+      name: "John Doe",
+      phone: 9789756452,
+    },
+    {
+      id: "#001",
+      email: "M001",
+      name: "John Doe",
+      phone: 9789756452,
+    },
+  ];
+
+  const tableColumns = [
+    {
+      id: "email",
+      label: "Email",
+      style: { width: "6vw" },
+    },
+    {
+      id: "id",
+      label: "Id",
+      style: { width: "6vw" },
+    },
+    {
+      id: "name",
+      label: "Name",
+      style: { width: "10vw" },
+    },
+    {
+      id: "phone",
+      label: "Phone",
+      style: { width: "6vw" },
+    },
+  ];
 
   const getMooringsData = async () => {
     await getMoorings({})
@@ -139,6 +191,26 @@ const Moorings = () => {
   useEffect(() => {
     getMooringsData();
   }, []);
+
+  const header = (
+    <div className="">
+      {/* <span className="text-xl font-bold">Work Orders</span> */}
+
+      <div className="text-xl w-full font-bold bg-red-600">Work Orders</div>
+      <div className="">
+        <div className="p-input-icon-left">
+          <i
+            className="pi pi-search text-[#D2D2D2] "
+            data-testid="search-icon"
+          />
+          <InputText
+            placeholder="Search"
+            className="h-[5vh] cursor-pointer font-bold"
+          />
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <>
@@ -171,33 +243,47 @@ const Moorings = () => {
       </div>
 
       <div className="flex ml-12 gap-4 mt-10">
-        <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[28vw] h-[4vh]">
-          <DataTable
-            value={filteredMooringData}
+        <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[28vw] h-[60%]">
+          {/* <DataTable
+            value={boatData}
             header={MooringsHeader}
             scrollable={true}
             tableStyle={{
-              // minWidth: "20rem",
+
               fontSize: "12px",
               color: "#000000",
               fontWeight: 600,
               backgroundColor: "#D9D9D9",
             }}
-            size="small"
+            // size="small"
           >
             <Column header="ID:" field="id" style={{ width: "6vw" }}></Column>
             <Column
-              style={{ width: "6vw" }}
-              field="ownerName"
+              style={{ width: "50vw" }}
+              field="name"
               header="Mooring Name"
             ></Column>
             <Column
-              style={{ width: "10vw" }}
+              style={{ width: "50vw" }}
               field="gpsCoordinates"
               header="GPS Coordinates"
             ></Column>
-          </DataTable>
+          </DataTable> */}
+
+          <DataTableSearchFieldComponent
+            data={boatData}
+            tableStyle={{
+              fontSize: "12px",
+              color: "#000000",
+              fontWeight: 600,
+              backgroundColor: "#D9D9D9",
+            }}
+            scrollable={true}
+            columns={tableColumns}
+            header={MooringsHeader}
+          />
         </div>
+
         <div className="relative">
           <img
             src="/assets/images/Sea-img.png"
@@ -463,3 +549,100 @@ const Moorings = () => {
 };
 
 export default Moorings;
+// import React, { useState } from 'react'
+// import DataTableSearchFieldComponent from '../../Common/ DataTableSearchFieldComponent';
+// import { InputText } from 'primereact/inputtext';
+// interface BoatData {
+//   id: string;
+//   customerName: string;
+//   // mooringServiceDate: string;
+//   // mooringLocation: string;
+//   // name:string
+// }
+// const Moorings = () => {
+
+//   const [boatData, setBoatData] = useState<BoatData[]>([
+//     {
+//       id: "01",
+//       customerName: "Suncatcher",
+//       // mooringServiceDate: "John Smith",
+//       // mooringLocation: "15, March 2024",
+//       // name:"arun"
+//     },
+
+//     // {
+//     //   id: "01",
+//     //   customerName: "Suncatcher",
+//     //   mooringServiceDate: "15,march,2024",
+//     //   mooringLocation: "38 21.806 144 44.959",
+//     //   name:"arun"
+//     // },
+//     // {
+//     //   id: "02",
+//     //   customerName: "Suncatcher",
+//     //   mooringServiceDate: "15,march,2024",
+//     //   mooringLocation: "38 21.806 144 44.959",
+//     //   name:"arun"
+//     // },
+//     // {
+//     //   id: "03",
+//     //   customerName: "Suncatcher",
+//     //   mooringServiceDate: "15,march,2024",
+//     //   mooringLocation: "38 21.806 144 44.959",
+//     //   name:"arun"
+//     // },
+//   ]);
+//   const columnHeaders = ["Customer ID", "Product Name", "Quantity"];
+
+//   const header = (
+//     <div className="flex flex-wrap align-items-center justify-between  p-4">
+//       <span className="text-xl font-bold">Work Orders</span>
+//       <div className="">
+//         <div className="p-input-icon-left">
+//           <i
+//             className="pi pi-search text-[#D2D2D2] "
+//             data-testid="search-icon"
+//           />
+//           <InputText
+//             placeholder="Search"
+//             className="h-[5vh] cursor-pointer font-bold"
+//           />
+//         </div>
+//       </div>
+//     </div>
+//   );
+
+//   return (
+//     <>
+
+//       {/*
+//       <DataTableSearchFieldComponent
+//         value={boatData}
+//         tableStyle={{ fontSize: "0.80rem", fontWeight: "bold" }}
+//         scrollable={true}
+//         field={"Product 1"}
+//         header={<span>Header</span>}
+
+//         columnHeader={columnHeaders}
+
+//         Style={{}}
+
+//       /> */}
+//       <DataTableSearchFieldComponent
+
+//         header={header}
+//         value={boatData}
+//         tableStyle={{
+//           // width: "73rem",
+//           fontSize: "0.90rem",
+//           fontWeight: "bold",
+//         }}
+//         scrollable={true}
+
+//       />
+
+//     </>
+//   )
+// }
+
+// export default Moorings

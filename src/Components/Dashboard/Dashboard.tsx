@@ -11,7 +11,7 @@ import { FaCircle } from "react-icons/fa6";
 import Timeline from "../customComponent/Timeline";
 import { FaCalendar } from "react-icons/fa";
 import "./Dashboard.css";
-import Accordition from "../customComponent/Accordion";
+import Accordition from "../Common/Accordion";
 interface BoatData {
   id: string;
   customerName: string;

@@ -29,6 +29,7 @@ import {
   MOORING_RESPONSE,
 } from "../../../Services/MoorManage/types";
 import DatePickerComponent from "../../Common/DatePickerComponent";
+import DataTableSearchFieldComponent from "../../Common/ DataTableSearchFieldComponent";
 
 interface CustomerData {
   id: string;
@@ -336,61 +337,11 @@ const Customer = () => {
           <StatCard key={items[0].title} items={items} />
         ))}
       </div> */}
-      
+
       <div className="flex ml-12 gap-4 mt-10">
         <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[28vw] h-[105vh]">
-          <DataTable
-            value={filteredCustomerData}
-            header={CustomerHeader}
-            scrollable={true}
-            tableStyle={{
-              // minWidth: "20rem",
-              fontSize: "12px",
-              color: "#000000",
-              fontWeight: 600,
-              backgroundColor: "#D1D1D1",
-            }}
-            size="small"
-          >
-            <Column header="ID:" field="id" style={{ width: "6vw" }}></Column>
-            <Column
-              style={{ width: "6vw" }}
-              field="name"
-              header="Name:"
-            ></Column>
-            <Column
-              style={{ width: "10vw" }}
-              field="email"
-              header="Email:"
-            ></Column>
-            <Column
-              style={{ width: "5vw" }}
-              field="phoneNumber"
-              header="Phone:"
-            ></Column>
-            {/* <Column
-            style={{ width: "10vw" }}
-            field="address"
-            header="Address"
-          ></Column>
-          <Column
-            header="Actions"
-            body={(rowData) => (
-              <div className="flex gap-2">
-                <Button
-                  label="Edit"
-                  className="p-button-text p-button-info"
-                  onClick={() => handleEdit(rowData)}
-                />
-                <Button
-                  label="Delete"
-                  className="p-button-text p-button-danger"
-                  onClick={() => handleDelete(rowData)}
-                />
-              </div>
-            )}
-          ></Column> */}
-          </DataTable>
+
+
         </div>
         {/* middle container */}
         <div className="relative w-[30vw]">
