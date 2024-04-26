@@ -50,7 +50,6 @@ const WorkOrders = () => {
       console.error("Error fetching work order data:", error);
     }
   };
-  
 
   const handleEdit = (rowData: any) => {
     setSelectedCustomer(rowData);
@@ -98,7 +97,7 @@ const WorkOrders = () => {
                   <AddWorkOrders
                     workOrderData={selectedCustomer}
                     editMode={editMode}
-                    setVisible = {setVisible}
+                    setVisible={setVisible}
                   />
                 </Dialog>
               </div>
@@ -158,7 +157,7 @@ const WorkOrders = () => {
                 <div className="flex gap-4">
                   <span
                     className="text-black underline cursor-pointer"
-                    onClick={ () => handleEdit(rowData)}
+                    onClick={() => handleEdit(rowData)}
                   >
                     Edit
                   </span>

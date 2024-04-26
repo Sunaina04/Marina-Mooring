@@ -68,7 +68,6 @@ const AccountPayable = () => {
   const header = (
     <div className="flex flex-wrap align-items-center justify-between gap-2 ">
       <span className="text-xl font-bold">Account Payable</span>
-      
     </div>
   );
   return (
@@ -102,9 +101,7 @@ const AccountPayable = () => {
             onClick={handleButtonClick}
             visible={false}
             onHide={handleModalClose}
-          >
-           
-          </CustomModal>
+          ></CustomModal>
         </div>
       </div>
       <div className="bg-[#F2F2F2] rounded-md border-[1px] border-[#D1D1D1] p-2 mt-12 w-[68vw] ml-20">
@@ -112,45 +109,46 @@ const AccountPayable = () => {
           <Column
             header="invoice"
             field="invoice"
-            style={{ width: "5rem" ,fontSize:"0.80rem"}}
+            style={{ width: "5rem", fontSize: "0.80rem" }}
           ></Column>
           <Column
             field="mooringid"
             header="Mooring ID"
-            style={{ width: "8rem",fontSize:"0.80rem" }}
+            style={{ width: "8rem", fontSize: "0.80rem" }}
           ></Column>
           <Column
             field="name"
             header="Customer Name"
-            style={{ width: "11rem",fontSize:"0.80rem" }}
+            style={{ width: "11rem", fontSize: "0.80rem" }}
           ></Column>
           <Column
             field="technicianName"
             header="Technician name"
-            style={{ width: "11rem" ,fontSize:"0.80rem"}}
+            style={{ width: "11rem", fontSize: "0.80rem" }}
           ></Column>
           <Column
             field="services"
             header="Services"
-            style={{ width: "10rem",fontSize:"0.80rem" }}
+            style={{ width: "10rem", fontSize: "0.80rem" }}
           ></Column>
-          <Column field="time" header="Time" style={{ width: "5rem",fontSize:"0.80rem" }}>
-
-          </Column>
+          <Column
+            field="time"
+            header="Time"
+            style={{ width: "5rem", fontSize: "0.80rem" }}
+          ></Column>
           <Column
             field="amount"
             header="Amount"
-            style={{ width: "6rem",fontSize:"0.80rem" }}
+            style={{ width: "6rem", fontSize: "0.80rem" }}
           ></Column>
           <Column
             header="Actions"
-            style={{fontSize:"0.80rem" }}
+            style={{ fontSize: "0.80rem" }}
             body={() => (
               <div className="flex gap-4">
                 <span className="text-green-500  bg-green-100 underline cursor-pointer">
                   Paid
                 </span>
-               
               </div>
             )}
           ></Column>
