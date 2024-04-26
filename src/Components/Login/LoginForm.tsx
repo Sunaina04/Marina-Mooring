@@ -3,12 +3,12 @@ import {
   useGetEmployeeMutation,
   useLoginMutation,
   useResetPasswordMutation,
-} from "../../Services/authentication/authApi";
+} from "../../Services/Authentication/authApi";
 import {
   ErrorResponse,
   LOGIN_RESPONSE,
   RESET_PASSSWORD_RESPONSE,
-} from "../../Services/authentication/types";
+} from "../../Services/Authentication/AuthTypes";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserData } from "../../store/Slice/userSlice";
 import { Link, useNavigate } from "react-router-dom";

@@ -4,6 +4,7 @@ import { InputTextarea } from "primereact/inputtextarea";
 import InputComponent from "../../Common/InputComponent";
 import { InputText } from "primereact/inputtext";
 import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
+import { Button } from "primereact/button";
 interface City {
     name: string;
     code: string;
@@ -215,7 +216,7 @@ const AddTechnication = () => {
                 </div>
 
                 <div className="flex gap-3 mt-4 ">
-                    <ButtonComponent
+                    <Button
                         onClick={function (): void {
                             throw new Error("Function not implemented.");
                         }}
@@ -231,7 +232,7 @@ const AddTechnication = () => {
                             borderRadius: "0.50rem",
                         }}
                     />
-                    <ButtonComponent
+                    <Button
                         onClick={function (): void {
                             throw new Error("Function not implemented.");
                         }}

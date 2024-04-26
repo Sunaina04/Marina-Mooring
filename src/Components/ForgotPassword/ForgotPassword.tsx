@@ -3,11 +3,11 @@ import InputComponent from "../Common/InputComponent";
 import { useNavigate } from "react-router-dom";
 import {
   useForgotPasswordMutation,
-} from "../../Services/authentication/authApi";
+} from "../../Services/Authentication/authApi";
 import {
   ErrorResponseForgotPassword,
   validateEmailResponse,
-} from "../../Services/authentication/types";
+} from "../../Services/Authentication/AuthTypes";
 import { Button } from "primereact/button";
 import { PasswordValidation } from "../utils/PasswordValidation";
 

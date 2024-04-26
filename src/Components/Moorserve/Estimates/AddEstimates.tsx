@@ -6,6 +6,7 @@ import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown'
 import InputComponent from '../../Common/InputComponent'
 import { IoIosAdd } from "react-icons/io";
 import { GrFormSubtract } from "react-icons/gr";
+import { Button } from 'primereact/button'
 const AddEstimates = () => {
     const [value, setValue] = useState<string>("");
 
@@ -227,8 +228,7 @@ const AddEstimates = () => {
                 </div>
 
                 <div className="flex gap-3 mt-4 ">
-                    <ButtonComponent
-                        onClick={() => { }}
+                    <Button
                         label={"Save"}
                         style={{
                             width: "5vw",
@@ -241,7 +241,7 @@ const AddEstimates = () => {
                             borderRadius: "0.50rem",
                         }}
                     />
-                    <ButtonComponent
+                    <Button
                         onClick={() => { }}
                         label={"Back"}
                         text={true}
