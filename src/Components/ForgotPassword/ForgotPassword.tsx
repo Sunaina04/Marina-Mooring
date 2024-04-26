@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import InputComponent from "../Common/InputComponent";
-import ButtonComponent from "../Common/ButtonComponent";
 import { useNavigate } from "react-router-dom";
 import {
   useForgotPasswordMutation,
-  useValidateEmailMutation,
 } from "../../Services/authentication/authApi";
 import {
-  ErrorResponse,
   ErrorResponseForgotPassword,
   validateEmailResponse,
 } from "../../Services/authentication/types";
@@ -18,7 +15,6 @@ const ForgotPassword = () => {
   const navigate = useNavigate();
   const navigateToLoginPage = useNavigate();
   const [validateEmail] = useForgotPasswordMutation();
-  const token = localStorage.getItem("token");
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState<any>([]);
   // console.log("errorData", errors);

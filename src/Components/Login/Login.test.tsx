@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import LoginForm from "./LoginForm";
 import { Provider } from "react-redux";
 import { store } from "../../store/store";
-import { BrowserRouter, MemoryRouter } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import user from "@testing-library/user-event";
 const Label = "Login";
 const typeEmail = "email";

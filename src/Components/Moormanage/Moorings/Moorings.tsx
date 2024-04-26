@@ -290,7 +290,7 @@ const Moorings = () => {
             className="bg-no-repeat object-cover bg-auto rounded-md w-full h-[105vh]"
             alt="Sea"
           />
-          <div className=" absolute top-72   ">
+          <div className="absolute top-72">
             <div className="">
               <Timeline data-testid="timeline" />
             </div>
@@ -548,101 +548,6 @@ const Moorings = () => {
   );
 };
 
+
 export default Moorings;
-// import React, { useState } from 'react'
-// import DataTableSearchFieldComponent from '../../Common/ DataTableSearchFieldComponent';
-// import { InputText } from 'primereact/inputtext';
-// interface BoatData {
-//   id: string;
-//   customerName: string;
-//   // mooringServiceDate: string;
-//   // mooringLocation: string;
-//   // name:string
-// }
-// const Moorings = () => {
 
-//   const [boatData, setBoatData] = useState<BoatData[]>([
-//     {
-//       id: "01",
-//       customerName: "Suncatcher",
-//       // mooringServiceDate: "John Smith",
-//       // mooringLocation: "15, March 2024",
-//       // name:"arun"
-//     },
-
-//     // {
-//     //   id: "01",
-//     //   customerName: "Suncatcher",
-//     //   mooringServiceDate: "15,march,2024",
-//     //   mooringLocation: "38 21.806 144 44.959",
-//     //   name:"arun"
-//     // },
-//     // {
-//     //   id: "02",
-//     //   customerName: "Suncatcher",
-//     //   mooringServiceDate: "15,march,2024",
-//     //   mooringLocation: "38 21.806 144 44.959",
-//     //   name:"arun"
-//     // },
-//     // {
-//     //   id: "03",
-//     //   customerName: "Suncatcher",
-//     //   mooringServiceDate: "15,march,2024",
-//     //   mooringLocation: "38 21.806 144 44.959",
-//     //   name:"arun"
-//     // },
-//   ]);
-//   const columnHeaders = ["Customer ID", "Product Name", "Quantity"];
-
-//   const header = (
-//     <div className="flex flex-wrap align-items-center justify-between  p-4">
-//       <span className="text-xl font-bold">Work Orders</span>
-//       <div className="">
-//         <div className="p-input-icon-left">
-//           <i
-//             className="pi pi-search text-[#D2D2D2] "
-//             data-testid="search-icon"
-//           />
-//           <InputText
-//             placeholder="Search"
-//             className="h-[5vh] cursor-pointer font-bold"
-//           />
-//         </div>
-//       </div>
-//     </div>
-//   );
-
-//   return (
-//     <>
-
-//       {/*
-//       <DataTableSearchFieldComponent
-//         value={boatData}
-//         tableStyle={{ fontSize: "0.80rem", fontWeight: "bold" }}
-//         scrollable={true}
-//         field={"Product 1"}
-//         header={<span>Header</span>}
-
-//         columnHeader={columnHeaders}
-
-//         Style={{}}
-
-//       /> */}
-//       <DataTableSearchFieldComponent
-
-//         header={header}
-//         value={boatData}
-//         tableStyle={{
-//           // width: "73rem",
-//           fontSize: "0.90rem",
-//           fontWeight: "bold",
-//         }}
-//         scrollable={true}
-
-//       />
-
-//     </>
-//   )
-// }
-
-// export default Moorings

@@ -1,17 +1,13 @@
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import dayjs from "dayjs";
 import { SetStateAction, useState } from "react";
 import { Nullable } from "primereact/ts-helpers";
 import { SelectButton, SelectButtonChangeEvent } from "primereact/selectbutton";
-import { Accordion, AccordionTab } from "primereact/accordion";
-import StatCard from "../StatCard/StatCard";
-import { BsFileCheckFill } from "react-icons/bs";
-import { FaCircle } from "react-icons/fa6";
 import Timeline from "../customComponent/Timeline";
-import { FaCalendar } from "react-icons/fa";
 import "./Dashboard.css";
-import Accordition from "../Common/Accordion";
+import Accordition from "../customComponent/Accordion";
+import { FaCircle } from "react-icons/fa";
+
 interface BoatData {
   id: string;
   customerName: string;
@@ -119,83 +115,51 @@ const Dashboard = () => {
     </div>
   );
 
-  const [expanded, setExpanded] = useState("panel1");
-
-  const handleChange =
-    (panel: SetStateAction<string>) => (event: any, isExpanded: any) => {
-      setExpanded(isExpanded ? panel : "");
-    };
-
-  const statCardsData = [
-    [
-      { title: "Total Customers", percentage: 17, count: 42324 },
-      { title: "Total Customers", percentage: 17, count: 43324 },
-      { title: "Total Customers", percentage: 17, count: 44324 },
-      { title: "Total Customers", percentage: 17, count: 58765 },
-      { title: "Total Customers", percentage: 17, count: 42324 },
-      { title: "Total Customers", percentage: 17, count: 46789 },
-    ],
-  ];
-
-  const events = [
-    { title: "Open Work Order", start: "2024-03-27", end: "2024-03-27" },
-
-    { title: "Total Moorings", start: "2024-03-27", end: "2024-03-27" },
-
-    { title: "Open Work Order", start: "2024-03-28", end: "2024-03-28" },
-
-    { title: "Total Moorings", start: "2024-03-28", end: "2024-03-28" },
-
-    // Add more events here
-  ];
-
   return (
     <>
       <div className="flex ml-12 hello">
-        <div>
-          <h1 className="mt-14 ml-12 opacity-30 text-2xl font-normal">
-            Dashboard
+          <h1 className="mt-12 ml-12 opacity-30 text-2xl font-normal">
+            DASHBOARD
           </h1>
-        </div>
       </div>
 
       <div className="flex justify-between p-4 ml-8">
         {/* Boat Data DataTable */}
 
         {/* right section */}
-        <div className="flex flex-col ">
+        <div className="relative ">
           <div className="w-[43vw] h-14 mt-11">
             <img src="/assets/images/Sea-img.png" />
-            <div className="-translate-y-[45vh] translate-x-[5vw]">
+            <div className="absolute top-20 left-3">
               <Timeline />
             </div>
-            <div className="-translate-y-[45vh] translate-x-[20vw]">
+            <div className="absolute top-28 right-8">
               <Timeline />
             </div>
           </div>
-          <div className="absolute -translate-y-[19vh] translate-x-[25vw] bottom-0  rounded-md border-[1px] p-1 border-gray-300 w-[17vw] h-[13vh] bg-white">
+          <div className="absolute top-60 left-72 rounded-md border-[1px] p-1 border-gray-300 w-[17vw] h-[13vh] bg-white">
             <p className="text-[0.7rem] ml-1  text-black">Status</p>
             <hr className="m-1 border-black" />
             <div className="flex">
               <div>
                 <FaCircle className="h-3 text-red-600 mt-1" />
-                <FaCircle className="h-3 text-green-600 mt-4" />
+                <FaCircle className="h-3 text-green-600 mt-2" />
               </div>
               <div>
                 <p className="text-[0.6rem] text-black mt-1">Need inspection</p>
-                <p className="text-[0.6rem] text-black tracking-tighter mt-[0.9rem]">
+                <p className="text-[0.6rem] text-black tracking-tighter mt-[0.3rem]">
                   Gear On (in the water)
                 </p>
               </div>
               <div className="ml-1">
                 <FaCircle className="h-3 text-violet-600 mt-1 " />
-                <FaCircle className="h-3 text-gray-500 mt-4" />
+                <FaCircle className="h-3 text-gray-500 mt-2" />
               </div>
               <div>
                 <p className="text-[0.6rem] text-black tracking-tighter mt-1">
                   Gear Off (out of the water)
                 </p>
-                <p className="text-[0.6rem] text-black tracking-tighter mt-[0.9rem]">
+                <p className="text-[0.6rem] text-black tracking-tighter mt-[0.3rem]">
                   Not in Use
                 </p>
               </div>
@@ -258,44 +222,8 @@ const Dashboard = () => {
         {/* leftSection */}
 
         <div className="mr-50 mt-11">
-
-
           <Accordition />
-
-
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       </div>
     </>
   );
