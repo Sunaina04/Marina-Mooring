@@ -20,6 +20,8 @@ import {
   MOORING_PAYLOAD,
   MOORING_RESPONSE,
 } from '../../../Services/MoorManage/types'
+import { IoSearch } from 'react-icons/io5'
+import DataTableSearchFieldComponent from '../../Common/ DataTableSearchFieldComponent'
 
 const Customer = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -96,16 +98,17 @@ const Customer = () => {
     }
   }
 
-  const CustomerHeader = () => {
+  const CustomersHeader = () => {
     return (
-      <div className="flex flex-col">
-        <span className="text-sm font-extrabold mb-2">Customers</span>
-        <div className="flex items-center gap-2 p-2">
-          <div className="p-input-icon-left">
-            <i className="pi pi-search text-[#D2D2D2]" />
+      <div className="">
+        <div className="flex items-center">
+          <div className="p-input-icon-left ">
+            <IoSearch style={{ marginLeft: '1rem', color: '#A4A4A4' }} />
             <InputText
-              placeholder="Search by name, ID, mooring no, boat name, phone no..."
-              className="h-[5vh] w-[48vh] cursor-pointer text-sm"
+              placeholder="Search by name, ID,address..."
+              className="h-[5vh] w-[55vh] cursor-pointer text-[0.65rem]
+               text-[#A4A4A4]  border-1 border-[1px]
+               border-[#9F9F9F] rounded-md pl-8" // Adjust padding to make space for the icon
               value={searchQuery}
               onChange={handleSearchChange}
             />
@@ -114,6 +117,84 @@ const Customer = () => {
       </div>
     )
   }
+
+  const boatData= [
+    {
+      id: '#001',
+      email: 'Jone@gmail.com',
+      name: 'John Doe',
+      phone: 9789756452,
+    },
+    {
+      id: '#001',
+      email: 'Jone@gmail.com',
+      name: 'John Doe',
+      phone: 9789756452,
+    },
+    {
+      id: '#001',
+      email: 'Jone@gmail.com',
+      name: 'John Doe',
+      phone: 9789756452,
+    },
+    {
+      id: '#001',
+      email: 'Jone@gmail.com',
+      name: 'John Doe',
+      phone: 9789756452,
+    },
+
+    {
+      id: '#001',
+      email: 'Jone@gmail.com',
+      name: 'John Doe',
+      phone: 9789756452,
+    },
+    {
+      id: '#001',
+      email: 'Jone@gmail.com',
+      name: 'John Doe',
+      phone: 9789756452,
+    },
+
+    {
+      id: '#001',
+      email: 'Jone@gmail.com',
+      name: 'John Doe',
+      phone: 9789756452,
+    },
+
+    {
+      id: '#001',
+      email: 'Jone@gmail.com',
+      name: 'John Doe',
+      phone: 9789756452,
+    },
+  ]
+  const tableColumns = [
+    {
+      id: 'id',
+      label: 'ID:',
+      style: { width: '4vw', borderBottom: '1px solid #C0C0C0', backGroundColor: 'red' },
+    },
+
+    {
+      id: 'name',
+      label: 'Name:',
+      style: { width: '6vw', borderBottom: '1px solid #C0C0C0' },
+    },
+    {
+      id: 'email',
+      label: 'Email:',
+      style: { width: '6vw', borderBottom: '1px solid #C0C0C0' },
+    },
+
+    {
+      id: 'phone',
+      label: 'Phone:',
+      style: { width: '6vw', borderBottom: '1px solid #C0C0C0' },
+    },
+  ]
 
   const getMooringsData = async () => {
     await getMoorings({})
@@ -132,6 +213,26 @@ const Customer = () => {
   }, [])
 
   console.log('selectedCustoer', selectedCustomer)
+
+  // const actionButtons = [
+  //   () => (
+  //     <>
+  //       <div className='flex gap-8'>
+
+  //         <button  onClick={() => handleButtonClick()}>
+  //           edit
+  //         </button>
+
+  //         <button onClick={() => handleButtonClick()}>
+  //           delete
+  //         </button>
+
+  //       </div>
+
+  //     </>
+  //   ),
+
+  // ];
 
   return (
     <>
@@ -166,28 +267,24 @@ const Customer = () => {
       </div>
 
       <div className="flex ml-12 gap-4">
-        <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[28vw] h-[85vh]">
-          <DataTable
-            value={filteredCustomerData}
-            header={CustomerHeader}
-            scrollable={true}
-            onRowSelect={(e) => {
-              setSelectedCustomer(e.data)
-              setCustomerRecord(true)
-            }}
+        <div className="bg-[F2F2F2] overflow-x-hidden overflow-y-scroll rounded-md border-[1px]  border-gray-300 w-[28vw] h-[70vh]">
+          <div className="text-sm font-extrabold rounded-sm w-full  bg-[#D9D9D9]">
+            <h1 className="p-4">Customers</h1>
+          </div>
+
+          <DataTableSearchFieldComponent
+            data={boatData}
             tableStyle={{
-              // minWidth: "20rem",
-              fontSize: '12px',
+              fontSize: '10px',
               color: '#000000',
               fontWeight: 600,
-              backgroundColor: '#D1D1D1',
+              backgroundColor: '#D9D9D9',
             }}
-            size="small">
-            <Column header="ID:" field="id" style={{ width: '6vw' }}></Column>
-            <Column style={{ width: '6vw' }} field="customerName" header="Name:"></Column>
-            <Column style={{ width: '10vw' }} field="emailAddress" header="Email:"></Column>
-            <Column style={{ width: '5vw' }} field="phone" header="Phone:"></Column>
-          </DataTable>
+            scrollable={false}
+            columns={tableColumns}
+            header={CustomersHeader}
+            // actionbuttons={actionButtons}
+          />
         </div>
 
         {/* middle container */}
@@ -234,7 +331,7 @@ const Customer = () => {
         </div>
 
         {/* last container */}
-        {(selectedCustomer && customerRecord) && (
+        {selectedCustomer && customerRecord && (
           <div className="w-[30vw]">
             <div className="rounded-md border">
               <div className="bg-[#D9D9D9] flex justify-between pb-2">

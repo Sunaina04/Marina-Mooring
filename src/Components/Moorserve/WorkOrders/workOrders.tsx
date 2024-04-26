@@ -113,6 +113,8 @@ const WorkOrders = () => {
               // width: "73rem",
               fontSize: "0.80rem",
               fontWeight: "bold",
+
+              backgroundColor:"red"
             }}
             scrollable={true}
           >

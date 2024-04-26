@@ -39,3 +39,6 @@ border-radius: 5px;
   background-color: black;
 }
 
+.p-datatable .p-datatable-tbody > tr ,td{
+  background: #F2F2F2
+}

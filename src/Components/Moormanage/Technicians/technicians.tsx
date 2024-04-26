@@ -1,118 +1,112 @@
-import { useEffect, useState } from "react";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
-import { SelectButton, SelectButtonChangeEvent } from "primereact/selectbutton";
-import { Nullable } from "primereact/ts-helpers";
-import { BiCalendarAlt } from "react-icons/bi";
-import AddTechnication from "./AddTechnician";
-import { Button } from "primereact/button";
-import { InputText } from "primereact/inputtext";
-import ButtonComponent from "../../Common/ButtonComponent";
-import { Calendar } from 'primereact/calendar';
-import {
-  TECHNICIAN_PAYLOAD,
-  TECHNICIAN_RESPONSE,
-} from "../../../Services/MoorManage/types";
-import { useGetTechnicianMutation } from "../../../Services/MoorManage/moormanage";
+import { useEffect, useState } from 'react'
+import { DataTable } from 'primereact/datatable'
+import { Column } from 'primereact/column'
+import { SelectButton, SelectButtonChangeEvent } from 'primereact/selectbutton'
+import { Nullable } from 'primereact/ts-helpers'
+import { BiCalendarAlt } from 'react-icons/bi'
+import AddTechnication from './AddTechnician'
+import { Button } from 'primereact/button'
+import { InputText } from 'primereact/inputtext'
+import ButtonComponent from '../../Common/ButtonComponent'
+import { Calendar } from 'primereact/calendar'
+import { TECHNICIAN_PAYLOAD, TECHNICIAN_RESPONSE } from '../../../Services/MoorManage/types'
+import { useGetTechnicianMutation } from '../../../Services/MoorManage/moormanage'
+import DataTableSearchFieldComponent from '../../Common/ DataTableSearchFieldComponent'
+import { IoSearch } from 'react-icons/io5'
 
 interface Technician_Data {
-  id: string;
-  techniciansName: string;
-  openWorkOrders: string;
-  completedJobs: string;
+  id: string
+  techniciansName: string
+  openWorkOrders: string
+  completedJobs: string
 }
 
 interface BillsData {
-  id: number;
-  technician: string;
-  techniciansName: string;
-  dueDate: string;
+  id: number
+  technician: string
+  techniciansName: string
+  dueDate: string
+}
+interface CustomerData {
+  id: string
+  techniciansName: string
+  openWorkOrder: number
+  completedJobs: number
 }
 
 const Technicians = () => {
-  const [date, setDate] = useState<Nullable<(Date | null)[]>>(null);
-  const options: string[] = ["Open", "Completed"];
-  const [value, setValue] = useState<string>(options[0]);
-  const [dataVisible, setDataVisible] = useState(false);
-  const [technicianRecord, setTechnicianRecord] = useState();
-  console.log("sfsffas", technicianRecord)
-  const [globalFilter, setGlobalFilter] = useState<string | null>(null);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
-  const [technicianData, setTechnicianData] = useState<TECHNICIAN_PAYLOAD[]>(
-    []
-  );
-  const [filteredTechnicianData, setFilteredTechnicianData] = useState<
-    TECHNICIAN_PAYLOAD[]
-  >([]);
-  const [getTechnicians] = useGetTechnicianMutation();
+  const [date, setDate] = useState<Nullable<(Date | null)[]>>(null)
+  const options: string[] = ['Open', 'Completed']
+  const [value, setValue] = useState<string>(options[0])
+  const [dataVisible, setDataVisible] = useState(false)
+  const [technicianRecord, setTechnicianRecord] = useState()
+  console.log('sfsffas', technicianRecord)
+  const [globalFilter, setGlobalFilter] = useState<string | null>(null)
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date())
+  const [technicianData, setTechnicianData] = useState<TECHNICIAN_PAYLOAD[]>([])
+  const [filteredTechnicianData, setFilteredTechnicianData] = useState<TECHNICIAN_PAYLOAD[]>([])
+  const [getTechnicians] = useGetTechnicianMutation()
 
   const [billsData, setBillsData] = useState<BillsData[]>([
     {
       id: 0,
-      technician: "Suncatcher",
-      techniciansName: "John Smith",
+      technician: 'Suncatcher',
+      techniciansName: 'John Smith',
       // amount: "$50"
-      dueDate: "3-12-2024",
+      dueDate: '3-12-2024',
     },
-  ]);
+  ])
 
-  const [billsValue, setBillsValue] = useState<Technician_Data[]>([
+  const tableColumns = [
     {
-      id: "1",
-      techniciansName: "John Smith",
-      openWorkOrders: "35",
-      completedJobs: "3",
+      id: 'id',
+      label: 'ID',
+      style: { width: '6vw', borderBottom: '1px solid #C0C0C0', fontSize: '0.90rem' },
     },
 
-    // {
-    //   id: 0,
-    //   mooring: "Suncatcher",
-    //   techniciansName: "John Smith",
-    //   amount: "$50",
-    // },
-    // {
-    //   id: 0,
-    //   mooring: "Suncatcher",
-    //   techniciansName: "John Smith",
-    //   amount: "$50",
-    // },
-    // {
-    //   id: 0,
-    //   mooring: "Suncatcher",
-    //   techniciansName: "John Smith",
-    //   amount: "$50",
-    // },
-    // {
-    //   id: 0,
-    //   mooring: "Suncatcher",
-    //   techniciansName: "John Smith",
-    //   amount: "$50",
-    // },
-  ]);
+    {
+      id: 'techniciansName',
+      label: 'Technicians Name',
+      style: { width: '12vw', borderBottom: '1px solid #C0C0C0', fontSize: '0.90rem' },
+    },
+    {
+      id: 'openWorkOrder',
+      label: 'Open Work Orders',
+      style: { width: '12vw', borderBottom: '1px solid #C0C0C0', fontSize: '0.90rem' },
+    },
 
-  const technicianHeader = (
-    <div>
-      <div className="p-input-icon-left">
-        <i className="pi pi-search" />
-        <input
-          type="search"
-          value={globalFilter as string}
-          onChange={(e) => setGlobalFilter(e.target.value)}
-          placeholder="Search By name, Id..."
-          className="border-[1px] w-[30vw] p-2 pl-10 rounded-md"
-        />
+    {
+      id: 'completedJobs',
+      label: 'Complete jobs',
+      style: { width: '12vw', borderBottom: '1px solid #C0C0C0', fontSize: '0.90rem' },
+    },
+  ]
+
+  const CustomersHeader = () => {
+    return (
+      <div className="">
+        <div className="flex items-center  bg-[#F2F2F2]">
+          <div className="p-input-icon-left">
+            <IoSearch style={{ marginLeft: '1rem', color: '#A4A4A4' }} />
+            <InputText
+              placeholder="Search by name, ID"
+              className="h-[5vh] w-[65vh] cursor-pointer text-[0.65rem]
+               text-[#A4A4A4]  border-1 border-[1px]
+               border-[#9F9F9F] rounded-md pl-10"
+            />
+          </div>
+        </div>
       </div>
-    </div>
-  );
+    )
+  }
 
   const handleDateSelect = (date: Date) => {
-    setSelectedDate(date);
-  };
+    setSelectedDate(date)
+  }
 
   const handleDateUnselect = () => {
-    setSelectedDate(null);
-  };
-
+    setSelectedDate(null)
+  }
 
   //table header 2
   const workOrder = (
@@ -122,154 +116,68 @@ const Technicians = () => {
           <p className="font-bold"> Work Orders </p>
         </div>
         <div>
-        <SelectButton value={value} onChange={(e) => setValue(e.value)} options={options} />
+          <SelectButton value={value} onChange={(e) => setValue(e.value)} options={options} />
         </div>
       </div>
     </>
-  );
-
-  const Billsheader = (
-    <div className="flex flex-wrap align-items-center gap-4 ">
-      <span className="text-sm font-bold text-[black]">Work Orders</span>
-      <div className=" ">
-        {/* <span
-          style={{
-            background: "#000000",
-            color: "white",
-            border: "1px solid black", // Adding border property
-            padding: "3px",
-            fontSize: "14px",
-            fontWeight: 400,
-            textAlign: "left",
-            marginRight: "-8px",
-          }}
-        >
-          Pending
-        </span>
-        <span
-          style={{
-            background: "#D9D9D9",
-            padding: "3px", // Adding padding for better appearance
-            fontSize: "14px",
-            fontWeight: 400,
-            textAlign: "left",
-          }}
-        >
-          Cleared
-        </span> */}
-
-        <div className="" >
-          <SelectButton
-            style={{ fontSize: "0.2rem", fontWeight: "bolder", height: "2rem" }}
-            value={value}
-            onChange={(e: SelectButtonChangeEvent) => setValue(e.value)}
-            options={options}
-          />
-        </div>
-      </div>
-
-      <div className="ml-72">
-        <Button
-          onClick={function (): void {
-            throw new Error("Function not implemented.");
-          }}
-          label={"Add New"}
-          style={{
-            backgroundColor: "black",
-            height: "4vh",
-            fontSize: "0.75rem",
-            borderRadius: "0.20rem",
-          }}
-
-        />
-      </div>
-    </div>
-  );
+  )
 
   const getTechniciansData = async () => {
     await getTechnicians({})
       .unwrap()
       .then(async (response) => {
-        console.log("RESPONSE", response);
-        const { status, content } = response as TECHNICIAN_RESPONSE;
+        console.log('RESPONSE', response)
+        const { status, content } = response as TECHNICIAN_RESPONSE
         if (status === 200 && Array.isArray(content)) {
-          setTechnicianData(content);
-          setFilteredTechnicianData(content); // Initialize filtered data with all data
+          setTechnicianData(content)
+          setFilteredTechnicianData(content) // Initialize filtered data with all data
         }
-      });
-  };
+      })
+  }
 
   useEffect(() => {
-    getTechniciansData();
-  }, []);
+    getTechniciansData()
+  }, [])
 
   return (
     <>
       <div className="flex justify-between items-center ml-12">
         <div>
-          <h1 className="mt-14 ml-20 opacity-30 text-2xl font-normal">
-            MOORMANAGE/Technicians
-          </h1>
+          <h1 className="mt-14 ml-20 opacity-30 text-2xl font-normal">MOORMANAGE/Technicians</h1>
         </div>
         <div className="flex gap-4 items-center mr-10 mt-14">
           <div className="">
             <p> Filter order by Date </p>
           </div>
           <div>
-          <Calendar value={date} onChange={(e) => setDate(e.value)} selectionMode="range" readOnlyInput  />
+            <Calendar
+              value={date}
+              onChange={(e) => setDate(e.value)}
+              selectionMode="range"
+              readOnlyInput
+            />
           </div>
-          
         </div>
       </div>
 
-
       <div className="flex gap-5 mt-10 ml-20">
-
-        <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[35vw] ">
-          <DataTable
-            // value={filteredMooringData}
-            header={technicianHeader}
-            value={billsValue}
-            scrollable={true}
-            selectionMode="single"
-            onRowSelect={(e) => {
-              setTechnicianRecord(e.data);
-              setDataVisible(true);
-            }}
+        <div className="rounded-md border-[1px] p-4 border-gray-300 w-[38vw] h-[65vh] mb-96 overflow-x-hidden overflow-y-scroll ">
+          <DataTableSearchFieldComponent
+            data={filteredTechnicianData}
             tableStyle={{
-              // minWidth: "20rem",
-              fontSize: "12px",
-              color: "#000000",
+              // fontSize: '10rem',
+              color: '#000000',
               fontWeight: 600,
-              backgroundColor: "#D9D9D9",
+              backgroundColor: 'red',
             }}
-            size="small"
-          >
-            <Column header="ID:" field="id" style={{ width: "6vw" }}></Column>
-            <Column
-              style={{ width: "6vw" }}
-              field="techniciansName"
-              header="Technician Name"
-            ></Column>
-            <Column
-              style={{ width: "10vw" }}
-              field="openWorkOrders"
-              header="Open Work Orders"
-            ></Column>
-            <Column
-              style={{ width: "10vw" }}
-              field="completedJobs"
-              header="Completed Jobs"
-            ></Column>
-          </DataTable>
+            columns={tableColumns}
+            header={CustomersHeader}
+          />
         </div>
-
-
-
 
         {dataVisible && (
           <div className=" rounded-md border-[1px]  border-[#D1D1D1]  ml-10  w-[35vw] ">
-            <DataTable
+            {/* <DataTable
               header={workOrder}
               value={billsData}
               scrollable={true}
@@ -298,12 +206,13 @@ const Technicians = () => {
                 style={{ width: "4vw" }}
                 body={(rowData) => <p className="underline">view</p>}
               ></Column>
-            </DataTable>
+            </DataTable> */}
+            <DataTableSearchFieldComponent data={[]} columns={[]} header={undefined} />
           </div>
         )}
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Technicians;
+export default Technicians

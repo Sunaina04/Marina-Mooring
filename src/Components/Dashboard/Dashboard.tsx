@@ -1,17 +1,13 @@
-import { DataTable } from 'primereact/datatable'
-import { Column } from 'primereact/column'
-import dayjs from 'dayjs'
-import { SetStateAction, useState } from 'react'
-import { Nullable } from 'primereact/ts-helpers'
-import { SelectButton, SelectButtonChangeEvent } from 'primereact/selectbutton'
-import { Accordion, AccordionTab } from 'primereact/accordion'
-import StatCard from '../StatCard/StatCard'
-import { BsFileCheckFill } from 'react-icons/bs'
-import { FaCircle } from 'react-icons/fa6'
-import Timeline from '../customComponent/Timeline'
-import { FaCalendar } from 'react-icons/fa'
-import './Dashboard.css'
-import Accordition from '../Common/Accordion'
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
+import { SetStateAction, useState } from "react";
+import { Nullable } from "primereact/ts-helpers";
+import { SelectButton, SelectButtonChangeEvent } from "primereact/selectbutton";
+import Timeline from "../customComponent/Timeline";
+import "./Dashboard.css";
+import Accordition from "../Common/Accordion";
+import { FaCircle } from "react-icons/fa";
+
 interface BoatData {
   id: string
   customerName: string
