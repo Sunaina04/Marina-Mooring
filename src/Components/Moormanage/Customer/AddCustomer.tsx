@@ -7,28 +7,17 @@ import {
   useUpdateCustomerMutation,
 } from "../../../Services/MoorManage/moormanage";
 import { Button } from "primereact/button";
+import { CityProps, CustomerDataProps } from "../../../types/CommonTypes";
 
-interface Props {
-  customer: any;
-  editMode: boolean;
-  closeModal: () => void;
-  getCustomer: () => void;
-}
-
-interface City {
-  name: string;
-  code: string;
-}
-
-const AddCustomer: React.FC<Props> = ({
+const AddCustomer: React.FC<CustomerDataProps> = ({
   customer,
   editMode,
   closeModal,
   getCustomer,
 }) => {
   const [value, setValue] = useState<string>("");
-  const [selectedCountry, setSelectedCountry] = useState<City | null>(null);
-  const [selectedState, setSelectedState] = useState<City | null>(null);
+  const [selectedCountry, setSelectedCountry] = useState<CityProps | null>(null);
+  const [selectedState, setSelectedState] = useState<CityProps | null>(null);
   const [customerName, setCustomerName] = useState<string>("");
   const [customerId, setCustomerId] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
@@ -37,10 +26,10 @@ const AddCustomer: React.FC<Props> = ({
   const [sectorBlock, setSectorBlock] = useState<string>("");
   const [pinCode, setPinCode] = useState<string>("");
   const [addCustomer] = useAddCustomerMutation();
-  const [selectedCity, setSelectedCity] = useState<City | null>(null);
+  const [selectedCity, setSelectedCity] = useState<CityProps | null>(null);
   const [updateCustomer] = useUpdateCustomerMutation();
 
-  const cities: City[] = [
+  const cities: CityProps[] = [
     { name: "New York", code: "NY" },
     { name: "Rome", code: "RM" },
     { name: "London", code: "LDN" },

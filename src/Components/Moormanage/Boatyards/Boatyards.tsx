@@ -8,13 +8,7 @@ import MooringTable from "./BoatyardTable";
 import { BOATYARD_DATA, BOATYARD_PAYLOAD, BOATYARD_RESPONSE } from "../../../Services/MoorManage/types";
 import BoatyardTable from "./BoatyardTable";
 import { useGetBoatyardsMutation } from "../../../Services/MoorManage/moormanage";
-interface CustomerData {
-  id: string;
-  name: string;
-  phoneNumber: number;
-  email: string;
-  InventoryItems: number;
-}
+
 const Boatyards = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [boatyardsData, setboatyardsData] = useState<BOATYARD_PAYLOAD[]>([]);
@@ -22,46 +16,6 @@ const Boatyards = () => {
     BOATYARD_PAYLOAD[]
   >([]);
   const [getBaotyards] = useGetBoatyardsMutation();
-
-  const [boatData] = useState<CustomerData[]>([
-    {
-      id: "0",
-      name: "Ram",
-      phoneNumber: 4564546897,
-      email: "test@gmail.com",
-      InventoryItems: 12,
-    },
-    {
-      id: "01",
-      name: "Ram",
-      phoneNumber: 4564546897,
-      email: "test@gmail.com",
-      InventoryItems: 12,
-    },
-
-    {
-      id: "02",
-      name: "Ram",
-      phoneNumber: 4564546897,
-      email: "test@gmail.com",
-      InventoryItems: 12,
-    },
-
-    {
-      id: "03",
-      name: "Ram",
-      phoneNumber: 4564546897,
-      email: "test@gmail.com",
-      InventoryItems: 12,
-    },
-    {
-      id: "04",
-      name: "Ram",
-      phoneNumber: 4564546897,
-      email: "test@gmail.com",
-      InventoryItems: 12,
-    },
-  ]);
 
   const moorings: BOATYARD_DATA[] = [
     {

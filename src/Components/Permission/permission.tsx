@@ -66,7 +66,7 @@ const Permission = () => {
         </div>
 
         <div className="mt-14 ml-64">
-          <ButtonComponent
+          <Button
             label={""}
             onClick={() => {}}
             style={{
@@ -93,7 +93,7 @@ const Permission = () => {
               }}
             />
             <span className="mr-4">Filter</span>
-          </ButtonComponent>
+          </Button>
         </div>
 
         <div className="flex  items-center mr-[23rem] mt-14">

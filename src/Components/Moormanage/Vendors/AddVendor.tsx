@@ -7,6 +7,7 @@ import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
 import { Checkbox } from "primereact/checkbox";
 import { VENDOR_PAYLOAD } from "../../../Services/MoorManage/types";
 import { useAddVendorsMutation } from "../../../Services/MoorManage/moormanage";
+import { Button } from "primereact/button";
 
 interface City {
   name: string;
@@ -608,7 +609,7 @@ const AddVendor: React.FC<Props> = ({
 
       <div className="flex gap-3 mt-4 ">
         {/* Save Button */}
-        <ButtonComponent
+        <Button
           onClick={saveVendor}
           label={"Save"}
           style={{
@@ -623,7 +624,7 @@ const AddVendor: React.FC<Props> = ({
           }}
         />
         {/* Back Button */}
-        <ButtonComponent
+        <Button
           onClick={closeModal}
           label={"Back"}
           text={true}

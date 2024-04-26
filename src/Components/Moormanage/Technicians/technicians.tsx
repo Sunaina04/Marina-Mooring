@@ -169,7 +169,7 @@ const Technicians = () => {
       </div>
 
       <div className="ml-72">
-        <ButtonComponent
+        <Button
           onClick={function (): void {
             throw new Error("Function not implemented.");
           }}

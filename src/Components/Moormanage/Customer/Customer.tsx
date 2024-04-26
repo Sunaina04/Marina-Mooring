@@ -21,14 +21,6 @@ import {
   MOORING_RESPONSE,
 } from '../../../Services/MoorManage/types'
 
-interface CustomerProps {
-  id: string
-  name: string
-  phone: string
-  email: string
-  address: string
-}
-
 const Customer = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [customerData, setCustomerData] = useState<CUSTOMER_PAYLOAD[]>([])
@@ -46,14 +38,6 @@ const Customer = () => {
   const [deleteCustomer] = useDeleteCustomerMutation()
 
   const [getMoorings] = useGetMooringsMutation()
-
-  const [edited, setEdited] = useState<CustomerProps>({
-    id: '#43453',
-    name: 'John Smith',
-    phone: '+1 234 543 4324',
-    email: 'john@gmail.com',
-    address: 'Suite 333 17529 Miller Spur South Ervinstad',
-  })
 
   const handleButtonClick = () => {
     setModalVisible(true)
@@ -293,7 +277,7 @@ const Customer = () => {
                 <div className="text-sm mt-2">
                   <p>
                     <span className="font-bold">Address:</span>
-                    {edited.address}
+                    {selectedCustomer.address}
                   </p>
                 </div>
                 <div className="font-bold text-sm mt-2">
