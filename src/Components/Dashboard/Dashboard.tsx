@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import dayjs from 'dayjs'
@@ -17,6 +18,24 @@ interface BoatData {
   customerName: string
   mooringServiceDate: string
   mooringLocation: string
+=======
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
+import { SetStateAction, useState } from "react";
+import { Nullable } from "primereact/ts-helpers";
+import { SelectButton, SelectButtonChangeEvent } from "primereact/selectbutton";
+import Timeline from "../customComponent/Timeline";
+import "./Dashboard.css";
+import Accordition from "../Common/Accordion";
+import { FaCircle } from "react-icons/fa";
+import DataTableComponent from "../Common/DataTableComponent";
+interface BoatData {
+  id: string;
+  customerName: string;
+  mooringId:string;
+  mooringServiceDate: string;
+  mooringLocation: string;
+>>>>>>> Stashed changes
 }
 
 interface BillsData {
@@ -32,6 +51,7 @@ const Dashboard = () => {
   const [value, setValue] = useState<string>(options[0])
   const [boatData, setBoatData] = useState<BoatData[]>([
     {
+<<<<<<< Updated upstream
       id: '01',
       customerName: 'Suncatcher',
       mooringServiceDate: 'John Smith',
@@ -55,6 +75,35 @@ const Dashboard = () => {
       customerName: 'Suncatcher',
       mooringServiceDate: '15,march,2024',
       mooringLocation: '38 21.806 144 44.959',
+=======
+      id: "01",
+      customerName: "Suncatcher",
+      mooringId:"#3254",
+      mooringServiceDate: "John Smith",
+      mooringLocation: "15, March 2024",
+    },
+
+    {
+      id: "02",
+      customerName: "Suncatcher",
+      mooringId:"#3254",
+      mooringServiceDate: "15,march,2024",
+      mooringLocation: "38 21.806 144 44.959",
+    },
+    {
+      id: "03",
+      customerName: "Suncatcher",
+      mooringId:"#3254",
+      mooringServiceDate: "15,march,2024",
+      mooringLocation: "38 21.806 144 44.959",
+    },
+    {
+      id: "04",
+      customerName: "Suncatcher",
+      mooringId:"#3254",
+      mooringServiceDate: "15,march,2024",
+      mooringLocation: "38 21.806 144 44.959",
+>>>>>>> Stashed changes
     },
   ])
 
@@ -195,10 +244,19 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div>
+          <div className="bg-[#F2F2F2] rounded-xl border-[1px] border-[#D1D1D1] p- mt-[20rem] w-[43vw] ">
             {/* dataTable */}
-
-            <div className="bg-[#F2F2F2] rounded-xl border-[1px] border-[#D1D1D1] p- mt-[20rem] w-[43vw] ">
+            <DataTableComponent
+              header={Boatsheader}
+              value={boatData}
+              tableStyle={{
+               // width: "73rem",
+                fontSize: "0.90rem",
+                fontWeight: "bold",
+              }}
+              scrollable={true}
+            />
+            {/* <div className="bg-[#F2F2F2] rounded-xl border-[1px] border-[#D1D1D1] p- mt-[20rem] w-[43vw] ">
               <DataTable
                 value={boatData}
                 header={Boatsheader}
@@ -232,7 +290,7 @@ const Dashboard = () => {
                     </div>
                   )}></Column>
               </DataTable>
-            </div>
+            </div> */}
           </div>
         </div>
 

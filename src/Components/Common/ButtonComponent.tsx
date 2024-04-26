@@ -2,7 +2,7 @@ import { Button } from "primereact/button";
 import React, { ReactNode } from "react";
 
 interface ButtonCompProps {
-  // onClick: () => void;
+  onClick: () => void;
   disabled?: boolean;
   label: string;
   style?: React.CSSProperties;

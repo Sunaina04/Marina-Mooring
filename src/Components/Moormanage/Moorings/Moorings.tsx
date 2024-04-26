@@ -225,10 +225,10 @@ const Moorings = () => {
             label={"ADD NEW"}
             style={{
               width: "50vw",
-              height: "80vh",
+              height: "90vh",
               backgroundColor: "black",
               cursor: "pointer",
-              fontSize: "14px",
+              fontSize: "15px",
               fontWeight: "bold",
               color: "white",
               borderRadius: "1rem",
