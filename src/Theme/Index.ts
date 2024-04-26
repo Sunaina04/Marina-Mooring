@@ -7,7 +7,7 @@ import {
   secondary,
   success,
   warning,
-} from "./themeColors";
+} from "./ThemeColors";
 
 const THEMES = {
   LIGHT: "light",

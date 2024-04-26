@@ -14,7 +14,7 @@ import {
 } from "redux-persist";
 
 import userSlice from "./Slice/userSlice";
-import { userApi } from "../Services/userApi";
+import { userApi } from "../Services/UserApi";
 
 const rootReducer = combineReducers({
   user: userSlice,

@@ -5,9 +5,9 @@ import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
 import {
   useAddCustomerMutation,
   useUpdateCustomerMutation,
-} from "../../../Services/MoorManage/moormanage";
+} from "../../../Services/MoorManage/MoormanageApi";
 import { Button } from "primereact/button";
-import { CityProps, CustomerDataProps } from "../../../types/CommonTypes";
+import { CityProps, CustomerDataProps } from "../../../Types/CommonTypes";
 
 const AddCustomer: React.FC<CustomerDataProps> = ({
   customer,

@@ -8,11 +8,11 @@ import { GrFormSubtract } from "react-icons/gr";
 import {
   WorkOrder_PAYLOAD,
   WorkOrder_RESPONSE,
-} from "../../../Services/MoorServe/types";
+} from "../../../Types/MoorServeApiTypes";
 import {
   useAddWorkOrderMutation,
   useUpdateWorkOrderMutation,
-} from "../../../Services/MoorServe/moorserve";
+} from "../../../Services/MoorServe/MoorserveApi";
 import { Button } from "primereact/button";
 
 interface Props {

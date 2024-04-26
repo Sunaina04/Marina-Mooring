@@ -7,7 +7,7 @@ import { InputText } from "primereact/inputtext";
 import React, { useState, useEffect } from "react";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
-import { useGetMooringsMutation } from "../../../Services/MoorManage/moormanage";
+import { useGetMooringsMutation } from "../../../Services/MoorManage/MoormanageApi";
 import Timeline from "../../customComponent/Timeline";
 
 import { InputSwitch, InputSwitchChangeEvent } from "primereact/inputswitch";
@@ -15,7 +15,7 @@ import { InputSwitch, InputSwitchChangeEvent } from "primereact/inputswitch";
 import {
   MOORING_PAYLOAD,
   MOORING_RESPONSE,
-} from "../../../Services/MoorManage/types";
+} from "../../../Types/MoorManageApiTypes";
 import { FaCircle, FaEdit } from "react-icons/fa";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { Avatar } from "primereact/avatar";

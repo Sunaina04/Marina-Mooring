@@ -1,5 +1,5 @@
-import { userApi } from "../userApi";
-import { BOATYARD_PAYLOAD, CUSTOMER_PAYLOAD, MOORING_PAYLOAD, TECHNICIAN_PAYLOAD, VENDOR_PAYLOAD } from "./types";
+import { userApi } from "../UserApi";
+import { BOATYARD_PAYLOAD, CUSTOMER_PAYLOAD, MOORING_PAYLOAD, TECHNICIAN_PAYLOAD, VENDOR_PAYLOAD } from "../../Types/MoorManageApiTypes";
 
 const moormanageApi = userApi.injectEndpoints({
   endpoints: (builder: any) => ({

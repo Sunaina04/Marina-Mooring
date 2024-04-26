@@ -7,11 +7,11 @@ import { InputText } from "primereact/inputtext";
 import {
   useDeleteVendorMutation,
   useGetVendorsMutation,
-} from "../../../Services/MoorManage/moormanage";
+} from "../../../Services/MoorManage/MoormanageApi";
 import {
   VENDOR_PAYLOAD,
   VENDOR_RESPONSE,
-} from "../../../Services/MoorManage/types";
+} from "../../../Types/MoorManageApiTypes";
 import { Button } from "primereact/button";
 
 const Vendors = () => {

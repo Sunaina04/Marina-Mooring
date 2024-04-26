@@ -5,8 +5,8 @@ import InputComponent from "../../Common/InputComponent";
 import { InputText } from "primereact/inputtext";
 import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
 import { Checkbox } from "primereact/checkbox";
-import { VENDOR_PAYLOAD } from "../../../Services/MoorManage/types";
-import { useAddVendorsMutation } from "../../../Services/MoorManage/moormanage";
+import { VENDOR_PAYLOAD } from "../../../Types/MoorManageApiTypes";
+import { useAddVendorsMutation } from "../../../Services/MoorManage/MoormanageApi";
 import { Button } from "primereact/button";
 
 interface City {

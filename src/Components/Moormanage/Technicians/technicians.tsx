@@ -12,8 +12,8 @@ import { Calendar } from 'primereact/calendar';
 import {
   TECHNICIAN_PAYLOAD,
   TECHNICIAN_RESPONSE,
-} from "../../../Services/MoorManage/types";
-import { useGetTechnicianMutation } from "../../../Services/MoorManage/moormanage";
+} from "../../../Types/MoorManageApiTypes";
+import { useGetTechnicianMutation } from "../../../Services/MoorManage/MoormanageApi";
 
 interface Technician_Data {
   id: string;

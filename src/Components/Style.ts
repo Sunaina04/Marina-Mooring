@@ -1,4 +1,4 @@
-import { primary, secondary } from "../theme/themeColors";
+import { primary, secondary } from "../Theme/ThemeColors";
 
 
 export const fieldStyle = {

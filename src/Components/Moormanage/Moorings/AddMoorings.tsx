@@ -4,8 +4,8 @@ import { InputTextarea } from "primereact/inputtextarea";
 import { InputText } from "primereact/inputtext";
 import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
 import InputComponent from "../../Common/InputComponent";
-import { useAddMooringsMutation } from "../../../Services/MoorManage/moormanage";
-import { MOORING_PAYLOAD } from "../../../Services/MoorManage/types";
+import { useAddMooringsMutation } from "../../../Services/MoorManage/MoormanageApi";
+import { MOORING_PAYLOAD } from "../../../Types/MoorManageApiTypes";
 import { Button } from "primereact/button";
 
 interface Props {

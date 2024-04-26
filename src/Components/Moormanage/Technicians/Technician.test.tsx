@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import Technicians from "../Technicians/technicians";
 import { Provider } from "react-redux";
-import { store } from "../../../store/store";
+import { store } from "../../../Store/store";
 
 describe("Technician Components", () => {
   it("renders Customer component correctly", () => {

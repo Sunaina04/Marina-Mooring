@@ -2,10 +2,10 @@ import "./SignUp.css";
 import { FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
-import { useSignupMutation } from "../../Services/Authentication/authApi";
-import { SIGNUP_PAYLOAD, SIGNUP_RESPONSE } from "../../Services/Authentication/AuthTypes";
+import { SIGNUP_PAYLOAD, SIGNUP_RESPONSE } from "../../Types/AuthTypes";
 import { useState, ChangeEvent, FormEvent, useRef } from "react";
 import { Toast } from 'primereact/toast';
+import { useSignupMutation } from "../../Services/Authentication/AuthApi";
 
 const SignUp = () => {
   const [signupPayload, setSignupPayload] = useState<SIGNUP_PAYLOAD>({

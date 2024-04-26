@@ -5,9 +5,9 @@ import CustomModal from "../../customComponent/CustomModal";
 import AddBoatyards from "./AddBoatyards";
 import { InputText } from "primereact/inputtext";
 import MooringTable from "./BoatyardTable";
-import { BOATYARD_DATA, BOATYARD_PAYLOAD, BOATYARD_RESPONSE } from "../../../Services/MoorManage/types";
+import { BOATYARD_DATA, BOATYARD_PAYLOAD, BOATYARD_RESPONSE } from "../../../Types/MoorManageApiTypes";
 import BoatyardTable from "./BoatyardTable";
-import { useGetBoatyardsMutation } from "../../../Services/MoorManage/moormanage";
+import { useGetBoatyardsMutation } from "../../../Services/MoorManage/MoormanageApi";
 
 const Boatyards = () => {
   const [modalVisible, setModalVisible] = useState(false);

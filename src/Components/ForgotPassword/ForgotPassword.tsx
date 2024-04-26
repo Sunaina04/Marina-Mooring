@@ -2,14 +2,12 @@ import React, { useState } from "react";
 import InputComponent from "../Common/InputComponent";
 import { useNavigate } from "react-router-dom";
 import {
-  useForgotPasswordMutation,
-} from "../../Services/Authentication/authApi";
-import {
   ErrorResponseForgotPassword,
   validateEmailResponse,
-} from "../../Services/Authentication/AuthTypes";
+} from "../../Types/AuthTypes";
 import { Button } from "primereact/button";
-import { PasswordValidation } from "../utils/PasswordValidation";
+import { PasswordValidation } from "../Utils/PasswordValidation";
+import { useForgotPasswordMutation } from "../../Services/Authentication/AuthApi";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();

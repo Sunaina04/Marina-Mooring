@@ -1,8 +1,8 @@
 import * as React from "react";
 import { NavLink, Outlet } from "react-router-dom";
-import { SidebarMenu } from "./components/SidebarMenu";
-import Header from "./components/Header";
-import { filterModalStyle } from "../../style";
+import { SidebarMenu } from "../LayoutComponents/SidebarMenu";
+import Header from "../LayoutComponents/Header";
+import { filterModalStyle } from "../../Style";
 import { style } from "../../customComponent/CustomModal";
 
 const AdminLayout = () => {

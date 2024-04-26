@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { BOATYARD_DATA } from "../../../Services/MoorManage/types";
+import { BOATYARD_DATA } from "../../../Types/MoorManageApiTypes";
 import { Button } from "primereact/button";
 
 interface DataProps {

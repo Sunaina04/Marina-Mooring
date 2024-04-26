@@ -4,7 +4,7 @@ import {
   BaseQueryApi,
   FetchArgs,
 } from "@reduxjs/toolkit/query/react";
-import { RootState } from "../store/store";
+import { RootState } from "../Store/store";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: process.env.REACT_APP_BASE_URL,

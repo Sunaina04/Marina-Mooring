@@ -6,12 +6,12 @@ import { InputText } from "primereact/inputtext";
 import {
   FORMS_PAYLOAD,
   FORMS_RESPONSE,
-} from "../../../Services/MoorServe/types";
+} from "../../../Types/MoorServeApiTypes";
 import {
   useDownloadFormMutation,
   useGetFormsMutation,
   useUploadFormMutation,
-} from "../../../Services/MoorServe/moorserve";
+} from "../../../Services/MoorServe/MoorserveApi";
 import { Button } from "primereact/button";
 
 const Forms = () => {

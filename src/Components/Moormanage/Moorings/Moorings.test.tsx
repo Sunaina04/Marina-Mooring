@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import Moorings from "./Moorings";
 import { Provider } from "react-redux";
-import { store } from "../../../store/store";
+import { store } from "../../../Store/store";
 
 describe("Moorings Component", () => {
   it("renders Moorings header", () => {

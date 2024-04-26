@@ -10,8 +10,8 @@ import AddWorkOrders from "./AddWorkOrders";
 import {
   WorkOrder_PAYLOAD,
   WorkOrder_RESPONSE,
-} from "../../../Services/MoorServe/types";
-import { useGetWorkOrdersMutation } from "../../../Services/MoorServe/moorserve";
+} from "../../../Types/MoorServeApiTypes";
+import { useGetWorkOrdersMutation } from "../../../Services/MoorServe/MoorserveApi";
 
 const WorkOrders = () => {
   const [visible, setVisible] = useState(false);

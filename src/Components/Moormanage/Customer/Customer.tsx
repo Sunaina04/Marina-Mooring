@@ -13,13 +13,13 @@ import {
   useDeleteCustomerMutation,
   useGetCustomerMutation,
   useGetMooringsMutation,
-} from '../../../Services/MoorManage/moormanage'
+} from '../../../Services/MoorManage/MoormanageApi'
 import {
   CUSTOMER_PAYLOAD,
   CUSTOMER_RESPONSE,
   MOORING_PAYLOAD,
   MOORING_RESPONSE,
-} from '../../../Services/MoorManage/types'
+} from '../../../Types/MoorManageApiTypes'
 
 const Customer = () => {
   const [modalVisible, setModalVisible] = useState(false)

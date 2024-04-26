@@ -3,7 +3,7 @@ import { useRoutes } from "react-router-dom";
 import { QueryClientProvider, QueryClient } from "react-query";
 import routes from "./routes";
 import { Provider } from "react-redux";
-import { store } from "./store/store";
+import { store } from "./Store/store";
 import { ToastContainer } from "react-toastify";
 import { Toaster } from "react-hot-toast";
 import { PrimeReactProvider } from "primereact/api";

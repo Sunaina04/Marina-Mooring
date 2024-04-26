@@ -1,4 +1,4 @@
-import { UserData } from "../../Services/Authentication/AuthTypes";
+import { UserData } from "../../Types/AuthTypes";
 
 export interface INITIAl_STATE {
   token: null | string;
