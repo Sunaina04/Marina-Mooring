@@ -1,24 +1,3 @@
-<<<<<<< Updated upstream
-import { DataTable } from 'primereact/datatable'
-import { Column } from 'primereact/column'
-import dayjs from 'dayjs'
-import { SetStateAction, useState } from 'react'
-import { Nullable } from 'primereact/ts-helpers'
-import { SelectButton, SelectButtonChangeEvent } from 'primereact/selectbutton'
-import { Accordion, AccordionTab } from 'primereact/accordion'
-import StatCard from '../StatCard/StatCard'
-import { BsFileCheckFill } from 'react-icons/bs'
-import { FaCircle } from 'react-icons/fa6'
-import Timeline from '../customComponent/Timeline'
-import { FaCalendar } from 'react-icons/fa'
-import './Dashboard.css'
-import Accordition from '../Common/Accordion'
-interface BoatData {
-  id: string
-  customerName: string
-  mooringServiceDate: string
-  mooringLocation: string
-=======
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { SetStateAction, useState } from "react";
@@ -35,7 +14,6 @@ interface BoatData {
   mooringId:string;
   mooringServiceDate: string;
   mooringLocation: string;
->>>>>>> Stashed changes
 }
 
 interface BillsData {
@@ -51,31 +29,6 @@ const Dashboard = () => {
   const [value, setValue] = useState<string>(options[0])
   const [boatData, setBoatData] = useState<BoatData[]>([
     {
-<<<<<<< Updated upstream
-      id: '01',
-      customerName: 'Suncatcher',
-      mooringServiceDate: 'John Smith',
-      mooringLocation: '15, March 2024',
-    },
-
-    {
-      id: '01',
-      customerName: 'Suncatcher',
-      mooringServiceDate: '15,march,2024',
-      mooringLocation: '38 21.806 144 44.959',
-    },
-    {
-      id: '01',
-      customerName: 'Suncatcher',
-      mooringServiceDate: '15,march,2024',
-      mooringLocation: '38 21.806 144 44.959',
-    },
-    {
-      id: '01',
-      customerName: 'Suncatcher',
-      mooringServiceDate: '15,march,2024',
-      mooringLocation: '38 21.806 144 44.959',
-=======
       id: "01",
       customerName: "Suncatcher",
       mooringId:"#3254",
@@ -103,7 +56,6 @@ const Dashboard = () => {
       mooringId:"#3254",
       mooringServiceDate: "15,march,2024",
       mooringLocation: "38 21.806 144 44.959",
->>>>>>> Stashed changes
     },
   ])
 
