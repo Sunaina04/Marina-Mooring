@@ -2,17 +2,7 @@ import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import React from "react";
-
-interface MooringDetail {
-  id: string;
-  mainContact: string;
-  mooringNumber: string;
-  boatName: string;
-}
-
-interface RowExpansionProps {
-  mooringDetails: MooringDetail[];
-}
+import { RowExpansionProps } from "../../../Type/ComponentBasedType";
 
 const BoatyardDetailsTable: React.FC<RowExpansionProps> = ({
   mooringDetails,

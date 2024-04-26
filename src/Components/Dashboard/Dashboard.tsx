@@ -1,30 +1,13 @@
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
-import dayjs from 'dayjs'
-import { SetStateAction, useState } from 'react'
+import {  useState } from 'react'
 import { Nullable } from 'primereact/ts-helpers'
-import { SelectButton, SelectButtonChangeEvent } from 'primereact/selectbutton'
-import { Accordion, AccordionTab } from 'primereact/accordion'
-import StatCard from '../StatCard/StatCard'
-import { BsFileCheckFill } from 'react-icons/bs'
 import { FaCircle } from 'react-icons/fa6'
-import Timeline from '../customComponent/Timeline'
-import { FaCalendar } from 'react-icons/fa'
+import Timeline from '../CustomComponent/Timeline'
 import './Dashboard.css'
-import Accordition from '../Common/Accordion'
-interface BoatData {
-  id: string
-  customerName: string
-  mooringServiceDate: string
-  mooringLocation: string
-}
+import Accordition from '../CommonComponent/Accordion'
+import { BillsData, BoatData } from '../../Type/ComponentBasedType'
 
-interface BillsData {
-  workOrderNo: string
-  customerName: string
-  assignedTo: string
-  date: string
-}
 
 const Dashboard = () => {
   const [date, setDate] = useState<Nullable<(Date | null)[]>>(null)
@@ -103,49 +86,6 @@ const Dashboard = () => {
       </span>
     </div>
   )
-
-  const Billsheader = (
-    <div className="flex flex-wrap align-items-center justify-between gap-2 ">
-      <span className="text-sm font-bold">Bills</span>
-      <div className="ml-40 ">
-        <SelectButton
-          style={{ height: '2vh', fontSize: '0.50rem', fontWeight: 'bolder' }}
-          value={value}
-          onChange={(e: SelectButtonChangeEvent) => setValue(e.value)}
-          options={options}
-        />
-      </div>
-    </div>
-  )
-
-  const [expanded, setExpanded] = useState('panel1')
-
-  const handleChange = (panel: SetStateAction<string>) => (event: any, isExpanded: any) => {
-    setExpanded(isExpanded ? panel : '')
-  }
-
-  const statCardsData = [
-    [
-      { title: 'Total Customers', percentage: 17, count: 42324 },
-      { title: 'Total Customers', percentage: 17, count: 43324 },
-      { title: 'Total Customers', percentage: 17, count: 44324 },
-      { title: 'Total Customers', percentage: 17, count: 58765 },
-      { title: 'Total Customers', percentage: 17, count: 42324 },
-      { title: 'Total Customers', percentage: 17, count: 46789 },
-    ],
-  ]
-
-  const events = [
-    { title: 'Open Work Order', start: '2024-03-27', end: '2024-03-27' },
-
-    { title: 'Total Moorings', start: '2024-03-27', end: '2024-03-27' },
-
-    { title: 'Open Work Order', start: '2024-03-28', end: '2024-03-28' },
-
-    { title: 'Total Moorings', start: '2024-03-28', end: '2024-03-28' },
-
-    // Add more events here
-  ]
 
   return (
     <>

@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import LoginForm from "./LoginForm";
 import { Provider } from "react-redux";
-import { store } from "../../Store/store";
+import { store } from "../../Store/Store";
 import { BrowserRouter } from "react-router-dom";
 import user from "@testing-library/user-event";
 const Label = "Login";

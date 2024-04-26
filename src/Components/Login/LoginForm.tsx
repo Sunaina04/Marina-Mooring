@@ -1,26 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from 'react'
 import {
   useGetEmployeeMutation,
   useLoginMutation,
   useResetPasswordMutation,
-} from "../../Services/Authentication/AuthApi";
-import {
-  ErrorResponse,
-  LOGIN_RESPONSE,
-  RESET_PASSSWORD_RESPONSE,
-} from "../../Types/AuthTypes";
-import { useDispatch, useSelector } from "react-redux";
-import { setUserData } from "../../Store/Slice/userSlice";
-import { Link, useNavigate } from "react-router-dom";
-import { InputText } from "primereact/inputtext";
-
-interface LoginFormProps {
-  Label: string;
-  typeEmail: string;
-  typePass: string;
-  showSinUp: boolean;
-  admin?: boolean;
-}
+} from '../../Services/Authentication/AuthApi'
+import { ErrorResponse, LOGIN_RESPONSE, RESET_PASSSWORD_RESPONSE } from '../../Type/ApiTypes'
+import { useDispatch, useSelector } from 'react-redux'
+import { setUserData } from '../../Store/Slice/userSlice'
+import { Link, useNavigate } from 'react-router-dom'
+import { InputText } from 'primereact/inputtext'
+import { LoginFormProps } from '../../Type/ComponentBasedType'
 
 export default function LoginForm({
   Label,
@@ -29,54 +18,52 @@ export default function LoginForm({
   showSinUp,
   admin,
 }: LoginFormProps) {
-  const dispatch = useDispatch();
-  const toast = useRef<any>(null);
+  const dispatch = useDispatch()
+  const toast = useRef<any>(null)
   const [loginPayload, setLoginPayload] = useState({
-    username: "",
-    password: "",
-  });
-  const { username, password } = loginPayload;
-  const userData = useSelector((state: any) => state.user?.userData);
-  const token = localStorage?.getItem("token");
-  const navigate = useNavigate();
+    username: '',
+    password: '',
+  })
+  const { username, password } = loginPayload
+  const userData = useSelector((state: any) => state.user?.userData)
+  const token = useSelector((state: any) => state.user?.token)
+  const navigate = useNavigate()
 
   const [errors, setErrors] = useState({
-    email: "",
-    password: "",
-  });
+    email: '',
+    password: '',
+  })
 
   const handleChange = (e: any) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setLoginPayload((prev) => ({
       ...prev,
       [name]: value,
-    }));
-  };
+    }))
+  }
 
   /* ***************************************************
    * NOTE: API Hooks
    ****************************************************/
-  const [login] = useLoginMutation();
-  const [getEmployee] = useGetEmployeeMutation();
-  const [resetPassword] = useResetPasswordMutation();
+  const [login] = useLoginMutation()
+  const [getEmployee] = useGetEmployeeMutation()
+  const [resetPassword] = useResetPasswordMutation()
 
   const signInHandler = async () => {
-
-    if (loginPayload.username.length===0) {
+    if (loginPayload.username.length === 0) {
       setErrors((prev) => ({
         ...prev,
-        email: "Email cannot be empty",
-      }));
+        email: 'Email cannot be empty',
+      }))
     }
 
-    if (loginPayload.password.length===0) {
+    if (loginPayload.password.length === 0) {
       setErrors((prev) => ({
         ...prev,
-        password: "Password cannot be empty",
-      }));
-    
+        password: 'Password cannot be empty',
+      }))
     }
-    
+
     if (admin) {
       // try {
       //   const response = await login(loginPayload).unwrap();
@@ -93,7 +80,7 @@ export default function LoginForm({
       //       severity: "success",
       //       summary: message,
       //     });
-      navigate("/admin/login/permission");
+      navigate('/admin/login/permission')
       //   }
       // } catch (error: any) {
       //   console.error("Error occurred during login:", error);
@@ -103,26 +90,26 @@ export default function LoginForm({
       // }
     } else {
       try {
-        const response = await login(loginPayload).unwrap();
-        const { status, user, token, message } = response as LOGIN_RESPONSE;
+        const response = await login(loginPayload).unwrap()
+        const { status, user, token, message } = response as LOGIN_RESPONSE
         if (status === 200) {
-          console.log("data", user, response);
-          dispatch(setUserData({ ...user }));
-          localStorage.setItem("token", token);
+          console.log('data', user, response)
+          dispatch(setUserData({ ...user }))
+          localStorage.setItem('token', token)
           setLoginPayload({
-            username: "",
-            password: "",
-          });
+            username: '',
+            password: '',
+          })
           toast.current?.show({
-            severity: "success",
+            severity: 'success',
             summary: message,
-          });
-          navigate("/dashboard");
+          })
+          navigate('/dashboard')
         }
       } catch (error: any) {
-        console.error("Error occurred during login:", error);
+        console.error('Error occurred during login:', error)
         if (error.data) {
-          const { message: msg } = error.data as ErrorResponse;
+          const { message: msg } = error.data as ErrorResponse
         }
       }
     }
@@ -142,41 +129,39 @@ export default function LoginForm({
     //   }));
     //   return;
     // }
-
-  };
+  }
 
   const ResetPasswordHandler = async () => {
-    console.log("RESET PASSWORD");
+    console.log('RESET PASSWORD')
     const resetPassPayload = {
-      newPassword: "", // Add your new password here
-      confirmPassword: "", // Add your confirm password here
-    };
+      newPassword: '', 
+      confirmPassword: '', 
+    }
     try {
       const response = await resetPassword({
         payload: resetPassPayload,
-        token: token, // Make sure 'token' is defined in your scope
-      }).unwrap();
-      const { status, content, message } = response as RESET_PASSSWORD_RESPONSE;
+        token: token, 
+      }).unwrap()
+      const { status, content, message } = response as RESET_PASSSWORD_RESPONSE
       if (status === 200) {
-        navigate("/dashboard");
+        navigate('/dashboard')
       }
     } catch (error: any) {
-      console.error("Error occurred during password reset:", error);
+      console.error('Error occurred during password reset:', error)
       if (error.data) {
-        const { message: msg } = error.data as ErrorResponse;
-        // Handle error message if needed
+        const { message: msg } = error.data as ErrorResponse
       }
     }
-  };
+  }
 
   const getEmployeeHandler = async () => {
-    const response = await getEmployee({});
-    console.log("response", response);
-  };
+    const response = await getEmployee({})
+    console.log('response', response)
+  }
 
   useEffect(() => {
-    getEmployeeHandler();
-  }, []);
+    getEmployeeHandler()
+  }, [])
 
   return (
     <>
@@ -190,88 +175,82 @@ export default function LoginForm({
                 className="w-full h-80 bg-black mb-5"
               />
             </div>
-            <div className="text-red-500">
-              {errors.email}
-            </div>
-            <div className="p-input-icon-left" style={{ position: "relative" }}>
+            <div className="text-red-500">{errors.email}</div>
+            <div className="p-input-icon-left" style={{ position: 'relative' }}>
               <InputText
                 style={{
-                  width: "40vw",
-                  height: "6vh",
-                  padding: "0 4rem 0 3rem",
-                  border: "1px solid gray",
-                  fontSize: "1.10vw",
+                  width: '40vw',
+                  height: '6vh',
+                  padding: '0 4rem 0 3rem',
+                  border: '1px solid gray',
+                  fontSize: '1.10vw',
                 }}
                 type={
                   showSinUp
-                    ? typeEmail === "password"
-                      ? "password"
-                      : "text"
-                    : typeEmail === "email"
-                      ? "email"
-                      : "text"
+                    ? typeEmail === 'password'
+                      ? 'password'
+                      : 'text'
+                    : typeEmail === 'email'
+                      ? 'email'
+                      : 'text'
                 }
-                placeholder={showSinUp ? "New password" : "Enter Your email"}
+                placeholder={showSinUp ? 'New password' : 'Enter Your email'}
                 name="username"
-                value={username} // Bind value to username state
+                value={username}
                 onChange={handleChange}
               />
               <span
                 className="w-5 h-5 absolute top-1/2 transform -translate-y-1/2 left-3  text-gray-400"
                 style={{
-                  backgroundImage: `url(${showSinUp
-                    ? "/assets/images/key.png"
-                    : "/assets/images/email.png"
-                    })`,
-                  backgroundRepeat: "no-repeat",
-                  backgroundSize: "contain",
-                }}
-              ></span>
+                  backgroundImage: `url(${
+                    showSinUp ? '/assets/images/key.png' : '/assets/images/email.png'
+                  })`,
+                  backgroundRepeat: 'no-repeat',
+                  backgroundSize: 'contain',
+                }}></span>
             </div>
           </div>
 
           <div className="mb-3">
-            <div className="p-input-icon-left" style={{ position: "relative" }}>
+            <div className="p-input-icon-left" style={{ position: 'relative' }}>
               <InputText
                 style={{
-                  width: "40vw",
-                  height: "6vh",
-                  padding: "0 4rem 0 3rem",
-                  border: "1px solid gray",
-                  fontSize: "1.10vw",
+                  width: '40vw',
+                  height: '6vh',
+                  padding: '0 4rem 0 3rem',
+                  border: '1px solid gray',
+                  fontSize: '1.10vw',
                 }}
                 type={
                   showSinUp
-                    ? typePass === "password"
-                      ? "password"
-                      : "text"
-                    : typePass === "password"
-                      ? "password"
-                      : "text"
+                    ? typePass === 'password'
+                      ? 'password'
+                      : 'text'
+                    : typePass === 'password'
+                      ? 'password'
+                      : 'text'
                 }
-                placeholder={showSinUp ? "Confirm password" : "Password"}
+                placeholder={showSinUp ? 'Confirm password' : 'Password'}
                 name="password"
-                value={password} // Bind value to password state
+                value={password}
                 onChange={handleChange}
               />
               <span
                 className="w-5 h-5 absolute top-1/2 transform -translate-y-1/2 left-3 text-gray-400"
                 style={{
-                  backgroundImage: `url(${admin ? "/assets/images/key.png" : "/assets/images/key.png"
-                    })`,
-                  backgroundRepeat: "no-repeat",
-                  backgroundSize: "contain",
-                }}
-              ></span>
+                  backgroundImage: `url(${
+                    admin ? '/assets/images/key.png' : '/assets/images/key.png'
+                  })`,
+                  backgroundRepeat: 'no-repeat',
+                  backgroundSize: 'contain',
+                }}></span>
             </div>
 
             {!showSinUp && !admin && (
               <>
                 <div className="flex justify-end mt-8 cursor-pointer ">
-                  <Link to={"/forgotPassword"}>
-                    <p className="font-normal font-['Roboto']">
-                      Forgot password?
-                    </p>
+                  <Link to={'/forgotPassword'}>
+                    <p className="font-normal font-['Roboto']">Forgot password?</p>
                   </Link>
                 </div>
 
@@ -282,11 +261,10 @@ export default function LoginForm({
             )}
           </div>
           <div className="flex flex-col items-center">
-            {admin && <span className="mb-8">For admin use only</span>}{" "}
+            {admin && <span className="mb-8">For admin use only</span>}{' '}
             <button
               className="w-40 h-12 bg-black text-white border border-black font-bold text-sm"
-              onClick={showSinUp ? ResetPasswordHandler : signInHandler}
-            >
+              onClick={showSinUp ? ResetPasswordHandler : signInHandler}>
               {Label}
             </button>
           </div>
@@ -294,16 +272,15 @@ export default function LoginForm({
       </div>
       {!admin && (
         <div className="flex justify-center items-center mt-0">
-          <div className="text-center mx-auto" style={{ width: "40vw" }}>
+          <div className="text-center mx-auto" style={{ width: '40vw' }}>
             <p className="text-xs font-bold">
-              Just testing the waters? If you do not have an account{" "}
-              <span className="underline font-bolder">CLICK HERE</span> to let
-              us know you would like to connect and see if MOORFIND can work for
-              you and your business.
+              Just testing the waters? If you do not have an account{' '}
+              <span className="underline font-bolder">CLICK HERE</span> to let us know you would
+              like to connect and see if MOORFIND can work for you and your business.
             </p>
           </div>
         </div>
       )}
     </>
-  );
+  )
 }

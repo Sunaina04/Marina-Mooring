@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
-import ButtonComponent from "../Common/ButtonComponent";
+import ButtonComponent from "../CommonComponent/ButtonComponent";
 import { InputText } from "primereact/inputtext";
 
 export const style = {

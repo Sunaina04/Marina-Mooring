@@ -1,5 +1,5 @@
+import { UPLOAD_PAYLOAD, WorkOrder_PAYLOAD } from "../../Type/ApiTypes";
 import { userApi } from "../UserApi";
-import { FORMS_PAYLOAD, UPLOAD_PAYLOAD, WorkOrder_PAYLOAD } from "../../Types/MoorServeApiTypes";
 
 const moorserveApi = userApi.injectEndpoints({
   endpoints: (builder: any) => ({

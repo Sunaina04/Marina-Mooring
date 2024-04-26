@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import Customer from "./Customer";
 import { Provider } from "react-redux";
-import { store } from "../../../Store/store";
+import { store } from "../../../Store/Store";
 import user from "@testing-library/user-event";
 
 // global.fetch = jest.fn(() => {

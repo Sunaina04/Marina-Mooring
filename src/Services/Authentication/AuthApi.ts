@@ -4,7 +4,7 @@ import {
   LOGIN_PAYLOAD,
   RESET_PASSWORD_PAYLOAD,
   SIGNUP_PAYLOAD,
-} from "../../Types/AuthTypes";
+} from "../../Type/ApiTypes";
 
 const authApi = userApi.injectEndpoints({
   endpoints: (builder: any) => ({

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import CustomModal from '../../customComponent/CustomModal'
+import CustomModal from '../../CustomComponent/CustomModal'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import AddCustomer from './AddCustomer'
@@ -8,7 +8,7 @@ import { FaEdit } from 'react-icons/fa'
 import { RiDeleteBin5Fill } from 'react-icons/ri'
 import { FaCircle } from 'react-icons/fa6'
 import { Dialog } from 'primereact/dialog'
-import Timeline from '../../customComponent/Timeline'
+import Timeline from '../../CustomComponent/Timeline'
 import {
   useDeleteCustomerMutation,
   useGetCustomerMutation,
@@ -19,7 +19,7 @@ import {
   CUSTOMER_RESPONSE,
   MOORING_PAYLOAD,
   MOORING_RESPONSE,
-} from '../../../Types/MoorManageApiTypes'
+} from '../../../Type/ApiTypes'
 
 const Customer = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -234,7 +234,7 @@ const Customer = () => {
         </div>
 
         {/* last container */}
-        {(selectedCustomer && customerRecord) && (
+        {selectedCustomer && customerRecord && (
           <div className="w-[30vw]">
             <div className="rounded-md border">
               <div className="bg-[#D9D9D9] flex justify-between pb-2">
@@ -385,22 +385,18 @@ const Customer = () => {
                         <span style={{ fontWeight: 'bold' }}>Weight:</span>{' '}
                         {customerRowData?.boatWeight}
                       </p>
-
                       <p>
                         <span style={{ fontWeight: 'bold' }}>Type of Weight:</span>{' '}
                         {customerRowData?.typeOfWeight}
                       </p>
-
                       <p>
                         <span style={{ fontWeight: 'bold' }}>Condition of Eye:</span>{' '}
                         {customerRowData?.conditionOfEye}
                       </p>
-
                       <p>
                         <span style={{ fontWeight: 'bold' }}>Shackle, Swivel Condition:</span>{' '}
                         {customerRowData?.shackleSwivelCondition}
                       </p>
-
                       <p>
                         <span style={{ fontWeight: 'bold' }}>Dept at Mean High Water:</span>{' '}
                         {customerRowData?.deptAtMeanHighWater}

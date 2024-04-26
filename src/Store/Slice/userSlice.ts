@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../store";
-import { INITIAl_STATE } from "./types";
-import { UserData } from "../../Types/AuthTypes";
+import { RootState } from "../Store";
+import { UserData } from "../../Type/ApiTypes";
+import { INITIAl_STATE } from "../../Type/CommonType";
 
 const initialState: INITIAl_STATE = {
   token: null,
@@ -16,7 +16,6 @@ export const userSlice = createSlice({
       const data = action.payload;
       state.userData = data;
     },
-
     setLogout: () => {
       return initialState;
     },
@@ -24,7 +23,5 @@ export const userSlice = createSlice({
 });
 
 export const { setLogout, setUserData } = userSlice.actions;
-
 export default userSlice.reducer;
 export const token = (state: RootState) => state?.user?.token;
-console.log("TOKEN" , token);

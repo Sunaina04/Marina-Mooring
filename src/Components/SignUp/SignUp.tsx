@@ -1,88 +1,79 @@
-import "./SignUp.css";
-import { FaFacebook } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
-import { SIGNUP_PAYLOAD, SIGNUP_RESPONSE } from "../../Types/AuthTypes";
-import { useState, ChangeEvent, FormEvent, useRef } from "react";
-import { Toast } from 'primereact/toast';
-import { useSignupMutation } from "../../Services/Authentication/AuthApi";
+import './SignUp.css'
+import { FaFacebook } from 'react-icons/fa'
+import { FcGoogle } from 'react-icons/fc'
+import { Link } from 'react-router-dom'
+import { SIGNUP_PAYLOAD, SIGNUP_RESPONSE } from '../../Type/ApiTypes'
+import { useState, ChangeEvent, FormEvent, useRef } from 'react'
+import { Toast } from 'primereact/toast'
+import { useSignupMutation } from '../../Services/Authentication/AuthApi'
 
 const SignUp = () => {
   const [signupPayload, setSignupPayload] = useState<SIGNUP_PAYLOAD>({
-    firstname: "",
-    lastname: "",
-    email: "",
-    password: "",
-    phoneNumber: "",
-  });
+    firstname: '',
+    lastname: '',
+    email: '',
+    password: '',
+    phoneNumber: '',
+  })
 
-  const { firstname, lastname, email, password, phoneNumber } = signupPayload;
+  const { firstname, lastname, email, password, phoneNumber } = signupPayload
 
-  const [signup] = useSignupMutation();
-  const toast = useRef<any>(null); // Ref for toast message
-
+  const [signup] = useSignupMutation()
+  const toast = useRef<any>(null)
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setSignupPayload((prevState) => ({
       ...prevState,
       [name]: value,
-    }));
+    }))
 
     // Validation for email
-    if (name === "email") {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (name === 'email') {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
       if (!emailRegex.test(value)) {
-        // Show toast message for invalid email format
         toast.current?.show({
-          severity: "error",
-          summary: "Invalid Email",
-          detail: "Please enter a valid email address",
-        });
+          severity: 'error',
+          summary: 'Invalid Email',
+          detail: 'Please enter a valid email address',
+        })
       }
     }
 
     // Validation for phone number
-    if (name === "phoneNumber") {
-      const phoneRegex = /^\d{10}$/; // Assuming phone number is 10 digits
+    if (name === 'phoneNumber') {
+      const phoneRegex = /^\d{10}$/
       if (!phoneRegex.test(value)) {
-        // Show toast message for invalid phone number format
         toast.current?.show({
-          severity: "error",
-          summary: "Invalid Phone Number",
-          detail: "Please enter a valid 10-digit phone number",
-        });
+          severity: 'error',
+          summary: 'Invalid Phone Number',
+          detail: 'Please enter a valid 10-digit phone number',
+        })
       }
     }
-  };
+  }
 
   const signUpHandler = async (e: FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
-      const response = await signup(signupPayload);
-      console.log("response", response);
-      // Handle success response
-      const { data } = response as SIGNUP_RESPONSE;
+      const response = await signup(signupPayload)
+      const { data } = response as SIGNUP_RESPONSE
       if (data?.status === 200) {
-        // Reset sign-up fields
         setSignupPayload({
-          firstname: "",
-          lastname: "",
-          email: "",
-          password: "",
-          phoneNumber: "",
-        });
-        // Show toast message for successful sign-up
+          firstname: '',
+          lastname: '',
+          email: '',
+          password: '',
+          phoneNumber: '',
+        })
         toast.current?.show({
-          severity: "success",
+          severity: 'success',
           summary: data.message,
-        });
+        })
       }
     } catch (error) {
-      console.error("Error occurred during signup:", error);
-      // Handle error response
-      // You can add error handling logic here if needed
+      console.error('Error occurred during signup:', error)
     }
-  };
+  }
 
   return (
     <div className="main-container">
@@ -145,13 +136,11 @@ const SignUp = () => {
             </div>
             <div className="signUp-btn">
               <button type="submit">SignUp</button>
-              <p style={{ fontSize: "0.90rem" }}>
+              <p style={{ fontSize: '0.90rem' }}>
                 Already have an account?
                 <Link to="/login">
-                  {" "}
-                  <span style={{ color: "blue", cursor: "pointer" }}>
-                    Login
-                  </span>
+                  {' '}
+                  <span style={{ color: 'blue', cursor: 'pointer' }}>Login</span>
                 </Link>
               </p>
             </div>
@@ -163,9 +152,7 @@ const SignUp = () => {
                 <button>
                   <div className="iconFacebook">
                     <FaFacebook fontSize={20} />
-                    <span style={{ marginLeft: "4rem" }}>
-                      Login with Facebook
-                    </span>
+                    <span style={{ marginLeft: '4rem' }}>Login with Facebook</span>
                   </div>
                 </button>
               </div>
@@ -173,9 +160,7 @@ const SignUp = () => {
                 <button>
                   <div className="iconGoogle">
                     <FcGoogle fontSize={20} />
-                    <span style={{ marginLeft: "4rem" }}>
-                      Login with Google
-                    </span>
+                    <span style={{ marginLeft: '4rem' }}>Login with Google</span>
                   </div>
                 </button>
               </div>
@@ -183,9 +168,9 @@ const SignUp = () => {
           </div>
         </div>
       </form>
-      <Toast ref={toast}></Toast> {/* Toast component for displaying messages */}
+      <Toast ref={toast}></Toast>
     </div>
-  );
-};
+  )
+}
 
-export default SignUp;
+export default SignUp

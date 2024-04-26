@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import Vendors from "./Vendors";
 import { Provider } from "react-redux";
-import { store } from "../../../Store/store";
+import { store } from "../../../Store/Store";
 
 describe("Vendors Component", () => {
   it("renders the component with header and search input", () => {

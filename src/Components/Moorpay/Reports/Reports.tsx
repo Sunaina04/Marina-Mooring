@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-
 import StatCard from "../../StatCard/StatCard";
 import { SelectButton, SelectButtonChangeEvent } from "primereact/selectbutton";
-import VerticalBar from "../../StatCard/VerticalBar";
 
 const Reports = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -171,7 +169,6 @@ const Reports = () => {
             <span className="text-sm mb-2">
               This chart is for total orders & total sales.
             </span>
-            <VerticalBar />
           </div>
         </div>
       </div>
