@@ -204,7 +204,7 @@ const Moorings = () => {
             className="bg-no-repeat object-cover bg-auto rounded-md w-full h-[105vh]"
             alt="Sea"
           />
-          <div className=" absolute top-72   ">
+          <div className="absolute top-72">
             <div className="">
               <Timeline data-testid="timeline" />
             </div>

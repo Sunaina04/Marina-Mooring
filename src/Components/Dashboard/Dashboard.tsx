@@ -1,17 +1,12 @@
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import dayjs from "dayjs";
 import { SetStateAction, useState } from "react";
 import { Nullable } from "primereact/ts-helpers";
 import { SelectButton, SelectButtonChangeEvent } from "primereact/selectbutton";
-import { Accordion, AccordionTab } from "primereact/accordion";
-import StatCard from "../StatCard/StatCard";
-import { BsFileCheckFill } from "react-icons/bs";
-import { FaCircle } from "react-icons/fa6";
 import Timeline from "../customComponent/Timeline";
-import { FaCalendar } from "react-icons/fa";
 import "./Dashboard.css";
 import Accordition from "../customComponent/Accordion";
+import { FaCircle } from "react-icons/fa";
 
 interface BoatData {
   id: string;
@@ -120,44 +115,12 @@ const Dashboard = () => {
     </div>
   );
 
-  const [expanded, setExpanded] = useState("panel1");
-
-  const handleChange =
-    (panel: SetStateAction<string>) => (event: any, isExpanded: any) => {
-      setExpanded(isExpanded ? panel : "");
-    };
-
-  const statCardsData = [
-    [
-      { title: "Total Customers", percentage: 17, count: 42324 },
-      { title: "Total Customers", percentage: 17, count: 43324 },
-      { title: "Total Customers", percentage: 17, count: 44324 },
-      { title: "Total Customers", percentage: 17, count: 58765 },
-      { title: "Total Customers", percentage: 17, count: 42324 },
-      { title: "Total Customers", percentage: 17, count: 46789 },
-    ],
-  ];
-
-  const events = [
-    { title: "Open Work Order", start: "2024-03-27", end: "2024-03-27" },
-
-    { title: "Total Moorings", start: "2024-03-27", end: "2024-03-27" },
-
-    { title: "Open Work Order", start: "2024-03-28", end: "2024-03-28" },
-
-    { title: "Total Moorings", start: "2024-03-28", end: "2024-03-28" },
-
-    // Add more events here
-  ];
-
   return (
     <>
       <div className="flex ml-12 hello">
-        <div>
-          <h1 className="mt-14 ml-12 opacity-30 text-2xl font-normal">
-            Dashboard
+          <h1 className="mt-12 ml-12 opacity-30 text-2xl font-normal">
+            DASHBOARD
           </h1>
-        </div>
       </div>
 
       <div className="flex justify-between p-4 ml-8">
@@ -259,44 +222,8 @@ const Dashboard = () => {
         {/* leftSection */}
 
         <div className="mr-50 mt-11">
-
-
           <Accordition />
-
-
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       </div>
     </>
   );

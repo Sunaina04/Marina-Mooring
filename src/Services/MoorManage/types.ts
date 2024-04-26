@@ -1,30 +1,54 @@
 export interface CUSTOMER_PAYLOAD {
+  id: number;
+  creationDate: string;
+  createdBy: string;
+  lastModifiedDate: string;
+  lastModifiedBy: string;
   customerName: string;
   customerId: string;
   phone: string;
   emailAddress: string;
   streetHouse: string;
-  sectorBlock: string;
+  aptSuite: string;
   state: string;
   country: string;
-  pinCode: string;
-  note: string;
+  zipCode: string;
+}
+
+export interface ADD_CUSTOMER_PAYLOAD {
+  id: number;
+  customerName: string;
+  customerId: string;
+  phone: string;
+  emailAddress: string;
+  streetHouse: string;
+  aptSuite: string;
+  state: string;
+  country: string;
+  zipCode: string;
 }
 
 export interface CUSTOMER_RESPONSE {
-  // data : [
-  id: string;
-  customerName: string;
-  customerId: string;
-  phone: string;
-  emailAddress: string;
-  streetHouse: string;
-  sectorBlock: string;
-  state: string;
-  country: string;
-  pinCode: string;
-  note: string;
-  // ]
+  message: string;
+  status: number;
+  errorList: [];
+  time: string;
+  content: {
+    id: number;
+    creationDate: string;
+    createdBy: string;
+    lastModifiedDate: string;
+    lastModifiedBy: string;
+    customerName: string;
+    customerId: string;
+    phone: string;
+    emailAddress: string;
+    streetHouse: string;
+    aptSuite: string;
+    state: string;
+    country: string;
+    zipCode: string;
+  };
 }
 
 export interface MOORING_PAYLOAD {
@@ -51,7 +75,7 @@ export interface MOORING_PAYLOAD {
 export interface MOORING_RESPONSE {
   message: string;
   status: number;
-  errorList: string[];
+  errorList: [];
   time: string;
   content: {
     id: string;
@@ -72,7 +96,7 @@ export interface MOORING_RESPONSE {
     sizeOfWeight: string;
     typeOfWeight: string;
     deptAtMeanHighWater: string;
-  };
+  }
 }
 
 export interface VENDOR_PAYLOAD {
@@ -92,13 +116,13 @@ export interface VENDOR_PAYLOAD {
   salesRepPhoneNumber: string;
   salesRepEmail: string;
   salesRepNote: string;
-  primarySalesRep: boolean;
+  primarySalesRep: boolean
 }
 
 export interface VENDOR_RESPONSE {
   message: string;
   status: number;
-  errorList: string[];
+  errorList: [];
   time: string;
   content: {
     id: number;
@@ -117,8 +141,8 @@ export interface VENDOR_RESPONSE {
     salesRepPhoneNumber: string;
     salesRepEmail: string;
     salesRepNote: string;
-    primarySalesRep: boolean;
-  };
+    primarySalesRep: boolean
+  }
 }
 
 export interface BOATYARD_DATA {
@@ -139,8 +163,8 @@ export interface BOATYARD_DATA {
       mainContact: string;
       mooringNumber: string;
       boatName: string;
-    }[];
-  }[];
+    }[]
+  }[]
 }
 
 export interface BOATYARD_PAYLOAD {
@@ -155,7 +179,7 @@ export interface BOATYARD_PAYLOAD {
 export interface BOATYARD_RESPONSE {
   status: number;
   message: string;
-  errorList: [];
+  errorList: []
   time: string;
   content: {
     id: number;
@@ -164,7 +188,7 @@ export interface BOATYARD_RESPONSE {
     ownerName: string;
     emailAddress: string;
     phone: string;
-  };
+  }
 }
 
 export interface TECHNICIAN_PAYLOAD {
@@ -184,7 +208,7 @@ export interface TECHNICIAN_PAYLOAD {
 export interface TECHNICIAN_RESPONSE {
   status: number;
   message: string;
-  errorList: [];
+  errorList: []
   time: string;
   content: {
     id: number;
@@ -198,5 +222,5 @@ export interface TECHNICIAN_RESPONSE {
     country: string;
     pincode: string;
     note: string;
-  };
+  }
 }
