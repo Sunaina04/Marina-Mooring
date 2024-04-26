@@ -127,39 +127,39 @@ const Dashboard = () => {
         {/* Boat Data DataTable */}
 
         {/* right section */}
-        <div className="flex flex-col ">
+        <div className="relative ">
           <div className="w-[43vw] h-14 mt-11">
             <img src="/assets/images/Sea-img.png" />
-            <div className="-translate-y-[45vh] translate-x-[5vw]">
+            <div className="absolute top-20 left-3">
               <Timeline />
             </div>
-            <div className="-translate-y-[45vh] translate-x-[20vw]">
+            <div className="absolute top-28 right-8">
               <Timeline />
             </div>
           </div>
-          <div className="absolute -translate-y-[19vh] translate-x-[25vw] bottom-0  rounded-md border-[1px] p-1 border-gray-300 w-[17vw] h-[13vh] bg-white">
+          <div className="absolute top-60 left-72 rounded-md border-[1px] p-1 border-gray-300 w-[17vw] h-[13vh] bg-white">
             <p className="text-[0.7rem] ml-1  text-black">Status</p>
             <hr className="m-1 border-black" />
             <div className="flex">
               <div>
                 <FaCircle className="h-3 text-red-600 mt-1" />
-                <FaCircle className="h-3 text-green-600 mt-4" />
+                <FaCircle className="h-3 text-green-600 mt-2" />
               </div>
               <div>
                 <p className="text-[0.6rem] text-black mt-1">Need inspection</p>
-                <p className="text-[0.6rem] text-black tracking-tighter mt-[0.9rem]">
+                <p className="text-[0.6rem] text-black tracking-tighter mt-[0.3rem]">
                   Gear On (in the water)
                 </p>
               </div>
               <div className="ml-1">
                 <FaCircle className="h-3 text-violet-600 mt-1 " />
-                <FaCircle className="h-3 text-gray-500 mt-4" />
+                <FaCircle className="h-3 text-gray-500 mt-2" />
               </div>
               <div>
                 <p className="text-[0.6rem] text-black tracking-tighter mt-1">
                   Gear Off (out of the water)
                 </p>
-                <p className="text-[0.6rem] text-black tracking-tighter mt-[0.9rem]">
+                <p className="text-[0.6rem] text-black tracking-tighter mt-[0.3rem]">
                   Not in Use
                 </p>
               </div>
