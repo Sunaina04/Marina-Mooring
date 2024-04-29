@@ -3,7 +3,7 @@ import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import CustomModal from '../../CustomComponent/CustomModal'
 import { InputText } from 'primereact/inputtext'
-import { Forms_Payload, Forms_Response } from '../../../Type/ApiTypes'
+import { FormsPayload, FormsResponse } from '../../../Type/ApiTypes'
 import {
   useDownloadFormMutation,
   useGetFormsMutation,
@@ -13,7 +13,7 @@ import useSubmit from '../../../Services/CustomHook/useSubmit'
 
 const Forms = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [formsData, setFormsData] = useState<Forms_Payload[]>([])
+  const [formsData, setFormsData] = useState<FormsPayload[]>([])
   const [customerName, setCustomerName] = useState('')
   const [customerID, setCustomerID] = useState('')
   const [formName, setFormName] = useState('')
@@ -44,7 +44,7 @@ const Forms = () => {
   const getFormsData = async () => {
     try {
       const response = await getForms({}).unwrap()
-      const { status, content } = response as Forms_Response
+      const { status, content } = response as FormsResponse
       if (status === 200 && Array.isArray(content)) {
         setFormsData(content)
       }

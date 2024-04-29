@@ -4,16 +4,16 @@ import AddBoatyards from './AddBoatyards'
 import { InputText } from 'primereact/inputtext'
 import {
   BoatYard_Data,
-  BoatYard_Payload,
-  BoatYard_Response,
+  BoatYardPayload,
+  BoatYardResponse,
 } from '../../../Type/ApiTypes'
 import BoatyardTable from './BoatyardTable'
 import { useGetBoatyardsMutation } from '../../../Services/MoorManage/MoormanageApi'
 
 const Boatyards = () => {
   const [modalVisible, setModalVisible] = useState(false)
-  const [boatyardsData, setboatyardsData] = useState<BoatYard_Payload[]>([])
-  const [filteredboatyardsData, setFilteredboatyardsData] = useState<BoatYard_Payload[]>([])
+  const [boatyardsData, setboatyardsData] = useState<BoatYardPayload[]>([])
+  const [filteredboatyardsData, setFilteredboatyardsData] = useState<BoatYardPayload[]>([])
   const [getBaotyards] = useGetBoatyardsMutation()
 
   const moorings: BoatYard_Data[] = [
@@ -184,7 +184,7 @@ const Boatyards = () => {
       .unwrap()
       .then(async (response) => {
         console.log('RESPONSE', response)
-        const { status, content } = response as BoatYard_Response
+        const { status, content } = response as BoatYardResponse
         if (status === 200 && Array.isArray(content)) {
           setboatyardsData(content)
           setFilteredboatyardsData(content) // Initialize filtered data with all data

@@ -2,13 +2,13 @@ import './SignUp.css'
 import { FaFacebook } from 'react-icons/fa'
 import { FcGoogle } from 'react-icons/fc'
 import { Link } from 'react-router-dom'
-import { SignUp_Payload, SignUp_Response } from '../../Type/ApiTypes'
+import { SignUpPayload, SignUpResponse } from '../../Type/ApiTypes'
 import { useState, ChangeEvent, FormEvent, useRef } from 'react'
 import { Toast } from 'primereact/toast'
 import { useSignupMutation } from '../../Services/Authentication/AuthApi'
 
 const SignUp = () => {
-  const [signupPayload, setSignupPayload] = useState<SignUp_Payload>({
+  const [signupPayload, setSignupPayload] = useState<SignUpPayload>({
     firstname: '',
     lastname: '',
     email: '',
@@ -56,7 +56,7 @@ const SignUp = () => {
     e.preventDefault()
     try {
       const response = await signup(signupPayload)
-      const { data } = response as SignUp_Response
+      const { data } = response as SignUpResponse
       if (data?.status === 200) {
         setSignupPayload({
           firstname: '',

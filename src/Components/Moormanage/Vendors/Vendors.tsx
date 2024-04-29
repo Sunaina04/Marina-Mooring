@@ -8,12 +8,12 @@ import {
   useDeleteVendorMutation,
   useGetVendorsMutation,
 } from '../../../Services/MoorManage/MoormanageApi'
-import { Vendor_Payload, Vendor_Response } from '../../../Type/ApiTypes'
+import { VendorPayload, VendorResponse } from '../../../Type/ApiTypes'
 import { Button } from 'primereact/button'
 
 const Vendors = () => {
   const [modalVisible, setModalVisible] = useState(false)
-  const [vendorData, setVendorData] = useState<Vendor_Payload[]>([])
+  const [vendorData, setVendorData] = useState<VendorPayload[]>([])
   const [selectedCustomer, setSelectedCustomer] = useState<any>(null)
   const [editMode, setEditMode] = useState(false)
 
@@ -28,7 +28,7 @@ const Vendors = () => {
     await getVendors({})
       .unwrap()
       .then(async (response) => {
-        const { status, content } = response as Vendor_Response
+        const { status, content } = response as VendorResponse
         if (status === 200 && Array.isArray(content)) {
           setVendorData(content)
         }

@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 import { SidebarMenu } from '../LayoutComponents/SidebarMenu'
 import Header from '../LayoutComponents/Header'
@@ -6,9 +6,9 @@ import { filterModalStyle } from '../../Style'
 import { style } from '../../CustomComponent/CustomModal'
 
 const AdminLayout = () => {
-  const [openSubMenus, setOpenSubMenus] = React.useState(new Array(SidebarMenu.length).fill(false))
-  const [open, setOpen] = React.useState(true)
-  const [selectedSubcategory, setSelectedSubcategory] = React.useState<any>(null)
+  const [openSubMenus, setOpenSubMenus] = useState(new Array(SidebarMenu.length).fill(false))
+  const [open, setOpen] = useState(true)
+  const [selectedSubcategory, setSelectedSubcategory] = useState<any>(null)
 
   const handleExpand = (index: number) => {
     setOpenSubMenus((prev) => {
@@ -18,7 +18,13 @@ const AdminLayout = () => {
     })
   }
 
-  React.useEffect(() => {
+  const handleNavLink = (index: any) => {
+    setSelectedSubcategory(null)
+    setSelectedSubcategory(0)
+    handleExpand(index)
+  }
+
+  useEffect(() => {
     if (open) {
       filterModalStyle.left = '40vw'
       style.left = '58.2%'
@@ -48,8 +54,8 @@ const AdminLayout = () => {
             border: '1px solid #B3B3B3',
             display: 'inline-block',
             background: '#D9D9D9',
-            position: 'absolute', // Change from "fixed" to "absolute"
-            zIndex: 999, // Ensure the button appears on top of other content
+            position: 'absolute',
+            zIndex: 999,
           }}>
           <img
             src={open ? '/assets/images/chevron_left.svg' : '/assets/images/chevron_right.svg'}
@@ -70,7 +76,6 @@ const AdminLayout = () => {
           }}>
           {SidebarMenu.map((item, index) => (
             <React.Fragment key={index}>
-              {/* Sidebar Items */}
               {item.name && (
                 <NavLink
                   to={item.link}
@@ -78,15 +83,13 @@ const AdminLayout = () => {
                     display: 'flex',
                     height: '30px',
                     background: '#D9D9D9',
-                    flexDirection: 'row', // Display icon and name in a row
-                    alignItems: 'center', // Align items vertically
+                    flexDirection: 'row',
+                    alignItems: 'center',
                     border: '1px solid #B3B3B3',
                     position: 'relative',
                   }}
                   onClick={() => {
-                    setSelectedSubcategory(null)
-                    setSelectedSubcategory(0)
-                    handleExpand(index) // Expand clicked field
+                    handleNavLink(index)
                   }}>
                   <img
                     src={item.icon}

@@ -8,7 +8,7 @@ import { Button } from 'primereact/button'
 import { useGetMooringsMutation } from '../../../Services/MoorManage/MoormanageApi'
 import Timeline from '../../CustomComponent/Timeline'
 import { InputSwitch, InputSwitchChangeEvent } from 'primereact/inputswitch'
-import { Mooring_Payload, Mooring_Response } from '../../../Type/ApiTypes'
+import { MooringPayload, MooringResponse } from '../../../Type/ApiTypes'
 import { FaCircle, FaEdit } from 'react-icons/fa'
 import { Dialog } from 'primereact/dialog'
 import DataTableSearchFieldComponent from '../../CommonComponent/DataTableSearchFieldComponent'
@@ -16,11 +16,11 @@ import { CustomerData, CustomerProps } from '../../../Type/CommonType'
 
 const Moorings = () => {
   const [modalVisible, setModalVisible] = useState(false)
-  const [mooringData, setMooringData] = useState<Mooring_Payload[]>([])
+  const [mooringData, setMooringData] = useState<MooringPayload[]>([])
   const [selectedCustomer, setSelectedCustomer] = useState<any>(null)
   const [editMode, setEditMode] = useState(false)
   const [searchQuery, setSearchQuery] = useState<string>('')
-  const [filteredMooringData, setFilteredMooringData] = useState<Mooring_Payload[]>([])
+  const [filteredMooringData, setFilteredMooringData] = useState<MooringPayload[]>([])
   const [edit, setEdit] = useState<CustomerProps>({
     id: '#43453',
     name: 'John Smith',
@@ -30,7 +30,7 @@ const Moorings = () => {
   })
   const [isChecked, setIsChecked] = useState(false)
   const [isDialogVisible, setIsDialogVisible] = useState(false)
-  const [selectedMooring, setSelectedMooring] = useState<Mooring_Payload>()
+  const [selectedMooring, setSelectedMooring] = useState<MooringPayload>()
 
   const handleInputChange = (e: InputSwitchChangeEvent) => {
     // e.stopPropagation();
@@ -141,7 +141,7 @@ const Moorings = () => {
     await getMoorings({})
       .unwrap()
       .then(async (response: any) => {
-        const { status, content } = response as Mooring_Response
+        const { status, content } = response as MooringResponse
         if (status === 200 && Array.isArray(content)) {
           setMooringData(content)
           setFilteredMooringData(content)

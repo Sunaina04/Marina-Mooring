@@ -1,7 +1,6 @@
 import React from "react";
 import { Column, ColumnBodyOptions } from "primereact/column";
 import { DataTable } from "primereact/datatable";
-import { tabListStyle } from "../Style";
 
 type TableBodyType =
   | React.ReactNode

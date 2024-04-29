@@ -1,11 +1,11 @@
-import { Upload_Payload, WorkOrder_Payload } from "../../Type/ApiTypes";
+import { UploadPayload, WorkOrderPayload } from "../../Type/ApiTypes";
 import { userApi } from "../UserApi";
 
 const moorserveApi = userApi.injectEndpoints({
   endpoints: (builder: any) => ({
     //ADD Work Order
     addWorkOrder: builder.mutation({
-      query: (payload: WorkOrder_Payload) => ({
+      query: (payload: WorkOrderPayload) => ({
         url: "api/v1/workorder/",
         method: "POST",
         body: payload,
@@ -41,7 +41,7 @@ const moorserveApi = userApi.injectEndpoints({
 
     //Edit WorkOrder
     updateWorkOrder: builder.mutation({
-      query: ({ payload, id }: { payload: WorkOrder_Payload; id: number }) => ({
+      query: ({ payload, id }: { payload: WorkOrderPayload; id: number }) => ({
         url: `api/v1/workorder/${id}`,
         method: "PUT",
         body: payload,
@@ -58,7 +58,7 @@ const moorserveApi = userApi.injectEndpoints({
 
     //Upload Form
     uploadForm: builder.mutation({
-      query: (payload: Upload_Payload) => ({
+      query: (payload: UploadPayload) => ({
         url: "api/v1/form/upload",
         method: "POST",
         body: payload,

@@ -5,7 +5,7 @@ import { SelectButton, SelectButtonChangeEvent } from 'primereact/selectbutton'
 import { Nullable } from 'primereact/ts-helpers'
 import { Button } from 'primereact/button'
 import { Calendar } from 'primereact/calendar'
-import { Technician_Payload, Technician_Response } from '../../../Type/ApiTypes'
+import { TechnicianPayload, TechnicianResponse } from '../../../Type/ApiTypes'
 import { useGetTechnicianMutation } from '../../../Services/MoorManage/MoormanageApi'
 import { BillsData } from '../../../Type/CommonType'
 
@@ -17,8 +17,8 @@ const Technicians = () => {
   const [technicianRecord, setTechnicianRecord] = useState()
   const [globalFilter, setGlobalFilter] = useState<string | null>(null)
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date())
-  const [technicianData, setTechnicianData] = useState<Technician_Payload[]>([])
-  const [filteredTechnicianData, setFilteredTechnicianData] = useState<Technician_Payload[]>([])
+  const [technicianData, setTechnicianData] = useState<TechnicianPayload[]>([])
+  const [filteredTechnicianData, setFilteredTechnicianData] = useState<TechnicianPayload[]>([])
   const [getTechnicians] = useGetTechnicianMutation()
 
   const [workOrderData, setWorkOrderData] = useState<BillsData[]>([
@@ -102,7 +102,7 @@ const Technicians = () => {
       .unwrap()
       .then(async (response) => {
         console.log('RESPONSE', response)
-        const { status, content } = response as Technician_Response
+        const { status, content } = response as TechnicianResponse
         if (status === 200 && Array.isArray(content)) {
           setTechnicianData(content)
           setFilteredTechnicianData(content) // Initialize filtered data with all data
