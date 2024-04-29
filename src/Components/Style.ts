@@ -122,7 +122,6 @@ export const filterModalStyle = {
   // boxShadow: 24,
   p: { xs: 2, md: 4 },
 }
-console.log('first')
 
 export const ChipWrapperStyle = {
   display: 'flex',

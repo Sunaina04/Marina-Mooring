@@ -42,8 +42,6 @@ const AddPermission = () => {
             <span className="font-semibold text-sm">Customer ID</span>
             <div className="mt-2">
               <InputComponent
-                // placeholder="Enter customer ID"
-                // type="text"
                 style={{
                   width: '13vw',
                   height: '4vh',
@@ -59,8 +57,6 @@ const AddPermission = () => {
             <span className="font-semibold text-sm">Phone</span>
             <div className="mt-2">
               <InputComponent
-                // placeholder="Enter owner name"
-                // type="text"
                 style={{
                   width: '13vw',
                   height: '4vh',
@@ -130,7 +126,6 @@ const AddPermission = () => {
               <div className="mt-2">
                 <InputText
                   placeholder="Street/house"
-                  // type="text"
                   style={{
                     width: '14vw',
                     height: '4vh',

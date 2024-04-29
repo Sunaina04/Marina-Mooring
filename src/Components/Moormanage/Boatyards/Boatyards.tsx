@@ -183,11 +183,10 @@ const Boatyards = () => {
     await getBaotyards({})
       .unwrap()
       .then(async (response) => {
-        console.log('RESPONSE', response)
         const { status, content } = response as BoatYardResponse
         if (status === 200 && Array.isArray(content)) {
           setboatyardsData(content)
-          setFilteredboatyardsData(content) // Initialize filtered data with all data
+          setFilteredboatyardsData(content) 
         }
       })
   }

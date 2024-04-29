@@ -75,7 +75,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     const response = await addCustomer(payload)
     closeModal()
     getCustomer()
-    console.log('RESPONSE', response)
   }
 
   const UpdateCustomer = async () => {
@@ -94,7 +93,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     const response = await updateCustomer(payload)
     closeModal()
     getCustomer()
-    console.log('RESPONSE', response)
   }
 
   useEffect(() => {
@@ -324,8 +322,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             <span className="font-semibold text-sm">Harbor</span>
             <div className="mt-2">
               <InputComponent
-                // placeholder="Enter owner name"
-                // type="text"
+                
                 value={formData.harbor}
                 onChange={(e) => handleInputChange('harbor', e.target.value)}
                 style={{
@@ -338,26 +335,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               />
             </div>
           </div>
-          {/* <div>
-            <span className="font-semibold text-sm">Mooring Number</span>
-            <div className="mt-2">
-              <InputComponent
-                // placeholder="Enter customer ID"
-                // type="text"
-                value={formData.mooringNumber}
-                onChange={(e) =>
-                  handleInputChange("mooringNumber", e.target.value)
-                }
-                style={{
-                  width: "13vw",
-                  height: "4vh",
-                  border: "1px solid gray",
-                  borderRadius: "0.50rem",
-                  fontSize: "0.80vw",
-                }}
-              />
-            </div>
-          </div>*/}
+        
           <div>
             <span className="font-semibold text-sm">Water Depth</span>
             <div className="mt-2">
@@ -382,8 +360,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               <span className="font-semibold text-sm">G.P.S Cordinates</span>
               <div className="mt-2">
                 <InputComponent
-                  // placeholder="Enter customer ID"
-                  // type="text"
                   value={formData.gpsCoordinates}
                   onChange={(e) => handleInputChange('gpsCoordinates', e.target.value)}
                   style={{
@@ -401,8 +377,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               <span className="font-semibold text-sm">Boat Name</span>
               <div className="mt-2">
                 <InputComponent
-                  // placeholder="Enter owner name"
-                  // type="text"
                   value={formData.boatName}
                   onChange={(e) => handleInputChange('boatName', e.target.value)}
                   style={{
@@ -463,8 +437,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               <span className="font-semibold text-sm">Weight</span>
               <div className="mt-2">
                 <InputComponent
-                  // placeholder="Enter owner name"
-                  // type="text"
                   value={formData.boatWeight}
                   onChange={(e) => handleInputChange('boatWeight', e.target.value)}
                   style={{
@@ -624,10 +596,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               </div>
             </div>
           </div>
+          
           {/* last row */}
-
-          {/* shackle and depth */}
-
           <div className="mt-3">
             <div className="">
               <div>

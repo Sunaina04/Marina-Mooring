@@ -106,15 +106,6 @@ const Reports = () => {
             <DataTable
               value={boatData}
               header={""}
-              tableStyle={
-                {
-                  // minWidth: "25rem",
-                  // fontSize: "12px",
-                  // color: "#000000",
-                  // fontWeight: 600,
-                  // backgroundColor: "#D1D1D1",
-                }
-              }
               size="small"
             >
               <Column

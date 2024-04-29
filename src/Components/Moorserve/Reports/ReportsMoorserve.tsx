@@ -114,31 +114,7 @@ const ReportsMoorserve = () => {
     <div className="flex flex-wrap justify-between align-items-center gap-4 ">
       <span className="text-lg font-bold">Services</span>
       <div className=" ">
-        {/* <span
-          style={{
-            background: "#000000",
-            color: "white",
-            border: "1px solid black", // Adding border property
-            padding: "3px",
-            fontSize: "14px",
-            fontWeight: 400,
-            textAlign: "left",
-            marginRight: "-8px",
-          }}
-        >
-          Pending
-        </span>
-        <span
-          style={{
-            background: "#D9D9D9",
-            padding: "3px", // Adding padding for better appearance
-            fontSize: "14px",
-            fontWeight: 400,
-            textAlign: "left",
-          }}
-        >
-          Cleared
-        </span> */}
+        
 
         <div className="">
           <SelectButton

@@ -56,7 +56,6 @@ const BoatyardDetailsTable: React.FC<RowExpansionProps> = ({
                 label="View"
                 className="p-button-text p-button-info text-xs underline text-red"
                 style={{ color: "red" }}
-                // onClick={() => handleEdit(rowData)}
               />
             )}
           ></Column>

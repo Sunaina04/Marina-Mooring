@@ -9,7 +9,6 @@ export const style = {
   top: "50%",
   left: "''",
   transform: "translate(-50%, -50%)",
-  // width: "50%",
   bgcolor: "background.white",
   borderRadius: "25px",
   p: 3,
@@ -63,7 +62,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
             <img
               src="/assets/images/plus.png"
               alt="icon"
-              className="w-3 mr-3" // Adjust margin to your preference
+              className="w-3 mr-3" 
               style={{
                 filter: "invert(100%)",
                 color: "whitesmoke",
@@ -78,7 +77,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
         <Dialog
           header={header}
           visible={visible || internalVisible}
-          style={style} // Add borderRadius style property
+          style={style} 
           onHide={() => {
             onHide();
             setInternalVisible(false);

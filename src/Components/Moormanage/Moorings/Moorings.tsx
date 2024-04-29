@@ -33,7 +33,6 @@ const Moorings = () => {
   const [selectedMooring, setSelectedMooring] = useState<MooringPayload>()
 
   const handleInputChange = (e: InputSwitchChangeEvent) => {
-    // e.stopPropagation();
     console.log(e.value)
     setIsChecked(e.value)
   }
@@ -294,7 +293,6 @@ const Moorings = () => {
                 <div className="">
                   <h3 className="bg-[#D9D9D9] font-bold h12 py-4 pl-2 ">Moorings</h3>
                   <DataTable
-                    // tableStyle={{ minWidth: "20rem" }}
                     className="bg[#F2F2F2]"
                     value={mooringData}
                     scrollable={true}

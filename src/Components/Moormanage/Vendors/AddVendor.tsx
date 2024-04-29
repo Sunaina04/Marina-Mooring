@@ -91,7 +91,6 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
       primarySalesRep: true,
     }
     const response = await addVendor(payload)
-    console.log('RESPONSE', response)
   }
 
   return (
@@ -341,7 +340,6 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
               value={addressZipCode !== undefined ? addressZipCode.toString() : ''}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 const inputVal = e.target.value
-                // Convert the input value back to a number before setting the state
                 const newValue = inputVal !== '' ? parseInt(inputVal, 10) : undefined
                 setAddressZipCode(newValue)
               }}
@@ -378,7 +376,6 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
               value={remitZipCode !== undefined ? remitZipCode.toString() : ''}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 const inputVal = e.target.value
-                // Convert the input value to a number before setting the state
                 const newValue = inputVal !== '' ? parseInt(inputVal, 10) : undefined
                 setRemitZipCode(newValue)
               }}

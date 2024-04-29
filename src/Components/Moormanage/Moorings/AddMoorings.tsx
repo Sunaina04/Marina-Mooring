@@ -104,8 +104,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
             <span className="font-semibold text-sm">Mooring Number</span>
             <div className="mt-2">
               <InputComponent
-                // placeholder="Enter customer ID"
-                // type="text"
                 value={formData.mooringNumber}
                 onChange={(e) => handleInputChange('mooringNumber', e.target.value)}
                 style={{
@@ -123,8 +121,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
             <span className="font-semibold text-sm">Harbor</span>
             <div className="mt-2">
               <InputComponent
-                // placeholder="Enter owner name"
-                // type="text"
                 value={formData.harbor}
                 onChange={(e) => handleInputChange('harbor', e.target.value)}
                 style={{
@@ -162,8 +158,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
               <span className="font-semibold text-sm">G.P.S Cordinates</span>
               <div className="mt-2">
                 <InputComponent
-                  // placeholder="Enter customer ID"
-                  // type="text"
                   value={formData.gpsCoordinates}
                   onChange={(e) => handleInputChange('gpsCoordinates', e.target.value)}
                   style={{
@@ -181,8 +175,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
               <span className="font-semibold text-sm">Boat Name</span>
               <div className="mt-2">
                 <InputComponent
-                  // placeholder="Enter owner name"
-                  // type="text"
                   value={formData.boatName}
                   onChange={(e) => handleInputChange('boatName', e.target.value)}
                   style={{
@@ -244,8 +236,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
               <span className="font-semibold text-sm">Weight</span>
               <div className="mt-2">
                 <InputComponent
-                  // placeholder="Enter owner name"
-                  // type="text"
                   value={formData.boatWeight}
                   onChange={(e) => handleInputChange('boatWeight', e.target.value)}
                   style={{

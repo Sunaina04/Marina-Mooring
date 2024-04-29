@@ -29,7 +29,6 @@ const FilterButton: React.FC<ButtonCompProps> = ({
                 <img
                     src="assets/images/key.png"
                     alt="icon"
-                // className="absolute left-0 top-1/2 transform -translate-y-1/2 w-44 h-5 text-white" 
                 />
                 <Button
                     onClick={onClick}

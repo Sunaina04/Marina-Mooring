@@ -85,11 +85,9 @@ const Customer = () => {
   }
 
   const handleDelete = async (rowData: any) => {
-    console.log('Delete clicked for:', rowData, rowData?.id)
 
     try {
       const response = await deleteCustomer({ id: rowData?.id })
-      console.log('RESPONSE', response)
       getCustomerData()
     } catch (error) {
       console.error('Error deleting customer:', error)
@@ -131,7 +129,6 @@ const Customer = () => {
     getMooringsData()
   }, [])
 
-  console.log('selectedCustoer', selectedCustomer)
 
   return (
     <>
@@ -176,7 +173,6 @@ const Customer = () => {
               setCustomerRecord(true)
             }}
             tableStyle={{
-              // minWidth: "20rem",
               fontSize: '12px',
               color: '#000000',
               fontWeight: 600,

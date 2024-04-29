@@ -10,6 +10,7 @@ import {
 } from '../../../Services/MoorServe/MoorserveApi'
 import { Button } from 'primereact/button'
 import useSubmit from '../../../Services/CustomHook/useSubmit'
+import FormFields from '../../CustomComponent/FormFields'
 
 const Forms = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -17,7 +18,7 @@ const Forms = () => {
   const [customerName, setCustomerName] = useState('')
   const [customerID, setCustomerID] = useState('')
   const [formName, setFormName] = useState('')
-  const [file, setFile] = useState<File | null>(null) // For file upload
+  const [file, setFile] = useState<File | null>(null) 
   const [getForms] = useGetFormsMutation()
   const [downloadForms] = useDownloadFormMutation()
   const { error, response, handleSubmit } = useSubmit()
@@ -35,7 +36,6 @@ const Forms = () => {
       const response = await downloadForms({
         filename: rowData.formName,
       }).unwrap()
-      console.log('Form downloaded successfully:', response)
     } catch (error) {
       console.error('Error fetching forms:', error)
     }
@@ -94,77 +94,28 @@ const Forms = () => {
             label="Upload New"
             icon={true}>
             <div className="flex gap-4">
-              <div>
-                <label htmlFor="customerName" className="block text-sm font-medium text-gray-700">
-                  Customer Name
-                </label>
-                <InputText
-                  type="text"
-                  id="customerName"
-                  name="customerName"
-                  value={customerName}
-                  style={{
-                    width: '13vw',
-                    height: '4vh',
-                    border: '1px solid gray',
-                    borderRadius: '0.50rem',
-                  }}
-                  onChange={(e) => setCustomerName(e.target.value)}
-                  className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="customerID" className="block text-sm font-medium text-gray-700">
-                  ID
-                </label>
-                <InputText
-                  type="text"
-                  id="customerID"
-                  name="customerID"
-                  value={customerID}
-                  style={{
-                    width: '13vw',
-                    height: '4vh',
-                    border: '1px solid gray',
-                    borderRadius: '0.50rem',
-                  }}
-                  onChange={(e) => setCustomerID(e.target.value)}
-                  className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                />
-              </div>
-
-              <div className="">
-                <label htmlFor="formName" className="block text-sm font-medium text-gray-700">
-                  Form Name
-                </label>
-                <InputText
-                  type="text"
-                  id="formName"
-                  name="formName"
-                  style={{
-                    width: '13vw',
-                    height: '4vh',
-                    border: '1px solid gray',
-                    borderRadius: '0.50rem',
-                  }}
-                  value={formName}
-                  onChange={(e) => setFormName(e.target.value)}
-                  className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                />
-              </div>
+              <FormFields
+                label="Customer Name"
+                value={customerName}
+                onChange={(e) => setCustomerName(e.target.value)}
+              />
+              <FormFields
+                label="ID"
+                value={customerID}
+                onChange={(e) => setCustomerID(e.target.value)}
+              />
+              <FormFields
+                label="Form Name"
+                value={formName}
+                onChange={(e) => setFormName(e.target.value)}
+              />
             </div>
 
             <div className="mt-4">
-              <label htmlFor="fileUpload" className="block text-sm font-medium text-gray-700">
-                Upload File
-              </label>
-              <InputText
+              <FormFields
+                label="Upload File"
                 type="file"
-                id="fileUpload"
-                name="fileUpload"
                 onChange={(e) => setFile(e.target.files?.[0] || null)}
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
               />
             </div>
 

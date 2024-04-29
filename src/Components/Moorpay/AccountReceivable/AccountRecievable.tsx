@@ -93,14 +93,7 @@ const AccountRecievable = () => {
         </div>
       </div>
       <div className="bg-[#F2F2F2] rounded-md border-[1px] border-[#D1D1D1] p-2 mt-12 w-[68vw] ml-20">
-        <DataTable
-          value={accountRecievableData}
-          header={header}
-          tableStyle={
-            {
-              // backgroundColor:"#F2F2F2"
-            }
-          }>
+        <DataTable value={accountRecievableData} header={header}>
           <Column
             header="invoice"
             field="invoice"

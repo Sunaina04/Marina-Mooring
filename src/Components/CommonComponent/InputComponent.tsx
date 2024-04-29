@@ -6,9 +6,9 @@ interface InputStyle {
   height?: string;
   padding?: string;
   fontSize?: string;
-  border?: string; // Adjusted type
+  border?: string; 
   fontFamily?: string;
-  borderRadius?: string; // Corrected typo
+  borderRadius?: string; 
 }
 
 interface InputComponentProps {

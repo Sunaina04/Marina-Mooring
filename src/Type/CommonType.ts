@@ -35,3 +35,10 @@ export interface INITIAl_STATE {
   token: undefined | string
   userData: UserData | undefined
 }
+
+export interface FormFieldsProps {
+  label: string;
+  value?: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  type?: string;
+}

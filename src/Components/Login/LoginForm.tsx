@@ -93,7 +93,6 @@ export default function LoginForm({
         const response = await login(loginPayload).unwrap()
         const { status, user, token, message } = response as LoginResponse
         if (status === 200) {
-          console.log('data', user, response)
           dispatch(setUserData({ ...user }))
           localStorage.setItem('token', token)
           setLoginPayload({
@@ -132,7 +131,6 @@ export default function LoginForm({
   }
 
   const ResetPasswordHandler = async () => {
-    console.log('RESET PASSWORD')
     const resetPassPayload = {
       newPassword: '', 
       confirmPassword: '', 
@@ -156,7 +154,6 @@ export default function LoginForm({
 
   const getEmployeeHandler = async () => {
     const response = await getEmployee({})
-    console.log('response', response)
   }
 
   useEffect(() => {

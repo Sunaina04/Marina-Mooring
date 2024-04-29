@@ -101,7 +101,6 @@ const Technicians = () => {
     await getTechnicians({})
       .unwrap()
       .then(async (response) => {
-        console.log('RESPONSE', response)
         const { status, content } = response as TechnicianResponse
         if (status === 200 && Array.isArray(content)) {
           setTechnicianData(content)
@@ -147,7 +146,6 @@ const Technicians = () => {
               setDataVisible(true)
             }}
             tableStyle={{
-              // minWidth: "20rem",
               fontSize: '12px',
               color: '#000000',
               fontWeight: 600,

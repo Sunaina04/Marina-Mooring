@@ -94,7 +94,6 @@ const WorkOrders = () => {
             value={workOrderData}
             header={header}
             tableStyle={{
-              // width: "73rem",
               fontSize: '0.80rem',
               fontWeight: 'bold',
             }}

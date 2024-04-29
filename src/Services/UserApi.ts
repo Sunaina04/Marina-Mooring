@@ -15,7 +15,6 @@ const baseQueryWithInterceptor = async (
 ) => {
   const result = await baseQuery(args as FetchArgs | string, api, extraOptions)
   if (result?.error?.status === 403) {
-    // Handle 403 error here
   }
   return result
 }

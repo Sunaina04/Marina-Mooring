@@ -124,7 +124,6 @@ const Vendors = () => {
                     textDecoration: 'underline',
                     cursor: 'pointer',
                   }}
-                  // onClick={handleViewInventory}
                 />
                 <Button
                   label="Edit"

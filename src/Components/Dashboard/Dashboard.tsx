@@ -143,7 +143,6 @@ const Dashboard = () => {
                 value={boatData}
                 header={Boatsheader}
                 tableStyle={{
-                  // width: "73rem",
                   fontSize: '0.90rem',
                   fontWeight: 'bold',
                 }}

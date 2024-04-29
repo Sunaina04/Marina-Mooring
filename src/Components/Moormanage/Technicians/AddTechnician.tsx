@@ -47,8 +47,6 @@ const AddTechnication = () => {
                 </div>
                 <div className="mt-2">
                   <InputComponent
-                    // placeholder="Enter customer ID"
-                    // type="text"
                     style={{
                       width: '13vw',
                       height: '4vh',
@@ -84,8 +82,6 @@ const AddTechnication = () => {
                 </div>
                 <div className="mt-2">
                   <InputComponent
-                    // placeholder="Enter customer ID"
-                    // type="text"
                     style={{
                       width: '13vw',
                       height: '4vh',
@@ -111,7 +107,6 @@ const AddTechnication = () => {
               <div className="mt-2">
                 <InputText
                   placeholder="Street/house"
-                  // type="text"
                   style={{
                     width: '14vw',
                     height: '4vh',

@@ -113,7 +113,6 @@ const Accordion = () => {
               value={billsData}
               header={""}
               tableStyle={{
-                // width: "73rem",
                 fontSize: "0.60rem",
                 fontWeight: "bold",
               }}

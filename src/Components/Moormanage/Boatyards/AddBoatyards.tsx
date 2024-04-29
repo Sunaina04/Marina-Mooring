@@ -31,8 +31,6 @@ const AddBoatyards = () => {
             <span className="font-semibold text-sm">Main Contact</span>
             <div className="mt-2">
               <InputComponent
-                // placeholder="Enter customer ID"
-                // type="text"
                 style={{
                   width: '13vw',
                   height: '4vh',
@@ -53,8 +51,6 @@ const AddBoatyards = () => {
 
             <div className="mt-2">
               <InputComponent
-                // placeholder="Enter owner name"
-                // type="text"
                 style={{
                   width: '13vw',
                   height: '4vh',
@@ -73,8 +69,6 @@ const AddBoatyards = () => {
               </div>
               <div className="mt-2">
                 <InputComponent
-                  // placeholder="Enter owner name"
-                  // type="text"
                   style={{
                     width: '13vw',
                     height: '4vh',
@@ -91,10 +85,8 @@ const AddBoatyards = () => {
         <div>
           <div className="bg-[#ECECEC] rounded-md border-[1px] p-1 border-gray-300 w-[40vw] mt-10">
             <DataTable
-              // value={boatData}
               header={'Existing Sites'}
               tableStyle={{
-                // minWidth: "20rem",
                 fontSize: '12px',
                 color: '#000000',
                 fontWeight: 600,
