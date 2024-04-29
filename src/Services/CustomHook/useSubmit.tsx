@@ -3,12 +3,12 @@ import { useUploadFormMutation } from '../MoorServe/MoorserveApi'
 import { FormsResponse } from '../../Type/ApiTypes'
 
 const useSubmit = () => {
-  const [error, setError] = useState<any>(null)
+  const [error, setError] = useState<any>(undefined)
   const [response, setResponse] = useState<FormsResponse>()
   const [uploadForms] = useUploadFormMutation()
 
   const handleSubmit = async (formData: FormData) => {
-    setError(null)
+    setError(undefined)
 
     try {
       const response = await uploadForms(formData).unwrap()

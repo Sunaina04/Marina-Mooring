@@ -14,7 +14,7 @@ import { Button } from 'primereact/button'
 const Vendors = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [vendorData, setVendorData] = useState<VendorPayload[]>([])
-  const [selectedCustomer, setSelectedCustomer] = useState<any>(null)
+  const [selectedCustomer, setSelectedCustomer] = useState<any>(undefined)
   const [editMode, setEditMode] = useState(false)
 
   const [getVendors] = useGetVendorsMutation()

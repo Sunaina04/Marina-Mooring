@@ -18,7 +18,7 @@ const Forms = () => {
   const [customerName, setCustomerName] = useState('')
   const [customerID, setCustomerID] = useState('')
   const [formName, setFormName] = useState('')
-  const [file, setFile] = useState<File | null>(null) 
+  const [file, setFile] = useState<File | undefined>(undefined) 
   const [getForms] = useGetFormsMutation()
   const [downloadForms] = useDownloadFormMutation()
   const { error, response, handleSubmit } = useSubmit()
@@ -115,7 +115,7 @@ const Forms = () => {
               <FormFields
                 label="Upload File"
                 type="file"
-                onChange={(e) => setFile(e.target.files?.[0] || null)}
+                onChange={(e) => setFile(e.target.files?.[0] || undefined)}
               />
             </div>
 

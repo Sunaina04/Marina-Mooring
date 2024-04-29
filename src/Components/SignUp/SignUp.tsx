@@ -19,7 +19,7 @@ const SignUp = () => {
   const { firstname, lastname, email, password, phoneNumber } = signupPayload
 
   const [signup] = useSignupMutation()
-  const toast = useRef<any>(null)
+  const toast = useRef<any>(undefined)
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setSignupPayload((prevState) => ({

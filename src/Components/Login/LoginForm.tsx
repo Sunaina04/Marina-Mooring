@@ -19,7 +19,7 @@ export default function LoginForm({
   admin,
 }: LoginFormProps) {
   const dispatch = useDispatch()
-  const toast = useRef<any>(null)
+  const toast = useRef<any>(undefined)
   const [loginPayload, setLoginPayload] = useState({
     username: '',
     password: '',

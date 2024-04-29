@@ -17,7 +17,7 @@ import { CustomerData, CustomerProps } from '../../../Type/CommonType'
 const Moorings = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [mooringData, setMooringData] = useState<MooringPayload[]>([])
-  const [selectedCustomer, setSelectedCustomer] = useState<any>(null)
+  const [selectedCustomer, setSelectedCustomer] = useState<any>(undefined)
   const [editMode, setEditMode] = useState(false)
   const [searchQuery, setSearchQuery] = useState<string>('')
   const [filteredMooringData, setFilteredMooringData] = useState<MooringPayload[]>([])

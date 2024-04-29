@@ -9,7 +9,7 @@ import { CityProps } from '../../../Type/CommonType'
 
 const AddTechnication = () => {
   const [value, setValue] = useState<string>('')
-  const [selectedCity, setSelectedCity] = useState<CityProps | null>(null)
+  const [selectedCity, setSelectedCity] = useState<CityProps | undefined>(undefined)
   const cities: CityProps[] = [
     { name: 'New York', code: 'NY' },
     { name: 'Rome', code: 'RM' },

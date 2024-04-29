@@ -11,7 +11,7 @@ import { useGetWorkOrdersMutation } from '../../../Services/MoorServe/MoorserveA
 const WorkOrders = () => {
   const [visible, setVisible] = useState(false)
   const [workOrderData, setWorkOrderData] = useState<WorkOrderPayload[]>([])
-  const [selectedCustomer, setSelectedCustomer] = useState<any>(null)
+  const [selectedCustomer, setSelectedCustomer] = useState<any>(undefined)
   const [editMode, setEditMode] = useState(false)
   const [getWorkOrder] = useGetWorkOrdersMutation()
 

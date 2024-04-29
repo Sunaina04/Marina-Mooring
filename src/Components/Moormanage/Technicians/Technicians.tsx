@@ -7,16 +7,16 @@ import { Button } from 'primereact/button'
 import { Calendar } from 'primereact/calendar'
 import { TechnicianPayload, TechnicianResponse } from '../../../Type/ApiTypes'
 import { useGetTechnicianMutation } from '../../../Services/MoorManage/MoormanageApi'
-import { BillsData } from '../../../Type/CommonType'
+import { BillsData, NullableDateArray } from '../../../Type/CommonType'
 
 const Technicians = () => {
-  const [date, setDate] = useState<Nullable<(Date | null)[]>>(null)
+  const [date, setDate] = useState<NullableDateArray>(null)
   const options: string[] = ['Open', 'Completed']
   const [value, setValue] = useState<string>(options[0])
   const [dataVisible, setDataVisible] = useState(false)
   const [technicianRecord, setTechnicianRecord] = useState()
-  const [globalFilter, setGlobalFilter] = useState<string | null>(null)
-  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date())
+  const [globalFilter, setGlobalFilter] = useState<string | undefined>(undefined)
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date())
   const [technicianData, setTechnicianData] = useState<TechnicianPayload[]>([])
   const [filteredTechnicianData, setFilteredTechnicianData] = useState<TechnicianPayload[]>([])
   const [getTechnicians] = useGetTechnicianMutation()
@@ -50,7 +50,12 @@ const Technicians = () => {
   }
 
   const handleDateUnselect = () => {
-    setSelectedDate(null)
+    setSelectedDate(undefined)
+  }
+
+  const handleRowSelection = (e: any) => {
+    setTechnicianRecord(e.data)
+    setDataVisible(true)
   }
 
   const workOrder = (
@@ -66,47 +71,17 @@ const Technicians = () => {
     </>
   )
 
-  const Billsheader = (
-    <div className="flex flex-wrap align-items-center gap-4 ">
-      <span className="text-sm font-bold text-[black]">Work Orders</span>
-      <div className=" ">
-        <div className="">
-          <SelectButton
-            style={{ fontSize: '0.2rem', fontWeight: 'bolder', height: '2rem' }}
-            value={value}
-            onChange={(e: SelectButtonChangeEvent) => setValue(e.value)}
-            options={options}
-          />
-        </div>
-      </div>
-
-      <div className="ml-72">
-        <Button
-          onClick={function (): void {
-            throw new Error('Function not implemented.')
-          }}
-          label={'Add New'}
-          style={{
-            backgroundColor: 'black',
-            height: '4vh',
-            fontSize: '0.75rem',
-            borderRadius: '0.20rem',
-          }}
-        />
-      </div>
-    </div>
-  )
-
   const getTechniciansData = async () => {
-    await getTechnicians({})
-      .unwrap()
-      .then(async (response) => {
-        const { status, content } = response as TechnicianResponse
-        if (status === 200 && Array.isArray(content)) {
-          setTechnicianData(content)
-          setFilteredTechnicianData(content) // Initialize filtered data with all data
-        }
-      })
+    try {
+      const response = await getTechnicians({}).unwrap()
+      const { status, content } = response as TechnicianResponse
+      if (status === 200 && Array.isArray(content)) {
+        setTechnicianData(content)
+        setFilteredTechnicianData(content)
+      }
+    } catch (error) {
+      console.error('Error fetching technician data:', error)
+    }
   }
 
   useEffect(() => {
@@ -126,7 +101,7 @@ const Technicians = () => {
           <div>
             <Calendar
               value={date}
-              onChange={(e) => setDate(e.value)}
+              onChange={(e) => setDate(e.value || null)}
               selectionMode="range"
               readOnlyInput
             />
@@ -142,8 +117,7 @@ const Technicians = () => {
             scrollable={true}
             selectionMode="single"
             onRowSelect={(e) => {
-              setTechnicianRecord(e.data)
-              setDataVisible(true)
+              handleRowSelection(e)
             }}
             tableStyle={{
               fontSize: '12px',

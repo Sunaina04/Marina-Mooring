@@ -10,7 +10,7 @@ import { AddMooringProps } from '../../../Type/ComponentBasedType'
 
 const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
   const [value, setValue] = useState<string>('')
-  const [selectedCity, setSelectedCity] = useState<CityProps | null>(null)
+  const [selectedCity, setSelectedCity] = useState<CityProps | undefined>(undefined)
   const [saveMoorings] = useAddMooringsMutation()
   const [formData, setFormData] = useState<any>({
     customerName: '',

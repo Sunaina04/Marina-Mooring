@@ -26,7 +26,7 @@ const Customer = () => {
   const [customerData, setCustomerData] = useState<CustomerPayload[]>([])
   const [editMode, setEditMode] = useState(false)
   const [customerRecord, setCustomerRecord] = useState(false)
-  const [selectedCustomer, setSelectedCustomer] = useState<any>(null)
+  const [selectedCustomer, setSelectedCustomer] = useState<any>(undefined)
   const [searchQuery, setSearchQuery] = useState<string>('')
   const [filteredCustomerData, setFilteredCustomerData] = useState<CustomerPayload[]>([])
 

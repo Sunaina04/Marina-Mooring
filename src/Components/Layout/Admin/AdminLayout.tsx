@@ -8,7 +8,7 @@ import { style } from '../../CustomComponent/CustomModal'
 const AdminLayout = () => {
   const [openSubMenus, setOpenSubMenus] = useState(new Array(SidebarMenu.length).fill(false))
   const [open, setOpen] = useState(true)
-  const [selectedSubcategory, setSelectedSubcategory] = useState<any>(null)
+  const [selectedSubcategory, setSelectedSubcategory] = useState<any>(undefined)
 
   const handleExpand = (index: number) => {
     setOpenSubMenus((prev) => {
@@ -19,7 +19,7 @@ const AdminLayout = () => {
   }
 
   const handleNavLink = (index: any) => {
-    setSelectedSubcategory(null)
+    setSelectedSubcategory(undefined)
     setSelectedSubcategory(0)
     handleExpand(index)
   }

@@ -37,8 +37,10 @@ export interface INITIAl_STATE {
 }
 
 export interface FormFieldsProps {
-  label: string;
-  value?: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  type?: string;
+  label: string
+  value?: string
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  type?: string
 }
+
+export type NullableDateArray = (Date | null)[] | null

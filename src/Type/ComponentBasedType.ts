@@ -101,7 +101,7 @@ export interface PermissionData {
   role: string
 }
 
-export interface StatCardProps {
+export type StatCardProps = {
   items: {
     title: string
     percentage: number

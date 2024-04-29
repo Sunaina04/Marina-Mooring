@@ -17,8 +17,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   getCustomer,
 }) => {
   const [value, setValue] = useState<string>('')
-  const [selectedCountry, setSelectedCountry] = useState<CityProps | null>(null)
-  const [selectedState, setSelectedState] = useState<CityProps | null>(null)
+  const [selectedCountry, setSelectedCountry] = useState<CityProps | undefined>(undefined)
+  const [selectedState, setSelectedState] = useState<CityProps | undefined>(undefined)
   const [customerName, setCustomerName] = useState<string>('')
   const [customerId, setCustomerId] = useState<string>('')
   const [phone, setPhone] = useState<string>('')
@@ -27,7 +27,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [sectorBlock, setSectorBlock] = useState<string>('')
   const [pinCode, setPinCode] = useState<string>('')
   const [addCustomer] = useAddCustomerMutation()
-  const [selectedCity, setSelectedCity] = useState<CityProps | null>(null)
+  const [selectedCity, setSelectedCity] = useState<CityProps | undefined>(undefined)
   const [updateCustomer] = useUpdateCustomerMutation()
 
   const cities: CityProps[] = [
@@ -107,10 +107,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       setPinCode(customer.pinCode || '')
 
       const selectedCountry = cities.find((city) => city.name === customer.country)
-      setSelectedCountry(selectedCountry || null)
+      setSelectedCountry(selectedCountry || undefined)
 
       const selectedState = cities.find((city) => city.name === customer.state)
-      setSelectedState(selectedState || null)
+      setSelectedState(selectedState || undefined)
     }
   }, [editMode, customer])
 
@@ -596,7 +596,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               </div>
             </div>
           </div>
-          
+
           {/* last row */}
           <div className="mt-3">
             <div className="">
