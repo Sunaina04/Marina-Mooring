@@ -1,13 +1,36 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import { SelectButton, SelectButtonChangeEvent } from 'primereact/selectbutton'
-import { Nullable } from 'primereact/ts-helpers'
-import { Button } from 'primereact/button'
 import { Calendar } from 'primereact/calendar'
 import { TechnicianPayload, TechnicianResponse } from '../../../Type/ApiTypes'
 import { useGetTechnicianMutation } from '../../../Services/MoorManage/MoormanageApi'
 import { BillsData, NullableDateArray } from '../../../Type/CommonType'
+
+const useFetchTechnicians = () => {
+  const [technicianData, setTechnicianData] = useState<TechnicianPayload[]>([])
+  const [filteredTechnicianData, setFilteredTechnicianData] = useState<TechnicianPayload[]>([])
+  const [getTechnicians] = useGetTechnicianMutation()
+
+  const getTechniciansData = useCallback(async () => {
+    try {
+      const response = await getTechnicians({}).unwrap()
+      const { status, content } = response as TechnicianResponse
+      if (status === 200 && Array.isArray(content)) {
+        setTechnicianData(content)
+        setFilteredTechnicianData(content)
+      }
+    } catch (error) {
+      console.error('Error fetching technician data:', error)
+    }
+  }, [getTechnicians])
+
+  useEffect(() => {
+    getTechniciansData()
+  }, [getTechniciansData])
+
+  return { technicianData, filteredTechnicianData }
+}
 
 const Technicians = () => {
   const [date, setDate] = useState<NullableDateArray>(null)
@@ -17,9 +40,7 @@ const Technicians = () => {
   const [technicianRecord, setTechnicianRecord] = useState()
   const [globalFilter, setGlobalFilter] = useState<string | undefined>(undefined)
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date())
-  const [technicianData, setTechnicianData] = useState<TechnicianPayload[]>([])
-  const [filteredTechnicianData, setFilteredTechnicianData] = useState<TechnicianPayload[]>([])
-  const [getTechnicians] = useGetTechnicianMutation()
+  const { technicianData, filteredTechnicianData } = useFetchTechnicians()
 
   const [workOrderData, setWorkOrderData] = useState<BillsData[]>([
     {
@@ -70,23 +91,6 @@ const Technicians = () => {
       </div>
     </>
   )
-
-  const getTechniciansData = async () => {
-    try {
-      const response = await getTechnicians({}).unwrap()
-      const { status, content } = response as TechnicianResponse
-      if (status === 200 && Array.isArray(content)) {
-        setTechnicianData(content)
-        setFilteredTechnicianData(content)
-      }
-    } catch (error) {
-      console.error('Error fetching technician data:', error)
-    }
-  }
-
-  useEffect(() => {
-    getTechniciansData()
-  }, [])
 
   return (
     <>
