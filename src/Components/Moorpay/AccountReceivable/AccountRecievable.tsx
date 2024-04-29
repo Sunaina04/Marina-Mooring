@@ -2,11 +2,11 @@ import { useState } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import CustomModal from '../../CustomComponent/CustomModal'
-import { AccountRecievableProps } from '../../../Type/ComponentBasedType'
+import { MoorPayProps } from '../../../Type/ComponentBasedType'
 
 const AccountRecievable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [accountRecievableData, setAccountRecievableData] = useState<AccountRecievableProps[]>([
+  const [accountRecievableData, setAccountRecievableData] = useState<MoorPayProps[]>([
     {
       invoice: '#425',
       mooringid: '#6658',

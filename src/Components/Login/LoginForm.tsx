@@ -4,7 +4,7 @@ import {
   useLoginMutation,
   useResetPasswordMutation,
 } from '../../Services/Authentication/AuthApi'
-import { ErrorResponse, LOGIN_RESPONSE, RESET_PASSSWORD_RESPONSE } from '../../Type/ApiTypes'
+import { ErrorResponse, Login_Response, ResetPassword_Response } from '../../Type/ApiTypes'
 import { useDispatch, useSelector } from 'react-redux'
 import { setUserData } from '../../Store/Slice/userSlice'
 import { Link, useNavigate } from 'react-router-dom'
@@ -67,7 +67,7 @@ export default function LoginForm({
     if (admin) {
       // try {
       //   const response = await login(loginPayload).unwrap();
-      //   const { status, user, token, message } = response as LOGIN_RESPONSE;
+      //   const { status, user, token, message } = response as Login_Response;
       //   if (status === 200) {
       //     console.log("data", user, response);
       //     dispatch(setUserData({ ...user }));
@@ -91,7 +91,7 @@ export default function LoginForm({
     } else {
       try {
         const response = await login(loginPayload).unwrap()
-        const { status, user, token, message } = response as LOGIN_RESPONSE
+        const { status, user, token, message } = response as Login_Response
         if (status === 200) {
           console.log('data', user, response)
           dispatch(setUserData({ ...user }))
@@ -142,7 +142,7 @@ export default function LoginForm({
         payload: resetPassPayload,
         token: token, 
       }).unwrap()
-      const { status, content, message } = response as RESET_PASSSWORD_RESPONSE
+      const { status, content, message } = response as ResetPassword_Response
       if (status === 200) {
         navigate('/dashboard')
       }

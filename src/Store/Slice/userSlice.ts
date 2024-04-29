@@ -4,8 +4,8 @@ import { UserData } from "../../Type/ApiTypes";
 import { INITIAl_STATE } from "../../Type/CommonType";
 
 const initialState: INITIAl_STATE = {
-  token: null,
-  userData: null,
+  token: undefined,
+  userData: undefined,
 };
 
 export const userSlice = createSlice({

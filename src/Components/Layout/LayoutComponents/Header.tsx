@@ -20,7 +20,6 @@ const Header: React.FC = () => {
         }}>
         <img alt="Logo" src={'/assets/images/Moorfind.png'} style={{ width: 100, height: 80 }} />
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          {/* <Avatar src="" /> */}
           <Button
             icon={expanded ? 'pi pi-angle-up' : 'pi pi-angle-down'}
             onClick={handleMenu}

@@ -15,23 +15,23 @@ import {
   useGetMooringsMutation,
 } from '../../../Services/MoorManage/MoormanageApi'
 import {
-  CUSTOMER_PAYLOAD,
-  CUSTOMER_RESPONSE,
-  MOORING_PAYLOAD,
-  MOORING_RESPONSE,
+  Customer_Payload,
+  Customer_Response,
+  Mooring_Payload,
+  Mooring_Response,
 } from '../../../Type/ApiTypes'
 
 const Customer = () => {
   const [modalVisible, setModalVisible] = useState(false)
-  const [customerData, setCustomerData] = useState<CUSTOMER_PAYLOAD[]>([])
+  const [customerData, setCustomerData] = useState<Customer_Payload[]>([])
   const [editMode, setEditMode] = useState(false)
   const [customerRecord, setCustomerRecord] = useState(false)
   const [selectedCustomer, setSelectedCustomer] = useState<any>(null)
   const [searchQuery, setSearchQuery] = useState<string>('')
-  const [filteredCustomerData, setFilteredCustomerData] = useState<CUSTOMER_PAYLOAD[]>([])
+  const [filteredCustomerData, setFilteredCustomerData] = useState<Customer_Payload[]>([])
 
-  const [mooringData, setMooringData] = useState<MOORING_PAYLOAD[]>([])
-  const [customerRowData, setCustomerRowData] = useState<MOORING_PAYLOAD>()
+  const [mooringData, setMooringData] = useState<Mooring_Payload[]>([])
+  const [customerRowData, setCustomerRowData] = useState<Mooring_Payload>()
   const [dialogVisible, setDialogVisible] = useState(false)
 
   const [getCustomer] = useGetCustomerMutation()
@@ -69,7 +69,7 @@ const Customer = () => {
   const getCustomerData = async () => {
     try {
       const response = await getCustomer({}).unwrap()
-      const { status, content } = response as CUSTOMER_RESPONSE
+      const { status, content } = response as Customer_Response
       if (status === 200 && Array.isArray(content)) {
         setCustomerData(content)
         setFilteredCustomerData(content)
@@ -119,7 +119,7 @@ const Customer = () => {
     await getMoorings({})
       .unwrap()
       .then(async (response) => {
-        const { status, content } = response as MOORING_RESPONSE
+        const { status, content } = response as Mooring_Response
         if (status === 200 && Array.isArray(content)) {
           setMooringData(content)
         }

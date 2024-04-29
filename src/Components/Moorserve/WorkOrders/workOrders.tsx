@@ -5,12 +5,12 @@ import { InputText } from 'primereact/inputtext'
 import { Dialog } from 'primereact/dialog'
 import { Button } from 'primereact/button'
 import AddWorkOrders from './AddWorkOrders'
-import { WorkOrder_PAYLOAD, WorkOrder_RESPONSE } from '../../../Type/ApiTypes'
+import { WorkOrder_Payload, WorkOrder_Response } from '../../../Type/ApiTypes'
 import { useGetWorkOrdersMutation } from '../../../Services/MoorServe/MoorserveApi'
 
 const WorkOrders = () => {
   const [visible, setVisible] = useState(false)
-  const [workOrderData, setWorkOrderData] = useState<WorkOrder_PAYLOAD[]>([])
+  const [workOrderData, setWorkOrderData] = useState<WorkOrder_Payload[]>([])
   const [selectedCustomer, setSelectedCustomer] = useState<any>(null)
   const [editMode, setEditMode] = useState(false)
   const [getWorkOrder] = useGetWorkOrdersMutation()
@@ -30,7 +30,7 @@ const WorkOrders = () => {
   const getWorkOrderData = async () => {
     try {
       const response = await getWorkOrder({}).unwrap()
-      const { status, content } = response as WorkOrder_RESPONSE
+      const { status, content } = response as WorkOrder_Response
       if (status === 200 && Array.isArray(content)) {
         setWorkOrderData(content)
       }

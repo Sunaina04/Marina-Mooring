@@ -3,20 +3,20 @@ import CustomModal from '../../CustomComponent/CustomModal'
 import AddBoatyards from './AddBoatyards'
 import { InputText } from 'primereact/inputtext'
 import {
-  BOATYARD_DATA,
-  BOATYARD_PAYLOAD,
-  BOATYARD_RESPONSE,
+  BoatYard_Data,
+  BoatYard_Payload,
+  BoatYard_Response,
 } from '../../../Type/ApiTypes'
 import BoatyardTable from './BoatyardTable'
 import { useGetBoatyardsMutation } from '../../../Services/MoorManage/MoormanageApi'
 
 const Boatyards = () => {
   const [modalVisible, setModalVisible] = useState(false)
-  const [boatyardsData, setboatyardsData] = useState<BOATYARD_PAYLOAD[]>([])
-  const [filteredboatyardsData, setFilteredboatyardsData] = useState<BOATYARD_PAYLOAD[]>([])
+  const [boatyardsData, setboatyardsData] = useState<BoatYard_Payload[]>([])
+  const [filteredboatyardsData, setFilteredboatyardsData] = useState<BoatYard_Payload[]>([])
   const [getBaotyards] = useGetBoatyardsMutation()
 
-  const moorings: BOATYARD_DATA[] = [
+  const moorings: BoatYard_Data[] = [
     {
       id: '#9715',
       moorings: 'Pioneer',
@@ -184,7 +184,7 @@ const Boatyards = () => {
       .unwrap()
       .then(async (response) => {
         console.log('RESPONSE', response)
-        const { status, content } = response as BOATYARD_RESPONSE
+        const { status, content } = response as BoatYard_Response
         if (status === 200 && Array.isArray(content)) {
           setboatyardsData(content)
           setFilteredboatyardsData(content) // Initialize filtered data with all data
@@ -214,7 +214,7 @@ const Boatyards = () => {
         </div>
       </div>
       <div className="ml-10">
-        <BoatyardTable moorings={moorings as BOATYARD_DATA[]} />
+        <BoatyardTable moorings={moorings as BoatYard_Data[]} />
       </div>
     </>
   )

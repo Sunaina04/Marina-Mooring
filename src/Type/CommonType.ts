@@ -1,4 +1,4 @@
-import { BOATYARD_DATA, UserData } from './ApiTypes'
+import { BoatYard_Data, UserData } from './ApiTypes'
 
 export interface CityProps {
   name: string
@@ -6,7 +6,7 @@ export interface CityProps {
 }
 
 export interface DataProps {
-  moorings: BOATYARD_DATA[]
+  moorings: BoatYard_Data[]
 }
 
 export interface CustomerData {
@@ -32,6 +32,6 @@ export interface BillsData {
 }
 
 export interface INITIAl_STATE {
-  token: null | string
-  userData: UserData | null
+  token: undefined | string
+  userData: UserData | undefined
 }

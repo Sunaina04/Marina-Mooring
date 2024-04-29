@@ -4,7 +4,7 @@ import { InputText } from 'primereact/inputtext'
 import { Dropdown } from 'primereact/dropdown'
 import { IoIosAdd } from 'react-icons/io'
 import { GrFormSubtract } from 'react-icons/gr'
-import { WorkOrder_RESPONSE } from '../../../Type/ApiTypes'
+import { WorkOrder_Response } from '../../../Type/ApiTypes'
 import {
   useAddWorkOrderMutation,
   useUpdateWorkOrderMutation,
@@ -40,7 +40,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
     }
 
     const response = await saveWorkOrder(payload).unwrap()
-    const { content, status } = response as WorkOrder_RESPONSE
+    const { content, status } = response as WorkOrder_Response
     if (status === 200) {
     }
   }

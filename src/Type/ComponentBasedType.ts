@@ -1,4 +1,4 @@
-import { MOORING_PAYLOAD, VENDOR_PAYLOAD, WorkOrder_PAYLOAD } from "./ApiTypes"
+import { Mooring_Payload, Vendor_Payload, WorkOrder_Payload } from "./ApiTypes"
 
 export interface CustomerDataProps {
   customer: any
@@ -41,7 +41,7 @@ export interface RowExpansionProps {
 }
 
 export interface AddMooringProps {
-  moorings: MOORING_PAYLOAD
+  moorings: Mooring_Payload
   editMode: boolean
 }
 
@@ -53,23 +53,13 @@ export interface Technician_Data {
 }
 
 export interface AddVendorProps {
-  vendors: VENDOR_PAYLOAD
+  vendors: Vendor_Payload
   editMode: boolean
   closeModal: () => void
   getVendor: () => void
 }
 
-export interface AccountPayableProps {
-  invoice: string
-  mooringid: string
-  name: string
-  technicianName: string
-  services: string
-  time: string
-  amount: string
-}
-
-export interface AccountRecievableProps {
+export interface MoorPayProps {
   invoice: string
   mooringid: string
   name: string
@@ -98,7 +88,7 @@ export interface TimeCardsProps {
 }
 
 export interface WorkOrderProps {
-  workOrderData: WorkOrder_PAYLOAD
+  workOrderData: WorkOrder_Payload
   editMode: boolean
   setVisible: React.Dispatch<React.SetStateAction<boolean>>
 }

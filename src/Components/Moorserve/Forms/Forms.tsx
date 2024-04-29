@@ -3,24 +3,24 @@ import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import CustomModal from '../../CustomComponent/CustomModal'
 import { InputText } from 'primereact/inputtext'
-import { FORMS_PAYLOAD, FORMS_RESPONSE } from '../../../Type/ApiTypes'
+import { Forms_Payload, Forms_Response } from '../../../Type/ApiTypes'
 import {
   useDownloadFormMutation,
   useGetFormsMutation,
-  useUploadFormMutation,
 } from '../../../Services/MoorServe/MoorserveApi'
 import { Button } from 'primereact/button'
+import useSubmit from '../../../Services/CustomHook/useSubmit'
 
 const Forms = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [formsData, setFormsData] = useState<FORMS_PAYLOAD[]>([])
+  const [formsData, setFormsData] = useState<Forms_Payload[]>([])
   const [customerName, setCustomerName] = useState('')
   const [customerID, setCustomerID] = useState('')
   const [formName, setFormName] = useState('')
   const [file, setFile] = useState<File | null>(null) // For file upload
   const [getForms] = useGetFormsMutation()
-  const [uploadForms] = useUploadFormMutation()
   const [downloadForms] = useDownloadFormMutation()
+  const { error, response, handleSubmit } = useSubmit()
 
   const handleButtonClick = () => {
     setIsModalOpen(true)
@@ -44,7 +44,7 @@ const Forms = () => {
   const getFormsData = async () => {
     try {
       const response = await getForms({}).unwrap()
-      const { status, content } = response as FORMS_RESPONSE
+      const { status, content } = response as Forms_Response
       if (status === 200 && Array.isArray(content)) {
         setFormsData(content)
       }
@@ -62,21 +62,9 @@ const Forms = () => {
     }
     formData.append('customerName', customerName)
     formData.append('customerId', customerID)
-
-    try {
-      const response = await uploadForms(formData).unwrap()
-      console.log('Form uploaded successfully:', response)
-      const { status, content } = response as FORMS_RESPONSE
-      if (status === 200) {
-        getFormsData()
-        setIsModalOpen(false)
-        setCustomerName('')
-        setCustomerID('')
-        setFormName('')
-        setFile(null)
-      }
-    } catch (error) {
-      console.error('Error uploading form:', error)
+    handleSubmit(formData)
+    if (response?.status === 200) {
+      setIsModalOpen(false)
     }
   }
 

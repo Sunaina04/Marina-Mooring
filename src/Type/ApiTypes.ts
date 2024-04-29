@@ -1,9 +1,9 @@
-export interface LOGIN_PAYLOAD {
+export interface Login_Payload {
   username: string
   password: string
 }
 
-export interface SIGNUP_PAYLOAD {
+export interface SignUp_Payload {
   firstname: string
   lastname: string
   phoneNumber: string
@@ -11,12 +11,12 @@ export interface SIGNUP_PAYLOAD {
   password: string
 }
 
-export interface RESET_PASSWORD_PAYLOAD {
+export interface ResetPassword_Payload {
   newPassword: string
   confirmPassword: string
 }
 
-export interface FORGOT_PASSWORD_PAYLOAD {
+export interface ForgotPassword_Payload {
   email: string
 }
 
@@ -39,7 +39,7 @@ export interface RoleData {
   description: string
 }
 
-export interface LOGIN_RESPONSE {
+export interface Login_Response {
   status: number
   message: string
   user: UserData
@@ -47,7 +47,7 @@ export interface LOGIN_RESPONSE {
   role: RoleData
 }
 
-export interface SIGNUP_RESPONSE {
+export type SignUp_Response = {
   data: {
     status: number
     message: string
@@ -55,15 +55,15 @@ export interface SIGNUP_RESPONSE {
   }
 }
 
-export interface RESET_PASSSWORD_RESPONSE {
+export interface ResetPassword_Response {
   status: number
   message: string
-  errorList: [string]
+  errorList: string[]
   time: string
-  content: {}
+  content: Record<string, any>
 }
 
-export interface FORGOT_PASSSWORD_RESPONSE {
+export interface ForgotPassword_Response {
   status: number
   message: string
   data: any
@@ -78,10 +78,9 @@ export interface ErrorResponse {
   status: number
   message: string
   data: string
-  // response: string;
 }
 
-export interface ErrorResponseForgotPassword {
+export type ErrorResponseForgotPassword = {
   data: {
     response: string
   }
@@ -93,7 +92,7 @@ export interface validateEmailResponse {
   success: boolean
 }
 
-export interface CUSTOMER_PAYLOAD {
+export interface Customer_Payload {
   id: number
   creationDate: string
   createdBy: string
@@ -110,7 +109,7 @@ export interface CUSTOMER_PAYLOAD {
   zipCode: string
 }
 
-export interface ADD_CUSTOMER_PAYLOAD {
+export interface AddCustomer_Payload {
   id: number
   customerName: string
   customerId: string
@@ -123,30 +122,17 @@ export interface ADD_CUSTOMER_PAYLOAD {
   zipCode: string
 }
 
-export interface CUSTOMER_RESPONSE {
+export interface Customer_Response {
   message: string
   status: number
   errorList: []
   time: string
   content: {
-    id: number
-    creationDate: string
-    createdBy: string
-    lastModifiedDate: string
-    lastModifiedBy: string
-    customerName: string
-    customerId: string
-    phone: string
-    emailAddress: string
-    streetHouse: string
-    aptSuite: string
-    state: string
-    country: string
-    zipCode: string
+    Customer_Payload: Customer_Payload
   }
 }
 
-export interface MOORING_PAYLOAD {
+export interface Mooring_Payload {
   id: number
   mooringNumber: string
   customerName: string
@@ -167,34 +153,17 @@ export interface MOORING_PAYLOAD {
   deptAtMeanHighWater: string
 }
 
-export interface MOORING_RESPONSE {
+export interface Mooring_Response {
   message: string
   status: number
   errorList: []
   time: string
   content: {
-    id: string
-    mooringNumber: string
-    customerName: string
-    harbor: string
-    waterDepth: string
-    gpsCoordinates: string
-    boatName: string
-    boatSize: string
-    boatType: string
-    boatWeight: string
-    conditionOfEye: string
-    bottomChainCondition: string
-    topChainCondition: string
-    shackleSwivelCondition: string
-    pennantCondition: string
-    sizeOfWeight: string
-    typeOfWeight: string
-    deptAtMeanHighWater: string
+    Mooring_Payload: Mooring_Payload
   }
 }
 
-export interface VENDOR_PAYLOAD {
+export interface Vendor_Payload {
   id: number
   companyName: string
   companyPhoneNumber: string
@@ -214,33 +183,17 @@ export interface VENDOR_PAYLOAD {
   primarySalesRep: boolean
 }
 
-export interface VENDOR_RESPONSE {
+export interface Vendor_Response {
   message: string
   status: number
   errorList: []
   time: string
   content: {
-    id: number
-    companyName: string
-    companyPhoneNumber: string
-    website: string
-    street: string
-    aptSuite: string
-    state: string
-    country: string
-    zipCode: number
-    companyEmail: string
-    accountNumber: string
-    firstName: string
-    lastName: string
-    salesRepPhoneNumber: string
-    salesRepEmail: string
-    salesRepNote: string
-    primarySalesRep: boolean
+    Vendor_Payload: Vendor_Payload
   }
 }
 
-export interface BOATYARD_DATA {
+export interface BoatYard_Data {
   id: string
   moorings: string
   boatyards: number
@@ -262,7 +215,7 @@ export interface BOATYARD_DATA {
   }[]
 }
 
-export interface BOATYARD_PAYLOAD {
+export interface BoatYard_Payload {
   id: number
   boatyardId: string
   mooringName: string
@@ -271,22 +224,17 @@ export interface BOATYARD_PAYLOAD {
   phone: string
 }
 
-export interface BOATYARD_RESPONSE {
+export interface BoatYard_Response {
   status: number
   message: string
   errorList: []
   time: string
   content: {
-    id: number
-    boatyardId: string
-    mooringName: string
-    ownerName: string
-    emailAddress: string
-    phone: string
+    BoatYard_Payload: BoatYard_Payload
   }
 }
 
-export interface TECHNICIAN_PAYLOAD {
+export interface Technician_Payload {
   id: number
   technicianName: string
   technicianId: string
@@ -300,27 +248,17 @@ export interface TECHNICIAN_PAYLOAD {
   note: string
 }
 
-export interface TECHNICIAN_RESPONSE {
+export interface Technician_Response {
   status: number
   message: string
   errorList: []
   time: string
   content: {
-    id: number
-    technicianName: string
-    technicianId: string
-    emailAddress: string
-    phone: string
-    streetHouse: string
-    sectorBlock: string
-    state: string
-    country: string
-    pincode: string
-    note: string
+    Technician_Payload: Technician_Payload
   }
 }
 
-export interface FORMS_PAYLOAD {
+export interface Forms_Payload {
   id: number
   submittedBy: string
   formName: string
@@ -328,27 +266,23 @@ export interface FORMS_PAYLOAD {
   downloadUrl: string
 }
 
-export interface FORMS_RESPONSE {
+export interface Forms_Response {
   message: string
   status: number
   errorList: null
   time: string
   content: {
-    id: number
-    submittedBy: string
-    formName: string
-    submittedDate: string
-    downloadUrl: string
+    Forms_Payload: Forms_Payload
   }
 }
 
-export interface UPLOAD_PAYLOAD {
+export interface Upload_Payload {
   file: string
   customerName: string
   customerId: string
 }
 
-export interface WorkOrder_PAYLOAD {
+export interface WorkOrder_Payload {
   id: number
   creationDate: string
   createdBy: string
@@ -366,26 +300,12 @@ export interface WorkOrder_PAYLOAD {
   reportProblem: string
 }
 
-export interface WorkOrder_RESPONSE {
+export interface WorkOrder_Response {
   message: string
   status: number
   errorList: []
   time: string
   content: {
-    id: number
-    creationDate: string
-    createdBy: string
-    lastModifiedDate: string
-    lastModifiedBy: string
-    customerName: string
-    customerId: string
-    mooringNumber: string
-    boatYard: string
-    assignedTo: string
-    dueDate: string
-    scheduleDate: string
-    status: string
-    time: string
-    reportProblem: string
+    WorkOrder_Payload: WorkOrder_Payload
   }
 }

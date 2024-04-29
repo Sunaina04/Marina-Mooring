@@ -1,15 +1,15 @@
 import { userApi } from "../UserApi";
 import {
-  FORGOT_PASSWORD_PAYLOAD,
-  LOGIN_PAYLOAD,
-  RESET_PASSWORD_PAYLOAD,
-  SIGNUP_PAYLOAD,
+  ForgotPassword_Payload,
+  Login_Payload,
+  ResetPassword_Payload,
+  SignUp_Payload,
 } from "../../Type/ApiTypes";
 
 const authApi = userApi.injectEndpoints({
   endpoints: (builder: any) => ({
     login: builder.mutation({
-      query: (payload: LOGIN_PAYLOAD) => ({
+      query: (payload: Login_Payload) => ({
         url: "api/v1/auth/login",
         method: "POST",
         body: payload,
@@ -17,7 +17,7 @@ const authApi = userApi.injectEndpoints({
     }),
 
     signup: builder.mutation({
-      query: (payload: SIGNUP_PAYLOAD) => ({
+      query: (payload: SignUp_Payload) => ({
         url: "v1/mmm/employees/saveEmployee",
         method: "POST",
         body: payload,
@@ -32,7 +32,7 @@ const authApi = userApi.injectEndpoints({
     }),
 
     forgotPassword: builder.mutation({
-      query: (payload: FORGOT_PASSWORD_PAYLOAD) => ({
+      query: (payload: ForgotPassword_Payload) => ({
         url: "api/v1/auth/forgetPassword",
         method: "POST",
         body: payload,
@@ -44,7 +44,7 @@ const authApi = userApi.injectEndpoints({
         payload,
         token,
       }: {
-        payload: RESET_PASSWORD_PAYLOAD;
+        payload: ResetPassword_Payload;
         token: string;
       }) => ({
         url: "api/v1/auth/resetPassword",

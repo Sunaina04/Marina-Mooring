@@ -1,4 +1,4 @@
-import { BOATYARD_PAYLOAD, CUSTOMER_PAYLOAD, MOORING_PAYLOAD, TECHNICIAN_PAYLOAD, VENDOR_PAYLOAD } from "../../Type/ApiTypes";
+import { BoatYard_Payload, Customer_Payload, Mooring_Payload, Technician_Payload, Vendor_Payload } from "../../Type/ApiTypes";
 import { userApi } from "../UserApi";
 
 const moormanageApi = userApi.injectEndpoints({
@@ -6,7 +6,7 @@ const moormanageApi = userApi.injectEndpoints({
 
     //Customer API
     addCustomer: builder.mutation({
-      query: (payload: CUSTOMER_PAYLOAD) => ({
+      query: (payload: Customer_Payload) => ({
         url: "api/v1/customer/",
         method: "POST",
         body: payload,
@@ -28,7 +28,7 @@ const moormanageApi = userApi.injectEndpoints({
     }),
 
     updateCustomer: builder.mutation({
-      query: (payload: CUSTOMER_PAYLOAD) => ({
+      query: (payload: Customer_Payload) => ({
         url: "api/v1/customer/",
         method: "PUT",
         body: payload,
@@ -38,7 +38,7 @@ const moormanageApi = userApi.injectEndpoints({
 
     //Mooring API
     addMoorings: builder.mutation({
-      query: (payload: MOORING_PAYLOAD) => ({
+      query: (payload: Mooring_Payload) => ({
         url: "api/v1/mooring/",
         method: "POST",
         body: payload,
@@ -71,7 +71,7 @@ const moormanageApi = userApi.injectEndpoints({
     }),
 
     updateMoorings: builder.mutation({
-      query: ({ payload, id }: { payload: CUSTOMER_PAYLOAD; id: number }) => ({
+      query: ({ payload, id }: { payload: Customer_Payload; id: number }) => ({
         url: `api/v1/mooring/${id}`,
         method: "PUT",
         body: payload,
@@ -80,7 +80,7 @@ const moormanageApi = userApi.injectEndpoints({
 
     // Vendor API
     addVendors: builder.mutation({
-      query: (payload: VENDOR_PAYLOAD) => ({
+      query: (payload: Vendor_Payload) => ({
         url: "api/v1/vendor/",
         method: "POST",
         body: payload,
@@ -113,7 +113,7 @@ const moormanageApi = userApi.injectEndpoints({
     }),
 
     updateVendor: builder.mutation({
-      query: ({ payload, id }: { payload: VENDOR_PAYLOAD; id: number }) => ({
+      query: ({ payload, id }: { payload: Vendor_Payload; id: number }) => ({
         url: `api/v1/vendor/${id}`,
         method: "PUT",
         body: payload,
@@ -123,7 +123,7 @@ const moormanageApi = userApi.injectEndpoints({
 
     // Boatyards API
     addBoatyards: builder.mutation({
-      query: (payload: BOATYARD_PAYLOAD) => ({
+      query: (payload: BoatYard_Payload) => ({
         url: "api/v1/boatyards/",
         method: "POST",
         body: payload,
@@ -156,7 +156,7 @@ const moormanageApi = userApi.injectEndpoints({
     }),
 
     updateBoatyards: builder.mutation({
-      query: ({ payload, id }: { payload: BOATYARD_PAYLOAD; id: number }) => ({
+      query: ({ payload, id }: { payload: BoatYard_Payload; id: number }) => ({
         url: `api/v1/boatyards/${id}`,
         method: "PUT",
         body: payload,
@@ -165,7 +165,7 @@ const moormanageApi = userApi.injectEndpoints({
 
     // Technician API
     addTechnician: builder.mutation({
-      query: (payload: TECHNICIAN_PAYLOAD) => ({
+      query: (payload: Technician_Payload) => ({
         url: "api/v1/technician/",
         method: "POST",
         body: payload,
@@ -205,7 +205,7 @@ const moormanageApi = userApi.injectEndpoints({
     }),
 
     updateTechnician: builder.mutation({
-      query: ({ payload, id }: { payload: TECHNICIAN_PAYLOAD; id: number }) => ({
+      query: ({ payload, id }: { payload: Technician_Payload; id: number }) => ({
         url: `api/v1/technician/${id}`,
         method: "PUT",
         body: payload,
