@@ -136,6 +136,7 @@ const Estimates = () => {
             onClick={handleButtonClick}
             visible={false}
             onHide={handleModalClose}
+            header={header}
           >
             <AddEstimates/>
           </CustomModal>

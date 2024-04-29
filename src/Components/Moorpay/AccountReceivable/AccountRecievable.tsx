@@ -104,6 +104,7 @@ const AccountRecievable = () => {
             onClick={handleButtonClick}
             visible={false}
             onHide={handleModalClose}
+            header={header}
           >
             <AddCustomer
               customer={undefined}

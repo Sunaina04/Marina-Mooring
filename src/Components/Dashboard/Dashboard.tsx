@@ -152,7 +152,7 @@ const Dashboard = () => {
     <>
       <div className="flex ml-12 hello">
         <div>
-          <h1 className="mt-14 ml-12 opacity-30 text-2xl font-normal">Dashboard</h1>
+          <h1 className="mt-14 ml-12 opacity-30 text-2xl font-normal">DASHBOARD</h1>
         </div>
       </div>
 

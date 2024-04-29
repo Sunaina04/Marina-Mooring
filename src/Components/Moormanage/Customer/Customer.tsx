@@ -143,15 +143,15 @@ const Customer = () => {
           <CustomModal
             label={'ADD NEW'}
             style={{
-              width: '50vw',
-              height: '80vh',
+              width: '8vw',
+              height: '7vh',
               backgroundColor: 'black',
               cursor: 'pointer',
-              fontSize: '14px',
+              fontSize: '15px',
               fontWeight: 'bold',
               color: 'white',
-              borderRadius: '1rem',
             }}
+            header={<h1 className="text-xl font-bold text-black ml-4">Add Customer</h1>} 
             onClick={handleButtonClick}
             visible={modalVisible || editMode}
             onHide={handleModalClose}>
@@ -165,7 +165,7 @@ const Customer = () => {
         </div>
       </div>
 
-      <div className="flex ml-12 gap-4">
+      <div className="flex ml-12 gap-4 mt-4">
         <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[28vw] h-[85vh]">
           <DataTable
             value={filteredCustomerData}
@@ -234,7 +234,7 @@ const Customer = () => {
         </div>
 
         {/* last container */}
-        {(selectedCustomer && customerRecord) && (
+        {selectedCustomer && customerRecord && (
           <div className="w-[30vw]">
             <div className="rounded-md border">
               <div className="bg-[#D9D9D9] flex justify-between pb-2">

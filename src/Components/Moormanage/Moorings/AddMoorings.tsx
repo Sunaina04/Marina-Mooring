@@ -92,12 +92,12 @@ const AddMoorings: React.FC<Props> = ({ moorings, editMode }) => {
 
   return (
     <>
-      <div className="w-full h-full  ">
-        <h1 className="ml-5 text-lg font-bold">Add Mooring</h1>
+      <div className="w-full h-full ">
+        <h1 className="ml-3 text-xl text-black font-bold">Add Mooring</h1>
 
-        <div className="flex justify-around mt-3">
+        <div className="flex justify-around mt-3 ">
           <div>
-            <span className="font-semibold text-sm">Customer Name</span>
+            <span className="font-semibold text-sm text-black">Customer Name</span>
             <div className="mt-2">
               <InputComponent
                 value={formData.customerName}
@@ -114,7 +114,7 @@ const AddMoorings: React.FC<Props> = ({ moorings, editMode }) => {
           </div>
 
           <div>
-            <span className="font-semibold text-sm">Mooring ID</span>
+            <span className="font-semibold text-sm text-black">Mooring ID</span>
             <div className="mt-2">
               <InputComponent
                 // placeholder="Enter customer ID"
@@ -135,7 +135,7 @@ const AddMoorings: React.FC<Props> = ({ moorings, editMode }) => {
           </div>
 
           <div>
-            <span className="font-semibold text-sm">Harbor</span>
+            <span className="font-semibold text-sm text-black">Harbor</span>
             <div className="mt-2">
               <InputComponent
                 // placeholder="Enter owner name"
@@ -157,7 +157,7 @@ const AddMoorings: React.FC<Props> = ({ moorings, editMode }) => {
         <div className="mt-3  ">
           <div className="flex justify-around mt-3">
             <div>
-              <span className="font-semibold text-sm">Water Depth</span>
+              <span className="font-semibold text-sm text-black">Water Depth</span>
               <div className="mt-2">
                 <InputComponent
                   value={formData.waterDepth}
@@ -176,7 +176,7 @@ const AddMoorings: React.FC<Props> = ({ moorings, editMode }) => {
             </div>
 
             <div>
-              <span className="font-semibold text-sm">G.P.S Cordinates</span>
+              <span className="font-semibold text-sm text-black">G.P.S Cordinates</span>
               <div className="mt-2">
                 <InputComponent
                   // placeholder="Enter customer ID"
@@ -197,7 +197,7 @@ const AddMoorings: React.FC<Props> = ({ moorings, editMode }) => {
             </div>
 
             <div>
-              <span className="font-semibold text-sm">BoatYard Name</span>
+              <span className="font-semibold text-sm text-black">Boatyard Name</span>
               <div className="mt-2">
                 <InputComponent
                   // placeholder="Enter owner name"
@@ -223,7 +223,7 @@ const AddMoorings: React.FC<Props> = ({ moorings, editMode }) => {
           <div className="flex justify-around  mt-3">
             
             <div>
-              <span className="font-semibold text-sm">Boat Name</span>
+              <span className="font-semibold text-sm text-black">Boat Name</span>
               <div className="mt-2">
                 <InputComponent
                   // placeholder="Enter owner name"
@@ -244,7 +244,7 @@ const AddMoorings: React.FC<Props> = ({ moorings, editMode }) => {
             </div>
 
             <div className="">
-              <span className="font-semibold text-sm">Boat Size</span>
+              <span className="font-semibold text-sm text-black">Boat Size</span>
               <div className="mt-2">
                 <InputComponent
                   value={formData.boatSize}
@@ -264,7 +264,7 @@ const AddMoorings: React.FC<Props> = ({ moorings, editMode }) => {
 
             <div className="">
               <div>
-                <span className="font-semibold text-sm">Type</span>
+                <span className="font-semibold text-sm text-black">Type</span>
               </div>
 
               <div className="mt-2">
@@ -291,7 +291,7 @@ const AddMoorings: React.FC<Props> = ({ moorings, editMode }) => {
           <div className="flex gap-4 mt-3 ml-3">
 
           <div>
-              <span className="font-semibold text-sm">Weight</span>
+              <span className="font-semibold text-sm text-black">Weight</span>
               <div className="mt-2">
                 <InputComponent
                   // placeholder="Enter owner name"
@@ -311,7 +311,7 @@ const AddMoorings: React.FC<Props> = ({ moorings, editMode }) => {
 
             <div className="ml-3">
               <div>
-                <span className="font-semibold text-sm">Size of Weight</span>
+                <span className="font-semibold text-sm text-black">Size of Weight</span>
               </div>
 
               <div className="mt-2">
@@ -334,7 +334,7 @@ const AddMoorings: React.FC<Props> = ({ moorings, editMode }) => {
 
             <div className="ml-3">
               <div>
-                <span className="font-semibold text-sm">Type of Weight</span>
+                <span className="font-semibold text-sm text-black">Type of Weight</span>
               </div>
 
               <div className="mt-2">
@@ -361,7 +361,7 @@ const AddMoorings: React.FC<Props> = ({ moorings, editMode }) => {
           <div className="">
            <div className="">
               <div>
-                <span className="font-semibold text-sm">
+                <span className="font-semibold text-sm text-black">
                   Top Chain Condition
                 </span>
               </div>
@@ -387,7 +387,7 @@ const AddMoorings: React.FC<Props> = ({ moorings, editMode }) => {
             </div>
             <div className="mt-3">
               <div>
-                <span className="font-semibold text-sm">
+                <span className="font-semibold text-sm text-black">
                   Bootom Chain Condition
                 </span>
               </div>
@@ -413,7 +413,7 @@ const AddMoorings: React.FC<Props> = ({ moorings, editMode }) => {
             </div>
             <div className="mt-3">
               <div className="">
-                <span className="font-semibold text-sm">Pennant Condition</span>
+                <span className="font-semibold text-sm text-black">Pennant Condition</span>
               </div>
 
               <div className="mt-2">
@@ -442,7 +442,7 @@ const AddMoorings: React.FC<Props> = ({ moorings, editMode }) => {
           <div className="ml-2">
             <div>
               <div>
-                <span className="font-semibold text-sm">Condition of Eye</span>
+                <span className="font-semibold text-sm text-black">Condition of Eye</span>
               </div>
               <div className="mt-2">
                 <Dropdown
@@ -463,7 +463,7 @@ const AddMoorings: React.FC<Props> = ({ moorings, editMode }) => {
             </div>
             <div className="mt-3">
               <div>
-                <span className="font-semibold text-sm">
+                <span className="font-semibold text-sm text-black">
                   Shackle,Swivel Condition
                 </span>
               </div>
@@ -489,7 +489,7 @@ const AddMoorings: React.FC<Props> = ({ moorings, editMode }) => {
             </div>
           <div className="mt-3">
           <div className="">
-            <span className="font-semibold text-sm">
+            <span className="font-semibold text-sm text-black">
               Dept at Mean High Water
             </span>
           </div>
@@ -513,7 +513,7 @@ const AddMoorings: React.FC<Props> = ({ moorings, editMode }) => {
       </div>
             <div className="">
               <div>
-                <span className="font-semibold text-sm">Pin on Map</span>
+                <span className="font-semibold text-sm ml-3 text-black">Pin on Map</span>
               </div>
             </div>
     </div>
@@ -524,6 +524,7 @@ const AddMoorings: React.FC<Props> = ({ moorings, editMode }) => {
             label={"Save"}
             style={{
               width: "5vw",
+              height:"7vh",
               backgroundColor: "black",
               cursor: "pointer",
               fontWeight: "bolder",
