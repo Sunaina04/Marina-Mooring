@@ -3,7 +3,7 @@ import CustomModal from '../../CustomComponent/CustomModal'
 import AddBoatyards from './AddBoatyards'
 import { InputText } from 'primereact/inputtext'
 import {
-  BoatYard_Data,
+  BoatYardData,
   BoatYardPayload,
   BoatYardResponse,
 } from '../../../Type/ApiTypes'
@@ -16,7 +16,7 @@ const Boatyards = () => {
   const [filteredboatyardsData, setFilteredboatyardsData] = useState<BoatYardPayload[]>([])
   const [getBaotyards] = useGetBoatyardsMutation()
 
-  const moorings: BoatYard_Data[] = [
+  const moorings: BoatYardData[] = [
     {
       id: '#9715',
       moorings: 'Pioneer',
@@ -213,7 +213,7 @@ const Boatyards = () => {
         </div>
       </div>
       <div className="ml-10">
-        <BoatyardTable moorings={moorings as BoatYard_Data[]} />
+        <BoatyardTable moorings={moorings as BoatYardData[]} />
       </div>
     </>
   )

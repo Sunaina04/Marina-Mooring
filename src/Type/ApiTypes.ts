@@ -193,7 +193,7 @@ export interface VendorResponse {
   }
 }
 
-export type BoatYard_Data = {
+export type BoatYardData = {
   id: string
   moorings: string
   boatyards: number

@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../Store";
 import { UserData } from "../../Type/ApiTypes";
-import { INITIAl_STATE } from "../../Type/CommonType";
+import { InitialState } from "../../Type/CommonType";
 
-const initialState: INITIAl_STATE = {
+const initialState: InitialState = {
   token: undefined,
   userData: undefined,
 };
