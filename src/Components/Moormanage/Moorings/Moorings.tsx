@@ -4,7 +4,7 @@ import CustomModal from '../../customComponent/CustomModal'
 import AddCustomer from '../Customer/AddCustomer'
 import AddMoorings from './AddMoorings'
 import { InputText } from 'primereact/inputtext'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { Column } from 'primereact/column'
 import { Button } from 'primereact/button'
 import { useGetMooringsMutation } from '../../../Services/MoorManage/moormanage'
@@ -19,13 +19,7 @@ import { Avatar } from 'primereact/avatar'
 import { AiFillCheckCircle } from 'react-icons/ai'
 import { Dialog } from 'primereact/dialog'
 import DataTableSearchFieldComponent from '../../Common/ DataTableSearchFieldComponent'
-
-interface CustomerData {
-  id: string
-  name: string
-  email: string
-  phone: number
-}
+import { boatDataMooring } from '../../utils/CustomData'
 
 interface CustomerProps {
   id: string
@@ -34,6 +28,14 @@ interface CustomerProps {
   email: string
   address: string
 }
+
+interface TableColumn {
+  id: string
+  label: string
+  style: React.CSSProperties
+}
+
+type TableColumns = TableColumn[]
 
 const Moorings = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -55,7 +57,7 @@ const Moorings = () => {
   console.log('selectedmooring', selectedMooring)
 
   const handleInputChange = (e: InputSwitchChangeEvent) => {
-    // e.stopPropagation();
+
     console.log(e.value)
     setIsChecked(e.value)
   }
@@ -91,78 +93,26 @@ const Moorings = () => {
     setFilteredMooringData(filteredData)
   }
 
-  const boatData: CustomerData[] = [
-    {
-      id: '#001',
-      email: 'M001',
-      name: 'John Doe',
-      phone: 9789756452,
-    },
-    {
-      id: '#001',
-      email: 'M001',
-      name: 'John Doe',
-      phone: 9789756452,
-    },
-    {
-      id: '#001',
-      email: 'M001',
-      name: 'John Doe',
-      phone: 9789756452,
-    },
-    {
-      id: '#001',
-      email: 'M001',
-      name: 'John Doe',
-      phone: 9789756452,
-    },
-
-    {
-      id: '#001',
-      email: 'M001',
-      name: 'John Doe',
-      phone: 9789756452,
-    },
-    {
-      id: '#001',
-      email: 'M001',
-      name: 'John Doe',
-      phone: 9789756452,
-    },
-
-    {
-      id: '#001',
-      email: 'M001',
-      name: 'John Doe',
-      phone: 9789756452,
-    },
-
-    {
-      id: '#001',
-      email: '3821.8061444.959',
-      name: 'John Doe',
-      phone: 9789756452,
-    },
-  ]
-
-  const tableColumns = [
-    {
-      id: 'id',
-      label: 'ID:',
-      style: { width: '4vw', borderBottom: '1px solid #C0C0C0' },
-    },
-
-    {
-      id: 'name',
-      label: 'Mooring Name:',
-      style: { width: '8vw', borderBottom: '1px solid #C0C0C0' },
-    },
-    {
-      id: 'email',
-      label: 'GPS Coordinates:',
-      style: { width: '4vw', borderBottom: '1px solid #C0C0C0' },
-    },
-  ]
+  const tableColumns: TableColumns = useMemo<TableColumns>(
+    () => [
+      {
+        id: 'id',
+        label: 'ID:',
+        style: { width: '4vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'name',
+        label: 'Mooring Name:',
+        style: { width: '8vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'email',
+        label: 'GPS Coordinates:',
+        style: { width: '4vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
+      },
+    ],
+    [],
+  )
 
   const MooringsHeader = () => {
     return (
@@ -238,36 +188,11 @@ const Moorings = () => {
         <div
           className="bg-[F2F2F2] overflow-x-hidden overflow-y-scroll rounded-md border-[1px] w-[25vw] bag-[#D1D1D1] h-96 border-gray-300 "
           style={{}}>
-          {/* <DataTable
-            value={boatData}
-            header={MooringsHeader}
-            scrollable={true}
-            tableStyle={{
-
-              fontSize: "12px",
-              color: "#000000",
-              fontWeight: 600,
-              backgroundColor: "#D9D9D9",
-            }}
-            // size="small"
-          >
-            <Column header="ID:" field="id" style={{ width: "6vw" }}></Column>
-            <Column
-              style={{ width: "50vw" }}
-              field="name"
-              header="Mooring Name"
-            ></Column>
-            <Column
-              style={{ width: "50vw" }}
-              field="gpsCoordinates"
-              header="GPS Coordinates"
-            ></Column>
-          </DataTable> */}
           <div className="text-sm font-extrabold rounded-sm w-full  bg-[#D9D9D9]">
             <h1 className="p-4">Moorings</h1>
           </div>
           <DataTableSearchFieldComponent
-            data={boatData}
+            data={boatDataMooring}
             tableStyle={{
               fontSize: '10px',
               color: '#000000',

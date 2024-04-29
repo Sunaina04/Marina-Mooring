@@ -14,7 +14,6 @@ interface ButtonCompProps {
 }
 
 const ButtonComponent: React.FC<ButtonCompProps> = ({
-  // onClick,
   disabled,
   label,
   style,
@@ -22,6 +21,7 @@ const ButtonComponent: React.FC<ButtonCompProps> = ({
   icon,
   color,
   children,
+  onClick
 }) => {
   return (
     <div>
@@ -36,6 +36,7 @@ const ButtonComponent: React.FC<ButtonCompProps> = ({
         icon={icon}
         color={color}
         children={children}
+        onClick={onClick}
       />
     </div>
   );

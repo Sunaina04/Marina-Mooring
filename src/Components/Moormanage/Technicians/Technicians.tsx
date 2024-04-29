@@ -14,25 +14,13 @@ import { useGetTechnicianMutation } from '../../../Services/MoorManage/moormanag
 import DataTableSearchFieldComponent from '../../Common/ DataTableSearchFieldComponent'
 import { IoSearch } from 'react-icons/io5'
 
-interface Technician_Data {
-  id: string
-  techniciansName: string
-  openWorkOrders: string
-  completedJobs: string
+interface TableColumn {
+  id: string;
+  label: string;
+  style: React.CSSProperties;
 }
 
-interface BillsData {
-  id: number
-  technician: string
-  techniciansName: string
-  dueDate: string
-}
-interface CustomerData {
-  id: string
-  techniciansName: string
-  openWorkOrder: number
-  completedJobs: number
-}
+interface TableColumns extends Array<TableColumn> {}
 
 const Technicians = () => {
   const [date, setDate] = useState<Nullable<(Date | null)[]>>(null)
@@ -47,40 +35,71 @@ const Technicians = () => {
   const [filteredTechnicianData, setFilteredTechnicianData] = useState<TECHNICIAN_PAYLOAD[]>([])
   const [getTechnicians] = useGetTechnicianMutation()
 
-  const [billsData, setBillsData] = useState<BillsData[]>([
-    {
-      id: 0,
-      technician: 'Suncatcher',
-      techniciansName: 'John Smith',
-      // amount: "$50"
-      dueDate: '3-12-2024',
-    },
-  ])
 
-  const tableColumns = [
+
+  const tableColumns: TableColumns = [
     {
       id: 'id',
       label: 'ID',
-      style: { width: '6vw', borderBottom: '1px solid #C0C0C0', fontSize: '0.90rem' },
+      style: { width: '4vw', borderBottom: '1px solid #C0C0C0', fontSize: '0.90rem', backgroundColor: '#F2F2F2' },
+    },
+    {
+      id: 'mooring',
+      label: 'Mooring',
+      style: { width: '6vw', borderBottom: '1px solid #C0C0C0', fontSize: '0.90rem', backgroundColor: '#F2F2F2' },
     },
 
+    {
+      id: 'customerName',
+      label: 'Customer Name',
+      style: { width: '10vw', borderBottom: '1px solid #C0C0C0', fontSize: '0.90rem', backgroundColor: '#F2F2F2' },
+    },
+
+
+    {
+      id: 'dueDate',
+      label: 'Due date',
+      style: { width: '12vw', borderBottom: '1px solid #C0C0C0', fontSize: '0.90rem', backgroundColor: '#F2F2F2' },
+    },
+
+  ]
+
+
+
+
+  const tableCol: TableColumns  = [
+    {
+      id: 'id',
+      label: 'ID',
+      style: { width: '3vw', borderBottom: '1px solid #C0C0C0', fontSize: '0.90rem', backgroundColor: '#F2F2F2' },
+    },
     {
       id: 'techniciansName',
       label: 'Technicians Name',
-      style: { width: '12vw', borderBottom: '1px solid #C0C0C0', fontSize: '0.90rem' },
+      style: { width: '6vw', borderBottom: '1px solid #C0C0C0', fontSize: '0.90rem', backgroundColor: '#F2F2F2' },
     },
     {
-      id: 'openWorkOrder',
+      id: 'openWorkOrders',
       label: 'Open Work Orders',
-      style: { width: '12vw', borderBottom: '1px solid #C0C0C0', fontSize: '0.90rem' },
+      style: { width: '6vw', borderBottom: '1px solid #C0C0C0', fontSize: '0.90rem', backgroundColor: '#F2F2F2' },
     },
-
     {
       id: 'completedJobs',
-      label: 'Complete jobs',
-      style: { width: '12vw', borderBottom: '1px solid #C0C0C0', fontSize: '0.90rem' },
+      label: 'Completed jobs',
+      style: { width: '6vw', borderBottom: '1px solid #C0C0C0', fontSize: '0.90rem', backgroundColor: '#F2F2F2' },
     },
+
   ]
+  const boatData = [
+    {
+      id: '#001',
+      mooring: 'Suncatcher',
+      customerName: 'John Doe',
+      dueDate: "15,March 2024",
+    },
+
+  ]
+
 
   const CustomersHeader = () => {
     return (
@@ -111,7 +130,7 @@ const Technicians = () => {
   //table header 2
   const workOrder = (
     <>
-      <div className="flex gap-40 rounded-md">
+      <div className="flex gap-80 rounded-md">
         <div>
           <p className="font-bold"> Work Orders </p>
         </div>
@@ -121,6 +140,40 @@ const Technicians = () => {
       </div>
     </>
   )
+
+  const actionButtons = [
+    () => (
+      <>
+        <div className="flex">
+          <Button
+            label="View"
+            style={{
+              fontWeight: 'bold',
+              textDecoration: 'underline',
+              cursor: 'pointer',
+            }}
+          // onClick={handleViewInventory}
+          />
+        </div>
+
+      </>
+    ),
+
+  ];
+
+
+
+  const ActionHeader = () => {
+    return (
+
+      <div className="flex items-center">
+        <div >
+
+        </div>
+      </div>
+
+    )
+  }
 
   const getTechniciansData = async () => {
     await getTechnicians({})
@@ -165,50 +218,68 @@ const Technicians = () => {
           <DataTableSearchFieldComponent
             data={filteredTechnicianData}
             tableStyle={{
-              // fontSize: '10rem',
               color: '#000000',
               fontWeight: 600,
               backgroundColor: 'red',
             }}
-            columns={tableColumns}
+            columns={tableCol}
             header={CustomersHeader}
           />
         </div>
 
         {dataVisible && (
-          <div className=" rounded-md border-[1px]  border-[#D1D1D1]  ml-10  w-[35vw] ">
-            {/* <DataTable
+          // <div className=" rounded-md border-[1px]  border-[#D1D1D1]  ml-10  w-[35vw] ">
+          //   <DataTable
+          //     header={workOrder}
+          //     value={billsData}
+          //     scrollable={true}
+          //   >
+          //     <Column
+          //       style={{ width: "1vw", fontSize: "0.75rem" }}
+          //       field="id"
+          //       header="ID"
+          //     ></Column>
+          //     <Column
+          //       style={{ width: "3vw", fontSize: "0.75rem" }}
+          //       field="mooring"
+          //       header="Mooring"
+          //     ></Column>
+          //     <Column
+          //       style={{ width: "4vw", fontSize: "0.75rem" }}
+          //       field="techniciansName"
+          //       header="Customer Name"
+          //     ></Column>
+          //     <Column
+          //       style={{ width: "2vw", fontSize: "0.75rem" }}
+          //       field="dueDate"
+          //       header="Due Date"
+          //     ></Column>
+          //     <Column
+          //       style={{ width: "4vw" }}
+          //       body={(rowData) => <p className="underline">view</p>}
+          //     ></Column>
+          //   </DataTable>
+
+
+
+          // </div>
+
+          <div className="rounded-md border-[1px] p-4 border-gray-300 w-[38vw] h-[65vh] mb-96 overflow-x-hidden overflow-y-scroll ">
+            <DataTableSearchFieldComponent
+              data={boatData}
+              tableStyle={{
+
+                fontWeight: 600,
+
+              }}
+              columns={tableColumns}
               header={workOrder}
-              value={billsData}
-              scrollable={true}
-            >
-              <Column
-                style={{ width: "1vw", fontSize: "0.75rem" }}
-                field="id"
-                header="ID"
-              ></Column>
-              <Column
-                style={{ width: "3vw", fontSize: "0.75rem" }}
-                field="mooring"
-                header="Mooring"
-              ></Column>
-              <Column
-                style={{ width: "4vw", fontSize: "0.75rem" }}
-                field="techniciansName"
-                header="Customer Name"
-              ></Column>
-              <Column
-                style={{ width: "2vw", fontSize: "0.75rem" }}
-                field="dueDate"
-                header="Due Date"
-              ></Column>
-              <Column
-                style={{ width: "4vw" }}
-                body={(rowData) => <p className="underline">view</p>}
-              ></Column>
-            </DataTable> */}
-            <DataTableSearchFieldComponent data={[]} columns={[]} header={undefined} />
+              actionbuttons={actionButtons}
+              actionHeader={ActionHeader}
+              style={{ backgroundColor: "#F2F2F2", borderBottom: "1px solid #C0C0C0" }}
+            />
           </div>
+
         )}
       </div>
     </>

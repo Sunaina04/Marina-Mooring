@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import CustomModal from '../../customComponent/CustomModal'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
@@ -22,13 +22,23 @@ import {
 } from '../../../Services/MoorManage/types'
 import { IoSearch } from 'react-icons/io5'
 import DataTableSearchFieldComponent from '../../Common/ DataTableSearchFieldComponent'
+import { CustomerDataProps } from '../../../types/CommonTypes'
+import { boatData } from '../../utils/CustomData'
+
+interface TableColumn {
+  id: string
+  label: string
+  style: React.CSSProperties
+}
+
+type TableColumns = TableColumn[]
 
 const Customer = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [customerData, setCustomerData] = useState<CUSTOMER_PAYLOAD[]>([])
   const [editMode, setEditMode] = useState(false)
   const [customerRecord, setCustomerRecord] = useState(false)
-  const [selectedCustomer, setSelectedCustomer] = useState<any>(null)
+  const [selectedCustomer, setSelectedCustomer] = useState<any>()
   const [searchQuery, setSearchQuery] = useState<string>('')
   const [filteredCustomerData, setFilteredCustomerData] = useState<CUSTOMER_PAYLOAD[]>([])
 
@@ -100,101 +110,47 @@ const Customer = () => {
 
   const CustomersHeader = () => {
     return (
-      <div className="">
-        <div className="flex items-center">
-          <div className="p-input-icon-left ">
-            <IoSearch style={{ marginLeft: '1rem', color: '#A4A4A4' }} />
-            <InputText
-              placeholder="Search by name, ID,address..."
-              className="h-[5vh] w-[55vh] cursor-pointer text-[0.65rem]
+      <div className="flex items-center">
+        <div className="p-input-icon-left ">
+          <IoSearch style={{ marginLeft: '1rem', color: '#A4A4A4' }} />
+          <InputText
+            placeholder="Search by name, ID,address..."
+            className="h-[5vh] w-[55vh] cursor-pointer text-[0.65rem]
                text-[#A4A4A4]  border-1 border-[1px]
-               border-[#9F9F9F] rounded-md pl-8" // Adjust padding to make space for the icon
-              value={searchQuery}
-              onChange={handleSearchChange}
-            />
-          </div>
+               border-[#9F9F9F] rounded-md pl-8"
+            value={searchQuery}
+            onChange={handleSearchChange}
+          />
         </div>
       </div>
     )
   }
 
-  const boatData= [
-    {
-      id: '#001',
-      email: 'Jone@gmail.com',
-      name: 'John Doe',
-      phone: 9789756452,
-    },
-    {
-      id: '#001',
-      email: 'Jone@gmail.com',
-      name: 'John Doe',
-      phone: 9789756452,
-    },
-    {
-      id: '#001',
-      email: 'Jone@gmail.com',
-      name: 'John Doe',
-      phone: 9789756452,
-    },
-    {
-      id: '#001',
-      email: 'Jone@gmail.com',
-      name: 'John Doe',
-      phone: 9789756452,
-    },
-
-    {
-      id: '#001',
-      email: 'Jone@gmail.com',
-      name: 'John Doe',
-      phone: 9789756452,
-    },
-    {
-      id: '#001',
-      email: 'Jone@gmail.com',
-      name: 'John Doe',
-      phone: 9789756452,
-    },
-
-    {
-      id: '#001',
-      email: 'Jone@gmail.com',
-      name: 'John Doe',
-      phone: 9789756452,
-    },
-
-    {
-      id: '#001',
-      email: 'Jone@gmail.com',
-      name: 'John Doe',
-      phone: 9789756452,
-    },
-  ]
-  const tableColumns = [
-    {
-      id: 'id',
-      label: 'ID:',
-      style: { width: '4vw', borderBottom: '1px solid #C0C0C0', backGroundColor: 'red' },
-    },
-
-    {
-      id: 'name',
-      label: 'Name:',
-      style: { width: '6vw', borderBottom: '1px solid #C0C0C0' },
-    },
-    {
-      id: 'email',
-      label: 'Email:',
-      style: { width: '6vw', borderBottom: '1px solid #C0C0C0' },
-    },
-
-    {
-      id: 'phone',
-      label: 'Phone:',
-      style: { width: '6vw', borderBottom: '1px solid #C0C0C0' },
-    },
-  ]
+  const tableColumns: TableColumns = useMemo<TableColumns>(
+    () => [
+      {
+        id: 'id',
+        label: 'ID:',
+        style: { width: '4vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'name',
+        label: 'Name:',
+        style: { width: '6vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'email',
+        label: 'Email:',
+        style: { width: '6vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'phone',
+        label: 'Phone:',
+        style: { width: '6vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
+      },
+    ],
+    [],
+  )
 
   const getMooringsData = async () => {
     await getMoorings({})
@@ -213,26 +169,6 @@ const Customer = () => {
   }, [])
 
   console.log('selectedCustoer', selectedCustomer)
-
-  // const actionButtons = [
-  //   () => (
-  //     <>
-  //       <div className='flex gap-8'>
-
-  //         <button  onClick={() => handleButtonClick()}>
-  //           edit
-  //         </button>
-
-  //         <button onClick={() => handleButtonClick()}>
-  //           delete
-  //         </button>
-
-  //       </div>
-
-  //     </>
-  //   ),
-
-  // ];
 
   return (
     <>
@@ -283,7 +219,6 @@ const Customer = () => {
             scrollable={false}
             columns={tableColumns}
             header={CustomersHeader}
-            // actionbuttons={actionButtons}
           />
         </div>
 

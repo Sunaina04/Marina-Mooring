@@ -1,81 +1,106 @@
-import { useState } from "react";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
-import CustomModal from "../../customComponent/CustomModal";
-import AddCustomer from "../../Moormanage/Customer/AddCustomer";
-import { InputText } from "primereact/inputtext";
-import ButtonComponent from "../../Common/ButtonComponent";
-
+import { useMemo, useState } from 'react'
+import { DataTable } from 'primereact/datatable'
+import { Column } from 'primereact/column'
+import CustomModal from '../../customComponent/CustomModal'
+import AddCustomer from '../../Moormanage/Customer/AddCustomer'
+import { InputText } from 'primereact/inputtext'
+import ButtonComponent from '../../Common/ButtonComponent'
+import DataTableSearchFieldComponent from '../../Common/ DataTableSearchFieldComponent'
+import { accountRecievableData } from '../../utils/CustomData'
 interface CustomerData {
-  invoice: string;
-  mooringid: string;
-  name: string;
-  technicianName: string;
-  services: string;
-  time: string;
-  amount: string;
+  invoice: string
+  mooringid: string
+  name: string
+  technicianName: string
+  services: string
+  time: string
+  amount: string
 }
 
-const AccountRecievable = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [boatData, setBoatData] = useState<CustomerData[]>([
-    {
-      invoice: "#425",
-      mooringid: "#6658",
-      name: "John Smith",
-      technicianName: "jim Carry",
-      services: "Regular Services",
-      time: "2hrs",
-      amount: "$12",
-    },
+interface TableColumn {
+  id: string
+  label: string
+  style: {
+    width: string
+    backgroundColor: string
+  }
+}
 
-    {
-      invoice: "#425",
-      mooringid: "#6658",
-      name: "John Smith",
-      technicianName: "jim Carry",
-      services: "Regular Services",
-      time: "2hrs",
-      amount: "$12",
-    },
-    {
-      invoice: "#425",
-      mooringid: "#6658",
-      name: "John Smith",
-      technicianName: "jim Carry",
-      services: "Regular Services",
-      time: "2hrs",
-      amount: "$12",
-    },
-    {
-      invoice: "#425",
-      mooringid: "#6658",
-      name: "John Smith",
-      technicianName: "jim Carry",
-      services: "Regular Services",
-      time: "2hrs",
-      amount: "$12",
-    },
-  ]);
+type TableColumns = TableColumn[]
+const AccountRecievable = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [boatData, setBoatData] = useState<CustomerData[]>()
 
   const handleButtonClick = () => {
-    setIsModalOpen(true);
-  };
+    setIsModalOpen(true)
+  }
 
   const handleModalClose = () => {
-    setIsModalOpen(false);
-  };
+    setIsModalOpen(false)
+  }
 
   const header = (
     <div className="flex flex-wrap align-items-center justify-between gap-2 ">
       <span className="text-xl font-bold">Account Recievable</span>
-
     </div>
-  );
+  )
+
+  const tableColumns: TableColumns = useMemo<TableColumns>(
+    () => [
+      {
+        id: 'invoice',
+        label: 'Invoice',
+        style: { width: '6vw', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'mooringId',
+        label: 'Mooring ID',
+        style: { width: '12vw', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'customerName',
+        label: 'Customer Name',
+        style: { width: '10vw', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'technicianName',
+        label: 'Technician Name',
+        style: { width: '12vw', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'services',
+        label: 'Services',
+        style: { width: '10vw', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'time',
+        label: 'Time',
+        style: { width: '10vw', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'amount',
+        label: 'Amount',
+        style: { width: '10vw', backgroundColor: '#F2F2F2' },
+      },
+    ],
+    [],
+  )
+
+  const actionButtons = [
+    () => (
+      <>
+        <div className="flex ">
+          <div className="flex gap-4">
+            <span className="text-green-500  bg-green-100 cursor-pointer">Approve</span>
+            <span className="text-red-500  bg-red-100 cursor-pointer">Deny</span>
+          </div>
+        </div>
+      </>
+    ),
+  ]
 
   return (
     <>
-      {" "}
       <div className="flex justify-between items-center ml-12">
         <div>
           <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">
@@ -89,7 +114,7 @@ const AccountRecievable = () => {
               src="/assets/images/download.png"
               alt=""
               className="w-5 "
-              style={{ filter: "grayscale(100%)", color: "gray" }}
+              style={{ filter: 'grayscale(100%)', color: 'gray' }}
             />
           </div>
 
@@ -100,84 +125,38 @@ const AccountRecievable = () => {
           <div></div>
         </div>
         <div className="items-center mr-[10rem] mt-14">
-          <CustomModal
-            onClick={handleButtonClick}
-            visible={false}
-            onHide={handleModalClose}
-          >
+          <CustomModal onClick={handleButtonClick} visible={false} onHide={handleModalClose}>
             <AddCustomer
               customer={undefined}
               editMode={false}
               closeModal={function (): void {
-                throw new Error("Function not implemented.");
+                throw new Error('Function not implemented.')
               }}
               getCustomer={function (): void {
-                throw new Error("Function not implemented.");
+                throw new Error('Function not implemented.')
               }}
             />
           </CustomModal>
         </div>
       </div>
-      <div className="bg-[#F2F2F2] rounded-md border-[1px] border-[#D1D1D1] p-2 mt-12 w-[68vw] ml-20">
-        <DataTable value={boatData} header={header} tableStyle={{
 
-          // backgroundColor:"#F2F2F2"
-
-        }}>
-          <Column
-            header="invoice"
-            field="invoice"
-            style={{ width: "",fontSize:"0.80rem" }}
-          ></Column>
-          <Column
-            field="mooringid"
-            header="Mooring ID"
-            style={{ width: "",fontSize:"0.80rem" }}
-          ></Column>
-          <Column
-            field="name"
-            header="Customer Name"
-            style={{ width: "9vw",fontSize:"0.80rem" }}
-          ></Column>
-          <Column
-            field="technicianName"
-            header="Technician name"
-            style={{ width: "9vw" ,fontSize:"0.80rem"}}
-          ></Column>
-          <Column
-            field="services"
-            header="Services"
-            style={{ width: "9vw",fontSize:"0.80rem" }}
-          ></Column>
-          <Column 
-          field="time"
-           header="Time" 
-           style={{ width: "" ,fontSize:"0.80rem"}}>
-
-          </Column>
-          <Column
-            field="amount"
-            header="Amount"
-            style={{ width: "" ,fontSize:"0.80rem"}}
-          ></Column>
-          <Column
-            header="Action"
-            style={{ width: "" ,fontSize:"0.80rem"}}
-            body={() => (
-              <div className="flex gap-4">
-                <span className="text-green-500 bg-green-100 underline cursor-pointer">
-                  Approve
-                </span>
-                <span className="text-red-500 underline bg-red-100 cursor-pointer">
-                  Deny
-                </span>
-              </div>
-            )}
-          ></Column>
-        </DataTable>
+      <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[67vw]  ml-32 mb-80">
+        <DataTableSearchFieldComponent
+          tableStyle={{
+            fontSize: '12px',
+            color: '#000000',
+            fontWeight: 600,
+          }}
+          data={accountRecievableData}
+          columns={tableColumns}
+          header={header}
+          actionbuttons={actionButtons}
+          actionHeader={'Action'}
+          style={{ backgroundColor: '#F2F2F2' }}
+        />
       </div>
     </>
-  );
-};
+  )
+}
 
-export default AccountRecievable;
+export default AccountRecievable

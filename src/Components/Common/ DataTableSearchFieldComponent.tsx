@@ -1,5 +1,5 @@
 import React from 'react'
-import { Column, ColumnBodyOptions } from 'primereact/column'
+import { Column, ColumnBodyOptions, ColumnHeaderOptions } from 'primereact/column'
 import { DataTable } from 'primereact/datatable'
 import { tabListStyle } from '../style'
 
@@ -13,13 +13,14 @@ interface TableColumnProps {
 }
 
 interface DataTableCompProps {
-  data: any[]
+  data?: any[] 
   scrollable?: boolean
   columns: TableColumnProps[]
   tableStyle?: React.CSSProperties | undefined
   actionbuttons?: TableBodyType[]
   style?: React.CSSProperties | undefined
   header: any
+  actionHeader?:React.ReactNode | ((options: ColumnHeaderOptions) => React.ReactNode);
 }
 
 const DataTableSearchFieldComponent: React.FC<DataTableCompProps> = ({
@@ -30,6 +31,7 @@ const DataTableSearchFieldComponent: React.FC<DataTableCompProps> = ({
   actionbuttons = [],
   style,
   header,
+  actionHeader
 }) => {
   return (
     <div className="card">
@@ -39,7 +41,7 @@ const DataTableSearchFieldComponent: React.FC<DataTableCompProps> = ({
         ))}
 
         {actionbuttons.map((actionbutton) => (
-          <Column header="Action" body={actionbutton} style={style}></Column>
+          <Column header={actionHeader} body={actionbutton} style={style}></Column>
         ))}
       </DataTable>
     </div>
@@ -47,3 +49,4 @@ const DataTableSearchFieldComponent: React.FC<DataTableCompProps> = ({
 }
 
 export default DataTableSearchFieldComponent
+

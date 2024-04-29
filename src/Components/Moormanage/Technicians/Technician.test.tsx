@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import Technicians from "../Technicians/technicians";
+import Technicians from "./Technicians";
 import { Provider } from "react-redux";
 import { store } from "../../../store/store";
 

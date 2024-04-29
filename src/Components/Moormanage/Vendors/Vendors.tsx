@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import CustomModal from '../../customComponent/CustomModal'
@@ -10,6 +10,15 @@ import {
 } from '../../../Services/MoorManage/moormanage'
 import { VENDOR_PAYLOAD, VENDOR_RESPONSE } from '../../../Services/MoorManage/types'
 import { Button } from 'primereact/button'
+import DataTableSearchFieldComponent from '../../Common/ DataTableSearchFieldComponent'
+
+interface TableColumn {
+  id: string
+  label: string
+  style: React.CSSProperties
+}
+
+interface TableColumns extends Array<TableColumn> {}
 
 const Vendors = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -64,6 +73,121 @@ const Vendors = () => {
     getVendorData()
   }, [])
 
+  const boatData = [
+    {
+      id: '#001',
+      companyName: 'marina Depot Direct',
+      phoneNumber: 9789756452,
+      emailAddress: 'demo@gmail.com',
+      inventoryItems: 142,
+    },
+    {
+      id: '#001',
+      companyName: 'marina Depot Direct',
+      phoneNumber: 9789756452,
+      emailAddress: 'demo@gmail.com',
+      inventoryItems: 142,
+    },
+    {
+      id: '#001',
+      companyName: 'marina Depot Direct',
+      phoneNumber: 9789756452,
+      emailAddress: 'demo@gmail.com',
+      inventoryItems: 142,
+    },
+    {
+      id: '#001',
+      companyName: 'marina Depot Direct',
+      phoneNumber: 9789756452,
+      emailAddress: 'demo@gmail.com',
+      inventoryItems: 142,
+    },
+    {
+      id: '#001',
+      companyName: 'marina Depot Direct',
+      phoneNumber: 9789756452,
+      emailAddress: 'demo@gmail.com',
+      inventoryItems: 142,
+    },
+  ]
+
+  const tableColumns: TableColumns = useMemo<TableColumns>(
+    () => [
+      {
+        id: 'id',
+        label: 'ID',
+        style: { width: '6vw', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'companyName',
+        label: 'Company Name',
+        style: { width: '12vw', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'phoneNumber',
+        label: 'Phone Number',
+        style: { width: '10vw', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'emailAddress',
+        label: 'Email Address',
+        style: { width: '12vw', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'inventoryItems',
+        label: 'Inventory Items',
+        style: { width: '10vw', backgroundColor: '#F2F2F2' },
+      },
+    ],
+    [],
+  )
+
+  const ActionHeader = () => {
+    return (
+      <div className="flex items-center">
+        <div>Action</div>
+      </div>
+    )
+  }
+
+  const actionButtons = [
+    () => (
+      <>
+        <div className="flex gap-5">
+          <Button
+            label="View Inventory"
+            style={{
+              fontWeight: 'bold',
+              textDecoration: 'underline',
+              cursor: 'pointer',
+            }}
+            // onClick={handleViewInventory}
+          />
+          <Button
+            label="Edit"
+            style={{
+              fontWeight: 'bold',
+              textDecoration: 'underline',
+              color: 'green',
+              cursor: 'pointer',
+            }}
+            onClick={() => handleEdit}
+          />
+          <Button
+            label="Delete"
+            style={{
+              fontWeight: 'bold',
+              textDecoration: 'underline',
+              color: 'red',
+              cursor: 'pointer',
+            }}
+            // onClick={() => handleDelete(rowData)}
+          />
+        </div>
+      </>
+    ),
+  ]
+
   return (
     <>
       {/* <div className="flex ml-12"> */}
@@ -95,67 +219,20 @@ const Vendors = () => {
         </div>
       </div>
       {/* </div> */}
-      <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[67vw] p-1 ml-32">
-        <DataTable
-          value={vendorData}
-          header={''}
+      <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[67vw] p-1 ml-32 mb-80">
+        <DataTableSearchFieldComponent
           tableStyle={{
-            minWidth: '20rem',
             fontSize: '12px',
             color: '#000000',
             fontWeight: 600,
-            backgroundColor: '#D1D1D1',
           }}
-          size="small">
-          <Column header="ID" field="id" style={{ width: '8vw' }}></Column>
-          <Column style={{ width: '11vw' }} field="companyName" header="Company Name"></Column>
-          <Column
-            style={{ width: '11vw' }}
-            field="companyPhoneNumber"
-            header="Phone Number"></Column>
-
-          <Column style={{ width: '11vw' }} field="companyEmail" header="Email Address"></Column>
-          <Column
-            style={{ width: '11vw' }}
-            field="InventoryItems"
-            header="Inventory Items"></Column>
-
-          <Column
-            header="Actions"
-            body={(rowData) => (
-              <div className="flex gap-5">
-                <Button
-                  label="View Inventory"
-                  style={{
-                    fontWeight: 'bold',
-                    textDecoration: 'underline',
-                    cursor: 'pointer',
-                  }}
-                  // onClick={handleViewInventory}
-                />
-                <Button
-                  label="Edit"
-                  style={{
-                    fontWeight: 'bold',
-                    textDecoration: 'underline',
-                    color: 'green',
-                    cursor: 'pointer',
-                  }}
-                  onClick={() => handleEdit(rowData)}
-                />
-                <Button
-                  label="Delete"
-                  style={{
-                    fontWeight: 'bold',
-                    textDecoration: 'underline',
-                    color: 'red',
-                    cursor: 'pointer',
-                  }}
-                  onClick={() => handleDelete(rowData)}
-                />
-              </div>
-            )}></Column>
-        </DataTable>
+          data={boatData}
+          columns={tableColumns}
+          header={undefined}
+          actionbuttons={actionButtons}
+          actionHeader={ActionHeader}
+          style={{ backgroundColor: '#F2F2F2' }}
+        />
       </div>
     </>
   )

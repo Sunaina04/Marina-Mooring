@@ -10,7 +10,7 @@ import Moorings from "./Components/Moormanage/Moorings/Moorings";
 import Vendors from "./Components/Moormanage/Vendors/Vendors";
 import Moormanage from "./Components/Moormanage/moormanage";
 import Moorpay from "./Components/Moorpay/MoorPay";
-import Technicians from "./Components/Moormanage/Technicians/technicians";
+import Technicians from "./Components/Moormanage/Technicians/Technicians";
 import Boatyards from "./Components/Moormanage/Boatyards/Boatyards";
 import Reports from "./Components/Moormanage/Reports/Reports";
 import AccountPayable from "./Components/Moorpay/AccountPayable/AccountPayable";

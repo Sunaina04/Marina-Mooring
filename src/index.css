@@ -39,6 +39,19 @@ border-radius: 5px;
   background-color: black;
 }
 
-.p-datatable .p-datatable-tbody > tr ,td{
+
+/* searchDataTable */
+
+.p-datatable .p-datatable-tbody > tr {
   background: #F2F2F2
+}
+
+.p-datatable-thead>th{
+  background: #F2F2F2
+
+}
+.p-datatable-header{
+
+  background: #F2F2F2
+
 }
