@@ -88,8 +88,8 @@ const Permission = () => {
             <CustomModal
               label={'ADD NEW'}
               style={{
-                width: '50vw',
-                height: '80vh',
+                width: '8vw',
+                height: '7vh',
                 backgroundColor: 'black',
                 cursor: 'pointer',
                 fontSize: '14px',
@@ -99,7 +99,7 @@ const Permission = () => {
               onClick={handleButtonClick}
               visible={modalVisible}
               onHide={handleModalClose}
-              header="">
+              header={<h1 className="text-xl font-bold text-black ml-4">New User</h1>} >
               <AddPermission />
             </CustomModal>
           </div>

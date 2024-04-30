@@ -291,7 +291,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             <InputText
               value={pinCode}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPinCode(e.target.value)}
-              placeholder="Pincode"
+              placeholder="Zipcode"
               style={{
                 width: '14vw',
                 height: '4vh',
@@ -302,6 +302,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             />
           </div>
         </div>
+      </div>
+      <div className='ml-4 mt-8 text-xl text-black font-semibold'>
+        <h3>Add Mooring</h3>
       </div>
       <div className="mt-8 ml-2">
         <AddMoorings moorings={formData} editMode={editMode} />

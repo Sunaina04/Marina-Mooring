@@ -80,9 +80,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
   return (
     <>
       <div className="w-full h-full ">
-        <h1 className="ml-3 text-xl text-black font-bold">Add Mooring</h1>
-
-        <div className="flex justify-around mt-3 ">
+        <div className="flex justify-around ">
           <div>
             <span className="font-semibold text-sm text-black">Customer Name</span>
             <div className="mt-2">

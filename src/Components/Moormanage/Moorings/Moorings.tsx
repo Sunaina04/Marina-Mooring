@@ -190,7 +190,7 @@ const Moorings = () => {
             onClick={handleButtonClick}
             visible={modalVisible || editMode}
             onHide={handleModalClose}
-            header={"Add Mooring"}
+            header={<h1 className="text-lg font-bold text-black ml-4">Add Mooring</h1>}
           >
             <AddMoorings moorings={selectedCustomer} editMode={editMode} />
           </CustomModal>
