@@ -1,25 +1,21 @@
-import React, { useState } from "react";
-import { InputText } from "primereact/inputtext";
-import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
-import { InputTextarea } from "primereact/inputtextarea";
-import InputComponent from "../Common/InputComponent";
-import ButtonComponent from "../Common/ButtonComponent";
-import { Button } from "primereact/button";
+import React, { useState } from 'react'
+import { InputText } from 'primereact/inputtext'
+import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown'
+import { InputTextarea } from 'primereact/inputtextarea'
+import InputComponent from '../CommonComponent/InputComponent'
+import { Button } from 'primereact/button'
+import { CityProps } from '../../Type/CommonType'
 
-interface City {
-  name: string;
-  code: string;
-}
 const AddPermission = () => {
-  const [value, setValue] = useState<string>("");
-  const [selectedCity, setSelectedCity] = useState<City | null>(null);
-  const cities: City[] = [
-    { name: "New York", code: "NY" },
-    { name: "Rome", code: "RM" },
-    { name: "London", code: "LDN" },
-    { name: "Istanbul", code: "IST" },
-    { name: "Paris", code: "PRS" },
-  ];
+  const [value, setValue] = useState<string>('')
+  const [selectedCity, setSelectedCity] = useState<CityProps | undefined>(undefined)
+  const cities: CityProps[] = [
+    { name: 'New York', code: 'NY' },
+    { name: 'Rome', code: 'RM' },
+    { name: 'London', code: 'LDN' },
+    { name: 'Istanbul', code: 'IST' },
+    { name: 'Paris', code: 'PRS' },
+  ]
 
   return (
     <>
@@ -32,11 +28,11 @@ const AddPermission = () => {
             <div className="mt-2">
               <InputComponent
                 style={{
-                  width: "13vw",
-                  height: "4vh",
-                  border: "1px solid gray",
-                  borderRadius: "0.50rem",
-                  fontSize: "0.80vw",
+                  width: '13vw',
+                  height: '4vh',
+                  border: '1px solid gray',
+                  borderRadius: '0.50rem',
+                  fontSize: '0.80vw',
                 }}
               />
             </div>
@@ -46,14 +42,12 @@ const AddPermission = () => {
             <span className="font-semibold text-sm">Customer ID</span>
             <div className="mt-2">
               <InputComponent
-                // placeholder="Enter customer ID"
-                // type="text"
                 style={{
-                  width: "13vw",
-                  height: "4vh",
-                  border: "1px solid gray",
-                  borderRadius: "0.50rem",
-                  fontSize: "0.80vw",
+                  width: '13vw',
+                  height: '4vh',
+                  border: '1px solid gray',
+                  borderRadius: '0.50rem',
+                  fontSize: '0.80vw',
                 }}
               />
             </div>
@@ -63,14 +57,12 @@ const AddPermission = () => {
             <span className="font-semibold text-sm">Phone</span>
             <div className="mt-2">
               <InputComponent
-                // placeholder="Enter owner name"
-                // type="text"
                 style={{
-                  width: "13vw",
-                  height: "4vh",
-                  border: "1px solid gray",
-                  borderRadius: "0.50rem",
-                  fontSize: "0.80vw",
+                  width: '13vw',
+                  height: '4vh',
+                  border: '1px solid gray',
+                  borderRadius: '0.50rem',
+                  fontSize: '0.80vw',
                 }}
               />
             </div>
@@ -87,11 +79,11 @@ const AddPermission = () => {
               <div className="mt-3">
                 <InputText
                   style={{
-                    width: "13vw",
-                    height: "4vh",
-                    border: "1px solid gray",
-                    borderRadius: "0.50rem",
-                    fontSize: "0.80vw",
+                    width: '13vw',
+                    height: '4vh',
+                    border: '1px solid gray',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.80vw',
                   }}
                 />
               </div>
@@ -107,18 +99,16 @@ const AddPermission = () => {
               <div className="m-3">
                 <Dropdown
                   value={selectedCity}
-                  onChange={(e: DropdownChangeEvent) =>
-                    setSelectedCity(e.value)
-                  }
+                  onChange={(e: DropdownChangeEvent) => setSelectedCity(e.value)}
                   options={cities}
                   optionLabel="name"
                   editable
                   placeholder="State"
                   style={{
-                    width: "14vw",
-                    height: "4vh",
-                    border: "1px solid gray",
-                    borderRadius: "0.50rem",
+                    width: '14vw',
+                    height: '4vh',
+                    border: '1px solid gray',
+                    borderRadius: '0.50rem',
                   }}
                 />
               </div>
@@ -136,12 +126,11 @@ const AddPermission = () => {
               <div className="mt-2">
                 <InputText
                   placeholder="Street/house"
-                  // type="text"
                   style={{
-                    width: "14vw",
-                    height: "4vh",
-                    border: "1px solid gray",
-                    borderRadius: "0.50rem",
+                    width: '14vw',
+                    height: '4vh',
+                    border: '1px solid gray',
+                    borderRadius: '0.50rem',
                   }}
                 />
               </div>
@@ -153,10 +142,10 @@ const AddPermission = () => {
                   placeholder="Sector/Block"
                   type="text"
                   style={{
-                    width: "14vw",
-                    height: "4vh",
-                    border: "1px solid gray",
-                    borderRadius: "0.50rem",
+                    width: '14vw',
+                    height: '4vh',
+                    border: '1px solid gray',
+                    borderRadius: '0.50rem',
                   }}
                 />
               </div>
@@ -171,10 +160,10 @@ const AddPermission = () => {
                 editable
                 placeholder="State"
                 style={{
-                  width: "14vw",
-                  height: "4vh",
-                  border: "1px solid gray",
-                  borderRadius: "0.50rem",
+                  width: '14vw',
+                  height: '4vh',
+                  border: '1px solid gray',
+                  borderRadius: '0.50rem',
                 }}
               />
             </div>
@@ -191,20 +180,20 @@ const AddPermission = () => {
                 placeholder="Country"
                 className=""
                 style={{
-                  width: "14vw",
-                  height: "4vh",
-                  border: "1px solid gray",
-                  borderRadius: "0.50rem",
+                  width: '14vw',
+                  height: '4vh',
+                  border: '1px solid gray',
+                  borderRadius: '0.50rem',
                 }}
               />
             </div>
             <InputText
               placeholder="Pincode"
               style={{
-                width: "14vw",
-                height: "4vh",
-                border: "1px solid gray",
-                borderRadius: "0.50rem",
+                width: '14vw',
+                height: '4vh',
+                border: '1px solid gray',
+                borderRadius: '0.50rem',
               }}
             />
           </div>
@@ -221,9 +210,7 @@ const AddPermission = () => {
                 className="w-full h-14"
                 autoResize
                 value={value}
-                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-                  setValue(e.target.value)
-                }
+                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setValue(e.target.value)}
                 rows={5}
                 cols={30}
               />
@@ -233,27 +220,27 @@ const AddPermission = () => {
 
         <div className="flex gap-3 mt-4 ml-6">
           <Button
-            label={"Save"}
+            label={'Save'}
             style={{
-              width: "5vw",
-              backgroundColor: "black",
-              cursor: "pointer",
-              fontWeight: "bolder",
-              fontSize: "1vw",
-              border: "1px solid  gray",
-              color: "white",
-              borderRadius: "0.50rem",
+              width: '5vw',
+              backgroundColor: 'black',
+              cursor: 'pointer',
+              fontWeight: 'bolder',
+              fontSize: '1vw',
+              border: '1px solid  gray',
+              color: 'white',
+              borderRadius: '0.50rem',
             }}
           />
           <Button
-            label={"Back"}
+            label={'Back'}
             text={true}
-            style={{ backgroundColor: "white", color: "black", border: "none" }}
+            style={{ backgroundColor: 'white', color: 'black', border: 'none' }}
           />
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default AddPermission;
+export default AddPermission

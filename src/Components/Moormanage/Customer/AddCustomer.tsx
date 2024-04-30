@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import InputComponent from '../../Common/InputComponent'
+import InputComponent from '../../CommonComponent/InputComponent'
 import { InputText } from 'primereact/inputtext'
 import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown'
 import {
   useAddCustomerMutation,
   useUpdateCustomerMutation,
-} from '../../../Services/MoorManage/moormanage'
+} from '../../../Services/MoorManage/MoormanageApi'
 import { Button } from 'primereact/button'
-import { CityProps, CustomerDataProps } from '../../../types/CommonTypes'
+import { CustomerDataProps } from '../../../Type/ComponentBasedType'
+import { CityProps } from '../../../Type/CommonType'
 import AddMoorings from '../Moorings/AddMoorings'
+
 const AddCustomer: React.FC<CustomerDataProps> = ({
   customer,
   editMode,
@@ -16,8 +18,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   getCustomer,
 }) => {
   const [value, setValue] = useState<string>('')
-  const [selectedCountry, setSelectedCountry] = useState<CityProps | null>(null)
-  const [selectedState, setSelectedState] = useState<CityProps | null>(null)
+  const [selectedCountry, setSelectedCountry] = useState<CityProps | undefined>(undefined)
+  const [selectedState, setSelectedState] = useState<CityProps | undefined>(undefined)
   const [customerName, setCustomerName] = useState<string>('')
   const [customerId, setCustomerId] = useState<string>('')
   const [phone, setPhone] = useState<string>('')
@@ -26,7 +28,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [sectorBlock, setSectorBlock] = useState<string>('')
   const [pinCode, setPinCode] = useState<string>('')
   const [addCustomer] = useAddCustomerMutation()
-  const [selectedCity, setSelectedCity] = useState<CityProps | null>(null)
+  const [selectedCity, setSelectedCity] = useState<CityProps | undefined>(undefined)
   const [updateCustomer] = useUpdateCustomerMutation()
 
   const cities: CityProps[] = [
@@ -74,7 +76,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     const response = await addCustomer(payload)
     closeModal()
     getCustomer()
-    console.log('RESPONSE', response)
   }
 
   const UpdateCustomer = async () => {
@@ -93,7 +94,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     const response = await updateCustomer(payload)
     closeModal()
     getCustomer()
-    console.log('RESPONSE', response)
   }
 
   useEffect(() => {
@@ -108,10 +108,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       setPinCode(customer.pinCode || '')
 
       const selectedCountry = cities.find((city) => city.name === customer.country)
-      setSelectedCountry(selectedCountry || null)
+      setSelectedCountry(selectedCountry || undefined)
 
       const selectedState = cities.find((city) => city.name === customer.state)
-      setSelectedState(selectedState || null)
+      setSelectedState(selectedState || undefined)
     }
   }, [editMode, customer])
 
@@ -161,7 +161,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     border: '1px solid gray',
                     borderRadius: '0.50rem',
                     fontSize: '0.80vw',
-                  
                   }}
                 />
               </div>
@@ -298,7 +297,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 height: '4vh',
                 border: '1px solid gray',
                 borderRadius: '0.50rem',
-                
               }}
               // className="shadow-none"
             />
