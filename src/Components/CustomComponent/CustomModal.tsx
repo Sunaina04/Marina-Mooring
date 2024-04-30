@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Button } from 'primereact/button'
 import { Dialog } from 'primereact/dialog'
+import { InputText } from 'primereact/inputtext'
 
 export const style = {
   position: 'absolute' as 'absolute',
@@ -57,7 +58,6 @@ const CustomModal: React.FC<CustomModalProps> = ({
               }}
             />
           )}
-
           {label ? label : 'ADD NEW'}
         </Button>
 

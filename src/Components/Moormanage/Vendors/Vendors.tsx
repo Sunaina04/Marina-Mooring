@@ -74,7 +74,7 @@ const Vendors = () => {
           </div>
 
           <CustomModal
-            header={"Add Vendor"}
+            header={'Add Vendor'}
             onClick={handleButtonClick}
             visible={modalVisible || editMode}
             onHide={handleModalClose}

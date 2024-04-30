@@ -192,7 +192,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
 
         <div className="">
           <div className="flex justify-around  mt-3">
-            
             <div>
               <span className="font-semibold text-sm text-black">Boat Name</span>
               <div className="mt-2">
@@ -200,15 +199,13 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                   // placeholder="Enter owner name"
                   // type="text"
                   value={formData.boatName}
-                  onChange={(e) =>
-                    handleInputChange("boatName", e.target.value)
-                  }
+                  onChange={(e) => handleInputChange('boatName', e.target.value)}
                   style={{
-                    width: "13vw",
-                    height: "4vh",
-                    border: "1px solid gray",
-                    borderRadius: "0.50rem",
-                    fontSize: "0.80vw",
+                    width: '13vw',
+                    height: '4vh',
+                    border: '1px solid gray',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.80vw',
                   }}
                 />
               </div>
@@ -258,8 +255,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
 
         <div className="">
           <div className="flex gap-4 mt-3 ml-3">
-
-          <div>
+            <div>
               <span className="font-semibold text-sm text-black">Weight</span>
               <div className="mt-2">
                 <InputComponent
@@ -326,54 +322,46 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
 
         <div className="flex ml-3 gap-5 mt-4">
           <div className="">
-           <div className="">
+            <div className="">
               <div>
-                <span className="font-semibold text-sm text-black">
-                  Top Chain Condition
-                </span>
+                <span className="font-semibold text-sm text-black">Top Chain Condition</span>
               </div>
 
               <div className="mt-3">
                 <Dropdown
                   value={formData.topChainCondition}
-                  onChange={(e) =>
-                    handleInputChange("topChainCondition", e.value)
-                  }
+                  onChange={(e) => handleInputChange('topChainCondition', e.value)}
                   options={cities}
                   optionLabel="name"
                   editable
                   placeholder="Select"
                   style={{
-                    width: "13vw",
-                    height: "4vh",
-                    border: "1px solid gray",
-                    borderRadius: "0.50rem",
+                    width: '13vw',
+                    height: '4vh',
+                    border: '1px solid gray',
+                    borderRadius: '0.50rem',
                   }}
                 />
               </div>
             </div>
             <div className="mt-3">
               <div>
-                <span className="font-semibold text-sm text-black">
-                  Bootom Chain Condition
-                </span>
+                <span className="font-semibold text-sm text-black">Bootom Chain Condition</span>
               </div>
 
               <div className="mt-2">
                 <Dropdown
-                  value={formData.bottomChainCondition}
-                  onChange={(e) =>
-                    handleInputChange("bottomChainCondition", e.value)
-                  }
+                  value={formData.conditionOfEye}
+                  onChange={(e) => handleInputChange('conditionOfEye', e.value)}
                   options={cities}
                   optionLabel="name"
                   editable
                   placeholder="Select"
                   style={{
-                    width: "13vw",
-                    height: "4vh",
-                    border: "1px solid gray",
-                    borderRadius: "0.50rem",
+                    width: '13vw',
+                    height: '4vh',
+                    border: '1px solid gray',
+                    borderRadius: '0.50rem',
                   }}
                 />
               </div>
@@ -386,26 +374,22 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
               <div className="mt-2">
                 <Dropdown
                   value={selectedCity}
-                  onChange={(e: DropdownChangeEvent) =>
-                    setSelectedCity(e.value)
-                  }
+                  onChange={(e: DropdownChangeEvent) => setSelectedCity(e.value)}
                   options={cities}
                   optionLabel="name"
                   editable
                   placeholder="Select"
                   style={{
-                    width: "13vw",
-                    height: "4vh",
-                    border: "1px solid gray",
-                    borderRadius: "0.50rem",
+                    width: '13vw',
+                    height: '4vh',
+                    border: '1px solid gray',
+                    borderRadius: '0.50rem',
                   }}
                 />
               </div>
-            </div>   
+            </div>
           </div>
-        
 
-        
           <div className="ml-2">
             <div>
               <div>
