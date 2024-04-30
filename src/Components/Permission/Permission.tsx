@@ -99,7 +99,7 @@ const Permission = () => {
               onClick={handleButtonClick}
               visible={modalVisible}
               onHide={handleModalClose}
-              header={<h1 className="text-xl font-bold text-black ml-4">New User</h1>} >
+              header={<h1 className="text-xl font-bold text-black ml-4">New User</h1>}>
               <AddPermission />
             </CustomModal>
           </div>
