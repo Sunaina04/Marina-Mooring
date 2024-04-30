@@ -140,7 +140,7 @@ const routes = [
         ],
       },
       {
-        path: 'permission',
+        path: 'admin/login/permission',
         element: <Permission />,
       },
     ],
