@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { Provider } from "react-redux";
-import { store } from "../../store/store";
+import { store } from "../../Store/Store";
 import { BrowserRouter } from "react-router-dom";
 import ForgotPassword from "./ForgotPassword";
 
