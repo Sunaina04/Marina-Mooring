@@ -3,12 +3,11 @@ import { InputText } from 'primereact/inputtext';
 import { FormFieldsProps } from '../../Type/CommonType';
 
 const FormFields: React.FC<FormFieldsProps> = ({ label, value, onChange, type = 'text' }) => {
-  return (
-    <div>
-      <label htmlFor={label} className="block text-sm font-medium text-gray-700">
-        {label}
-      </label>
-      {type === 'file' ? (
+  let inputElement;
+
+  switch (type) {
+    case 'file':
+      inputElement = (
         <input
           type="file"
           id={label}
@@ -16,7 +15,10 @@ const FormFields: React.FC<FormFieldsProps> = ({ label, value, onChange, type = 
           onChange={onChange}
           className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
         />
-      ) : (
+      );
+      break;
+    default:
+      inputElement = (
         <InputText
           type={type}
           id={label}
@@ -31,7 +33,15 @@ const FormFields: React.FC<FormFieldsProps> = ({ label, value, onChange, type = 
           }}
           className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
         />
-      )}
+      );
+  }
+
+  return (
+    <div>
+      <label htmlFor={label} className="block text-sm font-medium text-gray-700">
+        {label}
+      </label>
+      {inputElement}
     </div>
   );
 };

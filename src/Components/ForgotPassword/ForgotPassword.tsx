@@ -3,7 +3,7 @@ import InputComponent from '../CommonComponent/InputComponent'
 import { useNavigate } from 'react-router-dom'
 import { ErrorResponseForgotPassword, validateEmailResponse } from '../../Type/ApiTypes'
 import { Button } from 'primereact/button'
-import { PasswordValidation } from '../Utils/PasswordValidation'
+import { validateUserCredentials } from '../Utils/ValidateUserCredentials'
 import { useForgotPasswordMutation } from '../../Services/Authentication/AuthApi'
 
 const ForgotPassword = () => {
@@ -14,7 +14,7 @@ const ForgotPassword = () => {
   const [errors, setErrors] = useState<any>([])
 
   const validateEmailHandler = async () => {
-    const message = PasswordValidation(email, '', '')
+    const message = validateUserCredentials(email, '', '')
     if (email.length === 0) {
       setErrors('Please enter your Registered Email')
       return

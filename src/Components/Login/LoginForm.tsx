@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   useGetEmployeeMutation,
   useLoginMutation,
@@ -19,7 +19,6 @@ export default function LoginForm({
   admin,
 }: LoginFormProps) {
   const dispatch = useDispatch()
-  const toast = useRef<any>(undefined)
   const [loginPayload, setLoginPayload] = useState({
     username: '',
     password: '',
@@ -76,10 +75,7 @@ export default function LoginForm({
       //       username: "",
       //       password: "",
       //     });
-      //     toast.current?.show({
-      //       severity: "success",
-      //       summary: message,
-      //     });
+
       navigate('/admin/login/permission')
       //   }
       // } catch (error: any) {
@@ -99,10 +95,6 @@ export default function LoginForm({
             username: '',
             password: '',
           })
-          toast.current?.show({
-            severity: 'success',
-            summary: message,
-          })
           navigate('/dashboard')
         }
       } catch (error: any) {
@@ -112,33 +104,17 @@ export default function LoginForm({
         }
       }
     }
-
-    // const validationError = PasswordValidation(loginPayload.username, loginPayload.password, "");
-    // if (validationError) {
-    //   setErrors((prev) => ({
-    //     ...prev,
-    //     email: validationError,
-    //   }));
-
-    // }
-    // if (validationError) {
-    //   setErrors((prev) => ({
-    //     ...prev,
-    //     password: validationError,
-    //   }));
-    //   return;
-    // }
   }
 
   const ResetPasswordHandler = async () => {
     const resetPassPayload = {
-      newPassword: '', 
-      confirmPassword: '', 
+      newPassword: '',
+      confirmPassword: '',
     }
     try {
       const response = await resetPassword({
         payload: resetPassPayload,
-        token: token, 
+        token: token,
       }).unwrap()
       const { status, content, message } = response as ResetPasswordResponse
       if (status === 200) {
