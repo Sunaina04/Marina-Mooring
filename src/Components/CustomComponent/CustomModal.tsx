@@ -22,7 +22,7 @@ interface CustomModalProps {
   style?: React.CSSProperties
   onHide: () => void
   children?: React.ReactNode
-  header?: React.ReactNode;
+  header?: React.ReactNode
   label?: string
   icon?: boolean
 }
@@ -46,7 +46,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
           onClick={() => {
             setInternalVisible(true)
           }}
-          className='shadow-none'
+          className="shadow-none"
           style={style}>
           {!icon && (
             <img
@@ -60,7 +60,6 @@ const CustomModal: React.FC<CustomModalProps> = ({
               }}
             />
           )}
-
           {label ? label : 'ADD NEW'}
         </Button>
 

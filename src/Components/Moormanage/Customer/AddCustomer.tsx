@@ -224,7 +224,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   height: '4vh',
                   border: '1px solid gray',
                   borderRadius: '0.50rem',
-                  color:"black"
+                  color: 'black',
                 }}
               />
             </div>
@@ -244,7 +244,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   height: '4vh',
                   border: '1px solid gray',
                   borderRadius: '0.50rem',
-                  color:"black"
+                  color: 'black',
                 }}
               />
             </div>
@@ -263,7 +263,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 height: '4vh',
                 border: '1px solid gray',
                 borderRadius: '0.50rem',
-                color:"black"
+                color: 'black',
               }}
             />
           </div>

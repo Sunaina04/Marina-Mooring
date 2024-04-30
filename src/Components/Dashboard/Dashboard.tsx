@@ -1,6 +1,6 @@
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
-import {  useState } from 'react'
+import { useState } from 'react'
 import { FaCircle } from 'react-icons/fa6'
 import Timeline from '../CustomComponent/Timeline'
 import './Dashboard.css'
@@ -9,40 +9,39 @@ import { BillsData, BoatData } from '../../Type/ComponentBasedType'
 import { NullableDateArray } from '../../Type/CommonType'
 import DataTableComponent from '../Common/DataTableComponent'
 
-
 const Dashboard = () => {
   const [date, setDate] = useState<NullableDateArray>(null)
   const options: string[] = ['Pending', 'Cleared']
   const [value, setValue] = useState<string>(options[0])
   const [boatData, setBoatData] = useState<BoatData[]>([
     {
-      id: "01",
-      customerName: "Suncatcher",
-      mooringId:"#3254",
-      mooringServiceDate: "John Smith",
-      mooringLocation: "15, March 2024",
+      id: '01',
+      customerName: 'Suncatcher',
+      mooringId: '#3254',
+      mooringServiceDate: 'John Smith',
+      mooringLocation: '15, March 2024',
     },
 
     {
-      id: "02",
-      customerName: "Suncatcher",
-      mooringId:"#3254",
-      mooringServiceDate: "15,march,2024",
-      mooringLocation: "38 21.806 144 44.959",
+      id: '02',
+      customerName: 'Suncatcher',
+      mooringId: '#3254',
+      mooringServiceDate: '15,march,2024',
+      mooringLocation: '38 21.806 144 44.959',
     },
     {
-      id: "03",
-      customerName: "Suncatcher",
-      mooringId:"#3254",
-      mooringServiceDate: "15,march,2024",
-      mooringLocation: "38 21.806 144 44.959",
+      id: '03',
+      customerName: 'Suncatcher',
+      mooringId: '#3254',
+      mooringServiceDate: '15,march,2024',
+      mooringLocation: '38 21.806 144 44.959',
     },
     {
-      id: "04",
-      customerName: "Suncatcher",
-      mooringId:"#3254",
-      mooringServiceDate: "15,march,2024",
-      mooringLocation: "38 21.806 144 44.959",
+      id: '04',
+      customerName: 'Suncatcher',
+      mooringId: '#3254',
+      mooringServiceDate: '15,march,2024',
+      mooringLocation: '38 21.806 144 44.959',
     },
   ])
 
@@ -118,9 +117,9 @@ const Dashboard = () => {
               header={Boatsheader}
               value={boatData}
               tableStyle={{
-               // width: "73rem",
-                fontSize: "0.90rem",
-                fontWeight: "bold",
+                // width: "73rem",
+                fontSize: '0.90rem',
+                fontWeight: 'bold',
               }}
               scrollable={true}
             />

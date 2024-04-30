@@ -179,19 +179,18 @@ const Moorings = () => {
           <CustomModal
             label={'ADD NEW'}
             style={{
-              width: "8vw",
-              height: "7vh",
-              backgroundColor: "black",
-              cursor: "pointer",
-              fontSize: "15px",
-              fontWeight: "bold",
-              color: "white",
+              width: '8vw',
+              height: '7vh',
+              backgroundColor: 'black',
+              cursor: 'pointer',
+              fontSize: '15px',
+              fontWeight: 'bold',
+              color: 'white',
             }}
             onClick={handleButtonClick}
             visible={modalVisible || editMode}
             onHide={handleModalClose}
-            header={"Add Mooring"}
-          >
+            header={'Add Mooring'}>
             <AddMoorings moorings={selectedCustomer} editMode={editMode} />
           </CustomModal>
         </div>

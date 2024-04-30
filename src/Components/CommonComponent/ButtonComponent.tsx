@@ -1,15 +1,15 @@
-import { Button } from "primereact/button";
-import React, { ReactNode } from "react";
+import { Button } from 'primereact/button'
+import React, { ReactNode } from 'react'
 
 interface ButtonCompProps {
-  disabled?: boolean;
-  label: string;
-  style?: React.CSSProperties;
-  size?: "small" | "large";
-  icon?: JSX.Element;
-  color?: string;
-  children?: ReactNode;
-  text?: boolean;
+  disabled?: boolean
+  label: string
+  style?: React.CSSProperties
+  size?: 'small' | 'large'
+  icon?: JSX.Element
+  color?: string
+  children?: ReactNode
+  text?: boolean
 }
 
 const ButtonComponent: React.FC<ButtonCompProps> = ({
@@ -36,7 +36,7 @@ const ButtonComponent: React.FC<ButtonCompProps> = ({
         children={children}
       />
     </div>
-  );
-};
+  )
+}
 
-export default ButtonComponent;
+export default ButtonComponent
