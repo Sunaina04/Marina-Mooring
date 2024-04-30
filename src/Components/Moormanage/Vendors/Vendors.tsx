@@ -1,20 +1,20 @@
 import { useEffect, useState } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
-import CustomModal from '../../customComponent/CustomModal'
+import CustomModal from '../../CustomComponent/CustomModal'
 import AddVendor from './AddVendor'
 import { InputText } from 'primereact/inputtext'
 import {
   useDeleteVendorMutation,
   useGetVendorsMutation,
-} from '../../../Services/MoorManage/moormanage'
-import { VENDOR_PAYLOAD, VENDOR_RESPONSE } from '../../../Services/MoorManage/types'
+} from '../../../Services/MoorManage/MoormanageApi'
+import { VendorPayload, VendorResponse } from '../../../Type/ApiTypes'
 import { Button } from 'primereact/button'
 
 const Vendors = () => {
   const [modalVisible, setModalVisible] = useState(false)
-  const [vendorData, setVendorData] = useState<VENDOR_PAYLOAD[]>([])
-  const [selectedCustomer, setSelectedCustomer] = useState<any>(null)
+  const [vendorData, setVendorData] = useState<VendorPayload[]>([])
+  const [selectedCustomer, setSelectedCustomer] = useState<any>(undefined)
   const [editMode, setEditMode] = useState(false)
 
   const [getVendors] = useGetVendorsMutation()
@@ -28,9 +28,7 @@ const Vendors = () => {
     await getVendors({})
       .unwrap()
       .then(async (response) => {
-        console.log('RESPONSE', response)
-        const { status, content } = response as VENDOR_RESPONSE
-        console.log('CONTENT', content, status)
+        const { status, content } = response as VendorResponse
         if (status === 200 && Array.isArray(content)) {
           setVendorData(content)
         }
@@ -43,12 +41,8 @@ const Vendors = () => {
   }
 
   const handleDelete = async (rowData: any) => {
-    // Handle delete action here, using the data from rowData if necessary
-    console.log('Delete clicked for:', rowData, rowData?.id)
-
     try {
       const response = await deleteVendor({ id: rowData?.id })
-      console.log('RESPONSE', response)
       getVendorData()
     } catch (error) {
       console.error('Error deleting customer:', error)
@@ -66,8 +60,6 @@ const Vendors = () => {
 
   return (
     <>
-      {' '}
-      {/* <div className="flex ml-12"> */}
       <div className="flex justify-between items-center ml-2">
         <div>
           <h1 className="mt-14 ml-[7.50rem] opacity-30 text-2xl font-normal">Moormanage/Vendor</h1>
@@ -133,7 +125,6 @@ const Vendors = () => {
                     textDecoration: 'underline',
                     cursor: 'pointer',
                   }}
-                  // onClick={handleViewInventory}
                 />
                 <Button
                   label="Edit"
