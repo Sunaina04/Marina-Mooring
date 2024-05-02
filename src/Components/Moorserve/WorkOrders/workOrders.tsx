@@ -9,15 +9,6 @@ import { WorkOrderPayload, WorkOrderResponse } from '../../../Type/ApiTypes'
 import { useGetWorkOrdersMutation } from '../../../Services/MoorServe/MoorserveApi'
 import DataTableSearchFieldComponent from '../../CommonComponent/DataTableSearchFieldComponent'
 
-interface TableColumn {
-  id: string
-  label: string
-  style: React.CSSProperties
-}
-
-interface TableColumns extends Array<TableColumn> {}
-
-
 const WorkOrders = () => {
   const [visible, setVisible] = useState(false)
   const [workOrderData, setWorkOrderData] = useState<WorkOrderPayload[]>([])
@@ -58,7 +49,7 @@ const WorkOrders = () => {
     ),
   ]
 
-  const tableColumns: TableColumns = useMemo<TableColumns>(
+  const tableColumns = useMemo(
     () => [
       {
         id: 'invoice',

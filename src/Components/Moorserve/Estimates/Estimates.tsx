@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import ButtonComponent from '../../CommonComponent/ButtonComponent'
@@ -7,6 +7,7 @@ import AddCustomer from '../../Moormanage/Customer/AddCustomer'
 import AddEstimates from './AddEstimates'
 import { InputText } from 'primereact/inputtext'
 import { EstimateProps } from '../../../Type/ComponentBasedType'
+import DataTableSearchFieldComponent from '../../CommonComponent/DataTableSearchFieldComponent'
 
 const Estimates = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -81,6 +82,69 @@ const Estimates = () => {
     </div>
   )
 
+
+
+  const tableColumns = useMemo(
+    () => [
+      {
+        id: 'invoice',
+        label: 'Invoice',
+        style: { width: '6vw', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'mooringId',
+        label: 'Mooring ID',
+        style: { width: '12vw', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'customerName',
+        label: 'Customer Name',
+        style: { width: '10vw', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'technicianName',
+        label: 'Technician Name',
+        style: { width: '12vw', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'services',
+        label: 'Services',
+        style: { width: '10vw', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'time',
+        label: 'Time',
+        style: { width: '10vw', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'amount',
+        label: 'Amount',
+        style: { width: '10vw', backgroundColor: '#F2F2F2' },
+      },
+    ],
+    [],
+  )
+
+
+  const actionButtons = [
+    () => (
+      <>
+        <div className="flex ">
+          <div className="flex gap-4">
+            <span
+              className=" underline cursor-pointer"
+              //  onClick={() => handleEdit(rowData)}
+            >
+              Edit
+            </span>
+          </div>
+        </div>
+      </>
+    ),
+  ]
+
+
+
   return (
     <>
       <div className="flex justify-between items-center ml-12">
@@ -113,7 +177,7 @@ const Estimates = () => {
           </CustomModal>
         </div>
       </div>
-      <div className="bg-[#F2F2F2] rounded-xl border-[1px] border-[#D1D1D1] ml-40  mb-3 p-2 mt-12 w-[55vw]">
+      {/* <div className="bg-[#F2F2F2] rounded-xl border-[1px] border-[#D1D1D1] ml-40  mb-3 p-2 mt-12 w-[55vw]">
         <DataTable
           value={boatData}
           header={header}
@@ -136,7 +200,25 @@ const Estimates = () => {
               </div>
             )}></Column>
         </DataTable>
+      </div> */}
+
+      <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[64vw]  ml-32 mt-12 ">
+        <DataTableSearchFieldComponent
+          tableStyle={{
+            fontSize: '12px',
+            color: '#000000',
+            fontWeight: 600,
+          }}
+          data={boatData}
+          columns={tableColumns}
+          header={header}
+          actionbuttons={actionButtons}
+          actionHeader={'Action'}
+          style={{ backgroundColor: '#F2F2F2' }}
+        />
       </div>
+
+
     </>
   )
 }

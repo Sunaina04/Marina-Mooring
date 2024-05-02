@@ -11,15 +11,7 @@ import {
 import { VendorPayload, VendorResponse } from '../../../Type/ApiTypes'
 import { Button } from 'primereact/button'
 import DataTableSearchFieldComponent from '../../CommonComponent/DataTableSearchFieldComponent'
-
-
-interface TableColumn {
-  id: string
-  label: string
-  style: React.CSSProperties
-}
-
-interface TableColumns extends Array<TableColumn> {}
+import { boatData } from '../../Utils/CustomData'
 
 
 
@@ -71,45 +63,11 @@ const Vendors = () => {
     getVendorData()
   }, [])
 
-  const boatData = [
-    {
-      id: '#001',
-      companyName: 'marina Depot Direct',
-      phoneNumber: 9789756452,
-      emailAddress: 'demo@gmail.com',
-      inventoryItems: 142,
-    },
-    {
-      id: '#001',
-      companyName: 'marina Depot Direct',
-      phoneNumber: 9789756452,
-      emailAddress: 'demo@gmail.com',
-      inventoryItems: 142,
-    },
-    {
-      id: '#001',
-      companyName: 'marina Depot Direct',
-      phoneNumber: 9789756452,
-      emailAddress: 'demo@gmail.com',
-      inventoryItems: 142,
-    },
-    {
-      id: '#001',
-      companyName: 'marina Depot Direct',
-      phoneNumber: 9789756452,
-      emailAddress: 'demo@gmail.com',
-      inventoryItems: 142,
-    },
-    {
-      id: '#001',
-      companyName: 'marina Depot Direct',
-      phoneNumber: 9789756452,
-      emailAddress: 'demo@gmail.com',
-      inventoryItems: 142,
-    },
-  ]
 
-  const tableColumns: TableColumns = useMemo<TableColumns>(
+
+
+
+  const tableColumns= useMemo(
     () => [
       {
         id: 'id',
@@ -188,7 +146,6 @@ const Vendors = () => {
 
   return (
     <>
-      {/* <div className="flex ml-12"> */}
       <div className="flex justify-between items-center ml-2">
         <div>
           <h1 className="mt-14 ml-[7.50rem] opacity-30 text-2xl font-normal">Moormanage/Vendor</h1>

@@ -3,18 +3,11 @@ import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import CustomModal from '../../CustomComponent/CustomModal'
 import { MoorPayProps } from '../../../Type/ComponentBasedType'
-import AddCustomer from '../../Moormanage/Customer/AddCustomer'
 import DataTableSearchFieldComponent from '../../CommonComponent/DataTableSearchFieldComponent'
-interface TableColumn {
-  id: string
-  label: string
-  style: {
-    width: string
-    backgroundColor: string
-  }
-}
+import AddCustomer from '../../Moormanage/Customer/AddCustomer'
 
-type TableColumns = TableColumn[]
+
+
 const AccountRecievable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [accountRecievableData, setAccountRecievableData] = useState<MoorPayProps[]>([
@@ -71,7 +64,7 @@ const AccountRecievable = () => {
     </div>
   )
 
-  const tableColumns: TableColumns = useMemo<TableColumns>(
+  const tableColumns = useMemo(
     () => [
       {
         id: 'invoice',

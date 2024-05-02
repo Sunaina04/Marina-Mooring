@@ -46,7 +46,6 @@ export interface FormFieldsProps {
 
 export type NullableDateArray = (Date | null)[] | null
 
-
 export interface TableColumn {
   id: string
   label: string

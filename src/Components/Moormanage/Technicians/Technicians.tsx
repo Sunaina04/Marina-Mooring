@@ -6,12 +6,15 @@ import { Calendar } from 'primereact/calendar'
 import { TechnicianPayload, TechnicianResponse } from '../../../Type/ApiTypes'
 import { useGetTechnicianMutation } from '../../../Services/MoorManage/MoormanageApi'
 import { BillsData, NullableDateArray } from '../../../Type/CommonType'
- 
+import { Button } from 'primereact/button'
+import DataTableSearchFieldComponent from '../../CommonComponent/DataTableSearchFieldComponent'
+import { IoSearch } from 'react-icons/io5'
+import { InputText } from 'primereact/inputtext'
+
 const useFetchTechnicians = () => {
   const [technicianData, setTechnicianData] = useState<TechnicianPayload[]>([])
   const [filteredTechnicianData, setFilteredTechnicianData] = useState<TechnicianPayload[]>([])
   const [getTechnicians] = useGetTechnicianMutation()
- 
   const getTechniciansData = useCallback(async () => {
     try {
       const response = await getTechnicians({}).unwrap()
@@ -24,14 +27,14 @@ const useFetchTechnicians = () => {
       console.error('Error fetching technician data:', error)
     }
   }, [getTechnicians])
- 
+
   useEffect(() => {
     getTechniciansData()
   }, [getTechniciansData])
- 
+
   return { technicianData, filteredTechnicianData }
 }
- 
+
 const Technicians = () => {
   const [date, setDate] = useState<NullableDateArray>(null)
   const options: string[] = ['Open', 'Completed']
@@ -91,7 +94,58 @@ const Technicians = () => {
       </div>
     </>
   )
- 
+
+  const actionButtons = [
+    () => (
+      <>
+        <div className="flex">
+          <Button
+            label="View"
+            style={{
+              fontWeight: 'bold',
+              textDecoration: 'underline',
+              cursor: 'pointer',
+            }}
+          // onClick={handleViewInventory}
+          />
+        </div>
+
+      </>
+    ),
+
+  ];
+
+
+
+  const ActionHeader = () => {
+    return (
+
+      <div className="flex items-center">
+        <div >
+
+        </div>
+      </div>
+
+    )
+  }
+
+  // const getTechniciansData = async () => {
+  //   await getTechnicians({})
+  //     .unwrap()
+  //     .then(async (response) => {
+  //       console.log('RESPONSE', response)
+  //       const { status, content } = response as TechnicianResponse
+  //       if (status === 200 && Array.isArray(content)) {
+  //         setTechnicianData(content)
+  //         setFilteredTechnicianData(content) // Initialize filtered data with all data
+  //       }
+  //     })
+  // }
+
+  // useEffect(() => {
+  //   getTechniciansData()
+  // }, [])
+
   return (
     <>
       <div className="flex justify-between items-center ml-12">
