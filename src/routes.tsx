@@ -22,7 +22,7 @@ import TimeCards from './Components/Moorserve/TimeCards/TimeCards'
 import Forms from './Components/Moorserve/Forms/Forms'
 import ReportsMoorserve from './Components/Moorserve/Reports/ReportsMoorserve'
 import Customer from './Components/Moormanage/Customer/Customer'
-import Permission from './Components/Permission/Permission'
+import Permission from './Components/AdminTools/CustomerAdmin'
 import Admin from './Components/EmployeeManagement/Admin'
 
 const routes = [
@@ -140,7 +140,7 @@ const routes = [
         ],
       },
       {
-        path: 'admin/login/permission',
+        path: 'customerAdmin',
         element: <Permission />,
       },
     ],

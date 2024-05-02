@@ -151,10 +151,9 @@ const AdminLayout = () => {
                         onClick={() => setSelectedSubcategory(subIndex)}>
                         <img
                           src={subcategory.icon}
-                          alt=""
                           width={17}
                           style={{
-                            marginRight: '8px',
+                            marginRight: '4px',
                             marginLeft: open ? '50px' : '3px',
                           }}
                         />

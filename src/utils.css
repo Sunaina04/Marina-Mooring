@@ -1,0 +1,20 @@
+* input {
+  box-shadow: none !important;
+  padding-left: 0.5em;
+  color: black;
+}
+* input::placeholder {
+  color: black; /* Set placeholder color */
+}
+
+* select {
+  box-shadow: none !important;
+}
+* select::placeholder {
+  color: black; /* Set select placeholder color */
+}
+
+* [data-pc-name="dropdown"] {
+  box-shadow: none !important;
+  color: black;
+}

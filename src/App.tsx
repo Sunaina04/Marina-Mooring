@@ -9,6 +9,7 @@ import { Toaster } from "react-hot-toast";
 import { PrimeReactProvider } from "primereact/api";
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
+import './utils.css';
 
 const queryClient = new QueryClient();
 const App: React.FC = () => {

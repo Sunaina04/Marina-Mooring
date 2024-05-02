@@ -3,11 +3,14 @@ import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import { Button } from 'primereact/button'
 import CustomModal from '../CustomComponent/CustomModal'
-import AddPermission from './AddPermission'
 import { PermissionData } from '../../Type/ComponentBasedType'
+import AddCustomer from './AddCustomer'
 
 const Permission = () => {
   const [modalVisible, setModalVisible] = useState(false)
+  const [selectedCustomer, setSelectedCustomer] = useState<any>(undefined)
+  const [editMode, setEditMode] = useState(false)
+
   const [permissionData, setPermissionData] = useState<PermissionData[]>([
     {
       id: '01',
@@ -54,33 +57,27 @@ const Permission = () => {
         </div>
 
         <div className="mt-14 ml-64">
-          <Button
-            label={''}
-            onClick={() => {}}
+          <select
+            onChange={() => {}}
             style={{
               display: 'flex',
               alignItems: 'center',
               width: '7vw',
               height: '5vh',
-              backgroundColor: 'black',
+              backgroundColor: 'white',
               cursor: 'pointer',
-              color: 'white',
+              color: 'black',
               fontWeight: 'bold',
               fontSize: '0.80vw',
               justifyContent: 'space-between',
-            }}>
-            <img
-              src="/assets/images/more.png"
-              alt="icon"
-              className="p-icon w-4"
-              style={{
-                filter: 'invert(100%)',
-                color: 'whitesmoke',
-                fontWeight: 'bolder',
-              }}
-            />
-            <span className="mr-4">Filter</span>
-          </Button>
+              appearance: 'none',
+              paddingLeft: '0.5rem',
+            }}
+            defaultValue="">
+            <option value="" disabled>
+              Select Role
+            </option>
+          </select>
         </div>
 
         <div className="flex  items-center mr-[23rem] mt-14">
@@ -88,8 +85,8 @@ const Permission = () => {
             <CustomModal
               label={'ADD NEW'}
               style={{
-                width: '50vw',
-                height: '80vh',
+                width: '8vw',
+                height: '7vh',
                 backgroundColor: 'black',
                 cursor: 'pointer',
                 fontSize: '14px',
@@ -99,8 +96,8 @@ const Permission = () => {
               onClick={handleButtonClick}
               visible={modalVisible}
               onHide={handleModalClose}
-              header="">
-              <AddPermission />
+              header={<h1 className="text-xl font-bold text-black ml-4">New User</h1>}>
+              <AddCustomer customerData={selectedCustomer} editMode={editMode} />
             </CustomModal>
           </div>
         </div>

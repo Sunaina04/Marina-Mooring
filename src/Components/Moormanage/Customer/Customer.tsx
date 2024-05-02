@@ -8,7 +8,7 @@ import { FaEdit } from 'react-icons/fa'
 import { RiDeleteBin5Fill } from 'react-icons/ri'
 import { FaCircle } from 'react-icons/fa6'
 import { Dialog } from 'primereact/dialog'
-import Timeline from '../../CustomComponent/Timeline'
+
 import {
   useDeleteCustomerMutation,
   useGetCustomerMutation,
@@ -20,6 +20,7 @@ import {
   MooringPayload,
   MooringResponse,
 } from '../../../Type/ApiTypes'
+// import Timeline from '../../customComponent/Timeline'
 
 const Customer = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -140,15 +141,15 @@ const Customer = () => {
           <CustomModal
             label={'ADD NEW'}
             style={{
-              width: '50vw',
-              height: '80vh',
+              width: '8vw',
+              height: '7vh',
               backgroundColor: 'black',
               cursor: 'pointer',
-              fontSize: '14px',
+              fontSize: '15px',
               fontWeight: 'bold',
               color: 'white',
-              borderRadius: '1rem',
             }}
+            header={<h1 className="text-xl font-bold text-black ml-4">Add Customer</h1>} 
             onClick={handleButtonClick}
             visible={modalVisible || editMode}
             onHide={handleModalClose}>
@@ -162,7 +163,7 @@ const Customer = () => {
         </div>
       </div>
 
-      <div className="flex ml-12 gap-4">
+      <div className="flex ml-12 gap-4 mt-4">
         <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[28vw] h-[85vh]">
           <DataTable
             value={filteredCustomerData}
@@ -195,10 +196,10 @@ const Customer = () => {
           />
 
           <div className="absolute top-5 left-0" data-testid="timeline1">
-            <Timeline />
+            {/* <Timeline /> */}
           </div>
           <div className="absolute top-20 right-0" data-testid="timeline2">
-            <Timeline />
+            {/* <Timeline /> */}
           </div>
 
           <div className="absolute  translate-x-6 bottom-4  rounded-md border-[1px] pb-1 border-gray-300 w-[17vw]  mt-auto h-[13vh] bg-white">

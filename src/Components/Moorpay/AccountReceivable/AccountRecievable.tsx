@@ -3,6 +3,7 @@ import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import CustomModal from '../../CustomComponent/CustomModal'
 import { MoorPayProps } from '../../../Type/ComponentBasedType'
+import AddCustomer from '../../Moormanage/Customer/AddCustomer'
 
 const AccountRecievable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -89,7 +90,15 @@ const AccountRecievable = () => {
           <CustomModal
             onClick={handleButtonClick}
             visible={false}
-            onHide={handleModalClose}></CustomModal>
+            onHide={handleModalClose}
+            header={header}>
+            <AddCustomer
+              customer={undefined}
+              editMode={false}
+              closeModal={() => {}}
+              getCustomer={() => {}}
+            />
+          </CustomModal>
         </div>
       </div>
       <div className="bg-[#F2F2F2] rounded-md border-[1px] border-[#D1D1D1] p-2 mt-12 w-[68vw] ml-20">

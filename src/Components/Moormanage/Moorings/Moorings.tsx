@@ -6,13 +6,13 @@ import React, { useState, useEffect } from 'react'
 import { Column } from 'primereact/column'
 import { Button } from 'primereact/button'
 import { useGetMooringsMutation } from '../../../Services/MoorManage/MoormanageApi'
-import Timeline from '../../CustomComponent/Timeline'
 import { InputSwitch, InputSwitchChangeEvent } from 'primereact/inputswitch'
 import { MooringPayload, MooringResponse } from '../../../Type/ApiTypes'
 import { FaCircle, FaEdit } from 'react-icons/fa'
 import { Dialog } from 'primereact/dialog'
 import DataTableSearchFieldComponent from '../../CommonComponent/DataTableSearchFieldComponent'
 import { CustomerData, CustomerProps } from '../../../Type/CommonType'
+// import Timeline from '../../customComponent/Timeline'
 
 const Moorings = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -179,18 +179,19 @@ const Moorings = () => {
           <CustomModal
             label={'ADD NEW'}
             style={{
-              width: '50vw',
-              height: '80vh',
-              backgroundColor: 'black',
-              cursor: 'pointer',
-              fontSize: '14px',
-              fontWeight: 'bold',
-              color: 'white',
-              borderRadius: '1rem',
+              width: "8vw",
+              height: "7vh",
+              backgroundColor: "black",
+              cursor: "pointer",
+              fontSize: "15px",
+              fontWeight: "bold",
+              color: "white",
             }}
             onClick={handleButtonClick}
             visible={modalVisible || editMode}
-            onHide={handleModalClose}>
+            onHide={handleModalClose}
+            header={<h1 className="text-lg font-bold text-black ml-4">Add Mooring</h1>}
+          >
             <AddMoorings moorings={selectedCustomer} editMode={editMode} />
           </CustomModal>
         </div>
@@ -220,7 +221,7 @@ const Moorings = () => {
           />
           <div className="absolute top-72">
             <div className="">
-              <Timeline data-testid="timeline" />
+              {/* <Timeline data-testid="timeline" /> */}
             </div>
             <div className="rounded-md border-[1px] pb-1 border-gray-300 mt-16 ml-10 w-[17vw]  h-[13vh] bg-white">
               <p className="text-[0.7rem] ml-1 text-black">Status</p>

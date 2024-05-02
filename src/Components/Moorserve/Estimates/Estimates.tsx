@@ -1,9 +1,7 @@
 import { useState } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
-import ButtonComponent from '../../CommonComponent/ButtonComponent'
 import CustomModal from '../../CustomComponent/CustomModal'
-import AddCustomer from '../../Moormanage/Customer/AddCustomer'
 import AddEstimates from './AddEstimates'
 import { InputText } from 'primereact/inputtext'
 import { EstimateProps } from '../../../Type/ComponentBasedType'
@@ -108,8 +106,10 @@ const Estimates = () => {
             data-testid="modal"
             onClick={handleButtonClick}
             visible={false}
-            onHide={handleModalClose}>
-            <AddEstimates />
+            onHide={handleModalClose}
+            header={header}
+          >
+            <AddEstimates/>
           </CustomModal>
         </div>
       </div>

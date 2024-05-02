@@ -96,13 +96,11 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
   return (
     <>
       <div className="main">
-        <h1 className="text-lg font-bold">Add Company</h1>
-
         {/* Company Info */}
         <div className="flex">
-          <div className="flex mt-3 gap-8">
+          <div className="flex gap-8">
             <div>
-              <span className="font-semibold text-sm">Company Name</span>
+              <span className="font-semibold text-sm text-black">Company Name</span>
               <div className="mt-2">
                 <InputComponent
                   value={companyName}
@@ -122,7 +120,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
 
             {/* Phone */}
             <div>
-              <span className="font-semibold text-sm">Phone</span>
+              <span className="font-semibold text-sm text-black">Phone</span>
               <div className="mt-2">
                 <InputComponent
                   value={phone}
@@ -140,7 +138,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
 
             {/* Website */}
             <div>
-              <span className="font-semibold text-sm">Website</span>
+              <span className="font-semibold text-sm text-black">Website</span>
               <div className="mt-2">
                 <InputComponent
                   value={website}
@@ -160,12 +158,12 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
 
         {/* Address */}
         <div>
-          <div className="mt-3 ml-1 flex">
+          <div className="mt-5 ml-1 flex">
             <div>
-              <h1 className="text-sm font-bold">Address</h1>
+              <h1 className="text-sm font-bold text-black">Address</h1>
             </div>
             <div className="ml-[16.50rem]">
-              <h1 className="text-sm font-bold">Remit Address</h1>
+              <h1 className="text-sm font-bold text-black">Remit Address</h1>
             </div>
           </div>
 
@@ -408,8 +406,8 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
       </div>
 
       <div>
-        <div className="mt-2">
-          <div className="ml-1">
+        <div className="mt-8">
+          <div className="ml-1 text-black font-semibold text-sm">
             <span>Account Number</span>
           </div>
           <div className="mt-1">
@@ -418,7 +416,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setAccountNumber(e.target.value)
               }
-              placeholder="Sector/Block"
+              // placeholder="Sector/Block"
               type="text"
               style={{
                 width: '14vw',
@@ -426,14 +424,15 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                 border: '1px solid gray',
                 borderRadius: '0.50rem',
                 fontSize: '0.70rem',
+                padding:"1em"
               }}
             />
           </div>
         </div>
       </div>
 
-      <div className="">
-        <div className="mt-4 ">
+      <div className="mt-8 bg-slate-50">
+        <div className="">
           <h1 className="text-sm font-bold">Sales Representative</h1>
         </div>
 
