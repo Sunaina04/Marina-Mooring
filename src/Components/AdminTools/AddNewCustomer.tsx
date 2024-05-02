@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { InputText } from 'primereact/inputtext'
 import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown'
 import { Button } from 'primereact/button'
@@ -15,15 +15,15 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
   const [street, setStreet] = useState('')
   const [apt, setApt] = useState('')
   const [zipCode, setZipCode] = useState('')
-  const [role, setRole] = useState<Role | undefined>(undefined)
-  const [country, setCountry] = useState<Country | undefined>(undefined)
-  const [state, setState] = useState<State | undefined>(undefined)
+  const [role, setRole] = useState<Role>()
+  const [country, setCountry] = useState<Country>()
+  const [state, setState] = useState<State>()
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const { getMetaData } = useMetaData()
-  const [rolesData, setRolesData] = useState<Role[] | undefined>(undefined)
-  const [countriesData, setCountriesData] = useState<Country[] | undefined>(undefined)
-  const [statesData, setStatesData] = useState<State[] | undefined>(undefined)
+  const [rolesData, setRolesData] = useState<Role[]>()
+  const [countriesData, setCountriesData] = useState<Country[]>()
+  const [statesData, setStatesData] = useState<State[]>()
 
   useEffect(() => {
     if (editMode && customerData) {
@@ -49,22 +49,26 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
     //Api not implemented yet from backend
   }
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const { rolesData, countriesData, statesData } = await getMetaData()
-      console.log(rolesData, countriesData, statesData)
-      if (rolesData !== null) {
-        setRolesData(rolesData)
-      }
-      if (countriesData !== null) {
-        setCountriesData(countriesData)
-      }
-      if (statesData !== null) {
-        setStatesData(statesData)
-      }
+  const fetchDataAndUpdate = useCallback(async () => {
+    const { rolesData, countriesData, statesData } = await getMetaData()
+    console.log(rolesData, countriesData, statesData)
+
+    if (rolesData !== null) {
+      setRolesData(rolesData)
     }
-    fetchData()
+
+    if (countriesData !== null) {
+      setCountriesData(countriesData)
+    }
+
+    if (statesData !== null) {
+      setStatesData(statesData)
+    }
   }, [])
+
+  useEffect(() => {
+    fetchDataAndUpdate()
+  }, [fetchDataAndUpdate])
 
   return (
     <>

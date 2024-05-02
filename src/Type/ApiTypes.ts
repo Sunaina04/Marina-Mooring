@@ -322,7 +322,7 @@ export interface WorkOrderResponse {
   }
 }
 
-export interface MetaDataResponse {
+export type MetaDataResponse = {
   message: string
   status: number
   errorList: []
