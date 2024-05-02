@@ -79,12 +79,10 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
 
   return (
     <>
-      <div className="w-full h-full  ">
-        <h1 className="ml-5 text-lg font-bold">Add Mooring</h1>
-
-        <div className="flex justify-around mt-3">
+      <div className="w-full h-full ">
+        <div className="flex justify-around ">
           <div>
-            <span className="font-semibold text-sm">Owner Name</span>
+            <span className="font-semibold text-sm text-black">Customer Name</span>
             <div className="mt-2">
               <InputComponent
                 value={formData.customerName}
@@ -101,7 +99,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
           </div>
 
           <div>
-            <span className="font-semibold text-sm">Mooring Number</span>
+            <span className="font-semibold text-sm text-black">Mooring ID</span>
             <div className="mt-2">
               <InputComponent
                 value={formData.mooringNumber}
@@ -118,7 +116,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
           </div>
 
           <div>
-            <span className="font-semibold text-sm">Harbor</span>
+            <span className="font-semibold text-sm text-black">Harbor</span>
             <div className="mt-2">
               <InputComponent
                 value={formData.harbor}
@@ -138,7 +136,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
         <div className="mt-3  ">
           <div className="flex justify-around mt-3">
             <div>
-              <span className="font-semibold text-sm">Water Depth</span>
+              <span className="font-semibold text-sm text-black">Water Depth</span>
               <div className="mt-2">
                 <InputComponent
                   value={formData.waterDepth}
@@ -155,7 +153,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
             </div>
 
             <div>
-              <span className="font-semibold text-sm">G.P.S Cordinates</span>
+              <span className="font-semibold text-sm text-black">G.P.S Cordinates</span>
               <div className="mt-2">
                 <InputComponent
                   value={formData.gpsCoordinates}
@@ -172,7 +170,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
             </div>
 
             <div>
-              <span className="font-semibold text-sm">Boat Name</span>
+              <span className="font-semibold text-sm text-black">Boatyard Name</span>
               <div className="mt-2">
                 <InputComponent
                   value={formData.boatName}
@@ -191,9 +189,28 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
         </div>
 
         <div className="">
-          <div className="flex justify-around ml-1 mt-3">
+          <div className="flex justify-around  mt-3">
             <div>
-              <span className="font-semibold text-sm">Boat Size</span>
+              <span className="font-semibold text-sm text-black">Boat Name</span>
+              <div className="mt-2">
+                <InputComponent
+                  // placeholder="Enter owner name"
+                  // type="text"
+                  value={formData.boatName}
+                  onChange={(e) => handleInputChange('boatName', e.target.value)}
+                  style={{
+                    width: '13vw',
+                    height: '4vh',
+                    border: '1px solid gray',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.80vw',
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className="">
+              <span className="font-semibold text-sm text-black">Boat Size</span>
               <div className="mt-2">
                 <InputComponent
                   value={formData.boatSize}
@@ -209,9 +226,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
               </div>
             </div>
 
-            <div className="ml-1">
+            <div className="">
               <div>
-                <span className="font-semibold text-sm">Type</span>
+                <span className="font-semibold text-sm text-black">Type</span>
               </div>
 
               <div className="mt-2">
@@ -223,17 +240,21 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                   editable
                   placeholder="Skiff"
                   style={{
-                    width: '14vw',
-                    height: '4vh',
-                    border: '1px solid gray',
-                    borderRadius: '0.50rem',
+                    width: "13vw",
+                    height: "4vh",
+                    border: "1px solid gray",
+                    borderRadius: "0.50rem",
                   }}
                 />
               </div>
             </div>
+          </div>
+        </div>
 
+        <div className="">
+          <div className="flex gap-4 mt-3 ml-3">
             <div>
-              <span className="font-semibold text-sm">Weight</span>
+              <span className="font-semibold text-sm text-black">Weight</span>
               <div className="mt-2">
                 <InputComponent
                   value={formData.boatWeight}
@@ -248,17 +269,13 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                 />
               </div>
             </div>
-          </div>
-        </div>
 
-        <div className="">
-          <div className="flex gap-4 mt-3 ml-4">
-            <div>
+            <div className="ml-3">
               <div>
-                <span className="font-semibold text-sm">Size of Weight</span>
+                <span className="font-semibold text-sm text-black">Size of Weight</span>
               </div>
 
-              <div>
+              <div className="mt-2">
                 <Dropdown
                   value={formData.sizeOfWeight}
                   onChange={(e) => handleInputChange('sizeOfWeight', e.value)}
@@ -276,12 +293,12 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
               </div>
             </div>
 
-            <div className="ml-4">
+            <div className="ml-3">
               <div>
-                <span className="font-semibold text-sm">Type of Weight</span>
+                <span className="font-semibold text-sm text-black">Type of Weight</span>
               </div>
 
-              <div>
+              <div className="mt-2">
                 <Dropdown
                   value={formData.typeOfWeight}
                   onChange={(e) => handleInputChange('typeOfWeight', e.value)}
@@ -290,21 +307,25 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                   editable
                   placeholder="Select"
                   style={{
-                    width: '14vw',
-                    height: '4vh',
-                    border: '1px solid gray',
-                    borderRadius: '0.50rem',
+                    width: "13vw",
+                    height: "4vh",
+                    border: "1px solid gray",
+                    borderRadius: "0.50rem",
                   }}
                 />
               </div>
             </div>
+          </div>
+        </div>
 
-            <div className="ml-2">
+        <div className="flex ml-3 gap-5 mt-4">
+          <div className="">
+            <div className="">
               <div>
-                <span className="font-semibold text-sm">Top Chain Condition</span>
+                <span className="font-semibold text-sm text-black">Top Chain Condition</span>
               </div>
 
-              <div>
+              <div className="mt-3">
                 <Dropdown
                   value={formData.topChainCondition}
                   onChange={(e) => handleInputChange('topChainCondition', e.value)}
@@ -313,7 +334,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                   editable
                   placeholder="Select"
                   style={{
-                    width: '13.50vw',
+                    width: '13vw',
                     height: '4vh',
                     border: '1px solid gray',
                     borderRadius: '0.50rem',
@@ -321,17 +342,12 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                 />
               </div>
             </div>
-          </div>
-        </div>
-
-        <div className="">
-          <div className="flex gap-4 mt-3 ml-4">
-            <div>
+            <div className="mt-3">
               <div>
-                <span className="font-semibold text-sm">Condition of Eye</span>
+                <span className="font-semibold text-sm text-black">Bootom Chain Condition</span>
               </div>
 
-              <div>
+              <div className="mt-2">
                 <Dropdown
                   value={formData.conditionOfEye}
                   onChange={(e) => handleInputChange('conditionOfEye', e.value)}
@@ -347,43 +363,13 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                   }}
                 />
               </div>
-              <div></div>
             </div>
-
-            <div className="ml-4">
-              <div>
-                <span className="font-semibold text-sm">Bootom Chain Condition</span>
+            <div className="mt-3">
+              <div className="">
+                <span className="font-semibold text-sm text-black">Pennant Condition</span>
               </div>
 
-              <div>
-                <Dropdown
-                  value={formData.bottomChainCondition}
-                  onChange={(e) => handleInputChange('bottomChainCondition', e.value)}
-                  options={cities}
-                  optionLabel="name"
-                  editable
-                  placeholder="Select"
-                  style={{
-                    width: '14vw',
-                    height: '4vh',
-                    border: '1px solid gray',
-                    borderRadius: '0.50rem',
-                  }}
-                />
-              </div>
-              <div></div>
-            </div>
-          </div>
-        </div>
-
-        <div className="">
-          <div className="flex justify-around mt-3">
-            <div className="">
-              <div>
-                <span className="font-semibold text-sm">Shackle,Swivel Condition</span>
-              </div>
-
-              <div>
+              <div className="mt-2">
                 <Dropdown
                   value={selectedCity}
                   onChange={(e: DropdownChangeEvent) => setSelectedCity(e.value)}
@@ -400,13 +386,38 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                 />
               </div>
             </div>
+          </div>
 
-            <div className="mr-14">
-              <div className="mr-3">
-                <span className="font-semibold text-sm">Pennant Condition</span>
+          <div className="ml-2">
+            <div>
+              <div>
+                <span className="font-semibold text-sm text-black">Condition of Eye</span>
+              </div>
+              <div className="mt-2">
+                <Dropdown
+                  value={formData.conditionOfEye}
+                  onChange={(e) => handleInputChange('conditionOfEye', e.value)}
+                  options={cities}
+                  optionLabel="name"
+                  editable
+                  placeholder="Select"
+                  style={{
+                    width: '13vw',
+                    height: '4vh',
+                    border: '1px solid gray',
+                    borderRadius: '0.50rem',
+                  }}
+                />
+              </div>
+            </div>
+            <div className="mt-3">
+              <div>
+                <span className="font-semibold text-sm text-black">
+                  Shackle,Swivel Condition
+                </span>
               </div>
 
-              <div className="mr-4">
+              <div className="mt-2">
                 <Dropdown
                   value={selectedCity}
                   onChange={(e: DropdownChangeEvent) => setSelectedCity(e.value)}
@@ -415,7 +426,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                   editable
                   placeholder="Select"
                   style={{
-                    width: '14vw',
+                    width: '13vw',
                     height: '4vh',
                     border: '1px solid gray',
                     borderRadius: '0.50rem',
@@ -423,25 +434,14 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                 />
               </div>
             </div>
-
-            <div></div>
-
-            <div>
-              <div>
-                <span className="font-semibold text-sm">Pin on Map</span>
-              </div>
-
-              <div></div>
-            </div>
-          </div>
-        </div>
-
-        <div className="ml-4">
-          <div className="mt-2 ml-1">
-            <span className="font-semibold text-sm">Dept at Mean High Water</span>
+          <div className="mt-3">
+          <div className="">
+            <span className="font-semibold text-sm text-black">
+              Dept at Mean High Water
+            </span>
           </div>
 
-          <div className="mt-2 ml-1">
+          <div className="mt-2">
             <InputText
               value={formData.deptAtMeanHighWater}
               onChange={(e) => handleInputChange('deptAtMeanHighWater', e.target.value)}
@@ -455,39 +455,28 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
             />
           </div>
         </div>
-
-        <div className="ml-6">
-          <div className="mt-3">
-            <span className="text-sm font-bold">Note</span>
-          </div>
-
-          <div className="mt-3">
-            <div className="card flex justify-content-center">
-              <InputTextarea
-                className="w-full h-14"
-                autoResize
-                value={value}
-                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setValue(e.target.value)}
-                rows={5}
-                cols={30}
-              />
+      </div>
+            <div className="">
+              <div>
+                <span className="font-semibold text-sm ml-3 text-black">Pin on Map</span>
+              </div>
             </div>
-          </div>
-        </div>
+    </div>
 
-        <div className="flex gap-3 mt-4 ml-6">
+        <div className="flex gap-3 mt-10 ml-5">
           <Button
             onClick={SaveMoorings}
             label={'Save'}
             style={{
-              width: '5vw',
-              backgroundColor: 'black',
-              cursor: 'pointer',
-              fontWeight: 'bolder',
-              fontSize: '1vw',
-              border: '1px solid  gray',
-              color: 'white',
-              borderRadius: '0.50rem',
+              width: "5vw",
+              height:"7vh",
+              backgroundColor: "black",
+              cursor: "pointer",
+              fontWeight: "bolder",
+              fontSize: "1vw",
+              border: "1px solid  gray",
+              color: "white",
+              borderRadius: "0.50rem",
             }}
           />
           <Button

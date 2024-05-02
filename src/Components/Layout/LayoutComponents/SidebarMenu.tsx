@@ -78,13 +78,18 @@ export const SidebarMenu = [
   {
     icon: '/assets/images/square.png',
     name: 'ADMIN TOOLS',
-    link: 'admin/login',
+    link: '/customerAdmin',
     subcategories: [
       {
         icon: '/assets/images/square.png',
-        name: 'Permission',
-        link: '/permission',
+        name: 'Customer-Admin',
+        link: '/customerAdmin',
       },
+      {
+        icon: '/assets/images/square.png',
+        name: 'Technician & Finanace',
+        link: '/permission',
+      }
     ],
   },
 ]

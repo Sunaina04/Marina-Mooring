@@ -1,5 +1,5 @@
-import { Button } from "primereact/button";
-import React, { ReactNode } from "react";
+import { Button } from 'primereact/button'
+import React, { ReactNode } from 'react'
 
 interface ButtonCompProps {
   onClick: () => void;
@@ -39,7 +39,7 @@ const ButtonComponent: React.FC<ButtonCompProps> = ({
         onClick={onClick}
       />
     </div>
-  );
-};
+  )
+}
 
-export default ButtonComponent;
+export default ButtonComponent

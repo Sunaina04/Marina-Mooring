@@ -1,21 +1,10 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import { Button } from 'primereact/button'
 import CustomModal from '../CustomComponent/CustomModal'
-import AddPermission from './AddPermission'
+import AddCustomer from '../AdminTools/AddCustomer'
 import { PermissionData } from '../../Type/ComponentBasedType'
-import DataTableSearchFieldComponent from '../CommonComponent/DataTableSearchFieldComponent'
-import { IoSearch } from 'react-icons/io5'
-import { InputText } from 'primereact/inputtext'
-import { boatData } from '../Utils/CustomData'
-interface TableColumn {
-  id: string
-  label: string
-  style: React.CSSProperties
-}
-
-type TableColumns = TableColumn[]
 
 const Permission = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -57,114 +46,6 @@ const Permission = () => {
   const handleModalClose = () => {
     setModalVisible(false)
   }
-
-
-  const CustomersHeader = () => {
-    return (
-      <div className="flex items-center">
-        <div className="p-input-icon-left ">
-          <IoSearch style={{ marginLeft: '1rem', color: '#A4A4A4' }} />
-          <InputText
-            placeholder="Search by name, ID,phone no..."
-            className="h-[5vh] w-[55vh] cursor-pointer text-[0.65rem]
-               text-[#A4A4A4]  border-1 border-[1px]
-               border-[#9F9F9F] rounded-md pl-8"
-
-          />
-        </div>
-      </div>
-    )
-  }
-
-  const TechniciansHeader = () => {
-    return (
-      <div className="flex items-center">
-        <div className="p-input-icon-left ">
-          <IoSearch style={{ marginLeft: '1rem', color: '#A4A4A4' }} />
-          <InputText
-            placeholder="Search by name, ID,Email,Role,phone no..."
-            className="h-[5vh] w-[55vh] cursor-pointer text-[0.65rem]
-               text-[#A4A4A4]  border-1 border-[1px]
-               border-[#9F9F9F] rounded-md pl-8"
-
-          />
-        </div>
-      </div>
-    )
-  }
-
-
-  const ActionHeader = () => {
-    return (
-      <div className="flex items-center">
-        <div>Action</div>
-      </div>
-    )
-  }
-  const tableColumns: TableColumns = useMemo<TableColumns>(
-    () => [
-      {
-        id: 'id',
-        label: 'ID:',
-        style: { width: '4vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
-      },
-      {
-        id: 'name',
-        label: 'Name:',
-        style: { width: '6vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
-      },
-     
-      {
-        id: 'phone',
-        label: 'Phone:',
-        style: { width: '6vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
-      },
-    ],
-    [],
-  )
-
-  const tableColumnsTechnicians: TableColumns = useMemo<TableColumns>(
-    () => [
-      {
-        id: 'id',
-        label: 'ID:',
-        style: { width: '4vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
-      },
-      {
-        id: 'name',
-        label: 'Name:',
-        style: { width: '6vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
-      },
-     
-      {
-        id: 'email',
-        label: 'Email:',
-        style: { width: '6vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
-      },
-     
-      {
-        id: 'phone',
-        label: 'Phone:',
-        style: { width: '6vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
-      },
-
-
-      {
-        id: 'role',
-        label: 'Role:',
-        style: { width: '6vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
-      },
-
-
-    ],
-    [],
-  )
-
-
-
-
-
-
   return (
     <>
       <div className="flex justify-between items-center ml-12">
@@ -175,7 +56,7 @@ const Permission = () => {
         <div className="mt-14 ml-64">
           <Button
             label={''}
-            onClick={() => { }}
+            onClick={() => {}}
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -219,60 +100,39 @@ const Permission = () => {
               visible={modalVisible}
               onHide={handleModalClose}
               header="">
-              <AddPermission />
+              {/* <AddCustomer/> */}
             </CustomModal>
           </div>
         </div>
       </div>
-
-      <div className='flex gap-10 ml-8'>
-
-        <div className="bg-[F2F2F2]  rounded-md border-[1px]  border-gray-300 w-[28vw] h-[70vh]">
-          <div className="text-sm font-extrabold rounded-sm w-full  bg-[#D9D9D9]">
-            <h1 className="p-4">Customers-admins</h1>
-          </div>
-
-          <DataTableSearchFieldComponent
-            data={boatData}
-            tableStyle={{
-              fontSize: '12px',
-              color: '#000000',
-              fontWeight: 600,
-              backgroundColor: '#D9D9D9',
-            }}
-            scrollable={false}
-            columns={tableColumns}
-            header={CustomersHeader}
-          />
-        </div>
-
-
-        <div className="bg-[F2F2F2]  rounded-md border-[1px]  border-gray-300 w-[28vw] h-[70vh]">
-          <div className="text-sm font-extrabold rounded-sm w-full  bg-[#D9D9D9]">
-            <h1 className="p-4">Customer-adminUsers</h1>
-          </div>
-
-          <DataTableSearchFieldComponent
-            data={boatData}
-            tableStyle={{
-              fontSize: '12px',
-              color: '#000000',
-              fontWeight: 600,
-              backgroundColor: '#D9D9D9',
-            }}
-            scrollable={false}
-            columns={tableColumnsTechnicians}
-            header={TechniciansHeader}
-          />
-        </div>
-
-
-
+      <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[54vw] ml-20 mt-10">
+        <DataTable
+          value={permissionData}
+          header={''}
+          tableStyle={{
+            minWidth: '20rem',
+            fontSize: '12px',
+            color: '#000000',
+            fontWeight: 600,
+            backgroundColor: '#D1D1D1',
+          }}
+          size="small"
+          scrollable={true}>
+          <Column header="ID" field="id" style={{ width: '6vw' }}></Column>
+          <Column style={{ width: '10vw' }} field="name" header="Name"></Column>
+          <Column style={{ width: '12vw' }} field="email" header="Email"></Column>
+          <Column style={{ width: '11vw' }} field="phone" header="Phone"></Column>
+          <Column style={{ width: '7vw' }} field="role" header="Role"></Column>
+          <Column
+            header="Actions"
+            body={() => (
+              <div className="flex gap-5">
+                <span className="text-black  font-bold underline cursor-pointer">Edit</span>
+                <span className="text-red-600 font-bold underline cursor-pointer">Delete</span>
+              </div>
+            )}></Column>
+        </DataTable>
       </div>
-
-
-
-
     </>
   )
 }

@@ -1,4 +1,4 @@
-import { MooringPayload, VendorPayload, WorkOrderPayload } from "./ApiTypes"
+import { MooringPayload, VendorPayload, WorkOrderPayload } from './ApiTypes'
 
 export interface CustomerDataProps {
   customer: any
@@ -10,6 +10,7 @@ export interface CustomerDataProps {
 export interface BoatData {
   id: string
   customerName: string
+  mooringId?: string
   mooringServiceDate: string
   mooringLocation: string
 }
@@ -107,4 +108,9 @@ export type StatCardProps = {
     percentage: number
     count: number
   }[]
+}
+
+export interface CustomerAdminDataProps {
+  customerData: any
+  editMode: boolean
 }
