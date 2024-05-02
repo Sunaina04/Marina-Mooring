@@ -4,8 +4,9 @@ import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown'
 import { Button } from 'primereact/button'
 import InputComponent from '../CommonComponent/InputComponent'
 import { CityProps } from '../../Type/CommonType'
+import { CustomerAdminDataProps } from '../../Type/ComponentBasedType'
 
-const AddCustomer = ({ customerData, editMode }: { customerData?: any; editMode?: boolean }) => {
+const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode }) => {
   const [name, setName] = useState('')
   const [id, setId] = useState('')
   const [phone, setPhone] = useState('')

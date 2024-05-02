@@ -3,11 +3,14 @@ import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import { Button } from 'primereact/button'
 import CustomModal from '../CustomComponent/CustomModal'
-import AddPermission from './AddCustomer'
 import { PermissionData } from '../../Type/ComponentBasedType'
+import AddCustomer from './AddCustomer'
 
 const Permission = () => {
   const [modalVisible, setModalVisible] = useState(false)
+  const [selectedCustomer, setSelectedCustomer] = useState<any>(undefined)
+  const [editMode, setEditMode] = useState(false)
+
   const [permissionData, setPermissionData] = useState<PermissionData[]>([
     {
       id: '01',
@@ -94,7 +97,7 @@ const Permission = () => {
               visible={modalVisible}
               onHide={handleModalClose}
               header={<h1 className="text-xl font-bold text-black ml-4">New User</h1>}>
-              <AddPermission />
+              <AddCustomer customerData={selectedCustomer} editMode={editMode} />
             </CustomModal>
           </div>
         </div>

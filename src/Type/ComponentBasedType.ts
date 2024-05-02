@@ -109,3 +109,8 @@ export type StatCardProps = {
     count: number
   }[]
 }
+
+export interface CustomerAdminDataProps {
+  customerData: any
+  editMode: boolean
+}
