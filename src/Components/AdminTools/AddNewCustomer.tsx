@@ -51,8 +51,6 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
 
   const fetchDataAndUpdate = useCallback(async () => {
     const { rolesData, countriesData, statesData } = await getMetaData()
-    console.log(rolesData, countriesData, statesData)
-
     if (rolesData !== null) {
       setRolesData(rolesData)
     }
