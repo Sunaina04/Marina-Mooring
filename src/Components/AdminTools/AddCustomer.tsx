@@ -29,12 +29,10 @@ const AddCustomer = ({ customerData, editMode }: { customerData?: any; editMode?
 
   useEffect(() => {
     if (editMode && customerData) {
-      // Pre-fill the form fields with customer data if in edit mode
       setName(customerData.Name || '')
       setId(customerData.UserId || '')
       setPhone(customerData.Phone || '')
       setEmail(customerData.Email || '')
-      // Set other fields accordingly...
     }
   }, [editMode, customerData])
 
@@ -55,8 +53,6 @@ const AddCustomer = ({ customerData, editMode }: { customerData?: any; editMode?
       createdBy: 'System',
       updatedBy: 'System',
     }
-
-    // Here you can send the payload to your API or perform any other action
     console.log('Payload:', payload)
   }
 
