@@ -11,7 +11,7 @@ import { InputSwitch, InputSwitchChangeEvent } from 'primereact/inputswitch'
 import { MooringPayload, MooringResponse } from '../../../Type/ApiTypes'
 import { FaCircle, FaEdit } from 'react-icons/fa'
 import { Dialog } from 'primereact/dialog'
-import DataTableSearchFieldComponent from '../../CommonComponent/DataTableSearchFieldComponent'
+import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableSearchFieldComponent'
 import { CustomerData, CustomerProps } from '../../../Type/CommonType'
 // import Timeline from '../../customComponent/Timeline'
  
@@ -138,16 +138,19 @@ const Moorings = () => {
   ]
  
   const getMooringsData = async () => {
-    await getMoorings({})
-      .unwrap()
-      .then(async (response: any) => {
-        const { status, content } = response as MooringResponse
-        if (status === 200 && Array.isArray(content)) {
-          setMooringData(content)
-          setFilteredMooringData(content)
-        }
-      })
-  }
+    try {
+      const response = await getMoorings({}).unwrap();
+      const { status, content } = response as MooringResponse;
+      if (status === 200 && Array.isArray(content)) {
+        setMooringData(content);
+        setFilteredMooringData(content);
+      }
+    } catch (error) {
+      // Handle the error appropriately, for example:
+      console.error("Error fetching moorings data:", error);
+    }
+  };
+  
  
   const handleEdit = (rowData: any) => {
     setSelectedCustomer(rowData)

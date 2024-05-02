@@ -3,7 +3,8 @@ import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import CustomModal from '../../CustomComponent/CustomModal'
 import { MoorPayProps } from '../../../Type/ComponentBasedType'
-import DataTableSearchFieldComponent from '../../CommonComponent/DataTableSearchFieldComponent'
+import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableSearchFieldComponent'
+import { ActionButtonColumnProps } from '../../../Type/Component/Table'
 
 interface TableColumn {
   id: string
@@ -105,17 +106,18 @@ const AccountPayable = () => {
       </div>
     )
   }
-  const actionButtons = [
-    () => (
-      <>
-        <div className="flex ">
-          <div className="flex gap-4">
-            <span className="text-green-500  bg-green-100 cursor-pointer">Paid</span>
-          </div>
-        </div>
-      </>
-    ),
-  ]
+
+  const ActionButtonColumn: ActionButtonColumnProps = {
+    header: 'Action',
+    buttons: [
+      {
+        color: 'green',
+        label: 'Paid',
+        filled: true,
+      },
+    ],
+    headerStyle: { backgroundColor: '#F2F2F2' },
+  }
 
   return (
     <>
@@ -156,8 +158,7 @@ const AccountPayable = () => {
           data={accountPayableData}
           columns={tableColumns}
           header={CustomersHeader}
-          actionbuttons={actionButtons}
-          actionHeader={'Action'}
+          actionButtons={ActionButtonColumn}
           style={{ backgroundColor: '#F2F2F2' }}
         />
       </div>

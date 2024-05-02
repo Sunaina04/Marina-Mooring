@@ -53,6 +53,85 @@ export const boatData = [
   },
 ]
 
+export const customerAdmin = [
+  {
+    id: '#001',
+    email: 'Jone@gmail.com',
+    name: 'John Doe',
+    phone: 9789756452,
+  },
+  {
+    id: '#001',
+    email: 'Jone@gmail.com',
+    name: 'John Doe',
+    phone: 9789756452,
+  },
+  {
+    id: '#001',
+    email: 'Jone@gmail.com',
+    name: 'John Doe',
+    phone: 9789756452,
+  },
+  {
+    id: '#001',
+    email: 'Jone@gmail.com',
+    name: 'John Doe',
+    phone: 9789756452,
+  },
+
+  {
+    id: '#001',
+    email: 'Jone@gmail.com',
+    name: 'John Doe',
+    phone: 9789756452,
+  },
+
+  {
+    id: '#001',
+    email: 'Jone@gmail.com',
+    name: 'John Doe',
+    phone: 9789756452,
+  },
+]
+
+export const customerAdminUser = [
+  {
+    id: '01',
+    email: 'Demo@gmail.com',
+    name: 'John Smith',
+    phone: '12375859',
+    role: 'Vendor',
+  },
+  {
+    id: '01',
+    email: 'Demo@gmail.com',
+    name: 'John Smith',
+    phone: '12375859',
+    role: 'Customer',
+  },
+  {
+    id: '01',
+    email: 'Demo@gmail.com',
+    name: 'John Smith',
+    phone: '12375859',
+    role: 'Technician',
+  },
+  {
+    id: '01',
+    email: 'Demo@gmail.com',
+    name: 'John Smith',
+    phone: '12375859',
+    role: 'Admin',
+  },
+
+  {
+    id: '01',
+    email: 'Demo@gmail.com',
+    name: 'John Smith',
+    phone: '12375859',
+    role: 'Admin',
+  },
+]
 //mooring
 export const boatDataMooring = [
   {

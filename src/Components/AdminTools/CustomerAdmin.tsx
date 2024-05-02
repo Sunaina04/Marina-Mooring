@@ -1,51 +1,18 @@
 import { useMemo, useState } from 'react'
-import { DataTable } from 'primereact/datatable'
-import { Column } from 'primereact/column'
-import { Button } from 'primereact/button'
 import CustomModal from '../CustomComponent/CustomModal'
-import { PermissionData } from '../../Type/ComponentBasedType'
+
 import AddCustomer from './AddCustomer'
 import { IoSearch } from 'react-icons/io5'
 import { InputText } from 'primereact/inputtext'
 import { TableColumns } from '../../Type/CommonType'
-import DataTableSearchFieldComponent from '../CommonComponent/DataTableSearchFieldComponent'
-import { boatData } from '../Utils/CustomData'
-
+import DataTableSearchFieldComponent from '../CommonComponent/Table/DataTableSearchFieldComponent'
+import {customerAdmin, customerAdminUser } from '../Utils/CustomData'
+import { ActionButtonColumnProps } from '../../Type/Component/Table'
+import './AddCustomer.module.css'
 const Permission = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [selectedCustomer, setSelectedCustomer] = useState<any>(undefined)
   const [editMode, setEditMode] = useState(false)
-
-  const [permissionData, setPermissionData] = useState<PermissionData[]>([
-    {
-      id: '01',
-      email: 'Demo@gmail.com',
-      name: 'John Smith',
-      phone: '12375859',
-      role: 'Vendor',
-    },
-    {
-      id: '01',
-      email: 'Demo@gmail.com',
-      name: 'John Smith',
-      phone: '12375859',
-      role: 'Customer',
-    },
-    {
-      id: '01',
-      email: 'Demo@gmail.com',
-      name: 'John Smith',
-      phone: '12375859',
-      role: 'Technician',
-    },
-    {
-      id: '01',
-      email: 'Demo@gmail.com',
-      name: 'John Smith',
-      phone: '12375859',
-      role: 'Admin',
-    },
-  ])
 
   const handleButtonClick = () => {
     setModalVisible(true)
@@ -57,60 +24,89 @@ const Permission = () => {
 
   const CustomersHeader = () => {
     return (
-      <div className="flex items-center">
+      <div className="flex items-center flex-col">
         <div className="p-input-icon-left ">
           <IoSearch style={{ marginLeft: '1rem', color: '#A4A4A4' }} />
           <InputText
             placeholder="Search by name, ID,phone no..."
             className="h-[5vh] w-[55vh] cursor-pointer text-[0.65rem]
-               text-[#A4A4A4]  border-1 border-[1px]
-               border-[#9F9F9F] rounded-md pl-8"
+                border-1 border-[1px]
+               border-[#9F9F9F] rounded-lg pl-10"
+            style={{ color: '#A4A4A4' }}
           />
         </div>
+
+        <span
+          className="border-[1px]
+               border-[#9F9F9F]  w-[26vw] mt-3 "></span>
       </div>
     )
   }
 
   const TechniciansHeader = () => {
     return (
-      <div className="flex items-center">
+      <div className="flex items-center flex-col">
         <div className="p-input-icon-left ">
           <IoSearch style={{ marginLeft: '1rem', color: '#A4A4A4' }} />
           <InputText
             placeholder="Search by name, ID,Email,Role,phone no..."
-            className="h-[5vh] w-[55vh] cursor-pointer text-[0.65rem]
-               text-[#A4A4A4]  border-1 border-[1px]
-               border-[#9F9F9F] rounded-md pl-8"
+            className="h-[5vh] w-[64vh] cursor-pointer text-[0.65rem]
+              text-[#A4A4A4]  border-1 border-[1px]
+               border-[#9F9F9F] rounded-md pl-10"
+            style={{ color: 'red !important' }}
           />
         </div>
+        <span
+          className="border-[1px]
+               border-[#9F9F9F]  w-[32vw] mt-3 "></span>
       </div>
     )
   }
 
-  const ActionHeader = () => {
-    return (
-      <div className="flex items-center">
-        <div>Action</div>
-      </div>
-    )
+  const ActionButtonColumn: ActionButtonColumnProps = {
+    header: 'Action',
+    buttons: [
+      {
+        color: 'black',
+        label: 'Edit',
+        underline: true,
+      },
+    ],
+    headerStyle: { backgroundColor: '#F2F2F2', color: 'black' },
   }
+
   const tableColumns: TableColumns = useMemo<TableColumns>(
     () => [
       {
         id: 'id',
         label: 'ID:',
-        style: { width: '4vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
+        style: {
+          width: '4vw',
+          borderBottom: '1px solid #C0C0C0',
+          backgroundColor: '#F2F2F2',
+          color: 'black',
+        },
       },
       {
         id: 'name',
         label: 'Name:',
-        style: { width: '6vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
+        style: {
+          width: '6vw',
+          borderBottom: '1px solid #C0C0C0',
+          backgroundColor: '#F2F2F2',
+          color: 'black',
+        },
       },
 
       {
         id: 'phone',
         label: 'Phone:',
-        style: { width: '6vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
+        style: {
+          width: '6vw',
+          borderBottom: '1px solid #C0C0C0',
+          backgroundColor: '#F2F2F2',
+          color: 'black',
+        },
       },
     ],
     [],
@@ -121,30 +117,30 @@ const Permission = () => {
       {
         id: 'id',
         label: 'ID:',
-        style: { width: '4vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
+        style: { width: '4vw', backgroundColor: '#F2F2F2', color: 'black' },
       },
       {
         id: 'name',
         label: 'Name:',
-        style: { width: '6vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
+        style: { width: '6vw', backgroundColor: '#F2F2F2', color: 'black' },
       },
 
       {
         id: 'email',
         label: 'Email:',
-        style: { width: '6vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
+        style: { width: '6vw', backgroundColor: '#F2F2F2', color: 'black' },
       },
 
       {
         id: 'phone',
         label: 'Phone:',
-        style: { width: '6vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
+        style: { width: '6vw', backgroundColor: '#F2F2F2', color: 'black' },
       },
 
       {
         id: 'role',
         label: 'Role:',
-        style: { width: '6vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
+        style: { width: '6vw', backgroundColor: '#F2F2F2', color: 'black' },
       },
     ],
     [],
@@ -205,42 +201,45 @@ const Permission = () => {
       </div>
 
       <div className="flex gap-10 ml-8">
-        <div className="bg-[F2F2F2]  rounded-md border-[1px]  border-gray-300 w-[28vw] h-[70vh]">
+        <div className="bg-[F2F2F2]  rounded-md border-[1px]  border-gray-300 w-[28vw] h-[65vh] mb-10">
           <div className="text-sm font-extrabold rounded-sm w-full  bg-[#D9D9D9]">
             <h1 className="p-4">Customers-admins</h1>
           </div>
 
-          <DataTableSearchFieldComponent
-            data={boatData}
-            tableStyle={{
-              fontSize: '12px',
-              color: '#000000',
-              fontWeight: 600,
-              backgroundColor: '#D9D9D9',
-            }}
-            scrollable={false}
-            columns={tableColumns}
-            header={CustomersHeader}
-          />
+          <div data-testid="customer-admin-data">
+            <DataTableSearchFieldComponent
+              data={customerAdmin}
+              tableStyle={{
+                fontSize: '12px',
+                color: '#000000',
+                fontWeight: 600,
+                backgroundColor: '#D9D9D9',
+              }}
+              scrollable={false}
+              columns={tableColumns}
+              header={CustomersHeader}
+            />
+          </div>
         </div>
 
-        <div className="bg-[F2F2F2]  rounded-md border-[1px]  border-gray-300 w-[28vw] h-[70vh]">
+        <div className="bg-[F2F2F2]  rounded-md border-[1px]  border-gray-300 w-[33vw] h-[65vh]">
           <div className="text-sm font-extrabold rounded-sm w-full  bg-[#D9D9D9]">
             <h1 className="p-4">Customer-adminUsers</h1>
           </div>
 
-          <DataTableSearchFieldComponent
-            data={boatData}
-            tableStyle={{
-              fontSize: '12px',
-              color: '#000000',
-              fontWeight: 600,
-              backgroundColor: '#D9D9D9',
-            }}
-            scrollable={false}
-            columns={tableColumnsTechnicians}
-            header={TechniciansHeader}
-          />
+          <div data-testid="customer-admin-users-table">
+            <DataTableSearchFieldComponent
+              tableStyle={{
+                fontSize: '12px',
+                color: '#000000',
+                fontWeight: 600,
+              }}
+              data={customerAdminUser}
+              columns={tableColumnsTechnicians}
+              header={TechniciansHeader}
+              actionButtons={ActionButtonColumn}
+            />
+          </div>
         </div>
       </div>
     </>

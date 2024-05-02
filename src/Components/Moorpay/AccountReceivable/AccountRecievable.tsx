@@ -1,11 +1,9 @@
 import { useMemo, useState } from 'react'
-import { DataTable } from 'primereact/datatable'
-import { Column } from 'primereact/column'
 import CustomModal from '../../CustomComponent/CustomModal'
 import { MoorPayProps } from '../../../Type/ComponentBasedType'
-import DataTableSearchFieldComponent from '../../CommonComponent/DataTableSearchFieldComponent'
+import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableSearchFieldComponent'
 import AddCustomer from '../../Moormanage/Customer/AddCustomer'
-
+import { ActionButtonColumnProps } from '../../../Type/Component/Table'
 
 const AccountRecievable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -104,18 +102,24 @@ const AccountRecievable = () => {
     [],
   )
 
-  const actionButtons = [
-    () => (
-      <>
-        <div className="flex ">
-          <div className="flex gap-4">
-            <span className="text-green-500  bg-green-100 cursor-pointer">Approve</span>
-            <span className="text-red-500  bg-red-100 cursor-pointer">Deny</span>
-          </div>
-        </div>
-      </>
-    ),
-  ]
+  const ActionButtonColumn: ActionButtonColumnProps = {
+    header: 'Action',
+    buttons: [
+      {
+        color: 'green',
+        label: 'Approve',
+        underline: true,
+        filled: true,
+      },
+      {
+        color: 'red',
+        label: 'deny',
+        underline: true,
+        filled: true,
+      },
+    ],
+    headerStyle: { backgroundColor: '#F2F2F2' },
+  }
 
   return (
     <>
@@ -168,8 +172,7 @@ const AccountRecievable = () => {
           data={accountRecievableData}
           columns={tableColumns}
           header={header}
-          actionbuttons={actionButtons}
-          actionHeader={'Action'}
+          actionButtons={ActionButtonColumn}
           style={{ backgroundColor: '#F2F2F2' }}
         />
       </div>

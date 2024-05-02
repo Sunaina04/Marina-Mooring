@@ -100,7 +100,7 @@ const Permission = () => {
               visible={modalVisible}
               onHide={handleModalClose}
               header="">
-              {/* <AddCustomer/> */}
+              
             </CustomModal>
           </div>
         </div>

@@ -5,7 +5,8 @@ import CustomModal from '../../CustomComponent/CustomModal'
 import AddEstimates from './AddEstimates'
 import { InputText } from 'primereact/inputtext'
 import { EstimateProps } from '../../../Type/ComponentBasedType'
-import DataTableSearchFieldComponent from '../../CommonComponent/DataTableSearchFieldComponent'
+import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableSearchFieldComponent'
+import { ActionButtonColumnProps } from '../../../Type/Component/Table'
 
 const Estimates = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -124,22 +125,19 @@ const Estimates = () => {
   )
 
 
-  const actionButtons = [
-    () => (
-      <>
-        <div className="flex ">
-          <div className="flex gap-4">
-            <span
-              className=" underline cursor-pointer"
-              //  onClick={() => handleEdit(rowData)}
-            >
-              Edit
-            </span>
-          </div>
-        </div>
-      </>
-    ),
-  ]
+  const ActionButtonColumn: ActionButtonColumnProps = {
+    header: 'Action',
+    buttons: [
+      {
+        color: 'black',
+        label: 'Edit',
+        underline: true,
+      }
+    ],
+    headerStyle:  {backgroundColor:"#F2F2F2"}
+  }
+
+
 
 
 
@@ -177,31 +175,7 @@ const Estimates = () => {
           </CustomModal>
         </div>
       </div>
-      {/* <div className="bg-[#F2F2F2] rounded-xl border-[1px] border-[#D1D1D1] ml-40  mb-3 p-2 mt-12 w-[55vw]">
-        <DataTable
-          value={boatData}
-          header={header}
-          tableStyle={{
-            fontSize: '0.80rem',
-            fontWeight: 'bold',
-          }}>
-          <Column header="Customer ID" field="customerId" style={{ width: '5vw' }}></Column>
-          <Column field="customerName" header="Customer Name" style={{ width: '8vw' }}></Column>
-          <Column field="mooringId" header="Mooring ID" style={{ width: '9vw' }}></Column>
-          <Column field="boatyard" header="Boatyard" style={{ width: '8vw' }}></Column>
-          <Column field="assigned" header="Assigned to" style={{ width: '8vw' }}></Column>
-          <Column field="duedate" header="Due date" style={{ width: '8vw' }}></Column>
-          <Column
-            header="Actions"
-            body={() => (
-              <div className="flex gap-4">
-                <span className="text-black underline cursor-pointer">Convert</span>
-                <span className="text-black underline cursor-pointer">Edit</span>
-              </div>
-            )}></Column>
-        </DataTable>
-      </div> */}
-
+  
       <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[64vw]  ml-32 mt-12 ">
         <DataTableSearchFieldComponent
           tableStyle={{
@@ -212,8 +186,7 @@ const Estimates = () => {
           data={boatData}
           columns={tableColumns}
           header={header}
-          actionbuttons={actionButtons}
-          actionHeader={'Action'}
+          actionButtons={ActionButtonColumn}
           style={{ backgroundColor: '#F2F2F2' }}
         />
       </div>

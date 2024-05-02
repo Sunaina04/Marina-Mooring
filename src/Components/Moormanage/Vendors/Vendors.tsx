@@ -10,11 +10,9 @@ import {
 } from '../../../Services/MoorManage/MoormanageApi'
 import { VendorPayload, VendorResponse } from '../../../Type/ApiTypes'
 import { Button } from 'primereact/button'
-import DataTableSearchFieldComponent from '../../CommonComponent/DataTableSearchFieldComponent'
+import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableSearchFieldComponent'
 import { boatData } from '../../Utils/CustomData'
-
-
-
+import { ActionButtonColumnProps } from '../../../Type/Component/Table'
 
 const Vendors = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -30,14 +28,15 @@ const Vendors = () => {
   }
 
   const getVendorData = async () => {
-    await getVendors({})
-      .unwrap()
-      .then(async (response) => {
-        const { status, content } = response as VendorResponse
-        if (status === 200 && Array.isArray(content)) {
-          setVendorData(content)
-        }
-      })
+    try {
+      const response = await getVendors({}).unwrap()
+      const { status, content } = response as VendorResponse
+      if (status === 200 && Array.isArray(content)) {
+        setVendorData(content)
+      }
+    } catch (error) {
+      console.error('Error fetching vendor data:', error)
+    }
   }
 
   const handleEdit = (rowData: any) => {
@@ -63,11 +62,7 @@ const Vendors = () => {
     getVendorData()
   }, [])
 
-
-
-
-
-  const tableColumns= useMemo(
+  const tableColumns = useMemo(
     () => [
       {
         id: 'id',
@@ -98,51 +93,25 @@ const Vendors = () => {
     [],
   )
 
-  const ActionHeader = () => {
-    return (
-      <div className="flex items-center">
-        <div>Action</div>
-      </div>
-    )
+  const ActionButtonColumn: ActionButtonColumnProps = {
+    header: 'Action',
+    buttons: [
+      {
+        color: 'black',
+        label: 'View Inventory',
+      },
+      {
+        color: 'green',
+        label: 'Edit',
+        onClick: handleEdit,
+      },
+      {
+        color: 'red',
+        label: 'Delete',
+      },
+    ],
+    headerStyle: { backgroundColor: '#F2F2F2' },
   }
-
-  const actionButtons = [
-    () => (
-      <>
-        <div className="flex gap-5">
-          <Button
-            label="View Inventory"
-            style={{
-              fontWeight: 'bold',
-              textDecoration: 'underline',
-              cursor: 'pointer',
-            }}
-            // onClick={handleViewInventory}
-          />
-          <Button
-            label="Edit"
-            style={{
-              fontWeight: 'bold',
-              textDecoration: 'underline',
-              color: 'green',
-              cursor: 'pointer',
-            }}
-            onClick={() => handleEdit}
-          />
-          <Button
-            label="Delete"
-            style={{
-              fontWeight: 'bold',
-              textDecoration: 'underline',
-              color: 'red',
-              cursor: 'pointer',
-            }}
-            // onClick={() => handleDelete(rowData)}
-          />
-        </div>
-      </>
-    ),
-  ]
 
   return (
     <>
@@ -160,7 +129,7 @@ const Vendors = () => {
           </div>
 
           <CustomModal
-           header={<h1 className="text-lg font-bold text-black mt-4">Add Compony</h1>}
+            header={<h1 className="text-lg font-bold text-black mt-4">Add Compony</h1>}
             onClick={handleButtonClick}
             visible={modalVisible || editMode}
             onHide={handleModalClose}
@@ -185,8 +154,7 @@ const Vendors = () => {
           data={boatData}
           columns={tableColumns}
           header={undefined}
-          actionbuttons={actionButtons}
-          actionHeader={ActionHeader}
+          actionButtons={ActionButtonColumn}
           style={{ backgroundColor: '#F2F2F2' }}
         />
       </div>

@@ -7,7 +7,7 @@ import { TechnicianPayload, TechnicianResponse } from '../../../Type/ApiTypes'
 import { useGetTechnicianMutation } from '../../../Services/MoorManage/MoormanageApi'
 import { BillsData, NullableDateArray } from '../../../Type/CommonType'
 import { Button } from 'primereact/button'
-import DataTableSearchFieldComponent from '../../CommonComponent/DataTableSearchFieldComponent'
+import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableSearchFieldComponent'
 import { IoSearch } from 'react-icons/io5'
 import { InputText } from 'primereact/inputtext'
 

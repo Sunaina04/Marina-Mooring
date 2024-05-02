@@ -7,7 +7,8 @@ import { Button } from 'primereact/button'
 import AddWorkOrders from './AddWorkOrders'
 import { WorkOrderPayload, WorkOrderResponse } from '../../../Type/ApiTypes'
 import { useGetWorkOrdersMutation } from '../../../Services/MoorServe/MoorserveApi'
-import DataTableSearchFieldComponent from '../../CommonComponent/DataTableSearchFieldComponent'
+import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableSearchFieldComponent'
+import { ActionButtonColumnProps } from '../../../Type/Component/Table'
 
 const WorkOrders = () => {
   const [visible, setVisible] = useState(false)
@@ -32,22 +33,17 @@ const WorkOrders = () => {
     </div>
   )
 
-  const actionButtons = [
-    () => (
-      <>
-        <div className="flex ">
-          <div className="flex gap-4">
-            <span
-              className=" underline cursor-pointer"
-              //  onClick={() => handleEdit(rowData)}
-            >
-              Edit
-            </span>
-          </div>
-        </div>
-      </>
-    ),
-  ]
+  const ActionButtonColumn: ActionButtonColumnProps = {
+    header: 'Action',
+    buttons: [
+      {
+        color: 'black',
+        label: 'Edit',
+        underline: true,
+      }
+    ],
+    headerStyle: {backgroundColor:"#F2F2F2"}
+  }
 
   const tableColumns = useMemo(
     () => [
@@ -192,8 +188,7 @@ const WorkOrders = () => {
             data={workOrderData}
             columns={tableColumns}
             header={header}
-            actionbuttons={actionButtons}
-            actionHeader={'Action'}
+            actionButtons={ActionButtonColumn}
             style={{ backgroundColor: '#F2F2F2' }}
           />
         </div>

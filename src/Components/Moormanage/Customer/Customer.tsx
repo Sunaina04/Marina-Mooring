@@ -21,7 +21,7 @@ import {
   MooringResponse,
 } from '../../../Type/ApiTypes'
 import { IoSearch } from 'react-icons/io5'
-import DataTableSearchFieldComponent from '../../CommonComponent/DataTableSearchFieldComponent'
+import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableSearchFieldComponent'
 import { boatData } from '../../Utils/CustomData'
 
 
@@ -143,17 +143,20 @@ const Customer = () => {
     ],
     [],
   )
-
+  
   const getMooringsData = async () => {
-    await getMoorings({})
-      .unwrap()
-      .then(async (response) => {
-        const { status, content } = response as MooringResponse
-        if (status === 200 && Array.isArray(content)) {
-          setMooringData(content)
-        }
-      })
-  }
+    try {
+      const response = await getMoorings({}).unwrap();
+      const { status, content } = response as MooringResponse;
+      if (status === 200 && Array.isArray(content)) {
+        setMooringData(content);
+      }
+    } catch (error) {
+      // Handle the error appropriately, for example:
+      console.error("Error fetching moorings data:", error);
+    }
+  };
+  
 
   useEffect(() => {
     getCustomerData()

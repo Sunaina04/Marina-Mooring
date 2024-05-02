@@ -179,6 +179,7 @@ const Boatyards = () => {
     setModalVisible(false)
   }
 
+  
   const getBaotyardsData = async () => {
     await getBaotyards({})
       .unwrap()
