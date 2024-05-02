@@ -7,7 +7,6 @@ import DataTableSearchFieldComponent from '../../CommonComponent/DataTableSearch
 import AddCustomer from '../../Moormanage/Customer/AddCustomer'
 
 
-
 const AccountRecievable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [accountRecievableData, setAccountRecievableData] = useState<MoorPayProps[]>([
