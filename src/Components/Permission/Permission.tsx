@@ -54,33 +54,27 @@ const Permission = () => {
         </div>
 
         <div className="mt-14 ml-64">
-          <Button
-            label={''}
-            onClick={() => {}}
+          <select
+            onChange={() => {}}
             style={{
               display: 'flex',
               alignItems: 'center',
               width: '7vw',
               height: '5vh',
-              backgroundColor: 'black',
+              backgroundColor: 'white',
               cursor: 'pointer',
-              color: 'white',
+              color: 'black',
               fontWeight: 'bold',
               fontSize: '0.80vw',
               justifyContent: 'space-between',
-            }}>
-            <img
-              src="/assets/images/more.png"
-              alt="icon"
-              className="p-icon w-4"
-              style={{
-                filter: 'invert(100%)',
-                color: 'whitesmoke',
-                fontWeight: 'bolder',
-              }}
-            />
-            <span className="mr-4">Filter</span>
-          </Button>
+              appearance: 'none',
+              paddingLeft: '0.5rem',
+            }}
+            defaultValue="">
+            <option value="" disabled>
+              Select Role
+            </option>
+          </select>
         </div>
 
         <div className="flex  items-center mr-[23rem] mt-14">
