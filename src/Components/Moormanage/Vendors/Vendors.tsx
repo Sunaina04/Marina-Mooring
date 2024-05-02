@@ -1,16 +1,17 @@
 import { useEffect, useMemo, useState } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
-import CustomModal from '../../customComponent/CustomModal'
+import CustomModal from '../../CustomComponent/CustomModal'
 import AddVendor from './AddVendor'
 import { InputText } from 'primereact/inputtext'
 import {
   useDeleteVendorMutation,
   useGetVendorsMutation,
-} from '../../../Services/MoorManage/moormanage'
-import { VENDOR_PAYLOAD, VENDOR_RESPONSE } from '../../../Services/MoorManage/types'
+} from '../../../Services/MoorManage/MoormanageApi'
+import { VendorPayload, VendorResponse } from '../../../Type/ApiTypes'
 import { Button } from 'primereact/button'
-import DataTableSearchFieldComponent from '../../Common/ DataTableSearchFieldComponent'
+import DataTableSearchFieldComponent from '../../CommonComponent/DataTableSearchFieldComponent'
+
 
 interface TableColumn {
   id: string
@@ -20,10 +21,13 @@ interface TableColumn {
 
 interface TableColumns extends Array<TableColumn> {}
 
+
+
+
 const Vendors = () => {
   const [modalVisible, setModalVisible] = useState(false)
-  const [vendorData, setVendorData] = useState<VENDOR_PAYLOAD[]>([])
-  const [selectedCustomer, setSelectedCustomer] = useState<any>(null)
+  const [vendorData, setVendorData] = useState<VendorPayload[]>([])
+  const [selectedCustomer, setSelectedCustomer] = useState<any>(undefined)
   const [editMode, setEditMode] = useState(false)
 
   const [getVendors] = useGetVendorsMutation()
@@ -37,9 +41,7 @@ const Vendors = () => {
     await getVendors({})
       .unwrap()
       .then(async (response) => {
-        console.log('RESPONSE', response)
-        const { status, content } = response as VENDOR_RESPONSE
-        console.log('CONTENT', content, status)
+        const { status, content } = response as VendorResponse
         if (status === 200 && Array.isArray(content)) {
           setVendorData(content)
         }
@@ -52,12 +54,8 @@ const Vendors = () => {
   }
 
   const handleDelete = async (rowData: any) => {
-    // Handle delete action here, using the data from rowData if necessary
-    console.log('Delete clicked for:', rowData, rowData?.id)
-
     try {
       const response = await deleteVendor({ id: rowData?.id })
-      console.log('RESPONSE', response)
       getVendorData()
     } catch (error) {
       console.error('Error deleting customer:', error)

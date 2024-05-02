@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import CustomModal from '../../customComponent/CustomModal'
+import CustomModal from '../../CustomComponent/CustomModal'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import AddCustomer from './AddCustomer'
@@ -8,42 +8,36 @@ import { FaEdit } from 'react-icons/fa'
 import { RiDeleteBin5Fill } from 'react-icons/ri'
 import { FaCircle } from 'react-icons/fa6'
 import { Dialog } from 'primereact/dialog'
-import Timeline from '../../customComponent/Timeline'
+import Timeline from '../../CustomComponent/Timeline'
 import {
   useDeleteCustomerMutation,
   useGetCustomerMutation,
   useGetMooringsMutation,
-} from '../../../Services/MoorManage/moormanage'
+} from '../../../Services/MoorManage/MoormanageApi'
 import {
-  CUSTOMER_PAYLOAD,
-  CUSTOMER_RESPONSE,
-  MOORING_PAYLOAD,
-  MOORING_RESPONSE,
-} from '../../../Services/MoorManage/types'
+  CustomerPayload,
+  CustomerResponse,
+  MooringPayload,
+  MooringResponse,
+} from '../../../Type/ApiTypes'
 import { IoSearch } from 'react-icons/io5'
-import DataTableSearchFieldComponent from '../../Common/ DataTableSearchFieldComponent'
-import { CustomerDataProps } from '../../../types/CommonTypes'
-import { boatData } from '../../utils/CustomData'
+import DataTableSearchFieldComponent from '../../CommonComponent/DataTableSearchFieldComponent'
+import { boatData } from '../../Utils/CustomData'
 
-interface TableColumn {
-  id: string
-  label: string
-  style: React.CSSProperties
-}
 
-type TableColumns = TableColumn[]
+
 
 const Customer = () => {
   const [modalVisible, setModalVisible] = useState(false)
-  const [customerData, setCustomerData] = useState<CUSTOMER_PAYLOAD[]>([])
+  const [customerData, setCustomerData] = useState<CustomerPayload[]>([])
   const [editMode, setEditMode] = useState(false)
   const [customerRecord, setCustomerRecord] = useState(false)
-  const [selectedCustomer, setSelectedCustomer] = useState<any>()
+  const [selectedCustomer, setSelectedCustomer] = useState<any>(undefined)
   const [searchQuery, setSearchQuery] = useState<string>('')
-  const [filteredCustomerData, setFilteredCustomerData] = useState<CUSTOMER_PAYLOAD[]>([])
+  const [filteredCustomerData, setFilteredCustomerData] = useState<CustomerPayload[]>([])
 
-  const [mooringData, setMooringData] = useState<MOORING_PAYLOAD[]>([])
-  const [customerRowData, setCustomerRowData] = useState<MOORING_PAYLOAD>()
+  const [mooringData, setMooringData] = useState<MooringPayload[]>([])
+  const [customerRowData, setCustomerRowData] = useState<MooringPayload>()
   const [dialogVisible, setDialogVisible] = useState(false)
 
   const [getCustomer] = useGetCustomerMutation()
@@ -81,7 +75,7 @@ const Customer = () => {
   const getCustomerData = async () => {
     try {
       const response = await getCustomer({}).unwrap()
-      const { status, content } = response as CUSTOMER_RESPONSE
+      const { status, content } = response as CustomerResponse
       if (status === 200 && Array.isArray(content)) {
         setCustomerData(content)
         setFilteredCustomerData(content)
@@ -97,11 +91,9 @@ const Customer = () => {
   }
 
   const handleDelete = async (rowData: any) => {
-    console.log('Delete clicked for:', rowData, rowData?.id)
 
     try {
       const response = await deleteCustomer({ id: rowData?.id })
-      console.log('RESPONSE', response)
       getCustomerData()
     } catch (error) {
       console.error('Error deleting customer:', error)
@@ -126,7 +118,7 @@ const Customer = () => {
     )
   }
 
-  const tableColumns: TableColumns = useMemo<TableColumns>(
+  const tableColumns= useMemo(
     () => [
       {
         id: 'id',
@@ -156,7 +148,7 @@ const Customer = () => {
     await getMoorings({})
       .unwrap()
       .then(async (response) => {
-        const { status, content } = response as MOORING_RESPONSE
+        const { status, content } = response as MooringResponse
         if (status === 200 && Array.isArray(content)) {
           setMooringData(content)
         }
@@ -168,7 +160,6 @@ const Customer = () => {
     getMooringsData()
   }, [])
 
-  console.log('selectedCustoer', selectedCustomer)
 
   return (
     <>
@@ -211,7 +202,7 @@ const Customer = () => {
           <DataTableSearchFieldComponent
             data={boatData}
             tableStyle={{
-              fontSize: '10px',
+              fontSize: '12px',
               color: '#000000',
               fontWeight: 600,
               backgroundColor: '#D9D9D9',
@@ -417,22 +408,18 @@ const Customer = () => {
                         <span style={{ fontWeight: 'bold' }}>Weight:</span>{' '}
                         {customerRowData?.boatWeight}
                       </p>
-
                       <p>
                         <span style={{ fontWeight: 'bold' }}>Type of Weight:</span>{' '}
                         {customerRowData?.typeOfWeight}
                       </p>
-
                       <p>
                         <span style={{ fontWeight: 'bold' }}>Condition of Eye:</span>{' '}
                         {customerRowData?.conditionOfEye}
                       </p>
-
                       <p>
                         <span style={{ fontWeight: 'bold' }}>Shackle, Swivel Condition:</span>{' '}
                         {customerRowData?.shackleSwivelCondition}
                       </p>
-
                       <p>
                         <span style={{ fontWeight: 'bold' }}>Dept at Mean High Water:</span>{' '}
                         {customerRowData?.deptAtMeanHighWater}

@@ -1,16 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import Customer from "./Customer";
 import { Provider } from "react-redux";
-import { store } from "../../../store/store";
+import { store } from "../../../Store/Store";
 import user from "@testing-library/user-event";
 
-// global.fetch = jest.fn(() => {
-//     return Promise.resolve({
-//       json: () => {
-//         return Promise.resolve();
-//       },
-//     });
-//   });
+
 describe("Customer Component", () => {
   it("renders Customer component correctly", () => {
     render(

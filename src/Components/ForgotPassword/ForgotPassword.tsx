@@ -1,62 +1,54 @@
-import React, { useState } from "react";
-import InputComponent from "../Common/InputComponent";
-import { useNavigate } from "react-router-dom";
-import {
-  useForgotPasswordMutation,
-} from "../../Services/Authentication/authApi";
-import {
-  ErrorResponseForgotPassword,
-  validateEmailResponse,
-} from "../../Services/Authentication/AuthTypes";
-import { Button } from "primereact/button";
-import { PasswordValidation } from "../utils/PasswordValidation";
+import React, { useState } from 'react'
+import InputComponent from '../CommonComponent/InputComponent'
+import { useNavigate } from 'react-router-dom'
+import { ErrorResponseForgotPassword, validateEmailResponse } from '../../Type/ApiTypes'
+import { Button } from 'primereact/button'
+import { validateUserCredentials } from '../Utils/ValidateUserCredentials'
+import { useForgotPasswordMutation } from '../../Services/Authentication/AuthApi'
 
 const ForgotPassword = () => {
-  const navigate = useNavigate();
-  const navigateToLoginPage = useNavigate();
-  const [validateEmail] = useForgotPasswordMutation();
-  const [email, setEmail] = useState("");
-  const [errors, setErrors] = useState<any>([]);
-  // console.log("errorData", errors);
+  const navigate = useNavigate()
+  const navigateToLoginPage = useNavigate()
+  const [validateEmail] = useForgotPasswordMutation()
+  const [email, setEmail] = useState('')
+  const [errors, setErrors] = useState<any>([])
 
   const validateEmailHandler = async () => {
-    const message=PasswordValidation(email,"","")
+    const message = validateUserCredentials(email, '', '')
     if (email.length === 0) {
-      setErrors("Please enter your Registered Email");
-      return;
+      setErrors('Please enter your Registered Email')
+      return
     }
     try {
-      const data = await validateEmail({ email }).unwrap();
-      console.log("dataaaaaa", data);
+      const data = await validateEmail({ email }).unwrap()
 
-      const { response, success } = data as validateEmailResponse;
-      console.log("data", response);
+      const { response, success } = data as validateEmailResponse
 
       if (success === true) {
-        navigate("/resetpass");
+        navigate('/resetpass')
       } else {
-        setErrors(response);
+        setErrors(response)
       }
     } catch (error) {
-      const { data } = error as ErrorResponseForgotPassword;
+      const { data } = error as ErrorResponseForgotPassword
       if (data) {
-        const errorMessage = data?.response;
-        console.error("Error:", errorMessage);
-        setErrors(errorMessage);
+        const errorMessage = data?.response
+        console.error('Error:', errorMessage)
+        setErrors(errorMessage)
       }
     }
     if (email) {
-      setErrors(message);
-    } 
+      setErrors(message)
+    }
 
-    setEmail(" ");
-  };
+    setEmail(' ')
+  }
 
   const handleChange = (e: any) => {
-    const { value: inputValue } = e.target;
+    const { value: inputValue } = e.target
 
-    setEmail(inputValue);
-  };
+    setEmail(inputValue)
+  }
 
   return (
     <>
@@ -82,11 +74,11 @@ const ForgotPassword = () => {
             <div className="p-input-icon-left">
               <InputComponent
                 style={{
-                  width: "40vw",
-                  height: "6vh",
-                  padding: "0 3rem",
-                  border: "1px solid gray",
-                  fontSize: "18px",
+                  width: '40vw',
+                  height: '6vh',
+                  padding: '0 3rem',
+                  border: '1px solid gray',
+                  fontSize: '18px',
                 }}
                 value={email}
                 type="email"
@@ -96,35 +88,31 @@ const ForgotPassword = () => {
             </div>
             <div className="flex  mt-8 cursor-pointer ">
               <p className="w-[42vw] text-xs font-bold">
-                If you are having trouble logging in, please enter the email
-                address registered with MOORFIND. If it is a valid email
-                address, you will be sent an email allowing you to resest your
-                password.
+                If you are having trouble logging in, please enter the email address registered with
+                MOORFIND. If it is a valid email address, you will be sent an email allowing you to
+                resest your password.
               </p>
             </div>
           </div>
 
           <Button
             style={{
-              width: "10vw",
-              height: "6vh",
-              backgroundColor: "black",
-              color: "white",
-              border: "1px solid black",
-              fontWeight: "bold",
-              fontSize: "1.50rem",
+              width: '10vw',
+              height: '6vh',
+              backgroundColor: 'black',
+              color: 'white',
+              border: '1px solid black',
+              fontWeight: 'bold',
+              fontSize: '1.50rem',
             }}
-            label={"Submit"}
+            label={'Submit'}
             onClick={() => {
-              validateEmailHandler();
+              validateEmailHandler()
             }}
           />
 
           <div className="flex justify-center flex-col mt-4">
-            <h1
-              className="cursor-pointer"
-              onClick={() => navigateToLoginPage("/Login")}
-            >
+            <h1 className="cursor-pointer" onClick={() => navigateToLoginPage('/Login')}>
               Back
             </h1>
           </div>
@@ -135,7 +123,7 @@ const ForgotPassword = () => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default ForgotPassword;
+export default ForgotPassword

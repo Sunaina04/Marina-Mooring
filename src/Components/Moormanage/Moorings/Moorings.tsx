@@ -1,33 +1,20 @@
 import { DataTable } from 'primereact/datatable'
-import ButtonComponent from '../../Common/ButtonComponent'
-import CustomModal from '../../customComponent/CustomModal'
-import AddCustomer from '../Customer/AddCustomer'
+import CustomModal from '../../CustomComponent/CustomModal'
 import AddMoorings from './AddMoorings'
 import { InputText } from 'primereact/inputtext'
 import React, { useState, useEffect, useMemo } from 'react'
 import { Column } from 'primereact/column'
 import { Button } from 'primereact/button'
-import { useGetMooringsMutation } from '../../../Services/MoorManage/moormanage'
-import Timeline from '../../customComponent/Timeline'
-
+import { useGetMooringsMutation } from '../../../Services/MoorManage/MoormanageApi'
+import Timeline from '../../CustomComponent/Timeline'
 import { InputSwitch, InputSwitchChangeEvent } from 'primereact/inputswitch'
-import { IoSearch } from 'react-icons/io5'
-import { MOORING_PAYLOAD, MOORING_RESPONSE } from '../../../Services/MoorManage/types'
+import { MooringPayload, MooringResponse } from '../../../Type/ApiTypes'
 import { FaCircle, FaEdit } from 'react-icons/fa'
-import { RiDeleteBin5Fill } from 'react-icons/ri'
-import { Avatar } from 'primereact/avatar'
-import { AiFillCheckCircle } from 'react-icons/ai'
 import { Dialog } from 'primereact/dialog'
-import DataTableSearchFieldComponent from '../../Common/ DataTableSearchFieldComponent'
-import { boatDataMooring } from '../../utils/CustomData'
-
-interface CustomerProps {
-  id: string
-  name: string
-  phone: string
-  email: string
-  address: string
-}
+import DataTableSearchFieldComponent from '../../CommonComponent/DataTableSearchFieldComponent'
+import { CustomerData, CustomerProps } from '../../../Type/CommonType'
+import { IoSearch } from 'react-icons/io5'
+import { boatDataMooring } from '../../Utils/CustomData'
 
 interface TableColumn {
   id: string
@@ -39,11 +26,11 @@ type TableColumns = TableColumn[]
 
 const Moorings = () => {
   const [modalVisible, setModalVisible] = useState(false)
-  const [mooringData, setMooringData] = useState<MOORING_PAYLOAD[]>([])
-  const [selectedCustomer, setSelectedCustomer] = useState<any>(null)
+  const [mooringData, setMooringData] = useState<MooringPayload[]>([])
+  const [selectedCustomer, setSelectedCustomer] = useState<any>(undefined)
   const [editMode, setEditMode] = useState(false)
   const [searchQuery, setSearchQuery] = useState<string>('')
-  const [filteredMooringData, setFilteredMooringData] = useState<MOORING_PAYLOAD[]>([])
+  const [filteredMooringData, setFilteredMooringData] = useState<MooringPayload[]>([])
   const [edit, setEdit] = useState<CustomerProps>({
     id: '#43453',
     name: 'John Smith',
@@ -53,11 +40,9 @@ const Moorings = () => {
   })
   const [isChecked, setIsChecked] = useState(false)
   const [isDialogVisible, setIsDialogVisible] = useState(false)
-  const [selectedMooring, setSelectedMooring] = useState<MOORING_PAYLOAD>()
-  console.log('selectedmooring', selectedMooring)
+  const [selectedMooring, setSelectedMooring] = useState<MooringPayload>()
 
   const handleInputChange = (e: InputSwitchChangeEvent) => {
-
     console.log(e.value)
     setIsChecked(e.value)
   }
@@ -77,13 +62,11 @@ const Moorings = () => {
     const query = event.target.value
     setSearchQuery(query)
     const filteredData = mooringData.filter((data) => {
-      // Check if data.id is a string before calling toLowerCase()
       const id = typeof data.id === 'number' ? data.id.toString() : ''
       const customerName =
         typeof data.customerName === 'string' ? data.customerName.toLowerCase() : ''
       const gpsCoordinates =
         typeof data.gpsCoordinates === 'string' ? data.gpsCoordinates.toLowerCase() : ''
-      // Implement your custom filtering logic here
       return (
         id.includes(query.toLowerCase()) ||
         customerName.includes(query.toLowerCase()) ||
@@ -139,11 +122,10 @@ const Moorings = () => {
     await getMoorings({})
       .unwrap()
       .then(async (response: any) => {
-        // console.log("RESPONSE", response);
-        const { status, content } = response as MOORING_RESPONSE
+        const { status, content } = response as MooringResponse
         if (status === 200 && Array.isArray(content)) {
           setMooringData(content)
-          setFilteredMooringData(content) // Initialize filtered data with all data
+          setFilteredMooringData(content)
         }
       })
   }

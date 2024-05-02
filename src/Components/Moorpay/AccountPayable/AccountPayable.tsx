@@ -1,21 +1,9 @@
 import { useMemo, useState } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
-import ButtonComponent from '../../Common/ButtonComponent'
-import CustomModal from '../../customComponent/CustomModal'
-import AddCustomer from '../../Moormanage/Customer/AddCustomer'
-import DataTableSearchFieldComponent from '../../Common/ DataTableSearchFieldComponent'
-import { Button } from 'primereact/button'
-import { accountPayableData } from '../../utils/CustomData'
-interface CustomerData {
-  invoice: string
-  mooringid: string
-  name: string
-  technicianName: string
-  services: string
-  time: string
-  amount: string
-}
+import CustomModal from '../../CustomComponent/CustomModal'
+import { MoorPayProps } from '../../../Type/ComponentBasedType'
+import DataTableSearchFieldComponent from '../../CommonComponent/DataTableSearchFieldComponent'
 
 interface TableColumn {
   id: string
@@ -29,6 +17,46 @@ interface TableColumn {
 type TableColumns = TableColumn[]
 const AccountPayable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [accountPayableData, setAccountPayableData] = useState<MoorPayProps[]>([
+    {
+      invoice: '#425',
+      mooringid: '#6658',
+      name: 'John Smith',
+      technicianName: 'jim Carry',
+      services: 'Regular Services',
+      time: '2hrs',
+      amount: '$12',
+    },
+
+    {
+      invoice: '#425',
+      mooringid: '#6658',
+      name: 'John Smith',
+      technicianName: 'jim Carry',
+      services: 'Regular Services',
+      time: '2hrs',
+      amount: '$12',
+    },
+    {
+      invoice: '#425',
+      mooringid: '#6658',
+      name: 'John Smith',
+      technicianName: 'jim Carry',
+      services: 'Regular Services',
+      time: '2hrs',
+      amount: '$12',
+    },
+    {
+      invoice: '#425',
+      mooringid: '#6658',
+      name: 'John Smith',
+      technicianName: 'jim Carry',
+      services: 'Regular Services',
+      time: '2hrs',
+      amount: '$12',
+    },
+  ])
+
   const handleButtonClick = () => {
     setIsModalOpen(true)
   }
@@ -105,13 +133,11 @@ const AccountPayable = () => {
               style={{ filter: 'grayscale(100%)', color: 'gray' }}
             />
           </div>
-
           <div>
             <h1>DownLoad Excel</h1>
           </div>
-
-          <div></div>
         </div>
+
         <div className="items-center mr-[10rem] mt-14">
           <CustomModal
             onClick={handleButtonClick}

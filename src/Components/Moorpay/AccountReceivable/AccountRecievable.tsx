@@ -1,22 +1,10 @@
 import { useMemo, useState } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
-import CustomModal from '../../customComponent/CustomModal'
+import CustomModal from '../../CustomComponent/CustomModal'
+import { MoorPayProps } from '../../../Type/ComponentBasedType'
 import AddCustomer from '../../Moormanage/Customer/AddCustomer'
-import { InputText } from 'primereact/inputtext'
-import ButtonComponent from '../../Common/ButtonComponent'
-import DataTableSearchFieldComponent from '../../Common/ DataTableSearchFieldComponent'
-import { accountRecievableData } from '../../utils/CustomData'
-interface CustomerData {
-  invoice: string
-  mooringid: string
-  name: string
-  technicianName: string
-  services: string
-  time: string
-  amount: string
-}
-
+import DataTableSearchFieldComponent from '../../CommonComponent/DataTableSearchFieldComponent'
 interface TableColumn {
   id: string
   label: string
@@ -29,7 +17,45 @@ interface TableColumn {
 type TableColumns = TableColumn[]
 const AccountRecievable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [boatData, setBoatData] = useState<CustomerData[]>()
+  const [accountRecievableData, setAccountRecievableData] = useState<MoorPayProps[]>([
+    {
+      invoice: '#425',
+      mooringid: '#6658',
+      name: 'John Smith',
+      technicianName: 'jim Carry',
+      services: 'Regular Services',
+      time: '2hrs',
+      amount: '$12',
+    },
+
+    {
+      invoice: '#425',
+      mooringid: '#6658',
+      name: 'John Smith',
+      technicianName: 'jim Carry',
+      services: 'Regular Services',
+      time: '2hrs',
+      amount: '$12',
+    },
+    {
+      invoice: '#425',
+      mooringid: '#6658',
+      name: 'John Smith',
+      technicianName: 'jim Carry',
+      services: 'Regular Services',
+      time: '2hrs',
+      amount: '$12',
+    },
+    {
+      invoice: '#425',
+      mooringid: '#6658',
+      name: 'John Smith',
+      technicianName: 'jim Carry',
+      services: 'Regular Services',
+      time: '2hrs',
+      amount: '$12',
+    },
+  ])
 
   const handleButtonClick = () => {
     setIsModalOpen(true)
