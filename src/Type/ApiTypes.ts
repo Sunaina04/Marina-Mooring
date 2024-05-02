@@ -322,16 +322,20 @@ export interface WorkOrderResponse {
   }
 }
 
-export type MetaDataResponse = {
+export interface ContentData {
+  name: string
+  id: number
+  label: undefined
+}
+
+export interface Content {
+  data: ContentData
+}
+
+export interface MetaDataResponse {
   message: string
   status: number
   errorList: []
   time: number
-  content: {
-    data: {
-      name: string
-      id: number
-      label: undefined
-    }
-  }
+  content: Content
 }
