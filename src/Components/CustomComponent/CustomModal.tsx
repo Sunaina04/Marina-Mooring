@@ -53,7 +53,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
               className="w-3 ml-2 mr-1" // Adjust margin to your preference
               style={{
                 filter: 'invert(100%)',
-                color: 'whitesmoke',
+                color: 'white',
                 fontWeight: 'bolder',
               }}
             />

@@ -59,11 +59,11 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
 
   return (
     <>
-      <div className="w-full h-full">
-        <div className="flex justify-around mt-3">
+      <div className="w-full h-full ml-4">
+        <div className="flex gap-6 mt-3 ">
           <div>
-            <span className="font-semibold text-sm ml-0.5">Name</span>
-            <div className="mt-1 ml-0.5">
+            <span className="font-semibold text-sm">Name</span>
+            <div className="mt-1">
               <InputText
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -118,148 +118,138 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
 
         <div className="flex gap-6 ">
           <div>
-            <div className="ml-4 ">
-              <div className="mt-3">
-                <span className="font-semibold text-sm ">Email Address</span>
-              </div>
-
-              <div className="mt-1">
-                <InputText
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  style={{
-                    width: '13vw',
-                    height: '4vh',
-                    border: '1px solid gray',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.80vw',
-                    padding: '1.2em',
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <div className="">
-              <div className="mt-3">
-                <span className="font-semibold text-sm">Role</span>
-              </div>
-
-              <div className="mt-1">
-                <Dropdown
-                  value={role}
-                  onChange={(e: DropdownChangeEvent) => setRole(e.value)}
-                  options={cities}
-                  optionLabel="name"
-                  editable
-                  placeholder="Select"
-                  style={{
-                    width: '13vw',
-                    height: '4.71vh',
-                    border: '1px solid gray',
-                    borderRadius: '0.50rem',
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="">
-          <div className="mt-5 ml-4">
-            <h1 className="text-lg font-semibold">Address</h1>
-          </div>
-
-          <div className="flex justify-around  mt-2 ml-1 ">
-            <div>
-              <div className="mt-2">
-                <InputText
-                  value={street}
-                  onChange={(e) => setStreet(e.target.value)}
-                  placeholder="Street/house"
-                  style={{
-                    width: '13vw',
-                    height: '4vh',
-                    border: '1px solid gray',
-                    borderRadius: '0.50rem',
-                    padding: '0.83em',
-                  }}
-                />
-              </div>
+            <div className="mt-3">
+              <span className="font-semibold text-sm ">Email Address</span>
             </div>
 
-            <div>
-              <div className="mt-2">
-                <InputText
-                  value={apt}
-                  onChange={(e) => setApt(e.target.value)}
-                  placeholder="Apt/Suite"
-                  type="text"
-                  style={{
-                    width: '13vw',
-                    height: '4vh',
-                    border: '1px solid gray',
-                    borderRadius: '0.50rem',
-                    padding: '0.83em',
-                  }}
-                />
-              </div>
-            </div>
-
-            <div className="card flex justify-content-center mt-2 ">
-              <Dropdown
-                value={state}
-                onChange={(e: DropdownChangeEvent) => setState(e.value)}
-                options={cities}
-                optionLabel="name"
-                editable
-                placeholder="State"
-                style={{
-                  width: '13vw',
-                  height: '4.71vh',
-                  border: '1px solid gray',
-                  borderRadius: '0.50rem',       
-                }}
-              />
-            </div>
-          </div>
-
-          <div className="flex mt-5 gap-6 ml-4">
-            <div className="card flex justify-content-center">
-              <Dropdown
-                value={country}
-                onChange={(e: DropdownChangeEvent) => setCountry(e.value)}
-                options={cities}
-                optionLabel="name"
-                editable
-                placeholder="Country"
-                className=""
-                style={{
-                  width: '13vw',
-                  height: '4.71vh',
-                  border: '1px solid gray',
-                  borderRadius: '0.50rem',
-                }}
-              />
-            </div>
-            <div className='ml-0.5'>
+            <div className="mt-1">
               <InputText
-                value={zipCode}
-                onChange={(e) => setZipCode(e.target.value)}
-                placeholder="Zipcode"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 style={{
                   width: '13vw',
                   height: '4vh',
                   border: '1px solid gray',
                   borderRadius: '0.50rem',
-                  padding: '0.83em',
+                  fontSize: '0.80vw',
+                  padding: '1.2em',
+                }}
+              />
+            </div>
+          </div>
+
+          <div>
+            <div className="mt-3">
+              <span className="font-semibold text-sm">Role</span>
+            </div>
+
+            <div className="mt-1">
+              <Dropdown
+                value={role}
+                onChange={(e: DropdownChangeEvent) => setRole(e.value)}
+                options={cities}
+                optionLabel="name"
+                editable
+                placeholder="Select"
+                style={{
+                  width: '13vw',
+                  height: '4.71vh',
+                  border: '1px solid gray',
+                  borderRadius: '0.50rem',
                 }}
               />
             </div>
           </div>
         </div>
-        <div className="flex ml-4 mt-5 gap-6 text-black">
+
+        <div className="mt-5">
+          <h1 className="text-lg font-semibold">Address</h1>
+        </div>
+
+        <div className="flex gap-6 mt-4">
+          <div className="">
+            <InputText
+              value={street}
+              onChange={(e) => setStreet(e.target.value)}
+              placeholder="Street/house"
+              style={{
+                width: '13vw',
+                height: '4vh',
+                border: '1px solid gray',
+                borderRadius: '0.50rem',
+                padding: '0.83em',
+              }}
+            />
+          </div>
+
+          <div>
+            <InputText
+              value={apt}
+              onChange={(e) => setApt(e.target.value)}
+              placeholder="Apt/Suite"
+              type="text"
+              style={{
+                width: '13vw',
+                height: '4vh',
+                border: '1px solid gray',
+                borderRadius: '0.50rem',
+                padding: '0.83em',
+              }}
+            />
+          </div>
+
+          <div>
+            <Dropdown
+              value={state}
+              onChange={(e: DropdownChangeEvent) => setState(e.value)}
+              options={cities}
+              optionLabel="name"
+              editable
+              placeholder="State"
+              style={{
+                width: '13vw',
+                height: '4.71vh',
+                border: '1px solid gray',
+                borderRadius: '0.50rem',
+              }}
+            />
+          </div>
+        </div>
+
+        <div className="flex mt-5 gap-6">
+          <div>
+            <Dropdown
+              value={country}
+              onChange={(e: DropdownChangeEvent) => setCountry(e.value)}
+              options={cities}
+              optionLabel="name"
+              editable
+              placeholder="Country"
+              style={{
+                width: '13vw',
+                height: '4.71vh',
+                border: '1px solid gray',
+                borderRadius: '0.50rem',
+              }}
+            />
+          </div>
+          <div>
+            <InputText
+              value={zipCode}
+              onChange={(e) => setZipCode(e.target.value)}
+              placeholder="Zipcode"
+              style={{
+                width: '13vw',
+                height: '4vh',
+                border: '1px solid gray',
+                borderRadius: '0.50rem',
+                padding: '0.83em',
+              }}
+            />
+          </div>
+        </div>
+
+        <div className="flex mt-5 gap-6 text-black">
           <div>
             <span className="font-semibold text-sm">Create password</span>
             <div className="mt-1">
@@ -275,7 +265,7 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
               />
             </div>
           </div>
-          <div className='ml-0.5'>
+          <div className="">
             <span className="font-semibold text-sm">Confirm password</span>
             <div className="mt-1 ">
               <InputComponent
@@ -293,7 +283,7 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
         </div>
 
         {/* Save and Back buttons */}
-        <div className="flex gap-3 mt-10 ml-6">
+        <div className="flex gap-3 mt-10 ">
           <Button
             label={'Save'}
             onClick={handleSave}
