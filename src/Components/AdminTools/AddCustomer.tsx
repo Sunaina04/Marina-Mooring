@@ -1,14 +1,24 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { InputText } from 'primereact/inputtext'
 import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown'
-import { InputTextarea } from 'primereact/inputtextarea'
-import InputComponent from '../CommonComponent/InputComponent'
 import { Button } from 'primereact/button'
+import InputComponent from '../CommonComponent/InputComponent'
 import { CityProps } from '../../Type/CommonType'
 
-const AddPermission = () => {
-  const [value, setValue] = useState<string>('')
-  const [selectedCity, setSelectedCity] = useState<CityProps | undefined>(undefined)
+const AddCustomer = ({ customerData, editMode }: { customerData?: any; editMode?: boolean }) => {
+  const [name, setName] = useState('')
+  const [id, setId] = useState('')
+  const [phone, setPhone] = useState('')
+  const [email, setEmail] = useState('')
+  const [role, setRole] = useState<CityProps | undefined>(undefined)
+  const [street, setStreet] = useState('')
+  const [apt, setApt] = useState('')
+  const [state, setState] = useState<CityProps | undefined>(undefined)
+  const [country, setCountry] = useState<CityProps | undefined>(undefined)
+  const [zipCode, setZipCode] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+
   const cities: CityProps[] = [
     { name: 'New York', code: 'NY' },
     { name: 'Rome', code: 'RM' },
@@ -17,14 +27,49 @@ const AddPermission = () => {
     { name: 'Paris', code: 'PRS' },
   ]
 
+  useEffect(() => {
+    if (editMode && customerData) {
+      // Pre-fill the form fields with customer data if in edit mode
+      setName(customerData.Name || '')
+      setId(customerData.UserId || '')
+      setPhone(customerData.Phone || '')
+      setEmail(customerData.Email || '')
+      // Set other fields accordingly...
+    }
+  }, [editMode, customerData])
+
+  const handleSave = () => {
+    const payload = {
+      id: 1,
+      roleId: role?.code,
+      Name: name,
+      UserId: id,
+      Phone: phone,
+      Email: email,
+      street: street,
+      Apt: apt,
+      stateId: state?.code,
+      countryId: country?.code,
+      zipCode: zipCode,
+      password: password,
+      createdBy: 'System',
+      updatedBy: 'System',
+    }
+
+    // Here you can send the payload to your API or perform any other action
+    console.log('Payload:', payload)
+  }
+
   return (
     <>
-      <div className="w-full h-full  ">
+      <div className="w-full h-full">
         <div className="flex justify-around mt-3">
           <div>
             <span className="font-semibold text-sm">Name</span>
             <div className="mt-2">
-              <InputComponent
+              <InputText
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 style={{
                   width: '13vw',
                   height: '4vh',
@@ -39,7 +84,9 @@ const AddPermission = () => {
           <div>
             <span className="font-semibold text-sm">ID</span>
             <div className="mt-2">
-              <InputComponent
+              <InputText
+                value={id}
+                onChange={(e) => setId(e.target.value)}
                 style={{
                   width: '13vw',
                   height: '4vh',
@@ -54,7 +101,9 @@ const AddPermission = () => {
           <div>
             <span className="font-semibold text-sm">Phone</span>
             <div className="mt-2">
-              <InputComponent
+              <InputText
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
                 style={{
                   width: '13vw',
                   height: '4vh',
@@ -76,6 +125,8 @@ const AddPermission = () => {
 
               <div className="mt-3">
                 <InputText
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   style={{
                     width: '13vw',
                     height: '4vh',
@@ -96,8 +147,8 @@ const AddPermission = () => {
 
               <div className="mt-3">
                 <Dropdown
-                  value={selectedCity}
-                  onChange={(e: DropdownChangeEvent) => setSelectedCity(e.value)}
+                  value={role}
+                  onChange={(e: DropdownChangeEvent) => setRole(e.value)}
                   options={cities}
                   optionLabel="name"
                   editable
@@ -123,6 +174,8 @@ const AddPermission = () => {
             <div>
               <div className="mt-2">
                 <InputText
+                  value={street}
+                  onChange={(e) => setStreet(e.target.value)}
                   placeholder="Street/house"
                   style={{
                     width: '13vw',
@@ -137,6 +190,8 @@ const AddPermission = () => {
             <div>
               <div className="mt-2">
                 <InputText
+                  value={apt}
+                  onChange={(e) => setApt(e.target.value)}
                   placeholder="Apt/Suite"
                   type="text"
                   style={{
@@ -151,8 +206,8 @@ const AddPermission = () => {
 
             <div className="card flex justify-content-center mt-2 ">
               <Dropdown
-                value={selectedCity}
-                onChange={(e: DropdownChangeEvent) => setSelectedCity(e.value)}
+                value={state}
+                onChange={(e: DropdownChangeEvent) => setState(e.value)}
                 options={cities}
                 optionLabel="name"
                 editable
@@ -170,8 +225,8 @@ const AddPermission = () => {
           <div className="flex mt-5 gap-6 ml-5">
             <div className="card flex justify-content-center">
               <Dropdown
-                value={selectedCity}
-                onChange={(e: DropdownChangeEvent) => setSelectedCity(e.value)}
+                value={country}
+                onChange={(e: DropdownChangeEvent) => setCountry(e.value)}
                 options={cities}
                 optionLabel="name"
                 editable
@@ -186,6 +241,8 @@ const AddPermission = () => {
               />
             </div>
             <InputText
+              value={zipCode}
+              onChange={(e) => setZipCode(e.target.value)}
               placeholder="Zipcode"
               style={{
                 width: '13vw',
@@ -227,9 +284,11 @@ const AddPermission = () => {
           </div>
         </div>
 
+        {/* Save and Back buttons */}
         <div className="flex gap-3 mt-10 ml-6">
           <Button
             label={'Save'}
+            onClick={handleSave}
             style={{
               width: '5vw',
               height: '7vh',
@@ -237,7 +296,7 @@ const AddPermission = () => {
               cursor: 'pointer',
               fontWeight: 'bolder',
               fontSize: '1vw',
-              border: '1px solid  gray',
+              border: '1px solid gray',
               color: 'white',
               borderRadius: '0.50rem',
             }}
@@ -253,4 +312,4 @@ const AddPermission = () => {
   )
 }
 
-export default AddPermission
+export default AddCustomer

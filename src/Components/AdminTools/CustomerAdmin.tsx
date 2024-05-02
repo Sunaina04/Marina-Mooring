@@ -3,7 +3,7 @@ import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import { Button } from 'primereact/button'
 import CustomModal from '../CustomComponent/CustomModal'
-import AddPermission from './AddPermission'
+import AddPermission from './AddCustomer'
 import { PermissionData } from '../../Type/ComponentBasedType'
 
 const Permission = () => {
