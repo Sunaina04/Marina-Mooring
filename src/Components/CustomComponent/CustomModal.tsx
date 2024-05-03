@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Button } from 'primereact/button'
 import { Dialog } from 'primereact/dialog'
-import { InputText } from 'primereact/inputtext'
 
 export const style = {
   position: 'absolute' as 'absolute',
@@ -50,10 +49,10 @@ const CustomModal: React.FC<CustomModalProps> = ({
             <img
               src="/assets/images/plus.png"
               alt="icon"
-              className="w-3 ml-2 mr-1" // Adjust margin to your preference
+              className="w-4 ml-3 mr-3"
               style={{
                 filter: 'invert(100%)',
-                color: 'whitesmoke',
+                color: 'white',
                 fontWeight: 'bolder',
               }}
             />
@@ -68,7 +67,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
             width: '50vw',
             height: '100vh',
             borderRadius: '1rem',
-          }} // Add borderRadius style property
+          }}
           onHide={() => {
             onHide()
             setInternalVisible(false)

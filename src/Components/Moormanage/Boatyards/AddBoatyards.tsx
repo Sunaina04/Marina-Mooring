@@ -4,8 +4,22 @@ import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import { useState } from 'react'
 import { Button } from 'primereact/button'
+import { Dropdown } from 'primereact/dropdown'
 
 const AddBoatyards = () => {
+  const [boatyardId, setBoatyardId] = useState('')
+  const [boatyardName, setBoatyardName] = useState('')
+  const [emailAddress, setEmailAddress] = useState('')
+  const [phone, setPhone] = useState('')
+  const [address, setAddress] = useState('')
+  const [aptSuite, setAptSuite] = useState('')
+  const [state, setState] = useState(null)
+  const [country, setCountry] = useState(null)
+  const [zipCode, setZipCode] = useState('')
+  const [mainContact, setMainContact] = useState('')
+
+  const handleSave = () => {}
+
   return (
     <>
       <div className="w-full h-full  ">
@@ -16,6 +30,8 @@ const AddBoatyards = () => {
             <span className="font-semibold text-sm">Boatyard ID</span>
             <div className="mt-2">
               <InputComponent
+                value={boatyardId}
+                onChange={(e) => setBoatyardId(e.target.value)}
                 style={{
                   width: '13vw',
                   height: '4vh',
@@ -28,9 +44,11 @@ const AddBoatyards = () => {
           </div>
 
           <div>
-            <span className="font-semibold text-sm">Main Contact</span>
+            <span className="font-semibold text-sm">Boatyard Name</span>
             <div className="mt-2">
               <InputComponent
+                value={boatyardName}
+                onChange={(e) => setBoatyardName(e.target.value)}
                 style={{
                   width: '13vw',
                   height: '4vh',
@@ -51,6 +69,8 @@ const AddBoatyards = () => {
 
             <div className="mt-2">
               <InputComponent
+                value={emailAddress}
+                onChange={(e) => setEmailAddress(e.target.value)}
                 style={{
                   width: '13vw',
                   height: '4vh',
@@ -69,6 +89,8 @@ const AddBoatyards = () => {
               </div>
               <div className="mt-2">
                 <InputComponent
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
                   style={{
                     width: '13vw',
                     height: '4vh',
@@ -82,55 +104,135 @@ const AddBoatyards = () => {
           </div>
         </div>
 
-        <div>
-          <div className="bg-[#ECECEC] rounded-md border-[1px] p-1 border-gray-300 w-[40vw] mt-10">
-            <DataTable
-              header={'Existing Sites'}
-              tableStyle={{
-                fontSize: '12px',
-                color: '#000000',
-                fontWeight: 600,
-                backgroundColor: '#D1D1D1',
-              }}
-              size="small">
-              <Column header="" field="id" style={{ width: '4vw' }}></Column>
-              <Column style={{ width: '4vw' }} field="customerName" header=""></Column>
-              <Column style={{ width: '10vw' }} field="email" header=""></Column>
-              <Column style={{ width: '8vw' }} field="phone" header=""></Column>
-              <Column style={{ width: '8vw' }} field="address" header=""></Column>
-            </DataTable>
+        <div className="flex gap-8 mt-4">
+          <div>
+            <div>
+              <span className="font-semibold text-sm">Address</span>
+            </div>
 
-            <Button
-              style={{
-                width: '100%',
-                height: '4vh',
-                backgroundColor: '#ECECEC',
-                cursor: 'pointer',
-                color: '#6B6B6B',
-                fontWeight: 'bolder',
-                fontSize: '0.50rem',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-              label="">
-              <img
-                src="/assets/images/plus.png"
-                alt="icon"
-                className="w-3 mr-1"
+            <div className="mt-2">
+              <InputComponent
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                placeholder="Street/house"
                 style={{
-                  color: 'black',
-                  fontWeight: 'bolder',
+                  width: '13vw',
+                  height: '4vh',
+                  border: '1px solid gray',
+                  borderRadius: '0.50rem',
+                  fontSize: '0.80vw',
                 }}
               />
-              ADD NEW
-            </Button>
+            </div>
+          </div>
+
+          <div>
+            <div>
+              <div className="mt-2">
+                <InputComponent
+                  placeholder="Apt/Suite"
+                  style={{
+                    width: '13vw',
+                    height: '4vh',
+                    border: '1px solid gray',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.80vw',
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div>
+              <div className="mt-2">
+                <Dropdown
+                  placeholder="State"
+                  value={state}
+                  onChange={(e) => setState(e.target.value)}
+                  style={{
+                    width: '13vw',
+                    height: '4vh',
+                    border: '1px solid gray',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.80vw',
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex gap-8 mt-4">
+          <div>
+            <div className="mt-2">
+              <Dropdown
+                value={country}
+                onChange={(e) => setCountry(e.target.value)}
+                placeholder="Country"
+                style={{
+                  width: '13vw',
+                  height: '4vh',
+                  border: '1px solid gray',
+                  borderRadius: '0.50rem',
+                  fontSize: '0.80vw',
+                }}
+              />
+            </div>
+          </div>
+
+          <div>
+            <div>
+              <div className="mt-2">
+                <InputComponent
+                  value={zipCode}
+                  onChange={(e) => setZipCode(e.target.value)}
+                  placeholder="Zip code"
+                  style={{
+                    width: '13vw',
+                    height: '4vh',
+                    border: '1px solid gray',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.80vw',
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex gap-8 mt-4">
+          <div>
+            <div>
+              <span className="font-semibold text-sm">Main Contact</span>
+            </div>
+
+            <div>
+              <div>
+                <div className="mt-2">
+                  <InputComponent
+                    value={mainContact}
+                    onChange={(e) => setMainContact(e.target.value)}
+                    style={{
+                      width: '13vw',
+                      height: '4vh',
+                      border: '1px solid gray',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.80vw',
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div>{/* Add Map Here */}</div>
           </div>
         </div>
 
         <div className="flex gap-3 mt-4 ml-6">
           <Button
             label={'Save'}
+            onClick={handleSave}
             style={{
               width: '5vw',
               backgroundColor: 'black',
