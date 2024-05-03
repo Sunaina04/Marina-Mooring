@@ -5,39 +5,10 @@ import { Button } from 'primereact/button'
 import CustomModal from '../CustomComponent/CustomModal'
 import AddCustomer from '../AdminTools/AddCustomer'
 import { PermissionData } from '../../Type/ComponentBasedType'
+import { permissionData } from '../Utils/CustomData'
 
 const Permission = () => {
   const [modalVisible, setModalVisible] = useState(false)
-  const [permissionData, setPermissionData] = useState<PermissionData[]>([
-    {
-      id: '01',
-      email: 'Demo@gmail.com',
-      name: 'John Smith',
-      phone: '12375859',
-      role: 'Vendor',
-    },
-    {
-      id: '01',
-      email: 'Demo@gmail.com',
-      name: 'John Smith',
-      phone: '12375859',
-      role: 'Customer',
-    },
-    {
-      id: '01',
-      email: 'Demo@gmail.com',
-      name: 'John Smith',
-      phone: '12375859',
-      role: 'Technician',
-    },
-    {
-      id: '01',
-      email: 'Demo@gmail.com',
-      name: 'John Smith',
-      phone: '12375859',
-      role: 'Admin',
-    },
-  ])
 
   const handleButtonClick = () => {
     setModalVisible(true)
@@ -99,9 +70,7 @@ const Permission = () => {
               onClick={handleButtonClick}
               visible={modalVisible}
               onHide={handleModalClose}
-              header="">
-              
-            </CustomModal>
+              header=""></CustomModal>
           </div>
         </div>
       </div>

@@ -93,26 +93,28 @@ const Vendors = () => {
     [],
   )
 
-  const ActionButtonColumn: ActionButtonColumnProps = {
-    header: 'Action',
-    buttons: [
-      {
-        color: 'black',
-        label: 'View Inventory',
-      },
-      {
-        color: 'green',
-        label: 'Edit',
-        onClick: handleEdit,
-      },
-      {
-        color: 'red',
-        label: 'Delete',
-      },
-    ],
-    headerStyle: { backgroundColor: '#F2F2F2' },
-  }
-
+  const ActionButtonColumn: ActionButtonColumnProps = useMemo(
+    () => ({
+      header: 'Action',
+      buttons: [
+        {
+          color: 'black',
+          label: 'View Inventory',
+        },
+        {
+          color: 'green',
+          label: 'Edit',
+          onClick: handleEdit,
+        },
+        {
+          color: 'red',
+          label: 'Delete',
+        },
+      ],
+      headerStyle: { backgroundColor: '#F2F2F2' },
+    }),
+    [],
+  )
   return (
     <>
       <div className="flex justify-between items-center ml-2">

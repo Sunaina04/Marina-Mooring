@@ -94,6 +94,48 @@ export const customerAdmin = [
   },
 ]
 
+export const boatyardMooring = [
+  
+
+  {
+    id: '01',
+    mainContact: 'Maxwell',
+    mooringID: '54325',
+    boatName: 'sunriase',
+
+  },
+  {
+    id: '01',
+    mainContact: 'Maxwell',
+    mooringID: '54325',
+    boatName: 'sunriase',
+
+  },
+  {
+    id: '01',
+    mainContact: 'Maxwell',
+    mooringID: '54325',
+    boatName: 'sunriase',
+
+  },
+  {
+    id: '01',
+    mainContact: 'Maxwell',
+    mooringID: '54325',
+    boatName: 'sunriase',
+
+  },
+  {
+    id: '01',
+    mainContact: 'Maxwell',
+    mooringID: '54325',
+    boatName: 'sunriase',
+
+  },
+  
+]
+
+
 export const customerAdminUser = [
   {
     id: '01',
@@ -132,6 +174,10 @@ export const customerAdminUser = [
     role: 'Admin',
   },
 ]
+
+
+
+
 //mooring
 export const boatDataMooring = [
   {
@@ -269,3 +315,36 @@ export const accountPayableData = [
     amount: '$12',
   },
 ]
+
+
+export const permissionData = [
+  {
+    id: '01',
+    email: 'Demo@gmail.com',
+    name: 'John Smith',
+    phone: '12375859',
+    role: 'Vendor',
+  },
+  {
+    id: '01',
+    email: 'Demo@gmail.com',
+    name: 'John Smith',
+    phone: '12375859',
+    role: 'Customer',
+  },
+  {
+    id: '01',
+    email: 'Demo@gmail.com',
+    name: 'John Smith',
+    phone: '12375859',
+    role: 'Technician',
+  },
+  {
+    id: '01',
+    email: 'Demo@gmail.com',
+    name: 'John Smith',
+    phone: '12375859',
+    role: 'Admin',
+  },
+]
+

@@ -129,22 +129,7 @@ const Technicians = () => {
     )
   }
 
-  // const getTechniciansData = async () => {
-  //   await getTechnicians({})
-  //     .unwrap()
-  //     .then(async (response) => {
-  //       console.log('RESPONSE', response)
-  //       const { status, content } = response as TechnicianResponse
-  //       if (status === 200 && Array.isArray(content)) {
-  //         setTechnicianData(content)
-  //         setFilteredTechnicianData(content) // Initialize filtered data with all data
-  //       }
-  //     })
-  // }
-
-  // useEffect(() => {
-  //   getTechniciansData()
-  // }, [])
+ 
 
   return (
     <>

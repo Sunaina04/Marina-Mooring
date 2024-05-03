@@ -1,12 +1,11 @@
 import { useMemo, useState } from 'react'
 import CustomModal from '../CustomComponent/CustomModal'
-
 import AddCustomer from './AddCustomer'
 import { IoSearch } from 'react-icons/io5'
 import { InputText } from 'primereact/inputtext'
 import { TableColumns } from '../../Type/CommonType'
 import DataTableSearchFieldComponent from '../CommonComponent/Table/DataTableSearchFieldComponent'
-import {customerAdmin, customerAdminUser } from '../Utils/CustomData'
+import { customerAdmin, customerAdminUser } from '../Utils/CustomData'
 import { ActionButtonColumnProps } from '../../Type/Component/Table'
 import './AddCustomer.module.css'
 const Permission = () => {
@@ -152,7 +151,6 @@ const Permission = () => {
         <div>
           <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">Moormanage/Permission</h1>
         </div>
-
         <div className="mt-14 ml-64">
           <select
             onChange={() => {}}
@@ -176,7 +174,6 @@ const Permission = () => {
             </option>
           </select>
         </div>
-
         <div className="flex  items-center mr-[23rem] mt-14">
           <div className="">
             <CustomModal
@@ -199,13 +196,11 @@ const Permission = () => {
           </div>
         </div>
       </div>
-
       <div className="flex gap-10 ml-8">
         <div className="bg-[F2F2F2]  rounded-md border-[1px]  border-gray-300 w-[28vw] h-[65vh] mb-10">
           <div className="text-sm font-extrabold rounded-sm w-full  bg-[#D9D9D9]">
             <h1 className="p-4">Customers-admins</h1>
           </div>
-
           <div data-testid="customer-admin-data">
             <DataTableSearchFieldComponent
               data={customerAdmin}
@@ -221,7 +216,6 @@ const Permission = () => {
             />
           </div>
         </div>
-
         <div className="bg-[F2F2F2]  rounded-md border-[1px]  border-gray-300 w-[33vw] h-[65vh]">
           <div className="text-sm font-extrabold rounded-sm w-full  bg-[#D9D9D9]">
             <h1 className="p-4">Customer-adminUsers</h1>
