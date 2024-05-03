@@ -52,11 +52,11 @@ export interface Role {
 export interface Country {
   id: number
   name: string
-  label: undefined
+  label: string
 }
 
 export interface State {
   id: number
   name: string
-  label: undefined
+  label: string
 }

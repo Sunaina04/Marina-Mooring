@@ -13,12 +13,22 @@ const AddBoatyards = () => {
   const [phone, setPhone] = useState('')
   const [address, setAddress] = useState('')
   const [aptSuite, setAptSuite] = useState('')
-  const [state, setState] = useState(null)
-  const [country, setCountry] = useState(null)
+  const [state, setState] = useState()
+  const [country, setCountry] = useState()
   const [zipCode, setZipCode] = useState('')
   const [mainContact, setMainContact] = useState('')
 
-  const handleSave = () => {}
+  const style = {
+    width: '13vw',
+    height: '4vh',
+    border: '1px solid gray',
+    borderRadius: '0.50rem',
+    fontSize: '0.80vw',
+  }
+
+  const handleSave = () => {
+    return void 0
+  }
 
   return (
     <>
@@ -32,13 +42,7 @@ const AddBoatyards = () => {
               <InputComponent
                 value={boatyardId}
                 onChange={(e) => setBoatyardId(e.target.value)}
-                style={{
-                  width: '13vw',
-                  height: '4vh',
-                  border: '1px solid gray',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.80vw',
-                }}
+                style={style}
               />
             </div>
           </div>
@@ -49,13 +53,7 @@ const AddBoatyards = () => {
               <InputComponent
                 value={boatyardName}
                 onChange={(e) => setBoatyardName(e.target.value)}
-                style={{
-                  width: '13vw',
-                  height: '4vh',
-                  border: '1px solid gray',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.80vw',
-                }}
+                style={style}
               />
             </div>
           </div>
@@ -71,13 +69,7 @@ const AddBoatyards = () => {
               <InputComponent
                 value={emailAddress}
                 onChange={(e) => setEmailAddress(e.target.value)}
-                style={{
-                  width: '13vw',
-                  height: '4vh',
-                  border: '1px solid gray',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.80vw',
-                }}
+                style={style}
               />
             </div>
           </div>
@@ -91,13 +83,7 @@ const AddBoatyards = () => {
                 <InputComponent
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  style={{
-                    width: '13vw',
-                    height: '4vh',
-                    border: '1px solid gray',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.80vw',
-                  }}
+                  style={style}
                 />
               </div>
             </div>
@@ -115,13 +101,7 @@ const AddBoatyards = () => {
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 placeholder="Street/house"
-                style={{
-                  width: '13vw',
-                  height: '4vh',
-                  border: '1px solid gray',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.80vw',
-                }}
+                style={style}
               />
             </div>
           </div>
@@ -129,16 +109,7 @@ const AddBoatyards = () => {
           <div>
             <div>
               <div className="mt-2">
-                <InputComponent
-                  placeholder="Apt/Suite"
-                  style={{
-                    width: '13vw',
-                    height: '4vh',
-                    border: '1px solid gray',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.80vw',
-                  }}
-                />
+                <InputComponent placeholder="Apt/Suite" style={style} />
               </div>
             </div>
           </div>
@@ -150,13 +121,7 @@ const AddBoatyards = () => {
                   placeholder="State"
                   value={state}
                   onChange={(e) => setState(e.target.value)}
-                  style={{
-                    width: '13vw',
-                    height: '4vh',
-                    border: '1px solid gray',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.80vw',
-                  }}
+                  style={style}
                 />
               </div>
             </div>
@@ -170,13 +135,7 @@ const AddBoatyards = () => {
                 value={country}
                 onChange={(e) => setCountry(e.target.value)}
                 placeholder="Country"
-                style={{
-                  width: '13vw',
-                  height: '4vh',
-                  border: '1px solid gray',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.80vw',
-                }}
+                style={style}
               />
             </div>
           </div>
@@ -188,13 +147,7 @@ const AddBoatyards = () => {
                   value={zipCode}
                   onChange={(e) => setZipCode(e.target.value)}
                   placeholder="Zip code"
-                  style={{
-                    width: '13vw',
-                    height: '4vh',
-                    border: '1px solid gray',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.80vw',
-                  }}
+                  style={style}
                 />
               </div>
             </div>
@@ -213,13 +166,7 @@ const AddBoatyards = () => {
                   <InputComponent
                     value={mainContact}
                     onChange={(e) => setMainContact(e.target.value)}
-                    style={{
-                      width: '13vw',
-                      height: '4vh',
-                      border: '1px solid gray',
-                      borderRadius: '0.50rem',
-                      fontSize: '0.80vw',
-                    }}
+                    style={style}
                   />
                 </div>
               </div>
