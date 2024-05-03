@@ -60,3 +60,7 @@ export interface State {
   name: string
   label: undefined
 }
+
+export interface MapProps {
+  marker?: []
+}
