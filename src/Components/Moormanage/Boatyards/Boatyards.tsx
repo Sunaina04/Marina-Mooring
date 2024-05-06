@@ -1,15 +1,18 @@
 import { useEffect, useMemo, useState } from 'react'
-import CustomModal, { style } from '../../CustomComponent/CustomModal'
+import CustomModal from '../../CustomComponent/CustomModal'
 import AddBoatyards from './AddBoatyards'
 import { InputText } from 'primereact/inputtext'
-import { BoatYardData, BoatYardPayload, BoatYardResponse } from '../../../Type/ApiTypes'
+import { BoatYardPayload, BoatYardResponse } from '../../../Type/ApiTypes'
 import { useGetBoatyardsMutation } from '../../../Services/MoorManage/MoormanageApi'
-import { FaSearch } from 'react-icons/fa'
-import { ActionButtonColumnProps } from '../../../Type/Component/Table'
-import { IoSearch } from 'react-icons/io5'
 import DataTableWithToogle from '../../CommonComponent/Table/DataTableWithToogle'
-import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableSearchFieldComponent'
-import { boatyardMooring } from '../../Utils/CustomData'
+import { ActionButtonColumnProps, Product } from '../../../Type/Component/Table'
+import { IoSearch } from 'react-icons/io5'
+import { boatyardMooring, getProductsWithOrdersData } from '../../Utils/CustomData'
+import { DataTable } from 'primereact/datatable'
+import { Column } from 'primereact/column'
+import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader'
+import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
+import { FaSearch } from 'react-icons/fa'
 
 const Boatyards = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -17,160 +20,8 @@ const Boatyards = () => {
   const [filteredboatyardsData, setFilteredboatyardsData] = useState<BoatYardPayload[]>([])
   const [getBaotyards] = useGetBoatyardsMutation()
 
-  const moorings: BoatYardData[] = [
-    {
-      id: '#9715',
-      moorings: 'Pioneer',
-      boatyards: 2,
-      name: 'John smith',
-      phoneNumber: '+1 234 543 4324',
-      email: 'demo@gmail.com',
-      boatyardDetails: [
-        {
-          id: 1,
-          name: 'Pioneer',
-          address: '123 Elm St',
-          phone: '+1 234 543 4324',
-          mooring: 15,
-          mooringDetails: [
-            {
-              id: '#46645',
-              mainContact: 'Maxwell',
-              mooringNumber: '54345',
-              boatName: 'Sunriase',
-            },
-            {
-              id: '#46645',
-              mainContact: 'Maxwell',
-              mooringNumber: '54345',
-              boatName: 'Sunriase',
-            },
-            {
-              id: '#46645',
-              mainContact: 'Maxwell',
-              mooringNumber: '54345',
-              boatName: 'Sunriase',
-            },
-            {
-              id: '#46645',
-              mainContact: 'Maxwell',
-              mooringNumber: '54345',
-              boatName: 'Sunriase',
-            },
-          ],
-        },
-        {
-          id: 1,
-          name: 'Pioneer',
-          address: '123 Elm St',
-          phone: '+1 234 543 4324',
-          mooring: 15,
-          mooringDetails: [
-            {
-              id: '#46645',
-              mainContact: 'Maxwell',
-              mooringNumber: '54345',
-              boatName: 'Sunriase',
-            },
-            {
-              id: '#46645',
-              mainContact: 'Maxwell',
-              mooringNumber: '54345',
-              boatName: 'Sunriase',
-            },
-            {
-              id: '#46645',
-              mainContact: 'Maxwell',
-              mooringNumber: '54345',
-              boatName: 'Sunriase',
-            },
-            {
-              id: '#46645',
-              mainContact: 'Maxwell',
-              mooringNumber: '54345',
-              boatName: 'Sunriase',
-            },
-          ],
-        },
-      ],
-    },
-    {
-      id: '#9715',
-      moorings: 'Pioneer',
-      boatyards: 2,
-      name: 'John smith',
-      phoneNumber: '+1 234 543 4324',
-      email: 'demo@gmail.com',
-      boatyardDetails: [
-        {
-          id: 1,
-          name: 'Pioneer',
-          address: '123 Elm St',
-          phone: '+1 234 543 4324',
-          mooring: 15,
-          mooringDetails: [
-            {
-              id: '#46645',
-              mainContact: 'Maxwell',
-              mooringNumber: '54345',
-              boatName: 'Sunriase',
-            },
-            {
-              id: '#46645',
-              mainContact: 'Maxwell',
-              mooringNumber: '54345',
-              boatName: 'Sunriase',
-            },
-            {
-              id: '#46645',
-              mainContact: 'Maxwell',
-              mooringNumber: '54345',
-              boatName: 'Sunriase',
-            },
-            {
-              id: '#46645',
-              mainContact: 'Maxwell',
-              mooringNumber: '54345',
-              boatName: 'Sunriase',
-            },
-          ],
-        },
-        {
-          id: 1,
-          name: 'Pioneer',
-          address: '123 Elm St',
-          phone: '+1 234 543 4324',
-          mooring: 15,
-          mooringDetails: [
-            {
-              id: '#46645',
-              mainContact: 'Maxwell',
-              mooringNumber: '54345',
-              boatName: 'Sunriase',
-            },
-            {
-              id: '#46645',
-              mainContact: 'Maxwell',
-              mooringNumber: '54345',
-              boatName: 'Sunriase',
-            },
-            {
-              id: '#46645',
-              mainContact: 'Maxwell',
-              mooringNumber: '54345',
-              boatName: 'Sunriase',
-            },
-            {
-              id: '#46645',
-              mainContact: 'Maxwell',
-              mooringNumber: '54345',
-              boatName: 'Sunriase',
-            },
-          ],
-        },
-      ],
-    },
-  ]
+  const [products, setProducts] = useState<Product[]>([])
+  const [expandedRows, setExpandedRows] = useState<any>(undefined)
 
   const handleButtonClick = () => {
     setModalVisible(true)
@@ -231,21 +82,128 @@ const Boatyards = () => {
   )
 
   const getBaotyardsData = async () => {
-    await getBaotyards({})
-      .unwrap()
-      .then(async (response) => {
-        const { status, content } = response as BoatYardResponse
-        if (status === 200 && Array.isArray(content)) {
-          setboatyardsData(content)
-          setFilteredboatyardsData(content)
-        }
-      })
+    try {
+      await getBaotyards({})
+        .unwrap()
+        .then(async (response) => {
+          const { status, content } = response as BoatYardResponse
+          if (status === 200 && Array.isArray(content)) {
+            setboatyardsData(content)
+            setFilteredboatyardsData(content)
+          }
+        })
+    } catch (error) {
+      console.error('Error fetching getBoatyardsdata:', error)
+    }
   }
 
   useEffect(() => {
     getBaotyardsData()
   }, [])
 
+  useEffect(() => {
+    const productsData = getProductsWithOrdersData()
+    setProducts(productsData)
+  }, [])
+
+  const allowExpansion = (rowData: Product): boolean => {
+    console.log('rowData', rowData)
+
+    return !!rowData.orders && rowData.orders.length > 0
+  }
+
+  const rowExpansionTemplate = (data: Product) => {
+    return (
+      <DataTable value={data.orders}>
+        <Column
+          field="address"
+          header="Address"
+          style={{
+            width: '',
+            backgroundColor: '#F2F2F2',
+            fontSize: '0.80rem',
+            borderBottom: '1px solid #C0C0C0',
+          }}
+        />
+        <Column
+          field="mooringInventoried"
+          header="Mooring Inventoried"
+          style={{
+            width: '14rem',
+            backgroundColor: '#F2F2F2',
+            fontSize: '0.80rem',
+            borderBottom: '1px solid #C0C0C0',
+          }}
+        />
+        <Column
+          field="boatyardGpsCoordinates"
+          header="Boatyard GPS Coordinates"
+          style={{
+            width: '14rem',
+            fontSize: '0.80rem',
+            backgroundColor: '#F2F2F2',
+            borderBottom: '1px solid #C0C0C0',
+          }}
+        />
+      </DataTable>
+    )
+  }
+
+  const columns = useMemo(
+    () => [
+      {
+        field: 'id',
+        header: 'ID',
+        style: {
+          width: '8rem',
+          backgroundColor: '#F2F2F2',
+          fontSize: '0.80rem',
+          color: 'black',
+          fontWeight: 'bold',
+        },
+      },
+      {
+        field: 'name',
+        header: 'Name',
+        style: {
+          width: '8rem',
+          backgroundColor: '#F2F2F2',
+          fontSize: '0.80rem',
+          color: 'black',
+          fontWeight: 'bold',
+        },
+      },
+      {
+        field: 'noOfBoatYards',
+        header: 'No.of Boatyards',
+        style: {
+          width: '24rem',
+          backgroundColor: '#F2F2F2',
+          fontSize: '0.80rem',
+          color: 'black',
+          fontWeight: 'bold',
+        },
+      },
+      {
+        field: 'totalMooringInventoried',
+        header: 'Total Mooring Inventoried',
+        style: {
+          width: '28rem',
+          backgroundColor: '#F2F2F2',
+          fontSize: '0.80rem',
+          color: 'black',
+          fontWeight: 'bold',
+        },
+      },
+      {
+        field: '',
+        header: '',
+        expander: allowExpansion,
+        style: { backgroundColor: '#F2F2F2' },
+      },
+    ],
+    [allowExpansion],
+  )
   return (
     <>
       <div className="flex justify-between items-center ml-12">
@@ -289,22 +247,29 @@ const Boatyards = () => {
         <div
           data-testid="customer-admin-users-table"
           className="bg-[F2F2F2] overflow-x-hidden overflow-y-scroll  rounded-md border-[1px]  border-gray-300 w-[40vw] h-[55vh] mb-60">
-          <div className="text-sm font-extrabold rounded-sm w-full  bg-[#D9D9D9]">
-            <h1 className="p-4">Customers</h1>
-          </div>
-
-          <div className="flex items-center justify-center mt-2 bg-[#F2F2F2]">
-            <div className="p-input-icon-left ">
-              <IoSearch style={{ marginLeft: '1rem', color: '#A4A4A4' }} />
-              <InputText
-                placeholder="Search by name, ID,address..."
-                className="h-[5vh] w-[80vh] cursor-pointer text-[0.65rem]
-               text-[#A4A4A4]  border-1 border-[1px]
-               border-[#9F9F9F] rounded-md pl-10"
-              />
-            </div>
-          </div>
-          <DataTableWithToogle />
+          <InputTextWithHeader
+            header={'Boatyards Detail'}
+            placeholder={'Search by name, ID,address...'}
+            style={{ marginLeft: '1rem', color: '#A4A4A4' }}
+            inputTextStyle={{
+              height: '5vh',
+              width: '80vh',
+              cursor: 'pointer',
+              color: '#A4A4A4',
+              border: '1px solid  #9F9F9F',
+              paddingLeft: '3rem',
+              borderRadius: '0.45rem',
+              fontSize: '0.80rem',
+            }}
+          />
+          <DataTableWithToogle
+            data={products}
+            rowExpansionTemplate={rowExpansionTemplate}
+            onRowToggle={(e) => setExpandedRows(e.data)}
+            expandedRows={expandedRows}
+            dataKey="id"
+            columns={columns}
+          />
         </div>
         <div
           data-testid="customer-admin-users-table"
@@ -325,7 +290,7 @@ const Boatyards = () => {
               <p className="mr-[7.50rem]">38 21.806 144</p>
             </div>
           </div>
-          <DataTableSearchFieldComponent
+          <DataTableComponent
             tableStyle={{
               fontSize: '12px',
               color: '#000000',
@@ -334,7 +299,6 @@ const Boatyards = () => {
             data={boatyardMooring}
             columns={tableColumnsTechnicians}
             actionButtons={ActionButtonColumn}
-            header={''}
           />
         </div>
       </div>

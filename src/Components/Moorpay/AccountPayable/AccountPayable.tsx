@@ -3,7 +3,7 @@ import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import CustomModal from '../../CustomComponent/CustomModal'
 import { MoorPayProps } from '../../../Type/ComponentBasedType'
-import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableSearchFieldComponent'
+import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
 import { ActionButtonColumnProps } from '../../../Type/Component/Table'
 
 interface TableColumn {

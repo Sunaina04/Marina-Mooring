@@ -4,7 +4,7 @@ import { DataTable } from 'primereact/datatable'
 import { DataTableProps } from '../../../Type/Component/Table'
 import DataTableButton from './DataTableButton'
 
-const DataTableSearchFieldComponent: React.FC<DataTableProps> = ({
+const DataTableComponent: React.FC<DataTableProps> = ({
   data = [],
   scrollable = true,
   columns,
@@ -18,6 +18,7 @@ const DataTableSearchFieldComponent: React.FC<DataTableProps> = ({
         <div className={'flex gap-4'}>
           {actionButtons?.buttons?.map((b) => (
             <DataTableButton
+              data-testid="custom-element"
               onClick={() => b.onClick && b.onClick(rowData)}
               {...b}></DataTableButton>
           ))}
@@ -44,4 +45,4 @@ const DataTableSearchFieldComponent: React.FC<DataTableProps> = ({
   )
 }
 
-export default DataTableSearchFieldComponent
+export default DataTableComponent

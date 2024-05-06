@@ -3,7 +3,6 @@ import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import { Button } from 'primereact/button'
 import CustomModal from '../CustomComponent/CustomModal'
-import AddCustomer from '../AdminTools/AddCustomer'
 import { PermissionData } from '../../Type/ComponentBasedType'
 import { permissionData } from '../Utils/CustomData'
 

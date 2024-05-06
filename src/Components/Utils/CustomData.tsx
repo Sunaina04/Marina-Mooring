@@ -348,3 +348,50 @@ export const permissionData = [
   },
 ]
 
+export const getProductsWithOrdersData = (): any[] => {
+  return [
+    {
+      id: '#9715',
+      name: 'Pioneer',
+      noOfBoatYards: "16",
+      totalMooringInventoried: "40",
+      orders: [
+        {
+          address: '123 Elm St',
+          mooringInventoried: '25',
+          date: '2020-09-13',
+          boatyardGpsCoordinates: "38 21.806 14444.959"
+        },
+        {
+          address: '123 Elm St',
+          mooringInventoried: '25',
+          date: '2020-09-13',
+          boatyardGpsCoordinates: "38 21.806 14444.959"
+        },
+
+      ]
+    },
+
+    {
+      id: '#9716',
+      name: 'Pioneer',
+      noOfBoatYards: "16",
+      totalMooringInventoried: "40",
+      orders: [
+        {
+          address: '123 Elm St',
+          mooringInventoried: '25',
+          date: '2020-09-13',
+          boatyardGpsCoordinates: "38 21.806 14444.959"
+        },
+        {
+          address: '123 Elm St',
+          mooringInventoried: '25',
+          date: '2020-09-13',
+          boatyardGpsCoordinates: "38 21.806 14444.959"
+        },
+
+      ]
+    },
+  ];
+};

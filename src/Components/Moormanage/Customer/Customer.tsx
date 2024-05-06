@@ -21,8 +21,10 @@ import {
   MooringResponse,
 } from '../../../Type/ApiTypes'
 import { IoSearch } from 'react-icons/io5'
-import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableSearchFieldComponent'
+import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
 import { boatData } from '../../Utils/CustomData'
+import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader'
+import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 
 
 
@@ -53,6 +55,9 @@ const Customer = () => {
     setModalVisible(false)
     setEditMode(false)
   }
+
+
+
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const query = event.target.value
@@ -100,25 +105,8 @@ const Customer = () => {
     }
   }
 
-  const CustomersHeader = () => {
-    return (
-      <div className="flex items-center">
-        <div className="p-input-icon-left ">
-          <IoSearch style={{ marginLeft: '1rem', color: '#A4A4A4' }} />
-          <InputText
-            placeholder="Search by name, ID,address..."
-            className="h-[5vh] w-[55vh] cursor-pointer text-[0.65rem]
-               text-[#A4A4A4]  border-1 border-[1px]
-               border-[#9F9F9F] rounded-md pl-8"
-            value={searchQuery}
-            onChange={handleSearchChange}
-          />
-        </div>
-      </div>
-    )
-  }
 
-  const tableColumns= useMemo(
+  const tableColumns = useMemo(
     () => [
       {
         id: 'id',
@@ -143,7 +131,7 @@ const Customer = () => {
     ],
     [],
   )
-  
+
   const getMooringsData = async () => {
     try {
       const response = await getMoorings({}).unwrap();
@@ -152,11 +140,11 @@ const Customer = () => {
         setMooringData(content);
       }
     } catch (error) {
-      // Handle the error appropriately, for example:
+
       console.error("Error fetching moorings data:", error);
     }
   };
-  
+
 
   useEffect(() => {
     getCustomerData()
@@ -182,7 +170,7 @@ const Customer = () => {
               fontWeight: 'bold',
               color: 'white',
             }}
-            header={<h1 className="text-xl font-bold text-black ml-4">Add Customer</h1>} 
+            header={<h1 className="text-xl font-bold text-black ml-4">Add Customer</h1>}
             onClick={handleButtonClick}
             visible={modalVisible || editMode}
             onHide={handleModalClose}>
@@ -198,22 +186,27 @@ const Customer = () => {
 
       <div className="flex ml-12 gap-4">
         <div className="bg-[F2F2F2] overflow-x-hidden overflow-y-scroll rounded-md border-[1px]  border-gray-300 w-[28vw] h-[70vh]">
-          <div className="text-sm font-extrabold rounded-sm w-full  bg-[#D9D9D9]">
-            <h1 className="p-4">Customers</h1>
-          </div>
 
-          <DataTableSearchFieldComponent
-            data={boatData}
-            tableStyle={{
-              fontSize: '12px',
-              color: '#000000',
-              fontWeight: 600,
-              backgroundColor: '#D9D9D9',
-            }}
-            scrollable={false}
-            columns={tableColumns}
-            header={CustomersHeader}
+          <InputTextWithHeader header={'Customers'} placeholder={'Search by name, ID,address...'}
+            style={{ marginLeft: "1rem", color: "A4A4A4" }}
+            inputTextStyle={{ height: "5vh", width: "55vh", cursor: "pointer", fontSize: "0.63rem", color: "#A4A4A4", border: "1px solid #A4A4A4", paddingLeft: "3rem", borderRadius: "0.45rem" }}
+            onChange={handleSearchChange}
+            value={searchQuery}
           />
+
+          <DataTableComponent
+          data={boatData}
+          tableStyle={{
+            fontSize: '12px',
+            color: '#000000',
+            fontWeight: 600,
+            backgroundColor: '#D9D9D9',
+          }}
+          scrollable={false}
+          columns={tableColumns} header={undefined}
+          
+          />
+       
         </div>
 
         {/* middle container */}

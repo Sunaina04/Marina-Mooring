@@ -7,7 +7,7 @@ import { Button } from 'primereact/button'
 import AddWorkOrders from './AddWorkOrders'
 import { WorkOrderPayload, WorkOrderResponse } from '../../../Type/ApiTypes'
 import { useGetWorkOrdersMutation } from '../../../Services/MoorServe/MoorserveApi'
-import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableSearchFieldComponent'
+import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
 import { ActionButtonColumnProps } from '../../../Type/Component/Table'
 
 const WorkOrders = () => {

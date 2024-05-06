@@ -5,8 +5,9 @@ import CustomModal from '../../CustomComponent/CustomModal'
 import AddEstimates from './AddEstimates'
 import { InputText } from 'primereact/inputtext'
 import { EstimateProps } from '../../../Type/ComponentBasedType'
-import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableSearchFieldComponent'
+import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
 import { ActionButtonColumnProps } from '../../../Type/Component/Table'
+import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 
 const Estimates = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -177,18 +178,21 @@ const Estimates = () => {
       </div>
   
       <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[64vw]  ml-32 mt-12 ">
-        <DataTableSearchFieldComponent
-          tableStyle={{
-            fontSize: '12px',
-            color: '#000000',
-            fontWeight: 600,
-          }}
-          data={boatData}
-          columns={tableColumns}
-          header={header}
-          actionButtons={ActionButtonColumn}
-          style={{ backgroundColor: '#F2F2F2' }}
+
+        <DataTableComponent
+         tableStyle={{
+          fontSize: '12px',
+          color: '#000000',
+          fontWeight: 600,
+        }}
+        data={boatData}
+        columns={tableColumns}
+        header={header}
+        actionButtons={ActionButtonColumn}
+        style={{ backgroundColor: '#F2F2F2' }}
+        
         />
+      
       </div>
 
 

@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import CustomModal from '../../CustomComponent/CustomModal'
 import { MoorPayProps } from '../../../Type/ComponentBasedType'
-import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableSearchFieldComponent'
+import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
 import AddCustomer from '../../Moormanage/Customer/AddCustomer'
 import { ActionButtonColumnProps } from '../../../Type/Component/Table'
 

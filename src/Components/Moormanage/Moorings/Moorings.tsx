@@ -11,7 +11,7 @@ import { InputSwitch, InputSwitchChangeEvent } from 'primereact/inputswitch'
 import { MooringPayload, MooringResponse } from '../../../Type/ApiTypes'
 import { FaCircle, FaEdit } from 'react-icons/fa'
 import { Dialog } from 'primereact/dialog'
-import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableSearchFieldComponent'
+import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
 import { CustomerData, CustomerProps } from '../../../Type/CommonType'
 // import Timeline from '../../customComponent/Timeline'
  
