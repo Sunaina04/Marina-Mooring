@@ -1,16 +1,16 @@
-import React from 'react'
-import { MapContainer, TileLayer } from 'react-leaflet'
-import { MapProps } from '../../Type/CommonType'
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 
-const CustomMap: React.FC<MapProps> = ({ marker }) => {
-  const center = [10.178111119, 106.1787402874031]
+const CustomMap = () => {
+  const position = [51.505, -0.09];
 
   return (
-    <MapContainer
-      center={center}
-      zoom={10}
-      style={{ width: '100vw', height: '100vw' }}></MapContainer>
-  )
-}
+    <MapContainer center={position} zoom={13} style={{ width: '100%', height: '400px' }}>
+      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+      <Marker position={position}>
+        <Popup>A pretty CSS3 popup.<br />Easily customizable.</Popup>
+      </Marker>
+    </MapContainer>
+  );
+};
 
-export default CustomMap
+export default CustomMap;

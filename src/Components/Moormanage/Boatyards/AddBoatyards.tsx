@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { Button } from 'primereact/button'
 import { Dropdown } from 'primereact/dropdown'
 import CustomMap from '../../Map/CustomMap'
+import { MarkerData } from '../../../Type/CommonType'
 
 const AddBoatyards = () => {
   const [boatyardId, setBoatyardId] = useState('')
@@ -20,6 +21,11 @@ const AddBoatyards = () => {
   const [mainContact, setMainContact] = useState('')
 
   const handleSave = () => {}
+
+  const markers: MarkerData[] = [
+    { position: [51.505, -0.09], popupContent: 'Marker 1' },
+    { position: [51.51, -0.1], popupContent: 'Marker 2' },
+  ]
 
   return (
     <>
@@ -228,8 +234,8 @@ const AddBoatyards = () => {
 
             <div>
               {/* Add Map Here */}
-              <CustomMap/>
-              </div>
+              <CustomMap />
+            </div>
           </div>
         </div>
 

@@ -6,6 +6,7 @@ import { BoatYardData, BoatYardPayload, BoatYardResponse } from '../../../Type/A
 import BoatyardTable from './BoatyardTable'
 import { useGetBoatyardsMutation } from '../../../Services/MoorManage/MoormanageApi'
 import { FaSearch } from 'react-icons/fa'
+import CustomMap from '../../Map/CustomMap'
 
 const Boatyards = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -232,7 +233,7 @@ const Boatyards = () => {
         </div>
       </div>
       <div className="ml-10">
-        <BoatyardTable moorings={moorings as BoatYardData[]} />
+        <CustomMap/>
       </div>
     </>
   )
