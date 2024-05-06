@@ -1,32 +1,29 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { InputText } from 'primereact/inputtext'
 import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown'
 import { Button } from 'primereact/button'
 import InputComponent from '../CommonComponent/InputComponent'
-import { CityProps } from '../../Type/CommonType'
+import { Country, Role, State } from '../../Type/CommonType'
 import { CustomerAdminDataProps } from '../../Type/ComponentBasedType'
+import useMetaData from '../CommonComponent/MetaDataComponent'
 
 const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode }) => {
   const [name, setName] = useState('')
   const [id, setId] = useState('')
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
-  const [role, setRole] = useState<CityProps | undefined>(undefined)
   const [street, setStreet] = useState('')
   const [apt, setApt] = useState('')
-  const [state, setState] = useState<CityProps | undefined>(undefined)
-  const [country, setCountry] = useState<CityProps | undefined>(undefined)
   const [zipCode, setZipCode] = useState('')
+  const [role, setRole] = useState<Role>()
+  const [country, setCountry] = useState<Country>()
+  const [state, setState] = useState<State>()
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-
-  const cities: CityProps[] = [
-    { name: 'New York', code: 'NY' },
-    { name: 'Rome', code: 'RM' },
-    { name: 'London', code: 'LDN' },
-    { name: 'Istanbul', code: 'IST' },
-    { name: 'Paris', code: 'PRS' },
-  ]
+  const { getMetaData } = useMetaData()
+  const [rolesData, setRolesData] = useState<Role[]>()
+  const [countriesData, setCountriesData] = useState<Country[]>()
+  const [statesData, setStatesData] = useState<State[]>()
 
   useEffect(() => {
     if (editMode && customerData) {
@@ -39,23 +36,37 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
 
   const handleSave = () => {
     const payload = {
-      id: 1,
-      roleId: role?.code,
       Name: name,
       UserId: id,
       Phone: phone,
       Email: email,
       street: street,
       Apt: apt,
-      stateId: state?.code,
-      countryId: country?.code,
       zipCode: zipCode,
       password: password,
-      createdBy: 'System',
-      updatedBy: 'System',
     }
     console.log('Payload:', payload)
+    //Api not implemented yet from backend
   }
+
+  const fetchDataAndUpdate = useCallback(async () => {
+    const { rolesData, countriesData, statesData } = await getMetaData()
+    if (rolesData !== null) {
+      setRolesData(rolesData)
+    }
+
+    if (countriesData !== null) {
+      setCountriesData(countriesData)
+    }
+
+    if (statesData !== null) {
+      setStatesData(statesData)
+    }
+  }, [])
+
+  useEffect(() => {
+    fetchDataAndUpdate()
+  }, [fetchDataAndUpdate])
 
   return (
     <>
@@ -146,7 +157,7 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
                 <Dropdown
                   value={role}
                   onChange={(e: DropdownChangeEvent) => setRole(e.value)}
-                  options={cities}
+                  options={rolesData}
                   optionLabel="name"
                   editable
                   placeholder="Select"
@@ -205,7 +216,7 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
               <Dropdown
                 value={state}
                 onChange={(e: DropdownChangeEvent) => setState(e.value)}
-                options={cities}
+                options={statesData}
                 optionLabel="name"
                 editable
                 placeholder="State"
@@ -224,7 +235,7 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
               <Dropdown
                 value={country}
                 onChange={(e: DropdownChangeEvent) => setCountry(e.value)}
-                options={cities}
+                options={countriesData}
                 optionLabel="name"
                 editable
                 placeholder="Country"

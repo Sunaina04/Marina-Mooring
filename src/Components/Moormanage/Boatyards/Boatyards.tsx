@@ -4,12 +4,12 @@ import AddBoatyards from './AddBoatyards'
 import { InputText } from 'primereact/inputtext'
 import { BoatYardData, BoatYardPayload, BoatYardResponse } from '../../../Type/ApiTypes'
 import { useGetBoatyardsMutation } from '../../../Services/MoorManage/MoormanageApi'
-import DataTableWithToogle from '../../CommonComponent/Table/DataTableWithToogle'
-import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableSearchFieldComponent'
+import { FaSearch } from 'react-icons/fa'
 import { ActionButtonColumnProps } from '../../../Type/Component/Table'
 import { IoSearch } from 'react-icons/io5'
-import { TableColumns } from '../../../Type/CommonType'
-import { boatyardMooring, customerAdminUser } from '../../Utils/CustomData'
+import DataTableWithToogle from '../../CommonComponent/Table/DataTableWithToogle'
+import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableSearchFieldComponent'
+import { boatyardMooring } from '../../Utils/CustomData'
 
 const Boatyards = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -193,7 +193,7 @@ const Boatyards = () => {
     style: { borderBottom: '1px solid #C0C0C0' },
   }
 
-  const tableColumnsTechnicians: TableColumns = useMemo<TableColumns>(
+  const tableColumnsTechnicians= useMemo(
     () => [
       {
         id: 'id',
@@ -249,22 +249,40 @@ const Boatyards = () => {
   return (
     <>
       <div className="flex justify-between items-center ml-12">
-        <h1 className="mt-14 ml-28 opacity-30 text-2xl font-normal">Moormanage/Boatyards</h1>
+        <h1 className="mt-14 ml-28 opacity-30 text-2xl font-normal">MOORMANAGE/Boatyards</h1>
         <div className="flex gap-4 items-center mr-12 mt-14">
-          <div>
-            <div className="p-input-icon-left ">
-              <IoSearch style={{ marginLeft: '1rem', color: '#A4A4A4' }} />
+          <div className="flex mr-24">
+            <div className="mr-5 relative">
+              <FaSearch className="absolute z-10 top-[1.5rem] left-2 text-gray-500" />
               <InputText
                 placeholder="Search"
-                className="h-[5vh] w-[14vw] cursor-pointer text-[0.65rem]
-              text-[#A4A4A4]  border-1 border-[1px]
-               border-[#9F9F9F] pl-10"
+                style={{
+                  width: '15vw',
+                  height: '7vh',
+                  padding: '0 4rem 0 3rem',
+                  border: '1px solid gray',
+                  fontSize: '1.10vw',
+                }}
               />
             </div>
+
+            <CustomModal
+              label={'ADD NEW'}
+              style={{
+                width: '8.5vw',
+                height: '7vh',
+                backgroundColor: 'black',
+                cursor: 'pointer',
+                fontSize: '18px',
+                fontWeight: 'bold',
+                color: 'white',
+              }}
+              onClick={handleButtonClick}
+              visible={false}
+              onHide={handleModalClose}>
+              <AddBoatyards />
+            </CustomModal>
           </div>
-          <CustomModal onClick={handleButtonClick} visible={false} onHide={handleModalClose}>
-            <AddBoatyards />
-          </CustomModal>
         </div>
       </div>
       <div className="ml-8 flex gap-4">

@@ -1,9 +1,8 @@
 import { useMemo, useState } from 'react'
 import CustomModal from '../CustomComponent/CustomModal'
-import AddCustomer from './AddCustomer'
+import AddCustomer from '../Moormanage/Customer/AddCustomer'
 import { IoSearch } from 'react-icons/io5'
 import { InputText } from 'primereact/inputtext'
-import { TableColumns } from '../../Type/CommonType'
 import DataTableSearchFieldComponent from '../CommonComponent/Table/DataTableSearchFieldComponent'
 import { customerAdmin, customerAdminUser } from '../Utils/CustomData'
 import { ActionButtonColumnProps } from '../../Type/Component/Table'
@@ -74,7 +73,7 @@ const Permission = () => {
     headerStyle: { backgroundColor: '#F2F2F2', color: 'black' },
   }
 
-  const tableColumns: TableColumns = useMemo<TableColumns>(
+  const tableColumns = useMemo(
     () => [
       {
         id: 'id',
@@ -111,7 +110,7 @@ const Permission = () => {
     [],
   )
 
-  const tableColumnsTechnicians: TableColumns = useMemo<TableColumns>(
+  const tableColumnsTechnicians = useMemo(
     () => [
       {
         id: 'id',
@@ -191,7 +190,11 @@ const Permission = () => {
               visible={modalVisible}
               onHide={handleModalClose}
               header={<h1 className="text-xl font-bold text-black ml-4">New User</h1>}>
-              <AddCustomer customerData={selectedCustomer} editMode={editMode} />
+              <AddCustomer customer={selectedCustomer} editMode={editMode} closeModal={function (): void {
+                throw new Error('Function not implemented.')
+              } } getCustomer={function (): void {
+                throw new Error('Function not implemented.')
+              } } />
             </CustomModal>
           </div>
         </div>

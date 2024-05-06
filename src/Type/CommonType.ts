@@ -43,16 +43,20 @@ export interface FormFieldsProps {
   type?: string
 }
 
-
 export type NullableDateArray = (Date | null)[] | null
 
-export interface TableColumn {
-  id: string
-  label: string
-  style: {
-    width: string
-    backgroundColor: string
-  }
+export interface Role {
+  name: string
 }
 
-export type TableColumns = TableColumn[]
+export interface Country {
+  id: number
+  name: string
+  label: string
+}
+
+export interface State {
+  id: number
+  name: string
+  label: string
+}
