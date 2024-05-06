@@ -189,9 +189,9 @@ const Boatyards = () => {
       })
   }
 
-  useEffect(() => {
-    getBaotyardsData()
-  }, [])
+  // useEffect(() => {
+  //   getBaotyardsData()
+  // }, [])
 
   return (
     <>
@@ -231,9 +231,6 @@ const Boatyards = () => {
             </CustomModal>
           </div>
         </div>
-      </div>
-      <div className="ml-10">
-        <CustomMap/>
       </div>
     </>
   )

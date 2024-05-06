@@ -1,16 +1,20 @@
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { useState } from 'react'
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import "./CustomMap.css"
 
 const CustomMap = () => {
-  const position = [51.505, -0.09];
+  const position = [13.08462, 80.2483579]
+  const [center, setCenter] = useState({ latitude: 13.084622, langitude: 80.248357 })
+  const ZOOM_LEVEL = 9
 
   return (
-    <MapContainer center={position} zoom={13} style={{ width: '100%', height: '400px' }}>
-      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-      <Marker position={position}>
-        <Popup>A pretty CSS3 popup.<br />Easily customizable.</Popup>
-      </Marker>
-    </MapContainer>
-  );
-};
+    <MapContainer center={position} zoom={13}>
+    <TileLayer
+      // attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+    />
+  </MapContainer>
+  )
+}
 
-export default CustomMap;
+export default CustomMap

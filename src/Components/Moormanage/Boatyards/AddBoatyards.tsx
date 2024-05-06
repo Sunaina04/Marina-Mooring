@@ -233,7 +233,6 @@ const AddBoatyards = () => {
             </div>
 
             <div>
-              {/* Add Map Here */}
               <CustomMap />
             </div>
           </div>
