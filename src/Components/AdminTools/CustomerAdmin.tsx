@@ -1,10 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import { Button } from 'primereact/button'
 import CustomModal from '../CustomComponent/CustomModal'
 import { PermissionData } from '../../Type/ComponentBasedType'
-import AddCustomer from './AddCustomer'
+import AddCustomer from './AddNewCustomer'
 
 const Permission = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -49,6 +49,7 @@ const Permission = () => {
   const handleModalClose = () => {
     setModalVisible(false)
   }
+  
   return (
     <>
       <div className="flex justify-between items-center ml-12">
