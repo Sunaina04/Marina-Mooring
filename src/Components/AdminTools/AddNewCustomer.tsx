@@ -33,6 +33,7 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
       setEmail(customerData.Email || '')
     }
   }, [editMode, customerData])
+  console.log(customerData, "customerData")
 
   const handleSave = () => {
     const payload = {

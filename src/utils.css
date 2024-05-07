@@ -3,18 +3,28 @@
   padding-left: 0.5em;
   color: black;
 }
+
 * input::placeholder {
-  color: black; /* Set placeholder color */
+  color: black;
+  /* Set placeholder color */
 }
 
 * select {
   box-shadow: none !important;
 }
+
 * select::placeholder {
-  color: black; /* Set select placeholder color */
+  color: black;
+  /* Set select placeholder color */
 }
 
 * [data-pc-name="dropdown"] {
   box-shadow: none !important;
   color: black;
+}
+
+#stateDropdown span {
+  padding: 0;
+  margin-left: 0.5rem;
+  color:black
 }
