@@ -114,3 +114,12 @@ export interface CustomerAdminDataProps {
   customerData: any
   editMode: boolean
 }
+
+export interface CustomStateMapProps {
+  onPositionChange: (lat: number, lng: number) => void
+}
+
+export interface DisplayPositionProps {
+  map: any
+  onPositionChange: (lat: number, lng: number) => void
+}

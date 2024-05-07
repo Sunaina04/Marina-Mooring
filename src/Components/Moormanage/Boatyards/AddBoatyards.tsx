@@ -7,6 +7,7 @@ import { Button } from 'primereact/button'
 import { Dropdown } from 'primereact/dropdown'
 import CustomMap from '../../Map/CustomMap'
 import { MarkerData } from '../../../Type/CommonType'
+import CustomStateMap from '../../Map/CustomStateMap'
 
 const AddBoatyards = () => {
   const [boatyardId, setBoatyardId] = useState('')
@@ -19,7 +20,15 @@ const AddBoatyards = () => {
   const [country, setCountry] = useState(null)
   const [zipCode, setZipCode] = useState('')
   const [mainContact, setMainContact] = useState('')
+  const [latitude, setLatitude] = useState<number>();
+  const [longitude, setLongitude] = useState<number>();
 
+  const handlePositionChange = (lat : number, lng :number) => {
+    setLatitude(lat);
+    setLongitude(lng);
+};
+
+console.log("VALUES" , latitude , longitude)
   const handleSave = () => {}
 
   const markers: MarkerData[] = [
@@ -231,11 +240,11 @@ const AddBoatyards = () => {
                 </div>
               </div>
             </div>
-
-            <div>
-              <CustomMap />
-            </div>
           </div>
+        </div>
+
+        <div className='ml-12 mr-12 mt-10'>
+          <CustomStateMap onPositionChange={handlePositionChange}/>
         </div>
 
         <div className="flex gap-3 mt-4 ml-6">
