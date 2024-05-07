@@ -9,7 +9,7 @@ const center = [31.63398, 74.87226]
 const zoom = 13
 
 const CustomStateMap: React.FC<CustomStateMapProps> = ({ onPositionChange }) => {
-  const [map, setMap] = useState(null)
+  const [map, setMap] = useState()
 
   const displayMap = useMemo(
     () => (
