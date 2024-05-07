@@ -22,7 +22,6 @@ const Permission = () => {
         <div>
           <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">Moormanage/Permission</h1>
         </div>
-
         <div className="mt-14 ml-64">
           <Button
             label={''}

@@ -1,32 +1,7 @@
 import React from 'react'
-import {
-  DataTable,
-  DataTableExpandedRows,
-  DataTableRowData,
-  DataTableRowExpansionTemplate,
-  DataTableRowToggleEvent,
-  DataTableValueArray,
-} from 'primereact/datatable'
-import { Column, ColumnBodyOptions } from 'primereact/column'
-
-interface RowExpansionDemoProps {
-  data: any[]
-  rowExpansionTemplate?(
-    data: DataTableRowData<any>,
-    options: DataTableRowExpansionTemplate,
-  ): React.ReactNode
-  dataKey?: string | undefined
-  tableStyle?: React.CSSProperties
-  columns: {
-    expander?: boolean | ((data: any, options: ColumnBodyOptions) => boolean)
-    field: string
-    header: string
-    style?: React.CSSProperties
-  }[]
-  expandedRows?: DataTableValueArray | DataTableExpandedRows | undefined
-  onRowToggle?(event: DataTableRowToggleEvent): void
-}
-
+import { DataTable } from 'primereact/datatable'
+import { Column } from 'primereact/column'
+import { RowExpansionDemoProps } from '../../../Type/Component/Table'
 const DataTableWithToogle: React.FC<RowExpansionDemoProps> = ({
   data,
   rowExpansionTemplate,
@@ -36,6 +11,9 @@ const DataTableWithToogle: React.FC<RowExpansionDemoProps> = ({
   expandedRows,
   onRowToggle,
 }) => {
+  const generateRandomKey = () => {
+    return Math.random().toString(36).substring(7)
+  }
   return (
     <DataTable
       value={data}
@@ -46,7 +24,7 @@ const DataTableWithToogle: React.FC<RowExpansionDemoProps> = ({
       tableStyle={tableStyle}>
       {columns.map((col) => (
         <Column
-          key={col.field}
+          key={generateRandomKey()}
           field={col.field}
           header={col.header}
           style={col.style}

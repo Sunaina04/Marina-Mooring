@@ -95,7 +95,7 @@ export const customerAdmin = [
 ]
 
 export const boatyardMooring = [
-  
+
 
   {
     id: '01',
@@ -132,7 +132,7 @@ export const boatyardMooring = [
     boatName: 'sunriase',
 
   },
-  
+
 ]
 
 

@@ -68,7 +68,6 @@ const Technicians = () => {
       </div>
     </div>
   )
- 
   const handleDateSelect = (date: Date) => {
     setSelectedDate(date)
   }
@@ -81,7 +80,6 @@ const Technicians = () => {
     setTechnicianRecord(e.data)
     setDataVisible(true)
   }
- 
   const workOrder = (
     <>
       <div className="flex gap-40 rounded-md">
@@ -94,7 +92,6 @@ const Technicians = () => {
       </div>
     </>
   )
-
   const actionButtons = [
     () => (
       <>
@@ -114,9 +111,6 @@ const Technicians = () => {
     ),
 
   ];
-
-
-
   const ActionHeader = () => {
     return (
 
@@ -128,9 +122,6 @@ const Technicians = () => {
 
     )
   }
-
- 
-
   return (
     <>
       <div className="flex justify-between items-center ml-12">
@@ -151,7 +142,6 @@ const Technicians = () => {
           </div>
         </div>
       </div>
- 
       <div className="flex gap-5 mt-10 ml-20">
         <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[35vw] ">
           <DataTable
@@ -184,7 +174,6 @@ const Technicians = () => {
               header="Completed Jobs"></Column>
           </DataTable>
         </div>
- 
         {dataVisible && (
           <div className=" rounded-md border-[1px]  border-[#D1D1D1]  ml-10  w-[35vw] ">
             <DataTable header={workOrder} value={workOrderData} scrollable={true}>
