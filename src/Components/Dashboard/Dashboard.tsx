@@ -3,7 +3,6 @@ import { Column } from 'primereact/column'
 import { useState } from 'react'
 import { FaCircle } from 'react-icons/fa6'
 import Timeline from '../CustomComponent/Timeline'
-import './Dashboard.css'
 import Accordition from '../CommonComponent/Accordion'
 import { BillsData, BoatData } from '../../Type/ComponentBasedType'
 import { NullableDateArray } from '../../Type/CommonType'
@@ -13,38 +12,6 @@ const Dashboard = () => {
   const [date, setDate] = useState<NullableDateArray>(null)
   const options: string[] = ['Pending', 'Cleared']
   const [value, setValue] = useState<string>(options[0])
-  const [boatData, setBoatData] = useState<any[]>([
-    {
-      id: '01',
-      customerName: 'Suncatcher',
-      mooringId: '#3254',
-      mooringServiceDate: 'John Smith',
-      mooringLocation: '15, March 2024',
-    },
-
-    {
-      id: '02',
-      customerName: 'Suncatcher',
-      mooringId: '#3254',
-      mooringServiceDate: '15,march,2024',
-      mooringLocation: '38 21.806 144 44.959',
-    },
-    {
-      id: '03',
-      customerName: 'Suncatcher',
-      mooringId: '#3254',
-      mooringServiceDate: '15,march,2024',
-      mooringLocation: '38 21.806 144 44.959',
-    },
-    {
-      id: '04',
-      customerName: 'Suncatcher',
-      mooringId: '#3254',
-      mooringServiceDate: '15,march,2024',
-      mooringLocation: '38 21.806 144 44.959',
-    },
-  ])
-
   const Boatsheader = (
     <div className="flex flex-wrap align-items-center justify-between gap-2 p-4">
       <span className="text-xl font-extrabold">Moorings Due for Service</span>
@@ -72,9 +39,6 @@ const Dashboard = () => {
       </div>
 
       <div className="flex justify-between p-4 ml-8">
-        {/* Boat Data DataTable */}
-
-        {/* right section */}
         <div className="flex flex-col ">
           <div className="w-[43vw] h-14 mt-11">
             <img src="/assets/images/Sea-img.png" />
@@ -112,8 +76,6 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="bg-[#F2F2F2] rounded-xl border-[1px] border-[#D1D1D1] p- mt-[20rem] w-[43vw] ">
-            {/* dataTable */}
-
             <DataTableComponent
               header={Boatsheader}
               tableStyle={{
@@ -125,9 +87,6 @@ const Dashboard = () => {
             />
           </div>
         </div>
-
-        {/* leftSection */}
-
         <div className="mr-50 mt-11">
           <Accordition />
         </div>

@@ -6,13 +6,13 @@ import { BoatYardPayload, BoatYardResponse } from '../../../Type/ApiTypes'
 import { useGetBoatyardsMutation } from '../../../Services/MoorManage/MoormanageApi'
 import DataTableWithToogle from '../../CommonComponent/Table/DataTableWithToogle'
 import { ActionButtonColumnProps, Product } from '../../../Type/Component/Table'
-import { IoSearch } from 'react-icons/io5'
 import { boatyardMooring, getProductsWithOrdersData } from '../../Utils/CustomData'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 import { FaSearch } from 'react-icons/fa'
+import { properties } from '../../Utils/MeassageProperties'
 
 const Boatyards = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -43,8 +43,7 @@ const Boatyards = () => {
     headerStyle: { backgroundColor: '#F2F2F2', color: 'black' },
     style: { borderBottom: '1px solid #C0C0C0' },
   }
-
-  const tableColumnsTechnicians= useMemo(
+  const tableColumnsTechnicians = useMemo(
     () => [
       {
         id: 'id',
@@ -80,7 +79,6 @@ const Boatyards = () => {
     ],
     [],
   )
-
   const getBaotyardsData = async () => {
     try {
       await getBaotyards({})
@@ -96,7 +94,6 @@ const Boatyards = () => {
       console.error('Error fetching getBoatyardsdata:', error)
     }
   }
-
   useEffect(() => {
     getBaotyardsData()
   }, [])
@@ -138,6 +135,7 @@ const Boatyards = () => {
         <Column
           field="boatyardGpsCoordinates"
           header="Boatyard GPS Coordinates"
+         
           style={{
             width: '14rem',
             fontSize: '0.80rem',
@@ -207,7 +205,7 @@ const Boatyards = () => {
   return (
     <>
       <div className="flex justify-between items-center ml-12">
-        <h1 className="mt-14 ml-28 opacity-30 text-2xl font-normal">MOORMANAGE/Boatyards</h1>
+        <h1 className="mt-14 ml-28 opacity-30 text-2xl font-normal">{properties.header}</h1>
         <div className="flex gap-4 items-center mr-12 mt-14">
           <div className="flex mr-24">
             <div className="mr-5 relative">
@@ -223,32 +221,33 @@ const Boatyards = () => {
                 }}
               />
             </div>
-
-            <CustomModal
-              label={'ADD NEW'}
-              style={{
-                width: '8.5vw',
-                height: '7vh',
-                backgroundColor: 'black',
-                cursor: 'pointer',
-                fontSize: '18px',
-                fontWeight: 'bold',
-                color: 'white',
-              }}
-              onClick={handleButtonClick}
-              visible={false}
-              onHide={handleModalClose}>
-              <AddBoatyards />
-            </CustomModal>
+            <div data-testid="customModal">
+              <CustomModal
+                label={properties.label}
+                style={{
+                  width: '8.5vw',
+                  height: '7vh',
+                  backgroundColor: 'black',
+                  cursor: 'pointer',
+                  fontSize: '18px',
+                  fontWeight: 'bold',
+                  color: 'white',
+                }}
+                onClick={handleButtonClick}
+                visible={false}
+                onHide={handleModalClose}>
+                <AddBoatyards />
+              </CustomModal>
+            </div>
           </div>
         </div>
       </div>
       <div className="ml-8 flex gap-4">
         <div
-          data-testid="customer-admin-users-table"
+          data-testid="dataTable"
           className="bg-[F2F2F2] overflow-x-hidden overflow-y-scroll  rounded-md border-[1px]  border-gray-300 w-[40vw] h-[55vh] mb-60">
           <InputTextWithHeader
-            header={'Boatyards Detail'}
+            header={properties.boatyardDeatile}
             placeholder={'Search by name, ID,address...'}
             style={{ marginLeft: '1rem', color: '#A4A4A4' }}
             inputTextStyle={{
@@ -262,6 +261,8 @@ const Boatyards = () => {
               fontSize: '0.80rem',
             }}
           />
+          <div>
+          </div>
           <DataTableWithToogle
             data={products}
             rowExpansionTemplate={rowExpansionTemplate}
@@ -275,13 +276,13 @@ const Boatyards = () => {
           data-testid="customer-admin-users-table"
           className="bg-[F2F2F2]  rounded-md border-[1px]  border-gray-300 w-[33vw] h-[55vh] mb-60">
           <div className="text-sm font-extrabold rounded-sm w-full  bg-[#D9D9D9]">
-            <h1 className="p-4">Boatyard Moorings</h1>
+            <h1 className="p-4">{properties.boatyardMooringHeader}</h1>
           </div>
           <div className="items-center bg-[#F2F2F2] mt-2">
             <div className="flex justify-around">
-              <p>Address</p>
-              <p>Mooring Inventoried</p>
-              <p>Boatyard GPS Coordinates</p>
+              <p>{properties.address}</p>
+              <p>{properties.mooringInventoried}</p>
+              <p>{properties.boatyardGPSCoordinates}</p>
             </div>
             <div className="border-[1px] border-[#9F9F9F]  w-[] mt-3 "></div>
             <div className="flex justify-between mt-2">

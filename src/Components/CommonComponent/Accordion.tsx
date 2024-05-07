@@ -68,7 +68,7 @@ const Accordion = () => {
               <h1 className="w-40">Calendar</h1>
             </div>
 
-            <div className="ml-[17rem] mt-1">
+            <div className="ml-[20rem] mt-1">
               {accordion === "faq1" ? <FiMinus /> : <IoAddOutline />}
             </div>
           </div>
@@ -91,13 +91,12 @@ const Accordion = () => {
             <div className="mt-1">
               <BsFileCheckFill style={{ fontSize: "1rem" }} />
             </div>
-
             <div>
               <h1 className="w-40 text-black font-extrabold">
                 Open Work Orders
               </h1>
             </div>
-            <div className="ml-[16.50rem] mt-1">
+            <div className="ml-[20rem] mt-1">
               {accordion === "faq2" ? <FiMinus /> : <IoAddOutline />}
             </div>
           </div>
@@ -174,7 +173,7 @@ const Accordion = () => {
               <h1 className="w-44 ">Total Moorings</h1>
             </div>
 
-            <div className="ml-[15rem]">
+            <div className="ml-[18.50rem]">
               {accordion === "faq3" ? <FiMinus /> : <IoAddOutline />}
             </div>
           </div>

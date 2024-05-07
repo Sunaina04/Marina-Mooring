@@ -93,10 +93,7 @@ export const customerAdmin = [
     phone: 9789756452,
   },
 ]
-
 export const boatyardMooring = [
-
-
   {
     id: '01',
     mainContact: 'Maxwell',
@@ -134,8 +131,6 @@ export const boatyardMooring = [
   },
 
 ]
-
-
 export const customerAdminUser = [
   {
     id: '01',
@@ -174,10 +169,6 @@ export const customerAdminUser = [
     role: 'Admin',
   },
 ]
-
-
-
-
 //mooring
 export const boatDataMooring = [
   {
@@ -232,9 +223,7 @@ export const boatDataMooring = [
     phone: 9789756452,
   },
 ]
-
 //AccountReceivable data
-
 export const accountRecievableData = [
   {
     invoice: '#425',
@@ -315,8 +304,6 @@ export const accountPayableData = [
     amount: '$12',
   },
 ]
-
-
 export const permissionData = [
   {
     id: '01',
@@ -347,7 +334,6 @@ export const permissionData = [
     role: 'Admin',
   },
 ]
-
 export const getProductsWithOrdersData = (): any[] => {
   return [
     {
@@ -371,7 +357,6 @@ export const getProductsWithOrdersData = (): any[] => {
 
       ]
     },
-
     {
       id: '#9716',
       name: 'Pioneer',

@@ -3,11 +3,11 @@ import CustomModal from '../CustomComponent/CustomModal'
 import AddCustomer from '../Moormanage/Customer/AddCustomer'
 import { IoSearch } from 'react-icons/io5'
 import { InputText } from 'primereact/inputtext'
-import DataTableSearchFieldComponent from '../CommonComponent/Table/DataTableComponent'
 import { customerAdmin, customerAdminUser } from '../Utils/CustomData'
 import { ActionButtonColumnProps } from '../../Type/Component/Table'
 import './AddCustomer.module.css'
 import DataTableComponent from '../CommonComponent/Table/DataTableComponent'
+import { properties } from '../Utils/MeassageProperties'
 const Permission = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [selectedCustomer, setSelectedCustomer] = useState<any>(undefined)
@@ -34,7 +34,6 @@ const Permission = () => {
             style={{ color: '#A4A4A4' }}
           />
         </div>
-
         <span
           className="border-[1px]
                border-[#9F9F9F]  w-[26vw] mt-3 "></span>
@@ -149,7 +148,7 @@ const Permission = () => {
     <>
       <div className="flex justify-between items-center ml-12">
         <div>
-          <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">Moormanage/Permission</h1>
+          <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">{properties.moormanagePermission}</h1>
         </div>
         <div className="mt-14 ml-64">
           <select
@@ -175,7 +174,7 @@ const Permission = () => {
           </select>
         </div>
         <div className="flex  items-center mr-[23rem] mt-14">
-          <div className="">
+          <div className=" ">
             <CustomModal
               label={'ADD NEW'}
               style={{
@@ -203,10 +202,9 @@ const Permission = () => {
       <div className="flex gap-10 ml-8">
         <div className="bg-[F2F2F2]  rounded-md border-[1px]  border-gray-300 w-[28vw] h-[65vh] mb-10">
           <div className="text-sm font-extrabold rounded-sm w-full  bg-[#D9D9D9]">
-            <h1 className="p-4">Customers-admins</h1>
+            <h1 className="p-4">{properties.Customersadmins}</h1>
           </div>
           <div data-testid="customer-admin-data">
-
             <DataTableComponent
               data={customerAdmin}
               tableStyle={{
@@ -225,7 +223,7 @@ const Permission = () => {
         </div>
         <div className="bg-[F2F2F2]  rounded-md border-[1px]  border-gray-300 w-[33vw] h-[65vh]">
           <div className="text-sm font-extrabold rounded-sm w-full  bg-[#D9D9D9]">
-            <h1 className="p-4">Customer-adminUsers</h1>
+            <h1 className="p-4">{properties.CustomerAdminUsers}</h1>
           </div>
 
           <div data-testid="customer-admin-users-table">
