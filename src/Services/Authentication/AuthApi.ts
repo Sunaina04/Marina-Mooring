@@ -4,10 +4,19 @@ import {
   LoginPayload,
   ResetPasswordPayload,
   SignUpPayload,
+  UserLoginPayload,
 } from "../../Type/ApiTypes";
 
 const authApi = userApi.injectEndpoints({
   endpoints: (builder: any) => ({
+    userLogin: builder.mutation({
+      query: (payload: UserLoginPayload) => ({
+        url: "api/v1/user/",
+        method: "POST",
+        body: payload,
+      }),
+    }),
+
     login: builder.mutation({
       query: (payload: LoginPayload) => ({
         url: "api/v1/auth/login",

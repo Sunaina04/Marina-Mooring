@@ -1,3 +1,15 @@
+export interface UserLoginPayload {
+  name: string
+  email: string
+  phoneNumber: string
+  password: string
+  userID: string
+  customerAdminId: string
+  role: string
+  state: string
+  country: string
+}
+
 export interface LoginPayload {
   username: string
   password: string
@@ -308,4 +320,22 @@ export interface WorkOrderResponse {
   content: {
     WorkOrderPayload: WorkOrderPayload
   }
+}
+
+export interface ContentData {
+  name: string
+  id: number
+  label: undefined
+}
+
+export interface Content {
+  data: ContentData
+}
+
+export interface MetaDataResponse {
+  message: string
+  status: number
+  errorList: []
+  time: number
+  content: Content
 }

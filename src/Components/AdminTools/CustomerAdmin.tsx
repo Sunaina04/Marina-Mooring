@@ -1,12 +1,12 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import { Button } from 'primereact/button'
 import CustomModal from '../CustomComponent/CustomModal'
 import { PermissionData } from '../../Type/ComponentBasedType'
-import AddCustomer from './AddCustomer'
 import { Dropdown } from 'primereact/dropdown'
 import { FaFilter } from 'react-icons/fa6'
+import AddCustomer from './AddNewCustomer'
 
 const Permission = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -52,13 +52,7 @@ const Permission = () => {
   const handleModalClose = () => {
     setModalVisible(false)
   }
-
-  // const CustomPlaceholder = () => (
-  //   <div style={{ display: 'flex', alignItems: 'center' }}>
-  //     <FaFilter style={{ marginRight: '0.5em' }} />
-  //     <span>Select Role</span>
-  //   </div>
-  // );
+  
   return (
     <>
       <div className="flex justify-between ml-12">
