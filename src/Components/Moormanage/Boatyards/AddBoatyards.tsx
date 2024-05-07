@@ -89,13 +89,11 @@ const AddBoatyards = () => {
             </div>
           </div>
         </div>
-
+        <div className='mt-8'>
+          <span className="font-semibold text-sm">Address</span>
+        </div>
         <div className="flex gap-8 mt-4">
           <div>
-            <div>
-              <span className="font-semibold text-sm">Address</span>
-            </div>
-
             <div className="mt-2">
               <InputComponent
                 value={address}

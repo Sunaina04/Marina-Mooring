@@ -154,7 +154,7 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
               <span className="font-semibold text-sm">Role</span>
             </div>
 
-            <div className="mt-3">
+            <div className="mt-1">
               <Dropdown
                 value={role}
                 onChange={(e: DropdownChangeEvent) => setRole(e.value)}
@@ -164,7 +164,7 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
                 placeholder="Select"
                 style={{
                   width: '13vw',
-                  height: '4vh',
+                  height: '4.71vh',
                   border: '1px solid gray',
                   borderRadius: '0.50rem',
                 }}
@@ -177,23 +177,9 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
           <h1 className="text-lg font-semibold">Address</h1>
         </div>
 
-        <div className="flex gap-6 mt-4">
-          <div className="">
-            <InputText
-              value={street}
-              onChange={(e) => setStreet(e.target.value)}
-              placeholder="Street/house"
-              style={{
-                width: '13vw',
-                height: '4vh',
-                border: '1px solid gray',
-                borderRadius: '0.50rem',
-                padding: '0.83em',
-              }}
-            />
-          </div>
+        <div className="gap-6 mt-4">
 
-          <div className="flex justify-around  mt-4 ml-2 ">
+          <div className="flex gap-6 ">
             <div>
               <div className="mt-2">
                 <InputText
@@ -202,7 +188,7 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
                   placeholder="Street/house"
                   style={{
                     width: '13vw',
-                    height: '4vh',
+                    height: '4.71vh',
                     border: '1px solid gray',
                     borderRadius: '0.50rem',
                   }}
@@ -219,7 +205,7 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
                   type="text"
                   style={{
                     width: '13vw',
-                    height: '4vh',
+                    height: '4.71vh',
                     border: '1px solid gray',
                     borderRadius: '0.50rem',
                   }}
@@ -227,7 +213,7 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
               </div>
             </div>
 
-            <div className="card flex justify-content-center mt-2 ">
+            <div className=" mt-2 ">
               <Dropdown
                 value={state}
                 onChange={(e: DropdownChangeEvent) => setState(e.value)}
@@ -237,7 +223,7 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
                 placeholder="State"
                 style={{
                   width: '13vw',
-                  height: '4vh',
+                  height: '4.71vh',
                   border: '1px solid gray',
                   borderRadius: '0.50rem',
                 }}
@@ -245,7 +231,7 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
             </div>
           </div>
 
-          <div className="flex mt-5 gap-6 ml-5">
+          <div className="flex mt-5 gap-6 ">
             <div className="card flex justify-content-center">
               <Dropdown
                 value={country}
@@ -257,7 +243,7 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
                 className=""
                 style={{
                   width: '13vw',
-                  height: '4vh',
+                  height: '4.71vh',
                   border: '1px solid gray',
                   borderRadius: '0.50rem',
                 }}
