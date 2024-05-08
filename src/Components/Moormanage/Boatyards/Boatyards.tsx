@@ -189,9 +189,9 @@ const Boatyards = () => {
       })
   }
 
-  // useEffect(() => {
-  //   getBaotyardsData()
-  // }, [])
+  useEffect(() => {
+    getBaotyardsData()
+  }, [])
 
   return (
     <>

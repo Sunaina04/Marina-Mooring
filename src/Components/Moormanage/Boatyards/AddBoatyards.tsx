@@ -20,17 +20,15 @@ const AddBoatyards = () => {
   const [country, setCountry] = useState()
   const [zipCode, setZipCode] = useState('')
   const [mainContact, setMainContact] = useState('')
-  const [latitude, setLatitude] = useState<number>();
-  const [longitude, setLongitude] = useState<number>();
+  const [latitude, setLatitude] = useState<number>()
+  const [longitude, setLongitude] = useState<number>()
 
-  const handlePositionChange = (lat : number, lng :number) => {
-    setLatitude(lat);
-    setLongitude(lng);
-};
+  const handlePositionChange = (lat: number, lng: number) => {
+    setLatitude(lat)
+    setLongitude(lng)
+  }
 
-console.log("VALUES" , latitude , longitude)
-
-const style = {
+  const style = {
     width: '13vw',
     height: '4vh',
     border: '1px solid gray',
@@ -41,11 +39,6 @@ const style = {
   const handleSave = () => {
     return void 0
   }
-
-  const markers: MarkerData[] = [
-    { position: [51.505, -0.09], popupContent: 'Marker 1' },
-    { position: [51.51, -0.1], popupContent: 'Marker 2' },
-  ]
 
   return (
     <>
@@ -191,8 +184,8 @@ const style = {
           </div>
         </div>
 
-        <div className='ml-12 mr-12 mt-10'>
-          <CustomStateMap onPositionChange={handlePositionChange}/>
+        <div className="ml-12 mr-12 mt-10">
+          <CustomStateMap onPositionChange={handlePositionChange} />
         </div>
 
         <div className="flex gap-3 mt-4 ml-6">
