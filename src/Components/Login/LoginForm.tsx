@@ -10,6 +10,7 @@ import { setUserData } from '../../Store/Slice/userSlice'
 import { Link, useNavigate } from 'react-router-dom'
 import { InputText } from 'primereact/inputtext'
 import { LoginFormProps } from '../../Type/ComponentBasedType'
+import { Button } from 'primereact/button'
 
 export default function LoginForm({
   Label,
@@ -138,25 +139,31 @@ export default function LoginForm({
 
   return (
     <>
-      <div className="w-full h-screen flex justify-center items-center">
-        <div className="text-center">
-          <div className="mb-3">
-            <div>
-              <img
-                src="/assets/images/Moorfind.png"
-                alt="Logo"
-                className="w-full h-80 bg-black mb-5"
-              />
-            </div>
+      <div
+        className="w-full h-screen flex justify-center items-center"
+        style={{
+          backgroundImage: "url('/assets/images/loginBackgroundImage.png')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}>
+        <div className="bg-white rounded-lg p-8 w-600 h-700 absolute top-227 left-420 gap-8">
+          <div className="text-center mb-3">
+            <img
+              src="/assets/images/moorfindLogo.png"
+              alt="Logo"
+              className="mx-auto w-15 h-12 mb-5"
+            />
             <div className="text-red-500">{errors.email}</div>
-            <div className="p-input-icon-left" style={{ position: 'relative' }}>
+            <div className="p-input-icon-left relative">
               <InputText
                 style={{
-                  width: '40vw',
+                  width: '30vw',
                   height: '6vh',
                   padding: '0 4rem 0 3rem',
-                  border: '1px solid gray',
-                  fontSize: '1.10vw',
+                  border: '1px solid #C5D9E0',
+                  fontSize: '16px',
+                  color: '#00426F',
+                  borderRadius: '10px',
                 }}
                 type={
                   showSinUp
@@ -173,26 +180,27 @@ export default function LoginForm({
                 onChange={handleChange}
               />
               <span
-                className="w-5 h-5 absolute top-1/2 transform -translate-y-1/2 left-3  text-gray-400"
+                className="w-5 h-5 absolute top-1/2 transform -translate-y-1/2 left-3 text-gray-400"
                 style={{
                   backgroundImage: `url(${
-                    showSinUp ? '/assets/images/key.png' : '/assets/images/email.png'
+                    showSinUp ? '/assets/images/key.png' : '/assets/images/envelope.png'
                   })`,
                   backgroundRepeat: 'no-repeat',
                   backgroundSize: 'contain',
                 }}></span>
             </div>
           </div>
-
           <div className="mb-3">
-            <div className="p-input-icon-left" style={{ position: 'relative' }}>
+            <div className="p-input-icon-left relative">
               <InputText
                 style={{
-                  width: '40vw',
+                  width: '30vw',
                   height: '6vh',
                   padding: '0 4rem 0 3rem',
-                  border: '1px solid gray',
-                  fontSize: '1.10vw',
+                  border: '1px solid #C5D9E0',
+                  fontSize: '16px',
+                  color: '#00426F',
+                  borderRadius: '10px',
                 }}
                 type={
                   showSinUp
@@ -223,7 +231,17 @@ export default function LoginForm({
               <>
                 <div className="flex justify-end mt-8 cursor-pointer ">
                   <Link to={'/forgotPassword'}>
-                    <p className="font-normal font-['Roboto']">Forgot password?</p>
+                    <p
+                      className="font-normal"
+                      style={{
+                        fontSize: '16px',
+                        fontWeight: 400,
+                        lineHeight: '18.75px',
+                        textAlign: 'right',
+                        color: '#00426F',
+                      }}>
+                      Forgot password?
+                    </p>
                   </Link>
                 </div>
 
@@ -235,25 +253,35 @@ export default function LoginForm({
           </div>
           <div className="flex flex-col items-center">
             {admin && <span className="mb-8">For admin use only</span>}{' '}
-            <button
-              className="w-40 h-12 bg-black text-white border border-black font-bold text-sm"
+            <Button
+              className="w-30 h-10 bg-black text-white border border-black font-bold text-sm flex justify-center items-center"
+              style={{ backgroundColor: '#0098FF', width: '30vw' }}
               onClick={showSinUp ? ResetPasswordHandler : signInHandler}>
               {Label}
-            </button>
+            </Button>
+            <div className="flex justify-center items-center mt-0">
+              <div
+                className="text-center mx-auto"
+                style={{
+                  width: '30vw',
+                  fontSize: '14px',
+                  lineHeight: '24px',
+                  textAlign: 'center',
+                  color: '#00426F',
+                }}>
+                <p className="text-xs font-bold">
+                  Just testing the waters? If you do not have an account{' '}
+                  <a href="https://www.moorfind.com/" className="underline font-bolder">
+                    CLICK HERE
+                  </a>{' '}
+                  to let us know you would like to connect and see if MOORFIND can work for you and
+                  your business.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      {!admin && (
-        <div className="flex justify-center items-center mt-0">
-          <div className="text-center mx-auto" style={{ width: '40vw' }}>
-            <p className="text-xs font-bold">
-              Just testing the waters? If you do not have an account{' '}
-              <span className="underline font-bolder">CLICK HERE</span> to let us know you would
-              like to connect and see if MOORFIND can work for you and your business.
-            </p>
-          </div>
-        </div>
-      )}
     </>
   )
 }
