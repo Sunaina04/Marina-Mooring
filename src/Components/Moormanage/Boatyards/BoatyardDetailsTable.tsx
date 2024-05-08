@@ -14,7 +14,7 @@ const BoatyardDetailsTable: React.FC<RowExpansionProps> = ({
   return (
     <div style={{ display: "flex", alignItems: "center" }}>
       <img
-        src="/assets/images/Sea-img.png"
+        src="/assets/images/map.png"
         alt="sea image"
         style={{ width: "50vw", height: "200px", marginRight:"20px" , marginTop:"-120px" }}
       />

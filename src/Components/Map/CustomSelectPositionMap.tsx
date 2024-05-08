@@ -19,7 +19,7 @@ const CustomSelectPositionMap: React.FC<CustomStateMapProps> = ({
         center={center}
         zoom={zoomLevel}
         scrollWheelZoom={false}
-        attributionControl={false} 
+        attributionControl={false}
         zoomControl={false}
         ref={setMap}>
         <TileLayer url="/assets/images/map.png" noWrap={true} />
