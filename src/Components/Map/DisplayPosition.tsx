@@ -3,9 +3,6 @@ import L from 'leaflet'
 import './CustomMap.css'
 import { DisplayPositionProps } from '../../Type/ComponentBasedType'
 
-const center = [31.63398, 74.87226]
-const zoom = 13
-
 const DisplayPosition: React.FC<DisplayPositionProps> = ({ map, onPositionChange }) => {
   const [position, setPosition] = useState(() => map.getCenter())
 

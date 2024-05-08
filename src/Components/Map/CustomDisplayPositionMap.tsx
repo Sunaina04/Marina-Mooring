@@ -1,19 +1,18 @@
-import { useState } from 'react'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import L from 'leaflet'
 import './CustomMap.css'
+import { CustomMapProps } from '../../Type/ComponentBasedType'
 
-const CustomMap = () => {
-  const position = [31.63398, 74.872261]
-  const ZOOM_LEVEL = 9
-
+const CustomDisplayPositionMap: React.FC<CustomMapProps> = ({
+  position = [31.63398, 74.872261],
+  zoomLevel = 9,
+  popUpMessage,
+}) => {
   return (
-    <MapContainer center={position} zoom={ZOOM_LEVEL}>
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
+    <MapContainer center={position} zoom={zoomLevel}>
+      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
       <Marker position={position}>
-        <Popup>A Great Amritsar</Popup>
+        <Popup>{popUpMessage}</Popup>
       </Marker>
     </MapContainer>
   )
@@ -27,4 +26,4 @@ let DefaultIcon = L.icon({
 })
 L.Marker.prototype.options.icon = DefaultIcon
 
-export default CustomMap
+export default CustomDisplayPositionMap

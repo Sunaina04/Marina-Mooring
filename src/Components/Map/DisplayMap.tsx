@@ -2,11 +2,9 @@ import { MapContainer, Marker, TileLayer } from 'react-leaflet'
 import './CustomMap.css'
 import { DisplayMapProps } from '../../Type/ComponentBasedType'
 
-const DisplayMap: React.FC<DisplayMapProps> = ({ center }) => {
-  const zoom = 13
-
+const DisplayMap: React.FC<DisplayMapProps> = ({ center, zoomLevel = 13 }) => {
   return (
-    <MapContainer center={center} zoom={zoom} scrollWheelZoom={false}>
+    <MapContainer center={center} zoom={zoomLevel} scrollWheelZoom={false}>
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
       <Marker position={center} />
     </MapContainer>

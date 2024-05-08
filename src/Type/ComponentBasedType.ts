@@ -117,6 +117,8 @@ export interface CustomerAdminDataProps {
 
 export interface CustomStateMapProps {
   onPositionChange: (lat: number, lng: number) => void
+  center?: [number, number]
+  zoomLevel?: number
 }
 
 export interface DisplayPositionProps {
@@ -126,4 +128,11 @@ export interface DisplayPositionProps {
 
 export interface DisplayMapProps {
   center: [number, number]
+  zoomLevel?: number
+}
+
+export interface CustomMapProps {
+  position: number[]
+  zoomLevel?: number
+  popUpMessage?: string
 }
