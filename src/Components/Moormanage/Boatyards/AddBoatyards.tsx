@@ -151,6 +151,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData }) => 
               value={state}
               onChange={(e) => setState(e.target.value)}
               options={statesData}
+              optionLabel="name"
               style={style}
             />
           </div>
@@ -165,6 +166,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData }) => 
                 onChange={(e) => setCountry(e.target.value)}
                 placeholder="Country"
                 options={countriesData}
+                optionLabel="name"
                 style={style}
               />
             </div>
