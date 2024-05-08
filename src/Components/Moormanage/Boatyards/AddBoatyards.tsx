@@ -11,7 +11,7 @@ import useMetaData from '../../CommonComponent/MetaDataComponent'
 import { Country, State } from '../../../Type/CommonType'
 import { BoatYardResponse } from '../../../Type/ApiTypes'
 
-const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData }) => {
+const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData , gpsCoordinates }) => {
   const [boatyardId, setBoatyardId] = useState('')
   const [boatyardName, setBoatyardName] = useState('')
   const [emailAddress, setEmailAddress] = useState('')
@@ -50,7 +50,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData }) => 
       contact: mainContact,
       state: selectedState,
       country: selectedCountry,
-      gpsCoordinates: '',
+      gpsCoordinates: gpsCoordinates,
     }
     const response = await addBoatyard({ payload }).unwrap()
     const { status } = response as BoatYardResponse
