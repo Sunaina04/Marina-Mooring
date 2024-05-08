@@ -9,6 +9,7 @@ import { useAddBoatyardsMutation } from '../../../Services/MoorManage/Moormanage
 import { BoatYardProps } from '../../../Type/ComponentBasedType'
 import useMetaData from '../../CommonComponent/MetaDataComponent'
 import { Country, State } from '../../../Type/CommonType'
+import { BoatYardResponse } from '../../../Type/ApiTypes'
 
 const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData }) => {
   const [boatyardId, setBoatyardId] = useState('')
@@ -17,7 +18,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData }) => 
   const [phone, setPhone] = useState('')
   const [address, setAddress] = useState('')
   const [aptSuite, setAptSuite] = useState('')
-  const [state, setState] = useState()
+  const [state, setState] = useState('')
   const [country, setCountry] = useState()
   const [zipCode, setZipCode] = useState('')
   const [mainContact, setMainContact] = useState('')
@@ -35,7 +36,10 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData }) => 
   }
 
   const handleSave = async () => {
-    const yardPayload = {
+    const selectedState = statesData?.find((stateItem) => stateItem.name === state)
+    const selectedCountry = countriesData?.find((countryItem) => countryItem.name === country)
+
+    const payload = {
       boatyardId: boatyardId,
       boatyardName: boatyardName,
       phone: phone,
@@ -44,12 +48,16 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData }) => 
       apt: aptSuite,
       zipCode: zipCode,
       contact: mainContact,
-      state: state,
-      country: country,
+      state: selectedState,
+      country: selectedCountry,
+      gpsCoordinates: '',
     }
-    const response = await addBoatyard(yardPayload)
-    closeModal()
-    boatYardData()
+    const response = await addBoatyard({ payload }).unwrap()
+    const { status } = response as BoatYardResponse
+    if (status === 200) {
+      closeModal()
+      boatYardData()
+    }
   }
 
   const fetchDataAndUpdate = useCallback(async () => {
