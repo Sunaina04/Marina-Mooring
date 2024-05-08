@@ -15,8 +15,14 @@ const CustomSelectPositionMap: React.FC<CustomStateMapProps> = ({
 
   const displayMap = useMemo(
     () => (
-      <MapContainer center={center} zoom={zoomLevel} scrollWheelZoom={false} ref={setMap}>
-        <TileLayer url="https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}" />
+      <MapContainer
+        center={center}
+        zoom={zoomLevel}
+        scrollWheelZoom={false}
+        attributionControl={false} 
+        zoomControl={false}
+        ref={setMap}>
+        <TileLayer url="/assets/images/map.png" noWrap={true} />
         <Marker position={center} />
       </MapContainer>
     ),
