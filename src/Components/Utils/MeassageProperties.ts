@@ -9,4 +9,6 @@ export const properties = {
   Customersadmins: 'Customers-admins',
   CustomerAdminUsers: 'Customer-adminUsers',
   label: 'ADD NEW',
+  customerMooringHeader:"Moorings",
+  MoormanageMoorings:"Moormanage/Moorings"
 }

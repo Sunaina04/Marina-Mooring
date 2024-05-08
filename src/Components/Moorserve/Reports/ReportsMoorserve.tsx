@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { useState } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
@@ -154,20 +154,6 @@ const ReportsMoorserve = () => {
     setModalVisible(false)
   }
 
-  const statCardsData = [
-    [
-      { title: 'Total Customers', percentage: 17, count: 42324 },
-      { title: 'Total Customers', percentage: 17, count: 42324 },
-      { title: 'Total Customers', percentage: 17, count: 42324 },
-      { title: 'Total Customers', percentage: 17, count: 58765 },
-      { title: 'Total Customers', percentage: 17, count: 42324 },
-      { title: 'Total Customers', percentage: 17, count: 46789 },
-    ],
-
-    [{ title: 'Services', percentage: 25, count: 34576 }],
-
-    [{ title: 'Work Orders', percentage: 58, count: 8421 }],
-  ]
 
   return (
     <>

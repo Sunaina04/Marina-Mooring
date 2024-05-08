@@ -20,15 +20,10 @@ import {
   MooringPayload,
   MooringResponse,
 } from '../../../Type/ApiTypes'
-import { IoSearch } from 'react-icons/io5'
 import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
 import { boatData } from '../../Utils/CustomData'
 import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
-
-
-
-
 const Customer = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [customerData, setCustomerData] = useState<CustomerPayload[]>([])

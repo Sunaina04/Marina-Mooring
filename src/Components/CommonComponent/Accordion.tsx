@@ -166,7 +166,7 @@ const Accordion = () => {
         >
           <div className="flex mt-3 gap-2 p-1">
             <span className="">
-              <img src="/assets/images/ship.png" style={{ width: "23px" }} />
+              <img alt="icon" src="/assets/images/ship.png" style={{ width: "23px" }} />
             </span>
 
             <div>

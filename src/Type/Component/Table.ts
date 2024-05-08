@@ -11,7 +11,7 @@ import {
 
 export type TableBodyType =
   | React.ReactNode
-  | ((data: any, options: ColumnBodyOptions) => React.ReactNode)
+  | ((data?: any, options?: ColumnBodyOptions) => React.ReactNode)
 
 export interface TableColumnProps {
   id: string | undefined

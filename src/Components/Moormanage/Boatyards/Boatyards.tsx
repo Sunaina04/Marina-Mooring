@@ -19,7 +19,6 @@ const Boatyards = () => {
   const [boatyardsData, setboatyardsData] = useState<BoatYardPayload[]>([])
   const [filteredboatyardsData, setFilteredboatyardsData] = useState<BoatYardPayload[]>([])
   const [getBaotyards] = useGetBoatyardsMutation()
-
   const [products, setProducts] = useState<Product[]>([])
   const [expandedRows, setExpandedRows] = useState<any>(undefined)
 
@@ -65,10 +64,21 @@ const Boatyards = () => {
           color: 'black',
         },
       },
-
+      {
+        id: 'mooringId',
+        label: 'Mooring ID',
+        style: {
+          width: '9vw',
+          backgroundColor: '#F2F2F2',
+          borderBottom: '1px solid #C0C0C0',
+          color: 'black',
+        },
+      },
       {
         id: 'boatName',
         label: 'Boat Name',
+        body: (rowData: { mooringResponseDtoList: any }) =>
+          rowData.mooringResponseDtoList[0].boatName,
         style: {
           width: '12vw',
           backgroundColor: '#F2F2F2',
@@ -104,8 +114,6 @@ const Boatyards = () => {
   }, [])
 
   const allowExpansion = (rowData: Product): boolean => {
-    console.log('rowData', rowData)
-
     return !!rowData.orders && rowData.orders.length > 0
   }
 
@@ -135,7 +143,6 @@ const Boatyards = () => {
         <Column
           field="boatyardGpsCoordinates"
           header="Boatyard GPS Coordinates"
-         
           style={{
             width: '14rem',
             fontSize: '0.80rem',
@@ -159,6 +166,7 @@ const Boatyards = () => {
           color: 'black',
           fontWeight: 'bold',
         },
+        body: () => {},
       },
       {
         field: 'name',
@@ -261,8 +269,7 @@ const Boatyards = () => {
               fontSize: '0.80rem',
             }}
           />
-          <div>
-          </div>
+          <div></div>
           <DataTableWithToogle
             data={products}
             rowExpansionTemplate={rowExpansionTemplate}
@@ -297,7 +304,7 @@ const Boatyards = () => {
               color: '#000000',
               fontWeight: 600,
             }}
-            data={boatyardMooring}
+            data={boatyardsData}
             columns={tableColumnsTechnicians}
             actionButtons={ActionButtonColumn}
           />

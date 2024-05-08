@@ -36,7 +36,7 @@ const DataTableComponent: React.FC<DataTableProps> = ({
         {actionButtons && (
           <Column
             header={actionButtons?.header}
-            body={(rowData) => buttonBody(data)}
+            body={(rowData) => buttonBody(rowData)}
             style={actionButtons?.style}
             headerStyle={actionButtons?.headerStyle}></Column>
         )}

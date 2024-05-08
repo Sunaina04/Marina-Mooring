@@ -1,6 +1,4 @@
 import { useEffect, useMemo, useState } from 'react'
-import { DataTable } from 'primereact/datatable'
-import { Column } from 'primereact/column'
 import CustomModal from '../../CustomComponent/CustomModal'
 import AddVendor from './AddVendor'
 import { InputText } from 'primereact/inputtext'
@@ -9,7 +7,6 @@ import {
   useGetVendorsMutation,
 } from '../../../Services/MoorManage/MoormanageApi'
 import { VendorPayload, VendorResponse } from '../../../Type/ApiTypes'
-import { Button } from 'primereact/button'
 import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
 import { boatData } from '../../Utils/CustomData'
 import { ActionButtonColumnProps } from '../../../Type/Component/Table'
