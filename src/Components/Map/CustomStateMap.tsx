@@ -9,12 +9,12 @@ const center = [31.63398, 74.87226]
 const zoom = 13
 
 const CustomStateMap: React.FC<CustomStateMapProps> = ({ onPositionChange }) => {
-  const [map, setMap] = useState()
+  const [map, setMap] = useState(null)
 
   const displayMap = useMemo(
     () => (
       <MapContainer center={center} zoom={zoom} scrollWheelZoom={false} ref={setMap}>
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        <TileLayer url="https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}" />
         <Marker position={center} />
       </MapContainer>
     ),

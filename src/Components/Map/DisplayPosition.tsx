@@ -9,10 +9,6 @@ const zoom = 13
 const DisplayPosition: React.FC<DisplayPositionProps> = ({ map, onPositionChange }) => {
   const [position, setPosition] = useState(() => map.getCenter())
 
-  const onClick = useCallback(() => {
-    map.setView(center, zoom)
-  }, [map])
-
   const onMove = useCallback(() => {
     const newPosition = map.getCenter()
     setPosition(newPosition)

@@ -123,3 +123,7 @@ export interface DisplayPositionProps {
   map: any
   onPositionChange: (lat: number, lng: number) => void
 }
+
+export interface DisplayMapProps {
+  center: [number, number]
+}
