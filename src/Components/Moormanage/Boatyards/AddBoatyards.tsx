@@ -10,10 +10,7 @@ import { BoatYardProps } from '../../../Type/ComponentBasedType'
 import useMetaData from '../../CommonComponent/MetaDataComponent'
 import { Country, State } from '../../../Type/CommonType'
 
-const AddBoatyards: React.FC<BoatYardProps> = ({
-  closeModal,
-  boatYardData,
-}) => {
+const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData }) => {
   const [boatyardId, setBoatyardId] = useState('')
   const [boatyardName, setBoatyardName] = useState('')
   const [emailAddress, setEmailAddress] = useState('')
@@ -48,13 +45,13 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
       zipCode: zipCode,
       contact: mainContact,
       state: state,
-      country: country
+      country: country,
     }
     const response = await addBoatyard(yardPayload)
     closeModal()
     boatYardData()
   }
- 
+
   const fetchDataAndUpdate = useCallback(async () => {
     const { countriesData, statesData } = await getMetaData()
     if (countriesData !== null) {
@@ -82,13 +79,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
               <InputComponent
                 value={boatyardId}
                 onChange={(e) => setBoatyardId(e.target.value)}
-                style={{
-                  width: '14vw',
-                  height: '4vh',
-                  border: '1px solid gray',
-                  borderRadius: '0.50rem',
-                  // color:"black"
-                }}
+                style={style}
               />
             </div>
           </div>
@@ -99,13 +90,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
               <InputComponent
                 value={boatyardName}
                 onChange={(e) => setBoatyardName(e.target.value)}
-                style={{
-                  width: '14vw',
-                  height: '4vh',
-                  border: '1px solid gray',
-                  borderRadius: '0.50rem',
-                  // color:"black"
-                }}
+                style={style}
               />
             </div>
           </div>
@@ -121,13 +106,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
               <InputComponent
                 value={emailAddress}
                 onChange={(e) => setEmailAddress(e.target.value)}
-                style={{
-                  width: '14vw',
-                  height: '4vh',
-                  border: '1px solid gray',
-                  borderRadius: '0.50rem',
-                  // color:"black"
-                }}
+                style={style}
               />
             </div>
           </div>
@@ -141,13 +120,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
                 <InputComponent
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  style={{
-                    width: '14vw',
-                    height: '4vh',
-                    border: '1px solid gray',
-                    borderRadius: '0.50rem',
-                    // color:"black"
-                  }}
+                  style={style}
                 />
               </div>
             </div>
@@ -163,27 +136,12 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               placeholder="Street/house"
-              style={{
-                width: '14vw',
-                height: '4vh',
-                border: '1px solid gray',
-                borderRadius: '0.50rem',
-                // color:"black"
-              }}
+              style={style}
             />
           </div>
 
           <div className="mt-2">
-            <InputComponent
-              placeholder="Apt/Suite"
-              style={{
-                width: '14vw',
-                height: '4vh',
-                border: '1px solid gray',
-                borderRadius: '0.50rem',
-                // color:"black"
-              }}
-            />
+            <InputComponent placeholder="Apt/Suite" style={style} />
           </div>
 
           <div className="mt-2">
@@ -193,12 +151,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
               value={state}
               onChange={(e) => setState(e.target.value)}
               options={statesData}
-              style={{
-                width: '14vw',
-                height: '4vh',
-                border: '1px solid gray',
-                borderRadius: '0.50rem',
-              }}
+              style={style}
             />
           </div>
         </div>
@@ -212,14 +165,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
                 onChange={(e) => setCountry(e.target.value)}
                 placeholder="Country"
                 options={countriesData}
-                style={{
-                  width: '14vw',
-                  height: '4vh',
-                  border: '1px solid gray',
-                  borderRadius: '0.50rem',
-                  // marginBottom:"1rem"
-                  // color:"black"
-                }}
+                style={style}
               />
             </div>
           </div>
@@ -231,13 +177,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
                   value={zipCode}
                   onChange={(e) => setZipCode(e.target.value)}
                   placeholder="Zip code"
-                  style={{
-                    width: '14vw',
-                    height: '4vh',
-                    border: '1px solid gray',
-                    borderRadius: '0.50rem',
-                    // color:"black"
-                  }}
+                  style={style}
                 />
               </div>
             </div>
@@ -256,13 +196,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
                   <InputComponent
                     value={mainContact}
                     onChange={(e) => setMainContact(e.target.value)}
-                    style={{
-                      width: '14vw',
-                      height: '4vh',
-                      border: '1px solid gray',
-                      borderRadius: '0.50rem',
-                      // color:"black"
-                    }}
+                    style={style}
                   />
                 </div>
               </div>
