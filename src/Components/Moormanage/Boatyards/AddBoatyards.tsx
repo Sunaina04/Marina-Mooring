@@ -5,9 +5,9 @@ import { Column } from 'primereact/column'
 import { useState } from 'react'
 import { Button } from 'primereact/button'
 import { Dropdown } from 'primereact/dropdown'
-import CustomMap from '../../Map/CustomMap'
+import CustomMap from '../../Map/CustomDisplayPositionMap'
 import { MarkerData } from '../../../Type/CommonType'
-import CustomStateMap from '../../Map/CustomStateMap'
+import CustomStateMap from '../../Map/CustomSelectPositionMap'
 
 const AddBoatyards = () => {
   const [boatyardId, setBoatyardId] = useState('')
