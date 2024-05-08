@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import L from 'leaflet'
 import './CustomMap.css'
 import { DisplayPositionProps } from '../../Type/ComponentBasedType'
+import DefaultIcon from './DefaultIcon'
 
 const DisplayPosition: React.FC<DisplayPositionProps> = ({ map, onPositionChange }) => {
   const [position, setPosition] = useState(() => map.getCenter())
@@ -24,12 +25,6 @@ const DisplayPosition: React.FC<DisplayPositionProps> = ({ map, onPositionChange
   return <></>
 }
 
-let DefaultIcon = L.icon({
-  iconUrl: '/assets/images/marker-icon.png',
-  iconSize: [100, 100],
-  iconAnchor: [10, 41],
-  popupAnchor: [2, -40],
-})
 L.Marker.prototype.options.icon = DefaultIcon
 
 export default DisplayPosition

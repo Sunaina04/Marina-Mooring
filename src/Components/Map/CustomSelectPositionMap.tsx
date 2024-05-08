@@ -4,8 +4,9 @@ import L from 'leaflet'
 import './CustomMap.css'
 import DisplayPosition from './DisplayPosition'
 import { CustomStateMapProps } from '../../Type/ComponentBasedType'
+import DefaultIcon from './DefaultIcon'
 
-const CustomStateMap: React.FC<CustomStateMapProps> = ({
+const CustomSelectPositionMap: React.FC<CustomStateMapProps> = ({
   onPositionChange,
   center = [31.63398, 74.87226],
   zoomLevel = 13,
@@ -29,12 +30,6 @@ const CustomStateMap: React.FC<CustomStateMapProps> = ({
   )
 }
 
-let DefaultIcon = L.icon({
-  iconUrl: '/assets/images/marker-icon.png',
-  iconSize: [100, 100],
-  iconAnchor: [10, 41],
-  popupAnchor: [2, -40],
-})
 L.Marker.prototype.options.icon = DefaultIcon
 
-export default CustomStateMap
+export default CustomSelectPositionMap
