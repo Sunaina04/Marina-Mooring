@@ -189,9 +189,8 @@ export default function LoginForm({
                 <span
                   className="w-5 h-5 absolute top-[2rem]  transform -translate-y-1/2 left-4 text-[#00426f] text-lg font-[900]"
                   style={{
-                    backgroundImage: `url(${
-                      showSinUp ? '/assets/images/key.png' : '/assets/images/envelope.png'
-                    })`,
+                    backgroundImage: `url(${showSinUp ? '/assets/images/key.png' : '/assets/images/envelope.png'
+                      })`,
                     backgroundRepeat: 'no-repeat',
                     backgroundSize: 'contain',
                   }}></span>
@@ -225,9 +224,8 @@ export default function LoginForm({
                 <span
                   className="w-5 h-5 absolute top-1/2 transform -translate-y-1/2 left-4 text-gray-400"
                   style={{
-                    backgroundImage: `url(${
-                      admin ? '/assets/images/key.png' : '/assets/images/key.png'
-                    })`,
+                    backgroundImage: `url(${admin ? '/assets/images/key.png' : '/assets/images/key.png'
+                      })`,
                     backgroundRepeat: 'no-repeat',
                     backgroundSize: 'contain',
                   }}></span>
