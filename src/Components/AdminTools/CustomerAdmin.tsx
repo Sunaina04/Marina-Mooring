@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react'
 import CustomModal from '../CustomComponent/CustomModal'
-import AddCustomer from '../Moormanage/Customer/AddCustomer'
 import { IoSearch } from 'react-icons/io5'
 import { InputText } from 'primereact/inputtext'
 import { customerAdmin, customerAdminUser } from '../Utils/CustomData'
@@ -8,10 +7,16 @@ import { ActionButtonColumnProps } from '../../Type/Component/Table'
 import './AddCustomer.module.css'
 import DataTableComponent from '../CommonComponent/Table/DataTableComponent'
 import { properties } from '../Utils/MeassageProperties'
+import { PermissionData } from '../../Type/ComponentBasedType'
+import { Dropdown } from 'primereact/dropdown'
+import { FaFilter } from 'react-icons/fa6'
+import AddNewCustomer from './AddNewCustomer'
+
 const Permission = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [selectedCustomer, setSelectedCustomer] = useState<any>(undefined)
   const [editMode, setEditMode] = useState(false)
+  const [selectRole, setSelectRole] = useState()
 
   const handleButtonClick = () => {
     setModalVisible(true)
@@ -146,35 +151,24 @@ const Permission = () => {
 
   return (
     <>
-      <div className="flex justify-between items-center ml-12">
+      <div className="flex justify-between ml-12">
         <div>
-          <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">{properties.moormanagePermission}</h1>
+          <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">MOORMANAGE/permission</h1>
         </div>
-        <div className="mt-14 ml-64">
-          <select
-            onChange={() => { }}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              width: '7vw',
-              height: '5vh',
-              backgroundColor: 'white',
-              cursor: 'pointer',
-              color: 'black',
-              fontWeight: 'bold',
-              fontSize: '0.80vw',
-              justifyContent: 'space-between',
-              appearance: 'none',
-              paddingLeft: '0.5rem',
-            }}
-            defaultValue="">
-            <option value="" disabled>
-              Select Role
-            </option>
-          </select>
-        </div>
-        <div className="flex  items-center mr-[23rem] mt-14">
-          <div className=" ">
+        <div className="flex mr-24">
+          <div className="mt-14 mr-5 relative">
+            <FaFilter className='absolute z-10 top-[0.8rem] left-2 text-gray-500' />
+            <Dropdown
+              value={selectRole}
+              onChange={(e) => setSelectRole(e.value)}
+              // options={cities}
+              optionLabel="name"
+              placeholder="Select Role"
+              className="h-[7vh] w-[12vw] border-[1px] border-gray-400 !pl-[1.3rem] !font-sm"
+            />
+          </div>
+
+          <div className="mt-14">
             <CustomModal
               label={'ADD NEW'}
               style={{
@@ -190,11 +184,7 @@ const Permission = () => {
               visible={modalVisible}
               onHide={handleModalClose}
               header={<h1 className="text-xl font-bold text-black ml-4">New User</h1>}>
-              <AddCustomer customer={selectedCustomer} editMode={editMode} closeModal={function (): void {
-                throw new Error('Function not implemented.')
-              } } getCustomer={function (): void {
-                throw new Error('Function not implemented.')
-              } } />
+              <AddNewCustomer customerData={selectedCustomer} editMode={editMode} />
             </CustomModal>
           </div>
         </div>

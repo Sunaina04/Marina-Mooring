@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import CustomModal from '../../CustomComponent/CustomModal'
 import AddBoatyards from './AddBoatyards'
 import { InputText } from 'primereact/inputtext'
-import { BoatYardPayload, BoatYardResponse } from '../../../Type/ApiTypes'
+import { BoatYardData, BoatYardPayload, BoatYardResponse } from '../../../Type/ApiTypes'
 import { useGetBoatyardsMutation } from '../../../Services/MoorManage/MoormanageApi'
 import DataTableWithToogle from '../../CommonComponent/Table/DataTableWithToogle'
 import { ActionButtonColumnProps, Product } from '../../../Type/Component/Table'
@@ -18,9 +18,166 @@ const Boatyards = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [boatyardsData, setboatyardsData] = useState<BoatYardPayload[]>([])
   const [filteredboatyardsData, setFilteredboatyardsData] = useState<BoatYardPayload[]>([])
-  const [getBaotyards] = useGetBoatyardsMutation()
   const [products, setProducts] = useState<Product[]>([])
   const [expandedRows, setExpandedRows] = useState<any>(undefined)
+  const [getBoatyards] = useGetBoatyardsMutation()
+  const [selectedCustomer, setSelectedCustomer] = useState<any>(undefined)
+  const [editMode, setEditMode] = useState(false)
+
+  const moorings: BoatYardData[] = [
+    {
+      id: '#9715',
+      moorings: 'Pioneer',
+      boatyards: 2,
+      name: 'John smith',
+      phoneNumber: '+1 234 543 4324',
+      email: 'demo@gmail.com',
+      boatyardDetails: [
+        {
+          id: 1,
+          name: 'Pioneer',
+          address: '123 Elm St',
+          phone: '+1 234 543 4324',
+          mooring: 15,
+          mooringDetails: [
+            {
+              id: '#46645',
+              mainContact: 'Maxwell',
+              mooringNumber: '54345',
+              boatName: 'Sunriase',
+            },
+            {
+              id: '#46645',
+              mainContact: 'Maxwell',
+              mooringNumber: '54345',
+              boatName: 'Sunriase',
+            },
+            {
+              id: '#46645',
+              mainContact: 'Maxwell',
+              mooringNumber: '54345',
+              boatName: 'Sunriase',
+            },
+            {
+              id: '#46645',
+              mainContact: 'Maxwell',
+              mooringNumber: '54345',
+              boatName: 'Sunriase',
+            },
+          ],
+        },
+        {
+          id: 1,
+          name: 'Pioneer',
+          address: '123 Elm St',
+          phone: '+1 234 543 4324',
+          mooring: 15,
+          mooringDetails: [
+            {
+              id: '#46645',
+              mainContact: 'Maxwell',
+              mooringNumber: '54345',
+              boatName: 'Sunriase',
+            },
+            {
+              id: '#46645',
+              mainContact: 'Maxwell',
+              mooringNumber: '54345',
+              boatName: 'Sunriase',
+            },
+            {
+              id: '#46645',
+              mainContact: 'Maxwell',
+              mooringNumber: '54345',
+              boatName: 'Sunriase',
+            },
+            {
+              id: '#46645',
+              mainContact: 'Maxwell',
+              mooringNumber: '54345',
+              boatName: 'Sunriase',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: '#9715',
+      moorings: 'Pioneer',
+      boatyards: 2,
+      name: 'John smith',
+      phoneNumber: '+1 234 543 4324',
+      email: 'demo@gmail.com',
+      boatyardDetails: [
+        {
+          id: 1,
+          name: 'Pioneer',
+          address: '123 Elm St',
+          phone: '+1 234 543 4324',
+          mooring: 15,
+          mooringDetails: [
+            {
+              id: '#46645',
+              mainContact: 'Maxwell',
+              mooringNumber: '54345',
+              boatName: 'Sunriase',
+            },
+            {
+              id: '#46645',
+              mainContact: 'Maxwell',
+              mooringNumber: '54345',
+              boatName: 'Sunriase',
+            },
+            {
+              id: '#46645',
+              mainContact: 'Maxwell',
+              mooringNumber: '54345',
+              boatName: 'Sunriase',
+            },
+            {
+              id: '#46645',
+              mainContact: 'Maxwell',
+              mooringNumber: '54345',
+              boatName: 'Sunriase',
+            },
+          ],
+        },
+        {
+          id: 1,
+          name: 'Pioneer',
+          address: '123 Elm St',
+          phone: '+1 234 543 4324',
+          mooring: 15,
+          mooringDetails: [
+            {
+              id: '#46645',
+              mainContact: 'Maxwell',
+              mooringNumber: '54345',
+              boatName: 'Sunriase',
+            },
+            {
+              id: '#46645',
+              mainContact: 'Maxwell',
+              mooringNumber: '54345',
+              boatName: 'Sunriase',
+            },
+            {
+              id: '#46645',
+              mainContact: 'Maxwell',
+              mooringNumber: '54345',
+              boatName: 'Sunriase',
+            },
+            {
+              id: '#46645',
+              mainContact: 'Maxwell',
+              mooringNumber: '54345',
+              boatName: 'Sunriase',
+            },
+          ],
+        },
+      ],
+    },
+  ]
 
   const handleButtonClick = () => {
     setModalVisible(true)
@@ -89,9 +246,9 @@ const Boatyards = () => {
     ],
     [],
   )
-  const getBaotyardsData = async () => {
+  const getBoatyardsData = async () => {
     try {
-      await getBaotyards({})
+      await getBoatyards({})
         .unwrap()
         .then(async (response) => {
           const { status, content } = response as BoatYardResponse
@@ -105,7 +262,7 @@ const Boatyards = () => {
     }
   }
   useEffect(() => {
-    getBaotyardsData()
+    getBoatyardsData()
   }, [])
 
   useEffect(() => {
@@ -166,7 +323,7 @@ const Boatyards = () => {
           color: 'black',
           fontWeight: 'bold',
         },
-        body: () => {},
+        body: () => { },
       },
       {
         field: 'name',
@@ -229,24 +386,23 @@ const Boatyards = () => {
                 }}
               />
             </div>
-            <div data-testid="customModal">
-              <CustomModal
-                label={properties.label}
-                style={{
-                  width: '8.5vw',
-                  height: '7vh',
-                  backgroundColor: 'black',
-                  cursor: 'pointer',
-                  fontSize: '18px',
-                  fontWeight: 'bold',
-                  color: 'white',
-                }}
-                onClick={handleButtonClick}
-                visible={false}
-                onHide={handleModalClose}>
-                <AddBoatyards />
-              </CustomModal>
-            </div>
+
+            <CustomModal
+              label={'ADD NEW'}
+              style={{
+                width: '8vw',
+                height: '7vh',
+                backgroundColor: 'black',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: 'bold',
+                color: 'white',
+              }}
+              onClick={handleButtonClick}
+              visible={false}
+              onHide={handleModalClose}>
+              <AddBoatyards closeModal={handleModalClose} boatYardData={getBoatyardsData} customerData={selectedCustomer} editMode={editMode} />
+            </CustomModal>
           </div>
         </div>
       </div>

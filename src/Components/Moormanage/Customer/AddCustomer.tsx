@@ -136,7 +136,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 }
                 style={{
                   width: '13vw',
-                  height: '4vh',
+                  height: '4.71vh',
                   border: '1px solid gray',
                   borderRadius: '0.50rem',
                   fontSize: '0.80vw',
@@ -155,7 +155,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                   style={{
                     width: '13vw',
-                    height: '4vh',
+                    height: '4.71vh',
                     border: '1px solid gray',
                     borderRadius: '0.50rem',
                     fontSize: '0.80vw',
@@ -174,7 +174,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCustomerId(e.target.value)}
                 style={{
                   width: '13vw',
-                  height: '4vh',
+                  height: '4.71vh',
                   border: '1px solid gray',
                   borderRadius: '0.50rem',
                   fontSize: '0.80vw',
@@ -190,7 +190,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPhone(e.target.value)}
                 style={{
                   width: '13vw',
-                  height: '4vh',
+                  height: '4.71vh',
                   border: '1px solid gray',
                   borderRadius: '0.50rem',
                   fontSize: '0.80vw',
@@ -215,7 +215,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 placeholder="Street/house"
                 style={{
                   width: '14vw',
-                  height: '4vh',
+                  height: '4.71vh',
                   border: '1px solid gray',
                   borderRadius: '0.50rem',
                   color: 'black',
@@ -234,7 +234,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 type="text"
                 style={{
                   width: '14vw',
-                  height: '4vh',
+                  height: '4.71vh',
                   border: '1px solid gray',
                   borderRadius: '0.50rem',
                   color: 'black',
@@ -252,7 +252,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               placeholder="State"
               style={{
                 width: '14vw',
-                height: '4vh',
+                height: '4.71vh',
                 border: '1px solid gray',
                 borderRadius: '0.50rem',
                 color: 'black',
@@ -272,7 +272,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               className=""
               style={{
                 width: '14vw',
-                height: '4vh',
+                height: '4.71vh',
                 border: '1px solid gray',
                 borderRadius: '0.50rem',
               }}
@@ -285,7 +285,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               placeholder="Zipcode"
               style={{
                 width: '14vw',
-                height: '4vh',
+                height: '4.71vh',
                 border: '1px solid gray',
                 borderRadius: '0.50rem',
               }}
