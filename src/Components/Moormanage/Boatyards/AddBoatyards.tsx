@@ -134,18 +134,19 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData , gpsC
             </div>
           </div>
         </div>
-
-        <div className="mt-8">
+        <div className='mt-8'>
           <span className="font-semibold text-sm">Address</span>
         </div>
-        <div className="flex gap-6">
-          <div className="mt-2">
-            <InputComponent
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              placeholder="Street/house"
-              style={style}
-            />
+        <div className="flex gap-8 mt-4">
+          <div>
+            <div className="mt-2">
+              <InputComponent
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                placeholder="Street/house"
+                style={style}
+              />
+            </div>
           </div>
 
           <div className="mt-2">

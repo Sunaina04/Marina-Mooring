@@ -1,12 +1,12 @@
 * input {
   box-shadow: none !important;
-  padding-left: 0.5em;
+  padding-left: 0.2em;
   color: black;
 }
 
 * input::placeholder {
-  color: black;
-  /* Set placeholder color */
+  color: black; /* Set placeholder color */
+  font-size: small;
 }
 
 * select {
@@ -21,6 +21,8 @@
 * [data-pc-name="dropdown"] {
   box-shadow: none !important;
   color: black;
+  padding-left: 0.5em;
+
 }
 
 #stateDropdown span {
