@@ -9,7 +9,7 @@ import {
 import { VendorPayload, VendorResponse } from '../../../Type/ApiTypes'
 import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
 import { boatData } from '../../Utils/CustomData'
-import { ActionButtonColumnProps } from '../../../Type/Component/TableTypes'
+import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 
 const Vendors = () => {
   const [modalVisible, setModalVisible] = useState(false)
