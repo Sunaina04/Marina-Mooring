@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import InputComponent from '../CommonComponent/InputComponent'
+import  { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ErrorResponseForgotPassword, validateEmailResponse } from '../../Type/ApiTypes'
 import { Button } from 'primereact/button'
@@ -17,7 +16,7 @@ const ForgotPassword = () => {
   const validateEmailHandler = async () => {
     const message = validateUserCredentials(email, '', '')
     if (email.length === 0) {
-      setErrors('Please enter your Registered Email')
+      setErrors('Entered email is not registered with us, Please enter the valid email.')
       return
     }
     try {
@@ -53,6 +52,7 @@ const ForgotPassword = () => {
 
   return (
     <>
+    
       <div
         className="w-full h-screen flex justify-center items-center"
         style={{
@@ -60,7 +60,8 @@ const ForgotPassword = () => {
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}>
-        <div className="bg-white rounded-xl p-8 w-600 absolute top-227 left-420 gap-8 h-auto">
+
+        <div className="bg-white rounded-xl p-8 w-600 absolute top-227 left-420 gap-8 h-[70vh]">
           <div className="text-center mt-[1rem]">
             <img
               src="/assets/images/moorfindLogo.png"
@@ -70,35 +71,40 @@ const ForgotPassword = () => {
           </div>
 
           <div className=" flex flex-col justify-center text-center mt-[3rem]">
-            <div className="text-red-500 ">{errors.email}</div>
-            <div className="flex flex-col gap-5">
+            {errors && (
+              <div className="mb-4">
+                <span className=" mb-8 text-red-500">{errors}</span>
+              </div>
+            )}
+            <div className='flex flex-col gap-5'>
               <div className="p-input-icon-left relative flex justify-center ">
-                <InputText
-                  style={{
-                    width: '28vw',
-                    height: '7vh',
-                    padding: '0 4rem 0 3rem',
-                    border: '1px solid #C5D9E0',
-                    fontSize: '16px',
-                    color: '#00426F',
-                    borderRadius: '10px',
-                  }}
-                  placeholder={'Enter your register email'}
-                  name="username"
-                  value={''}
-                  onChange={handleChange}
-                />
-                <span
-                  className="w-5 h-5 absolute top-[2rem]  transform -translate-y-1/2 left-4 text-[#00426f] text-lg font-[900]"
-                  style={{
-                    backgroundImage: `url('/assets/images/key.png' : '/assets/images/envelope.png'
-                      })`,
-                    backgroundRepeat: 'no-repeat',
-                    backgroundSize: 'contain',
-                  }}></span>
+                <div className="p-input-icon-left relative flex justify-center">
+                  <InputText
+                    style={{
+                      width: '28vw',
+                      height: '7vh',
+                      padding: '0 4rem 0 3rem',
+                      border: '1px solid #C5D9E0',
+                      fontSize: '16px',
+                      color: '#00426F',
+                      borderRadius: '10px',
+                    }}
+                    value={email}
+                    type="email"
+                    placeholder="Enter Your Registered email"
+                    onChange={handleChange}
+                  />
+                  <span
+                    className="w-5 h-5 absolute top-[2rem] transform -translate-y-1/2 left-4 text-[#00426f] text-lg font-[900]"
+                    style={{
+                      backgroundImage: `url('/assets/images/envelope.png')`,
+                      backgroundRepeat: 'no-repeat',
+                      backgroundSize: 'contain',
+                    }}
+                  ></span>
+                </div>
               </div>
             </div>
-
             <div className="flex  mt-8 cursor-pointer ">
               <p className="w-[42vw] text-xs font-bold">
                 If you are having trouble logging in, please enter the email address registered with
@@ -116,22 +122,39 @@ const ForgotPassword = () => {
                 padding: '0 4rem 0 3rem',
                 border: '1px solid #C5D9E0',
                 fontSize: '22px',
-                lineHeight: '25.78px',
+                lineHeight: "25.78px",
                 color: '#FFFFFF',
                 borderRadius: '10px',
-                backgroundColor: '#0098FF',
-                textAlign: 'center',
-                display: 'flex',
-                fontWeight: '700',
-                justifyContent: 'center',
-              }}>
+                backgroundColor: "#0098FF",
+                textAlign: "center",
+                display: "flex",
+                fontWeight: "700",
+                justifyContent: "center",
+              }}
+
+              onClick={() => {
+                validateEmailHandler()
+              }}
+            >
+
+
               Submit
             </Button>
 
-            <p className="mt-10 text-[#00426F] font-[700] text-lg">Back</p>
+            <p className='mt-10 text-[#00426F] font-[700] text-lg' onClick={() => navigateToLoginPage('/Login')}>Back</p>
+
+
+
+
           </div>
         </div>
+
       </div>
+
+
+
+
+
     </>
   )
 }
