@@ -1,17 +1,15 @@
 import InputComponent from '../../CommonComponent/InputComponent'
-import ButtonComponent from '../../CommonComponent/ButtonComponent'
-import { DataTable } from 'primereact/datatable'
-import { Column } from 'primereact/column'
 import { useState, useEffect, useCallback } from 'react'
 import { Button } from 'primereact/button'
 import { Dropdown } from 'primereact/dropdown'
+import CustomStateMap from '../../Map/CustomSelectPositionMap'
 import { useAddBoatyardsMutation } from '../../../Services/MoorManage/MoormanageApi'
 import { BoatYardProps } from '../../../Type/ComponentBasedType'
 import useMetaData from '../../CommonComponent/MetaDataComponent'
 import { Country, State } from '../../../Type/CommonType'
 import { BoatYardResponse } from '../../../Type/ApiTypes'
 
-const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData , gpsCoordinates }) => {
+const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCoordinates }) => {
   const [boatyardId, setBoatyardId] = useState('')
   const [boatyardName, setBoatyardName] = useState('')
   const [emailAddress, setEmailAddress] = useState('')
@@ -22,6 +20,8 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData , gpsC
   const [country, setCountry] = useState()
   const [zipCode, setZipCode] = useState('')
   const [mainContact, setMainContact] = useState('')
+  const [latitude, setLatitude] = useState<number>()
+  const [longitude, setLongitude] = useState<number>()
   const [addBoatyard] = useAddBoatyardsMutation()
   const { getMetaData } = useMetaData()
   const [countriesData, setCountriesData] = useState<Country[]>()
@@ -33,6 +33,11 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData , gpsC
     border: '1px solid gray',
     borderRadius: '0.50rem',
     fontSize: '0.80vw',
+  }
+
+  const handlePositionChange = (lat: number, lng: number) => {
+    setLatitude(lat)
+    setLongitude(lng)
   }
 
   const handleSave = async () => {
@@ -212,8 +217,9 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData , gpsC
                 </div>
               </div>
             </div>
-
-            <div>{/* Add Map Here */}</div>
+          </div>
+          <div>
+            <CustomStateMap onPositionChange={handlePositionChange} />
           </div>
         </div>
 

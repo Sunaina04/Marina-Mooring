@@ -3,7 +3,6 @@ import CustomModal from '../CustomComponent/CustomModal'
 import { IoSearch } from 'react-icons/io5'
 import { InputText } from 'primereact/inputtext'
 import { customerAdmin, customerAdminUser } from '../Utils/CustomData'
-import { ActionButtonColumnProps } from '../../Type/Component/Table'
 import './AddCustomer.module.css'
 import DataTableComponent from '../CommonComponent/Table/DataTableComponent'
 import { properties } from '../Utils/MeassageProperties'
@@ -11,6 +10,7 @@ import { PermissionData } from '../../Type/ComponentBasedType'
 import { Dropdown } from 'primereact/dropdown'
 import { FaFilter } from 'react-icons/fa6'
 import AddNewCustomer from './AddNewCustomer'
+import { ActionButtonColumnProps } from '../../Type/Components/TableTypes'
 
 const Permission = () => {
   const [modalVisible, setModalVisible] = useState(false)

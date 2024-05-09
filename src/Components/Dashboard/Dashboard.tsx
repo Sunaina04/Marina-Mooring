@@ -41,7 +41,7 @@ const Dashboard = () => {
       <div className="flex justify-between p-4 ml-8">
         <div className="flex flex-col ">
           <div className="w-[43vw] h-14 mt-11">
-            <img src="/assets/images/Sea-img.png" />
+            <img src="/assets/images/map.png" />
             <div className="-translate-y-[45vh] translate-x-[5vw]">
               <Timeline />
             </div>

@@ -188,7 +188,7 @@ const Moorings = () => {
 
         <div className="relative">
           <img
-            src="/assets/images/Sea-img.png"
+            src="/assets/images/map.png"
             className="bg-no-repeat object-cover bg-auto rounded-md w-full h-[105vh]"
             alt="Sea"
           />

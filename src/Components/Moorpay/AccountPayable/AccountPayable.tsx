@@ -4,7 +4,7 @@ import { Column } from 'primereact/column'
 import CustomModal from '../../CustomComponent/CustomModal'
 import { MoorPayProps } from '../../../Type/ComponentBasedType'
 import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
-import { ActionButtonColumnProps } from '../../../Type/Component/Table'
+import { ActionButtonColumnProps } from '../../../Type/Component/TableTypes'
 
 interface TableColumn {
   id: string

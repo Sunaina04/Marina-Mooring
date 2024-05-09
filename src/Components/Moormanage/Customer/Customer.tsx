@@ -207,7 +207,7 @@ const Customer = () => {
         {/* middle container */}
         <div className="relative w-[30vw]">
           <img
-            src="/assets/images/Sea-img.png"
+            src="/assets/images/map.png"
             className=" h-full object-cover rounded-md border-[1px] border-gray-300"
             alt="Sea Image"
           />
