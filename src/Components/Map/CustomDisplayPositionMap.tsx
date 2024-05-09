@@ -1,10 +1,10 @@
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import L from 'leaflet'
 import './CustomMap.css'
-import { CustomMapProps } from '../../Type/ComponentBasedType'
 import DefaultIcon from './DefaultIcon'
+import { CustomDisplayPositionMapProps } from '../../Type/Components/MapTypes'
 
-const CustomDisplayPositionMap: React.FC<CustomMapProps> = ({
+const CustomDisplayPositionMap: React.FC<CustomDisplayPositionMapProps> = ({
   position = [31.63398, 74.872261],
   zoomLevel = 9,
   popUpMessage,

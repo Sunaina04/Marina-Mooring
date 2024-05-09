@@ -5,7 +5,7 @@ import { InputText } from 'primereact/inputtext'
 import { BoatYardData, BoatYardPayload, BoatYardResponse } from '../../../Type/ApiTypes'
 import { useGetBoatyardsMutation } from '../../../Services/MoorManage/MoormanageApi'
 import DataTableWithToogle from '../../CommonComponent/Table/DataTableWithToogle'
-import { ActionButtonColumnProps, Product } from '../../../Type/Component/Table'
+import { ActionButtonColumnProps, Product } from '../../../Type/Components/TableTypes'
 import { boatyardMooring, getProductsWithOrdersData } from '../../Utils/CustomData'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
@@ -430,7 +430,7 @@ const Boatyards = () => {
           <DataTableWithToogle
             data={products}
             rowExpansionTemplate={rowExpansionTemplate}
-            onRowToggle={(e) => setExpandedRows(e.data)}
+            onRowToggle={(e: any) => setExpandedRows(e.data)}
             expandedRows={expandedRows}
             dataKey="id"
             columns={columns}

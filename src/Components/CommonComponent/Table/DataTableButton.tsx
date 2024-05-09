@@ -1,4 +1,4 @@
-import { ButtonProps } from '../../../Type/Component/Table'
+import { ButtonProps } from '../../../Type/Component/TableTypes'
 import { bgColor, textColors } from '../../Utils/Properties'
 
 const DataTableButton: React.FC<ButtonProps> = ({

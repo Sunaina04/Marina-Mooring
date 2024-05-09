@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from 'react'
 import L from 'leaflet'
 import './CustomMap.css'
-import { DisplayPositionProps } from '../../Type/ComponentBasedType'
 import DefaultIcon from './DefaultIcon'
+import { DisplayPositionProps } from '../../Type/Components/MapTypes'
 
 const DisplayPosition: React.FC<DisplayPositionProps> = ({ map, onPositionChange }) => {
   const [position, setPosition] = useState(() => map.getCenter())

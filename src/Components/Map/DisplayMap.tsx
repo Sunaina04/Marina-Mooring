@@ -1,6 +1,6 @@
 import { MapContainer, Marker, TileLayer } from 'react-leaflet'
 import './CustomMap.css'
-import { DisplayMapProps } from '../../Type/ComponentBasedType'
+import { DisplayMapProps } from '../../Type/Components/MapTypes'
 
 const DisplayMap: React.FC<DisplayMapProps> = ({ center, zoomLevel = 13 }) => {
   return (

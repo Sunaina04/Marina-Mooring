@@ -121,25 +121,3 @@ export interface CustomerAdminDataProps {
   customerData: any
   editMode: boolean
 }
-
-export interface CustomStateMapProps {
-  onPositionChange: (lat: number, lng: number) => void
-  center?: [number, number]
-  zoomLevel?: number
-}
-
-export interface DisplayPositionProps {
-  map: any
-  onPositionChange: (lat: number, lng: number) => void
-}
-
-export interface DisplayMapProps {
-  center: [number, number]
-  zoomLevel?: number
-}
-
-export interface CustomMapProps {
-  position: number[]
-  zoomLevel?: number
-  popUpMessage?: string
-}

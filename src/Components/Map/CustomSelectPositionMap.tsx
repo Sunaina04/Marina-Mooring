@@ -3,10 +3,10 @@ import { MapContainer, Marker, TileLayer } from 'react-leaflet'
 import L from 'leaflet'
 import './CustomMap.css'
 import DisplayPosition from './DisplayPosition'
-import { CustomStateMapProps } from '../../Type/ComponentBasedType'
 import DefaultIcon from './DefaultIcon'
+import { CustomSelectPositionMapProps } from '../../Type/Components/MapTypes'
 
-const CustomSelectPositionMap: React.FC<CustomStateMapProps> = ({
+const CustomSelectPositionMap: React.FC<CustomSelectPositionMapProps> = ({
   onPositionChange,
   center = [31.63398, 74.87226],
   zoomLevel = 13,

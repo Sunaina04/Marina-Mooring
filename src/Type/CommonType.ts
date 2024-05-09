@@ -61,16 +61,3 @@ export interface State {
   label: string
 }
 
-export interface MarkerData {
-  position: [number, number]
-  popupContent: string
-}
-
-export interface CustomMapProps {
-  center?: [number, number]
-  zoom?: number
-  markers?: MarkerData[]
-  onMarkerClick?(marker: MarkerData): void
-  onContextMenu?(e: any): void
-}
-
