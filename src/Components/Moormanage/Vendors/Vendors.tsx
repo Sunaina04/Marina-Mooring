@@ -1,6 +1,4 @@
-import { useEffect, useState } from 'react'
-import { DataTable } from 'primereact/datatable'
-import { Column } from 'primereact/column'
+import { useEffect, useMemo, useState } from 'react'
 import CustomModal from '../../CustomComponent/CustomModal'
 import AddVendor from './AddVendor'
 import { InputText } from 'primereact/inputtext'
@@ -9,7 +7,9 @@ import {
   useGetVendorsMutation,
 } from '../../../Services/MoorManage/MoormanageApi'
 import { VendorPayload, VendorResponse } from '../../../Type/ApiTypes'
-import { Button } from 'primereact/button'
+import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
+import { boatData } from '../../Utils/CustomData'
+import { ActionButtonColumnProps } from '../../../Type/Component/Table'
 
 const Vendors = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -25,14 +25,15 @@ const Vendors = () => {
   }
 
   const getVendorData = async () => {
-    await getVendors({})
-      .unwrap()
-      .then(async (response) => {
-        const { status, content } = response as VendorResponse
-        if (status === 200 && Array.isArray(content)) {
-          setVendorData(content)
-        }
-      })
+    try {
+      const response = await getVendors({}).unwrap()
+      const { status, content } = response as VendorResponse
+      if (status === 200 && Array.isArray(content)) {
+        setVendorData(content)
+      }
+    } catch (error) {
+      console.error('Error fetching vendor data:', error)
+    }
   }
 
   const handleEdit = (rowData: any) => {
@@ -58,6 +59,59 @@ const Vendors = () => {
     getVendorData()
   }, [])
 
+  const tableColumns = useMemo(
+    () => [
+      {
+        id: 'id',
+        label: 'ID',
+        style: { width: '6vw', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'companyName',
+        label: 'Company Name',
+        style: { width: '12vw', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'phoneNumber',
+        label: 'Phone Number',
+        style: { width: '10vw', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'emailAddress',
+        label: 'Email Address',
+        style: { width: '12vw', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'inventoryItems',
+        label: 'Inventory Items',
+        style: { width: '10vw', backgroundColor: '#F2F2F2' },
+      },
+    ],
+    [],
+  )
+
+  const ActionButtonColumn: ActionButtonColumnProps = useMemo(
+    () => ({
+      header: 'Action',
+      buttons: [
+        {
+          color: 'black',
+          label: 'View Inventory',
+        },
+        {
+          color: 'green',
+          label: 'Edit',
+          onClick: handleEdit,
+        },
+        {
+          color: 'red',
+          label: 'Delete',
+        },
+      ],
+      headerStyle: { backgroundColor: '#F2F2F2' },
+    }),
+    [],
+  )
   return (
     <>
       <div className="flex justify-between items-center ml-2">
@@ -74,7 +128,7 @@ const Vendors = () => {
           </div>
 
           <CustomModal
-           header={<h1 className="text-lg font-bold text-black mt-4">Add Compony</h1>}
+            header={<h1 className="text-lg font-bold text-black mt-4">Add Compony</h1>}
             onClick={handleButtonClick}
             visible={modalVisible || editMode}
             onHide={handleModalClose}
@@ -89,66 +143,19 @@ const Vendors = () => {
         </div>
       </div>
       {/* </div> */}
-      <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[67vw] p-1 ml-32 mt-10">
-        <DataTable
-          value={vendorData}
-          header={''}
+      <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[67vw] p-1 ml-32 mb-80">
+        <DataTableSearchFieldComponent
           tableStyle={{
-            minWidth: '20rem',
             fontSize: '12px',
             color: '#000000',
             fontWeight: 600,
-            backgroundColor: '#D1D1D1',
           }}
-          size="small">
-          <Column header="ID" field="id" style={{ width: '8vw' }}></Column>
-          <Column style={{ width: '11vw' }} field="companyName" header="Company Name"></Column>
-          <Column
-            style={{ width: '11vw' }}
-            field="companyPhoneNumber"
-            header="Phone Number"></Column>
-
-          <Column style={{ width: '11vw' }} field="companyEmail" header="Email Address"></Column>
-          <Column
-            style={{ width: '11vw' }}
-            field="InventoryItems"
-            header="Inventory Items"></Column>
-
-          <Column
-            header="Actions"
-            body={(rowData) => (
-              <div className="flex gap-5">
-                <Button
-                  label="View Inventory"
-                  style={{
-                    fontWeight: 'bold',
-                    textDecoration: 'underline',
-                    cursor: 'pointer',
-                  }}
-                />
-                <Button
-                  label="Edit"
-                  style={{
-                    fontWeight: 'bold',
-                    textDecoration: 'underline',
-                    color: 'green',
-                    cursor: 'pointer',
-                  }}
-                  onClick={() => handleEdit(rowData)}
-                />
-                <Button
-                  label="Delete"
-                  style={{
-                    fontWeight: 'bold',
-                    textDecoration: 'underline',
-                    color: 'red',
-                    cursor: 'pointer',
-                  }}
-                  onClick={() => handleDelete(rowData)}
-                />
-              </div>
-            )}></Column>
-        </DataTable>
+          data={boatData}
+          columns={tableColumns}
+          header={undefined}
+          actionButtons={ActionButtonColumn}
+          style={{ backgroundColor: '#F2F2F2' }}
+        />
       </div>
     </>
   )

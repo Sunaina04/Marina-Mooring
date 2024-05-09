@@ -15,7 +15,6 @@ import {
 
 import userSlice from "./Slice/userSlice";
 import { userApi } from "../Services/UserApi";
-
 const rootReducer = combineReducers({
   user: userSlice,
   [userApi.reducerPath]: userApi.reducer,

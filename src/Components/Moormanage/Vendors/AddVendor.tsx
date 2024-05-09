@@ -96,7 +96,6 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
   return (
     <>
       <div className="main">
-        {/* Company Info */}
         <div className="flex">
           <div className="flex gap-8">
             <div>
@@ -117,8 +116,6 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                 />
               </div>
             </div>
-
-            {/* Phone */}
             <div>
               <span className="font-semibold text-sm text-black">Phone</span>
               <div className="mt-2">
@@ -135,8 +132,6 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                 />
               </div>
             </div>
-
-            {/* Website */}
             <div>
               <span className="font-semibold text-sm text-black">Website</span>
               <div className="mt-2">
@@ -155,8 +150,6 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
             </div>
           </div>
         </div>
-
-        {/* Address */}
         <div>
           <div className="mt-5 ml-1 flex">
             <div>
@@ -186,8 +179,6 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                 />
               </div>
             </div>
-
-            {/* Apt/Suite */}
             <div>
               <div className="mt-2">
                 <InputText
@@ -204,8 +195,6 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                 />
               </div>
             </div>
-
-            {/* Remit Street/Building */}
             <div>
               <div className="mt-2">
                 <InputText
@@ -224,8 +213,6 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                 />
               </div>
             </div>
-
-            {/* Remit Apt/Suite */}
             <div>
               <div className="mt-2">
                 <InputText
@@ -245,9 +232,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
               </div>
             </div>
           </div>
-
           <div className="flex mt-5 gap-2">
-            {/* Country */}
             <div className="">
               <Dropdown
                 value={selectedCity}
@@ -266,8 +251,6 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                 }}
               />
             </div>
-
-            {/* State */}
             <div>
               <Dropdown
                 value={selectedCity}
@@ -286,8 +269,6 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                 }}
               />
             </div>
-
-            {/* Remit Country */}
             <div className="">
               <Dropdown
                 value={selectedCity}
@@ -306,8 +287,6 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                 }}
               />
             </div>
-
-            {/* Remit State */}
             <div className="">
               <Dropdown
                 value={selectedCity}
@@ -350,8 +329,6 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
               }}
             />
           </div>
-
-          {/* Email Address */}
           <div className="mt-2 ">
             <InputText
               placeholder="Email Address"
@@ -366,8 +343,6 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
               }}
             />
           </div>
-
-          {/* Remit Zip Code */}
           <div className="mt-2 ">
             <InputText
               placeholder="Zip Code"
@@ -416,7 +391,6 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setAccountNumber(e.target.value)
               }
-              // placeholder="Sector/Block"
               type="text"
               style={{
                 width: '14vw',
@@ -554,7 +528,6 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
       </div>
 
       <div className="flex gap-3 mt-4 ">
-        {/* Save Button */}
         <Button
           onClick={saveVendor}
           label={'Save'}
@@ -569,7 +542,6 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
             borderRadius: '0.50rem',
           }}
         />
-        {/* Back Button */}
         <Button
           onClick={closeModal}
           label={'Back'}

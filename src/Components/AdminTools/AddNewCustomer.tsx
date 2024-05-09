@@ -7,7 +7,7 @@ import { Country, Role, State } from '../../Type/CommonType'
 import { CustomerAdminDataProps } from '../../Type/ComponentBasedType'
 import useMetaData from '../CommonComponent/MetaDataComponent'
 
-const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode }) => {
+const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode }) => {
   const [name, setName] = useState('')
   const [id, setId] = useState('')
   const [phone, setPhone] = useState('')
@@ -325,4 +325,4 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
   )
 }
 
-export default AddCustomer
+export default AddNewCustomer

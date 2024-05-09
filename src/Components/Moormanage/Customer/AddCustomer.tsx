@@ -10,7 +10,6 @@ import { Button } from 'primereact/button'
 import { CustomerDataProps } from '../../../Type/ComponentBasedType'
 import { CityProps } from '../../../Type/CommonType'
 import AddMoorings from '../Moorings/AddMoorings'
-
 const AddCustomer: React.FC<CustomerDataProps> = ({
   customer,
   editMode,
@@ -150,7 +149,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               <div>
                 <span className="font-semibold text-sm text-black">Email Address</span>
               </div>
-
               <div className="mt-2">
                 <InputText
                   value={email}
@@ -167,7 +165,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             </div>
           </div>
         </div>
-
         <div className="">
           <div>
             <span className="font-semibold text-sm text-black">Customer ID</span>
@@ -185,7 +182,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               />
             </div>
           </div>
-
           <div className="mt-4">
             <span className="font-semibold text-sm text-black">Phone</span>
             <div className="mt-2">
@@ -204,13 +200,11 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           </div>
         </div>
       </div>
-
-      <div className="ml-4">
-        <div className="mt-4">
+      <div className="">
+        <div className="mt-4 ml-5">
           <h1 className="text-sm font-bold text-black">Address</h1>
         </div>
-
-        <div className="flex justify-around mt-4 gap-4 ">
+        <div className="flex justify-around ml-3 mt-4 ">
           <div>
             <div className="mt-2">
               <InputText
@@ -224,12 +218,11 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   height: '4.71vh',
                   border: '1px solid gray',
                   borderRadius: '0.50rem',
-                  color:"black"
+                  color: 'black',
                 }}
               />
             </div>
           </div>
-
           <div>
             <div className="mt-2">
               <InputText
@@ -244,13 +237,12 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   height: '4.71vh',
                   border: '1px solid gray',
                   borderRadius: '0.50rem',
-                  color:"black"
+                  color: 'black',
                 }}
               />
             </div>
           </div>
-
-          <div className="mt-2 ">
+          <div className="card flex justify-content-center mt-2 ">
             <Dropdown
               value={selectedState}
               onChange={(e: DropdownChangeEvent) => setSelectedState(e.value)}
@@ -263,14 +255,13 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 height: '4.71vh',
                 border: '1px solid gray',
                 borderRadius: '0.50rem',
-                color:"black"
+                color: 'black',
               }}
             />
           </div>
         </div>
-
-        <div className="flex mt-5 gap-4">
-          <div>
+        <div className="flex mt-5 gap-2 ml-4">
+          <div className="card flex justify-content-center">
             <Dropdown
               value={selectedCountry}
               onChange={(e: DropdownChangeEvent) => setSelectedCountry(e.value)}
@@ -303,7 +294,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           </div>
         </div>
       </div>
-      <div className='ml-4 mt-8 text-xl text-black font-semibold'>
+      <div className="ml-4 mt-8 text-xl text-black font-semibold">
         <h3>Add Mooring</h3>
       </div>
       <div className="mt-8 ml-2">

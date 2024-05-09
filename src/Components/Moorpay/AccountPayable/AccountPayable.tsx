@@ -1,9 +1,21 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import CustomModal from '../../CustomComponent/CustomModal'
 import { MoorPayProps } from '../../../Type/ComponentBasedType'
+import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
+import { ActionButtonColumnProps } from '../../../Type/Component/Table'
 
+interface TableColumn {
+  id: string
+  label: string
+  style: {
+    width: string
+    backgroundColor: string
+  }
+}
+
+type TableColumns = TableColumn[]
 const AccountPayable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [accountPayableData, setAccountPayableData] = useState<MoorPayProps[]>([
@@ -54,11 +66,59 @@ const AccountPayable = () => {
     setIsModalOpen(false)
   }
 
-  const header = (
-    <div className="flex flex-wrap align-items-center justify-between gap-2 ">
-      <span className="text-xl font-bold">Account Payable</span>
-    </div>
+  const tableColumns: TableColumns = useMemo<TableColumns>(
+    () => [
+      {
+        id: 'customerId',
+        label: 'Customer ID',
+        style: { width: '6vw', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'mooringId',
+        label: 'Mooring ID',
+        style: { width: '12vw', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'boatyard',
+        label: 'Boatyard',
+        style: { width: '10vw', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'assignedTo',
+        label: 'Assigned to',
+        style: { width: '12vw', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'status',
+        label: 'Status',
+        style: { width: '10vw', backgroundColor: '#F2F2F2' },
+      },
+    ],
+    [],
   )
+
+  const CustomersHeader = () => {
+    return (
+      <div className="flex items-center">
+        <div className="">
+          <h1>Account Payable</h1>
+        </div>
+      </div>
+    )
+  }
+
+  const ActionButtonColumn: ActionButtonColumnProps = {
+    header: 'Action',
+    buttons: [
+      {
+        color: 'green',
+        label: 'Paid',
+        filled: true,
+      },
+    ],
+    headerStyle: { backgroundColor: '#F2F2F2' },
+  }
+
   return (
     <>
       <div className="flex justify-between items-center ml-12">
@@ -87,45 +147,20 @@ const AccountPayable = () => {
             onHide={handleModalClose}></CustomModal>
         </div>
       </div>
-      <div className="bg-[#F2F2F2] rounded-md border-[1px] border-[#D1D1D1] p-2 mt-12 w-[68vw] ml-20">
-        <DataTable value={accountPayableData} header={header} tableStyle={{}}>
-          <Column
-            header="invoice"
-            field="invoice"
-            style={{ width: '5rem', fontSize: '0.80rem' }}></Column>
-          <Column
-            field="mooringid"
-            header="Mooring ID"
-            style={{ width: '8rem', fontSize: '0.80rem' }}></Column>
-          <Column
-            field="name"
-            header="Customer Name"
-            style={{ width: '11rem', fontSize: '0.80rem' }}></Column>
-          <Column
-            field="technicianName"
-            header="Technician name"
-            style={{ width: '11rem', fontSize: '0.80rem' }}></Column>
-          <Column
-            field="services"
-            header="Services"
-            style={{ width: '10rem', fontSize: '0.80rem' }}></Column>
-          <Column
-            field="time"
-            header="Time"
-            style={{ width: '5rem', fontSize: '0.80rem' }}></Column>
-          <Column
-            field="amount"
-            header="Amount"
-            style={{ width: '6rem', fontSize: '0.80rem' }}></Column>
-          <Column
-            header="Actions"
-            style={{ fontSize: '0.80rem' }}
-            body={() => (
-              <div className="flex gap-4">
-                <span className="text-green-500  bg-green-100 underline cursor-pointer">Paid</span>
-              </div>
-            )}></Column>
-        </DataTable>
+
+      <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[67vw]  ml-32 mb-80">
+        <DataTableSearchFieldComponent
+          tableStyle={{
+            fontSize: '12px',
+            color: '#000000',
+            fontWeight: 600,
+          }}
+          data={accountPayableData}
+          columns={tableColumns}
+          header={CustomersHeader}
+          actionButtons={ActionButtonColumn}
+          style={{ backgroundColor: '#F2F2F2' }}
+        />
       </div>
     </>
   )
