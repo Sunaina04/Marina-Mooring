@@ -5,7 +5,7 @@
 }
 
 * input::placeholder {
-  color: black; /* Set placeholder color */
+  color: black; 
   font-size: small;
 }
 
@@ -15,7 +15,6 @@
 
 * select::placeholder {
   color: black;
-  /* Set select placeholder color */
 }
 
 * [data-pc-name="dropdown"] {
