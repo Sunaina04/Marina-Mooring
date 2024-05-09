@@ -181,7 +181,7 @@ export default function LoginForm({
                         ? 'email'
                         : 'text'
                   }
-                  placeholder={showSinUp ? 'New password' : 'johnsmith@sub-admin.com'}
+                  placeholder={showSinUp ? 'New password' : 'Enter Username'}
                   name="username"
                   value={username}
                   onChange={handleChange}
@@ -216,7 +216,7 @@ export default function LoginForm({
                         ? 'password'
                         : 'text'
                   }
-                  placeholder={showSinUp ? 'Confirm password' : '**********'}
+                  placeholder={showSinUp ? 'Confirm password' : 'Enter Password'}
                   name="password"
                   value={password}
                   onChange={handleChange}
