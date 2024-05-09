@@ -7,7 +7,7 @@ import { Country, Role, State } from '../../Type/CommonType'
 import { CustomerAdminDataProps } from '../../Type/ComponentBasedType'
 import useMetaData from '../CommonComponent/MetaDataComponent'
 
-const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode }) => {
+const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode }) => {
   const [name, setName] = useState('')
   const [id, setId] = useState('')
   const [phone, setPhone] = useState('')
@@ -70,11 +70,11 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
 
   return (
     <>
-      <div className="w-full h-full">
-        <div className="flex justify-around mt-3">
+      <div className="w-full h-full ml-4">
+        <div className="flex gap-6 mt-3 ">
           <div>
             <span className="font-semibold text-sm">Name</span>
-            <div className="mt-2">
+            <div className="mt-1">
               <InputText
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -84,6 +84,7 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
                   border: '1px solid gray',
                   borderRadius: '0.50rem',
                   fontSize: '0.80vw',
+                  padding: '1.2em',
                 }}
               />
             </div>
@@ -91,7 +92,7 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
 
           <div>
             <span className="font-semibold text-sm">ID</span>
-            <div className="mt-2">
+            <div className="mt-1">
               <InputText
                 value={id}
                 onChange={(e) => setId(e.target.value)}
@@ -101,6 +102,7 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
                   border: '1px solid gray',
                   borderRadius: '0.50rem',
                   fontSize: '0.80vw',
+                  padding: '1.2em',
                 }}
               />
             </div>
@@ -108,7 +110,7 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
 
           <div>
             <span className="font-semibold text-sm">Phone</span>
-            <div className="mt-2">
+            <div className="mt-1">
               <InputText
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
@@ -118,6 +120,7 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
                   border: '1px solid gray',
                   borderRadius: '0.50rem',
                   fontSize: '0.80vw',
+                  padding: '1.2em',
                 }}
               />
             </div>
@@ -126,59 +129,57 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
 
         <div className="flex gap-6 ">
           <div>
-            <div className="ml-4 ">
-              <div className="mt-3">
-                <span className="font-semibold text-sm ">Email Address</span>
-              </div>
+            <div className="mt-3">
+              <span className="font-semibold text-sm ">Email Address</span>
+            </div>
 
-              <div className="mt-3">
-                <InputText
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  style={{
-                    width: '13vw',
-                    height: '4vh',
-                    border: '1px solid gray',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.80vw',
-                  }}
-                />
-              </div>
+            <div className="mt-1">
+              <InputText
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                style={{
+                  width: '13vw',
+                  height: '4vh',
+                  border: '1px solid gray',
+                  borderRadius: '0.50rem',
+                  fontSize: '0.80vw',
+                  padding: '1.2em',
+                }}
+              />
             </div>
           </div>
 
           <div>
-            <div className="">
-              <div className="mt-3">
-                <span className="font-semibold text-sm">Role</span>
-              </div>
+            <div className="mt-3">
+              <span className="font-semibold text-sm">Role</span>
+            </div>
 
-              <div className="mt-3">
-                <Dropdown
-                  value={role}
-                  onChange={(e: DropdownChangeEvent) => setRole(e.value)}
-                  options={rolesData}
-                  optionLabel="name"
-                  editable
-                  placeholder="Select"
-                  style={{
-                    width: '13vw',
-                    height: '4vh',
-                    border: '1px solid gray',
-                    borderRadius: '0.50rem',
-                  }}
-                />
-              </div>
+            <div className="mt-1">
+              <Dropdown
+                value={role}
+                onChange={(e: DropdownChangeEvent) => setRole(e.value)}
+                options={rolesData}
+                optionLabel="name"
+                editable
+                placeholder="Select"
+                style={{
+                  width: '13vw',
+                  height: '4.71vh',
+                  border: '1px solid gray',
+                  borderRadius: '0.50rem',
+                }}
+              />
             </div>
           </div>
         </div>
 
-        <div className="">
-          <div className="mt-8 ml-5">
-            <h1 className="text-lg font-bold">Address</h1>
-          </div>
+        <div className="mt-5">
+          <h1 className="text-lg font-semibold">Address</h1>
+        </div>
 
-          <div className="flex justify-around  mt-4 ml-2 ">
+        <div className="gap-6 mt-4">
+
+          <div className="flex gap-6 ">
             <div>
               <div className="mt-2">
                 <InputText
@@ -187,7 +188,7 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
                   placeholder="Street/house"
                   style={{
                     width: '13vw',
-                    height: '4vh',
+                    height: '4.71vh',
                     border: '1px solid gray',
                     borderRadius: '0.50rem',
                   }}
@@ -204,7 +205,7 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
                   type="text"
                   style={{
                     width: '13vw',
-                    height: '4vh',
+                    height: '4.71vh',
                     border: '1px solid gray',
                     borderRadius: '0.50rem',
                   }}
@@ -212,7 +213,7 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
               </div>
             </div>
 
-            <div className="card flex justify-content-center mt-2 ">
+            <div className=" mt-2 ">
               <Dropdown
                 value={state}
                 onChange={(e: DropdownChangeEvent) => setState(e.value)}
@@ -222,7 +223,7 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
                 placeholder="State"
                 style={{
                   width: '13vw',
-                  height: '4vh',
+                  height: '4.71vh',
                   border: '1px solid gray',
                   borderRadius: '0.50rem',
                 }}
@@ -230,7 +231,7 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
             </div>
           </div>
 
-          <div className="flex mt-5 gap-6 ml-5">
+          <div className="flex mt-5 gap-6 ">
             <div className="card flex justify-content-center">
               <Dropdown
                 value={country}
@@ -242,7 +243,7 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
                 className=""
                 style={{
                   width: '13vw',
-                  height: '4vh',
+                  height: '4.71vh',
                   border: '1px solid gray',
                   borderRadius: '0.50rem',
                 }}
@@ -257,14 +258,16 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
                 height: '4vh',
                 border: '1px solid gray',
                 borderRadius: '0.50rem',
+                padding: '0.83em',
               }}
             />
           </div>
         </div>
-        <div className="flex ml-5 mt-5 gap-6 text-black">
+
+        <div className="flex mt-5 gap-6 text-black">
           <div>
             <span className="font-semibold text-sm">Create password</span>
-            <div className="mt-2">
+            <div className="mt-1">
               <InputComponent
                 style={{
                   width: '13vw',
@@ -272,13 +275,14 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
                   border: '1px solid gray',
                   borderRadius: '0.50rem',
                   fontSize: '0.80vw',
+                  padding: '1.2em',
                 }}
               />
             </div>
           </div>
-          <div>
+          <div className="">
             <span className="font-semibold text-sm">Confirm password</span>
-            <div className="mt-2">
+            <div className="mt-1 ">
               <InputComponent
                 style={{
                   width: '13vw',
@@ -286,6 +290,7 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
                   border: '1px solid gray',
                   borderRadius: '0.50rem',
                   fontSize: '0.80vw',
+                  padding: '1.2em',
                 }}
               />
             </div>
@@ -293,7 +298,7 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
         </div>
 
         {/* Save and Back buttons */}
-        <div className="flex gap-3 mt-10 ml-6">
+        <div className="flex gap-3 mt-10 ">
           <Button
             label={'Save'}
             onClick={handleSave}
@@ -320,4 +325,4 @@ const AddCustomer: React.FC<CustomerAdminDataProps> = ({ customerData, editMode 
   )
 }
 
-export default AddCustomer
+export default AddNewCustomer

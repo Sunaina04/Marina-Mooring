@@ -1,4 +1,4 @@
-import { Chart } from 'primereact/chart'
+
 import React from 'react'
 import { AreaChart, Area, Tooltip, ResponsiveContainer } from 'recharts'
 import { GoArrowUpRight } from 'react-icons/go'

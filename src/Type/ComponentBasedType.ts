@@ -6,6 +6,13 @@ export interface CustomerDataProps {
   closeModal: () => void
   getCustomer: () => void
 }
+export interface BoatYardProps {
+  customerData: any
+  editMode: boolean
+  gpsCoordinates? : string
+  closeModal: () => void
+  boatYardData: () => void
+}
 
 export interface BoatData {
   id: string
