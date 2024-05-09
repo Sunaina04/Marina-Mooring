@@ -2,21 +2,30 @@ import InputComponent from '../../CommonComponent/InputComponent'
 import ButtonComponent from '../../CommonComponent/ButtonComponent'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Button } from 'primereact/button'
 import { Dropdown } from 'primereact/dropdown'
+import { useAddBoatyardsMutation } from '../../../Services/MoorManage/MoormanageApi'
+import { BoatYardProps } from '../../../Type/ComponentBasedType'
+import useMetaData from '../../CommonComponent/MetaDataComponent'
+import { Country, State } from '../../../Type/CommonType'
+import { BoatYardResponse } from '../../../Type/ApiTypes'
 
-const AddBoatyards = () => {
+const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData , gpsCoordinates }) => {
   const [boatyardId, setBoatyardId] = useState('')
   const [boatyardName, setBoatyardName] = useState('')
   const [emailAddress, setEmailAddress] = useState('')
   const [phone, setPhone] = useState('')
   const [address, setAddress] = useState('')
   const [aptSuite, setAptSuite] = useState('')
-  const [state, setState] = useState()
+  const [state, setState] = useState('')
   const [country, setCountry] = useState()
   const [zipCode, setZipCode] = useState('')
   const [mainContact, setMainContact] = useState('')
+  const [addBoatyard] = useAddBoatyardsMutation()
+  const { getMetaData } = useMetaData()
+  const [countriesData, setCountriesData] = useState<Country[]>()
+  const [statesData, setStatesData] = useState<State[]>()
 
   const style = {
     width: '13vw',
@@ -26,9 +35,45 @@ const AddBoatyards = () => {
     fontSize: '0.80vw',
   }
 
-  const handleSave = () => {
-    return void 0
+  const handleSave = async () => {
+    const selectedState = statesData?.find((stateItem) => stateItem.name === state)
+    const selectedCountry = countriesData?.find((countryItem) => countryItem.name === country)
+
+    const payload = {
+      boatyardId: boatyardId,
+      boatyardName: boatyardName,
+      phone: phone,
+      emailAddress: emailAddress,
+      street: address,
+      apt: aptSuite,
+      zipCode: zipCode,
+      contact: mainContact,
+      state: selectedState,
+      country: selectedCountry,
+      gpsCoordinates: gpsCoordinates,
+    }
+    const response = await addBoatyard({ payload }).unwrap()
+    const { status } = response as BoatYardResponse
+    if (status === 200) {
+      closeModal()
+      boatYardData()
+    }
   }
+
+  const fetchDataAndUpdate = useCallback(async () => {
+    const { countriesData, statesData } = await getMetaData()
+    if (countriesData !== null) {
+      setCountriesData(countriesData)
+    }
+
+    if (statesData !== null) {
+      setStatesData(statesData)
+    }
+  }, [])
+
+  useEffect(() => {
+    fetchDataAndUpdate()
+  }, [fetchDataAndUpdate])
 
   return (
     <>
@@ -104,35 +149,33 @@ const AddBoatyards = () => {
             </div>
           </div>
 
-          <div>
-            <div>
-              <div className="mt-2">
-                <InputComponent placeholder="Apt/Suite" style={style} />
-              </div>
-            </div>
+          <div className="mt-2">
+            <InputComponent placeholder="Apt/Suite" style={style} />
           </div>
 
-          <div>
-            <div>
-              <div className="mt-2">
-                <Dropdown
-                  placeholder="State"
-                  value={state}
-                  onChange={(e) => setState(e.target.value)}
-                  style={style}
-                />
-              </div>
-            </div>
+          <div className="mt-2">
+            <Dropdown
+              id="stateDropdown"
+              placeholder="State"
+              value={state}
+              onChange={(e) => setState(e.target.value)}
+              options={statesData}
+              optionLabel="name"
+              style={style}
+            />
           </div>
         </div>
 
-        <div className="flex gap-8 mt-4">
+        <div className="flex gap-6 mt-4">
           <div>
             <div className="mt-2">
               <Dropdown
+                id="stateDropdown"
                 value={country}
                 onChange={(e) => setCountry(e.target.value)}
                 placeholder="Country"
+                options={countriesData}
+                optionLabel="name"
                 style={style}
               />
             </div>
@@ -174,7 +217,7 @@ const AddBoatyards = () => {
           </div>
         </div>
 
-        <div className="flex gap-3 mt-4 ml-6">
+        <div className="flex gap-3 mt-12">
           <Button
             label={'Save'}
             onClick={handleSave}

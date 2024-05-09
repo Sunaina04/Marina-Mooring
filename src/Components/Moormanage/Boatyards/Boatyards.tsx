@@ -11,7 +11,9 @@ const Boatyards = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [boatyardsData, setboatyardsData] = useState<BoatYardPayload[]>([])
   const [filteredboatyardsData, setFilteredboatyardsData] = useState<BoatYardPayload[]>([])
-  const [getBaotyards] = useGetBoatyardsMutation()
+  const [getBoatyards] = useGetBoatyardsMutation()
+  const [selectedCustomer, setSelectedCustomer] = useState<any>(undefined)
+  const [editMode, setEditMode] = useState(false)
 
   const moorings: BoatYardData[] = [
     {
@@ -177,7 +179,7 @@ const Boatyards = () => {
   }
 
   const getBaotyardsData = async () => {
-    await getBaotyards({})
+    await getBoatyards({})
       .unwrap()
       .then(async (response) => {
         const { status, content } = response as BoatYardResponse
@@ -215,18 +217,18 @@ const Boatyards = () => {
             <CustomModal
               label={'ADD NEW'}
               style={{
-                width: '8.5vw',
+                width: '8vw',
                 height: '7vh',
                 backgroundColor: 'black',
                 cursor: 'pointer',
-                fontSize: '18px',
+                fontSize: '14px',
                 fontWeight: 'bold',
                 color: 'white',
               }}
               onClick={handleButtonClick}
               visible={false}
               onHide={handleModalClose}>
-              <AddBoatyards />
+              <AddBoatyards closeModal={handleModalClose} boatYardData={getBaotyardsData} customerData={selectedCustomer} editMode={editMode}/>
             </CustomModal>
           </div>
         </div>
