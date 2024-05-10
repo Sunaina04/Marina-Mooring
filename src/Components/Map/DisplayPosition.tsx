@@ -7,7 +7,7 @@ import { DisplayPositionProps } from '../../Type/Components/MapTypes'
 const DisplayPosition: React.FC<DisplayPositionProps> = ({ map, onPositionChange }) => {
   const [position, setPosition] = useState(() => map.getCenter())
 
-  const handlePositionChange = useCallback(() => {
+  const onMove = useCallback(() => {
     const newPosition = map.getCenter()
     setPosition(newPosition)
     if (onPositionChange) {
@@ -16,14 +16,11 @@ const DisplayPosition: React.FC<DisplayPositionProps> = ({ map, onPositionChange
   }, [map, onPositionChange])
 
   useEffect(() => {
-    const mapMoveListener = () => {
-      handlePositionChange();
-    };
-    map.on('move', mapMoveListener);
+    map.on('move', onMove)
     return () => {
-      map.off('move', mapMoveListener);
-    };
-  }, [map, handlePositionChange, onPositionChange]);
+      map.off('move', onMove)
+    }
+  }, [map, onMove])
 
   return <></>
 }
