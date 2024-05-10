@@ -200,7 +200,7 @@ const CustomerAdmin = () => {
     <>
       <div className="flex justify-between ml-12">
         <div>
-          <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">MOORMANAGE/permission</h1>
+          <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">Moormanage/Permission</h1>
         </div>
         <div className="flex mr-24">
           <div className="mt-14 mr-5 relative">

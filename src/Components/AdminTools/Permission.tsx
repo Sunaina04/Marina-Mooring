@@ -49,7 +49,7 @@ const Permission = () => {
   const handleModalClose = () => {
     setModalVisible(false)
   }
-  
+
   return (
     <>
       <div className="flex justify-between items-center ml-12">
@@ -105,7 +105,6 @@ const Permission = () => {
       </div>
       <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[54vw] ml-20 mt-10">
         <DataTableComponent
-          value={permissionData}
           tableStyle={{
             minWidth: '20rem',
             fontSize: '12px',
@@ -113,8 +112,9 @@ const Permission = () => {
             fontWeight: 600,
             backgroundColor: '#D1D1D1',
           }}
-          scrollable={true}>
-        </DataTableComponent>
+          scrollable={true}
+          value={permissionData}
+        />
       </div>
     </>
   )
