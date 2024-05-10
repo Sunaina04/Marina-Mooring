@@ -122,21 +122,20 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   }
 
   return (
-    <div className="w-full h-full ">
-      {/* <h1 className="ml-5 text-xl text-black font-bold">Add Customer</h1> */}
-      <div className="flex gap-10">
+    <div className="ml-4 ">
+      <div className="flex gap-5">
         <div className="">
           <div>
-            <span className="font-semibold text-sm ml-5 text-black">Customer Name</span>
-            <div className="mt-2 ml-5">
+            <span className="font-semibold text-sm text-black">Customer Name</span>
+            <div className="mt-2">
               <InputComponent
                 value={customerName}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setCustomerName(e.target.value)
                 }
                 style={{
-                  width: '13vw',
-                  height: '4.71vh',
+                  width: '15vw',
+                  height: '5vh',
                   border: '1px solid gray',
                   borderRadius: '0.50rem',
                   fontSize: '0.80vw',
@@ -144,7 +143,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               />
             </div>
           </div>
-          <div className="mt-4 ml-5 ">
+          <div className="mt-4">
             <div>
               <div>
                 <span className="font-semibold text-sm text-black">Email Address</span>
@@ -154,8 +153,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   value={email}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                   style={{
-                    width: '13vw',
-                    height: '4.71vh',
+                    width: '15vw',
+                    height: '5vh',
                     border: '1px solid gray',
                     borderRadius: '0.50rem',
                     fontSize: '0.80vw',
@@ -173,8 +172,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 value={customerId}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCustomerId(e.target.value)}
                 style={{
-                  width: '13vw',
-                  height: '4.71vh',
+                  width: '15vw',
+                  height: '5vh',
                   border: '1px solid gray',
                   borderRadius: '0.50rem',
                   fontSize: '0.80vw',
@@ -189,8 +188,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 value={phone}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPhone(e.target.value)}
                 style={{
-                  width: '13vw',
-                  height: '4.71vh',
+                  width: '15vw',
+                  height: '5vh',
                   border: '1px solid gray',
                   borderRadius: '0.50rem',
                   fontSize: '0.80vw',
@@ -200,13 +199,13 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           </div>
         </div>
       </div>
-      <div className="">
-        <div className="mt-4 ml-5">
+      <div className="mt-5">
+        <div className="">
           <h1 className="text-sm font-bold text-black">Address</h1>
         </div>
-        <div className="flex justify-around ml-3 mt-4 ">
+        <div className="flex mt-3 gap-5 ">
           <div>
-            <div className="mt-2">
+            <div className="">
               <InputText
                 value={streetHouse}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -214,8 +213,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 }
                 placeholder="Street/house"
                 style={{
-                  width: '14vw',
-                  height: '4.71vh',
+                  width: '15vw',
+                  height: '5vh',
                   border: '1px solid gray',
                   borderRadius: '0.50rem',
                   color: 'black',
@@ -224,7 +223,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             </div>
           </div>
           <div>
-            <div className="mt-2">
+            <div className="">
               <InputText
                 value={sectorBlock}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -233,8 +232,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 placeholder="Apt/Suite"
                 type="text"
                 style={{
-                  width: '14vw',
-                  height: '4.71vh',
+                  width: '15vw',
+                  height: '5vh',
                   border: '1px solid gray',
                   borderRadius: '0.50rem',
                   color: 'black',
@@ -242,7 +241,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               />
             </div>
           </div>
-          <div className="card flex justify-content-center mt-2 ">
+          <div className="">
             <Dropdown
               value={selectedState}
               onChange={(e: DropdownChangeEvent) => setSelectedState(e.value)}
@@ -251,8 +250,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               editable
               placeholder="State"
               style={{
-                width: '14vw',
-                height: '4.71vh',
+                width: '15vw',
+                height: '5vh',
                 border: '1px solid gray',
                 borderRadius: '0.50rem',
                 color: 'black',
@@ -260,8 +259,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             />
           </div>
         </div>
-        <div className="flex mt-5 gap-2 ml-4">
-          <div className="card flex justify-content-center">
+        <div className="flex mt-5 gap-5">
+          <div className="">
             <Dropdown
               value={selectedCountry}
               onChange={(e: DropdownChangeEvent) => setSelectedCountry(e.value)}
@@ -271,8 +270,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               placeholder="Country"
               className=""
               style={{
-                width: '14vw',
-                height: '4.71vh',
+                width: '15vw',
+                height: '5vh',
                 border: '1px solid gray',
                 borderRadius: '0.50rem',
               }}
@@ -284,8 +283,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPinCode(e.target.value)}
               placeholder="Zipcode"
               style={{
-                width: '14vw',
-                height: '4.71vh',
+                width: '15vw',
+                height: '5vh',
                 border: '1px solid gray',
                 borderRadius: '0.50rem',
               }}
@@ -294,10 +293,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           </div>
         </div>
       </div>
-      <div className="ml-4 mt-8 text-xl text-black font-semibold">
+      <div className="mt-8 text-xl text-black font-semibold">
         <h3>Add Mooring</h3>
       </div>
-      <div className="mt-8 ml-2">
+      <div className="mt-8">
         <AddMoorings moorings={formData} editMode={editMode} />
       </div>
     </div>

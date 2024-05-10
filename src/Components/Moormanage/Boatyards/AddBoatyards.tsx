@@ -228,12 +228,12 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
             label={'Save'}
             onClick={handleSave}
             style={{
-              width: '5vw',
-              backgroundColor: 'black',
+              width: '6vw',
+              height: '7vh',
+              backgroundColor: '#0098FF',
               cursor: 'pointer',
               fontWeight: 'bolder',
               fontSize: '1vw',
-              border: '1px solid  gray',
               color: 'white',
               borderRadius: '0.50rem',
             }}

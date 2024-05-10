@@ -391,9 +391,9 @@ const Boatyards = () => {
             <CustomModal
               label={'ADD NEW'}
               style={{
-                width: '8vw',
+                width: '9vw',
                 height: '7vh',
-                backgroundColor: 'black',
+                backgroundColor: '#0098FF',
                 cursor: 'pointer',
                 fontSize: '14px',
                 fontWeight: 'bold',

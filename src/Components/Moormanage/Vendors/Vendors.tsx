@@ -132,7 +132,15 @@ const Vendors = () => {
             onClick={handleButtonClick}
             visible={modalVisible || editMode}
             onHide={handleModalClose}
-            style={{ borderRadius: '2rem' }}>
+            style={{
+              width: '9vw',
+              height: '7vh',
+              backgroundColor: '#0098FF',
+              cursor: 'pointer',
+              fontSize: '14px',
+              fontWeight: 'bold',
+              color: 'white',
+            }}>
             <AddVendor
               vendors={selectedCustomer}
               editMode={editMode}

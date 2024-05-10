@@ -144,13 +144,13 @@ const Moorings = () => {
           <CustomModal
             label={'ADD NEW'}
             style={{
-              width: "8vw",
-              height: "7vh",
-              backgroundColor: "black",
-              cursor: "pointer",
-              fontSize: "15px",
-              fontWeight: "bold",
-              color: "white",
+              width: '9vw',
+              height: '7vh',
+              backgroundColor: '#0098FF',
+              cursor: 'pointer',
+              fontSize: '14px',
+              fontWeight: 'bold',
+              color: 'white',
             }}
             onClick={handleButtonClick}
             visible={modalVisible || editMode}

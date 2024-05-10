@@ -10,7 +10,7 @@ export const style = {
   bgcolor: 'background.white',
   borderRadius: '25px',
   p: 3,
-  maxHeight: '90vh',
+ // maxHeight: '90vh',
   overflowY: 'auto',
 }
 interface CustomModalProps {
@@ -65,7 +65,6 @@ const CustomModal: React.FC<CustomModalProps> = ({
           visible={visible || internalVisible}
           style={{
             width: '60vw',
-            // height: '100vh',
             borderRadius: '1rem',
             maxHeight: '95% !important'
           }}

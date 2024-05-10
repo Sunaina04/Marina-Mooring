@@ -149,7 +149,7 @@ const Customer = () => {
 
   return (
     <>
-      <div className="flex  items-center justify-between ml-3 mr-3 overflow-hidden">
+      <div className="flex justify-between ml-3 mr-3">
         <div>
           <h1 className="mt-12 ml-8 opacity-30 text-2xl font-normal">MOORMANAGE/Customer</h1>
         </div>
@@ -157,11 +157,11 @@ const Customer = () => {
           <CustomModal
             label={'ADD NEW'}
             style={{
-              width: '8vw',
+              width: '9vw',
               height: '7vh',
-              backgroundColor: 'black',
+              backgroundColor: '#0098FF',
               cursor: 'pointer',
-              fontSize: '15px',
+              fontSize: '14px',
               fontWeight: 'bold',
               color: 'white',
             }}

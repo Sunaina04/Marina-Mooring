@@ -173,7 +173,7 @@ const Permission = () => {
         </div>
         <div className="flex mr-24">
           <div className="mt-14 mr-5 relative">
-            <FaFilter className='absolute z-10 top-[0.8rem] left-2 text-gray-500' />
+            <FaFilter className='absolute z-10 top-[0.8rem] left-2 text-blue-900' />
             <Dropdown
               value={selectRole}
               onChange={(e) => setSelectRole(e.value)}
