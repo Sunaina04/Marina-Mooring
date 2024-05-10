@@ -3,7 +3,7 @@ import { DataTable, DataTableValueArray } from "primereact/datatable";
 import { Column } from "primereact/column";
  
 interface TableCompProps {
-  header: React.JSX.Element;
+  header?: React.JSX.Element;
   //   column: React.ReactNode;
   field?: string;
   value: DataTableValueArray | undefined;
