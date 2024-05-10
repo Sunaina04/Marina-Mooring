@@ -1,19 +1,18 @@
+
 import { DataTable } from 'primereact/datatable'
 import CustomModal from '../../CustomComponent/CustomModal'
 import AddMoorings from './AddMoorings'
-import { InputText } from 'primereact/inputtext'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { Column } from 'primereact/column'
-import { Button } from 'primereact/button'
 import { useGetMooringsMutation } from '../../../Services/MoorManage/MoormanageApi'
 import { InputSwitch, InputSwitchChangeEvent } from 'primereact/inputswitch'
 import { MooringPayload, MooringResponse } from '../../../Type/ApiTypes'
 import { FaCircle, FaEdit } from 'react-icons/fa'
 import { Dialog } from 'primereact/dialog'
-import DataTableSearchFieldComponent from '../../CommonComponent/DataTableSearchFieldComponent'
 import { CustomerData, CustomerProps } from '../../../Type/CommonType'
-// import Timeline from '../../customComponent/Timeline'
-
+import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
+import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader'
+import { properties } from '../../Utils/MeassageProperties'
 const Moorings = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [mooringData, setMooringData] = useState<MooringPayload[]>([])
@@ -65,27 +64,6 @@ const Moorings = () => {
     })
     setFilteredMooringData(filteredData)
   }
-
-  const MooringsHeader = () => {
-    return (
-      <div className="flex flex-col">
-        <span className="text-sm font-extrabold mb-2">Moorings</span>
-        <div className="flex items-center gap-2 p-2">
-          <div className="p-input-icon-left">
-            <i className="pi pi-search text-[#D2D2D2]" />
-            <InputText
-              placeholder="Search by name, ID, mooring no, boat name, phone no..."
-              className="h-[5vh]
-               w-[48vh] cursor-pointer text-[0.65rem] text-center border-1 border-[1px] border-[#9F9F9F] rounded-sm "
-              value={searchQuery}
-              onChange={handleSearchChange}
-            />
-          </div>
-        </div>
-      </div>
-    )
-  }
-
   const boatData: CustomerData[] = [
     {
       id: '#001',
@@ -112,41 +90,39 @@ const Moorings = () => {
       phone: 9789756452,
     },
   ]
-
-  const tableColumns = [
-    {
-      id: 'email',
-      label: 'Email',
-      style: { width: '6vw' },
-    },
-    {
-      id: 'id',
-      label: 'Id',
-      style: { width: '6vw' },
-    },
-    {
-      id: 'name',
-      label: 'Name',
-      style: { width: '10vw' },
-    },
-    {
-      id: 'phone',
-      label: 'Phone',
-      style: { width: '6vw' },
-    },
-  ]
+  const tableColumns = useMemo(
+    () => [
+      {
+        id: 'id',
+        label: 'ID:',
+        style: { width: '4vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'mooringName',
+        label: 'Mooring Name:',
+        style: { width: '6vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'gpsCoordinates',
+        label: 'GPS Coordinates:',
+        style: { width: '6vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
+      },
+    ],
+    [],
+  )
 
   const getMooringsData = async () => {
-    await getMoorings({})
-      .unwrap()
-      .then(async (response: any) => {
-        const { status, content } = response as MooringResponse
-        if (status === 200 && Array.isArray(content)) {
-          setMooringData(content)
-          setFilteredMooringData(content)
-        }
-      })
-  }
+    try {
+      const response = await getMoorings({}).unwrap();
+      const { status, content } = response as MooringResponse;
+      if (status === 200 && Array.isArray(content)) {
+        setMooringData(content);
+        setFilteredMooringData(content);
+      }
+    } catch (error) {
+      console.error("Error fetching moorings data:", error);
+    }
+  };
 
   const handleEdit = (rowData: any) => {
     setSelectedCustomer(rowData)
@@ -157,23 +133,12 @@ const Moorings = () => {
     getMooringsData()
   }, [])
 
-  const header = (
-    <div className="">
-      <div className="text-xl w-full font-bold bg-red-600">Work Orders</div>
-      <div className="">
-        <div className="p-input-icon-left">
-          <i className="pi pi-search text-[#D2D2D2] " data-testid="search-icon" />
-          <InputText placeholder="Search" className="h-[5vh] cursor-pointer font-bold" />
-        </div>
-      </div>
-    </div>
-  )
 
   return (
     <>
       <div className="flex items-center justify-between ml-12 overflow-hidden">
         <div>
-          <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">Moormanage/Moorings</h1>
+          <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">{properties.MoormanageMoorings}</h1>
         </div>
         <div className="flex gap-4 items-center mr-20  mt-14">
           <CustomModal
@@ -198,9 +163,17 @@ const Moorings = () => {
       </div>
 
       <div className="flex ml-12 gap-4 mt-10">
-        <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[28vw] h-[60%]">
-          <DataTableSearchFieldComponent
-            data={boatData}
+        <div className="bg-[F2F2F2] rounded-md border-[1px]  border-gray-300 w-[35vw] h-[60%]">
+
+          <InputTextWithHeader header={properties.customerMooringHeader} placeholder={'Search by name, ID,mooring no,boat name,phone no...'}
+            style={{ marginLeft: "1rem", color: "A4A4A4" }}
+            inputTextStyle={{ height: "5vh", width: "38vh", cursor: "pointer", fontSize: "0.63rem", color: "#A4A4A4", border: "1px solid #A4A4A4", paddingLeft: "3rem", borderRadius: "0.45rem" }}
+            onChange={handleSearchChange}
+            value={searchQuery}
+          />
+          <div className="border-[1px]  border-[#9F9F9F]   mt-3 "></div>
+          <DataTableComponent
+            data={mooringData}
             tableStyle={{
               fontSize: '12px',
               color: '#000000',
@@ -209,19 +182,18 @@ const Moorings = () => {
             }}
             scrollable={true}
             columns={tableColumns}
-            header={MooringsHeader}
+            header={""}
           />
         </div>
 
         <div className="relative">
           <img
-            src="/assets/images/Sea-img.png"
+            src="/assets/images/map.png"
             className="bg-no-repeat object-cover bg-auto rounded-md w-full h-[105vh]"
             alt="Sea"
           />
           <div className="absolute top-72">
             <div className="">
-              {/* <Timeline data-testid="timeline" /> */}
             </div>
             <div className="rounded-md border-[1px] pb-1 border-gray-300 mt-16 ml-10 w-[17vw]  h-[13vh] bg-white">
               <p className="text-[0.7rem] ml-1 text-black">Status</p>
@@ -250,8 +222,9 @@ const Moorings = () => {
               </div>
             </div>
           </div>
-
           <div className=" border-gray-300 absolute top-5 right-5  w-[25em]  ">
+
+
             <div className="flex rounded-md bg-gray-500  py-3 pl-4 ">
               <div className="flex items-center">
                 <span className="font-bold">Customers Record</span>
@@ -262,12 +235,13 @@ const Moorings = () => {
                   checked={isChecked}
                   onChange={handleInputChange}
                   className="border-none ml-20"
+                  color='green'
                 />
               </div>
             </div>
 
             {isChecked && (
-              <>
+              <div className=''>
                 <div className="bg-[#F2F2F2] px-2">
                   <div className="flex gap-32 ">
                     <div className="font-bold text-sm ml-2 tracking-tighter">
@@ -291,6 +265,7 @@ const Moorings = () => {
                     </p>
                   </div>
                 </div>
+
                 <div className="">
                   <h3 className="bg-[#D9D9D9] font-bold h12 py-4 pl-2 ">Moorings</h3>
                   <DataTable
@@ -319,7 +294,6 @@ const Moorings = () => {
                       headerStyle={{ fontSize: '0.87rem' }}
                       style={{ fontSize: '0.75rem' }}></Column>
                   </DataTable>
-                  {/* Dialog */}
                   <Dialog
                     visible={isDialogVisible}
                     onHide={() => setIsDialogVisible(false)}
@@ -413,10 +387,18 @@ const Moorings = () => {
                     )}
                   </Dialog>
                 </div>
-              </>
+
+
+              </div>
+
+
+
             )}
           </div>
         </div>
+
+
+
       </div>
     </>
   )

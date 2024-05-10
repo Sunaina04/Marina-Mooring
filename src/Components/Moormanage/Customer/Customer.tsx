@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import CustomModal from '../../CustomComponent/CustomModal'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
@@ -20,8 +20,10 @@ import {
   MooringPayload,
   MooringResponse,
 } from '../../../Type/ApiTypes'
-// import Timeline from '../../customComponent/Timeline'
-
+import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
+import { boatData } from '../../Utils/CustomData'
+import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader'
+import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 const Customer = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [customerData, setCustomerData] = useState<CustomerPayload[]>([])
@@ -48,6 +50,9 @@ const Customer = () => {
     setModalVisible(false)
     setEditMode(false)
   }
+
+
+
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const query = event.target.value
@@ -95,35 +100,46 @@ const Customer = () => {
     }
   }
 
-  const CustomerHeader = () => {
-    return (
-      <div className="flex flex-col">
-        <span className="text-sm font-extrabold mb-2">Customers</span>
-        <div className="flex items-center gap-2 p-2">
-          <div className="p-input-icon-left">
-            <i className="pi pi-search text-[#D2D2D2]" />
-            <InputText
-              placeholder="Search by name, ID, mooring no, boat name, phone no..."
-              className="h-[5vh] w-[48vh] cursor-pointer text-sm"
-              value={searchQuery}
-              onChange={handleSearchChange}
-            />
-          </div>
-        </div>
-      </div>
-    )
-  }
+
+  const tableColumns = useMemo(
+    () => [
+      {
+        id: 'id',
+        label: 'ID:',
+        style: { width: '4vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'name',
+        label: 'Name:',
+        style: { width: '6vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'email',
+        label: 'Email:',
+        style: { width: '6vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'phone',
+        label: 'Phone:',
+        style: { width: '6vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
+      },
+    ],
+    [],
+  )
 
   const getMooringsData = async () => {
-    await getMoorings({})
-      .unwrap()
-      .then(async (response) => {
-        const { status, content } = response as MooringResponse
-        if (status === 200 && Array.isArray(content)) {
-          setMooringData(content)
-        }
-      })
-  }
+    try {
+      const response = await getMoorings({}).unwrap();
+      const { status, content } = response as MooringResponse;
+      if (status === 200 && Array.isArray(content)) {
+        setMooringData(content);
+      }
+    } catch (error) {
+
+      console.error("Error fetching moorings data:", error);
+    }
+  };
+
 
   useEffect(() => {
     getCustomerData()
@@ -149,7 +165,7 @@ const Customer = () => {
               fontWeight: 'bold',
               color: 'white',
             }}
-            header={<h1 className="text-xl font-bold text-black ml-4">Add Customer</h1>} 
+            header={<h1 className="text-xl font-bold text-black ml-4">Add Customer</h1>}
             onClick={handleButtonClick}
             visible={modalVisible || editMode}
             onHide={handleModalClose}>
@@ -163,34 +179,35 @@ const Customer = () => {
         </div>
       </div>
 
-      <div className="flex ml-12 gap-4 mt-4">
-        <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[28vw] h-[85vh]">
-          <DataTable
-            value={filteredCustomerData}
-            header={CustomerHeader}
-            scrollable={true}
-            onRowSelect={(e) => {
-              setSelectedCustomer(e.data)
-              setCustomerRecord(true)
-            }}
-            tableStyle={{
-              fontSize: '12px',
-              color: '#000000',
-              fontWeight: 600,
-              backgroundColor: '#D1D1D1',
-            }}
-            size="small">
-            <Column header="ID:" field="id" style={{ width: '6vw' }}></Column>
-            <Column style={{ width: '6vw' }} field="customerName" header="Name:"></Column>
-            <Column style={{ width: '10vw' }} field="emailAddress" header="Email:"></Column>
-            <Column style={{ width: '5vw' }} field="phone" header="Phone:"></Column>
-          </DataTable>
+      <div className="flex ml-12 gap-4">
+        <div className="bg-[F2F2F2] overflow-x-hidden overflow-y-scroll rounded-md border-[1px]  border-gray-300 w-[28vw] h-[70vh]">
+
+          <InputTextWithHeader header={'Customers'} placeholder={'Search by name, ID,address...'}
+            style={{ marginLeft: "1rem", color: "A4A4A4" }}
+            inputTextStyle={{ height: "5vh", width: "55vh", cursor: "pointer", fontSize: "0.63rem", color: "#A4A4A4", border: "1px solid #A4A4A4", paddingLeft: "3rem", borderRadius: "0.45rem" }}
+            onChange={handleSearchChange}
+            value={searchQuery}
+          />
+
+          <DataTableComponent
+          data={boatData}
+          tableStyle={{
+            fontSize: '12px',
+            color: '#000000',
+            fontWeight: 600,
+            backgroundColor: '#D9D9D9',
+          }}
+          scrollable={false}
+          columns={tableColumns} header={undefined}
+          
+          />
+       
         </div>
 
         {/* middle container */}
         <div className="relative w-[30vw]">
           <img
-            src="/assets/images/Sea-img.png"
+            src="/assets/images/map.png"
             className=" h-full object-cover rounded-md border-[1px] border-gray-300"
             alt="Sea Image"
           />

@@ -6,12 +6,15 @@ import { Calendar } from 'primereact/calendar'
 import { TechnicianPayload, TechnicianResponse } from '../../../Type/ApiTypes'
 import { useGetTechnicianMutation } from '../../../Services/MoorManage/MoormanageApi'
 import { BillsData, NullableDateArray } from '../../../Type/CommonType'
+import { Button } from 'primereact/button'
+import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
+import { IoSearch } from 'react-icons/io5'
+import { InputText } from 'primereact/inputtext'
 
 const useFetchTechnicians = () => {
   const [technicianData, setTechnicianData] = useState<TechnicianPayload[]>([])
   const [filteredTechnicianData, setFilteredTechnicianData] = useState<TechnicianPayload[]>([])
   const [getTechnicians] = useGetTechnicianMutation()
-
   const getTechniciansData = useCallback(async () => {
     try {
       const response = await getTechnicians({}).unwrap()
@@ -41,7 +44,7 @@ const Technicians = () => {
   const [globalFilter, setGlobalFilter] = useState<string | undefined>(undefined)
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date())
   const { technicianData, filteredTechnicianData } = useFetchTechnicians()
-
+ 
   const [workOrderData, setWorkOrderData] = useState<BillsData[]>([
     {
       id: 0,
@@ -50,7 +53,7 @@ const Technicians = () => {
       dueDate: '3-12-2024',
     },
   ])
-
+ 
   const technicianHeader = (
     <div>
       <div className="p-input-icon-left">
@@ -65,20 +68,18 @@ const Technicians = () => {
       </div>
     </div>
   )
-
   const handleDateSelect = (date: Date) => {
     setSelectedDate(date)
   }
-
+ 
   const handleDateUnselect = () => {
     setSelectedDate(undefined)
   }
-
+ 
   const handleRowSelection = (e: any) => {
     setTechnicianRecord(e.data)
     setDataVisible(true)
   }
-
   const workOrder = (
     <>
       <div className="flex gap-40 rounded-md">
@@ -91,7 +92,36 @@ const Technicians = () => {
       </div>
     </>
   )
+  const actionButtons = [
+    () => (
+      <>
+        <div className="flex">
+          <Button
+            label="View"
+            style={{
+              fontWeight: 'bold',
+              textDecoration: 'underline',
+              cursor: 'pointer',
+            }}
+          // onClick={handleViewInventory}
+          />
+        </div>
 
+      </>
+    ),
+
+  ];
+  const ActionHeader = () => {
+    return (
+
+      <div className="flex items-center">
+        <div >
+
+        </div>
+      </div>
+
+    )
+  }
   return (
     <>
       <div className="flex justify-between items-center ml-12">
@@ -112,7 +142,6 @@ const Technicians = () => {
           </div>
         </div>
       </div>
-
       <div className="flex gap-5 mt-10 ml-20">
         <div className="bg-[F2F2F2] rounded-md border-[1px] p-1 border-gray-300 w-[35vw] ">
           <DataTable
@@ -145,7 +174,6 @@ const Technicians = () => {
               header="Completed Jobs"></Column>
           </DataTable>
         </div>
-
         {dataVisible && (
           <div className=" rounded-md border-[1px]  border-[#D1D1D1]  ml-10  w-[35vw] ">
             <DataTable header={workOrder} value={workOrderData} scrollable={true}>
@@ -172,5 +200,6 @@ const Technicians = () => {
     </>
   )
 }
-
+ 
 export default Technicians
+ 
