@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { ErrorResponseForgotPassword, validateEmailResponse } from '../../Type/ApiTypes'
 import { Button } from 'primereact/button'
 import { validateUserCredentials } from '../Utils/ValidateUserCredentials'
@@ -52,7 +52,6 @@ const ForgotPassword = () => {
 
   return (
     <>
-
       <div
         className="w-full h-screen flex justify-center items-center"
         style={{
@@ -60,7 +59,6 @@ const ForgotPassword = () => {
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}>
-
         <div className="bg-white rounded-xl p-8 w-600 absolute top-227 left-420 gap-8 h-[70vh]">
           <div className="text-center mt-[1rem]">
             <img
@@ -76,7 +74,7 @@ const ForgotPassword = () => {
                 <span className=" mb-8 text-red-500">{errors}</span>
               </div>
             )}
-            <div className='flex flex-col gap-5'>
+            <div className="flex flex-col gap-5">
               <div className="p-input-icon-left relative flex justify-center ">
                 <div className="p-input-icon-left relative flex justify-center">
                   <InputText
@@ -100,20 +98,18 @@ const ForgotPassword = () => {
                       backgroundImage: `url('/assets/images/envelope.png')`,
                       backgroundRepeat: 'no-repeat',
                       backgroundSize: 'contain',
-                    }}
-                  ></span>
+                    }}></span>
                 </div>
               </div>
             </div>
-            <div className="flex  mt-8 cursor-pointer ">
-              <p className="w-[42vw] text-xs font-bold">
+            <div className="flex  mt-8 cursor-pointer">
+              <p className="w-[29vw] text-sm font-[400] leading-6 text-[#00426f] ">
                 If you are having trouble logging in, please enter the email address registered with
                 MOORFIND. If it is a valid email address, you will be sent an email allowing you to
                 resest your password.
               </p>
             </div>
           </div>
-
           <div className="flex flex-col items-center mt-8">
             <Button
               style={{
@@ -122,22 +118,25 @@ const ForgotPassword = () => {
                 padding: '0 4rem 0 3rem',
                 border: '1px solid #C5D9E0',
                 fontSize: '22px',
-                lineHeight: "25.78px",
+                lineHeight: '25.78px',
                 color: '#FFFFFF',
                 borderRadius: '10px',
-                backgroundColor: "#0098FF",
-                textAlign: "center",
-                display: "flex",
-                fontWeight: "700",
-                justifyContent: "center",
+                backgroundColor: '#0098FF',
+                textAlign: 'center',
+                display: 'flex',
+                fontWeight: '700',
+                justifyContent: 'center',
               }}
               onClick={() => {
                 validateEmailHandler()
-              }}
-            >
+              }}>
               Submit
             </Button>
-            <p className='mt-10 text-[#00426F] font-[700] text-lg' onClick={() => navigateToLoginPage('/Login')}>Back</p>
+            <p
+              className="mt-10 text-[#00426F] font-[700] text-lg"
+              onClick={() => navigateToLoginPage('/Login')}>
+              Back
+            </p>
           </div>
         </div>
       </div>

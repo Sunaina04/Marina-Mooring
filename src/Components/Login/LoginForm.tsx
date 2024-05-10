@@ -20,6 +20,8 @@ export default function LoginForm() {
   })
   const { username, password } = loginPayload
   const userData = useSelector((state: any) => state.user?.userData)
+  console.log('userData', userData)
+
   const token = useSelector((state: any) => state.user?.token)
   const navigate = useNavigate()
 
@@ -41,7 +43,7 @@ export default function LoginForm() {
    ****************************************************/
   const [login] = useLoginMutation()
   const [getEmployee] = useGetEmployeeMutation()
-  
+
   const signInHandler = async () => {
     if (loginPayload.username.length === 0) {
       setErrors((prev) => ({

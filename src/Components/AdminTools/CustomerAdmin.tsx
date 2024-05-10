@@ -49,12 +49,12 @@ const CustomerAdmin = () => {
   const handleModalClose = () => {
     setModalVisible(false)
   }
-  
+
   return (
     <>
       <div className="flex justify-between items-center ml-12">
         <div>
-          <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">Moormanage/CustomerAdmin</h1>
+          <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">Moormanage/Permission</h1>
         </div>
 
         <div className="mt-14 ml-64">

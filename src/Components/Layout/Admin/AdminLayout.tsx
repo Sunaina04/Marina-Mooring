@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
-import { SidebarMenu } from '../LayoutComponents/SidebarMenu'
+import SidebarMenu from '../LayoutComponents/SidebarMenu'
 import Header from '../LayoutComponents/Header'
 import { filterModalStyle } from '../../Style'
 import { style } from '../../CustomComponent/CustomModal'
@@ -9,7 +9,7 @@ const AdminLayout = () => {
   const [openSubMenus, setOpenSubMenus] = useState(new Array(SidebarMenu.length).fill(false))
   const [open, setOpen] = useState(true)
   const [selectedSubcategory, setSelectedSubcategory] = useState<any>(undefined)
-
+  const menuItems = SidebarMenu()
   const handleExpand = (index: number) => {
     setOpenSubMenus((prev) => {
       const updatedSubMenus = new Array(SidebarMenu.length).fill(false)
@@ -74,7 +74,7 @@ const AdminLayout = () => {
             position: 'relative',
             overflowY: 'auto',
           }}>
-          {SidebarMenu.map((item, index) => (
+          {menuItems.map((item, index) => (
             <React.Fragment key={index}>
               {item.name && (
                 <NavLink
@@ -129,7 +129,6 @@ const AdminLayout = () => {
                   )}
                 </NavLink>
               )}
-
               {/* Submenu Items */}
               {item.subcategories && openSubMenus[index] && (
                 <div>
