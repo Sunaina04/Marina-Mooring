@@ -64,9 +64,10 @@ const CustomModal: React.FC<CustomModalProps> = ({
           header={header}
           visible={visible || internalVisible}
           style={{
-            width: '50vw',
-            height: '100vh',
+            width: '60vw',
+            // height: '100vh',
             borderRadius: '1rem',
+            maxHeight: '95% !important'
           }}
           onHide={() => {
             onHide()

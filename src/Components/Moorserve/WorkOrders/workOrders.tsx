@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react'
-import { DataTable } from 'primereact/datatable'
-import { Column } from 'primereact/column'
+import { useEffect, useMemo, useState } from 'react'
 import { InputText } from 'primereact/inputtext'
 import { Dialog } from 'primereact/dialog'
 import { Button } from 'primereact/button'
 import AddWorkOrders from './AddWorkOrders'
 import { WorkOrderPayload, WorkOrderResponse } from '../../../Type/ApiTypes'
 import { useGetWorkOrdersMutation } from '../../../Services/MoorServe/MoorserveApi'
+import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
+import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 
 const WorkOrders = () => {
   const [visible, setVisible] = useState(false)
@@ -21,10 +21,67 @@ const WorkOrders = () => {
       <div className="">
         <div className="p-input-icon-left">
           <i className="pi pi-search text-[#D2D2D2] " data-testid="search-icon" />
-          <InputText placeholder="Search" className="h-[5vh] cursor-pointer font-bold" />
+          <InputText
+            placeholder="Search"
+            className="h-[5vh] cursor-pointer font-bold"
+            style={{ border: '1px solid #D2D2D2', borderRadius: '10px' }}
+          />
         </div>
       </div>
     </div>
+  )
+
+  const ActionButtonColumn: ActionButtonColumnProps = {
+    header: 'Action',
+    buttons: [
+      {
+        color: 'black',
+        label: 'Edit',
+        underline: true,
+      }
+    ],
+    headerStyle: {backgroundColor:"#F2F2F2"}
+  }
+
+  const tableColumns = useMemo(
+    () => [
+      {
+        id: 'invoice',
+        label: 'Invoice',
+        style: { width: '6vw', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'mooringId',
+        label: 'Mooring ID',
+        style: { width: '12vw', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'customerName',
+        label: 'Customer Name',
+        style: { width: '10vw', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'technicianName',
+        label: 'Technician Name',
+        style: { width: '12vw', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'services',
+        label: 'Services',
+        style: { width: '10vw', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'time',
+        label: 'Time',
+        style: { width: '10vw', backgroundColor: '#F2F2F2' },
+      },
+      {
+        id: 'amount',
+        label: 'Amount',
+        style: { width: '10vw', backgroundColor: '#F2F2F2' },
+      },
+    ],
+    [],
   )
 
   const getWorkOrderData = async () => {
@@ -89,7 +146,7 @@ const WorkOrders = () => {
           </div>
         </div>
 
-        <div className="bg-[#F2F2F2] rounded-xl border-[1px] border-[#D1D1D1] ml-36 p-2 mt-12 w-[64vw] ">
+        {/* <div className="bg-[#F2F2F2] rounded-xl border-[1px] border-[#D1D1D1] ml-36 p-2 mt-12 w-[64vw] ">
           <DataTable
             value={workOrderData}
             header={header}
@@ -117,6 +174,21 @@ const WorkOrders = () => {
                 </div>
               )}></Column>
           </DataTable>
+        </div> */}
+
+        <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[64vw]  ml-32 mt-12 ">
+          <DataTableSearchFieldComponent
+            tableStyle={{
+              fontSize: '12px',
+              color: '#000000',
+              fontWeight: 600,
+            }}
+            data={workOrderData}
+            columns={tableColumns}
+            header={header}
+            actionButtons={ActionButtonColumn}
+            style={{ backgroundColor: '#F2F2F2' }}
+          />
         </div>
       </div>
     </>

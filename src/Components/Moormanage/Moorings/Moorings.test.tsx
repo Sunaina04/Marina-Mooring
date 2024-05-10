@@ -78,7 +78,7 @@ describe("Moorings Component", () => {
     const seaImage = screen.getByAltText("Sea");
 
     expect(seaImage).toBeInTheDocument();
-    expect(seaImage).toHaveAttribute("src", "/assets/images/Sea-img.png");
+    expect(seaImage).toHaveAttribute("src", "/assets/images/map.png");
     expect(seaImage).toHaveClass(
       "bg-no-repeat object-cover bg-auto rounded-md w-full h-[105vh]"
     );

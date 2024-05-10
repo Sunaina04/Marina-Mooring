@@ -119,7 +119,7 @@ const routes = [
         children: [
           {
             path: 'workOrders',
-            element: <WorkOrders />,
+            element: <WorkOrders/>,
           },
           {
             path: 'estimates',

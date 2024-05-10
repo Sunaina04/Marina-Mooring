@@ -14,7 +14,6 @@ export const isValidPassword = (password: string): boolean => {
 export const isValidName = (name: string): boolean => {
   return NAME_REGEX.test(name);
 }
-
 // Function to validate user credentials.
 export const validateUserCredentials = (
   email: string,
