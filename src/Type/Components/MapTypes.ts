@@ -1,11 +1,13 @@
+type MarkerPosition = [number, number]
+
 export interface MarkerData {
-    position: [number, number]
+    position: MarkerPosition
     popupContent: string
 }
 
 export interface CustomSelectPositionMapProps {
     onPositionChange: (lat: number, lng: number) => void
-    center?: [number, number]
+    center?: MarkerPosition
     zoomLevel?: number
 }
 
@@ -15,12 +17,12 @@ export interface DisplayPositionProps {
 }
 
 export interface DisplayMapProps {
-    center: [number, number]
+    center: MarkerPosition
     zoomLevel?: number
 }
 
 export interface CustomDisplayPositionMapProps {
-    position: [number, number]
+    position: MarkerPosition
     zoomLevel?: number
     popUpMessage?: string
 }

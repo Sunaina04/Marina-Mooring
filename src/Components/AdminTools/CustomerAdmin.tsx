@@ -11,12 +11,16 @@ import { Dropdown } from 'primereact/dropdown'
 import { FaFilter } from 'react-icons/fa6'
 import AddNewCustomer from './AddNewCustomer'
 import { ActionButtonColumnProps } from '../../Type/Components/TableTypes'
+import { useGetCustomerMutation } from '../../Services/MoorManage/MoormanageApi'
+import { CustomerPayload, CustomerResponse } from '../../Type/ApiTypes'
 
 const Permission = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [selectedCustomer, setSelectedCustomer] = useState<any>(undefined)
   const [editMode, setEditMode] = useState(false)
   const [selectRole, setSelectRole] = useState()
+  const [getCustomer] = useGetCustomerMutation()
+  const [getAdminData, setGetAdminData] = useState<CustomerPayload[]>([])
 
   const handleButtonClick = () => {
     setModalVisible(true)
@@ -149,6 +153,18 @@ const Permission = () => {
     [],
   )
 
+  const getCustomerData = async () => {
+    try {
+      const response = await getCustomer({}).unwrap()
+      const { status, content } = response as CustomerResponse
+      if (status === 200 && Array.isArray(content)) {
+        setGetAdminData(content)
+      }
+    } catch (error) {
+      console.error('Error occurred while fetching customer data:', error)
+    }
+  }
+
   return (
     <>
       <div className="flex justify-between ml-12">
@@ -172,9 +188,9 @@ const Permission = () => {
             <CustomModal
               label={'ADD NEW'}
               style={{
-                width: '8vw',
+                width: '9vw',
                 height: '7vh',
-                backgroundColor: 'black',
+                backgroundColor: '#0098FF',
                 cursor: 'pointer',
                 fontSize: '14px',
                 fontWeight: 'bold',
@@ -184,7 +200,7 @@ const Permission = () => {
               visible={modalVisible}
               onHide={handleModalClose}
               header={<h1 className="text-xl font-bold text-black ml-4">New User</h1>}>
-              <AddNewCustomer customerData={selectedCustomer} editMode={editMode} />
+              <AddNewCustomer customerData={selectedCustomer} editMode={editMode} getCustomer={getCustomerData} closeModal={handleModalClose} />
             </CustomModal>
           </div>
         </div>

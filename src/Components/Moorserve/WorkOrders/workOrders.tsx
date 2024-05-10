@@ -6,7 +6,7 @@ import AddWorkOrders from './AddWorkOrders'
 import { WorkOrderPayload, WorkOrderResponse } from '../../../Type/ApiTypes'
 import { useGetWorkOrdersMutation } from '../../../Services/MoorServe/MoorserveApi'
 import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
-import { ActionButtonColumnProps } from '../../../Type/Component/TableTypes'
+import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 
 const WorkOrders = () => {
   const [visible, setVisible] = useState(false)

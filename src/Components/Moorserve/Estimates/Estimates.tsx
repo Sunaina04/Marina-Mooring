@@ -6,7 +6,7 @@ import AddEstimates from './AddEstimates'
 import { InputText } from 'primereact/inputtext'
 import { EstimateProps } from '../../../Type/ComponentBasedType'
 import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
-import { ActionButtonColumnProps } from '../../../Type/Component/TableTypes'
+import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 
 const Estimates = () => {

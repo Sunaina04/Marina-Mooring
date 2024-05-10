@@ -1,7 +1,7 @@
 import React from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
-import { RowExpansionDemoProps } from '../../../Type/Component/TableTypes'
+import { RowExpansionDemoProps } from '../../../Type/Components/TableTypes'
 const DataTableWithToogle: React.FC<RowExpansionDemoProps> = ({
   data,
   rowExpansionTemplate,

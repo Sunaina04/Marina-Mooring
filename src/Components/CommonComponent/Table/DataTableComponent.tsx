@@ -1,7 +1,7 @@
 import React from 'react'
 import { Column } from 'primereact/column'
 import { DataTable } from 'primereact/datatable'
-import { DataTableProps } from '../../../Type/Component/TableTypes'
+import { DataTableProps } from '../../../Type/Components/TableTypes'
 import DataTableButton from './DataTableButton'
 
 const DataTableComponent: React.FC<DataTableProps> = ({
