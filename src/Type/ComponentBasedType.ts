@@ -30,10 +30,6 @@ export interface BillsData {
 }
 
 export interface LoginFormProps {
-  Label: string
-  typeEmail: string
-  typePass: string
-  showSinUp: boolean
   admin?: boolean
 }
 

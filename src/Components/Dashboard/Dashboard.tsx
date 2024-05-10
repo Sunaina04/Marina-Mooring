@@ -6,12 +6,44 @@ import Timeline from '../CustomComponent/Timeline'
 import Accordition from '../CommonComponent/Accordion'
 import { BillsData, BoatData } from '../../Type/ComponentBasedType'
 import { NullableDateArray } from '../../Type/CommonType'
-import DataTableComponent from '../CommonComponent/Table/DataTableComponent'
+import DataTableComponent from '../Common/DataTableComponent'
 
 const Dashboard = () => {
   const [date, setDate] = useState<NullableDateArray>(null)
   const options: string[] = ['Pending', 'Cleared']
   const [value, setValue] = useState<string>(options[0])
+  const [boatData, setBoatData] = useState<BoatData[]>([
+    {
+      id: '01',
+      customerName: 'Suncatcher',
+      mooringId: '#3254',
+      mooringServiceDate: 'John Smith',
+      mooringLocation: '15, March 2024',
+    },
+
+    {
+      id: '02',
+      customerName: 'Suncatcher',
+      mooringId: '#3254',
+      mooringServiceDate: '15,march,2024',
+      mooringLocation: '38 21.806 144 44.959',
+    },
+    {
+      id: '03',
+      customerName: 'Suncatcher',
+      mooringId: '#3254',
+      mooringServiceDate: '15,march,2024',
+      mooringLocation: '38 21.806 144 44.959',
+    },
+    {
+      id: '04',
+      customerName: 'Suncatcher',
+      mooringId: '#3254',
+      mooringServiceDate: '15,march,2024',
+      mooringLocation: '38 21.806 144 44.959',
+    },
+  ])
+
   const Boatsheader = (
     <div className="flex flex-wrap align-items-center justify-between gap-2 p-4">
       <span className="text-xl font-extrabold">Moorings Due for Service</span>
@@ -39,6 +71,7 @@ const Dashboard = () => {
       </div>
 
       <div className="flex justify-between p-4 ml-8">
+        {/* right section */}
         <div className="flex flex-col ">
           <div className="w-[43vw] h-14 mt-11">
             <img src="/assets/images/map.png" />
@@ -83,10 +116,12 @@ const Dashboard = () => {
                 fontWeight: 'bold',
               }}
               scrollable={true}
-              columns={[]}
+              value={[]}
             />
           </div>
         </div>
+
+        {/* leftSection */}
         <div className="mr-50 mt-11">
           <Accordition />
         </div>

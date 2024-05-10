@@ -14,10 +14,41 @@ import { ActionButtonColumnProps } from '../../Type/Components/TableTypes'
 import { useGetCustomerMutation } from '../../Services/MoorManage/MoormanageApi'
 import { CustomerPayload, CustomerResponse } from '../../Type/ApiTypes'
 
-const Permission = () => {
+const CustomerAdmin = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [selectedCustomer, setSelectedCustomer] = useState<any>(undefined)
   const [editMode, setEditMode] = useState(false)
+  const [CustomerAdminData, setCustomerAdminData] = useState<PermissionData[]>([
+    {
+      id: '01',
+      email: 'Demo@gmail.com',
+      name: 'John Smith',
+      phone: '12375859',
+      role: 'Vendor',
+    },
+    {
+      id: '01',
+      email: 'Demo@gmail.com',
+      name: 'John Smith',
+      phone: '12375859',
+      role: 'Customer',
+    },
+    {
+      id: '01',
+      email: 'Demo@gmail.com',
+      name: 'John Smith',
+      phone: '12375859',
+      role: 'Technician',
+    },
+    {
+      id: '01',
+      email: 'Demo@gmail.com',
+      name: 'John Smith',
+      phone: '12375859',
+      role: 'Admin',
+    },
+  ])
+
   const [selectRole, setSelectRole] = useState()
   const [getCustomer] = useGetCustomerMutation()
   const [getAdminData, setGetAdminData] = useState<CustomerPayload[]>([])
@@ -169,7 +200,7 @@ const Permission = () => {
     <>
       <div className="flex justify-between ml-12">
         <div>
-          <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">MOORMANAGE/permission</h1>
+          <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">Moormanage/Permission</h1>
         </div>
         <div className="flex mr-24">
           <div className="mt-14 mr-5 relative">
@@ -254,4 +285,4 @@ const Permission = () => {
   )
 }
 
-export default Permission
+export default CustomerAdmin

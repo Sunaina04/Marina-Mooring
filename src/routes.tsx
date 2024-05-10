@@ -1,7 +1,6 @@
 import React from 'react'
 import ForgotPassword from './Components/ForgotPassword/ForgotPassword'
 import Dashboard from './Components/Dashboard/Dashboard'
-import LoginMain from './Components/Login/LoginMain'
 import ResetPassword from './Components/ResetPassword/ResetPassword'
 import SignUp from './Components/SignUp/SignUp'
 import AdminLayout from './Components/Layout/Admin/AdminLayout'
@@ -22,17 +21,19 @@ import TimeCards from './Components/Moorserve/TimeCards/TimeCards'
 import Forms from './Components/Moorserve/Forms/Forms'
 import ReportsMoorserve from './Components/Moorserve/Reports/ReportsMoorserve'
 import Customer from './Components/Moormanage/Customer/Customer'
-import Permission from './Components/AdminTools/CustomerAdmin'
+import Permission from './Components/AdminTools/Permission'
 import Admin from './Components/EmployeeManagement/Admin'
+import LoginForm from './Components/Login/LoginForm'
+import CustomerAdmin from './Components/AdminTools/CustomerAdmin'
 
 const routes = [
   {
     path: '',
-    element: <LoginMain />,
+    element: <LoginForm />,
   },
   {
     path: 'login',
-    element: <LoginMain />,
+    element: <LoginForm />,
   },
   {
     path: 'signup',
@@ -141,7 +142,7 @@ const routes = [
       },
       {
         path: 'customerAdmin',
-        element: <Permission />,
+        element: <CustomerAdmin />,
       },
     ],
   },
