@@ -13,6 +13,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   editMode,
   getCustomer,
   closeModal,
+  customerAdminId,
 }) => {
   const [name, setName] = useState('')
   const [id, setId] = useState('')
@@ -43,17 +44,18 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
   const handleSave = async () => {
     const payload = {
-      Name: name,
-      userId: id,
-      Phone: phone,
-      Email: email,
+      name: name,
+      userID: id,
+      phoneNumber: phone,
+      email: email,
       street: street,
-      Apt: apt,
+      apt: apt,
       zipCode: zipCode,
       password: password,
       state: state,
       country: country,
       role: role?.name,
+      customerAdminId:customerAdminId,
     }
     const response = await addCustomer(payload)
     closeModal()
