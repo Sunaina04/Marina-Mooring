@@ -98,7 +98,11 @@ const Permission = () => {
               visible={modalVisible}
               onHide={handleModalClose}
               header={<h1 className="text-xl font-bold text-black ml-4">New User</h1>}>
-              <AddCustomer customerData={selectedCustomer} editMode={editMode} />
+              <AddCustomer customerData={selectedCustomer} editMode={editMode} closeModal={function (): void {
+                throw new Error('Function not implemented.')
+              } } getCustomer={function (): void {
+                throw new Error('Function not implemented.')
+              } } />
             </CustomModal>
           </div>
         </div>

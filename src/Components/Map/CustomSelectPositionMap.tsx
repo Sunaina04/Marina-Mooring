@@ -21,7 +21,9 @@ const CustomSelectPositionMap: React.FC<CustomSelectPositionMapProps> = ({
         scrollWheelZoom={false}
         attributionControl={false}
         zoomControl={false}
-        ref={setMap}>
+        // ref={setMap} 
+        
+        >
         <TileLayer url="/assets/images/map.png" noWrap={true} />
         <Marker position={center} />
       </MapContainer>
