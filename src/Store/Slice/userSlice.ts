@@ -14,9 +14,16 @@ export const userSlice = createSlice({
     setLogout: () => {
       return {} as InitialState
     },
+    setOpen: (state, action: PayloadAction<boolean>) => {
+      state.isOpen = action.payload;
+    },
+    toggleSidebar: (state) => {
+      state.sidebar.isOpen = !state.sidebar.isOpen;
+    },
   },
 })
 
-export const { setLogout, setUserData } = userSlice.actions
-export default userSlice.reducer
+export const { setLogout, setUserData,setOpen, toggleSidebar } = userSlice.actions
+export const selectSidebar = (state: RootState) => state.user.sidebar;
 export const token = (state: RootState) => state?.user?.token
+export default userSlice.reducer

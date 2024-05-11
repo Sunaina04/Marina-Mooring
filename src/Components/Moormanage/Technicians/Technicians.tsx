@@ -10,6 +10,7 @@ import { Button } from 'primereact/button'
 import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
 import { IoSearch } from 'react-icons/io5'
 import { InputText } from 'primereact/inputtext'
+import Header from '../../Layout/LayoutComponents/Header'
 
 const useFetchTechnicians = () => {
   const [technicianData, setTechnicianData] = useState<TechnicianPayload[]>([])
@@ -124,10 +125,8 @@ const Technicians = () => {
   }
   return (
     <>
+    <Header header='MOORMANAGE/Technicians'/>
       <div className="flex justify-between items-center ml-12">
-        <div>
-          <h1 className="mt-14 ml-20 opacity-30 text-2xl font-normal">MOORMANAGE/Technicians</h1>
-        </div>
         <div className="flex gap-4 items-center mr-10 mt-14">
           <div className="">
             <p> Filter order by Date </p>

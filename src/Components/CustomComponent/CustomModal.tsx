@@ -49,7 +49,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
             <img
               src="/assets/images/plus.png"
               alt="icon"
-              className="w-4 ml-3 mr-3"
+              className="w-4 ml-2 mr-1.5"
               style={{
                 filter: 'invert(100%)',
                 color: 'white',

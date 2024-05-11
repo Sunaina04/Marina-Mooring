@@ -8,6 +8,17 @@ export interface UserLoginPayload {
   role: string
   state: string
   country: string
+  street: string
+  apt: string
+  zipCode: string
+}
+
+export interface SaveUserResponse {
+  message: string
+  status: number
+  errorList: [string]
+  time: string
+  content: {}
 }
 
 export interface LoginPayload {

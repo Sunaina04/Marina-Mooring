@@ -38,6 +38,7 @@ export interface ButtonProps {
   hidden?: boolean
   onClick?: (data?: any) => void
   label: string
+  fontWeight?: number
 }
 
 // Can be defined single in future

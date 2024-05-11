@@ -30,10 +30,15 @@ export interface BillsData {
   techniciansName: string
   dueDate: string
 }
+export interface SidebarState {
+  isOpen: boolean
+}
 
 export interface InitialState {
   token: undefined | string
   userData: UserData | undefined
+  isOpen: boolean
+  sidebar: SidebarState
 }
 
 export interface FormFieldsProps {
@@ -60,4 +65,3 @@ export interface State {
   name: string
   label: string
 }
-

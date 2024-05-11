@@ -4,12 +4,17 @@ import SidebarMenu from '../LayoutComponents/SidebarMenu'
 import Header from '../LayoutComponents/Header'
 import { filterModalStyle } from '../../Style'
 import { style } from '../../CustomComponent/CustomModal'
+import { useDispatch, useSelector } from 'react-redux'
+import { setOpen } from '../../../Store/Slice/userSlice'
+import { RootState } from '../../../Store/Store'
 
 const AdminLayout = () => {
   const [openSubMenus, setOpenSubMenus] = useState(new Array(SidebarMenu.length).fill(false))
-  const [open, setOpen] = useState(true)
-  const [selectedSubcategory, setSelectedSubcategory] = useState<any>(undefined)
+  const [selectedSubcategory, setSelectedSubcategory] = useState<any>()
+  const open = useSelector((state: RootState) => state.user.isOpen)
+  const dispatch = useDispatch()
   const menuItems = SidebarMenu()
+
   const handleExpand = (index: number) => {
     setOpenSubMenus((prev) => {
       const updatedSubMenus = new Array(SidebarMenu.length).fill(false)
@@ -35,213 +40,234 @@ const AdminLayout = () => {
   }, [open])
 
   const handleToggleDrawer = () => {
-    setOpen((prev) => !prev)
+    dispatch(setOpen(!open))
   }
 
   return (
-    <>
-      <Header />
-      <div style={{ display: 'flex' }}>
+    <div style={{ display: 'flex', minHeight: '100vh' }}>
+      <div style={{ display: 'flex', maxHeight: '100vh', overflowY: 'auto' }}>
         <button
           onClick={handleToggleDrawer}
           style={{
-            height: '35px',
-            width: '20px',
+            height: '30px',
+            width: '30px',
             minWidth: '5px',
-            marginRight: '-20rem',
-            marginLeft: open ? '15rem' : '4rem',
-            marginTop: '5rem',
-            border: '1px solid #B3B3B3',
+            marginLeft: open ? '15rem' : '4.5rem',
+            marginTop: '3rem',
             display: 'inline-block',
-            background: '#D9D9D9',
+            background: open ? '#FFFFFF' : '#00426F',
             position: 'absolute',
             zIndex: 999,
+            borderRadius: '5px',
           }}>
           <img
-            src={open ? '/assets/images/chevron_left.svg' : '/assets/images/chevron_right.svg'}
+            src={open ? '/assets/images/left.svg' : '/assets/images/right.svg'}
             alt={open ? 'ChevronLeft' : 'ChevronRight'}
-            style={{ width: '100%', height: '100%', marginLeft: '-1px' }}
+            style={{ width: '25%', height: '100%', marginLeft: '10px' }}
           />
         </button>
-
         <div
           style={{
-            width: open ? '15rem' : '4rem',
-            height: '100vh',
-            background: '#F2F2F2',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            width: open ? '18rem' : '4.5rem',
+            minWidth: open ? '18rem' : '4.5rem',
+            maxHeight: '100vh',
+            background: '#00426F',
             borderRight: 'none',
             transition: 'width 0.3s ease-in-out',
             position: 'relative',
             overflowY: 'auto',
+            paddingBottom: '20px',
           }}>
-          {menuItems.map((item, index) => (
-            <React.Fragment key={index}>
-              {item.name && (
-                <NavLink
-                  to={item.link}
-                  style={{
-                    display: 'flex',
-                    height: '30px',
-                    background: '#D9D9D9',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    border: '1px solid #B3B3B3',
-                    position: 'relative',
-                  }}
-                  onClick={() => {
-                    handleNavLink(index)
-                  }}>
-                  <img
-                    src={item.icon}
-                    alt=""
-                    width={17}
+          {/* Logo */}
+          <div style={{ minWidth: '18rem' }}>
+            <img
+              src={open ? '/assets/images/MoorFindLogo.svg' : '/assets/images/moorfind.svg'}
+              alt="Moorfind Logo"
+              style={{
+                width: open ? '45%' : '2rem',
+                height: open ? 'auto' : '3rem',
+                display: 'block',
+                transition: 'width 0.3s ease-in-out',
+                marginRight: open ? '15px' : '5px',
+                marginLeft: open ? '30px' : '20px',
+                marginTop: '50px',
+                marginBottom: '50px',
+              }}
+            />
+            {menuItems.map((item, index) => (
+              <React.Fragment key={index}>
+                {item.name && (
+                  <NavLink
+                    to={item.link}
                     style={{
-                      marginRight: open ? '15px' : '5px',
-                      marginLeft: open ? '30px' : '20px',
+                      display: 'flex',
+                      height: '30px',
+                      background: '#00426F',
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      position: 'relative',
                     }}
-                  />
-                  <span
-                    style={{
-                      fontSize: '12.5px',
-                      fontWeight: 700,
-                      letterSpacing: '0.2px',
-                      textAlign: 'left',
-                      color: '#000000',
-                      display: open ? 'flex' : 'none',
-                      flexGrow: 1,
+                    onClick={() => {
+                      handleNavLink(index)
                     }}>
-                    {item.name}
-                  </span>
-                  {item.subcategories && open && (
                     <img
-                      src={
-                        openSubMenus[index] ? '/assets/images/minus.png' : '/assets/images/plus.png'
-                      }
-                      alt={openSubMenus[index] ? 'Minus' : 'Plus'}
+                      src={item.icon}
+                      alt=""
+                      width={22}
                       style={{
-                        width: '10px',
-                        position: 'absolute',
-                        right: '8px',
-                        top: '50%',
-                        transform: 'translateY(-50%)',
+                        marginRight: open ? '15px' : '5px',
+                        marginLeft: open ? '30px' : '20px',
                       }}
                     />
-                  )}
-                </NavLink>
-              )}
-              {/* Submenu Items */}
-              {item.subcategories && openSubMenus[index] && (
-                <div>
-                  {item.subcategories.map((subcategory, subIndex) => (
-                    <NavLink
-                      to={subcategory.link}
-                      style={{ textDecoration: 'none' }}
-                      key={subIndex}>
-                      <div
+                    <span
+                      style={{
+                        fontSize: '15px',
+                        fontWeight: 700,
+                        letterSpacing: '0.2px',
+                        textAlign: 'left',
+                        color: '#FFFFFF',
+                        display: open ? 'flex' : 'none',
+                        flexGrow: 1,
+                      }}>
+                      {item.name}
+                    </span>
+                    {item.subcategories && open && (
+                      <img
+                        src={
+                          openSubMenus[index]
+                            ? '/assets/images/minus.svg'
+                            : '/assets/images/plus.svg'
+                        }
+                        alt={openSubMenus[index] ? 'Minus' : 'Plus'}
                         style={{
-                          display: 'flex',
-                          justifyContent: 'flex-start',
-                          alignItems: 'center',
-                          padding: '5px 16px',
-                          cursor: 'pointer',
-                          background: '#F2F2F2',
-                          border: '1px solid #B3B3B3',
+                          width: '10px',
+                          position: 'absolute',
+                          right: '8px',
+                          top: '50%',
+                          transform: 'translateY(-50%)',
                         }}
-                        onClick={() => setSelectedSubcategory(subIndex)}>
-                        <img
-                          src={subcategory.icon}
-                          width={17}
+                      />
+                    )}
+                  </NavLink>
+                )}
+                {/* Submenu Items */}
+                {item.subcategories && openSubMenus[index] && (
+                  <div>
+                    {item.subcategories.map((subcategory, subIndex) => (
+                      <NavLink
+                        to={subcategory.link}
+                        style={{
+                          textDecoration: 'none',
+                          // border: selectedSubcategory === index ? '1px solid #0098FF' : 'none',
+                          // background: selectedSubcategory === index ? '#0098FF' : '#00426',
+                        }}
+                        key={subIndex}>
+                        <div
                           style={{
-                            marginRight: '4px',
-                            marginLeft: open ? '50px' : '3px',
+                            display: 'flex',
+                            justifyContent: 'flex-start',
+                            alignItems: 'center',
+                            padding: '5px 16px',
+                            cursor: 'pointer',
+                            background: '#00426F',
                           }}
-                        />
-                        {open && (
-                          <span
+                          onClick={() => setSelectedSubcategory(subIndex)}>
+                          <img
+                            src={subcategory.icon}
+                            width={20}
                             style={{
-                              fontSize: '12.5px',
-                              fontWeight: selectedSubcategory === subIndex ? 700 : 400,
-                              lineHeight: '1.5',
-                              letterSpacing: '0.2px',
-                              textAlign: 'left',
-                              marginLeft: '5px',
-                              color: '#000000',
-                            }}>
-                            {subcategory.name}
-                          </span>
-                        )}
-                      </div>
-                    </NavLink>
-                  ))}
-                </div>
-              )}
+                              marginRight: '4px',
+                              marginLeft: open ? '30px' : '3px',
+                              marginTop: '20px',
+                            }}
+                          />
+                          {open && (
+                            <span
+                              style={{
+                                fontSize: '14px',
+                                fontWeight: 600,
+                                lineHeight: '1.5',
+                                letterSpacing: '0.2px',
+                                textAlign: 'left',
+                                marginLeft: '5px',
+                                color: '#FFFFFF',
+                                marginTop: '20px',
+                              }}>
+                              {subcategory.name}
+                            </span>
+                          )}
+                        </div>
+                      </NavLink>
+                    ))}
+                  </div>
+                )}
 
-              {/* Add spacer between items */}
-              {index !== SidebarMenu.length - 1 && <div style={{ height: '25px' }} />}
-            </React.Fragment>
-          ))}
-
+                {/* Add spacer between items */}
+                {index !== SidebarMenu.length - 1 && <div style={{ height: '30px' }} />}
+              </React.Fragment>
+            ))}
+          </div>
           {/* Logout Button */}
           <div
             style={{
-              position: 'absolute',
-              bottom: '10px',
-              right: '10px',
-              width: open ? '15rem' : '4rem',
+              // width: open ? '15rem' : '4rem',
               background: '#F2F2F2',
               borderRight: 'none',
               transition: 'width 0.3s ease-in-out',
-              marginRight: '-10px',
-              marginBottom: '-8px',
             }}>
             <NavLink
               to={''}
               style={{
                 display: 'flex',
                 height: '30px',
-                background: '#D9D9D9',
+                background: '#00426F',
                 flexDirection: 'row',
                 alignItems: 'center',
-                border: '1px solid #B3B3B3',
                 position: 'relative',
               }}>
               <img
-                src="/assets/images/square.png"
+                src="/assets/images/logout.svg"
                 alt="Logout"
-                width={17}
+                width={20}
                 style={{
                   marginRight: open ? '15px' : '20px',
-                  marginLeft: open ? '30px' : '8px',
+                  marginLeft: open ? '30px' : '20px',
                 }}
               />
               <span
                 style={{
-                  fontSize: '12.5px',
+                  fontSize: '15px',
                   fontWeight: 700,
                   letterSpacing: '0.2px',
                   textAlign: 'left',
-                  color: '#000000',
+                  color: '#FFFFFF',
                   display: open ? 'flex' : 'none',
                   flexGrow: 1,
                 }}>
-                {'Logout'}
+                {'LOGOUT'}
               </span>
             </NavLink>
           </div>
         </div>
-
-        <div
-          style={{
-            flexGrow: 1,
-            width: '82%',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-          }}>
-          <Outlet />
-        </div>
       </div>
-    </>
+      <div
+        style={{
+          flexGrow: 1,
+          // width: '82%',
+          width: 'calc(100vw - 18rem)',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          height: '100%',
+          overflowY: 'scroll',
+          maxHeight: '100vh',
+        }}>
+        <Outlet />
+      </div>
+    </div>
   )
 }
 

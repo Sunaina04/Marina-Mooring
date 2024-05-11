@@ -120,3 +120,7 @@ export interface CustomerAdminDataProps {
   closeModal: () => void
   getCustomer: () => void
 }
+
+export interface HeaderProps {
+  header: string;
+}

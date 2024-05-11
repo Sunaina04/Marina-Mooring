@@ -1,4 +1,4 @@
-import  { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import CustomModal from '../../CustomComponent/CustomModal'
@@ -10,6 +10,7 @@ import {
 import { Button } from 'primereact/button'
 import useSubmit from '../../../Services/CustomHook/useSubmit'
 import FormFields from '../../CustomComponent/FormFields'
+import Header from '../../Layout/LayoutComponents/Header'
 
 const Forms = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -17,7 +18,7 @@ const Forms = () => {
   const [customerName, setCustomerName] = useState('')
   const [customerID, setCustomerID] = useState('')
   const [formName, setFormName] = useState('')
-  const [file, setFile] = useState<File | undefined>(undefined) 
+  const [file, setFile] = useState<File | undefined>(undefined)
   const [getForms] = useGetFormsMutation()
   const [downloadForms] = useDownloadFormMutation()
   const { error, response, handleSubmit } = useSubmit()
@@ -79,11 +80,9 @@ const Forms = () => {
 
   return (
     <>
-      <div className="flex justify-between items-center ml-12">
-        <div>
-          <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">MOORSERVE/Forms Library</h1>
-        </div>
+      <Header header="MOORSERVE/Forms" />
 
+      <div className="flex justify-between items-center ml-12">
         <div className=" mr-64 mt-14">
           <CustomModal
             header="Form Details"

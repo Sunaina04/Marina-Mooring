@@ -5,10 +5,10 @@ export const properties = {
   address: 'Address',
   mooringInventoried: 'Mooring Inventoried',
   boatyardGPSCoordinates: 'Boatyard GPS Coordinates',
-  moormanagePermission: 'Moormanage/Permission',
-  Customersadmins: 'Customers-admins',
-  CustomerAdminUsers: 'Customer-adminUsers',
+  moormanagePermission: 'MOORMANAGE/Permission',
+  CustomersOwner: 'Customer Owner',
+  CustomerOwnerUsers: 'Customer Owner Users',
   label: 'ADD NEW',
   customerMooringHeader:"Moorings",
-  MoormanageMoorings:"Moormanage/Moorings"
+  MoormanageMoorings:"MOORMANAGE/Moorings"
 }

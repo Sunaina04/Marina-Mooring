@@ -4,6 +4,7 @@ import { MoorPayProps } from '../../../Type/ComponentBasedType'
 import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
 import AddCustomer from '../../Moormanage/Customer/AddCustomer'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
+import Header from '../../Layout/LayoutComponents/Header'
 
 const AccountRecievable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -123,13 +124,9 @@ const AccountRecievable = () => {
 
   return (
     <>
-      <div className="flex justify-between items-center ml-12">
-        <div>
-          <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">
-            Moormanage/Account Receivable
-          </h1>
-        </div>
+      <Header header="MOORPAY/Account Receivable" />
 
+      <div className="flex justify-between items-center ml-12">
         <div className="flex gap-1 ml-[18rem] text-[gray] font-extrabold mt-14">
           <div>
             <img

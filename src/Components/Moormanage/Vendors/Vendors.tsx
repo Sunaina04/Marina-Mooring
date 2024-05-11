@@ -10,6 +10,7 @@ import { VendorPayload, VendorResponse } from '../../../Type/ApiTypes'
 import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
 import { boatData } from '../../Utils/CustomData'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
+import Header from '../../Layout/LayoutComponents/Header'
 
 const Vendors = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -114,11 +115,8 @@ const Vendors = () => {
   )
   return (
     <>
+    <Header header='MOORMANAGE/Vendor'/>
       <div className="flex justify-between items-center ml-2">
-        <div>
-          <h1 className="mt-14 ml-[7.50rem] opacity-30 text-2xl font-normal">Moormanage/Vendor</h1>
-        </div>
-
         <div className="flex gap-4 items-center  mr-[8rem] mt-14">
           <div>
             <div className="p-input-icon-left">

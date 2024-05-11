@@ -9,7 +9,7 @@ import {
 
 const authApi = userApi.injectEndpoints({
   endpoints: (builder: any) => ({
-    userLogin: builder.mutation({
+    addUser: builder.mutation({
       query: (payload: UserLoginPayload) => ({
         url: "api/v1/user/",
         method: "POST",
@@ -74,6 +74,7 @@ const authApi = userApi.injectEndpoints({
 });
 
 export const {
+  useAddUserMutation,
   useLoginMutation,
   useSignupMutation,
   useForgotPasswordMutation,

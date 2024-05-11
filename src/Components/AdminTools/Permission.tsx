@@ -4,7 +4,8 @@ import { Button } from 'primereact/button'
 import CustomModal from '../CustomComponent/CustomModal'
 import { PermissionData } from '../../Type/ComponentBasedType'
 import AddCustomer from './AddNewCustomer'
-import DataTableComponent from '../Common/DataTableComponent'
+import DataTableComponent from '../CommonComponent/Table/DataTableComponent'
+import Header from '../Layout/LayoutComponents/Header'
 
 const Permission = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -52,11 +53,9 @@ const Permission = () => {
 
   return (
     <>
-      <div className="flex justify-between items-center ml-12">
-        <div>
-          <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">Moormanage/Permission</h1>
-        </div>
+      <Header header="MOORMANAGE/Permission" />
 
+      <div className="flex justify-between items-center ml-12">
         <div className="mt-14 ml-64">
           <select
             onChange={() => {}}
@@ -98,11 +97,16 @@ const Permission = () => {
               visible={modalVisible}
               onHide={handleModalClose}
               header={<h1 className="text-xl font-bold text-black ml-4">New User</h1>}>
-              <AddCustomer customerData={selectedCustomer} editMode={editMode} closeModal={function (): void {
-                throw new Error('Function not implemented.')
-              } } getCustomer={function (): void {
-                throw new Error('Function not implemented.')
-              } } />
+              <AddCustomer
+                customerData={selectedCustomer}
+                editMode={editMode}
+                closeModal={function (): void {
+                  throw new Error('Function not implemented.')
+                }}
+                getCustomer={function (): void {
+                  throw new Error('Function not implemented.')
+                }}
+              />
             </CustomModal>
           </div>
         </div>
@@ -117,7 +121,7 @@ const Permission = () => {
             backgroundColor: '#D1D1D1',
           }}
           scrollable={true}
-          value={permissionData}
+          columns={[]}
         />
       </div>
     </>

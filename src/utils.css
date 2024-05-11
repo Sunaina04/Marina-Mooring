@@ -5,7 +5,7 @@
 }
 
 * input::placeholder {
-  color: black; 
+  color: black;
   font-size: small;
 }
 
@@ -17,15 +17,19 @@
   color: black;
 }
 
-* [data-pc-name="dropdown"] {
+* [data-pc-name='dropdown'] {
   box-shadow: none !important;
   color: black;
   padding-left: 0.5em;
-
 }
 
 #stateDropdown span {
   padding: 0;
   margin-left: 0.5rem;
-  color:black
+  color: black;
 }
+
+body {
+  background-color: #e7e7e7;
+}
+

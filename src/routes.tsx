@@ -24,7 +24,7 @@ import Customer from './Components/Moormanage/Customer/Customer'
 import Permission from './Components/AdminTools/Permission'
 import Admin from './Components/EmployeeManagement/Admin'
 import LoginForm from './Components/Login/LoginForm'
-import CustomerAdmin from './Components/AdminTools/CustomerAdmin'
+import CustomerAdmin from './Components/AdminTools/CustomerOwner'
 
 const routes = [
   {

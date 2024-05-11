@@ -7,6 +7,7 @@ import { WorkOrderPayload, WorkOrderResponse } from '../../../Type/ApiTypes'
 import { useGetWorkOrdersMutation } from '../../../Services/MoorServe/MoorserveApi'
 import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
+import Header from '../../Layout/LayoutComponents/Header'
 
 const WorkOrders = () => {
   const [visible, setVisible] = useState(false)
@@ -38,9 +39,9 @@ const WorkOrders = () => {
         color: 'black',
         label: 'Edit',
         underline: true,
-      }
+      },
     ],
-    headerStyle: {backgroundColor:"#F2F2F2"}
+    headerStyle: { backgroundColor: '#F2F2F2' },
   }
 
   const tableColumns = useMemo(
@@ -108,11 +109,10 @@ const WorkOrders = () => {
 
   return (
     <>
+      <Header header="MOORSERVE/Work Orders" />
+
       <div className="">
         <div className="flex justify-between gap-4 mr-4 mt-24">
-          <div>
-            <h1 className="mt-6 opacity-30 text-2xl ml-36 font-normal">MOORSERVE/Work Orders</h1>
-          </div>
           <div className="flex mr-36 gap-4">
             <div>
               <div className="flex gap-4">

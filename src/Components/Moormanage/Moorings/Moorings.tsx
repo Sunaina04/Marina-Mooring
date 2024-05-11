@@ -1,4 +1,3 @@
-
 import { DataTable } from 'primereact/datatable'
 import CustomModal from '../../CustomComponent/CustomModal'
 import AddMoorings from './AddMoorings'
@@ -13,6 +12,7 @@ import { CustomerData, CustomerProps } from '../../../Type/CommonType'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader'
 import { properties } from '../../Utils/MeassageProperties'
+import Header from '../../Layout/LayoutComponents/Header'
 const Moorings = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [mooringData, setMooringData] = useState<MooringPayload[]>([])
@@ -113,16 +113,16 @@ const Moorings = () => {
 
   const getMooringsData = async () => {
     try {
-      const response = await getMoorings({}).unwrap();
-      const { status, content } = response as MooringResponse;
+      const response = await getMoorings({}).unwrap()
+      const { status, content } = response as MooringResponse
       if (status === 200 && Array.isArray(content)) {
-        setMooringData(content);
-        setFilteredMooringData(content);
+        setMooringData(content)
+        setFilteredMooringData(content)
       }
     } catch (error) {
-      console.error("Error fetching moorings data:", error);
+      console.error('Error fetching moorings data:', error)
     }
-  };
+  }
 
   const handleEdit = (rowData: any) => {
     setSelectedCustomer(rowData)
@@ -133,30 +133,26 @@ const Moorings = () => {
     getMooringsData()
   }, [])
 
-
   return (
     <>
+      <Header header={properties.MoormanageMoorings} />
       <div className="flex items-center justify-between ml-12 overflow-hidden">
-        <div>
-          <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">{properties.MoormanageMoorings}</h1>
-        </div>
         <div className="flex gap-4 items-center mr-20  mt-14">
           <CustomModal
             label={'ADD NEW'}
             style={{
-              width: "8vw",
-              height: "7vh",
-              backgroundColor: "black",
-              cursor: "pointer",
-              fontSize: "15px",
-              fontWeight: "bold",
-              color: "white",
+              width: '8vw',
+              height: '7vh',
+              backgroundColor: 'black',
+              cursor: 'pointer',
+              fontSize: '15px',
+              fontWeight: 'bold',
+              color: 'white',
             }}
             onClick={handleButtonClick}
             visible={modalVisible || editMode}
             onHide={handleModalClose}
-            header={<h1 className="text-lg font-bold text-black ml-4">Add Mooring</h1>}
-          >
+            header={<h1 className="text-lg font-bold text-black ml-4">Add Mooring</h1>}>
             <AddMoorings moorings={selectedCustomer} editMode={editMode} />
           </CustomModal>
         </div>
@@ -164,10 +160,20 @@ const Moorings = () => {
 
       <div className="flex ml-12 gap-4 mt-10">
         <div className="bg-[F2F2F2] rounded-md border-[1px]  border-gray-300 w-[35vw] h-[60%]">
-
-          <InputTextWithHeader header={properties.customerMooringHeader} placeholder={'Search by name, ID,mooring no,boat name,phone no...'}
-            style={{ marginLeft: "1rem", color: "A4A4A4" }}
-            inputTextStyle={{ height: "5vh", width: "38vh", cursor: "pointer", fontSize: "0.63rem", color: "#A4A4A4", border: "1px solid #A4A4A4", paddingLeft: "3rem", borderRadius: "0.45rem" }}
+          <InputTextWithHeader
+            header={properties.customerMooringHeader}
+            placeholder={'Search by name, ID,mooring no,boat name,phone no...'}
+            style={{ marginLeft: '1rem', color: 'A4A4A4' }}
+            inputTextStyle={{
+              height: '5vh',
+              width: '38vh',
+              cursor: 'pointer',
+              fontSize: '0.63rem',
+              color: '#A4A4A4',
+              border: '1px solid #A4A4A4',
+              paddingLeft: '3rem',
+              borderRadius: '0.45rem',
+            }}
             onChange={handleSearchChange}
             value={searchQuery}
           />
@@ -182,7 +188,7 @@ const Moorings = () => {
             }}
             scrollable={true}
             columns={tableColumns}
-            header={""}
+            header={''}
           />
         </div>
 
@@ -193,8 +199,7 @@ const Moorings = () => {
             alt="Sea"
           />
           <div className="absolute top-72">
-            <div className="">
-            </div>
+            <div className=""></div>
             <div className="rounded-md border-[1px] pb-1 border-gray-300 mt-16 ml-10 w-[17vw]  h-[13vh] bg-white">
               <p className="text-[0.7rem] ml-1 text-black">Status</p>
               <hr className="m-1 border-black" />
@@ -223,8 +228,6 @@ const Moorings = () => {
             </div>
           </div>
           <div className=" border-gray-300 absolute top-5 right-5  w-[25em]  ">
-
-
             <div className="flex rounded-md bg-gray-500  py-3 pl-4 ">
               <div className="flex items-center">
                 <span className="font-bold">Customers Record</span>
@@ -235,13 +238,13 @@ const Moorings = () => {
                   checked={isChecked}
                   onChange={handleInputChange}
                   className="border-none ml-20"
-                  color='green'
+                  color="green"
                 />
               </div>
             </div>
 
             {isChecked && (
-              <div className=''>
+              <div className="">
                 <div className="bg-[#F2F2F2] px-2">
                   <div className="flex gap-32 ">
                     <div className="font-bold text-sm ml-2 tracking-tighter">
@@ -387,18 +390,10 @@ const Moorings = () => {
                     )}
                   </Dialog>
                 </div>
-
-
               </div>
-
-
-
             )}
           </div>
         </div>
-
-
-
       </div>
     </>
   )

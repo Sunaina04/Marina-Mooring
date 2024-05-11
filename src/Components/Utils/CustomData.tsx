@@ -1,3 +1,5 @@
+import { Button } from "primereact/button"
+
 //customer
 export const boatData = [
   {

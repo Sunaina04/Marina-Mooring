@@ -24,6 +24,7 @@ import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTable
 import { boatData } from '../../Utils/CustomData'
 import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
+import Header from '../../Layout/LayoutComponents/Header'
 const Customer = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [customerData, setCustomerData] = useState<CustomerPayload[]>([])
@@ -50,9 +51,6 @@ const Customer = () => {
     setModalVisible(false)
     setEditMode(false)
   }
-
-
-
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const query = event.target.value
@@ -91,7 +89,6 @@ const Customer = () => {
   }
 
   const handleDelete = async (rowData: any) => {
-
     try {
       const response = await deleteCustomer({ id: rowData?.id })
       getCustomerData()
@@ -99,7 +96,6 @@ const Customer = () => {
       console.error('Error deleting customer:', error)
     }
   }
-
 
   const tableColumns = useMemo(
     () => [
@@ -129,30 +125,25 @@ const Customer = () => {
 
   const getMooringsData = async () => {
     try {
-      const response = await getMoorings({}).unwrap();
-      const { status, content } = response as MooringResponse;
+      const response = await getMoorings({}).unwrap()
+      const { status, content } = response as MooringResponse
       if (status === 200 && Array.isArray(content)) {
-        setMooringData(content);
+        setMooringData(content)
       }
     } catch (error) {
-
-      console.error("Error fetching moorings data:", error);
+      console.error('Error fetching moorings data:', error)
     }
-  };
-
+  }
 
   useEffect(() => {
     getCustomerData()
     getMooringsData()
   }, [])
 
-
   return (
     <>
+      <Header header="MOORMANAGE/Customer" />
       <div className="flex  items-center justify-between ml-3 mr-3 overflow-hidden">
-        <div>
-          <h1 className="mt-12 ml-8 opacity-30 text-2xl font-normal">MOORMANAGE/Customer</h1>
-        </div>
         <div className="flex gap-4 mt-14 ml-[20.60rem]">
           <CustomModal
             label={'ADD NEW'}
@@ -181,27 +172,36 @@ const Customer = () => {
 
       <div className="flex ml-12 gap-4">
         <div className="bg-[F2F2F2] overflow-x-hidden overflow-y-scroll rounded-md border-[1px]  border-gray-300 w-[28vw] h-[70vh]">
-
-          <InputTextWithHeader header={'Customers'} placeholder={'Search by name, ID,address...'}
-            style={{ marginLeft: "1rem", color: "A4A4A4" }}
-            inputTextStyle={{ height: "5vh", width: "55vh", cursor: "pointer", fontSize: "0.63rem", color: "#A4A4A4", border: "1px solid #A4A4A4", paddingLeft: "3rem", borderRadius: "0.45rem" }}
+          <InputTextWithHeader
+            header={'Customers'}
+            placeholder={'Search by name, ID,address...'}
+            style={{ marginLeft: '1rem', color: 'A4A4A4' }}
+            inputTextStyle={{
+              height: '5vh',
+              width: '55vh',
+              cursor: 'pointer',
+              fontSize: '0.63rem',
+              color: '#A4A4A4',
+              border: '1px solid #A4A4A4',
+              paddingLeft: '3rem',
+              borderRadius: '0.45rem',
+            }}
             onChange={handleSearchChange}
             value={searchQuery}
           />
 
           <DataTableComponent
-          data={boatData}
-          tableStyle={{
-            fontSize: '12px',
-            color: '#000000',
-            fontWeight: 600,
-            backgroundColor: '#D9D9D9',
-          }}
-          scrollable={false}
-          columns={tableColumns} header={undefined}
-          
+            data={boatData}
+            tableStyle={{
+              fontSize: '12px',
+              color: '#000000',
+              fontWeight: 600,
+              backgroundColor: '#D9D9D9',
+            }}
+            scrollable={false}
+            columns={tableColumns}
+            header={undefined}
           />
-       
         </div>
 
         {/* middle container */}

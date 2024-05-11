@@ -5,6 +5,7 @@ import CustomModal from '../../CustomComponent/CustomModal'
 import { MoorPayProps } from '../../../Type/ComponentBasedType'
 import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
+import Header from '../../Layout/LayoutComponents/Header'
 
 interface TableColumn {
   id: string
@@ -121,11 +122,8 @@ const AccountPayable = () => {
 
   return (
     <>
+      <Header header="MOORPAY/Account Payable" />
       <div className="flex justify-between items-center ml-12">
-        <div>
-          <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">Moormanage/Account Payable</h1>
-        </div>
-
         <div className="flex gap-1 ml-[18rem] text-[gray] font-extrabold mt-14">
           <div>
             <img

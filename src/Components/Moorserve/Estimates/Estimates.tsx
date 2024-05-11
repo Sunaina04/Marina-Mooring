@@ -8,6 +8,7 @@ import { EstimateProps } from '../../../Type/ComponentBasedType'
 import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
+import Header from '../../Layout/LayoutComponents/Header'
 
 const Estimates = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -82,8 +83,6 @@ const Estimates = () => {
     </div>
   )
 
-
-
   const tableColumns = useMemo(
     () => [
       {
@@ -125,7 +124,6 @@ const Estimates = () => {
     [],
   )
 
-
   const ActionButtonColumn: ActionButtonColumnProps = {
     header: 'Action',
     buttons: [
@@ -133,21 +131,16 @@ const Estimates = () => {
         color: 'black',
         label: 'Edit',
         underline: true,
-      }
+      },
     ],
-    headerStyle:  {backgroundColor:"#F2F2F2"}
+    headerStyle: { backgroundColor: '#F2F2F2' },
   }
-
-
-
-
 
   return (
     <>
+      <Header header="MOORSERVE/Estimates" />
+
       <div className="flex justify-between items-center ml-12">
-        <div>
-          <h1 className="mt-14 ml-[7.50vw] opacity-30 text-2xl font-normal">MOORSERVE/Estimates</h1>
-        </div>
         <div className="flex gap-1 ml-[15rem] text-[gray] font-extrabold mt-14">
           <div>
             <img
@@ -170,32 +163,26 @@ const Estimates = () => {
             onClick={handleButtonClick}
             visible={false}
             onHide={handleModalClose}
-            header={header}
-          >
-            <AddEstimates/>
+            header={header}>
+            <AddEstimates />
           </CustomModal>
         </div>
       </div>
-  
+
       <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[64vw]  ml-32 mt-12 ">
-
         <DataTableComponent
-         tableStyle={{
-          fontSize: '12px',
-          color: '#000000',
-          fontWeight: 600,
-        }}
-        data={boatData}
-        columns={tableColumns}
-        header={header}
-        actionButtons={ActionButtonColumn}
-        style={{ backgroundColor: '#F2F2F2' }}
-        
+          tableStyle={{
+            fontSize: '12px',
+            color: '#000000',
+            fontWeight: 600,
+          }}
+          data={boatData}
+          columns={tableColumns}
+          header={header}
+          actionButtons={ActionButtonColumn}
+          style={{ backgroundColor: '#F2F2F2' }}
         />
-      
       </div>
-
-
     </>
   )
 }

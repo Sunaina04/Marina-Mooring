@@ -7,6 +7,8 @@ import { Country, Role, State } from '../../Type/CommonType'
 import { CustomerAdminDataProps } from '../../Type/ComponentBasedType'
 import useMetaData from '../CommonComponent/MetaDataComponent'
 import { useAddCustomerMutation } from '../../Services/MoorManage/MoormanageApi'
+import { useAddUserMutation } from '../../Services/Authentication/AuthApi'
+import { SaveUserResponse } from '../../Type/ApiTypes'
 
 const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   customerData,
@@ -27,7 +29,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const [state, setState] = useState<State>()
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [addCustomer] = useAddCustomerMutation()
+  const [addCustomer] = useAddUserMutation()
   const { getMetaData } = useMetaData()
   const [rolesData, setRolesData] = useState<Role[]>()
   const [countriesData, setCountriesData] = useState<Country[]>()
@@ -55,12 +57,14 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       state: state,
       country: country,
       role: role?.name,
-      customerAdminId:customerAdminId,
+      customerAdminId: customerAdminId,
     }
-    const response = await addCustomer(payload)
-    closeModal()
+    const response = await addCustomer(payload).unwrap()
+    const { status, content } = response as SaveUserResponse
+    if (status === 200) {
+      closeModal()
+    }
     getCustomer()
-    //Api not implemented yet from backend
   }
 
   const fetchDataAndUpdate = useCallback(async () => {

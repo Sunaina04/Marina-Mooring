@@ -14,6 +14,7 @@ import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 import { FaSearch } from 'react-icons/fa'
 import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
 import { properties } from '../../Utils/MeassageProperties'
+import Header from '../../Layout/LayoutComponents/Header'
 
 const Boatyards = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -324,7 +325,7 @@ const Boatyards = () => {
           color: 'black',
           fontWeight: 'bold',
         },
-        body: () => { },
+        body: () => {},
       },
       {
         field: 'name',
@@ -370,8 +371,8 @@ const Boatyards = () => {
   )
   return (
     <>
+      <Header header="MOORMANAGE/Boatyards" />
       <div className="flex justify-between items-center ml-12">
-        <h1 className="mt-14 ml-28 opacity-30 text-2xl font-normal">{properties.header}</h1>
         <div className="flex gap-4 items-center mr-12 mt-14">
           <div className="flex mr-24">
             <div className="mr-5 relative">
@@ -402,7 +403,12 @@ const Boatyards = () => {
               onClick={handleButtonClick}
               visible={false}
               onHide={handleModalClose}>
-              <AddBoatyards closeModal={handleModalClose} boatYardData={getBoatyardsData} customerData={selectedCustomer} editMode={editMode} />
+              <AddBoatyards
+                closeModal={handleModalClose}
+                boatYardData={getBoatyardsData}
+                customerData={selectedCustomer}
+                editMode={editMode}
+              />
             </CustomModal>
           </div>
         </div>

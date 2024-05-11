@@ -2,12 +2,12 @@ import { InputText } from 'primereact/inputtext'
 import React from 'react'
 import { IoSearch } from 'react-icons/io5'
 interface inputHeader {
-  header: string
+  header?: string
   style?: React.CSSProperties
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
   placeholder: string
   headerStyle?: React.CSSProperties
-  inputTextStyle: React.CSSProperties
+  inputTextStyle?: React.CSSProperties
   value?: string | undefined
 }
 const InputTextWithHeader: React.FC<inputHeader> = ({
