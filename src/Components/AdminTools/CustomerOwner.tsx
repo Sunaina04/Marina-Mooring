@@ -56,7 +56,7 @@ const CustomerOwner = () => {
         id: 'customerId',
         label: 'ID',
         style: {
-          width: '4vw',
+          // width: '4vw',
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#F2F2F2',
           color: '#000000',
@@ -67,7 +67,7 @@ const CustomerOwner = () => {
         id: 'customerName',
         label: 'Name',
         style: {
-          width: '6vw',
+          // width: '6vw',
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#F2F2F2',
           color: '#000000',
@@ -79,7 +79,7 @@ const CustomerOwner = () => {
         id: 'phone',
         label: 'Phone',
         style: {
-          width: '6vw',
+          // width: '6vw',
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#F2F2F2',
           color: '#000000',
@@ -96,7 +96,7 @@ const CustomerOwner = () => {
         id: 'id',
         label: 'ID',
         style: {
-          width: '6vw',
+          // width: '6vw',
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#F2F2F2',
           color: '#000000',
@@ -107,7 +107,7 @@ const CustomerOwner = () => {
         id: 'name',
         label: 'Name',
         style: {
-          width: '8vw',
+          // width: '8vw',
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#F2F2F2',
           color: '#000000',
@@ -119,7 +119,7 @@ const CustomerOwner = () => {
         id: 'email',
         label: 'Email',
         style: {
-          width: '8vw',
+          // width: '8vw',
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#F2F2F2',
           color: '#000000',
@@ -131,7 +131,7 @@ const CustomerOwner = () => {
         id: 'phone',
         label: 'Phone',
         style: {
-          width: '8vw',
+          // width: '8vw',
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#F2F2F2',
           color: '#000000',
@@ -143,7 +143,7 @@ const CustomerOwner = () => {
         id: 'role',
         label: 'Role',
         style: {
-          width: '8vw',
+          // width: '8vw',
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#F2F2F2',
           color: '#000000',
@@ -247,9 +247,13 @@ const CustomerOwner = () => {
         </div>
       </div>
 
-      <div className="flex gap-10 ml-8 mt-10">
-        <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[30vw] mb-10">
-          <div className="text-sm font-extrabold rounded-t-md w-full bg-[#00426F]">
+      <div
+        className="flex gap-10 ml-8 mt-10"
+        style={{
+          paddingRight: '70px',
+        }}>
+        <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 mb-10">
+          <div className="text-sm font-extrabold rounded-t-md bg-[#00426F]">
             <h1 className="p-4 text-white">{properties.CustomersOwner}</h1>
           </div>
           <div data-testid="customer-admin-data">
@@ -268,8 +272,12 @@ const CustomerOwner = () => {
           </div>
         </div>
 
-        <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[45vw] mb-10">
-          <div className="text-sm font-extrabold rounded-t-md w-full bg-[#00426F]">
+        <div
+          className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 mb-10"
+          style={{
+            flexGrow: 1,
+          }}>
+          <div className="text-sm font-extrabold rounded-t-md  bg-[#00426F]">
             <h1 className="p-4 text-white">{properties.CustomerOwnerUsers}</h1>
           </div>
           <div data-testid="customer-admin-users-table">
