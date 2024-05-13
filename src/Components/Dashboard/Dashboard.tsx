@@ -109,7 +109,7 @@ const Dashboard = () => {
                 </div>
               </div>
             </div> */}
-            <h1>hello</h1>
+            <h1> Map </h1>
           </div>
 
           <div className="bg-[#F2F2F2] border-[#D1D1D1]  w-[43vw] ">

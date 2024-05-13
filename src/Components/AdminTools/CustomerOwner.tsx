@@ -24,6 +24,7 @@ const CustomerOwner = () => {
   const [customerAdminId, setCustomerAdminId] = useState('')
   const [getUser] = useGetUsersMutation()
   const [getCustomerOwnerData, setgetCustomerOwnerData] = useState<CustomerPayload[]>([])
+  const [getCustomerOwnerUserData, setgetCustomerOwnerUserData] = useState<CustomerPayload[]>([])
 
   const handleButtonClick = () => {
     setModalVisible(true)
@@ -123,7 +124,7 @@ const CustomerOwner = () => {
       },
 
       {
-        id: 'phone',
+        id: 'phoneNumber',
         label: 'Phone',
         style: {
           borderBottom: '1px solid #C0C0C0',
@@ -174,6 +175,18 @@ const CustomerOwner = () => {
         setCustomerAdminId(content?.content[0].customerAdminId)
       }
       console.log(getCustomerOwnerData)
+    } catch (error) {
+      console.error('Error occurred while fetching customer data:', error)
+    }
+  }
+
+  const getCustomerAdminsUsers = async (row: any) => {
+    try {
+      const response = await getUser({ customerAdminId: row?.customerAdminId }).unwrap()
+      const { status, content } = response as GetUserResponse
+      if (status === 200 && Array.isArray(content?.content)) {
+        setgetCustomerOwnerUserData(content?.content)
+      }
     } catch (error) {
       console.error('Error occurred while fetching customer data:', error)
     }
@@ -265,6 +278,9 @@ const CustomerOwner = () => {
               scrollable={true}
               columns={tableColumns}
               header={CustomersHeader}
+              onRowClick={(e) => {
+                getCustomerAdminsUsers(e.data)
+              }}
             />
           </div>
         </div>
@@ -286,7 +302,7 @@ const CustomerOwner = () => {
                 backgroundColor: '#D9D9D9',
               }}
               scrollable={true}
-              // data={customerAdminUser}
+              data={getCustomerOwnerUserData}
               columns={tableColumnsTechnicians}
               header={TechniciansHeader}
               actionButtons={ActionButtonColumn}

@@ -3,6 +3,7 @@ import { textColors } from '../../Components/Utils/Properties'
 import { CSSProperties } from 'react'
 import {
   DataTableExpandedRows,
+  DataTableRowClickEvent,
   DataTableRowData,
   DataTableRowExpansionTemplate,
   DataTableRowToggleEvent,
@@ -28,6 +29,7 @@ export interface DataTableProps {
   style?: React.CSSProperties | undefined
   header?: any
   actionButtons?: ActionButtonColumnProps
+  onRowClick?: (event: DataTableRowClickEvent) => void
 }
 
 export interface ButtonProps {

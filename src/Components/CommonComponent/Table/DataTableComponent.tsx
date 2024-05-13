@@ -11,6 +11,7 @@ const DataTableComponent: React.FC<DataTableProps> = ({
   tableStyle = undefined,
   header,
   actionButtons,
+  onRowClick,
 }) => {
   const buttonBody = (rowData: any) => {
     return (
@@ -29,7 +30,12 @@ const DataTableComponent: React.FC<DataTableProps> = ({
 
   return (
     <div className="card">
-      <DataTable value={data} tableStyle={tableStyle} scrollable={scrollable} header={header}>
+      <DataTable
+        value={data}
+        tableStyle={tableStyle}
+        scrollable={scrollable}
+        header={header}
+        onRowClick={onRowClick}>
         {columns.map((d) => (
           <Column key={d.id} style={d.style} field={d.id} header={d.label} body={d.body} />
         ))}
