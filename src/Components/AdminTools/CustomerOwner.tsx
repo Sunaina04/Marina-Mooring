@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import CustomModal from '../CustomComponent/CustomModal'
-import './AddCustomer.module.css'
 import DataTableComponent from '../CommonComponent/Table/DataTableComponent'
 import { properties } from '../Utils/MeassageProperties'
 import { Dropdown } from 'primereact/dropdown'
@@ -9,11 +8,11 @@ import { ActionButtonColumnProps } from '../../Type/Components/TableTypes'
 import { useGetCustomerMutation } from '../../Services/MoorManage/MoormanageApi'
 import { CustomerPayload, CustomerResponse, GetUserResponse } from '../../Type/ApiTypes'
 import Header from '../Layout/LayoutComponents/Header'
-import './CustomerAdmin.module.css'
 import useMetaData from '../CommonComponent/MetaDataComponent'
 import { Role } from '../../Type/CommonType'
 import { CustomersHeader, TechniciansHeader } from '../Utils/DataTableHeader'
 import { useGetUsersMutation } from '../../Services/Authentication/AuthApi'
+import './CustomerOwner.module.css'
 
 const CustomerOwner = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -61,7 +60,7 @@ const CustomerOwner = () => {
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#F2F2F2',
           color: '#000000',
-          fontWeight: 700,
+          fontWeight: 500,
         },
       },
       {
@@ -71,7 +70,7 @@ const CustomerOwner = () => {
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#F2F2F2',
           color: '#000000',
-          fontWeight: 700,
+          fontWeight: 500,
         },
       },
 
@@ -82,7 +81,7 @@ const CustomerOwner = () => {
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#F2F2F2',
           color: '#000000',
-          fontWeight: 700,
+          fontWeight: 500,
         },
       },
     ],
@@ -188,7 +187,7 @@ const CustomerOwner = () => {
     <>
       <Header header="MOORMANAGE/Permission" />
 
-      <div className="flex mr-20 justify-end">
+      <div className="flex mr-12 justify-end">
         <div className="mt-14 mr-5 relative">
           <Dropdown
             value={selectRole}
@@ -199,16 +198,16 @@ const CustomerOwner = () => {
             placeholder="Select Role"
             style={{
               width: '12vw',
-              height: '5vh',
+              height: '44px',
+              minHeight: '44px',
               paddingLeft: '2rem',
-              paddingRight: '1rem',
               border: '1px solid #D5E1EA',
               borderRadius: '6px',
             }}
           />
           <img
             src="/assets/images/filter.svg"
-            alt="Dropdown Icon"
+            alt="filter Icon"
             className="absolute top-1/2 left-2 transform -translate-y-1/2 h-5 w-5"
             style={{ pointerEvents: 'none' }}
           />
@@ -218,8 +217,9 @@ const CustomerOwner = () => {
           <CustomModal
             label={'ADD NEW'}
             style={{
-              width: '7vw',
-              height: '5vh',
+              width: '121px',
+              height: '44px',
+              minHeight: '44px',
               backgroundColor: '#0098FF',
               cursor: 'pointer',
               fontSize: '16px',
@@ -244,10 +244,11 @@ const CustomerOwner = () => {
       <div
         className="flex gap-10 ml-8 mt-10"
         style={{
-          paddingRight: '70px',
+          paddingRight: '40px',
+          paddingLeft: '25px',
         }}>
         <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 mb-10">
-          <div className="text-sm font-extrabold rounded-t-md bg-[#00426F]">
+          <div className="text-sm font-bold rounded-t-md bg-[#00426F]">
             <h1 className="p-4 text-white">{properties.CustomersOwner}</h1>
           </div>
           <div data-testid="customer-admin-data">
@@ -271,7 +272,7 @@ const CustomerOwner = () => {
           style={{
             flexGrow: 1,
           }}>
-          <div className="text-sm font-extrabold rounded-t-md  bg-[#00426F]">
+          <div className="text-sm font-bold rounded-t-md  bg-[#00426F]">
             <h1 className="p-4 text-white">{properties.CustomerOwnerUsers}</h1>
           </div>
           <div data-testid="customer-admin-users-table">

@@ -4,13 +4,11 @@ import { Avatar } from 'primereact/avatar'
 import { Dropdown } from 'primereact/dropdown'
 import { HeaderProps } from '../../../Type/ComponentBasedType'
 import { useSelector } from 'react-redux'
-import { RootState } from '../../../Store/Store'
 import useMetaData from '../../CommonComponent/MetaDataComponent'
 import { Role } from '../../../Type/CommonType'
 
 const Header: React.FC<HeaderProps> = ({ header }) => {
   const userData = useSelector((state: any) => state.user?.userData)
-  const isOpen = useSelector((state: RootState) => state.user.isOpen)
   const [expanded, setExpanded] = useState(false)
   const [selectRole, setSelectRole] = useState(userData?.role.name)
   const { getMetaData } = useMetaData()
@@ -41,11 +39,11 @@ const Header: React.FC<HeaderProps> = ({ header }) => {
         justifyContent: 'space-between',
         alignItems: 'center',
         marginTop: '2rem',
-        marginLeft: '1rem',
-        marginRight: '1rem',
+        marginLeft: '3rem',
+        marginRight: '2rem',
         borderRadius: '0.5rem',
         fontSize: '18px',
-        fontWeight: 600,
+        fontWeight: 500,
         textAlign: 'left',
         color: '#AEAEAE',
       }}>
@@ -58,11 +56,13 @@ const Header: React.FC<HeaderProps> = ({ header }) => {
           options={rolesData}
           editable
           style={{
-            width: '150px',
-            height: '4vh',
+            width: '142px',
+            height: '32px',
+            minHeight: '32px',
             border: '1px solid gray',
             borderRadius: '0.5rem',
             color: 'black',
+            marginRight: '40px',
           }}
         />
         {userData && (

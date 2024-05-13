@@ -129,7 +129,7 @@ export default function LoginForm() {
                 />
                 <img
                   src="/assets/images/envelope.png"
-                  alt="Search Icon"
+                  alt="Envelope Icon"
                   className="p-clickable"
                   style={{
                     position: 'absolute',
@@ -160,7 +160,7 @@ export default function LoginForm() {
                 />
                 <img
                   src="/assets/images/key.png"
-                  alt="Search Icon"
+                  alt="Key Icon"
                   className="p-clickable"
                   style={{
                     position: 'absolute',
