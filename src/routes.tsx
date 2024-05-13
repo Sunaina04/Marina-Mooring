@@ -48,17 +48,6 @@ const routes = [
     element: <ForgotPassword />,
   },
   {
-    path: 'admin/login',
-    element: <Admin />,
-    children: [
-      {
-        path: 'permisiion',
-        element: <Permission />,
-      },
-    ],
-  },
-
-  {
     path: '',
     element: <AdminLayout />,
     children: [
@@ -120,7 +109,7 @@ const routes = [
         children: [
           {
             path: 'workOrders',
-            element: <WorkOrders/>,
+            element: <WorkOrders />,
           },
           {
             path: 'estimates',
@@ -143,6 +132,10 @@ const routes = [
       {
         path: 'customerAdmin',
         element: <CustomerAdmin />,
+      },
+      {
+        path: 'permission',
+        element: <Permission />,
       },
     ],
   },

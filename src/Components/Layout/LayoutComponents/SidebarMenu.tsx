@@ -2,10 +2,13 @@ import { useSelector } from 'react-redux'
 
 const SidebarMenu = () => {
   const userData = useSelector((state: any) => state.user?.userData)
+
+  let link
   let adminSubcategories
 
   switch (userData?.role?.name) {
     case 'CUSTOMER_ADMIN':
+      link = '/permission'
       adminSubcategories = [
         {
           icon: '/assets/images/permission.svg',
@@ -20,6 +23,7 @@ const SidebarMenu = () => {
       ]
       break
     default:
+      link = '/customerAdmin'
       adminSubcategories = [
         {
           icon: '/assets/images/customerOwner.svg',
@@ -115,7 +119,7 @@ const SidebarMenu = () => {
     {
       icon: '/assets/images/tools.svg',
       name: 'ADMIN TOOLS',
-      link: '/customerAdmin',
+      link: link,
       subcategories: adminSubcategories,
     },
   ]

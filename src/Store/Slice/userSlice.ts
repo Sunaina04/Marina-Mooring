@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../Store'
-import { UserData } from '../../Type/ApiTypes'
 import { InitialState } from '../../Type/CommonType'
+import { UserData } from '../../Type/ApiTypes'
 
 export const userSlice = createSlice({
   name: 'user',
@@ -10,6 +10,10 @@ export const userSlice = createSlice({
     setUserData: (state, action: PayloadAction<UserData>) => {
       const data = action.payload
       state.userData = data
+    },
+    setToken: (state, action: PayloadAction<string>) => {
+      const data = action.payload
+      state.token = data
     },
     setLogout: () => {
       return {} as InitialState
@@ -23,7 +27,6 @@ export const userSlice = createSlice({
   },
 })
 
-export const { setLogout, setUserData, setOpen, toggleSidebar } = userSlice.actions
+export const { setLogout, setUserData, setOpen, toggleSidebar, setToken } = userSlice.actions
 export const selectSidebar = (state: RootState) => state.user.sidebar
-export const token = (state: RootState) => state?.user?.token
 export default userSlice.reducer

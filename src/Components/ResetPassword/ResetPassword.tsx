@@ -3,10 +3,11 @@ import { InputText } from 'primereact/inputtext'
 import { useResetPasswordMutation } from '../../Services/Authentication/AuthApi'
 import { ResetPasswordResponse } from '../../Type/ApiTypes'
 import { useState } from 'react'
-import { token } from '../../Store/Slice/userSlice'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const ResetPassword = () => {
+  // const token = useSelector((state: any) => state.user?.token)
   const [resetPassword] = useResetPasswordMutation()
   const [passwords, setPasswords] = useState({
     newPassword: '',
@@ -30,7 +31,7 @@ const ResetPassword = () => {
     try {
       const response = await resetPassword({
         payload: resetPassPayload,
-        token: token,
+        // token: token,
       }).unwrap()
       const { status, content, message } = response as ResetPasswordResponse
     } catch (error: any) {
@@ -40,7 +41,7 @@ const ResetPassword = () => {
       }
     }
   }
-  
+
   return (
     <>
       <div
@@ -59,7 +60,7 @@ const ResetPassword = () => {
             />
           </div>
           <div className="flex flex-col justify-center text-center">
-            <div className="text-red-500 ">{ }</div>
+            <div className="text-red-500 ">{}</div>
             <div className="flex flex-col gap-5 mt-20">
               <div className="p-input-icon-left relative flex justify-center ">
                 <InputText

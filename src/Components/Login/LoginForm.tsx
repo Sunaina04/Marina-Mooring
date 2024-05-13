@@ -1,12 +1,8 @@
-import { useEffect, useState } from 'react'
-import {
-  useGetUsersMutation,
-  useLoginMutation,
-  useResetPasswordMutation,
-} from '../../Services/Authentication/AuthApi'
+import { useState } from 'react'
+import { useLoginMutation } from '../../Services/Authentication/AuthApi'
 import { ErrorResponse, LoginResponse, ResetPasswordResponse } from '../../Type/ApiTypes'
 import { useDispatch, useSelector } from 'react-redux'
-import { setUserData } from '../../Store/Slice/userSlice'
+import { setToken, setUserData } from '../../Store/Slice/userSlice'
 import { Link, useNavigate } from 'react-router-dom'
 import { InputText } from 'primereact/inputtext'
 import { Button } from 'primereact/button'
@@ -19,12 +15,7 @@ export default function LoginForm() {
     password: '',
   })
   const { username, password } = loginPayload
-  const userData = useSelector((state: any) => state.user?.userData)
-  const token = useSelector((state: any) => state.user?.token)
-  console.log('TOKEN IS :_', token)
-
   const navigate = useNavigate()
-
   const [errors, setErrors] = useState({
     email: '',
     password: '',
@@ -42,7 +33,6 @@ export default function LoginForm() {
    * NOTE: API Hooks
    ****************************************************/
   const [login] = useLoginMutation()
-  const [getUser] = useGetUsersMutation()
 
   const signInHandler = async () => {
     if (!username.trim()) {
@@ -65,7 +55,7 @@ export default function LoginForm() {
       const { status, user, token, message } = response as LoginResponse
       if (status === 200) {
         dispatch(setUserData({ ...user }))
-        localStorage.setItem('token', token)
+        dispatch(setToken(token))
         setLoginPayload({
           username: '',
           password: '',
@@ -79,14 +69,6 @@ export default function LoginForm() {
       }
     }
   }
-
-  const getUserHandler = async () => {
-    const response = await getUser({})
-  }
-
-  useEffect(() => {
-    getUserHandler()
-  }, [])
 
   return (
     <>
@@ -171,13 +153,6 @@ export default function LoginForm() {
                     height: '20px',
                   }}
                 />
-                {/* <span
-                  className="input-icon w-5 h-10 absolute top-[50%] transform -translate-y-1/2 left-10 text-[#00426f] text-lg font-[900]"
-                  style={{
-                    backgroundImage: `url('/assets/images/key.png')`,
-                    backgroundRepeat: 'no-repeat',
-                    backgroundSize: 'contain',
-                  }}></span> */}
               </div>
 
               <div className="flex justify-end mb-8 w-[500px] cursor-pointer underline">
