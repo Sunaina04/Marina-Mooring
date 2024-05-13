@@ -7,12 +7,13 @@ import { Dropdown } from 'primereact/dropdown'
 import AddNewCustomer from './AddNewCustomer'
 import { ActionButtonColumnProps } from '../../Type/Components/TableTypes'
 import { useGetCustomerMutation } from '../../Services/MoorManage/MoormanageApi'
-import { CustomerPayload, CustomerResponse } from '../../Type/ApiTypes'
+import { CustomerPayload, CustomerResponse, GetUserResponse } from '../../Type/ApiTypes'
 import Header from '../Layout/LayoutComponents/Header'
 import './CustomerAdmin.module.css'
 import useMetaData from '../CommonComponent/MetaDataComponent'
 import { Role } from '../../Type/CommonType'
 import { CustomersHeader, TechniciansHeader } from '../Utils/DataTableHeader'
+import { useGetUsersMutation } from '../../Services/Authentication/AuthApi'
 
 const CustomerOwner = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -22,6 +23,7 @@ const CustomerOwner = () => {
   const [rolesData, setRolesData] = useState<Role[]>()
   const [selectRole, setSelectRole] = useState()
   const [getCustomer] = useGetCustomerMutation()
+  const [getUser] = useGetUsersMutation()
   const [getCustomerOwnerData, setgetCustomerOwnerData] = useState<CustomerPayload[]>([])
 
   const handleButtonClick = () => {
@@ -56,7 +58,6 @@ const CustomerOwner = () => {
         id: 'customerId',
         label: 'ID',
         style: {
-          // width: '4vw',
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#F2F2F2',
           color: '#000000',
@@ -67,7 +68,6 @@ const CustomerOwner = () => {
         id: 'customerName',
         label: 'Name',
         style: {
-          // width: '6vw',
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#F2F2F2',
           color: '#000000',
@@ -79,7 +79,6 @@ const CustomerOwner = () => {
         id: 'phone',
         label: 'Phone',
         style: {
-          // width: '6vw',
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#F2F2F2',
           color: '#000000',
@@ -96,7 +95,6 @@ const CustomerOwner = () => {
         id: 'id',
         label: 'ID',
         style: {
-          // width: '6vw',
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#F2F2F2',
           color: '#000000',
@@ -107,7 +105,6 @@ const CustomerOwner = () => {
         id: 'name',
         label: 'Name',
         style: {
-          // width: '8vw',
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#F2F2F2',
           color: '#000000',
@@ -119,7 +116,6 @@ const CustomerOwner = () => {
         id: 'email',
         label: 'Email',
         style: {
-          // width: '8vw',
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#F2F2F2',
           color: '#000000',
@@ -131,7 +127,6 @@ const CustomerOwner = () => {
         id: 'phone',
         label: 'Phone',
         style: {
-          // width: '8vw',
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#F2F2F2',
           color: '#000000',
@@ -143,7 +138,6 @@ const CustomerOwner = () => {
         id: 'role',
         label: 'Role',
         style: {
-          // width: '8vw',
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#F2F2F2',
           color: '#000000',
@@ -164,11 +158,18 @@ const CustomerOwner = () => {
     [],
   )
 
-  const getCustomerData = async () => {
+  const fetchDataAndUpdate = useCallback(async () => {
+    const { rolesData } = await getMetaData()
+    if (rolesData !== null) {
+      setRolesData(rolesData)
+    }
+  }, [])
+
+  const getUserHandler = async () => {
     try {
-      const response = await getCustomer({}).unwrap()
+      const response = await getUser({}).unwrap()
       console.log(' I AM CALLED', response)
-      const { status, content } = response as CustomerResponse
+      const { status, content } = response as GetUserResponse
       if (status === 200 && Array.isArray(content)) {
         setgetCustomerOwnerData(content)
       }
@@ -178,15 +179,8 @@ const CustomerOwner = () => {
     }
   }
 
-  const fetchDataAndUpdate = useCallback(async () => {
-    const { rolesData } = await getMetaData()
-    if (rolesData !== null) {
-      setRolesData(rolesData)
-    }
-  }, [])
-
   useEffect(() => {
-    getCustomerData()
+    getUserHandler()
     fetchDataAndUpdate()
   }, [fetchDataAndUpdate])
 
@@ -240,7 +234,7 @@ const CustomerOwner = () => {
             <AddNewCustomer
               customerData={selectedCustomer}
               editMode={editMode}
-              getCustomer={getCustomerData}
+              getUser={getUserHandler}
               closeModal={handleModalClose}
             />
           </CustomModal>

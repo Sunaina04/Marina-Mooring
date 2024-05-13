@@ -1,11 +1,6 @@
 import { InputText } from 'primereact/inputtext'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../Store/Store'
 
 export const TechniciansHeader = () => {
-  const open = useSelector((state: RootState) => state.user.isOpen)
-  console.log('open', open)
-
   return (
     <div className="flex flex-col">
       <div className="p-input-icon-left ">

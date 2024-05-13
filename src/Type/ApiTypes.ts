@@ -21,6 +21,14 @@ export interface SaveUserResponse {
   content: {}
 }
 
+export interface GetUserResponse {
+  message: string
+  status: number
+  errorList: [string]
+  time: string
+  content: {}
+}
+
 export interface LoginPayload {
   username: string
   password: string

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import {
-  useGetEmployeeMutation,
+  useGetUsersMutation,
   useLoginMutation,
   useResetPasswordMutation,
 } from '../../Services/Authentication/AuthApi'
@@ -21,6 +21,8 @@ export default function LoginForm() {
   const { username, password } = loginPayload
   const userData = useSelector((state: any) => state.user?.userData)
   const token = useSelector((state: any) => state.user?.token)
+  console.log('TOKEN IS :_', token)
+
   const navigate = useNavigate()
 
   const [errors, setErrors] = useState({
@@ -40,7 +42,7 @@ export default function LoginForm() {
    * NOTE: API Hooks
    ****************************************************/
   const [login] = useLoginMutation()
-  const [getEmployee] = useGetEmployeeMutation()
+  const [getUser] = useGetUsersMutation()
 
   const signInHandler = async () => {
     if (!username.trim()) {
@@ -78,12 +80,12 @@ export default function LoginForm() {
     }
   }
 
-  const getEmployeeHandler = async () => {
-    const response = await getEmployee({})
+  const getUserHandler = async () => {
+    const response = await getUser({})
   }
 
   useEffect(() => {
-    getEmployeeHandler()
+    getUserHandler()
   }, [])
 
   return (

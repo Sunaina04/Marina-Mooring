@@ -9,7 +9,7 @@ export interface CustomerDataProps {
 export interface BoatYardProps {
   customerData: any
   editMode: boolean
-  gpsCoordinates? : string
+  gpsCoordinates?: string
   closeModal: () => void
   boatYardData: () => void
 }
@@ -116,11 +116,11 @@ export type StatCardProps = {
 export interface CustomerAdminDataProps {
   customerData: any
   editMode: boolean
-  customerAdminId? : string
+  customerAdminId?: string
   closeModal: () => void
-  getCustomer: () => void
+  getUser: () => void
 }
 
 export interface HeaderProps {
-  header: string;
+  header: string
 }

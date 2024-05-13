@@ -13,7 +13,7 @@ import { SaveUserResponse } from '../../Type/ApiTypes'
 const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   customerData,
   editMode,
-  getCustomer,
+  getUser,
   closeModal,
   customerAdminId,
 }) => {
@@ -64,7 +64,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     if (status === 200) {
       closeModal()
     }
-    getCustomer()
+    getUser()
   }
 
   const fetchDataAndUpdate = useCallback(async () => {

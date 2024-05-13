@@ -100,12 +100,8 @@ const Permission = () => {
               <AddCustomer
                 customerData={selectedCustomer}
                 editMode={editMode}
-                closeModal={function (): void {
-                  throw new Error('Function not implemented.')
-                }}
-                getCustomer={function (): void {
-                  throw new Error('Function not implemented.')
-                }}
+                closeModal={() => {}}
+                getUser={() => {}}
               />
             </CustomModal>
           </div>
