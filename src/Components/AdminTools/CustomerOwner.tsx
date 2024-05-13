@@ -18,6 +18,7 @@ const CustomerOwner = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [selectedCustomer, setSelectedCustomer] = useState<any>()
   const [editMode, setEditMode] = useState(false)
+  const [isRowClick, setIsRowClick] = useState(false)
   const { getMetaData } = useMetaData()
   const [rolesData, setRolesData] = useState<Role[]>()
   const [selectRole, setSelectRole] = useState()
@@ -169,12 +170,10 @@ const CustomerOwner = () => {
     try {
       const response = await getUser({}).unwrap()
       const { status, content } = response as GetUserResponse
-      console.log(content?.content, response)
       if (status === 200 && Array.isArray(content?.content)) {
         setgetCustomerOwnerData(content?.content)
         setCustomerAdminId(content?.content[0].customerAdminId)
       }
-      console.log(getCustomerOwnerData)
     } catch (error) {
       console.error('Error occurred while fetching customer data:', error)
     }
@@ -186,6 +185,7 @@ const CustomerOwner = () => {
       const { status, content } = response as GetUserResponse
       if (status === 200 && Array.isArray(content?.content)) {
         setgetCustomerOwnerUserData(content?.content)
+        setIsRowClick(true)
       }
     } catch (error) {
       console.error('Error occurred while fetching customer data:', error)
@@ -274,6 +274,7 @@ const CustomerOwner = () => {
                 color: '#000000',
                 fontWeight: 600,
                 backgroundColor: '#D9D9D9',
+                cursor: 'pointer',
               }}
               scrollable={true}
               columns={tableColumns}
@@ -285,30 +286,32 @@ const CustomerOwner = () => {
           </div>
         </div>
 
-        <div
-          className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 mb-10"
-          style={{
-            flexGrow: 1,
-          }}>
-          <div className="text-sm font-bold rounded-t-md  bg-[#00426F]">
-            <h1 className="p-4 text-white">{properties.CustomerOwnerUsers}</h1>
+        {isRowClick && (
+          <div
+            className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 mb-10"
+            style={{
+              flexGrow: 1,
+            }}>
+            <div className="text-sm font-bold rounded-t-md  bg-[#00426F]">
+              <h1 className="p-4 text-white">{properties.CustomerOwnerUsers}</h1>
+            </div>
+            <div data-testid="customer-admin-users-table">
+              <DataTableComponent
+                tableStyle={{
+                  fontSize: '12px',
+                  color: '#000000',
+                  fontWeight: 600,
+                  backgroundColor: '#D9D9D9',
+                }}
+                scrollable={true}
+                data={getCustomerOwnerUserData}
+                columns={tableColumnsTechnicians}
+                header={TechniciansHeader}
+                actionButtons={ActionButtonColumn}
+              />
+            </div>
           </div>
-          <div data-testid="customer-admin-users-table">
-            <DataTableComponent
-              tableStyle={{
-                fontSize: '12px',
-                color: '#000000',
-                fontWeight: 600,
-                backgroundColor: '#D9D9D9',
-              }}
-              scrollable={true}
-              data={getCustomerOwnerUserData}
-              columns={tableColumnsTechnicians}
-              header={TechniciansHeader}
-              actionButtons={ActionButtonColumn}
-            />
-          </div>
-        </div>
+        )}
       </div>
     </>
   )
