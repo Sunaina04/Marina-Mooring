@@ -9,6 +9,7 @@ import { Role } from '../../../Type/CommonType'
 
 const Header: React.FC<HeaderProps> = ({ header }) => {
   const userData = useSelector((state: any) => state.user?.userData)
+  const role = userData?.role?.name
   const [expanded, setExpanded] = useState(false)
   const [selectRole, setSelectRole] = useState(userData?.role.name)
   const { getMetaData } = useMetaData()
@@ -49,22 +50,24 @@ const Header: React.FC<HeaderProps> = ({ header }) => {
       }}>
       {header}
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: '300px' }}>
-        <Dropdown
-          value={selectRole}
-          onChange={(e) => setSelectRole(e.value)}
-          optionLabel="name"
-          options={rolesData}
-          editable
-          style={{
-            width: '142px',
-            height: '32px',
-            minHeight: '32px',
-            border: '1px solid gray',
-            borderRadius: '0.5rem',
-            color: 'black',
-            marginRight: '40px',
-          }}
-        />
+        {role === 'OWNER' && (
+          <Dropdown
+            value={selectRole}
+            onChange={(e) => setSelectRole(e.value)}
+            optionLabel="name"
+            options={rolesData}
+            editable
+            style={{
+              width: '142px',
+              height: '32px',
+              minHeight: '32px',
+              border: '1px solid gray',
+              borderRadius: '0.5rem',
+              color: 'black',
+              marginRight: '40px',
+            }}
+          />
+        )}
         {userData && (
           <>
             <Avatar image={'/assets/images/user.png'} />
