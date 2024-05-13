@@ -1,4 +1,4 @@
-import { Button } from "primereact/button"
+import { Button } from 'primereact/button'
 
 //customer
 export const boatData = [
@@ -101,37 +101,31 @@ export const boatyardMooring = [
     mainContact: 'Maxwell',
     mooringID: '54325',
     boatName: 'sunriase',
-
   },
   {
     id: '01',
     mainContact: 'Maxwell',
     mooringID: '54325',
     boatName: 'sunriase',
-
   },
   {
     id: '01',
     mainContact: 'Maxwell',
     mooringID: '54325',
     boatName: 'sunriase',
-
   },
   {
     id: '01',
     mainContact: 'Maxwell',
     mooringID: '54325',
     boatName: 'sunriase',
-
   },
   {
     id: '01',
     mainContact: 'Maxwell',
     mooringID: '54325',
     boatName: 'sunriase',
-
   },
-
 ]
 export const customerAdminUser = [
   {
@@ -341,44 +335,80 @@ export const getProductsWithOrdersData = (): any[] => {
     {
       id: '#9715',
       name: 'Pioneer',
-      noOfBoatYards: "16",
-      totalMooringInventoried: "40",
+      noOfBoatYards: '16',
+      totalMooringInventoried: '40',
       orders: [
         {
           address: '123 Elm St',
           mooringInventoried: '25',
           date: '2020-09-13',
-          boatyardGpsCoordinates: "38 21.806 14444.959"
+          boatyardGpsCoordinates: '38 21.806 14444.959',
         },
         {
           address: '123 Elm St',
           mooringInventoried: '25',
           date: '2020-09-13',
-          boatyardGpsCoordinates: "38 21.806 14444.959"
+          boatyardGpsCoordinates: '38 21.806 14444.959',
         },
-
-      ]
+      ],
     },
     {
       id: '#9716',
       name: 'Pioneer',
-      noOfBoatYards: "16",
-      totalMooringInventoried: "40",
+      noOfBoatYards: '16',
+      totalMooringInventoried: '40',
       orders: [
         {
           address: '123 Elm St',
           mooringInventoried: '25',
           date: '2020-09-13',
-          boatyardGpsCoordinates: "38 21.806 14444.959"
+          boatyardGpsCoordinates: '38 21.806 14444.959',
         },
         {
           address: '123 Elm St',
           mooringInventoried: '25',
           date: '2020-09-13',
-          boatyardGpsCoordinates: "38 21.806 14444.959"
+          boatyardGpsCoordinates: '38 21.806 14444.959',
         },
-
-      ]
+      ],
     },
-  ];
-};
+  ]
+}
+
+export const AccorditionDataTable = [
+  {
+    orderNo: 'B0210',
+    mooringId: '#3254',
+    customerName: 'John Smith',
+    assignedTo: 'Clara Ortiz',
+    date: '15, March 2024',
+  },
+]
+
+export const dasboardTable = [
+  {
+    id: '01',
+    customerName: 'Suncatcher',
+    mooringServiceData: '#3254',
+    mooringServiceDate: 'John Smith',
+    mooringLoaction: '15, March 2024',
+    status: 'pending',
+  },
+
+  {
+    id: '01',
+    customerName: 'Suncatcher',
+    mooringServiceData: '#3254',
+    mooringServiceDate: 'John Smith',
+    mooringLoaction: '15, March 2024',
+    status: 'pending',
+  },
+  {
+    id: '01',
+    customerName: 'Suncatcher',
+    mooringServiceData: '#3254',
+    mooringServiceDate: 'John Smith',
+    mooringLoaction: '15, March 2024',
+    status: 'pending',
+  },
+]
