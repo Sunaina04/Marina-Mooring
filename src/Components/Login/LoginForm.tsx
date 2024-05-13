@@ -6,6 +6,7 @@ import { setToken, setUserData } from '../../Store/Slice/userSlice'
 import { Link, useNavigate } from 'react-router-dom'
 import { InputText } from 'primereact/inputtext'
 import { Button } from 'primereact/button'
+
 import './Login.module.css'
 
 export default function LoginForm() {
@@ -14,6 +15,10 @@ export default function LoginForm() {
     username: '',
     password: '',
   })
+
+  console.log('user', loginPayload.username)
+  console.log('password', loginPayload.password)
+
   const { username, password } = loginPayload
   const navigate = useNavigate()
   const [errors, setErrors] = useState({
@@ -21,31 +26,52 @@ export default function LoginForm() {
     password: '',
   })
 
+  console.log('errors', errors.email, errors.password)
+
   const handleChange = (e: any) => {
     const { name, value } = e.target
+    errors.email = ''
+    errors.password = ''
+
     setLoginPayload((prev) => ({
       ...prev,
       [name]: value,
     }))
   }
 
-  /* ***************************************************
-   * NOTE: API Hooks
-   ****************************************************/
   const [login] = useLoginMutation()
 
   const signInHandler = async () => {
-    if (!username.trim()) {
+    setErrors({ email: '', password: '' })
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (username.length == 0) {
       setErrors((prev) => ({
         ...prev,
         email: 'Email cannot be empty',
       }))
       return
     }
-    if (!password.trim()) {
+    if (!emailRegex.test(username.trim())) {
+      setErrors((prev) => ({
+        ...prev,
+        email: 'Invalid email format',
+      }))
+      return
+    }
+
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/
+    if (password.length === 0) {
       setErrors((prev) => ({
         ...prev,
         password: 'Password cannot be empty',
+      }))
+      return
+    }
+    if (!passwordRegex.test(password.trim())) {
+      setErrors((prev) => ({
+        ...prev,
+        password:
+          'Password must contain at least one uppercase letter, one lowercase letter, one number, and minimum 8 characters',
       }))
       return
     }
@@ -90,7 +116,7 @@ export default function LoginForm() {
             />
           </div>
           <div className="flex flex-col justify-center text-center mt-[5rem]">
-            <div className="text-red-500">{errors.email}</div>
+            <div className="text-red-500">{errors.email && <p>{errors.email}</p>}</div>
             <div className="flex flex-col gap-5 items-center">
               <div className="p-input-icon-left">
                 <InputText
@@ -123,7 +149,7 @@ export default function LoginForm() {
                   }}
                 />
               </div>
-
+              <div className="text-red-500">{<p>{errors.password}</p>}</div>
               <div className="p-input-icon-left">
                 <InputText
                   style={{
@@ -138,6 +164,7 @@ export default function LoginForm() {
                   placeholder="Enter Your Password"
                   name="password"
                   value={password}
+                  type="password"
                   onChange={handleChange}
                 />
                 <img

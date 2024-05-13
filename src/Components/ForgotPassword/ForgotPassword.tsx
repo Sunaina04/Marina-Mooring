@@ -5,7 +5,7 @@ import { Button } from 'primereact/button'
 import { validateUserCredentials } from '../Utils/ValidateUserCredentials'
 import { useForgotPasswordMutation } from '../../Services/Authentication/AuthApi'
 import { InputText } from 'primereact/inputtext'
-
+import './ForgotPassword.module.css'
 const ForgotPassword = () => {
   const navigate = useNavigate()
   const navigateToLoginPage = useNavigate()
@@ -59,7 +59,7 @@ const ForgotPassword = () => {
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}>
-        <div className="bg-white rounded-xl p-8 w-600 absolute top-227 left-420 gap-8 h-[70vh]">
+        <div className="bg-white rounded-xl p-8 w-600 absolute top-227 left-420 gap-8 h-auto">
           <div className="text-center mt-[1rem]">
             <img
               src="/assets/images/moorfindLogo.png"
@@ -79,8 +79,8 @@ const ForgotPassword = () => {
                 <div className="p-input-icon-left relative flex justify-center">
                   <InputText
                     style={{
-                      width: '28vw',
-                      height: '7vh',
+                      width: '500px',
+                      height: '60px',
                       padding: '0 4rem 0 3rem',
                       border: '1px solid #C5D9E0',
                       fontSize: '16px',
@@ -92,29 +92,52 @@ const ForgotPassword = () => {
                     placeholder="Enter Your Registered email"
                     onChange={handleChange}
                   />
-                  <span
-                    className="w-5 h-5 absolute top-[2rem] transform -translate-y-1/2 left-4 text-[#00426f] text-lg font-[900]"
+                  <img
+                    src="/assets/images/envelope.png"
+                    alt="Search Icon"
+                    className="p-clickable"
                     style={{
-                      backgroundImage: `url('/assets/images/envelope.png')`,
-                      backgroundRepeat: 'no-repeat',
-                      backgroundSize: 'contain',
-                    }}></span>
+                      position: 'absolute',
+                      left: '10px',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      width: '20px',
+                      height: '15px',
+                      color: '#00426f',
+                      fontSize: '900',
+                    }}
+                  />
                 </div>
               </div>
             </div>
-            <div className="flex  mt-8 cursor-pointer">
-              <p className="w-[29vw] text-sm font-[400] leading-6 text-[#00426f] ">
+            <div
+              className="flex  mt-8 cursor-pointer"
+              style={{
+                width: '500px',
+                height: '72px',
+                top: '538px',
+                left: ' 470px',
+                gap: '0px',
+                opacity: '0px',
+                color: '#00426F',
+                fontSize: '14px',
+                lineHeight: '24px',
+                textAlign: 'center',
+              }}>
+              <p>
                 If you are having trouble logging in, please enter the email address registered with
                 MOORFIND. If it is a valid email address, you will be sent an email allowing you to
                 resest your password.
               </p>
             </div>
           </div>
-          <div className="flex flex-col items-center mt-8">
+          <div className="flex flex-col items-center mt-20">
             <Button
               style={{
-                width: '28vw',
-                height: '7vh',
+                width: '500px',
+                height: '60px',
+                top: '687ps',
+                gap: '0px',
                 padding: '0 4rem 0 3rem',
                 border: '1px solid #C5D9E0',
                 fontSize: '22px',
@@ -132,11 +155,25 @@ const ForgotPassword = () => {
               }}>
               Submit
             </Button>
-            <p
-              className="mt-10 text-[#00426F] font-[700] text-lg"
+            <Button
+              style={{
+                width: '500px',
+                height: '60px',
+                padding: '0 4rem 0 3rem',
+                fontSize: '22px',
+                lineHeight: '25.78px',
+                color: '#00426F',
+                borderRadius: '10px',
+                backgroundColor: '#F2F2F2 ',
+                textAlign: 'center',
+                display: 'flex',
+                fontWeight: '700',
+                justifyContent: 'center',
+              }}
+              className="mt-5"
               onClick={() => navigateToLoginPage('/Login')}>
               Back
-            </p>
+            </Button>
           </div>
         </div>
       </div>

@@ -51,7 +51,7 @@ const ResetPassword = () => {
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}>
-        <div className="bg-white rounded-xl p-8 w-600 absolute top-227 left-420 gap-8  h-[70vh]">
+        <div className="bg-white rounded-xl p-8 w-600 absolute top-227 left-420 gap-8  h-auto">
           <div className="text-center mt-[1rem]">
             <img
               src="/assets/images/moorfindLogo.png"
@@ -65,59 +65,84 @@ const ResetPassword = () => {
               <div className="p-input-icon-left relative flex justify-center ">
                 <InputText
                   style={{
-                    width: '28vw',
-                    height: '7vh',
                     padding: '0 4rem 0 3rem',
                     border: '1px solid #C5D9E0',
                     fontSize: '16px',
                     color: '#00426F',
                     borderRadius: '10px',
+                    width: '500px',
+                    height: '60px',
+                    top: '458px',
+                    left: '470px',
+                    gap: '0px',
+                    opacity: '0px',
                   }}
                   placeholder="New Password"
                   name="newPassword"
                   onChange={handleChange}
                   value={passwords.newPassword}
                 />
-                <span
-                  className="w-5 h-5 absolute top-[2rem] transform -translate-y-1/2 left-4 text-[#00426f] text-lg font-[900]"
+
+                <img
+                  src="/assets/images/key.png"
+                  alt="Key Icon"
+                  className="p-clickable"
                   style={{
-                    backgroundImage: `url('/assets/images/key.png')`,
-                    backgroundRepeat: 'no-repeat',
-                    backgroundSize: 'contain',
-                  }}></span>
+                    position: 'absolute',
+                    left: '10px',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    width: '20px',
+                    height: '20px',
+                    color: '##000000',
+                  }}
+                />
               </div>
 
               <div className="p-input-icon-left relative">
                 <InputText
                   style={{
-                    width: '28vw',
-                    height: '7vh',
                     padding: '0 4rem 0 3rem',
                     border: '1px solid #C5D9E0',
                     fontSize: '16px',
                     color: '#00426F',
                     borderRadius: '10px',
+                    width: '500px',
+                    height: '60px',
+                    top: '458px',
+                    left: '470px',
+                    gap: '0px',
+                    opacity: '0px',
                   }}
                   placeholder={'Confirm Password'}
                   name="confirmPassword"
                   onChange={handleChange}
                   value={passwords.confirmPassword}
                 />
-                <span
-                  className="w-5 h-5 absolute top-[2rem] transform -translate-y-1/2 left-4 text-[#00426f] text-lg font-[900]"
+
+                <img
+                  src="/assets/images/key.png"
+                  alt="Key Icon"
+                  className="p-clickable"
                   style={{
-                    backgroundImage: `url('/assets/images/key.png')`,
-                    backgroundRepeat: 'no-repeat',
-                    backgroundSize: 'contain',
-                  }}></span>
+                    position: 'absolute',
+                    left: '10px',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    width: '20px',
+                    height: '20px',
+                    color: '##000000',
+                  }}
+                />
               </div>
             </div>
           </div>
           <div className="flex flex-col items-center mt-8">
             <Button
               style={{
-                width: '28vw',
-                height: '7vh',
+                width: '500px',
+                height: '60px',
+                minHeight: '60px',
                 padding: '0 4rem 0 3rem',
                 border: '1px solid #C5D9E0',
                 fontSize: '22px',
@@ -135,8 +160,9 @@ const ResetPassword = () => {
             </Button>
             <Button
               style={{
-                width: '28vw',
-                height: '7vh',
+                width: '500px',
+                height: '60px',
+                top: '20px',
                 padding: '0 4rem 0 3rem',
                 fontSize: '22px',
                 lineHeight: '25.78px',
@@ -147,7 +173,6 @@ const ResetPassword = () => {
                 display: 'flex',
                 fontWeight: '700',
                 justifyContent: 'center',
-                marginTop: '1rem',
               }}
               onClick={() => navigateToLoginPage('/Login')}>
               <p>Back</p>
