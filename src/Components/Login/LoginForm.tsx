@@ -6,7 +6,6 @@ import { setToken, setUserData } from '../../Store/Slice/userSlice'
 import { Link, useNavigate } from 'react-router-dom'
 import { InputText } from 'primereact/inputtext'
 import { Button } from 'primereact/button'
-
 import './Login.module.css'
 
 export default function LoginForm() {
@@ -15,18 +14,12 @@ export default function LoginForm() {
     username: '',
     password: '',
   })
-
-  console.log('user', loginPayload.username)
-  console.log('password', loginPayload.password)
-
   const { username, password } = loginPayload
   const navigate = useNavigate()
   const [errors, setErrors] = useState({
     email: '',
     password: '',
   })
-
-  console.log('errors', errors.email, errors.password)
 
   const handleChange = (e: any) => {
     const { name, value } = e.target
@@ -58,20 +51,10 @@ export default function LoginForm() {
       }))
       return
     }
-
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/
     if (password.length === 0) {
       setErrors((prev) => ({
         ...prev,
         password: 'Password cannot be empty',
-      }))
-      return
-    }
-    if (!passwordRegex.test(password.trim())) {
-      setErrors((prev) => ({
-        ...prev,
-        password:
-          'Password must contain at least one uppercase letter, one lowercase letter, one number, and minimum 8 characters',
       }))
       return
     }
@@ -92,6 +75,10 @@ export default function LoginForm() {
       console.error('Error occurred during login:', error)
       if (error.data) {
         const { message: msg } = error.data as ErrorResponse
+        setErrors((prev) => ({
+          ...prev,
+          email: msg,
+        }))
       }
     }
   }
@@ -116,8 +103,8 @@ export default function LoginForm() {
             />
           </div>
           <div className="flex flex-col justify-center text-center mt-[5rem]">
-            <div className="text-red-500">{errors.email && <p>{errors.email}</p>}</div>
-            <div className="flex flex-col gap-5 items-center">
+            <div className="text-red-500 mb-5">{errors.email && <p>{errors.email}</p>}</div>
+            <div className="flex flex-col items-center">
               <div className="p-input-icon-left">
                 <InputText
                   placeholder="Enter Your Email"
@@ -149,7 +136,7 @@ export default function LoginForm() {
                   }}
                 />
               </div>
-              <div className="text-red-500">{<p>{errors.password}</p>}</div>
+              <div className="text-red-500 mb-5">{<p>{errors.password}</p>}</div>
               <div className="p-input-icon-left">
                 <InputText
                   style={{
@@ -182,7 +169,7 @@ export default function LoginForm() {
                 />
               </div>
 
-              <div className="flex justify-end mb-8 w-[500px] cursor-pointer underline">
+              <div className="flex justify-end mb-8 mt-5 w-[500px] cursor-pointer underline">
                 <span
                   className="font-normal"
                   style={{
