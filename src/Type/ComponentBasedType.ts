@@ -116,7 +116,7 @@ export type StatCardProps = {
 export interface CustomerAdminDataProps {
   customerData: any
   editMode: boolean
-  customerAdminId?: string
+  customerAdminId: string
   closeModal: () => void
   getUser: () => void
 }

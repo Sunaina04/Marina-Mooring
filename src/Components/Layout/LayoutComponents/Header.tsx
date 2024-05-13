@@ -49,7 +49,14 @@ const Header: React.FC<HeaderProps> = ({ header }) => {
         color: '#AEAEAE',
       }}>
       {header}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: '300px' }}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          minWidth: '300px',
+          justifyContent: 'end',
+        }}>
         {role === 'OWNER' && (
           <Dropdown
             value={selectRole}

@@ -1,16 +1,16 @@
-export interface UserLoginPayload {
+export interface AddUserPayload {
   name: string
   email: string
   phoneNumber: string
   password: string
   userID: string
-  customerAdminId: string
   role: string
   state: string
   country: string
   street: string
   apt: string
   zipCode: string
+  confirmPassword: string
 }
 
 export interface SaveUserResponse {
@@ -21,12 +21,36 @@ export interface SaveUserResponse {
   content: {}
 }
 
+export interface GetUserResponseContent {
+  name: string
+  email: string
+  phoneNumber: string
+  password: string
+  userID: string
+  role: string
+  state: string
+  country: string
+  street: string
+  apt: string
+  zipCode: string
+  customerAdminId: string
+}
+
+export interface UserResponse {
+  content: GetUserResponseContent
+  empty: boolean
+  first: boolean
+  last: boolean
+  number: boolean
+  numberOfElements: number
+}
+
 export interface GetUserResponse {
   message: string
   status: number
   errorList: [string]
   time: string
-  content: {}
+  content: UserResponse
 }
 
 export interface LoginPayload {

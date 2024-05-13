@@ -102,6 +102,7 @@ const Permission = () => {
                 editMode={editMode}
                 closeModal={() => {}}
                 getUser={() => {}}
+                customerAdminId=""
               />
             </CustomModal>
           </div>

@@ -4,16 +4,23 @@ import {
   LoginPayload,
   ResetPasswordPayload,
   SignUpPayload,
-  UserLoginPayload,
+  AddUserPayload,
 } from '../../Type/ApiTypes'
 
 const authApi = userApi.injectEndpoints({
   endpoints: (builder: any) => ({
     addUser: builder.mutation({
-      query: (payload: UserLoginPayload) => ({
+      query: ({
+        payload,
+        customerAdminId,
+      }: {
+        payload: AddUserPayload
+        customerAdminId: number
+      }) => ({
         url: 'api/v1/user/',
         method: 'POST',
         body: payload,
+        params: { customerAdminId },
       }),
     }),
 
@@ -65,7 +72,7 @@ const authApi = userApi.injectEndpoints({
 
     resetPassword: builder.mutation({
       query: ({ payload, token }: { payload: ResetPasswordPayload; token: string }) => ({
-        url: 'api/v1/auth/resetPassword',
+        url: 'api/v1/auth/resetPassword/',
         method: 'POST',
         body: payload,
         params: { token },

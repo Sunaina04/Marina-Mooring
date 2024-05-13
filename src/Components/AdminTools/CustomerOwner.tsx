@@ -21,7 +21,7 @@ const CustomerOwner = () => {
   const { getMetaData } = useMetaData()
   const [rolesData, setRolesData] = useState<Role[]>()
   const [selectRole, setSelectRole] = useState()
-  const [getCustomer] = useGetCustomerMutation()
+  const [customerAdminId, setCustomerAdminId] = useState('')
   const [getUser] = useGetUsersMutation()
   const [getCustomerOwnerData, setgetCustomerOwnerData] = useState<CustomerPayload[]>([])
 
@@ -54,7 +54,7 @@ const CustomerOwner = () => {
   const tableColumns = useMemo(
     () => [
       {
-        id: 'customerId',
+        id: 'customerAdminId',
         label: 'ID',
         style: {
           borderBottom: '1px solid #C0C0C0',
@@ -64,7 +64,7 @@ const CustomerOwner = () => {
         },
       },
       {
-        id: 'customerName',
+        id: 'name',
         label: 'Name',
         style: {
           borderBottom: '1px solid #C0C0C0',
@@ -75,7 +75,7 @@ const CustomerOwner = () => {
       },
 
       {
-        id: 'phone',
+        id: 'phoneNumber',
         label: 'Phone',
         style: {
           borderBottom: '1px solid #C0C0C0',
@@ -167,10 +167,11 @@ const CustomerOwner = () => {
   const getUserHandler = async () => {
     try {
       const response = await getUser({}).unwrap()
-      console.log(' I AM CALLED', response)
       const { status, content } = response as GetUserResponse
-      if (status === 200 && Array.isArray(content)) {
-        setgetCustomerOwnerData(content)
+      console.log(content?.content, response)
+      if (status === 200 && Array.isArray(content?.content)) {
+        setgetCustomerOwnerData(content?.content)
+        setCustomerAdminId(content?.content[0].customerAdminId)
       }
       console.log(getCustomerOwnerData)
     } catch (error) {
@@ -232,6 +233,7 @@ const CustomerOwner = () => {
             onHide={handleModalClose}
             header={<h1 className="text-xl font-bold text-#000000 ml-4">New User</h1>}>
             <AddNewCustomer
+              customerAdminId={customerAdminId}
               customerData={selectedCustomer}
               editMode={editMode}
               getUser={getUserHandler}

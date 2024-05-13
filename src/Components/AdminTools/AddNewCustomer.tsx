@@ -6,7 +6,6 @@ import InputComponent from '../CommonComponent/InputComponent'
 import { Country, Role, State } from '../../Type/CommonType'
 import { CustomerAdminDataProps } from '../../Type/ComponentBasedType'
 import useMetaData from '../CommonComponent/MetaDataComponent'
-import { useAddCustomerMutation } from '../../Services/MoorManage/MoormanageApi'
 import { useAddUserMutation } from '../../Services/Authentication/AuthApi'
 import { SaveUserResponse } from '../../Type/ApiTypes'
 
@@ -45,7 +44,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   }, [editMode, customerData])
 
   const handleSave = async () => {
-    const payload = {
+    const addUserPayload = {
       name: name,
       userID: id,
       phoneNumber: phone,
@@ -54,12 +53,15 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       apt: apt,
       zipCode: zipCode,
       password: password,
-      state: state,
-      country: country,
+      state: state?.name,
+      country: country?.name,
       role: role?.name,
-      customerAdminId: customerAdminId,
+      confirmPassword: confirmPassword,
     }
-    const response = await addCustomer(payload).unwrap()
+    const response = await addCustomer({
+      payload: addUserPayload,
+      customerAdminId: customerAdminId,
+    }).unwrap()
     const { status, content } = response as SaveUserResponse
     if (status === 200) {
       closeModal()
@@ -288,6 +290,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
             <span className="font-semibold text-xs text-black">Create password</span>
             <div className="mt-1">
               <InputComponent
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 style={{
                   width: '15vw',
                   height: '5vh',
@@ -303,6 +307,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
             <span className="font-semibold text-xs text-black">Confirm password</span>
             <div className="mt-1 ">
               <InputComponent
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
                 style={{
                   width: '15vw',
                   height: '5vh',
@@ -334,6 +340,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           />
           <Button
             label={'Back'}
+            onClick={closeModal}
             text={true}
             style={{ backgroundColor: 'white', color: 'black', border: 'none' }}
           />
