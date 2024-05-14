@@ -37,12 +37,16 @@
 /* searchDataTable */
 
 .p-datatable .p-datatable-tbody > tr {
-  background: #f2f2f2;
+  background: #ffffff;
 }
 
 .p-datatable-thead > th {
   background: #f2f2f2;
 }
 .p-datatable-header {
-  background: #f2f2f2;
+  background: #ffffff;
+  border-radius: 9px;
+}
+.p-datatable-emptymessage {
+  background: #ffffff;
 }

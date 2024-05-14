@@ -1,5 +1,6 @@
 import { userApi } from '../UserApi'
 import {
+  AddUserPayload,
   ForgotPasswordPayload,
   LoginPayload,
   ResetPasswordPayload,
@@ -8,6 +9,22 @@ import {
 
 const authApi = userApi.injectEndpoints({
   endpoints: (builder: any) => ({
+    addUser: builder.mutation({
+      query: ({
+        payload,
+        customerAdminId,
+      }: {
+        payload: AddUserPayload
+        customerAdminId: number
+      }) => ({
+        url: 'api/v1/user/',
+        method: 'POST',
+        body: payload,
+        params: { customerAdminId },
+    
+      }),
+    }),
+
     login: builder.mutation({
       query: (payload: LoginPayload) => ({
         url: 'api/v1/auth/login',

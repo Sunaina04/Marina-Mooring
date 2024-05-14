@@ -35,8 +35,8 @@ const Dashboard = () => {
         },
       },
       {
-        id: 'mooringServiceData',
-        label: 'Mooring service Data',
+        id: 'mooringId',
+        label: 'Mooring ID',
         style: {
           fontSize: '10px',
           width: '18vw',
@@ -45,9 +45,21 @@ const Dashboard = () => {
           fontWeight: '700',
         },
       },
+
       {
-        id: 'mooringLoaction',
-        label: 'Mooring Loacation',
+        id: 'mooringServiceDate',
+        label: 'Mooring service Date',
+        style: {
+          fontSize: '10px',
+          width: '20vw',
+          backgroundColor: '#FFFFFF',
+          color: '#000000',
+          fontWeight: '700',
+        },
+      },
+      {
+        id: 'mooringLocation ',
+        label: 'Mooring Location ',
         style: {
           fontSize: '10px',
           width: '18vw',
@@ -80,11 +92,11 @@ const Dashboard = () => {
         color: 'green',
       },
     ],
-    headerStyle: { backgroundColor: '#F2F2F2' },
+    headerStyle: { backgroundColor: '#FFFFFF' },
   }
 
   const Boatsheader = (
-    <div className="flex flex-wrap align-items-center justify-between gap-2 p-4">
+    <div className="flex flex-wrap align-items-center justify-between gap-2 p-4 bg-[#FFFFFF]">
       <span
         style={{
           fontWeight: '700',
@@ -106,7 +118,7 @@ const Dashboard = () => {
           letterSpacing: '0.46px',
           textAlign: 'right',
         }}>
-        View All
+        View all
       </span>
     </div>
   )
@@ -114,54 +126,36 @@ const Dashboard = () => {
   return (
     <>
       <Header header="DASHBOARD" />
-      <div className="flex justify-around">
+      <div className="flex  ml-12 gap-8 mt-10">
         <div className="right flex flex-col">
-          <div>
-            {/* right section */}
-            {/* <div className="w-[43vw] h-14 mt-11">
-              <img src="/assets/images/map.png" />
-              <div className="-translate-y-[45vh] translate-x-[5vw]"></div>
-              <div className="-translate-y-[45vh] translate-x-[20vw]"></div>
-              <div className="absolute -translate-y-[19vh] translate-x-[25vw] bottom-0  rounded-md border-[1px] p-1 border-gray-300 w-[17vw] h-[13vh] bg-white">
-                <p className="text-[0.7rem] ml-1  text-black">Status</p>
-                <hr className="m-1 border-black" />
-                <div className="flex">
-                  <div>
-                    <FaCircle className="h-3 text-red-600 mt-1" />
-                    <FaCircle className="h-3 text-green-600 mt-4" />
-                  </div>
-                  <div>
-                    <p className="text-[0.6rem] text-black mt-1">Need inspection</p>
-                    <p className="text-[0.6rem] text-black tracking-tighter mt-[0.9rem]">
-                      Gear On (in the water)
-                    </p>
-                  </div>
-                  <div className="ml-1">
-                    <FaCircle className="h-3 text-violet-600 mt-1 " />
-                    <FaCircle className="h-3 text-gray-500 mt-4" />
-                  </div>
-                  <div>
-                    <p className="text-[0.6rem] text-black tracking-tighter mt-1">
-                      Gear Off (out of the water)
-                    </p>
-                    <p className="text-[0.6rem] text-black tracking-tighter mt-[0.9rem]">Not in Use</p>
-                  </div>
-                </div>
-              </div>
-            </div> */}
-            <h1> Map </h1>
-          </div>
-
           <div
             style={{
-              width: '728.91px',
-              height: '300.2px',
-              top: '563.46px',
+              width: '850px',
+              height: '334.01px',
               gap: '0px',
               borderRadius: '10px',
               opacity: '0px',
               border: '1.13px solid #D5E1EA',
               backgroundColor: '#FFFFFF',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <div>
+              <h1 className="">map</h1>
+            </div>
+          </div>
+
+          <div
+            style={{
+              width: '850px',
+              height: '300.2px',
+              gap: '0px',
+              borderRadius: '10px',
+              opacity: '0px',
+              border: '1.13px solid #D5E1EA',
+              backgroundColor: '#FFFFFF',
+              marginTop: '20px',
             }}>
             <DataTableComponent
               columns={columns}
@@ -171,8 +165,12 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="left">
-          <div className="mr-50 mt-11">
+        <div
+          className="left "
+          style={{
+            flexGrow: 1,
+          }}>
+          <div className="w-full">
             <Accordition />
           </div>
         </div>
