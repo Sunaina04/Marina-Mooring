@@ -73,7 +73,7 @@ const Accordion = () => {
 
   return (
     <div className="wrapper">
-      <div className="tab px-5 relative mb-4 rounded-md bg-white border-[1px] border-[#D5E1EA] w-[30vw]">
+      <div className="tab px-5 relative mb-4 rounded-md bg-white border-[1px] border-[#D5E1EA] mr-8">
         <label
           htmlFor="faq1"
           className="cursor-pointer flex items-center justify-between h-14"
@@ -83,7 +83,7 @@ const Accordion = () => {
               <img alt="icon" src="/assets/images/Calendar.svg" style={{ width: '23px' }} />
             </div>
             <div>
-              <h1 className="text-[16px] font-[700] text-[#10293A] leading-[18.75px]">Calendar</h1>
+              <h1 className="text-[16px] font-[500] text-[#10293A] leading-[18.75px]">Calendar</h1>
             </div>
           </div>
 
@@ -98,12 +98,10 @@ const Accordion = () => {
           </div>
         </label>
         <div
-          className={`content mt-5 transition-all ease-in-out duration-500 ${accordion === 'faq1' ? '' : 'hidden'}`}>
-          <h1>Hello</h1>
-        </div>
+          className={`content mt-5 transition-all ease-in-out duration-500 ${accordion === 'faq1' ? '' : 'hidden'}`}></div>
       </div>
 
-      <div className="tab px-5 relative mb-4 rounded-md bg-[#FFFFFF] border-[1px] border-[#D5E1EA] w-[30vw]">
+      <div className="tab px-5 relative mb-4 rounded-md bg-[#FFFFFF] border-[1px] border-[#D5E1EA] mr-8">
         <label
           htmlFor="faq2"
           className="cursor-pointer flex items-center justify-between h-14"
@@ -113,7 +111,7 @@ const Accordion = () => {
               <img alt="icon" src="/assets/images/file.svg" style={{ width: '23px' }} />
             </div>
             <div>
-              <h1 className="text-[16px] font-[700] text-[#10293A] leading-[18.75px]">
+              <h1 className="text-[16px] font-[500] text-[#10293A] leading-[18.75px]">
                 Open Work Orders
               </h1>
             </div>
@@ -137,19 +135,20 @@ const Accordion = () => {
             columns={columns}
             actionButtons={ActionButtonColumn}
             scrollable
+            tableStyle={{ fontSize: '10px' }}
           />
         </label>
       </div>
 
-      <div className="tab px-5 py-3 bg-white border-[1px] border-[#D5E1EA] relative mb-2 rounded-md w-[30vw]">
+      <div className="tab px-5 py-3 bg-white border-[1px] border-[#D5E1EA] relative mb-2 rounded-md mr-8">
         <label
           htmlFor="faq3"
           className="cursor-pointer flex items-center justify-between h-8"
           onClick={() => handleToggle('faq3')}>
           <div className="flex items-center gap-2">
-            <img alt="icon" src="/assets/images/Group.svg" style={{ width: '23px' }} />
+            <img alt="icon" src="/assets/images/Group.svg" style={{ width: '25px' }} />
             <div className="ml-2">
-              <h1 className="text-[#10293A] font-[700] leading-[18.75px]">Total Moorings</h1>
+              <h1 className="text-[#10293A] font-[500] leading-[18.75px]">Total Moorings</h1>
             </div>
           </div>
 
