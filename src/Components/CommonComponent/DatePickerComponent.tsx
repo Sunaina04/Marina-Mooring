@@ -1,34 +1,30 @@
-import React from "react";
-import { Calendar } from "primereact/calendar";
-import { Nullable } from "primereact/ts-helpers";
+import { useState } from 'react'
+import { Calendar } from 'primereact/calendar'
+import { Nullable } from 'primereact/ts-helpers'
 
-interface DatePickerComponentProps {
-  value?: Nullable<Date>;
-  onChange: (newValue: Date) => void;
-  format?: string;
-  readOnly?: boolean;
-  style?: React.CSSProperties;
-  showIcon?: boolean;
+const DatePickerComponent = () => {
+  const [date, setDate] = useState<Nullable<Date>>(null)
+
+  return (
+    <>
+      <div
+        className="card flex justify-content-center"
+        style={{
+          width: '500px',
+          height: 'auto',
+          gap: '0px',
+          borderRadius: '10px',
+          border: '1.13px solid #D5E1EA',
+          backgroundColor: '#FFFFFF',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          margin: '1rem',
+        }}>
+        <Calendar value={date} onChange={(e) => setDate(e.value)} inline showWeek />
+      </div>
+    </>
+  )
 }
 
-const DatePickerComponent: React.FC<DatePickerComponentProps> = ({
-  value,
-  style,
-  onChange,
-  showIcon,
-}) => {
-  return (
-    <div>
-      <div>
-        <Calendar
-          showIcon={showIcon}
-          value={value}
-          style={style}
-          onChange={(e) => onChange(e.value as Date)}
-        />
-      </div>
-    </div>
-  );
-};
-
-export default DatePickerComponent;
+export default DatePickerComponent

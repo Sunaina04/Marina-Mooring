@@ -1,14 +1,11 @@
-import React, { useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { IoAddOutline } from 'react-icons/io5'
 import { FiMinus } from 'react-icons/fi'
-import { FaCalendar } from 'react-icons/fa'
-import { BsFileCheckFill } from 'react-icons/bs'
-import { Column } from 'primereact/column'
-import { DataTable } from 'primereact/datatable'
 import StatCard from '../StatCard/StatCard'
 import DataTableComponent from './Table/DataTableComponent'
 import { ActionButtonColumnProps, TableColumnProps } from '../../Type/Components/TableTypes'
 import { AccorditionDataTable } from '../Utils/CustomData'
+import DatePickerComponent from './DatePickerComponent'
 
 const Accordion = () => {
   const [accordion, setAccordion] = useState('faq1')
@@ -86,7 +83,6 @@ const Accordion = () => {
               <h1 className="text-[16px] font-[500] text-[#10293A] leading-[18.75px]">Calendar</h1>
             </div>
           </div>
-
           <div>
             <div className="">
               {accordion === 'faq1' ? (
@@ -98,9 +94,11 @@ const Accordion = () => {
           </div>
         </label>
         <div
-          className={`content mt-5 transition-all ease-in-out duration-500 ${accordion === 'faq1' ? '' : 'hidden'}`}></div>
+          style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+          className={`content mt-5 transition-all ease-in-out duration-500 ${accordion === 'faq1' ? '' : 'hidden'}`}>
+          <DatePickerComponent />
+        </div>
       </div>
-
       <div className="tab px-5 relative mb-4 rounded-md bg-[#FFFFFF] border-[1px] border-[#D5E1EA] mr-8">
         <label
           htmlFor="faq2"
@@ -116,7 +114,6 @@ const Accordion = () => {
               </h1>
             </div>
           </div>
-
           <div>
             <div className="">
               {accordion === 'faq2' ? (
@@ -139,7 +136,6 @@ const Accordion = () => {
           />
         </label>
       </div>
-
       <div className="tab px-5 py-3 bg-white border-[1px] border-[#D5E1EA] relative mb-2 rounded-md mr-8">
         <label
           htmlFor="faq3"
@@ -151,7 +147,6 @@ const Accordion = () => {
               <h1 className="text-[#10293A] font-[500] leading-[18.75px]">Total Moorings</h1>
             </div>
           </div>
-
           <div className="">
             {accordion === 'faq3' ? (
               <FiMinus style={{ color: '#10293A' }} />
