@@ -3,9 +3,10 @@ import { RootState } from '../Store/Store'
 
 const baseQuery = fetchBaseQuery({
   baseUrl: process.env.REACT_APP_BASE_URL,
-  prepareHeaders: (headers, { getState }) => {
+  prepareHeaders: (headers, { getState, endpoint }) => {
     const token = (getState() as RootState).user.token
-    if (token) {
+    const noAuthEndpoints = ['api/v1/auth/']
+    if (token && !noAuthEndpoints.includes(endpoint)) {
       headers.set('Authorization', `Bearer ${token}`)
     }
     return headers
