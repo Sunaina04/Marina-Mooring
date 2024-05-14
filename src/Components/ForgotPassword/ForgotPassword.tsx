@@ -5,8 +5,8 @@ import { Button } from 'primereact/button'
 import { useForgotPasswordMutation } from '../../Services/Authentication/AuthApi'
 import { InputText } from 'primereact/inputtext'
 import './ForgotPassword.module.css'
+
 const ForgotPassword = () => {
-  const navigate = useNavigate()
   const navigateToLoginPage = useNavigate()
   const [validateEmail] = useForgotPasswordMutation()
   const [email, setEmail] = useState('')
