@@ -30,6 +30,7 @@ export interface DataTableProps {
   header?: any
   actionButtons?: ActionButtonColumnProps
   onRowClick?: (event: DataTableRowClickEvent) => void
+  rowStyle?: (rowData: any) => React.CSSProperties
 }
 
 export interface ButtonProps {

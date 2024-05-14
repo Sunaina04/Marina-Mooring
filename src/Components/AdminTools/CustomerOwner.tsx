@@ -18,6 +18,7 @@ const CustomerOwner = () => {
   const [selectedCustomer, setSelectedCustomer] = useState<any>()
   const [editMode, setEditMode] = useState(false)
   const [isRowClick, setIsRowClick] = useState(false)
+  const [selectedRow, setSelectedRow] = useState<string | null>(null)
   const { getMetaData } = useMetaData()
   const [rolesData, setRolesData] = useState<Role[]>()
   const [selectRole, setSelectRole] = useState()
@@ -45,7 +46,7 @@ const CustomerOwner = () => {
       },
     ],
     headerStyle: {
-      backgroundColor: '#F2F2F2',
+      backgroundColor: '#FFFFFF',
       borderBottom: '1px solid #C0C0C0',
       color: '#000000',
       fontWeight: 400,
@@ -59,7 +60,7 @@ const CustomerOwner = () => {
         label: 'ID',
         style: {
           borderBottom: '1px solid #C0C0C0',
-          backgroundColor: '#F2F2F2',
+          backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: 500,
         },
@@ -69,18 +70,17 @@ const CustomerOwner = () => {
         label: 'Name',
         style: {
           borderBottom: '1px solid #C0C0C0',
-          backgroundColor: '#F2F2F2',
+          backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: 500,
         },
       },
-
       {
         id: 'phoneNumber',
         label: 'Phone',
         style: {
           borderBottom: '1px solid #C0C0C0',
-          backgroundColor: '#F2F2F2',
+          backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: 500,
         },
@@ -96,7 +96,7 @@ const CustomerOwner = () => {
         label: 'ID',
         style: {
           borderBottom: '1px solid #C0C0C0',
-          backgroundColor: '#F2F2F2',
+          backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: 400,
         },
@@ -106,54 +106,41 @@ const CustomerOwner = () => {
         label: 'Name',
         style: {
           borderBottom: '1px solid #C0C0C0',
-          backgroundColor: '#F2F2F2',
+          backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: 400,
         },
       },
-
       {
         id: 'email',
         label: 'Email',
         style: {
           borderBottom: '1px solid #C0C0C0',
-          backgroundColor: '#F2F2F2',
+          backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: 400,
         },
       },
-
       {
         id: 'phoneNumber',
         label: 'Phone',
         style: {
           borderBottom: '1px solid #C0C0C0',
-          backgroundColor: '#F2F2F2',
+          backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: 400,
         },
       },
-
       {
         id: 'role',
         label: 'Role',
         style: {
           borderBottom: '1px solid #C0C0C0',
-          backgroundColor: '#F2F2F2',
+          backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: 400,
         },
       },
-      // {
-      //   id: 'action',
-      //   label: 'Action',
-      //   style: {
-      //     width: '6vw',
-      //     borderBottom: '1px solid #C0C0C0',
-      //     backgroundColor: '#F2F2F2',
-      //     color: '#000000',
-      //   },
-      // },
     ],
     [],
   )
@@ -171,7 +158,6 @@ const CustomerOwner = () => {
       const { status, content } = response as GetUserResponse
       if (status === 200 && Array.isArray(content?.content)) {
         setgetCustomerOwnerData(content?.content)
-        setCustomerAdminId(content?.content[0].id)
       }
     } catch (error) {
       console.error('Error occurred while fetching customer data:', error)
@@ -185,6 +171,8 @@ const CustomerOwner = () => {
       if (status === 200 && Array.isArray(content?.content)) {
         setgetCustomerOwnerUserData(content?.content)
         setIsRowClick(true)
+        setSelectedRow(row?.id)
+        setCustomerAdminId(row?.id)
       }
     } catch (error) {
       console.error('Error occurred while fetching customer data:', error)
@@ -245,7 +233,7 @@ const CustomerOwner = () => {
             onHide={handleModalClose}
             header={<h1 className="text-xl font-extrabold text-black ml-4">New User</h1>}>
             <AddNewCustomer
-              customerAdminId={customerAdminId}
+              customerAdminId={customerAdminId ? customerAdminId : ''}
               customerData={selectedCustomer}
               editMode={editMode}
               getUser={getUserHandler}
@@ -261,7 +249,7 @@ const CustomerOwner = () => {
           paddingRight: '40px',
           paddingLeft: '25px',
         }}>
-        <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 mb-10">
+        <div className="bg-[FFFFFF] rounded-md border-[1px] mb-10">
           <div className="text-sm font-bold rounded-t-md bg-[#00426F]">
             <h1 className="p-4 text-white">{properties.CustomersOwner}</h1>
           </div>
@@ -281,17 +269,20 @@ const CustomerOwner = () => {
               onRowClick={(e) => {
                 getCustomerAdminsUsers(e.data)
               }}
+              rowStyle={(rowData) => ({
+                backgroundColor: selectedRow === rowData.id ? 'black' : 'red',
+              })}
             />
           </div>
         </div>
 
         {isRowClick && (
           <div
-            className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 mb-10"
+            className="bg-[F2F2F2] rounded-lg border-[1px] mb-10"
             style={{
               flexGrow: 1,
             }}>
-            <div className="text-sm font-bold rounded-t-md  bg-[#00426F]">
+            <div className="text-sm font-bold rounded-t-md bg-[#00426F]">
               <h1 className="p-4 text-white">{properties.CustomerOwnerUsers}</h1>
             </div>
             <div data-testid="customer-admin-users-table">

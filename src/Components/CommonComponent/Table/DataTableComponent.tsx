@@ -8,6 +8,7 @@ const DataTableComponent: React.FC<DataTableProps> = ({
   data = [],
   scrollable = true,
   columns,
+  rowStyle,
   tableStyle = undefined,
   header,
   actionButtons,
@@ -16,7 +17,7 @@ const DataTableComponent: React.FC<DataTableProps> = ({
   const buttonBody = (rowData: any) => {
     return (
       <div className="flex ">
-        <div className={'flex gap-4'}>
+        <div className="flex gap-4">
           {actionButtons?.buttons?.map((b) => (
             <DataTableButton
               data-testid="custom-element"
@@ -28,6 +29,10 @@ const DataTableComponent: React.FC<DataTableProps> = ({
     )
   }
 
+  const getRowStyle = (rowData: any) => {
+    return rowStyle ? rowStyle(rowData) : {}
+  }
+
   return (
     <div className="card">
       <DataTable
@@ -35,7 +40,8 @@ const DataTableComponent: React.FC<DataTableProps> = ({
         tableStyle={tableStyle}
         scrollable={scrollable}
         header={header}
-        onRowClick={onRowClick}>
+        onRowClick={onRowClick}
+        rowClassName={getRowStyle}>
         {columns.map((d) => (
           <Column
             key={d.id}
