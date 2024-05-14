@@ -17,6 +17,7 @@ export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false)
   const { username, password } = loginPayload
   const navigate = useNavigate()
+  const [login] = useLoginMutation()
   const [errors, setErrors] = useState({
     email: '',
     password: '',
@@ -36,8 +37,6 @@ export default function LoginForm() {
   const toggleShowPassword = () => {
     setShowPassword(!showPassword)
   }
-
-  const [login] = useLoginMutation()
 
   const signInHandler = async () => {
     setErrors({ email: '', password: '' })

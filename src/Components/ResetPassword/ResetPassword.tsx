@@ -90,8 +90,8 @@ const ResetPassword = () => {
           <div className="flex flex-col justify-center text-center">
             <div className="flex flex-col gap-5 mt-20">
               {message && (
-                <div className="mb-4">
-                  <span className="mb-8 text-red-500 text-sm break-words max-w-full">
+                <div className="mb-4 flex justify-center">
+                  <span className="mb-8 text-red-500 text-sm break-words max-w-md overflow-wrap-normal">
                     {message}
                   </span>
                 </div>

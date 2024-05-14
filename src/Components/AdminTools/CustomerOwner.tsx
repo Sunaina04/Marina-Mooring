@@ -179,7 +179,6 @@ const CustomerOwner = () => {
   }
 
   const getCustomerAdminsUsers = async (row: any) => {
-    console.log('ROW', row)
     try {
       const response = await getUser({ customerAdminId: row?.id }).unwrap()
       const { status, content } = response as GetUserResponse
@@ -244,7 +243,7 @@ const CustomerOwner = () => {
             onClick={handleButtonClick}
             visible={modalVisible}
             onHide={handleModalClose}
-            header={<h1 className="text-xl font-bold text-#000000 ml-4">New User</h1>}>
+            header={<h1 className="text-xl font-extrabold text-black ml-4">New User</h1>}>
             <AddNewCustomer
               customerAdminId={customerAdminId}
               customerData={selectedCustomer}

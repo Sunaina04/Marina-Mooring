@@ -90,17 +90,17 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
   return (
     <>
-      <div className="ml-4">
+      <div className="ml-4" style={{ width: '50vh', height: '500px' }}>
         <div className="flex gap-6 mt-3 ">
           <div>
-            <span className="font-semibold text-xs text-black">Name</span>
+            <span className="text-xs text-black">Name</span>
             <div className="mt-1">
               <InputText
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 style={{
-                  width: '15vw',
-                  height: '5vh',
+                  width: '230px',
+                  height: '32px',
                   border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.80vw',
@@ -111,14 +111,14 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           </div>
 
           <div>
-            <span className="font-semibold text-xs text-black">ID</span>
+            <span className="text-xs text-black">ID</span>
             <div className="mt-1">
               <InputText
                 value={id}
                 onChange={(e) => setId(e.target.value)}
                 style={{
-                  width: '15vw',
-                  height: '5vh',
+                  width: '230px',
+                  height: '32px',
                   border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.80vw',
@@ -129,14 +129,14 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           </div>
 
           <div>
-            <span className="font-semibold text-xs text-black">Phone</span>
+            <span className="text-xs text-black">Phone</span>
             <div className="mt-1">
               <InputText
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 style={{
-                  width: '15vw',
-                  height: '5vh',
+                  width: '230px',
+                  height: '32px',
                   border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.80vw',
@@ -150,7 +150,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         <div className="flex gap-6 ">
           <div>
             <div className="mt-3">
-              <span className="font-semibold text-xs text-black">Email Address</span>
+              <span className="text-xs text-black">Email Address</span>
             </div>
 
             <div className="mt-1">
@@ -158,8 +158,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 style={{
-                  width: '15vw',
-                  height: '5vh',
+                  width: '230px',
+                  height: '32px',
                   border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.80vw',
@@ -171,7 +171,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
           <div>
             <div className="mt-3">
-              <span className="font-semibold text-xs text-black">Role</span>
+              <span className="text-xs text-black">Role</span>
             </div>
 
             <div className="mt-1">
@@ -183,8 +183,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 editable
                 placeholder="Select"
                 style={{
-                  width: '15vw',
-                  height: '5vh',
+                  width: '230px',
+                  height: '32px',
+                  minHeight: '32px',
                   border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                 }}
@@ -194,7 +195,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         </div>
 
         <div className="mt-5">
-          <h1 className="text-lg font-semibold">Address</h1>
+          <h1 className="text-xs text-blac">Address</h1>
         </div>
 
         <div className="gap-6 mt-4">
@@ -206,8 +207,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   onChange={(e) => setStreet(e.target.value)}
                   placeholder="Street/house"
                   style={{
-                    width: '15vw',
-                    height: '5vh',
+                    width: '230px',
+                    height: '32px',
                     border: '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     padding: '0.80em',
@@ -224,8 +225,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   placeholder="Apt/Suite"
                   type="text"
                   style={{
-                    width: '15vw',
-                    height: '5vh',
+                    width: '230px',
+                    height: '32px',
                     border: '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     padding: '0.83em',
@@ -243,8 +244,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 editable
                 placeholder="State"
                 style={{
-                  width: '15vw',
-                  height: '5vh',
+                  width: '230px',
+                  height: '32px',
+                  minHeight: '32px',
                   border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                 }}
@@ -263,8 +265,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 placeholder="Country"
                 className=""
                 style={{
-                  width: '15vw',
-                  height: '5vh',
+                  width: '230px',
+                  height: '32px',
                   border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                 }}
@@ -275,8 +277,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
               onChange={(e) => setZipCode(e.target.value)}
               placeholder="Zipcode"
               style={{
-                width: '15vw',
-                height: '5vh',
+                width: '230px',
+                height: '32px',
                 border: '1px solid #D5E1EA',
                 borderRadius: '0.50rem',
                 padding: '0.83em',
@@ -287,14 +289,14 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
         <div className="flex mt-5 gap-6">
           <div>
-            <span className="font-semibold text-xs text-black">Create password</span>
+            <span className="text-xs text-black">Create password</span>
             <div className="mt-1">
               <InputComponent
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 style={{
-                  width: '15vw',
-                  height: '5vh',
+                  width: '230px',
+                  height: '32px',
                   border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.80vw',
@@ -304,14 +306,14 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
             </div>
           </div>
           <div className="">
-            <span className="font-semibold text-xs text-black">Confirm password</span>
+            <span className="text-xs text-black">Confirm password</span>
             <div className="mt-1 ">
               <InputComponent
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 style={{
-                  width: '15vw',
-                  height: '5vh',
+                  width: '230px',
+                  height: '32px',
                   border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.80vw',
