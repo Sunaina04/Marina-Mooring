@@ -186,6 +186,7 @@ const Permission = () => {
               editMode={editMode}
               getUser={getCustomerAdminsUsers}
               closeModal={handleModalClose}
+              setIsVisible={setModalVisible}
             />
           </CustomModal>
         </div>

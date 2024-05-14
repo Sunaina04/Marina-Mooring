@@ -116,6 +116,8 @@ export type StatCardProps = {
 export interface CustomerAdminDataProps {
   customerData?: any
   editMode: boolean
+  isVisible?: boolean
+  setIsVisible: React.Dispatch<React.SetStateAction<boolean>>
   customerAdminId: string
   closeModal: () => void
   getUser: () => void

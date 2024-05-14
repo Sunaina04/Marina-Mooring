@@ -228,9 +228,13 @@ const CustomerOwner = () => {
               color: 'white',
               borderRadius: '0.50rem',
             }}
-            onClick={handleButtonClick}
+            onClick={() => {
+              setModalVisible(true)
+            }}
             visible={modalVisible}
-            onHide={handleModalClose}
+            onHide={() => {
+              setModalVisible(false)
+            }}
             header={<h1 className="text-xl font-extrabold text-black ml-4">New User</h1>}>
             <AddNewCustomer
               customerAdminId={customerAdminId ? customerAdminId : ''}
@@ -238,6 +242,8 @@ const CustomerOwner = () => {
               editMode={editMode}
               getUser={getUserHandler}
               closeModal={handleModalClose}
+              isVisible={modalVisible}
+              setIsVisible={setModalVisible}
             />
           </CustomModal>
         </div>
