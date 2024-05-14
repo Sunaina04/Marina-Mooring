@@ -5,8 +5,7 @@ import { properties } from '../Utils/MeassageProperties'
 import { Dropdown } from 'primereact/dropdown'
 import AddNewCustomer from './AddNewCustomer'
 import { ActionButtonColumnProps } from '../../Type/Components/TableTypes'
-import { useGetCustomerMutation } from '../../Services/MoorManage/MoormanageApi'
-import { CustomerPayload, CustomerResponse, GetUserResponse } from '../../Type/ApiTypes'
+import { CustomerPayload, GetUserResponse } from '../../Type/ApiTypes'
 import Header from '../Layout/LayoutComponents/Header'
 import useMetaData from '../CommonComponent/MetaDataComponent'
 import { Role } from '../../Type/CommonType'
@@ -56,7 +55,7 @@ const CustomerOwner = () => {
   const tableColumns = useMemo(
     () => [
       {
-        id: 'customerAdminId',
+        id: 'id',
         label: 'ID',
         style: {
           borderBottom: '1px solid #C0C0C0',
@@ -172,7 +171,7 @@ const CustomerOwner = () => {
       const { status, content } = response as GetUserResponse
       if (status === 200 && Array.isArray(content?.content)) {
         setgetCustomerOwnerData(content?.content)
-        setCustomerAdminId(content?.content[0].customerAdminId)
+        setCustomerAdminId(content?.content[0].id)
       }
     } catch (error) {
       console.error('Error occurred while fetching customer data:', error)

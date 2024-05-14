@@ -5,7 +5,7 @@ const baseQuery = fetchBaseQuery({
   baseUrl: process.env.REACT_APP_BASE_URL,
   prepareHeaders: (headers, { getState, endpoint }) => {
     const token = (getState() as RootState).user.token
-    const noAuthEndpoints = ['api/v1/auth/']
+    const noAuthEndpoints = ['api/v1/auth/login']
     if (token && !noAuthEndpoints.includes(endpoint)) {
       headers.set('Authorization', `Bearer ${token}`)
     }

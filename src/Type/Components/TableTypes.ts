@@ -41,6 +41,7 @@ export interface ButtonProps {
   onClick?: (data?: any) => void
   label: string
   fontWeight?: number
+  style?: React.CSSProperties | undefined
 }
 
 // Can be defined single in future

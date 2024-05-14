@@ -37,7 +37,14 @@ const DataTableComponent: React.FC<DataTableProps> = ({
         header={header}
         onRowClick={onRowClick}>
         {columns.map((d) => (
-          <Column key={d.id} style={d.style} field={d.id} header={d.label} body={d.body} />
+          <Column
+            key={d.id}
+            headerStyle={d.style}
+            field={d.id}
+            header={d.label}
+            body={d.body}
+            style={{ fontWeight: 500 }}
+          />
         ))}
         {actionButtons && (
           <Column

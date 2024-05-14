@@ -1,47 +1,107 @@
-import { useEffect, useState } from 'react'
-import { Column } from 'primereact/column'
-import { Button } from 'primereact/button'
+import { useEffect, useMemo, useState } from 'react'
 import CustomModal from '../CustomComponent/CustomModal'
 import { PermissionData } from '../../Type/ComponentBasedType'
-import AddCustomer from './AddNewCustomer'
 import DataTableComponent from '../CommonComponent/Table/DataTableComponent'
 import Header from '../Layout/LayoutComponents/Header'
+import AddNewCustomer from './AddNewCustomer'
+import { InputText } from 'primereact/inputtext'
+import { ActionButtonColumnProps } from '../../Type/Components/TableTypes'
+import { useSelector } from 'react-redux'
+import { useGetUsersMutation } from '../../Services/Authentication/AuthApi'
+import { CustomerPayload, GetUserResponse } from '../../Type/ApiTypes'
 
 const Permission = () => {
   const [modalVisible, setModalVisible] = useState(false)
-  const [selectedCustomer, setSelectedCustomer] = useState<any>(undefined)
   const [editMode, setEditMode] = useState(false)
+  const userData = useSelector((state: any) => state.user?.userData)
+  const customerAdminId = userData?.id
+  const [getUser] = useGetUsersMutation()
+  const [getCustomerOwnerUserData, setgetCustomerOwnerUserData] = useState<CustomerPayload[]>([])
 
-  const [permissionData, setPermissionData] = useState<PermissionData[]>([
-    {
-      id: '01',
-      email: 'Demo@gmail.com',
-      name: 'John Smith',
-      phone: '12375859',
-      role: 'Vendor',
+  const tableColumnsPermission = useMemo(
+    () => [
+      {
+        id: 'id',
+        label: 'ID',
+        style: {
+          borderBottom: '1px solid #C0C0C0',
+          backgroundColor: '#00426F',
+          color: '#FFFFFF',
+          fontWeight: 400,
+          borderTopLeftRadius: '10px',
+        },
+      },
+      {
+        id: 'name',
+        label: 'Name',
+        style: {
+          borderBottom: '1px solid #C0C0C0',
+          backgroundColor: '#00426F',
+          color: '#FFFFFF',
+          fontWeight: 400,
+        },
+      },
+
+      {
+        id: 'email',
+        label: 'Email',
+        style: {
+          borderBottom: '1px solid #C0C0C0',
+          backgroundColor: '#00426F',
+          color: '#FFFFFF',
+          fontWeight: 400,
+        },
+      },
+
+      {
+        id: 'phoneNumber',
+        label: 'Phone',
+        style: {
+          borderBottom: '1px solid #C0C0C0',
+          backgroundColor: '#00426F',
+          color: '#FFFFFF',
+          fontWeight: 400,
+        },
+      },
+
+      {
+        id: 'role',
+        label: 'Role',
+        style: {
+          borderBottom: '1px solid #C0C0C0',
+          backgroundColor: '#00426F',
+          color: '#FFFFFF',
+          fontWeight: 400,
+        },
+      },
+    ],
+    [],
+  )
+
+  const ActionButtonColumn: ActionButtonColumnProps = {
+    header: 'Action',
+    buttons: [
+      {
+        color: 'black',
+        label: 'Edit',
+        underline: true,
+        fontWeight: 400,
+      },
+      {
+        color: 'red',
+        label: 'Delete',
+        underline: true,
+        fontWeight: 400,
+      },
+    ],
+    headerStyle: {
+      backgroundColor: '#00426F',
+      borderBottom: '1px solid #C0C0C0',
+      color: '#FFFFFF',
+      fontWeight: 400,
+      borderTopRightRadius: '10px',
     },
-    {
-      id: '01',
-      email: 'Demo@gmail.com',
-      name: 'John Smith',
-      phone: '12375859',
-      role: 'Customer',
-    },
-    {
-      id: '01',
-      email: 'Demo@gmail.com',
-      name: 'John Smith',
-      phone: '12375859',
-      role: 'Technician',
-    },
-    {
-      id: '01',
-      email: 'Demo@gmail.com',
-      name: 'John Smith',
-      phone: '12375859',
-      role: 'Admin',
-    },
-  ])
+  }
 
   const handleButtonClick = () => {
     setModalVisible(true)
@@ -51,75 +111,114 @@ const Permission = () => {
     setModalVisible(false)
   }
 
+  const getCustomerAdminsUsers = async () => {
+    try {
+      const response = await getUser({ customerAdminId: customerAdminId }).unwrap()
+      const { status, content } = response as GetUserResponse
+      if (status === 200 && Array.isArray(content?.content)) {
+        setgetCustomerOwnerUserData(content?.content)
+      }
+    } catch (error) {
+      console.error('Error occurred while fetching customer data:', error)
+    }
+  }
+
+  useEffect(() => {
+    getCustomerAdminsUsers()
+  }, [])
+
   return (
     <>
       <Header header="MOORMANAGE/Permission" />
 
-      <div className="flex justify-between items-center ml-12">
-        <div className="mt-14 ml-64">
-          <select
-            onChange={() => {}}
+      <div className="flex mr-12 justify-end">
+        <div className="mt-14 mr-5 relative">
+          <InputText
+            placeholder="Search by name, ID, Role, phone no..."
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              width: '7vw',
-              height: '5vh',
-              backgroundColor: 'white',
-              cursor: 'pointer',
-              color: 'black',
-              fontWeight: 'bold',
-              fontSize: '0.80vw',
-              justifyContent: 'space-between',
-              appearance: 'none',
-              paddingLeft: '0.5rem',
+              width: '378px',
+              height: '44px',
+              padding: '0 4rem 0 3rem',
+              border: '1px solid #C5D9E0',
+              fontSize: '16px',
+              color: '#00426F',
+              borderRadius: '4px',
+              minHeight: '44px',
+              fontWeight: 400,
             }}
-            defaultValue="">
-            <option value="" disabled>
-              Select Role
-            </option>
-          </select>
+          />
+          <img
+            src="/assets/images/Search.svg"
+            alt="Search Icon"
+            className="p-clickable"
+            style={{
+              position: 'absolute',
+              left: '10px',
+              right: '-10px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              width: '18px',
+              height: '18px',
+            }}
+          />
         </div>
 
-        <div className="flex  items-center mr-[23rem] mt-14">
-          <div className="">
-            <CustomModal
-              label={'ADD NEW'}
-              style={{
-                width: '8vw',
-                height: '7vh',
-                backgroundColor: 'black',
-                cursor: 'pointer',
-                fontSize: '14px',
-                fontWeight: 'bold',
-                color: 'white',
-              }}
-              onClick={handleButtonClick}
-              visible={modalVisible}
-              onHide={handleModalClose}
-              header={<h1 className="text-xl font-bold text-black ml-4">New User</h1>}>
-              <AddCustomer
-                customerData={selectedCustomer}
-                editMode={editMode}
-                closeModal={() => {}}
-                getUser={() => {}}
-                customerAdminId=""
-              />
-            </CustomModal>
-          </div>
+        <div className="mt-14">
+          <CustomModal
+            label={'ADD NEW'}
+            style={{
+              width: '121px',
+              height: '44px',
+              minHeight: '44px',
+              backgroundColor: '#0098FF',
+              cursor: 'pointer',
+              fontSize: '16px',
+              fontWeight: 700,
+              color: 'white',
+              borderRadius: '0.50rem',
+            }}
+            onClick={handleButtonClick}
+            visible={modalVisible}
+            onHide={handleModalClose}
+            header={<h1 className="text-xl font-bold text-#000000 ml-4">New User</h1>}>
+            <AddNewCustomer
+              customerAdminId={customerAdminId}
+              editMode={editMode}
+              getUser={getCustomerAdminsUsers}
+              closeModal={handleModalClose}
+            />
+          </CustomModal>
         </div>
       </div>
-      <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[54vw] ml-20 mt-10">
-        <DataTableComponent
-          tableStyle={{
-            minWidth: '20rem',
-            fontSize: '12px',
-            color: '#000000',
-            fontWeight: 600,
-            backgroundColor: '#D1D1D1',
-          }}
-          scrollable={true}
-          columns={[]}
-        />
+
+      <div
+        className="flex gap-10 ml-8 mt-10"
+        style={{
+          paddingRight: '40px',
+          paddingLeft: '25px',
+        }}>
+        <div
+          className="bg-[F2F2F2] border-[1px] border-gray-300 mb-10 rounded-lg"
+          style={{
+            flexGrow: 1,
+            borderRadius: '10px',
+          }}>
+          <div data-testid="permission-users-table">
+            <DataTableComponent
+              tableStyle={{
+                fontSize: '12px',
+                color: '#000000',
+                fontWeight: 600,
+                backgroundColor: '#D9D9D9',
+                borderRadius: '0 0 10px 10px',
+              }}
+              scrollable={true}
+              data={getCustomerOwnerUserData}
+              columns={tableColumnsPermission}
+              actionButtons={ActionButtonColumn}
+            />
+          </div>
+        </div>
       </div>
     </>
   )
