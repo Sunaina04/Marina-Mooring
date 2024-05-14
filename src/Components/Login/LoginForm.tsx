@@ -14,6 +14,7 @@ export default function LoginForm() {
     username: '',
     password: '',
   })
+  const [showPassword, setShowPassword] = useState(false)
   const { username, password } = loginPayload
   const navigate = useNavigate()
   const [errors, setErrors] = useState({
@@ -30,6 +31,10 @@ export default function LoginForm() {
       ...prev,
       [name]: value,
     }))
+  }
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword)
   }
 
   const [login] = useLoginMutation()
@@ -103,7 +108,7 @@ export default function LoginForm() {
             />
           </div>
           <div className="flex flex-col justify-center text-center mt-[5rem]">
-            <div className="text-red-500 mb-5">{errors.email && <p>{errors.email}</p>}</div>
+            <div className="text-red-500 mb-5 text-sm">{errors.email && <p>{errors.email}</p>}</div>
             <div className="flex flex-col items-center">
               <div className="p-input-icon-left">
                 <InputText
@@ -136,7 +141,7 @@ export default function LoginForm() {
                   }}
                 />
               </div>
-              <div className="text-red-500 mb-5">{<p>{errors.password}</p>}</div>
+              <div className="text-red-500 mb-5 mt-3 text-sm">{<p>{errors.password}</p>}</div>
               <div className="p-input-icon-left">
                 <InputText
                   style={{
@@ -165,6 +170,21 @@ export default function LoginForm() {
                     transform: 'translateY(-50%)',
                     width: '20px',
                     height: '20px',
+                  }}
+                />
+                <img
+                  src={showPassword ? '/assets/images/eye.png' : '/assets/images/eye-slash.png'}
+                  alt="Toggle Password Visibility"
+                  onClick={() => toggleShowPassword()}
+                  className="p-clickable"
+                  style={{
+                    position: 'absolute',
+                    right: '10px',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    width: '20px',
+                    height: '20px',
+                    cursor: 'pointer',
                   }}
                 />
               </div>
@@ -197,7 +217,7 @@ export default function LoginForm() {
                   backgroundColor: '#0098FF',
                   textAlign: 'center',
                   display: 'flex',
-                  fontWeight: '700',
+                  fontWeight: '500',
                   justifyContent: 'center',
                 }}
                 onClick={signInHandler}>

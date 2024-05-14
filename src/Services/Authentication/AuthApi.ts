@@ -30,6 +30,7 @@ const authApi = userApi.injectEndpoints({
         method: 'POST',
         body: payload,
       }),
+      extraOptions: { requiresAuth: false },
     }),
 
     signup: builder.mutation({
@@ -72,7 +73,7 @@ const authApi = userApi.injectEndpoints({
 
     resetPassword: builder.mutation({
       query: ({ payload, token }: { payload: ResetPasswordPayload; token: string }) => ({
-        url: 'api/v1/auth/resetPassword/',
+        url: 'api/v1/auth/resetPassword',
         method: 'POST',
         body: payload,
         params: { token },

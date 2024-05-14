@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ErrorResponseForgotPassword, validateEmailResponse } from '../../Type/ApiTypes'
 import { Button } from 'primereact/button'
-import { validateUserCredentials } from '../Utils/ValidateUserCredentials'
 import { useForgotPasswordMutation } from '../../Services/Authentication/AuthApi'
 import { InputText } from 'primereact/inputtext'
 import './ForgotPassword.module.css'
@@ -12,20 +11,18 @@ const ForgotPassword = () => {
   const [validateEmail] = useForgotPasswordMutation()
   const [email, setEmail] = useState('')
   const [errors, setErrors] = useState<any>([])
+  const [message, setMessage] = useState<any>([])
 
   const validateEmailHandler = async () => {
-    const message = validateUserCredentials(email, '', '')
     if (email.length === 0) {
       setErrors('Entered email is not registered with us, Please enter the valid email.')
       return
     }
     try {
       const data = await validateEmail({ email }).unwrap()
-
       const { response, success } = data as validateEmailResponse
-
       if (success === true) {
-        navigate('/resetpass')
+        setMessage(response)
       } else {
         setErrors(response)
       }
@@ -37,17 +34,14 @@ const ForgotPassword = () => {
         setErrors(errorMessage)
       }
     }
-    if (email) {
-      setErrors(message)
-    }
-
     setEmail(' ')
   }
 
   const handleChange = (e: any) => {
     const { value: inputValue } = e.target
-
     setEmail(inputValue)
+    setErrors('')
+    setMessage('')
   }
 
   return (
@@ -68,10 +62,15 @@ const ForgotPassword = () => {
             />
           </div>
 
-          <div className=" flex flex-col justify-center text-center mt-[3rem]">
+          <div className="flex flex-col justify-center text-center mt-[3rem]">
             {errors && (
               <div className="mb-4">
-                <span className=" mb-8 text-red-500">{errors}</span>
+                <span className="mb-8 text-red-500 text-sm">{errors}</span>
+              </div>
+            )}
+            {message && (
+              <div className="mb-4">
+                <span className="mb-8 text-green-500 text-sm">{message}</span>
               </div>
             )}
             <div className="flex flex-col gap-5">
@@ -89,7 +88,7 @@ const ForgotPassword = () => {
                     }}
                     value={email}
                     type="email"
-                    placeholder="Enter Your Registered email"
+                    placeholder="Enter Your registered email"
                     onChange={handleChange}
                   />
                   <img
@@ -111,7 +110,7 @@ const ForgotPassword = () => {
               </div>
             </div>
             <div
-              className="flex  mt-8 cursor-pointer"
+              className="flex mt-8 cursor-pointer"
               style={{
                 width: '500px',
                 height: '72px',
@@ -147,7 +146,7 @@ const ForgotPassword = () => {
                 backgroundColor: '#0098FF',
                 textAlign: 'center',
                 display: 'flex',
-                fontWeight: '700',
+                fontWeight: '500',
                 justifyContent: 'center',
               }}
               onClick={() => {
@@ -167,7 +166,7 @@ const ForgotPassword = () => {
                 backgroundColor: '#F2F2F2 ',
                 textAlign: 'center',
                 display: 'flex',
-                fontWeight: '700',
+                fontWeight: '500',
                 justifyContent: 'center',
               }}
               className="mt-5"

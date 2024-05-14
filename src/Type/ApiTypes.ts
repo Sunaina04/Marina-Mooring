@@ -71,6 +71,14 @@ export interface ResetPasswordPayload {
   confirmPassword: string
 }
 
+export interface ResetPasswordResponse {
+  status: number
+  message: string
+  errorList: string[]
+  time: string
+  content: Record<string, any>
+}
+
 export interface ForgotPasswordPayload {
   email: string
 }
@@ -108,14 +116,6 @@ export type SignUpResponse = {
     message: string
     data: UserData
   }
-}
-
-export interface ResetPasswordResponse {
-  status: number
-  message: string
-  errorList: string[]
-  time: string
-  content: Record<string, any>
 }
 
 export interface ForgotPasswordResponse {

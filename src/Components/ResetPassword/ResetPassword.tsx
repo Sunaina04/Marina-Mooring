@@ -4,14 +4,19 @@ import { useResetPasswordMutation } from '../../Services/Authentication/AuthApi'
 import { ResetPasswordResponse } from '../../Type/ApiTypes'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 
 const ResetPassword = () => {
-  // const token = useSelector((state: any) => state.user?.token)
+  const urlParams = new URLSearchParams(window.location.search)
+  const tokenFromUrl = urlParams.get('token')
   const [resetPassword] = useResetPasswordMutation()
+  const [message, setMessage] = useState<string>('')
   const [passwords, setPasswords] = useState({
     newPassword: '',
     confirmPassword: '',
+  })
+  const [showPassword, setShowPassword] = useState({
+    newPassword: false,
+    confirmPassword: false,
   })
   const navigateToLoginPage = useNavigate()
 
@@ -23,17 +28,40 @@ const ResetPassword = () => {
     }))
   }
 
+  const toggleShowPassword = (field: 'newPassword' | 'confirmPassword') => {
+    setShowPassword((prevShowPassword) => ({
+      ...prevShowPassword,
+      [field]: !prevShowPassword[field],
+    }))
+  }
+
   const handleResetPassword = async () => {
+    if (!passwords.newPassword || !passwords.confirmPassword) {
+      setMessage('Both password fields are required.')
+      return
+    }
+
+    if (passwords.newPassword !== passwords.confirmPassword) {
+      setMessage('Passwords do not match.')
+      return
+    }
+
     const resetPassPayload = {
       newPassword: passwords.newPassword,
       confirmPassword: passwords.confirmPassword,
     }
+
     try {
       const response = await resetPassword({
+        token: tokenFromUrl,
         payload: resetPassPayload,
-        // token: token,
       }).unwrap()
       const { status, content, message } = response as ResetPasswordResponse
+      if (status === 200) {
+        setMessage(message)
+      } else {
+        setMessage(message)
+      }
     } catch (error: any) {
       console.error('Error occurred during password reset:', error)
       if (error.data) {
@@ -51,7 +79,7 @@ const ResetPassword = () => {
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}>
-        <div className="bg-white rounded-xl p-8 w-600 absolute top-227 left-420 gap-8  h-auto">
+        <div className="bg-white rounded-xl p-8 w-600 absolute top-227 left-420 gap-8 h-auto">
           <div className="text-center mt-[1rem]">
             <img
               src="/assets/images/moorfindLogo.png"
@@ -60,9 +88,15 @@ const ResetPassword = () => {
             />
           </div>
           <div className="flex flex-col justify-center text-center">
-            <div className="text-red-500 ">{}</div>
             <div className="flex flex-col gap-5 mt-20">
-              <div className="p-input-icon-left relative flex justify-center ">
+              {message && (
+                <div className="mb-4">
+                  <span className="mb-8 text-red-500 text-sm break-words max-w-full">
+                    {message}
+                  </span>
+                </div>
+              )}
+              <div className="p-input-icon-left relative flex justify-center">
                 <InputText
                   style={{
                     padding: '0 4rem 0 3rem',
@@ -72,17 +106,13 @@ const ResetPassword = () => {
                     borderRadius: '10px',
                     width: '500px',
                     height: '60px',
-                    top: '458px',
-                    left: '470px',
-                    gap: '0px',
-                    opacity: '0px',
                   }}
                   placeholder="New Password"
                   name="newPassword"
+                  type={showPassword.newPassword ? 'text' : 'password'}
                   onChange={handleChange}
                   value={passwords.newPassword}
                 />
-
                 <img
                   src="/assets/images/key.png"
                   alt="Key Icon"
@@ -94,12 +124,31 @@ const ResetPassword = () => {
                     transform: 'translateY(-50%)',
                     width: '20px',
                     height: '20px',
-                    color: '##000000',
+                    color: '#000000',
+                  }}
+                />
+                <img
+                  src={
+                    showPassword.newPassword
+                      ? '/assets/images/eye.png'
+                      : '/assets/images/eye-slash.png'
+                  }
+                  alt="Toggle Password Visibility"
+                  onClick={() => toggleShowPassword('newPassword')}
+                  className="p-clickable"
+                  style={{
+                    position: 'absolute',
+                    right: '10px',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    width: '20px',
+                    height: '20px',
+                    cursor: 'pointer',
                   }}
                 />
               </div>
 
-              <div className="p-input-icon-left relative">
+              <div className="p-input-icon-left relative flex justify-center">
                 <InputText
                   style={{
                     padding: '0 4rem 0 3rem',
@@ -109,17 +158,13 @@ const ResetPassword = () => {
                     borderRadius: '10px',
                     width: '500px',
                     height: '60px',
-                    top: '458px',
-                    left: '470px',
-                    gap: '0px',
-                    opacity: '0px',
                   }}
-                  placeholder={'Confirm Password'}
+                  placeholder="Confirm Password"
                   name="confirmPassword"
+                  type={showPassword.confirmPassword ? 'text' : 'password'}
                   onChange={handleChange}
                   value={passwords.confirmPassword}
                 />
-
                 <img
                   src="/assets/images/key.png"
                   alt="Key Icon"
@@ -131,7 +176,26 @@ const ResetPassword = () => {
                     transform: 'translateY(-50%)',
                     width: '20px',
                     height: '20px',
-                    color: '##000000',
+                    color: '#000000',
+                  }}
+                />
+                <img
+                  src={
+                    showPassword.confirmPassword
+                      ? '/assets/images/eye.png'
+                      : '/assets/images/eye-slash.png'
+                  }
+                  alt="Toggle Password Visibility"
+                  onClick={() => toggleShowPassword('confirmPassword')}
+                  className="p-clickable"
+                  style={{
+                    position: 'absolute',
+                    right: '10px',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    width: '20px',
+                    height: '20px',
+                    cursor: 'pointer',
                   }}
                 />
               </div>
@@ -152,7 +216,7 @@ const ResetPassword = () => {
                 backgroundColor: '#0098FF',
                 textAlign: 'center',
                 display: 'flex',
-                fontWeight: '700',
+                fontWeight: '500',
                 justifyContent: 'center',
               }}
               onClick={handleResetPassword}>
@@ -168,11 +232,12 @@ const ResetPassword = () => {
                 lineHeight: '25.78px',
                 color: '#00426F',
                 borderRadius: '10px',
-                backgroundColor: '#F2F2F2 ',
+                backgroundColor: '#F2F2F2',
                 textAlign: 'center',
                 display: 'flex',
-                fontWeight: '700',
+                fontWeight: '500',
                 justifyContent: 'center',
+                marginBottom: '30px',
               }}
               onClick={() => navigateToLoginPage('/Login')}>
               <p>Back</p>
