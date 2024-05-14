@@ -122,7 +122,6 @@ const Dashboard = () => {
       </span>
     </div>
   )
-
   return (
     <>
       <Header header="DASHBOARD" />
@@ -145,7 +144,6 @@ const Dashboard = () => {
               <h1 className="">map</h1>
             </div>
           </div>
-
           <div
             style={{
               width: '850px',
@@ -164,7 +162,6 @@ const Dashboard = () => {
             />
           </div>
         </div>
-
         <div
           className="left "
           style={{
