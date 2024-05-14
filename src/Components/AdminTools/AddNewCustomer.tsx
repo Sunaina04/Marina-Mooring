@@ -6,8 +6,8 @@ import InputComponent from '../CommonComponent/InputComponent'
 import { Country, Role, State } from '../../Type/CommonType'
 import { CustomerAdminDataProps } from '../../Type/ComponentBasedType'
 import useMetaData from '../CommonComponent/MetaDataComponent'
-import { useAddUserMutation } from '../../Services/Authentication/AuthApi'
 import { SaveUserResponse } from '../../Type/ApiTypes'
+import { useAddUserMutation } from '../../Services/AdminTools/AdminToolsApi'
 
 const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   customerData,

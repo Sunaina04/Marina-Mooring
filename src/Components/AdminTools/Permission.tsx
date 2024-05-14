@@ -7,8 +7,8 @@ import AddNewCustomer from './AddNewCustomer'
 import { InputText } from 'primereact/inputtext'
 import { ActionButtonColumnProps } from '../../Type/Components/TableTypes'
 import { useSelector } from 'react-redux'
-import { useGetUsersMutation } from '../../Services/Authentication/AuthApi'
 import { CustomerPayload, GetUserResponse } from '../../Type/ApiTypes'
+import { useGetUsersMutation } from '../../Services/AdminTools/AdminToolsApi'
 
 const Permission = () => {
   const [modalVisible, setModalVisible] = useState(false)

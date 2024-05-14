@@ -10,8 +10,8 @@ import Header from '../Layout/LayoutComponents/Header'
 import useMetaData from '../CommonComponent/MetaDataComponent'
 import { Role } from '../../Type/CommonType'
 import { CustomersHeader, TechniciansHeader } from '../Utils/DataTableHeader'
-import { useGetUsersMutation } from '../../Services/Authentication/AuthApi'
 import './CustomerOwner.module.css'
+import { useGetUsersMutation } from '../../Services/AdminTools/AdminToolsApi'
 
 const CustomerOwner = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -179,8 +179,9 @@ const CustomerOwner = () => {
   }
 
   const getCustomerAdminsUsers = async (row: any) => {
+    console.log('ROW', row)
     try {
-      const response = await getUser({ customerAdminId: row?.customerAdminId }).unwrap()
+      const response = await getUser({ customerAdminId: row?.id }).unwrap()
       const { status, content } = response as GetUserResponse
       if (status === 200 && Array.isArray(content?.content)) {
         setgetCustomerOwnerUserData(content?.content)

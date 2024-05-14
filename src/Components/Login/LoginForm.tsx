@@ -156,7 +156,7 @@ export default function LoginForm() {
                   placeholder="Enter Your Password"
                   name="password"
                   value={password}
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   onChange={handleChange}
                 />
                 <img
