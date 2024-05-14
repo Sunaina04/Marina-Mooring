@@ -15,27 +15,57 @@ const Dashboard = () => {
       {
         id: 'id',
         label: 'ID',
-        style: { fontSize: '10px', width: '12vw', backgroundColor: '#F2F2F2', color: '#000000' },
+        style: {
+          fontSize: '10px',
+          width: '12vw',
+          backgroundColor: '#FFFFFF',
+          color: '#000000',
+          fontWeight: '700',
+        },
       },
       {
         id: 'customerName',
         label: 'Customer Name',
-        style: { fontSize: '10px', width: '12vw', backgroundColor: '#F2F2F2', color: '#000000' },
+        style: {
+          fontSize: '10px',
+          width: '12vw',
+          backgroundColor: '#FFFFFF',
+          color: '#000000',
+          fontWeight: '700',
+        },
       },
       {
         id: 'mooringServiceData',
         label: 'Mooring service Data',
-        style: { fontSize: '10px', width: '18vw', backgroundColor: '#F2F2F2', color: '#000000' },
+        style: {
+          fontSize: '10px',
+          width: '18vw',
+          backgroundColor: '#FFFFFF',
+          color: '#000000',
+          fontWeight: '700',
+        },
       },
       {
         id: 'mooringLoaction',
         label: 'Mooring Loacation',
-        style: { fontSize: '10px', width: '12vw', backgroundColor: '#F2F2F2', color: '#000000' },
+        style: {
+          fontSize: '10px',
+          width: '18vw',
+          backgroundColor: '#FFFFFF',
+          color: '#000000',
+          fontWeight: '700',
+        },
       },
       {
         id: 'status',
         label: 'Status',
-        style: { fontSize: '10px', width: '20vw', backgroundColor: '#F2F2F2', color: 'black' },
+        style: {
+          fontSize: '10px',
+          width: '20vw',
+          backgroundColor: '#FFFFFF',
+          color: '#000000',
+          fontWeight: '700',
+        },
       },
     ],
     [],
@@ -55,17 +85,27 @@ const Dashboard = () => {
 
   const Boatsheader = (
     <div className="flex flex-wrap align-items-center justify-between gap-2 p-4">
-      <span className="text-xl font-extrabold">Moorings Due for Service</span>
       <span
         style={{
-          fontFamily: 'Lato',
-          fontSize: '14px',
-          fontWeight: 700,
-          lineHeight: '16.8px',
-          letterSpacing: '0.4837472140789032px',
+          fontWeight: '700',
+          fontSize: '16px',
+          lineHeight: '18.75px',
+          letterSpacing: '0.46px',
+          color: '#000000',
+        }}>
+        Moorings Due for Service
+      </span>
+      <span
+        style={{
+          width: '80px',
+          height: '16px',
+          opacity: '50%',
+          fontSize: '13.59px',
+          fontWeight: '400',
+          lineHeight: '15.92px',
+          letterSpacing: '0.46px',
           textAlign: 'right',
-        }}
-        className=" font-bold leading-4 text-right tracking-tight">
+        }}>
         View All
       </span>
     </div>
@@ -112,18 +152,26 @@ const Dashboard = () => {
             <h1> Map </h1>
           </div>
 
-          <div className="bg-[#F2F2F2] border-[#D1D1D1]  w-[43vw] ">
+          <div
+            style={{
+              width: '728.91px',
+              height: '300.2px',
+              top: '563.46px',
+              gap: '0px',
+              borderRadius: '10px',
+              opacity: '0px',
+              border: '1.13px solid #D5E1EA',
+              backgroundColor: '#FFFFFF',
+            }}>
             <DataTableComponent
               columns={columns}
               actionButtons={ActionButtonColumn}
               header={Boatsheader}
-              data={dasboardTable}
             />
           </div>
         </div>
 
         <div className="left">
-          {/* leftSection */}
           <div className="mr-50 mt-11">
             <Accordition />
           </div>
