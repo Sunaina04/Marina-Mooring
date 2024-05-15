@@ -157,7 +157,9 @@ const Customer = () => {
               />
             }
             visible={modalVisible}
-            onClick={handleButtonClick} onHide={handleModalClose} />
+            onClick={handleButtonClick}
+            onHide={handleModalClose}
+          />
         </div>
       </div>
 

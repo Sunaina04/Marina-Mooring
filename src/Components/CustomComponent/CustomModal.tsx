@@ -1,19 +1,8 @@
+import React from 'react'
+import { Button } from 'primereact/button'
+import { Dialog } from 'primereact/dialog'
+import { CustomModalProps } from '../../Type/ComponentBasedType'
 
-import React from "react";
-import { Button } from 'primereact/button';
-import { Dialog } from 'primereact/dialog';
-import { CustomModalProps } from "../../Type/ComponentBasedType";
-export const style = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: "''",
-  transform: 'translate(-50%, -50%)',
-  bgcolor: 'background.white',
-  borderRadius: '25px',
-  p: 3,
-  maxHeight: '90vh',
-  overflowY: 'auto',
-}
 const CustomModal: React.FC<CustomModalProps> = ({
   buttonText,
   headerText,
@@ -29,18 +18,31 @@ const CustomModal: React.FC<CustomModalProps> = ({
     <div className="card flex justify-content-center">
       <Button
         label={buttonText}
-        icon={<img
-          src="/assets/images/plus.png"
-          alt="icon"
-          className="w-4 ml-2 "
-          style={{
-            filter: 'invert(100%)',
-            color: 'white',
-            fontWeight: 'bolder',
-          }}
-        />}
+        icon={
+          <img
+            src="/assets/images/plus.png"
+            alt="icon"
+            className="w-4 ml-2 "
+            style={{
+              filter: 'invert(100%)',
+              color: 'white',
+              fontWeight: 'bolder',
+            }}
+          />
+        }
         onClick={onClick}
-        style={buttonStyle}
+        style={{
+          width: '121px',
+          height: '44px',
+          minHeight: '44px',
+          backgroundColor: '#0098FF',
+          cursor: 'pointer',
+          fontSize: '16px',
+          fontWeight: 700,
+          color: 'white',
+          borderRadius: '0.50rem',
+          marginLeft: '8px',
+        }}
       />
 
       <Dialog
@@ -48,12 +50,18 @@ const CustomModal: React.FC<CustomModalProps> = ({
         {...dialogProps}
         visible={visible}
         onHide={onHide}
-        style={dialogStyle}
-      >
+        style={{
+          width: '850px',
+          minWidth: '850px',
+          height: '630px',
+          minHeight: '630px',
+          borderRadius: '1rem',
+          maxHeight: '95% !important',
+        }}>
         {children}
       </Dialog>
     </div>
-  );
+  )
 }
 
-export default CustomModal;
+export default CustomModal

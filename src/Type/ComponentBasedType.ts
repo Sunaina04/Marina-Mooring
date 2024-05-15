@@ -138,6 +138,6 @@ export interface CustomModalProps {
   visible: boolean
   onClick: () => void
   onHide: () => void
-  buttonStyle?: React.CSSProperties
+  buttonStyle?: React.CSSProperties | undefined
   dialogStyle?: React.CSSProperties
 }
