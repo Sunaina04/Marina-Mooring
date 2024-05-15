@@ -11,6 +11,7 @@ import { Button } from 'primereact/button'
 import useSubmit from '../../../Services/CustomHook/useSubmit'
 import FormFields from '../../CustomComponent/FormFields'
 import Header from '../../Layout/LayoutComponents/Header'
+import AddCustomer from '../../Moormanage/Customer/AddCustomer'
 
 const Forms = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -24,7 +25,7 @@ const Forms = () => {
   const { error, response, handleSubmit } = useSubmit()
 
   const handleButtonClick = () => {
-    setIsModalOpen(true)
+    // setIsModalOpen(true)
   }
 
   const handleModalClose = () => {
@@ -82,75 +83,43 @@ const Forms = () => {
     <>
       <Header header="MOORSERVE/Forms" />
 
-      <div className="flex justify-between items-center ml-12">
-        <div className=" mr-64 mt-14">
-          {/* <CustomModal
-            header="Form Details"
-            onClick={handleButtonClick}
+      <div className="flex justify-end">
+        <div className=" mr-16 mt-14">
+          <CustomModal
+            buttonText={'Upload New'}
+            children={
+              <AddCustomer
+                customer={undefined}
+                editMode={false}
+                closeModal={() => {}}
+                getCustomer={() => {}}
+              />
+            }
+            headerText={<h1 className="text-xl font-extrabold text-black ml-4">New User</h1>}
             visible={isModalOpen}
+            onClick={handleButtonClick}
             onHide={handleModalClose}
-            label="Upload New"
-            icon={true}>
-            <div className="flex gap-4">
-              <FormFields
-                label="Customer Name"
-                value={customerName}
-                onChange={(e) => setCustomerName(e.target.value)}
-              />
-              <FormFields
-                label="ID"
-                value={customerID}
-                onChange={(e) => setCustomerID(e.target.value)}
-              />
-              <FormFields
-                label="Form Name"
-                value={formName}
-                onChange={(e) => setFormName(e.target.value)}
-              />
-            </div>
-
-            <div className="mt-4">
-              <FormFields
-                label="Upload File"
-                type="file"
-                onChange={(e) => setFile(e.target.files?.[0] || undefined)}
-              />
-            </div>
-
-            <div className="mt-6 flex ">
-              <Button
-                type="button"
-                onClick={handleSave}
-                label={'Save'}
-                style={{
-                  width: '5vw',
-                  backgroundColor: 'black',
-                  cursor: 'pointer',
-                  fontWeight: 'bolder',
-                  fontSize: '1vw',
-                  border: '1px solid  gray',
-                  color: 'white',
-                  borderRadius: '0.50rem',
-                }}
-              />
-
-              <Button
-                type="button"
-                onClick={handleModalClose}
-                label={'Cancel'}
-                style={{
-                  width: '5vw',
-                  backgroundColor: 'black',
-                  cursor: 'pointer',
-                  fontWeight: 'bolder',
-                  fontSize: '1vw',
-                  border: '1px solid  gray',
-                  color: 'white',
-                  borderRadius: '0.50rem',
-                }}
-              />
-            </div>
-          </CustomModal> */}
+            buttonStyle={{
+              width: '121px',
+              height: '44px',
+              minHeight: '44px',
+              backgroundColor: '#0098FF',
+              cursor: 'pointer',
+              fontSize: '14px',
+              fontWeight: 700,
+              color: 'white',
+              borderRadius: '0.50rem',
+              marginLeft: '8px',
+            }}
+            dialogStyle={{
+              width: '800px',
+              minWidth: '800px',
+              height: '630px',
+              minHeight: '630px',
+              borderRadius: '1rem',
+              maxHeight: '95% !important',
+            }}
+          />
         </div>
       </div>
       <div className="bg-[#F2F2F2] rounded-md border-[1px] border-[#D1D1D1] p-2 mt-12 w-[61vw] ml-20">

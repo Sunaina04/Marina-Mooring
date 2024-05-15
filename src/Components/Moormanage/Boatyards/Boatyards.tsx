@@ -11,10 +11,10 @@ import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
-import { FaSearch } from 'react-icons/fa'
 import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
 import { properties } from '../../Utils/MeassageProperties'
 import Header from '../../Layout/LayoutComponents/Header'
+import { IoSearchSharp } from 'react-icons/io5'
 
 const Boatyards = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -372,48 +372,55 @@ const Boatyards = () => {
   return (
     <>
       <Header header="MOORMANAGE/Boatyards" />
-      <div className="flex justify-between items-center ml-12">
-        <div className="flex gap-4 items-center mr-12 mt-14">
-          <div className="flex mr-24">
-            <div className="mr-5 relative">
-              <FaSearch className="absolute z-10 top-[1.5rem] left-2 text-gray-500" />
+      <div className="flex justify-end mr-14 mt-14">
+        <div className="flex gap-6 ">
+          <div>
+            <div className="p-input-icon-left">
+              <IoSearchSharp className="ml-2 text-blue-900" />
               <InputText
                 placeholder="Search"
-                style={{
-                  width: '15vw',
-                  height: '7vh',
-                  padding: '0 4rem 0 3rem',
-                  border: '1px solid gray',
-                  fontSize: '1.10vw',
-                }}
+                className="h-[44px] w-[237px] cursor-pointer pl-8 rounded-lg text-bold  "
               />
             </div>
-
-            {/* <CustomModal
-              label={'ADD NEW'}
-              style={{
-                width: '8vw',
-                height: '7vh',
-                backgroundColor: 'black',
-                cursor: 'pointer',
-                fontSize: '14px',
-                fontWeight: 'bold',
-                color: 'white',
-              }}
-              onClick={handleButtonClick}
-              visible={false}
-              onHide={handleModalClose}>
+          </div>
+          <CustomModal
+            buttonText={'ADD NEW'}
+            children={
               <AddBoatyards
                 closeModal={handleModalClose}
                 boatYardData={getBoatyardsData}
                 customerData={selectedCustomer}
                 editMode={editMode}
               />
-            </CustomModal> */}
-          </div>
+            }
+            headerText={<h1 className="text-xl font-extrabold text-black ml-4">New User</h1>}
+            visible={modalVisible}
+            onClick={handleButtonClick}
+            onHide={handleModalClose}
+            buttonStyle={{
+              width: '121px',
+              height: '44px',
+              minHeight: '44px',
+              backgroundColor: '#0098FF',
+              cursor: 'pointer',
+              fontSize: '16px',
+              fontWeight: 700,
+              color: 'white',
+              borderRadius: '0.50rem',
+              marginLeft: '8px',
+            }}
+            dialogStyle={{
+              width: '800px',
+              minWidth: '800px',
+              height: '630px',
+              minHeight: '630px',
+              borderRadius: '1rem',
+              maxHeight: '95% !important',
+            }}
+          />
         </div>
       </div>
-      <div className="ml-8 flex gap-4">
+      <div className="ml-8 flex gap-4 mt-10">
         <div
           data-testid="dataTable"
           className="bg-[F2F2F2] overflow-x-hidden overflow-y-scroll  rounded-md border-[1px]  border-gray-300 w-[40vw] h-[55vh] mb-60">

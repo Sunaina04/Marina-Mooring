@@ -11,6 +11,7 @@ import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTable
 import { boatData } from '../../Utils/CustomData'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import Header from '../../Layout/LayoutComponents/Header'
+import { IoSearchSharp } from 'react-icons/io5'
 
 const Vendors = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -115,13 +116,16 @@ const Vendors = () => {
   )
   return (
     <>
-    <Header header='MOORMANAGE/Vendor'/>
-      <div className="flex justify-between items-center ml-2">
-        <div className="flex gap-4 items-center  mr-[8rem] mt-14">
+      <Header header="MOORMANAGE/Vendor" />
+      <div className="flex justify-end">
+        <div className="flex gap-4 mr-12 mt-14">
           <div>
             <div className="p-input-icon-left">
-              <i className="pi pi-search text-[#D2D2D2]" />
-              <InputText placeholder="Search" className="h-[5vh] cursor-pointer font-bold" />
+              <IoSearchSharp className="ml-2 text-blue-900" />
+              <InputText
+                placeholder="Search"
+                className="h-[44px] w-[237px] cursor-pointer pl-8 rounded-lg text-bold  "
+              />
             </div>
           </div>
 
@@ -130,7 +134,17 @@ const Vendors = () => {
             onClick={handleButtonClick}
             visible={modalVisible || editMode}
             onHide={handleModalClose}
-            style={{ borderRadius: '2rem' }}>
+            style={{
+              width: '121px',
+              height: '44px',
+              minHeight: '44px',
+              backgroundColor: '#0098FF',
+              cursor: 'pointer',
+              fontSize: '16px',
+              fontWeight: 700,
+              color: 'white',
+              borderRadius: '0.50rem',
+            }}>
             <AddVendor
               vendors={selectedCustomer}
               editMode={editMode}
@@ -138,10 +152,45 @@ const Vendors = () => {
               getVendor={getVendorData}
             />
           </CustomModal> */}
+          <CustomModal
+            buttonText={'ADD NEW'}
+            children={
+              <AddVendor
+                vendors={selectedCustomer}
+                editMode={editMode}
+                closeModal={handleModalClose}
+                getVendor={getVendorData}
+              />
+            }
+            headerText={<h1 className="text-xl font-extrabold text-black ml-4">New User</h1>}
+            visible={modalVisible}
+            onClick={handleButtonClick}
+            onHide={handleModalClose}
+            buttonStyle={{
+              width: '121px',
+              height: '44px',
+              minHeight: '44px',
+              backgroundColor: '#0098FF',
+              cursor: 'pointer',
+              fontSize: '16px',
+              fontWeight: 700,
+              color: 'white',
+              borderRadius: '0.50rem',
+              marginLeft: '8px',
+            }}
+            dialogStyle={{
+              width: '800px',
+              minWidth: '800px',
+              height: '630px',
+              minHeight: '630px',
+              borderRadius: '1rem',
+              maxHeight: '95% !important',
+            }}
+          />
         </div>
       </div>
       {/* </div> */}
-      <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[67vw] p-1 ml-32 mb-80">
+      <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[67vw] p-1 ml-32 mt-14 mb-80">
         <DataTableSearchFieldComponent
           tableStyle={{
             fontSize: '12px',

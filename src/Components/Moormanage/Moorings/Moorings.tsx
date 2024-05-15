@@ -136,25 +136,36 @@ const Moorings = () => {
   return (
     <>
       <Header header={properties.MoormanageMoorings} />
-      <div className="flex items-center justify-between ml-12 overflow-hidden">
-        <div className="flex gap-4 items-center mr-20  mt-14">
-          {/* <CustomModal
-            label={'ADD NEW'}
-            style={{
-              width: '8vw',
-              height: '7vh',
-              backgroundColor: 'black',
-              cursor: 'pointer',
-              fontSize: '15px',
-              fontWeight: 'bold',
-              color: 'white',
-            }}
+      <div className="flex justify-end mr-12 ">
+        <div className="flex mt-14">
+          <CustomModal
+            buttonText={'ADD NEW'}
+            children={<AddMoorings moorings={selectedCustomer} editMode={editMode} />}
+            headerText={<h1 className="text-xl font-extrabold text-black ml-4">New User</h1>}
+            visible={modalVisible}
             onClick={handleButtonClick}
-            visible={modalVisible || editMode}
             onHide={handleModalClose}
-            header={<h1 className="text-lg font-bold text-black ml-4">Add Mooring</h1>}>
-            <AddMoorings moorings={selectedCustomer} editMode={editMode} />
-          </CustomModal> */}
+            buttonStyle={{
+              width: '121px',
+              height: '44px',
+              minHeight: '44px',
+              backgroundColor: '#0098FF',
+              cursor: 'pointer',
+              fontSize: '16px',
+              fontWeight: 700,
+              color: 'white',
+              borderRadius: '0.50rem',
+              marginLeft: '8px',
+            }}
+            dialogStyle={{
+              width: '800px',
+              minWidth: '800px',
+              height: '630px',
+              minHeight: '630px',
+              borderRadius: '1rem',
+              maxHeight: '95% !important',
+            }}
+          />
         </div>
       </div>
 

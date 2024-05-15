@@ -112,37 +112,37 @@ const WorkOrders = () => {
       <Header header="MOORSERVE/Work Orders" />
 
       <div className="">
-        <div className="flex justify-between gap-4 mr-4 mt-24">
-          <div className="flex mr-36 gap-4">
-            <div>
-              <div className="flex gap-4">
-                <Button
-                  label={'Create New'}
-                  onClick={() => setVisible(true)}
-                  style={{
-                    width: '7vw',
-                    height: '5vh',
-                    backgroundColor: 'black',
-                    cursor: 'pointer',
-                    color: 'white',
-                    fontWeight: 'bold',
-                    fontSize: '0.80vw',
-                  }}></Button>
+        <div className="flex justify-end mr-16 mt-14">
+          <div>
+            <Button
+              label={'Create New'}
+              onClick={() => setVisible(true)}
+              style={{
+                width: '121px',
+                height: '44px',
+                minHeight: '44px',
+                backgroundColor: '#0098FF',
+                cursor: 'pointer',
+                fontSize: '16px',
+                fontWeight: 700,
+                color: 'white',
+                borderRadius: '0.50rem',
+                marginLeft: '8px',
+                fontFamily: 'Roboto, sans-serif',
+              }}></Button>
 
-                <Dialog
-                  header={''}
-                  visible={visible}
-                  modal={false}
-                  style={{ width: '50vw' }}
-                  onHide={() => setVisible(false)}>
-                  <AddWorkOrders
-                    workOrderData={selectedCustomer}
-                    editMode={editMode}
-                    setVisible={setVisible}
-                  />
-                </Dialog>
-              </div>
-            </div>
+            <Dialog
+              header={''}
+              visible={visible}
+              modal={false}
+              style={{ width: '50vw' }}
+              onHide={() => setVisible(false)}>
+              <AddWorkOrders
+                workOrderData={selectedCustomer}
+                editMode={editMode}
+                setVisible={setVisible}
+              />
+            </Dialog>
           </div>
         </div>
 

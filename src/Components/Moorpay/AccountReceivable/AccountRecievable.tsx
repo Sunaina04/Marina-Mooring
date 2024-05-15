@@ -49,7 +49,7 @@ const AccountRecievable = () => {
   ])
 
   const handleButtonClick = () => {
-    setIsModalOpen(true)
+    // setIsModalOpen(true)
   }
 
   const handleModalClose = () => {
@@ -126,8 +126,8 @@ const AccountRecievable = () => {
     <>
       <Header header="MOORPAY/Account Receivable" />
 
-      <div className="flex justify-between items-center ml-12">
-        <div className="flex gap-1 ml-[18rem] text-[gray] font-extrabold mt-14">
+      <div className="flex justify-end mr-16">
+        <div className="flex gap-4 ml-[18rem] text-[gray] font-extrabold mt-14">
           <div>
             <img
               src="/assets/images/download.png"
@@ -143,15 +143,42 @@ const AccountRecievable = () => {
 
           <div></div>
         </div>
-        <div className="items-center mr-[10rem] mt-14">
-        
-          <CustomModal buttonText={''} headerText={''} children={undefined} visible={false} onClick={function (): void {
-            throw new Error('Function not implemented.')
-          } } onHide={function (): void {
-            throw new Error('Function not implemented.')
-          } }/>
-
-
+        <div className="mt-14">
+          <CustomModal
+            buttonText={'ADD NEW'}
+            children={
+              <AddCustomer
+                customer={undefined}
+                editMode={false}
+                closeModal={() => {}}
+                getCustomer={() => {}}
+              />
+            }
+            headerText={<h1 className="text-xl font-extrabold text-black ml-4">New User</h1>}
+            visible={isModalOpen}
+            onClick={handleButtonClick}
+            onHide={handleModalClose}
+            buttonStyle={{
+              width: '121px',
+              height: '44px',
+              minHeight: '44px',
+              backgroundColor: '#0098FF',
+              cursor: 'pointer',
+              fontSize: '16px',
+              fontWeight: 700,
+              color: 'white',
+              borderRadius: '0.50rem',
+              marginLeft: '8px',
+            }}
+            dialogStyle={{
+              width: '800px',
+              minWidth: '800px',
+              height: '630px',
+              minHeight: '630px',
+              borderRadius: '1rem',
+              maxHeight: '95% !important',
+            }}
+          />
         </div>
       </div>
 

@@ -122,12 +122,12 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   }
 
   return (
-    <div className="w-full h-full ">
+    <div className="">
       {/* <h1 className="ml-5 text-xl text-black font-bold">Add Customer</h1> */}
-      <div className="flex gap-10">
+      <div className="flex gap-6">
         <div className="">
           <div>
-            <span className="font-semibold text-sm ml-5 text-black">Customer Name</span>
+            <span className="font-semibold text-sm text-black">Customer Name</span>
             <div className="mt-2 ml-5">
               <InputComponent
                 value={customerName}
@@ -294,7 +294,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           </div>
         </div>
       </div>
-      <div className="ml-4 mt-8 text-xl text-black font-semibold">
+      <div className="ml-4 mt-8 text-xl text-black font-bold">
         <h3>Add Mooring</h3>
       </div>
       <div className="mt-8 ml-2">

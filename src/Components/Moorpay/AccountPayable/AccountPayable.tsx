@@ -6,6 +6,7 @@ import { MoorPayProps } from '../../../Type/ComponentBasedType'
 import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import Header from '../../Layout/LayoutComponents/Header'
+import AddCustomer from '../../Moormanage/Customer/AddCustomer'
 
 interface TableColumn {
   id: string
@@ -60,7 +61,7 @@ const AccountPayable = () => {
   ])
 
   const handleButtonClick = () => {
-    setIsModalOpen(true)
+    //setIsModalOpen(true)
   }
 
   const handleModalClose = () => {
@@ -123,8 +124,8 @@ const AccountPayable = () => {
   return (
     <>
       <Header header="MOORPAY/Account Payable" />
-      <div className="flex justify-between items-center ml-12">
-        <div className="flex gap-1 ml-[18rem] text-[gray] font-extrabold mt-14">
+      <div className="flex justify-end gap-4 mr-16">
+        <div className="flex  text-blue-900 font-extrabold mt-14">
           <div>
             <img
               src="/assets/images/download.png"
@@ -138,11 +139,42 @@ const AccountPayable = () => {
           </div>
         </div>
 
-        <div className="items-center mr-[10rem] mt-14">
-          {/* <CustomModal
+        <div className="mt-14">
+          <CustomModal
+            buttonText={'ADD NEW'}
+            children={
+              <AddCustomer
+                customer={undefined}
+                editMode={false}
+                closeModal={() => {}}
+                getCustomer={() => {}}
+              />
+            }
+            headerText={<h1 className="text-xl font-extrabold text-black ml-4">New User</h1>}
+            visible={isModalOpen}
             onClick={handleButtonClick}
-            visible={false}
-            onHide={handleModalClose}></CustomModal> */}
+            onHide={handleModalClose}
+            buttonStyle={{
+              width: '121px',
+              height: '44px',
+              minHeight: '44px',
+              backgroundColor: '#0098FF',
+              cursor: 'pointer',
+              fontSize: '16px',
+              fontWeight: 700,
+              color: 'white',
+              borderRadius: '0.50rem',
+              marginLeft: '8px',
+            }}
+            dialogStyle={{
+              width: '800px',
+              minWidth: '800px',
+              height: '630px',
+              minHeight: '630px',
+              borderRadius: '1rem',
+              maxHeight: '95% !important',
+            }}
+          />
         </div>
       </div>
 

@@ -29,16 +29,18 @@ const CustomModal: React.FC<CustomModalProps> = ({
     <div className="card flex justify-content-center">
       <Button
         label={buttonText}
-        icon={<img
-          src="/assets/images/plus.png"
-          alt="icon"
-          className="w-4 ml-2 "
-          style={{
-            filter: 'invert(100%)',
-            color: 'white',
-            fontWeight: 'bolder',
-          }}
-        />}
+        icon={buttonText !== 'Upload New' ? (
+          <img
+            src="/assets/images/plus.png"
+            alt="icon"
+            className="w-4 ml-2"
+            style={{
+              filter: 'invert(100%)',
+              color: 'white',
+              fontWeight: 'bolder',
+            }}
+          />
+        ) : null}
         onClick={onClick}
         style={buttonStyle}
       />
