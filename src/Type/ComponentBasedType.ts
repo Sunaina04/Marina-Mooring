@@ -121,8 +121,23 @@ export interface CustomerAdminDataProps {
   customerAdminId: string
   closeModal: () => void
   getUser: () => void
+  setModalVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export interface HeaderProps {
   header: string
+}
+
+export interface CustomModalProps {
+  buttonText: string
+  headerText: string | JSX.Element
+  children: React.ReactNode
+  dialogProps?: {
+    [key: string]: any
+  }
+  visible: boolean
+  onClick: () => void
+  onHide: () => void
+  buttonStyle?: React.CSSProperties
+  dialogStyle?: React.CSSProperties
 }

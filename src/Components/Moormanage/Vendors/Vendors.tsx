@@ -125,7 +125,7 @@ const Vendors = () => {
             </div>
           </div>
 
-          <CustomModal
+          {/* <CustomModal
             header={<h1 className="text-lg font-bold text-black mt-4">Add Compony</h1>}
             onClick={handleButtonClick}
             visible={modalVisible || editMode}
@@ -137,7 +137,7 @@ const Vendors = () => {
               closeModal={handleModalClose}
               getVendor={getVendorData}
             />
-          </CustomModal>
+          </CustomModal> */}
         </div>
       </div>
       {/* </div> */}

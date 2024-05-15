@@ -54,7 +54,7 @@ const Permission = () => {
 
         <div className="flex  items-center mr-[23rem] mt-14">
           <div className="">
-            <CustomModal
+            {/* <CustomModal
               label={'ADD NEW'}
               style={{
                 width: '50vw',
@@ -68,7 +68,7 @@ const Permission = () => {
               onClick={handleButtonClick}
               visible={modalVisible}
               onHide={handleModalClose}
-              header=""></CustomModal>
+              header=""></CustomModal> */}
           </div>
         </div>
       </div>

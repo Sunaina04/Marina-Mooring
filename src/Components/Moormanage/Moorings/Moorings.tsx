@@ -138,7 +138,7 @@ const Moorings = () => {
       <Header header={properties.MoormanageMoorings} />
       <div className="flex items-center justify-between ml-12 overflow-hidden">
         <div className="flex gap-4 items-center mr-20  mt-14">
-          <CustomModal
+          {/* <CustomModal
             label={'ADD NEW'}
             style={{
               width: '8vw',
@@ -154,7 +154,7 @@ const Moorings = () => {
             onHide={handleModalClose}
             header={<h1 className="text-lg font-bold text-black ml-4">Add Mooring</h1>}>
             <AddMoorings moorings={selectedCustomer} editMode={editMode} />
-          </CustomModal>
+          </CustomModal> */}
         </div>
       </div>
 
