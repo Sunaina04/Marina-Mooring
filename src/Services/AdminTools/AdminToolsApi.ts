@@ -39,6 +39,31 @@ const adminToolsApi = userApi.injectEndpoints({
         params: { pageNumber, pageSize, sortBy, sortDir, customerAdminId, searchText },
       }),
     }),
+
+    deleteUser: builder.mutation({
+      query: ({ userId, customerAdminId }: { userId?: number; customerAdminId?: number }) => ({
+        url: `api/v1/user/${userId}`,
+        method: 'DELETE',
+        params: customerAdminId,
+      }),
+    }),
+
+    updateUser: builder.mutation({
+      query: ({
+        payload,
+        id,
+        customerAdminId,
+      }: {
+        payload: AddUserPayload
+        id: number
+        customerAdminId?: number
+      }) => ({
+        url: `api/v1/user/${id}`,
+        method: 'PUT',
+        body: payload,
+        params: customerAdminId,
+      }),
+    }),
   }),
 })
 

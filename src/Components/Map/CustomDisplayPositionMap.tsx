@@ -10,8 +10,13 @@ const CustomDisplayPositionMap: React.FC<CustomDisplayPositionMapProps> = ({
   popUpMessage,
 }) => {
   return (
-    <MapContainer center={position} zoom={zoomLevel}>
-      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+    <MapContainer
+      center={position}
+      zoom={zoomLevel}
+      scrollWheelZoom={false}
+      attributionControl={false}
+      zoomControl={false}>
+      <TileLayer url="/assets/images/map.png" noWrap={true} />
       <Marker position={position}>
         <Popup>{popUpMessage}</Popup>
       </Marker>

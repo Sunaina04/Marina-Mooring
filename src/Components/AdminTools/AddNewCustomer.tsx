@@ -41,6 +41,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const [successMessage, setSuccessMessage] = useState<string>()
   const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false)
 
+  // console.log('CUSTOMERDATA', customerData)
   const validateFields = () => {
     const errors: { [key: string]: string } = {}
     if (!name) errors.name = 'Name is required'
