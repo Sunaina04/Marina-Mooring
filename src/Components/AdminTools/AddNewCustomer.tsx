@@ -265,6 +265,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   height: '32px',
                   minHeight: '32px',
                   border: '1px solid #D5E1EA',
+                  fontSize: '0.80vw',
                   borderRadius: '0.50rem',
                 }}
               />
@@ -274,7 +275,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         </div>
 
         <div className="mt-5">
-          <h1 className="text-xs text-blac">Address</h1>
+          <h1 className="text-xs text-black">Address</h1>
         </div>
 
         <div className="gap-6 mt-4">
@@ -290,6 +291,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                     height: '32px',
                     border: '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
+                    fontSize: '0.80vw',
                     padding: '0.80em',
                   }}
                 />
@@ -309,6 +311,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                     height: '32px',
                     border: '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
+                    fontSize: '0.80vw',
                     padding: '0.83em',
                   }}
                 />
@@ -332,6 +335,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   height: '32px',
                   minHeight: '32px',
                   border: '1px solid #D5E1EA',
+                  fontSize: '0.80vw',
                   borderRadius: '0.50rem',
                 }}
               />
@@ -357,6 +361,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   height: '32px',
                   border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
+                  fontSize: '0.80vw',
                 }}
               />
             </div>
@@ -371,6 +376,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 height: '32px',
                 border: '1px solid #D5E1EA',
                 borderRadius: '0.50rem',
+                fontSize: '0.80vw',
                 padding: '0.83em',
               }}
             />
