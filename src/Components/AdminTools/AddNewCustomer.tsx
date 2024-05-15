@@ -127,7 +127,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         setSuccessMessage(message || 'Customer added successfully')
         setShowSuccessModal(true)
         getUser()
-        // setIsVisible(false)
+        setModalVisible(false)
       } else {
         setErrorMessage(message || 'An error occurred while saving the customer.')
       }
@@ -138,7 +138,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
   const handleBack = () => {
     setModalVisible(false)
-
   }
   const fetchDataAndUpdate = useCallback(async () => {
     const { rolesData, countriesData, statesData } = await getMetaData()
