@@ -158,14 +158,14 @@ const Estimates = () => {
           <div></div>
         </div>
         <div className="items-center mr-[10rem] mt-14">
-          <CustomModal
+          {/* <CustomModal
             data-testid="modal"
             onClick={handleButtonClick}
             visible={false}
             onHide={handleModalClose}
             header={header}>
             <AddEstimates />
-          </CustomModal>
+          </CustomModal> */}
         </div>
       </div>
 

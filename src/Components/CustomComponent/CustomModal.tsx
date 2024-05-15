@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
-import { Button } from 'primereact/button'
-import { Dialog } from 'primereact/dialog'
 
+import React from "react";
+import { Button } from 'primereact/button';
+import { Dialog } from 'primereact/dialog';
+import { CustomModalProps } from "../../Type/ComponentBasedType";
 export const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
@@ -13,73 +14,46 @@ export const style = {
   maxHeight: '90vh',
   overflowY: 'auto',
 }
-interface CustomModalProps {
-  onClick: () => void
-  visible: boolean
-  style?: React.CSSProperties
-  onHide: () => void
-  children?: React.ReactNode
-  header?: React.ReactNode
-  label?: string
-  icon?: boolean
-}
-
 const CustomModal: React.FC<CustomModalProps> = ({
-  onClick,
-  visible,
-  style,
-  onHide,
+  buttonText,
+  headerText,
+  dialogProps,
   children,
-  header,
-  label,
-  icon,
+  visible,
+  onClick,
+  onHide,
+  buttonStyle,
+  dialogStyle,
 }) => {
-  const [internalVisible, setInternalVisible] = useState<boolean>(false)
-
   return (
-    <>
-      <div className="flex gap-4">
-        <Button
-          onClick={() => {
-            setInternalVisible(true)
-          }}
-          className="shadow-none"
-          style={style}>
-          {!icon && (
-            <img
-              src="/assets/images/plus.png"
-              alt="icon"
-              className="w-4 ml-2 mr-1.5"
-              style={{
-                filter: 'invert(100%)',
-                color: 'white',
-                fontWeight: 'bolder',
-              }}
-            />
-          )}
-          {label ? label : 'ADD NEW'}
-        </Button>
-
-        <Dialog
-          header={header}
-          visible={visible || internalVisible}
+    <div className="card flex justify-content-center">
+      <Button
+        label={buttonText}
+        icon={<img
+          src="/assets/images/plus.png"
+          alt="icon"
+          className="w-4 ml-2 "
           style={{
-            width: '800px',
-            minWidth: '800px',
-            height: '630px',
-            minHeight: '630px',
-            borderRadius: '1rem',
-            maxHeight: '95% !important',
+            filter: 'invert(100%)',
+            color: 'white',
+            fontWeight: 'bolder',
           }}
-          onHide={() => {
-            onHide()
-            setInternalVisible(false)
-          }}>
-          {children}
-        </Dialog>
-      </div>
-    </>
-  )
+        />}
+        onClick={onClick}
+        style={buttonStyle}
+      />
+
+      <Dialog
+        header={headerText}
+        {...dialogProps}
+        visible={visible}
+        onHide={onHide}
+        style={dialogStyle}
+      >
+        {children}
+      </Dialog>
+    </div>
+  );
 }
 
-export default CustomModal
+export default CustomModal;

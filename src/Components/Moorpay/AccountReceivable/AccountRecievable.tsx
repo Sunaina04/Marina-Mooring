@@ -144,18 +144,14 @@ const AccountRecievable = () => {
           <div></div>
         </div>
         <div className="items-center mr-[10rem] mt-14">
-          <CustomModal
-            onClick={handleButtonClick}
-            visible={false}
-            onHide={handleModalClose}
-            header={header}>
-            <AddCustomer
-              customer={undefined}
-              editMode={false}
-              closeModal={() => {}}
-              getCustomer={() => {}}
-            />
-          </CustomModal>
+        
+          <CustomModal buttonText={''} headerText={''} children={undefined} visible={false} onClick={function (): void {
+            throw new Error('Function not implemented.')
+          } } onHide={function (): void {
+            throw new Error('Function not implemented.')
+          } }/>
+
+
         </div>
       </div>
 

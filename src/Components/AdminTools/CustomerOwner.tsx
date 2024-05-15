@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { SetStateAction, useCallback, useEffect, useMemo, useState } from 'react'
 import CustomModal from '../CustomComponent/CustomModal'
 import DataTableComponent from '../CommonComponent/Table/DataTableComponent'
 import { properties } from '../Utils/MeassageProperties'
@@ -216,8 +216,25 @@ const CustomerOwner = () => {
 
         <div className="mt-14">
           <CustomModal
-            label={'ADD NEW'}
-            style={{
+            buttonText={'ADD NEW'}
+            children={
+              <AddNewCustomer
+                customerAdminId={customerAdminId ? customerAdminId : ''}
+                customerData={selectedCustomer}
+                editMode={editMode}
+                getUser={getUserHandler}
+                closeModal={() => {}}
+                setModalVisible={setModalVisible}
+                setIsVisible={function (value: SetStateAction<boolean>): void {
+                  throw new Error('Function not implemented.')
+                }}
+              />
+            }
+            headerText={<h1 className="text-xl font-extrabold text-black ml-4">New User</h1>}
+            visible={modalVisible}
+            onClick={handleButtonClick}
+            onHide={handleModalClose}
+            buttonStyle={{
               width: '121px',
               height: '44px',
               minHeight: '44px',
@@ -227,25 +244,17 @@ const CustomerOwner = () => {
               fontWeight: 700,
               color: 'white',
               borderRadius: '0.50rem',
+              marginLeft: '8px',
             }}
-            onClick={() => {
-              setModalVisible(true)
+            dialogStyle={{
+              width: '800px',
+              minWidth: '800px',
+              height: '630px',
+              minHeight: '630px',
+              borderRadius: '1rem',
+              maxHeight: '95% !important',
             }}
-            visible={modalVisible}
-            onHide={() => {
-              setModalVisible(false)
-            }}
-            header={<h1 className="text-xl font-extrabold text-black ml-4">New User</h1>}>
-            <AddNewCustomer
-              customerAdminId={customerAdminId ? customerAdminId : ''}
-              customerData={selectedCustomer}
-              editMode={editMode}
-              getUser={getUserHandler}
-              closeModal={handleModalClose}
-              isVisible={modalVisible}
-              setIsVisible={setModalVisible}
-            />
-          </CustomModal>
+          />
         </div>
       </div>
 

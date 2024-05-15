@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { SetStateAction, useEffect, useMemo, useState } from 'react'
 import CustomModal from '../CustomComponent/CustomModal'
 import { PermissionData } from '../../Type/ComponentBasedType'
 import DataTableComponent from '../CommonComponent/Table/DataTableComponent'
@@ -165,28 +165,20 @@ const Permission = () => {
 
         <div className="mt-14">
           <CustomModal
-            label={'ADD NEW'}
-            style={{
-              width: '121px',
-              height: '44px',
-              minHeight: '44px',
-              backgroundColor: '#0098FF',
-              cursor: 'pointer',
-              fontSize: '16px',
-              fontWeight: 700,
-              color: 'white',
-              borderRadius: '0.50rem',
-            }}
+            buttonText={'ADD NEW'}
             onClick={handleButtonClick}
             visible={modalVisible}
             onHide={handleModalClose}
-            header={<h1 className="text-xl font-bold text-#000000 ml-4">New User</h1>}>
+            headerText={<h1 className="text-xl font-bold text-#000000 ml-4">New User</h1>}>
             <AddNewCustomer
               customerAdminId={customerAdminId}
               editMode={editMode}
               getUser={getCustomerAdminsUsers}
               closeModal={handleModalClose}
               setIsVisible={setModalVisible}
+              setModalVisible={function (value: SetStateAction<boolean>): void {
+                throw new Error('Function not implemented.')
+              }}
             />
           </CustomModal>
         </div>

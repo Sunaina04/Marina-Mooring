@@ -146,27 +146,18 @@ const Customer = () => {
       <div className="flex  items-center justify-between ml-3 mr-3 overflow-hidden">
         <div className="flex gap-4 mt-14 ml-[20.60rem]">
           <CustomModal
-            label={'ADD NEW'}
-            style={{
-              width: '8vw',
-              height: '7vh',
-              backgroundColor: 'black',
-              cursor: 'pointer',
-              fontSize: '15px',
-              fontWeight: 'bold',
-              color: 'white',
-            }}
-            header={<h1 className="text-xl font-bold text-black ml-4">Add Customer</h1>}
-            onClick={handleButtonClick}
-            visible={modalVisible || editMode}
-            onHide={handleModalClose}>
-            <AddCustomer
-              customer={selectedCustomer}
-              editMode={editMode || modalVisible}
-              closeModal={handleModalClose}
-              getCustomer={getCustomerData}
-            />
-          </CustomModal>
+            buttonText={'ADD NEW'}
+            headerText={<h1 className="text-xl font-bold text-black ml-4">Add Customer</h1>}
+            children={
+              <AddCustomer
+                customer={selectedCustomer}
+                editMode={editMode || modalVisible}
+                closeModal={handleModalClose}
+                getCustomer={getCustomerData}
+              />
+            }
+            visible={modalVisible}
+            onClick={handleButtonClick} onHide={handleModalClose} />
         </div>
       </div>
 

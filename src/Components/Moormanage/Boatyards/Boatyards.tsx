@@ -389,7 +389,7 @@ const Boatyards = () => {
               />
             </div>
 
-            <CustomModal
+            {/* <CustomModal
               label={'ADD NEW'}
               style={{
                 width: '8vw',
@@ -409,7 +409,7 @@ const Boatyards = () => {
                 customerData={selectedCustomer}
                 editMode={editMode}
               />
-            </CustomModal>
+            </CustomModal> */}
           </div>
         </div>
       </div>

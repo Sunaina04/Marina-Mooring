@@ -16,8 +16,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   getUser,
   closeModal,
   customerAdminId,
-  isVisible,
-  setIsVisible,
+  setModalVisible,
 }) => {
   const [name, setName] = useState('')
   const [id, setId] = useState('')
@@ -128,7 +127,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         setSuccessMessage(message || 'Customer added successfully')
         setShowSuccessModal(true)
         getUser()
-        setIsVisible(false)
+        // setIsVisible(false)
       } else {
         setErrorMessage(message || 'An error occurred while saving the customer.')
       }
@@ -137,6 +136,10 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     }
   }
 
+  const handleBack = () => {
+    setModalVisible(false)
+
+  }
   const fetchDataAndUpdate = useCallback(async () => {
     const { rolesData, countriesData, statesData } = await getMetaData()
     if (rolesData !== null) {
@@ -443,9 +446,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           />
           <Button
             label={'Back'}
-            onClick={() => {
-              setIsVisible(false)
-            }}
+            onClick={handleBack}
             text={true}
             style={{
               width: '6vw',

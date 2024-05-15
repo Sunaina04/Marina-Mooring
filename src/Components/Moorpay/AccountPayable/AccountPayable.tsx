@@ -139,10 +139,10 @@ const AccountPayable = () => {
         </div>
 
         <div className="items-center mr-[10rem] mt-14">
-          <CustomModal
+          {/* <CustomModal
             onClick={handleButtonClick}
             visible={false}
-            onHide={handleModalClose}></CustomModal>
+            onHide={handleModalClose}></CustomModal> */}
         </div>
       </div>
 

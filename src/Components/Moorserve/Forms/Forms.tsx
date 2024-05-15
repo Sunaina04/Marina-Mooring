@@ -84,7 +84,7 @@ const Forms = () => {
 
       <div className="flex justify-between items-center ml-12">
         <div className=" mr-64 mt-14">
-          <CustomModal
+          {/* <CustomModal
             header="Form Details"
             onClick={handleButtonClick}
             visible={isModalOpen}
@@ -150,7 +150,7 @@ const Forms = () => {
                 }}
               />
             </div>
-          </CustomModal>
+          </CustomModal> */}
         </div>
       </div>
       <div className="bg-[#F2F2F2] rounded-md border-[1px] border-[#D1D1D1] p-2 mt-12 w-[61vw] ml-20">
