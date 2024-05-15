@@ -2,7 +2,17 @@ import React from 'react'
 import { Button } from 'primereact/button'
 import { Dialog } from 'primereact/dialog'
 import { CustomModalProps } from '../../Type/ComponentBasedType'
-
+export const style = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: "''",
+  transform: 'translate(-50%, -50%)',
+  bgcolor: 'background.white',
+  borderRadius: '25px',
+  p: 3,
+  maxHeight: '90vh',
+  overflowY: 'auto',
+}
 const CustomModal: React.FC<CustomModalProps> = ({
   buttonText,
   headerText,
@@ -50,14 +60,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
         {...dialogProps}
         visible={visible}
         onHide={onHide}
-        style={{
-          width: '850px',
-          minWidth: '850px',
-          height: '630px',
-          minHeight: '630px',
-          borderRadius: '1rem',
-          maxHeight: '95% !important',
-        }}>
+        style={dialogStyle}>
         {children}
       </Dialog>
     </div>

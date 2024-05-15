@@ -280,6 +280,7 @@ const CustomerOwner = () => {
               onRowClick={(e) => {
                 getCustomerAdminsUsers(e.data)
               }}
+              style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
               rowStyle={(rowData) => ({
                 backgroundColor: selectedRow === rowData.id ? 'black' : 'red',
               })}
