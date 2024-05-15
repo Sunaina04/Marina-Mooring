@@ -141,3 +141,12 @@ export interface CustomModalProps {
   buttonStyle?: React.CSSProperties | undefined
   dialogStyle?: React.CSSProperties
 }
+export interface inputHeader {
+  header?: string
+  iconStyle?: React.CSSProperties
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+  placeholder: string
+  headerStyle?: React.CSSProperties
+  inputTextStyle?: React.CSSProperties
+  value?: string | undefined
+}

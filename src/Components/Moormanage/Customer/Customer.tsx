@@ -1,9 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import CustomModal from '../../CustomComponent/CustomModal'
-import { DataTable } from 'primereact/datatable'
-import { Column } from 'primereact/column'
 import AddCustomer from './AddCustomer'
-import { InputText } from 'primereact/inputtext'
 import { FaEdit } from 'react-icons/fa'
 import { RiDeleteBin5Fill } from 'react-icons/ri'
 import { FaCircle } from 'react-icons/fa6'
@@ -20,8 +17,7 @@ import {
   MooringPayload,
   MooringResponse,
 } from '../../../Type/ApiTypes'
-import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
-import { boatData } from '../../Utils/CustomData'
+
 import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 import Header from '../../Layout/LayoutComponents/Header'
@@ -102,22 +98,84 @@ const Customer = () => {
       {
         id: 'id',
         label: 'ID:',
-        style: { width: '4vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
+        style: {
+          width: '4vw',
+
+          backgroundColor: '#FFFFFF',
+          fontWeight: '700',
+          fontSize: '10px',
+          color: '#000000',
+        },
       },
       {
         id: 'name',
         label: 'Name:',
-        style: { width: '6vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
+        style: {
+          width: '6vw',
+          backgroundColor: '#FFFFFF',
+          fontWeight: '700',
+          fontSize: '10px',
+          color: '#000000',
+        },
       },
       {
         id: 'email',
         label: 'Email:',
-        style: { width: '6vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
+        style: {
+          width: '6vw',
+          backgroundColor: '#FFFFFF',
+          fontWeight: '700',
+          fontSize: '10px',
+          color: '#000000',
+        },
       },
       {
         id: 'phone',
         label: 'Phone:',
-        style: { width: '6vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
+        style: {
+          width: '6vw',
+          backgroundColor: '#FFFFFF',
+          fontWeight: '700',
+          fontSize: '10px',
+          color: '#000000',
+        },
+      },
+    ],
+    [],
+  )
+
+  const tableColumn = useMemo(
+    () => [
+      {
+        id: 'id',
+        label: 'ID:',
+        style: {
+          width: '2vw',
+
+          backgroundColor: '#FFFFFF',
+          fontSize: '10px',
+          color: '#000000',
+        },
+      },
+      {
+        id: 'mooringName',
+        label: 'Mooring Name',
+        style: {
+          width: '4vw',
+          backgroundColor: '#FFFFFF',
+          fontSize: '10px',
+          color: '#000000',
+        },
+      },
+      {
+        id: 'gpsCoordinate',
+        label: 'GPS Coordinates',
+        style: {
+          width: '4vw',
+          backgroundColor: '#FFFFFF',
+          fontSize: '10px',
+          color: '#000000',
+        },
       },
     ],
     [],
@@ -143,7 +201,7 @@ const Customer = () => {
   return (
     <>
       <Header header="MOORMANAGE/Customer" />
-      <div className="flex  items-center justify-between ml-3 mr-3 overflow-hidden">
+      <div className="flex  items-center justify-between  ml-3 mr-3 ">
         <div className="flex gap-4 mt-14 ml-[20.60rem]">
           <CustomModal
             buttonText={'ADD NEW'}
@@ -163,38 +221,74 @@ const Customer = () => {
         </div>
       </div>
 
-      <div className="flex ml-12 gap-4">
-        <div className="bg-[F2F2F2] overflow-x-hidden overflow-y-scroll rounded-md border-[1px]  border-gray-300 w-[28vw] h-[70vh]">
+      <div className="flex ml-12 mt-48 gap-6 fixed">
+        <div
+          style={{
+            width: '450px',
+            height: '711px',
+            top: '277px',
+            left: '107px',
+            gap: '0px',
+            borderRadius: '10px',
+            border: '1px solid #D5E1EA',
+            opacity: '0px',
+            backgroundColor: 'white',
+          }}
+          className="bg-[F2F2F2] overflow-x-hidden overflow-y-scroll ">
           <InputTextWithHeader
+            headerStyle={{
+              width: '80px',
+              height: '55px',
+              top: '294px',
+              left: '124px',
+              gap: '0px',
+              opacity: '0px',
+              color: '#FFFFFF',
+            }}
             header={'Customers'}
-            placeholder={'Search by name, ID,address...'}
-            style={{ marginLeft: '1rem', color: 'A4A4A4' }}
+            placeholder={'Search by name, ID, mooring no, boat name, phone no.... '}
+            iconStyle={{
+              left: '10px',
+              gap: '0px',
+              opacity: '0px',
+              color: '#10293A',
+              fontWeight: '900',
+              fontSize: '1.15rem',
+              lineHeight: '16px',
+              letterSpacing: '0.2px',
+            }}
             inputTextStyle={{
-              height: '5vh',
-              width: '55vh',
+              height: '44px',
+              width: '400px',
               cursor: 'pointer',
-              fontSize: '0.63rem',
-              color: '#A4A4A4',
-              border: '1px solid #A4A4A4',
-              paddingLeft: '3rem',
-              borderRadius: '0.45rem',
+              fontSize: '',
+              color: '#D5E1EA',
+              border: '1px solid #D5E1EA',
+              paddingLeft: '35px',
+              borderRadius: '5px',
             }}
             onChange={handleSearchChange}
             value={searchQuery}
           />
+          <div className="mt-2">
+            <hr style={{ border: ' 0.20px solid #D5E1EA' }} />
+          </div>
 
-          <DataTableComponent
-            data={boatData}
-            tableStyle={{
-              fontSize: '12px',
-              color: '#000000',
-              fontWeight: 600,
-              backgroundColor: '#D9D9D9',
-            }}
-            scrollable={false}
-            columns={tableColumns}
-            header={undefined}
-          />
+          <div className="mt-2 ">
+            <DataTableComponent
+              data={undefined}
+              tableStyle={{
+                fontSize: '12px',
+                color: '#000000',
+                fontWeight: 600,
+                backgroundColor: '#D9D9D9',
+              }}
+              scrollable={false}
+              columns={tableColumns}
+              header={undefined}
+              style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+            />
+          </div>
         </div>
 
         {/* middle container */}
@@ -204,14 +298,13 @@ const Customer = () => {
             className=" h-full object-cover rounded-md border-[1px] border-gray-300"
             alt="Sea Image"
           />
-
           <div className="absolute top-5 left-0" data-testid="timeline1">
             {/* <Timeline /> */}
           </div>
           <div className="absolute top-20 right-0" data-testid="timeline2">
             {/* <Timeline /> */}
           </div>
-
+          {/* 
           <div className="absolute  translate-x-6 bottom-4  rounded-md border-[1px] pb-1 border-gray-300 w-[17vw]  mt-auto h-[13vh] bg-white">
             <p className="text-[0.7rem] ml-1 text-black">Status</p>
             <hr className="m-1 border-black" />
@@ -237,92 +330,164 @@ const Customer = () => {
                 <p className="text-[0.6rem] text-black mt-[0.3rem]">Not in Use</p>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
 
         {/* last container */}
+
         {selectedCustomer && customerRecord && (
-          <div className="w-[30vw]">
+          <div
+            style={{
+              width: '450px',
+              height: '711px',
+              top: '277px',
+              left: '107px',
+              gap: '0px',
+              borderRadius: '10px',
+              border: '1px solid #D5E1EA',
+              opacity: '0px',
+              backgroundColor: 'white',
+            }}
+            className="w-[30vw]">
             <div className="rounded-md border">
-              <div className="bg-[#D9D9D9] flex justify-between pb-2">
-                <div>
-                  <p className="font-bold text-sm mt-3 ml-3">Customers Record</p>
+              <div className="bg-[#10293A] rounded-r-md  rounded-l-md flex justify-between pb-2">
+                <div className="text-sm font-bold rounded-t-md bg-[]">
+                  <h1 className="p-4 text-white">{'Customers Record'}</h1>
                 </div>
                 <div className="flex">
-                  <FaEdit onClick={handleEdit} className="mr-3 mt-3" data-testid="FaEdit" />
+                  <FaEdit
+                    onClick={handleEdit}
+                    className="mr-3 mt-3 text-[white]"
+                    data-testid="FaEdit"
+                  />
                   <RiDeleteBin5Fill
                     onClick={handleDelete}
-                    className="text-red-500 mr-2 mt-3"
+                    className="text-white mr-2 mt-3"
                     data-testid="RiDeleteBin5Fill"
                   />
                 </div>
               </div>
 
-              <div className="bg-[#F2F2F2] pt-2 px-3">
-                <div className="flex gap-32 ">
-                  <div className=" text-sm tracking-tighter">
+              <div className="">
+                <div className="flex gap-40 p-4 ">
+                  <div
+                    className="right"
+                    style={{
+                      fontSize: '14px',
+                      fontWeight: '400',
+                      lineHeight: '16.41px',
+                      color: '#000000',
+                    }}>
                     <p>
-                      <span className="font-bold">ID:</span>
-                      {selectedCustomer.id}
+                      <span className="">ID:</span>
+                      {selectedCustomer}
                     </p>
-                    <p>
-                      <span className="font-bold">Phone:</span>
-                      {selectedCustomer.phone}
+                    <p className="mt-6">
+                      <span className="">Phone:</span>
+                      {selectedCustomer}
                     </p>
                   </div>
-                  <div className=" text-sm">
+
+                  <div
+                    style={{
+                      fontSize: '14px',
+                      fontWeight: '400',
+                      lineHeight: '16.41px',
+                      color: '#000000',
+                    }}
+                    className="left">
                     <p>
-                      <span className="font-bold">Name:</span>
-                      {selectedCustomer.customerName}
+                      <span>Name:</span>
+                      {selectedCustomer}
                     </p>
-                    <p>
-                      <span className="font-bold">Email:</span>
-                      {selectedCustomer.email}
+                    <p className="mt-6">
+                      <span className="">Email:</span>
+                      {selectedCustomer}
                     </p>
                   </div>
                 </div>
-                <div className="text-sm mt-2">
-                  <p>
-                    <span className="font-bold">Address:</span>
-                    {selectedCustomer.address}
+                <div className="">
+                  <p className="ml-4">
+                    <span className="">Address:</span>
+                    {selectedCustomer}
                   </p>
-                </div>
-                <div className="font-bold text-sm mt-2">
-                  <p>
-                    Boatyard:<span className="bg-[#D9D9D9] ml-2">Pioneer</span>{' '}
-                    <span className="bg-[#D9D9D9] ml-2">02Pioneer</span>{' '}
-                    <span className="bg-[#D9D9D9] ml-2">Pioneer</span>
-                  </p>
+
+                  <div className="flex mt-4 ml-4 mb-3">
+                    <div>
+                      <h1>Boatyard:</h1>
+                    </div>
+                    <div className="flex gap-3">
+                      <p
+                        style={{
+                          borderRadius: '5px',
+                          fontWeight: '400',
+                          fontSize: '12px',
+                          color: '#10293A',
+                          backgroundColor: '#D5E1EA',
+                          padding: '5px',
+                          marginLeft: '5px',
+                        }}>
+                        Pioneer
+                      </p>
+
+                      <p
+                        style={{
+                          borderRadius: '5px',
+                          fontWeight: '400',
+                          fontSize: '12px',
+                          color: '#10293A',
+                          backgroundColor: '#D5E1EA',
+                          padding: '5px',
+                        }}>
+                        02Pioneer
+                      </p>
+
+                      <p
+                        style={{
+                          borderRadius: '5px',
+                          fontWeight: '400',
+                          fontSize: '12px',
+                          color: '#10293A',
+                          backgroundColor: '#D5E1EA',
+                          padding: '5px',
+                        }}>
+                        03Pioneer
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-
-            <div style={{ maxWidth: '72vh' }} className="">
-              <h3 className="bg-[#D9D9D9] font-bold py-2 pl-3">Moorings</h3>
-              <DataTable
-                tableStyle={{ minWidth: '20rem' }}
-                className="bg[#F2F2F2]"
-                value={mooringData}
-                scrollable={true}
-                selectionMode="single"
-                style={{ overflow: 'scroll', maxHeight: '72vh' }}
-                onRowSelect={(e) => {
-                  setCustomerRowData(e.data)
-                  setDialogVisible(true)
+            <div>
+              <p
+                style={{
+                  backgroundColor: '#10293A',
+                  fontWeight: '700',
+                  color: 'white',
+                  padding: '14px',
+                  fontSize: '15px',
                 }}>
-                <Column
-                  field="id"
-                  header="ID"
-                  headerClassName="text-sm"
-                  style={{ fontSize: '0.75rem' }}
-                />
-                <Column field="mooringName" header="Mooring Name" style={{ fontSize: '0.75rem' }} />
-                <Column
-                  field="gpsCoordinates"
-                  header="GPS Coordinate"
-                  style={{ fontSize: '0.75rem' }}
-                />
-              </DataTable>
+                Moorings
+              </p>
+            </div>
+
+            <div className="overflow-x-hidden overflow-y-scroll">
+              <DataTableComponent
+                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+                tableStyle={{
+                  fontSize: '12px',
+                  color: '#000000',
+                  fontWeight: 600,
+                  backgroundColor: '#D9D9D9',
+                }}
+                // onRowClick={(e) => {
+                //     setCustomerRowData(e.data)
+                //     setDialogVisible(true)
+                //   }}
+                columns={tableColumn}
+                data={undefined}
+              />
+
               {/* Dialog BOX */}
               <Dialog
                 visible={dialogVisible}

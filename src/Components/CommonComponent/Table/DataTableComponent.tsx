@@ -13,6 +13,7 @@ const DataTableComponent: React.FC<DataTableProps> = ({
   header,
   actionButtons,
   onRowClick,
+  style,
 }) => {
   const buttonBody = (rowData: any) => {
     return (
@@ -49,7 +50,7 @@ const DataTableComponent: React.FC<DataTableProps> = ({
             field={d.id}
             header={d.label}
             body={d.body}
-            style={{ fontWeight: 500 }}
+            style={style}
           />
         ))}
         {actionButtons && (
