@@ -3,11 +3,13 @@ import { InputText } from 'primereact/inputtext'
 import { useResetPasswordMutation } from '../../Services/Authentication/AuthApi'
 import { ResetPasswordResponse } from '../../Type/ApiTypes'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 const ResetPassword = () => {
   const urlParams = new URLSearchParams(window.location.search)
-  const tokenFromUrl = urlParams.get('token')
+  const [searchParams] = useSearchParams()
+  const tokenFromUrl = searchParams.get('token')
+  // const tokenFromUrl = urlParams.get('token')
   const [resetPassword] = useResetPasswordMutation()
   const [message, setMessage] = useState<string>('')
   const [passwords, setPasswords] = useState({
@@ -20,12 +22,15 @@ const ResetPassword = () => {
   })
   const navigateToLoginPage = useNavigate()
 
+  console.log('I AM HERE, Token from URL:', tokenFromUrl)
+
   const handleChange = (e: { target: { name: any; value: any } }) => {
     const { name, value } = e.target
     setPasswords((prevPasswords) => ({
       ...prevPasswords,
       [name]: value,
     }))
+    console.log('Updated passwords state:', { [name]: value })
   }
 
   const toggleShowPassword = (field: 'newPassword' | 'confirmPassword') => {
@@ -52,20 +57,23 @@ const ResetPassword = () => {
     }
 
     try {
+      console.log('Sending reset password request with token:', tokenFromUrl)
       const response = await resetPassword({
         token: tokenFromUrl,
         payload: resetPassPayload,
       }).unwrap()
+      console.log('Response from server:', response)
       const { status, content, message } = response as ResetPasswordResponse
       if (status === 200) {
-        setMessage(message)
+        setMessage('Password reset successfully.')
+        navigateToLoginPage('/Login')
       } else {
-        setMessage(message)
+        setMessage(message || 'Password reset failed.')
       }
     } catch (error: any) {
       console.error('Error occurred during password reset:', error)
       if (error.data) {
-        console.log(error)
+        console.log(error.data)
       }
     }
   }

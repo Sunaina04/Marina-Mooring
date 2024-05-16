@@ -1,18 +1,11 @@
 import { InputText } from 'primereact/inputtext'
 import React from 'react'
 import { IoSearch } from 'react-icons/io5'
-interface inputHeader {
-  header?: string
-  style?: React.CSSProperties
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
-  placeholder: string
-  headerStyle?: React.CSSProperties
-  inputTextStyle?: React.CSSProperties
-  value?: string | undefined
-}
+import { inputHeader } from '../../../Type/ComponentBasedType'
+
 const InputTextWithHeader: React.FC<inputHeader> = ({
   header,
-  style,
+  iconStyle,
   onChange,
   placeholder,
   headerStyle,
@@ -21,15 +14,14 @@ const InputTextWithHeader: React.FC<inputHeader> = ({
 }) => {
   return (
     <>
-      <div className="text-sm font-extrabold rounded-sm w-full  bg-[#D9D9D9]">
+      <div className="text-sm font-extrabold rounded-sm w-full  bg-[#10293A]">
         <h1 style={headerStyle} className="p-4">
           {header}
         </h1>
       </div>
-
-      <div className="flex items-center justify-center mt-2 bg-[#F2F2F2]">
+      <div className="flex items-center justify-center mt-2 bg-[white]">
         <div className="p-input-icon-left ">
-          <IoSearch style={style} />
+          <IoSearch style={iconStyle} />
           <InputText
             placeholder={placeholder}
             style={inputTextStyle}

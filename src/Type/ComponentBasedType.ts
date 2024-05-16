@@ -138,6 +138,15 @@ export interface CustomModalProps {
   visible: boolean
   onClick: () => void
   onHide: () => void
-  buttonStyle?: React.CSSProperties
+  buttonStyle?: React.CSSProperties | undefined
   dialogStyle?: React.CSSProperties
+}
+export interface inputHeader {
+  header?: string
+  iconStyle?: React.CSSProperties
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+  placeholder: string
+  headerStyle?: React.CSSProperties
+  inputTextStyle?: React.CSSProperties
+  value?: string | undefined
 }

@@ -1,8 +1,7 @@
-
-import React from "react";
-import { Button } from 'primereact/button';
-import { Dialog } from 'primereact/dialog';
-import { CustomModalProps } from "../../Type/ComponentBasedType";
+import React from 'react'
+import { Button } from 'primereact/button'
+import { Dialog } from 'primereact/dialog'
+import { CustomModalProps } from '../../Type/ComponentBasedType'
 export const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
@@ -29,20 +28,31 @@ const CustomModal: React.FC<CustomModalProps> = ({
     <div className="card flex justify-content-center">
       <Button
         label={buttonText}
-        icon={buttonText !== 'Upload New' ? (
+        icon={
           <img
             src="/assets/images/plus.png"
             alt="icon"
-            className="w-4 ml-2"
+            className="w-4 ml-2 "
             style={{
               filter: 'invert(100%)',
               color: 'white',
               fontWeight: 'bolder',
             }}
           />
-        ) : null}
+        }
         onClick={onClick}
-        style={buttonStyle}
+        style={{
+          width: '121px',
+          height: '44px',
+          minHeight: '44px',
+          backgroundColor: '#0098FF',
+          cursor: 'pointer',
+          fontSize: '16px',
+          fontWeight: 700,
+          color: 'white',
+          borderRadius: '0.50rem',
+          marginLeft: '8px',
+        }}
       />
 
       <Dialog
@@ -50,12 +60,11 @@ const CustomModal: React.FC<CustomModalProps> = ({
         {...dialogProps}
         visible={visible}
         onHide={onHide}
-        style={dialogStyle}
-      >
+        style={dialogStyle}>
         {children}
       </Dialog>
     </div>
-  );
+  )
 }
 
-export default CustomModal;
+export default CustomModal

@@ -5,20 +5,21 @@ import { properties } from '../Utils/MeassageProperties'
 import { Dropdown } from 'primereact/dropdown'
 import AddNewCustomer from './AddNewCustomer'
 import { ActionButtonColumnProps } from '../../Type/Components/TableTypes'
-import { CustomerPayload, GetUserResponse } from '../../Type/ApiTypes'
+import { AddUserPayload, CustomerPayload, GetUserResponse } from '../../Type/ApiTypes'
 import Header from '../Layout/LayoutComponents/Header'
 import useMetaData from '../CommonComponent/MetaDataComponent'
 import { Role } from '../../Type/CommonType'
 import { CustomersHeader, TechniciansHeader } from '../Utils/DataTableHeader'
 import './CustomerOwner.module.css'
 import { useGetUsersMutation } from '../../Services/AdminTools/AdminToolsApi'
+import { Button } from 'primereact/button'
 
 const CustomerOwner = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [selectedCustomer, setSelectedCustomer] = useState<any>()
   const [editMode, setEditMode] = useState(false)
   const [isRowClick, setIsRowClick] = useState(false)
-  const [selectedRow, setSelectedRow] = useState<string | null>(null)
+  const [selectedRow, setSelectedRow] = useState<any>()
   const { getMetaData } = useMetaData()
   const [rolesData, setRolesData] = useState<Role[]>()
   const [selectRole, setSelectRole] = useState()
@@ -27,12 +28,14 @@ const CustomerOwner = () => {
   const [getCustomerOwnerData, setgetCustomerOwnerData] = useState<CustomerPayload[]>([])
   const [getCustomerOwnerUserData, setgetCustomerOwnerUserData] = useState<CustomerPayload[]>([])
 
-  const handleButtonClick = () => {
-    setModalVisible(true)
-  }
-
   const handleModalClose = () => {
     setModalVisible(false)
+  }
+
+  const handleEditButtonClick = (rowData: any) => {
+    console.log('rowData', rowData)
+    setSelectedCustomer(rowData)
+    setModalVisible(true)
   }
 
   const ActionButtonColumn: ActionButtonColumnProps = {
@@ -43,6 +46,7 @@ const CustomerOwner = () => {
         label: 'Edit',
         underline: true,
         fontWeight: 400,
+        onClick: (rowData: any) => handleEditButtonClick(rowData),
       },
     ],
     headerStyle: {
@@ -141,6 +145,18 @@ const CustomerOwner = () => {
           fontWeight: 400,
         },
       },
+      // {
+      //   id: 'action',
+      //   label: 'Action',
+      //   style: {
+      //     borderBottom: '1px solid #C0C0C0',
+      //     backgroundColor: '#FFFFFF',
+      //     color: '#000000',
+      //     fontWeight: 400,
+      //   },
+      //   render: (rowData: any) => console.log('ROW DATA IN COL', rowData),
+      //   // <Button onClick={() => handleEditButtonClick(rowData)}>Edit</Button>
+      // },
     ],
     [],
   )
@@ -217,6 +233,7 @@ const CustomerOwner = () => {
         <div className="mt-14">
           <CustomModal
             buttonText={'ADD NEW'}
+            onHide={handleModalClose}
             children={
               <AddNewCustomer
                 customerAdminId={customerAdminId ? customerAdminId : ''}
@@ -225,34 +242,13 @@ const CustomerOwner = () => {
                 getUser={getUserHandler}
                 closeModal={() => {}}
                 setModalVisible={setModalVisible}
-                setIsVisible={function (value: SetStateAction<boolean>): void {
-                  throw new Error('Function not implemented.')
-                }}
+                setIsVisible={() => {}}
               />
             }
-            headerText={<h1 className="text-xl font-extrabold text-black ml-4">New User</h1>}
+            headerText={<h1 className="text-xl font-extrabold text-black-600 ml-4">New User</h1>}
             visible={modalVisible}
-            onClick={handleButtonClick}
-            onHide={handleModalClose}
-            buttonStyle={{
-              width: '121px',
-              height: '44px',
-              minHeight: '44px',
-              backgroundColor: '#0098FF',
-              cursor: 'pointer',
-              fontSize: '16px',
-              fontWeight: 700,
-              color: 'white',
-              borderRadius: '0.50rem',
-              marginLeft: '8px',
-            }}
-            dialogStyle={{
-              width: '800px',
-              minWidth: '800px',
-              height: '630px',
-              minHeight: '630px',
-              borderRadius: '1rem',
-              maxHeight: '95% !important',
+            onClick={() => {
+              setModalVisible(true)
             }}
           />
         </div>
@@ -284,6 +280,7 @@ const CustomerOwner = () => {
               onRowClick={(e) => {
                 getCustomerAdminsUsers(e.data)
               }}
+              style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
               rowStyle={(rowData) => ({
                 backgroundColor: selectedRow === rowData.id ? 'black' : 'red',
               })}

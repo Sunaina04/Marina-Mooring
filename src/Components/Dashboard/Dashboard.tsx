@@ -5,6 +5,7 @@ import DataTableComponent from '../CommonComponent/Table/DataTableComponent'
 import Header from '../Layout/LayoutComponents/Header'
 import { ActionButtonColumnProps, TableColumnProps } from '../../Type/Components/TableTypes'
 import { dasboardTable } from '../Utils/CustomData'
+import CustomDisplayPositionMap from '../Map/CustomDisplayPositionMap'
 
 const Dashboard = () => {
   const [date, setDate] = useState<NullableDateArray>(null)
@@ -140,9 +141,10 @@ const Dashboard = () => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <div>
-              <h1 className="">map</h1>
-            </div>
+            {/* <div>
+              <h1 className="">map</h1> */}
+            <CustomDisplayPositionMap />
+            {/* </div> */}
           </div>
           <div
             style={{

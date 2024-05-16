@@ -427,7 +427,7 @@ const Boatyards = () => {
           <InputTextWithHeader
             header={properties.boatyardDeatile}
             placeholder={'Search by name, ID,address...'}
-            style={{ marginLeft: '1rem', color: '#A4A4A4' }}
+            iconStyle={{ marginLeft: '1rem', color: '#A4A4A4' }}
             inputTextStyle={{
               height: '5vh',
               width: '80vh',

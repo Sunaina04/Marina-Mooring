@@ -3,7 +3,6 @@ import { NavLink, Outlet } from 'react-router-dom'
 import SidebarMenu from '../LayoutComponents/SidebarMenu'
 import Header from '../LayoutComponents/Header'
 import { filterModalStyle } from '../../Style'
-import { style } from '../../CustomComponent/CustomModal'
 import { useDispatch, useSelector } from 'react-redux'
 import { setOpen } from '../../../Store/Slice/userSlice'
 import { RootState } from '../../../Store/Store'
@@ -29,15 +28,15 @@ const AdminLayout = () => {
     handleExpand(index)
   }
 
-  useEffect(() => {
-    if (open) {
-      filterModalStyle.left = '40vw'
-      style.left = '58.2%'
-    } else {
-      filterModalStyle.left = '34vw'
-      style.left = '52%'
-    }
-  }, [open])
+  // useEffect(() => {
+  //   if (open) {
+  //     filterModalStyle.left = '40vw'
+  //     style.left = '58.2%'
+  //   } else {
+  //     filterModalStyle.left = '34vw'
+  //     style.left = '52%'
+  //   }
+  // }, [open])
 
   const handleToggleDrawer = () => {
     dispatch(setOpen(!open))

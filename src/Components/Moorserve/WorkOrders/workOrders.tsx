@@ -128,7 +128,6 @@ const WorkOrders = () => {
                 color: 'white',
                 borderRadius: '0.50rem',
                 marginLeft: '8px',
-                fontFamily: 'Roboto, sans-serif',
               }}></Button>
 
             <Dialog

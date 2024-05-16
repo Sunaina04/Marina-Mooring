@@ -13,18 +13,19 @@ const DataTableComponent: React.FC<DataTableProps> = ({
   header,
   actionButtons,
   onRowClick,
+  style,
 }) => {
   const buttonBody = (rowData: any) => {
     return (
-      <div className="flex ">
-        <div className="flex gap-4">
-          {actionButtons?.buttons?.map((b) => (
-            <DataTableButton
-              data-testid="custom-element"
-              onClick={() => b.onClick && b.onClick(rowData)}
-              {...b}></DataTableButton>
-          ))}
-        </div>
+      <div className="flex gap-4">
+        {actionButtons?.buttons?.map((b, index) => (
+          <DataTableButton
+            key={index}
+            data-testid="custom-element"
+            onClick={() => b.onClick && b.onClick(rowData)}
+            {...b}
+          />
+        ))}
       </div>
     )
   }
@@ -49,15 +50,16 @@ const DataTableComponent: React.FC<DataTableProps> = ({
             field={d.id}
             header={d.label}
             body={d.body}
-            style={{ fontWeight: 500 }}
+            style={style}
           />
         ))}
         {actionButtons && (
           <Column
-            header={actionButtons?.header}
+            header={actionButtons.header}
             body={(rowData) => buttonBody(rowData)}
-            style={actionButtons?.style}
-            headerStyle={actionButtons?.headerStyle}></Column>
+            style={actionButtons.style}
+            headerStyle={actionButtons.headerStyle}
+          />
         )}
       </DataTable>
     </div>

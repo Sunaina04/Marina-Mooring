@@ -40,6 +40,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const [successMessage, setSuccessMessage] = useState<string>()
   const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false)
 
+  // console.log('CUSTOMERDATA', customerData)
   const validateFields = () => {
     const errors: { [key: string]: string } = {}
     if (!name) errors.name = 'Name is required'
@@ -160,11 +161,11 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
   return (
     <>
-      <div style={{ width: '300px', minWidth: '300px', height: '500px' }}>
+      <div>
         {errorMessage && <div className="p-error">{errorMessage}</div>}
         {successMessage && <div className="p-success">{successMessage}</div>}
 
-        <div className="flex gap-6 mt-3 ">
+        <div className="flex gap-8 mt-3 ">
           <div>
             <span className="text-xs text-black">Name</span>
             <div className="mt-1">
@@ -223,7 +224,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           </div>
         </div>
 
-        <div className="flex gap-6 ">
+        <div className="flex gap-8 ">
           <div>
             <div className="mt-3">
               <span className="text-xs text-black">Email Address</span>
@@ -280,8 +281,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           <h1 className="text-xs text-black">Address</h1>
         </div>
 
-        <div className="gap-6 mt-4">
-          <div className="flex gap-6 ">
+        <div className="gap-8 mt-4">
+          <div className="flex gap-8 ">
             <div>
               <div className="mt-2">
                 <InputText
@@ -345,7 +346,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
             </div>
           </div>
 
-          <div className="flex mt-5 gap-6 ">
+          <div className="flex mt-5 gap-8 ">
             <div className="card flex justify-content-center">
               <Dropdown
                 value={country}
@@ -386,7 +387,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           </div>
         </div>
 
-        <div className="flex mt-5 gap-6">
+        <div className="flex mt-5 gap-8">
           <div>
             <span className="text-xs text-black">Create password</span>
             <div className="mt-1">
@@ -428,7 +429,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         </div>
 
         {/* Save and Back buttons */}
-        <div className="flex gap-6 mt-10 ">
+        <div className="flex gap-8 mt-10 ">
           <Button
             label={'Save'}
             onClick={handleSave}

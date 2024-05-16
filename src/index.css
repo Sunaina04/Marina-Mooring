@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 /* 
 .p-selectbutton .p-button.p-highlight {
   background-color: black;
@@ -38,6 +39,7 @@
 
 .p-datatable .p-datatable-tbody > tr {
   background: #ffffff;
+
 }
 
 .p-datatable-thead > th {

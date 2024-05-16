@@ -174,7 +174,7 @@ const Moorings = () => {
           <InputTextWithHeader
             header={properties.customerMooringHeader}
             placeholder={'Search by name, ID,mooring no,boat name,phone no...'}
-            style={{ marginLeft: '1rem', color: 'A4A4A4' }}
+            iconStyle={{ marginLeft: '1rem', color: 'A4A4A4' }}
             inputTextStyle={{
               height: '5vh',
               width: '38vh',
