@@ -262,6 +262,7 @@ const CustomerOwner = () => {
                 columns={tableColumnsTechnicians}
                 header={TechniciansHeader}
                 actionButtons={ActionButtonColumn}
+                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
               />
             </div>
           </div>

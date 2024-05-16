@@ -93,89 +93,71 @@ const Customer = () => {
     }
   }
 
-  const tableColumns = useMemo(
+  const handleCustomerTableRowClick = (rowData: any) => {
+    setCustomerRecord(true)
+    setSelectedCustomer(rowData.data)
+  }
+
+  const handleMooringTableRowClick = (rowData: any) => {
+    setDialogVisible(true)
+    setCustomerRowData(rowData.data)
+  }
+
+  const customerTableColumnStyle = {
+    backgroundColor: '#FFFFFF',
+    fontWeight: '700',
+    fontSize: '10px',
+    color: '#000000',
+  }
+
+  const CustomerTableColumns = useMemo(
     () => [
       {
-        id: 'id',
+        id: 'customerId',
         label: 'ID:',
-        style: {
-          width: '4vw',
-
-          backgroundColor: '#FFFFFF',
-          fontWeight: '700',
-          fontSize: '10px',
-          color: '#000000',
-        },
+        style: customerTableColumnStyle,
       },
       {
-        id: 'name',
+        id: 'customerName',
         label: 'Name:',
-        style: {
-          width: '6vw',
-          backgroundColor: '#FFFFFF',
-          fontWeight: '700',
-          fontSize: '10px',
-          color: '#000000',
-        },
+        style: customerTableColumnStyle,
       },
       {
-        id: 'email',
+        id: 'emailAddress',
         label: 'Email:',
-        style: {
-          width: '6vw',
-          backgroundColor: '#FFFFFF',
-          fontWeight: '700',
-          fontSize: '10px',
-          color: '#000000',
-        },
+        style: customerTableColumnStyle,
       },
       {
         id: 'phone',
         label: 'Phone:',
-        style: {
-          width: '6vw',
-          backgroundColor: '#FFFFFF',
-          fontWeight: '700',
-          fontSize: '10px',
-          color: '#000000',
-        },
+        style: customerTableColumnStyle,
       },
     ],
     [],
   )
 
-  const tableColumn = useMemo(
+  const MooringTableColumnStyle = {
+    backgroundColor: '#FFFFFF',
+    fontSize: '10px',
+    color: '#000000',
+  }
+
+  const MooringTableColumn = useMemo(
     () => [
       {
         id: 'id',
         label: 'ID:',
-        style: {
-          width: '2vw',
-
-          backgroundColor: '#FFFFFF',
-          fontSize: '10px',
-          color: '#000000',
-        },
+        style: MooringTableColumnStyle,
       },
       {
         id: 'mooringName',
         label: 'Mooring Name',
-        style: {
-          width: '4vw',
-          backgroundColor: '#FFFFFF',
-          fontSize: '10px',
-          color: '#000000',
-        },
+        style: MooringTableColumnStyle,
       },
       {
-        id: 'gpsCoordinate',
+        id: 'gpsCoordinates',
         label: 'GPS Coordinates',
-        style: {
-          width: '4vw',
-          backgroundColor: '#FFFFFF',
-          fontSize: '10px',
-          color: '#000000',
-        },
+        style: MooringTableColumnStyle,
       },
     ],
     [],
@@ -296,7 +278,7 @@ const Customer = () => {
 
           <div className="mt-2 ">
             <DataTableComponent
-              data={undefined}
+              data={customerData}
               tableStyle={{
                 fontSize: '12px',
                 color: '#000000',
@@ -304,9 +286,10 @@ const Customer = () => {
                 backgroundColor: '#D9D9D9',
               }}
               scrollable={false}
-              columns={tableColumns}
+              columns={CustomerTableColumns}
               header={undefined}
               style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+              onRowClick={(rowData) => handleCustomerTableRowClick(rowData)}
             />
           </div>
         </div>
@@ -355,7 +338,7 @@ const Customer = () => {
 
         {/* last container */}
 
-        {selectedCustomer && customerRecord && (
+        {customerRecord && (
           <div
             style={{
               width: '450px',
@@ -400,11 +383,11 @@ const Customer = () => {
                     }}>
                     <p>
                       <span className="">ID:</span>
-                      {selectedCustomer}
+                      {selectedCustomer.customerId}
                     </p>
                     <p className="mt-6">
                       <span className="">Phone:</span>
-                      {selectedCustomer}
+                      {selectedCustomer.phoneNumber}
                     </p>
                   </div>
 
@@ -418,18 +401,18 @@ const Customer = () => {
                     className="left">
                     <p>
                       <span>Name:</span>
-                      {selectedCustomer}
+                      {selectedCustomer.customerName}
                     </p>
                     <p className="mt-6">
                       <span className="">Email:</span>
-                      {selectedCustomer}
+                      {selectedCustomer.emailAddress}
                     </p>
                   </div>
                 </div>
                 <div className="">
                   <p className="ml-4">
                     <span className="">Address:</span>
-                    {selectedCustomer}
+                    {selectedCustomer.Apt}
                   </p>
 
                   <div className="flex mt-4 ml-4 mb-3">
@@ -500,12 +483,11 @@ const Customer = () => {
                   fontWeight: 600,
                   backgroundColor: '#D9D9D9',
                 }}
-                // onRowClick={(e) => {
-                //     setCustomerRowData(e.data)
-                //     setDialogVisible(true)
-                //   }}
-                columns={tableColumn}
-                data={undefined}
+                onRowClick={(rowData) => {
+                  handleMooringTableRowClick(rowData)
+                }}
+                columns={MooringTableColumn}
+                data={mooringData}
               />
 
               {/* Dialog BOX */}
@@ -521,81 +503,78 @@ const Customer = () => {
                   </div>
                 }>
                 <hr className="border border-black  my-0 mx-0"></hr>
-                {customerRowData && (
-                  <div className="flex leading-10 gap-4">
-                    <div>
-                      <p>
-                        <span style={{ fontWeight: 'bold' }}>ID:</span> {customerRowData?.id}
-                      </p>
-                      <p>
-                        <span style={{ fontWeight: 'bold' }}>Mooring No:</span>{' '}
-                        {customerRowData?.mooringNumber}
-                      </p>
-                      <p>
-                        <span style={{ fontWeight: 'bold' }}>Boat Name:</span>{' '}
-                        {customerRowData?.boatName}
-                      </p>
-                      <p>
-                        <span style={{ fontWeight: 'bold' }}>Type:</span>{' '}
-                        {customerRowData?.boatType}
-                      </p>
-                      <p>
-                        <span style={{ fontWeight: 'bold' }}>Size of Weight:</span>{' '}
-                        {customerRowData?.sizeOfWeight}
-                      </p>
-                      <p>
-                        <span style={{ fontWeight: 'bold' }}>Top Chain Condition:</span>{' '}
-                        {customerRowData?.topChainCondition}
-                      </p>
-                      <p className="tracking-tighter">
-                        <span style={{ fontWeight: 'bold' }}>Bottom Chain Condition:</span>{' '}
-                        {customerRowData?.bottomChainCondition}
-                      </p>
-                      <p>
-                        <span style={{ fontWeight: 'bold' }}>Pennant Condition:</span>{' '}
-                        {customerRowData?.pennantCondition}
-                      </p>
-                      <p>
-                        <span style={{ fontWeight: 'bold' }}>Water Depth:</span>{' '}
-                        {customerRowData?.waterDepth}
-                      </p>
-                    </div>
-                    <div>
-                      <p>
-                        <span style={{ fontWeight: 'bold' }}>Harbor:</span>{' '}
-                        {customerRowData?.harbor}
-                      </p>
-                      <p>
-                        <span style={{ fontWeight: 'bold' }}>G.P.S Coordinates:</span>{' '}
-                        {customerRowData?.gpsCoordinates}
-                      </p>
-                      <p>
-                        <span style={{ fontWeight: 'bold' }}>Boat Size:</span>{' '}
-                        {customerRowData?.boatSize}
-                      </p>
-                      <p>
-                        <span style={{ fontWeight: 'bold' }}>Weight:</span>{' '}
-                        {customerRowData?.boatWeight}
-                      </p>
-                      <p>
-                        <span style={{ fontWeight: 'bold' }}>Type of Weight:</span>{' '}
-                        {customerRowData?.typeOfWeight}
-                      </p>
-                      <p>
-                        <span style={{ fontWeight: 'bold' }}>Condition of Eye:</span>{' '}
-                        {customerRowData?.conditionOfEye}
-                      </p>
-                      <p>
-                        <span style={{ fontWeight: 'bold' }}>Shackle, Swivel Condition:</span>{' '}
-                        {customerRowData?.shackleSwivelCondition}
-                      </p>
-                      <p>
-                        <span style={{ fontWeight: 'bold' }}>Dept at Mean High Water:</span>{' '}
-                        {customerRowData?.deptAtMeanHighWater}
-                      </p>
-                    </div>
+
+                <div className="flex leading-10 gap-4">
+                  <div>
+                    <p>
+                      <span style={{ fontWeight: 'bold' }}>ID:</span> {customerRowData?.id}
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: 'bold' }}>Mooring No:</span>{' '}
+                      {customerRowData?.mooringNumber}
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: 'bold' }}>Boat Name:</span>{' '}
+                      {customerRowData?.boatName}
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: 'bold' }}>Type:</span> {customerRowData?.boatType}
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: 'bold' }}>Size of Weight:</span>{' '}
+                      {customerRowData?.sizeOfWeight}
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: 'bold' }}>Top Chain Condition:</span>{' '}
+                      {customerRowData?.topChainCondition}
+                    </p>
+                    <p className="tracking-tighter">
+                      <span style={{ fontWeight: 'bold' }}>Bottom Chain Condition:</span>{' '}
+                      {customerRowData?.bottomChainCondition}
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: 'bold' }}>Pennant Condition:</span>{' '}
+                      {customerRowData?.pennantCondition}
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: 'bold' }}>Water Depth:</span>{' '}
+                      {customerRowData?.waterDepth}
+                    </p>
                   </div>
-                )}
+                  <div>
+                    <p>
+                      <span style={{ fontWeight: 'bold' }}>Harbor:</span> {customerRowData?.harbor}
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: 'bold' }}>G.P.S Coordinates:</span>{' '}
+                      {customerRowData?.gpsCoordinates}
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: 'bold' }}>Boat Size:</span>{' '}
+                      {customerRowData?.boatSize}
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: 'bold' }}>Weight:</span>{' '}
+                      {customerRowData?.boatWeight}
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: 'bold' }}>Type of Weight:</span>{' '}
+                      {customerRowData?.typeOfWeight}
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: 'bold' }}>Condition of Eye:</span>{' '}
+                      {customerRowData?.conditionOfEye}
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: 'bold' }}>Shackle, Swivel Condition:</span>{' '}
+                      {customerRowData?.shackleSwivelCondition}
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: 'bold' }}>Dept at Mean High Water:</span>{' '}
+                      {customerRowData?.deptAtMeanHighWater}
+                    </p>
+                  </div>
+                </div>
               </Dialog>
             </div>
           </div>

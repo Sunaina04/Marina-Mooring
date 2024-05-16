@@ -45,7 +45,7 @@ const AdminLayout = () => {
             height: '30px',
             width: '30px',
             minWidth: '5px',
-            marginLeft: open ? '15rem' : '4.5rem',
+            marginLeft: open ? '15rem' : '4.8rem',
             marginTop: '3rem',
             display: 'inline-block',
             background: open ? '#FFFFFF' : '#00426F',
