@@ -159,6 +159,23 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     fetchDataAndUpdate()
   }, [fetchDataAndUpdate])
 
+  useEffect(() => {
+    if (editMode && customerData) {
+      setName(customerData.name || '')
+      setId(customerData.userID || '')
+      setPhone(customerData.phoneNumber || '')
+      setEmail(customerData.email || '')
+      setStreet(customerData.street || '')
+      setApt(customerData.apt || '')
+      setZipCode(customerData.zipCode || '')
+      setPassword('')
+      setConfirmPassword('')
+      setRole(customerData.role || undefined)
+      setCountry(customerData.country || undefined)
+      setState(customerData.state || undefined)
+    }
+  }, [editMode, customerData])
+
   return (
     <>
       <div>

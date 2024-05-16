@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 import SidebarMenu from '../LayoutComponents/SidebarMenu'
-import Header from '../LayoutComponents/Header'
-import { filterModalStyle } from '../../Style'
 import { useDispatch, useSelector } from 'react-redux'
 import { setOpen } from '../../../Store/Slice/userSlice'
 import { RootState } from '../../../Store/Store'
 
 const AdminLayout = () => {
   const [openSubMenus, setOpenSubMenus] = useState(new Array(SidebarMenu.length).fill(false))
+  const [selectedCategory, setSelectedCategory] = useState<any>()
   const [selectedSubcategory, setSelectedSubcategory] = useState<any>()
   const open = useSelector((state: RootState) => state.user.isOpen)
   const dispatch = useDispatch()
@@ -22,21 +21,16 @@ const AdminLayout = () => {
     })
   }
 
-  const handleNavLink = (index: any) => {
+  const handleMainCategoryClick = (index: number) => {
+    setSelectedCategory(selectedCategory === index ? null : index)
     setSelectedSubcategory(undefined)
-    setSelectedSubcategory(0)
     handleExpand(index)
   }
 
-  // useEffect(() => {
-  //   if (open) {
-  //     filterModalStyle.left = '40vw'
-  //     style.left = '58.2%'
-  //   } else {
-  //     filterModalStyle.left = '34vw'
-  //     style.left = '52%'
-  //   }
-  // }, [open])
+  const handleSubCategoryClick = (mainIndex: number, subIndex: number) => {
+    setSelectedCategory(mainIndex)
+    setSelectedSubcategory(subIndex)
+  }
 
   const handleToggleDrawer = () => {
     dispatch(setOpen(!open))
@@ -103,14 +97,19 @@ const AdminLayout = () => {
                     to={item.link}
                     style={{
                       display: 'flex',
-                      height: '30px',
-                      background: '#00426F',
+                      height: '40px',
+                      width: open ? '16rem' : '3rem',
+                      minWidth: open ? '16rem' : '3rem',
+                      marginLeft: open ? '20px' : '10px',
+                      marginRight: open ? '20px' : '10px',
+                      background: selectedCategory === index ? '#0098FF' : '#00426F',
+                      borderRadius: '4px',
                       flexDirection: 'row',
                       alignItems: 'center',
                       position: 'relative',
                     }}
                     onClick={() => {
-                      handleNavLink(index)
+                      handleMainCategoryClick(index)
                     }}>
                     <img
                       src={item.icon}
@@ -118,7 +117,7 @@ const AdminLayout = () => {
                       width={22}
                       style={{
                         marginRight: open ? '15px' : '5px',
-                        marginLeft: open ? '30px' : '20px',
+                        marginLeft: open ? '30px' : '14px',
                       }}
                     />
                     <span
@@ -154,46 +153,52 @@ const AdminLayout = () => {
                 )}
                 {/* Submenu Items */}
                 {item.subcategories && openSubMenus[index] && (
-                  <div>
+                  <div style={{ marginTop: '10px' }}>
                     {item.subcategories.map((subcategory, subIndex) => (
                       <NavLink
                         to={subcategory.link}
                         style={{
                           textDecoration: 'none',
-                          // border: selectedSubcategory === index ? '1px solid #0098FF' : 'none',
-                          // background: selectedSubcategory === index ? '#0098FF' : '#00426',
                         }}
-                        key={subIndex}>
+                        key={subIndex}
+                        onClick={() => handleSubCategoryClick(index, subIndex)}>
                         <div
                           style={{
                             display: 'flex',
-                            justifyContent: 'flex-start',
-                            alignItems: 'center',
-                            padding: '5px 16px',
+                            height: '40px',
+                            width: open ? '16rem' : '3rem',
+                            minWidth: open ? '16rem' : '3rem',
+                            marginLeft: open ? '20px' : '10px',
+                            marginRight: open ? '20px' : '10px',
+                            marginTop: '10px',
+                            borderRadius: '4px',
+                            flexDirection: 'row',
+                            padding: '0px 16px',
                             cursor: 'pointer',
-                            background: '#00426F',
-                          }}
-                          onClick={() => setSelectedSubcategory(subIndex)}>
+                            background:
+                              selectedCategory === index && selectedSubcategory === subIndex
+                                ? '#0098FF'
+                                : '#00426F',
+                          }}>
                           <img
                             src={subcategory.icon}
                             width={20}
                             style={{
-                              marginRight: '4px',
-                              marginLeft: open ? '30px' : '3px',
-                              marginTop: '20px',
+                              marginRight: '10px',
+                              marginLeft: open ? '30px' : '2px',
                             }}
                           />
                           {open && (
                             <span
                               style={{
                                 fontSize: '14px',
-                                fontWeight: 600,
+                                fontWeight: 400,
                                 lineHeight: '1.5',
                                 letterSpacing: '0.2px',
                                 textAlign: 'left',
                                 marginLeft: '5px',
                                 color: '#FFFFFF',
-                                marginTop: '20px',
+                                marginTop: '10px',
                               }}>
                               {subcategory.name}
                             </span>
@@ -205,17 +210,18 @@ const AdminLayout = () => {
                 )}
 
                 {/* Add spacer between items */}
-                {index !== SidebarMenu.length - 1 && <div style={{ height: '30px' }} />}
+                {index !== SidebarMenu.length - 1 && <div style={{ height: '40px' }} />}
               </React.Fragment>
             ))}
           </div>
+
           {/* Logout Button */}
           <div
             style={{
-              // width: open ? '15rem' : '4rem',
               background: '#F2F2F2',
-              borderRight: 'none',
               transition: 'width 0.3s ease-in-out',
+              marginLeft: open ? '30px' : '8px',
+              marginRight: open ? '15px' : '20px',
             }}>
             <NavLink
               to={''}
@@ -244,7 +250,7 @@ const AdminLayout = () => {
                   textAlign: 'left',
                   color: '#FFFFFF',
                   display: open ? 'flex' : 'none',
-                  flexGrow: 1,
+                  // flexGrow: 1,
                 }}>
                 {'LOGOUT'}
               </span>
@@ -255,8 +261,7 @@ const AdminLayout = () => {
       <div
         style={{
           flexGrow: 1,
-          // width: '82%',
-          width: 'calc(100vw - 18rem)',
+          width: 'calc(100vw - 20rem)',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',

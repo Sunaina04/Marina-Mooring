@@ -13,6 +13,7 @@ import { useGetUsersMutation } from '../../Services/AdminTools/AdminToolsApi'
 const Permission = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [editMode, setEditMode] = useState(false)
+  const [selectedCustomer, setSelectedCustomer] = useState<any>()
   const userData = useSelector((state: any) => state.user?.userData)
   const customerAdminId = userData?.id
   const [getUser] = useGetUsersMutation()
@@ -86,6 +87,11 @@ const Permission = () => {
         label: 'Edit',
         underline: true,
         fontWeight: 400,
+        onClick: (rowData: any) => {
+          setEditMode(true)
+          setModalVisible(true)
+          setSelectedCustomer(rowData)
+        },
       },
       {
         color: 'red',
@@ -176,9 +182,8 @@ const Permission = () => {
               getUser={getCustomerAdminsUsers}
               closeModal={handleModalClose}
               setIsVisible={setModalVisible}
-              setModalVisible={function (value: SetStateAction<boolean>): void {
-                throw new Error('Function not implemented.')
-              }}
+              setModalVisible={setModalVisible}
+              customerData={selectedCustomer}
             />
           </CustomModal>
         </div>
@@ -206,6 +211,9 @@ const Permission = () => {
                 borderRadius: '0 0 10px 10px',
               }}
               scrollable={true}
+              onRowClick={(rowData: any) => {
+                // setSelectedCustomer(rowData.data)
+              }}
               data={getCustomerOwnerUserData}
               columns={tableColumnsPermission}
               actionButtons={ActionButtonColumn}
