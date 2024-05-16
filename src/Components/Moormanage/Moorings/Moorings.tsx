@@ -1,8 +1,7 @@
-import { DataTable } from 'primereact/datatable'
+
 import CustomModal from '../../CustomComponent/CustomModal'
 import AddMoorings from './AddMoorings'
 import React, { useState, useEffect, useMemo } from 'react'
-import { Column } from 'primereact/column'
 import { useGetMooringsMutation } from '../../../Services/MoorManage/MoormanageApi'
 import { InputSwitch, InputSwitchChangeEvent } from 'primereact/inputswitch'
 import { MooringPayload, MooringResponse } from '../../../Type/ApiTypes'
@@ -64,48 +63,83 @@ const Moorings = () => {
     })
     setFilteredMooringData(filteredData)
   }
-  const boatData: CustomerData[] = [
-    {
-      id: '#001',
-      email: 'M001',
-      name: 'John Doe',
-      phone: 9789756452,
-    },
-    {
-      id: '#001',
-      email: 'M001',
-      name: 'John Doe',
-      phone: 9789756452,
-    },
-    {
-      id: '#001',
-      email: 'M001',
-      name: 'John Doe',
-      phone: 9789756452,
-    },
-    {
-      id: '#001',
-      email: 'M001',
-      name: 'John Doe',
-      phone: 9789756452,
-    },
-  ]
+
   const tableColumns = useMemo(
     () => [
       {
         id: 'id',
         label: 'ID:',
-        style: { width: '4vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
+        style: {
+          width: '4vw',
+          borderBottom: '1px solid #C0C0C0',
+          fontWeight: '700',
+          color: '#000000',
+          backgroundColor: '#FFFFFF',
+        },
       },
       {
         id: 'mooringName',
         label: 'Mooring Name:',
-        style: { width: '6vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
+        style: {
+          width: '6vw',
+          borderBottom: '1px solid #C0C0C0',
+          backgroundColor: '#FFFFFF',
+          fontWeight: '700',
+          color: '#000000',
+        },
       },
       {
         id: 'gpsCoordinates',
         label: 'GPS Coordinates:',
-        style: { width: '6vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
+        style: {
+          width: '6vw',
+          borderBottom: '1px solid #C0C0C0',
+          backgroundColor: '#FFFFFF',
+          fontWeight: '700',
+          color: '#000000',
+        },
+      },
+    ],
+    [],
+  )
+
+  const tableColumnsTechnicians = useMemo(
+    () => [
+      {
+        id: 'id',
+        label: 'ID:',
+        style: {
+          width: '4vw',
+          borderBottom: '1px solid #C0C0C0',
+          fontWeight: '400',
+          color: '#000000',
+          fontSize: '10px',
+          backgroundColor: '#FFFFFF',
+        },
+      },
+      {
+        id: 'mooringName',
+        label: 'Mooring Name:',
+        style: {
+          width: '6vw',
+          borderBottom: '1px solid #C0C0C0',
+          backgroundColor: '#FFFFFF',
+          fontSize: '10px',
+          fontWeight: '400',
+          color: '#000000',
+        },
+      },
+      {
+        id: 'gpsCoordinates',
+        label: 'GPS Coordinates:',
+        style: {
+          width: '6vw',
+          borderBottom: '1px solid #C0C0C0',
+          backgroundColor: '#FFFFFF',
+          fontSize: '10px',
+          fontWeight: '700',
+          color: '#000000',
+        },
       },
     ],
     [],
@@ -170,49 +204,92 @@ const Moorings = () => {
         </div>
       </div>
 
-      <div className="flex ml-12 gap-4 mt-10">
-        <div className="bg-[F2F2F2] rounded-md border-[1px]  border-gray-300 w-[35vw] h-[60%]">
-          <InputTextWithHeader
-            header={properties.customerMooringHeader}
-            placeholder={'Search by name, ID,mooring no,boat name,phone no...'}
-            iconStyle={{ marginLeft: '1rem', color: 'A4A4A4' }}
-            inputTextStyle={{
-              height: '5vh',
-              width: '38vh',
-              cursor: 'pointer',
-              fontSize: '0.63rem',
-              color: '#A4A4A4',
-              border: '1px solid #A4A4A4',
-              paddingLeft: '3rem',
-              borderRadius: '0.45rem',
+      <div
+        // style={{border:"1px solid red"}}
+        className="flex ml-12 gap-4 mt-10">
+        <div
+          //  style={{border:"1px solid blue"}}
+
+          className="">
+          <div
+            style={{
+              width: '450px',
+              height: '600px',
+              top: '277px',
+              left: '107px',
+              gap: '0px',
+              borderRadius: '5px',
+              border: '1px solid #D5E1EA',
+              opacity: '0px',
+              backgroundColor: 'white',
             }}
-            onChange={handleSearchChange}
-            value={searchQuery}
-          />
-          <div className="border-[1px]  border-[#9F9F9F]   mt-3 "></div>
-          <DataTableComponent
-            data={mooringData}
-            tableStyle={{
-              fontSize: '12px',
-              color: '#000000',
-              fontWeight: 600,
-              backgroundColor: '#D9D9D9',
-            }}
-            scrollable={true}
-            columns={tableColumns}
-            header={''}
-          />
+            className="bg-[F2F2F2] overflow-x-hidden overflow-y-scroll ">
+            <InputTextWithHeader
+              headerStyle={{
+                height: '55px',
+                top: '294px',
+                left: '124px',
+                gap: '0px',
+                opacity: '0px',
+                color: '#FFFFFF',
+                backgroundColor: '#00426F',
+              }}
+              header={'Moorings'}
+              placeholder={'Search by name, ID, mooring no, boat name, phone no.... '}
+              iconStyle={{
+                left: '10px',
+                gap: '0px',
+                opacity: '0px',
+                color: '#10293A',
+                fontWeight: '900',
+                fontSize: '1.15rem',
+                lineHeight: '16px',
+                letterSpacing: '0.2px',
+              }}
+              inputTextStyle={{
+                height: '44px',
+                width: '400px',
+                cursor: 'pointer',
+                fontSize: '',
+                color: '#D5E1EA',
+                border: '1px solid #D5E1EA',
+                paddingLeft: '35px',
+                borderRadius: '5px',
+              }}
+              onChange={handleSearchChange}
+              value={searchQuery}
+            />
+            <div className="mt-2">
+              <hr style={{ border: ' 0.20px solid #D5E1EA' }} />
+            </div>
+
+            <div className="mt-2 ">
+              <DataTableComponent
+                data={undefined}
+                tableStyle={{
+                  fontSize: '12px',
+                  color: '#000000',
+                  fontWeight: 600,
+                  backgroundColor: '#D9D9D9',
+                }}
+                scrollable={false}
+                columns={tableColumns}
+                header={undefined}
+                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+              />
+            </div>
+          </div>
         </div>
 
-        <div className="relative">
+        <div className="relative mr-10">
           <img
             src="/assets/images/map.png"
-            className="bg-no-repeat object-cover bg-auto rounded-md w-full h-[105vh]"
+            className="bg-no-repeat object-cover bg-auto rounded-md w-full h-full"
             alt="Sea"
           />
           <div className="absolute top-72">
             <div className=""></div>
-            <div className="rounded-md border-[1px] pb-1 border-gray-300 mt-16 ml-10 w-[17vw]  h-[13vh] bg-white">
+            <div className="rounded-md border-[1px] pb-1 border-gray-300 mt-16 ml-10 w-[17vw]  h-[13vh] bg-[#FFFFFF]">
               <p className="text-[0.7rem] ml-1 text-black">Status</p>
               <hr className="m-1 border-black" />
               <div className="flex">
@@ -239,13 +316,32 @@ const Moorings = () => {
               </div>
             </div>
           </div>
-          <div className=" border-gray-300 absolute top-5 right-5  w-[25em]  ">
-            <div className="flex rounded-md bg-gray-500  py-3 pl-4 ">
-              <div className="flex items-center">
-                <span className="font-bold">Customers Record</span>
-                <span>
-                  <FaEdit className="ml-2" onClick={handleEdit} data-testid="edit" />
+          <div className="absolute top-5 right-5   w-[25rem] ">
+            <div
+              style={{
+                width: '398px',
+                height: '51px',
+                border: '0.96 px solid #D5E1EA',
+              }}
+              className={`flex ${isChecked ? 'bg-[#00426F] rounded-tl-[5px] rounded-tr-[5px] ' : ' bg-[#FFFFFF] rounded-xl    '} i py-3 pl-4 `}>
+              <div className="flex items-center fixed overflow-hidden">
+                <span
+                  className={`flex  text-[15px] font-[700] text-[#000000] ${isChecked ? 'text-[#FFFFFF] font-[700]' : ' '} `}>
+                  Customers Record
                 </span>
+                {isChecked ? (
+                  <span>
+                    <FaEdit
+                      className="ml-2"
+                      style={{ color: 'white' }}
+                      onClick={handleEdit}
+                      data-testid="edit"
+                    />
+                  </span>
+                ) : (
+                  ''
+                )}
+
                 <InputSwitch
                   checked={isChecked}
                   onChange={handleInputChange}
@@ -256,59 +352,89 @@ const Moorings = () => {
             </div>
 
             {isChecked && (
-              <div>
-                <div className="bg-[#F2F2F2] px-2">
-                  <div className="flex gap-32 ">
-                    <div className="font-bold text-sm ml-2 tracking-tighter">
-                      <p>ID:{edit.id}</p>
-                      <p>Phone:{edit.phone}</p>
+              <div className="">
+                <div className="bg-[#F2F2F2] px-2 h-[18vh]">
+                  <div className="flex gap-20 text-[14px] ">
+                    <div className=" mt-2 ">
+                      <p className="text-[14px] font-[400]  text-[#000000]">ID:{edit.id}</p>
+                      <p className="mt-4  w-40 text-[#000000] font-[400] ">Phone:{edit.phone}</p>
                     </div>
-                    <div className="font-bold text-sm tracking-tighter">
-                      <p>Name:{edit.name}</p>
-                      <p>Email:{edit.email}</p>
+                    <div className="mt-2">
+                      <p className="text-[14px] font-[400] mt-2 text-[#000000]">Name:{edit.name}</p>
+                      <p className="text-[14px] font-[400] text-[#000000] mt-3">
+                        Email:{edit.email}
+                      </p>
                     </div>
                   </div>
-                  <div className="font-bold text-sm  ml-2 mt-2">
+                  <div className="text-[14px] font-[400] mt-3 text-[#000000]">
                     <p>Address:{edit.address}</p>
                   </div>
-                  <div className="font-bold text-sm mt-2 ml-2 pb-2">
+                  <div className="text-[14px] mt-4 ">
                     <p>
                       Boatyard:
-                      <span className="bg-[#D9D9D9] ml-2">Pioneer</span>{' '}
-                      <span className="bg-[#D9D9D9] ml-2">02Pioneer</span>{' '}
-                      <span className="bg-[#D9D9D9] ml-2">Pioneer</span>
+                      <span
+                        style={{
+                          backgroundColor: '#D5E1EA',
+                          color: '#00426F',
+                          fontSize: '13px',
+                          padding: '5px',
+                          width: '60px',
+                          height: '25px',
+                          borderRadius: '5px',
+                        }}
+                        className="ml-2">
+                        Pioneer
+                      </span>
+                      <span
+                        style={{
+                          backgroundColor: '#D5E1EA',
+                          color: '#00426F',
+                          fontSize: '13px',
+                          padding: '5px',
+                          width: '60px',
+                          height: '25px',
+                          borderRadius: '5px',
+                        }}
+                        className=" ml-2">
+                        02Pioneer
+                      </span>
+                      <span
+                        style={{
+                          backgroundColor: '#D5E1EA',
+                          color: '#00426F',
+                          fontSize: '13px',
+                          padding: '5px',
+                          width: '60px',
+                          height: '25px',
+                          borderRadius: '5px',
+                        }}
+                        className=" ml-2">
+                        Pioneer
+                      </span>
                     </p>
                   </div>
                 </div>
 
                 <div>
-                  <h3 className="bg-[#D9D9D9] font-bold h12 py-4 pl-2 ">Moorings</h3>
-                  <DataTable
-                    className="bg[#F2F2F2]"
-                    value={mooringData}
-                    scrollable={true}
-                    selectionMode="single"
-                    onRowSelect={(e) => {
-                      setSelectedMooring(e.data)
-                      setIsDialogVisible(true)
-                    }}
-                    style={{ overflow: 'scroll', maxHeight: '60vh' }}>
-                    <Column
-                      field="id"
-                      header="ID"
-                      headerClassName="text-sm"
-                      style={{ fontSize: '0.75rem' }}></Column>
-                    <Column
-                      field="mooringName"
-                      header="Mooring Name"
-                      headerStyle={{ fontSize: '0.875rem' }}
-                      style={{ fontSize: '0.75rem' }}></Column>
-                    <Column
-                      field="gpsCoordinates"
-                      header="GPS Coordinate"
-                      headerStyle={{ fontSize: '0.87rem' }}
-                      style={{ fontSize: '0.75rem' }}></Column>
-                  </DataTable>
+                  <h3
+                    className={`${isChecked ? 'bg-[#00426F] text-[#FFFFFF]' : ''} font-[700] text-[15px] h-12 py-4 pl-2 `}>
+                    Moorings
+                  </h3>
+
+                  <div data-testid="customer-admin-users-table">
+                    <DataTableComponent
+                      tableStyle={{
+                        fontSize: '12px',
+                        color: '#000000',
+                        fontWeight: 600,
+                        backgroundColor: '#D9D9D9',
+                      }}
+                      scrollable={true}
+                      data={undefined}
+                      columns={tableColumnsTechnicians}
+                    />
+                  </div>
+
                   <Dialog
                     visible={isDialogVisible}
                     onHide={() => setIsDialogVisible(false)}

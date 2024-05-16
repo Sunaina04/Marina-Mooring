@@ -8,7 +8,7 @@ import {
 } from '../../../Services/MoorManage/MoormanageApi'
 import { VendorPayload, VendorResponse } from '../../../Type/ApiTypes'
 import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
-import { boatData } from '../../Utils/CustomData'
+import { boatData, vendorDataa } from '../../Utils/CustomData'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import Header from '../../Layout/LayoutComponents/Header'
 import { IoSearchSharp } from 'react-icons/io5'
@@ -66,27 +66,34 @@ const Vendors = () => {
       {
         id: 'id',
         label: 'ID',
-        style: { width: '6vw', backgroundColor: '#F2F2F2' },
+        style: {
+          width: '9vw',
+          backgroundColor: '#00426F',
+          color: '#FFFFFF',
+          fontSize: '11.18px',
+          fontWeight: '700',
+          borderTopLeftRadius: '10px',
+        },
       },
       {
         id: 'companyName',
         label: 'Company Name',
-        style: { width: '12vw', backgroundColor: '#F2F2F2' },
+        style: { width: '16vw', backgroundColor: '#00426F', color: '#FFFFFF' },
       },
       {
         id: 'phoneNumber',
         label: 'Phone Number',
-        style: { width: '10vw', backgroundColor: '#F2F2F2' },
+        style: { width: '15vw', backgroundColor: '#00426F', color: '#FFFFFF' },
       },
       {
-        id: 'emailAddress',
+        id: 'email',
         label: 'Email Address',
-        style: { width: '12vw', backgroundColor: '#F2F2F2' },
+        style: { width: '16vw', backgroundColor: '#00426F', color: '#FFFFFF' },
       },
       {
         id: 'inventoryItems',
         label: 'Inventory Items',
-        style: { width: '10vw', backgroundColor: '#F2F2F2' },
+        style: { width: '13vw', backgroundColor: '#00426F', color: '#FFFFFF' },
       },
     ],
     [],
@@ -99,18 +106,27 @@ const Vendors = () => {
         {
           color: 'black',
           label: 'View Inventory',
+          underline: true,
         },
         {
           color: 'green',
           label: 'Edit',
           onClick: handleEdit,
+          underline: true,
         },
         {
           color: 'red',
           label: 'Delete',
+          underline: true,
         },
       ],
-      headerStyle: { backgroundColor: '#F2F2F2' },
+      headerStyle: {
+        backgroundColor: '#00426F',
+        color: '#FFFFFF',
+        height: '3.50rem',
+        borderTopRightRadius: '10px',
+      },
+      style: { borderBottom: '1px solid #D5E1EA' },
     }),
     [],
   )
@@ -167,18 +183,28 @@ const Vendors = () => {
         </div>
       </div>
       {/* </div> */}
-      <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[67vw] p-1 ml-32 mt-14 mb-80">
+
+      <div
+        style={{
+          height: '657px',
+          borderRadius: '10px',
+          border: '1px solid #D5E1EA',
+          opacity: '0px',
+          backgroundColor: '#FFFFFF',
+        
+        }}
+        className=" ml-[3rem] mr-[2.30rem] mt-8">
         <DataTableSearchFieldComponent
           tableStyle={{
             fontSize: '12px',
             color: '#000000',
-            fontWeight: 600,
+            fontWeight: '400',
           }}
-          data={boatData}
+          data={vendorDataa}
           columns={tableColumns}
           header={undefined}
           actionButtons={ActionButtonColumn}
-          style={{ backgroundColor: '#F2F2F2' }}
+          style={{ backgroundColor: '#FFFFFF', borderBottom: '1px solid #D5E1EA' }}
         />
       </div>
     </>

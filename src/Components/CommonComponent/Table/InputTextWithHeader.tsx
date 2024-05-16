@@ -14,7 +14,7 @@ const InputTextWithHeader: React.FC<inputHeader> = ({
 }) => {
   return (
     <>
-      <div className="text-sm font-extrabold rounded-sm w-full  bg-[#10293A]">
+      <div className="text-sm font-extrabold rounded-sm w-full ">
         <h1 style={headerStyle} className="p-4">
           {header}
         </h1>

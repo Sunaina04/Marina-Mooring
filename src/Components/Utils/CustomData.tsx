@@ -412,3 +412,49 @@ export const dasboardTable = [
     status: 'pending',
   },
 ]
+
+
+
+export const vendorDataa= [
+  {
+    id: '01',
+    companyName: 'Suncatcher',
+    phoneNumber: '7648258963',
+    email: 'John Smith@gmail.com',
+    inventoryItems: '142',
+  },
+  {
+    id: '01',
+    companyName: 'Suncatcher',
+    phoneNumber: '7648258963',
+    email: 'John Smith@gmail.com',
+    inventoryItems: '142',
+  
+  },
+  {
+    id: '01',
+    companyName: 'Suncatcher',
+    phoneNumber: '7648258963',
+    email: 'John Smith@gmail.com',
+    inventoryItems: '142',
+  
+  },
+  {
+    id: '01',
+    companyName: 'Suncatcher',
+    phoneNumber: '7648258963',
+    email: 'John Smith@gmail.com',
+    inventoryItems: '142',
+  },
+
+  {
+    id: '01',
+    companyName: 'Suncatcher',
+    phoneNumber: '7648258963',
+    email: 'John Smith@gmail.com',
+    inventoryItems: '142',
+  
+  },
+
+  
+]
