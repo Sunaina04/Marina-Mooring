@@ -239,13 +239,13 @@ const Customer = () => {
           className="bg-[F2F2F2] overflow-x-hidden overflow-y-scroll ">
           <InputTextWithHeader
             headerStyle={{
-              width: '80px',
               height: '55px',
               top: '294px',
               left: '124px',
               gap: '0px',
               opacity: '0px',
               color: '#FFFFFF',
+              backgroundColor: '#10293A',
             }}
             header={'Customers'}
             placeholder={'Search by name, ID, mooring no, boat name, phone no.... '}

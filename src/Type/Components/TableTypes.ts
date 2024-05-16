@@ -43,7 +43,7 @@ export interface ButtonProps {
   label: string
   fontWeight?: number
   style?: React.CSSProperties | undefined
-  onRowClick?: (event: DataTableRowClickEvent) => void
+  
 }
 
 // Can be defined single in future
