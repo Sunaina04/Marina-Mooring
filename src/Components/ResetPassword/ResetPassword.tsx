@@ -135,6 +135,8 @@ const ResetPassword = () => {
                     color: '#000000',
                   }}
                 />
+
+                {/* Password Visibility
                 <img
                   src={
                     showPassword.newPassword
@@ -153,7 +155,7 @@ const ResetPassword = () => {
                     height: '20px',
                     cursor: 'pointer',
                   }}
-                />
+                /> */}
               </div>
 
               <div className="p-input-icon-left relative flex justify-center">
@@ -187,6 +189,8 @@ const ResetPassword = () => {
                     color: '#000000',
                   }}
                 />
+
+                {/* Password Visibility
                 <img
                   src={
                     showPassword.confirmPassword
@@ -205,7 +209,7 @@ const ResetPassword = () => {
                     height: '20px',
                     cursor: 'pointer',
                   }}
-                />
+                /> */}
               </div>
             </div>
           </div>

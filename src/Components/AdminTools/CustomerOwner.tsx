@@ -46,7 +46,7 @@ const CustomerOwner = () => {
         label: 'Edit',
         underline: true,
         fontWeight: 400,
-        onClick: (rowData: any) => handleEditButtonClick(rowData),
+        onClick: (rowData) => handleEditButtonClick(rowData),
       },
     ],
     headerStyle: {
@@ -55,6 +55,14 @@ const CustomerOwner = () => {
       color: '#000000',
       fontWeight: 400,
     },
+    onRowClick: (rowData) => handleEditButtonClick(rowData),
+  }
+
+  const columnStyle = {
+    borderBottom: '1px solid #C0C0C0',
+    backgroundColor: '#FFFFFF',
+    color: '#000000',
+    fontWeight: 500,
   }
 
   const tableColumns = useMemo(
@@ -62,32 +70,17 @@ const CustomerOwner = () => {
       {
         id: 'id',
         label: 'ID',
-        style: {
-          borderBottom: '1px solid #C0C0C0',
-          backgroundColor: '#FFFFFF',
-          color: '#000000',
-          fontWeight: 500,
-        },
+        style: columnStyle,
       },
       {
         id: 'name',
         label: 'Name',
-        style: {
-          borderBottom: '1px solid #C0C0C0',
-          backgroundColor: '#FFFFFF',
-          color: '#000000',
-          fontWeight: 500,
-        },
+        style: columnStyle,
       },
       {
         id: 'phoneNumber',
         label: 'Phone',
-        style: {
-          borderBottom: '1px solid #C0C0C0',
-          backgroundColor: '#FFFFFF',
-          color: '#000000',
-          fontWeight: 500,
-        },
+        style: columnStyle,
       },
     ],
     [],
@@ -95,68 +88,27 @@ const CustomerOwner = () => {
 
   const tableColumnsTechnicians = useMemo(
     () => [
+      { id: 'id', label: 'ID', style: columnStyle },
+      { id: 'name', label: 'Name', style: columnStyle },
+      { id: 'email', label: 'Email', style: columnStyle },
+      { id: 'phoneNumber', label: 'Phone', style: columnStyle },
+      { id: 'role', label: 'Role', style: columnStyle },
       {
-        id: 'id',
-        label: 'ID',
-        style: {
-          borderBottom: '1px solid #C0C0C0',
-          backgroundColor: '#FFFFFF',
-          color: '#000000',
-          fontWeight: 400,
-        },
+        id: 'action',
+        label: 'Action',
+        style: columnStyle,
+        render: (rowData: {
+          id: string
+          name: string
+          email: string
+          phoneNumber: string
+          role: string
+        }) => (
+          <Button color="primary" size="small" onClick={() => handleEditButtonClick(rowData)}>
+            Edit
+          </Button>
+        ),
       },
-      {
-        id: 'name',
-        label: 'Name',
-        style: {
-          borderBottom: '1px solid #C0C0C0',
-          backgroundColor: '#FFFFFF',
-          color: '#000000',
-          fontWeight: 400,
-        },
-      },
-      {
-        id: 'email',
-        label: 'Email',
-        style: {
-          borderBottom: '1px solid #C0C0C0',
-          backgroundColor: '#FFFFFF',
-          color: '#000000',
-          fontWeight: 400,
-        },
-      },
-      {
-        id: 'phoneNumber',
-        label: 'Phone',
-        style: {
-          borderBottom: '1px solid #C0C0C0',
-          backgroundColor: '#FFFFFF',
-          color: '#000000',
-          fontWeight: 400,
-        },
-      },
-      {
-        id: 'role',
-        label: 'Role',
-        style: {
-          borderBottom: '1px solid #C0C0C0',
-          backgroundColor: '#FFFFFF',
-          color: '#000000',
-          fontWeight: 400,
-        },
-      },
-      // {
-      //   id: 'action',
-      //   label: 'Action',
-      //   style: {
-      //     borderBottom: '1px solid #C0C0C0',
-      //     backgroundColor: '#FFFFFF',
-      //     color: '#000000',
-      //     fontWeight: 400,
-      //   },
-      //   render: (rowData: any) => console.log('ROW DATA IN COL', rowData),
-      //   // <Button onClick={() => handleEditButtonClick(rowData)}>Edit</Button>
-      // },
     ],
     [],
   )
@@ -270,7 +222,7 @@ const CustomerOwner = () => {
               tableStyle={{
                 fontSize: '12px',
                 color: '#000000',
-                fontWeight: 600,
+                fontWeight: 500,
                 backgroundColor: '#D9D9D9',
                 cursor: 'pointer',
               }}
@@ -302,7 +254,7 @@ const CustomerOwner = () => {
                 tableStyle={{
                   fontSize: '12px',
                   color: '#000000',
-                  fontWeight: 600,
+                  fontWeight: 400,
                   backgroundColor: '#D9D9D9',
                 }}
                 scrollable={true}

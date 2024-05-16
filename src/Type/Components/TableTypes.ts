@@ -43,6 +43,7 @@ export interface ButtonProps {
   label: string
   fontWeight?: number
   style?: React.CSSProperties | undefined
+  onRowClick?: (event: DataTableRowClickEvent) => void
 }
 
 // Can be defined single in future
@@ -51,6 +52,7 @@ export interface ActionButtonColumnProps {
   header?: React.ReactNode | ((options: ColumnHeaderOptions) => React.ReactNode)
   buttons?: ButtonProps[]
   style?: React.CSSProperties | undefined
+  onRowClick?: (event: DataTableRowClickEvent) => void
 }
 
 export interface Order {

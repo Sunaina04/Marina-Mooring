@@ -23,7 +23,7 @@ const AdminLayout = () => {
 
   const handleMainCategoryClick = (index: number) => {
     setSelectedCategory(selectedCategory === index ? null : index)
-    setSelectedSubcategory(undefined)
+    setSelectedSubcategory(0)
     handleExpand(index)
   }
 
@@ -64,8 +64,8 @@ const AdminLayout = () => {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
-            width: open ? '18rem' : '4.5rem',
-            minWidth: open ? '18rem' : '4.5rem',
+            width: open ? '18rem' : '5rem',
+            minWidth: open ? '18rem' : '5rem',
             maxHeight: '100vh',
             background: '#00426F',
             borderRight: 'none',
@@ -75,7 +75,7 @@ const AdminLayout = () => {
             paddingBottom: '20px',
           }}>
           {/* Logo */}
-          <div style={{ minWidth: '18rem' }}>
+          <div>
             <img
               src={open ? '/assets/images/MoorFindLogo.svg' : '/assets/images/moorfind.svg'}
               alt="Moorfind Logo"
@@ -102,7 +102,7 @@ const AdminLayout = () => {
                       minWidth: open ? '16rem' : '3rem',
                       marginLeft: open ? '20px' : '10px',
                       marginRight: open ? '20px' : '10px',
-                      background: selectedCategory === index ? '#0098FF' : '#00426F',
+                      background: selectedCategory === 0 && index === 0 ? '#0098FF' : '#00426F',
                       borderRadius: '4px',
                       flexDirection: 'row',
                       alignItems: 'center',
@@ -151,6 +151,7 @@ const AdminLayout = () => {
                     )}
                   </NavLink>
                 )}
+
                 {/* Submenu Items */}
                 {item.subcategories && openSubMenus[index] && (
                   <div style={{ marginTop: '10px' }}>
@@ -168,8 +169,8 @@ const AdminLayout = () => {
                             height: '40px',
                             width: open ? '16rem' : '3rem',
                             minWidth: open ? '16rem' : '3rem',
-                            marginLeft: open ? '20px' : '10px',
-                            marginRight: open ? '20px' : '10px',
+                            marginLeft: open ? '10px' : '10px',
+                            marginRight: open ? '10px' : '10px',
                             marginTop: '10px',
                             borderRadius: '4px',
                             flexDirection: 'row',
@@ -220,8 +221,6 @@ const AdminLayout = () => {
             style={{
               background: '#F2F2F2',
               transition: 'width 0.3s ease-in-out',
-              marginLeft: open ? '30px' : '8px',
-              marginRight: open ? '15px' : '20px',
             }}>
             <NavLink
               to={''}
@@ -250,7 +249,6 @@ const AdminLayout = () => {
                   textAlign: 'left',
                   color: '#FFFFFF',
                   display: open ? 'flex' : 'none',
-                  // flexGrow: 1,
                 }}>
                 {'LOGOUT'}
               </span>
@@ -261,7 +259,7 @@ const AdminLayout = () => {
       <div
         style={{
           flexGrow: 1,
-          width: 'calc(100vw - 20rem)',
+          width: 'calc(100vw - 16rem)',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',

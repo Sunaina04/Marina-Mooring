@@ -27,7 +27,7 @@ const SidebarMenu = () => {
       adminSubcategories = [
         {
           icon: '/assets/images/customerOwner.svg',
-          name: 'Customer-Owner',
+          name: 'Customer Owner',
           link: '/customerAdmin',
         },
         {
