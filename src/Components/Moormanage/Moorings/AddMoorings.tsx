@@ -82,7 +82,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
       <div>
         <div className="flex gap-6 ">
           <div>
-            <span className="font-semibold text-sm text-black">Customer Name</span>
+            <span className="font-medium text-sm text-[#000000]">Customer Name</span>
             <div className="mt-2">
               <InputComponent
                 value={formData.customerName}
@@ -99,7 +99,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
           </div>
 
           <div>
-            <span className="font-semibold text-sm text-black">Mooring ID</span>
+            <span className="font-medium text-sm text-[#000000]">Mooring ID</span>
             <div className="mt-2">
               <InputComponent
                 value={formData.mooringNumber}
@@ -116,7 +116,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
           </div>
 
           <div>
-            <span className="font-semibold text-sm text-black">Harbor</span>
+            <span className="font-medium text-sm text-[#000000]">Harbor</span>
             <div className="mt-2">
               <InputComponent
                 value={formData.harbor}
@@ -135,7 +135,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
 
         <div className="flex gap-6 mt-3">
           <div>
-            <span className="font-semibold text-sm text-black">Water Depth</span>
+            <span className="font-medium text-sm text-[#000000]">Water Depth</span>
             <div className="mt-2">
               <InputComponent
                 value={formData.waterDepth}
@@ -152,7 +152,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
           </div>
 
           <div>
-            <span className="font-semibold text-sm text-black">G.P.S Cordinates</span>
+            <span className="font-medium text-sm text-[#000000]">G.P.S Cordinates</span>
             <div className="mt-2">
               <InputComponent
                 value={formData.gpsCoordinates}
@@ -169,7 +169,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
           </div>
 
           <div>
-            <span className="font-semibold text-sm text-black">Boatyard Name</span>
+            <span className="font-medium text-sm text-[#000000]">Boatyard Name</span>
             <div className="mt-2">
               <InputComponent
                 value={formData.boatName}
@@ -188,7 +188,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
 
         <div className="flex gap-6 mt-3">
           <div>
-            <span className="font-semibold text-sm text-black">Boat Name</span>
+            <span className="font-medium text-sm text-[#000000]">Boat Name</span>
             <div className="mt-2">
               <InputComponent
                 // placeholder="Enter owner name"
@@ -207,7 +207,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
           </div>
 
           <div>
-            <span className="font-semibold text-sm text-black">Boat Size</span>
+            <span className="font-medium text-sm text-[#000000]">Boat Size</span>
             <div className="mt-2">
               <InputComponent
                 value={formData.boatSize}
@@ -225,7 +225,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
 
           <div>
             <div>
-              <span className="font-semibold text-sm text-black">Type</span>
+              <span className="font-medium text-sm text-[#000000]">Type</span>
             </div>
 
             <div className="mt-2">
@@ -249,7 +249,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
 
         <div className="flex gap-6 mt-3">
           <div>
-            <span className="font-semibold text-sm text-black">Weight</span>
+            <span className="font-medium text-sm text-[#000000]">Weight</span>
             <div className="mt-2">
               <InputComponent
                 value={formData.boatWeight}
@@ -267,7 +267,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
 
           <div>
             <div>
-              <span className="font-semibold text-sm text-black">Size of Weight</span>
+              <span className="font-medium text-sm text-[#000000]">Size of Weight</span>
             </div>
 
             <div className="mt-2">
@@ -290,7 +290,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
 
           <div>
             <div>
-              <span className="font-semibold text-sm text-black">Type of Weight</span>
+              <span className="font-medium text-sm text-[#000000]">Type of Weight</span>
             </div>
 
             <div className="mt-2">
@@ -316,7 +316,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
           <div>
             <div>
               <div>
-                <span className="font-semibold text-sm text-black">Top Chain Condition</span>
+                <span className="font-medium text-sm text-[#000000]">Top Chain Condition</span>
               </div>
 
               <div className="mt-2">
@@ -338,7 +338,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
             </div>
             <div className="mt-3">
               <div>
-                <span className="font-semibold text-sm text-black">Bootom Chain Condition</span>
+                <span className="font-medium text-sm text-[#000000]">Bootom Chain Condition</span>
               </div>
 
               <div className="mt-2">
@@ -360,7 +360,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
             </div>
             <div className="mt-3">
               <div>
-                <span className="font-semibold text-sm text-black">Pennant Condition</span>
+                <span className="font-medium text-sm text-[#000000]">Pennant Condition</span>
               </div>
 
               <div className="mt-2">
@@ -385,7 +385,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
           <div>
             <div>
               <div>
-                <span className="font-semibold text-sm text-black">Condition of Eye</span>
+                <span className="font-medium text-sm text-[#000000]">Condition of Eye</span>
               </div>
               <div className="mt-2">
                 <Dropdown
@@ -406,7 +406,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
             </div>
             <div className="mt-3">
               <div>
-                <span className="font-semibold text-sm text-black">Shackle,Swivel Condition</span>
+                <span className="font-medium text-sm text-[#000000]">Shackle,Swivel Condition</span>
               </div>
 
               <div className="mt-2">
@@ -428,7 +428,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
             </div>
             <div className="mt-3">
               <div>
-                <span className="font-semibold text-sm text-black">Dept at Mean High Water</span>
+                <span className="font-medium text-sm text-[#000000]">Dept at Mean High Water</span>
               </div>
 
               <div className="mt-2">
@@ -448,7 +448,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
           </div>
           <div>
             <div>
-              <span className="font-semibold text-sm  text-black">Pin on Map</span>
+              <span className="font-medium text-sm text-[#000000]">Pin on Map</span>
             </div>
           </div>
         </div>
@@ -458,7 +458,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
             onClick={SaveMoorings}
             label={'Save'}
             style={{
-              width: '6rem',
+              width: '5rem',
               height: '7vh',
               backgroundColor: '#0098FF',
               cursor: 'pointer',

@@ -126,7 +126,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       <div className="flex gap-6">
         <div>
           <div>
-            <span className="font-semibold text-sm text-black">Customer Name</span>
+            <span className="font-medium text-sm text-[#000000]">Customer Name</span>
             <div className="mt-2">
               <InputComponent
                 value={customerName}
@@ -146,7 +146,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           <div className="mt-4">
             <div>
               <div>
-                <span className="font-semibold text-sm text-black">Email Address</span>
+                <span className="font-medium text-sm text-[#000000]">Email Address</span>
               </div>
               <div className="mt-2">
                 <InputText
@@ -166,7 +166,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         </div>
         <div>
           <div>
-            <span className="font-semibold text-sm text-black">Customer ID</span>
+            <span className="font-medium text-sm text-[#000000]">Customer ID</span>
             <div className="mt-2">
               <InputComponent
                 value={customerId}
@@ -182,7 +182,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             </div>
           </div>
           <div className="mt-4">
-            <span className="font-semibold text-sm text-black">Phone</span>
+            <span className="font-medium text-sm text-[#000000]">Phone</span>
             <div className="mt-2">
               <InputComponent
                 value={phone}

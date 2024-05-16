@@ -58,7 +58,7 @@ const AccountRecievable = () => {
 
   const header = (
     <div className="flex flex-wrap align-items-center justify-between gap-2">
-      <span className="text-xl font-bold text-white ">Account Recievable</span>
+      <span className="text-xl font-bold ">Account Recievable</span>
     </div>
   )
 
@@ -188,6 +188,7 @@ const AccountRecievable = () => {
             fontSize: '12px',
             color: '#000000',
             fontWeight: 600,
+            backgroundColor:'#00426F'
           }}
           data={accountRecievableData}
           columns={tableColumns}

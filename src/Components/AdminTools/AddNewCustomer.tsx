@@ -184,7 +184,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
         <div className="flex gap-8 mt-3 ">
           <div>
-            <span className="text-xs text-black">Name</span>
+            <span className="font-medium text-sm text-[#000000]">Name</span>
             <div className="mt-1">
               <InputText
                 value={name}
@@ -203,7 +203,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           </div>
 
           <div>
-            <span className="text-xs text-black">ID</span>
+            <span className="font-medium text-sm text-[#000000]">ID</span>
             <div className="mt-1">
               <InputText
                 value={id}
@@ -222,7 +222,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           </div>
 
           <div>
-            <span className="text-xs text-black">Phone</span>
+            <span className="font-medium text-sm text-[#000000]">Phone</span>
             <div className="mt-1">
               <InputText
                 value={phone}
@@ -244,7 +244,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         <div className="flex gap-8 ">
           <div>
             <div className="mt-3">
-              <span className="text-xs text-black">Email Address</span>
+              <span className="font-medium text-sm text-[#000000]">Email Address</span>
             </div>
 
             <div className="mt-1">
@@ -266,7 +266,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
           <div>
             <div className="mt-3">
-              <span className="text-xs text-black">Role</span>
+              <span className="font-medium text-sm text-[#000000]">Role</span>
             </div>
 
             <div className="mt-1">
@@ -406,7 +406,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
         <div className="flex mt-5 gap-8">
           <div>
-            <span className="text-xs text-black">Create password</span>
+            <span className="font-medium text-sm text-[#000000]">Create password</span>
             <div className="mt-1">
               <InputComponent
                 value={password}
@@ -424,7 +424,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
             </div>
           </div>
           <div className="">
-            <span className="text-xs text-black">Confirm password</span>
+            <span className="font-medium text-sm text-[#000000]">Confirm password</span>
             <div className="mt-1 ">
               <InputComponent
                 value={confirmPassword}
@@ -451,8 +451,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
             label={'Save'}
             onClick={handleSave}
             style={{
-              width: '6rem',
-              height: '6vh',
+              width: '5rem',
+              height: '7vh',
             //  minHeight: '6vh',
               backgroundColor: '#0098FF',
               cursor: 'pointer',
