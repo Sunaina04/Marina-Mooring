@@ -52,6 +52,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
           color: 'white',
           borderRadius: '0.50rem',
           marginLeft: '8px',
+          boxShadow:'none'
         }}
       />
 

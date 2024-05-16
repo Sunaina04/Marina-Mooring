@@ -23,7 +23,7 @@ const Vendors = () => {
   const [deleteVendor] = useDeleteVendorMutation()
 
   const handleButtonClick = () => {
-    setModalVisible(true)
+    // setModalVisible(true)
   }
 
   const getVendorData = async () => {
@@ -129,29 +129,6 @@ const Vendors = () => {
             </div>
           </div>
 
-          {/* <CustomModal
-            header={<h1 className="text-lg font-bold text-black mt-4">Add Compony</h1>}
-            onClick={handleButtonClick}
-            visible={modalVisible || editMode}
-            onHide={handleModalClose}
-            style={{
-              width: '121px',
-              height: '44px',
-              minHeight: '44px',
-              backgroundColor: '#0098FF',
-              cursor: 'pointer',
-              fontSize: '16px',
-              fontWeight: 700,
-              color: 'white',
-              borderRadius: '0.50rem',
-            }}>
-            <AddVendor
-              vendors={selectedCustomer}
-              editMode={editMode}
-              closeModal={handleModalClose}
-              getVendor={getVendorData}
-            />
-          </CustomModal> */}
           <CustomModal
             buttonText={'ADD NEW'}
             children={

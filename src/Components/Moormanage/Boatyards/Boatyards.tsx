@@ -182,7 +182,7 @@ const Boatyards = () => {
   ]
 
   const handleButtonClick = () => {
-    setModalVisible(true)
+   // setModalVisible(true)
   }
 
   const handleModalClose = () => {

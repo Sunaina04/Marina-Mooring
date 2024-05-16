@@ -57,8 +57,8 @@ const AccountRecievable = () => {
   }
 
   const header = (
-    <div className="flex flex-wrap align-items-center justify-between gap-2 ">
-      <span className="text-xl font-bold">Account Recievable</span>
+    <div className="flex flex-wrap align-items-center justify-between gap-2">
+      <span className="text-xl font-bold text-white ">Account Recievable</span>
     </div>
   )
 

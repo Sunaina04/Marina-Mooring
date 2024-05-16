@@ -19,7 +19,7 @@
 
 * [data-pc-name='dropdown'] {
   box-shadow: none !important;
-  color: black;
+  color: black !important;
   padding-left: 0.5em;
 }
 

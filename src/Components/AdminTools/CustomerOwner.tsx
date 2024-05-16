@@ -197,7 +197,7 @@ const CustomerOwner = () => {
                 setIsVisible={() => {}}
               />
             }
-            headerText={<h1 className="text-xl font-extrabold text-black-600 ml-4">New User</h1>}
+            headerText={<h1 className="text-xl font-extrabold text-black-600 ">New User</h1>}
             visible={modalVisible}
             onClick={() => {
               setModalVisible(true)

@@ -213,7 +213,7 @@ const Customer = () => {
                 getCustomer={getCustomerData}
               />
             }
-            headerText={<h1 className="text-xl font-extrabold text-black ml-4">New User</h1>}
+            headerText={<h1 className="text-xxl font-bold text-black ">Add Customer</h1>}
             visible={modalVisible}
             onClick={handleButtonClick}
             onHide={handleModalClose}

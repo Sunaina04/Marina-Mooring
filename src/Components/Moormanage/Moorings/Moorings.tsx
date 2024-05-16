@@ -141,7 +141,7 @@ const Moorings = () => {
           <CustomModal
             buttonText={'ADD NEW'}
             children={<AddMoorings moorings={selectedCustomer} editMode={editMode} />}
-            headerText={<h1 className="text-xl font-extrabold text-black ml-4">New User</h1>}
+            headerText={<h1 className="text-xxl font-bold text-black ">Add Mooring</h1>}
             visible={modalVisible}
             onClick={handleButtonClick}
             onHide={handleModalClose}
@@ -155,6 +155,7 @@ const Moorings = () => {
               fontWeight: 700,
               color: 'white',
               borderRadius: '0.50rem',
+              boxShadow:'none',
               marginLeft: '8px',
             }}
             dialogStyle={{
@@ -255,7 +256,7 @@ const Moorings = () => {
             </div>
 
             {isChecked && (
-              <div className="">
+              <div>
                 <div className="bg-[#F2F2F2] px-2">
                   <div className="flex gap-32 ">
                     <div className="font-bold text-sm ml-2 tracking-tighter">
@@ -280,7 +281,7 @@ const Moorings = () => {
                   </div>
                 </div>
 
-                <div className="">
+                <div>
                   <h3 className="bg-[#D9D9D9] font-bold h12 py-4 pl-2 ">Moorings</h3>
                   <DataTable
                     className="bg[#F2F2F2]"

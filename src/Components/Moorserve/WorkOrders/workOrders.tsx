@@ -116,7 +116,7 @@ const WorkOrders = () => {
           <div>
             <Button
               label={'Create New'}
-              onClick={() => setVisible(true)}
+              onClick={() => setVisible(false)}
               style={{
                 width: '121px',
                 height: '44px',
@@ -128,6 +128,7 @@ const WorkOrders = () => {
                 color: 'white',
                 borderRadius: '0.50rem',
                 marginLeft: '8px',
+                boxShadow:'none'
               }}></Button>
 
             <Dialog

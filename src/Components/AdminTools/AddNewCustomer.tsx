@@ -190,11 +190,11 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 value={name}
                 onChange={(e) => handleInputChange('name', e.target.value)}
                 style={{
-                  width: '230px',
+                  width: '232px',
                   height: '32px',
                   border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
-                  fontSize: '0.80vw',
+                  fontSize: '0.8rem',
                   padding: '1.2em',
                 }}
               />
@@ -213,7 +213,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   height: '32px',
                   border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
-                  fontSize: '0.80vw',
+                  fontSize: '0.8rem',
                   padding: '1.2em',
                 }}
               />
@@ -232,7 +232,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   height: '32px',
                   border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
-                  fontSize: '0.80vw',
+                  fontSize: '0.8rem',
                   padding: '1.2em',
                 }}
               />
@@ -256,7 +256,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   height: '32px',
                   border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
-                  fontSize: '0.80vw',
+                  fontSize: '0.8rem',
                   padding: '1.2em',
                 }}
               />
@@ -285,7 +285,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   height: '32px',
                   minHeight: '32px',
                   border: '1px solid #D5E1EA',
-                  fontSize: '0.80vw',
+                  fontSize: '0.8rem',
                   borderRadius: '0.50rem',
                 }}
               />
@@ -311,7 +311,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                     height: '32px',
                     border: '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
-                    fontSize: '0.80vw',
+                    fontSize: '0.8rem',
                     padding: '0.80em',
                   }}
                 />
@@ -331,7 +331,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                     height: '32px',
                     border: '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
-                    fontSize: '0.80vw',
+                    fontSize: '0.8rem',
                     padding: '0.83em',
                   }}
                 />
@@ -355,7 +355,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   height: '32px',
                   minHeight: '32px',
                   border: '1px solid #D5E1EA',
-                  fontSize: '0.80vw',
+                  fontSize: '0.8rem',
                   borderRadius: '0.50rem',
                 }}
               />
@@ -364,7 +364,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           </div>
 
           <div className="flex mt-5 gap-8 ">
-            <div className="card flex justify-content-center">
+            <div className="">
               <Dropdown
                 value={country}
                 onChange={(e) => {
@@ -381,7 +381,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   height: '32px',
                   border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
-                  fontSize: '0.80vw',
+                  fontSize: '0.8rem',
                 }}
               />
             </div>
@@ -396,7 +396,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 height: '32px',
                 border: '1px solid #D5E1EA',
                 borderRadius: '0.50rem',
-                fontSize: '0.80vw',
+                fontSize: '0.8rem',
                 padding: '0.83em',
               }}
             />
@@ -416,7 +416,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   height: '32px',
                   border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
-                  fontSize: '0.80vw',
+                  fontSize: '0.8rem',
                   padding: '1.2em',
                 }}
               />
@@ -434,7 +434,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   height: '32px',
                   border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
-                  fontSize: '0.80vw',
+                  fontSize: '0.8rem',
                   padding: '1.2em',
                 }}
               />
@@ -446,17 +446,17 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         </div>
 
         {/* Save and Back buttons */}
-        <div className="flex gap-8 mt-10 ">
+        <div className="flex gap-6 mt-10 ">
           <Button
             label={'Save'}
             onClick={handleSave}
             style={{
-              width: '6vw',
+              width: '6rem',
               height: '6vh',
-              minHeight: '6vh',
+            //  minHeight: '6vh',
               backgroundColor: '#0098FF',
               cursor: 'pointer',
-              fontSize: '1vw',
+              fontSize: '0.9rem',
               color: 'white',
               borderRadius: '0.50rem',
             }}
@@ -466,7 +466,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
             onClick={handleBack}
             text={true}
             style={{
-              width: '6vw',
+              width: '5rem',
               height: '6vh',
               minHeight: '6vh',
               backgroundColor: 'white',
