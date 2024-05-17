@@ -453,7 +453,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
             style={{
               width: '5rem',
               height: '7vh',
-              //  minHeight: '6vh',
+              minHeight: '7vh',
               backgroundColor: '#0098FF',
               cursor: 'pointer',
               fontSize: '0.9rem',
@@ -467,7 +467,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
             text={true}
             style={{
               width: '5rem',
-              height: '6vh',
+              height: '7vh',
               minHeight: '6vh',
               backgroundColor: 'white',
               color: 'black',

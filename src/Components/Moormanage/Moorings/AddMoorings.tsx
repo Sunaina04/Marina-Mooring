@@ -90,9 +90,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid gray',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
-                  fontSize: '0.80vw',
+                  fontSize: '0.8rem',
                 }}
               />
             </div>
@@ -107,9 +107,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid gray',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
-                  fontSize: '0.80vw',
+                  fontSize: '0.8rem',
                 }}
               />
             </div>
@@ -124,9 +124,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid gray',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
-                  fontSize: '0.80vw',
+                  fontSize: '0.8rem',
                 }}
               />
             </div>
@@ -143,16 +143,16 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid gray',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
-                  fontSize: '0.80vw',
+                  fontSize: '0.8rem',
                 }}
               />
             </div>
           </div>
 
           <div>
-            <span className="font-medium text-sm text-[#000000]">G.P.S Cordinates</span>
+            <span className="font-medium text-sm text-[#000000]">G.P.S Coordinates</span>
             <div className="mt-2">
               <InputComponent
                 value={formData.gpsCoordinates}
@@ -160,9 +160,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid gray',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
-                  fontSize: '0.80vw',
+                  fontSize: '0.8rem',
                 }}
               />
             </div>
@@ -177,9 +177,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid gray',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
-                  fontSize: '0.80vw',
+                  fontSize: '0.8rem',
                 }}
               />
             </div>
@@ -198,9 +198,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid gray',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
-                  fontSize: '0.80vw',
+                  fontSize: '0.8rem',
                 }}
               />
             </div>
@@ -215,9 +215,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid gray',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
-                  fontSize: '0.80vw',
+                  fontSize: '0.8rem',
                 }}
               />
             </div>
@@ -239,8 +239,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid gray',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
+                  fontSize: '0.8rem',
                 }}
               />
             </div>
@@ -257,9 +258,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid gray',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
-                  fontSize: '0.80vw',
+                  fontSize: '0.8rem',
                 }}
               />
             </div>
@@ -281,8 +282,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid gray',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
+                  fontSize: '0.8rem',
                 }}
               />
             </div>
@@ -304,8 +306,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid gray',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
+                  fontSize: '0.8rem',
                 }}
               />
             </div>
@@ -330,8 +333,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: '1px solid gray',
+                    border: '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
                   }}
                 />
               </div>
@@ -352,8 +356,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: '1px solid gray',
+                    border: '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
                   }}
                 />
               </div>
@@ -374,8 +379,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: '1px solid gray',
+                    border: '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
                   }}
                 />
               </div>
@@ -398,8 +404,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: '1px solid gray',
+                    border: '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
                   }}
                 />
               </div>
@@ -420,8 +427,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: '1px solid gray',
+                    border: '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
                   }}
                 />
               </div>
@@ -438,9 +446,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: '1px solid gray',
+                    border: '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
-                    fontSize: '0.80vw',
+                    fontSize: '0.8rem',
                   }}
                 />
               </div>

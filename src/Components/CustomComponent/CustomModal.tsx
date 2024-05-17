@@ -52,7 +52,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
           color: 'white',
           borderRadius: '0.50rem',
           marginLeft: '8px',
-          boxShadow:'none'
+          boxShadow: 'none',
         }}
       />
 
@@ -60,7 +60,9 @@ const CustomModal: React.FC<CustomModalProps> = ({
         header={headerText}
         {...dialogProps}
         visible={visible}
+        modal={false}
         onHide={onHide}
+        draggable={false}
         style={dialogStyle}>
         {children}
       </Dialog>

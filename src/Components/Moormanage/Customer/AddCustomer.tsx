@@ -136,9 +136,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid gray',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
-                  fontSize: '0.80vw',
+                  fontSize: '0.8rem',
                 }}
               />
             </div>
@@ -155,9 +155,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: '1px solid gray',
+                    border: '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
-                    fontSize: '0.80vw',
+                    fontSize: '0.8rem',
                   }}
                 />
               </div>
@@ -174,9 +174,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid gray',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
-                  fontSize: '0.80vw',
+                  fontSize: '0.8rem',
                 }}
               />
             </div>
@@ -190,9 +190,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid gray',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
-                  fontSize: '0.80vw',
+                  fontSize: '0.8rem',
                 }}
               />
             </div>
@@ -201,7 +201,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       </div>
       <div className="mt-5">
         <div>
-          <h1 className="text-sm font-bold text-black">Address</h1>
+          <h1 className="font-medium text-sm text-[#000000]">Address</h1>
         </div>
         <div className="flex gap-6 mt-5 ">
           <div>
@@ -215,9 +215,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid gray',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   color: 'black',
+                  fontSize: '0.8rem',
                 }}
               />
             </div>
@@ -234,9 +235,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid gray',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   color: 'black',
+                  fontSize: '0.8rem',
                 }}
               />
             </div>
@@ -252,9 +254,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               style={{
                 width: '230px',
                 height: '32px',
-                border: '1px solid gray',
+                border: '1px solid #D5E1EA',
                 borderRadius: '0.50rem',
                 color: 'black',
+                fontSize: '0.8rem',
               }}
             />
           </div>
@@ -272,8 +275,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               style={{
                 width: '230px',
                 height: '32px',
-                border: '1px solid gray',
+                border: '1px solid #D5E1EA',
                 borderRadius: '0.50rem',
+                fontSize: '0.8rem',
               }}
             />
           </div>
@@ -285,8 +289,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               style={{
                 width: '230px',
                 height: '32px',
-                border: '1px solid gray',
+                border: '1px solid #D5E1EA',
                 borderRadius: '0.50rem',
+                fontSize: '0.8rem',
               }}
               // className="shadow-none"
             />
