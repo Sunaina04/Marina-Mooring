@@ -9,11 +9,13 @@ import { Dialog } from 'primereact/dialog'
 import {
   useDeleteCustomerMutation,
   useGetCustomerMutation,
+  useGetCustomersWithMooringMutation,
   useGetMooringsMutation,
 } from '../../../Services/MoorManage/MoormanageApi'
 import {
   CustomerPayload,
   CustomerResponse,
+  CustomersWithMooringResponse,
   MooringPayload,
   MooringResponse,
 } from '../../../Type/ApiTypes'
@@ -37,7 +39,7 @@ const Customer = () => {
   const [getCustomer] = useGetCustomerMutation()
   const [deleteCustomer] = useDeleteCustomerMutation()
 
-  const [getMoorings] = useGetMooringsMutation()
+  const [getCustomerWithMooring] = useGetCustomersWithMooringMutation()
 
   const handleButtonClick = () => {
     setModalVisible(true)
@@ -163,12 +165,12 @@ const Customer = () => {
     [],
   )
 
-  const getMooringsData = async () => {
+  const getCustomersWithMooring = async () => {
     try {
-      const response = await getMoorings({}).unwrap()
-      const { status, content } = response as MooringResponse
-      if (status === 200 && Array.isArray(content)) {
-        setMooringData(content)
+      const response = await getCustomerWithMooring(1).unwrap()
+      const { status, content } = response as CustomersWithMooringResponse
+      if (status === 200 && Array.isArray(content.customerResponseDto)) {
+        setMooringData(content.customerResponseDto)
       }
     } catch (error) {
       console.error('Error fetching moorings data:', error)
@@ -177,7 +179,7 @@ const Customer = () => {
 
   useEffect(() => {
     getCustomerData()
-    getMooringsData()
+    getCustomersWithMooring()
   }, [])
 
   return (

@@ -1,46 +1,50 @@
-import { BoatYardPayload, CustomerPayload, MooringPayload, TechnicianPayload, VendorPayload } from "../../Type/ApiTypes";
-import { userApi } from "../UserApi";
+import {
+  BoatYardPayload,
+  CustomerPayload,
+  MooringPayload,
+  TechnicianPayload,
+  VendorPayload,
+} from '../../Type/ApiTypes'
+import { userApi } from '../UserApi'
 
 const moormanageApi = userApi.injectEndpoints({
   endpoints: (builder: any) => ({
-
     //Customer API
     addCustomer: builder.mutation({
       query: (payload: CustomerPayload) => ({
-        url: "api/v1/customer/",
-        method: "POST",
+        url: 'api/v1/customer/',
+        method: 'POST',
         body: payload,
       }),
     }),
 
     getCustomer: builder.mutation({
       query: ({}) => ({
-        url: "api/v1/customer/",
-        method: "GET",
+        url: 'api/v1/customer/',
+        method: 'GET',
       }),
     }),
 
     deleteCustomer: builder.mutation({
       query: ({ id }: { id?: number }) => ({
         url: `api/v1/customer/${id}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
     }),
 
     updateCustomer: builder.mutation({
       query: (payload: CustomerPayload) => ({
-        url: "api/v1/customer/",
-        method: "PUT",
+        url: 'api/v1/customer/',
+        method: 'PUT',
         body: payload,
       }),
     }),
 
-
     //Mooring API
     addMoorings: builder.mutation({
       query: (payload: MooringPayload) => ({
-        url: "api/v1/mooring/",
-        method: "POST",
+        url: 'api/v1/mooring/',
+        method: 'POST',
         body: payload,
       }),
     }),
@@ -52,13 +56,13 @@ const moormanageApi = userApi.injectEndpoints({
         sortBy,
         sortDir,
       }: {
-        page?: number;
-        size?: number;
-        sortBy?: string;
-        sortDir?: string;
+        page?: number
+        size?: number
+        sortBy?: string
+        sortDir?: string
       }) => ({
-        url: "api/v1/mooring/",
-        method: "GET",
+        url: 'api/v1/mooring/',
+        method: 'GET',
         params: { page, size, sortBy, sortDir },
       }),
     }),
@@ -66,14 +70,14 @@ const moormanageApi = userApi.injectEndpoints({
     deleteMoorings: builder.mutation({
       query: ({ id }: { id?: number }) => ({
         url: `api/v1/mooring/${id}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
     }),
 
     updateMoorings: builder.mutation({
       query: ({ payload, id }: { payload: CustomerPayload; id: number }) => ({
         url: `api/v1/mooring/${id}`,
-        method: "PUT",
+        method: 'PUT',
         body: payload,
       }),
     }),
@@ -81,8 +85,8 @@ const moormanageApi = userApi.injectEndpoints({
     // Vendor API
     addVendors: builder.mutation({
       query: (payload: VendorPayload) => ({
-        url: "api/v1/vendor/",
-        method: "POST",
+        url: 'api/v1/vendor/',
+        method: 'POST',
         body: payload,
       }),
     }),
@@ -94,13 +98,13 @@ const moormanageApi = userApi.injectEndpoints({
         sortBy,
         sortDir,
       }: {
-        page?: number;
-        size?: number;
-        sortBy?: string;
-        sortDir?: string;
+        page?: number
+        size?: number
+        sortBy?: string
+        sortDir?: string
       }) => ({
-        url: "api/v1/vendor/",
-        method: "GET",
+        url: 'api/v1/vendor/',
+        method: 'GET',
         params: { page, size, sortBy, sortDir },
       }),
     }),
@@ -108,24 +112,23 @@ const moormanageApi = userApi.injectEndpoints({
     deleteVendor: builder.mutation({
       query: ({ id }: { id?: number }) => ({
         url: `api/v1/vendor/${id}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
     }),
 
     updateVendor: builder.mutation({
       query: ({ payload, id }: { payload: VendorPayload; id: number }) => ({
         url: `api/v1/vendor/${id}`,
-        method: "PUT",
+        method: 'PUT',
         body: payload,
       }),
     }),
 
-
     // Boatyards API
     addBoatyards: builder.mutation({
       query: (payload: BoatYardPayload) => ({
-        url: "api/v1/boatyard/",
-        method: "POST",
+        url: 'api/v1/boatyard/',
+        method: 'POST',
         body: payload,
       }),
     }),
@@ -137,13 +140,13 @@ const moormanageApi = userApi.injectEndpoints({
         sortBy,
         sortDir,
       }: {
-        pageNumber?: number;
-        pageSize?: number;
-        sortBy?: string;
-        sortDir?: string;
+        pageNumber?: number
+        pageSize?: number
+        sortBy?: string
+        sortDir?: string
       }) => ({
-        url: "api/v1/boatyard/",
-        method: "GET",
+        url: 'api/v1/boatyard/',
+        method: 'GET',
         params: { pageNumber, pageSize, sortBy, sortDir },
       }),
     }),
@@ -151,14 +154,14 @@ const moormanageApi = userApi.injectEndpoints({
     deleteBoatyards: builder.mutation({
       query: ({ id }: { id?: number }) => ({
         url: `api/v1/boatyard/${id}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
     }),
 
     updateBoatyards: builder.mutation({
       query: ({ payload, id }: { payload: BoatYardPayload; id: number }) => ({
         url: `api/v1/boatyard/${id}`,
-        method: "PUT",
+        method: 'PUT',
         body: payload,
       }),
     }),
@@ -166,8 +169,8 @@ const moormanageApi = userApi.injectEndpoints({
     // Technician API
     addTechnician: builder.mutation({
       query: (payload: TechnicianPayload) => ({
-        url: "api/v1/technician/",
-        method: "POST",
+        url: 'api/v1/technician/',
+        method: 'POST',
         body: payload,
       }),
     }),
@@ -179,13 +182,13 @@ const moormanageApi = userApi.injectEndpoints({
         sortBy,
         sortDir,
       }: {
-        pageNumber?: number;
-        pageSize?: number;
-        sortBy?: string;
-        sortDir?: string;
+        pageNumber?: number
+        pageSize?: number
+        sortBy?: string
+        sortDir?: string
       }) => ({
-        url: "api/v1/technician/",
-        method: "GET",
+        url: 'api/v1/technician/',
+        method: 'GET',
         params: { pageNumber, pageSize, sortBy, sortDir },
       }),
     }),
@@ -193,27 +196,34 @@ const moormanageApi = userApi.injectEndpoints({
     getTechnicianById: builder.mutation({
       query: ({ id }: { id?: number }) => ({
         url: `api/v1/technician/${id}`,
-        method: "GET",
+        method: 'GET',
       }),
     }),
 
     deleteTechnician: builder.mutation({
       query: ({ id }: { id?: number }) => ({
         url: `api/v1/technician/${id}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
     }),
 
     updateTechnician: builder.mutation({
       query: ({ payload, id }: { payload: TechnicianPayload; id: number }) => ({
         url: `api/v1/technician/${id}`,
-        method: "PUT",
+        method: 'PUT',
         body: payload,
       }),
     }),
 
+    //FetchCustomersWithMooring
+    getCustomersWithMooring: builder.mutation({
+      query: ({ name }: { name?: string }) => ({
+        url: `api/v1/customer/fetchCustomerWithMoorings/${name}`,
+        method: 'GET',
+      }),
+    }),
   }),
-});
+})
 
 export const {
   useGetCustomerMutation,
@@ -237,4 +247,5 @@ export const {
   useDeleteTechnicianMutation,
   useUpdateTechnicianMutation,
   useGetTechnicianByIdMutation,
-} = moormanageApi;
+  useGetCustomersWithMooringMutation,
+} = moormanageApi

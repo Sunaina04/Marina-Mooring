@@ -187,6 +187,31 @@ export interface CustomerResponse {
   }
 }
 
+export interface customerResponseDto {
+  customerResponseDto: {
+    id: number
+    customerName: string
+    customerId: string
+    phone: string
+    emailAddress: string
+    streetHouse: string
+    aptSuite: string
+    state: string
+    country: string
+    zipCode: string
+    mooringResponseDtoList: []
+  }
+  boatyardNames: []
+}
+
+export interface CustomersWithMooringResponse {
+  message: string
+  status: number
+  errorList: []
+  time: number
+  content: customerResponseDto
+}
+
 export interface MooringPayload {
   id: number
   mooringNumber: string
