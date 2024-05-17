@@ -171,7 +171,7 @@ const AccountRecievable = () => {
               color: '#FFFFFF',
               padding: '8px',
             }}>
-            Account Receiveable
+            Account Receivable
           </span>
         </div>
         <DataTableComponent
