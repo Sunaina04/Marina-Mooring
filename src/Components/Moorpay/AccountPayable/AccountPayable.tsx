@@ -23,8 +23,8 @@ const AccountPayable = () => {
   const [accountPayableData, setAccountPayableData] = useState<MoorPayProps[]>([
     {
       invoice: '#425',
-      mooringid: '#6658',
-      name: 'John Smith',
+      mooringId: '#6658',
+      customerName: 'John Smith',
       technicianName: 'jim Carry',
       services: 'Regular Services',
       time: '2hrs',
@@ -33,8 +33,8 @@ const AccountPayable = () => {
 
     {
       invoice: '#425',
-      mooringid: '#6658',
-      name: 'John Smith',
+      mooringId: '#6658',
+      customerName: 'John Smith',
       technicianName: 'jim Carry',
       services: 'Regular Services',
       time: '2hrs',
@@ -42,8 +42,8 @@ const AccountPayable = () => {
     },
     {
       invoice: '#425',
-      mooringid: '#6658',
-      name: 'John Smith',
+      mooringId: '#6658',
+      customerName: 'John Smith',
       technicianName: 'jim Carry',
       services: 'Regular Services',
       time: '2hrs',
@@ -51,8 +51,8 @@ const AccountPayable = () => {
     },
     {
       invoice: '#425',
-      mooringid: '#6658',
-      name: 'John Smith',
+      mooringId: '#6658',
+      customerName: 'John Smith',
       technicianName: 'jim Carry',
       services: 'Regular Services',
       time: '2hrs',

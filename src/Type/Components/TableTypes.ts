@@ -36,6 +36,7 @@ export interface DataTableProps {
 export interface ButtonProps {
   underline?: boolean
   color?: keyof typeof textColors
+  padding?:string
   filled?: boolean
   disabled?: boolean
   hidden?: boolean

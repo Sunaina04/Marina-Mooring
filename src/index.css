@@ -33,22 +33,23 @@
 
 .headerClass {
   background-color: black;
+
+
 }
 
 /* searchDataTable */
 
 .p-datatable .p-datatable-tbody > tr {
   background: #ffffff;
+  
 
 }
 
 .p-datatable-thead > th {
   background: #f2f2f2;
+ 
 }
-.p-datatable-header {
-  background: #ffffff;
-  border-radius: 9px;
-}
+
 .p-datatable-emptymessage {
   background: #ffffff;
 }

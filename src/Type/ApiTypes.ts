@@ -1,3 +1,31 @@
+export interface UserLoginPayload {
+  name: string
+  email: string
+  phoneNumber: string
+  password: string
+  userID: string
+  customerAdminId: string
+  role: string
+  state: string
+  country: string
+}
+export interface UserResponse {
+  content: GetUserResponse
+  empty: boolean
+  first: boolean
+  last: boolean
+  number: boolean
+  numberOfElements: number
+}
+ 
+export interface GetUserResponse {
+  message: string
+  status: number
+  errorList: [string]
+  time: string
+  content: UserResponse
+}
+
 export interface AddUserPayload {
   name: string
   email: string
@@ -12,7 +40,6 @@ export interface AddUserPayload {
   zipCode: string
   confirmPassword: string
 }
-
 export interface SaveUserResponse {
   message: string
   status: number
@@ -20,39 +47,6 @@ export interface SaveUserResponse {
   time: string
   content: {}
 }
-
-export interface GetUserResponseContent {
-  name: string
-  email: string
-  phoneNumber: string
-  password: string
-  userID: string
-  role: string
-  state: string
-  country: string
-  street: string
-  apt: string
-  zipCode: string
-  customerAdminId: string
-}
-
-export interface UserResponse {
-  content: GetUserResponseContent
-  empty: boolean
-  first: boolean
-  last: boolean
-  number: boolean
-  numberOfElements: number
-}
-
-export interface GetUserResponse {
-  message: string
-  status: number
-  errorList: [string]
-  time: string
-  content: UserResponse
-}
-
 export interface LoginPayload {
   username: string
   password: string
@@ -69,14 +63,6 @@ export interface SignUpPayload {
 export interface ResetPasswordPayload {
   newPassword: string
   confirmPassword: string
-}
-
-export interface ResetPasswordResponse {
-  status: number
-  message: string
-  errorList: string[]
-  time: string
-  content: Record<string, any>
 }
 
 export interface ForgotPasswordPayload {
@@ -116,6 +102,14 @@ export type SignUpResponse = {
     message: string
     data: UserData
   }
+}
+
+export interface ResetPasswordResponse {
+  status: number
+  message: string
+  errorList: string[]
+  time: string
+  content: Record<string, any>
 }
 
 export interface ForgotPasswordResponse {

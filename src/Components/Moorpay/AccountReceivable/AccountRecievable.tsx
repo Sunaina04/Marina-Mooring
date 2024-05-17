@@ -5,48 +5,11 @@ import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTable
 import AddCustomer from '../../Moormanage/Customer/AddCustomer'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import Header from '../../Layout/LayoutComponents/Header'
+import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 
 const AccountRecievable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [accountRecievableData, setAccountRecievableData] = useState<MoorPayProps[]>([
-    {
-      invoice: '#425',
-      mooringid: '#6658',
-      name: 'John Smith',
-      technicianName: 'jim Carry',
-      services: 'Regular Services',
-      time: '2hrs',
-      amount: '$12',
-    },
-
-    {
-      invoice: '#425',
-      mooringid: '#6658',
-      name: 'John Smith',
-      technicianName: 'jim Carry',
-      services: 'Regular Services',
-      time: '2hrs',
-      amount: '$12',
-    },
-    {
-      invoice: '#425',
-      mooringid: '#6658',
-      name: 'John Smith',
-      technicianName: 'jim Carry',
-      services: 'Regular Services',
-      time: '2hrs',
-      amount: '$12',
-    },
-    {
-      invoice: '#425',
-      mooringid: '#6658',
-      name: 'John Smith',
-      technicianName: 'jim Carry',
-      services: 'Regular Services',
-      time: '2hrs',
-      amount: '$12',
-    },
-  ])
+  const [accountRecievableData, setAccountRecievableData] = useState<MoorPayProps[]>([])
 
   const handleButtonClick = () => {
     // setIsModalOpen(true)
@@ -57,47 +20,54 @@ const AccountRecievable = () => {
   }
 
   const header = (
-    <div className="flex flex-wrap align-items-center justify-between gap-2">
-      <span className="text-xl font-bold ">Account Recievable</span>
+    <div className="flex flex-wrap align-items-center ">
+      <h1 className="text-xl font-bold text-white">Account Receivable</h1>
     </div>
   )
 
-  const tableColumns = useMemo(
+  const columnStyle = {
+    borderBottom: '1px solid #C0C0C0',
+    backgroundColor: '#FFFFFF',
+    color: '#000000',
+    fontWeight: 'bold',
+  }
+
+  const accountRecievableTableColumn = useMemo(
     () => [
       {
         id: 'invoice',
         label: 'Invoice',
-        style: { width: '6vw', backgroundColor: '#F2F2F2' },
+        style: columnStyle,
       },
       {
         id: 'mooringId',
         label: 'Mooring ID',
-        style: { width: '12vw', backgroundColor: '#F2F2F2' },
+        style: columnStyle,
       },
       {
         id: 'customerName',
         label: 'Customer Name',
-        style: { width: '10vw', backgroundColor: '#F2F2F2' },
+        style: columnStyle,
       },
       {
         id: 'technicianName',
         label: 'Technician Name',
-        style: { width: '12vw', backgroundColor: '#F2F2F2' },
+        style: columnStyle,
       },
       {
         id: 'services',
         label: 'Services',
-        style: { width: '10vw', backgroundColor: '#F2F2F2' },
+        style: columnStyle,
       },
       {
         id: 'time',
         label: 'Time',
-        style: { width: '10vw', backgroundColor: '#F2F2F2' },
+        style: columnStyle,
       },
       {
         id: 'amount',
         label: 'Amount',
-        style: { width: '10vw', backgroundColor: '#F2F2F2' },
+        style: columnStyle,
       },
     ],
     [],
@@ -109,17 +79,21 @@ const AccountRecievable = () => {
       {
         color: 'green',
         label: 'Approve',
-        underline: true,
         filled: true,
       },
       {
         color: 'red',
-        label: 'deny',
-        underline: true,
+        label: 'Deny',
         filled: true,
       },
     ],
-    headerStyle: { backgroundColor: '#F2F2F2' },
+    headerStyle: {
+      backgroundColor: '#FFFFFF',
+      height: '3.50rem',
+      fontWeight: 'bold',
+      color: 'black',
+    },
+    style: { borderBottom: '1px solid #D5E1EA' },
   }
 
   return (
@@ -128,22 +102,17 @@ const AccountRecievable = () => {
 
       <div className="flex justify-end mr-16">
         <div className="flex gap-4 ml-[18rem] text-[gray] font-extrabold mt-14">
-          <div>
-            <img
-              src="/assets/images/download.png"
-              alt=""
-              className="w-5 "
-              style={{ filter: 'grayscale(100%)', color: 'gray' }}
-            />
+          <div style={{ marginTop: '0.8rem' }}>
+            <img src="/assets/images/downloadIcon.png" alt="" className="w-5 " />
           </div>
 
-          <div>
-            <h1>DownLoad Excel</h1>
+          <div style={{ marginTop: '0.6rem', color: '#00426F' }}>
+            <h1>Download Excel</h1>
           </div>
 
           <div></div>
         </div>
-        <div className="mt-14">
+        <div className="mt-14 ">
           <CustomModal
             buttonText={'ADD NEW'}
             children={
@@ -182,19 +151,39 @@ const AccountRecievable = () => {
         </div>
       </div>
 
-      <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[67vw]  ml-32 mb-80">
-        <DataTableSearchFieldComponent
+      <div
+        style={{
+          height: '640px',
+          gap: '0px',
+          borderRadius: '10px',
+          border: '1px solid #D5E1EA',
+          opacity: '0px',
+          backgroundColor: '#FFFFFF',
+        }}
+        className="bg-[F2F2F2]  ml-12  mt-6 mr-14">
+        <div className="flex flex-wrap align-items-center justify-between  bg-[#00426F] p-2   rounded-tl-[5px] rounded-tr-[5px]">
+          <span
+            style={{
+              fontSize: '18px',
+              fontWeight: '700',
+              lineHeight: '21.09px',
+              letterSpacing: '0.4837472140789032px',
+              color: '#FFFFFF',
+              padding: '8px',
+            }}>
+            Account Receiveable
+          </span>
+        </div>
+        <DataTableComponent
           tableStyle={{
             fontSize: '12px',
             color: '#000000',
             fontWeight: 600,
-            backgroundColor:'#00426F'
           }}
-          data={accountRecievableData}
-          columns={tableColumns}
-          header={header}
+          data={undefined}
+          columns={accountRecievableTableColumn}
           actionButtons={ActionButtonColumn}
-          style={{ backgroundColor: '#F2F2F2' }}
+          style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '200' }}
         />
       </div>
     </>

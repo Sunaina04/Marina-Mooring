@@ -50,9 +50,10 @@ const CustomModal: React.FC<CustomModalProps> = ({
           fontSize: '16px',
           fontWeight: 700,
           color: 'white',
-          borderRadius: '0.50rem',
+          borderRadius: '10px',
           marginLeft: '8px',
-          boxShadow: 'none',
+          boxShadow:'none',
+          
         }}
       />
 

@@ -65,8 +65,8 @@ export interface AddVendorProps {
 
 export interface MoorPayProps {
   invoice: string
-  mooringid: string
-  name: string
+  mooringId: string
+  customerName: string
   technicianName: string
   services: string
   time: string
