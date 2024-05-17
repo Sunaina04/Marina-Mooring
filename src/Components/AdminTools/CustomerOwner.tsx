@@ -55,7 +55,8 @@ const CustomerOwner = () => {
       color: '#000000',
       fontWeight: 400,
     },
-    onRowClick: (rowData) => handleEditButtonClick(rowData),
+    style: { borderBottom: '1px solid #D5E1EA' },
+    // onRowClick: (rowData) => handleEditButtonClick(rowData),
   }
 
   const columnStyle = {
@@ -93,22 +94,22 @@ const CustomerOwner = () => {
       { id: 'email', label: 'Email', style: columnStyle },
       { id: 'phoneNumber', label: 'Phone', style: columnStyle },
       { id: 'role', label: 'Role', style: columnStyle },
-      {
-        id: 'action',
-        label: 'Action',
-        style: columnStyle,
-        render: (rowData: {
-          id: string
-          name: string
-          email: string
-          phoneNumber: string
-          role: string
-        }) => (
-          <Button color="primary" size="small" onClick={() => handleEditButtonClick(rowData)}>
-            Edit
-          </Button>
-        ),
-      },
+      // {
+      //   id: 'action',
+      //   label: 'Action',
+      //   style: columnStyle,
+      //   render: (rowData: {
+      //     id: string
+      //     name: string
+      //     email: string
+      //     phoneNumber: string
+      //     role: string
+      //   }) => (
+      //     <Button color="primary" size="small" onClick={() => handleEditButtonClick(rowData)}>
+      //       Edit
+      //     </Button>
+      //   ),
+      // },
     ],
     [],
   )

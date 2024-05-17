@@ -33,7 +33,6 @@ export const CustomersHeader = () => {
           }}
         />
       </div>
-
       <span className="border-[1px] border-[#D5E1EA] w-[28vw] mt-3 "></span>
     </div>
   )

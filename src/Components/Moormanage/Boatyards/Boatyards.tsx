@@ -182,7 +182,7 @@ const Boatyards = () => {
   ]
 
   const handleButtonClick = () => {
-   // setModalVisible(true)
+    // setModalVisible(true)
   }
 
   const handleModalClose = () => {
@@ -236,8 +236,8 @@ const Boatyards = () => {
       {
         id: 'boatName',
         label: 'Boat Name',
-        body: (rowData: { mooringResponseDtoList: any }) =>
-          rowData.mooringResponseDtoList[0].boatName,
+        // body: (rowData: { mooringResponseDtoList: any }) =>
+        //   rowData.mooringResponseDtoList[0].boatName,
         style: {
           width: '12vw',
           backgroundColor: '#F2F2F2',

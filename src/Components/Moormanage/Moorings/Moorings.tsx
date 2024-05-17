@@ -1,4 +1,3 @@
-
 import CustomModal from '../../CustomComponent/CustomModal'
 import AddMoorings from './AddMoorings'
 import React, { useState, useEffect, useMemo } from 'react'
@@ -189,7 +188,7 @@ const Moorings = () => {
               fontWeight: 700,
               color: 'white',
               borderRadius: '0.50rem',
-              boxShadow:'none',
+              boxShadow: 'none',
               marginLeft: '8px',
             }}
             dialogStyle={{
@@ -204,17 +203,11 @@ const Moorings = () => {
         </div>
       </div>
 
-      <div
-        // style={{border:"1px solid red"}}
-        className="flex ml-12 gap-4 mt-10">
-        <div
-          //  style={{border:"1px solid blue"}}
-
-          className="">
+      <div className="flex ml-12 gap-4 mt-10">
+        <div>
           <div
             style={{
               width: '450px',
-              height: '600px',
               top: '277px',
               left: '107px',
               gap: '0px',
@@ -223,7 +216,7 @@ const Moorings = () => {
               opacity: '0px',
               backgroundColor: 'white',
             }}
-            className="bg-[F2F2F2] overflow-x-hidden overflow-y-scroll ">
+            className="bg-[F2F2F2]">
             <InputTextWithHeader
               headerStyle={{
                 height: '55px',
@@ -265,7 +258,7 @@ const Moorings = () => {
 
             <div className="mt-2 ">
               <DataTableComponent
-                data={undefined}
+                data={filteredMooringData}
                 tableStyle={{
                   fontSize: '12px',
                   color: '#000000',

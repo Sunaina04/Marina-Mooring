@@ -1,5 +1,5 @@
 const textColors = {
-  green: 'text-green-500',
+  green: 'text-green-600',
   red: 'text-red-500',
   black: 'text-[black]',
 }

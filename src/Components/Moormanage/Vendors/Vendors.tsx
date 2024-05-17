@@ -191,7 +191,6 @@ const Vendors = () => {
           border: '1px solid #D5E1EA',
           opacity: '0px',
           backgroundColor: '#FFFFFF',
-        
         }}
         className=" ml-[3rem] mr-[2.30rem] mt-8">
         <DataTableSearchFieldComponent

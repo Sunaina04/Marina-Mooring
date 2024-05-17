@@ -51,8 +51,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     if (!street) errors.apt = 'Apt is required'
     if (!zipCode) errors.zipCode = 'ZipCode is required'
     if (!role) errors.role = 'Role is required'
-    if (!country) errors.country = 'Country is required'
-    if (!state) errors.state = 'State is required'
+    // if (!country) errors.country = 'Country is required'
+    // if (!state) errors.state = 'State is required'
     if (!password) errors.password = 'Password is required'
     if (!password) errors.confirmPassword = 'Confirm Password is required'
     if (password !== confirmPassword) errors.confirmPassword = 'Passwords do not match'
@@ -124,7 +124,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         customerAdminId: customerAdminId,
       }).unwrap()
       const { status, content, message } = response as SaveUserResponse
-      if (status === 200) {
+      if (status === 200 || status === 201) {
         setSuccessMessage(message || 'Customer added successfully')
         setShowSuccessModal(true)
         getUser()
@@ -453,7 +453,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
             style={{
               width: '5rem',
               height: '7vh',
-            //  minHeight: '6vh',
+              //  minHeight: '6vh',
               backgroundColor: '#0098FF',
               cursor: 'pointer',
               fontSize: '0.9rem',

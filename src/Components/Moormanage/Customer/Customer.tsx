@@ -236,7 +236,7 @@ const Customer = () => {
             opacity: '0px',
             backgroundColor: 'white',
           }}
-          className="bg-[F2F2F2] overflow-x-hidden overflow-y-scroll ">
+          className="bg-[F2F2F2]">
           <InputTextWithHeader
             headerStyle={{
               height: '55px',
