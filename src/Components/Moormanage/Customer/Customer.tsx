@@ -23,6 +23,7 @@ import {
 import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 import Header from '../../Layout/LayoutComponents/Header'
+import { CustomersHeader, TechniciansHeader } from '../../Utils/DataTableHeader'
 const Customer = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [customerData, setCustomerData] = useState<CustomerPayload[]>([])
@@ -225,11 +226,11 @@ const Customer = () => {
         </div>
       </div>
 
-      <div className="flex ml-12 mt-48 gap-6 fixed">
+      <div className="flex ml-12 mt-6 gap-6 ">
         <div
           style={{
             width: '450px',
-            height: '711px',
+            height: '650px',
             top: '277px',
             left: '107px',
             gap: '0px',
@@ -239,43 +240,8 @@ const Customer = () => {
             backgroundColor: 'white',
           }}
           className="bg-[F2F2F2]">
-          <InputTextWithHeader
-            headerStyle={{
-              height: '55px',
-              top: '294px',
-              left: '124px',
-              gap: '0px',
-              opacity: '0px',
-              color: '#FFFFFF',
-              backgroundColor: '#10293A',
-            }}
-            header={'Customers'}
-            placeholder={'Search by name, ID, mooring no, boat name, phone no.... '}
-            iconStyle={{
-              left: '10px',
-              gap: '0px',
-              opacity: '0px',
-              color: '#10293A',
-              fontWeight: '900',
-              fontSize: '1.15rem',
-              lineHeight: '16px',
-              letterSpacing: '0.2px',
-            }}
-            inputTextStyle={{
-              height: '44px',
-              width: '400px',
-              cursor: 'pointer',
-              fontSize: '',
-              color: '#D5E1EA',
-              border: '1px solid #D5E1EA',
-              paddingLeft: '35px',
-              borderRadius: '5px',
-            }}
-            onChange={handleSearchChange}
-            value={searchQuery}
-          />
-          <div className="mt-2">
-            <hr style={{ border: ' 0.20px solid #D5E1EA' }} />
+          <div className="text-sm font-bold rounded-t-md bg-[#10293A]">
+            <h1 className="p-4 text-white">Customers</h1>
           </div>
 
           <div className="mt-2 ">
@@ -289,7 +255,7 @@ const Customer = () => {
               }}
               scrollable={false}
               columns={CustomerTableColumns}
-              header={undefined}
+              header={CustomersHeader}
               style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
               onRowClick={(rowData) => handleCustomerTableRowClick(rowData)}
             />

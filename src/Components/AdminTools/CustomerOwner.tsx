@@ -66,7 +66,7 @@ const CustomerOwner = () => {
     fontWeight: 500,
   }
 
-  const tableColumns = useMemo(
+  const customerOwnerTableColumn = useMemo(
     () => [
       {
         id: 'id',
@@ -87,7 +87,7 @@ const CustomerOwner = () => {
     [],
   )
 
-  const tableColumnsTechnicians = useMemo(
+  const customerOwnerUserTableColumn = useMemo(
     () => [
       { id: 'id', label: 'ID', style: columnStyle },
       { id: 'name', label: 'Name', style: columnStyle },
@@ -228,7 +228,7 @@ const CustomerOwner = () => {
                 cursor: 'pointer',
               }}
               scrollable={true}
-              columns={tableColumns}
+              columns={customerOwnerTableColumn}
               header={CustomersHeader}
               onRowClick={(e) => {
                 getCustomerAdminsUsers(e.data)
@@ -260,7 +260,7 @@ const CustomerOwner = () => {
                 }}
                 scrollable={true}
                 data={getCustomerOwnerUserData}
-                columns={tableColumnsTechnicians}
+                columns={customerOwnerUserTableColumn }
                 header={TechniciansHeader}
                 actionButtons={ActionButtonColumn}
                 style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}

@@ -36,6 +36,7 @@ export interface DataTableProps {
 export interface ButtonProps {
   underline?: boolean
   color?: keyof typeof textColors
+  padding?:string
   filled?: boolean
   disabled?: boolean
   hidden?: boolean
@@ -43,7 +44,6 @@ export interface ButtonProps {
   label: string
   fontWeight?: number
   style?: React.CSSProperties | undefined
-  
 }
 
 // Can be defined single in future

@@ -2,14 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 
-.p-selectbutton .p-button.p-highlight {
-  background-color: black;
-}
-.p-selectbutton .p-button.p-highlight:hover {
-  background-color: black;
-} */
-
 .p-dialog {
   border-radius: 10px;
   border: 2px solid #f5efef;
@@ -33,22 +25,23 @@
 
 .headerClass {
   background-color: black;
+
+
 }
 
 /* searchDataTable */
 
 .p-datatable .p-datatable-tbody > tr {
   background: #ffffff;
+  
 
 }
 
 .p-datatable-thead > th {
   background: #f2f2f2;
+ 
 }
-.p-datatable-header {
-  background: #ffffff;
-  border-radius: 9px;
-}
+
 .p-datatable-emptymessage {
   background: #ffffff;
 }
@@ -56,3 +49,8 @@
 .p-inputswitch-slider{
   background-color: green;
 } */
+
+.p-inputtext::placeholder{
+  color: #A4A4A4 !important;
+  
+  }

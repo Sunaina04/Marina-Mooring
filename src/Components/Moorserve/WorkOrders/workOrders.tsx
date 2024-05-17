@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from 'react'
-import { InputText } from 'primereact/inputtext'
 import { Dialog } from 'primereact/dialog'
 import { Button } from 'primereact/button'
 import AddWorkOrders from './AddWorkOrders'
@@ -9,6 +8,8 @@ import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTable
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import Header from '../../Layout/LayoutComponents/Header'
 
+import './WorkOrder.module.css'
+import { vendor } from '../../Utils/CustomData'
 const WorkOrders = () => {
   const [visible, setVisible] = useState(false)
   const [workOrderData, setWorkOrderData] = useState<WorkOrderPayload[]>([])
@@ -16,24 +17,8 @@ const WorkOrders = () => {
   const [editMode, setEditMode] = useState(false)
   const [getWorkOrder] = useGetWorkOrdersMutation()
 
-  const header = (
-    <div className="flex flex-wrap align-items-center justify-between  p-4">
-      <span className="text-xl font-bold">Work Orders</span>
-      <div className="">
-        <div className="p-input-icon-left">
-          <i className="pi pi-search text-[#D2D2D2] " data-testid="search-icon" />
-          <InputText
-            placeholder="Search"
-            className="h-[5vh] cursor-pointer font-bold"
-            style={{ border: '1px solid #D2D2D2', borderRadius: '10px' }}
-          />
-        </div>
-      </div>
-    </div>
-  )
-
   const ActionButtonColumn: ActionButtonColumnProps = {
-    header: 'Action',
+    header: '',
     buttons: [
       {
         color: 'black',
@@ -41,45 +26,53 @@ const WorkOrders = () => {
         underline: true,
       },
     ],
-    headerStyle: { backgroundColor: '#F2F2F2' },
+    headerStyle: { backgroundColor: '#FFFFFF' },
+    style: { borderBottom: '1px solid #D5E1EA', backgroundColor: '#FFFFFF', fontWeight: '400' },
   }
 
-  const tableColumns = useMemo(
+  const columnStyle = {
+    backgroundColor: '#FFFFFF',
+    color: '#000000',
+    fontWeight: '500',
+    fontSize: '12px',
+  }
+
+  const workOrderColumns = useMemo(
     () => [
       {
-        id: 'invoice',
-        label: 'Invoice',
-        style: { width: '6vw', backgroundColor: '#F2F2F2' },
+        id: 'customerId',
+        label: 'Customer ID',
+        style: columnStyle,
+      },
+      {
+        id: 'customerName',
+        label: 'CustomerName',
+        style: columnStyle,
       },
       {
         id: 'mooringId',
         label: 'Mooring ID',
-        style: { width: '12vw', backgroundColor: '#F2F2F2' },
+        style: columnStyle,
       },
       {
-        id: 'customerName',
-        label: 'Customer Name',
-        style: { width: '10vw', backgroundColor: '#F2F2F2' },
+        id: 'boatyard',
+        label: 'Boatyard',
+        style: columnStyle,
       },
       {
-        id: 'technicianName',
-        label: 'Technician Name',
-        style: { width: '12vw', backgroundColor: '#F2F2F2' },
+        id: 'assigned',
+        label: 'Assigned to',
+        style: columnStyle,
       },
       {
-        id: 'services',
-        label: 'Services',
-        style: { width: '10vw', backgroundColor: '#F2F2F2' },
+        id: 'dueDate',
+        label: 'Due Date',
+        style: columnStyle,
       },
       {
-        id: 'time',
-        label: 'Time',
-        style: { width: '10vw', backgroundColor: '#F2F2F2' },
-      },
-      {
-        id: 'amount',
-        label: 'Amount',
-        style: { width: '10vw', backgroundColor: '#F2F2F2' },
+        id: 'status',
+        label: 'Status',
+        style: columnStyle,
       },
     ],
     [],
@@ -128,7 +121,7 @@ const WorkOrders = () => {
                 color: 'white',
                 borderRadius: '0.50rem',
                 marginLeft: '8px',
-                boxShadow:'none'
+                boxShadow: 'none',
               }}></Button>
 
             <Dialog
@@ -146,48 +139,57 @@ const WorkOrders = () => {
           </div>
         </div>
 
-        {/* <div className="bg-[#F2F2F2] rounded-xl border-[1px] border-[#D1D1D1] ml-36 p-2 mt-12 w-[64vw] ">
-          <DataTable
-            value={workOrderData}
-            header={header}
-            tableStyle={{
-              fontSize: '0.80rem',
-              fontWeight: 'bold',
-            }}
-            scrollable={true}>
-            <Column style={{ width: '4vw' }} field="customerId" header="Customer ID"></Column>
-            <Column style={{ width: '7vw' }} field="customerName" header="Customer Name"></Column>
-            <Column style={{ width: '7vw' }} field="mooringNumber" header="Mooring ID"></Column>
-            <Column style={{ width: '15vw' }} field="boatYard" header="Boatyard"></Column>
-            <Column style={{ width: '13vw' }} field="assignedTo" header="Assigned to"></Column>
-            <Column style={{ width: '6vw' }} field="dueDate" header="Due date"></Column>
-            <Column style={{ width: '6vw' }} field="status" header="Status"></Column>
-            <Column
-              header="Action"
-              body={(rowData) => (
-                <div className="flex gap-4">
-                  <span
-                    className="text-black underline cursor-pointer"
-                    onClick={() => handleEdit(rowData)}>
-                    Edit
-                  </span>
-                </div>
-              )}></Column>
-          </DataTable>
-        </div> */}
+        <div
+          style={{
+            height: '640px',
+            gap: '0px',
+            borderRadius: '10px',
+            border: '1px solid #D5E1EA',
+            opacity: '0px',
+            backgroundColor: '#FFFFFF',
+          }}
+          className="bg-[F2F2F2]  ml-12  mt-6 mr-14">
+          <div className="flex flex-wrap align-items-center justify-between  bg-[#00426F] p-2   rounded-tl-[5px] rounded-tr-[5px]">
+            <span
+              style={{
+                fontSize: '18px',
+                fontWeight: '700',
+                lineHeight: '21.09px',
+                letterSpacing: '0.4837472140789032px',
+                color: '#FFFFFF',
+                padding: '8px',
+              }}>
+              Work Order
+            </span>
 
-        <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[64vw]  ml-32 mt-12 ">
+            <div className="relative inline-block">
+              <div className="relative">
+                <img
+                  src="/assets/images/Search.png"
+                  alt="search icon"
+                  className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5"
+                  data-testid="search-icon"
+                />
+                <input
+                  placeholder="Search"
+                  className="pl-10 w-[237px] 
+                  bg-[#00426F]
+              
+                  h-[35px] rounded-lg border text-white border-[#D5E1EA] focus:outline-none"
+                />
+              </div>
+            </div>
+          </div>
           <DataTableSearchFieldComponent
             tableStyle={{
               fontSize: '12px',
               color: '#000000',
               fontWeight: 600,
             }}
-            data={workOrderData}
-            columns={tableColumns}
-            header={header}
+            data={undefined}
+            columns={workOrderColumns}
             actionButtons={ActionButtonColumn}
-            style={{ backgroundColor: '#F2F2F2' }}
+            style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '200' }}
           />
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import CustomModal from '../../CustomComponent/CustomModal'
@@ -12,6 +12,9 @@ import useSubmit from '../../../Services/CustomHook/useSubmit'
 import FormFields from '../../CustomComponent/FormFields'
 import Header from '../../Layout/LayoutComponents/Header'
 import AddCustomer from '../../Moormanage/Customer/AddCustomer'
+import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
+import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
+import { FormDataa } from '../../Utils/CustomData'
 
 const Forms = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -73,11 +76,55 @@ const Forms = () => {
     getFormsData()
   }, [])
 
-  const header = (
-    <div className="flex flex-wrap align-items-center justify-between gap-2 p-4">
-      <span className="text-xl font-bold">Forms</span>
-    </div>
+  const columnStyle = {
+    backgroundColor: '#FFFFFF',
+    color: '#000000',
+    fontWeight: '500',
+    fontSize: '12px',
+  }
+
+  const FormsColumns = useMemo(
+    () => [
+      {
+        id: 'id',
+        label: 'ID',
+        style: columnStyle,
+      },
+      {
+        id: 'submittedBy',
+        label: 'Submitted by',
+        style: columnStyle,
+      },
+      {
+        id: 'formName',
+        label: 'Form Name',
+        style: columnStyle,
+      },
+      {
+        id: 'submittedDate',
+        label: 'Submitted Date',
+        style: columnStyle,
+      },
+    ],
+    [],
   )
+  const ActionButtonColumn: ActionButtonColumnProps = {
+    header: 'Action',
+    buttons: [
+      {
+        color: 'black',
+        label: 'Download',
+        underline: true,
+      },
+    ],
+    headerStyle: {
+      backgroundColor: '#FFFFFF',
+      color: '#000000',
+      fontWeight: '500',
+      fontSize: '12px',
+    },
+    style: { borderBottom: '1px solid #D5E1EA', backgroundColor: '#FFFFFF', fontWeight: '400' },
+  }
 
   return (
     <>
@@ -122,28 +169,58 @@ const Forms = () => {
           />
         </div>
       </div>
-      <div className="bg-[#F2F2F2] rounded-md border-[1px] border-[#D1D1D1] p-2 mt-12 w-[61vw] ml-20">
-        <DataTable value={formsData} header={header} tableStyle={{}}>
-          <Column header="ID" field="id" style={{ width: '4vw' }}></Column>
-          <Column field="submittedBy" header="Submitted by" style={{ width: '12vw' }}></Column>
-          <Column field="formName" header="Form Name" style={{ width: '11vw' }}></Column>
-          <Column field="submittedDate" header="Submitted Date" style={{ width: '12vw' }}></Column>
-          <Column
-            header="Action"
-            style={{ width: '12vw' }}
-            body={(rowData) => (
-              <p
-                onClick={() => handleDownload(rowData)}
-                style={{
-                  width: '5vw',
-                  cursor: 'pointer',
-                  fontWeight: 'bolder',
-                  fontSize: '1vw',
-                }}>
-                DownLoad
-              </p>
-            )}></Column>
-        </DataTable>
+
+      <div
+        style={{
+          gap: '0px',
+          borderRadius: '10px',
+          border: '1px solid #D5E1EA',
+          opacity: '0px',
+          backgroundColor: '#FFFFFF',
+        }}
+        className="bg-[F2F2F2]  ml-12  mt-6 mr-14">
+        <div className="flex flex-wrap align-items-center justify-between  bg-[#00426F] p-2   rounded-tl-[5px] rounded-tr-[5px]">
+          <span
+            style={{
+              fontSize: '18px',
+              fontWeight: '700',
+              lineHeight: '21.09px',
+              letterSpacing: '0.4837472140789032px',
+              color: '#FFFFFF',
+              padding: '8px',
+            }}>
+            Forms
+          </span>
+
+          <div className="relative inline-block">
+            <div className="relative">
+              <img
+                src="/assets/images/Search.png"
+                alt="search icon"
+                className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5"
+                data-testid="search-icon"
+              />
+              <input
+                placeholder="Search"
+                className="pl-10 w-[237px] 
+                  bg-[#00426F]
+              
+                  h-[35px] rounded-lg border text-white border-[#D5E1EA] focus:outline-none"
+              />
+            </div>
+          </div>
+        </div>
+        <DataTableComponent
+          tableStyle={{
+            fontSize: '12px',
+            color: '#000000',
+            fontWeight: 600,
+          }}
+          data={undefined}
+          columns={FormsColumns}
+          actionButtons={ActionButtonColumn}
+          style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '200' }}
+        />
       </div>
     </>
   )

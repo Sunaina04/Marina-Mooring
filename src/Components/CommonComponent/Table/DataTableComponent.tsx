@@ -35,7 +35,7 @@ const DataTableComponent: React.FC<DataTableProps> = ({
   }
 
   return (
-    <div className="card">
+    <div className="card " >
       <DataTable
         value={data}
         tableStyle={tableStyle}
