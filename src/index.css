@@ -2,14 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 
-.p-selectbutton .p-button.p-highlight {
-  background-color: black;
-}
-.p-selectbutton .p-button.p-highlight:hover {
-  background-color: black;
-} */
-
 .p-dialog {
   border-radius: 10px;
   border: 2px solid #f5efef;
@@ -57,3 +49,8 @@
 .p-inputswitch-slider{
   background-color: green;
 } */
+
+.p-inputtext::placeholder{
+  color: #A4A4A4 !important;
+  
+  }

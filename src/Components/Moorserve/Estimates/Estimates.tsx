@@ -9,6 +9,7 @@ import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTable
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 import Header from '../../Layout/LayoutComponents/Header'
+import { EstimateData } from '../../Utils/CustomData'
 
 const Estimates = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -49,7 +50,7 @@ const Estimates = () => {
   ])
 
   const handleButtonClick = () => {
-  //  setIsModalOpen(true)
+    //  setIsModalOpen(true)
   }
 
   const handleModalClose = () => {
@@ -83,42 +84,44 @@ const Estimates = () => {
     </div>
   )
 
-  const tableColumns = useMemo(
+  const columnStyle = {
+    backgroundColor: '#FFFFFF',
+    color: '#000000',
+    fontWeight: '500',
+    fontSize: '12px',
+  }
+
+  const workOrderColumns = useMemo(
     () => [
       {
-        id: 'invoice',
-        label: 'Invoice',
-        style: { width: '6vw', backgroundColor: '#F2F2F2' },
+        id: 'customerId',
+        label: 'Customer ID',
+        style: columnStyle,
+      },
+      {
+        id: 'customerName',
+        label: 'CustomerName',
+        style: columnStyle,
       },
       {
         id: 'mooringId',
         label: 'Mooring ID',
-        style: { width: '12vw', backgroundColor: '#F2F2F2' },
+        style: columnStyle,
       },
       {
-        id: 'customerName',
-        label: 'Customer Name',
-        style: { width: '10vw', backgroundColor: '#F2F2F2' },
+        id: 'boatyard',
+        label: 'Boatyard',
+        style: columnStyle,
       },
       {
-        id: 'technicianName',
-        label: 'Technician Name',
-        style: { width: '12vw', backgroundColor: '#F2F2F2' },
+        id: 'assigned',
+        label: 'Assigned to',
+        style: columnStyle,
       },
       {
-        id: 'services',
-        label: 'Services',
-        style: { width: '10vw', backgroundColor: '#F2F2F2' },
-      },
-      {
-        id: 'time',
-        label: 'Time',
-        style: { width: '10vw', backgroundColor: '#F2F2F2' },
-      },
-      {
-        id: 'amount',
-        label: 'Amount',
-        style: { width: '10vw', backgroundColor: '#F2F2F2' },
+        id: 'dueDate',
+        label: 'Due Date',
+        style: columnStyle,
       },
     ],
     [],
@@ -129,11 +132,18 @@ const Estimates = () => {
     buttons: [
       {
         color: 'black',
+        label: 'Convert',
+        underline: true,
+      },
+
+      {
+        color: 'black',
         label: 'Edit',
         underline: true,
       },
     ],
-    headerStyle: { backgroundColor: '#F2F2F2' },
+    headerStyle: { backgroundColor: '#FFFFFF', color: '#000000', fontWeight: '500' },
+    style: { borderBottom: '1px solid #D5E1EA', backgroundColor: '#FFFFFF', fontWeight: '400' },
   }
 
   return (
@@ -189,18 +199,57 @@ const Estimates = () => {
         </div>
       </div>
 
-      <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[64vw]  ml-32 mt-12 ">
-        <DataTableComponent
+      <div
+        style={{
+          height: '640px',
+          gap: '0px',
+          borderRadius: '10px',
+          border: '1px solid #D5E1EA',
+          opacity: '0px',
+          backgroundColor: '#FFFFFF',
+        }}
+        className="bg-[F2F2F2]  ml-12  mt-6 mr-14">
+        <div className="flex flex-wrap align-items-center justify-between  bg-[#00426F] p-2   rounded-tl-[5px] rounded-tr-[5px]">
+          <span
+            style={{
+              fontSize: '18px',
+              fontWeight: '700',
+              lineHeight: '21.09px',
+              letterSpacing: '0.4837472140789032px',
+              color: '#FFFFFF',
+              padding: '8px',
+            }}>
+            Estimate
+          </span>
+
+          <div className="relative inline-block">
+            <div className="relative">
+              <img
+                src="/assets/images/Search.png"
+                alt="search icon"
+                className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5"
+                data-testid="search-icon"
+              />
+              <input
+                placeholder="Search"
+                className="pl-10 w-[237px] 
+                  bg-[#00426F]
+              
+                  h-[35px] rounded-lg border text-white border-[#D5E1EA] focus:outline-none"
+              />
+            </div>
+          </div>
+        </div>
+        <DataTableSearchFieldComponent
           tableStyle={{
             fontSize: '12px',
             color: '#000000',
             fontWeight: 600,
           }}
-          data={boatData}
-          columns={tableColumns}
-          header={header}
+          data={EstimateData}
+          columns={workOrderColumns}
           actionButtons={ActionButtonColumn}
-          style={{ backgroundColor: '#F2F2F2' }}
+          style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '200' }}
         />
       </div>
     </>

@@ -61,7 +61,7 @@ const Vendors = () => {
     getVendorData()
   }, [])
 
-  const tableColumns = useMemo(
+  const VendorColumns = useMemo(
     () => [
       {
         id: 'id',
@@ -200,7 +200,7 @@ const Vendors = () => {
             fontWeight: '400',
           }}
           data={vendorDataa}
-          columns={tableColumns}
+          columns={VendorColumns}
           header={undefined}
           actionButtons={ActionButtonColumn}
           style={{ backgroundColor: '#FFFFFF', borderBottom: '1px solid #D5E1EA' }}

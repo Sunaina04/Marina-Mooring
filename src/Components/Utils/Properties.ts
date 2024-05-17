@@ -1,7 +1,7 @@
 const textColors = {
-  green: 'text-green-500 font-semibold',
-  red: 'text-red-500 font-semibold',
-  black: 'text-[black]',
+  green: 'text-green-600',
+  red: 'text-red-500',
+  black: 'text-black-500',
 }
 
 const bgColor = {

@@ -44,7 +44,6 @@ export interface ButtonProps {
   label: string
   fontWeight?: number
   style?: React.CSSProperties | undefined
-  
 }
 
 // Can be defined single in future

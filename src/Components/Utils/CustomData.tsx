@@ -458,3 +458,45 @@ export const vendorDataa= [
 
   
 ]
+
+
+
+export const vendor= [
+  {
+    customerId: '#456',
+    customerName: 'jon smith',
+    mooringId: '7645',
+    boatyard: 'pionner',
+    assignedTo: 'clara ortiz',
+    dueDate:"15,March 2024",
+    status:"New Request"
+  },
+  
+]
+
+export const EstimateData= [
+  {
+    customerId: '#456',
+    customerName: 'jon smith',
+    mooringId: '7645',
+    boatyard: 'pionner',
+    assignedTo: 'clara ortiz',
+    dueDate:"15,March 2024",
+  
+  },
+  
+
+]
+
+
+export const FormDataa= [
+  {
+    id: '#456',
+    submittedBy: 'jon smith',
+    formName: '7645',
+    submittedDate: '15,March 2024',
+  
+  },
+
+  
+]
