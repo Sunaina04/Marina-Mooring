@@ -40,7 +40,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const [successMessage, setSuccessMessage] = useState<string>()
   const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false)
 
-  // console.log('CUSTOMERDATA', customerData)
+  console.log('CUSTOMERDATA', customerData)
   const validateFields = () => {
     const errors: { [key: string]: string } = {}
     if (!name) errors.name = 'Name is required'
@@ -201,11 +201,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
               />
             </div>
 
-            <p className='p-1'>
+            <p className="p-1">
               {fieldErrors.name && <small className="p-error">{fieldErrors.name}</small>}
-
             </p>
-
           </div>
 
           <div>
@@ -223,12 +221,10 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   padding: '1.2em',
                 }}
               />
-
             </div>
 
-            <p className='p-1'>
+            <p className="p-1">
               {fieldErrors.id && <small className="p-error">{fieldErrors.id}</small>}
-
             </p>
           </div>
 
@@ -247,11 +243,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   padding: '1.2em',
                 }}
               />
-
             </div>
-            <p className='p-1'>
+            <p className="p-1">
               {fieldErrors.phone && <small className="p-error">{fieldErrors.phone}</small>}
-
             </p>
           </div>
         </div>
@@ -275,12 +269,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   padding: '1.2em',
                 }}
               />
-
             </div>
-            <p>
-              {fieldErrors.email && <small className="p-error">{fieldErrors.email}</small>}
-
-            </p>
+            <p>{fieldErrors.email && <small className="p-error">{fieldErrors.email}</small>}</p>
           </div>
 
           <div>
@@ -308,12 +298,10 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   borderRadius: '0.50rem',
                 }}
               />
-
             </div>
 
-            <p className='p-1'>
+            <p className="p-1">
               {fieldErrors.role && <small className="p-error">{fieldErrors.role}</small>}
-
             </p>
           </div>
         </div>
@@ -339,12 +327,10 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                     padding: '0.80em',
                   }}
                 />
-
               </div>
 
-              <p className='p-1'>
+              <p className="p-1">
                 {fieldErrors.street && <small className="p-error">{fieldErrors.street}</small>}
-
               </p>
             </div>
 
@@ -365,11 +351,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   }}
                 />
               </div>
-              <p className='p-1'>
+              <p className="p-1">
                 {fieldErrors.apt && <small className="p-error">{fieldErrors.apt}</small>}
-
               </p>
-
             </div>
 
             <div className=" mt-2 ">
@@ -392,10 +376,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   borderRadius: '0.50rem',
                 }}
               />
-              <p className='p-1'>
+              <p className="p-1">
                 {fieldErrors.state && <small className="p-error">{fieldErrors.state}</small>}
               </p>
-
             </div>
           </div>
 
@@ -421,11 +404,10 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 }}
               />
 
-               <p className='p-1'>
-              {fieldErrors.country && <small className="p-error">{fieldErrors.country}</small>}
-            </p>
+              <p className="p-1">
+                {fieldErrors.country && <small className="p-error">{fieldErrors.country}</small>}
+              </p>
             </div>
-           
 
             <div>
               <InputText
@@ -442,17 +424,11 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   padding: '0.83em',
                 }}
               />
-              <p className='p-1'>
-
+              <p className="p-1">
                 {fieldErrors.zipCode && <small className="p-error">{fieldErrors.zipCode}</small>}
               </p>
-
-
             </div>
-
-
           </div>
-
         </div>
 
         <div className="flex mt-5 gap-8">
@@ -471,11 +447,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   padding: '1.2em',
                 }}
               />
-              <p className='p-1'>
-
+              <p className="p-1">
                 {fieldErrors.password && <small className="p-error">{fieldErrors.password}</small>}
               </p>
-
             </div>
           </div>
           <div className="">

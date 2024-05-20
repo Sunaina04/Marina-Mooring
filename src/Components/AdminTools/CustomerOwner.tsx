@@ -32,9 +32,9 @@ const CustomerOwner = () => {
   }
 
   const handleEditButtonClick = (rowData: any) => {
-    console.log('rowData', rowData)
     setSelectedCustomer(rowData)
     setModalVisible(true)
+    setEditMode(true)
   }
 
   const ActionButtonColumn: ActionButtonColumnProps = {
@@ -204,26 +204,37 @@ const CustomerOwner = () => {
             <h1 className="p-4 text-white">{properties.CustomersOwner}</h1>
           </div>
           <div data-testid="customer-admin-data">
-            <DataTableComponent
-              data={getCustomerOwnerData}
-              tableStyle={{
-                fontSize: '12px',
-                color: '#000000',
-                fontWeight: 500,
-                backgroundColor: '#D9D9D9',
-                cursor: 'pointer',
-              }}
-              scrollable={true}
-              columns={customerOwnerTableColumn}
-              header={CustomersHeader}
-              onRowClick={(e) => {
-                getCustomerAdminsUsers(e.data)
-              }}
-              style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
-              rowStyle={(rowData) => ({
-                backgroundColor: selectedRow === rowData.id ? 'black' : 'red',
-              })}
-            />
+            {getCustomerOwnerData.length === 0 ? (
+              <div className="text-center mt-40">
+                <img
+                  src="/assets/images/empty.png"
+                  alt="Empty Data"
+                  className="w-32 mx-auto mb-4"
+                />
+                <p className="text-gray-500">No data available</p>
+              </div>
+            ) : (
+              <DataTableComponent
+                data={getCustomerOwnerData}
+                tableStyle={{
+                  fontSize: '12px',
+                  color: '#000000',
+                  fontWeight: 500,
+                  backgroundColor: '#D9D9D9',
+                  cursor: 'pointer',
+                }}
+                scrollable={true}
+                columns={customerOwnerTableColumn}
+                header={CustomersHeader}
+                onRowClick={(e) => {
+                  getCustomerAdminsUsers(e.data)
+                }}
+                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+                rowStyle={(rowData) => ({
+                  backgroundColor: selectedRow === rowData.id ? 'black' : 'red',
+                })}
+              />
+            )}
           </div>
         </div>
 
@@ -240,20 +251,31 @@ const CustomerOwner = () => {
             <h1 className="p-4 text-white">{properties.CustomerOwnerUsers}</h1>
           </div>
           <div data-testid="customer-admin-users-table">
-            <DataTableComponent
-              tableStyle={{
-                fontSize: '12px',
-                color: '#000000',
-                fontWeight: 400,
-                backgroundColor: '#D9D9D9',
-              }}
-              scrollable={true}
-              data={isRowClick ? getCustomerOwnerUserData : undefined}
-              columns={customerOwnerUserTableColumn}
-              header={TechniciansHeader}
-              actionButtons={ActionButtonColumn}
-              style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
-            />
+            {!isRowClick ? (
+              <div className="text-center mt-40">
+                <img
+                  src="/assets/images/empty.png"
+                  alt="Empty Data"
+                  className="w-32 mx-auto mb-4"
+                />
+                <p className="text-gray-500">No data available</p>
+              </div>
+            ) : (
+              <DataTableComponent
+                tableStyle={{
+                  fontSize: '12px',
+                  color: '#000000',
+                  fontWeight: 400,
+                  backgroundColor: '#D9D9D9',
+                }}
+                scrollable={true}
+                data={isRowClick ? getCustomerOwnerUserData : undefined}
+                columns={customerOwnerUserTableColumn}
+                header={TechniciansHeader}
+                actionButtons={ActionButtonColumn}
+                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+              />
+            )}
           </div>
         </div>
       </div>

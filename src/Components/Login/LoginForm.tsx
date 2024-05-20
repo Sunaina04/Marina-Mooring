@@ -173,7 +173,7 @@ export default function LoginForm() {
                 />
 
                 {/* Password Visibility */}
-                {/* <img
+                <img
                   src={showPassword ? '/assets/images/eye.png' : '/assets/images/eye-slash.png'}
                   alt="Toggle Password Visibility"
                   onClick={() => toggleShowPassword()}
@@ -187,7 +187,7 @@ export default function LoginForm() {
                     height: '20px',
                     cursor: 'pointer',
                   }}
-                /> */}
+                />
               </div>
 
               <div className="flex justify-end mb-8 mt-5 w-[500px] cursor-pointer underline">
