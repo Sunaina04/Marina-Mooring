@@ -51,8 +51,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     if (!street) errors.apt = 'Apt is required'
     if (!zipCode) errors.zipCode = 'ZipCode is required'
     if (!role) errors.role = 'Role is required'
-    // if (!country) errors.country = 'Country is required'
-    // if (!state) errors.state = 'State is required'
+    if (!country) errors.country = 'Country is required'
+    if (!state) errors.state = 'State is required'
     if (!password) errors.password = 'Password is required'
     if (!password) errors.confirmPassword = 'Confirm Password is required'
     if (password !== confirmPassword) errors.confirmPassword = 'Passwords do not match'
@@ -189,17 +189,23 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
               <InputText
                 value={name}
                 onChange={(e) => handleInputChange('name', e.target.value)}
+                className={fieldErrors.name ? 'p-invalid' : ''}
                 style={{
                   width: '232px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.name ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   padding: '1.2em',
                 }}
               />
-              {fieldErrors.name && <small className="p-error">{fieldErrors.name}</small>}
             </div>
+
+            <p className='p-1'>
+              {fieldErrors.name && <small className="p-error">{fieldErrors.name}</small>}
+
+            </p>
+
           </div>
 
           <div>
@@ -211,14 +217,19 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.id ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   padding: '1.2em',
                 }}
               />
-              {fieldErrors.id && <small className="p-error">{fieldErrors.id}</small>}
+
             </div>
+
+            <p className='p-1'>
+              {fieldErrors.id && <small className="p-error">{fieldErrors.id}</small>}
+
+            </p>
           </div>
 
           <div>
@@ -230,14 +241,18 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.phone ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   padding: '1.2em',
                 }}
               />
-              {fieldErrors.phone && <small className="p-error">{fieldErrors.phone}</small>}
+
             </div>
+            <p className='p-1'>
+              {fieldErrors.phone && <small className="p-error">{fieldErrors.phone}</small>}
+
+            </p>
           </div>
         </div>
 
@@ -254,14 +269,18 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.email ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   padding: '1.2em',
                 }}
               />
-              {fieldErrors.email && <small className="p-error">{fieldErrors.email}</small>}
+
             </div>
+            <p>
+              {fieldErrors.email && <small className="p-error">{fieldErrors.email}</small>}
+
+            </p>
           </div>
 
           <div>
@@ -284,13 +303,18 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   width: '230px',
                   height: '32px',
                   minHeight: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.role ? '1px solid red' : '1px solid #D5E1EA',
                   fontSize: '0.8rem',
                   borderRadius: '0.50rem',
                 }}
               />
-              {fieldErrors.role && <small className="p-error">{fieldErrors.role}</small>}
+
             </div>
+
+            <p className='p-1'>
+              {fieldErrors.role && <small className="p-error">{fieldErrors.role}</small>}
+
+            </p>
           </div>
         </div>
 
@@ -309,14 +333,19 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: '1px solid #D5E1EA',
+                    border: fieldErrors.street ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                     padding: '0.80em',
                   }}
                 />
-                {fieldErrors.street && <small className="p-error">{fieldErrors.street}</small>}
+
               </div>
+
+              <p className='p-1'>
+                {fieldErrors.street && <small className="p-error">{fieldErrors.street}</small>}
+
+              </p>
             </div>
 
             <div>
@@ -329,14 +358,18 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: '1px solid #D5E1EA',
+                    border: fieldErrors.apt ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                     padding: '0.83em',
                   }}
                 />
               </div>
-              {fieldErrors.apt && <small className="p-error">{fieldErrors.apt}</small>}
+              <p className='p-1'>
+                {fieldErrors.apt && <small className="p-error">{fieldErrors.apt}</small>}
+
+              </p>
+
             </div>
 
             <div className=" mt-2 ">
@@ -354,12 +387,15 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   width: '230px',
                   height: '32px',
                   minHeight: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.state ? '1px solid red' : '1px solid #D5E1EA',
                   fontSize: '0.8rem',
                   borderRadius: '0.50rem',
                 }}
               />
-              {fieldErrors.state && <small className="p-error">{fieldErrors.state}</small>}
+              <p className='p-1'>
+                {fieldErrors.state && <small className="p-error">{fieldErrors.state}</small>}
+              </p>
+
             </div>
           </div>
 
@@ -379,29 +415,44 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.country ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
-            </div>
-            {fieldErrors.country && <small className="p-error">{fieldErrors.country}</small>}
 
-            <InputText
-              value={zipCode}
-              onChange={(e) => handleInputChange('zipCode', e.target.value)}
-              placeholder="Zipcode"
-              style={{
-                width: '230px',
-                height: '32px',
-                border: '1px solid #D5E1EA',
-                borderRadius: '0.50rem',
-                fontSize: '0.8rem',
-                padding: '0.83em',
-              }}
-            />
-            {fieldErrors.zipCode && <small className="p-error">{fieldErrors.zipCode}</small>}
+               <p className='p-1'>
+              {fieldErrors.country && <small className="p-error">{fieldErrors.country}</small>}
+            </p>
+            </div>
+           
+
+            <div>
+              <InputText
+                value={zipCode}
+                invalid
+                onChange={(e) => handleInputChange('zipCode', e.target.value)}
+                placeholder="Zipcode"
+                style={{
+                  width: '230px',
+                  height: '32px',
+                  border: fieldErrors.zipCode ? '1px solid red' : '1px solid #D5E1EA',
+                  borderRadius: '0.50rem',
+                  fontSize: '0.8rem',
+                  padding: '0.83em',
+                }}
+              />
+              <p className='p-1'>
+
+                {fieldErrors.zipCode && <small className="p-error">{fieldErrors.zipCode}</small>}
+              </p>
+
+
+            </div>
+
+
           </div>
+
         </div>
 
         <div className="flex mt-5 gap-8">
@@ -414,13 +465,17 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.password ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   padding: '1.2em',
                 }}
               />
-              {fieldErrors.password && <small className="p-error">{fieldErrors.password}</small>}
+              <p className='p-1'>
+
+                {fieldErrors.password && <small className="p-error">{fieldErrors.password}</small>}
+              </p>
+
             </div>
           </div>
           <div className="">
@@ -432,7 +487,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.confirmPassword ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   padding: '1.2em',
