@@ -301,8 +301,34 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       <div className="mt-8 text-xl text-black font-bold">
         <h3>Add Mooring</h3>
       </div>
-      <div className="mt-8">
+      {/* <div className="mt-8">
         <AddMoorings moorings={formData} editMode={editMode} />
+      </div> */}
+
+      <div className="flex gap-6 mt-10">
+        <Button
+          onClick={SaveCustomer}
+          label={'Save'}
+          style={{
+            width: '5rem',
+            height: '7vh',
+            backgroundColor: '#0098FF',
+            cursor: 'pointer',
+            fontWeight: 'bolder',
+            fontSize: '1rem',
+            boxShadow: 'none',
+            color: 'white',
+            borderRadius: '0.50rem',
+          }}
+        />
+        <Button
+          onClick={function (): void {
+            throw new Error('Function not implemented.')
+          }}
+          label={'Back'}
+          text={true}
+          style={{ backgroundColor: 'white', color: 'black', border: 'none' }}
+        />
       </div>
     </div>
   )

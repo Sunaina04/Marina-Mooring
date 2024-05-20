@@ -10,7 +10,7 @@ import { CustomerData, CustomerProps } from '../../../Type/CommonType'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 import { properties } from '../../Utils/MeassageProperties'
 import Header from '../../Layout/LayoutComponents/Header'
-import { MooringsHeader} from '../../Utils/DataTableHeader'
+import { MooringsHeader } from '../../Utils/DataTableHeader'
 const Moorings = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [mooringData, setMooringData] = useState<MooringPayload[]>([])
@@ -63,12 +63,11 @@ const Moorings = () => {
     setFilteredMooringData(filteredData)
   }
 
-  const tableColumnsStyle={
+  const tableColumnsStyle = {
     borderBottom: '1px solid #C0C0C0',
     fontWeight: '700',
     color: '#000000',
     backgroundColor: '#FFFFFF',
-
   }
 
   const MooringColumns = useMemo(
@@ -76,17 +75,17 @@ const Moorings = () => {
       {
         id: 'id',
         label: 'ID',
-        style: tableColumnsStyle
+        style: tableColumnsStyle,
       },
       {
         id: 'mooringName',
         label: 'Mooring Name',
-        style: tableColumnsStyle
+        style: tableColumnsStyle,
       },
       {
         id: 'gpsCoordinates',
         label: 'GPS Coordinates',
-        style: tableColumnsStyle
+        style: tableColumnsStyle,
       },
     ],
     [],
