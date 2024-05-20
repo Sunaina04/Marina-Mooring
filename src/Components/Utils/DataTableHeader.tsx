@@ -5,7 +5,7 @@ export const CustomersHeader = () => {
     <div className="flex flex-col">
       <div className="p-input-icon-left">
         <InputText
-          placeholder="Search by name, ID, mooring no, boat name, phone no.... "
+          placeholder="Search by name, ID, phone no.... "
           style={{
             width: '100%',
             height: '44px',

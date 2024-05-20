@@ -1,18 +1,17 @@
-import { SetStateAction, useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import CustomModal from '../CustomComponent/CustomModal'
 import DataTableComponent from '../CommonComponent/Table/DataTableComponent'
 import { properties } from '../Utils/MeassageProperties'
 import { Dropdown } from 'primereact/dropdown'
 import AddNewCustomer from './AddNewCustomer'
 import { ActionButtonColumnProps } from '../../Type/Components/TableTypes'
-import { AddUserPayload, CustomerPayload, GetUserResponse } from '../../Type/ApiTypes'
+import { CustomerPayload, GetUserResponse } from '../../Type/ApiTypes'
 import Header from '../Layout/LayoutComponents/Header'
 import useMetaData from '../CommonComponent/MetaDataComponent'
 import { Role } from '../../Type/CommonType'
 import { CustomersHeader, TechniciansHeader } from '../Utils/DataTableHeader'
 import './CustomerOwner.module.css'
 import { useGetUsersMutation } from '../../Services/AdminTools/AdminToolsApi'
-import { Button } from 'primereact/button'
 
 const CustomerOwner = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -56,7 +55,6 @@ const CustomerOwner = () => {
       fontWeight: 400,
     },
     style: { borderBottom: '1px solid #D5E1EA' },
-    // onRowClick: (rowData) => handleEditButtonClick(rowData),
   }
 
   const columnStyle = {
@@ -94,22 +92,6 @@ const CustomerOwner = () => {
       { id: 'email', label: 'Email', style: columnStyle },
       { id: 'phoneNumber', label: 'Phone', style: columnStyle },
       { id: 'role', label: 'Role', style: columnStyle },
-      // {
-      //   id: 'action',
-      //   label: 'Action',
-      //   style: columnStyle,
-      //   render: (rowData: {
-      //     id: string
-      //     name: string
-      //     email: string
-      //     phoneNumber: string
-      //     role: string
-      //   }) => (
-      //     <Button color="primary" size="small" onClick={() => handleEditButtonClick(rowData)}>
-      //       Edit
-      //     </Button>
-      //   ),
-      // },
     ],
     [],
   )
@@ -158,7 +140,7 @@ const CustomerOwner = () => {
       <Header header="MOORMANAGE/Permission" />
 
       <div className="flex mr-12 justify-end">
-        <div className="mt-14 mr-5 relative">
+        <div className="mt-8 mr-5 relative">
           <Dropdown
             value={selectRole}
             onChange={(e) => setSelectRole(e.value)}
@@ -167,23 +149,25 @@ const CustomerOwner = () => {
             editable
             placeholder="Select Role"
             style={{
-              width: '12vw',
+              width: '172px',
               height: '44px',
               minHeight: '44px',
               paddingLeft: '2rem',
               border: '1px solid #D5E1EA',
               borderRadius: '6px',
+              cursor: 'pointer',
+              fontSize: '14px',
             }}
           />
           <img
             src="/assets/images/filter.svg"
             alt="filter Icon"
-            className="absolute top-1/2 left-2 transform -translate-y-1/2 h-5 w-5"
-            style={{ pointerEvents: 'none' }}
+            className="absolute top-1/2 left-2 transform -translate-y-1/2 h-4 w-4"
+            style={{ cursor: 'pointer' }}
           />
         </div>
 
-        <div className="mt-14">
+        <div className="mt-8">
           <CustomModal
             buttonText={'ADD NEW'}
             onHide={handleModalClose}
@@ -207,14 +191,16 @@ const CustomerOwner = () => {
         </div>
       </div>
 
-      <div
-        className="flex gap-10 ml-8 mt-10"
-        style={{
-          paddingRight: '40px',
-          paddingLeft: '25px',
-        }}>
-        <div className="bg-[FFFFFF] rounded-md border-[1px] mb-10">
-          <div className="text-sm font-bold rounded-t-md bg-[#00426F]">
+      <div className="flex gap-10 ml-8 mt-10">
+        <div
+          style={{
+            height: 'calc(40vw - 10px)',
+            borderRadius: '15px',
+            border: '1px solid #D5E1EA',
+            backgroundColor: '#FFFFFF',
+            marginLeft: '40px',
+          }}>
+          <div className="text-md font-semibold rounded-t-md bg-[#00426F]">
             <h1 className="p-4 text-white">{properties.CustomersOwner}</h1>
           </div>
           <div data-testid="customer-admin-data">
@@ -241,33 +227,35 @@ const CustomerOwner = () => {
           </div>
         </div>
 
-        {isRowClick && (
-          <div
-            className="bg-[F2F2F2] rounded-lg border-[1px] mb-10"
-            style={{
-              flexGrow: 1,
-            }}>
-            <div className="text-sm font-bold rounded-t-md bg-[#00426F]">
-              <h1 className="p-4 text-white">{properties.CustomerOwnerUsers}</h1>
-            </div>
-            <div data-testid="customer-admin-users-table">
-              <DataTableComponent
-                tableStyle={{
-                  fontSize: '12px',
-                  color: '#000000',
-                  fontWeight: 400,
-                  backgroundColor: '#D9D9D9',
-                }}
-                scrollable={true}
-                data={getCustomerOwnerUserData}
-                columns={customerOwnerUserTableColumn }
-                header={TechniciansHeader}
-                actionButtons={ActionButtonColumn}
-                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
-              />
-            </div>
+        <div
+          style={{
+            flexGrow: 1,
+            height: 'calc(40vw - 10px)',
+            borderRadius: '15px',
+            border: '1px solid #D5E1EA',
+            backgroundColor: '#FFFFFF',
+            marginRight: '50px',
+          }}>
+          <div className="text-md font-semibold rounded-t-md bg-[#00426F]">
+            <h1 className="p-4 text-white">{properties.CustomerOwnerUsers}</h1>
           </div>
-        )}
+          <div data-testid="customer-admin-users-table">
+            <DataTableComponent
+              tableStyle={{
+                fontSize: '12px',
+                color: '#000000',
+                fontWeight: 400,
+                backgroundColor: '#D9D9D9',
+              }}
+              scrollable={true}
+              data={isRowClick ? getCustomerOwnerUserData : undefined}
+              columns={customerOwnerUserTableColumn}
+              header={TechniciansHeader}
+              actionButtons={ActionButtonColumn}
+              style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+            />
+          </div>
+        </div>
       </div>
     </>
   )

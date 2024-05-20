@@ -64,7 +64,7 @@ const AdminLayout = () => {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
-            width: open ? '18rem' : '5rem',
+            width: open ? '19rem' : '5rem',
             minWidth: open ? '18rem' : '5rem',
             maxHeight: '100vh',
             background: '#00426F',

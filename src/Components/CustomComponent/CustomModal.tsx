@@ -2,17 +2,7 @@ import React from 'react'
 import { Button } from 'primereact/button'
 import { Dialog } from 'primereact/dialog'
 import { CustomModalProps } from '../../Type/ComponentBasedType'
-export const style = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: "''",
-  transform: 'translate(-50%, -50%)',
-  bgcolor: 'background.white',
-  borderRadius: '25px',
-  p: 3,
-  maxHeight: '90vh',
-  overflowY: 'auto',
-}
+
 const CustomModal: React.FC<CustomModalProps> = ({
   buttonText,
   headerText,
@@ -28,18 +18,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
     <div className="card flex justify-content-center">
       <Button
         label={buttonText}
-        icon={
-          <img
-            src="/assets/images/plus.png"
-            alt="icon"
-            className="w-4 ml-2 "
-            style={{
-              filter: 'invert(100%)',
-              color: 'white',
-              fontWeight: 'bolder',
-            }}
-          />
-        }
+        icon={<img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8 ml-4 mb-0.5" />}
         onClick={onClick}
         style={{
           width: '121px',
@@ -47,13 +26,13 @@ const CustomModal: React.FC<CustomModalProps> = ({
           minHeight: '44px',
           backgroundColor: '#0098FF',
           cursor: 'pointer',
-          fontSize: '16px',
-          fontWeight: 700,
-          color: 'white',
-          borderRadius: '10px',
-          marginLeft: '8px',
-          boxShadow:'none',
-          
+          fontSize: '15px',
+          fontWeight: 600,
+          color: '#FFFFFF',
+          borderRadius: '5px',
+          boxShadow: 'none',
+          lineHeight: '18.75px',
+          letterSpacing: '0.20000000298023224px',
         }}
       />
 

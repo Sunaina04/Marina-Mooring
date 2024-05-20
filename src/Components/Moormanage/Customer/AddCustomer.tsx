@@ -40,37 +40,61 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     { name: 'Punjab', code: 'PNB' },
   ]
   const [formData, setFormData] = useState<any>({
+    mooringId: '',
+    mooringName: '',
     customerName: '',
-    mooringNumber: '',
     harbor: '',
     waterDepth: '',
     gpsCoordinates: '',
+    boatyardName: '',
     boatName: '',
     boatSize: '',
+    boatType: '',
     boatWeight: '',
     sizeOfWeight: '',
     typeOfWeight: '',
-    topChainCondition: '',
     conditionOfEye: '',
+    topChainCondition: '',
     bottomChainCondition: '',
     shackleSwivelCondition: '',
     pennantCondition: '',
-    deptAtMeanHighWater: '',
-    note: '',
+    depthAtMeanHighWater: 0,
+    status: '',
   })
 
   const SaveCustomer = async () => {
     const payload = {
-      customerName,
-      customerId,
-      phone,
+      id: 0,
+      customerName: customerName,
+      customerId: customerId,
       emailAddress: email,
-      streetHouse,
-      sectorBlock,
-      state: selectedState?.name || '',
-      country: selectedCountry?.name || '',
-      pinCode,
-      note: value,
+      phone: phone,
+      streetHouse: streetHouse,
+      aptSuite: sectorBlock,
+      state: selectedState?.name,
+      country: pinCode,
+      mooringRequestDto: {
+        mooringId: formData.mooringId,
+        mooringName: formData.mooringName,
+        customerName: formData.customerName,
+        harbor: formData.harbor,
+        waterDepth: formData.waterDepth,
+        gpsCoordinates: formData.gpsCoordinates,
+        boatyardName: formData.boatyardName,
+        boatName: formData.boatName,
+        boatSize: formData.boatSize,
+        boatType: '',
+        boatWeight: formData.boatWeight,
+        sizeOfWeight: formData.sizeOfWeight,
+        typeOfWeight: formData.typeOfWeight,
+        conditionOfEye: formData.conditionEye,
+        topChainCondition: '',
+        bottomChainCondition: '',
+        shackleSwivelCondition: '',
+        pennantCondition: '',
+        depthAtMeanHighWater: 0,
+        status: '',
+      },
     }
     const response = await addCustomer(payload)
     closeModal()
@@ -301,9 +325,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       <div className="mt-8 text-xl text-black font-bold">
         <h3>Add Mooring</h3>
       </div>
-      {/* <div className="mt-8">
-        <AddMoorings moorings={formData} editMode={editMode} />
-      </div> */}
+
       <div className="mt-6">
         <div className="flex gap-6 ">
           <div>
@@ -380,7 +402,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             <span className="font-medium text-sm text-[#000000]">Boatyard Name</span>
             <div className="mt-2">
               <InputComponent
-                value={formData.boatName}
+                value={formData.boatyardName}
                 onChange={(e) => handleInputChange('boatName', e.target.value)}
                 style={{
                   width: '230px',
@@ -396,8 +418,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             <span className="font-medium text-sm text-[#000000]">Boat Name</span>
             <div className="mt-2">
               <InputComponent
-                // placeholder="Enter owner name"
-                // type="text"
                 value={formData.boatName}
                 onChange={(e) => handleInputChange('boatName', e.target.value)}
                 style={{
@@ -661,7 +681,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               </div>
             </div>
           </div>
-          <div className='mt-3'>
+          <div className="mt-3">
             <div>
               <span className="font-medium text-sm text-[#000000]">Pin on Map</span>
             </div>
@@ -686,9 +706,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           }}
         />
         <Button
-          onClick={function (): void {
-            throw new Error('Function not implemented.')
-          }}
+          onClick={() => {}}
           label={'Back'}
           text={true}
           style={{ backgroundColor: 'white', color: 'black', border: 'none' }}

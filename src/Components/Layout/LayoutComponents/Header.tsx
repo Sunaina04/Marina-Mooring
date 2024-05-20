@@ -39,7 +39,7 @@ const Header: React.FC<HeaderProps> = ({ header }) => {
         flexWrap: 'wrap',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginTop: '2rem',
+        marginTop: '1rem',
         marginLeft: '3rem',
         marginRight: '2rem',
         borderRadius: '0.5rem',
