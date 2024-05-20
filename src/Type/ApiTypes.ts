@@ -17,7 +17,7 @@ export interface UserResponse {
   number: boolean
   numberOfElements: number
 }
- 
+
 export interface GetUserResponse {
   message: string
   status: number
@@ -193,7 +193,7 @@ export interface customerResponseDto {
     state: string
     country: string
     zipCode: string
-    mooringResponseDtoList: []
+    mooringResponseDtoList: MooringResponseDtoList
   }
   boatyardNames: []
 }
@@ -225,6 +225,29 @@ export interface MooringPayload {
   sizeOfWeight: string
   typeOfWeight: string
   deptAtMeanHighWater: string
+}
+
+export interface MooringResponseDtoList {
+  id: number
+  mooringId: string
+  mooringName: string
+  customerName: string
+  harbor: string
+  waterDepth: string
+  gpsCoordinates: string
+  boatyardName: string
+  boatName: string
+  boatSize: string
+  boatType: string
+  boatWeight: string
+  sizeOfWeight: string
+  typeOfWeight: string
+  conditionOfEye: string
+  topChainCondition: string
+  bottomChainCondition: string
+  shackleSwivelCondition: string
+  pennantCondition: string
+  depthAtMeanHighWater: number
 }
 
 export interface MooringResponse {

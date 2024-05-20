@@ -217,7 +217,7 @@ const moormanageApi = userApi.injectEndpoints({
 
     //FetchCustomersWithMooring
     getCustomersWithMooring: builder.mutation({
-      query: ({ name }: { name?: string }) => ({
+      query: ({ name }: { name?: number }) => ({
         url: `api/v1/customer/fetchCustomerWithMoorings/${name}`,
         method: 'GET',
       }),

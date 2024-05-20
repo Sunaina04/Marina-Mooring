@@ -18,9 +18,9 @@ import {
   CustomersWithMooringResponse,
   MooringPayload,
   MooringResponse,
+  MooringResponseDtoList,
 } from '../../../Type/ApiTypes'
 
-import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 import Header from '../../Layout/LayoutComponents/Header'
 import { CustomersHeader, TechniciansHeader } from '../../Utils/DataTableHeader'
@@ -29,12 +29,13 @@ const Customer = () => {
   const [customerData, setCustomerData] = useState<CustomerPayload[]>([])
   const [editMode, setEditMode] = useState(false)
   const [customerRecord, setCustomerRecord] = useState(false)
-  const [selectedCustomer, setSelectedCustomer] = useState<any>(undefined)
+  const [selectedCustomer, setSelectedCustomer] = useState<any>()
   const [searchQuery, setSearchQuery] = useState<string>('')
   const [filteredCustomerData, setFilteredCustomerData] = useState<CustomerPayload[]>([])
-
-  const [mooringData, setMooringData] = useState<MooringPayload[]>([])
-  const [customerRowData, setCustomerRowData] = useState<MooringPayload>()
+  const [customerRecordData, setCustomerRecordData] = useState<any>()
+  const [mooringData, setMooringData] = useState<MooringResponseDtoList[]>([])
+  const [boatYardData, setBoatYardData] = useState<any[]>([])
+  const [mooringRowData, setMooringRowData] = useState<MooringPayload>()
   const [dialogVisible, setDialogVisible] = useState(false)
 
   const [getCustomer] = useGetCustomerMutation()
@@ -69,19 +70,6 @@ const Customer = () => {
     setFilteredCustomerData(filteredData)
   }
 
-  const getCustomerData = async () => {
-    try {
-      const response = await getCustomer({}).unwrap()
-      const { status, content } = response as CustomerResponse
-      if (status === 200 && Array.isArray(content)) {
-        setCustomerData(content)
-        setFilteredCustomerData(content)
-      }
-    } catch (error) {
-      console.error('Error occurred while fetching customer data:', error)
-    }
-  }
-
   const handleEdit = (rowData: any) => {
     setSelectedCustomer(rowData)
     setEditMode(true)
@@ -98,12 +86,12 @@ const Customer = () => {
 
   const handleCustomerTableRowClick = (rowData: any) => {
     setCustomerRecord(true)
-    setSelectedCustomer(rowData.data)
+    getCustomersWithMooring(rowData.data.id)
   }
 
   const handleMooringTableRowClick = (rowData: any) => {
     setDialogVisible(true)
-    setCustomerRowData(rowData.data)
+    setMooringRowData(rowData.data)
   }
 
   const customerTableColumnStyle = {
@@ -166,12 +154,31 @@ const Customer = () => {
     [],
   )
 
-  const getCustomersWithMooring = async () => {
+  const getCustomerData = async () => {
     try {
-      const response = await getCustomerWithMooring(1).unwrap()
+      const response = await getCustomer({}).unwrap()
+      const { status, content } = response as CustomerResponse
+      if (status === 200 && Array.isArray(content)) {
+        setCustomerData(content)
+        setFilteredCustomerData(content)
+      }
+    } catch (error) {
+      console.error('Error occurred while fetching customer data:', error)
+    }
+  }
+
+  const getCustomersWithMooring = async (id: number) => {
+    try {
+      const response = await getCustomerWithMooring({ name: id }).unwrap()
       const { status, content } = response as CustomersWithMooringResponse
-      if (status === 200 && Array.isArray(content.customerResponseDto)) {
-        setMooringData(content.customerResponseDto)
+      if (
+        status === 200 &&
+        Array.isArray(content.customerResponseDto.mooringResponseDtoList) &&
+        Array.isArray(content.boatyardNames)
+      ) {
+        setCustomerRecordData(content.customerResponseDto)
+        setMooringData(content.customerResponseDto.mooringResponseDtoList)
+        setBoatYardData(content.boatyardNames)
       }
     } catch (error) {
       console.error('Error fetching moorings data:', error)
@@ -180,7 +187,6 @@ const Customer = () => {
 
   useEffect(() => {
     getCustomerData()
-    getCustomersWithMooring()
   }, [])
 
   return (
@@ -252,6 +258,7 @@ const Customer = () => {
                 color: '#000000',
                 fontWeight: 600,
                 backgroundColor: '#D9D9D9',
+                cursor: 'pointer',
               }}
               scrollable={false}
               columns={CustomerTableColumns}
@@ -275,6 +282,9 @@ const Customer = () => {
           <div className="absolute top-20 right-0" data-testid="timeline2">
             {/* <Timeline /> */}
           </div>
+
+          {/* Commentting this code for now due to some ui issues but will use in future once api is ready for it  */}
+
           {/* 
           <div className="absolute  translate-x-6 bottom-4  rounded-md border-[1px] pb-1 border-gray-300 w-[17vw]  mt-auto h-[13vh] bg-white">
             <p className="text-[0.7rem] ml-1 text-black">Status</p>
@@ -350,12 +360,12 @@ const Customer = () => {
                       color: '#000000',
                     }}>
                     <p>
-                      <span className="">ID:</span>
-                      {selectedCustomer.customerId}
+                      <span className="">ID: </span>
+                      {customerRecordData?.customerId}
                     </p>
                     <p className="mt-6">
-                      <span className="">Phone:</span>
-                      {selectedCustomer.phoneNumber}
+                      <span className="">Phone: </span>
+                      {customerRecordData?.phone}
                     </p>
                   </div>
 
@@ -368,62 +378,47 @@ const Customer = () => {
                     }}
                     className="left">
                     <p>
-                      <span>Name:</span>
-                      {selectedCustomer.customerName}
+                      <span>Name: </span>
+                      {customerRecordData?.customerName}
                     </p>
                     <p className="mt-6">
-                      <span className="">Email:</span>
-                      {selectedCustomer.emailAddress}
+                      <span className="">Email: </span>
+                      {customerRecordData?.emailAddress}
                     </p>
                   </div>
                 </div>
                 <div className="">
                   <p className="ml-4">
-                    <span className="">Address:</span>
-                    {selectedCustomer.Apt}
+                    <span className="address-label">Address: </span>
+                    {customerRecordData?.aptSuite && <span>{customerRecordData?.aptSuite} </span>}
+                    {customerRecordData?.streetHouse && (
+                      <span>{customerRecordData?.streetHouse} </span>
+                    )}
+                    {customerRecordData?.city && <span>{customerRecordData?.city}, </span>}
+                    {customerRecordData?.state && <span>{customerRecordData?.state}, </span>}
+                    {customerRecordData?.country && <span>{customerRecordData?.country} </span>}
                   </p>
 
                   <div className="flex mt-4 ml-4 mb-3">
                     <div>
-                      <h1>Boatyard:</h1>
+                      <h1>Boatyard: </h1>
                     </div>
                     <div className="flex gap-3">
-                      <p
-                        style={{
-                          borderRadius: '5px',
-                          fontWeight: '400',
-                          fontSize: '12px',
-                          color: '#10293A',
-                          backgroundColor: '#D5E1EA',
-                          padding: '5px',
-                          marginLeft: '5px',
-                        }}>
-                        Pioneer
-                      </p>
-
-                      <p
-                        style={{
-                          borderRadius: '5px',
-                          fontWeight: '400',
-                          fontSize: '12px',
-                          color: '#10293A',
-                          backgroundColor: '#D5E1EA',
-                          padding: '5px',
-                        }}>
-                        02Pioneer
-                      </p>
-
-                      <p
-                        style={{
-                          borderRadius: '5px',
-                          fontWeight: '400',
-                          fontSize: '12px',
-                          color: '#10293A',
-                          backgroundColor: '#D5E1EA',
-                          padding: '5px',
-                        }}>
-                        03Pioneer
-                      </p>
+                      {boatYardData.map((boatyard, index) => (
+                        <p
+                          key={index}
+                          style={{
+                            borderRadius: '5px',
+                            fontWeight: '400',
+                            fontSize: '12px',
+                            color: '#10293A',
+                            backgroundColor: '#D5E1EA',
+                            padding: '5px',
+                            marginLeft: '5px',
+                          }}>
+                          {boatyard}
+                        </p>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -475,71 +470,71 @@ const Customer = () => {
                 <div className="flex leading-10 gap-4">
                   <div>
                     <p>
-                      <span style={{ fontWeight: 'bold' }}>ID:</span> {customerRowData?.id}
+                      <span style={{ fontWeight: 'bold' }}>ID:</span> {mooringRowData?.id}
                     </p>
                     <p>
                       <span style={{ fontWeight: 'bold' }}>Mooring No:</span>{' '}
-                      {customerRowData?.mooringNumber}
+                      {mooringRowData?.mooringNumber}
                     </p>
                     <p>
                       <span style={{ fontWeight: 'bold' }}>Boat Name:</span>{' '}
-                      {customerRowData?.boatName}
+                      {mooringRowData?.boatName}
                     </p>
                     <p>
-                      <span style={{ fontWeight: 'bold' }}>Type:</span> {customerRowData?.boatType}
+                      <span style={{ fontWeight: 'bold' }}>Type:</span> {mooringRowData?.boatType}
                     </p>
                     <p>
                       <span style={{ fontWeight: 'bold' }}>Size of Weight:</span>{' '}
-                      {customerRowData?.sizeOfWeight}
+                      {mooringRowData?.sizeOfWeight}
                     </p>
                     <p>
                       <span style={{ fontWeight: 'bold' }}>Top Chain Condition:</span>{' '}
-                      {customerRowData?.topChainCondition}
+                      {mooringRowData?.topChainCondition}
                     </p>
                     <p className="tracking-tighter">
                       <span style={{ fontWeight: 'bold' }}>Bottom Chain Condition:</span>{' '}
-                      {customerRowData?.bottomChainCondition}
+                      {mooringRowData?.bottomChainCondition}
                     </p>
                     <p>
                       <span style={{ fontWeight: 'bold' }}>Pennant Condition:</span>{' '}
-                      {customerRowData?.pennantCondition}
+                      {mooringRowData?.pennantCondition}
                     </p>
                     <p>
                       <span style={{ fontWeight: 'bold' }}>Water Depth:</span>{' '}
-                      {customerRowData?.waterDepth}
+                      {mooringRowData?.waterDepth}
                     </p>
                   </div>
                   <div>
                     <p>
-                      <span style={{ fontWeight: 'bold' }}>Harbor:</span> {customerRowData?.harbor}
+                      <span style={{ fontWeight: 'bold' }}>Harbor:</span> {mooringRowData?.harbor}
                     </p>
                     <p>
                       <span style={{ fontWeight: 'bold' }}>G.P.S Coordinates:</span>{' '}
-                      {customerRowData?.gpsCoordinates}
+                      {mooringRowData?.gpsCoordinates}
                     </p>
                     <p>
                       <span style={{ fontWeight: 'bold' }}>Boat Size:</span>{' '}
-                      {customerRowData?.boatSize}
+                      {mooringRowData?.boatSize}
                     </p>
                     <p>
                       <span style={{ fontWeight: 'bold' }}>Weight:</span>{' '}
-                      {customerRowData?.boatWeight}
+                      {mooringRowData?.boatWeight}
                     </p>
                     <p>
                       <span style={{ fontWeight: 'bold' }}>Type of Weight:</span>{' '}
-                      {customerRowData?.typeOfWeight}
+                      {mooringRowData?.typeOfWeight}
                     </p>
                     <p>
                       <span style={{ fontWeight: 'bold' }}>Condition of Eye:</span>{' '}
-                      {customerRowData?.conditionOfEye}
+                      {mooringRowData?.conditionOfEye}
                     </p>
                     <p>
                       <span style={{ fontWeight: 'bold' }}>Shackle, Swivel Condition:</span>{' '}
-                      {customerRowData?.shackleSwivelCondition}
+                      {mooringRowData?.shackleSwivelCondition}
                     </p>
                     <p>
                       <span style={{ fontWeight: 'bold' }}>Dept at Mean High Water:</span>{' '}
-                      {customerRowData?.deptAtMeanHighWater}
+                      {mooringRowData?.deptAtMeanHighWater}
                     </p>
                   </div>
                 </div>
