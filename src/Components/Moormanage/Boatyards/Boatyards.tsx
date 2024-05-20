@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import CustomModal from '../../CustomComponent/CustomModal'
 import AddBoatyards from './AddBoatyards'
 import { InputText } from 'primereact/inputtext'
-import { BoatYardData, BoatYardPayload, BoatYardResponse } from '../../../Type/ApiTypes'
+import { BoatYardData, BoatYardPayload, BoatYardResponse, MooringResponseDtoList, TechnicianPayload } from '../../../Type/ApiTypes'
 import { useGetBoatyardsMutation } from '../../../Services/MoorManage/MoormanageApi'
 import DataTableWithToogle from '../../CommonComponent/Table/DataTableWithToogle'
 import { ActionButtonColumnProps, Product } from '../../../Type/Components/TableTypes'
@@ -15,6 +15,7 @@ import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
 import { properties } from '../../Utils/MeassageProperties'
 import Header from '../../Layout/LayoutComponents/Header'
 import { IoSearchSharp } from 'react-icons/io5'
+import CustomSelectPositionMap from '../../Map/CustomSelectPositionMap'
 
 const Boatyards = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -25,6 +26,15 @@ const Boatyards = () => {
   const [getBoatyards] = useGetBoatyardsMutation()
   const [selectedCustomer, setSelectedCustomer] = useState<any>(undefined)
   const [editMode, setEditMode] = useState(false)
+  const [position, setPosition] = useState<{ lat: number; lng: number } | null>(null);
+
+  const handlePositionChange = (lat: number, lng: number) => {
+    setPosition({ lat, lng });
+    
+  };
+  
+  
+
 
   const moorings: BoatYardData[] = [
     {
@@ -198,52 +208,41 @@ const Boatyards = () => {
         underline: true,
       },
     ],
-    headerStyle: { backgroundColor: '#F2F2F2', color: 'black' },
-    style: { borderBottom: '1px solid #C0C0C0' },
+    headerStyle: { backgroundColor: '#00426F', color: 'black' },
+    style: { borderBottom: '1px solid #D5E1EA' },
+  }
+
+
+  const techniciansTableStyle={
+    backgroundColor: '#00426F',
+    borderBottom: '1px solid #C0C0C0',
+    color: '#FFFFFF',
+    fontWeight:'700',
+    fontSize:'10px',
+    
+    
   }
   const tableColumnsTechnicians = useMemo(
     () => [
       {
         id: 'id',
         label: 'ID',
-        style: {
-          width: '4vw',
-          backgroundColor: '#F2F2F2',
-          borderBottom: '1px solid #C0C0C0',
-          color: 'black',
-        },
+        style: techniciansTableStyle
       },
       {
         id: 'mainContact',
         label: 'Main Contact',
-        style: {
-          width: '9vw',
-          backgroundColor: '#F2F2F2',
-          borderBottom: '1px solid #C0C0C0',
-          color: 'black',
-        },
+        style:techniciansTableStyle
       },
       {
         id: 'mooringId',
         label: 'Mooring ID',
-        style: {
-          width: '9vw',
-          backgroundColor: '#F2F2F2',
-          borderBottom: '1px solid #C0C0C0',
-          color: 'black',
-        },
+        style: techniciansTableStyle
       },
       {
         id: 'boatName',
         label: 'Boat Name',
-        // body: (rowData: { mooringResponseDtoList: any }) =>
-        //   rowData.mooringResponseDtoList[0].boatName,
-        style: {
-          width: '12vw',
-          backgroundColor: '#F2F2F2',
-          borderBottom: '1px solid #C0C0C0',
-          color: 'black',
-        },
+        style:techniciansTableStyle
       },
     ],
     [],
@@ -276,41 +275,47 @@ const Boatyards = () => {
     return !!rowData.orders && rowData.orders.length > 0
   }
 
+  const rowExpansionStyle={
+    
+    backgroundColor: '#F2F2F2',
+    fontSize: '0.80rem',
+    borderBottom: '1px solid #C0C0C0',
+  }
+
   const rowExpansionTemplate = (data: Product) => {
     return (
-      <DataTable value={data.orders}>
+      <DataTable value={data.orders} >
         <Column
           field="address"
           header="Address"
-          style={{
-            width: '',
-            backgroundColor: '#F2F2F2',
-            fontSize: '0.80rem',
-            borderBottom: '1px solid #C0C0C0',
-          }}
+          style={rowExpansionStyle}
+          headerStyle={{backgroundColor:'#00426F' ,color:'#FFFFFF'}}
         />
         <Column
           field="mooringInventoried"
           header="Mooring Inventoried"
-          style={{
-            width: '14rem',
-            backgroundColor: '#F2F2F2',
-            fontSize: '0.80rem',
-            borderBottom: '1px solid #C0C0C0',
-          }}
+          style={rowExpansionStyle}
+          headerStyle={{backgroundColor:'#00426F',color:'#FFFFFF'}}
+
         />
         <Column
           field="boatyardGpsCoordinates"
           header="Boatyard GPS Coordinates"
-          style={{
-            width: '14rem',
-            fontSize: '0.80rem',
-            backgroundColor: '#F2F2F2',
-            borderBottom: '1px solid #C0C0C0',
-          }}
+          style={rowExpansionStyle}
+          headerStyle={{backgroundColor:'#00426F',color:'#FFFFFF'}}
+
         />
+      
       </DataTable>
     )
+  }
+
+  const columnStyle={
+    
+    backgroundColor: '#F2F2F2',
+    fontSize:'10px',
+    color: 'black',
+    fontWeight: '700',
   }
 
   const columns = useMemo(
@@ -318,47 +323,23 @@ const Boatyards = () => {
       {
         field: 'id',
         header: 'ID',
-        style: {
-          width: '8rem',
-          backgroundColor: '#F2F2F2',
-          fontSize: '0.80rem',
-          color: 'black',
-          fontWeight: 'bold',
-        },
+        style: columnStyle,
         body: () => {},
       },
       {
         field: 'name',
         header: 'Name',
-        style: {
-          width: '8rem',
-          backgroundColor: '#F2F2F2',
-          fontSize: '0.80rem',
-          color: 'black',
-          fontWeight: 'bold',
-        },
+        style:columnStyle,
       },
       {
         field: 'noOfBoatYards',
         header: 'No.of Boatyards',
-        style: {
-          width: '24rem',
-          backgroundColor: '#F2F2F2',
-          fontSize: '0.80rem',
-          color: 'black',
-          fontWeight: 'bold',
-        },
+        style: columnStyle,
       },
       {
         field: 'totalMooringInventoried',
         header: 'Total Mooring Inventoried',
-        style: {
-          width: '28rem',
-          backgroundColor: '#F2F2F2',
-          fontSize: '0.80rem',
-          color: 'black',
-          fontWeight: 'bold',
-        },
+        style: columnStyle,
       },
       {
         field: '',
@@ -369,11 +350,14 @@ const Boatyards = () => {
     ],
     [allowExpansion],
   )
+
+ 
+  
   return (
     <>
       <Header header="MOORMANAGE/Boatyards" />
       <div className="flex justify-end mr-14 mt-14">
-        <div className="flex gap-6 ">
+        <div className="flex gap-6 mr-8">
           <div>
             <div className="p-input-icon-left">
               <IoSearchSharp className="ml-2 text-blue-900" />
@@ -420,26 +404,35 @@ const Boatyards = () => {
           />
         </div>
       </div>
-      <div className="ml-8 flex gap-4 mt-10">
+      <div className=" flex flex-wrap items-start justify-between ml-20  gap-3 mt-10" >
+    
         <div
           data-testid="dataTable"
-          className="bg-[F2F2F2] overflow-x-hidden overflow-y-scroll  rounded-md border-[1px]  border-gray-300 w-[40vw] h-[55vh] mb-60">
+          className="bg-[F2F2F2]   rounded-xl border-[1px]  border-gray-300 w-[515px] h-[650px] mb-60">
           <InputTextWithHeader
             header={properties.boatyardDeatile}
             placeholder={'Search by name, ID,address...'}
-            iconStyle={{ marginLeft: '1rem', color: '#A4A4A4' }}
+            headerStyle={{backgroundColor:'#00426F' ,color:'#FFFFFF' , borderTopLeftRadius:'10px',borderTopRightRadius:'10px'}}
+            iconStyle={{ marginLeft: '1.5rem', color: '#00426F' }}
             inputTextStyle={{
               height: '5vh',
-              width: '80vh',
+              width: '480px',
+              margin:'1rem',
               cursor: 'pointer',
               color: '#A4A4A4',
               border: '1px solid  #9F9F9F',
-              paddingLeft: '3rem',
+              paddingLeft: '2.5rem',
               borderRadius: '0.45rem',
               fontSize: '0.80rem',
+              backgroundColor:'F2F2F2'
+            
             }}
           />
-          <div></div>
+          <div>
+
+
+        </div>
+        <div  className="bg-#00426F overflow-x-hidden overflow-y-scroll ">
           <DataTableWithToogle
             data={products}
             rowExpansionTemplate={rowExpansionTemplate}
@@ -447,39 +440,58 @@ const Boatyards = () => {
             expandedRows={expandedRows}
             dataKey="id"
             columns={columns}
+            
           />
+          </div>
+        
         </div>
+        
         <div
           data-testid="customer-admin-users-table"
-          className="bg-[F2F2F2]  rounded-md border-[1px]  border-gray-300 w-[33vw] h-[55vh] mb-60">
+          className=" bg-[F2F2F2]  rounded-xl border-[1px]  mr-20 border-gray-300 w-[515px] h-[650px] mb-60">
           <div className="text-sm font-extrabold rounded-sm w-full  bg-[#D9D9D9]">
+            <div className='flex flex-wrap align-items-center justify-between  bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px]' style={{color:'#FFFFFF'}}>
             <h1 className="p-4">{properties.boatyardMooringHeader}</h1>
+            </div>
           </div>
-          <div className="items-center bg-[#F2F2F2] mt-2">
-            <div className="flex justify-around">
-              <p>{properties.address}</p>
+          <div className=" bg-[#F2F2F2] mt-2">
+            <div className='flex justify-start gap-12 ml-4 border-[1px] border-gray-300' style={{fontSize:'12px', fontWeight:'700'}} >
+              <p >{properties.address}</p>
               <p>{properties.mooringInventoried}</p>
               <p>{properties.boatyardGPSCoordinates}</p>
             </div>
-            <div className="border-[1px] border-[#9F9F9F]  w-[] mt-3 "></div>
-            <div className="flex justify-between mt-2">
-              <p className="ml-8">123 Elm St</p>
-              <p>25</p>
-              <p className="mr-[7.50rem]">38 21.806 144</p>
+            <div className="border-[1px] border-[#9F9F9F]  w-[full] mt-3 "></div>
+            <div className="flex justify-start gap-14  mt-2  font-normal text-sm">
+              <p className='ml-6'>123 Elm St</p>
+              <p  >25</p>
+              <p className='ml-20  underline' >38 21.806 144</p>
             </div>
           </div>
+          <div className='w-[512px] h-[150px] p-3.5 rounded-lg'>
+
+          <CustomSelectPositionMap onPositionChange={handlePositionChange} zoomLevel={12}/>
+          </div>
+          <div className="overflow-x-hidden overflow-y-scroll  " >
           <DataTableComponent
             tableStyle={{
               fontSize: '12px',
               color: '#000000',
-              fontWeight: 600,
+              fontWeight: 400,
+             
+              
             }}
-            data={boatyardsData}
+            scrollable={true}
+            data={moorings}
             columns={tableColumnsTechnicians}
             actionButtons={ActionButtonColumn}
+            style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
           />
-        </div>
-      </div>
+          </div>
+          </div>
+          </div>
+        
+        
+      
     </>
   )
 }

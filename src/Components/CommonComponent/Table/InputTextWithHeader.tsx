@@ -11,6 +11,7 @@ const InputTextWithHeader: React.FC<inputHeader> = ({
   headerStyle,
   inputTextStyle,
   value,
+  
 }) => {
   return (
     <>
