@@ -3,7 +3,7 @@ import CustomModal from '../CustomComponent/CustomModal'
 import DataTableComponent from '../CommonComponent/Table/DataTableComponent'
 import { properties } from '../Utils/MeassageProperties'
 import { Dropdown } from 'primereact/dropdown'
-import AddNewCustomer from './AddNewCustomer'
+
 import { ActionButtonColumnProps } from '../../Type/Components/TableTypes'
 import { CustomerPayload, GetUserResponse } from '../../Type/ApiTypes'
 import Header from '../Layout/LayoutComponents/Header'
@@ -12,6 +12,7 @@ import { Role } from '../../Type/CommonType'
 import { CustomersHeader, TechniciansHeader } from '../Utils/DataTableHeader'
 import './CustomerOwner.module.css'
 import { useGetUsersMutation } from '../../Services/AdminTools/AdminToolsApi'
+import AddNewCustomer from './AddNewCustomer'
 
 const CustomerOwner = () => {
   const [modalVisible, setModalVisible] = useState(false)

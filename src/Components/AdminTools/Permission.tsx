@@ -3,12 +3,13 @@ import CustomModal from '../CustomComponent/CustomModal'
 import { PermissionData } from '../../Type/ComponentBasedType'
 import DataTableComponent from '../CommonComponent/Table/DataTableComponent'
 import Header from '../Layout/LayoutComponents/Header'
-import AddNewCustomer from './AddNewCustomer'
+// import AddNewCustomer from '../AdminTools/AddNewCustomer'
 import { InputText } from 'primereact/inputtext'
 import { ActionButtonColumnProps } from '../../Type/Components/TableTypes'
 import { useSelector } from 'react-redux'
 import { CustomerPayload, GetUserResponse } from '../../Type/ApiTypes'
 import { useGetUsersMutation } from '../../Services/AdminTools/AdminToolsApi'
+import AddNewCustomer from './AddNewCustomer'
 
 const Permission = () => {
   const [modalVisible, setModalVisible] = useState(false)
