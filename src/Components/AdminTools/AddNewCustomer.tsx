@@ -446,17 +446,18 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         </div>
 
         {/* Save and Back buttons */}
-        <div className="flex gap-6 mt-10 ">
+        <div className="flex gap-4 mt-10 ">
           <Button
             label={'Save'}
             onClick={handleSave}
             style={{
-              width: '5rem',
-              height: '7vh',
-              minHeight: '7vh',
+              width: '89px',
+              height: '42px',
               backgroundColor: '#0098FF',
               cursor: 'pointer',
-              fontSize: '0.9rem',
+              fontWeight: 'bolder',
+              fontSize: '1rem',
+              boxShadow: 'none',
               color: 'white',
               borderRadius: '0.50rem',
             }}
@@ -466,12 +467,11 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
             onClick={handleBack}
             text={true}
             style={{
-              width: '5rem',
-              height: '7vh',
-              minHeight: '6vh',
               backgroundColor: 'white',
-              color: 'black',
+              color: '#000000',
               border: 'none',
+              width: '89px',
+              height: '42px',
             }}
           />
         </div>

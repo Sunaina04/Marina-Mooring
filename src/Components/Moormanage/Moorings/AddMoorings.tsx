@@ -413,7 +413,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
             </div>
             <div className="mt-3">
               <div>
-                <span className="font-medium text-sm text-[#000000]">Shackle,Swivel Condition</span>
+                <span className="font-medium text-sm text-[#000000]">Shackle, Swivel Condition</span>
               </div>
 
               <div className="mt-2">
@@ -461,13 +461,13 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
           </div>
         </div>
 
-        <div className="flex gap-6 mt-10">
+        <div className="flex gap-4 mt-10">
           <Button
             onClick={SaveMoorings}
             label={'Save'}
             style={{
-              width: '5rem',
-              height: '7vh',
+              width: '89px',
+              height: '42px',
               backgroundColor: '#0098FF',
               cursor: 'pointer',
               fontWeight: 'bolder',
@@ -483,7 +483,13 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
             }}
             label={'Back'}
             text={true}
-            style={{ backgroundColor: 'white', color: 'black', border: 'none' }}
+            style={{
+              backgroundColor: 'white',
+              color: '#000000',
+              border: 'none',
+              width: '89px',
+              height: '42px',
+            }}
           />
         </div>
       </div>
