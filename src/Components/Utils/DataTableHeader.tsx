@@ -1,5 +1,5 @@
 import { InputText } from 'primereact/inputtext'
-import './DataTableHeader.module.css'
+
 export const CustomersHeader = () => {
   return (
     <div className="flex flex-col">
@@ -12,7 +12,7 @@ export const CustomersHeader = () => {
             padding: '0 4rem 0 3rem',
             border: '1px solid #C5D9E0',
             fontSize: '16px',
-            color: '#00426F',
+            color: '#000000',
             borderRadius: '4px',
             minHeight: '44px',
             fontWeight: 400,
@@ -37,6 +37,7 @@ export const CustomersHeader = () => {
     </div>
   )
 }
+
 export const TechniciansHeader = () => {
   return (
     <div className="flex flex-col">
@@ -49,7 +50,7 @@ export const TechniciansHeader = () => {
             padding: '0 4rem 0 3rem',
             border: '1px solid #C5D9E0',
             fontSize: '16px',
-            color: '#00426F',
+            color: '#000000',
             borderRadius: '4px',
             minHeight: '44px',
             fontWeight: 400,

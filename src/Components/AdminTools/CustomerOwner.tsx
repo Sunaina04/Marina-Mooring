@@ -10,7 +10,6 @@ import Header from '../Layout/LayoutComponents/Header'
 import useMetaData from '../CommonComponent/MetaDataComponent'
 import { Role } from '../../Type/CommonType'
 import { CustomersHeader, TechniciansHeader } from '../Utils/DataTableHeader'
-import './CustomerOwner.module.css'
 import { useGetUsersMutation } from '../../Services/AdminTools/AdminToolsApi'
 import AddNewCustomer from './AddNewCustomer'
 
@@ -196,6 +195,7 @@ const CustomerOwner = () => {
         <div
           style={{
             height: 'calc(40vw - 10px)',
+            minHeight: '700px',
             borderRadius: '15px',
             border: '1px solid #D5E1EA',
             backgroundColor: '#FFFFFF',
@@ -243,6 +243,7 @@ const CustomerOwner = () => {
           style={{
             flexGrow: 1,
             height: 'calc(40vw - 10px)',
+            minHeight: '700px',
             borderRadius: '15px',
             border: '1px solid #D5E1EA',
             backgroundColor: '#FFFFFF',

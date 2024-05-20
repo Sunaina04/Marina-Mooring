@@ -241,7 +241,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   return (
     <>
       <div>
-        {errorMessage && <div className="p-error">{errorMessage}</div>}
+        {errorMessage && !errorMessage.includes('Email already present') && (
+          <div className="p-error">{errorMessage}</div>
+        )}
         {successMessage && <div className="p-success">{successMessage}</div>}
 
         <div className="flex gap-8 mt-3 ">
@@ -353,6 +355,11 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
               />
             </div>
             <p>{fieldErrors.email && <small className="p-error">{fieldErrors.email}</small>}</p>
+            <p>
+              {errorMessage && errorMessage.includes('Email already present') && (
+                <small className="p-error mt-1">Email already present</small>
+              )}
+            </p>
           </div>
 
           <div>
@@ -392,14 +399,14 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           </div>
         </div>
         <div className="mt-5">
-          <h1 className="text-xs text-black">
+          <span className="font-medium text-sm text-[#000000]">
             <div className="flex gap-1">
               Address
               <p className="text-red-600">*</p>
             </div>
-          </h1>
+          </span>
         </div>
-        <div className="gap-8 mt-4">
+        <div className="gap-8 mt-1">
           <div className="flex gap-8 ">
             <div>
               <div className="mt-2">
