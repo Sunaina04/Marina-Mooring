@@ -42,18 +42,32 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
   console.log('CUSTOMERDATA', customerData)
   const validateFields = () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const phoneRegex = /^\d{10}$/
+
     const errors: { [key: string]: string } = {}
     if (!name) errors.name = 'Name is required'
     if (!id) errors.id = 'ID is required'
-    if (!phone) errors.phone = 'Phone is required'
-    if (!email) errors.email = 'Email is required'
+    if (!phone) {
+      errors.phone = 'Phone is required'
+    } else if (!phoneRegex.test(phone)) {
+      errors.phone = 'Phone must be a 10-digit number'
+    }
+
+    if (!email) {
+      errors.email = 'Email is required'
+    } else if (!emailRegex.test(email)) {
+      errors.email = 'Please enter a valid email format'
+    }
     if (!street) errors.street = 'Street is required'
     if (!street) errors.apt = 'Apt is required'
     if (!zipCode) errors.zipCode = 'ZipCode is required'
     if (!role) errors.role = 'Role is required'
     if (!country) errors.country = 'Country is required'
     if (!state) errors.state = 'State is required'
-    if (!password) errors.password = 'Password is required'
+    if (!password) {
+      errors.password = 'Password is required'
+    }
     if (!password) errors.confirmPassword = 'Confirm Password is required'
     if (password !== confirmPassword) errors.confirmPassword = 'Passwords do not match'
     return errors
@@ -184,7 +198,12 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
         <div className="flex gap-8 mt-3 ">
           <div>
-            <span className="font-medium text-sm text-[#000000]">Name</span>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Name
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
             <div className="mt-1">
               <InputText
                 value={name}
@@ -207,7 +226,12 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           </div>
 
           <div>
-            <span className="font-medium text-sm text-[#000000]">ID</span>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                ID
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
             <div className="mt-1">
               <InputText
                 value={id}
@@ -229,7 +253,12 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           </div>
 
           <div>
-            <span className="font-medium text-sm text-[#000000]">Phone</span>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Phone
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
             <div className="mt-1">
               <InputText
                 value={phone}
@@ -253,7 +282,12 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         <div className="flex gap-8 ">
           <div>
             <div className="mt-3">
-              <span className="font-medium text-sm text-[#000000]">Email Address</span>
+              <span className="font-medium text-sm text-[#000000]">
+                <div className="flex gap-1">
+                  Email Address
+                  <p className="text-red-600">*</p>
+                </div>
+              </span>
             </div>
 
             <div className="mt-1">
@@ -275,7 +309,12 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
           <div>
             <div className="mt-3">
-              <span className="font-medium text-sm text-[#000000]">Role</span>
+              <span className="font-medium text-sm text-[#000000]">
+                <div className="flex gap-1">
+                  Role
+                  <p className="text-red-600">*</p>
+                </div>
+              </span>
             </div>
 
             <div className="mt-1">
@@ -299,17 +338,19 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 }}
               />
             </div>
-
             <p className="p-1">
               {fieldErrors.role && <small className="p-error">{fieldErrors.role}</small>}
             </p>
           </div>
         </div>
-
         <div className="mt-5">
-          <h1 className="text-xs text-black">Address</h1>
+          <h1 className="text-xs text-black">
+            <div className="flex gap-1">
+              Address
+              <p className="text-red-600">*</p>
+            </div>
+          </h1>
         </div>
-
         <div className="gap-8 mt-4">
           <div className="flex gap-8 ">
             <div>
@@ -433,7 +474,12 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
         <div className="flex mt-5 gap-8">
           <div>
-            <span className="font-medium text-sm text-[#000000]">Create password</span>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Create password
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
             <div className="mt-1">
               <InputComponent
                 value={password}
@@ -447,13 +493,18 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   padding: '1.2em',
                 }}
               />
-              <p className="p-1">
+              <p className="p-1 w-48">
                 {fieldErrors.password && <small className="p-error">{fieldErrors.password}</small>}
               </p>
             </div>
           </div>
           <div className="">
-            <span className="font-medium text-sm text-[#000000]">Confirm password</span>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Confirm password
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
             <div className="mt-1 ">
               <InputComponent
                 value={confirmPassword}
