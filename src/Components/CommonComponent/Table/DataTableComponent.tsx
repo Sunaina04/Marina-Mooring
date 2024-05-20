@@ -20,10 +20,12 @@ const DataTableComponent: React.FC<DataTableProps> = ({
       <div className="flex gap-4">
         {actionButtons?.buttons?.map((b, index) => (
           <DataTableButton
+            {...b}
             key={index}
             data-testid="custom-element"
-            onClick={() => b.onClick && b.onClick(rowData)}
-            {...b}
+            onClick={() => {
+              b.onClick && b.onClick(rowData)
+            }}
           />
         ))}
       </div>
@@ -35,7 +37,7 @@ const DataTableComponent: React.FC<DataTableProps> = ({
   }
 
   return (
-    <div className="card " >
+    <div className="card ">
       <DataTable
         value={data}
         tableStyle={tableStyle}
