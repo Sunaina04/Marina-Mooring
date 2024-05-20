@@ -61,10 +61,10 @@ const adminToolsApi = userApi.injectEndpoints({
         url: `api/v1/user/${id}`,
         method: 'PUT',
         body: payload,
-        params: customerAdminId,
+        params: { customerAdminId },
       }),
     }),
   }),
 })
 
-export const { useAddUserMutation, useGetUsersMutation } = adminToolsApi
+export const { useAddUserMutation, useGetUsersMutation, useUpdateUserMutation } = adminToolsApi

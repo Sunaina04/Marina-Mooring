@@ -7,7 +7,7 @@ import { Country, Role, State } from '../../Type/CommonType'
 import { CustomerAdminDataProps } from '../../Type/ComponentBasedType'
 import useMetaData from '../CommonComponent/MetaDataComponent'
 import { SaveUserResponse } from '../../Type/ApiTypes'
-import { useAddUserMutation } from '../../Services/AdminTools/AdminToolsApi'
+import { useAddUserMutation, useUpdateUserMutation } from '../../Services/AdminTools/AdminToolsApi'
 import { Dialog } from 'primereact/dialog'
 
 const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
@@ -30,8 +30,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const [state, setState] = useState<State>()
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [addCustomer] = useAddUserMutation()
-  const { getMetaData } = useMetaData()
   const [rolesData, setRolesData] = useState<Role[]>()
   const [countriesData, setCountriesData] = useState<Country[]>()
   const [statesData, setStatesData] = useState<State[]>()
@@ -39,8 +37,10 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
   const [successMessage, setSuccessMessage] = useState<string>()
   const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false)
+  const [addCustomer] = useAddUserMutation()
+  const [editCustomer] = useUpdateUserMutation()
+  const { getMetaData } = useMetaData()
 
-  console.log('CUSTOMERDATA', customerData)
   const validateFields = () => {
     const errors: { [key: string]: string } = {}
     if (!name) errors.name = 'Name is required'
@@ -92,6 +92,50 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         break
     }
     setFieldErrors((prevErrors) => ({ ...prevErrors, [fieldName]: '' }))
+  }
+
+  const handleEdit = async () => {
+    setErrorMessage('')
+    setSuccessMessage('')
+    const errors = validateFields()
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors)
+      return
+    }
+
+    const editUserPayload = {
+      name,
+      userID: id,
+      phoneNumber: phone,
+      email,
+      street,
+      apt,
+      zipCode,
+      password,
+      state: state?.name ? state?.name : customerData?.state,
+      country: country?.name ? country?.name : customerData?.country,
+      role: role?.name ? role?.name : customerData?.role,
+      confirmPassword,
+    }
+
+    try {
+      const response = await editCustomer({
+        payload: editUserPayload,
+        id: customerData.id,
+        customerAdminId: customerData.customerAdminId,
+      }).unwrap()
+      const { status, content, message } = response as SaveUserResponse
+      if (status === 200 || status === 201) {
+        setSuccessMessage(message || 'Customer Updated successfully')
+        setShowSuccessModal(true)
+        getUser()
+        setModalVisible(false)
+      } else {
+        setErrorMessage(message || 'An error occurred while updating the customer.')
+      }
+    } catch (error) {
+      setErrorMessage('An unexpected error occurred. Please try again later.')
+    }
   }
 
   const handleSave = async () => {
@@ -155,11 +199,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     }
   }, [])
 
-  useEffect(() => {
-    fetchDataAndUpdate()
-  }, [fetchDataAndUpdate])
-
-  useEffect(() => {
+  const handleEditMode = () => {
     if (editMode && customerData) {
       setName(customerData.name || '')
       setId(customerData.userID || '')
@@ -174,6 +214,14 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       setCountry(customerData.country || undefined)
       setState(customerData.state || undefined)
     }
+  }
+
+  useEffect(() => {
+    fetchDataAndUpdate()
+  }, [fetchDataAndUpdate])
+
+  useEffect(() => {
+    handleEditMode()
   }, [editMode, customerData])
 
   return (
@@ -478,7 +526,13 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         <div className="flex gap-4 mt-10 ">
           <Button
             label={'Save'}
-            onClick={handleSave}
+            onClick={() => {
+              if (editMode) {
+                handleEdit()
+              } else {
+                handleSave()
+              }
+            }}
             style={{
               width: '89px',
               height: '42px',
