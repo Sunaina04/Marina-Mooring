@@ -7,58 +7,12 @@ import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTable
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import Header from '../../Layout/LayoutComponents/Header'
 import AddCustomer from '../../Moormanage/Customer/AddCustomer'
+import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 
-interface TableColumn {
-  id: string
-  label: string
-  style: {
-    width: string
-    backgroundColor: string
-  }
-}
 
-type TableColumns = TableColumn[]
 const AccountPayable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [accountPayableData, setAccountPayableData] = useState<MoorPayProps[]>([
-    {
-      invoice: '#425',
-      mooringId: '#6658',
-      customerName: 'John Smith',
-      technicianName: 'jim Carry',
-      services: 'Regular Services',
-      time: '2hrs',
-      amount: '$12',
-    },
-
-    {
-      invoice: '#425',
-      mooringId: '#6658',
-      customerName: 'John Smith',
-      technicianName: 'jim Carry',
-      services: 'Regular Services',
-      time: '2hrs',
-      amount: '$12',
-    },
-    {
-      invoice: '#425',
-      mooringId: '#6658',
-      customerName: 'John Smith',
-      technicianName: 'jim Carry',
-      services: 'Regular Services',
-      time: '2hrs',
-      amount: '$12',
-    },
-    {
-      invoice: '#425',
-      mooringId: '#6658',
-      customerName: 'John Smith',
-      technicianName: 'jim Carry',
-      services: 'Regular Services',
-      time: '2hrs',
-      amount: '$12',
-    },
-  ])
+  const [accountPayableData, setAccountPayableData] = useState<MoorPayProps[]>([])
 
   const handleButtonClick = () => {
     //setIsModalOpen(true)
@@ -68,74 +22,99 @@ const AccountPayable = () => {
     setIsModalOpen(false)
   }
 
-  const tableColumns: TableColumns = useMemo<TableColumns>(
-    () => [
-      {
-        id: 'customerId',
-        label: 'Customer ID',
-        style: { width: '6vw', backgroundColor: '#F2F2F2' },
-      },
-      {
-        id: 'mooringId',
-        label: 'Mooring ID',
-        style: { width: '12vw', backgroundColor: '#F2F2F2' },
-      },
-      {
-        id: 'boatyard',
-        label: 'Boatyard',
-        style: { width: '10vw', backgroundColor: '#F2F2F2' },
-      },
-      {
-        id: 'assignedTo',
-        label: 'Assigned to',
-        style: { width: '12vw', backgroundColor: '#F2F2F2' },
-      },
-      {
-        id: 'status',
-        label: 'Status',
-        style: { width: '10vw', backgroundColor: '#F2F2F2' },
-      },
-    ],
-    [],
-  )
-
-  const CustomersHeader = () => {
-    return (
-      <div className="flex items-center">
-        <div className="">
-          <h1>Account Payable</h1>
-        </div>
-      </div>
-    )
+  const columnStyle = {
+    borderBottom: '1px solid #C0C0C0',
+    backgroundColor: '#FFFFFF',
+    color: '#000000',
+    fontWeight: 'bold',
   }
+
+  const accountPayableTableColumns= useMemo(
+    () => [
+    
+          {
+            id: 'invoice',
+            label: 'Invoice',
+            style: columnStyle,
+          },
+          {
+            id: 'mooringId',
+            label: 'Mooring ID',
+            style: columnStyle,
+          },
+          {
+            id: 'customerName',
+            label: 'Customer Name',
+            style: columnStyle,
+          },
+          {
+            id: 'technicianName',
+            label: 'Technician Name',
+            style: columnStyle,
+          },
+          {
+            id: 'services',
+            label: 'Services',
+            style: columnStyle,
+          },
+          {
+            id: 'time',
+            label: 'Time',
+            style: columnStyle,
+          },
+          {
+            id: 'amount',
+            label: 'Amount',
+            style: columnStyle,
+          },
+        ],
+        [],
+      )
+    
 
   const ActionButtonColumn: ActionButtonColumnProps = {
     header: 'Action',
+
     buttons: [
       {
         color: 'green',
         label: 'Paid',
         filled: true,
+        fontWeight:400,
+        style:{
+          width:'46px',
+          height:'17px'
+        }
+        
+       
       },
     ],
-    headerStyle: { backgroundColor: '#F2F2F2' },
+    headerStyle: {
+      backgroundColor: '#FFFFFF',
+      height: '3.50rem',
+      fontWeight: '700',
+      color: 'black',
+      borderBottom:'1px solid #C0C0C0'
+    },
+    style: { borderBottom: '1px solid #D5E1EA ',fontWeight:'500' },
   }
 
   return (
     <>
       <Header header="MOORPAY/Account Payable" />
-      <div className="flex justify-end gap-4 mr-16">
-        <div className="flex  text-blue-900 font-extrabold mt-14">
-          <div>
+     
+        <div className="flex justify-end mr-16">
+        <div className="flex gap-4 ml-[18rem] text-[gray] font-extrabold mt-14">
+          <div  style={{ marginTop: '0.8rem' }}>
             <img
-              src="/assets/images/download.png"
+              src="/assets/images/downloadIcon.png"
               alt=""
               className="w-5 "
-              style={{ filter: 'grayscale(100%)', color: 'gray' }}
             />
+          
           </div>
-          <div>
-            <h1>DownLoad Excel</h1>
+          <div  style={{ marginTop: '0.6rem', color: '#00426F',marginRight:'1.5rem' }}>
+            <h1>Download Excel</h1>
           </div>
         </div>
 
@@ -178,18 +157,41 @@ const AccountPayable = () => {
         </div>
       </div>
 
-      <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[67vw]  ml-32 mb-80">
-        <DataTableSearchFieldComponent
+      <div
+        style={{
+          
+          gap: '0px',
+          borderRadius: '10px',
+          border: '1px solid #D5E1EA',
+          opacity: '0px',
+          backgroundColor: '#FFFFFF',
+          
+          
+        }}
+        className="bg-[F2F2F2]  ml-12  mt-10 mr-14">
+        <div className="flex flex-wrap align-items-center justify-between  bg-[#00426F] p-2   rounded-tl-[10px] rounded-tr-[10px]">
+          <span
+            style={{
+              fontSize: '18px',
+              fontWeight: '700',
+              lineHeight: '21.09px',
+              letterSpacing: '0.4837472140789032px',
+              color: '#FFFFFF',
+              padding: '8px',
+            }}>
+            Account Payable
+          </span>
+        </div>
+        <DataTableComponent
           tableStyle={{
             fontSize: '12px',
             color: '#000000',
-            fontWeight: 600,
+            fontWeight: 700,
           }}
-          data={accountPayableData}
-          columns={tableColumns}
-          header={CustomersHeader}
+          data={undefined}
+          columns={accountPayableTableColumns}
           actionButtons={ActionButtonColumn}
-          style={{ backgroundColor: '#F2F2F2' }}
+          style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
         />
       </div>
     </>

@@ -92,6 +92,7 @@ const AccountRecievable = () => {
       height: '3.50rem',
       fontWeight: 'bold',
       color: 'black',
+      borderBottom:'1px solid #C0C0C0'
     },
     style: { borderBottom: '1px solid #D5E1EA' },
   }
@@ -106,11 +107,10 @@ const AccountRecievable = () => {
             <img src="/assets/images/downloadIcon.png" alt="" className="w-5 " />
           </div>
 
-          <div style={{ marginTop: '0.6rem', color: '#00426F' }}>
+          <div style={{ marginTop: '0.6rem', color: '#00426F',marginRight:'1.5rem' }}>
             <h1>Download Excel</h1>
           </div>
 
-          <div></div>
         </div>
         <div className="mt-14 ">
           <CustomModal
@@ -153,15 +153,15 @@ const AccountRecievable = () => {
 
       <div
         style={{
-          height: '640px',
+          
           gap: '0px',
           borderRadius: '10px',
           border: '1px solid #D5E1EA',
           opacity: '0px',
           backgroundColor: '#FFFFFF',
         }}
-        className="bg-[F2F2F2]  ml-12  mt-6 mr-14">
-        <div className="flex flex-wrap align-items-center justify-between  bg-[#00426F] p-2   rounded-tl-[5px] rounded-tr-[5px]">
+        className="bg-[F2F2F2]  ml-12  mt-10 mr-14">
+        <div className="flex flex-wrap align-items-center justify-between  bg-[#00426F] p-2   rounded-tl-[10px] rounded-tr-[10px]">
           <span
             style={{
               fontSize: '18px',
@@ -183,7 +183,7 @@ const AccountRecievable = () => {
           data={undefined}
           columns={accountRecievableTableColumn}
           actionButtons={ActionButtonColumn}
-          style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '200' }}
+          style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
         />
       </div>
     </>
