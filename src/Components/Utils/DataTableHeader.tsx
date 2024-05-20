@@ -1,5 +1,5 @@
 import { InputText } from 'primereact/inputtext'
-import "./DataTableHeader.module.css"
+import './DataTableHeader.module.css'
 export const CustomersHeader = () => {
   return (
     <div className="flex flex-col">
@@ -33,7 +33,7 @@ export const CustomersHeader = () => {
           }}
         />
       </div>
-      <span className="border-[1px] border-[#D5E1EA] w-[22vw] mt-3 "></span>
+      <span className="border-[1px] border-[#D5E1EA] w-[30vw] mt-3 "></span>
     </div>
   )
 }
@@ -75,8 +75,6 @@ export const TechniciansHeader = () => {
     </div>
   )
 }
-
-
 
 export const MooringsHeader = () => {
   return (
