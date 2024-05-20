@@ -7,7 +7,7 @@ const SidebarMenu = () => {
   let adminSubcategories
 
   switch (userData?.role?.name) {
-    case 'CUSTOMER_ADMIN':
+    case 'CUSTOMER OWNER':
       link = '/permission'
       adminSubcategories = [
         {

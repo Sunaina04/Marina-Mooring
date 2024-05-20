@@ -57,7 +57,7 @@ const Header: React.FC<HeaderProps> = ({ header }) => {
           minWidth: '300px',
           justifyContent: 'end',
         }}>
-        {role === 'OWNER' && (
+        {role === 'ADMINISTRATOR' && (
           <Dropdown
             value={selectRole}
             onChange={(e) => setSelectRole(e.value)}

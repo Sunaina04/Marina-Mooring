@@ -196,6 +196,8 @@ const CustomerOwner = () => {
           style={{
             height: 'calc(40vw - 10px)',
             minHeight: '700px',
+            width: '33vw',
+            minWidth: '33vw',
             borderRadius: '15px',
             border: '1px solid #D5E1EA',
             backgroundColor: '#FFFFFF',
@@ -244,6 +246,8 @@ const CustomerOwner = () => {
             flexGrow: 1,
             height: 'calc(40vw - 10px)',
             minHeight: '700px',
+            // width: '35vw',
+            // minWidth: '35vw',
             borderRadius: '15px',
             border: '1px solid #D5E1EA',
             backgroundColor: '#FFFFFF',
