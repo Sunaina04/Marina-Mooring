@@ -122,6 +122,10 @@ export interface CustomerAdminDataProps {
   closeModal: () => void
   getUser: () => void
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>
+onFocus?: (e: FocusEvent) => void;
+  onBlur?: (e: FocusEvent) => void;
+
+
 }
 
 export interface HeaderProps {

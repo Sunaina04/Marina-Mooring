@@ -40,13 +40,25 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const [addCustomer] = useAddUserMutation()
   const [editCustomer] = useUpdateUserMutation()
   const { getMetaData } = useMetaData()
-
+  const [passwordCriteria, setPasswordCriteria] = useState({
+    uppercase: false,
+    lowercase: false,
+    number: false,
+    specialChar: false,
+    length: false,
+  })
   const validateFields = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const phoneRegex = /^\d{10}$/
-
+    const nameRegex = /^[a-zA-Z ]+$/
     const errors: { [key: string]: string } = {}
-    if (!name) errors.name = 'Name is required'
+    if (!name) {
+      errors.name = 'Name is required'
+    } else if (!nameRegex.test(name)) {
+      errors.name = 'Name must only contain letters'
+    } else if (name.length < 3) {
+      errors.name = 'Name must be at least 3 characters long'
+    }
     if (!id) errors.id = 'ID is required'
     if (!phone) {
       errors.phone = 'Phone is required'
@@ -74,6 +86,20 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   }
 
   const handleInputChange = (fieldName: string, value: any) => {
+    const hasUppercase = /[A-Z]/.test(value)
+    const hasLowercase = /[a-z]/.test(value)
+    const hasNumber = /\d/.test(value)
+    const hasSpecialChar = /[@$!%*?&]/.test(value)
+    const hasMinLength = value.length >= 8
+
+    setPasswordCriteria({
+      uppercase: hasUppercase,
+      lowercase: hasLowercase,
+      number: hasNumber,
+      specialChar: hasSpecialChar,
+      length: hasMinLength,
+    })
+
     switch (fieldName) {
       case 'name':
         setName(value)
@@ -106,6 +132,16 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         break
     }
     setFieldErrors((prevErrors) => ({ ...prevErrors, [fieldName]: '' }))
+  }
+
+  const handleFocus = () => {
+    const passwordMessage = document.getElementById('password-message')
+    if (passwordMessage) passwordMessage.style.display = 'block'
+  }
+
+  const handleBlur = () => {
+    const passwordMessage = document.getElementById('password-message')
+    if (passwordMessage) passwordMessage.style.display = 'none'
   }
 
   const handleEdit = async () => {
@@ -539,6 +575,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
               <InputComponent
                 value={password}
                 onChange={(e) => handleInputChange('password', e.target.value)}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -551,6 +589,85 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
               <p className="p-1 w-48">
                 {fieldErrors.password && <small className="p-error">{fieldErrors.password}</small>}
               </p>
+              <div id="password-message" className="mt-2 hidden">
+                <div className="flex items-center gap-2">
+                  <img
+                    src={
+                      passwordCriteria.uppercase
+                        ? '/assets/images/check-mark.png'
+                        : '/assets/images/close.png'
+                    }
+                    alt="icon"
+                    className="w-4"
+                  />
+                  <p
+                    className={`password-message-item ${passwordCriteria.uppercase ? 'text-green-500' : 'text-red-500'}`}>
+                    At least one uppercase letter
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <img
+                    src={
+                      passwordCriteria.lowercase
+                        ? '/assets/images/check-mark.png'
+                        : '/assets/images/close.png'
+                    }
+                    alt="icon"
+                    className="w-4"
+                  />
+                  <p
+                    className={`password-message-item ${passwordCriteria.lowercase ? 'text-green-500' : 'text-red-500'}`}>
+                    At least one lowercase letter
+                  </p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <img
+                    src={
+                      passwordCriteria.number
+                        ? '/assets/images/check-mark.png'
+                        : '/assets/images/close.png'
+                    }
+                    alt="icon"
+                    className="w-4"
+                  />
+                  <p
+                    className={`password-message-item ${passwordCriteria.number ? 'text-green-500' : 'text-red-500'}`}>
+                    At least one number
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <img
+                    src={
+                      passwordCriteria.specialChar
+                        ? '/assets/images/check-mark.png'
+                        : '/assets/images/close.png'
+                    }
+                    alt="icon"
+                    className="w-4"
+                  />
+                  <p
+                    className={`password-message-item ${passwordCriteria.specialChar ? 'text-green-500' : 'text-red-500'}`}>
+                    At least one special character (@, $, !, %, *, ?, &)
+                  </p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <img
+                    src={
+                      passwordCriteria.length
+                        ? '/assets/images/check-mark.png'
+                        : '/assets/images/close.png'
+                    }
+                    alt="icon"
+                    className="w-4"
+                  />
+                  <p
+                    className={`password-message-item ${passwordCriteria.length ? 'text-green-500' : 'text-red-500'}`}>
+                    At least 8 characters
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
           <div className="">
