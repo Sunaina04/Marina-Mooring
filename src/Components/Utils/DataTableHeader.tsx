@@ -33,7 +33,11 @@ export const CustomersHeader = () => {
           }}
         />
       </div>
+<<<<<<< Updated upstream
       <span className="border-[1px] border-[#D5E1EA] w-[31vw] mt-3 "></span>
+=======
+      <span className="border-[1px] border-[#D5E1EA] w-[380px] mt-3 "></span>
+>>>>>>> Stashed changes
     </div>
   )
 }

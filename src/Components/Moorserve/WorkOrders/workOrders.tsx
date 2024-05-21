@@ -170,13 +170,13 @@ const WorkOrders = () => {
                   className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5"
                   data-testid="search-icon"
                 />
-                <input
-                  placeholder="Search"
-                  className="pl-10 w-[237px] 
-                  bg-[#00426F]
-              
-                  h-[35px] rounded-lg border text-white border-[#D5E1EA] focus:outline-none"
-                />
+               <input
+  placeholder="Search"
+  className="pl-10 w-[237px] 
+  bg-[#00426F]
+  h-[35px] rounded-lg border border-[#D5E1EA] placeholder:text-[#FFFFFF] text-[#FFFFFF] focus:outline-none"
+  
+/>
               </div>
             </div>
           </div>

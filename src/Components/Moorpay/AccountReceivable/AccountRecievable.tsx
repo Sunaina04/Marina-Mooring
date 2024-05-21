@@ -153,7 +153,7 @@ const AccountRecievable = () => {
 
       <div
         style={{
-          
+          height:'648px',
           gap: '0px',
           borderRadius: '10px',
           border: '1px solid #D5E1EA',
