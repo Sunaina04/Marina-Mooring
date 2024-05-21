@@ -36,7 +36,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const [errorMessage, setErrorMessage] = useState<string>()
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
   const [successMessage, setSuccessMessage] = useState<string>()
-  const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false)
+  const [dialogVisible, setDialogVisible] = useState<boolean>(false)
   const [addCustomer] = useAddUserMutation()
   const [editCustomer] = useUpdateUserMutation()
   const { getMetaData } = useMetaData()
@@ -141,13 +141,15 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       const { status, content, message } = response as SaveUserResponse
       if (status === 200 || status === 201) {
         setSuccessMessage(message || 'Customer Updated successfully')
-        setShowSuccessModal(true)
+        setDialogVisible(true)
         getUser()
         setModalVisible(false)
       } else {
+        setDialogVisible(true)
         setErrorMessage(message || 'An error occurred while updating the customer.')
       }
     } catch (error) {
+      setDialogVisible(true)
       setErrorMessage('An unexpected error occurred. Please try again later.')
     }
   }
@@ -184,13 +186,14 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       const { status, content, message } = response as SaveUserResponse
       if (status === 200 || status === 201) {
         setSuccessMessage(message || 'Customer added successfully')
-        setShowSuccessModal(true)
+        setDialogVisible(true)
         getUser()
-        setModalVisible(false)
       } else {
+        setDialogVisible(true)
         setErrorMessage(message || 'An error occurred while saving the customer.')
       }
     } catch (error) {
+      setDialogVisible(true)
       setErrorMessage('An unexpected error occurred. Please try again later.')
     }
   }
@@ -619,14 +622,42 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       </div>
 
       <Dialog
-        header="Success"
-        visible={showSuccessModal}
-        style={{ width: '50vw' }}
+        header={
+          <div className="flex items-center justify-center py-4">
+            <h2 className={`text-2xl font-semibold ${successMessage ? '#00426F' : 'text-red-600'}`}>
+              {successMessage ? 'Success' : 'Error !!!'}
+            </h2>
+          </div>
+        }
+        footer={
+          <div className="flex justify-end mt-4">
+            <button
+              className="bg-#0098FF hover:bg-blue-500 text-white font-bold py-2 px-4 rounded inline-flex items-center mr-2"
+              onClick={() => {
+                setDialogVisible(false)
+                if (successMessage) {
+                  handleBack()
+                } else {
+                  closeModal()
+                }
+              }}>
+              Close
+            </button>
+          </div>
+        }
+        visible={dialogVisible}
+        style={{ width: '35vw' }}
         onHide={() => {
-          setShowSuccessModal(false)
-          closeModal()
+          setDialogVisible(false)
+          if (successMessage) {
+            handleBack()
+          } else {
+            closeModal()
+          }
         }}>
-        <p>{successMessage}</p>
+        <div className="p-6">
+          <p className="text-lg text-gray-800">{successMessage ? successMessage : errorMessage}</p>
+        </div>
       </Dialog>
     </>
   )

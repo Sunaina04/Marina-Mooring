@@ -22,7 +22,8 @@ const CustomerOwner = () => {
   const { getMetaData } = useMetaData()
   const [rolesData, setRolesData] = useState<Role[]>()
   const [selectRole, setSelectRole] = useState()
-  const [customerAdminId, setCustomerAdminId] = useState('')
+  const [firstUserId, setFirstUserId] = useState('')
+  const [customerAdminId, setCustomerAdminId] = useState(firstUserId)
   const [getUser] = useGetUsersMutation()
   const [getCustomerOwnerData, setgetCustomerOwnerData] = useState<CustomerPayload[]>([])
   const [getCustomerOwnerUserData, setgetCustomerOwnerUserData] = useState<CustomerPayload[]>([])
@@ -107,28 +108,41 @@ const CustomerOwner = () => {
     try {
       const response = await getUser({}).unwrap()
       const { status, content } = response as GetUserResponse
-      if (status === 200 && Array.isArray(content?.content)) {
+      if (status === 200 && Array.isArray(content?.content) && content?.content.length > 0) {
         setgetCustomerOwnerData(content?.content)
+
+        // Set data for the first user by default
+        const firstUser = content?.content[0]
+        setFirstUserId(firstUser.id)
+        console.log('firstUserId in function', firstUserId)
       }
     } catch (error) {
       console.error('Error occurred while fetching customer data:', error)
     }
   }
 
-  const getCustomerAdminsUsers = async (row: any) => {
+  const getCustomerAdminsUsers = async (id: any) => {
     try {
-      const response = await getUser({ customerAdminId: row?.id }).unwrap()
+      const response = await getUser({ customerAdminId: id }).unwrap()
       const { status, content } = response as GetUserResponse
       if (status === 200 && Array.isArray(content?.content)) {
         setgetCustomerOwnerUserData(content?.content)
         setIsRowClick(true)
-        setSelectedRow(row?.id)
-        setCustomerAdminId(row?.id)
+        setSelectedRow(id)
+        setCustomerAdminId(id)
+      } else {
+        setIsRowClick(false)
+        setgetCustomerOwnerUserData([])
       }
     } catch (error) {
       console.error('Error occurred while fetching customer data:', error)
     }
   }
+
+  useEffect(() => {
+    getCustomerAdminsUsers(firstUserId)
+    console.log('i am here', firstUserId)
+  }, [firstUserId])
 
   useEffect(() => {
     getUserHandler()
@@ -230,7 +244,7 @@ const CustomerOwner = () => {
                 columns={customerOwnerTableColumn}
                 header={CustomersHeader}
                 onRowClick={(e) => {
-                  getCustomerAdminsUsers(e.data)
+                  getCustomerAdminsUsers(e.data.id)
                 }}
                 style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
                 rowStyle={(rowData) => ({
