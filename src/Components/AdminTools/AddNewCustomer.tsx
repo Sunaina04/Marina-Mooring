@@ -568,7 +568,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         <div className="flex mt-5 gap-8 ml-4">
           <div>
             <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
+              <div className="flex gap-1 text-center ">
                 Create password
                 <p className="text-red-600">*</p>
               </div>
@@ -593,10 +593,12 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
               </p>
 
               <div
-                style={{ width: '12vw', fontSize: '14px', fontWeight: 500 }}
+                style={{ width: '230px', fontSize: '14px' }}
                 id="password-message"
                 className="mt-2 hidden ">
-                <h3 className="font-medium text-sm text-[#000000]">Password must contain:</h3>
+                <h3 className="font-medium text-sm text-[#000000] flex justify-center mr-3">
+                  Password must contain:
+                </h3>
                 <div className="flex items-center gap-6 p-1 mt-2">
                   {passwordCriteria.uppercase ? (
                     <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
@@ -605,7 +607,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   )}
                   <p
                     className={`password-message-item ${passwordCriteria.uppercase ? 'text-green-500' : 'text-red-500'}`}>
-                    At least one uppercase letter
+                    At least <span className="font-[500]"> one uppercase letter</span>
                   </p>
                 </div>
 
@@ -618,7 +620,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
                   <p
                     className={`password-message-item ${passwordCriteria.lowercase ? 'text-green-500' : 'text-red-500'}`}>
-                    At least one lowercase letter
+                    At least <span className="font-[500]">one lowercase letter</span>
                   </p>
                 </div>
                 <div className="flex items-center gap-6 p-1 ">
@@ -629,7 +631,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   )}
                   <p
                     className={`password-message-item ${passwordCriteria.number ? 'text-green-500' : 'text-red-500'}`}>
-                    At least one number
+                    At least<span className="font-[500]">one number</span>
                   </p>
                 </div>
 
@@ -641,7 +643,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   )}
                   <p
                     className={`password-message-item ${passwordCriteria.specialChar ? 'text-green-500' : 'text-red-500'}`}>
-                    At least one special character (@, $, !, %, *, ?, &)
+                    At least<span className="font-[500]">one special character</span>
                   </p>
                 </div>
                 <div className="flex items-center gap-6 p-1 ">
@@ -652,7 +654,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   )}
                   <p
                     className={`password-message-item ${passwordCriteria.length ? 'text-green-500' : 'text-red-500'}`}>
-                    At least 8 characters
+                    At least <span className="font-[500]">8 characters</span>
                   </p>
                 </div>
               </div>
