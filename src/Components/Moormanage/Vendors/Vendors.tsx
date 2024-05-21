@@ -107,6 +107,7 @@ const Vendors = () => {
           color: 'black',
           label: 'View Inventory',
           underline: true,
+          style:{margin:0}
         },
         {
           color: 'green',
@@ -125,8 +126,10 @@ const Vendors = () => {
         color: '#FFFFFF',
         height: '3.50rem',
         borderTopRightRadius: '10px',
+        borderBottom:'1px solid #C0C0C0',
+        
       },
-      style: { borderBottom: '1px solid #D5E1EA' },
+      style: { borderBottom: '1px solid #D5E1EA ',width:'14rem'  },
     }),
     [],
   )
@@ -193,17 +196,21 @@ const Vendors = () => {
           backgroundColor: '#FFFFFF',
         }}
         className=" ml-[3rem] mr-[2.30rem] mt-8">
+
         <DataTableSearchFieldComponent
           tableStyle={{
             fontSize: '12px',
             color: '#000000',
             fontWeight: '400',
+            padding:'2rem'
+            
           }}
+          
           data={vendorDataa}
           columns={VendorColumns}
           header={undefined}
           actionButtons={ActionButtonColumn}
-          style={{ backgroundColor: '#FFFFFF', borderBottom: '1px solid #D5E1EA' }}
+          style={{ backgroundColor: '#FFFFFF', borderBottom: '1px solid #D5E1EA ' }}
         />
       </div>
     </>

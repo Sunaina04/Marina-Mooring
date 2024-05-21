@@ -17,7 +17,7 @@ const DataTableComponent: React.FC<DataTableProps> = ({
 }) => {
   const buttonBody = (rowData: any) => {
     return (
-      <div className="flex gap-4">
+      <div className="flex gap-4  ">
         {actionButtons?.buttons?.map((b, index) => (
           <DataTableButton
             {...b}

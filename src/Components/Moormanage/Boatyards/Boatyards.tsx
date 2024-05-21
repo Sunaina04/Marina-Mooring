@@ -345,6 +345,27 @@ const Boatyards = () => {
     [allowExpansion],
   )
 
+  const boatyardMooringTableComponents = useMemo(
+    () => [
+      {
+        id: 'address',
+        label: 'Address',
+        style: columnStyle,
+      },
+      {
+        id: 'mooringInventoried',
+        label: 'Mooring Inventoried',
+        style: columnStyle,
+      },
+      {
+        id: 'boatyardGpsCoorinates',
+        label: 'Boatyard GPS Coordinates',
+        style: columnStyle,
+      },
+    ],
+    [],
+  )
+
   return (
     <>
       <Header header="MOORMANAGE/Boatyards" />
@@ -369,7 +390,7 @@ const Boatyards = () => {
                 editMode={editMode}
               />
             }
-            headerText={<h1 className="text-xl font-extrabold text-black-600 ml-4">New User</h1>}
+            headerText={<h1 className="text-xl font-extrabold text-black ml-4">New User</h1>}
             visible={modalVisible}
             onClick={handleButtonClick}
             onHide={handleModalClose}
@@ -411,14 +432,14 @@ const Boatyards = () => {
             }}
             iconStyle={{ marginLeft: '1.5rem', color: '#00426F' }}
             inputTextStyle={{
-              height: '5vh',
+              height: '44px',
               width: '480px',
               margin: '1rem',
               cursor: 'pointer',
               color: '#A4A4A4',
               border: '1px solid  #9F9F9F',
               paddingLeft: '2.5rem',
-              borderRadius: '0.45rem',
+              borderRadius: '5px',
               fontSize: '0.80rem',
               backgroundColor: 'F2F2F2',
             }}
@@ -446,23 +467,30 @@ const Boatyards = () => {
               <h1 className="p-4">{properties.boatyardMooringHeader}</h1>
             </div>
           </div>
-          <div className=" bg-[#F2F2F2] mt-2">
-            <div
-              className="flex justify-start gap-12 ml-4 border-[1px] border-gray-300"
-              style={{ fontSize: '12px', fontWeight: '700' }}>
-              <p>{properties.address}</p>
+          {/* <div className=" bg-[#F2F2F2] mt-2 "> */}
+          {/* <div className='flex justify-start gap-12 ml-4 border-[1px] border-gray-300' style={{fontSize:'12px', fontWeight:'700'}} > */}
+          {/* <p >{properties.address}</p>
               <p>{properties.mooringInventoried}</p>
-              <p>{properties.boatyardGPSCoordinates}</p>
-            </div>
-            <div className="border-[1px] border-[#9F9F9F]  w-[full] mt-3 "></div>
+              <p>{properties.boatyardGPSCoordinates}</p> */}
+          <DataTableComponent
+            data={undefined}
+            columns={boatyardMooringTableComponents}
+            tableStyle={{
+              fontSize: '12px',
+              color: '#000000',
+              fontWeight: 700,
+            }}
+          />
+
+          {/* <div className="border-[1px] border-[#D5E1EA]  w-[full] mt-3 "></div>
             <div className="flex justify-start gap-14  mt-2  font-normal text-sm">
-              <p className="ml-6">123 Elm St</p>
-              <p>25</p>
-              <p className="ml-20  underline">38 21.806 144</p>
-            </div>
-          </div>
+              <p className='ml-6'>123 Elm St</p>
+              <p  >25</p>
+              <p className='ml-20  underline' >38 21.806 144</p>
+            </div> */}
+          {/* </div> */}
           <div className="w-[512px] h-[150px] p-3.5 rounded-lg">
-            <CustomSelectPositionMap onPositionChange={handlePositionChange} zoomLevel={12} />
+            <CustomSelectPositionMap onPositionChange={handlePositionChange} zoomLevel={50} />
           </div>
           <div className="overflow-x-hidden overflow-y-scroll  ">
             <DataTableComponent
