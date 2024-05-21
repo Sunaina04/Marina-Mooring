@@ -15,6 +15,7 @@ import AddCustomer from '../../Moormanage/Customer/AddCustomer'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import { FormDataa } from '../../Utils/CustomData'
+import { InputText } from 'primereact/inputtext'
 
 const Forms = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -172,6 +173,7 @@ const Forms = () => {
 
       <div
         style={{
+          height: '640px',
           gap: '0px',
           borderRadius: '10px',
           border: '1px solid #D5E1EA',
@@ -200,7 +202,7 @@ const Forms = () => {
                 className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5"
                 data-testid="search-icon"
               />
-              <input
+              <InputText
                 placeholder="Search"
                 className="pl-10 w-[237px] 
                   bg-[#00426F]
@@ -210,7 +212,13 @@ const Forms = () => {
             </div>
           </div>
         </div>
-        <DataTableComponent
+
+        {/* No Data Avaialble */}
+        <div className="text-center mt-40">
+          <img src="/assets/images/empty.png" alt="Empty Data" className="w-32 mx-auto mb-4" />
+          <p className="text-gray-500">No data available</p>
+        </div>
+        {/* <DataTableComponent
           tableStyle={{
             fontSize: '12px',
             color: '#000000',
@@ -220,7 +228,7 @@ const Forms = () => {
           columns={FormsColumns}
           actionButtons={ActionButtonColumn}
           style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '200' }}
-        />
+        /> */}
       </div>
     </>
   )

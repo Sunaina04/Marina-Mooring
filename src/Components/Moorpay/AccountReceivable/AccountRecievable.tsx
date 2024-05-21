@@ -92,7 +92,7 @@ const AccountRecievable = () => {
       height: '3.50rem',
       fontWeight: 'bold',
       color: 'black',
-      borderBottom:'1px solid #C0C0C0'
+      borderBottom: '1px solid #C0C0C0',
     },
     style: { borderBottom: '1px solid #D5E1EA' },
   }
@@ -107,10 +107,9 @@ const AccountRecievable = () => {
             <img src="/assets/images/downloadIcon.png" alt="" className="w-5 " />
           </div>
 
-          <div style={{ marginTop: '0.6rem', color: '#00426F',marginRight:'1.5rem' }}>
+          <div style={{ marginTop: '0.6rem', color: '#00426F', marginRight: '1.5rem' }}>
             <h1>Download Excel</h1>
           </div>
-
         </div>
         <div className="mt-14 ">
           <CustomModal
@@ -153,7 +152,7 @@ const AccountRecievable = () => {
 
       <div
         style={{
-          height:'648px',
+          height: '648px',
           gap: '0px',
           borderRadius: '10px',
           border: '1px solid #D5E1EA',
@@ -174,7 +173,13 @@ const AccountRecievable = () => {
             Account Receivable
           </span>
         </div>
-        <DataTableComponent
+
+        {/* No Data Avaialble */}
+        <div className="text-center mt-40">
+          <img src="/assets/images/empty.png" alt="Empty Data" className="w-32 mx-auto mb-4" />
+          <p className="text-gray-500">No data available</p>
+        </div>
+        {/* <DataTableComponent
           tableStyle={{
             fontSize: '12px',
             color: '#000000',
@@ -184,7 +189,7 @@ const AccountRecievable = () => {
           columns={accountRecievableTableColumn}
           actionButtons={ActionButtonColumn}
           style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
-        />
+        /> */}
       </div>
     </>
   )

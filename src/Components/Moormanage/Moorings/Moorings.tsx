@@ -197,6 +197,7 @@ const Moorings = () => {
           <div
             style={{
               width: '450px',
+              height: '650px',
               top: '277px',
               left: '107px',
               gap: '0px',
@@ -210,25 +211,36 @@ const Moorings = () => {
               <h1 className="p-4 text-white">Mooring</h1>
             </div>
 
-            <div className="mt-2 ">
-              <DataTableComponent
-                data={filteredMooringData}
-                tableStyle={{
-                  fontSize: '12px',
-                  color: '#000000',
-                  fontWeight: 600,
-                  backgroundColor: '#D9D9D9',
-                }}
-                scrollable={false}
-                columns={MooringColumns}
-                header={MooringsHeader}
-                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
-              />
+            <div className="mt-2">
+              {/* {filteredMooringData.length === 0 ? (
+                <DataTableComponent
+                  data={filteredMooringData}
+                  tableStyle={{
+                    fontSize: '12px',
+                    color: '#000000',
+                    fontWeight: 600,
+                    backgroundColor: '#D9D9D9',
+                  }}
+                  scrollable={false}
+                  columns={MooringColumns}
+                  header={MooringsHeader}
+                  style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+                />
+              ) : ( */}
+              <div className="text-center mt-40">
+                <img
+                  src="/assets/images/empty.png"
+                  alt="Empty Data"
+                  className="w-32 mx-auto mb-4"
+                />
+                <p className="text-gray-500">No data available</p>
+              </div>
+              {/* )} */}
             </div>
           </div>
         </div>
 
-        <div className="relative mr-10">
+        <div className="relative mr-10 min-w-[20vw] max-w-[80vw]">
           <img
             src="/assets/images/map.png"
             className="bg-no-repeat object-cover bg-auto rounded-md w-full h-full"
@@ -263,14 +275,14 @@ const Moorings = () => {
             </div>
           </div>
 
-          <div className="absolute top-5 right-5   w-[25rem] ">
+          <div className="absolute top-5 right-5 w-[25rem]">
             <div
               style={{
                 width: '398px',
                 height: '51px',
                 border: '0.96 px solid #D5E1EA',
               }}
-              className={`flex ${isChecked ? 'bg-[#00426F] rounded-tl-[5px] rounded-tr-[5px] ' : ' bg-[#FFFFFF] rounded-xl    '} i py-3 pl-4 `}>
+              className={`flex ${isChecked ? 'bg-[#00426F] rounded-tl-[5px] rounded-tr-[5px]' : 'bg-[#FFFFFF] rounded-xl'}  py-3 pl-4 `}>
               <div className="flex items-center fixed overflow-hidden">
                 <span
                   className={`flex  text-[15px] font-[700] text-[#000000] ${isChecked ? 'text-[#FFFFFF] font-[700]' : ' '} `}>

@@ -230,7 +230,7 @@ const Estimates = () => {
                 className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5"
                 data-testid="search-icon"
               />
-              <input
+              <InputText
                 placeholder="Search"
                 className="pl-10 w-[237px] 
                   bg-[#00426F]
@@ -240,7 +240,14 @@ const Estimates = () => {
             </div>
           </div>
         </div>
-        <DataTableSearchFieldComponent
+
+        {/* No Data Avaialble */}
+        <div className="text-center mt-40">
+          <img src="/assets/images/empty.png" alt="Empty Data" className="w-32 mx-auto mb-4" />
+          <p className="text-gray-500">No data available</p>
+        </div>
+
+        {/* <DataTableSearchFieldComponent
           tableStyle={{
             fontSize: '12px',
             color: '#000000',
@@ -250,7 +257,7 @@ const Estimates = () => {
           columns={workOrderColumns}
           actionButtons={ActionButtonColumn}
           style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '200' }}
-        />
+        /> */}
       </div>
     </>
   )

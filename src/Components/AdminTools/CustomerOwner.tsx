@@ -114,7 +114,6 @@ const CustomerOwner = () => {
         // Set data for the first user by default
         const firstUser = content?.content[0]
         setFirstUserId(firstUser.id)
-        console.log('firstUserId in function', firstUserId)
       }
     } catch (error) {
       console.error('Error occurred while fetching customer data:', error)
@@ -125,12 +124,11 @@ const CustomerOwner = () => {
     try {
       const response = await getUser({ customerAdminId: id }).unwrap()
       const { status, content } = response as GetUserResponse
-      if (status === 200 && Array.isArray(content?.content)) {
+      if (status === 200 && Array.isArray(content?.content) && content?.content.length > 0) {
         setgetCustomerOwnerUserData(content?.content)
         setIsRowClick(true)
         setSelectedRow(id)
         setCustomerAdminId(id)
-        console.log('customerAdminId 1 is ', customerAdminId)
       } else {
         setIsRowClick(false)
         setgetCustomerOwnerUserData([])
@@ -271,16 +269,7 @@ const CustomerOwner = () => {
             <h1 className="p-4 text-white">{properties.CustomerOwnerUsers}</h1>
           </div>
           <div data-testid="customer-admin-users-table">
-            {!isRowClick ? (
-              <div className="text-center mt-40">
-                <img
-                  src="/assets/images/empty.png"
-                  alt="Empty Data"
-                  className="w-32 mx-auto mb-4"
-                />
-                <p className="text-gray-500">No data available</p>
-              </div>
-            ) : (
+            {isRowClick ? (
               <DataTableComponent
                 tableStyle={{
                   fontSize: '12px',
@@ -295,6 +284,15 @@ const CustomerOwner = () => {
                 actionButtons={ActionButtonColumn}
                 style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
               />
+            ) : (
+              <div className="text-center mt-40">
+                <img
+                  src="/assets/images/empty.png"
+                  alt="Empty Data"
+                  className="w-32 mx-auto mb-4"
+                />
+                <p className="text-gray-500">No data available</p>
+              </div>
             )}
           </div>
         </div>

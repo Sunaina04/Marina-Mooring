@@ -47,7 +47,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     specialChar: false,
     length: false,
   })
-  console.log('customerAdminId3', customerAdminId)
 
   const validateFields = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/

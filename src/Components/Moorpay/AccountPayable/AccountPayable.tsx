@@ -9,7 +9,6 @@ import Header from '../../Layout/LayoutComponents/Header'
 import AddCustomer from '../../Moormanage/Customer/AddCustomer'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 
-
 const AccountPayable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [accountPayableData, setAccountPayableData] = useState<MoorPayProps[]>([])
@@ -29,48 +28,46 @@ const AccountPayable = () => {
     fontWeight: 'bold',
   }
 
-  const accountPayableTableColumns= useMemo(
+  const accountPayableTableColumns = useMemo(
     () => [
-    
-          {
-            id: 'invoice',
-            label: 'Invoice',
-            style: columnStyle,
-          },
-          {
-            id: 'mooringId',
-            label: 'Mooring ID',
-            style: columnStyle,
-          },
-          {
-            id: 'customerName',
-            label: 'Customer Name',
-            style: columnStyle,
-          },
-          {
-            id: 'technicianName',
-            label: 'Technician Name',
-            style: columnStyle,
-          },
-          {
-            id: 'services',
-            label: 'Services',
-            style: columnStyle,
-          },
-          {
-            id: 'time',
-            label: 'Time',
-            style: columnStyle,
-          },
-          {
-            id: 'amount',
-            label: 'Amount',
-            style: columnStyle,
-          },
-        ],
-        [],
-      )
-    
+      {
+        id: 'invoice',
+        label: 'Invoice',
+        style: columnStyle,
+      },
+      {
+        id: 'mooringId',
+        label: 'Mooring ID',
+        style: columnStyle,
+      },
+      {
+        id: 'customerName',
+        label: 'Customer Name',
+        style: columnStyle,
+      },
+      {
+        id: 'technicianName',
+        label: 'Technician Name',
+        style: columnStyle,
+      },
+      {
+        id: 'services',
+        label: 'Services',
+        style: columnStyle,
+      },
+      {
+        id: 'time',
+        label: 'Time',
+        style: columnStyle,
+      },
+      {
+        id: 'amount',
+        label: 'Amount',
+        style: columnStyle,
+      },
+    ],
+    [],
+  )
 
   const ActionButtonColumn: ActionButtonColumnProps = {
     header: 'Action',
@@ -80,13 +77,11 @@ const AccountPayable = () => {
         color: 'green',
         label: 'Paid',
         filled: true,
-        fontWeight:400,
-        style:{
-          width:'46px',
-          height:'17px'
-        }
-        
-       
+        fontWeight: 400,
+        style: {
+          width: '46px',
+          height: '17px',
+        },
       },
     ],
     headerStyle: {
@@ -94,26 +89,21 @@ const AccountPayable = () => {
       height: '3.50rem',
       fontWeight: '700',
       color: 'black',
-      borderBottom:'1px solid #C0C0C0'
+      borderBottom: '1px solid #C0C0C0',
     },
-    style: { borderBottom: '1px solid #D5E1EA ',fontWeight:'500' },
+    style: { borderBottom: '1px solid #D5E1EA ', fontWeight: '500' },
   }
 
   return (
     <>
       <Header header="MOORPAY/Account Payable" />
-     
-        <div className="flex justify-end mr-16">
+
+      <div className="flex justify-end mr-16">
         <div className="flex gap-4 ml-[18rem] text-[gray] font-extrabold mt-14">
-          <div  style={{ marginTop: '0.8rem' }}>
-            <img
-              src="/assets/images/downloadIcon.png"
-              alt=""
-              className="w-5 "
-            />
-          
+          <div style={{ marginTop: '0.8rem' }}>
+            <img src="/assets/images/downloadIcon.png" alt="" className="w-5 " />
           </div>
-          <div  style={{ marginTop: '0.6rem', color: '#00426F',marginRight:'1.5rem' }}>
+          <div style={{ marginTop: '0.6rem', color: '#00426F', marginRight: '1.5rem' }}>
             <h1>Download Excel</h1>
           </div>
         </div>
@@ -159,14 +149,12 @@ const AccountPayable = () => {
 
       <div
         style={{
-          height:'648px',
+          height: '648px',
           gap: '0px',
           borderRadius: '10px',
           border: '1px solid #D5E1EA',
           opacity: '0px',
           backgroundColor: '#FFFFFF',
-          
-          
         }}
         className="bg-[F2F2F2]  ml-12  mt-10 mr-14">
         <div className="flex flex-wrap align-items-center justify-between  bg-[#00426F] p-2   rounded-tl-[10px] rounded-tr-[10px]">
@@ -182,7 +170,12 @@ const AccountPayable = () => {
             Account Payable
           </span>
         </div>
-        <DataTableComponent
+        {/* No Data Avaialble */}
+        <div className="text-center mt-40">
+          <img src="/assets/images/empty.png" alt="Empty Data" className="w-32 mx-auto mb-4" />
+          <p className="text-gray-500">No data available</p>
+        </div>
+        {/* <DataTableComponent
           tableStyle={{
             fontSize: '12px',
             color: '#000000',
@@ -192,7 +185,7 @@ const AccountPayable = () => {
           columns={accountPayableTableColumns}
           actionButtons={ActionButtonColumn}
           style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
-        />
+        /> */}
       </div>
     </>
   )

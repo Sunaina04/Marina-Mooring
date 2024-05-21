@@ -7,9 +7,10 @@ import { useGetWorkOrdersMutation } from '../../../Services/MoorServe/MoorserveA
 import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import Header from '../../Layout/LayoutComponents/Header'
-
 import './WorkOrder.module.css'
 import { vendor } from '../../Utils/CustomData'
+import { InputText } from 'primereact/inputtext'
+
 const WorkOrders = () => {
   const [visible, setVisible] = useState(false)
   const [workOrderData, setWorkOrderData] = useState<WorkOrderPayload[]>([])
@@ -170,17 +171,21 @@ const WorkOrders = () => {
                   className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5"
                   data-testid="search-icon"
                 />
-               <input
-  placeholder="Search"
-  className="pl-10 w-[237px] 
-  bg-[#00426F]
-  h-[35px] rounded-lg border border-[#D5E1EA] placeholder:text-[#FFFFFF] text-[#FFFFFF] focus:outline-none"
-  
-/>
+                <InputText
+                  placeholder="Search"
+                  className="pl-10 w-[237px] bg-[#00426F] h-[35px] rounded-lg border border-[#D5E1EA] placeholder:text-[#FFFFFF] text-[#FFFFFF] focus:outline-none"
+                />
               </div>
             </div>
           </div>
-          <DataTableSearchFieldComponent
+
+          {/* No Data Avaialble */}
+          <div className="text-center mt-40">
+            <img src="/assets/images/empty.png" alt="Empty Data" className="w-32 mx-auto mb-4" />
+            <p className="text-gray-500">No data available</p>
+          </div>
+
+          {/* <DataTableSearchFieldComponent
             tableStyle={{
               fontSize: '12px',
               color: '#000000',
@@ -190,7 +195,7 @@ const WorkOrders = () => {
             columns={workOrderColumns}
             actionButtons={ActionButtonColumn}
             style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '200' }}
-          />
+          /> */}
         </div>
       </div>
     </>
