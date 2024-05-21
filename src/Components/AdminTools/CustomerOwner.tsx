@@ -9,9 +9,9 @@ import { CustomerPayload, GetUserResponse } from '../../Type/ApiTypes'
 import Header from '../Layout/LayoutComponents/Header'
 import useMetaData from '../CommonComponent/MetaDataComponent'
 import { Role } from '../../Type/CommonType'
-import { CustomersHeader, TechniciansHeader } from '../Utils/DataTableHeader'
 import { useGetUsersMutation } from '../../Services/AdminTools/AdminToolsApi'
 import AddNewCustomer from './AddNewCustomer'
+import { InputText } from 'primereact/inputtext'
 
 const CustomerOwner = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -27,9 +27,19 @@ const CustomerOwner = () => {
   const [getUser] = useGetUsersMutation()
   const [getCustomerOwnerData, setgetCustomerOwnerData] = useState<CustomerPayload[]>([])
   const [getCustomerOwnerUserData, setgetCustomerOwnerUserData] = useState<CustomerPayload[]>([])
+  const [searchText, setSearchText] = useState('')
+  const [searchUsersText, setSearchUsersText] = useState('')
 
   const handleModalClose = () => {
     setModalVisible(false)
+  }
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value)
+  }
+
+  const handleUsersSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchUsersText(e.target.value)
   }
 
   const handleEditButtonClick = (rowData: any) => {
@@ -97,6 +107,88 @@ const CustomerOwner = () => {
     [],
   )
 
+  const CustomersHeader = () => {
+    return (
+      <div className="flex flex-col">
+        <div className="p-input-icon-left">
+          <InputText
+            value={searchText}
+            onChange={handleSearch}
+            placeholder="Search by name, ID, phone no.... "
+            style={{
+              width: '100%',
+              height: '44px',
+              padding: '0 4rem 0 3rem',
+              border: '1px solid #C5D9E0',
+              fontSize: '16px',
+              color: '#000000',
+              borderRadius: '4px',
+              minHeight: '44px',
+              fontWeight: 400,
+              backgroundColor: 'rgb(242 242 242 / 0%)',
+            }}
+          />
+          <img
+            src="/assets/images/Search.svg"
+            alt="Search Icon"
+            className="p-clickable"
+            style={{
+              position: 'absolute',
+              left: '10px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              width: '18px',
+              height: '18px',
+            }}
+          />
+        </div>
+
+        <span className="border-[1px] border-[#D5E1EA] w-[31vw] mt-3 "></span>
+      </div>
+    )
+  }
+
+  const TechniciansHeader = () => {
+    return (
+      <div className="flex flex-col">
+        <div className="p-input-icon-left">
+          <InputText
+            value={searchUsersText}
+            onChange={handleUsersSearch}
+            placeholder="Search by name, ID, Email, Role, phone no..."
+            style={{
+              width: '100%',
+              height: '44px',
+              padding: '0 4rem 0 3rem',
+              border: '1px solid #C5D9E0',
+              fontSize: '16px',
+              color: '#000000',
+              borderRadius: '4px',
+              minHeight: '44px',
+              fontWeight: 400,
+              backgroundColor: 'rgb(242 242 242 / 0%)',
+            }}
+          />
+          <img
+            src="/assets/images/Search.svg"
+            alt="Search Icon"
+            className="p-clickable"
+            style={{
+              position: 'absolute',
+              left: '10px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              width: '18px',
+              height: '18px',
+            }}
+          />
+        </div>
+
+        <span className="border-[1px] border-[#D5E1EA] w-full mt-3 "></span>
+      </div>
+    )
+  }
+
   const fetchDataAndUpdate = useCallback(async () => {
     const { rolesData } = await getMetaData()
     if (rolesData !== null) {
@@ -106,7 +198,7 @@ const CustomerOwner = () => {
 
   const getUserHandler = async () => {
     try {
-      const response = await getUser({}).unwrap()
+      const response = await getUser({ searchText: searchText }).unwrap()
       const { status, content } = response as GetUserResponse
       if (status === 200 && Array.isArray(content?.content) && content?.content.length > 0) {
         setgetCustomerOwnerData(content?.content)
@@ -122,7 +214,7 @@ const CustomerOwner = () => {
 
   const getCustomerAdminsUsers = async (id: any) => {
     try {
-      const response = await getUser({ customerAdminId: id }).unwrap()
+      const response = await getUser({ customerAdminId: id, searchText: searchUsersText }).unwrap()
       const { status, content } = response as GetUserResponse
       if (status === 200 && Array.isArray(content?.content)) {
         if (content?.content.length > 0) {
@@ -146,19 +238,20 @@ const CustomerOwner = () => {
 
   useEffect(() => {
     getCustomerAdminsUsers(firstUserId)
-  }, [firstUserId])
+  }, [firstUserId, searchUsersText])
 
   useEffect(() => {
     getUserHandler()
     fetchDataAndUpdate()
-  }, [fetchDataAndUpdate])
+  }, [fetchDataAndUpdate, searchText])
 
   return (
     <div className={modalVisible ? 'backdrop-blur-lg' : ''}>
       <Header header="MOORMANAGE/Permission" />
 
       <div className="flex mr-12 justify-end">
-        <div className="mt-8 mr-5 relative">
+        {/* Commenting for now, will use later */}
+        {/* <div className="mt-8 mr-5 relative">
           <Dropdown
             value={selectRole}
             onChange={(e) => setSelectRole(e.value)}
@@ -183,7 +276,7 @@ const CustomerOwner = () => {
             className="absolute top-1/2 left-2 transform -translate-y-1/2 h-4 w-4"
             style={{ cursor: 'pointer' }}
           />
-        </div>
+        </div> */}
 
         <div className="mt-8">
           <CustomModal
