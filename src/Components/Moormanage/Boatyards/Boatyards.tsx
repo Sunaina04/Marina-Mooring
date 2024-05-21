@@ -2,7 +2,13 @@ import { useEffect, useMemo, useState } from 'react'
 import CustomModal from '../../CustomComponent/CustomModal'
 import AddBoatyards from './AddBoatyards'
 import { InputText } from 'primereact/inputtext'
-import { BoatYardData, BoatYardPayload, BoatYardResponse, MooringResponseDtoList, TechnicianPayload } from '../../../Type/ApiTypes'
+import {
+  BoatYardData,
+  BoatYardPayload,
+  BoatYardResponse,
+  MooringResponseDtoList,
+  TechnicianPayload,
+} from '../../../Type/ApiTypes'
 import { useGetBoatyardsMutation } from '../../../Services/MoorManage/MoormanageApi'
 import DataTableWithToogle from '../../CommonComponent/Table/DataTableWithToogle'
 import { ActionButtonColumnProps, Product } from '../../../Type/Components/TableTypes'
@@ -26,15 +32,11 @@ const Boatyards = () => {
   const [getBoatyards] = useGetBoatyardsMutation()
   const [selectedCustomer, setSelectedCustomer] = useState<any>(undefined)
   const [editMode, setEditMode] = useState(false)
-  const [position, setPosition] = useState<{ lat: number; lng: number } | null>(null);
+  const [position, setPosition] = useState<{ lat: number; lng: number } | null>(null)
 
   const handlePositionChange = (lat: number, lng: number) => {
-    setPosition({ lat, lng });
-    
-  };
-  
-  
-
+    setPosition({ lat, lng })
+  }
 
   const moorings: BoatYardData[] = [
     {
@@ -212,37 +214,34 @@ const Boatyards = () => {
     style: { borderBottom: '1px solid #D5E1EA' },
   }
 
-
-  const techniciansTableStyle={
+  const techniciansTableStyle = {
     backgroundColor: '#00426F',
     borderBottom: '1px solid #C0C0C0',
     color: '#FFFFFF',
-    fontWeight:'700',
-    fontSize:'10px',
-    
-    
+    fontWeight: '700',
+    fontSize: '10px',
   }
   const tableColumnsTechnicians = useMemo(
     () => [
       {
         id: 'id',
         label: 'ID',
-        style: techniciansTableStyle
+        style: techniciansTableStyle,
       },
       {
         id: 'mainContact',
         label: 'Main Contact',
-        style:techniciansTableStyle
+        style: techniciansTableStyle,
       },
       {
         id: 'mooringId',
         label: 'Mooring ID',
-        style: techniciansTableStyle
+        style: techniciansTableStyle,
       },
       {
         id: 'boatName',
         label: 'Boat Name',
-        style:techniciansTableStyle
+        style: techniciansTableStyle,
       },
     ],
     [],
@@ -275,8 +274,7 @@ const Boatyards = () => {
     return !!rowData.orders && rowData.orders.length > 0
   }
 
-  const rowExpansionStyle={
-    
+  const rowExpansionStyle = {
     backgroundColor: '#F2F2F2',
     fontSize: '0.80rem',
     borderBottom: '1px solid #C0C0C0',
@@ -284,36 +282,32 @@ const Boatyards = () => {
 
   const rowExpansionTemplate = (data: Product) => {
     return (
-      <DataTable value={data.orders} >
+      <DataTable value={data.orders}>
         <Column
           field="address"
           header="Address"
           style={rowExpansionStyle}
-          headerStyle={{backgroundColor:'#00426F' ,color:'#FFFFFF'}}
+          headerStyle={{ backgroundColor: '#00426F', color: '#FFFFFF' }}
         />
         <Column
           field="mooringInventoried"
           header="Mooring Inventoried"
           style={rowExpansionStyle}
-          headerStyle={{backgroundColor:'#00426F',color:'#FFFFFF'}}
-
+          headerStyle={{ backgroundColor: '#00426F', color: '#FFFFFF' }}
         />
         <Column
           field="boatyardGpsCoordinates"
           header="Boatyard GPS Coordinates"
           style={rowExpansionStyle}
-          headerStyle={{backgroundColor:'#00426F',color:'#FFFFFF'}}
-
+          headerStyle={{ backgroundColor: '#00426F', color: '#FFFFFF' }}
         />
-      
       </DataTable>
     )
   }
 
-  const columnStyle={
-    
+  const columnStyle = {
     backgroundColor: '#F2F2F2',
-    fontSize:'10px',
+    fontSize: '10px',
     color: 'black',
     fontWeight: '700',
   }
@@ -329,7 +323,7 @@ const Boatyards = () => {
       {
         field: 'name',
         header: 'Name',
-        style:columnStyle,
+        style: columnStyle,
       },
       {
         field: 'noOfBoatYards',
@@ -351,8 +345,6 @@ const Boatyards = () => {
     [allowExpansion],
   )
 
- 
-  
   return (
     <>
       <Header header="MOORMANAGE/Boatyards" />
@@ -377,7 +369,7 @@ const Boatyards = () => {
                 editMode={editMode}
               />
             }
-            headerText={<h1 className="text-xl font-extrabold text-black ml-4">New User</h1>}
+            headerText={<h1 className="text-xl font-extrabold text-black-600 ml-4">New User</h1>}
             visible={modalVisible}
             onClick={handleButtonClick}
             onHide={handleModalClose}
@@ -404,94 +396,90 @@ const Boatyards = () => {
           />
         </div>
       </div>
-      <div className=" flex flex-wrap items-start justify-between ml-20  gap-3 mt-10" >
-    
+      <div className=" flex flex-wrap items-start justify-between ml-20  gap-3 mt-10">
         <div
           data-testid="dataTable"
           className="bg-[F2F2F2]   rounded-xl border-[1px]  border-gray-300 w-[515px] h-[650px] mb-60">
           <InputTextWithHeader
             header={properties.boatyardDeatile}
             placeholder={'Search by name, ID,address...'}
-            headerStyle={{backgroundColor:'#00426F' ,color:'#FFFFFF' , borderTopLeftRadius:'10px',borderTopRightRadius:'10px'}}
+            headerStyle={{
+              backgroundColor: '#00426F',
+              color: '#FFFFFF',
+              borderTopLeftRadius: '10px',
+              borderTopRightRadius: '10px',
+            }}
             iconStyle={{ marginLeft: '1.5rem', color: '#00426F' }}
             inputTextStyle={{
               height: '5vh',
               width: '480px',
-              margin:'1rem',
+              margin: '1rem',
               cursor: 'pointer',
               color: '#A4A4A4',
               border: '1px solid  #9F9F9F',
               paddingLeft: '2.5rem',
               borderRadius: '0.45rem',
               fontSize: '0.80rem',
-              backgroundColor:'F2F2F2'
-            
+              backgroundColor: 'F2F2F2',
             }}
           />
-          <div>
-
-
-        </div>
-        <div  className="bg-#00426F overflow-x-hidden overflow-y-scroll ">
-          <DataTableWithToogle
-            data={products}
-            rowExpansionTemplate={rowExpansionTemplate}
-            onRowToggle={(e: any) => setExpandedRows(e.data)}
-            expandedRows={expandedRows}
-            dataKey="id"
-            columns={columns}
-            
-          />
+          <div></div>
+          <div className="bg-#00426F overflow-x-hidden overflow-y-scroll ">
+            <DataTableWithToogle
+              data={products}
+              rowExpansionTemplate={rowExpansionTemplate}
+              onRowToggle={(e: any) => setExpandedRows(e.data)}
+              expandedRows={expandedRows}
+              dataKey="id"
+              columns={columns}
+            />
           </div>
-        
         </div>
-        
+
         <div
           data-testid="customer-admin-users-table"
           className=" bg-[F2F2F2]  rounded-xl border-[1px]  mr-20 border-gray-300 w-[515px] h-[650px] mb-60">
           <div className="text-sm font-extrabold rounded-sm w-full  bg-[#D9D9D9]">
-            <div className='flex flex-wrap align-items-center justify-between  bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px]' style={{color:'#FFFFFF'}}>
-            <h1 className="p-4">{properties.boatyardMooringHeader}</h1>
+            <div
+              className="flex flex-wrap align-items-center justify-between  bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px]"
+              style={{ color: '#FFFFFF' }}>
+              <h1 className="p-4">{properties.boatyardMooringHeader}</h1>
             </div>
           </div>
           <div className=" bg-[#F2F2F2] mt-2">
-            <div className='flex justify-start gap-12 ml-4 border-[1px] border-gray-300' style={{fontSize:'12px', fontWeight:'700'}} >
-              <p >{properties.address}</p>
+            <div
+              className="flex justify-start gap-12 ml-4 border-[1px] border-gray-300"
+              style={{ fontSize: '12px', fontWeight: '700' }}>
+              <p>{properties.address}</p>
               <p>{properties.mooringInventoried}</p>
               <p>{properties.boatyardGPSCoordinates}</p>
             </div>
             <div className="border-[1px] border-[#9F9F9F]  w-[full] mt-3 "></div>
             <div className="flex justify-start gap-14  mt-2  font-normal text-sm">
-              <p className='ml-6'>123 Elm St</p>
-              <p  >25</p>
-              <p className='ml-20  underline' >38 21.806 144</p>
+              <p className="ml-6">123 Elm St</p>
+              <p>25</p>
+              <p className="ml-20  underline">38 21.806 144</p>
             </div>
           </div>
-          <div className='w-[512px] h-[150px] p-3.5 rounded-lg'>
-
-          <CustomSelectPositionMap onPositionChange={handlePositionChange} zoomLevel={12}/>
+          <div className="w-[512px] h-[150px] p-3.5 rounded-lg">
+            <CustomSelectPositionMap onPositionChange={handlePositionChange} zoomLevel={12} />
           </div>
-          <div className="overflow-x-hidden overflow-y-scroll  " >
-          <DataTableComponent
-            tableStyle={{
-              fontSize: '12px',
-              color: '#000000',
-              fontWeight: 400,
-             
-              
-            }}
-            scrollable={true}
-            data={moorings}
-            columns={tableColumnsTechnicians}
-            actionButtons={ActionButtonColumn}
-            style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
-          />
+          <div className="overflow-x-hidden overflow-y-scroll  ">
+            <DataTableComponent
+              tableStyle={{
+                fontSize: '12px',
+                color: '#000000',
+                fontWeight: 400,
+              }}
+              scrollable={true}
+              data={moorings}
+              columns={tableColumnsTechnicians}
+              actionButtons={ActionButtonColumn}
+              style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
+            />
           </div>
-          </div>
-          </div>
-        
-        
-      
+        </div>
+      </div>
     </>
   )
 }

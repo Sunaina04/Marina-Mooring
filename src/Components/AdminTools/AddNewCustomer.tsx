@@ -280,12 +280,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   return (
     <>
       <div>
-        {errorMessage && !errorMessage.includes('Email already present') && (
-          <div className="p-error">{errorMessage}</div>
-        )}
-        {successMessage && <div className="p-success">{successMessage}</div>}
-
-        <div className="flex gap-8 mt-3 ">
+        <div className="flex gap-8 mt-5 ml-4">
           <div>
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
@@ -368,7 +363,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           </div>
         </div>
 
-        <div className="flex gap-8 ">
+        <div className="flex gap-8 ml-4">
           <div>
             <div className="mt-3">
               <span className="font-medium text-sm text-[#000000]">
@@ -437,7 +432,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
             </p>
           </div>
         </div>
-        <div className="mt-5">
+        <div className="mt-5 ml-4">
           <span className="font-medium text-sm text-[#000000]">
             <div className="flex gap-1">
               Address
@@ -445,7 +440,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
             </div>
           </span>
         </div>
-        <div className="gap-8 mt-1">
+        <div className="gap-8 mt-1 ml-4">
           <div className="flex gap-8 ">
             <div>
               <div className="mt-2">
@@ -566,7 +561,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           </div>
         </div>
 
-        <div className="flex mt-5 gap-8">
+        <div className="flex mt-5 gap-8 ml-4">
           <div>
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
@@ -701,7 +696,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         </div>
 
         {/* Save and Back buttons */}
-        <div className="flex gap-4 mt-10 ">
+        <div className="flex gap-4 mt-10 ml-4">
           <Button
             label={'Save'}
             onClick={() => {
