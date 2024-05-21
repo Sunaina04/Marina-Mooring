@@ -35,7 +35,6 @@ const CustomModal: React.FC<CustomModalProps> = ({
           letterSpacing: '0.20000000298023224px',
         }}
       />
-
       <Dialog
         header={headerText}
         {...dialogProps}

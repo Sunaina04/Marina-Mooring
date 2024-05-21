@@ -83,7 +83,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
   return (
     <>
       <div className="w-full h-full  ">
-        <h1 className=" text-lg font-bold">Add Boatyard</h1>
+        {/* <h1 className=" text-lg font-bold">Add Boatyard</h1> */}
 
         <div className="flex gap-8 mt-3">
           <div>

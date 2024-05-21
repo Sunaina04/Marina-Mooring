@@ -194,7 +194,7 @@ const Boatyards = () => {
   ]
 
   const handleButtonClick = () => {
-    // setModalVisible(true)
+     setModalVisible(true)
   }
 
   const handleModalClose = () => {
@@ -390,7 +390,7 @@ const Boatyards = () => {
                 editMode={editMode}
               />
             }
-            headerText={<h1 className="text-xl font-extrabold text-black ml-4">New User</h1>}
+            headerText={<h1 className="text-xl font-extrabold text-black ml-4">Add Boatyard</h1>}
             visible={modalVisible}
             onClick={handleButtonClick}
             onHide={handleModalClose}

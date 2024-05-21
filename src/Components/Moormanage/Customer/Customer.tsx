@@ -191,7 +191,7 @@ const Customer = () => {
   }, [])
 
   return (
-    <>
+    <div className={modalVisible ? 'backdrop-blur-lg': ''}>
       <Header header="MOORMANAGE/Customer" />
       <div className="flex justify-end mr-12 ">
         <div className="flex mt-14 ">
@@ -578,7 +578,7 @@ const Customer = () => {
           </div>
         </>
       </div>
-    </>
+    </div>
   )
 }
 
