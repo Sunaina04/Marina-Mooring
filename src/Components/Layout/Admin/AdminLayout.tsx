@@ -265,7 +265,7 @@ const AdminLayout = () => {
           flexDirection: 'column',
           justifyContent: 'space-between',
           height: '100%',
-          overflowY: 'scroll',
+          overflowY: 'auto',
           maxHeight: '100vh',
         }}>
         <Outlet />
