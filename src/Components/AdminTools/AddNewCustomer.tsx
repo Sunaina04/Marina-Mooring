@@ -573,7 +573,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 <p className="text-red-600">*</p>
               </div>
             </span>
-            <div className="mt-1">
+            <div className="mt-1  ">
               <InputComponent
                 value={password}
                 onChange={(e) => handleInputChange('password', e.target.value)}
@@ -591,9 +591,13 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
               <p className="p-1 w-48">
                 {fieldErrors.password && <small className="p-error">{fieldErrors.password}</small>}
               </p>
-              <div id="password-message" className="mt-2 hidden">
+
+              <div
+                style={{ width: '12vw', fontSize: '14px', fontWeight: 500 }}
+                id="password-message"
+                className="mt-2 hidden ">
                 <h3 className="font-medium text-sm text-[#000000]">Password must contain:</h3>
-                <div className="flex items-center gap-6 mt-2">
+                <div className="flex items-center gap-6 p-1 mt-2">
                   {passwordCriteria.uppercase ? (
                     <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
                   ) : (
@@ -605,7 +609,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   </p>
                 </div>
 
-                <div className="flex items-center gap-6">
+                <div className="flex items-center gap-6 p-1 ">
                   {passwordCriteria.lowercase ? (
                     <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
                   ) : (
@@ -617,7 +621,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                     At least one lowercase letter
                   </p>
                 </div>
-                <div className="flex items-center gap-6">
+                <div className="flex items-center gap-6 p-1 ">
                   {passwordCriteria.number ? (
                     <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
                   ) : (
@@ -629,7 +633,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   </p>
                 </div>
 
-                <div className="flex items-center gap-6">
+                <div className="flex items-center gap-6 p-1 ">
                   {passwordCriteria.specialChar ? (
                     <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
                   ) : (
@@ -640,7 +644,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                     At least one special character (@, $, !, %, *, ?, &)
                   </p>
                 </div>
-                <div className="flex items-center gap-6">
+                <div className="flex items-center gap-6 p-1 ">
                   {passwordCriteria.length ? (
                     <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
                   ) : (
