@@ -728,15 +728,36 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       <Dialog
         header={
           <div className="flex items-center justify-center py-4">
-            <h2 className={`text-2xl font-semibold ${successMessage ? '#00426F' : 'text-red-600'}`}>
+            <h2
+              className={`text-3xl ml-8 font-bold ${successMessage ? 'text-green-600' : 'text-red-600'}`}>
               {successMessage ? 'Success' : 'Error !!!'}
             </h2>
+            {successMessage && (
+              <div className="flex items-center justify-center bg-green-500 rounded-full h-12 w-12 ml-4">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6 text-white"
+                  viewBox="0 0 20 20"
+                  fill="currentColor">
+                  <path
+                    fillRule="evenodd"
+                    d="M2.293 9.293a1 1 0 011.414-1.414L9 14.586l8.293-8.293a1 1 0 111.414 1.414l-9 9a1 1 0 01-1.414 0l-9-9a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </div>
+            )}
           </div>
         }
+        style={{
+          marginLeft: '100px',
+          width: '30vw',
+          background: successMessage ? '#D1FAE5' : '#FEE2E2',
+        }}
         footer={
           <div className="flex justify-end mt-4">
             <button
-              className="bg-#0098FF hover:bg-blue-500 text-white font-bold py-2 px-4 rounded inline-flex items-center mr-2"
+              className={`bg-${successMessage ? 'green' : 'red'}-500 hover:bg-${successMessage ? 'green' : 'red'}-600 text-white font-bold py-2 px-4 rounded inline-flex items-center mr-2`}
               onClick={() => {
                 setDialogVisible(false)
                 if (successMessage) {
@@ -745,12 +766,11 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   closeModal()
                 }
               }}>
-              Close
+              <span>Close</span>
             </button>
           </div>
         }
         visible={dialogVisible}
-        style={{ width: '35vw' }}
         onHide={() => {
           setDialogVisible(false)
           if (successMessage) {
@@ -759,7 +779,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
             closeModal()
           }
         }}>
-        <div className="p-6">
+        <div className="flex justify-center items-center h-full">
           <p className="text-lg text-gray-800">{successMessage ? successMessage : errorMessage}</p>
         </div>
       </Dialog>
