@@ -280,8 +280,14 @@ const Customer = () => {
             )}
           </div>
         </div>
-
+{/* </div> */}
         {/* middle container */}
+
+
+        
+         
+
+
 
         <>
           <div className="min-w-[20vw]">
@@ -299,68 +305,44 @@ const Customer = () => {
 
             {/* Commentting this code for now due to some ui issues but will use in future once api is ready for it  */}
 
-            {/* 
-          <div className="absolute  translate-x-6 bottom-4  rounded-md border-[1px] pb-1 border-gray-300 w-[17vw]  mt-auto h-[13vh] bg-white">
-            <p className="text-[0.7rem] ml-1 text-black">Status</p>
-            <hr className="m-1 border-black" />
-            <div className="flex justify-between">
-              <div data-testid="Facircle">
-                <FaCircle className="h-3 text-red-600 mt-1" />
-                <FaCircle className="h-3 text-green-600 mt-2" />
-              </div>
-              <div>
-                <p className="text-[0.6rem] text-black mt-1">Need inspection</p>
-                <p className="text-[0.6rem] text-black tracking-tighter mt-[0.3rem]">
-                  Gear On (in the water)
-                </p>
-              </div>
-              <div className="ml-1">
-                <FaCircle className="h-3 text-violet-600 mt-1 " />
-                <FaCircle className="h-3 text-gray-500 mt-2" />
-              </div>
-              <div>
-                <p className="text-[0.6rem] text-black tracking-tighter mt-1">
-                  Gear Off (out of the water)
-                </p>
-                <p className="text-[0.6rem] text-black mt-[0.3rem]">Not in Use</p>
-              </div>
-            </div>
-          </div> */}
-          </div>
 
-          {/* last container */}
+        </div>
 
-          <div
-            style={{
-              top: '277px',
-              left: '107px',
-              gap: '0px',
-              width: '413px',
-              borderRadius: '10px',
-              border: '1px solid #D5E1EA',
-              opacity: '0px',
-              backgroundColor: 'white',
-              flexGrow: 1,
-              marginRight: '40px',
-            }}>
-            <div className="rounded-md border">
-              <div className="bg-[#10293A] rounded-r-md  rounded-l-md flex justify-between pb-2">
-                <div className="text-sm font-semibold rounded-t-md bg-[]">
-                  <h1 className="p-4 text-white">{'Customers Record'}</h1>
+
+        
+
+            <div
+              style={{
+                top: '277px',
+                left: '107px',
+                gap: '0px',
+                width:'413px',
+                borderRadius: '10px',
+                border: '1px solid #D5E1EA',
+                opacity: '0px',
+                backgroundColor: 'white',
+                flexGrow: 1,
+                marginRight: '40px',
+              }}>
+              <div className="rounded-md border">
+                <div className="bg-[#10293A] rounded-r-md  rounded-l-md flex justify-between pb-2">
+                  <div className="text-sm font-semibold rounded-t-md bg-[]">
+                    <h1 className="p-4 text-white">{'Customers Record'}</h1>
+                  </div>
+                  <div className="flex">
+                    <FaEdit
+                      onClick={handleEdit}
+                      className="mr-3 mt-3 text-[white]"
+                      data-testid="FaEdit"
+                    />
+                    <RiDeleteBin5Fill
+                      onClick={handleDelete}
+                      className="text-white mr-2 mt-3"
+                      data-testid="RiDeleteBin5Fill"
+                    />
+                  </div>
                 </div>
-                <div className="flex">
-                  <FaEdit
-                    onClick={handleEdit}
-                    className="mr-3 mt-3 text-[white]"
-                    data-testid="FaEdit"
-                  />
-                  <RiDeleteBin5Fill
-                    onClick={handleDelete}
-                    className="text-white mr-2 mt-3"
-                    data-testid="RiDeleteBin5Fill"
-                  />
-                </div>
-              </div>
+
 
               {customerRecordData ? (
                 <div className="">
@@ -487,6 +469,7 @@ const Customer = () => {
                   data={mooringData}
                 />
               )}
+              {/* </div> */}
 
               {/* Dialog BOX */}
               <Dialog
@@ -574,11 +557,14 @@ const Customer = () => {
                   </div>
                 </div>
               </Dialog>
+              </div>
             </div>
-          </div>
-        </>
-      </div>
-    </div>
+       </>
+        </div>
+        </div>
+        
+    
+    
   )
 }
 

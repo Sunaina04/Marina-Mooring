@@ -73,8 +73,8 @@ const Accordion = () => {
   }
 
   return (
-    <div className="wrapper">
-      <div className="tab px-5 relative mb-4 rounded-md bg-white border-[1px] border-[#D5E1EA] mr-8">
+    <div className="flex flex-col wrapper">
+      <div className=" tab px-5 relative mb-4 rounded-md bg-white border-[1px] border-[#D5E1EA] mr-8">
         <label
           htmlFor="faq1"
           className="cursor-pointer flex items-center justify-between h-14"

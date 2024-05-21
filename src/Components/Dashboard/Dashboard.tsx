@@ -130,7 +130,7 @@ const Dashboard = () => {
         <div className="right flex flex-col">
           <div
             style={{
-              width: '850px',
+              width: '729.17px',
               height: '334.01px',
               gap: '0px',
               borderRadius: '10px',
@@ -148,7 +148,7 @@ const Dashboard = () => {
           </div>
           <div
             style={{
-              width: '850px',
+              width: '729.17px',
               height: '300.2px',
               gap: '0px',
               borderRadius: '10px',
