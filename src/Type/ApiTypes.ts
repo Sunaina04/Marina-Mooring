@@ -315,10 +315,17 @@ export type BoatYardData = {
 export interface BoatYardPayload {
   id: number
   boatyardId: string
-  mooringName: string
-  ownerName: string
+  boatyardName: string
   emailAddress: string
   phone: string
+  street: string
+  apt: string
+  state: string
+  country: string
+  zipCode: string
+  mainContact: string
+  gpsCoordinates: string
+  mooringResponseDtoList: []
 }
 
 export interface BoatYardResponse {
@@ -327,7 +334,7 @@ export interface BoatYardResponse {
   errorList: []
   time: string
   content: {
-    BoatYardPayload: BoatYardPayload
+    content: BoatYardPayload
   }
 }
 

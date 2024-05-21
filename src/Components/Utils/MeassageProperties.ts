@@ -1,7 +1,7 @@
 export const properties = {
   header: 'MOORMANAGE/Boatyards',
   boatyardMooringHeader: 'Boatyard Moorings',
-  boatyardDeatile: 'Boatyards Detail',
+  boatyardDetail: 'Boatyards Detail',
   address: 'Address',
   mooringInventoried: 'Mooring Inventoried',
   boatyardGPSCoordinates: 'Boatyard GPS Coordinates',
@@ -9,6 +9,6 @@ export const properties = {
   CustomersOwner: 'Customer Owner',
   CustomerOwnerUsers: 'Customer Owner Users',
   label: 'ADD NEW',
-  customerMooringHeader:"Moorings",
-  MoormanageMoorings:"MOORMANAGE/Moorings"
+  customerMooringHeader: 'Moorings',
+  MoormanageMoorings: 'MOORMANAGE/Moorings',
 }

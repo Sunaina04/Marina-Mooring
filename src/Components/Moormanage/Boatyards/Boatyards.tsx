@@ -38,161 +38,6 @@ const Boatyards = () => {
     setPosition({ lat, lng })
   }
 
-  const moorings: BoatYardData[] = [
-    {
-      id: '#9715',
-      moorings: 'Pioneer',
-      boatyards: 2,
-      name: 'John smith',
-      phoneNumber: '+1 234 543 4324',
-      email: 'demo@gmail.com',
-      boatyardDetails: [
-        {
-          id: 1,
-          name: 'Pioneer',
-          address: '123 Elm St',
-          phone: '+1 234 543 4324',
-          mooring: 15,
-          mooringDetails: [
-            {
-              id: '#46645',
-              mainContact: 'Maxwell',
-              mooringNumber: '54345',
-              boatName: 'Sunriase',
-            },
-            {
-              id: '#46645',
-              mainContact: 'Maxwell',
-              mooringNumber: '54345',
-              boatName: 'Sunriase',
-            },
-            {
-              id: '#46645',
-              mainContact: 'Maxwell',
-              mooringNumber: '54345',
-              boatName: 'Sunriase',
-            },
-            {
-              id: '#46645',
-              mainContact: 'Maxwell',
-              mooringNumber: '54345',
-              boatName: 'Sunriase',
-            },
-          ],
-        },
-        {
-          id: 1,
-          name: 'Pioneer',
-          address: '123 Elm St',
-          phone: '+1 234 543 4324',
-          mooring: 15,
-          mooringDetails: [
-            {
-              id: '#46645',
-              mainContact: 'Maxwell',
-              mooringNumber: '54345',
-              boatName: 'Sunriase',
-            },
-            {
-              id: '#46645',
-              mainContact: 'Maxwell',
-              mooringNumber: '54345',
-              boatName: 'Sunriase',
-            },
-            {
-              id: '#46645',
-              mainContact: 'Maxwell',
-              mooringNumber: '54345',
-              boatName: 'Sunriase',
-            },
-            {
-              id: '#46645',
-              mainContact: 'Maxwell',
-              mooringNumber: '54345',
-              boatName: 'Sunriase',
-            },
-          ],
-        },
-      ],
-    },
-    {
-      id: '#9715',
-      moorings: 'Pioneer',
-      boatyards: 2,
-      name: 'John smith',
-      phoneNumber: '+1 234 543 4324',
-      email: 'demo@gmail.com',
-      boatyardDetails: [
-        {
-          id: 1,
-          name: 'Pioneer',
-          address: '123 Elm St',
-          phone: '+1 234 543 4324',
-          mooring: 15,
-          mooringDetails: [
-            {
-              id: '#46645',
-              mainContact: 'Maxwell',
-              mooringNumber: '54345',
-              boatName: 'Sunriase',
-            },
-            {
-              id: '#46645',
-              mainContact: 'Maxwell',
-              mooringNumber: '54345',
-              boatName: 'Sunriase',
-            },
-            {
-              id: '#46645',
-              mainContact: 'Maxwell',
-              mooringNumber: '54345',
-              boatName: 'Sunriase',
-            },
-            {
-              id: '#46645',
-              mainContact: 'Maxwell',
-              mooringNumber: '54345',
-              boatName: 'Sunriase',
-            },
-          ],
-        },
-        {
-          id: 1,
-          name: 'Pioneer',
-          address: '123 Elm St',
-          phone: '+1 234 543 4324',
-          mooring: 15,
-          mooringDetails: [
-            {
-              id: '#46645',
-              mainContact: 'Maxwell',
-              mooringNumber: '54345',
-              boatName: 'Sunriase',
-            },
-            {
-              id: '#46645',
-              mainContact: 'Maxwell',
-              mooringNumber: '54345',
-              boatName: 'Sunriase',
-            },
-            {
-              id: '#46645',
-              mainContact: 'Maxwell',
-              mooringNumber: '54345',
-              boatName: 'Sunriase',
-            },
-            {
-              id: '#46645',
-              mainContact: 'Maxwell',
-              mooringNumber: '54345',
-              boatName: 'Sunriase',
-            },
-          ],
-        },
-      ],
-    },
-  ]
-
   const handleButtonClick = () => {
     setModalVisible(true)
   }
@@ -221,6 +66,7 @@ const Boatyards = () => {
     fontWeight: '700',
     fontSize: '10px',
   }
+
   const tableColumnsTechnicians = useMemo(
     () => [
       {
@@ -246,28 +92,25 @@ const Boatyards = () => {
     ],
     [],
   )
+
   const getBoatyardsData = async () => {
     try {
       await getBoatyards({})
         .unwrap()
         .then(async (response) => {
           const { status, content } = response as BoatYardResponse
-          if (status === 200 && Array.isArray(content)) {
-            setboatyardsData(content)
-            setFilteredboatyardsData(content)
+          if (status === 200 && Array.isArray(content.content)) {
+            setboatyardsData(content.content)
+            setFilteredboatyardsData(content.content)
           }
         })
     } catch (error) {
       console.error('Error fetching getBoatyardsdata:', error)
     }
   }
-  useEffect(() => {
-    getBoatyardsData()
-  }, [])
 
   useEffect(() => {
-    const productsData = getProductsWithOrdersData()
-    setProducts(productsData)
+    getBoatyardsData()
   }, [])
 
   const allowExpansion = (rowData: Product): boolean => {
@@ -309,11 +152,11 @@ const Boatyards = () => {
     backgroundColor: '#FFFFFF',
     fontSize: '10px',
     color: 'black',
-    fontWeight: '700',
+    fontWeight: '500',
     borderBottom: '1px solid #D5E1EA ',
   }
 
-  const columns = useMemo(
+  const boatYardColumns = useMemo(
     () => [
       {
         field: 'id',
@@ -322,7 +165,7 @@ const Boatyards = () => {
         body: () => {},
       },
       {
-        field: 'name',
+        field: 'boatyardName',
         header: 'Name',
         style: columnStyle,
       },
@@ -400,9 +243,9 @@ const Boatyards = () => {
       <div className=" flex  ml-20  gap-10 mt-10">
         <div
           data-testid="dataTable"
-          className="bg-[#FFFFFF]   rounded-xl border-[1px]  border-gray-300 w-[515px] h-[650px] mb-60">
+          className="bg-[#FFFFFF] rounded-xl border-[1px] border-gray-300 w-[515px] h-[650px] mb-60">
           <InputTextWithHeader
-            header={properties.boatyardDeatile}
+            header={properties.boatyardDetail}
             placeholder={'Search by name, ID,address...'}
             headerStyle={{
               backgroundColor: '#00426F',
@@ -427,14 +270,14 @@ const Boatyards = () => {
           <div></div>
           <div className="bg-#00426F overflow-x-hidden overflow-y-scroll ">
             <DataTableWithToogle
-              data={products}
+              data={boatyardsData}
               rowExpansionTemplate={rowExpansionTemplate}
               onRowToggle={(e: any) => {
                 setExpandedRows(e.data)
               }}
               expandedRows={expandedRows}
               dataKey="id"
-              columns={columns}
+              columns={boatYardColumns}
             />
           </div>
         </div>
@@ -458,15 +301,6 @@ const Boatyards = () => {
               <p>{properties.boatyardGPSCoordinates}</p>
             </div>
           </div>
-          {/* <DataTableComponent
-            data={undefined}
-            columns={boatyardMooringTableComponents}
-            tableStyle={{
-              fontSize: '12px',
-              color: '#000000',
-              fontWeight: 700,
-            }}
-          /> */}
 
           <div className="border-[1px] border-[#D5E1EA]  w-[full] mt-3 "></div>
           <div className="flex justify-start gap-14  mt-2  font-normal text-[12px]">

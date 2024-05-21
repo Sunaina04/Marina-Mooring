@@ -191,7 +191,7 @@ const Customer = () => {
   }, [])
 
   return (
-    <div className={modalVisible ? 'backdrop-blur-lg': ''}>
+    <div className={modalVisible ? 'backdrop-blur-lg' : ''}>
       <Header header="MOORMANAGE/Customer" />
       <div className="flex justify-end mr-12 ">
         <div className="flex mt-14 ">
@@ -257,7 +257,7 @@ const Customer = () => {
                 <img
                   src="/assets/images/empty.png"
                   alt="Empty Data"
-                  className="w-32 mx-auto mb-4"
+                  className="w-28 mx-auto mb-4"
                 />
                 <p className="text-gray-500">No data available</p>
               </div>
@@ -280,14 +280,8 @@ const Customer = () => {
             )}
           </div>
         </div>
-{/* </div> */}
+        {/* </div> */}
         {/* middle container */}
-
-
-        
-         
-
-
 
         <>
           <div className="min-w-[20vw]">
@@ -304,45 +298,39 @@ const Customer = () => {
             </div>
 
             {/* Commentting this code for now due to some ui issues but will use in future once api is ready for it  */}
+          </div>
 
-
-        </div>
-
-
-        
-
-            <div
-              style={{
-                top: '277px',
-                left: '107px',
-                gap: '0px',
-                width:'413px',
-                borderRadius: '10px',
-                border: '1px solid #D5E1EA',
-                opacity: '0px',
-                backgroundColor: 'white',
-                flexGrow: 1,
-                marginRight: '40px',
-              }}>
-              <div className="rounded-md border">
-                <div className="bg-[#10293A] rounded-r-md  rounded-l-md flex justify-between pb-2">
-                  <div className="text-sm font-semibold rounded-t-md bg-[]">
-                    <h1 className="p-4 text-white">{'Customers Record'}</h1>
-                  </div>
-                  <div className="flex">
-                    <FaEdit
-                      onClick={handleEdit}
-                      className="mr-3 mt-3 text-[white]"
-                      data-testid="FaEdit"
-                    />
-                    <RiDeleteBin5Fill
-                      onClick={handleDelete}
-                      className="text-white mr-2 mt-3"
-                      data-testid="RiDeleteBin5Fill"
-                    />
-                  </div>
+          <div
+            style={{
+              top: '277px',
+              left: '107px',
+              gap: '0px',
+              width: '413px',
+              borderRadius: '10px',
+              border: '1px solid #D5E1EA',
+              opacity: '0px',
+              backgroundColor: 'white',
+              flexGrow: 1,
+              marginRight: '40px',
+            }}>
+            <div className="rounded-md border">
+              <div className="bg-[#10293A] rounded-r-md  rounded-l-md flex justify-between pb-2">
+                <div className="text-sm font-semibold rounded-t-md bg-[]">
+                  <h1 className="p-4 text-white">{'Customers Record'}</h1>
                 </div>
-
+                <div className="flex">
+                  <FaEdit
+                    onClick={handleEdit}
+                    className="mr-3 mt-3 text-[white]"
+                    data-testid="FaEdit"
+                  />
+                  <RiDeleteBin5Fill
+                    onClick={handleDelete}
+                    className="text-white mr-2 mt-3"
+                    data-testid="RiDeleteBin5Fill"
+                  />
+                </div>
+              </div>
 
               {customerRecordData ? (
                 <div className="">
@@ -424,9 +412,9 @@ const Customer = () => {
                   <img
                     src="/assets/images/empty.png"
                     alt="Empty Data"
-                    className="w-32 mx-auto mb-4"
+                    className="w-10 mx-auto mt-10 mb-3"
                   />
-                  <p className="text-gray-500">No data available</p>
+                  <p className="text-gray-500 mb-10">No data available</p>
                 </div>
               )}
             </div>
@@ -449,7 +437,7 @@ const Customer = () => {
                   <img
                     src="/assets/images/empty.png"
                     alt="Empty Data"
-                    className="w-32 mx-auto mb-4"
+                    className="w-20 mx-auto mb-4"
                   />
                   <p className="text-gray-500">No data available</p>
                 </div>
@@ -557,14 +545,11 @@ const Customer = () => {
                   </div>
                 </div>
               </Dialog>
-              </div>
             </div>
-       </>
-        </div>
-        </div>
-        
-    
-    
+          </div>
+        </>
+      </div>
+    </div>
   )
 }
 
