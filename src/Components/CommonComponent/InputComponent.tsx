@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FocusEventHandler } from "react";
 import { InputText } from "primereact/inputtext";
 
 interface InputStyle {
@@ -21,6 +21,9 @@ interface InputComponentProps {
   autoFocus?: boolean;
   style?: InputStyle;
   name?: string;
+  onFocus?: any;
+  onBlur?: any;
+  
 }
 
 const InputComponent: React.FC<InputComponentProps> = ({
@@ -32,7 +35,10 @@ const InputComponent: React.FC<InputComponentProps> = ({
   required,
   autoFocus,
   style,
-  name
+  name,
+  onFocus,
+  onBlur
+
 }) => {
   return (
     <div className="p-inputgroup">
@@ -46,6 +52,8 @@ const InputComponent: React.FC<InputComponentProps> = ({
         autoFocus={autoFocus}
         name={name}
         style={style}
+        onFocus={onFocus}
+        onBlur={onBlur}
       />
     </div>
   );
