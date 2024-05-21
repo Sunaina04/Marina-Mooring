@@ -33,7 +33,6 @@ const Boatyards = () => {
   const [selectedCustomer, setSelectedCustomer] = useState<any>(undefined)
   const [editMode, setEditMode] = useState(false)
   const [position, setPosition] = useState<{ lat: number; lng: number } | null>(null)
-  
 
   const handlePositionChange = (lat: number, lng: number) => {
     setPosition({ lat, lng })
@@ -195,7 +194,7 @@ const Boatyards = () => {
   ]
 
   const handleButtonClick = () => {
-     setModalVisible(true)
+    setModalVisible(true)
   }
 
   const handleModalClose = () => {
@@ -311,9 +310,7 @@ const Boatyards = () => {
     fontSize: '10px',
     color: 'black',
     fontWeight: '700',
-    borderBottom:"1px solid #D5E1EA "
-    
-
+    borderBottom: '1px solid #D5E1EA ',
   }
 
   const columns = useMemo(
@@ -343,13 +340,12 @@ const Boatyards = () => {
         field: '',
         header: '',
         expander: allowExpansion,
-    style: { backgroundColor: '#FFFFFF' ,borderBottom:"1px solid #D5E1EA "},
+        style: { backgroundColor: '#FFFFFF', borderBottom: '1px solid #D5E1EA ' },
       },
     ],
     [allowExpansion],
   )
 
- 
   return (
     <>
       <Header header="MOORMANAGE/Boatyards" />
@@ -433,13 +429,12 @@ const Boatyards = () => {
             <DataTableWithToogle
               data={products}
               rowExpansionTemplate={rowExpansionTemplate}
-              onRowToggle={(e: any) =>{ setExpandedRows(e.data)}}
+              onRowToggle={(e: any) => {
+                setExpandedRows(e.data)
+              }}
               expandedRows={expandedRows}
               dataKey="id"
               columns={columns}
-              
-
-              
             />
           </div>
         </div>
@@ -455,12 +450,14 @@ const Boatyards = () => {
             </div>
           </div>
           <div className=" bg-[] mt-3 ">
-          <div className='flex justify-start gap-14 ml-4  ' style={{fontSize:'12px', fontWeight:'700'}} >
-          <p>{properties.address}</p>
-          <p>{properties.mooringInventoried}</p>
-          <p>{properties.boatyardGPSCoordinates}</p>
-              </div>
-              </div>
+            <div
+              className="flex justify-start gap-14 ml-4  "
+              style={{ fontSize: '12px', fontWeight: '700' }}>
+              <p>{properties.address}</p>
+              <p>{properties.mooringInventoried}</p>
+              <p>{properties.boatyardGPSCoordinates}</p>
+            </div>
+          </div>
           {/* <DataTableComponent
             data={undefined}
             columns={boatyardMooringTableComponents}
@@ -472,11 +469,11 @@ const Boatyards = () => {
           /> */}
 
           <div className="border-[1px] border-[#D5E1EA]  w-[full] mt-3 "></div>
-            <div className="flex justify-start gap-14  mt-2  font-normal text-[12px]">
-              <p className='ml-3.5'>123 Elm St</p>
-              <p className='w-15' >25</p>
-              <p className='ml-24  underline' >38 21.806 144</p>
-            </div>
+          <div className="flex justify-start gap-14  mt-2  font-normal text-[12px]">
+            <p className="ml-3.5">123 Elm St</p>
+            <p className="w-15">25</p>
+            <p className="ml-24  underline">38 21.806 144</p>
+          </div>
           {/* </div> */}
           <div className="w-[512px] h-[150px] p-3.5 ">
             <CustomSelectPositionMap onPositionChange={handlePositionChange} zoomLevel={50} />
@@ -487,7 +484,6 @@ const Boatyards = () => {
                 fontSize: '12px',
                 color: '#000000',
                 fontWeight: 400,
-                
               }}
               scrollable={true}
               data={boatyardMooring}
@@ -498,7 +494,6 @@ const Boatyards = () => {
           </div>
         </div>
       </div>
-      
     </>
   )
 }

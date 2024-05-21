@@ -9,6 +9,7 @@ import useMetaData from '../../CommonComponent/MetaDataComponent'
 import { Country, State } from '../../../Type/CommonType'
 import { BoatYardResponse } from '../../../Type/ApiTypes'
 import { InputText } from 'primereact/inputtext'
+import CustomSelectPositionMap from '../../Map/CustomSelectPositionMap'
 
 const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCoordinates }) => {
   const [boatyardId, setBoatyardId] = useState('')
@@ -83,20 +84,18 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
 
   return (
     <>
-      <div className="w-full h-full  ">
-
-
-        <div className="flex gap-8 mt-3">
+      <div className=" ml-4">
+        <div className="flex gap-6  ">
           <div>
-            <span className="font-semibold text-sm">Boatyard ID</span>
-            <div className="mt-2">
+            <span className="font-medium text-sm text-[#000000]">Boatyard ID</span>
+            <div className="mt-3">
               <InputComponent
                 value={boatyardId}
                 onChange={(e) => setBoatyardId(e.target.value)}
                 style={{
                   width: '230px',
                   height: '32px',
-                  border:'1px solid #D5E1EA',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   padding: '1.2em',
@@ -106,15 +105,15 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
           </div>
 
           <div>
-            <span className="font-semibold text-sm">Boatyard Name</span>
-            <div className="mt-2">
+            <span className="font-medium text-sm text-[#000000]">Boatyard Name</span>
+            <div className="mt-3">
               <InputComponent
                 value={boatyardName}
                 onChange={(e) => setBoatyardName(e.target.value)}
                 style={{
                   width: '230px',
                   height: '32px',
-                  border:'1px solid #D5E1EA',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   padding: '1.2em',
@@ -124,20 +123,20 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
           </div>
         </div>
 
-        <div className="flex gap-8 mt-4">
+        <div className="flex  gap-6 mt-3">
           <div>
             <div>
-              <span className="font-semibold text-sm">Email Address</span>
+              <span className="font-medium text-sm text-[#000000]">Email Address</span>
             </div>
 
-            <div className="mt-2">
+            <div className="mt-3">
               <InputComponent
                 value={emailAddress}
                 onChange={(e) => setEmailAddress(e.target.value)}
                 style={{
                   width: '230px',
                   height: '32px',
-                  border:'1px solid #D5E1EA',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   padding: '1.2em',
@@ -149,16 +148,16 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
           <div>
             <div>
               <div>
-                <span className="font-semibold text-sm">Phone</span>
+                <span className="font-medium text-sm text-[#000000]">Phone</span>
               </div>
-              <div className="mt-2">
+              <div className="mt-3">
                 <InputComponent
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   style={{
                     width: '230px',
                     height: '32px',
-                    border:'1px solid #D5E1EA',
+                    border: '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                     padding: '1.2em',
@@ -168,12 +167,12 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
             </div>
           </div>
         </div>
-        <div className='mt-8'>
-          <span className="font-semibold text-sm">Address</span>
+        <div className="mt-4">
+          <span className="font-medium text-sm text-[#000000]">Address</span>
         </div>
-        <div className="flex gap-8 mt-4">
+        <div className="flex gap-6 mt-4">
           <div>
-            <div className="mt-2">
+            <div className="">
               <InputComponent
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
@@ -181,7 +180,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
                 style={{
                   width: '230px',
                   height: '32px',
-                  border:'1px solid #D5E1EA',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   padding: '1.2em',
@@ -190,18 +189,21 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
             </div>
           </div>
 
-          <div className="mt-2">
-            <InputComponent placeholder="Apt/Suite"style={{
-                  width: '230px',
-                  height: '32px',
-                  border:'1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                  padding: '1.2em',
-                }} />
+          <div className="">
+            <InputComponent
+              placeholder="Apt/Suite"
+              style={{
+                width: '230px',
+                height: '32px',
+                border: '1px solid #D5E1EA',
+                borderRadius: '0.50rem',
+                fontSize: '0.8rem',
+                padding: '1.2em',
+              }}
+            />
           </div>
 
-          <div className="mt-2">
+          <div className="">
             <Dropdown
               id="stateDropdown"
               placeholder="State"
@@ -212,7 +214,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
               style={{
                 width: '230px',
                 height: '32px',
-                border:'1px solid #D5E1EA',
+                border: '1px solid #D5E1EA',
                 borderRadius: '0.50rem',
                 fontSize: '0.8rem',
                 padding: '1.2em',
@@ -221,9 +223,9 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
           </div>
         </div>
 
-        <div className="flex gap-6 mt-4">
+        <div className="flex  gap-6 mt-3">
           <div>
-            <div className="mt-2">
+            <div className="">
               <Dropdown
                 id="stateDropdown"
                 value={country}
@@ -234,7 +236,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
                 style={{
                   width: '230px',
                   height: '32px',
-                  border:'1px solid #D5E1EA',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   padding: '1.2em',
@@ -245,7 +247,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
 
           <div>
             <div>
-              <div className="mt-2">
+              <div className="">
                 <InputComponent
                   value={zipCode}
                   onChange={(e) => setZipCode(e.target.value)}
@@ -253,7 +255,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
                   style={{
                     width: '230px',
                     height: '32px',
-                    border:'1px solid #D5E1EA',
+                    border: '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                     padding: '1.2em',
@@ -264,22 +266,22 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
           </div>
         </div>
 
-        <div className="flex gap-8 mt-4">
+        <div className="flex mt-3 ">
           <div>
             <div>
-              <span className="font-semibold text-sm">Main Contact</span>
+              <span className="font-medium text-sm text-[#000000]">Main Contact</span>
             </div>
 
             <div>
               <div>
-                <div className="mt-2">
+                <div className=" mt-4">
                   <InputComponent
                     value={mainContact}
                     onChange={(e) => setMainContact(e.target.value)}
                     style={{
                       width: '230px',
                       height: '32px',
-                      border:'1px solid #D5E1EA',
+                      border: '1px solid #D5E1EA',
                       borderRadius: '0.50rem',
                       fontSize: '0.8rem',
                       padding: '1.2em',
@@ -289,12 +291,13 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
               </div>
             </div>
           </div>
-          <div>
-            <CustomStateMap onPositionChange={handlePositionChange} />
+
+          <div className="w-[512px] h-[150px] p-3.5 rounded-lg mt-6">
+            <CustomSelectPositionMap onPositionChange={handlePositionChange} zoomLevel={50} />
           </div>
         </div>
 
-        <div className="flex gap-3 mt-12">
+        <div className="flex gap-6">
           <Button
             label={'Save'}
             onClick={handleSave}
@@ -310,414 +313,9 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
               borderRadius: '0.50rem',
             }}
           />
-          <Button
-            label={'Back'}
-            text={true}
-            
-          />
+          <Button label={'Back'} text={true} />
         </div>
       </div>
-
-      {/* 
-<div>
-        <div className="flex gap-6 ">
-          <div>
-            <span className="font-medium text-sm text-[#000000]">Customer Name</span>
-            <div className="mt-2">
-              <InputComponent
-      
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                }}
-              />
-            </div>
-          </div>
-
-          <div>
-            <span className="font-medium text-sm text-[#000000]">Mooring ID</span>
-            <div className="mt-2">
-              <InputComponent
-              
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                }}
-              />
-            </div>
-          </div>
-
-          <div>
-            <span className="font-medium text-sm text-[#000000]">Harbor</span>
-            <div className="mt-2">
-              <InputComponent
-               
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                }}
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="flex gap-6 mt-3">
-          <div>
-            <span className="font-medium text-sm text-[#000000]">Water Depth</span>
-            <div className="mt-2">
-              <InputComponent
-            
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                }}
-              />
-            </div>
-          </div>
-
-          <div>
-            <span className="font-medium text-sm text-[#000000]">G.P.S Coordinates</span>
-            <div className="mt-2">
-              <InputComponent
-           
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                }}
-              />
-            </div>
-          </div>
-
-          <div>
-            <span className="font-medium text-sm text-[#000000]">Boatyard Name</span>
-            <div className="mt-2">
-              <InputComponent
-        
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                }}
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="flex gap-6 mt-3">
-          <div>
-            <span className="font-medium text-sm text-[#000000]">Boat Name</span>
-            <div className="mt-2">
-              <InputComponent
-     
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                }}
-              />
-            </div>
-          </div>
-
-          <div>
-            <span className="font-medium text-sm text-[#000000]">Boat Size</span>
-            <div className="mt-2">
-              <InputComponent
-         
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                }}
-              />
-            </div>
-          </div>
-
-          <div>
-            <div>
-              <span className="font-medium text-sm text-[#000000]">Type</span>
-            </div>
-
-            <div className="mt-2">
-              <Dropdown
-            
-                optionLabel="name"
-                editable
-                placeholder="Skiff"
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                }}
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="flex gap-6 mt-3">
-          <div>
-            <span className="font-medium text-sm text-[#000000]">Weight</span>
-            <div className="mt-2">
-              <InputComponent
-    
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                }}
-              />
-            </div>
-          </div>
-
-          <div>
-            <div>
-              <span className="font-medium text-sm text-[#000000]">Size of Weight</span>
-            </div>
-
-            <div className="mt-2">
-              <Dropdown
-             
-                optionLabel="name"
-                editable
-                placeholder="Select"
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                }}
-              />
-            </div>
-          </div>
-
-          <div>
-            <div>
-              <span className="font-medium text-sm text-[#000000]">Type of Weight</span>
-            </div>
-
-            <div className="mt-2">
-              <Dropdown
-            
-                optionLabel="name"
-                editable
-                placeholder="Select"
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                }}
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="flex gap-6 mt-3">
-          <div>
-            <div>
-              <div>
-                <span className="font-medium text-sm text-[#000000]">Top Chain Condition</span>
-              </div>
-
-              <div className="mt-2">
-                <Dropdown
-                  optionLabel="name"
-                  editable
-                  placeholder="Select"
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                  }}
-                />
-              </div>
-            </div>
-            <div className="mt-3">
-              <div>
-                <span className="font-medium text-sm text-[#000000]">Bootom Chain Condition</span>
-              </div>
-
-              <div className="mt-2">
-                <Dropdown
-                  value={undefined}
-                
-                  options={undefined}
-                  optionLabel="name"
-                  editable
-                  placeholder="Select"
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                  }}
-                />
-              </div>
-            </div>
-            <div className="mt-3">
-              <div>
-                <span className="font-medium text-sm text-[#000000]">Pennant Condition</span>
-              </div>
-
-              <div className="mt-2">
-                <Dropdown
-                  value={undefined}
-                  
-                  options={undefined}
-                  optionLabel="name"
-                  editable
-                  placeholder="Select"
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <div>
-              <div>
-                <span className="font-medium text-sm text-[#000000]">Condition of Eye</span>
-              </div>
-              <div className="mt-2">
-                <Dropdown
-                  value={undefined}
-              
-                  options={undefined}
-                  optionLabel="name"
-                  editable
-                  placeholder="Select"
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                  }}
-                />
-              </div>
-            </div>
-            <div className="mt-3">
-              <div>
-                <span className="font-medium text-sm text-[#000000]">Shackle, Swivel Condition</span>
-              </div>
-
-              <div className="mt-2">
-                <Dropdown
-                  value={undefined}
-
-                  options={undefined}
-                  optionLabel="name"
-                  editable
-                  placeholder="Select"
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                  }}
-                />
-              </div>
-            </div>
-            <div className="mt-3">
-              <div>
-                <span className="font-medium text-sm text-[#000000]">Dept at Mean High Water</span>
-              </div>
-
-              <div className="mt-2">
-                <InputText
-                  value={undefined}
-                
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-          <div>
-            <div>
-              <span className="font-medium text-sm text-[#000000]">Pin on Map</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex gap-4 mt-10">
-          <Button
-            onClick={undefined}
-            label={'Save'}
-            style={{
-              width: '89px',
-              height: '42px',
-              backgroundColor: '#0098FF',
-              cursor: 'pointer',
-              fontWeight: 'bolder',
-              fontSize: '1rem',
-              boxShadow: 'none',
-              color: 'white',
-              borderRadius: '0.50rem',
-            }}
-          />
-          <Button
-            onClick={function (): void {
-              throw new Error('Function not implemented.')
-            }}
-            label={'Back'}
-            text={true}
-            style={{
-              backgroundColor: 'white',
-              color: '#000000',
-              border: 'none',
-              width: '89px',
-              height: '42px',
-            }}
-          />
-        </div>
-      </div> */}
-
-
-
-
-
     </>
   )
 }
