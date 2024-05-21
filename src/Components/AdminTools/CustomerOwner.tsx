@@ -124,11 +124,17 @@ const CustomerOwner = () => {
     try {
       const response = await getUser({ customerAdminId: id }).unwrap()
       const { status, content } = response as GetUserResponse
-      if (status === 200 && Array.isArray(content?.content) && content?.content.length > 0) {
-        setgetCustomerOwnerUserData(content?.content)
-        setIsRowClick(true)
-        setSelectedRow(id)
-        setCustomerAdminId(id)
+      if (status === 200 && Array.isArray(content?.content)) {
+        if (content?.content.length > 0) {
+          setgetCustomerOwnerUserData(content?.content)
+          setIsRowClick(true)
+          setSelectedRow(id)
+          setCustomerAdminId(id)
+        } else {
+          setgetCustomerOwnerUserData([])
+          setCustomerAdminId(id)
+          setIsRowClick(false)
+        }
       } else {
         setIsRowClick(false)
         setgetCustomerOwnerUserData([])
