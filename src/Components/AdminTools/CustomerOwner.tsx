@@ -148,7 +148,7 @@ const CustomerOwner = () => {
   }, [fetchDataAndUpdate])
 
   return (
-    <>
+    <div className={modalVisible ? 'backdrop-blur-lg' : ''}>
       <Header header="MOORMANAGE/Permission" />
 
       <div className="flex mr-12 justify-end">
@@ -183,6 +183,7 @@ const CustomerOwner = () => {
           <CustomModal
             buttonText={'ADD NEW'}
             onHide={handleModalClose}
+            dialogStyle={{ marginTop: '120px', marginLeft: '180px', borderRadius: '20px' }}
             children={
               <AddNewCustomer
                 customerAdminId={customerAdminId ? customerAdminId : ''}
@@ -258,8 +259,6 @@ const CustomerOwner = () => {
             flexGrow: 1,
             height: 'calc(40vw - 10px)',
             minHeight: '700px',
-            // width: '35vw',
-            // minWidth: '35vw',
             borderRadius: '15px',
             border: '1px solid #D5E1EA',
             backgroundColor: '#FFFFFF',
@@ -297,7 +296,7 @@ const CustomerOwner = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

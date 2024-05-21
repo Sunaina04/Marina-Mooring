@@ -698,7 +698,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
               backgroundColor: '#0098FF',
               cursor: 'pointer',
               fontWeight: 'bolder',
-              fontSize: '1rem',
+              fontSize: '14px',
               boxShadow: 'none',
               color: 'white',
               borderRadius: '0.50rem',
@@ -713,7 +713,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
               color: '#000000',
               border: 'none',
               width: '89px',
+              fontSize: '14px',
               height: '42px',
+              fontWeight: '500',
             }}
           />
         </div>

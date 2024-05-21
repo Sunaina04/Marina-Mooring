@@ -14,7 +14,7 @@
 }
 
 * select::placeholder {
-  color: black ;
+  color: black;
 }
 
 * [data-pc-name='dropdown'] {
@@ -41,16 +41,17 @@ body {
 .backdrop-blur-lg::before {
   content: '';
   position: absolute;
-  top: 7rem;
+  top: 6rem;
   left: 0;
   right: 0;
   bottom: 0;
-  backdrop-filter: blur(10px); 
+  backdrop-filter: blur(10px);
   background: rgba(6, 24, 36, 0.7);
-  z-index: 2; 
+  z-index: 2;
   pointer-events: none;
 }
+
 .modal {
   position: relative;
-  z-index: 3; /* Higher than the blur effect */
+  z-index: 3;
 }
