@@ -85,12 +85,12 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     return errors
   }
 
-  const handleInputChange = (fieldName: string, value: any) => {
-    const hasUppercase = /[A-Z]/.test(value)
-    const hasLowercase = /[a-z]/.test(value)
-    const hasNumber = /\d/.test(value)
-    const hasSpecialChar = /[@$!%*?&]/.test(value)
-    const hasMinLength = value.length >= 8
+  const validatePassword = (password: string) => {
+    const hasUppercase = /[A-Z]/.test(password)
+    const hasLowercase = /[a-z]/.test(password)
+    const hasNumber = /\d/.test(password)
+    const hasSpecialChar = /[@$!%*?&]/.test(password)
+    const hasMinLength = password.length >= 8
 
     setPasswordCriteria({
       uppercase: hasUppercase,
@@ -99,7 +99,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       specialChar: hasSpecialChar,
       length: hasMinLength,
     })
+  }
 
+  const handleInputChange = (fieldName: string, value: any) => {
     switch (fieldName) {
       case 'name':
         setName(value)
@@ -124,6 +126,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         break
       case 'password':
         setPassword(value)
+        validatePassword(value)
         break
       case 'confirmPassword':
         setConfirmPassword(value)
@@ -588,78 +591,60 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 {fieldErrors.password && <small className="p-error">{fieldErrors.password}</small>}
               </p>
               <div id="password-message" className="mt-2 hidden">
-                <div className="flex items-center gap-2">
-                  <img
-                    src={
-                      passwordCriteria.uppercase
-                        ? '/assets/images/check-mark.png'
-                        : '/assets/images/close.png'
-                    }
-                    alt="icon"
-                    className="w-4"
-                  />
+                <h3 className="font-medium text-sm text-[#000000]">Password must contain:</h3>
+                <div className="flex items-center gap-6 mt-2">
+                  {passwordCriteria.uppercase ? (
+                    <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
+                  ) : (
+                    <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
+                  )}
                   <p
                     className={`password-message-item ${passwordCriteria.uppercase ? 'text-green-500' : 'text-red-500'}`}>
                     At least one uppercase letter
                   </p>
                 </div>
 
-                <div className="flex items-center gap-2">
-                  <img
-                    src={
-                      passwordCriteria.lowercase
-                        ? '/assets/images/check-mark.png'
-                        : '/assets/images/close.png'
-                    }
-                    alt="icon"
-                    className="w-4"
-                  />
+                <div className="flex items-center gap-6">
+                  {passwordCriteria.lowercase ? (
+                    <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
+                  ) : (
+                    <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
+                  )}
+
                   <p
                     className={`password-message-item ${passwordCriteria.lowercase ? 'text-green-500' : 'text-red-500'}`}>
                     At least one lowercase letter
                   </p>
                 </div>
-                <div className="flex items-center gap-2">
-                  <img
-                    src={
-                      passwordCriteria.number
-                        ? '/assets/images/check-mark.png'
-                        : '/assets/images/close.png'
-                    }
-                    alt="icon"
-                    className="w-4"
-                  />
+                <div className="flex items-center gap-6">
+                  {passwordCriteria.number ? (
+                    <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
+                  ) : (
+                    <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
+                  )}
                   <p
                     className={`password-message-item ${passwordCriteria.number ? 'text-green-500' : 'text-red-500'}`}>
                     At least one number
                   </p>
                 </div>
 
-                <div className="flex items-center gap-2">
-                  <img
-                    src={
-                      passwordCriteria.specialChar
-                        ? '/assets/images/check-mark.png'
-                        : '/assets/images/close.png'
-                    }
-                    alt="icon"
-                    className="w-4"
-                  />
+                <div className="flex items-center gap-6">
+                  {passwordCriteria.specialChar ? (
+                    <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
+                  ) : (
+                    <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
+                  )}
                   <p
                     className={`password-message-item ${passwordCriteria.specialChar ? 'text-green-500' : 'text-red-500'}`}>
                     At least one special character (@, $, !, %, *, ?, &)
                   </p>
                 </div>
-                <div className="flex items-center gap-2">
-                  <img
-                    src={
-                      passwordCriteria.length
-                        ? '/assets/images/check-mark.png'
-                        : '/assets/images/close.png'
-                    }
-                    alt="icon"
-                    className="w-4"
-                  />
+                <div className="flex items-center gap-6">
+                  {passwordCriteria.length ? (
+                    <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
+                  ) : (
+                    <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
+                  )}
                   <p
                     className={`password-message-item ${passwordCriteria.length ? 'text-green-500' : 'text-red-500'}`}>
                     At least 8 characters
