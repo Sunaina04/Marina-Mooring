@@ -130,6 +130,7 @@ const CustomerOwner = () => {
         setIsRowClick(true)
         setSelectedRow(id)
         setCustomerAdminId(id)
+        console.log('customerAdminId 1 is ', customerAdminId)
       } else {
         setIsRowClick(false)
         setgetCustomerOwnerUserData([])
@@ -141,7 +142,6 @@ const CustomerOwner = () => {
 
   useEffect(() => {
     getCustomerAdminsUsers(firstUserId)
-    console.log('i am here', firstUserId)
   }, [firstUserId])
 
   useEffect(() => {
