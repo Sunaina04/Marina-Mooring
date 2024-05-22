@@ -142,6 +142,7 @@ export interface CustomModalProps {
   onHide: () => void
   buttonStyle?: React.CSSProperties | undefined
   dialogStyle?: React.CSSProperties
+  footerContent?: React.ReactNode
 }
 export interface inputHeader {
   header?: string

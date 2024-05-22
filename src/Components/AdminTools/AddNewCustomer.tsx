@@ -565,165 +565,173 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           </div>
         </div>
 
-        <div className="flex mt-5 gap-8 ml-4">
-          <div>
-            <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1 text-center ">
-                Create password
-                <p className="text-red-600">*</p>
-              </div>
-            </span>
-            <div className="mt-1  ">
-              <InputComponent
-                value={password}
-                onChange={(e) => handleInputChange('password', e.target.value)}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: fieldErrors.password ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                  padding: '1.2em',
-                }}
-              />
-              <p className="p-1 w-48">
-                {fieldErrors.password && <small className="p-error">{fieldErrors.password}</small>}
-              </p>
-
-              <div
-                style={{ width: '230px', fontSize: '14px' }}
-                id="password-message"
-                className="mt-2 hidden ">
-                <h3 className="font-medium text-sm text-[#000000] flex justify-center mr-3">
-                  Password must contain:
-                </h3>
-                <div className="flex items-center gap-6 p-1 mt-2">
-                  {passwordCriteria.uppercase ? (
-                    <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
-                  ) : (
-                    <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
-                  )}
-                  <p
-                    className={`password-message-item ${passwordCriteria.uppercase ? 'text-green-500' : 'text-red-500'}`}>
-                    At least <span className="font-[500]"> one uppercase letter</span>
-                  </p>
+        {!editMode && (
+          <div className="flex mt-5 gap-8 ml-4">
+            <div>
+              <span className="font-medium text-sm text-[#000000]">
+                <div className="flex gap-1 text-center ">
+                  Create password
+                  <p className="text-red-600">*</p>
                 </div>
+              </span>
+              <div className="mt-1  ">
+                <InputComponent
+                  value={password}
+                  onChange={(e) => handleInputChange('password', e.target.value)}
+                  type="password"
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
+                  style={{
+                    width: '230px',
+                    height: '32px',
+                    border: fieldErrors.password ? '1px solid red' : '1px solid #D5E1EA',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
+                    padding: '1.2em',
+                  }}
+                />
+                <p className="p-1 w-48">
+                  {fieldErrors.password && (
+                    <small className="p-error">{fieldErrors.password}</small>
+                  )}
+                </p>
 
-                <div className="flex items-center gap-6 p-1 ">
-                  {passwordCriteria.lowercase ? (
-                    <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
-                  ) : (
-                    <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
-                  )}
+                <div
+                  style={{ width: '230px', fontSize: '14px' }}
+                  id="password-message"
+                  className="mt-2 hidden ">
+                  <h3 className="font-medium text-sm text-[#000000] flex justify-center mr-3">
+                    Password must contain:
+                  </h3>
+                  <div className="flex items-center gap-6 p-1 mt-2">
+                    {passwordCriteria.uppercase ? (
+                      <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
+                    ) : (
+                      <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
+                    )}
+                    <p
+                      className={`password-message-item ${passwordCriteria.uppercase ? 'text-green-500' : 'text-red-500'}`}>
+                      At least <span className="font-[500]"> one uppercase letter</span>
+                    </p>
+                  </div>
 
-                  <p
-                    className={`password-message-item ${passwordCriteria.lowercase ? 'text-green-500' : 'text-red-500'}`}>
-                    At least <span className="font-[500]">one lowercase letter</span>
-                  </p>
-                </div>
-                <div className="flex items-center gap-6 p-1 ">
-                  {passwordCriteria.number ? (
-                    <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
-                  ) : (
-                    <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
-                  )}
-                  <p
-                    className={`password-message-item ${passwordCriteria.number ? 'text-green-500' : 'text-red-500'}`}>
-                    At least<span className="font-[500]">one number</span>
-                  </p>
-                </div>
+                  <div className="flex items-center gap-6 p-1 ">
+                    {passwordCriteria.lowercase ? (
+                      <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
+                    ) : (
+                      <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
+                    )}
 
-                <div className="flex items-center gap-6 p-1 ">
-                  {passwordCriteria.specialChar ? (
-                    <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
-                  ) : (
-                    <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
-                  )}
-                  <p
-                    className={`password-message-item ${passwordCriteria.specialChar ? 'text-green-500' : 'text-red-500'}`}>
-                    At least<span className="font-[500]">one special character</span>
-                  </p>
-                </div>
-                <div className="flex items-center gap-6 p-1 ">
-                  {passwordCriteria.length ? (
-                    <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
-                  ) : (
-                    <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
-                  )}
-                  <p
-                    className={`password-message-item ${passwordCriteria.length ? 'text-green-500' : 'text-red-500'}`}>
-                    At least <span className="font-[500]">8 characters</span>
-                  </p>
+                    <p
+                      className={`password-message-item ${passwordCriteria.lowercase ? 'text-green-500' : 'text-red-500'}`}>
+                      At least <span className="font-[500]">one lowercase letter</span>
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-6 p-1 ">
+                    {passwordCriteria.number ? (
+                      <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
+                    ) : (
+                      <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
+                    )}
+                    <p
+                      className={`password-message-item ${passwordCriteria.number ? 'text-green-500' : 'text-red-500'}`}>
+                      At least<span className="font-[500]">one number</span>
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-6 p-1 ">
+                    {passwordCriteria.specialChar ? (
+                      <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
+                    ) : (
+                      <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
+                    )}
+                    <p
+                      className={`password-message-item ${passwordCriteria.specialChar ? 'text-green-500' : 'text-red-500'}`}>
+                      At least<span className="font-[500]">one special character</span>
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-6 p-1 ">
+                    {passwordCriteria.length ? (
+                      <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
+                    ) : (
+                      <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
+                    )}
+                    <p
+                      className={`password-message-item ${passwordCriteria.length ? 'text-green-500' : 'text-red-500'}`}>
+                      At least <span className="font-[500]">8 characters</span>
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="">
-            <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
-                Confirm password
-                <p className="text-red-600">*</p>
+            <div className="">
+              <span className="font-medium text-sm text-[#000000]">
+                <div className="flex gap-1">
+                  Confirm password
+                  <p className="text-red-600">*</p>
+                </div>
+              </span>
+              <div className="mt-1 ">
+                <InputComponent
+                  value={confirmPassword}
+                  onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
+                  type="password"
+                  style={{
+                    width: '230px',
+                    height: '32px',
+                    border: fieldErrors.confirmPassword ? '1px solid red' : '1px solid #D5E1EA',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
+                    padding: '1.2em',
+                  }}
+                />
+                {fieldErrors.confirmPassword && (
+                  <small className="p-error">{fieldErrors.confirmPassword}</small>
+                )}
               </div>
-            </span>
-            <div className="mt-1 ">
-              <InputComponent
-                value={confirmPassword}
-                onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: fieldErrors.confirmPassword ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                  padding: '1.2em',
-                }}
-              />
-              {fieldErrors.confirmPassword && (
-                <small className="p-error">{fieldErrors.confirmPassword}</small>
-              )}
             </div>
           </div>
-        </div>
+        )}
 
         {/* Save and Back buttons */}
-        <div className="flex gap-4 mt-10 ml-4">
-          <Button
-            label={'Save'}
-            onClick={() => {
-              if (editMode) {
-                handleEdit()
-              } else {
-                handleSave()
-              }
-            }}
-            style={{
-              width: '89px',
-              height: '42px',
-              backgroundColor: '#0098FF',
-              cursor: 'pointer',
-              fontWeight: 'bolder',
-              fontSize: '14px',
-              boxShadow: 'none',
-              color: 'white',
-              borderRadius: '0.50rem',
-            }}
-          />
-          <Button
-            label={'Back'}
-            onClick={handleBack}
-            text={true}
-            style={{
-              backgroundColor: 'white',
-              color: '#000000',
-              border: 'none',
-              width: '89px',
-              fontSize: '14px',
-              height: '42px',
-              fontWeight: '500',
-            }}
-          />
+        <div style={{ width: '100%', backgroundColor: 'white', padding: '0 12px' }}>
+          <div className="flex gap-4 mt-10 ml-4 absolute bottom-5 left-6">
+            <Button
+              label={'Save'}
+              onClick={() => {
+                if (editMode) {
+                  handleEdit()
+                } else {
+                  handleSave()
+                }
+              }}
+              style={{
+                width: '89px',
+                height: '42px',
+                backgroundColor: '#0098FF',
+                cursor: 'pointer',
+                fontWeight: 'bolder',
+                fontSize: '14px',
+                boxShadow: 'none',
+                color: 'white',
+                borderRadius: '0.50rem',
+              }}
+            />
+            <Button
+              label={'Back'}
+              onClick={handleBack}
+              text={true}
+              style={{
+                backgroundColor: 'white',
+                color: '#000000',
+                border: 'none',
+                width: '89px',
+                fontSize: '14px',
+                height: '42px',
+                fontWeight: '500',
+              }}
+            />
+          </div>
         </div>
       </div>
 

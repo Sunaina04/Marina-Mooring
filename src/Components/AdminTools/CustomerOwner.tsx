@@ -69,7 +69,7 @@ const CustomerOwner = () => {
   }
 
   const columnStyle = {
-    width: '10vw',
+    // width: '10vw',
     borderBottom: '1px solid #D5E1EA',
     backgroundColor: '#FFFFFF',
     color: '#000000',
@@ -207,7 +207,14 @@ const CustomerOwner = () => {
           <CustomModal
             buttonText={'ADD NEW'}
             onHide={handleModalClose}
-            dialogStyle={{ marginTop: '120px', marginLeft: '180px', borderRadius: '20px' }}
+            dialogStyle={{
+              width: '820px',
+              minWidth: '800px',
+              height: '600px',
+              minHeight: '600px',
+              borderRadius: '1rem',
+              maxHeight: '60% !important',
+            }}
             children={
               <AddNewCustomer
                 customerAdminId={customerAdminId ? customerAdminId : ''}
@@ -231,6 +238,7 @@ const CustomerOwner = () => {
       <div className="flex gap-10 ml-8 mt-10">
         <div
           style={{
+            // flexGrow: 1,
             borderRadius: '15px',
             border: '1px solid #D5E1EA',
             backgroundColor: '#FFFFFF',
@@ -244,8 +252,8 @@ const CustomerOwner = () => {
             onChange={handleSearch}
             placeholder="Search by name, ID, phone no.... "
             inputTextStyle={{
-              width: '38vw',
-              minWidth: '38vw',
+              width: '25vw',
+              minWidth: '25vw',
               height: '44px',
               padding: '0 2rem 0 2.5rem',
               border: '1px solid #C5D9E0',
@@ -263,8 +271,6 @@ const CustomerOwner = () => {
             style={{
               height: '600px',
               minHeight: 'calc(40vw - 600px)',
-              width: '40vw',
-              minWidth: '40vw',
               overflow: 'auto',
             }}>
             {getCustomerOwnerData.length === 0 ? (
@@ -287,8 +293,8 @@ const CustomerOwner = () => {
                   cursor: 'pointer',
                   marginLeft: '20px',
                   marginRight: '20px',
-                  width: '37vw',
-                  minWidth: '37vw',
+                  width: '25vw',
+                  minWidth: '25vw',
                 }}
                 scrollable={true}
                 columns={customerOwnerTableColumn}
@@ -296,9 +302,9 @@ const CustomerOwner = () => {
                   getCustomerAdminsUsers(e.data.id)
                 }}
                 style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
-                rowStyle={(rowData) => ({
-                  backgroundColor: selectedRow === rowData.id ? 'black' : 'red',
-                })}
+                // rowStyle={(rowData) => ({
+                //   backgroundColor: selectedRow === rowData.id ? 'black' : 'red',
+                // })}
               />
             )}
           </div>
@@ -320,8 +326,8 @@ const CustomerOwner = () => {
             onChange={handleUsersSearch}
             placeholder="Search by name, ID, Email, Role, phone no..."
             inputTextStyle={{
-              width: '42vw',
-              minWidth: '42vw',
+              width: '41vw',
+              minWidth: '41vw',
               height: '44px',
               border: '1px solid #C5D9E0',
               padding: '0 2rem 0 2.5rem',
@@ -351,8 +357,6 @@ const CustomerOwner = () => {
                   backgroundColor: '#FFFFFF',
                   marginLeft: '20px',
                   marginRight: '20px',
-                  width: '41vw',
-                  minWidth: '41vw',
                 }}
                 scrollable={true}
                 data={getCustomerOwnerUserData}

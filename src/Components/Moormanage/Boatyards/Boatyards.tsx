@@ -271,7 +271,7 @@ const Boatyards = () => {
               height: '600px',
               minHeight: '610px',
               borderRadius: '1rem',
-              maxHeight: '95% !important',
+              maxHeight: '60% !important',
             }}
           />
         </div>

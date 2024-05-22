@@ -22,6 +22,36 @@ const SidebarMenu = () => {
         },
       ]
       break
+    case 'TECHNICIAN':
+      link = '/permission'
+      adminSubcategories = [
+        {
+          icon: '/assets/images/permission.svg',
+          name: 'Permission',
+          link: '/permission',
+        },
+        {
+          icon: '/assets/images/settings.svg',
+          name: 'Settings',
+          link: '/permission',
+        },
+      ]
+      break
+    case 'FINANCE':
+      link = '/permission'
+      adminSubcategories = [
+        {
+          icon: '/assets/images/permission.svg',
+          name: 'Permission',
+          link: '/permission',
+        },
+        {
+          icon: '/assets/images/settings.svg',
+          name: 'Settings',
+          link: '/permission',
+        },
+      ]
+      break
     default:
       link = '/customerAdmin'
       adminSubcategories = [

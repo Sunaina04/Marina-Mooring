@@ -13,6 +13,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
   onHide,
   buttonStyle,
   dialogStyle,
+  footerContent,
 }) => {
   return (
     <div className="card flex justify-content-center">
@@ -33,7 +34,6 @@ const CustomModal: React.FC<CustomModalProps> = ({
           boxShadow: 'none',
           lineHeight: '18.75px',
           letterSpacing: '0.20000000298023224px',
-        
         }}
       />
       <Dialog
