@@ -29,6 +29,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
   const { getMetaData } = useMetaData()
   const [countriesData, setCountriesData] = useState<Country[]>()
   const [statesData, setStatesData] = useState<State[]>()
+  const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
 
   const style = {
     width: '13vw',
@@ -36,6 +37,43 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
     border: '1px solid gray',
     borderRadius: '0.50rem',
     fontSize: '0.80vw',
+  }
+
+  const validateFields = () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const phoneRegex = /^\d{10}$/
+    const nameRegex = /^[a-zA-Z ]+$/
+    const errors: { [key: string]: string } = {}
+
+    if (!boatyardName) {
+      errors.name = 'Boatyard Name is required'
+    } else if (!nameRegex.test(boatyardName)) {
+      errors.name = 'Name must only contain letters'
+    }
+
+    if (!boatyardId) errors.id = 'Boatyard ID is required'
+
+    if (!phone) {
+      errors.phone = 'Phone is required'
+    } else if (!phoneRegex.test(phone)) {
+      errors.phone = 'Phone must be a 10-digit number'
+    }
+
+    if (!emailAddress) {
+      errors.email = 'Email is required'
+    } else if (!emailRegex.test(emailAddress)) {
+      errors.email = 'Please enter a valid email format'
+    }
+
+    if (!address) errors.address = 'Street/house is required'
+
+    if (!zipCode) errors.zipCode = 'Zip code is required'
+
+    if (!mainContact) errors.mainContact = 'Main contact is required'
+    if (!country) errors.country = 'Country  is required'
+    if (!state) errors.state = 'State  is required'
+    if (!aptSuite) errors.aptSuite = 'Apt/Suite is required'
+    return errors
   }
 
   const handlePositionChange = (lat: number, lng: number) => {
@@ -49,6 +87,12 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
   }
 
   const handleSave = async () => {
+    const errors = validateFields()
+    if (Object.keys(errors).length > 0) {
+      setErrorMessage(errors)
+      return
+    }
+
     const selectedState = statesData?.find((stateItem) => stateItem.name === state)
     const selectedCountry = countriesData?.find((countryItem) => countryItem.name === country)
 
@@ -93,77 +137,88 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
       <div className=" ml-4">
         <div className="flex gap-6  ">
           <div>
-            <span className="font-medium text-sm text-[#000000]">Boatyard ID</span>
-            <div className="mt-3">
+            <span className="font-medium text-sm text-[#000000]">
+              Boatyard ID <span className="text-red-500">*</span>
+            </span>
+            <div className="mt-1">
               <InputComponent
                 value={boatyardId}
                 onChange={(e) => setBoatyardId(e.target.value)}
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: errorMessage.name ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   padding: '1.2em',
                 }}
               />
             </div>
+            <p>{errorMessage.id && <small className="p-error">{errorMessage.id}</small>}</p>
           </div>
 
           <div>
-            <span className="font-medium text-sm text-[#000000]">Boatyard Name</span>
-            <div className="mt-3">
+            <span className="font-medium text-sm text-[#000000]">
+              Boatyard Name <span className="text-red-500">*</span>
+            </span>
+            <div className="mt-1">
               <InputComponent
                 value={boatyardName}
                 onChange={(e) => setBoatyardName(e.target.value)}
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: errorMessage.name ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   padding: '1.2em',
                 }}
               />
             </div>
+            <p>{errorMessage.name && <small className="p-error">{errorMessage.name}</small>}</p>
           </div>
         </div>
 
-        <div className="flex  gap-6 mt-3">
+        <div className="flex  gap-6 mt-4">
           <div>
             <div>
-              <span className="font-medium text-sm text-[#000000]">Email Address</span>
+              <span className="font-medium text-sm text-[#000000]">
+                Email Address <span className="text-red-500">*</span>
+              </span>
             </div>
 
-            <div className="mt-3">
+            <div className="mt-1">
               <InputComponent
                 value={emailAddress}
                 onChange={(e) => setEmailAddress(e.target.value)}
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: errorMessage.email ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   padding: '1.2em',
                 }}
               />
             </div>
+            <p>{errorMessage.email && <small className="p-error">{errorMessage.email}</small>}</p>
           </div>
 
           <div>
             <div>
               <div>
-                <span className="font-medium text-sm text-[#000000]">Phone</span>
+                <span className="font-medium text-sm text-[#000000]">
+                  Phone <span className="text-red-500">*</span>
+                </span>
               </div>
-              <div className="mt-3">
+              <div className="mt-1">
                 <InputComponent
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: '1px solid #D5E1EA',
+                    border: errorMessage.phone ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                     padding: '1.2em',
@@ -171,12 +226,15 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
                 />
               </div>
             </div>
+            <p>{errorMessage.phone && <small className="p-error">{errorMessage.phone}</small>}</p>
           </div>
         </div>
-        <div className="mt-4">
-          <span className="font-medium text-sm text-[#000000]">Address</span>
+        <div className="mt-3">
+          <span className="font-medium text-sm text-[#000000]">
+            Address <span className="text-red-500">*</span>
+          </span>
         </div>
-        <div className="flex gap-6 mt-4">
+        <div className="flex gap-6 mt-1">
           <div>
             <div className="">
               <InputComponent
@@ -186,32 +244,39 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: errorMessage.address ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   padding: '1.2em',
                 }}
               />
             </div>
+
+            <p>
+              {errorMessage.address && <small className="p-error">{errorMessage.address}</small>}
+            </p>
           </div>
 
           <div className="">
             <InputComponent
               value={aptSuite}
-              onChange={(e) => setAptSuite(e.target.value)}
               placeholder="Apt/Suite"
+              onChange={(e) => setAptSuite(e.target.value)}
               style={{
                 width: '230px',
                 height: '32px',
-                border: '1px solid #D5E1EA',
+                border: errorMessage.aptSuite ? '1px solid red' : '1px solid #D5E1EA',
                 borderRadius: '0.50rem',
                 fontSize: '0.8rem',
                 padding: '1.2em',
               }}
             />
+            <p>
+              {errorMessage.aptSuite && <small className="p-error">{errorMessage.aptSuite}</small>}
+            </p>
           </div>
 
-          <div className="">
+          <div className="flex flex-col ">
             <Dropdown
               id="stateDropdown"
               placeholder="State"
@@ -222,16 +287,18 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
               style={{
                 width: '230px',
                 height: '32px',
-                border: '1px solid #D5E1EA',
+                border: errorMessage.state ? '1px solid red' : '1px solid #D5E1EA',
                 borderRadius: '0.50rem',
                 fontSize: '0.8rem',
-                padding: '1.2em',
+                padding: '4px',
               }}
             />
+
+            <p> {errorMessage.state && <small className="p-error">{errorMessage.state}</small>}</p>
           </div>
         </div>
 
-        <div className="flex  gap-6 mt-3">
+        <div className="flex  gap-6 mt-4">
           <div>
             <div className="">
               <Dropdown
@@ -244,13 +311,16 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: errorMessage.country ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
-                  padding: '1.2em',
+                  padding: '4px',
                 }}
               />
             </div>
+            <p>
+              {errorMessage.country && <small className="p-error">{errorMessage.country}</small>}
+            </p>
           </div>
 
           <div>
@@ -263,44 +333,55 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: '1px solid #D5E1EA',
+                    border: errorMessage.zipCode ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                     padding: '1.2em',
                   }}
                 />
               </div>
+              <p>
+                {errorMessage.zipCode && <small className="p-error">{errorMessage.zipCode}</small>}
+              </p>
             </div>
           </div>
         </div>
 
-        <div className="flex mt-3 ">
+        <div className="flex mt-4 ">
           <div>
             <div>
-              <span className="font-medium text-sm text-[#000000]">Main Contact</span>
+              <span className="font-medium text-sm text-[#000000]">
+                Main Contact <span className="text-red-500">*</span>
+              </span>
             </div>
 
             <div>
               <div>
-                <div className=" mt-4">
+                <div className=" mt-1">
                   <InputComponent
                     value={mainContact}
                     onChange={(e) => setMainContact(e.target.value)}
                     style={{
                       width: '230px',
                       height: '32px',
-                      border: '1px solid #D5E1EA',
+                      border: errorMessage.mainContact ? '1px solid red' : '1px solid #D5E1EA',
                       borderRadius: '0.50rem',
                       fontSize: '0.8rem',
                       padding: '1.2em',
                     }}
                   />
                 </div>
+
+                <p>
+                  {errorMessage.mainContact && (
+                    <small className="p-error">{errorMessage.mainContact}</small>
+                  )}
+                </p>
               </div>
             </div>
           </div>
 
-          <div className="w-[512px] h-[150px] p-3.5 rounded-lg mt-6">
+          <div className="w-full h-[150px] p-2 rounded-lg mt-[22px]">
             <CustomSelectPositionMap onPositionChange={handlePositionChange} zoomLevel={50} />
           </div>
         </div>

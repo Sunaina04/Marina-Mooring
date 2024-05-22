@@ -101,8 +101,29 @@ const Boatyards = () => {
     [],
   )
 
-  const allowExpansion = (rowData: BoatYardPayload): boolean => {
-    return !!rowData.mooringInventoried
+  const getBoatyardsData = async () => {
+    try {
+      await getBoatyards({})
+        .unwrap()
+        .then(async (response) => {
+          const { status, content } = response as BoatYardResponse
+          if (status === 200 && Array.isArray(content.content)) {
+            setboatyardsData(content.content)
+            setFilteredboatyardsData(content.content)
+          }
+        })
+    } catch (error) {
+      console.error('Error fetching getBoatyardsdata:', error)
+    }
+  }
+
+  useEffect(() => {
+    getBoatyardsData()
+  }, [])
+
+
+  const allowExpansion = (rowData: Product): boolean => {
+    return !!rowData.orders && rowData.orders.length > 0
   }
 
   const rowExpansionStyle = {
@@ -182,21 +203,6 @@ const Boatyards = () => {
     setSelectedBoatYard(rowData.data)
   }
 
-  const getBoatyardsData = async () => {
-    try {
-      await getBoatyards({})
-        .unwrap()
-        .then(async (response) => {
-          const { status, content } = response as BoatYardResponse
-          if (status === 200 && Array.isArray(content.content)) {
-            setboatyardsData(content.content)
-            setFilteredboatyardsData(content.content)
-          }
-        })
-    } catch (error) {
-      console.error('Error fetching getBoatyardsdata:', error)
-    }
-  }
 
   const getMooringsWithBoatyardData = async () => {
     try {
@@ -263,10 +269,10 @@ const Boatyards = () => {
               marginTop: '40px',
             }}
             dialogStyle={{
-              width: '800px',
+              width: '820px',
               minWidth: '800px',
-              height: '630px',
-              minHeight: '630px',
+              height: '600px',
+              minHeight: '610px',
               borderRadius: '1rem',
               maxHeight: '95% !important',
             }}

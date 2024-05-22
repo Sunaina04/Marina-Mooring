@@ -25,23 +25,16 @@
 
 .headerClass {
   background-color: black;
-
-
 }
 
 /* searchDataTable */
 
 .p-datatable .p-datatable-tbody > tr {
   background: #ffffff;
-  
-  
-  
-
 }
 
 .p-datatable-thead > th {
   background: #f2f2f2;
- 
 }
 
 .p-datatable-emptymessage {
@@ -52,8 +45,12 @@
   background-color: green;
 } */
 
-.p-inputtext::placeholder{
-  color: #A4A4A4 !important;
-  
-  }
-  
+.p-inputtext::placeholder {
+  color: #a4a4a4 !important;
+}
+
+#stateDropdown span {
+  color: #a4a4a4 !important;
+
+  font-size: 13px !important;
+}
