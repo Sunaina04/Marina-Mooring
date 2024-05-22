@@ -24,6 +24,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
   const [mainContact, setMainContact] = useState('')
   const [latitude, setLatitude] = useState<number>()
   const [longitude, setLongitude] = useState<number>()
+  const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<string>()
   const [addBoatyard] = useAddBoatyardsMutation()
   const { getMetaData } = useMetaData()
   const [countriesData, setCountriesData] = useState<Country[]>()
@@ -40,6 +41,11 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
   const handlePositionChange = (lat: number, lng: number) => {
     setLatitude(lat)
     setLongitude(lng)
+    const formattedLat = lat.toFixed(3)
+    const formattedLng = lng.toFixed(3)
+    const concatenatedValue = `${formattedLat} ${formattedLng}`
+    setGpsCoordinatesValue(concatenatedValue)
+    console.log(concatenatedValue)
   }
 
   const handleSave = async () => {
@@ -57,7 +63,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
       contact: mainContact,
       state: selectedState,
       country: selectedCountry,
-      gpsCoordinates: gpsCoordinates,
+      gpsCoordinates: gpsCoordinatesValue,
     }
     const response = await addBoatyard({ payload }).unwrap()
     const { status } = response as BoatYardResponse
@@ -191,6 +197,8 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
 
           <div className="">
             <InputComponent
+              value={aptSuite}
+              onChange={(e) => setAptSuite(e.target.value)}
               placeholder="Apt/Suite"
               style={{
                 width: '230px',

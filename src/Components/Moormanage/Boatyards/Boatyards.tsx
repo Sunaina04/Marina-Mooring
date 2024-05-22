@@ -7,9 +7,14 @@ import {
   BoatYardPayload,
   BoatYardResponse,
   MooringResponseDtoList,
+  MooringWithBoatYardResponse,
+  RowExpansionBoatYardData,
   TechnicianPayload,
 } from '../../../Type/ApiTypes'
-import { useGetBoatyardsMutation } from '../../../Services/MoorManage/MoormanageApi'
+import {
+  useGetBoatyardsMutation,
+  useGetMooringWithBoatyardMutation,
+} from '../../../Services/MoorManage/MoormanageApi'
 import DataTableWithToogle from '../../CommonComponent/Table/DataTableWithToogle'
 import { ActionButtonColumnProps, Product } from '../../../Type/Components/TableTypes'
 import { boatyardMooring, getProductsWithOrdersData } from '../../Utils/CustomData'
@@ -26,13 +31,16 @@ import CustomSelectPositionMap from '../../Map/CustomSelectPositionMap'
 const Boatyards = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [boatyardsData, setboatyardsData] = useState<BoatYardPayload[]>([])
+  const [mooringWithBoatyardsData, setMooringWithBoatyardsData] = useState<
+    MooringWithBoatYardResponse[]
+  >([])
   const [filteredboatyardsData, setFilteredboatyardsData] = useState<BoatYardPayload[]>([])
-  const [products, setProducts] = useState<Product[]>([])
-  const [expandedRows, setExpandedRows] = useState<any>(undefined)
-  const [getBoatyards] = useGetBoatyardsMutation()
-  const [selectedCustomer, setSelectedCustomer] = useState<any>(undefined)
+  const [expandedRows, setExpandedRows] = useState<any>()
+  const [selectedBoatYard, setSelectedBoatYard] = useState<any>()
   const [editMode, setEditMode] = useState(false)
-  const [position, setPosition] = useState<{ lat: number; lng: number } | null>(null)
+  const [position, setPosition] = useState<{ lat: number; lng: number } | undefined>(undefined)
+  const [getBoatyards] = useGetBoatyardsMutation()
+  const [getMooringsWithBoatyard] = useGetMooringWithBoatyardMutation()
 
   const handlePositionChange = (lat: number, lng: number) => {
     setPosition({ lat, lng })
@@ -93,28 +101,8 @@ const Boatyards = () => {
     [],
   )
 
-  const getBoatyardsData = async () => {
-    try {
-      await getBoatyards({})
-        .unwrap()
-        .then(async (response) => {
-          const { status, content } = response as BoatYardResponse
-          if (status === 200 && Array.isArray(content.content)) {
-            setboatyardsData(content.content)
-            setFilteredboatyardsData(content.content)
-          }
-        })
-    } catch (error) {
-      console.error('Error fetching getBoatyardsdata:', error)
-    }
-  }
-
-  useEffect(() => {
-    getBoatyardsData()
-  }, [])
-
   const allowExpansion = (rowData: BoatYardPayload): boolean => {
-    return !!rowData.mooringResponseDtoList
+    return !!rowData.mooringInventoried
     // && rowData.mooringResponseDtoList.length > 0
   }
 
@@ -124,9 +112,10 @@ const Boatyards = () => {
     borderBottom: '1px solid #C0C0C0 ',
   }
 
-  const rowExpansionTemplate = (data: Product) => {
+  const rowExpansionTemplate = (data: BoatYardData) => {
+    console.log('data', data)
     return (
-      <DataTable value={data.orders}>
+      <DataTable value={selectedBoatYard}>
         <Column
           field="address"
           header="Address"
@@ -140,7 +129,7 @@ const Boatyards = () => {
           headerStyle={{ backgroundColor: '#00426F', color: '#FFFFFF' }}
         />
         <Column
-          field="boatyardGpsCoordinates"
+          field="gpsCoordinates"
           header="Boatyard GPS Coordinates"
           style={rowExpansionStyle}
           headerStyle={{ backgroundColor: '#00426F', color: '#FFFFFF' }}
@@ -190,6 +179,49 @@ const Boatyards = () => {
     [allowExpansion],
   )
 
+  const handleRowClickBoatYardDetail = (rowData: any) => {
+    setSelectedBoatYard(rowData.data)
+  }
+
+  const getBoatyardsData = async () => {
+    try {
+      await getBoatyards({})
+        .unwrap()
+        .then(async (response) => {
+          const { status, content } = response as BoatYardResponse
+          if (status === 200 && Array.isArray(content.content)) {
+            setboatyardsData(content.content)
+            setFilteredboatyardsData(content.content)
+          }
+        })
+    } catch (error) {
+      console.error('Error fetching getBoatyardsdata:', error)
+    }
+  }
+
+  const getMooringsWithBoatyardData = async () => {
+    try {
+      await getMooringsWithBoatyard({ id: selectedBoatYard?.id })
+        .unwrap()
+        .then(async (response) => {
+          const { status, content } = response as MooringWithBoatYardResponse
+          if (status === 200 && Array.isArray(content)) {
+            setMooringWithBoatyardsData(content)
+          }
+        })
+    } catch (error) {
+      console.error('Error fetching getMooringsWithBoatyardData:', error)
+    }
+  }
+
+  useEffect(() => {
+    getBoatyardsData()
+  }, [])
+
+  useEffect(() => {
+    getMooringsWithBoatyardData()
+  }, [selectedBoatYard])
+
   return (
     <>
       <Header header="MOORMANAGE/Boatyards" />
@@ -210,7 +242,7 @@ const Boatyards = () => {
               <AddBoatyards
                 closeModal={handleModalClose}
                 boatYardData={getBoatyardsData}
-                customerData={selectedCustomer}
+                customerData={selectedBoatYard}
                 editMode={editMode}
               />
             }
@@ -242,46 +274,55 @@ const Boatyards = () => {
         </div>
       </div>
       <div className=" flex  ml-20  gap-10 mt-10">
-        <div
-          data-testid="dataTable"
-          className="bg-[#FFFFFF] rounded-xl border-[1px] border-gray-300 w-[515px] h-[650px] mb-60">
-          <InputTextWithHeader
-            header={properties.boatyardDetail}
-            placeholder={'Search by name, ID,address...'}
-            headerStyle={{
-              backgroundColor: '#00426F',
-              color: '#FFFFFF',
-              borderTopLeftRadius: '10px',
-              borderTopRightRadius: '10px',
-            }}
-            iconStyle={{ marginLeft: '1.5rem', color: '#00426F' }}
-            inputTextStyle={{
-              height: '44px',
-              width: '480px',
-              margin: '1rem',
-              cursor: 'pointer',
-              color: '#A4A4A4',
-              border: '1px solid  #9F9F9F',
-              paddingLeft: '2.5rem',
-              borderRadius: '5px',
-              fontSize: '0.80rem',
-              backgroundColor: 'F2F2F2',
-            }}
-          />
-          <div></div>
-          <div className="bg-#00426F overflow-x-hidden overflow-y-scroll ">
-            <DataTableWithToogle
-              data={boatyardsData}
-              rowExpansionTemplate={rowExpansionTemplate}
-              onRowToggle={(e: any) => {
-                setExpandedRows(e.data)
+        {boatyardMooring.length > 0 ? (
+          <div
+            data-testid="dataTable"
+            className="bg-[#FFFFFF] rounded-xl border-[1px] border-gray-300 w-[515px] h-[650px] mb-60">
+            <InputTextWithHeader
+              header={properties.boatyardDetail}
+              placeholder={'Search by name, ID,address...'}
+              headerStyle={{
+                backgroundColor: '#00426F',
+                color: '#FFFFFF',
+                borderTopLeftRadius: '10px',
+                borderTopRightRadius: '10px',
               }}
-              expandedRows={expandedRows}
-              dataKey="id"
-              columns={boatYardColumns}
+              iconStyle={{ marginLeft: '1.5rem', color: '#00426F' }}
+              inputTextStyle={{
+                height: '44px',
+                width: '480px',
+                margin: '1rem',
+                cursor: 'pointer',
+                color: '#A4A4A4',
+                border: '1px solid  #9F9F9F',
+                paddingLeft: '2.5rem',
+                borderRadius: '5px',
+                fontSize: '0.80rem',
+                backgroundColor: 'F2F2F2',
+              }}
             />
+            <div className="bg-#00426F overflow-x-hidden overflow-y-scroll ">
+              <DataTableWithToogle
+                data={boatyardsData}
+                rowExpansionTemplate={rowExpansionTemplate}
+                onRowToggle={(e: any) => {
+                  setExpandedRows(e.data)
+                }}
+                expandedRows={expandedRows}
+                dataKey="id"
+                columns={boatYardColumns}
+                onRowClick={(e: any) => {
+                  handleRowClickBoatYardDetail(e)
+                }}
+              />
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="text-center mt-40 mb-10">
+            <img src="/assets/images/empty.png" alt="Empty Data" className="w-20 mx-auto mb-4" />
+            <p className="text-gray-500">No data available</p>
+          </div>
+        )}
 
         <div
           data-testid="customer-admin-users-table"
@@ -304,29 +345,46 @@ const Boatyards = () => {
           </div>
 
           <div className="border-[1px] border-[#D5E1EA]  w-[full] mt-3 "></div>
-          <div className="flex justify-start gap-14  mt-2  font-normal text-[12px]">
-            <p className="ml-3.5">123 Elm St</p>
-            <p className="w-15">25</p>
-            <p className="ml-24  underline">38 21.806 144</p>
-          </div>
-          {/* </div> */}
-          <div className="w-[512px] h-[150px] p-3.5 ">
-            <CustomSelectPositionMap onPositionChange={handlePositionChange} zoomLevel={50} />
-          </div>
-          <div className="overflow-x-hidden overflow-y-scroll  ">
-            <DataTableComponent
-              tableStyle={{
-                fontSize: '12px',
-                color: '#000000',
-                fontWeight: 400,
-              }}
-              scrollable={true}
-              data={boatyardMooring}
-              columns={tableColumnsTechnicians}
-              actionButtons={ActionButtonColumn}
-              style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
-            />
-          </div>
+          {selectedBoatYard ? (
+            <>
+              <div className="flex justify-start gap-14  mt-2  font-normal text-[12px]">
+                <p className="ml-3.5">
+                  {selectedBoatYard?.street}
+                  {selectedBoatYard?.apt}
+                  {selectedBoatYard?.state}
+                  {selectedBoatYard?.country}
+                </p>
+                <p className="w-15">{selectedBoatYard?.mooringInventoried}</p>
+                <p className="ml-24  underline">{selectedBoatYard?.gpsCoordinates}</p>
+              </div>
+
+              <div className="w-[512px] h-[150px] p-3.5 ">
+                <CustomSelectPositionMap onPositionChange={handlePositionChange} zoomLevel={50} />
+              </div>
+            </>
+          ) : (
+            <div className="text-center mt-40 mb-10">
+              <img src="/assets/images/empty.png" alt="Empty Data" className="w-20 mx-auto mb-4" />
+              <p className="text-gray-500">No data available</p>
+            </div>
+          )}
+
+          {mooringWithBoatyardsData.length > 0 && (
+            <div className="overflow-x-hidden overflow-y-scroll  ">
+              <DataTableComponent
+                tableStyle={{
+                  fontSize: '12px',
+                  color: '#000000',
+                  fontWeight: 400,
+                }}
+                scrollable={true}
+                data={mooringWithBoatyardsData}
+                columns={tableColumnsTechnicians}
+                actionButtons={ActionButtonColumn}
+                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
+              />
+            </div>
+          )}
         </div>
       </div>
     </>

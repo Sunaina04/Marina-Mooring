@@ -325,7 +325,28 @@ export interface BoatYardPayload {
   zipCode: string
   mainContact: string
   gpsCoordinates: string
+  mooringInventoried: number
   mooringResponseDtoList: []
+}
+
+export interface RowExpansionBoatYardData {
+  Response: [
+    {
+      id: number
+      boatyardId: string
+      boatyardName: string
+      emailAddress: string
+      phone: string
+      street: string
+      apt: string
+      state: string
+      country: string
+      zipCode: string
+      mainContact: string
+      gpsCoordinates: string
+      mooringInventoried: number
+    },
+  ]
 }
 
 export interface BoatYardResponse {
@@ -336,6 +357,41 @@ export interface BoatYardResponse {
   content: {
     content: BoatYardPayload
   }
+}
+
+export interface MooringWithBoatYardContent {
+  id: 1
+  mooringName: string
+  mooringId: string
+  customerName: string
+  mooringNumber: number
+  harbor: string
+  waterDepth: string
+  gpsCoordinates: string
+  boatyardName: string
+  boatName: string
+  boatSize: string
+  boatType: string
+  boatWeight: string
+  sizeOfWeight: string
+  typeOfWeight: string
+  conditionOfEye: string
+  topChainCondition: string
+  bottomChainCondition: string
+  shackleSwivelCondition: string
+  pennantCondition: string
+  depthAtMeanHighWater: number
+  status: string
+  boatyardNames: string
+  customerId: string
+}
+
+export interface MooringWithBoatYardResponse {
+  message: string
+  status: number
+  errorList: []
+  time: number
+  content: MooringWithBoatYardContent
 }
 
 export interface TechnicianPayload {

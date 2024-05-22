@@ -318,7 +318,8 @@ const CustomerOwner = () => {
             className="custom-scrollbar"
             style={{
               height: 'calc(40vw - 10px)',
-              minHeight: '500px',
+              // height: '600px',
+              minHeight: '600px',
               width: '33vw',
               minWidth: '33vw',
               overflow: 'auto',
@@ -369,7 +370,12 @@ const CustomerOwner = () => {
             <h1 className="p-4 text-white">{properties.CustomerOwnerUsers}</h1>
           </div>
           <div
-            style={{ height: 'calc(40vw - 10px)', minHeight: '700px', overflow: 'auto' }}
+            style={{
+              height: 'calc(40vw - 10px)',
+              // height: '600px',
+              minHeight: '600px',
+              overflow: 'auto',
+            }}
             data-testid="customer-admin-users-table"
             className="custom-scrollbar">
             {isRowClick ? (

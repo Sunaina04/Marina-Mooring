@@ -36,7 +36,7 @@ export interface DataTableProps {
 export interface ButtonProps {
   underline?: boolean
   color?: keyof typeof textColors
-  padding?:string
+  padding?: string
   filled?: boolean
   disabled?: boolean
   hidden?: boolean
@@ -95,6 +95,7 @@ export interface RowExpansionDemoProps {
   dataKey?: string | undefined
   tableStyle?: React.CSSProperties
   columns: RowColumn[]
+  onRowClick?: (event: DataTableRowClickEvent) => void
   expandedRows?: DataTableValueArray | DataTableExpandedRows | undefined
   onRowToggle?(event: DataTableRowToggleEvent): void
 }
