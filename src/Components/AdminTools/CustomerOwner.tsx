@@ -11,6 +11,7 @@ import { useGetUsersMutation } from '../../Services/AdminTools/AdminToolsApi'
 import AddNewCustomer from './AddNewCustomer'
 import { InputText } from 'primereact/inputtext'
 import './CustomerOwner.module.css'
+import { customerAdminUser } from '../Utils/CustomData'
 
 const CustomerOwner = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -68,10 +69,11 @@ const CustomerOwner = () => {
   }
 
   const columnStyle = {
-    borderBottom: '1px solid #C0C0C0',
+    borderBottom: '1px solid #D5E1EA',
     backgroundColor: '#FFFFFF',
     color: '#000000',
     fontWeight: 500,
+    
   }
 
   const customerOwnerTableColumn = useMemo(
@@ -309,6 +311,7 @@ const CustomerOwner = () => {
             border: '1px solid #D5E1EA',
             backgroundColor: '#FFFFFF',
             marginLeft: '40px',
+      
           }}>
           <div className="text-md font-semibold rounded-t-md bg-[#00426F]">
             <h1 className="p-4 text-white">{properties.CustomersOwner}</h1>
@@ -342,6 +345,11 @@ const CustomerOwner = () => {
                   fontWeight: 500,
                   backgroundColor: '#D9D9D9',
                   cursor: 'pointer',
+                  marginLeft:'20px', 
+                  marginRight:'20px',
+                  width:'470px',
+                
+
                 }}
                 scrollable={true}
                 columns={customerOwnerTableColumn}
@@ -354,7 +362,7 @@ const CustomerOwner = () => {
                   backgroundColor: selectedRow === rowData.id ? 'black' : 'red',
                 })}
               />
-            )}
+             )} 
           </div>
         </div>
 
