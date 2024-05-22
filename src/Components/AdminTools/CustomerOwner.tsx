@@ -283,7 +283,14 @@ const CustomerOwner = () => {
           <CustomModal
             buttonText={'ADD NEW'}
             onHide={handleModalClose}
-            dialogStyle={{ marginTop: '120px', marginLeft: '180px', borderRadius: '20px' }}
+            dialogStyle={{
+              width: '820px',
+              minWidth: '800px',
+              height: '600px',
+              minHeight: '610px',
+              borderRadius: '1rem',
+              maxHeight: '60% !important',
+            }}
             children={
               <AddNewCustomer
                 customerAdminId={customerAdminId ? customerAdminId : ''}

@@ -274,7 +274,7 @@ const Boatyards = () => {
               height: '600px',
               minHeight: '610px',
               borderRadius: '1rem',
-              maxHeight: '95% !important',
+              maxHeight: '60% !important',
             }}
           />
         </div>
@@ -334,7 +334,7 @@ const Boatyards = () => {
 
         <div
           data-testid="customer-admin-users-table"
-          className=" flex-grow bg-[#FFFFFF]  rounded-xl border-[1px]    border-gray-300 w-[515px] h-[650px] mr-[50px] rounded-md mb-0" >
+          className=" bg-[#FFFFFF]  rounded-xl border-[1px]  mr-20  border-gray-300 w-[515px] mb-60">
           <div className="text-sm font-extrabold rounded-sm w-full   bg-[#D9D9D9]">
             <div
               className="flex  align-items-center justify-between  bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px]"
