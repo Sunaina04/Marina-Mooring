@@ -8,7 +8,6 @@ import {
   BoatYardResponse,
   MooringResponseDtoList,
   MooringWithBoatYardResponse,
-  RowExpansionBoatYardData,
   TechnicianPayload,
 } from '../../../Type/ApiTypes'
 import {
@@ -27,6 +26,7 @@ import { properties } from '../../Utils/MeassageProperties'
 import Header from '../../Layout/LayoutComponents/Header'
 import { IoSearchSharp } from 'react-icons/io5'
 import CustomSelectPositionMap from '../../Map/CustomSelectPositionMap'
+import './Boatyard.css'
 
 const Boatyards = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -103,7 +103,6 @@ const Boatyards = () => {
 
   const allowExpansion = (rowData: BoatYardPayload): boolean => {
     return !!rowData.mooringInventoried
-    // && rowData.mooringResponseDtoList.length > 0
   }
 
   const rowExpansionStyle = {
@@ -113,9 +112,8 @@ const Boatyards = () => {
   }
 
   const rowExpansionTemplate = (data: BoatYardData) => {
-    console.log('data', data)
     return (
-      <DataTable value={selectedBoatYard}>
+      <DataTable>
         <Column
           field="address"
           header="Address"
@@ -142,7 +140,7 @@ const Boatyards = () => {
     backgroundColor: '#FFFFFF',
     fontSize: '10px',
     color: 'black',
-    fontWeight: '500',
+    fontWeight: '700',
     borderBottom: '1px solid #D5E1EA ',
   }
 
@@ -151,8 +149,9 @@ const Boatyards = () => {
       {
         field: 'id',
         header: 'ID',
+
         style: columnStyle,
-        body: () => {},
+        // body: () => {},
       },
       {
         field: 'boatyardName',
@@ -225,7 +224,7 @@ const Boatyards = () => {
   return (
     <>
       <Header header="MOORMANAGE/Boatyards" />
-      <div className="flex justify-end mr-14 mt-14">
+      <div className="flex justify-end mr-14 mt-[40px]">
         <div className="flex gap-6 mr-8">
           <div>
             <div className="p-input-icon-left">
@@ -261,6 +260,7 @@ const Boatyards = () => {
               color: 'white',
               borderRadius: '0.50rem',
               marginLeft: '8px',
+              marginTop: '40px',
             }}
             dialogStyle={{
               width: '800px',
@@ -274,59 +274,54 @@ const Boatyards = () => {
         </div>
       </div>
       <div className=" flex  ml-20  gap-10 mt-10">
-        {boatyardMooring.length > 0 ? (
-          <div
-            data-testid="dataTable"
-            className="bg-[#FFFFFF] rounded-xl border-[1px] border-gray-300 w-[515px] h-[650px] mb-60">
-            <InputTextWithHeader
-              header={properties.boatyardDetail}
-              placeholder={'Search by name, ID,address...'}
-              headerStyle={{
-                backgroundColor: '#00426F',
-                color: '#FFFFFF',
-                borderTopLeftRadius: '10px',
-                borderTopRightRadius: '10px',
+        <div
+          data-testid="dataTable"
+          className="bg-[#FFFFFF] rounded-xl border-[1px] border-[#D5E1EA]  w-[515px] h-[650px] mb-60 ">
+          <InputTextWithHeader
+            header={properties.boatyardDetail}
+            placeholder={'Search by name, ID,address...'}
+            headerStyle={{
+              backgroundColor: '#00426F',
+              color: '#FFFFFF',
+              borderTopLeftRadius: '10px',
+              borderTopRightRadius: '10px',
+            }}
+            iconStyle={{ marginLeft: '26px', color: '#00426F', marginTop: '0px' }}
+            inputTextStyle={{
+              marginTop: '10px',
+              height: '44px',
+              width: '480px',
+              border: '1px solid #D5E1EA',
+              cursor: 'pointer',
+              color: '#A4A4A4',
+              marginLeft: '17px',
+              marginRight: '17px',
+              borderRadius: '5px',
+              fontSize: '0.80rem',
+              backgroundColor: 'F2F2F2',
+              paddingLeft: '30px',
+              fontWeight: '400',
+            }}
+          />
+
+          <div className="bg-#00426F overflow-x-hidden overflow-y-scroll mt-[20px] ml-[15px] mr-[15px]  ">
+            <DataTableWithToogle
+              data={boatyardsData}
+              rowExpansionTemplate={rowExpansionTemplate}
+              onRowToggle={(e: any) => {
+                setExpandedRows(e.data)
               }}
-              iconStyle={{ marginLeft: '1.5rem', color: '#00426F' }}
-              inputTextStyle={{
-                height: '44px',
-                width: '480px',
-                margin: '1rem',
-                cursor: 'pointer',
-                color: '#A4A4A4',
-                border: '1px solid  #9F9F9F',
-                paddingLeft: '2.5rem',
-                borderRadius: '5px',
-                fontSize: '0.80rem',
-                backgroundColor: 'F2F2F2',
-              }}
+              expandedRows={expandedRows}
+              dataKey="id"
+              columns={boatYardColumns}
+              onRowClick={(e: any) => handleRowClickBoatYardDetail(e)}
             />
-            <div className="bg-#00426F overflow-x-hidden overflow-y-scroll ">
-              <DataTableWithToogle
-                data={boatyardsData}
-                rowExpansionTemplate={rowExpansionTemplate}
-                onRowToggle={(e: any) => {
-                  setExpandedRows(e.data)
-                }}
-                expandedRows={expandedRows}
-                dataKey="id"
-                columns={boatYardColumns}
-                onRowClick={(e: any) => {
-                  handleRowClickBoatYardDetail(e)
-                }}
-              />
-            </div>
           </div>
-        ) : (
-          <div className="text-center mt-40 mb-10">
-            <img src="/assets/images/empty.png" alt="Empty Data" className="w-20 mx-auto mb-4" />
-            <p className="text-gray-500">No data available</p>
-          </div>
-        )}
+        </div>
 
         <div
           data-testid="customer-admin-users-table"
-          className=" bg-[#FFFFFF]  rounded-xl border-[1px]  mr-20  border-gray-300 w-[515px] h-[650px] mb-60">
+          className=" bg-[#FFFFFF]  rounded-xl border-[1px]  mr-20  border-gray-300 w-[515px]  rounded-md mb-60">
           <div className="text-sm font-extrabold rounded-sm w-full   bg-[#D9D9D9]">
             <div
               className="flex  align-items-center justify-between  bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px]"
@@ -336,7 +331,7 @@ const Boatyards = () => {
           </div>
           <div className=" bg-[] mt-3 ">
             <div
-              className="flex justify-start gap-14 ml-4  "
+              className="flex justify-start gap-14 ml-4 mt-[30px] "
               style={{ fontSize: '12px', fontWeight: '700' }}>
               <p>{properties.address}</p>
               <p>{properties.mooringInventoried}</p>
@@ -347,42 +342,48 @@ const Boatyards = () => {
           <div className="border-[1px] border-[#D5E1EA]  w-[full] mt-3 "></div>
           {selectedBoatYard ? (
             <>
-              <div className="flex justify-start gap-14  mt-2  font-normal text-[12px]">
+              <div className="flex justify-start gap-14  mt-4  font-normal text-[12px]">
                 <p className="ml-3.5">
                   {selectedBoatYard?.street}
                   {selectedBoatYard?.apt}
                   {selectedBoatYard?.state}
-                  {selectedBoatYard?.country}
+                  {selectedBoatYard?.country}t
                 </p>
                 <p className="w-15">{selectedBoatYard?.mooringInventoried}</p>
                 <p className="ml-24  underline">{selectedBoatYard?.gpsCoordinates}</p>
               </div>
-
-              <div className="w-[512px] h-[150px] p-3.5 ">
-                <CustomSelectPositionMap onPositionChange={handlePositionChange} zoomLevel={50} />
+              <div
+                className="w-[480px] h-[150px]  mt-[20px] mb-3 "
+                style={{
+                  border: '1px solid #D5E1EA',
+                  borderRadius: '10px',
+                  padding: '0px',
+                  marginLeft: '10px',
+                  marginRight: '10px',
+                }}>
+                <CustomSelectPositionMap onPositionChange={handlePositionChange} />
+              </div>
+              <div className="bg-#00426F overflow-x-hidden overflow-y-scroll mt-[13px] h-[200px] table-container  ">
+                <DataTableComponent
+                  tableStyle={{
+                    fontSize: '12px',
+                    color: '#000000',
+                  }}
+                  data={mooringWithBoatyardsData}
+                  columns={tableColumnsTechnicians}
+                  actionButtons={ActionButtonColumn}
+                  style={{
+                    borderBottom: '1px solid #D5E1EA ',
+                    fontWeight: '400',
+                    color: '#000000',
+                  }}
+                />
               </div>
             </>
           ) : (
             <div className="text-center mt-40 mb-10">
               <img src="/assets/images/empty.png" alt="Empty Data" className="w-20 mx-auto mb-4" />
               <p className="text-gray-500">No data available</p>
-            </div>
-          )}
-
-          {mooringWithBoatyardsData.length > 0 && (
-            <div className="overflow-x-hidden overflow-y-scroll  ">
-              <DataTableComponent
-                tableStyle={{
-                  fontSize: '12px',
-                  color: '#000000',
-                  fontWeight: 400,
-                }}
-                scrollable={true}
-                data={mooringWithBoatyardsData}
-                columns={tableColumnsTechnicians}
-                actionButtons={ActionButtonColumn}
-                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
-              />
             </div>
           )}
         </div>

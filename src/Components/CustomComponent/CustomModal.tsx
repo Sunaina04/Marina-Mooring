@@ -33,6 +33,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
           boxShadow: 'none',
           lineHeight: '18.75px',
           letterSpacing: '0.20000000298023224px',
+        
         }}
       />
       <Dialog
