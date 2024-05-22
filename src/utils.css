@@ -55,3 +55,24 @@ body {
   position: relative;
   z-index: 3;
 }
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  min-height: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background-color: #00426f;
+  height: 5px;
+  min-height: 5px;
+  margin-top: 100px;
+  margin-bottom: 380px;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #00426f;
+  border-radius: 6px;
+  width: 5px;
+}

@@ -113,8 +113,9 @@ const Boatyards = () => {
     getBoatyardsData()
   }, [])
 
-  const allowExpansion = (rowData: Product): boolean => {
-    return !!rowData.orders && rowData.orders.length > 0
+  const allowExpansion = (rowData: BoatYardPayload): boolean => {
+    return !!rowData.mooringResponseDtoList
+    // && rowData.mooringResponseDtoList.length > 0
   }
 
   const rowExpansionStyle = {

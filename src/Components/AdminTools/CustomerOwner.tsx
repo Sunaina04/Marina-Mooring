@@ -2,8 +2,6 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import CustomModal from '../CustomComponent/CustomModal'
 import DataTableComponent from '../CommonComponent/Table/DataTableComponent'
 import { properties } from '../Utils/MeassageProperties'
-import { Dropdown } from 'primereact/dropdown'
-
 import { ActionButtonColumnProps } from '../../Type/Components/TableTypes'
 import { CustomerPayload, GetUserResponse } from '../../Type/ApiTypes'
 import Header from '../Layout/LayoutComponents/Header'
@@ -12,6 +10,7 @@ import { Role } from '../../Type/CommonType'
 import { useGetUsersMutation } from '../../Services/AdminTools/AdminToolsApi'
 import AddNewCustomer from './AddNewCustomer'
 import { InputText } from 'primereact/inputtext'
+import './CustomerOwner.module.css'
 
 const CustomerOwner = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -306,10 +305,6 @@ const CustomerOwner = () => {
       <div className="flex gap-10 ml-8 mt-10">
         <div
           style={{
-            height: 'calc(40vw - 10px)',
-            minHeight: '700px',
-            width: '33vw',
-            minWidth: '33vw',
             borderRadius: '15px',
             border: '1px solid #D5E1EA',
             backgroundColor: '#FFFFFF',
@@ -318,7 +313,16 @@ const CustomerOwner = () => {
           <div className="text-md font-semibold rounded-t-md bg-[#00426F]">
             <h1 className="p-4 text-white">{properties.CustomersOwner}</h1>
           </div>
-          <div data-testid="customer-admin-data">
+          <div
+            data-testid="customer-admin-data"
+            className="custom-scrollbar"
+            style={{
+              height: 'calc(40vw - 10px)',
+              minHeight: '500px',
+              width: '33vw',
+              minWidth: '33vw',
+              overflow: 'auto',
+            }}>
             {getCustomerOwnerData.length === 0 ? (
               <div className="text-center mt-40">
                 <img
@@ -356,8 +360,6 @@ const CustomerOwner = () => {
         <div
           style={{
             flexGrow: 1,
-            height: 'calc(40vw - 10px)',
-            minHeight: '700px',
             borderRadius: '15px',
             border: '1px solid #D5E1EA',
             backgroundColor: '#FFFFFF',
@@ -366,7 +368,10 @@ const CustomerOwner = () => {
           <div className="text-md font-semibold rounded-t-md bg-[#00426F]">
             <h1 className="p-4 text-white">{properties.CustomerOwnerUsers}</h1>
           </div>
-          <div data-testid="customer-admin-users-table">
+          <div
+            style={{ height: 'calc(40vw - 10px)', minHeight: '700px', overflow: 'auto' }}
+            data-testid="customer-admin-users-table"
+            className="custom-scrollbar">
             {isRowClick ? (
               <DataTableComponent
                 tableStyle={{
