@@ -140,7 +140,7 @@ const Boatyards = () => {
     backgroundColor: '#FFFFFF',
     fontSize: '10px',
     color: 'black',
-    fontWeight: '700',
+    fontWeight: '500',
     borderBottom: '1px solid #D5E1EA ',
   }
 
@@ -149,7 +149,6 @@ const Boatyards = () => {
       {
         field: 'id',
         header: 'ID',
-
         style: columnStyle,
         // body: () => {},
       },
@@ -164,7 +163,7 @@ const Boatyards = () => {
         style: columnStyle,
       },
       {
-        field: 'totalMooringInventoried',
+        field: 'mooringInventoried',
         header: 'Total Mooring Inventoried',
         style: columnStyle,
       },
