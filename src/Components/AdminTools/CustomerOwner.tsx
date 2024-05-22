@@ -12,6 +12,7 @@ import AddNewCustomer from './AddNewCustomer'
 import { InputText } from 'primereact/inputtext'
 import './CustomerOwner.module.css'
 import { customerAdminUser } from '../Utils/CustomData'
+import InputTextWithHeader from '../CommonComponent/Table/InputTextWithHeader'
 
 const CustomerOwner = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -22,8 +23,7 @@ const CustomerOwner = () => {
   const { getMetaData } = useMetaData()
   const [rolesData, setRolesData] = useState<Role[]>()
   const [selectRole, setSelectRole] = useState()
-  const [firstUserId, setFirstUserId] = useState('')
-  const [customerAdminId, setCustomerAdminId] = useState(firstUserId)
+  const [customerAdminId, setCustomerAdminId] = useState('')
   const [getUser] = useGetUsersMutation()
   const [getCustomerOwnerData, setgetCustomerOwnerData] = useState<CustomerPayload[]>([])
   const [getCustomerOwnerUserData, setgetCustomerOwnerUserData] = useState<CustomerPayload[]>([])
@@ -55,7 +55,7 @@ const CustomerOwner = () => {
         color: 'black',
         label: 'Edit',
         underline: true,
-        fontWeight: 400,
+        fontWeight: 500,
         onClick: (rowData) => handleEditButtonClick(rowData),
       },
     ],
@@ -63,17 +63,17 @@ const CustomerOwner = () => {
       backgroundColor: '#FFFFFF',
       borderBottom: '1px solid #C0C0C0',
       color: '#000000',
-      fontWeight: 400,
+      fontWeight: 500,
     },
     style: { borderBottom: '1px solid #D5E1EA' },
   }
 
   const columnStyle = {
+    width: '10vw',
     borderBottom: '1px solid #D5E1EA',
     backgroundColor: '#FFFFFF',
     color: '#000000',
     fontWeight: 500,
-    
   }
 
   const customerOwnerTableColumn = useMemo(
@@ -97,98 +97,23 @@ const CustomerOwner = () => {
     [],
   )
 
+  const customerOwnerUserTableColumnStyle = {
+    borderBottom: '1px solid #D5E1EA',
+    backgroundColor: '#FFFFFF',
+    color: '#000000',
+    fontWeight: 500,
+  }
+
   const customerOwnerUserTableColumn = useMemo(
     () => [
-      { id: 'id', label: 'ID', style: columnStyle },
-      { id: 'name', label: 'Name', style: columnStyle },
-      { id: 'email', label: 'Email', style: columnStyle },
-      { id: 'phoneNumber', label: 'Phone', style: columnStyle },
-      { id: 'role', label: 'Role', style: columnStyle },
+      { id: 'id', label: 'ID', style: customerOwnerUserTableColumnStyle },
+      { id: 'name', label: 'Name', style: customerOwnerUserTableColumnStyle },
+      { id: 'email', label: 'Email', style: customerOwnerUserTableColumnStyle },
+      { id: 'phoneNumber', label: 'Phone', style: customerOwnerUserTableColumnStyle },
+      { id: 'role', label: 'Role', style: customerOwnerUserTableColumnStyle },
     ],
     [],
   )
-
-  const CustomersHeader = () => {
-    return (
-      <div className="flex flex-col">
-        <div className="p-input-icon-left">
-          <InputText
-            value={searchText}
-            onChange={handleSearch}
-            placeholder="Search by name, ID, phone no.... "
-            style={{
-              width: '100%',
-              height: '44px',
-              padding: '0 4rem 0 3rem',
-              border: '1px solid #C5D9E0',
-              fontSize: '16px',
-              color: '#000000',
-              borderRadius: '4px',
-              minHeight: '44px',
-              fontWeight: 400,
-              backgroundColor: 'rgb(242 242 242 / 0%)',
-            }}
-          />
-          <img
-            src="/assets/images/Search.svg"
-            alt="Search Icon"
-            className="p-clickable"
-            style={{
-              position: 'absolute',
-              left: '10px',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              width: '18px',
-              height: '18px',
-            }}
-          />
-        </div>
-
-        <span className="border-[1px] border-[#D5E1EA] w-[31vw] mt-3 "></span>
-      </div>
-    )
-  }
-
-  const TechniciansHeader = () => {
-    return (
-      <div className="flex flex-col">
-        <div className="p-input-icon-left">
-          <InputText
-            value={searchUsersText}
-            onChange={handleUsersSearch}
-            placeholder="Search by name, ID, Email, Role, phone no..."
-            style={{
-              width: '100%',
-              height: '44px',
-              padding: '0 4rem 0 3rem',
-              border: '1px solid #C5D9E0',
-              fontSize: '16px',
-              color: '#000000',
-              borderRadius: '4px',
-              minHeight: '44px',
-              fontWeight: 400,
-              backgroundColor: 'rgb(242 242 242 / 0%)',
-            }}
-          />
-          <img
-            src="/assets/images/Search.svg"
-            alt="Search Icon"
-            className="p-clickable"
-            style={{
-              position: 'absolute',
-              left: '10px',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              width: '18px',
-              height: '18px',
-            }}
-          />
-        </div>
-
-        <span className="border-[1px] border-[#D5E1EA] w-full mt-3 "></span>
-      </div>
-    )
-  }
 
   const fetchDataAndUpdate = useCallback(async () => {
     const { rolesData } = await getMetaData()
@@ -201,12 +126,12 @@ const CustomerOwner = () => {
     try {
       const response = await getUser({ searchText: searchText }).unwrap()
       const { status, content } = response as GetUserResponse
-      if (status === 200 && Array.isArray(content?.content) && content?.content.length > 0) {
-        setgetCustomerOwnerData(content?.content)
-
-        // Set data for the first user by default
-        const firstUser = content?.content[0]
-        setFirstUserId(firstUser.id)
+      if (status === 200 && Array.isArray(content?.content)) {
+        if (content?.content.length > 0) {
+          setgetCustomerOwnerData(content?.content)
+        } else {
+          setgetCustomerOwnerData([])
+        }
       }
     } catch (error) {
       console.error('Error occurred while fetching customer data:', error)
@@ -220,12 +145,11 @@ const CustomerOwner = () => {
       if (status === 200 && Array.isArray(content?.content)) {
         if (content?.content.length > 0) {
           setgetCustomerOwnerUserData(content?.content)
-          setIsRowClick(true)
+          // setIsRowClick(true)
           setSelectedRow(id)
           setCustomerAdminId(id)
         } else {
           setgetCustomerOwnerUserData([])
-          setCustomerAdminId(id)
           setIsRowClick(false)
         }
       } else {
@@ -238,8 +162,8 @@ const CustomerOwner = () => {
   }
 
   useEffect(() => {
-    getCustomerAdminsUsers(firstUserId)
-  }, [firstUserId, searchUsersText])
+    getCustomerAdminsUsers(customerAdminId)
+  }, [searchUsersText, isRowClick])
 
   useEffect(() => {
     getUserHandler()
@@ -311,20 +235,36 @@ const CustomerOwner = () => {
             border: '1px solid #D5E1EA',
             backgroundColor: '#FFFFFF',
             marginLeft: '40px',
-      
           }}>
           <div className="text-md font-semibold rounded-t-md bg-[#00426F]">
             <h1 className="p-4 text-white">{properties.CustomersOwner}</h1>
           </div>
+          <InputTextWithHeader
+            value={searchText}
+            onChange={handleSearch}
+            placeholder="Search by name, ID, phone no.... "
+            inputTextStyle={{
+              width: '38vw',
+              minWidth: '38vw',
+              height: '44px',
+              padding: '0 2rem 0 2.5rem',
+              border: '1px solid #C5D9E0',
+              fontSize: '14px',
+              color: '#000000',
+              borderRadius: '4px',
+              minHeight: '44px',
+              fontWeight: 400,
+              backgroundColor: '#FFFFFF',
+            }}
+          />
           <div
             data-testid="customer-admin-data"
-            className="custom-scrollbar"
+            // className="custom-scrollbar"
             style={{
-              height: 'calc(40vw - 10px)',
-              // height: '600px',
-              minHeight: '600px',
-              width: '33vw',
-              minWidth: '33vw',
+              height: '600px',
+              minHeight: 'calc(40vw - 600px)',
+              width: '40vw',
+              minWidth: '40vw',
               overflow: 'auto',
             }}>
             {getCustomerOwnerData.length === 0 ? (
@@ -342,27 +282,25 @@ const CustomerOwner = () => {
                 tableStyle={{
                   fontSize: '12px',
                   color: '#000000',
-                  fontWeight: 500,
+                  fontWeight: 600,
                   backgroundColor: '#D9D9D9',
                   cursor: 'pointer',
-                  marginLeft:'20px', 
-                  marginRight:'20px',
-                  width:'470px',
-                
-
+                  marginLeft: '20px',
+                  marginRight: '20px',
+                  width: '37vw',
+                  minWidth: '37vw',
                 }}
                 scrollable={true}
                 columns={customerOwnerTableColumn}
-                header={CustomersHeader}
                 onRowClick={(e) => {
                   getCustomerAdminsUsers(e.data.id)
                 }}
-                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
                 rowStyle={(rowData) => ({
                   backgroundColor: selectedRow === rowData.id ? 'black' : 'red',
                 })}
               />
-             )} 
+            )}
           </div>
         </div>
 
@@ -377,27 +315,48 @@ const CustomerOwner = () => {
           <div className="text-md font-semibold rounded-t-md bg-[#00426F]">
             <h1 className="p-4 text-white">{properties.CustomerOwnerUsers}</h1>
           </div>
+          <InputTextWithHeader
+            value={searchUsersText}
+            onChange={handleUsersSearch}
+            placeholder="Search by name, ID, Email, Role, phone no..."
+            inputTextStyle={{
+              width: '42vw',
+              minWidth: '42vw',
+              height: '44px',
+              border: '1px solid #C5D9E0',
+              padding: '0 2rem 0 2.5rem',
+              fontSize: '14px',
+              color: '#000000',
+              borderRadius: '4px',
+              minHeight: '44px',
+              fontWeight: 400,
+              backgroundColor: '#FFFFFF',
+            }}
+          />
           <div
             style={{
-              height: 'calc(40vw - 10px)',
-              // height: '600px',
-              minHeight: '600px',
+              height: '600px',
+              minHeight: 'calc(40vw - 600px)',
               overflow: 'auto',
             }}
             data-testid="customer-admin-users-table"
-            className="custom-scrollbar">
-            {isRowClick ? (
+            // className="custom-scrollbar"
+          >
+            {getCustomerOwnerUserData.length > 0 ? (
               <DataTableComponent
                 tableStyle={{
                   fontSize: '12px',
                   color: '#000000',
                   fontWeight: 400,
-                  backgroundColor: '#D9D9D9',
+                  backgroundColor: '#FFFFFF',
+                  marginLeft: '20px',
+                  marginRight: '20px',
+                  width: '41vw',
+                  minWidth: '41vw',
                 }}
                 scrollable={true}
-                data={isRowClick ? getCustomerOwnerUserData : undefined}
+                data={getCustomerOwnerUserData}
                 columns={customerOwnerUserTableColumn}
-                header={TechniciansHeader}
                 actionButtons={ActionButtonColumn}
                 style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
               />

@@ -5,7 +5,7 @@
 }
 
 * input::placeholder {
-  color: black !important;
+  color: #d5e1ea !important;
   font-size: small;
 }
 
@@ -35,7 +35,7 @@ body {
 
 .backdrop-blur-lg {
   position: relative;
-  min-height: 670px;
+  min-height: full;
 }
 
 .backdrop-blur-lg::before {

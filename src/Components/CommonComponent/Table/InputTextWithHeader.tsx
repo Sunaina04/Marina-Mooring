@@ -11,7 +11,6 @@ const InputTextWithHeader: React.FC<inputHeader> = ({
   headerStyle,
   inputTextStyle,
   value,
-  
 }) => {
   return (
     <>
@@ -20,16 +19,31 @@ const InputTextWithHeader: React.FC<inputHeader> = ({
           {header}
         </h1>
       </div>
-      <div className="flex items-center justify-center mt-2 bg-[white]">
-        <div className="p-input-icon-left ">
-          <IoSearch style={iconStyle} />
-          <InputText
-            placeholder={placeholder}
-            style={inputTextStyle}
-            onChange={onChange}
-            value={value}
-          />
+      <div className="flex flex-col">
+        <div className="flex items-center justify-center mt-[-15px] bg-[white]">
+          <div className="p-input-icon-left ">
+            <img
+              src="/assets/images/Search.svg"
+              alt="Search Icon"
+              className="p-clickable"
+              style={{
+                position: 'absolute',
+                left: '15px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                width: '18px',
+                height: '18px',
+              }}
+            />
+            <InputText
+              placeholder={placeholder}
+              style={inputTextStyle}
+              onChange={onChange}
+              value={value}
+            />
+          </div>
         </div>
+        <span className="border-[1px] border-[#D5E1EA] w-1/10 mt-3 mr-4 ml-4"></span>
       </div>
     </>
   )
