@@ -101,8 +101,29 @@ const Boatyards = () => {
     [],
   )
 
-  const allowExpansion = (rowData: BoatYardPayload): boolean => {
-    return !!rowData.mooringInventoried
+  const getBoatyardsData = async () => {
+    try {
+      await getBoatyards({})
+        .unwrap()
+        .then(async (response) => {
+          const { status, content } = response as BoatYardResponse
+          if (status === 200 && Array.isArray(content.content)) {
+            setboatyardsData(content.content)
+            setFilteredboatyardsData(content.content)
+          }
+        })
+    } catch (error) {
+      console.error('Error fetching getBoatyardsdata:', error)
+    }
+  }
+
+  useEffect(() => {
+    getBoatyardsData()
+  }, [])
+
+
+  const allowExpansion = (rowData: Product): boolean => {
+    return !!rowData.orders && rowData.orders.length > 0
   }
 
   const rowExpansionStyle = {
@@ -181,21 +202,6 @@ const Boatyards = () => {
     setSelectedBoatYard(rowData.data)
   }
 
-  const getBoatyardsData = async () => {
-    try {
-      await getBoatyards({})
-        .unwrap()
-        .then(async (response) => {
-          const { status, content } = response as BoatYardResponse
-          if (status === 200 && Array.isArray(content.content)) {
-            setboatyardsData(content.content)
-            setFilteredboatyardsData(content.content)
-          }
-        })
-    } catch (error) {
-      console.error('Error fetching getBoatyardsdata:', error)
-    }
-  }
 
   const getMooringsWithBoatyardData = async () => {
     try {
@@ -224,7 +230,7 @@ const Boatyards = () => {
     <>
       <Header header="MOORMANAGE/Boatyards" />
       <div className="flex justify-end mr-14 mt-[40px]">
-        <div className="flex gap-6 mr-8">
+        <div className="flex gap-6 ">
           <div>
             <div className="p-input-icon-left">
               <IoSearchSharp className="ml-2 text-blue-900" />
@@ -262,20 +268,23 @@ const Boatyards = () => {
               marginTop: '40px',
             }}
             dialogStyle={{
-              width: '800px',
+              width: '820px',
               minWidth: '800px',
-              height: '630px',
-              minHeight: '630px',
+              height: '600px',
+              minHeight: '610px',
               borderRadius: '1rem',
               maxHeight: '95% !important',
             }}
           />
         </div>
       </div>
-      <div className=" flex  ml-20  gap-10 mt-10">
+
+      <div className="ml-20 gap-[19px] mt-10 " style={{display:'flex' ,justifyContent:'space-evenly'}}>
+
         <div
           data-testid="dataTable"
-          className="bg-[#FFFFFF] rounded-xl border-[1px] border-[#D5E1EA]  w-[515px] h-[650px] mb-60 ">
+          className="flex-grow  bg-[#FFFFFF] rounded-xl border-[1px] border-[#D5E1EA]  w-[515px] h-[650px] mb-0 ">
+
           <InputTextWithHeader
             header={properties.boatyardDetail}
             placeholder={'Search by name, ID,address...'}
@@ -302,8 +311,9 @@ const Boatyards = () => {
               fontWeight: '400',
             }}
           />
+      {boatyardsData.length!==0?
 
-          <div className="bg-#00426F overflow-x-hidden overflow-y-scroll mt-[20px] ml-[15px] mr-[15px]  ">
+          <div className="bg-#00426F overflow-x-hidden overflow-y-scroll h-[500px] mt-[20px] ml-[15px] mr-[15px] table-container  ">
             <DataTableWithToogle
               data={boatyardsData}
               rowExpansionTemplate={rowExpansionTemplate}
@@ -315,12 +325,15 @@ const Boatyards = () => {
               columns={boatYardColumns}
               onRowClick={(e: any) => handleRowClickBoatYardDetail(e)}
             />
-          </div>
+          </div>:(<div className="text-center mt-40 mb-10">
+              <img src="/assets/images/empty.png" alt="Empty Data" className="w-20 mx-auto mb-4" />
+              <p className="text-gray-500">No data available</p>
+            </div>)}
         </div>
 
         <div
           data-testid="customer-admin-users-table"
-          className=" bg-[#FFFFFF]  rounded-xl border-[1px]  mr-20  border-gray-300 w-[515px]  rounded-md mb-60">
+          className=" flex-grow bg-[#FFFFFF]  rounded-xl border-[1px]    border-gray-300 w-[515px] h-[650px] mr-[50px] rounded-md mb-0" >
           <div className="text-sm font-extrabold rounded-sm w-full   bg-[#D9D9D9]">
             <div
               className="flex  align-items-center justify-between  bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px]"
@@ -362,7 +375,7 @@ const Boatyards = () => {
                 }}>
                 <CustomSelectPositionMap onPositionChange={handlePositionChange} />
               </div>
-              <div className="bg-#00426F overflow-x-hidden overflow-y-scroll mt-[13px] h-[200px] table-container  ">
+              <div className="bg-#00426F overflow-x-hidden overflow-y-scroll mt-[13px] h-[250px] table-container  ">
                 <DataTableComponent
                   tableStyle={{
                     fontSize: '12px',
