@@ -121,9 +121,8 @@ const Boatyards = () => {
     getBoatyardsData()
   }, [])
 
-
-  const allowExpansion = (rowData: Product): boolean => {
-    return !!rowData.orders && rowData.orders.length > 0
+  const allowExpansion = (rowData: BoatYardPayload): boolean => {
+    return !!rowData.mooringInventoried
   }
 
   const rowExpansionStyle = {
@@ -202,7 +201,6 @@ const Boatyards = () => {
     setSelectedBoatYard(rowData.data)
   }
 
-
   const getMooringsWithBoatyardData = async () => {
     try {
       await getMooringsWithBoatyard({ id: selectedBoatYard?.id })
@@ -279,12 +277,12 @@ const Boatyards = () => {
         </div>
       </div>
 
-      <div className="ml-20 gap-[19px] mt-10 " style={{display:'flex' ,justifyContent:'space-evenly'}}>
-
+      <div
+        className="ml-20 gap-[19px] mt-10 "
+        style={{ display: 'flex', justifyContent: 'space-evenly' }}>
         <div
           data-testid="dataTable"
           className="flex-grow  bg-[#FFFFFF] rounded-xl border-[1px] border-[#D5E1EA]  w-[515px] h-[650px] mb-0 ">
-
           <InputTextWithHeader
             header={properties.boatyardDetail}
             placeholder={'Search by name, ID,address...'}
@@ -311,29 +309,31 @@ const Boatyards = () => {
               fontWeight: '400',
             }}
           />
-      {boatyardsData.length!==0?
-
-          <div className="bg-#00426F overflow-x-hidden overflow-y-scroll h-[500px] mt-[20px] ml-[15px] mr-[15px] table-container  ">
-            <DataTableWithToogle
-              data={boatyardsData}
-              rowExpansionTemplate={rowExpansionTemplate}
-              onRowToggle={(e: any) => {
-                setExpandedRows(e.data)
-              }}
-              expandedRows={expandedRows}
-              dataKey="id"
-              columns={boatYardColumns}
-              onRowClick={(e: any) => handleRowClickBoatYardDetail(e)}
-            />
-          </div>:(<div className="text-center mt-40 mb-10">
+          {boatyardsData.length !== 0 ? (
+            <div className="bg-#00426F overflow-x-hidden overflow-y-scroll h-[500px] mt-[20px] ml-[15px] mr-[15px] table-container  ">
+              <DataTableWithToogle
+                data={boatyardsData}
+                rowExpansionTemplate={rowExpansionTemplate}
+                onRowToggle={(e: any) => {
+                  setExpandedRows(e.data)
+                }}
+                expandedRows={expandedRows}
+                dataKey="id"
+                columns={boatYardColumns}
+                onRowClick={(e: any) => handleRowClickBoatYardDetail(e)}
+              />
+            </div>
+          ) : (
+            <div className="text-center mt-40 mb-10">
               <img src="/assets/images/empty.png" alt="Empty Data" className="w-20 mx-auto mb-4" />
               <p className="text-gray-500">No data available</p>
-            </div>)}
+            </div>
+          )}
         </div>
 
         <div
           data-testid="customer-admin-users-table"
-          className=" flex-grow bg-[#FFFFFF]  rounded-xl border-[1px]    border-gray-300 w-[515px] h-[650px] mr-[50px] rounded-md mb-0" >
+          className=" flex-grow bg-[#FFFFFF]  rounded-xl border-[1px]    border-gray-300 w-[515px] h-[650px] mr-[50px] rounded-md mb-0">
           <div className="text-sm font-extrabold rounded-sm w-full   bg-[#D9D9D9]">
             <div
               className="flex  align-items-center justify-between  bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px]"
