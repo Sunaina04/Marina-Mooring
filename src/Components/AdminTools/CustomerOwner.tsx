@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import CustomModal from '../CustomComponent/CustomModal'
 import DataTableComponent from '../CommonComponent/Table/DataTableComponent'
 import { properties } from '../Utils/MeassageProperties'
@@ -14,6 +14,7 @@ import './CustomerOwner.module.css'
 import { customerAdminUser } from '../Utils/CustomData'
 import InputTextWithHeader from '../CommonComponent/Table/InputTextWithHeader'
 import { ProgressSpinner } from 'primereact/progressspinner'
+import { Toast } from 'primereact/toast';
 
 const CustomerOwner = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -32,6 +33,7 @@ const CustomerOwner = () => {
   const [searchText, setSearchText] = useState('')
   const [searchUsersText, setSearchUsersText] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const toast = useRef<Toast>(null);
 
   const handleModalClose = () => {
     setModalVisible(false)
@@ -49,6 +51,7 @@ const CustomerOwner = () => {
     setSelectedCustomer(rowData)
     setModalVisible(true)
     setEditMode(true)
+    
   }
 
   const ActionButtonColumn: ActionButtonColumnProps = {
@@ -185,6 +188,7 @@ const CustomerOwner = () => {
 
   return (
     <div className={modalVisible ? 'backdrop-blur-lg' : ''}>
+      <Toast ref={toast} />
       <Header header="MOORMANAGE/Permission" />
 
       <div className="flex mr-12 justify-end">
@@ -238,6 +242,8 @@ const CustomerOwner = () => {
                 setModalVisible={setModalVisible}
                 setIsVisible={() => {}}
                 customerUsers={getCustomerOwnerData}
+                toastRef={toast}
+                
               />
             }
             headerText={<span className="font-large text-2xl text-[#000000] ml-4">New User</span>}
@@ -409,3 +415,5 @@ const CustomerOwner = () => {
 }
 
 export default CustomerOwner
+
+

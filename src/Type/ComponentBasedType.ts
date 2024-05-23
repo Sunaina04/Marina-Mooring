@@ -126,6 +126,7 @@ export interface CustomerAdminDataProps {
   onBlur?: (e: FocusEvent) => void
   customerUsers?: any
   permission?: boolean
+  toastRef?: any
 }
 
 export interface HeaderProps {

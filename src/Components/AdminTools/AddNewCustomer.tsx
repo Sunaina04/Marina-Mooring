@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { InputText } from 'primereact/inputtext'
 import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown'
 import { Button } from 'primereact/button'
@@ -9,6 +9,7 @@ import useMetaData from '../CommonComponent/MetaDataComponent'
 import { CustomerPayload, SaveUserResponse } from '../../Type/ApiTypes'
 import { useAddUserMutation, useUpdateUserMutation } from '../../Services/AdminTools/AdminToolsApi'
 import { Dialog } from 'primereact/dialog'
+import { Toast } from 'primereact/toast'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { BsEye, BsEyeSlash } from 'react-icons/bs'
 
@@ -21,6 +22,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   setModalVisible,
   customerUsers,
   permission,
+  toastRef,
 }) => {
   const [name, setName] = useState('')
   const [id, setId] = useState('')
@@ -40,7 +42,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const [errorMessage, setErrorMessage] = useState<string>()
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
   const [successMessage, setSuccessMessage] = useState<string>()
-  const [dialogVisible, setDialogVisible] = useState<boolean>(false)
   const [selectedCustomerId, setSelectedCustomerId] = useState<any>()
   const [firstErrorField, setFirstErrorField] = useState('')
   const [customerAdminDropdownEnabled, setCustomerAdminDropdownEnabled] = useState(false)
@@ -204,7 +205,10 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
   const handleFocus = () => {
     const passwordMessage = document.getElementById('password-message')
-    if (passwordMessage) passwordMessage.style.display = 'block'
+    if (passwordMessage) {
+      passwordMessage.style.display = 'block'
+      passwordMessage.scrollIntoView({ behavior: 'smooth' })
+    }
   }
 
   const handleBlur = () => {
@@ -244,18 +248,23 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       const { status, content, message } = response as SaveUserResponse
       if (status === 200 || status === 201) {
         setSuccessMessage(message || 'Customer Updated successfully')
-        setDialogVisible(true)
+        toastRef?.current?.show({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'User Save successfully',
+          life: 3000,
+        })
         getUser()
         setModalVisible(false)
         setIsLoading(false)
       } else {
-        setDialogVisible(true)
+        // setDialogVisible(true)
         setIsLoading(false)
         setErrorMessage(message || 'An error occurred while updating the customer.')
       }
     } catch (error) {
       setIsLoading(false)
-      setDialogVisible(true)
+      // setDialogVisible(true)
       setErrorMessage('An unexpected error occurred. Please try again later.')
     }
   }
@@ -326,21 +335,37 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       const { status, content, message } = response as SaveUserResponse
       if (status === 200 || status === 201) {
         setSuccessMessage(message || 'Customer added successfully')
-        setDialogVisible(true)
+
+        toastRef?.current?.show({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'User Save successfully',
+          life: 3000,
+        })
+
         getUser()
         setIsLoading(false)
       } else {
         setIsLoading(false)
-        setDialogVisible(true)
+
         setErrorMessage(message || 'An error occurred while saving the customer.')
       }
     } catch (error) {
       setIsLoading(false)
-      setDialogVisible(true)
+
       setErrorMessage('An unexpected error occurred. Please try again later.')
     }
+
+    setModalVisible(false)
   }
 
+  const handleClick = () => {
+    if (editMode) {
+      handleEdit()
+    } else {
+      handleSave()
+    }
+  }
   const handleBack = () => {
     setModalVisible(false)
   }
@@ -349,11 +374,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     if (rolesData !== null) {
       setRolesData(rolesData)
     }
-
     if (countriesData !== null) {
       setCountriesData(countriesData)
     }
-
     if (statesData !== null) {
       setStatesData(statesData)
     }
@@ -948,13 +971,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         }}>
         <Button
           label={editMode ? 'Update' : 'Save'}
-          onClick={() => {
-            if (editMode) {
-              handleEdit()
-            } else {
-              handleSave()
-            }
-          }}
+          onClick={handleClick}
           style={{
             width: '89px',
             height: '42px',
@@ -985,65 +1002,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         />
       </div>
       {/* </div> */}
-
-      <Dialog
-        header={
-          <div className="flex items-center justify-center py-4">
-            <h2
-              className={`text-3xl ml-8 font-bold ${successMessage ? 'text-green-600' : 'text-red-600'}`}>
-              {successMessage ? 'Success' : 'Error !!!'}
-            </h2>
-            {successMessage && (
-              <div className="flex items-center justify-center bg-green-500 rounded-full h-12 w-12 ml-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 text-white"
-                  viewBox="0 0 20 20"
-                  fill="currentColor">
-                  <path
-                    fillRule="evenodd"
-                    d="M2.293 9.293a1 1 0 011.414-1.414L9 14.586l8.293-8.293a1 1 0 111.414 1.414l-9 9a1 1 0 01-1.414 0l-9-9a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
-            )}
-          </div>
-        }
-        style={{
-          marginLeft: '100px',
-          width: '30vw',
-          background: successMessage ? '#D1FAE5' : '#FEE2E2',
-        }}
-        footer={
-          <div className="flex justify-end mt-4">
-            <button
-              className={`bg-${successMessage ? 'green' : 'red'}-500 hover:bg-${successMessage ? 'green' : 'red'}-600 text-white font-bold py-2 px-4 rounded inline-flex items-center mr-2`}
-              onClick={() => {
-                setDialogVisible(false)
-                if (successMessage) {
-                  handleBack()
-                } else {
-                  closeModal()
-                }
-              }}>
-              <span>Close</span>
-            </button>
-          </div>
-        }
-        visible={dialogVisible}
-        onHide={() => {
-          setDialogVisible(false)
-          if (successMessage) {
-            handleBack()
-          } else {
-            closeModal()
-          }
-        }}>
-        <div className="flex justify-center items-center h-full">
-          <p className="text-lg text-gray-800">{successMessage ? successMessage : errorMessage}</p>
-        </div>
-      </Dialog>
     </>
   )
 }

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import CustomModal from '../CustomComponent/CustomModal'
 import DataTableComponent from '../CommonComponent/Table/DataTableComponent'
 import Header from '../Layout/LayoutComponents/Header'
@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux'
 import { CustomerPayload, DeleteUserResponse, GetUserResponse } from '../../Type/ApiTypes'
 import { useDeleteUserMutation, useGetUsersMutation } from '../../Services/AdminTools/AdminToolsApi'
 import AddNewCustomer from './AddNewCustomer'
+import { Toast } from 'primereact/toast'
 
 const Permission = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -19,7 +20,7 @@ const Permission = () => {
   const [getUser] = useGetUsersMutation()
   const [deleteUser] = useDeleteUserMutation()
   const [getCustomerOwnerUserData, setgetCustomerOwnerUserData] = useState<CustomerPayload[]>([])
-
+  const toast = useRef<Toast>(null)
   const handleEditButtonClick = (rowData: any) => {
     setEditMode(true)
     setModalVisible(true)
@@ -119,6 +120,7 @@ const Permission = () => {
 
   const handleButtonClick = () => {
     setModalVisible(true)
+    setSelectedCustomer('')
   }
 
   const handleModalClose = () => {
@@ -133,6 +135,12 @@ const Permission = () => {
       }).unwrap()
       const { status } = response as DeleteUserResponse
       if (status === 200) {
+        toast.current?.show({
+          severity: 'error',
+          summary: 'Success',
+          detail: 'User Deleted Successfully ',
+          life: 3000,
+        })
         getCustomerAdminsUsers()
       }
     } catch (error) {
@@ -164,6 +172,7 @@ const Permission = () => {
       <Header header="MOORMANAGE/Permission" />
 
       <div className="flex mr-12 justify-end">
+        <Toast ref={toast} />
         <div className="mt-14 mr-5 relative">
           <InputText
             value={searchInput}
@@ -215,6 +224,7 @@ const Permission = () => {
               setModalVisible={setModalVisible}
               customerData={selectedCustomer}
               permission={true}
+              toastRef={toast}
             />
           </CustomModal>
         </div>
