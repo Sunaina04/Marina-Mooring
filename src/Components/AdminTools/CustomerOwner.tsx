@@ -219,8 +219,8 @@ const CustomerOwner = () => {
             buttonText={'ADD NEW'}
             onHide={handleModalClose}
             dialogStyle={{
-              width: '820px',
-              minWidth: '800px',
+              width: '840px',
+              minWidth: '840px',
               height: '600px',
               minHeight: '600px',
               borderRadius: '1rem',
@@ -241,6 +241,7 @@ const CustomerOwner = () => {
             headerText={<span className="font-large text-2xl text-[#000000] ml-4">New User</span>}
             visible={modalVisible}
             onClick={() => {
+              setEditMode(false)
               setModalVisible(true)
               setSelectedCustomer('')
             }}
@@ -248,7 +249,7 @@ const CustomerOwner = () => {
         </div>
       </div>
 
-      <div className="flex gap-10 ml-8 mt-10">
+      <div className={`flex gap-10 ml-8 mt-10 ${isLoading ? 'blur-screen' : ''}`}>
         <div
           style={{
             // flexGrow: 1,
@@ -265,8 +266,8 @@ const CustomerOwner = () => {
             onChange={handleSearch}
             placeholder="Search by name, ID, phone no.... "
             inputTextStyle={{
-              width: '25vw',
-              minWidth: '25vw',
+              width: '30vw',
+              minWidth: '30vw',
               height: '44px',
               padding: '0 2rem 0 2.5rem',
               border: '1px solid #C5D9E0',
@@ -306,8 +307,8 @@ const CustomerOwner = () => {
                   cursor: 'pointer',
                   marginLeft: '20px',
                   marginRight: '20px',
-                  width: '25vw',
-                  minWidth: '25vw',
+                  width: '30vw',
+                  minWidth: '30vw',
                 }}
                 scrollable={true}
                 columns={customerOwnerTableColumn}
@@ -336,7 +337,9 @@ const CustomerOwner = () => {
             strokeWidth="4"
           />
         )}
+
         <div
+          className={`${isLoading ? 'blur-screen' : ''}`}
           style={{
             flexGrow: 1,
             borderRadius: '15px',
@@ -352,8 +355,7 @@ const CustomerOwner = () => {
             onChange={handleUsersSearch}
             placeholder="Search by name, ID, Email, Role, phone no..."
             inputTextStyle={{
-              width: '41vw',
-              minWidth: '41vw',
+              flexGrow: 1,
               height: '44px',
               border: '1px solid #C5D9E0',
               padding: '0 2rem 0 2.5rem',
@@ -370,10 +372,9 @@ const CustomerOwner = () => {
               height: '600px',
               minHeight: 'calc(40vw - 600px)',
               overflow: 'auto',
+              padding: '0 20px',
             }}
-            data-testid="customer-admin-users-table"
-            // className="custom-scrollbar"
-          >
+            data-testid="customer-admin-users-table">
             {getCustomerOwnerUserData.length > 0 ? (
               <DataTableComponent
                 tableStyle={{
@@ -381,8 +382,6 @@ const CustomerOwner = () => {
                   color: '#000000',
                   fontWeight: 400,
                   backgroundColor: '#FFFFFF',
-                  marginLeft: '20px',
-                  marginRight: '20px',
                 }}
                 scrollable={true}
                 data={getCustomerOwnerUserData}

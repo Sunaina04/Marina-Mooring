@@ -40,6 +40,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const [successMessage, setSuccessMessage] = useState<string>()
   const [dialogVisible, setDialogVisible] = useState<boolean>(false)
   const [selectedCustomerId, setSelectedCustomerId] = useState<any>()
+  const [firstErrorField, setFirstErrorField] = useState('')
   const [customerAdminDropdownEnabled, setCustomerAdminDropdownEnabled] = useState(false)
   const [addCustomer] = useAddUserMutation()
   const [editCustomer] = useUpdateUserMutation()
@@ -52,13 +53,13 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     length: false,
   })
   const [isLoading, setIsLoading] = useState(false)
-  var bcrypt = require('bcryptjs')
 
   const validateFields = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const phoneRegex = /^\d{10}$/
     const nameRegex = /^[a-zA-Z ]+$/
     const errors: { [key: string]: string } = {}
+    let firstError = ''
     if (!name) {
       errors.name = 'Name is required'
     } else if (!nameRegex.test(name)) {
@@ -66,31 +67,70 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     } else if (name.length < 3) {
       errors.name = 'Name must be at least 3 characters long'
     }
+    if (errors.name) {
+      firstError = 'name'
+    }
     if (!id) errors.id = 'ID is required'
+    if (errors.id && !firstError) {
+      firstError = 'id'
+    }
     if (!phone) {
       errors.phone = 'Phone is required'
     } else if (!phoneRegex.test(phone)) {
       errors.phone = 'Phone must be a 10-digit number'
     }
-
+    if (errors.phone && !firstError) {
+      firstError = 'phone'
+    }
     if (!email) {
       errors.email = 'Email is required'
     } else if (!emailRegex.test(email)) {
       errors.email = 'Please enter a valid email format'
     }
+    if (errors.email && !firstError) {
+      firstError = 'email'
+    }
     if (!street) errors.street = 'Street is required'
-    if (!street) errors.apt = 'Apt is required'
+    if (errors.street && !firstError) {
+      firstError = 'street'
+    }
+    if (!apt) errors.apt = 'Apt is required'
+    if (errors.apt && !firstError) {
+      firstError = 'apt'
+    }
     if (!zipCode) errors.zipCode = 'ZipCode is required'
+    if (errors.zipCode && !firstError) {
+      firstError = 'zipCode'
+    }
     if (!role) errors.role = 'Role is required'
+    if (errors.role && !firstError) {
+      firstError = 'role'
+    }
     if (!selectedCustomerId && customerAdminDropdownEnabled)
       errors.selectedCustomerId = 'Customer Admin is required'
+    if (errors.selectedCustomerId && !firstError) {
+      firstError = 'selectedCustomerId'
+    }
     if (!country) errors.country = 'Country is required'
+    if (errors.country && !firstError) {
+      firstError = 'country'
+    }
     if (!state) errors.state = 'State is required'
+    if (errors.state && !firstError) {
+      firstError = 'state'
+    }
     if (!password) {
       errors.password = 'Password is required'
     }
-    if (!password) errors.confirmPassword = 'Confirm Password is required'
+    if (errors.password && !firstError) {
+      firstError = 'password'
+    }
+    if (!confirmPassword) errors.confirmPassword = 'Confirm Password is required'
     if (password !== confirmPassword) errors.confirmPassword = 'Passwords do not match'
+    if (errors.confirmPassword && !firstError) {
+      firstError = 'confirmPassword'
+    }
+    setFirstErrorField(firstError)
     return errors
   }
 
@@ -323,6 +363,12 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   }
 
   useEffect(() => {
+    if (firstErrorField) {
+      document.getElementById(firstErrorField)?.scrollIntoView({ behavior: 'smooth' })
+    }
+  }, [firstErrorField])
+
+  useEffect(() => {
     if (role && (role.name === 'FINANCE' || role.name === 'TECHNICIAN')) {
       setCustomerAdminDropdownEnabled(true)
     } else {
@@ -340,7 +386,14 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
   return (
     <>
-      <div>
+      <div
+        style={{
+          height: 'calc(600px - 150px)',
+          overflowY: 'scroll',
+          overflowX: 'hidden',
+          paddingBottom: '50px',
+        }}
+        className="NoScrollBar">
         <div className="flex gap-8 mt-5 ml-4">
           <div>
             <span className="font-medium text-sm text-[#000000]">
@@ -365,7 +418,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
               />
             </div>
 
-            <p className="p-1">
+            <p className="p-1" id="name">
               {fieldErrors.name && <small className="p-error">{fieldErrors.name}</small>}
             </p>
           </div>
@@ -392,7 +445,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
               />
             </div>
 
-            <p className="p-1">
+            <p className="p-1" id="id">
               {fieldErrors.id && <small className="p-error">{fieldErrors.id}</small>}
             </p>
           </div>
@@ -418,7 +471,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 }}
               />
             </div>
-            <p className="p-1">
+            <p className="p-1" id="phone">
               {fieldErrors.phone && <small className="p-error">{fieldErrors.phone}</small>}
             </p>
           </div>
@@ -453,7 +506,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 }}
               />
             </div>
-            <p>{fieldErrors.email && <small className="p-error">{fieldErrors.email}</small>}</p>
+            <p id="email">
+              {fieldErrors.email && <small className="p-error">{fieldErrors.email}</small>}
+            </p>
             <p>
               {errorMessage && errorMessage.includes('Email already present') && (
                 <small className="p-error mt-1">Email already present</small>
@@ -494,7 +549,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 }}
               />
             </div>
-            <p className="p-1">
+            <p className="p-1" id="role">
               {fieldErrors.role && <small className="p-error">{fieldErrors.role}</small>}
             </p>
           </div>
@@ -535,7 +590,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 }}
               />
             </div>
-            <p className="p-1">
+            <p className="p-1" id="selectedCustomerId">
               {fieldErrors.selectedCustomerId && (
                 <small className="p-error">{fieldErrors.selectedCustomerId}</small>
               )}
@@ -584,7 +639,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 />
               </div>
 
-              <p className="p-1">
+              <p className="p-1" id="street">
                 {fieldErrors.street && <small className="p-error">{fieldErrors.street}</small>}
               </p>
             </div>
@@ -606,7 +661,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   }}
                 />
               </div>
-              <p className="p-1">
+              <p className="p-1" id="apt">
                 {fieldErrors.apt && <small className="p-error">{fieldErrors.apt}</small>}
               </p>
             </div>
@@ -631,7 +686,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   borderRadius: '0.50rem',
                 }}
               />
-              <p className="p-1">
+              <p className="p-1" id="state">
                 {fieldErrors.state && <small className="p-error">{fieldErrors.state}</small>}
               </p>
             </div>
@@ -659,7 +714,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 }}
               />
 
-              <p className="p-1">
+              <p className="p-1" id="country">
                 {fieldErrors.country && <small className="p-error">{fieldErrors.country}</small>}
               </p>
             </div>
@@ -679,7 +734,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   padding: '0.83em',
                 }}
               />
-              <p className="p-1">
+              <p className="p-1" id="zipCode">
                 {fieldErrors.zipCode && <small className="p-error">{fieldErrors.zipCode}</small>}
               </p>
             </div>
@@ -705,18 +760,15 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   style={{
                     width: '230px',
                     height: '32px',
-                    border:
-                      fieldErrors.password && errorMessage ? '1px solid red' : '1px solid #D5E1EA',
+                    border: fieldErrors.password ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                     padding: '1.2em',
                   }}
                 />
-                <p className="p-1 w-48">
-                  {fieldErrors.password && errorMessage ? (
-                    <small className="p-error">
-                      {fieldErrors.password} {errorMessage}
-                    </small>
+                <p className="p-1 w-48" id="password">
+                  {fieldErrors.password ? (
+                    <small className="p-error">{fieldErrors.password}</small>
                   ) : (
                     ''
                   )}
@@ -812,7 +864,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   }}
                 />
                 {fieldErrors.confirmPassword && (
-                  <small className="p-error">{fieldErrors.confirmPassword}</small>
+                  <small className="p-error" id="confirmPassword">
+                    {fieldErrors.confirmPassword}
+                  </small>
                 )}
               </div>
             </div>
@@ -820,46 +874,56 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         )}
 
         {/* Save and Back buttons */}
-        <div style={{ width: '100%', backgroundColor: 'white', padding: '0 12px' }}>
-          <div className="flex gap-4 mt-10 ml-4 absolute bottom-5 left-6">
-            <Button
-              label={editMode ? 'Update' : 'Save'}
-              onClick={() => {
-                if (editMode) {
-                  handleEdit()
-                } else {
-                  handleSave()
-                }
-              }}
-              style={{
-                width: '89px',
-                height: '42px',
-                backgroundColor: '#0098FF',
-                cursor: 'pointer',
-                fontWeight: 'bolder',
-                fontSize: '14px',
-                boxShadow: 'none',
-                color: 'white',
-                borderRadius: '0.50rem',
-              }}
-            />
-            <Button
-              label={'Back'}
-              onClick={handleBack}
-              text={true}
-              style={{
-                backgroundColor: 'white',
-                color: '#000000',
-                border: 'none',
-                width: '89px',
-                fontSize: '14px',
-                height: '42px',
-                fontWeight: '500',
-              }}
-            />
-          </div>
-        </div>
+        {/* <div style={{ width: '100%', backgroundColor: 'white', padding: '0 12px' }}> */}
       </div>
+      <div
+        className="flex gap-4 ml-4 bottom-2 absolute left-6"
+        style={{
+          width: '100%',
+          height: '80px',
+          backgroundColor: 'white',
+          padding: '0 12px',
+          marginBottom: '2px',
+        }}>
+        <Button
+          label={editMode ? 'Update' : 'Save'}
+          onClick={() => {
+            if (editMode) {
+              handleEdit()
+            } else {
+              handleSave()
+            }
+          }}
+          style={{
+            width: '89px',
+            height: '42px',
+            backgroundColor: '#0098FF',
+            cursor: 'pointer',
+            fontWeight: 'bolder',
+            fontSize: '14px',
+            boxShadow: 'none',
+            color: 'white',
+            borderRadius: '0.50rem',
+            top: '20px',
+          }}
+        />
+        <Button
+          label={'Back'}
+          onClick={handleBack}
+          text={true}
+          style={{
+            backgroundColor: 'white',
+            color: '#000000',
+            border: 'none',
+            width: '89px',
+            fontSize: '14px',
+            height: '42px',
+            fontWeight: '500',
+            top: '20px',
+          }}
+        />
+      </div>
+      {/* </div> */}
 
       <Dialog
         header={

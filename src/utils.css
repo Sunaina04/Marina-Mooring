@@ -93,3 +93,28 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+.NoScrollBar {
+  &::-webkit-scrollbar {
+    height: 0;
+    width: 0;
+    display: none;
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    display: none;
+    background: transparent;
+  }
+  &::-webkit-scrollbar:horizontal {
+    height: 0;
+    width: 0;
+    display: none;
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb:horizontal {
+    display: none;
+    background: transparent;
+  }
+}

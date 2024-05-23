@@ -26,14 +26,19 @@ export default function LoginForm() {
   const [isLoading, setIsLoading] = useState(false)
 
   const handleChange = (e: any) => {
-    const { name, value } = e.target
+    let { name, value } = e.target
     errors.email = ''
     errors.password = ''
 
-    setLoginPayload((prev) => ({
-      ...prev,
-      [name]: value,
-    }))
+    setLoginPayload((prev) => {
+      if (name === 'password') {
+        value = btoa(value)
+      }
+      return {
+        ...prev,
+        [name]: value,
+      }
+    })
   }
 
   const toggleShowPassword = () => {
