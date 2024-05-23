@@ -103,6 +103,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       specialChar: hasSpecialChar,
       length: hasMinLength,
     })
+
+    return hasUppercase && hasLowercase && hasNumber && hasSpecialChar && hasMinLength
   }
 
   const handleInputChange = (fieldName: string, value: any) => {
@@ -130,6 +132,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         break
       case 'password':
         setPassword(value)
+        setErrorMessage('')
         validatePassword(value)
         break
       case 'confirmPassword':
@@ -232,6 +235,12 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       country: country?.name,
       role: role?.name,
       confirmPassword,
+    }
+
+    if (!validatePassword(password)) {
+      setErrorMessage('Password is required')
+
+      return
     }
 
     try {
@@ -640,15 +649,20 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: fieldErrors.password ? '1px solid red' : '1px solid #D5E1EA',
+                    border:
+                      fieldErrors.password || errorMessage ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                     padding: '1.2em',
                   }}
                 />
                 <p className="p-1 w-48">
-                  {fieldErrors.password && (
-                    <small className="p-error">{fieldErrors.password}</small>
+                  {fieldErrors.password || errorMessage ? (
+                    <small className="p-error">
+                      {fieldErrors.password} {errorMessage}
+                    </small>
+                  ) : (
+                    ''
                   )}
                 </p>
 
