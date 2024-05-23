@@ -7,6 +7,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { InputText } from 'primereact/inputtext'
 import { Button } from 'primereact/button'
 import './Login.module.css'
+import { ProgressSpinner } from 'primereact/progressspinner'
 
 export default function LoginForm() {
   const dispatch = useDispatch()
@@ -22,6 +23,7 @@ export default function LoginForm() {
     email: '',
     password: '',
   })
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleChange = (e: any) => {
     const { name, value } = e.target
@@ -62,6 +64,7 @@ export default function LoginForm() {
       }))
       return
     }
+    setIsLoading(true)
 
     try {
       const response = await login(loginPayload).unwrap()
@@ -73,6 +76,7 @@ export default function LoginForm() {
           username: '',
           password: '',
         })
+        setIsLoading(false)
         navigate('/dashboard')
       }
     } catch (error: any) {
@@ -97,7 +101,7 @@ export default function LoginForm() {
           backgroundPosition: 'center',
         }}>
         <div
-          className="bg-white rounded-xl p-8 top-227 left-420 gap-8 h-auto"
+          className={`bg-white rounded-xl p-8 top-227 left-420 gap-8 h-auto ${isLoading ? 'blur-screen' : ''}`}
           style={{ width: '600px' }}>
           <div className="text-center mt-[1rem]">
             <img
@@ -190,6 +194,19 @@ export default function LoginForm() {
                 />
               </div>
 
+              {isLoading && (
+                <ProgressSpinner
+                  style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: '50px',
+                    height: '50px',
+                  }}
+                  strokeWidth="4"
+                />
+              )}
               <div className="flex justify-end mb-8 mt-5 w-[500px] cursor-pointer underline">
                 <span
                   className="font-normal"
@@ -220,8 +237,10 @@ export default function LoginForm() {
                   display: 'flex',
                   fontWeight: '500',
                   justifyContent: 'center',
+                  // filter: isLoading ? 'blur(1px)' : 'none',
                 }}
-                onClick={signInHandler}>
+                onClick={signInHandler}
+                disabled={isLoading}>
                 <p>Login</p>
               </Button>
             </div>

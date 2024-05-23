@@ -118,12 +118,13 @@ export interface CustomerAdminDataProps {
   editMode: boolean
   isVisible?: boolean
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>
-  customerAdminId: string
+  customerAdminId?: string
   closeModal: () => void
   getUser: () => void
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>
   onFocus?: (e: FocusEvent) => void
   onBlur?: (e: FocusEvent) => void
+  customerUsers?: any
 }
 
 export interface HeaderProps {

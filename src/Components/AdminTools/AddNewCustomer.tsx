@@ -6,7 +6,7 @@ import InputComponent from '../CommonComponent/InputComponent'
 import { Country, Role, State } from '../../Type/CommonType'
 import { CustomerAdminDataProps } from '../../Type/ComponentBasedType'
 import useMetaData from '../CommonComponent/MetaDataComponent'
-import { SaveUserResponse } from '../../Type/ApiTypes'
+import { CustomerPayload, SaveUserResponse } from '../../Type/ApiTypes'
 import { useAddUserMutation, useUpdateUserMutation } from '../../Services/AdminTools/AdminToolsApi'
 import { Dialog } from 'primereact/dialog'
 
@@ -17,6 +17,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   closeModal,
   customerAdminId,
   setModalVisible,
+  customerUsers,
 }) => {
   const [name, setName] = useState('')
   const [id, setId] = useState('')
@@ -37,6 +38,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
   const [successMessage, setSuccessMessage] = useState<string>()
   const [dialogVisible, setDialogVisible] = useState<boolean>(false)
+  const [selectedCustomerId, setSelectedCustomerId] = useState<any>()
   const [addCustomer] = useAddUserMutation()
   const [editCustomer] = useUpdateUserMutation()
   const { getMetaData } = useMetaData()
@@ -76,6 +78,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     if (!street) errors.apt = 'Apt is required'
     if (!zipCode) errors.zipCode = 'ZipCode is required'
     if (!role) errors.role = 'Role is required'
+    if (!selectedCustomerId) errors.selectedCustomerId = 'Customer Admin is required'
     if (!country) errors.country = 'Country is required'
     if (!state) errors.state = 'State is required'
     if (!password) {
@@ -202,6 +205,19 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       setFieldErrors(errors)
       return
     }
+    const selectedCustomer = customerUsers.find(
+      (customer: any) => customer.name === selectedCustomerId.name,
+    )
+
+    if (!selectedCustomer) {
+      setFieldErrors((prevErrors) => ({
+        ...prevErrors,
+        selectedCustomerId: 'Invalid customer admin',
+      }))
+      return
+    }
+
+    const customerAdminId = selectedCustomer.id
 
     const addUserPayload = {
       name,
@@ -265,11 +281,14 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       setStreet(customerData.street || '')
       setApt(customerData.apt || '')
       setZipCode(customerData.zipCode || '')
-      setPassword('')
-      setConfirmPassword('')
       setRole(customerData.role || undefined)
       setCountry(customerData.country || undefined)
       setState(customerData.state || undefined)
+      const selectedCustomerAdmin = customerUsers.find(
+        (customer: any) => customer.id === customerAdminId,
+      )
+      const selectedCustomerAdminName = selectedCustomerAdmin ? selectedCustomerAdmin.name : ''
+      setSelectedCustomerId(selectedCustomerAdminName)
     }
   }
 
@@ -409,7 +428,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 </div>
               </span>
             </div>
-
             <div className="mt-1">
               <Dropdown
                 value={role}
@@ -435,7 +453,45 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
               {fieldErrors.role && <small className="p-error">{fieldErrors.role}</small>}
             </p>
           </div>
+
+          <div>
+            <div className="mt-3">
+              <span className="font-medium text-sm text-[#000000]">
+                <div className="flex gap-1">
+                  Customer Admin
+                  <p className="text-red-600">*</p>
+                </div>
+              </span>
+            </div>
+            <div className="mt-1">
+              <Dropdown
+                value={selectedCustomerId}
+                onChange={(e) => {
+                  setSelectedCustomerId(e.value)
+                  setFieldErrors((prevErrors) => ({ ...prevErrors, selectedCustomerId: '' }))
+                }}
+                options={customerUsers}
+                optionLabel="name"
+                editable
+                placeholder="Select"
+                style={{
+                  width: '230px',
+                  height: '32px',
+                  minHeight: '32px',
+                  border: fieldErrors.selectedCustomerId ? '1px solid red' : '1px solid #D5E1EA',
+                  fontSize: '0.8rem',
+                  borderRadius: '0.50rem',
+                }}
+              />
+            </div>
+            <p className="p-1">
+              {fieldErrors.selectedCustomerId && (
+                <small className="p-error">{fieldErrors.selectedCustomerId}</small>
+              )}
+            </p>
+          </div>
         </div>
+
         <div className="mt-5 ml-4">
           <span className="font-medium text-sm text-[#000000]">
             <div className="flex gap-1">

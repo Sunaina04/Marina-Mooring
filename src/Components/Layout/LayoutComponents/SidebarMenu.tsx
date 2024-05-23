@@ -22,36 +22,7 @@ const SidebarMenu = () => {
         },
       ]
       break
-    case 'TECHNICIAN':
-      link = '/permission'
-      adminSubcategories = [
-        {
-          icon: '/assets/images/permission.svg',
-          name: 'Permission',
-          link: '/permission',
-        },
-        {
-          icon: '/assets/images/settings.svg',
-          name: 'Settings',
-          link: '/permission',
-        },
-      ]
-      break
-    case 'FINANCE':
-      link = '/permission'
-      adminSubcategories = [
-        {
-          icon: '/assets/images/permission.svg',
-          name: 'Permission',
-          link: '/permission',
-        },
-        {
-          icon: '/assets/images/settings.svg',
-          name: 'Settings',
-          link: '/permission',
-        },
-      ]
-      break
+
     default:
       link = '/customerAdmin'
       adminSubcategories = [
@@ -146,13 +117,19 @@ const SidebarMenu = () => {
         },
       ],
     },
-    {
+  ]
+
+  // Only add ADMIN TOOLS section if user is not FINANCE or TECHNICIAN
+  if (userData?.role?.name !== 'FINANCE' && userData?.role?.name !== 'TECHNICIAN') {
+    menu.push({
       icon: '/assets/images/tools.svg',
       name: 'ADMIN TOOLS',
       link: link,
       subcategories: adminSubcategories,
-    },
-  ]
+    })
+  }
+
+  return menu
 
   return menu
 }

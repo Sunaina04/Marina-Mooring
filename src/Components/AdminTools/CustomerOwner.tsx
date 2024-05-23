@@ -13,6 +13,7 @@ import { InputText } from 'primereact/inputtext'
 import './CustomerOwner.module.css'
 import { customerAdminUser } from '../Utils/CustomData'
 import InputTextWithHeader from '../CommonComponent/Table/InputTextWithHeader'
+import { ProgressSpinner } from 'primereact/progressspinner'
 
 const CustomerOwner = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -29,6 +30,7 @@ const CustomerOwner = () => {
   const [getCustomerOwnerUserData, setgetCustomerOwnerUserData] = useState<CustomerPayload[]>([])
   const [searchText, setSearchText] = useState('')
   const [searchUsersText, setSearchUsersText] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleModalClose = () => {
     setModalVisible(false)
@@ -123,11 +125,13 @@ const CustomerOwner = () => {
   }, [])
 
   const getUserHandler = async () => {
+    setIsLoading(true)
     try {
       const response = await getUser({ searchText: searchText }).unwrap()
       const { status, content } = response as GetUserResponse
       if (status === 200 && Array.isArray(content?.content)) {
         if (content?.content.length > 0) {
+          setIsLoading(false)
           setgetCustomerOwnerData(content?.content)
         } else {
           setgetCustomerOwnerData([])
@@ -139,10 +143,12 @@ const CustomerOwner = () => {
   }
 
   const getCustomerAdminsUsers = async (id: any) => {
+    setIsLoading(true)
     try {
       const response = await getUser({ customerAdminId: id, searchText: searchUsersText }).unwrap()
       const { status, content } = response as GetUserResponse
       if (status === 200 && Array.isArray(content?.content)) {
+        setIsLoading(false)
         if (content?.content.length > 0) {
           setgetCustomerOwnerUserData(content?.content)
           // setIsRowClick(true)
@@ -224,6 +230,7 @@ const CustomerOwner = () => {
                 closeModal={() => {}}
                 setModalVisible={setModalVisible}
                 setIsVisible={() => {}}
+                customerUsers={getCustomerOwnerData}
               />
             }
             headerText={<span className="font-large text-2xl text-[#000000] ml-4">New User</span>}
@@ -310,6 +317,19 @@ const CustomerOwner = () => {
           </div>
         </div>
 
+        {isLoading && (
+          <ProgressSpinner
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: '50px',
+              height: '50px',
+            }}
+            strokeWidth="4"
+          />
+        )}
         <div
           style={{
             flexGrow: 1,
