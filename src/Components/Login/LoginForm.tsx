@@ -16,6 +16,7 @@ export default function LoginForm() {
     password: '',
   })
   const [showPassword, setShowPassword] = useState(false)
+  const [encodePassword, setEncodePassword] = useState(true)
   const { username, password } = loginPayload
   const navigate = useNavigate()
   const [login] = useLoginMutation()
@@ -32,7 +33,7 @@ export default function LoginForm() {
 
     setLoginPayload((prev) => {
       if (name === 'password') {
-        value = btoa(value)
+        value = encodePassword ? btoa(value) : value
       }
       return {
         ...prev,
@@ -42,13 +43,14 @@ export default function LoginForm() {
   }
 
   const toggleShowPassword = () => {
-    setShowPassword(!showPassword)
+    setShowPassword((prevShowPassword) => !prevShowPassword)
+    setEncodePassword(!encodePassword) // Toggle encoding based on showPassword state
   }
 
   const signInHandler = async () => {
     setErrors({ email: '', password: '' })
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (username.length == 0) {
+    if (username.length === 0) {
       setErrors((prev) => ({
         ...prev,
         email: 'Email cannot be empty',
@@ -71,8 +73,13 @@ export default function LoginForm() {
     }
     setIsLoading(true)
 
+    const LoginPayload = {
+      password: loginPayload.password,
+      username: loginPayload.username,
+    }
+
     try {
-      const response = await login(loginPayload).unwrap()
+      const response = await login(LoginPayload).unwrap()
       const { status, user, token, message } = response as LoginResponse
       if (status === 200) {
         dispatch(setUserData({ ...user }))
@@ -186,7 +193,7 @@ export default function LoginForm() {
                 <img
                   src={showPassword ? '/assets/images/eye.png' : '/assets/images/eye-slash.png'}
                   alt="Toggle Password Visibility"
-                  onClick={() => toggleShowPassword()}
+                  onClick={toggleShowPassword}
                   className="p-clickable"
                   style={{
                     position: 'absolute',
