@@ -206,8 +206,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     setSuccessMessage('')
     const errors = validateFields()
     if (Object.keys(errors).length > 0) {
-      console.log('clicked5', errors)
-
       setFieldErrors(errors)
       return
     }
@@ -256,6 +254,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     setSuccessMessage('')
     const errors = validateFields()
     if (Object.keys(errors).length > 0) {
+      console.log('clicke', errors)
       setFieldErrors(errors)
       return
     }
