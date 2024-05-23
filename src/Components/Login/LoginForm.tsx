@@ -87,6 +87,7 @@ export default function LoginForm() {
           ...prev,
           email: msg,
         }))
+        setIsLoading(false)
       }
     }
   }

@@ -9,6 +9,7 @@ import useMetaData from '../CommonComponent/MetaDataComponent'
 import { CustomerPayload, SaveUserResponse } from '../../Type/ApiTypes'
 import { useAddUserMutation, useUpdateUserMutation } from '../../Services/AdminTools/AdminToolsApi'
 import { Dialog } from 'primereact/dialog'
+import { ProgressSpinner } from 'primereact/progressspinner'
 
 const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   customerData,
@@ -39,6 +40,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const [successMessage, setSuccessMessage] = useState<string>()
   const [dialogVisible, setDialogVisible] = useState<boolean>(false)
   const [selectedCustomerId, setSelectedCustomerId] = useState<any>()
+  const [customerAdminDropdownEnabled, setCustomerAdminDropdownEnabled] = useState(false)
   const [addCustomer] = useAddUserMutation()
   const [editCustomer] = useUpdateUserMutation()
   const { getMetaData } = useMetaData()
@@ -49,6 +51,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     specialChar: false,
     length: false,
   })
+  const [isLoading, setIsLoading] = useState(false)
   var bcrypt = require('bcryptjs')
 
   const validateFields = () => {
@@ -79,7 +82,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     if (!street) errors.apt = 'Apt is required'
     if (!zipCode) errors.zipCode = 'ZipCode is required'
     if (!role) errors.role = 'Role is required'
-    if (!selectedCustomerId) errors.selectedCustomerId = 'Customer Admin is required'
+    if (!selectedCustomerId && customerAdminDropdownEnabled)
+      errors.selectedCustomerId = 'Customer Admin is required'
     if (!country) errors.country = 'Country is required'
     if (!state) errors.state = 'State is required'
     if (!password) {
@@ -95,7 +99,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     const hasLowercase = /[a-z]/.test(password)
     const hasNumber = /\d/.test(password)
     const hasSpecialChar = /[@$!%*?&]/.test(password)
-    const hasMinLength = password.length >= 8
+    const hasMinLength = password.length >= 10
 
     setPasswordCriteria({
       uppercase: hasUppercase,
@@ -104,6 +108,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       specialChar: hasSpecialChar,
       length: hasMinLength,
     })
+
+    return hasUppercase && hasLowercase && hasNumber && hasSpecialChar && hasMinLength
   }
 
   const handleInputChange = (fieldName: string, value: any) => {
@@ -119,6 +125,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         break
       case 'email':
         setEmail(value)
+        setErrorMessage('')
         break
       case 'street':
         setStreet(value)
@@ -131,6 +138,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         break
       case 'password':
         setPassword(value)
+        setErrorMessage('')
         validatePassword(value)
         break
       case 'confirmPassword':
@@ -174,6 +182,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       role: role?.name ? role?.name : customerData?.role,
     }
 
+    setIsLoading(true)
     try {
       const response = await editCustomer({
         payload: editUserPayload,
@@ -186,11 +195,14 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         setDialogVisible(true)
         getUser()
         setModalVisible(false)
+        setIsLoading(false)
       } else {
         setDialogVisible(true)
+        setIsLoading(false)
         setErrorMessage(message || 'An error occurred while updating the customer.')
       }
     } catch (error) {
+      setIsLoading(false)
       setDialogVisible(true)
       setErrorMessage('An unexpected error occurred. Please try again later.')
     }
@@ -208,7 +220,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       (customer: any) => customer.name === selectedCustomerId.name,
     )
 
-    if (!selectedCustomer) {
+    if (!selectedCustomer && (role?.name === 'FINANCE' || role?.name === 'TECHNICIAN')) {
       setFieldErrors((prevErrors) => ({
         ...prevErrors,
         selectedCustomerId: 'Invalid customer admin',
@@ -216,7 +228,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       return
     }
 
-    const customerAdminId = selectedCustomer.id
+    const customerAdminId = selectedCustomer?.id
 
     if (password !== confirmPassword) {
       setFieldErrors((prevErrors) => ({
@@ -225,10 +237,15 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       }))
       return
     }
+
+    if (!validatePassword(password)) {
+      setErrorMessage('Password is required')
+      return
+    }
+    setIsLoading(true)
     try {
-      // Hash the password before sending
-      const hashedPassword = await bcrypt.hash(password, 10)
-      const hashedConfirmPassword = await bcrypt.hash(confirmPassword, 10)
+      // Encode the password using base64
+      const encodedPassword = btoa(password)
       const addUserPayload = {
         name,
         userID: id,
@@ -237,14 +254,14 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         street,
         apt,
         zipCode,
-        password: hashedPassword,
+        password: encodedPassword, // Using base64 encoded password
         state: state?.name,
         country: country?.name,
         role: role?.name,
-        confirmPassword: hashedConfirmPassword,
+        confirmPassword: encodedPassword, // Using base64 encoded password for confirmPassword
       }
 
-      // Send the hashed password to the server
+      // Send the encoded password to the server
       const response = await addCustomer({
         payload: addUserPayload,
         customerAdminId: customerAdminId,
@@ -254,11 +271,14 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         setSuccessMessage(message || 'Customer added successfully')
         setDialogVisible(true)
         getUser()
+        setIsLoading(false)
       } else {
+        setIsLoading(false)
         setDialogVisible(true)
         setErrorMessage(message || 'An error occurred while saving the customer.')
       }
     } catch (error) {
+      setIsLoading(false)
       setDialogVisible(true)
       setErrorMessage('An unexpected error occurred. Please try again later.')
     }
@@ -301,6 +321,14 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       setSelectedCustomerId(selectedCustomerAdminName)
     }
   }
+
+  useEffect(() => {
+    if (role && (role.name === 'FINANCE' || role.name === 'TECHNICIAN')) {
+      setCustomerAdminDropdownEnabled(true)
+    } else {
+      setCustomerAdminDropdownEnabled(false)
+    }
+  }, [role])
 
   useEffect(() => {
     fetchDataAndUpdate()
@@ -414,7 +442,11 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: fieldErrors.email ? '1px solid red' : '1px solid #D5E1EA',
+                  border:
+                    fieldErrors.email ||
+                    (errorMessage && errorMessage.includes('Email already present'))
+                      ? '1px solid red'
+                      : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   padding: '1.2em',
@@ -443,6 +475,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 value={role}
                 onChange={(e) => {
                   setRole(e.value)
+                  if (e.value !== 'FINANCE' || e.value !== 'TECHNICIAN') {
+                    setSelectedCustomerId('')
+                  }
                   setFieldErrors((prevErrors) => ({ ...prevErrors, role: '' }))
                 }}
                 options={rolesData}
@@ -478,12 +513,15 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 value={selectedCustomerId}
                 onChange={(e) => {
                   setSelectedCustomerId(e.value)
-                  setFieldErrors((prevErrors) => ({ ...prevErrors, selectedCustomerId: '' }))
+                  if (role?.name === 'FINANCE' || role?.name === 'TECHNICIAN') {
+                    setFieldErrors((prevErrors) => ({ ...prevErrors, selectedCustomerId: '' }))
+                  }
                 }}
                 options={customerUsers}
                 optionLabel="name"
                 editable
                 placeholder="Select"
+                disabled={customerAdminDropdownEnabled ? false : true}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -491,6 +529,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   border: fieldErrors.selectedCustomerId ? '1px solid red' : '1px solid #D5E1EA',
                   fontSize: '0.8rem',
                   borderRadius: '0.50rem',
+                  pointerEvents: customerAdminDropdownEnabled ? 'auto' : 'none',
+                  opacity: customerAdminDropdownEnabled ? 1 : 0.5,
+                  cursor: customerAdminDropdownEnabled ? 'pointer' : 'not-allowed',
                 }}
               />
             </div>
@@ -501,6 +542,20 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
             </p>
           </div>
         </div>
+
+        {isLoading && (
+          <ProgressSpinner
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: '50px',
+              height: '50px',
+            }}
+            strokeWidth="4"
+          />
+        )}
 
         <div className="mt-5 ml-4">
           <span className="font-medium text-sm text-[#000000]">
@@ -650,15 +705,20 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: fieldErrors.password ? '1px solid red' : '1px solid #D5E1EA',
+                    border:
+                      fieldErrors.password && errorMessage ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                     padding: '1.2em',
                   }}
                 />
                 <p className="p-1 w-48">
-                  {fieldErrors.password && (
-                    <small className="p-error">{fieldErrors.password}</small>
+                  {fieldErrors.password && errorMessage ? (
+                    <small className="p-error">
+                      {fieldErrors.password} {errorMessage}
+                    </small>
+                  ) : (
+                    ''
                   )}
                 </p>
 
@@ -724,7 +784,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                     )}
                     <p
                       className={`password-message-item ${passwordCriteria.length ? 'text-green-500' : 'text-red-500'}`}>
-                      At least <span className="font-[500]">8 characters</span>
+                      At least <span className="font-[500]">10 characters</span>
                     </p>
                   </div>
                 </div>
@@ -763,7 +823,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         <div style={{ width: '100%', backgroundColor: 'white', padding: '0 12px' }}>
           <div className="flex gap-4 mt-10 ml-4 absolute bottom-5 left-6">
             <Button
-              label={'Save'}
+              label={editMode ? 'Update' : 'Save'}
               onClick={() => {
                 if (editMode) {
                   handleEdit()
