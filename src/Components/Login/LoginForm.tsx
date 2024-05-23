@@ -11,13 +11,10 @@ import { ProgressSpinner } from 'primereact/progressspinner'
 
 export default function LoginForm() {
   const dispatch = useDispatch()
-  const [loginPayload, setLoginPayload] = useState({
-    username: '',
-    password: '',
-  })
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [encodePassword, setEncodePassword] = useState(true)
-  const { username, password } = loginPayload
   const navigate = useNavigate()
   const [login] = useLoginMutation()
   const [errors, setErrors] = useState({
@@ -27,30 +24,27 @@ export default function LoginForm() {
   const [isLoading, setIsLoading] = useState(false)
 
   const handleChange = (e: any) => {
-    let { name, value } = e.target
-    errors.email = ''
-    errors.password = ''
-
-    setLoginPayload((prev) => {
-      if (name === 'password') {
-        value = encodePassword ? btoa(value) : value
-      }
-      return {
-        ...prev,
-        [name]: value,
-      }
-    })
+    const { name, value } = e.target
+    if (name === 'username') {
+      setUsername(value)
+    } else if (name === 'password') {
+      setPassword(value)
+    }
+    setErrors((prev) => ({
+      ...prev,
+      [name]: '',
+    }))
   }
 
   const toggleShowPassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword)
-    setEncodePassword(!encodePassword) // Toggle encoding based on showPassword state
+    setEncodePassword(!encodePassword)
   }
 
   const signInHandler = async () => {
     setErrors({ email: '', password: '' })
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (username.length === 0) {
+    if (username.trim().length === 0) {
       setErrors((prev) => ({
         ...prev,
         email: 'Email cannot be empty',
@@ -64,7 +58,7 @@ export default function LoginForm() {
       }))
       return
     }
-    if (password.length === 0) {
+    if (password.trim().length === 0) {
       setErrors((prev) => ({
         ...prev,
         password: 'Password cannot be empty',
@@ -73,21 +67,19 @@ export default function LoginForm() {
     }
     setIsLoading(true)
 
-    const LoginPayload = {
-      password: loginPayload.password,
-      username: loginPayload.username,
+    const loginPayload = {
+      password: encodePassword ? btoa(password) : password,
+      username,
     }
 
     try {
-      const response = await login(LoginPayload).unwrap()
+      const response = await login(loginPayload).unwrap()
       const { status, user, token, message } = response as LoginResponse
       if (status === 200) {
         dispatch(setUserData({ ...user }))
         dispatch(setToken(token))
-        setLoginPayload({
-          username: '',
-          password: '',
-        })
+        setUsername('')
+        setPassword('')
         setIsLoading(false)
         navigate('/dashboard')
       }
