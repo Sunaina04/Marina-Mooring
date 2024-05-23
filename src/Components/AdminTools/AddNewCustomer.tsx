@@ -120,13 +120,13 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     if (errors.state && !firstError) {
       firstError = 'state'
     }
-    if (!password) {
+    if (!password && !editMode) {
       errors.password = 'Password is required'
     }
     if (errors.password && !firstError) {
       firstError = 'password'
     }
-    if (!confirmPassword) errors.confirmPassword = 'Confirm Password is required'
+    if (!confirmPassword && !editMode) errors.confirmPassword = 'Confirm Password is required'
     if (password !== confirmPassword) errors.confirmPassword = 'Passwords do not match'
     if (errors.confirmPassword && !firstError) {
       firstError = 'confirmPassword'
@@ -206,6 +206,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     setSuccessMessage('')
     const errors = validateFields()
     if (Object.keys(errors).length > 0) {
+      console.log('clicked5', errors)
+
       setFieldErrors(errors)
       return
     }
@@ -250,18 +252,13 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   }
 
   const handleSave = async () => {
-    console.log('clicked')
     setErrorMessage('')
     setSuccessMessage('')
     const errors = validateFields()
-    // if (Object.keys(errors).length > 0) {
-    //   setFieldErrors(errors)
-    //   console.log('clicked22')
-    //   return
-    // }
-
-    console.log('clicked5')
-
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors)
+      return
+    }
     const selectedCustomer = customerUsers?.find(
       (customer: any) => customer?.name === selectedCustomerId?.name,
     )

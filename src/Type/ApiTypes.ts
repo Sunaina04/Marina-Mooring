@@ -26,6 +26,14 @@ export interface GetUserResponse {
   content: UserResponse
 }
 
+export interface DeleteUserResponse {
+  message: string
+  status: number
+  errorList: []
+  time: number
+  content: number
+}
+
 export interface AddUserPayload {
   name: string
   email: string

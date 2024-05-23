@@ -5,8 +5,8 @@ import Header from '../Layout/LayoutComponents/Header'
 import { InputText } from 'primereact/inputtext'
 import { ActionButtonColumnProps } from '../../Type/Components/TableTypes'
 import { useSelector } from 'react-redux'
-import { CustomerPayload, GetUserResponse } from '../../Type/ApiTypes'
-import { useGetUsersMutation } from '../../Services/AdminTools/AdminToolsApi'
+import { CustomerPayload, DeleteUserResponse, GetUserResponse } from '../../Type/ApiTypes'
+import { useDeleteUserMutation, useGetUsersMutation } from '../../Services/AdminTools/AdminToolsApi'
 import AddNewCustomer from './AddNewCustomer'
 
 const Permission = () => {
@@ -16,6 +16,7 @@ const Permission = () => {
   const userData = useSelector((state: any) => state.user?.userData)
   const customerAdminId = userData?.id
   const [getUser] = useGetUsersMutation()
+  const [deleteUser] = useDeleteUserMutation()
   const [getCustomerOwnerUserData, setgetCustomerOwnerUserData] = useState<CustomerPayload[]>([])
 
   const handleEditButtonClick = (rowData: any) => {
@@ -99,6 +100,7 @@ const Permission = () => {
         label: 'Delete',
         underline: true,
         fontWeight: 400,
+        onClick: (rowData) => handleDeleteButtonClick(rowData),
       },
     ],
     headerStyle: {
@@ -116,6 +118,22 @@ const Permission = () => {
 
   const handleModalClose = () => {
     setModalVisible(false)
+  }
+
+  const handleDeleteButtonClick = async (rowData: any) => {
+    try {
+      console.log('rowData', rowData)
+      const response = await deleteUser({
+        userId: rowData.id,
+        customerAdminId: rowData.customerAdminId,
+      }).unwrap()
+      const { status } = response as DeleteUserResponse
+      if (status === 200) {
+        getCustomerAdminsUsers()
+      }
+    } catch (error) {
+      console.error('Error occurred while fetching customer data:', error)
+    }
   }
 
   const getCustomerAdminsUsers = async () => {

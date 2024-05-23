@@ -67,4 +67,9 @@ const adminToolsApi = userApi.injectEndpoints({
   }),
 })
 
-export const { useAddUserMutation, useGetUsersMutation, useUpdateUserMutation } = adminToolsApi
+export const {
+  useAddUserMutation,
+  useGetUsersMutation,
+  useDeleteUserMutation,
+  useUpdateUserMutation,
+} = adminToolsApi
