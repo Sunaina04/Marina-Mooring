@@ -47,14 +47,14 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const [addCustomer] = useAddUserMutation()
   const [editCustomer] = useUpdateUserMutation()
   const { getMetaData } = useMetaData()
-  const [showPassword,setShowPassword]=useState(false)
-  const [showConfirmPassword,setShowConfirmPassword]=useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
-  const handleShowPassword=()=>{
-    setShowPassword(!showPassword);
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword)
   }
 
-  const handleShowConfirmPassword=()=>{
+  const handleShowConfirmPassword = () => {
     setShowConfirmPassword(!showConfirmPassword)
   }
   const [passwordCriteria, setPasswordCriteria] = useState({
@@ -118,7 +118,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     if (errors.role && !firstError) {
       firstError = 'role'
     }
-    if (!selectedCustomerId && customerAdminDropdownEnabled)
+    if (!selectedCustomerId && customerAdminDropdownEnabled && !permission)
       errors.selectedCustomerId = 'Customer Admin is required'
     if (errors.selectedCustomerId && !firstError) {
       firstError = 'selectedCustomerId'
@@ -265,7 +265,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     setSuccessMessage('')
     const errors = validateFields()
     if (Object.keys(errors).length > 0) {
-      console.log('clicke', errors)
       setFieldErrors(errors)
       return
     }
@@ -772,39 +771,39 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   <p className="text-red-600">*</p>
                 </div>
               </span>
-              <div className="mt-1" >
+              <div className="mt-1">
                 <div style={{ position: 'relative', width: '230px', marginBottom: '10px' }}>
-                <InputComponent
-                  value={password}
-                  onChange={(e) => handleInputChange('password', e.target.value)}
-                  type={showPassword?"text":'password'}
-                  onFocus={handleFocus}
-                  onBlur={handleBlur}
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: fieldErrors.password ? '1px solid red' : '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                    padding: '1.2em',
-                  }}
-                />
-          <img
-                  src={showPassword ? '/assets/images/eye.png' : '/assets/images/eye-slash.png'}
-                  alt="Toggle Password Visibility"
-                  onClick={handleShowPassword}
-                  className="p-clickable"
-                  style={{
-                    position: 'absolute',
-                    right: '10px',
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    width: '20px',
-                    height: '20px',
-                    cursor: 'pointer',
-                    zIndex: '1'
-                  }}
-                />
+                  <InputComponent
+                    value={password}
+                    onChange={(e) => handleInputChange('password', e.target.value)}
+                    type={showPassword ? 'text' : 'password'}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: fieldErrors.password ? '1px solid red' : '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.8rem',
+                      padding: '1.2em',
+                    }}
+                  />
+                  <img
+                    src={showPassword ? '/assets/images/eye.png' : '/assets/images/eye-slash.png'}
+                    alt="Toggle Password Visibility"
+                    onClick={handleShowPassword}
+                    className="p-clickable"
+                    style={{
+                      position: 'absolute',
+                      right: '10px',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      width: '20px',
+                      height: '20px',
+                      cursor: 'pointer',
+                      zIndex: '1',
+                    }}
+                  />
                 </div>
                 <p className="p-1 w-48" id="password">
                   {fieldErrors.password ? (
@@ -891,35 +890,39 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
               </span>
               <div className="mt-1 ">
                 <div style={{ position: 'relative', marginBottom: '10px' }}>
-                <InputComponent
-                  value={confirmPassword}
-                  onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
-                  type={showConfirmPassword?'text':'password'}
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: fieldErrors.confirmPassword ? '1px solid red' : '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                    padding: '1.2em',
-                  }}
-                />
-                <img
-                  src={showConfirmPassword ? '/assets/images/eye.png' : '/assets/images/eye-slash.png'}
-                  alt="Toggle Password Visibility"
-                  onClick={handleShowConfirmPassword}
-                  className="p-clickable"
-                  style={{
-                    position: 'absolute',
-                    right: '10px',
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    width: '20px',
-                    height: '20px',
-                    cursor: 'pointer',
-                    zIndex: '1'
-                  }}
-                />
+                  <InputComponent
+                    value={confirmPassword}
+                    onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
+                    type={showConfirmPassword ? 'text' : 'password'}
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: fieldErrors.confirmPassword ? '1px solid red' : '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.8rem',
+                      padding: '1.2em',
+                    }}
+                  />
+                  <img
+                    src={
+                      showConfirmPassword
+                        ? '/assets/images/eye.png'
+                        : '/assets/images/eye-slash.png'
+                    }
+                    alt="Toggle Password Visibility"
+                    onClick={handleShowConfirmPassword}
+                    className="p-clickable"
+                    style={{
+                      position: 'absolute',
+                      right: '10px',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      width: '20px',
+                      height: '20px',
+                      cursor: 'pointer',
+                      zIndex: '1',
+                    }}
+                  />
                 </div>
                 {fieldErrors.confirmPassword && (
                   <small className="p-error" id="confirmPassword">
