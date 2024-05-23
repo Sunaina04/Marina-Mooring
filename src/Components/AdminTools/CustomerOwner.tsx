@@ -23,6 +23,7 @@ const CustomerOwner = () => {
   const [selectedRow, setSelectedRow] = useState<any>()
   const { getMetaData } = useMetaData()
   const [rolesData, setRolesData] = useState<Role[]>()
+
   const [selectRole, setSelectRole] = useState()
   const [customerAdminId, setCustomerAdminId] = useState('')
   const [getUser] = useGetUsersMutation()
@@ -124,24 +125,6 @@ const CustomerOwner = () => {
     }
   }, [])
 
-  // const getUserHandler = async () => {
-  //   setIsLoading(true)
-  //   try {
-  //     const response = await getUser({ searchText: searchText }).unwrap()
-  //     const { status, content } = response as GetUserResponse
-  //     if (status === 200 && Array.isArray(content?.content)) {
-  //       if (content?.content.length > 0) {
-  //         setIsLoading(false)
-  //         setgetCustomerOwnerData(content?.content)
-  //       } else {
-  //         setgetCustomerOwnerData([])
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.error('Error occurred while fetching customer data:', error)
-  //   }
-  // }
-
   const getUserHandler = useCallback(async () => {
     setIsLoading(true)
     try {
@@ -155,40 +138,6 @@ const CustomerOwner = () => {
       console.error('Error occurred while fetching customer data:', error)
     }
   }, [getUser, searchText])
-
-  // const getCustomerAdminsUsers = async (id: any) => {
-  //   setIsLoading(true)
-  //   try {
-  //     const response = await getUser({ customerAdminId: id, searchText: searchUsersText }).unwrap()
-  //     const { status, content } = response as GetUserResponse
-  //     if (status === 200 && Array.isArray(content?.content)) {
-  //       setIsLoading(false)
-  //       if (content?.content.length > 0) {
-  //         setgetCustomerOwnerUserData(content?.content)
-  //         // setIsRowClick(true)
-  //         setSelectedRow(id)
-  //         setCustomerAdminId(id)
-  //       } else {
-  //         setgetCustomerOwnerUserData([])
-  //         setIsRowClick(false)
-  //       }
-  //     } else {
-  //       setIsRowClick(false)
-  //       setgetCustomerOwnerUserData([])
-  //     }
-  //   } catch (error) {
-  //     console.error('Error occurred while fetching customer data:', error)
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   getCustomerAdminsUsers(customerAdminId)
-  // }, [searchUsersText, isRowClick])
-
-  // useEffect(() => {
-  //   getUserHandler()
-  //   fetchDataAndUpdate()
-  // }, [fetchDataAndUpdate, searchText])
 
   const getCustomerAdminsUsers = useCallback(
     async (id: any) => {
@@ -293,6 +242,7 @@ const CustomerOwner = () => {
             visible={modalVisible}
             onClick={() => {
               setModalVisible(true)
+              setSelectedCustomer('')
             }}
           />
         </div>
