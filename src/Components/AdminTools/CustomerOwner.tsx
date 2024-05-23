@@ -130,8 +130,10 @@ const CustomerOwner = () => {
     try {
       const response = await getUser({ searchText: searchText }).unwrap()
       const { status, content } = response as GetUserResponse
-      if (status === 200 && Array.isArray(content?.content) && content?.content.length > 0) {
-        setgetCustomerOwnerData(content?.content)
+      if (status === 200 && Array.isArray(content?.content)) {
+        if (content?.content.length > 0) {
+          setgetCustomerOwnerData(content?.content)
+        }
         setIsLoading(false)
       }
     } catch (error) {

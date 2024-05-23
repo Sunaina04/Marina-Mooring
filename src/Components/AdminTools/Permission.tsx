@@ -18,6 +18,12 @@ const Permission = () => {
   const [getUser] = useGetUsersMutation()
   const [getCustomerOwnerUserData, setgetCustomerOwnerUserData] = useState<CustomerPayload[]>([])
 
+  const handleEditButtonClick = (rowData: any) => {
+    setEditMode(true)
+    setModalVisible(true)
+    setSelectedCustomer(rowData)
+  }
+
   const tableColumnsPermission = useMemo(
     () => [
       {
@@ -86,11 +92,7 @@ const Permission = () => {
         label: 'Edit',
         underline: true,
         fontWeight: 400,
-        onClick: (rowData: any) => {
-          setEditMode(true)
-          setModalVisible(true)
-          setSelectedCustomer(rowData)
-        },
+        onClick: (rowData) => handleEditButtonClick(rowData),
       },
       {
         color: 'red',
@@ -183,6 +185,7 @@ const Permission = () => {
               setIsVisible={setModalVisible}
               setModalVisible={setModalVisible}
               customerData={selectedCustomer}
+              permission={true}
             />
           </CustomModal>
         </div>

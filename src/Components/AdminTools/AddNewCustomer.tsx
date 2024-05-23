@@ -20,6 +20,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   customerAdminId,
   setModalVisible,
   customerUsers,
+  permission,
 }) => {
   const [name, setName] = useState('')
   const [id, setId] = useState('')
@@ -260,18 +261,28 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   }
 
   const handleSave = async () => {
+    console.log('clicked')
     setErrorMessage('')
     setSuccessMessage('')
     const errors = validateFields()
-    if (Object.keys(errors).length > 0) {
-      setFieldErrors(errors)
-      return
-    }
-    const selectedCustomer = customerUsers.find(
-      (customer: any) => customer.name === selectedCustomerId.name,
+    // if (Object.keys(errors).length > 0) {
+    //   setFieldErrors(errors)
+    //   console.log('clicked22')
+    //   return
+    // }
+
+    console.log('clicked5')
+
+    const selectedCustomer = customerUsers?.find(
+      (customer: any) => customer?.name === selectedCustomerId?.name,
     )
 
-    if (!selectedCustomer && (role?.name === 'FINANCE' || role?.name === 'TECHNICIAN')) {
+    if (
+      !selectedCustomer &&
+      (role?.name === 'FINANCE' || role?.name === 'TECHNICIAN') &&
+      !permission
+    ) {
+      console.log('here')
       setFieldErrors((prevErrors) => ({
         ...prevErrors,
         selectedCustomerId: 'Invalid customer admin',
@@ -279,7 +290,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       return
     }
 
-    const customerAdminId = selectedCustomer?.id
+    const selectedCustomerAdminId = selectedCustomer?.id
 
     if (password !== confirmPassword) {
       setFieldErrors((prevErrors) => ({
@@ -315,7 +326,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       // Send the encoded password to the server
       const response = await addCustomer({
         payload: addUserPayload,
-        customerAdminId: customerAdminId,
+        customerAdminId: permission ? customerAdminId : selectedCustomerAdminId,
       }).unwrap()
       const { status, content, message } = response as SaveUserResponse
       if (status === 200 || status === 201) {
@@ -365,7 +376,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       setRole(customerData.role || undefined)
       setCountry(customerData.country || undefined)
       setState(customerData.state || undefined)
-      const selectedCustomerAdmin = customerUsers.find(
+      const selectedCustomerAdmin = customerUsers?.find(
         (customer: any) => customer.id === customerAdminId,
       )
       const selectedCustomerAdminName = selectedCustomerAdmin ? selectedCustomerAdmin.name : ''
@@ -544,7 +555,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   if (e.value !== 'FINANCE' || e.value !== 'TECHNICIAN') {
                     setSelectedCustomerId('')
                   }
-                  setFieldErrors((prevErrors) => ({ ...prevErrors, role: '' }))
+                  if (!permission) {
+                    setFieldErrors((prevErrors) => ({ ...prevErrors, role: '' }))
+                  }
                 }}
                 options={rolesData}
                 optionLabel="name"
@@ -565,48 +578,50 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
             </p>
           </div>
 
-          <div>
-            <div className="mt-3">
-              <span className="font-medium text-sm text-[#000000]">
-                <div className="flex gap-1">
-                  Customer Admin
-                  <p className="text-red-600">*</p>
-                </div>
-              </span>
+          {!permission && (
+            <div>
+              <div className="mt-3">
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">
+                    Customer Admin
+                    <p className="text-red-600">*</p>
+                  </div>
+                </span>
+              </div>
+              <div className="mt-1">
+                <Dropdown
+                  value={selectedCustomerId}
+                  onChange={(e) => {
+                    setSelectedCustomerId(e.value)
+                    if (role?.name === 'FINANCE' || role?.name === 'TECHNICIAN') {
+                      setFieldErrors((prevErrors) => ({ ...prevErrors, selectedCustomerId: '' }))
+                    }
+                  }}
+                  options={customerUsers}
+                  optionLabel="name"
+                  editable
+                  placeholder="Select"
+                  disabled={customerAdminDropdownEnabled ? false : true}
+                  style={{
+                    width: '230px',
+                    height: '32px',
+                    minHeight: '32px',
+                    border: fieldErrors.selectedCustomerId ? '1px solid red' : '1px solid #D5E1EA',
+                    fontSize: '0.8rem',
+                    borderRadius: '0.50rem',
+                    pointerEvents: customerAdminDropdownEnabled ? 'auto' : 'none',
+                    opacity: customerAdminDropdownEnabled ? 1 : 0.5,
+                    cursor: customerAdminDropdownEnabled ? 'pointer' : 'not-allowed',
+                  }}
+                />
+              </div>
+              <p className="p-1" id="selectedCustomerId">
+                {fieldErrors.selectedCustomerId && (
+                  <small className="p-error">{fieldErrors.selectedCustomerId}</small>
+                )}
+              </p>
             </div>
-            <div className="mt-1">
-              <Dropdown
-                value={selectedCustomerId}
-                onChange={(e) => {
-                  setSelectedCustomerId(e.value)
-                  if (role?.name === 'FINANCE' || role?.name === 'TECHNICIAN') {
-                    setFieldErrors((prevErrors) => ({ ...prevErrors, selectedCustomerId: '' }))
-                  }
-                }}
-                options={customerUsers}
-                optionLabel="name"
-                editable
-                placeholder="Select"
-                disabled={customerAdminDropdownEnabled ? false : true}
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  minHeight: '32px',
-                  border: fieldErrors.selectedCustomerId ? '1px solid red' : '1px solid #D5E1EA',
-                  fontSize: '0.8rem',
-                  borderRadius: '0.50rem',
-                  pointerEvents: customerAdminDropdownEnabled ? 'auto' : 'none',
-                  opacity: customerAdminDropdownEnabled ? 1 : 0.5,
-                  cursor: customerAdminDropdownEnabled ? 'pointer' : 'not-allowed',
-                }}
-              />
-            </div>
-            <p className="p-1" id="selectedCustomerId">
-              {fieldErrors.selectedCustomerId && (
-                <small className="p-error">{fieldErrors.selectedCustomerId}</small>
-              )}
-            </p>
-          </div>
+          )}
         </div>
 
         {isLoading && (
