@@ -10,6 +10,7 @@ import { CustomerPayload, SaveUserResponse } from '../../Type/ApiTypes'
 import { useAddUserMutation, useUpdateUserMutation } from '../../Services/AdminTools/AdminToolsApi'
 import { Dialog } from 'primereact/dialog'
 import { ProgressSpinner } from 'primereact/progressspinner'
+import { BsEye, BsEyeSlash } from 'react-icons/bs'
 
 const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   customerData,
@@ -45,6 +46,16 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const [addCustomer] = useAddUserMutation()
   const [editCustomer] = useUpdateUserMutation()
   const { getMetaData } = useMetaData()
+  const [showPassword,setShowPassword]=useState(false)
+  const [showConfirmPassword,setShowConfirmPassword]=useState(false)
+
+  const handleShowPassword=()=>{
+    setShowPassword(!showPassword);
+  }
+
+  const handleShowConfirmPassword=()=>{
+    setShowConfirmPassword(!showConfirmPassword)
+  }
   const [passwordCriteria, setPasswordCriteria] = useState({
     uppercase: false,
     lowercase: false,
@@ -750,11 +761,12 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   <p className="text-red-600">*</p>
                 </div>
               </span>
-              <div className="mt-1  ">
+              <div className="mt-1" >
+                <div style={{ position: 'relative', width: '230px', marginBottom: '10px' }}>
                 <InputComponent
                   value={password}
                   onChange={(e) => handleInputChange('password', e.target.value)}
-                  type="password"
+                  type={showPassword?"text":'password'}
                   onFocus={handleFocus}
                   onBlur={handleBlur}
                   style={{
@@ -766,6 +778,23 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                     padding: '1.2em',
                   }}
                 />
+          <img
+                  src={showPassword ? '/assets/images/eye.png' : '/assets/images/eye-slash.png'}
+                  alt="Toggle Password Visibility"
+                  onClick={handleShowPassword}
+                  className="p-clickable"
+                  style={{
+                    position: 'absolute',
+                    right: '10px',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    width: '20px',
+                    height: '20px',
+                    cursor: 'pointer',
+                    zIndex: '1'
+                  }}
+                />
+                </div>
                 <p className="p-1 w-48" id="password">
                   {fieldErrors.password ? (
                     <small className="p-error">{fieldErrors.password}</small>
@@ -850,10 +879,11 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 </div>
               </span>
               <div className="mt-1 ">
+                <div style={{ position: 'relative', marginBottom: '10px' }}>
                 <InputComponent
                   value={confirmPassword}
                   onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
-                  type="password"
+                  type={showConfirmPassword?'text':'password'}
                   style={{
                     width: '230px',
                     height: '32px',
@@ -863,6 +893,23 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                     padding: '1.2em',
                   }}
                 />
+                <img
+                  src={showConfirmPassword ? '/assets/images/eye.png' : '/assets/images/eye-slash.png'}
+                  alt="Toggle Password Visibility"
+                  onClick={handleShowConfirmPassword}
+                  className="p-clickable"
+                  style={{
+                    position: 'absolute',
+                    right: '10px',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    width: '20px',
+                    height: '20px',
+                    cursor: 'pointer',
+                    zIndex: '1'
+                  }}
+                />
+                </div>
                 {fieldErrors.confirmPassword && (
                   <small className="p-error" id="confirmPassword">
                     {fieldErrors.confirmPassword}
