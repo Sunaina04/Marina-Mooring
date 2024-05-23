@@ -14,7 +14,6 @@ export default function LoginForm() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
-  const [encodePassword, setEncodePassword] = useState(true)
   const navigate = useNavigate()
   const [login] = useLoginMutation()
   const [errors, setErrors] = useState({
@@ -38,7 +37,6 @@ export default function LoginForm() {
 
   const toggleShowPassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword)
-    setEncodePassword(!encodePassword)
   }
 
   const signInHandler = async () => {
@@ -68,7 +66,7 @@ export default function LoginForm() {
     setIsLoading(true)
 
     const loginPayload = {
-      password: encodePassword ? btoa(password) : password,
+      password: btoa(password),
       username,
     }
 
