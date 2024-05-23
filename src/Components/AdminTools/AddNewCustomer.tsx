@@ -788,7 +788,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                       padding: '1.2em',
                     }}
                   />
-                  <img
+                  {/* <img
                     src={showPassword ? '/assets/images/eye.png' : '/assets/images/eye-slash.png'}
                     alt="Toggle Password Visibility"
                     onClick={handleShowPassword}
@@ -803,7 +803,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                       cursor: 'pointer',
                       zIndex: '1',
                     }}
-                  />
+                  /> */}
                 </div>
                 <p className="p-1 w-48" id="password">
                   {fieldErrors.password ? (
@@ -903,7 +903,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                       padding: '1.2em',
                     }}
                   />
-                  <img
+                  {/* <img
                     src={
                       showConfirmPassword
                         ? '/assets/images/eye.png'
@@ -922,7 +922,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                       cursor: 'pointer',
                       zIndex: '1',
                     }}
-                  />
+                  /> */}
                 </div>
                 {fieldErrors.confirmPassword && (
                   <small className="p-error" id="confirmPassword">

@@ -13,6 +13,7 @@ const Permission = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [editMode, setEditMode] = useState(false)
   const [selectedCustomer, setSelectedCustomer] = useState<any>()
+  const [searchInput, setSearchInput] = useState('')
   const userData = useSelector((state: any) => state.user?.userData)
   const customerAdminId = userData?.id
   const [getUser] = useGetUsersMutation()
@@ -34,7 +35,7 @@ const Permission = () => {
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#00426F',
           color: '#FFFFFF',
-          fontWeight: 400,
+          fontWeight: 500,
           borderTopLeftRadius: '10px',
         },
       },
@@ -45,7 +46,7 @@ const Permission = () => {
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#00426F',
           color: '#FFFFFF',
-          fontWeight: 400,
+          fontWeight: 500,
         },
       },
 
@@ -56,7 +57,7 @@ const Permission = () => {
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#00426F',
           color: '#FFFFFF',
-          fontWeight: 400,
+          fontWeight: 500,
         },
       },
 
@@ -67,7 +68,7 @@ const Permission = () => {
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#00426F',
           color: '#FFFFFF',
-          fontWeight: 400,
+          fontWeight: 500,
         },
       },
 
@@ -78,7 +79,7 @@ const Permission = () => {
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#00426F',
           color: '#FFFFFF',
-          fontWeight: 400,
+          fontWeight: 500,
         },
       },
     ],
@@ -87,19 +88,23 @@ const Permission = () => {
 
   const ActionButtonColumn: ActionButtonColumnProps = {
     header: 'Action',
+    style: {
+      fontSize: '14px',
+      fontWeight: 600,
+    },
     buttons: [
       {
         color: 'black',
         label: 'Edit',
         underline: true,
-        fontWeight: 400,
+        fontWeight: 600,
         onClick: (rowData) => handleEditButtonClick(rowData),
       },
       {
         color: 'red',
         label: 'Delete',
         underline: true,
-        fontWeight: 400,
+        fontWeight: 500,
         onClick: (rowData) => handleDeleteButtonClick(rowData),
       },
     ],
@@ -107,7 +112,7 @@ const Permission = () => {
       backgroundColor: '#00426F',
       borderBottom: '1px solid #C0C0C0',
       color: '#FFFFFF',
-      fontWeight: 400,
+      fontWeight: 500,
       borderTopRightRadius: '10px',
     },
   }
@@ -122,7 +127,6 @@ const Permission = () => {
 
   const handleDeleteButtonClick = async (rowData: any) => {
     try {
-      console.log('rowData', rowData)
       const response = await deleteUser({
         userId: rowData.id,
         customerAdminId: rowData.customerAdminId,
@@ -138,7 +142,10 @@ const Permission = () => {
 
   const getCustomerAdminsUsers = async () => {
     try {
-      const response = await getUser({ customerAdminId: customerAdminId }).unwrap()
+      const response = await getUser({
+        searchText: searchInput,
+        customerAdminId: customerAdminId,
+      }).unwrap()
       const { status, content } = response as GetUserResponse
       if (status === 200 && Array.isArray(content?.content)) {
         setgetCustomerOwnerUserData(content?.content)
@@ -150,7 +157,7 @@ const Permission = () => {
 
   useEffect(() => {
     getCustomerAdminsUsers()
-  }, [])
+  }, [searchInput])
 
   return (
     <>
@@ -159,6 +166,10 @@ const Permission = () => {
       <div className="flex mr-12 justify-end">
         <div className="mt-14 mr-5 relative">
           <InputText
+            value={searchInput}
+            onChange={(e) => {
+              setSearchInput(e.target.value)
+            }}
             placeholder="Search by name, ID, Role, phone no..."
             style={{
               width: '378px',
@@ -169,7 +180,7 @@ const Permission = () => {
               color: '#00426F',
               borderRadius: '4px',
               minHeight: '44px',
-              fontWeight: 400,
+              fontWeight: 500,
             }}
           />
           <img
