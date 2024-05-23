@@ -49,6 +49,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     specialChar: false,
     length: false,
   })
+  var bcrypt = require('bcryptjs')
 
   const validateFields = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -168,11 +169,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       street,
       apt,
       zipCode,
-      password,
       state: state?.name ? state?.name : customerData?.state,
       country: country?.name ? country?.name : customerData?.country,
       role: role?.name ? role?.name : customerData?.role,
-      confirmPassword,
     }
 
     try {
@@ -219,22 +218,33 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
     const customerAdminId = selectedCustomer.id
 
-    const addUserPayload = {
-      name,
-      userID: id,
-      phoneNumber: phone,
-      email,
-      street,
-      apt,
-      zipCode,
-      password,
-      state: state?.name,
-      country: country?.name,
-      role: role?.name,
-      confirmPassword,
+    if (password !== confirmPassword) {
+      setFieldErrors((prevErrors) => ({
+        ...prevErrors,
+        confirmPassword: 'Passwords do not match',
+      }))
+      return
     }
-
     try {
+      // Hash the password before sending
+      const hashedPassword = await bcrypt.hash(password, 10)
+      const hashedConfirmPassword = await bcrypt.hash(confirmPassword, 10)
+      const addUserPayload = {
+        name,
+        userID: id,
+        phoneNumber: phone,
+        email,
+        street,
+        apt,
+        zipCode,
+        password: hashedPassword,
+        state: state?.name,
+        country: country?.name,
+        role: role?.name,
+        confirmPassword: hashedConfirmPassword,
+      }
+
+      // Send the hashed password to the server
       const response = await addCustomer({
         payload: addUserPayload,
         customerAdminId: customerAdminId,
