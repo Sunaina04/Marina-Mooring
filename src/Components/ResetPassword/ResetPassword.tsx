@@ -18,15 +18,38 @@ const ResetPassword = () => {
     confirmPassword: false,
   })
   const navigateToLoginPage = useNavigate()
+  const [passwordCriteria, setPasswordCriteria] = useState({
+    uppercase: false,
+    lowercase: false,
+    number: false,
+    specialChar: false,
+    length: false,
+  })
+  const [isTyping, setIsTyping] = useState(false)
 
   const handleChange = (e: { target: { name: any; value: any } }) => {
     const { name, value } = e.target
     if (name === 'newPassword') {
       setPassword(value)
+      // Check password criteria
+      setPasswordCriteria({
+        uppercase: /[A-Z]/.test(value),
+        lowercase: /[a-z]/.test(value),
+        number: /\d/.test(value),
+        specialChar: /[!@#$%^&*(),.?":{}|<>]/.test(value),
+        length: value.length == 10,
+      })
+
+      // Check if all criteria are met
+      const allCriteriaMet = Object.values(passwordCriteria).every((criteria) => criteria)
+      if (allCriteriaMet) {
+        setIsTyping(false) // Hide validation message
+      } else {
+        setIsTyping(true) // Show validation message
+      }
     } else if (name === 'confirmPassword') {
       setConfirmPassword(value)
     }
-    console.log('Updated passwords state:', { [name]: value })
   }
 
   const toggleShowPassword = (field: 'newPassword' | 'confirmPassword') => {
@@ -49,7 +72,7 @@ const ResetPassword = () => {
 
     const resetPassPayload = {
       newPassword: btoa(password), // Encoding password using btoa
-      confirmPassword: btoa(password),
+      confirmPassword: confirmPassword,
     }
 
     try {
@@ -98,7 +121,7 @@ const ResetPassword = () => {
                   </span>
                 </div>
               )}
-              <div className="p-input-icon-left relative flex justify-center">
+              <div className="relative">
                 <InputText
                   style={{
                     padding: '0 4rem 0 3rem',
@@ -115,10 +138,9 @@ const ResetPassword = () => {
                   onChange={handleChange}
                   value={password}
                 />
-                {/* Password Visibility */}
                 <img
                   src={
-                    showPassword.newPassword
+                    showPassword.confirmPassword
                       ? '/assets/images/eye.png'
                       : '/assets/images/eye-slash.png'
                   }
@@ -135,8 +157,94 @@ const ResetPassword = () => {
                     cursor: 'pointer',
                   }}
                 />
-              </div>
+                <div
+                  style={{
+                    width: '500px',
+                    fontSize: '14px',
+                    position: 'absolute',
+                    top: '100%',
+                    left: '0',
+                    backgroundColor: '#fff',
+                    padding: '10px',
+                    borderRadius: '5px',
+                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                    maxHeight: '200px',
+                    overflowY: 'auto',
+                    zIndex: '999',
+                    display: isTyping ? 'block' : 'none', // Show only when typing
+                  }}
+                  id="password-message">
+                  <h3 className="font-medium text-sm text-[#000000] flex justify-center mr-3">
+                    PASSWORD MUST CONTAIN:
+                  </h3>
+                  <div className="flex items-center gap-6 p-1 mt-2">
+                    {passwordCriteria.uppercase ? (
+                      <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
+                    ) : (
+                      <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
+                    )}
+                    <p
+                      className={`password-message-item ${
+                        passwordCriteria.uppercase ? 'text-green-500' : 'text-red-500'
+                      }`}>
+                      At least <span className="font-[500]"> one uppercase letter</span>
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-6 p-1">
+                    {passwordCriteria.lowercase ? (
+                      <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
+                    ) : (
+                      <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
+                    )}
 
+                    <p
+                      className={`password-message-item ${
+                        passwordCriteria.lowercase ? 'text-green-500' : 'text-red-500'
+                      }`}>
+                      At least <span className="font-[500]">one lowercase letter</span>
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-6 p-1">
+                    {passwordCriteria.number ? (
+                      <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
+                    ) : (
+                      <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
+                    )}
+                    <p
+                      className={`password-message-item ${
+                        passwordCriteria.number ? 'text-green-500' : 'text-red-500'
+                      }`}>
+                      At least<span className="font-[500]">one number</span>
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-6 p-1">
+                    {passwordCriteria.specialChar ? (
+                      <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
+                    ) : (
+                      <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
+                    )}
+                    <p
+                      className={`password-message-item ${
+                        passwordCriteria.specialChar ? 'text-green-500' : 'text-red-500'
+                      }`}>
+                      At least<span className="font-[500]">one special character</span>
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-6 p-1">
+                    {passwordCriteria.length ? (
+                      <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
+                    ) : (
+                      <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
+                    )}
+                    <p
+                      className={`password-message-item ${
+                        passwordCriteria.length ? 'text-green-500' : 'text-red-500'
+                      }`}>
+                      At least <span className="font-[500]">10 characters</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
               <div className="p-input-icon-left relative flex justify-center">
                 <InputText
                   style={{
