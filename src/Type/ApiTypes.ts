@@ -4,7 +4,7 @@ export interface UserLoginPayload {
   phoneNumber: string
   password: string
   userID: string
-  customerAdminId: string
+  customerOwnerId: string
   role: string
   state: string
   country: string

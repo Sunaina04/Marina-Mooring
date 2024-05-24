@@ -20,12 +20,7 @@ import CountriesData from '../CommonComponent/MetaDataComponent/CountriesData'
 const CustomerOwner = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [selectedCustomer, setSelectedCustomer] = useState<any>()
-  console.log(selectedCustomer, 'slectedCustomer')
-
   const [selectedCustomerUser, setSelectedCustomerUser] = useState<any>()
-
-  console.log(selectedCustomerUser, 'selectedCustomerUser')
-
   const [editMode, setEditMode] = useState(false)
   const [editCustomer, setEditCustomer] = useState(false)
   const [isRowClick, setIsRowClick] = useState(false)
@@ -61,7 +56,6 @@ const CustomerOwner = () => {
   }
 
   const handleEditButtonClick = (rowData: any) => {
-    console.log('rowData', rowData)
     setSelectedCustomer(rowData)
     setModalVisible(true)
     setEditCustomer(true)
@@ -292,7 +286,11 @@ const CustomerOwner = () => {
                 editMode={editMode}
                 editCustomerMode={editCustomer}
                 getUser={getUserHandler}
-                getCustomerUser={() => getCustomerAdminsUsers(customerAdminId)}
+                getCustomerUser={() => {
+                  if (customerAdminId) {
+                    getCustomerAdminsUsers(customerAdminId)
+                  }
+                }}
                 closeModal={() => {
                   setEditMode(false)
                   setEditCustomer(false)

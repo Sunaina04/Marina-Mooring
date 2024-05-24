@@ -1,17 +1,13 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { InputText } from 'primereact/inputtext'
-import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown'
+import { Dropdown } from 'primereact/dropdown'
 import { Button } from 'primereact/button'
 import InputComponent from '../CommonComponent/InputComponent'
 import { Country, Role, State } from '../../Type/CommonType'
 import { CustomerAdminDataProps } from '../../Type/ComponentBasedType'
-import useMetaData from '../CommonComponent/MetaDataComponent/RolesData'
-import { CustomerPayload, SaveUserResponse } from '../../Type/ApiTypes'
+import { SaveUserResponse } from '../../Type/ApiTypes'
 import { useAddUserMutation, useUpdateUserMutation } from '../../Services/AdminTools/AdminToolsApi'
-import { Dialog } from 'primereact/dialog'
-import { Toast } from 'primereact/toast'
 import { ProgressSpinner } from 'primereact/progressspinner'
-import { BsEye, BsEyeSlash } from 'react-icons/bs'
 import RolesData from '../CommonComponent/MetaDataComponent/RolesData'
 import StatesData from '../CommonComponent/MetaDataComponent/StatesData'
 import CountriesData from '../CommonComponent/MetaDataComponent/CountriesData'
@@ -38,8 +34,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const [apt, setApt] = useState('')
   const [zipCode, setZipCode] = useState('')
   const [role, setRole] = useState<Role>()
-  console.log('role', role)
-
   const [companyName, setCompanyName] = useState('')
   const [country, setCountry] = useState<Country>()
   const [state, setState] = useState<State>()
@@ -49,7 +43,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const [countriesData, setCountriesData] = useState<Country[]>()
   const [statesData, setStatesData] = useState<State[]>()
   const [errorMessage, setErrorMessage] = useState<string>()
-
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
   const [selectedCustomerId, setSelectedCustomerId] = useState<any>()
   const [firstErrorField, setFirstErrorField] = useState('')
@@ -137,7 +130,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     if (errors.selectedCustomerId && !firstError) {
       firstError = 'selectedCustomerId'
     }
-    if (!companyName) errors.companyName = 'Company Name is required'
+    if (!companyName && (role?.id === 1 || role?.id === 2))
+      errors.companyName = 'Company Name is required'
     if (errors.companyName && !firstError) {
       firstError = 'companyName'
     }
@@ -236,8 +230,10 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   }
 
   const handleEdit = async () => {
+    console.log('editCustomerMode', editCustomerMode, customerData.customerOwnerId)
     const errors = validateFields()
     if (Object.keys(errors).length > 0) {
+      console.log(errors)
       setFieldErrors(errors)
       return
     }
@@ -253,7 +249,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       stateId: state?.id ? state?.id : customerData?.state,
       countryId: country?.id ? country?.id : customerData?.country,
       roleId: role?.id ? role?.id : customerData?.role,
-      customerOwnerId: editCustomerMode ? '' : customerData.customerAdminId,
+      customerOwnerId: editCustomerMode ? '' : customerData.customerOwnerId,
     }
 
     setIsLoading(true)
@@ -278,7 +274,12 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         setIsLoading(false)
       } else {
         setIsLoading(false)
-        setErrorMessage(message || 'An error occurred while updating the customer.')
+        toastRef?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
       }
     } catch (error) {
       toastRef?.current?.show({
@@ -419,6 +420,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       setZipCode(customerData.zipCode || '')
       setRole(customerData.role || undefined)
       setCountry(customerData.country || undefined)
+      setCompanyName(customerData.companyName || '')
       setState(customerData.state || undefined)
       const selectedCustomerAdmin = customerUsers?.find(
         (customer: any) => customer.id === customerAdminId,
@@ -435,7 +437,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   }, [firstErrorField])
 
   useEffect(() => {
-    if (role && (role.name === 'FINANCE' || role.name === 'TECHNICIAN')) {
+    if (role && (role?.id === 3 || role?.id === 4)) {
       setCustomerAdminDropdownEnabled(true)
     } else {
       setCustomerAdminDropdownEnabled(false)
@@ -622,7 +624,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                     height: '32px',
                     minHeight: '32px',
                     border:
-                      role?.name == 'CUSTOMER OWNER' || role?.name === 'ADMINISTRATOR'
+                      role?.id === 1 || role?.id === 2
                         ? ' '
                         : fieldErrors.selectedCustomerId
                           ? '1px solid red'
@@ -636,7 +638,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 />
               </div>
               <p className="p-1" id="selectedCustomerId">
-                {role?.name == 'CUSTOMER OWNER' || role?.name === 'ADMINISTRATOR'
+                {role?.id === 1 || role?.id === 2
                   ? ' '
                   : fieldErrors.selectedCustomerId && (
                       <small className="p-error">{fieldErrors.selectedCustomerId}</small>
@@ -650,7 +652,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
               <span className="font-medium text-sm text-[#000000]">
                 <div className="flex gap-1">
                   Company Name
-                  <p className="text-red-600">*</p>
+                  {(role?.id === 1 || role?.id === 2) && <p className="text-red-600">*</p>}
                 </div>
               </span>
             </div>
@@ -659,6 +661,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
               <InputText
                 value={companyName}
                 onChange={(e) => handleInputChange('companyName', e.target.value)}
+                disabled={!(role?.id === 2)}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -666,13 +669,16 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   padding: '1.2em',
+                  cursor: role?.id === 2 ? 'pointer' : 'not-allowed',
                 }}
               />
             </div>
             <p id="companyName">
-              {fieldErrors.companyName && (
-                <small className="p-error">{fieldErrors.companyName}</small>
-              )}
+              {role?.id === 1 || role?.id === 2
+                ? ' '
+                : fieldErrors.companyName && (
+                    <small className="p-error">{fieldErrors.companyName}</small>
+                  )}
             </p>
           </div>
         </div>
