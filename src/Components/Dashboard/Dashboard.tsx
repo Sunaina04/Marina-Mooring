@@ -29,7 +29,7 @@ const Dashboard = () => {
         label: 'Customer Name',
         style: {
           fontSize: '10px',
-          width: '12vw',
+          width: '18vw',
           backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: '700',
@@ -63,7 +63,7 @@ const Dashboard = () => {
         label: 'Mooring Location ',
         style: {
           fontSize: '10px',
-          width: '18vw',
+          width: '20vw',
           backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: '700',
@@ -74,7 +74,7 @@ const Dashboard = () => {
         label: 'Status',
         style: {
           fontSize: '10px',
-          width: '20vw',
+          width: '24vw',
           backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: '700',
@@ -97,7 +97,7 @@ const Dashboard = () => {
   }
 
   const Boatsheader = (
-    <div className="flex flex-wrap align-items-center justify-between gap-2 p-4 bg-[#FFFFFF]">
+    <div className="flex flex-wrap align-items-center justify-between gap-2 p-4 bg-[#FFFFFF] ">
       <span
         style={{
           fontWeight: '700',
@@ -126,20 +126,23 @@ const Dashboard = () => {
   return (
     <>
       <Header header="DASHBOARD" />
-      <div className="flex  ml-12 gap-8 mt-10">
-        <div className="right flex flex-col">
+      <div className="flex flex-shrink  ml-12 gap-6 mt-10">
+        <div className="right flex flex-col ">
           <div
             style={{
-              width: '729.17px',
-              height: '334.01px',
-              gap: '0px',
+              
+              flexShrink:1,
+              border: '1px solid #D5E1EA',
               borderRadius: '10px',
-              opacity: '0px',
-              border: '1.13px solid #D5E1EA',
-              backgroundColor: '#FFFFFF',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
+              padding: '0px',
+              height:'334.01px',
+              gap:'0px',
+            
+              opacity:'0px',
+              display:'flex',
+              alignItems:'center',
+              backgroundColor:'#FFFFFF'
+
             }}>
             {/* <div>
               <h1 className="">map</h1> */}
@@ -147,13 +150,13 @@ const Dashboard = () => {
             {/* </div> */}
           </div>
           <div
-            style={{
-              width: '729.17px',
+            style={{ 
               height: '300.2px',
+              maxWidth:'728.9px',
               gap: '0px',
               borderRadius: '10px',
               opacity: '0px',
-              border: '1.13px solid #D5E1EA',
+              border: '1px solid #D5E1EA',
               backgroundColor: '#FFFFFF',
               marginTop: '20px',
             }}>
@@ -161,15 +164,16 @@ const Dashboard = () => {
               columns={columns}
               actionButtons={ActionButtonColumn}
               header={Boatsheader}
+            
             />
           </div>
         </div>
         <div
           className="left "
           style={{
-            flexGrow: 1,
+            flexShrink: 1,
           }}>
-          <div className="w-full">
+          <div >
             <Accordition />
           </div>
         </div>

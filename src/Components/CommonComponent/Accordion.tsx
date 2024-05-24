@@ -73,15 +73,15 @@ const Accordion = () => {
   }
 
   return (
-    <div className="flex flex-col wrapper">
-      <div className=" tab px-5 relative mb-4 rounded-md bg-white border-[1px] border-[#D5E1EA] mr-8">
+    <div className="flex   flex-col wrapper" >
+      <div className=" tab px-5 relative mb-4 rounded-md bg-white border-[1px] border-[#D5E1EA] mr-8  ">
         <label
           htmlFor="faq1"
           className="cursor-pointer flex items-center justify-between h-14"
           onClick={() => handleToggle('faq1')}>
           <div className="flex items-center gap-4">
             <div>
-              <img alt="icon" src="/assets/images/Calendar.svg" style={{ width: '23px' }} />
+              <img alt="icon" src="/assets/images/Calendar.svg" style={{ width: '23px', }} />
             </div>
             <div>
               <h1 className="text-[16px] font-[500] text-[#10293A] leading-[18.75px]">Calendar</h1>
@@ -113,7 +113,7 @@ const Accordion = () => {
             <div>
               <img alt="icon" src="/assets/images/file.svg" style={{ width: '23px' }} />
             </div>
-            <div>
+            <div style={{flexShrink:1}}>
               <h1 className="text-[16px] font-[500] text-[#10293A] leading-[18.75px]">
                 Open Work Orders
               </h1>
@@ -150,7 +150,7 @@ const Accordion = () => {
           onClick={() => handleToggle('faq3')}>
           <div className="flex items-center gap-2">
             <img alt="icon" src="/assets/images/Group.svg" style={{ width: '25px' }} />
-            <div className="ml-2">
+            <div className="ml-2 " style={{flexShrink:1}}>
               <h1 className="text-[#10293A] font-[500] leading-[18.75px]">Total Moorings</h1>
             </div>
           </div>

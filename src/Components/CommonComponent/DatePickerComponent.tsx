@@ -8,18 +8,20 @@ const DatePickerComponent = () => {
   return (
     <>
       <div
-        className="card flex justify-content-center"
+        className="card flex  justify-items-center"
         style={{
-          width: '500px',
+        
           height: 'auto',
           gap: '0px',
           borderRadius: '10px',
           border: '1.13px solid #D5E1EA',
-          backgroundColor: '#FFFFFF',
+          backgroundColor: '#D5E1EA',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          margin: '1rem',
+          marginBottom: '2rem',
+        
+        
         }}>
         <Calendar value={date} onChange={(e) => setDate(e.value)} inline showWeek />
       </div>
