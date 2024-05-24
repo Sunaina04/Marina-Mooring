@@ -24,6 +24,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
   const [state, setState] = useState('')
   const [country, setCountry] = useState()
   const [zipCode, setZipCode] = useState('')
+
   const [mainContact, setMainContact] = useState('')
   const [latitude, setLatitude] = useState<number>()
   const [longitude, setLongitude] = useState<number>()
@@ -350,7 +351,29 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
               </p>
             </div>
           </div>
-        </div>
+           <div>
+              <div className="">
+                <InputComponent
+                  value={gpsCoordinatesValue}
+                  onChange={(e) => setGpsCoordinatesValue(e.target.value)}
+                  placeholder="GPS Coordinates"
+                  style={{
+                    width: '230px',
+                    height: '32px',
+                    border: errorMessage.zipCode ? '1px solid red' : '1px solid #D5E1EA',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
+                    padding: '1.2em',
+                  }}
+                />
+              </div>
+            
+              <p>
+                {errorMessage.zipCode && <small className="p-error">{errorMessage.zipCode}</small>}
+              </p>
+            </div>
+          </div>
+        {/* </div> */}
 
         <div className="flex mt-4 ">
           <div>

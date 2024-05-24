@@ -20,15 +20,17 @@ const InputTextWithHeader: React.FC<inputHeader> = ({
         </h1>
       </div>
       <div className="flex flex-col">
-        <div className="flex items-center justify-center mt-[-15px] bg-[white]">
+        <div className="flex items-center justify-center mt-[-15px] bg-[white] ">
           <div
-            className="p-input-icon-left "
+            className="p-input-icon-left  "
             style={{
               flexGrow: 1,
               alignContent: 'stretch',
               width: '100%',
               display: 'flex',
               margin: ' 0 20px',
+              
+              
             }}>
             <img
               src="/assets/images/Search.svg"

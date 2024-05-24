@@ -41,6 +41,10 @@ const Boatyards = () => {
   const [position, setPosition] = useState<{ lat: number; lng: number } | undefined>(undefined)
   const [getBoatyards] = useGetBoatyardsMutation()
   const [getMooringsWithBoatyard] = useGetMooringWithBoatyardMutation()
+  const [selectedRowId,setSelectedRowID]=useState(null)
+  
+
+ 
 
   const handlePositionChange = (lat: number, lng: number) => {
     setPosition({ lat, lng })
@@ -127,7 +131,7 @@ const Boatyards = () => {
 
   const rowExpansionStyle = {
     backgroundColor: '#ECF3F9',
-    fontSize: '0.80rem',
+    fontSize: '12px',
     borderBottom: '1px solid #C0C0C0 ',
   }
 
@@ -199,8 +203,14 @@ const Boatyards = () => {
 
   const handleRowClickBoatYardDetail = (rowData: any) => {
     setSelectedBoatYard(rowData.data)
+  
   }
 
+  const getRowStyle = (rowData:any) => {
+    return {
+        backgroundColor: rowData.id === selectedRowId ? '#FFD700' : '', 
+    };
+};
   const getMooringsWithBoatyardData = async () => {
     try {
       await getMooringsWithBoatyard({ id: selectedBoatYard?.id })
@@ -278,7 +288,7 @@ const Boatyards = () => {
       </div>
 
       <div
-        className="ml-20 gap-[19px] mt-10 "
+        className="ml-[50px] gap-[19px] mt-10 "
         style={{ display: 'flex', justifyContent: 'space-evenly' }}>
         <div
           data-testid="dataTable"
@@ -291,22 +301,23 @@ const Boatyards = () => {
               color: '#FFFFFF',
               borderTopLeftRadius: '10px',
               borderTopRightRadius: '10px',
+              height:'4.8vw'
             }}
-            iconStyle={{ marginLeft: '26px', color: '#00426F', marginTop: '0px' }}
+            iconStyle={{ marginLeft: '34px', color: '#00426F', marginTop: '0px' }}
+           
             inputTextStyle={{
-              marginTop: '10px',
+              flexGrow: 1,
+              marginTop:'10px',
               height: '44px',
-              width: '480px',
-              border: '1px solid #D5E1EA',
-              cursor: 'pointer',
-              color: '#A4A4A4',
-              marginLeft: '17px',
-              marginRight: '17px',
-              borderRadius: '5px',
-              fontSize: '0.80rem',
-              backgroundColor: 'F2F2F2',
-              paddingLeft: '30px',
-              fontWeight: '400',
+              border: '1px solid #C5D9E0',
+              padding: '0 2rem 0 2.5rem',
+              fontSize: '14px',
+              color: '#000000',
+              borderRadius: '4px',
+              minHeight: '44px',
+              fontWeight: 400,
+              backgroundColor: '#FFFFFF',
+             
             }}
           />
           {boatyardsData.length !== 0 ? (
@@ -321,6 +332,7 @@ const Boatyards = () => {
                 dataKey="id"
                 columns={boatYardColumns}
                 onRowClick={(e: any) => handleRowClickBoatYardDetail(e)}
+                
               />
             </div>
           ) : (
@@ -332,7 +344,7 @@ const Boatyards = () => {
         </div>
 
         <div
-          data-testid="customer-admin-users-table"
+          data-testid="customer-admin-users-table" 
           className=" flex-grow bg-[#FFFFFF]  rounded-xl border-[1px]    border-gray-300 w-[515px] h-[650px] mr-[50px] rounded-md mb-0">
           <div className="text-sm font-extrabold rounded-sm w-full   bg-[#D9D9D9]">
             <div
@@ -343,9 +355,9 @@ const Boatyards = () => {
           </div>
           <div className=" bg-[] mt-3 ">
             <div
-              className="flex justify-start gap-14 ml-4 mt-[30px] "
+              className="flex justify-start gap-[4.2vw] ml-4 mt-[30px]  "
               style={{ fontSize: '12px', fontWeight: '700' }}>
-              <p>{properties.address}</p>
+              <p >{properties.address}</p>
               <p>{properties.mooringInventoried}</p>
               <p>{properties.boatyardGPSCoordinates}</p>
             </div>
@@ -354,8 +366,8 @@ const Boatyards = () => {
           <div className="border-[1px] border-[#D5E1EA]  w-[full] mt-3 "></div>
           {selectedBoatYard ? (
             <>
-              <div className="flex justify-start gap-14  mt-4  font-normal text-[12px]">
-                <p className="ml-3.5">
+              <div className="flex justify-start mt-4 gap-[5vw] font-normal text-[12px] ">
+                <p className="ml-3.5 w-[4vw]">
                   {selectedBoatYard?.street}
                   {selectedBoatYard?.apt}
                   {selectedBoatYard?.state}
@@ -365,13 +377,15 @@ const Boatyards = () => {
                 <p className="ml-24  underline">{selectedBoatYard?.gpsCoordinates}</p>
               </div>
               <div
-                className="w-[480px] h-[150px]  mt-[20px] mb-3 "
+                className=" h-[150px]  mt-[20px] mb-3 "
                 style={{
+                  flexGrow:1,
                   border: '1px solid #D5E1EA',
                   borderRadius: '10px',
                   padding: '0px',
-                  marginLeft: '10px',
-                  marginRight: '10px',
+                  marginLeft:'10px',
+                  marginRight:'10px'
+                  
                 }}>
                 <CustomSelectPositionMap onPositionChange={handlePositionChange} />
               </div>
@@ -380,12 +394,15 @@ const Boatyards = () => {
                   tableStyle={{
                     fontSize: '12px',
                     color: '#000000',
+                  
                   }}
                   data={mooringWithBoatyardsData}
                   columns={tableColumnsTechnicians}
                   actionButtons={ActionButtonColumn}
                   style={{
                     borderBottom: '1px solid #D5E1EA ',
+                  
+                    marginLeft:"5px",
                     fontWeight: '400',
                     color: '#000000',
                   }}
