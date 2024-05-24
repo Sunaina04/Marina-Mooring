@@ -625,7 +625,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                     minHeight: '32px',
                     border:
                       role?.id === 1 || role?.id === 2
-                        ? ' '
+                        ? '1px solid #D5E1EA'
                         : fieldErrors.selectedCustomerId
                           ? '1px solid red'
                           : '1px solid #D5E1EA',

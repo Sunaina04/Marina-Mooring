@@ -85,7 +85,7 @@ const CustomerOwner = () => {
       color: '#000000',
       fontWeight: 500,
     },
-    style: { borderBottom: '1px solid #D5E1EA' },
+    style: { borderBottom: '1px solid #D5E1EA'},
   }
 
   const columnStyle = {
@@ -130,7 +130,7 @@ const CustomerOwner = () => {
     ],
     headerStyle: {
       backgroundColor: '#FFFFFF',
-      borderBottom: '1px solid #C0C0C0',
+      borderBottom: '1px solid #D5E1EA',
       color: '#000000',
       fontWeight: 500,
     },

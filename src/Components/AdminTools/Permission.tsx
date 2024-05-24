@@ -40,6 +40,8 @@ const Permission = () => {
           color: '#FFFFFF',
           fontWeight: 500,
           borderTopLeftRadius: '10px',
+          
+          
         },
       },
       {
@@ -83,31 +85,35 @@ const Permission = () => {
           backgroundColor: '#00426F',
           color: '#FFFFFF',
           fontWeight: 500,
+        
         },
       },
     ],
+    
     [],
   )
 
   const ActionButtonColumn: ActionButtonColumnProps = {
     header: 'Action',
     style: {
-      fontSize: '14px',
+      fontSize: '12px',
       fontWeight: 600,
+      borderBottom: '1px solid #D5E1EA'
+      
+      
     },
     buttons: [
       {
         color: 'black',
         label: 'Edit',
         underline: true,
-        fontWeight: 600,
         onClick: (rowData) => handleEditButtonClick(rowData),
       },
       {
         color: 'red',
         label: 'Delete',
         underline: true,
-        fontWeight: 500,
+        
         onClick: (rowData) => handleDeleteButtonClick(rowData),
       },
     ],
@@ -117,7 +123,10 @@ const Permission = () => {
       color: '#FFFFFF',
       fontWeight: 500,
       borderTopRightRadius: '10px',
+      
     },
+    
+    
   }
 
   const handleButtonClick = () => {
@@ -127,6 +136,8 @@ const Permission = () => {
 
   const handleModalClose = () => {
     setModalVisible(false)
+    setEditMode(false)
+    setSelectedCustomer('')
   }
 
   const handleDeleteButtonClick = async (rowData: any) => {
@@ -251,7 +262,7 @@ const Permission = () => {
           paddingLeft: '25px',
         }}>
         <div
-          className="bg-[F2F2F2] border-[1px] border-gray-300 mb-10 rounded-lg"
+          className="bg-[#FFFFFF] border-[1px] h-[600px] border-gray-300 mb-10 rounded-lg"
           style={{
             flexGrow: 1,
             borderRadius: '10px',
@@ -264,7 +275,6 @@ const Permission = () => {
                 fontWeight: 600,
                 backgroundColor: '#D9D9D9',
                 borderRadius: '0 0 10px 10px',
-                height: '600px',
                 minHeight: 'calc(40vw - 600px)',
                 overflow: 'auto',
               }}
@@ -272,6 +282,7 @@ const Permission = () => {
               data={getCustomerOwnerUserData}
               columns={tableColumnsPermission}
               actionButtons={ActionButtonColumn}
+              style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
             />
           </div>
         </div>
