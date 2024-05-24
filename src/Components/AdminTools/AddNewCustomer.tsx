@@ -29,16 +29,16 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   permission,
   toastRef,
   setSelectedCustomerUser,
-  setSelectedCustomer
+  setSelectedCustomer,
 }) => {
   const [name, setName] = useState('')
-  const [id, setId] = useState('')
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
   const [street, setStreet] = useState('')
   const [apt, setApt] = useState('')
   const [zipCode, setZipCode] = useState('')
   const [role, setRole] = useState<Role>()
+  const [companyName, setCompanyName] = useState('')
   const [country, setCountry] = useState<Country>()
   const [state, setState] = useState<State>()
   const [password, setPassword] = useState('')
@@ -47,10 +47,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const [countriesData, setCountriesData] = useState<Country[]>()
   const [statesData, setStatesData] = useState<State[]>()
   const [errorMessage, setErrorMessage] = useState<string>()
-  
-  
+
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
-  const [successMessage, setSuccessMessage] = useState<string>()
   const [selectedCustomerId, setSelectedCustomerId] = useState<any>()
   const [firstErrorField, setFirstErrorField] = useState('')
   const [customerAdminDropdownEnabled, setCustomerAdminDropdownEnabled] = useState(false)
@@ -95,10 +93,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     if (errors.name) {
       firstError = 'name'
     }
-    if (!id) errors.id = 'ID is required'
-    if (errors.id && !firstError) {
-      firstError = 'id'
-    }
     if (!phone) {
       errors.phone = 'Phone is required'
     } else if (!phoneRegex.test(phone)) {
@@ -131,10 +125,19 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     if (errors.role && !firstError) {
       firstError = 'role'
     }
-    if (!selectedCustomerId && customerAdminDropdownEnabled && !permission)
+    if (
+      !selectedCustomerId &&
+      customerAdminDropdownEnabled &&
+      !permission &&
+      (role?.id === 3 || role?.id === 4)
+    )
       errors.selectedCustomerId = 'Customer Admin is required'
     if (errors.selectedCustomerId && !firstError) {
       firstError = 'selectedCustomerId'
+    }
+    if (!companyName) errors.companyName = 'Company Name is required'
+    if (errors.companyName && !firstError) {
+      firstError = 'companyName'
     }
     if (!country) errors.country = 'Country is required'
     if (errors.country && !firstError) {
@@ -176,6 +179,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
     return hasUppercase && hasLowercase && hasNumber && hasSpecialChar && hasMinLength
   }
+
   const handleFocus = () => {
     const passwordMessage = document.getElementById('password-message')
     if (passwordMessage) {
@@ -183,13 +187,14 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       passwordMessage.scrollIntoView({ behavior: 'smooth' })
     }
   }
+
   const handleInputChange = (fieldName: string, value: any) => {
     switch (fieldName) {
       case 'name':
         setName(value)
         break
-      case 'id':
-        setId(value)
+      case 'companyName':
+        setCompanyName(value)
         break
       case 'phone':
         setPhone(value)
@@ -216,13 +221,12 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       case 'confirmPassword':
         setConfirmPassword(value)
         break
+
       default:
         break
     }
     setFieldErrors((prevErrors) => ({ ...prevErrors, [fieldName]: '' }))
   }
-
-  
 
   const handleBlur = () => {
     const passwordMessage = document.getElementById('password-message')
@@ -230,8 +234,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   }
 
   const handleEdit = async () => {
-    setErrorMessage('')
-    setSuccessMessage('')
     const errors = validateFields()
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors)
@@ -240,7 +242,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
     const editUserPayload = {
       name,
-      userID: id,
+      companyName: companyName,
       phoneNumber: phone,
       email,
       street,
@@ -258,9 +260,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         id: customerData.id,
         customerAdminId: editCustomerMode ? '' : customerData.customerAdminId,
       }).unwrap()
-      const { status, content, message } = response as SaveUserResponse
+      const { status, message } = response as SaveUserResponse
       if (status === 200 || status === 201) {
-        setSuccessMessage(message || 'Customer Updated successfully')
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
@@ -268,9 +269,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           life: 3000,
         })
         getUser()
-        if(getCustomerUser){
-          getCustomerUser();
-
+        if (getCustomerUser) {
+          getCustomerUser()
         }
         setModalVisible(false)
         setIsLoading(false)
@@ -285,8 +285,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   }
 
   const handleSave = async () => {
-    setErrorMessage('')
-    setSuccessMessage('')
     const errors = validateFields()
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors)
@@ -296,7 +294,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       (customer: any) => customer?.name === selectedCustomerId?.name,
     )
 
-    if (!selectedCustomer && (role?.id === 2 || role?.id === 3) && !permission) {
+    if (!selectedCustomer && (role?.id === 3 || role?.id === 4) && !permission) {
       setFieldErrors((prevErrors) => ({
         ...prevErrors,
         selectedCustomerId: 'Invalid customer admin',
@@ -324,7 +322,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       const encodedPassword = btoa(password)
       const addUserPayload = {
         name,
-        userID: id,
+        companyName: companyName,
         phoneNumber: phone,
         email,
         street,
@@ -342,7 +340,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         payload: addUserPayload,
         customerAdminId: permission ? customerAdminId : selectedCustomerAdminId,
       }).unwrap()
-      const { status, content, message } = response as SaveUserResponse
+      const { status, message } = response as SaveUserResponse
       if (status === 200 || status === 201) {
         toastRef?.current?.show({
           severity: 'success',
@@ -377,8 +375,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
   const handleBack = () => {
     setModalVisible(false)
-    setSelectedCustomerUser("")
-  setSelectedCustomer("")
+    setSelectedCustomerUser('')
+    setSelectedCustomer('')
   }
 
   const fetchDataAndUpdate = useCallback(async () => {
@@ -399,7 +397,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const handleEditMode = () => {
     if (editMode && customerData) {
       setName(customerData.name || '')
-      setId(customerData.userID || '')
+      setCompanyName(customerData.userID || '')
       setPhone(customerData.phoneNumber || '')
       setEmail(customerData.email || '')
       setStreet(customerData.street || '')
@@ -421,7 +419,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       document.getElementById(firstErrorField)?.scrollIntoView({ behavior: 'smooth' })
     }
   }, [firstErrorField])
-
 
   useEffect(() => {
     if (role && (role.name === 'FINANCE' || role.name === 'TECHNICIAN')) {
@@ -481,33 +478,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           <div>
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
-                ID
-                <p className="text-red-600">*</p>
-              </div>
-            </span>
-            <div className="mt-1">
-              <InputText
-                value={id}
-                onChange={(e) => handleInputChange('id', e.target.value)}
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: fieldErrors.id ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                  padding: '1.2em',
-                }}
-              />
-            </div>
-
-            <p className="p-1" id="id">
-              {fieldErrors.id && <small className="p-error">{fieldErrors.id}</small>}
-            </p>
-          </div>
-
-          <div>
-            <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
                 Phone
                 <p className="text-red-600">*</p>
               </div>
@@ -530,18 +500,14 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
               {fieldErrors.phone && <small className="p-error">{fieldErrors.phone}</small>}
             </p>
           </div>
-        </div>
 
-        <div className="flex gap-8 ml-4">
           <div>
-            <div className="mt-3">
-              <span className="font-medium text-sm text-[#000000]">
-                <div className="flex gap-1">
-                  Email Address
-                  <p className="text-red-600">*</p>
-                </div>
-              </span>
-            </div>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Email Address
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
 
             <div className="mt-1">
               <InputText
@@ -570,7 +536,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
               )}
             </p>
           </div>
+        </div>
 
+        <div className="flex gap-8 ml-4">
           <div>
             <div className="mt-3">
               <span className="font-medium text-sm text-[#000000]">
@@ -618,7 +586,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
                     Customer Admin
-                    <p className="text-red-600">*</p>
+                    {customerAdminDropdownEnabled && <p className="text-red-600">*</p>}
                   </div>
                 </span>
               </div>
@@ -627,7 +595,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   value={selectedCustomerId}
                   onChange={(e) => {
                     setSelectedCustomerId(e.value)
-                    if (role?.id === 2 || role?.id === 3) {
+                    if (role?.id === 3 || role?.id === 4) {
                       setFieldErrors((prevErrors) => ({ ...prevErrors, selectedCustomerId: '' }))
                     }
                   }}
@@ -656,6 +624,37 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
               </p>
             </div>
           )}
+
+          <div>
+            <div className="mt-3">
+              <span className="font-medium text-sm text-[#000000]">
+                <div className="flex gap-1">
+                  Company Name
+                  <p className="text-red-600">*</p>
+                </div>
+              </span>
+            </div>
+
+            <div className="mt-1">
+              <InputText
+                value={companyName}
+                onChange={(e) => handleInputChange('companyName', e.target.value)}
+                style={{
+                  width: '230px',
+                  height: '32px',
+                  border: fieldErrors.companyName ? '1px solid red' : '1px solid #D5E1EA',
+                  borderRadius: '0.50rem',
+                  fontSize: '0.8rem',
+                  padding: '1.2em',
+                }}
+              />
+            </div>
+            <p id="companyName">
+              {fieldErrors.companyName && (
+                <small className="p-error">{fieldErrors.companyName}</small>
+              )}
+            </p>
+          </div>
         </div>
 
         {isLoading && (
@@ -820,7 +819,10 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                     style={{
                       width: '230px',
                       height: '32px',
-                      border: fieldErrors.password || errorMessage? '1px solid red' : '1px solid #D5E1EA',
+                      border:
+                        fieldErrors.password || errorMessage
+                          ? '1px solid red'
+                          : '1px solid #D5E1EA',
                       borderRadius: '0.50rem',
                       fontSize: '0.8rem',
                       padding: '1.2em',
@@ -843,10 +845,14 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                     }}
                   /> */}
                   <p className="p-1 w-48" id="password">
-                  
-                    {
-                      fieldErrors.password || errorMessage? <small className="p-error">{fieldErrors.password}{errorMessage}</small>:""
-                    }
+                    {fieldErrors.password || errorMessage ? (
+                      <small className="p-error">
+                        {fieldErrors.password}
+                        {errorMessage}
+                      </small>
+                    ) : (
+                      ''
+                    )}
                   </p>
                 </div>
 
@@ -855,7 +861,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   id="password-message"
                   className="mt-2 hidden ">
                   <h3 className="font-medium text-sm text-[#000000] flex justify-center mr-3">
-                  PASSWORD MUST CONTAIN:
+                    PASSWORD MUST CONTAIN:
                   </h3>
                   <div className="flex items-center gap-6 p-1 mt-2">
                     {passwordCriteria.uppercase ? (
