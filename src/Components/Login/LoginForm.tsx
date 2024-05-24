@@ -8,7 +8,6 @@ import { InputText } from 'primereact/inputtext'
 import { Button } from 'primereact/button'
 import './Login.module.css'
 import { ProgressSpinner } from 'primereact/progressspinner'
-
 export default function LoginForm() {
   const dispatch = useDispatch()
   const [username, setUsername] = useState('')
@@ -33,6 +32,11 @@ export default function LoginForm() {
       ...prev,
       [name]: '',
     }))
+  }
+  const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      signInHandler()
+    }
   }
 
   const toggleShowPassword = () => {
@@ -122,6 +126,7 @@ export default function LoginForm() {
                   name="username"
                   value={username}
                   onChange={handleChange}
+                  onKeyUp={handleKeyUp}
                   style={{
                     width: '500px',
                     height: '60px',
@@ -164,6 +169,7 @@ export default function LoginForm() {
                   value={password}
                   type={showPassword ? 'text' : 'password'}
                   onChange={handleChange}
+                  onKeyUp={handleKeyUp}
                 />
                 <img
                   src="/assets/images/key.png"

@@ -5,24 +5,27 @@ import { Button } from 'primereact/button'
 import { useForgotPasswordMutation } from '../../Services/Authentication/AuthApi'
 import { InputText } from 'primereact/inputtext'
 import './ForgotPassword.module.css'
-
+import { ProgressSpinner } from 'primereact/progressspinner'
 const ForgotPassword = () => {
   const navigateToLoginPage = useNavigate()
   const [validateEmail] = useForgotPasswordMutation()
   const [email, setEmail] = useState('')
   const [errors, setErrors] = useState<any>([])
   const [message, setMessage] = useState<any>([])
+  const [isLoading, setIsLoading] = useState(false)
 
   const validateEmailHandler = async () => {
     if (email.length === 0) {
-      setErrors('Entered email is not registered with us, Please enter the valid email.')
+      setErrors('Email cannot be empty ')
       return
     }
+    setIsLoading(true)
     try {
       const data = await validateEmail({ email }).unwrap()
       const { response, success } = data as validateEmailResponse
       if (success === true) {
         setMessage(response)
+        setIsLoading(false)
       } else {
         setErrors(response)
       }
@@ -32,6 +35,7 @@ const ForgotPassword = () => {
         const errorMessage = data?.response
         console.error('Error:', errorMessage)
         setErrors(errorMessage)
+        setIsLoading(false)
       }
     }
     setEmail(' ')
@@ -42,6 +46,15 @@ const ForgotPassword = () => {
     setEmail(inputValue)
     setErrors('')
     setMessage('')
+  }
+
+  const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      validateEmailHandler()
+    }
+  }
+  const handleSubmit = () => {
+    validateEmailHandler()
   }
 
   return (
@@ -90,6 +103,7 @@ const ForgotPassword = () => {
                     type="email"
                     placeholder="Enter Your registered email"
                     onChange={handleChange}
+                    onKeyUp={handleKeyUp}
                   />
                   <img
                     src="/assets/images/envelope.png"
@@ -109,6 +123,21 @@ const ForgotPassword = () => {
                 </div>
               </div>
             </div>
+
+            {isLoading && (
+              <ProgressSpinner
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  width: '50px',
+                  height: '50px',
+                }}
+                strokeWidth="4"
+              />
+            )}
+
             <div
               className="flex mt-8 cursor-pointer"
               style={{
@@ -149,9 +178,11 @@ const ForgotPassword = () => {
                 fontWeight: '500',
                 justifyContent: 'center',
               }}
-              onClick={() => {
-                validateEmailHandler()
-              }}>
+              // onClick={() => {
+              //   validateEmailHandler()
+              // }}
+
+              onClick={handleSubmit}>
               Submit
             </Button>
             <Button
