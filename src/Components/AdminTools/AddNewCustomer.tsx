@@ -253,7 +253,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       stateId: state?.id ? state?.id : customerData?.state,
       countryId: country?.id ? country?.id : customerData?.country,
       roleId: role?.id ? role?.id : customerData?.role,
-      customerAdminId: editCustomerMode ? '' : customerData.customerAdminId,
+      customerOwnerId: editCustomerMode ? '' : customerData.customerAdminId,
     }
 
     setIsLoading(true)

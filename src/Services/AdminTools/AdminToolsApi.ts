@@ -6,15 +6,15 @@ const adminToolsApi = userApi.injectEndpoints({
     addUser: builder.mutation({
       query: ({
         payload,
-        customerAdminId,
+        customerOwnerId,
       }: {
         payload: AddUserPayload
-        customerAdminId: number
+        customerOwnerId: number
       }) => ({
         url: 'api/v1/user/',
         method: 'POST',
         body: payload,
-        params: { customerAdminId },
+        params: { customerOwnerId },
       }),
     }),
 
@@ -24,27 +24,27 @@ const adminToolsApi = userApi.injectEndpoints({
         pageSize,
         sortBy,
         sortDir,
-        customerAdminId,
+        customerOwnerId,
         searchText,
       }: {
         pageNumber?: number
         pageSize?: number
         sortBy?: string
         sortDir?: string
-        customerAdminId?: number
+        customerOwnerId?: number
         searchText?: string
       }) => ({
         url: 'api/v1/user/',
         method: 'GET',
-        params: { pageNumber, pageSize, sortBy, sortDir, customerAdminId, searchText },
+        params: { pageNumber, pageSize, sortBy, sortDir, customerOwnerId, searchText },
       }),
     }),
 
     deleteUser: builder.mutation({
-      query: ({ userId, customerAdminId }: { userId?: number; customerAdminId?: number }) => ({
+      query: ({ userId, customerOwnerId }: { userId?: number; customerOwnerId?: number }) => ({
         url: `api/v1/user/${userId}`,
         method: 'DELETE',
-        params: customerAdminId,
+        params: customerOwnerId,
       }),
     }),
 
@@ -52,16 +52,16 @@ const adminToolsApi = userApi.injectEndpoints({
       query: ({
         payload,
         id,
-        customerAdminId,
+        customerOwnerId,
       }: {
         payload: AddUserPayload
         id: number
-        customerAdminId?: number
+        customerOwnerId?: number
       }) => ({
         url: `api/v1/user/${id}`,
         method: 'PUT',
         body: payload,
-        params: { customerAdminId },
+        params: { customerOwnerId },
       }),
     }),
   }),
