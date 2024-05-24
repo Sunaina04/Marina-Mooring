@@ -5,13 +5,16 @@ import { Button } from 'primereact/button'
 import InputComponent from '../CommonComponent/InputComponent'
 import { Country, Role, State } from '../../Type/CommonType'
 import { CustomerAdminDataProps } from '../../Type/ComponentBasedType'
-import useMetaData from '../CommonComponent/MetaDataComponent'
+import useMetaData from '../CommonComponent/MetaDataComponent/RolesData'
 import { CustomerPayload, SaveUserResponse } from '../../Type/ApiTypes'
 import { useAddUserMutation, useUpdateUserMutation } from '../../Services/AdminTools/AdminToolsApi'
 import { Dialog } from 'primereact/dialog'
 import { Toast } from 'primereact/toast'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { BsEye, BsEyeSlash } from 'react-icons/bs'
+import RolesData from '../CommonComponent/MetaDataComponent/RolesData'
+import StatesData from '../CommonComponent/MetaDataComponent/StatesData'
+import CountriesData from '../CommonComponent/MetaDataComponent/CountriesData'
 
 const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   customerData,
@@ -49,7 +52,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const [customerAdminDropdownEnabled, setCustomerAdminDropdownEnabled] = useState(false)
   const [addCustomer] = useAddUserMutation()
   const [editCustomer] = useUpdateUserMutation()
-  const { getMetaData } = useMetaData()
+  const { getRolesData } = RolesData()
+  const { getStatesData } = StatesData()
+  const { getCountriesData } = CountriesData()
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -236,9 +241,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       street,
       apt,
       zipCode,
-      state: state?.name ? state?.name : customerData?.state,
-      country: country?.name ? country?.name : customerData?.country,
-      role: role?.name ? role?.name : customerData?.role,
+      state: state?.id ? state?.id : customerData?.state,
+      country: country?.id ? country?.id : customerData?.country,
+      role: role?.id ? role?.id : customerData?.role,
     }
 
     setIsLoading(true)
@@ -282,11 +287,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       (customer: any) => customer?.name === selectedCustomerId?.name,
     )
 
-    if (
-      !selectedCustomer &&
-      (role?.name === 'FINANCE' || role?.name === 'TECHNICIAN') &&
-      !permission
-    ) {
+    if (!selectedCustomer && (role?.id === 2 || role?.id === 3) && !permission) {
       setFieldErrors((prevErrors) => ({
         ...prevErrors,
         selectedCustomerId: 'Invalid customer admin',
@@ -321,9 +322,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         apt,
         zipCode,
         password: encodedPassword, // Using base64 encoded password
-        state: state?.name,
-        country: country?.name,
-        role: role?.name,
+        state: state?.id,
+        country: country?.id,
+        role: role?.id,
         confirmPassword: encodedPassword, // Using base64 encoded password for confirmPassword
       }
 
@@ -334,28 +335,26 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       }).unwrap()
       const { status, content, message } = response as SaveUserResponse
       if (status === 200 || status === 201) {
-        setSuccessMessage(message || 'Customer added successfully')
-
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
           detail: 'User Saved successfully',
           life: 3000,
         })
-
         getUser()
         setIsLoading(false)
       } else {
+        toastRef?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message || 'An error occurred while saving the customer.',
+          life: 3000,
+        })
         setIsLoading(false)
-
-        setErrorMessage(message || 'An error occurred while saving the customer.')
       }
     } catch (error) {
       setIsLoading(false)
-
-      setErrorMessage('An unexpected error occurred. Please try again later.')
     }
-
     setModalVisible(false)
   }
 
@@ -372,7 +371,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   }
 
   const fetchDataAndUpdate = useCallback(async () => {
-    const { rolesData, countriesData, statesData } = await getMetaData()
+    const { statesData } = await getStatesData()
+    const { rolesData } = await getRolesData()
+    const { countriesData } = await getCountriesData()
     if (rolesData !== null) {
       setRolesData(rolesData)
     }
@@ -614,7 +615,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   value={selectedCustomerId}
                   onChange={(e) => {
                     setSelectedCustomerId(e.value)
-                    if (role?.name === 'FINANCE' || role?.name === 'TECHNICIAN') {
+                    if (role?.id === 2 || role?.id === 3) {
                       setFieldErrors((prevErrors) => ({ ...prevErrors, selectedCustomerId: '' }))
                     }
                   }}

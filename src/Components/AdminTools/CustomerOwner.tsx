@@ -5,7 +5,7 @@ import { properties } from '../Utils/MeassageProperties'
 import { ActionButtonColumnProps } from '../../Type/Components/TableTypes'
 import { CustomerPayload, GetUserResponse } from '../../Type/ApiTypes'
 import Header from '../Layout/LayoutComponents/Header'
-import useMetaData from '../CommonComponent/MetaDataComponent'
+import useMetaData from '../CommonComponent/MetaDataComponent/RolesData'
 import { Role } from '../../Type/CommonType'
 import { useGetUsersMutation } from '../../Services/AdminTools/AdminToolsApi'
 import AddNewCustomer from './AddNewCustomer'
@@ -13,6 +13,9 @@ import './CustomerOwner.module.css'
 import InputTextWithHeader from '../CommonComponent/Table/InputTextWithHeader'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { Toast } from 'primereact/toast'
+import RolesData from '../CommonComponent/MetaDataComponent/RolesData'
+import StatesData from '../CommonComponent/MetaDataComponent/StatesData'
+import CountriesData from '../CommonComponent/MetaDataComponent/CountriesData'
 
 const CustomerOwner = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -32,7 +35,7 @@ const CustomerOwner = () => {
   const [getCustomerOwnerUserData, setgetCustomerOwnerUserData] = useState<CustomerPayload[]>([])
 
   const [getUser] = useGetUsersMutation()
-  const { getMetaData } = useMetaData()
+  const { getRolesData } = RolesData()
 
   const toast = useRef<Toast>(null)
 
@@ -149,12 +152,12 @@ const CustomerOwner = () => {
     [],
   )
 
-  const fetchDataAndUpdate = useCallback(async () => {
-    const { rolesData } = await getMetaData()
-    if (rolesData !== null) {
-      setRolesData(rolesData)
-    }
-  }, [])
+  // const fetchDataAndUpdate = useCallback(async () => {
+  //   const { rolesData } = await getRolesData()
+  //   if (rolesData !== null) {
+  //     setRolesData(rolesData)
+  //   }
+  // }, [])
 
   const getUserHandler = useCallback(async () => {
     setIsLoading(true)
@@ -210,10 +213,6 @@ const CustomerOwner = () => {
     },
     [getUser, searchUsersText],
   )
-
-  useEffect(() => {
-    fetchDataAndUpdate()
-  }, [modalVisible])
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {

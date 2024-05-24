@@ -4,7 +4,7 @@ import { Avatar } from 'primereact/avatar'
 import { Dropdown } from 'primereact/dropdown'
 import { HeaderProps } from '../../../Type/ComponentBasedType'
 import { useSelector } from 'react-redux'
-import useMetaData from '../../CommonComponent/MetaDataComponent'
+import RolesData from '../../CommonComponent/MetaDataComponent/RolesData'
 import { Role } from '../../../Type/CommonType'
 
 const Header: React.FC<HeaderProps> = ({ header }) => {
@@ -12,7 +12,7 @@ const Header: React.FC<HeaderProps> = ({ header }) => {
   const role = userData?.role?.name
   const [expanded, setExpanded] = useState(false)
   const [selectRole, setSelectRole] = useState(userData?.role.name)
-  const { getMetaData } = useMetaData()
+  const { getRolesData } = RolesData()
   const [rolesData, setRolesData] = useState<Role[]>()
 
   const handleMenu = () => {
@@ -20,7 +20,7 @@ const Header: React.FC<HeaderProps> = ({ header }) => {
   }
 
   const fetchDataAndUpdate = useCallback(async () => {
-    const { rolesData } = await getMetaData()
+    const { rolesData } = await getRolesData()
     if (rolesData !== null) {
       setRolesData(rolesData)
     }

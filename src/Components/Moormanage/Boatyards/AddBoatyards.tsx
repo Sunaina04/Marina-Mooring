@@ -5,11 +5,14 @@ import { Dropdown } from 'primereact/dropdown'
 import CustomStateMap from '../../Map/CustomSelectPositionMap'
 import { useAddBoatyardsMutation } from '../../../Services/MoorManage/MoormanageApi'
 import { BoatYardProps } from '../../../Type/ComponentBasedType'
-import useMetaData from '../../CommonComponent/MetaDataComponent'
+import useMetaData from '../../CommonComponent/MetaDataComponent/RolesData'
 import { Country, State } from '../../../Type/CommonType'
 import { BoatYardResponse } from '../../../Type/ApiTypes'
 import { InputText } from 'primereact/inputtext'
 import CustomSelectPositionMap from '../../Map/CustomSelectPositionMap'
+import RolesData from '../../CommonComponent/MetaDataComponent/RolesData'
+import StatesData from '../../CommonComponent/MetaDataComponent/StatesData'
+import CountriesData from '../../CommonComponent/MetaDataComponent/CountriesData'
 
 const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCoordinates }) => {
   const [boatyardId, setBoatyardId] = useState('')
@@ -26,7 +29,8 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
   const [longitude, setLongitude] = useState<number>()
   const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<string>()
   const [addBoatyard] = useAddBoatyardsMutation()
-  const { getMetaData } = useMetaData()
+  const { getStatesData } = StatesData()
+  const { getCountriesData } = CountriesData()
   const [countriesData, setCountriesData] = useState<Country[]>()
   const [statesData, setStatesData] = useState<State[]>()
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
@@ -118,7 +122,8 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
   }
 
   const fetchDataAndUpdate = useCallback(async () => {
-    const { countriesData, statesData } = await getMetaData()
+    const { statesData } = await getStatesData()
+    const { countriesData } = await getCountriesData()
     if (countriesData !== null) {
       setCountriesData(countriesData)
     }
