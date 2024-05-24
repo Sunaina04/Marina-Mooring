@@ -53,7 +53,7 @@ export type NullableDateArray = (Date | null)[] | null
 export interface Role {
   id: number
   name: string
-  label: string
+  description: string
 }
 
 export interface Country {

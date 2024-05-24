@@ -26,6 +26,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   toastRef,
   setSelectedCustomerUser,
   setSelectedCustomer,
+  setEditCustomer,
 }) => {
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
@@ -230,10 +231,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   }
 
   const handleEdit = async () => {
-    console.log('editCustomerMode', editCustomerMode, customerData.customerOwnerId)
     const errors = validateFields()
     if (Object.keys(errors).length > 0) {
-      console.log(errors)
       setFieldErrors(errors)
       return
     }
@@ -249,14 +248,14 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       stateId: state?.id ? state?.id : customerData?.state,
       countryId: country?.id ? country?.id : customerData?.country,
       roleId: role?.id ? role?.id : customerData?.role,
-      customerOwnerId: editCustomerMode ? '' : customerData.customerOwnerId,
+      customerOwnerId: editCustomerMode ? '' : customerData?.customerOwnerId,
     }
 
     setIsLoading(true)
     try {
       const response = await editCustomer({
         payload: editUserPayload,
-        id: customerData.id,
+        id: customerData?.id,
       }).unwrap()
       const { status, message } = response as SaveUserResponse
       if (status === 200 || status === 201) {
@@ -272,6 +271,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         }
         setModalVisible(false)
         setIsLoading(false)
+        if (setEditCustomer) {
+          setEditCustomer(false)
+        }
       } else {
         setIsLoading(false)
         toastRef?.current?.show({
@@ -411,17 +413,17 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
   const handleEditMode = () => {
     if (editMode && customerData) {
-      setName(customerData.name || '')
-      setCompanyName(customerData.userID || '')
-      setPhone(customerData.phoneNumber || '')
-      setEmail(customerData.email || '')
-      setStreet(customerData.street || '')
-      setApt(customerData.apt || '')
-      setZipCode(customerData.zipCode || '')
-      setRole(customerData.role || undefined)
-      setCountry(customerData.country || undefined)
-      setCompanyName(customerData.companyName || '')
-      setState(customerData.state || undefined)
+      setName(customerData?.name || '')
+      setCompanyName(customerData?.userID || '')
+      setPhone(customerData?.phoneNumber || '')
+      setEmail(customerData?.email || '')
+      setStreet(customerData?.street || '')
+      setApt(customerData?.apt || '')
+      setZipCode(customerData?.zipCode || '')
+      setRole(customerData?.roleResponseDto?.name || undefined)
+      setCountry(customerData?.countryResponseDto?.name || undefined)
+      setCompanyName(customerData?.companyName || '')
+      setState(customerData?.stateResponseDto?.name || undefined)
       const selectedCustomerAdmin = customerUsers?.find(
         (customer: any) => customer.id === customerAdminId,
       )

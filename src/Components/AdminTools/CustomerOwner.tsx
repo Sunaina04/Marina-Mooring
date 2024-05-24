@@ -36,7 +36,6 @@ const CustomerOwner = () => {
   const [getCustomerOwnerUserData, setgetCustomerOwnerUserData] = useState<CustomerPayload[]>([])
 
   const [getUser] = useGetUsersMutation()
-  const { getRolesData } = RolesData()
 
   const toast = useRef<Toast>(null)
 
@@ -45,6 +44,7 @@ const CustomerOwner = () => {
     setSelectedCustomerUser('')
     setSelectedCustomer('')
     setEditCustomer(false)
+    setEditMode(false)
   }
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,6 +64,7 @@ const CustomerOwner = () => {
 
   const handleEditButtonUsersClick = (rowData: any) => {
     setSelectedCustomerUser(rowData)
+    setEditCustomer(false)
     setModalVisible(true)
     setEditMode(true)
   }
@@ -85,7 +86,7 @@ const CustomerOwner = () => {
       color: '#000000',
       fontWeight: 500,
     },
-    style: { borderBottom: '1px solid #D5E1EA'},
+    style: { borderBottom: '1px solid #D5E1EA' },
   }
 
   const columnStyle = {
@@ -150,17 +151,10 @@ const CustomerOwner = () => {
       { id: 'name', label: 'Name', style: customerOwnerUserTableColumnStyle },
       { id: 'email', label: 'Email', style: customerOwnerUserTableColumnStyle },
       { id: 'phoneNumber', label: 'Phone', style: customerOwnerUserTableColumnStyle },
-      { id: 'role', label: 'Role', style: customerOwnerUserTableColumnStyle },
+      { id: 'roleResponseDto.name', label: 'Role', style: customerOwnerUserTableColumnStyle },
     ],
     [],
   )
-
-  // const fetchDataAndUpdate = useCallback(async () => {
-  //   const { rolesData } = await getRolesData()
-  //   if (rolesData !== null) {
-  //     setRolesData(rolesData)
-  //   }
-  // }, [])
 
   const getUserHandler = useCallback(async () => {
     setIsLoading(true)
@@ -296,6 +290,7 @@ const CustomerOwner = () => {
                   setEditCustomer(false)
                 }}
                 setModalVisible={setModalVisible}
+                setEditCustomer={setEditCustomer}
                 setIsVisible={() => {}}
                 customerUsers={getCustomerOwnerData}
                 toastRef={toast}

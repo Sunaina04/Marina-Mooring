@@ -1,3 +1,5 @@
+import { Country, Role, State } from './CommonType'
+
 export interface UserLoginPayload {
   name: string
   email: string
@@ -5,9 +7,9 @@ export interface UserLoginPayload {
   password: string
   userID: string
   customerOwnerId: string
-  role: string
-  state: string
-  country: string
+  roleResponseDto: Role
+  stateResponseDto: State
+  countryResponseDto: Country
 }
 export interface UserResponse {
   content: GetUserResponse

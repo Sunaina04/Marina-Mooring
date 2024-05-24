@@ -130,8 +130,9 @@ export interface CustomerAdminDataProps {
   permission?: boolean
   toastRef?: any
   editCustomerMode?: boolean
-  setSelectedCustomerUser: Dispatch<SetStateAction<any>>;
-  setSelectedCustomer:Dispatch<SetStateAction<any>>;
+  setEditCustomer?: Dispatch<SetStateAction<any>>
+  setSelectedCustomerUser: Dispatch<SetStateAction<any>>
+  setSelectedCustomer: Dispatch<SetStateAction<any>>
 }
 
 export interface HeaderProps {
@@ -160,5 +161,5 @@ export interface inputHeader {
   headerStyle?: React.CSSProperties
   inputTextStyle?: React.CSSProperties
   value?: string | undefined
-  borderBottom?:React.CSSProperties
+  borderBottom?: React.CSSProperties
 }

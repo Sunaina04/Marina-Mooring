@@ -40,8 +40,6 @@ const Permission = () => {
           color: '#FFFFFF',
           fontWeight: 500,
           borderTopLeftRadius: '10px',
-          
-          
         },
       },
       {
@@ -78,18 +76,17 @@ const Permission = () => {
       },
 
       {
-        id: 'role',
+        id: 'roleResponseDto.name',
         label: 'Role',
         style: {
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#00426F',
           color: '#FFFFFF',
           fontWeight: 500,
-        
         },
       },
     ],
-    
+
     [],
   )
 
@@ -98,9 +95,7 @@ const Permission = () => {
     style: {
       fontSize: '12px',
       fontWeight: 600,
-      borderBottom: '1px solid #D5E1EA'
-      
-      
+      borderBottom: '1px solid #D5E1EA',
     },
     buttons: [
       {
@@ -113,7 +108,7 @@ const Permission = () => {
         color: 'red',
         label: 'Delete',
         underline: true,
-        
+
         onClick: (rowData) => handleDeleteButtonClick(rowData),
       },
     ],
@@ -123,10 +118,7 @@ const Permission = () => {
       color: '#FFFFFF',
       fontWeight: 500,
       borderTopRightRadius: '10px',
-      
     },
-    
-    
   }
 
   const handleButtonClick = () => {
@@ -246,11 +238,14 @@ const Permission = () => {
               setModalVisible={setModalVisible}
               customerData={selectedCustomer}
               permission={true}
-              toastRef={toast} setSelectedCustomerUser={function (value: any): void {
+              toastRef={toast}
+              setSelectedCustomerUser={function (value: any): void {
                 throw new Error('Function not implemented.')
-              } } setSelectedCustomer={function (value: any): void {
+              }}
+              setSelectedCustomer={function (value: any): void {
                 throw new Error('Function not implemented.')
-              } }            />
+              }}
+            />
           </CustomModal>
         </div>
       </div>
