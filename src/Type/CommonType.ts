@@ -51,7 +51,9 @@ export interface FormFieldsProps {
 export type NullableDateArray = (Date | null)[] | null
 
 export interface Role {
+  id: number
   name: string
+  label: string
 }
 
 export interface Country {

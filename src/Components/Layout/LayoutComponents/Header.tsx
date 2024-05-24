@@ -28,7 +28,7 @@ const Header: React.FC<HeaderProps> = ({ header }) => {
 
   useEffect(() => {
     fetchDataAndUpdate()
-  }, [fetchDataAndUpdate])
+  }, [selectRole])
 
   return (
     <div

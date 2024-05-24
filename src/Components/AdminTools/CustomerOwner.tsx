@@ -9,31 +9,32 @@ import useMetaData from '../CommonComponent/MetaDataComponent'
 import { Role } from '../../Type/CommonType'
 import { useGetUsersMutation } from '../../Services/AdminTools/AdminToolsApi'
 import AddNewCustomer from './AddNewCustomer'
-import { InputText } from 'primereact/inputtext'
 import './CustomerOwner.module.css'
-import { customerAdminUser } from '../Utils/CustomData'
 import InputTextWithHeader from '../CommonComponent/Table/InputTextWithHeader'
 import { ProgressSpinner } from 'primereact/progressspinner'
-import { Toast } from 'primereact/toast';
+import { Toast } from 'primereact/toast'
 
 const CustomerOwner = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [selectedCustomer, setSelectedCustomer] = useState<any>()
+  const [selectedCustomerUser, setSelectedCustomerUser] = useState<any>()
   const [editMode, setEditMode] = useState(false)
+  const [editCustomer, setEditCustomer] = useState(false)
   const [isRowClick, setIsRowClick] = useState(false)
   const [selectedRow, setSelectedRow] = useState<any>()
-  const { getMetaData } = useMetaData()
   const [rolesData, setRolesData] = useState<Role[]>()
-
   const [selectRole, setSelectRole] = useState()
   const [customerAdminId, setCustomerAdminId] = useState('')
-  const [getUser] = useGetUsersMutation()
-  const [getCustomerOwnerData, setgetCustomerOwnerData] = useState<CustomerPayload[]>([])
-  const [getCustomerOwnerUserData, setgetCustomerOwnerUserData] = useState<CustomerPayload[]>([])
   const [searchText, setSearchText] = useState('')
   const [searchUsersText, setSearchUsersText] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const toast = useRef<Toast>(null);
+  const [getCustomerOwnerData, setgetCustomerOwnerData] = useState<CustomerPayload[]>([])
+  const [getCustomerOwnerUserData, setgetCustomerOwnerUserData] = useState<CustomerPayload[]>([])
+
+  const [getUser] = useGetUsersMutation()
+  const { getMetaData } = useMetaData()
+
+  const toast = useRef<Toast>(null)
 
   const handleModalClose = () => {
     setModalVisible(false)
@@ -48,10 +49,17 @@ const CustomerOwner = () => {
   }
 
   const handleEditButtonClick = (rowData: any) => {
+    console.log('rowData', rowData)
     setSelectedCustomer(rowData)
     setModalVisible(true)
+    setEditCustomer(true)
     setEditMode(true)
-    
+  }
+
+  const handleEditButtonUsersClick = (rowData: any) => {
+    setSelectedCustomerUser(rowData)
+    setModalVisible(true)
+    setEditMode(true)
   }
 
   const ActionButtonColumn: ActionButtonColumnProps = {
@@ -103,6 +111,26 @@ const CustomerOwner = () => {
     [],
   )
 
+  const ActionButtonUsersColumn: ActionButtonColumnProps = {
+    header: 'Action',
+    buttons: [
+      {
+        color: 'black',
+        label: 'Edit',
+        underline: true,
+        fontWeight: 500,
+        onClick: (rowData) => handleEditButtonUsersClick(rowData),
+      },
+    ],
+    headerStyle: {
+      backgroundColor: '#FFFFFF',
+      borderBottom: '1px solid #C0C0C0',
+      color: '#000000',
+      fontWeight: 500,
+    },
+    style: { borderBottom: '1px solid #D5E1EA' },
+  }
+
   const customerOwnerUserTableColumnStyle = {
     borderBottom: '1px solid #D5E1EA',
     backgroundColor: '#FFFFFF',
@@ -131,13 +159,20 @@ const CustomerOwner = () => {
   const getUserHandler = useCallback(async () => {
     setIsLoading(true)
     try {
-      const response = await getUser({ searchText: searchText }).unwrap()
+      let params = {}
+      if (searchText) {
+        params = { searchText } // Add searchText to params if it exists
+      }
+      const response = await getUser(params).unwrap()
       const { status, content } = response as GetUserResponse
       if (status === 200 && Array.isArray(content?.content)) {
         if (content?.content.length > 0) {
+          setIsLoading(false)
           setgetCustomerOwnerData(content?.content)
+        } else {
+          setgetCustomerOwnerData([])
+          setIsLoading(false)
         }
-        setIsLoading(false)
       }
     } catch (error) {
       console.error('Error occurred while fetching customer data:', error)
@@ -146,6 +181,7 @@ const CustomerOwner = () => {
 
   const getCustomerAdminsUsers = useCallback(
     async (id: any) => {
+      setIsLoading(true)
       try {
         const response = await getUser({
           customerAdminId: id,
@@ -176,15 +212,24 @@ const CustomerOwner = () => {
   )
 
   useEffect(() => {
-    if (customerAdminId) {
-      getCustomerAdminsUsers(customerAdminId)
-    }
-  }, [customerAdminId, searchUsersText, getCustomerAdminsUsers])
+    fetchDataAndUpdate()
+  }, [modalVisible])
 
   useEffect(() => {
-    getUserHandler()
-    fetchDataAndUpdate()
-  }, [fetchDataAndUpdate, searchText])
+    const timeoutId = setTimeout(() => {
+      getUserHandler()
+    }, 600)
+    return () => clearTimeout(timeoutId)
+  }, [searchText])
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (customerAdminId) {
+        getCustomerAdminsUsers(customerAdminId)
+      }
+    }, 600)
+    return () => clearTimeout(timeoutId)
+  }, [searchUsersText])
 
   return (
     <div className={modalVisible ? 'backdrop-blur-lg' : ''}>
@@ -235,15 +280,19 @@ const CustomerOwner = () => {
             children={
               <AddNewCustomer
                 customerAdminId={customerAdminId ? customerAdminId : ''}
-                customerData={selectedCustomer}
+                customerData={selectedCustomerUser || selectedCustomer}
                 editMode={editMode}
                 getUser={getUserHandler}
-                closeModal={() => {}}
+                closeModal={() => {
+                  setEditMode(false)
+                  setSelectedCustomerUser('')
+                  setSelectedCustomer('')
+                  setEditCustomer(false)
+                }}
                 setModalVisible={setModalVisible}
                 setIsVisible={() => {}}
                 customerUsers={getCustomerOwnerData}
                 toastRef={toast}
-                
               />
             }
             headerText={<span className="font-large text-2xl text-[#000000] ml-4">New User</span>}
@@ -251,7 +300,9 @@ const CustomerOwner = () => {
             onClick={() => {
               setEditMode(false)
               setModalVisible(true)
+              setSelectedCustomerUser('')
               setSelectedCustomer('')
+              setEditCustomer(false)
             }}
           />
         </div>
@@ -324,6 +375,7 @@ const CustomerOwner = () => {
                   getCustomerAdminsUsers(e.data.id)
                 }}
                 style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
+                // actionButtons={ActionButtonColumn}
                 // rowStyle={(rowData) => ({
                 //   backgroundColor: selectedRow === rowData.id ? 'black' : 'red',
                 // })}
@@ -331,20 +383,6 @@ const CustomerOwner = () => {
             )}
           </div>
         </div>
-
-        {isLoading && (
-          <ProgressSpinner
-            style={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              width: '50px',
-              height: '50px',
-            }}
-            strokeWidth="4"
-          />
-        )}
 
         <div
           className={`${isLoading ? 'blur-screen' : ''}`}
@@ -375,6 +413,19 @@ const CustomerOwner = () => {
               backgroundColor: '#FFFFFF',
             }}
           />
+          {isLoading && (
+            <ProgressSpinner
+              style={{
+                position: 'absolute',
+                top: '50%',
+                // left: '5%',
+                transform: 'translate(-50%, -50%)',
+                width: '50px',
+                height: '50px',
+              }}
+              strokeWidth="4"
+            />
+          )}
           <div
             style={{
               height: '600px',
@@ -394,7 +445,7 @@ const CustomerOwner = () => {
                 scrollable={true}
                 data={getCustomerOwnerUserData}
                 columns={customerOwnerUserTableColumn}
-                actionButtons={ActionButtonColumn}
+                actionButtons={ActionButtonUsersColumn}
                 style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
               />
             ) : (
@@ -415,5 +466,3 @@ const CustomerOwner = () => {
 }
 
 export default CustomerOwner
-
-

@@ -21,6 +21,8 @@ const Permission = () => {
   const [deleteUser] = useDeleteUserMutation()
   const [getCustomerOwnerUserData, setgetCustomerOwnerUserData] = useState<CustomerPayload[]>([])
   const toast = useRef<Toast>(null)
+  const [isLoading, setIsLoading] = useState(false)
+
   const handleEditButtonClick = (rowData: any) => {
     setEditMode(true)
     setModalVisible(true)
@@ -128,6 +130,7 @@ const Permission = () => {
   }
 
   const handleDeleteButtonClick = async (rowData: any) => {
+    setIsLoading(true)
     try {
       const response = await deleteUser({
         userId: rowData.id,
@@ -135,6 +138,7 @@ const Permission = () => {
       }).unwrap()
       const { status } = response as DeleteUserResponse
       if (status === 200) {
+        setIsLoading(false)
         toast.current?.show({
           severity: 'error',
           summary: 'Success',
@@ -144,11 +148,13 @@ const Permission = () => {
         getCustomerAdminsUsers()
       }
     } catch (error) {
+      setIsLoading(false)
       console.error('Error occurred while fetching customer data:', error)
     }
   }
 
   const getCustomerAdminsUsers = async () => {
+    setIsLoading(true)
     try {
       const response = await getUser({
         searchText: searchInput,
@@ -156,15 +162,20 @@ const Permission = () => {
       }).unwrap()
       const { status, content } = response as GetUserResponse
       if (status === 200 && Array.isArray(content?.content)) {
+        setIsLoading(false)
         setgetCustomerOwnerUserData(content?.content)
       }
     } catch (error) {
+      setIsLoading(false)
       console.error('Error occurred while fetching customer data:', error)
     }
   }
 
   useEffect(() => {
-    getCustomerAdminsUsers()
+    const timeoutId = setTimeout(() => {
+      getCustomerAdminsUsers()
+    }, 600)
+    return () => clearTimeout(timeoutId)
   }, [searchInput])
 
   return (
@@ -231,7 +242,7 @@ const Permission = () => {
       </div>
 
       <div
-        className="flex gap-10 ml-8 mt-10"
+        className={`flex gap-10 ml-8 mt-10 ${isLoading ? 'blur-screen' : ''}`}
         style={{
           paddingRight: '40px',
           paddingLeft: '25px',
@@ -250,11 +261,11 @@ const Permission = () => {
                 fontWeight: 600,
                 backgroundColor: '#D9D9D9',
                 borderRadius: '0 0 10px 10px',
+                height: '600px',
+                minHeight: 'calc(40vw - 600px)',
+                overflow: 'auto',
               }}
               scrollable={true}
-              onRowClick={(rowData: any) => {
-                // setSelectedCustomer(rowData.data)
-              }}
               data={getCustomerOwnerUserData}
               columns={tableColumnsPermission}
               actionButtons={ActionButtonColumn}

@@ -236,6 +236,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       state: state?.name ? state?.name : customerData?.state,
       country: country?.name ? country?.name : customerData?.country,
       role: role?.name ? role?.name : customerData?.role,
+      // state: state?.id ? state?.id : customerData?.state,
+      // country: country?.id ? country?.id : customerData?.country,
+      // role: role?.id ? role?.id : customerData?.role,
     }
 
     setIsLoading(true)
@@ -251,20 +254,18 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
-          detail: 'User Save successfully',
+          detail: 'User Update successfully',
           life: 3000,
         })
         getUser()
         setModalVisible(false)
         setIsLoading(false)
       } else {
-        // setDialogVisible(true)
         setIsLoading(false)
         setErrorMessage(message || 'An error occurred while updating the customer.')
       }
     } catch (error) {
       setIsLoading(false)
-      // setDialogVisible(true)
       setErrorMessage('An unexpected error occurred. Please try again later.')
     }
   }
@@ -286,7 +287,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       (role?.name === 'FINANCE' || role?.name === 'TECHNICIAN') &&
       !permission
     ) {
-      console.log('here')
       setFieldErrors((prevErrors) => ({
         ...prevErrors,
         selectedCustomerId: 'Invalid customer admin',
@@ -321,6 +321,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         apt,
         zipCode,
         password: encodedPassword, // Using base64 encoded password
+        // state: state?.id,
+        // country: country?.id,
+        // role: role?.id,
         state: state?.name,
         country: country?.name,
         role: role?.name,
@@ -430,7 +433,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         style={{
           height: 'calc(600px - 150px)',
           overflowY: 'scroll',
-          overflowX: 'hidden',
+          overflowX: 'scroll',
           paddingBottom: '50px',
         }}
         className="NoScrollBar">
@@ -827,14 +830,14 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                       zIndex: '1',
                     }}
                   /> */}
+                  <p className="p-1 w-48" id="password">
+                    {fieldErrors.password ? (
+                      <small className="p-error">{fieldErrors.password}</small>
+                    ) : (
+                      ''
+                    )}
+                  </p>
                 </div>
-                <p className="p-1 w-48" id="password">
-                  {fieldErrors.password ? (
-                    <small className="p-error">{fieldErrors.password}</small>
-                  ) : (
-                    ''
-                  )}
-                </p>
 
                 <div
                   style={{ width: '230px', fontSize: '14px' }}
@@ -946,12 +949,12 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                       zIndex: '1',
                     }}
                   /> */}
+                  {fieldErrors.confirmPassword && (
+                    <small className="p-error" id="confirmPassword">
+                      {fieldErrors.confirmPassword}
+                    </small>
+                  )}
                 </div>
-                {fieldErrors.confirmPassword && (
-                  <small className="p-error" id="confirmPassword">
-                    {fieldErrors.confirmPassword}
-                  </small>
-                )}
               </div>
             </div>
           </div>
