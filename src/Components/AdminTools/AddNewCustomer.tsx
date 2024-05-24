@@ -16,7 +16,9 @@ import { BsEye, BsEyeSlash } from 'react-icons/bs'
 const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   customerData,
   editMode,
+  editCustomerMode,
   getUser,
+  getCustomerUser,
   closeModal,
   customerAdminId,
   setModalVisible,
@@ -50,6 +52,15 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const { getMetaData } = useMetaData()
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+
+  const [passwordCriteria, setPasswordCriteria] = useState({
+    uppercase: false,
+    lowercase: false,
+    number: false,
+    specialChar: false,
+    length: false,
+  })
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword)
@@ -58,14 +69,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const handleShowConfirmPassword = () => {
     setShowConfirmPassword(!showConfirmPassword)
   }
-  const [passwordCriteria, setPasswordCriteria] = useState({
-    uppercase: false,
-    lowercase: false,
-    number: false,
-    specialChar: false,
-    length: false,
-  })
-  const [isLoading, setIsLoading] = useState(false)
 
   const validateFields = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -236,9 +239,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       state: state?.name ? state?.name : customerData?.state,
       country: country?.name ? country?.name : customerData?.country,
       role: role?.name ? role?.name : customerData?.role,
-      // state: state?.id ? state?.id : customerData?.state,
-      // country: country?.id ? country?.id : customerData?.country,
-      // role: role?.id ? role?.id : customerData?.role,
     }
 
     setIsLoading(true)
@@ -246,7 +246,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       const response = await editCustomer({
         payload: editUserPayload,
         id: customerData.id,
-        customerAdminId: customerData.customerAdminId,
+        customerAdminId: editCustomerMode ? customerData.customerAdminId : '',
       }).unwrap()
       const { status, content, message } = response as SaveUserResponse
       if (status === 200 || status === 201) {
@@ -254,7 +254,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
-          detail: 'User Update successfully',
+          detail: 'User Save successfully',
           life: 3000,
         })
         getUser()
@@ -321,9 +321,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         apt,
         zipCode,
         password: encodedPassword, // Using base64 encoded password
-        // state: state?.id,
-        // country: country?.id,
-        // role: role?.id,
         state: state?.name,
         country: country?.name,
         role: role?.name,
@@ -363,15 +360,17 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   }
 
   const handleClick = () => {
-    if (editMode) {
+    if (editMode || editCustomerMode) {
       handleEdit()
     } else {
       handleSave()
     }
   }
+
   const handleBack = () => {
     setModalVisible(false)
   }
+
   const fetchDataAndUpdate = useCallback(async () => {
     const { rolesData, countriesData, statesData } = await getMetaData()
     if (rolesData !== null) {
@@ -425,7 +424,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
   useEffect(() => {
     handleEditMode()
-  }, [editMode, customerData])
+  }, [editMode, editCustomerMode, customerData])
 
   return (
     <>
@@ -582,6 +581,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 }}
                 options={rolesData}
                 optionLabel="name"
+                disabled={editCustomerMode}
                 editable
                 placeholder="Select"
                 style={{

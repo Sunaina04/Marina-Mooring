@@ -121,12 +121,14 @@ export interface CustomerAdminDataProps {
   customerAdminId?: string
   closeModal: () => void
   getUser: () => void
+  getCustomerUser?: () => void
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>
   onFocus?: (e: FocusEvent) => void
   onBlur?: (e: FocusEvent) => void
   customerUsers?: any
   permission?: boolean
   toastRef?: any
+  editCustomerMode?: boolean
 }
 
 export interface HeaderProps {

@@ -282,7 +282,9 @@ const CustomerOwner = () => {
                 customerAdminId={customerAdminId ? customerAdminId : ''}
                 customerData={selectedCustomerUser || selectedCustomer}
                 editMode={editMode}
+                editCustomerMode={editCustomer}
                 getUser={getUserHandler}
+                getCustomerUser={() => getCustomerAdminsUsers(customerAdminId)}
                 closeModal={() => {
                   setEditMode(false)
                   setSelectedCustomerUser('')
@@ -375,7 +377,7 @@ const CustomerOwner = () => {
                   getCustomerAdminsUsers(e.data.id)
                 }}
                 style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
-                // actionButtons={ActionButtonColumn}
+                actionButtons={ActionButtonColumn}
                 // rowStyle={(rowData) => ({
                 //   backgroundColor: selectedRow === rowData.id ? 'black' : 'red',
                 // })}
