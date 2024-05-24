@@ -31,6 +31,7 @@ const DataTableWithToogle: React.FC<RowExpansionDemoProps> = ({
           field={col.field}
           header={col.header}
           style={col.style}
+        
           expander={col.expander}
         />
       ))}

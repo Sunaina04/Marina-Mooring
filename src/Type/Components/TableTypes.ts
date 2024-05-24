@@ -84,6 +84,7 @@ export interface RowColumn {
   expander?: boolean | ((data: any, options: ColumnBodyOptions) => boolean)
   field: string
   header: string
+  
   style?: React.CSSProperties
 }
 export interface RowExpansionDemoProps {

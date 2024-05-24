@@ -347,6 +347,13 @@ const CustomerOwner = () => {
               fontWeight: 400,
               backgroundColor: '#FFFFFF',
             }}
+            borderBottom={{border:"1px solid #D5E1EA" }}
+            iconStyle={{position: 'absolute',
+            left: '15px',
+            top: '50%',
+            transform: 'translateY(-50%)',
+            width: '18px',
+            height: '18px',}}
           />
           <div
             data-testid="customer-admin-data"
@@ -422,6 +429,13 @@ const CustomerOwner = () => {
               fontWeight: 400,
               backgroundColor: '#FFFFFF',
             }}
+            borderBottom={{border:"1px solid #D5E1EA" }}
+            iconStyle={{position: 'absolute',
+            left: '15px',
+            top: '50%',
+            transform: 'translateY(-50%)',
+            width: '18px',
+            height: '18px',}}
           />
           {isLoading && (
             <ProgressSpinner

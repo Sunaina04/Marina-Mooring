@@ -231,14 +231,12 @@ const Moorings = () => {
               header={'Moorings'}
               placeholder={'Search by name, ID, mooring no, boat name, phone no.... '}
               iconStyle={{
-                left: '10px',
-                gap: '0px',
-                opacity: '0px',
-                color: '#10293A',
-                fontWeight: '900',
-                fontSize: '1.15rem',
-                lineHeight: '16px',
-                letterSpacing: '0.2px',
+                position: 'absolute',
+                left: '15px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                width: '18px',
+                height: '18px',
               }}
               inputTextStyle={{
                 height: '44px',
@@ -252,9 +250,11 @@ const Moorings = () => {
               }}
               onChange={handleSearchChange}
               value={searchQuery}
+            borderBottom={{border:"1px solid #D5E1EA" }}
+
             />
             <div className="mt-2">
-              <hr style={{ border: ' 0.20px solid #D5E1EA' }} />
+              {/* <hr style={{ border: ' 0.20px solid #D5E1EA' }} /> */}
             </div>
 
             <div className="mt-2">
