@@ -248,9 +248,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       street,
       apt,
       zipCode,
-      state: state?.id ? state?.id : customerData?.state,
-      country: country?.id ? country?.id : customerData?.country,
-      role: role?.id ? role?.id : customerData?.role,
+      stateId: state?.id ? state?.id : customerData?.state,
+      countryId: country?.id ? country?.id : customerData?.country,
+      roleId: role?.id ? role?.id : customerData?.role,
     }
 
     setIsLoading(true)
@@ -329,9 +329,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         apt,
         zipCode,
         password: encodedPassword, // Using base64 encoded password
-        state: state?.id,
-        country: country?.id,
-        role: role?.id,
+        stateId: state?.id,
+        countryId: country?.id,
+        roleId: role?.id,
         confirmPassword: encodedPassword, // Using base64 encoded password for confirmPassword
       }
 
