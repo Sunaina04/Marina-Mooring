@@ -28,6 +28,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   customerUsers,
   permission,
   toastRef,
+  setSelectedCustomerUser,
+  setSelectedCustomer
 }) => {
   const [name, setName] = useState('')
   const [id, setId] = useState('')
@@ -45,6 +47,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const [countriesData, setCountriesData] = useState<Country[]>()
   const [statesData, setStatesData] = useState<State[]>()
   const [errorMessage, setErrorMessage] = useState<string>()
+  
+  
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
   const [successMessage, setSuccessMessage] = useState<string>()
   const [selectedCustomerId, setSelectedCustomerId] = useState<any>()
@@ -172,7 +176,13 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
     return hasUppercase && hasLowercase && hasNumber && hasSpecialChar && hasMinLength
   }
-
+  const handleFocus = () => {
+    const passwordMessage = document.getElementById('password-message')
+    if (passwordMessage) {
+      passwordMessage.style.display = 'block'
+      passwordMessage.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
   const handleInputChange = (fieldName: string, value: any) => {
     switch (fieldName) {
       case 'name':
@@ -201,6 +211,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         setPassword(value)
         setErrorMessage('')
         validatePassword(value)
+        handleFocus()
         break
       case 'confirmPassword':
         setConfirmPassword(value)
@@ -211,13 +222,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     setFieldErrors((prevErrors) => ({ ...prevErrors, [fieldName]: '' }))
   }
 
-  const handleFocus = () => {
-    const passwordMessage = document.getElementById('password-message')
-    if (passwordMessage) {
-      passwordMessage.style.display = 'block'
-      passwordMessage.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
+  
 
   const handleBlur = () => {
     const passwordMessage = document.getElementById('password-message')
@@ -263,6 +268,10 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           life: 3000,
         })
         getUser()
+        if(getCustomerUser){
+          getCustomerUser();
+
+        }
         setModalVisible(false)
         setIsLoading(false)
       } else {
@@ -368,6 +377,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
   const handleBack = () => {
     setModalVisible(false)
+    setSelectedCustomerUser("")
+  setSelectedCustomer("")
   }
 
   const fetchDataAndUpdate = useCallback(async () => {
@@ -410,6 +421,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       document.getElementById(firstErrorField)?.scrollIntoView({ behavior: 'smooth' })
     }
   }, [firstErrorField])
+
 
   useEffect(() => {
     if (role && (role.name === 'FINANCE' || role.name === 'TECHNICIAN')) {
@@ -804,12 +816,11 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                     value={password}
                     onChange={(e) => handleInputChange('password', e.target.value)}
                     type={showPassword ? 'text' : 'password'}
-                    onFocus={handleFocus}
                     onBlur={handleBlur}
                     style={{
                       width: '230px',
                       height: '32px',
-                      border: fieldErrors.password ? '1px solid red' : '1px solid #D5E1EA',
+                      border: fieldErrors.password || errorMessage? '1px solid red' : '1px solid #D5E1EA',
                       borderRadius: '0.50rem',
                       fontSize: '0.8rem',
                       padding: '1.2em',
@@ -832,11 +843,10 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                     }}
                   /> */}
                   <p className="p-1 w-48" id="password">
-                    {fieldErrors.password ? (
-                      <small className="p-error">{fieldErrors.password}</small>
-                    ) : (
-                      ''
-                    )}
+                  
+                    {
+                      fieldErrors.password || errorMessage? <small className="p-error">{fieldErrors.password}{errorMessage}</small>:""
+                    }
                   </p>
                 </div>
 
@@ -845,7 +855,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   id="password-message"
                   className="mt-2 hidden ">
                   <h3 className="font-medium text-sm text-[#000000] flex justify-center mr-3">
-                    Password must contain:
+                  PASSWORD MUST CONTAIN:
                   </h3>
                   <div className="flex items-center gap-6 p-1 mt-2">
                     {passwordCriteria.uppercase ? (

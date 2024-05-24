@@ -235,8 +235,11 @@ const Permission = () => {
               setModalVisible={setModalVisible}
               customerData={selectedCustomer}
               permission={true}
-              toastRef={toast}
-            />
+              toastRef={toast} setSelectedCustomerUser={function (value: any): void {
+                throw new Error('Function not implemented.')
+              } } setSelectedCustomer={function (value: any): void {
+                throw new Error('Function not implemented.')
+              } }            />
           </CustomModal>
         </div>
       </div>

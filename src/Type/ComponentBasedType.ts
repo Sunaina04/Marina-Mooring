@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from 'react'
 import { MooringPayload, VendorPayload, WorkOrderPayload } from './ApiTypes'
 
 export interface CustomerDataProps {
@@ -129,6 +130,8 @@ export interface CustomerAdminDataProps {
   permission?: boolean
   toastRef?: any
   editCustomerMode?: boolean
+  setSelectedCustomerUser: Dispatch<SetStateAction<any>>;
+  setSelectedCustomer:Dispatch<SetStateAction<any>>;
 }
 
 export interface HeaderProps {

@@ -20,7 +20,12 @@ import CountriesData from '../CommonComponent/MetaDataComponent/CountriesData'
 const CustomerOwner = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [selectedCustomer, setSelectedCustomer] = useState<any>()
+  console.log(selectedCustomer, "slectedCustomer");
+
   const [selectedCustomerUser, setSelectedCustomerUser] = useState<any>()
+
+  console.log(selectedCustomerUser, "selectedCustomerUser");
+
   const [editMode, setEditMode] = useState(false)
   const [editCustomer, setEditCustomer] = useState(false)
   const [isRowClick, setIsRowClick] = useState(false)
@@ -28,6 +33,8 @@ const CustomerOwner = () => {
   const [rolesData, setRolesData] = useState<Role[]>()
   const [selectRole, setSelectRole] = useState()
   const [customerAdminId, setCustomerAdminId] = useState('')
+
+
   const [searchText, setSearchText] = useState('')
   const [searchUsersText, setSearchUsersText] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -41,6 +48,9 @@ const CustomerOwner = () => {
 
   const handleModalClose = () => {
     setModalVisible(false)
+    setSelectedCustomerUser('')
+    setSelectedCustomer('')
+    setEditCustomer(false)
   }
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -178,6 +188,7 @@ const CustomerOwner = () => {
         }
       }
     } catch (error) {
+      setIsLoading(false)
       console.error('Error occurred while fetching customer data:', error)
     }
   }, [getUser, searchText])
@@ -206,8 +217,10 @@ const CustomerOwner = () => {
         } else {
           setIsRowClick(false)
           setgetCustomerOwnerUserData([])
+
         }
       } catch (error) {
+        setIsLoading(false)
         console.error('Error occurred while fetching customer data:', error)
       }
     },
@@ -235,7 +248,7 @@ const CustomerOwner = () => {
       <Toast ref={toast} />
       <Header header="MOORMANAGE/Permission" />
 
-      <div className="flex mr-12 justify-end">
+      <div className="flex mr-12 justify-end ">
         {/* Commenting for now, will use later */}
         {/* <div className="mt-8 mr-5 relative">
           <Dropdown
@@ -264,6 +277,7 @@ const CustomerOwner = () => {
           />
         </div> */}
 
+
         <div className="mt-8">
           <CustomModal
             buttonText={'ADD NEW'}
@@ -275,6 +289,8 @@ const CustomerOwner = () => {
               minHeight: '600px',
               borderRadius: '1rem',
               maxHeight: '60% !important',
+
+
             }}
             children={
               <AddNewCustomer
@@ -286,14 +302,15 @@ const CustomerOwner = () => {
                 getCustomerUser={() => getCustomerAdminsUsers(customerAdminId)}
                 closeModal={() => {
                   setEditMode(false)
-                  setSelectedCustomerUser('')
-                  setSelectedCustomer('')
                   setEditCustomer(false)
+
                 }}
                 setModalVisible={setModalVisible}
-                setIsVisible={() => {}}
+                setIsVisible={() => { }}
                 customerUsers={getCustomerOwnerData}
                 toastRef={toast}
+                setSelectedCustomerUser={setSelectedCustomerUser}
+                setSelectedCustomer={setSelectedCustomer}
               />
             }
             headerText={<span className="font-large text-2xl text-[#000000] ml-4">New User</span>}
@@ -377,9 +394,9 @@ const CustomerOwner = () => {
                 }}
                 style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
                 actionButtons={ActionButtonColumn}
-                // rowStyle={(rowData) => ({
-                //   backgroundColor: selectedRow === rowData.id ? 'black' : 'red',
-                // })}
+              // rowStyle={(rowData) => ({
+              //   backgroundColor: selectedRow === rowData.id ? 'black' : 'red',
+              // })}
               />
             )}
           </div>
@@ -447,7 +464,7 @@ const CustomerOwner = () => {
                 data={getCustomerOwnerUserData}
                 columns={customerOwnerUserTableColumn}
                 actionButtons={ActionButtonUsersColumn}
-                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400', }}
               />
             ) : (
               <div className="text-center mt-40">
