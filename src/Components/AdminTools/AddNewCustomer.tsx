@@ -38,6 +38,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const [apt, setApt] = useState('')
   const [zipCode, setZipCode] = useState('')
   const [role, setRole] = useState<Role>()
+  console.log('role', role)
+
   const [companyName, setCompanyName] = useState('')
   const [country, setCountry] = useState<Country>()
   const [state, setState] = useState<State>()
@@ -619,7 +621,12 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                     width: '230px',
                     height: '32px',
                     minHeight: '32px',
-                    border: fieldErrors.selectedCustomerId ? '1px solid red' : '1px solid #D5E1EA',
+                    border:
+                      role?.name == 'CUSTOMER OWNER' || role?.name === 'ADMINISTRATOR'
+                        ? ' '
+                        : fieldErrors.selectedCustomerId
+                          ? '1px solid red'
+                          : '1px solid #D5E1EA',
                     fontSize: '0.8rem',
                     borderRadius: '0.50rem',
                     pointerEvents: customerAdminDropdownEnabled ? 'auto' : 'none',
@@ -629,9 +636,11 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 />
               </div>
               <p className="p-1" id="selectedCustomerId">
-                {fieldErrors.selectedCustomerId && (
-                  <small className="p-error">{fieldErrors.selectedCustomerId}</small>
-                )}
+                {role?.name == 'CUSTOMER OWNER' || role?.name === 'ADMINISTRATOR'
+                  ? ' '
+                  : fieldErrors.selectedCustomerId && (
+                      <small className="p-error">{fieldErrors.selectedCustomerId}</small>
+                    )}
               </p>
             </div>
           )}
