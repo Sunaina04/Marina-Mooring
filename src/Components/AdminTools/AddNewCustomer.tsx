@@ -251,6 +251,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       stateId: state?.id ? state?.id : customerData?.state,
       countryId: country?.id ? country?.id : customerData?.country,
       roleId: role?.id ? role?.id : customerData?.role,
+      customerAdminId: editCustomerMode ? '' : customerData.customerAdminId,
     }
 
     setIsLoading(true)
@@ -258,7 +259,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       const response = await editCustomer({
         payload: editUserPayload,
         id: customerData.id,
-        customerAdminId: editCustomerMode ? '' : customerData.customerAdminId,
       }).unwrap()
       const { status, message } = response as SaveUserResponse
       if (status === 200 || status === 201) {
@@ -279,8 +279,12 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         setErrorMessage(message || 'An error occurred while updating the customer.')
       }
     } catch (error) {
-      setIsLoading(false)
-      setErrorMessage('An unexpected error occurred. Please try again later.')
+      toastRef?.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: error,
+        life: 3000,
+      })
     }
   }
 
@@ -332,13 +336,13 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         stateId: state?.id,
         countryId: country?.id,
         roleId: role?.id,
+        customerOwnerId: permission ? customerAdminId : selectedCustomerAdminId,
         confirmPassword: encodedPassword, // Using base64 encoded password for confirmPassword
       }
 
       // Send the encoded password to the server
       const response = await addCustomer({
         payload: addUserPayload,
-        customerAdminId: permission ? customerAdminId : selectedCustomerAdminId,
       }).unwrap()
       const { status, message } = response as SaveUserResponse
       if (status === 200 || status === 201) {
@@ -349,7 +353,11 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           life: 3000,
         })
         getUser()
+        if (getCustomerUser) {
+          getCustomerUser()
+        }
         setIsLoading(false)
+        setModalVisible(false)
       } else {
         toastRef?.current?.show({
           severity: 'error',
@@ -360,9 +368,13 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         setIsLoading(false)
       }
     } catch (error) {
-      setIsLoading(false)
+      toastRef?.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: error,
+        life: 3000,
+      })
     }
-    setModalVisible(false)
   }
 
   const handleClick = () => {
@@ -444,8 +456,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           overflowY: 'scroll',
           overflowX: 'scroll',
           paddingBottom: '50px',
-        }}
-        className="NoScrollBar">
+        }}>
         <div className="flex gap-8 mt-5 ml-4">
           <div>
             <span className="font-medium text-sm text-[#000000]">
