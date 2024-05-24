@@ -246,7 +246,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       const response = await editCustomer({
         payload: editUserPayload,
         id: customerData.id,
-        customerAdminId: editCustomerMode ? customerData.customerAdminId : '',
+        customerAdminId: editCustomerMode ? '' : customerData.customerAdminId,
       }).unwrap()
       const { status, content, message } = response as SaveUserResponse
       if (status === 200 || status === 201) {
@@ -254,7 +254,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
-          detail: 'User Save successfully',
+          detail: 'User Updated successfully',
           life: 3000,
         })
         getUser()
@@ -339,7 +339,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
-          detail: 'User Save successfully',
+          detail: 'User Saved successfully',
           life: 3000,
         })
 
