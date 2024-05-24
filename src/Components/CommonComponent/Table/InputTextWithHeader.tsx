@@ -11,6 +11,7 @@ const InputTextWithHeader: React.FC<inputHeader> = ({
   headerStyle,
   inputTextStyle,
   value,
+  borderBottom,
 }) => {
   return (
     <>
@@ -36,14 +37,14 @@ const InputTextWithHeader: React.FC<inputHeader> = ({
               src="/assets/images/Search.svg"
               alt="Search Icon"
               className="p-clickable"
-              style={{
-                position: 'absolute',
-                left: '15px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                width: '18px',
-                height: '18px',
-              }}
+              style={iconStyle
+                // position: 'absolute',
+                // left: '15px',
+                // top: '50%',
+                // transform: 'translateY(-50%)',
+                // width: '18px',
+                // height: '18px',
+              }
             />
             <InputText
               placeholder={placeholder}
@@ -53,7 +54,7 @@ const InputTextWithHeader: React.FC<inputHeader> = ({
             />
           </div>
         </div>
-        <span className="border-[1px] border-[#D5E1EA] w-1/10 mt-3 mr-4 ml-4"></span>
+        <span className=" w-1/10 mt-3 mr-4 ml-4" style={borderBottom}></span>
       </div>
     </>
   )

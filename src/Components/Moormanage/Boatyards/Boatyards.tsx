@@ -65,6 +65,8 @@ const Boatyards = () => {
         color: 'red',
         label: 'view',
         underline: true,
+        
+        
       },
     ],
     headerStyle: { backgroundColor: '#00426F', color: 'black' },
@@ -131,18 +133,22 @@ const Boatyards = () => {
 
   const rowExpansionStyle = {
     backgroundColor: '#ECF3F9',
-    fontSize: '12px',
+    fontSize: '10px',
+    fontWeight:'700',
     borderBottom: '1px solid #C0C0C0 ',
+    
   }
 
   const rowExpansionTemplate = (data: BoatYardData) => {
     return (
+      <>
+      {boatyardsData ?
       <DataTable>
         <Column
           field="address"
           header="Address"
           style={rowExpansionStyle}
-          headerStyle={{ backgroundColor: '#00426F', color: '#FFFFFF' }}
+          headerStyle={{ backgroundColor: '#00426F', color: '#FFFFFF'  }}
         />
         <Column
           field="mooringInventoried"
@@ -156,7 +162,13 @@ const Boatyards = () => {
           style={rowExpansionStyle}
           headerStyle={{ backgroundColor: '#00426F', color: '#FFFFFF' }}
         />
-      </DataTable>
+      </DataTable>:
+      <div>
+              <img src="/assets/images/empty.png" alt="Empty Data" className="w-20 mx-auto mb-4" />
+
+      </div>
+      }
+      </>
     )
   }
 
@@ -174,6 +186,7 @@ const Boatyards = () => {
         field: 'id',
         header: 'ID',
         style: columnStyle,
+        
         // body: () => {},
       },
       {
@@ -303,7 +316,12 @@ const Boatyards = () => {
               borderTopRightRadius: '10px',
               height:'4.8vw'
             }}
-            iconStyle={{ marginLeft: '34px', color: '#00426F', marginTop: '0px' }}
+            iconStyle={{ position: 'absolute',
+            left: '15px',
+            top: '60%',
+            transform: 'translateY(-50%)',
+            width: '18px',
+            height: '18px', }}
            
             inputTextStyle={{
               flexGrow: 1,
@@ -321,7 +339,7 @@ const Boatyards = () => {
             }}
           />
           {boatyardsData.length !== 0 ? (
-            <div className="bg-#00426F overflow-x-hidden overflow-y-scroll h-[500px] mt-[20px] ml-[15px] mr-[15px] table-container  ">
+            <div className="bg-#00426F overflow-x-hidden overflow-y-scroll h-[500px] mt-[3px] ml-[15px] mr-[15px] table-container  ">
               <DataTableWithToogle
                 data={boatyardsData}
                 rowExpansionTemplate={rowExpansionTemplate}
@@ -355,26 +373,26 @@ const Boatyards = () => {
           </div>
           <div className=" bg-[] mt-3 ">
             <div
-              className="flex justify-start gap-[4.2vw] ml-4 mt-[30px]  "
-              style={{ fontSize: '12px', fontWeight: '700' }}>
+              className="flex justify-start  ml-4 mt-[30px]  "
+              style={{ fontSize: '10px', fontWeight: '700' }}>
               <p >{properties.address}</p>
-              <p>{properties.mooringInventoried}</p>
-              <p>{properties.boatyardGPSCoordinates}</p>
+              <p className='ml-[8.4vw]'>{properties.mooringInventoried}</p>
+              <p className='ml-[5.7vw]'>{properties.boatyardGPSCoordinates}</p>
             </div>
           </div>
 
           <div className="border-[1px] border-[#D5E1EA]  w-[full] mt-3 "></div>
           {selectedBoatYard ? (
             <>
-              <div className="flex justify-start mt-4 gap-[5vw] font-normal text-[12px] ">
-                <p className="ml-3.5 w-[4vw]">
-                  {selectedBoatYard?.street}
-                  {selectedBoatYard?.apt}
-                  {selectedBoatYard?.state}
-                  {selectedBoatYard?.country}t
+              <div className="flex justify-start mt-4  font-normal text-[12px] ">
+                <p className="ml-3.5 w-[6vw]">
+                  {selectedBoatYard?.street}<br/>
+                  {selectedBoatYard?.apt}<br/>
+                  {selectedBoatYard?.state} ,
+                  {selectedBoatYard?.country}
                 </p>
-                <p className="w-15">{selectedBoatYard?.mooringInventoried}</p>
-                <p className="ml-24  underline">{selectedBoatYard?.gpsCoordinates}</p>
+                <p className="w-15 ml-[5.4vw]">{selectedBoatYard?.mooringInventoried}</p>
+                <p className="ml-[12vw]  underline">{selectedBoatYard?.gpsCoordinates}</p>
               </div>
               <div
                 className=" h-[150px]  mt-[20px] mb-3 "
@@ -389,7 +407,8 @@ const Boatyards = () => {
                 }}>
                 <CustomSelectPositionMap onPositionChange={handlePositionChange} />
               </div>
-              <div className="bg-#00426F overflow-x-hidden overflow-y-scroll mt-[13px] h-[250px] table-container  ">
+              <div className="bg-#00426F overflow-x-hidden  mt-[13px] h-[250px] table-container  ">
+                
                 <DataTableComponent
                   tableStyle={{
                     fontSize: '12px',
@@ -400,13 +419,14 @@ const Boatyards = () => {
                   columns={tableColumnsTechnicians}
                   actionButtons={ActionButtonColumn}
                   style={{
-                    borderBottom: '1px solid #D5E1EA ',
-                  
+                    borderBottom: '1px solid #D5E1EA  ',
+                    
                     marginLeft:"5px",
                     fontWeight: '400',
                     color: '#000000',
                   }}
                 />
+                
               </div>
             </>
           ) : (

@@ -160,4 +160,5 @@ export interface inputHeader {
   headerStyle?: React.CSSProperties
   inputTextStyle?: React.CSSProperties
   value?: string | undefined
+  borderBottom?:React.CSSProperties
 }

@@ -1,6 +1,6 @@
 const textColors = {
   green: 'text-green-600',
-  red: 'text-red-500',
+  red: 'text-[#FF0000]',
   black: 'text-black-500',
   yellow:'#BFAC01'
 }
