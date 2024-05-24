@@ -9,27 +9,23 @@ const ResetPassword = () => {
   const urlParams = new URLSearchParams(window.location.search)
   const [searchParams] = useSearchParams()
   const tokenFromUrl = searchParams.get('token')
-  // const tokenFromUrl = urlParams.get('token')
   const [resetPassword] = useResetPasswordMutation()
   const [message, setMessage] = useState<string>('')
-  const [passwords, setPasswords] = useState({
-    newPassword: '',
-    confirmPassword: '',
-  })
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
   const [showPassword, setShowPassword] = useState({
     newPassword: false,
     confirmPassword: false,
   })
   const navigateToLoginPage = useNavigate()
 
-  console.log('I AM HERE, Token from URL:', tokenFromUrl)
-
   const handleChange = (e: { target: { name: any; value: any } }) => {
     const { name, value } = e.target
-    setPasswords((prevPasswords) => ({
-      ...prevPasswords,
-      [name]: value,
-    }))
+    if (name === 'newPassword') {
+      setPassword(value)
+    } else if (name === 'confirmPassword') {
+      setConfirmPassword(value)
+    }
     console.log('Updated passwords state:', { [name]: value })
   }
 
@@ -41,28 +37,26 @@ const ResetPassword = () => {
   }
 
   const handleResetPassword = async () => {
-    if (!passwords.newPassword || !passwords.confirmPassword) {
+    if (!password || !confirmPassword) {
       setMessage('Both password fields are required.')
       return
     }
 
-    if (passwords.newPassword !== passwords.confirmPassword) {
+    if (password !== confirmPassword) {
       setMessage('Passwords do not match.')
       return
     }
 
     const resetPassPayload = {
-      newPassword: passwords.newPassword,
-      confirmPassword: passwords.confirmPassword,
+      newPassword: btoa(password), // Encoding password using btoa
+      confirmPassword: btoa(password),
     }
 
     try {
-      console.log('Sending reset password request with token:', tokenFromUrl)
       const response = await resetPassword({
         token: tokenFromUrl,
         payload: resetPassPayload,
       }).unwrap()
-      console.log('Response from server:', response)
       const { status, content, message } = response as ResetPasswordResponse
       if (status === 200) {
         setMessage('Password reset successfully.')
@@ -119,23 +113,8 @@ const ResetPassword = () => {
                   name="newPassword"
                   type={showPassword.newPassword ? 'text' : 'password'}
                   onChange={handleChange}
-                  value={passwords.newPassword}
+                  value={password}
                 />
-                <img
-                  src="/assets/images/key.png"
-                  alt="Key Icon"
-                  className="p-clickable"
-                  style={{
-                    position: 'absolute',
-                    left: '10px',
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    width: '20px',
-                    height: '20px',
-                    color: '#000000',
-                  }}
-                />
-
                 {/* Password Visibility */}
                 <img
                   src={
@@ -173,23 +152,8 @@ const ResetPassword = () => {
                   name="confirmPassword"
                   type={showPassword.confirmPassword ? 'text' : 'password'}
                   onChange={handleChange}
-                  value={passwords.confirmPassword}
+                  value={confirmPassword}
                 />
-                <img
-                  src="/assets/images/key.png"
-                  alt="Key Icon"
-                  className="p-clickable"
-                  style={{
-                    position: 'absolute',
-                    left: '10px',
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    width: '20px',
-                    height: '20px',
-                    color: '#000000',
-                  }}
-                />
-
                 {/* Password Visibility */}
                 <img
                   src={
