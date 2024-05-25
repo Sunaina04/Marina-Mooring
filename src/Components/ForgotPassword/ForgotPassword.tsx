@@ -6,6 +6,7 @@ import { useForgotPasswordMutation } from '../../Services/Authentication/AuthApi
 import { InputText } from 'primereact/inputtext'
 import './ForgotPassword.module.css'
 import { ProgressSpinner } from 'primereact/progressspinner'
+
 const ForgotPassword = () => {
   const navigateToLoginPage = useNavigate()
   const [validateEmail] = useForgotPasswordMutation()

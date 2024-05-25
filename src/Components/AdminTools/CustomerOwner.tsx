@@ -164,15 +164,22 @@ const CustomerOwner = () => {
         params = { searchText } // Add searchText to params if it exists
       }
       const response = await getUser(params).unwrap()
-      const { status, content } = response as GetUserResponse
+      const { status, message, content } = response as GetUserResponse
       if (status === 200 && Array.isArray(content?.content)) {
+        setIsLoading(false)
         if (content?.content.length > 0) {
-          setIsLoading(false)
           setgetCustomerOwnerData(content?.content)
         } else {
           setgetCustomerOwnerData([])
-          setIsLoading(false)
         }
+      } else {
+        setIsLoading(false)
+        toast?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
       }
     } catch (error) {
       console.error('Error occurred while fetching customer data:', error)
@@ -187,7 +194,7 @@ const CustomerOwner = () => {
           customerOwnerId: id,
           searchText: searchUsersText,
         }).unwrap()
-        const { status, content } = response as GetUserResponse
+        const { status, message, content } = response as GetUserResponse
         if (status === 200 && Array.isArray(content?.content)) {
           setIsLoading(false)
           if (content?.content.length > 0) {
@@ -202,6 +209,13 @@ const CustomerOwner = () => {
           }
         } else {
           setIsRowClick(false)
+          setIsLoading(false)
+          toast?.current?.show({
+            severity: 'error',
+            summary: 'Error',
+            detail: message,
+            life: 3000,
+          })
           setgetCustomerOwnerUserData([])
         }
       } catch (error) {
@@ -286,8 +300,7 @@ const CustomerOwner = () => {
                   }
                 }}
                 closeModal={() => {
-                  setEditMode(false)
-                  setEditCustomer(false)
+                  handleModalClose()
                 }}
                 setModalVisible={setModalVisible}
                 setEditCustomer={setEditCustomer}

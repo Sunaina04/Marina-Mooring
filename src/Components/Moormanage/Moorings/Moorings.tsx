@@ -30,7 +30,6 @@ const Moorings = () => {
   const [selectedMooring, setSelectedMooring] = useState<MooringPayload>()
 
   const handleInputChange = (e: InputSwitchChangeEvent) => {
-    console.log(e.value)
     setIsChecked(e.value)
   }
 
@@ -250,12 +249,9 @@ const Moorings = () => {
               }}
               onChange={handleSearchChange}
               value={searchQuery}
-            borderBottom={{border:"1px solid #D5E1EA" }}
-
+              borderBottom={{ border: '1px solid #D5E1EA' }}
             />
-            <div className="mt-2">
-              {/* <hr style={{ border: ' 0.20px solid #D5E1EA' }} /> */}
-            </div>
+            <div className="mt-2">{/* <hr style={{ border: ' 0.20px solid #D5E1EA' }} /> */}</div>
 
             <div className="mt-2">
               {/* {filteredMooringData.length === 0 ? (

@@ -4,6 +4,7 @@ import { useResetPasswordMutation } from '../../Services/Authentication/AuthApi'
 import { ResetPasswordResponse } from '../../Type/ApiTypes'
 import { useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
+import { ProgressSpinner } from 'primereact/progressspinner'
 
 const ResetPassword = () => {
   const urlParams = new URLSearchParams(window.location.search)
@@ -26,6 +27,7 @@ const ResetPassword = () => {
     length: false,
   })
   const [isTyping, setIsTyping] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleChange = (e: { target: { name: any; value: any } }) => {
     const { name, value } = e.target
@@ -37,7 +39,7 @@ const ResetPassword = () => {
         lowercase: /[a-z]/.test(value),
         number: /\d/.test(value),
         specialChar: /[!@#$%^&*(),.?":{}|<>]/.test(value),
-        length: value.length == 10,
+        length: value.length >= 9,
       })
 
       // Check if all criteria are met
@@ -75,6 +77,7 @@ const ResetPassword = () => {
       confirmPassword: confirmPassword,
     }
 
+    setIsLoading(true)
     try {
       const response = await resetPassword({
         token: tokenFromUrl,
@@ -84,14 +87,12 @@ const ResetPassword = () => {
       if (status === 200) {
         setMessage('Password reset successfully.')
         navigateToLoginPage('/Login')
+        setIsLoading(false)
       } else {
         setMessage(message || 'Password reset failed.')
       }
     } catch (error: any) {
       console.error('Error occurred during password reset:', error)
-      if (error.data) {
-        console.log(error.data)
-      }
     }
   }
 
@@ -139,6 +140,19 @@ const ResetPassword = () => {
                   value={password}
                 />
                 <img
+                  src="/assets/images/key.png"
+                  alt="Key Icon"
+                  className="p-clickable"
+                  style={{
+                    position: 'absolute',
+                    left: '10px',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    width: '20px',
+                    height: '20px',
+                  }}
+                />
+                <img
                   src={
                     showPassword.confirmPassword
                       ? '/assets/images/eye.png'
@@ -171,7 +185,7 @@ const ResetPassword = () => {
                     maxHeight: '200px',
                     overflowY: 'auto',
                     zIndex: '999',
-                    display: isTyping ? 'block' : 'none', // Show only when typing
+                    display: isTyping ? 'block' : 'none',
                   }}
                   id="password-message">
                   <h3 className="font-medium text-sm text-[#000000] flex justify-center mr-3">
@@ -245,6 +259,19 @@ const ResetPassword = () => {
                   </div>
                 </div>
               </div>
+              {isLoading && (
+                <ProgressSpinner
+                  style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: '50px',
+                    height: '50px',
+                  }}
+                  strokeWidth="4"
+                />
+              )}
               <div className="p-input-icon-left relative flex justify-center">
                 <InputText
                   style={{
@@ -261,6 +288,19 @@ const ResetPassword = () => {
                   type={showPassword.confirmPassword ? 'text' : 'password'}
                   onChange={handleChange}
                   value={confirmPassword}
+                />
+                <img
+                  src="/assets/images/key.png"
+                  alt="Key Icon"
+                  className="p-clickable"
+                  style={{
+                    position: 'absolute',
+                    left: '10px',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    width: '20px',
+                    height: '20px',
+                  }}
                 />
                 {/* Password Visibility */}
                 <img

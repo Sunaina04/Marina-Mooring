@@ -269,11 +269,12 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         if (getCustomerUser) {
           getCustomerUser()
         }
-        setModalVisible(false)
-        setIsLoading(false)
         if (setEditCustomer) {
           setEditCustomer(false)
         }
+        setModalVisible(false)
+        setIsLoading(false)
+        closeModal()
       } else {
         setIsLoading(false)
         toastRef?.current?.show({
@@ -579,7 +580,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 }}
                 options={rolesData}
                 optionLabel="name"
-                disabled={editCustomerMode}
+                disabled={editCustomerMode || editMode}
                 editable
                 placeholder="Select"
                 style={{
@@ -589,6 +590,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   border: fieldErrors.role ? '1px solid red' : '1px solid #D5E1EA',
                   fontSize: '0.8rem',
                   borderRadius: '0.50rem',
+                  cursor: editCustomerMode || editMode ? 'not-allowed' : 'auto',
                 }}
               />
             </div>
