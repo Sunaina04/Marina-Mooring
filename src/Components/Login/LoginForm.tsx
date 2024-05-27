@@ -79,6 +79,7 @@ export default function LoginForm() {
       const response = await login(loginPayload).unwrap()
       const { status, user, token, message } = response as LoginResponse
       if (status === 200) {
+        sessionStorage.setItem('token', token)
         dispatch(setUserData({ ...user }))
         dispatch(setToken(token))
         setUsername('')
