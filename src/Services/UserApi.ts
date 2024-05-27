@@ -8,13 +8,12 @@ const baseQueryWithInterceptor = async (
   extraOptions: { signal?: AbortSignal },
 ) => {
   try {
-    // const token = sessionStorage.getItem('token')
-    // const newToken = await refreshToken(token)
     const result = await baseQuery(args as FetchArgs | string, api, extraOptions)
     return result
   } catch (error: any) {
+    console.log('in catch', error)
     if (error.status === 401 || error.status === 500) {
-      const token = sessionStorage.getItem('token')
+      const token = sessionStorage.getItem('refreshToken')
       const newToken = await refreshToken(token)
       return baseQuery(args as FetchArgs | string, api, extraOptions)
     }

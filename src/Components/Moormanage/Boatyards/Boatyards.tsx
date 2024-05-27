@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import CustomModal from '../../CustomComponent/CustomModal'
 import AddBoatyards from './AddBoatyards'
 import { InputText } from 'primereact/inputtext'
@@ -21,7 +21,6 @@ import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
-import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
 import { properties } from '../../Utils/MeassageProperties'
 import Header from '../../Layout/LayoutComponents/Header'
 import { IoSearchSharp } from 'react-icons/io5'
@@ -40,10 +39,15 @@ const Boatyards = () => {
   const [position, setPosition] = useState<{ lat: number; lng: number } | undefined>(undefined)
   const [getBoatyards] = useGetBoatyardsMutation()
   const [getMooringsWithBoatyard] = useGetMooringWithBoatyardMutation()
-  const [selectedRowId, setSelectedRowID] = useState(null)
+  const [selectedRowId, setSelectedRowID] = useState()
+  const [searchText, setSearchText] = useState('')
 
   const handlePositionChange = (lat: number, lng: number) => {
     setPosition({ lat, lng })
+  }
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value)
   }
 
   const handleButtonClick = () => {
@@ -100,26 +104,6 @@ const Boatyards = () => {
     ],
     [],
   )
-
-  const getBoatyardsData = async () => {
-    try {
-      await getBoatyards({})
-        .unwrap()
-        .then(async (response) => {
-          const { status, content } = response as BoatYardResponse
-          if (status === 200 && Array.isArray(content.content)) {
-            setboatyardsData(content.content)
-            setFilteredboatyardsData(content.content)
-          }
-        })
-    } catch (error) {
-      console.error('Error fetching getBoatyardsdata:', error)
-    }
-  }
-
-  useEffect(() => {
-    getBoatyardsData()
-  }, [])
 
   const allowExpansion = (rowData: BoatYardPayload): boolean => {
     return !!rowData.mooringInventoried
@@ -230,7 +214,24 @@ const Boatyards = () => {
       backgroundColor: rowData.id === selectedRowId ? '#FFD700' : '',
     }
   }
-  const getMooringsWithBoatyardData = async () => {
+
+  const getBoatyardsData = useCallback(async () => {
+    try {
+      await getBoatyards({ searchText: searchText })
+        .unwrap()
+        .then(async (response) => {
+          const { status, content } = response as BoatYardResponse
+          if (status === 200 && Array.isArray(content.content)) {
+            setboatyardsData(content.content)
+            setFilteredboatyardsData(content.content)
+          }
+        })
+    } catch (error) {
+      console.error('Error fetching getBoatyardsdata:', error)
+    }
+  }, [getBoatyards, searchText])
+
+  const getMooringsWithBoatyardData = useCallback(async () => {
     try {
       await getMooringsWithBoatyard({ id: selectedBoatYard?.id })
         .unwrap()
@@ -243,14 +244,17 @@ const Boatyards = () => {
     } catch (error) {
       console.error('Error fetching getMooringsWithBoatyardData:', error)
     }
-  }
+  }, [selectedBoatYard])
 
   useEffect(() => {
-    getBoatyardsData()
-  }, [])
+    const timeoutId = setTimeout(() => {
+      getBoatyardsData()
+    }, 600)
+    return () => clearTimeout(timeoutId)
+  }, [searchText])
 
   useEffect(() => {
-    getMooringsWithBoatyardData()
+    if (selectedBoatYard) getMooringsWithBoatyardData()
   }, [selectedBoatYard])
 
   return (
@@ -320,6 +324,8 @@ const Boatyards = () => {
             </div>
           </div>
           <InputTextWithHeader
+            value={searchText}
+            onChange={handleSearch}
             placeholder={'Search by name, ID,address...'}
             iconStyle={{
               position: 'absolute',
@@ -422,7 +428,6 @@ const Boatyards = () => {
                   actionButtons={ActionButtonColumn}
                   style={{
                     borderBottom: '1px solid #D5E1EA  ',
-
                     marginLeft: '5px',
                     fontWeight: '400',
                     color: '#000000',

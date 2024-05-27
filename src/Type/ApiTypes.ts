@@ -103,6 +103,7 @@ export interface LoginResponse {
   message: string
   user: UserData
   token: string
+  refreshToken: string
   role: RoleData
 }
 

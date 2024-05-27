@@ -5,7 +5,6 @@ import { properties } from '../Utils/MeassageProperties'
 import { ActionButtonColumnProps } from '../../Type/Components/TableTypes'
 import { CustomerPayload, GetUserResponse } from '../../Type/ApiTypes'
 import Header from '../Layout/LayoutComponents/Header'
-import useMetaData from '../CommonComponent/MetaDataComponent/RolesData'
 import { Role } from '../../Type/CommonType'
 import { useGetUsersMutation } from '../../Services/AdminTools/AdminToolsApi'
 import AddNewCustomer from './AddNewCustomer'
@@ -13,9 +12,6 @@ import './CustomerOwner.module.css'
 import InputTextWithHeader from '../CommonComponent/Table/InputTextWithHeader'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { Toast } from 'primereact/toast'
-import RolesData from '../CommonComponent/MetaDataComponent/RolesData'
-import StatesData from '../CommonComponent/MetaDataComponent/StatesData'
-import CountriesData from '../CommonComponent/MetaDataComponent/CountriesData'
 
 const CustomerOwner = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -28,7 +24,6 @@ const CustomerOwner = () => {
   const [rolesData, setRolesData] = useState<Role[]>()
   const [selectRole, setSelectRole] = useState()
   const [customerAdminId, setCustomerAdminId] = useState('')
-
   const [searchText, setSearchText] = useState('')
   const [searchUsersText, setSearchUsersText] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -90,7 +85,6 @@ const CustomerOwner = () => {
   }
 
   const columnStyle = {
-    // width: '10vw',
     borderBottom: '1px solid #D5E1EA',
     backgroundColor: '#FFFFFF',
     color: '#000000',

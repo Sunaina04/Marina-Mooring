@@ -30,21 +30,12 @@ const InputTextWithHeader: React.FC<inputHeader> = ({
               width: '100%',
               display: 'flex',
               margin: ' 0 20px',
-              
-              
             }}>
             <img
               src="/assets/images/Search.svg"
               alt="Search Icon"
               className="p-clickable"
-              style={iconStyle
-                // position: 'absolute',
-                // left: '15px',
-                // top: '50%',
-                // transform: 'translateY(-50%)',
-                // width: '18px',
-                // height: '18px',
-              }
+              style={iconStyle}
             />
             <InputText
               placeholder={placeholder}
