@@ -26,7 +26,6 @@ import { properties } from '../../Utils/MeassageProperties'
 import Header from '../../Layout/LayoutComponents/Header'
 import { IoSearchSharp } from 'react-icons/io5'
 import CustomSelectPositionMap from '../../Map/CustomSelectPositionMap'
-import './Boatyard.css'
 
 const Boatyards = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -313,16 +312,15 @@ const Boatyards = () => {
         <div
           data-testid="dataTable"
           className="flex-grow  bg-[#FFFFFF] rounded-xl border-[1px] border-[#D5E1EA]  w-[515px] h-[650px] mb-0 ">
+          <div className="text-sm font-extrabold rounded-sm w-full   bg-[#D9D9D9]">
+            <div
+              className="flex  align-items-center justify-between  bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px]"
+              style={{ color: '#FFFFFF' }}>
+              <h1 className="p-4">{properties.boatyardDetail}</h1>
+            </div>
+          </div>
           <InputTextWithHeader
-            header={properties.boatyardDetail}
             placeholder={'Search by name, ID,address...'}
-            headerStyle={{
-              backgroundColor: '#00426F',
-              color: '#FFFFFF',
-              borderTopLeftRadius: '10px',
-              borderTopRightRadius: '10px',
-              height: '4.8vw',
-            }}
             iconStyle={{
               position: 'absolute',
               left: '15px',

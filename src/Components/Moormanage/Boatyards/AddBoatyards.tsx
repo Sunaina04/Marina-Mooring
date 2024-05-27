@@ -21,8 +21,8 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
   const [phone, setPhone] = useState('')
   const [address, setAddress] = useState('')
   const [aptSuite, setAptSuite] = useState('')
-  const [state, setState] = useState('')
-  const [country, setCountry] = useState()
+  const [state, setState] = useState<State>()
+  const [country, setCountry] = useState<Country>()
   const [zipCode, setZipCode] = useState('')
 
   const [mainContact, setMainContact] = useState('')
@@ -98,8 +98,8 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
       return
     }
 
-    const selectedState = statesData?.find((stateItem) => stateItem.name === state)
-    const selectedCountry = countriesData?.find((countryItem) => countryItem.name === country)
+    // const selectedState = statesData?.find((stateItem) => stateItem.id === state)
+    // const selectedCountry = countriesData?.find((countryItem) => countryItem.id === country)
 
     const payload = {
       boatyardId: boatyardId,
@@ -110,11 +110,12 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
       apt: aptSuite,
       zipCode: zipCode,
       contact: mainContact,
-      state: selectedState,
-      country: selectedCountry,
+      stateId: state?.id,
+      countryId: country?.id,
       mainContact: mainContact,
       gpsCoordinates: gpsCoordinatesValue,
     }
+    console.log(payload)
     const response = await addBoatyard(payload).unwrap()
     const { status } = response as BoatYardResponse
     if (status === 200 || status === 201) {

@@ -8,100 +8,100 @@ import Header from '../../Layout/LayoutComponents/Header'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 
 const AccountRecievable = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [accountRecievableData, setAccountRecievableData] = useState<MoorPayProps[]>([])
+  // const [isModalOpen, setIsModalOpen] = useState(false)
+  // const [accountRecievableData, setAccountRecievableData] = useState<MoorPayProps[]>([])
 
-  const handleButtonClick = () => {
-    // setIsModalOpen(true)
-  }
+  // const handleButtonClick = () => {
+  //   // setIsModalOpen(true)
+  // }
 
-  const handleModalClose = () => {
-    setIsModalOpen(false)
-  }
+  // const handleModalClose = () => {
+  //   setIsModalOpen(false)
+  // }
 
-  const header = (
-    <div className="flex flex-wrap align-items-center ">
-      <h1 className="text-xl font-bold text-white">Account Receivable</h1>
-    </div>
-  )
+  // const header = (
+  //   <div className="flex flex-wrap align-items-center ">
+  //     <h1 className="text-xl font-bold text-white">Account Receivable</h1>
+  //   </div>
+  // )
 
-  const columnStyle = {
-    borderBottom: '1px solid #C0C0C0',
-    backgroundColor: '#FFFFFF',
-    color: '#000000',
-    fontWeight: 'bold',
-  }
+  // const columnStyle = {
+  //   borderBottom: '1px solid #C0C0C0',
+  //   backgroundColor: '#FFFFFF',
+  //   color: '#000000',
+  //   fontWeight: 'bold',
+  // }
 
-  const accountRecievableTableColumn = useMemo(
-    () => [
-      {
-        id: 'invoice',
-        label: 'Invoice',
-        style: columnStyle,
-      },
-      {
-        id: 'mooringId',
-        label: 'Mooring ID',
-        style: columnStyle,
-      },
-      {
-        id: 'customerName',
-        label: 'Customer Name',
-        style: columnStyle,
-      },
-      {
-        id: 'technicianName',
-        label: 'Technician Name',
-        style: columnStyle,
-      },
-      {
-        id: 'services',
-        label: 'Services',
-        style: columnStyle,
-      },
-      {
-        id: 'time',
-        label: 'Time',
-        style: columnStyle,
-      },
-      {
-        id: 'amount',
-        label: 'Amount',
-        style: columnStyle,
-      },
-    ],
-    [],
-  )
+  // const accountRecievableTableColumn = useMemo(
+  //   () => [
+  //     {
+  //       id: 'invoice',
+  //       label: 'Invoice',
+  //       style: columnStyle,
+  //     },
+  //     {
+  //       id: 'mooringId',
+  //       label: 'Mooring ID',
+  //       style: columnStyle,
+  //     },
+  //     {
+  //       id: 'customerName',
+  //       label: 'Customer Name',
+  //       style: columnStyle,
+  //     },
+  //     {
+  //       id: 'technicianName',
+  //       label: 'Technician Name',
+  //       style: columnStyle,
+  //     },
+  //     {
+  //       id: 'services',
+  //       label: 'Services',
+  //       style: columnStyle,
+  //     },
+  //     {
+  //       id: 'time',
+  //       label: 'Time',
+  //       style: columnStyle,
+  //     },
+  //     {
+  //       id: 'amount',
+  //       label: 'Amount',
+  //       style: columnStyle,
+  //     },
+  //   ],
+  //   [],
+  // )
 
-  const ActionButtonColumn: ActionButtonColumnProps = {
-    header: 'Action',
-    buttons: [
-      {
-        color: 'green',
-        label: 'Approve',
-        filled: true,
-      },
-      {
-        color: 'red',
-        label: 'Deny',
-        filled: true,
-      },
-    ],
-    headerStyle: {
-      backgroundColor: '#FFFFFF',
-      height: '3.50rem',
-      fontWeight: 'bold',
-      color: 'black',
-      borderBottom: '1px solid #C0C0C0',
-    },
-    style: { borderBottom: '1px solid #D5E1EA' },
-  }
+  // const ActionButtonColumn: ActionButtonColumnProps = {
+  //   header: 'Action',
+  //   buttons: [
+  //     {
+  //       color: 'green',
+  //       label: 'Approve',
+  //       filled: true,
+  //     },
+  //     {
+  //       color: 'red',
+  //       label: 'Deny',
+  //       filled: true,
+  //     },
+  //   ],
+  //   headerStyle: {
+  //     backgroundColor: '#FFFFFF',
+  //     height: '3.50rem',
+  //     fontWeight: 'bold',
+  //     color: 'black',
+  //     borderBottom: '1px solid #C0C0C0',
+  //   },
+  //   style: { borderBottom: '1px solid #D5E1EA' },
+  // }
 
   return (
     <>
       <Header header="MOORPAY/Account Receivable" />
 
-      <div className="flex justify-end mr-16">
+      {/* <div className="flex justify-end mr-16">
         <div className="flex gap-4 ml-[18rem] text-[gray] font-extrabold mt-14">
           <div style={{ marginTop: '0.8rem' }}>
             <img src="/assets/images/downloadIcon.png" alt="" className="w-5 " />
@@ -174,12 +174,11 @@ const AccountRecievable = () => {
           </span>
         </div>
 
-        {/* No Data Avaialble */}
         <div className="text-center mt-40">
           <img src="/assets/images/empty.png" alt="Empty Data" className="w-32 mx-auto mb-4" />
           <p className="text-gray-500">No data available</p>
         </div>
-        {/* <DataTableComponent
+        <DataTableComponent
           tableStyle={{
             fontSize: '12px',
             color: '#000000',
@@ -189,8 +188,8 @@ const AccountRecievable = () => {
           columns={accountRecievableTableColumn}
           actionButtons={ActionButtonColumn}
           style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
-        /> */}
-      </div>
+        />
+      </div> */}
     </>
   )
 }

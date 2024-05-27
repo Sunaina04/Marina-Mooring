@@ -98,7 +98,7 @@ const AccountPayable = () => {
     <>
       <Header header="MOORPAY/Account Payable" />
 
-      <div className="flex justify-end mr-16">
+      {/* <div className="flex justify-end mr-16">
         <div className="flex gap-4 ml-[18rem] text-[gray] font-extrabold mt-14">
           <div style={{ marginTop: '0.8rem' }}>
             <img src="/assets/images/downloadIcon.png" alt="" className="w-5 " />
@@ -170,12 +170,11 @@ const AccountPayable = () => {
             Account Payable
           </span>
         </div>
-        {/* No Data Avaialble */}
         <div className="text-center mt-40">
           <img src="/assets/images/empty.png" alt="Empty Data" className="w-32 mx-auto mb-4" />
           <p className="text-gray-500">No data available</p>
         </div>
-        {/* <DataTableComponent
+        <DataTableComponent
           tableStyle={{
             fontSize: '12px',
             color: '#000000',
@@ -185,8 +184,8 @@ const AccountPayable = () => {
           columns={accountPayableTableColumns}
           actionButtons={ActionButtonColumn}
           style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
-        /> */}
-      </div>
+        />
+      </div> */}
     </>
   )
 }

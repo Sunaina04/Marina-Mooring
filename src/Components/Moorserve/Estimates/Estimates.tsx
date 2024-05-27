@@ -150,7 +150,7 @@ const Estimates = () => {
     <>
       <Header header="MOORSERVE/Estimates" />
 
-      <div className="flex justify-end gap-6 mt-14 mr-16">
+      {/* <div className="flex justify-end gap-6 mt-14 mr-16">
         <div className="flex text-blue-900 font-extrabold">
           <div>
             <img
@@ -241,13 +241,12 @@ const Estimates = () => {
           </div>
         </div>
 
-        {/* No Data Avaialble */}
         <div className="text-center mt-40">
           <img src="/assets/images/empty.png" alt="Empty Data" className="w-32 mx-auto mb-4" />
           <p className="text-gray-500">No data available</p>
         </div>
 
-        {/* <DataTableSearchFieldComponent
+        <DataTableSearchFieldComponent
           tableStyle={{
             fontSize: '12px',
             color: '#000000',
@@ -257,8 +256,8 @@ const Estimates = () => {
           columns={workOrderColumns}
           actionButtons={ActionButtonColumn}
           style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '200' }}
-        /> */}
-      </div>
+        />
+      </div> */}
     </>
   )
 }

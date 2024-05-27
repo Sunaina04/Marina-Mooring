@@ -23,7 +23,10 @@ const CustomSelectPositionMap: React.FC<CustomSelectPositionMapProps> = ({
         zoomControl={false}
         // ref={setMap}
       >
-        <TileLayer url="/assets/images/map.png" noWrap={true} />
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        />
         <Marker position={center} />
       </MapContainer>
     ),

@@ -12,121 +12,115 @@ import { IoSearch } from 'react-icons/io5'
 import { InputText } from 'primereact/inputtext'
 import Header from '../../Layout/LayoutComponents/Header'
 
-const useFetchTechnicians = () => {
-  const [technicianData, setTechnicianData] = useState<TechnicianPayload[]>([])
-  const [filteredTechnicianData, setFilteredTechnicianData] = useState<TechnicianPayload[]>([])
-  const [getTechnicians] = useGetTechnicianMutation()
-  const getTechniciansData = useCallback(async () => {
-    try {
-      const response = await getTechnicians({}).unwrap()
-      const { status, content } = response as TechnicianResponse
-      if (status === 200 && Array.isArray(content)) {
-        setTechnicianData(content)
-        setFilteredTechnicianData(content)
-      }
-    } catch (error) {
-      console.error('Error fetching technician data:', error)
-    }
-  }, [getTechnicians])
+// const useFetchTechnicians = () => {
+//   const [technicianData, setTechnicianData] = useState<TechnicianPayload[]>([])
+//   const [filteredTechnicianData, setFilteredTechnicianData] = useState<TechnicianPayload[]>([])
+//   const [getTechnicians] = useGetTechnicianMutation()
+//   const getTechniciansData = useCallback(async () => {
+//     try {
+//       const response = await getTechnicians({}).unwrap()
+//       const { status, content } = response as TechnicianResponse
+//       if (status === 200 && Array.isArray(content)) {
+//         setTechnicianData(content)
+//         setFilteredTechnicianData(content)
+//       }
+//     } catch (error) {
+//       console.error('Error fetching technician data:', error)
+//     }
+//   }, [getTechnicians])
 
-  useEffect(() => {
-    getTechniciansData()
-  }, [getTechniciansData])
+//   useEffect(() => {
+//     getTechniciansData()
+//   }, [getTechniciansData])
 
-  return { technicianData, filteredTechnicianData }
-}
+//   return { technicianData, filteredTechnicianData }
+// }
 
 const Technicians = () => {
-  const [date, setDate] = useState<NullableDateArray>(null)
-  const options: string[] = ['Open', 'Completed']
-  const [value, setValue] = useState<string>(options[0])
-  const [dataVisible, setDataVisible] = useState(false)
-  const [technicianRecord, setTechnicianRecord] = useState()
-  const [globalFilter, setGlobalFilter] = useState<string | undefined>(undefined)
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date())
-  const { technicianData, filteredTechnicianData } = useFetchTechnicians()
- 
-  const [workOrderData, setWorkOrderData] = useState<BillsData[]>([
-    {
-      id: 0,
-      technician: 'Suncatcher',
-      techniciansName: 'John Smith',
-      dueDate: '3-12-2024',
-    },
-  ])
- 
-  const technicianHeader = (
-    <div>
-      <div className="p-input-icon-left">
-        <i className="pi pi-search" />
-        <input
-          type="search"
-          value={globalFilter as string}
-          onChange={(e) => setGlobalFilter(e.target.value)}
-          placeholder="Search By name, Id..."
-          className="border-[1px] w-[30vw] p-2 pl-10 rounded-md"
-        />
-      </div>
-    </div>
-  )
-  const handleDateSelect = (date: Date) => {
-    setSelectedDate(date)
-  }
- 
-  const handleDateUnselect = () => {
-    setSelectedDate(undefined)
-  }
- 
-  const handleRowSelection = (e: any) => {
-    setTechnicianRecord(e.data)
-    setDataVisible(true)
-  }
-  const workOrder = (
-    <>
-      <div className="flex gap-40 rounded-md">
-        <div>
-          <p className="font-bold"> Work Orders </p>
-        </div>
-        <div>
-          <SelectButton value={value} onChange={(e) => setValue(e.value)} options={options} />
-        </div>
-      </div>
-    </>
-  )
-  const actionButtons = [
-    () => (
-      <>
-        <div className="flex">
-          <Button
-            label="View"
-            style={{
-              fontWeight: 'bold',
-              textDecoration: 'underline',
-              cursor: 'pointer',
-            }}
-          // onClick={handleViewInventory}
-          />
-        </div>
+  // const [date, setDate] = useState<NullableDateArray>(null)
+  // const options: string[] = ['Open', 'Completed']
+  // const [value, setValue] = useState<string>(options[0])
+  // const [dataVisible, setDataVisible] = useState(false)
+  // const [technicianRecord, setTechnicianRecord] = useState()
+  // const [globalFilter, setGlobalFilter] = useState<string | undefined>(undefined)
+  // const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date())
+  // const { technicianData, filteredTechnicianData } = useFetchTechnicians()
 
-      </>
-    ),
+  // const [workOrderData, setWorkOrderData] = useState<BillsData[]>([
+  //   {
+  //     id: 0,
+  //     technician: 'Suncatcher',
+  //     techniciansName: 'John Smith',
+  //     dueDate: '3-12-2024',
+  //   },
+  // ])
 
-  ];
-  const ActionHeader = () => {
-    return (
+  // const technicianHeader = (
+  //   <div>
+  //     <div className="p-input-icon-left">
+  //       <i className="pi pi-search" />
+  //       <input
+  //         type="search"
+  //         value={globalFilter as string}
+  //         onChange={(e) => setGlobalFilter(e.target.value)}
+  //         placeholder="Search By name, Id..."
+  //         className="border-[1px] w-[30vw] p-2 pl-10 rounded-md"
+  //       />
+  //     </div>
+  //   </div>
+  // )
+  // const handleDateSelect = (date: Date) => {
+  //   setSelectedDate(date)
+  // }
 
-      <div className="flex items-center">
-        <div >
+  // const handleDateUnselect = () => {
+  //   setSelectedDate(undefined)
+  // }
 
-        </div>
-      </div>
-
-    )
-  }
+  // const handleRowSelection = (e: any) => {
+  //   setTechnicianRecord(e.data)
+  //   setDataVisible(true)
+  // }
+  // const workOrder = (
+  //   <>
+  //     <div className="flex gap-40 rounded-md">
+  //       <div>
+  //         <p className="font-bold"> Work Orders </p>
+  //       </div>
+  //       <div>
+  //         <SelectButton value={value} onChange={(e) => setValue(e.value)} options={options} />
+  //       </div>
+  //     </div>
+  //   </>
+  // )
+  // const actionButtons = [
+  //   () => (
+  //     <>
+  //       <div className="flex">
+  //         <Button
+  //           label="View"
+  //           style={{
+  //             fontWeight: 'bold',
+  //             textDecoration: 'underline',
+  //             cursor: 'pointer',
+  //           }}
+  //           // onClick={handleViewInventory}
+  //         />
+  //       </div>
+  //     </>
+  //   ),
+  // ]
+  // const ActionHeader = () => {
+  //   return (
+  //     <div className="flex items-center">
+  //       <div></div>
+  //     </div>
+  //   )
+  // }
   return (
     <>
-    <Header header='MOORMANAGE/Technicians'/>
-      <div className="flex justify-between items-center ml-12">
+      <Header header="MOORMANAGE/Technicians" />
+      {/* <div className="flex justify-between items-center ml-12">
         <div className="flex gap-4 items-center mr-10 mt-14">
           <div className="">
             <p> Filter order by Date </p>
@@ -195,10 +189,9 @@ const Technicians = () => {
             </DataTable>
           </div>
         )}
-      </div>
+      </div> */}
     </>
   )
 }
- 
+
 export default Technicians
- 

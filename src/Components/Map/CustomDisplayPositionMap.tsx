@@ -5,7 +5,7 @@ import DefaultIcon from './DefaultIcon'
 import { CustomDisplayPositionMapProps } from '../../Type/Components/MapTypes'
 
 const CustomDisplayPositionMap: React.FC<CustomDisplayPositionMapProps> = ({
-  position = [31.63398, 74.872261],
+  position = [45.4215, 75.691],
   zoomLevel = 9,
   popUpMessage,
 }) => {
@@ -16,7 +16,10 @@ const CustomDisplayPositionMap: React.FC<CustomDisplayPositionMapProps> = ({
       scrollWheelZoom={false}
       attributionControl={false}
       zoomControl={false}>
-      <TileLayer url="/assets/images/map.png" noWrap={true} />
+      <TileLayer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      />
       <Marker position={position}>
         <Popup>{popUpMessage}</Popup>
       </Marker>

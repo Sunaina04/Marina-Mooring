@@ -131,7 +131,7 @@ const Forms = () => {
     <>
       <Header header="MOORSERVE/Forms" />
 
-      <div className="flex justify-end">
+      {/* <div className="flex justify-end">
         <div className=" mr-16 mt-14">
           <CustomModal
             buttonText={'Upload New'}
@@ -213,12 +213,11 @@ const Forms = () => {
           </div>
         </div>
 
-        {/* No Data Avaialble */}
         <div className="text-center mt-40">
           <img src="/assets/images/empty.png" alt="Empty Data" className="w-32 mx-auto mb-4" />
           <p className="text-gray-500">No data available</p>
         </div>
-        {/* <DataTableComponent
+        <DataTableComponent
           tableStyle={{
             fontSize: '12px',
             color: '#000000',
@@ -228,8 +227,8 @@ const Forms = () => {
           columns={FormsColumns}
           actionButtons={ActionButtonColumn}
           style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '200' }}
-        /> */}
-      </div>
+        />
+      </div> */}
     </>
   )
 }
