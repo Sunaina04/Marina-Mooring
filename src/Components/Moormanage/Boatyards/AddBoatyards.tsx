@@ -93,10 +93,10 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
 
   const handleSave = async () => {
     const errors = validateFields()
-    if (Object.keys(errors).length > 0) {
-      setErrorMessage(errors)
-      return
-    }
+    // if (Object.keys(errors).length > 0) {
+    //   setErrorMessage(errors)
+    //   return
+    // }
 
     const selectedState = statesData?.find((stateItem) => stateItem.name === state)
     const selectedCountry = countriesData?.find((countryItem) => countryItem.name === country)
@@ -112,11 +112,12 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
       contact: mainContact,
       state: selectedState,
       country: selectedCountry,
+      mainContact: mainContact,
       gpsCoordinates: gpsCoordinatesValue,
     }
-    const response = await addBoatyard({ payload }).unwrap()
+    const response = await addBoatyard(payload).unwrap()
     const { status } = response as BoatYardResponse
-    if (status === 200) {
+    if (status === 200 || status === 201) {
       closeModal()
       boatYardData()
     }

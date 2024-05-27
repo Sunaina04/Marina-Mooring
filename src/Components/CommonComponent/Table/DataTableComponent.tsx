@@ -45,7 +45,7 @@ const DataTableComponent: React.FC<DataTableProps> = ({
         header={header}
         onRowClick={onRowClick}
         rowClassName={getRowStyle}>
-        {columns.map((d) => (
+        {columns?.map((d) => (
           <Column
             key={d.id}
             headerStyle={d.style}

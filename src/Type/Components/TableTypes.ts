@@ -24,7 +24,7 @@ export interface TableColumnProps {
 export interface DataTableProps {
   data?: any[]
   scrollable?: boolean
-  columns: TableColumnProps[]
+  columns?: TableColumnProps[]
   tableStyle?: React.CSSProperties | undefined
   style?: React.CSSProperties | undefined
   header?: any
@@ -84,7 +84,7 @@ export interface RowColumn {
   expander?: boolean | ((data: any, options: ColumnBodyOptions) => boolean)
   field: string
   header: string
-  
+
   style?: React.CSSProperties
 }
 export interface RowExpansionDemoProps {
