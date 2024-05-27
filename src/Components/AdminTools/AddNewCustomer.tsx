@@ -131,8 +131,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     if (errors.selectedCustomerId && !firstError) {
       firstError = 'selectedCustomerId'
     }
-    if (!companyName && (role?.id === 1 || role?.id === 2))
-      errors.companyName = 'Company Name is required'
+    if (!companyName && role?.id === 2) errors.companyName = 'Company Name is required'
     if (errors.companyName && !firstError) {
       firstError = 'companyName'
     }
@@ -651,40 +650,43 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
             </div>
           )}
 
-          <div>
-            <div className="mt-3">
-              <span className="font-medium text-sm text-[#000000]">
-                <div className="flex gap-1">
-                  Company Name
-                  {(role?.id === 1 || role?.id === 2) && <p className="text-red-600">*</p>}
-                </div>
-              </span>
-            </div>
+          {!permission && (
+            <div>
+              <div className="mt-3">
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">
+                    Company Name
+                    {role?.id === 2 && <p className="text-red-600">*</p>}
+                  </div>
+                </span>
+              </div>
 
-            <div className="mt-1">
-              <InputText
-                value={companyName}
-                onChange={(e) => handleInputChange('companyName', e.target.value)}
-                disabled={!(role?.id === 2)}
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: fieldErrors.companyName ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                  padding: '1.2em',
-                  cursor: role?.id === 2 ? 'pointer' : 'not-allowed',
-                }}
-              />
+              <div className="mt-1">
+                <InputText
+                  value={companyName}
+                  onChange={(e) => handleInputChange('companyName', e.target.value)}
+                  disabled={!(role?.id === 2)}
+                  style={{
+                    width: '230px',
+                    height: '32px',
+                    border:
+                      fieldErrors.companyName && role?.id === 2
+                        ? '1px solid red'
+                        : '1px solid #D5E1EA',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
+                    padding: '1.2em',
+                    cursor: role?.id === 2 ? 'pointer' : 'not-allowed',
+                  }}
+                />
+              </div>
+              <p id="companyName">
+                {role?.id === 2 && fieldErrors.companyName && (
+                  <small className="p-error">{fieldErrors.companyName}</small>
+                )}
+              </p>
             </div>
-            <p id="companyName">
-              {role?.id === 1 || role?.id === 2
-                ? ' '
-                : fieldErrors.companyName && (
-                    <small className="p-error">{fieldErrors.companyName}</small>
-                  )}
-            </p>
-          </div>
+          )}
         </div>
 
         {isLoading && (
