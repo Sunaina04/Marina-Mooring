@@ -73,6 +73,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
     if (!address) errors.address = 'Street/house is required'
 
     if (!zipCode) errors.zipCode = 'Zip code is required'
+    if (!gpsCoordinatesValue) errors.gpsCoordinatesValue = 'GPS Coordinates is required'
 
     if (!mainContact) errors.mainContact = 'Main contact is required'
     if (!country) errors.country = 'Country  is required'
@@ -368,7 +369,9 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
             </div>
 
             <p>
-              {errorMessage.zipCode && <small className="p-error">{errorMessage.zipCode}</small>}
+              {errorMessage.gpsCoordinatesValue && (
+                <small className="p-error">{errorMessage.gpsCoordinatesValue}</small>
+              )}
             </p>
           </div>
         </div>
