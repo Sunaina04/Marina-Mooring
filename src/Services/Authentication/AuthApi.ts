@@ -21,7 +21,6 @@ const authApi = userApi.injectEndpoints({
         method: 'POST',
         body: payload,
         params: { customerAdminId },
-    
       }),
     }),
 
@@ -66,6 +65,14 @@ const authApi = userApi.injectEndpoints({
         params: { token },
       }),
     }),
+
+    refreshToken: builder.mutation({
+      query: ({ refreshToken }: { refreshToken: string }) => ({
+        url: 'api/v1/auth/refresh',
+        method: 'POST',
+        params: { refreshToken },
+      }),
+    }),
   }),
 })
 
@@ -75,4 +82,5 @@ export const {
   useForgotPasswordMutation,
   useResetPasswordMutation,
   useValidateEmailMutation,
+  useRefreshTokenMutation,
 } = authApi

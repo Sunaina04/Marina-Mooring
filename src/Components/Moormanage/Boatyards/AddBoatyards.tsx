@@ -93,10 +93,10 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
 
   const handleSave = async () => {
     const errors = validateFields()
-    // if (Object.keys(errors).length > 0) {
-    //   setErrorMessage(errors)
-    //   return
-    // }
+    if (Object.keys(errors).length > 0) {
+      setErrorMessage(errors)
+      return
+    }
 
     const selectedState = statesData?.find((stateItem) => stateItem.name === state)
     const selectedCountry = countriesData?.find((countryItem) => countryItem.name === country)
