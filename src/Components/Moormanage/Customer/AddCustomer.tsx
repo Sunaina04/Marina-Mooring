@@ -10,6 +10,7 @@ import { Button } from 'primereact/button'
 import { CustomerDataProps } from '../../../Type/ComponentBasedType'
 import { CityProps } from '../../../Type/CommonType'
 import AddMoorings from '../Moorings/AddMoorings'
+
 const AddCustomer: React.FC<CustomerDataProps> = ({
   customer,
   editMode,
@@ -58,7 +59,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     bottomChainCondition: '',
     shackleSwivelCondition: '',
     pennantCondition: '',
-    depthAtMeanHighWater: 0,
+    depthAtMeanHighWater: '',
     status: '',
   })
 
@@ -403,7 +404,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             <div className="mt-2">
               <InputComponent
                 value={formData.boatyardName}
-                onChange={(e) => handleInputChange('boatName', e.target.value)}
+                onChange={(e) => handleInputChange('boatyardName', e.target.value)}
                 style={{
                   width: '230px',
                   height: '32px',
