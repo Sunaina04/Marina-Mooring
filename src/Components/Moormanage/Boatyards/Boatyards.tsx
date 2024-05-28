@@ -388,7 +388,6 @@ const Boatyards = () => {
                 <h1 className="p-4">{properties.boatyardMooringHeader}</h1>
               </div>
             </div>
-
             <div className=" bg-[] mt-3 ">
               <div
                 className="flex justify-start  ml-4 mt-[30px]  "
@@ -426,25 +425,33 @@ const Boatyards = () => {
                 }}>
                 <CustomSelectPositionMap onPositionChange={handlePositionChange} />
               </div>
-              <div
-                // style={{border:"2px solid red"}}
-
-                className="bg-#00426F overflow-x-hidden  mt-[13px] h-[250px] table-container  ">
-                <DataTableComponent
-                  tableStyle={{
-                    fontSize: '12px',
-                    color: '#000000',
-                  }}
-                  data={mooringWithBoatyardsData}
-                  columns={tableColumnsTechnicians}
-                  actionButtons={ActionButtonColumn}
-                  style={{
-                    borderBottom: '1px solid #D5E1EA',
-                    marginLeft: '5px',
-                    fontWeight: '400',
-                    color: '#000000',
-                  }}
-                />
+              <div className="bg-#00426F overflow-x-hidden  mt-[13px] h-[250px] table-container  ">
+                {mooringWithBoatyardsData.length === 0 ? (
+                  <div className="text-center mt-40 mb-10">
+                    <img
+                      src="/assets/images/empty.png"
+                      alt="Empty Data"
+                      className="w-20 mx-auto mb-4"
+                    />
+                    <p className="text-gray-500">No data available</p>
+                  </div>
+                ) : (
+                  <DataTableComponent
+                    tableStyle={{
+                      fontSize: '12px',
+                      color: '#000000',
+                    }}
+                    data={mooringWithBoatyardsData}
+                    columns={tableColumnsTechnicians}
+                    actionButtons={ActionButtonColumn}
+                    style={{
+                      borderBottom: '1px solid #D5E1EA',
+                      marginLeft: '5px',
+                      fontWeight: '400',
+                      color: '#000000',
+                    }}
+                  />
+                )}
               </div>
             </>
           ) : (
