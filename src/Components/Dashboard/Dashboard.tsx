@@ -130,29 +130,27 @@ const Dashboard = () => {
         <div className="right flex flex-col ">
           <div
             style={{
-              
-              flexShrink:1,
+              flexShrink: 1,
               border: '1px solid #D5E1EA',
               borderRadius: '10px',
               padding: '0px',
-              height:'334.01px',
-              gap:'0px',
-            
-              opacity:'0px',
-              display:'flex',
-              alignItems:'center',
-              backgroundColor:'#FFFFFF'
+              height: '334.01px',
+              gap: '0px',
 
+              opacity: '0px',
+              display: 'flex',
+              alignItems: 'center',
+              backgroundColor: '#FFFFFF',
             }}>
             {/* <div>
               <h1 className="">map</h1> */}
-            <CustomDisplayPositionMap />
+            <CustomDisplayPositionMap position={[78.965768, 79.8097687]} />
             {/* </div> */}
           </div>
           <div
-            style={{ 
+            style={{
               height: '300.2px',
-              maxWidth:'728.9px',
+              maxWidth: '728.9px',
               gap: '0px',
               borderRadius: '10px',
               opacity: '0px',
@@ -164,7 +162,6 @@ const Dashboard = () => {
               columns={columns}
               actionButtons={ActionButtonColumn}
               header={Boatsheader}
-            
             />
           </div>
         </div>
@@ -173,7 +170,7 @@ const Dashboard = () => {
           style={{
             flexShrink: 1,
           }}>
-          <div >
+          <div>
             <Accordition />
           </div>
         </div>

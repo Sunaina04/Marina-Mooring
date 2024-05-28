@@ -26,6 +26,7 @@ import Header from '../../Layout/LayoutComponents/Header'
 import { IoSearchSharp } from 'react-icons/io5'
 import CustomSelectPositionMap from '../../Map/CustomSelectPositionMap'
 import '../Boatyards/Boatyard.module.css'
+import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
 
 const Boatyards = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -424,7 +425,7 @@ const Boatyards = () => {
                   marginLeft: '10px',
                   marginRight: '10px',
                 }}>
-                <CustomSelectPositionMap onPositionChange={handlePositionChange} />
+                <CustomDisplayPositionMap position={[45.4215, 75.691]} />
               </div>
               <div
                 // style={{border:"2px solid red"}}
