@@ -10,6 +10,7 @@ export interface CustomerDataProps {
 export interface BoatYardProps {
   customerData: any
   editMode: boolean
+  toastRef?: any
   gpsCoordinates?: string
   closeModal: () => void
   boatYardData: () => void

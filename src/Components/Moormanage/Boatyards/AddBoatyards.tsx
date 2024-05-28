@@ -1,5 +1,5 @@
 import InputComponent from '../../CommonComponent/InputComponent'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { Button } from 'primereact/button'
 import { Dropdown } from 'primereact/dropdown'
 import CustomStateMap from '../../Map/CustomSelectPositionMap'
@@ -13,12 +13,14 @@ import CustomSelectPositionMap from '../../Map/CustomSelectPositionMap'
 import RolesData from '../../CommonComponent/MetaDataComponent/RolesData'
 import StatesData from '../../CommonComponent/MetaDataComponent/StatesData'
 import CountriesData from '../../CommonComponent/MetaDataComponent/CountriesData'
+import { Toast } from 'primereact/toast'
 
 const AddBoatyards: React.FC<BoatYardProps> = ({
   closeModal,
   boatYardData,
   gpsCoordinates,
   setModalVisible,
+  toastRef,
 }) => {
   const [boatyardId, setBoatyardId] = useState('')
   const [boatyardName, setBoatyardName] = useState('')
@@ -40,6 +42,8 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   const [countriesData, setCountriesData] = useState<Country[]>()
   const [statesData, setStatesData] = useState<State[]>()
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
+  const [isLoading, setIsLoading] = useState(false)
+  const toast = useRef<Toast>(null)
 
   const style = {
     width: '13vw',
@@ -103,29 +107,40 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
       return
     }
 
-    // const selectedState = statesData?.find((stateItem) => stateItem.id === state)
-    // const selectedCountry = countriesData?.find((countryItem) => countryItem.id === country)
-
-    const payload = {
-      boatyardId: boatyardId,
-      boatyardName: boatyardName,
-      phone: phone,
-      emailAddress: emailAddress,
-      street: address,
-      apt: aptSuite,
-      zipCode: zipCode,
-      contact: mainContact,
-      stateId: state?.id,
-      countryId: country?.id,
-      mainContact: mainContact,
-      gpsCoordinates: gpsCoordinatesValue,
-    }
-    console.log(payload)
-    const response = await addBoatyard(payload).unwrap()
-    const { status } = response as BoatYardResponse
-    if (status === 200 || status === 201) {
-      closeModal()
-      boatYardData()
+    try {
+      const payload = {
+        boatyardId: boatyardId,
+        boatyardName: boatyardName,
+        phone: phone,
+        emailAddress: emailAddress,
+        street: address,
+        apt: aptSuite,
+        zipCode: zipCode,
+        contact: mainContact,
+        stateId: state?.id,
+        countryId: country?.id,
+        mainContact: mainContact,
+        gpsCoordinates: gpsCoordinatesValue,
+      }
+      const response = await addBoatyard(payload).unwrap()
+      const { status } = response as BoatYardResponse
+      if (status === 200 || status === 201) {
+        closeModal()
+        boatYardData()
+        toastRef?.current?.show({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Boatyard Saved successfully',
+          life: 3000,
+        })
+      }
+    } catch (error) {
+      toastRef?.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: error,
+        life: 3000,
+      })
     }
   }
 

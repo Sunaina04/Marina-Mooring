@@ -13,16 +13,11 @@ import './CustomerOwner.module.css'
 import InputTextWithHeader from '../CommonComponent/Table/InputTextWithHeader'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { Toast } from 'primereact/toast'
-import RolesData from '../CommonComponent/MetaDataComponent/RolesData'
-import StatesData from '../CommonComponent/MetaDataComponent/StatesData'
-import CountriesData from '../CommonComponent/MetaDataComponent/CountriesData'
 
 const CustomerOwner = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [selectedCustomer, setSelectedCustomer] = useState<any>()
   const [selectedCustomerUser, setSelectedCustomerUser] = useState<any>()
-  console.log('dataaaaaaaa', selectedCustomerUser)
-
   const [editMode, setEditMode] = useState(false)
   const [editCustomer, setEditCustomer] = useState(false)
   const [isRowClick, setIsRowClick] = useState(false)
@@ -30,21 +25,13 @@ const CustomerOwner = () => {
   const [rolesData, setRolesData] = useState<Role[]>()
   const [selectRole, setSelectRole] = useState()
   const [customerAdminId, setCustomerAdminId] = useState('')
-
   const [searchText, setSearchText] = useState('')
   const [searchUsersText, setSearchUsersText] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [getCustomerOwnerData, setgetCustomerOwnerData] = useState<CustomerPayload[]>([])
-
   const [getCustomerOwnerUserData, setgetCustomerOwnerUserData] = useState<CustomerPayload[]>([])
   const [selectedId, setSelectedId] = useState<any>('')
-
-  console.log('gettttttttt', selectedId)
-
   const id = getCustomerOwnerData.map((items) => items.id)
-
-  console.log('iddddddd', id)
-
   const [getUser] = useGetUsersMutation()
 
   const toast = useRef<Toast>(null)

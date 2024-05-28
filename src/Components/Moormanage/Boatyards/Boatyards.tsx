@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import CustomModal from '../../CustomComponent/CustomModal'
 import AddBoatyards from './AddBoatyards'
 import { InputText } from 'primereact/inputtext'
@@ -27,6 +27,7 @@ import { IoSearchSharp } from 'react-icons/io5'
 import CustomSelectPositionMap from '../../Map/CustomSelectPositionMap'
 import '../Boatyards/Boatyard.module.css'
 import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
+import { Toast } from 'primereact/toast'
 
 const Boatyards = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -43,6 +44,8 @@ const Boatyards = () => {
   const [getMooringsWithBoatyard] = useGetMooringWithBoatyardMutation()
   const [selectedRowId, setSelectedRowID] = useState()
   const [searchText, setSearchText] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const toast = useRef<Toast>(null)
 
   const handlePositionChange = (lat: number, lng: number) => {
     setPosition({ lat, lng })
@@ -214,6 +217,7 @@ const Boatyards = () => {
   }
 
   const getBoatyardsData = useCallback(async () => {
+    setIsLoading(true)
     try {
       await getBoatyards({ searchText: searchText })
         .unwrap()
@@ -222,6 +226,14 @@ const Boatyards = () => {
           if (status === 200 && Array.isArray(content.content)) {
             setboatyardsData(content.content)
             setFilteredboatyardsData(content.content)
+          } else {
+            setIsLoading(false)
+            toast?.current?.show({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Error While Fetching Boatyards',
+              life: 3000,
+            })
           }
         })
     } catch (error) {
@@ -257,6 +269,7 @@ const Boatyards = () => {
 
   return (
     <>
+      <Toast ref={toast} />
       <Header header="MOORMANAGE/Boatyards" />
       <div className="flex justify-end mr-14 mt-[40px]">
         <div className="flex gap-6 ">
@@ -278,6 +291,7 @@ const Boatyards = () => {
                 customerData={selectedBoatYard}
                 editMode={editMode}
                 setModalVisible={setModalVisible}
+                toastRef={toast}
               />
             }
             headerText={<h1 className="text-xl font-extrabold text-black ml-4">Add Boatyard</h1>}
