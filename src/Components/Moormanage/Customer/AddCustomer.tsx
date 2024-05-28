@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import InputComponent from '../../CommonComponent/InputComponent'
 import { InputText } from 'primereact/inputtext'
 import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown'
@@ -8,8 +8,20 @@ import {
 } from '../../../Services/MoorManage/MoormanageApi'
 import { Button } from 'primereact/button'
 import { CustomerDataProps } from '../../../Type/ComponentBasedType'
-import { CityProps } from '../../../Type/CommonType'
+import { CityProps, Country, State } from '../../../Type/CommonType'
 import AddMoorings from '../Moorings/AddMoorings'
+import {
+  bottomChainConditionOptions,
+  chainConditionOptions,
+  conditionOfEyeOptions,
+  mooringTypeOptions,
+  pennantConditionOptions,
+  shackleSwivelConditionOptions,
+  sizeOfWeightOptions,
+  typeOfWeightOptions,
+} from '../../Utils/CustomData'
+import StatesData from '../../CommonComponent/MetaDataComponent/StatesData'
+import CountriesData from '../../CommonComponent/MetaDataComponent/CountriesData'
 
 const AddCustomer: React.FC<CustomerDataProps> = ({
   customer,
@@ -18,8 +30,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   getCustomer,
 }) => {
   const [value, setValue] = useState<string>('')
-  const [selectedCountry, setSelectedCountry] = useState<CityProps | undefined>(undefined)
-  const [selectedState, setSelectedState] = useState<CityProps | undefined>(undefined)
+  const [selectedCountry, setSelectedCountry] = useState<Country>()
+  const [selectedState, setSelectedState] = useState<State>()
   const [customerName, setCustomerName] = useState<string>('')
   const [customerId, setCustomerId] = useState<string>('')
   const [phone, setPhone] = useState<string>('')
@@ -27,19 +39,21 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [streetHouse, setStreetHouse] = useState<string>('')
   const [sectorBlock, setSectorBlock] = useState<string>('')
   const [pinCode, setPinCode] = useState<string>('')
+  const [countriesData, setCountriesData] = useState<Country[]>()
+  const [statesData, setStatesData] = useState<State[]>()
+
+  const { getStatesData } = StatesData()
+  const { getCountriesData } = CountriesData()
   const [addCustomer] = useAddCustomerMutation()
-  const [selectedCity, setSelectedCity] = useState<CityProps | undefined>(undefined)
   const [updateCustomer] = useUpdateCustomerMutation()
 
-  const cities: CityProps[] = [
-    { name: 'New York', code: 'NY' },
-    { name: 'Rome', code: 'RM' },
-    { name: 'London', code: 'LDN' },
-    { name: 'Istanbul', code: 'IST' },
-    { name: 'Paris', code: 'PRS' },
-    { name: 'India', code: 'IND' },
-    { name: 'Punjab', code: 'PNB' },
-  ]
+  const handleInputChange = (field: string, value: any) => {
+    setFormData({
+      ...formData,
+      [field]: value,
+    })
+  }
+
   const [formData, setFormData] = useState<any>({
     mooringId: '',
     mooringName: '',
@@ -65,7 +79,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
   const SaveCustomer = async () => {
     const payload = {
-      id: 0,
       customerName: customerName,
       customerId: customerId,
       emailAddress: email,
@@ -84,17 +97,17 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         boatyardName: formData.boatyardName,
         boatName: formData.boatName,
         boatSize: formData.boatSize,
-        boatType: '',
+        boatType: formData.boatType,
         boatWeight: formData.boatWeight,
         sizeOfWeight: formData.sizeOfWeight,
         typeOfWeight: formData.typeOfWeight,
-        conditionOfEye: formData.conditionEye,
-        topChainCondition: '',
-        bottomChainCondition: '',
-        shackleSwivelCondition: '',
-        pennantCondition: '',
-        depthAtMeanHighWater: 0,
-        status: '',
+        conditionOfEye: formData.conditionEye.id,
+        topChainCondition: formData.topChainCondition,
+        bottomChainCondition: formData.bottomChainCondition,
+        shackleSwivelCondition: formData.shackleSwivelCondition,
+        pennantCondition: formData.pennantCondition,
+        depthAtMeanHighWater: formData.depthAtMeanHighWater,
+        status: formData.status,
       },
     }
     const response = await addCustomer(payload)
@@ -120,6 +133,22 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     getCustomer()
   }
 
+  const fetchDataAndUpdate = useCallback(async () => {
+    const { statesData } = await getStatesData()
+    const { countriesData } = await getCountriesData()
+    if (countriesData !== null) {
+      setCountriesData(countriesData)
+    }
+
+    if (statesData !== null) {
+      setStatesData(statesData)
+    }
+  }, [])
+
+  useEffect(() => {
+    fetchDataAndUpdate()
+  }, [fetchDataAndUpdate])
+
   useEffect(() => {
     if (editMode && customer) {
       setValue(customer.note || '')
@@ -130,21 +159,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       setStreetHouse(customer.streetHouse || '')
       setSectorBlock(customer.sectorBlock || '')
       setPinCode(customer.pinCode || '')
-
-      const selectedCountry = cities.find((city) => city.name === customer.country)
-      setSelectedCountry(selectedCountry || undefined)
-
-      const selectedState = cities.find((city) => city.name === customer.state)
-      setSelectedState(selectedState || undefined)
     }
   }, [editMode, customer])
-
-  const handleInputChange = (field: string, value: any) => {
-    setFormData({
-      ...formData,
-      [field]: value,
-    })
-  }
 
   return (
     <div>
@@ -272,7 +288,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             <Dropdown
               value={selectedState}
               onChange={(e: DropdownChangeEvent) => setSelectedState(e.value)}
-              options={cities}
+              options={statesData}
               optionLabel="name"
               editable
               placeholder="State"
@@ -292,7 +308,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             <Dropdown
               value={selectedCountry}
               onChange={(e: DropdownChangeEvent) => setSelectedCountry(e.value)}
-              options={cities}
+              options={countriesData}
               optionLabel="name"
               editable
               placeholder="Country"
@@ -318,7 +334,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 borderRadius: '0.50rem',
                 fontSize: '0.8rem',
               }}
-              // className="shadow-none"
             />
           </div>
         </div>
@@ -458,9 +473,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
             <div className="mt-2">
               <Dropdown
-                value={formData.typeOfWeight}
-                onChange={(e) => handleInputChange('typeOfWeight', e.value)}
-                options={cities}
+                value={formData.type}
+                onChange={(e) => handleInputChange('type', e.value)}
+                options={mooringTypeOptions}
                 optionLabel="name"
                 editable
                 placeholder="Skiff"
@@ -502,7 +517,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               <Dropdown
                 value={formData.sizeOfWeight}
                 onChange={(e) => handleInputChange('sizeOfWeight', e.value)}
-                options={cities}
+                options={sizeOfWeightOptions}
                 optionLabel="name"
                 editable
                 placeholder="Select"
@@ -526,7 +541,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               <Dropdown
                 value={formData.typeOfWeight}
                 onChange={(e) => handleInputChange('typeOfWeight', e.value)}
-                options={cities}
+                options={typeOfWeightOptions}
                 optionLabel="name"
                 editable
                 placeholder="Select"
@@ -549,7 +564,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               <Dropdown
                 value={formData.topChainCondition}
                 onChange={(e) => handleInputChange('topChainCondition', e.value)}
-                options={cities}
+                options={chainConditionOptions}
                 optionLabel="name"
                 editable
                 placeholder="Select"
@@ -575,7 +590,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 <Dropdown
                   value={formData.conditionOfEye}
                   onChange={(e) => handleInputChange('conditionOfEye', e.value)}
-                  options={cities}
+                  options={conditionOfEyeOptions}
                   optionLabel="name"
                   editable
                   placeholder="Select"
@@ -598,9 +613,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
               <div className="mt-2">
                 <Dropdown
-                  value={selectedCity}
-                  onChange={(e: DropdownChangeEvent) => setSelectedCity(e.value)}
-                  options={cities}
+                  value={formData.shackleSwivelCondition}
+                  onChange={(e) => handleInputChange('shackleSwivelCondition', e.value)}
+                  options={shackleSwivelConditionOptions}
                   optionLabel="name"
                   editable
                   placeholder="Select"
@@ -642,9 +657,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
               <div className="mt-2">
                 <Dropdown
-                  value={formData.conditionOfEye}
-                  onChange={(e) => handleInputChange('conditionOfEye', e.value)}
-                  options={cities}
+                  value={formData.bottomChainCondition}
+                  onChange={(e) => handleInputChange('bottomChainCondition', e.value)}
+                  options={bottomChainConditionOptions}
                   optionLabel="name"
                   editable
                   placeholder="Select"
@@ -665,9 +680,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
               <div className="mt-2">
                 <Dropdown
-                  value={selectedCity}
-                  onChange={(e: DropdownChangeEvent) => setSelectedCity(e.value)}
-                  options={cities}
+                  value={formData.pennantCondition}
+                  onChange={(e) => handleInputChange('pennantCondition', e.value)}
+                  options={pennantConditionOptions}
                   optionLabel="name"
                   editable
                   placeholder="Select"

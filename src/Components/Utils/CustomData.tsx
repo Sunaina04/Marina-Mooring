@@ -126,7 +126,6 @@ export const boatyardMooring = [
     mooringID: '54325',
     boatName: 'sunriase',
   },
-  
 ]
 export const customerAdminUser = [
   {
@@ -331,6 +330,7 @@ export const permissionData = [
     role: 'Admin',
   },
 ]
+
 export const getProductsWithOrdersData = (): any[] => {
   return [
     {
@@ -414,9 +414,7 @@ export const dasboardTable = [
   },
 ]
 
-
-
-export const vendorDataa= [
+export const vendorDataa = [
   {
     id: '01',
     companyName: 'Suncatcher',
@@ -430,7 +428,6 @@ export const vendorDataa= [
     phoneNumber: '7648258963',
     email: 'John Smith@gmail.com',
     inventoryItems: '142',
-  
   },
   {
     id: '01',
@@ -438,7 +435,6 @@ export const vendorDataa= [
     phoneNumber: '7648258963',
     email: 'John Smith@gmail.com',
     inventoryItems: '142',
-  
   },
   {
     id: '01',
@@ -454,50 +450,84 @@ export const vendorDataa= [
     phoneNumber: '7648258963',
     email: 'John Smith@gmail.com',
     inventoryItems: '142',
-  
   },
-
-  
 ]
 
-
-
-export const vendor= [
+export const vendor = [
   {
     customerId: '#456',
     customerName: 'jon smith',
     mooringId: '7645',
     boatyard: 'pionner',
     assignedTo: 'clara ortiz',
-    dueDate:"15,March 2024",
-    status:"New Request"
+    dueDate: '15,March 2024',
+    status: 'New Request',
   },
-  
 ]
 
-export const EstimateData= [
+export const EstimateData = [
   {
     customerId: '#456',
     customerName: 'jon smith',
     mooringId: '7645',
     boatyard: 'pionner',
     assignedTo: 'clara ortiz',
-    dueDate:"15,March 2024",
-  
+    dueDate: '15,March 2024',
   },
-  
-
 ]
 
-
-export const FormDataa= [
+export const FormDataa = [
   {
     id: '#456',
     submittedBy: 'jon smith',
     formName: '7645',
     submittedDate: '15,March 2024',
-  
   },
+]
 
-  
+export const mooringTypeOptions = [
+  { id: 1, name: 'Type 1', code: 'T1' },
+  { id: 2, name: 'Type 2', code: 'T2' },
+  { id: 3, name: 'Type 3', code: 'T3' },
+]
+
+export const sizeOfWeightOptions = [
+  { id: 1, name: 'Small', code: 'Small' },
+  { id: 2, name: 'Medium', code: 'Medium' },
+  { id: 3, name: 'Large', code: 'Large' },
+]
+
+export const typeOfWeightOptions = [
+  { id: 1, name: 'Type A', code: 'A' },
+  { id: 2, name: 'Type B', code: 'B' },
+  { id: 3, name: 'Type C', code: 'C' },
+]
+
+export const chainConditionOptions = [
+  { id: 1, name: 'Good', code: 'Good' },
+  { id: 2, name: 'Fair', code: 'Fair' },
+  { id: 3, name: 'Poor', code: 'Poor' },
+]
+
+export const shackleSwivelConditionOptions = [
+  { id: 1, name: 'Good', code: 'Good' },
+  { id: 2, name: 'Fair', code: 'Fair' },
+  { id: 3, name: 'Poor', code: 'Poor' },
+]
+
+export const conditionOfEyeOptions = [
+  { id: 1, name: 'Good', code: 'Good' },
+  { id: 2, name: 'Fair', code: 'Fair' },
+  { id: 3, name: 'Poor', code: 'Poor' },
+]
+
+export const bottomChainConditionOptions = [
+  { id: 1, name: 'Good', code: 'Good' },
+  { id: 2, name: 'Fair', code: 'Fair' },
+  { id: 3, name: 'Poor', code: 'Poor' },
+]
+export const pennantConditionOptions = [
+  { id: 1, name: 'Good', code: 'Good' },
+  { id: 2, name: 'Fair', code: 'Fair' },
+  { id: 3, name: 'Poor', code: 'Poor' },
 ]
