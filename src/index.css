@@ -63,3 +63,11 @@
 
 
 }
+
+/* .custom-dropdown-enabled {
+  cursor: pointer !important;
+} */
+
+.custom-dropdown-disabled {
+  cursor: not-allowed !important;
+}

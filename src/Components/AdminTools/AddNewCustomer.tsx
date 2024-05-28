@@ -610,6 +610,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
               </div>
               <div className="mt-1">
                 <Dropdown
+                  className="cursor-wait"
                   value={selectedCustomerId}
                   onChange={(e) => {
                     setSelectedCustomerId(e.value)
