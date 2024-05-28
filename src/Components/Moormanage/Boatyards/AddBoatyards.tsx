@@ -14,7 +14,12 @@ import RolesData from '../../CommonComponent/MetaDataComponent/RolesData'
 import StatesData from '../../CommonComponent/MetaDataComponent/StatesData'
 import CountriesData from '../../CommonComponent/MetaDataComponent/CountriesData'
 
-const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCoordinates }) => {
+const AddBoatyards: React.FC<BoatYardProps> = ({
+  closeModal,
+  boatYardData,
+  gpsCoordinates,
+  setModalVisible,
+}) => {
   const [boatyardId, setBoatyardId] = useState('')
   const [boatyardName, setBoatyardName] = useState('')
   const [emailAddress, setEmailAddress] = useState('')
@@ -140,6 +145,10 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
     fetchDataAndUpdate()
   }, [fetchDataAndUpdate])
 
+  const handleBack = () => {
+    setModalVisible(false)
+  }
+
   return (
     <>
       <div className=" ml-4">
@@ -151,11 +160,14 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
             <div className="mt-1">
               <InputComponent
                 value={boatyardId}
-                onChange={(e) => setBoatyardId(e.target.value)}
+                onChange={(e) => {
+                  setBoatyardId(e.target.value)
+                  setErrorMessage((prev) => ({ ...prev, id: '' }))
+                }}
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: errorMessage.name ? '1px solid red' : '1px solid #D5E1EA',
+                  border: errorMessage.id ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   padding: '1.2em',
@@ -172,7 +184,10 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
             <div className="mt-1">
               <InputComponent
                 value={boatyardName}
-                onChange={(e) => setBoatyardName(e.target.value)}
+                onChange={(e) => {
+                  setBoatyardName(e.target.value)
+                  setErrorMessage((prev) => ({ ...prev, name: '' }))
+                }}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -198,7 +213,10 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
             <div className="mt-1">
               <InputComponent
                 value={emailAddress}
-                onChange={(e) => setEmailAddress(e.target.value)}
+                onChange={(e) => {
+                  setEmailAddress(e.target.value)
+                  setErrorMessage((prev) => ({ ...prev, email: '' }))
+                }}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -222,7 +240,10 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
               <div className="mt-1">
                 <InputComponent
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
+                  onChange={(e) => {
+                    setPhone(e.target.value)
+                    setErrorMessage((prev) => ({ ...prev, phone: '' }))
+                  }}
                   style={{
                     width: '230px',
                     height: '32px',
@@ -247,7 +268,10 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
             <div className="">
               <InputComponent
                 value={address}
-                onChange={(e) => setAddress(e.target.value)}
+                onChange={(e) => {
+                  setAddress(e.target.value)
+                  setErrorMessage((prev) => ({ ...prev, address: '' }))
+                }}
                 placeholder="Street/house"
                 style={{
                   width: '230px',
@@ -269,7 +293,10 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
             <InputComponent
               value={aptSuite}
               placeholder="Apt/Suite"
-              onChange={(e) => setAptSuite(e.target.value)}
+              onChange={(e) => {
+                setAptSuite(e.target.value)
+                setErrorMessage((prev) => ({ ...prev, aptSuite: '' }))
+              }}
               style={{
                 width: '230px',
                 height: '32px',
@@ -289,7 +316,10 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
               id="stateDropdown"
               placeholder="State"
               value={state}
-              onChange={(e) => setState(e.target.value)}
+              onChange={(e) => {
+                setState(e.value)
+                setErrorMessage((prev) => ({ ...prev, state: '' }))
+              }}
               options={statesData}
               optionLabel="name"
               style={{
@@ -312,7 +342,10 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
               <Dropdown
                 id="stateDropdown"
                 value={country}
-                onChange={(e) => setCountry(e.target.value)}
+                onChange={(e) => {
+                  setCountry(e.value)
+                  setErrorMessage((prev) => ({ ...prev, country: '' }))
+                }}
                 placeholder="Country"
                 options={countriesData}
                 optionLabel="name"
@@ -336,7 +369,10 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
               <div className="">
                 <InputComponent
                   value={zipCode}
-                  onChange={(e) => setZipCode(e.target.value)}
+                  onChange={(e) => {
+                    setZipCode(e.target.value)
+                    setErrorMessage((prev) => ({ ...prev, zipCode: '' }))
+                  }}
                   placeholder="Zip code"
                   style={{
                     width: '230px',
@@ -357,12 +393,15 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
             <div className="">
               <InputComponent
                 value={gpsCoordinatesValue}
-                onChange={(e) => setGpsCoordinatesValue(e.target.value)}
+                onChange={(e) => {
+                  setGpsCoordinatesValue(e.target.value)
+                  setErrorMessage((prev) => ({ ...prev, gpsCoordinatesValue: '' }))
+                }}
                 placeholder="GPS Coordinates"
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: errorMessage.zipCode ? '1px solid red' : '1px solid #D5E1EA',
+                  border: errorMessage.gpsCoordinatesValue ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   padding: '1.2em',
@@ -392,7 +431,10 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
                 <div className=" mt-1">
                   <InputComponent
                     value={mainContact}
-                    onChange={(e) => setMainContact(e.target.value)}
+                    onChange={(e) => {
+                      setMainContact(e.target.value)
+                      setErrorMessage((prev) => ({ ...prev, mainContact: '' }))
+                    }}
                     style={{
                       width: '230px',
                       height: '32px',
@@ -403,7 +445,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
                     }}
                   />
                 </div>
-
                 <p>
                   {errorMessage.mainContact && (
                     <small className="p-error">{errorMessage.mainContact}</small>
@@ -418,7 +459,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
           </div>
         </div>
 
-        <div className="flex gap-6">
+        <div className="flex gap-4 ml-4 bottom-5 absolute left-6">
           <Button
             label={'Save'}
             onClick={handleSave}
@@ -434,7 +475,21 @@ const AddBoatyards: React.FC<BoatYardProps> = ({ closeModal, boatYardData, gpsCo
               borderRadius: '0.50rem',
             }}
           />
-          <Button label={'Back'} text={true} />
+
+          <Button
+            label={'Back'}
+            onClick={handleBack}
+            text={true}
+            style={{
+              backgroundColor: 'white',
+              color: '#000000',
+              border: 'none',
+              width: '89px',
+              fontSize: '14px',
+              height: '42px',
+              fontWeight: '500',
+            }}
+          />
         </div>
       </div>
     </>

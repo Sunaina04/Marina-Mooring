@@ -5,6 +5,7 @@ import { properties } from '../Utils/MeassageProperties'
 import { ActionButtonColumnProps } from '../../Type/Components/TableTypes'
 import { CustomerPayload, GetUserResponse } from '../../Type/ApiTypes'
 import Header from '../Layout/LayoutComponents/Header'
+import useMetaData from '../CommonComponent/MetaDataComponent/RolesData'
 import { Role } from '../../Type/CommonType'
 import { useGetUsersMutation } from '../../Services/AdminTools/AdminToolsApi'
 import AddNewCustomer from './AddNewCustomer'
@@ -12,11 +13,16 @@ import './CustomerOwner.module.css'
 import InputTextWithHeader from '../CommonComponent/Table/InputTextWithHeader'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { Toast } from 'primereact/toast'
+import RolesData from '../CommonComponent/MetaDataComponent/RolesData'
+import StatesData from '../CommonComponent/MetaDataComponent/StatesData'
+import CountriesData from '../CommonComponent/MetaDataComponent/CountriesData'
 
 const CustomerOwner = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [selectedCustomer, setSelectedCustomer] = useState<any>()
   const [selectedCustomerUser, setSelectedCustomerUser] = useState<any>()
+  console.log('dataaaaaaaa', selectedCustomerUser)
+
   const [editMode, setEditMode] = useState(false)
   const [editCustomer, setEditCustomer] = useState(false)
   const [isRowClick, setIsRowClick] = useState(false)
@@ -24,11 +30,20 @@ const CustomerOwner = () => {
   const [rolesData, setRolesData] = useState<Role[]>()
   const [selectRole, setSelectRole] = useState()
   const [customerAdminId, setCustomerAdminId] = useState('')
+
   const [searchText, setSearchText] = useState('')
   const [searchUsersText, setSearchUsersText] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [getCustomerOwnerData, setgetCustomerOwnerData] = useState<CustomerPayload[]>([])
+
   const [getCustomerOwnerUserData, setgetCustomerOwnerUserData] = useState<CustomerPayload[]>([])
+  const [selectedId, setSelectedId] = useState<any>('')
+
+  console.log('gettttttttt', selectedId)
+
+  const id = getCustomerOwnerData.map((items) => items.id)
+
+  console.log('iddddddd', id)
 
   const [getUser] = useGetUsersMutation()
 
@@ -85,6 +100,7 @@ const CustomerOwner = () => {
   }
 
   const columnStyle = {
+    // width: '10vw',
     borderBottom: '1px solid #D5E1EA',
     backgroundColor: '#FFFFFF',
     color: '#000000',
@@ -97,6 +113,10 @@ const CustomerOwner = () => {
         id: 'id',
         label: 'ID',
         style: columnStyle,
+        // body: (data: any) => {
+        //   console.info("body data ", data);
+        //   return (<div style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500',   backgroundColor: 'red'}}>{data.id}</div>)
+        // }
       },
       {
         id: 'name',
@@ -391,13 +411,14 @@ const CustomerOwner = () => {
                 scrollable={true}
                 columns={customerOwnerTableColumn}
                 onRowClick={(e) => {
+                  console.log(e, 'data')
+                  // setCustomerAdminUser()
+                  setSelectedId(e.data.id)
                   getCustomerAdminsUsers(e.data.id)
                 }}
+                selectedRow={selectedId}
                 style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
                 actionButtons={ActionButtonColumn}
-                // rowStyle={(rowData) => ({
-                //   backgroundColor: selectedRow === rowData.id ? 'black' : 'red',
-                // })}
               />
             )}
           </div>

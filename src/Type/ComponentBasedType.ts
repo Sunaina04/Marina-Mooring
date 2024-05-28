@@ -13,6 +13,7 @@ export interface BoatYardProps {
   gpsCoordinates?: string
   closeModal: () => void
   boatYardData: () => void
+  setModalVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export interface BoatData {

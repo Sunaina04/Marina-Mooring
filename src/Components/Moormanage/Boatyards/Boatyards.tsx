@@ -25,6 +25,7 @@ import { properties } from '../../Utils/MeassageProperties'
 import Header from '../../Layout/LayoutComponents/Header'
 import { IoSearchSharp } from 'react-icons/io5'
 import CustomSelectPositionMap from '../../Map/CustomSelectPositionMap'
+import '../Boatyards/Boatyard.module.css'
 
 const Boatyards = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -114,7 +115,7 @@ const Boatyards = () => {
     fontSize: '10px',
     fontWeight: '700',
     color: '#FFFFFF',
-    borderBottom: '1px solid #C0C0C0 ',
+    padding: '15px',
   }
 
   const rowExpansionColumn = useMemo(
@@ -146,15 +147,11 @@ const Boatyards = () => {
             tableStyle={{
               fontSize: '12px',
               color: '#000000',
+              padding: '5rem',
             }}
             data={[data]}
             columns={rowExpansionColumn}
-            style={{
-              borderBottom: '1px solid #D5E1EA  ',
-              marginLeft: '5px',
-              fontWeight: '400',
-              color: '#000000',
-            }}
+            style={{ fontWeight: '500', backgroundColor: '#ECF3F9' }}
           />
         ) : (
           <div>
@@ -279,6 +276,7 @@ const Boatyards = () => {
                 boatYardData={getBoatyardsData}
                 customerData={selectedBoatYard}
                 editMode={editMode}
+                setModalVisible={setModalVisible}
               />
             }
             headerText={<h1 className="text-xl font-extrabold text-black ml-4">Add Boatyard</h1>}
@@ -352,6 +350,13 @@ const Boatyards = () => {
           {boatyardsData.length !== 0 ? (
             <div className="bg-#00426F overflow-x-hidden overflow-y-scroll h-[500px] mt-[3px] ml-[15px] mr-[15px] table-container  ">
               <DataTableWithToogle
+                tableStyle={{
+                  fontSize: '12px',
+                  color: '#000000',
+                  fontWeight: 600,
+                  backgroundColor: '#D9D9D9',
+                  cursor: 'pointer',
+                }}
                 data={boatyardsData}
                 rowExpansionTemplate={rowExpansionTemplate}
                 onRowToggle={(e: any) => {
@@ -361,6 +366,7 @@ const Boatyards = () => {
                 dataKey="id"
                 columns={boatYardColumns}
                 onRowClick={(e: any) => handleRowClickBoatYardDetail(e)}
+                // tableStyle={{border:"1px solid red"}}
               />
             </div>
           ) : (
@@ -373,25 +379,27 @@ const Boatyards = () => {
 
         <div
           data-testid="customer-admin-users-table"
-          className=" flex-grow bg-[#FFFFFF]  rounded-xl border-[1px]    border-gray-300 w-[515px] h-[650px] mr-[50px] rounded-md mb-0">
-          <div className="text-sm font-extrabold rounded-sm w-full   bg-[#D9D9D9]">
-            <div
-              className="flex  align-items-center justify-between  bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px]"
-              style={{ color: '#FFFFFF' }}>
-              <h1 className="p-4">{properties.boatyardMooringHeader}</h1>
+          className=" flex-grow bg-[#FFFFFF]  rounded-xl border-[1px]  border-gray-300 w-[515px] h-[650px] mr-[50px]  mb-0  s">
+          <div className="s">
+            <div className="text-sm font-extrabold rounded-sm w-full   bg-[#D9D9D9]">
+              <div
+                className="flex  align-items-center justify-between  bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px]"
+                style={{ color: '#FFFFFF' }}>
+                <h1 className="p-4">{properties.boatyardMooringHeader}</h1>
+              </div>
             </div>
-          </div>
-          <div className=" bg-[] mt-3 ">
-            <div
-              className="flex justify-start  ml-4 mt-[30px]  "
-              style={{ fontSize: '10px', fontWeight: '700' }}>
-              <p>{properties.address}</p>
-              <p className="ml-[8.4vw]">{properties.mooringInventoried}</p>
-              <p className="ml-[5.7vw]">{properties.boatyardGPSCoordinates}</p>
+
+            <div className=" bg-[] mt-3 ">
+              <div
+                className="flex justify-start  ml-4 mt-[30px]  "
+                style={{ fontSize: '10px', fontWeight: '700' }}>
+                <p>{properties.address}</p>
+                <p className="ml-[8.4vw]">{properties.mooringInventoried}</p>
+                <p className="ml-[5.7vw]">{properties.boatyardGPSCoordinates}</p>
+              </div>
             </div>
           </div>
 
-          <div className="border-[1px] border-[#D5E1EA]  w-[full] mt-3 "></div>
           {selectedBoatYard ? (
             <>
               <div className="flex justify-start mt-4  font-normal text-[12px] ">
@@ -405,8 +413,9 @@ const Boatyards = () => {
                 <p className="w-15 ml-[5.4vw]">{selectedBoatYard?.mooringInventoried}</p>
                 <p className="ml-[12vw]  underline">{selectedBoatYard?.gpsCoordinates}</p>
               </div>
+
               <div
-                className=" h-[150px]  mt-[20px] mb-3 "
+                className=" h-[150px]  mt-[20px] mb-3  sticky"
                 style={{
                   flexGrow: 1,
                   border: '1px solid #D5E1EA',
@@ -417,7 +426,10 @@ const Boatyards = () => {
                 }}>
                 <CustomSelectPositionMap onPositionChange={handlePositionChange} />
               </div>
-              <div className="bg-#00426F overflow-x-hidden  mt-[13px] h-[250px] table-container  ">
+              <div
+                // style={{border:"2px solid red"}}
+
+                className="bg-#00426F overflow-x-hidden  mt-[13px] h-[250px] table-container  ">
                 <DataTableComponent
                   tableStyle={{
                     fontSize: '12px',
@@ -427,7 +439,7 @@ const Boatyards = () => {
                   columns={tableColumnsTechnicians}
                   actionButtons={ActionButtonColumn}
                   style={{
-                    borderBottom: '1px solid #D5E1EA  ',
+                    borderBottom: '1px solid #D5E1EA',
                     marginLeft: '5px',
                     fontWeight: '400',
                     color: '#000000',

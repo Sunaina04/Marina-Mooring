@@ -9,6 +9,8 @@ describe("AddBoatyards", () => {
             throw new Error("Function not implemented.");
         } } boatYardData={function (): void {
             throw new Error("Function not implemented.");
+        } } setModalVisible={function (value: React.SetStateAction<boolean>): void {
+            throw new Error("Function not implemented.");
         } } />);
         expect(getByText("Boatyard ID")).toBeInTheDocument();
         expect(getByText("Main Contact")).toBeInTheDocument();
@@ -21,6 +23,8 @@ describe("AddBoatyards", () => {
             throw new Error("Function not implemented.");
         } } boatYardData={function (): void {
             throw new Error("Function not implemented.");
+        } } setModalVisible={function (value: React.SetStateAction<boolean>): void {
+            throw new Error("Function not implemented.");
         } } />);
         expect(getByText("Existing Sites")).toBeInTheDocument();
 
@@ -32,6 +36,8 @@ describe("AddBoatyards", () => {
             throw new Error("Function not implemented.");
         } } boatYardData={function (): void {
             throw new Error("Function not implemented.");
+        } } setModalVisible={function (value: React.SetStateAction<boolean>): void {
+            throw new Error("Function not implemented.");
         } } />);
         expect(getByText("ADD NEW")).toBeInTheDocument();
     });
@@ -40,6 +46,8 @@ describe("AddBoatyards", () => {
         const { getByText } = render(<AddBoatyards customerData={undefined} editMode={false} closeModal={function (): void {
             throw new Error("Function not implemented.");
         } } boatYardData={function (): void {
+            throw new Error("Function not implemented.");
+        } } setModalVisible={function (value: React.SetStateAction<boolean>): void {
             throw new Error("Function not implemented.");
         } } />);
         expect(getByText("Save")).toBeInTheDocument();
@@ -50,6 +58,8 @@ describe("AddBoatyards", () => {
         const { getByAltText } = render(<AddBoatyards customerData={undefined} editMode={false} closeModal={function (): void {
             throw new Error("Function not implemented.");
         } } boatYardData={function (): void {
+            throw new Error("Function not implemented.");
+        } } setModalVisible={function (value: React.SetStateAction<boolean>): void {
             throw new Error("Function not implemented.");
         } } />);
         const plusIcon = getByAltText("icon");

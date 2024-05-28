@@ -7,6 +7,7 @@ import {
   DataTableRowData,
   DataTableRowExpansionTemplate,
   DataTableRowToggleEvent,
+  DataTableSelectionSingleChangeEvent,
   DataTableValueArray,
 } from 'primereact/datatable'
 
@@ -15,7 +16,7 @@ export type TableBodyType =
   | ((data?: any, options?: ColumnBodyOptions) => React.ReactNode)
 
 export interface TableColumnProps {
-  id: string | undefined
+  id: string
   label: String
   style?: React.CSSProperties | undefined
   body?: TableBodyType
@@ -31,7 +32,14 @@ export interface DataTableProps {
   actionButtons?: ActionButtonColumnProps
   onRowClick?: (event: DataTableRowClickEvent) => void
   rowStyle?: (rowData: any) => React.CSSProperties
+  selectedRow?: String
+  selectionMode?: 'single' | 'radiobutton' | undefined;
+  selection?: any[number] | undefined | null;
+  metaKeySelection?: boolean | undefined;
+  onSelectionChange?(event: DataTableSelectionSingleChangeEvent<any>): void;
+  dataKey?: string | undefined;
 }
+
 
 export interface ButtonProps {
   underline?: boolean
