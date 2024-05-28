@@ -30,7 +30,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [addCustomer] = useAddCustomerMutation()
   const [selectedCity, setSelectedCity] = useState<CityProps | undefined>(undefined)
   const [updateCustomer] = useUpdateCustomerMutation()
-
+  const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
+  const [firstErrorField, setFirstErrorField] = useState('')
   const cities: CityProps[] = [
     { name: 'New York', code: 'NY' },
     { name: 'Rome', code: 'RM' },
@@ -63,7 +64,70 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     status: '',
   })
 
+  const validateFields = () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const phoneRegex = /^\d{10}$/
+    const nameRegex = /^[a-zA-Z ]+$/
+    const errors: { [key: string]: string } = {}
+    let firstError = ''
+
+    if (!customerName) {
+      errors.customerName = 'Customer name is required'
+      firstError = 'CustomerName'
+    } else if (!nameRegex.test(customerName)) {
+      errors.customerName = 'Name must only contain letters'
+      firstError = 'CustomerName'
+    } else if (customerName.length < 3) {
+      errors.customerName = 'CustomerName must be at least 3 characters long'
+      firstError = 'CustomerName'
+    }
+
+    if (!phone) {
+      errors.phone = 'Phone is required'
+      if (!firstError) firstError = 'phone'
+    } else if (!phoneRegex.test(phone)) {
+      errors.phone = 'Phone must be a 10-digit number'
+      if (!firstError) firstError = 'phone'
+    }
+
+    if (!email) {
+      errors.email = 'Email is required'
+      if (!firstError) firstError = 'email'
+    } else if (!emailRegex.test(email)) {
+      errors.email = 'Please enter a valid email format'
+      if (!firstError) firstError = 'email'
+    }
+
+    if (!streetHouse) {
+      errors.streetHouse = 'Street/House is required'
+      if (!firstError) firstError = 'streetHouse'
+    }
+
+    if (!sectorBlock) {
+      errors.sectorBlock = 'Sector/Block is required'
+      if (!firstError) firstError = 'sectorBlock'
+    }
+
+    if (!pinCode) {
+      errors.pinCode = 'Pin code is required'
+      if (!firstError) firstError = 'pinCode'
+    }
+
+    if (!selectedCity) {
+      errors.selectedCity = 'City is required'
+      if (!firstError) firstError = 'selectedCity'
+    }
+
+    setFirstErrorField(firstError)
+    setFieldErrors(errors)
+    return errors
+  }
   const SaveCustomer = async () => {
+    // alert("hi")
+    const errors = validateFields()
+    if (Object.keys(errors).length > 0) {
+      return
+    }
     const payload = {
       id: 0,
       customerName: customerName,
@@ -139,11 +203,38 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     }
   }, [editMode, customer])
 
-  const handleInputChange = (field: string, value: any) => {
-    setFormData({
-      ...formData,
-      [field]: value,
-    })
+  // const handleInputChange = (field: string, value: any) => {
+  //   setFormData({
+  //     ...formData,
+  //     [field]: value,
+  //   })
+  // }
+
+  const handleInputChange = (fieldName: string, value: any) => {
+    switch (fieldName) {
+      case 'customerName':
+        setCustomerName(value)
+        break
+      case 'phone':
+        setPhone(value)
+        break
+      case 'email':
+        setEmail(value)
+        break
+      case 'streetHouse':
+        setStreetHouse(value)
+        break
+      case 'sectorBlock':
+        setSectorBlock(value)
+        break
+      case 'pinCode':
+        setPinCode(value)
+        break
+      default:
+        setFormData({ ...formData, [fieldName]: value })
+        break
+    }
+    setFieldErrors((prevErrors) => ({ ...prevErrors, [fieldName]: '' }))
   }
 
   return (
@@ -155,9 +246,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             <div className="mt-2">
               <InputComponent
                 value={customerName}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setCustomerName(e.target.value)
-                }
+                onChange={(e) => handleInputChange('customerName', e.target.value)}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -166,6 +255,11 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   fontSize: '0.8rem',
                 }}
               />
+              <p className="" id="name">
+                {fieldErrors.customerName && (
+                  <small className="p-error">{fieldErrors.customerName}</small>
+                )}
+              </p>
             </div>
           </div>
           <div className="mt-4">
@@ -176,7 +270,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               <div className="mt-2">
                 <InputText
                   value={email}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    handleInputChange('email', e.target.value)
+                  }
                   style={{
                     width: '230px',
                     height: '32px',
@@ -185,6 +281,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     fontSize: '0.8rem',
                   }}
                 />
+                <p className="" id="email">
+                  {fieldErrors.email && <small className="p-error">{fieldErrors.email}</small>}
+                </p>
               </div>
             </div>
           </div>
@@ -195,7 +294,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             <div className="mt-2">
               <InputComponent
                 value={customerId}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCustomerId(e.target.value)}
+                onChange={(e) => handleInputChange('customerId', e.target.value)}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -204,6 +303,11 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   fontSize: '0.8rem',
                 }}
               />
+              <p className="" id="customerId">
+                {fieldErrors.customerId && (
+                  <small className="p-error">{fieldErrors.customerId}</small>
+                )}
+              </p>
             </div>
           </div>
           <div className="mt-4">
@@ -211,7 +315,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             <div className="mt-2">
               <InputComponent
                 value={phone}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPhone(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  handleInputChange('phone', e.target.value)
+                }
                 style={{
                   width: '230px',
                   height: '32px',
@@ -220,6 +326,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   fontSize: '0.8rem',
                 }}
               />
+              <p className="" id="phone">
+                {fieldErrors.phone && <small className="p-error">{fieldErrors.phone}</small>}
+              </p>
             </div>
           </div>
         </div>
@@ -233,9 +342,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             <div>
               <InputText
                 value={streetHouse}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setStreetHouse(e.target.value)
-                }
+                onChange={(e) => handleInputChange('streetHouse', e.target.value)}
                 placeholder="Street/house"
                 style={{
                   width: '230px',
@@ -246,15 +353,18 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   fontSize: '0.8rem',
                 }}
               />
+              <p className="" id="streetHouse">
+                {fieldErrors.streetHouse && (
+                  <small className="p-error">{fieldErrors.streetHouse}</small>
+                )}
+              </p>
             </div>
           </div>
           <div>
             <div>
               <InputText
                 value={sectorBlock}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setSectorBlock(e.target.value)
-                }
+                onChange={(e) => handleInputChange('AptSuite', e.target.value)}
                 placeholder="Apt/Suite"
                 type="text"
                 style={{
@@ -266,12 +376,16 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   fontSize: '0.8rem',
                 }}
               />
+              <p className="" id="AptSuite">
+                {fieldErrors.AptSuite && <small className="p-error">{fieldErrors.AptSuite}</small>}
+              </p>
             </div>
           </div>
           <div>
             <Dropdown
               value={selectedState}
-              onChange={(e: DropdownChangeEvent) => setSelectedState(e.value)}
+              // onChange={(e: DropdownChangeEvent) => setSelectedState("selectedState",e.value)}
+              onChange={(e: DropdownChangeEvent) => handleInputChange('selectedState', e.value)}
               options={cities}
               optionLabel="name"
               editable
@@ -285,6 +399,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 fontSize: '0.8rem',
               }}
             />
+
+            <p className="" id="selectedState">
+              {fieldErrors.AptSuite && <small className="p-error">{fieldErrors.AptSuite}</small>}
+            </p>
           </div>
         </div>
         <div className="flex mt-5 gap-6">
@@ -690,27 +808,37 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         </div>
       </div>
 
-      <div className="flex gap-6 mt-10">
+      <div className="flex gap-4  bottom-8 absolute ">
         <Button
           onClick={SaveCustomer}
           label={'Save'}
           style={{
-            width: '5rem',
-            height: '7vh',
+            width: '89px',
+            height: '42px',
             backgroundColor: '#0098FF',
             cursor: 'pointer',
             fontWeight: 'bolder',
-            fontSize: '1rem',
+            fontSize: '14px',
             boxShadow: 'none',
             color: 'white',
             borderRadius: '0.50rem',
+            top: '20px',
           }}
         />
         <Button
           onClick={() => {}}
           label={'Back'}
           text={true}
-          style={{ backgroundColor: 'white', color: 'black', border: 'none' }}
+          style={{
+            backgroundColor: 'white',
+            color: '#000000',
+            border: 'none',
+            width: '89px',
+            fontSize: '14px',
+            height: '42px',
+            fontWeight: '500',
+            top: '20px',
+          }}
         />
       </div>
     </div>
