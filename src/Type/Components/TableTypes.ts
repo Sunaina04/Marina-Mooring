@@ -38,6 +38,7 @@ export interface DataTableProps {
   metaKeySelection?: boolean | undefined;
   onSelectionChange?(event: DataTableSelectionSingleChangeEvent<any>): void;
   dataKey?: string | undefined;
+  emptyMessage?: string | React.ReactNode | ((frozen: boolean) => React.ReactNode) | undefined;
 }
 
 
@@ -107,4 +108,5 @@ export interface RowExpansionDemoProps {
   onRowClick?: (event: DataTableRowClickEvent) => void
   expandedRows?: DataTableValueArray | DataTableExpandedRows | undefined
   onRowToggle?(event: DataTableRowToggleEvent): void
+  emptyMessage?: string | React.ReactNode | ((frozen: boolean) => React.ReactNode) | undefined;
 }

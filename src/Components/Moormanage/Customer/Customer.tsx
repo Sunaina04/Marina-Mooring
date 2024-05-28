@@ -77,13 +77,17 @@ const Customer = () => {
   }
 
   const handleEdit = (rowData: any) => {
-    setSelectedCustomer(rowData)
+    console.log(customerRecordData)
+    setSelectedCustomer(customerRecordData)
+    setModalVisible(true)
     setEditMode(true)
   }
 
   const handleDelete = async (rowData: any) => {
+    console.log(customerRecordData)
     try {
-      const response = await deleteCustomer({ id: rowData?.id })
+      const response = await deleteCustomer({ id: customerRecordData?.id })
+      console.log(response)
       getCustomerData()
     } catch (error) {
       console.error('Error deleting customer:', error)
@@ -164,9 +168,9 @@ const Customer = () => {
     try {
       const response = await getCustomer({}).unwrap()
       const { status, content } = response as CustomerResponse
-      if (status === 200 && Array.isArray(content)) {
-        setCustomerData(content)
-        setFilteredCustomerData(content)
+      if (status === 200 && Array.isArray(content?.content)) {
+        setCustomerData(content?.content)
+        setFilteredCustomerData(content?.content)
       }
     } catch (error) {
       console.error('Error occurred while fetching customer data:', error)
@@ -257,7 +261,7 @@ const Customer = () => {
           </div>
 
           <div className="mt-2 ">
-            {getCustomerData.length === 0 ? (
+            {customerData.length === 0 ? (
               <div className="text-center mt-40">
                 <img
                   src="/assets/images/empty.png"
