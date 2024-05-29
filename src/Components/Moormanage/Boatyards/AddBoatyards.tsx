@@ -83,58 +83,15 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
     return errors
   }
 
-  const handleFieldChange = (field: string, value: any) => {
-    // const newErrorMessage = { ...errorMessage }
-    // delete newErrorMessage[field]
-    // setErrorMessage(newErrorMessage)
-
-    switch (field) {
-      case 'boatyardId':
-        setBoatyardId(value)
-        break
-      case 'boatyardName':
-        setBoatyardName(value)
-        break
-      case 'emailAddress':
-        setEmailAddress(value)
-        break
-      case 'phone':
-        setPhone(value)
-        break
-      case 'address':
-        setAddress(value)
-        break
-      case 'aptSuite':
-        setAptSuite(value)
-        break
-      case 'state':
-        setState(value)
-        break
-      case 'country':
-        setCountry(value)
-        break
-      case 'zipCode':
-        setZipCode(value)
-        break
-      case 'gpsCoordinatesValue':
-        setGpsCoordinatesValue(value)
-        break
-      case 'mainContact':
-        setMainContact(value)
-        break
-      default:
-        break
-    }
-    setErrorMessage((prevErrors) => ({ ...prevErrors, [field]: '' }))
-  }
-
   const handlePositionChange = (lat: number, lng: number) => {
+    console.log('here')
     setLatitude(lat)
     setLongitude(lng)
     const formattedLat = lat.toFixed(3)
     const formattedLng = lng.toFixed(3)
     const concatenatedValue = `${formattedLat} ${formattedLng}`
     setGpsCoordinatesValue(concatenatedValue)
+    console.log('value', gpsCoordinatesValue)
   }
 
   const handleSave = async () => {

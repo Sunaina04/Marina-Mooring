@@ -22,7 +22,7 @@ export interface DisplayMapProps {
 }
 
 export interface CustomDisplayPositionMapProps {
-  position: MarkerPosition
+  position?: MarkerPosition
   zoomLevel?: number
   popUpMessage?: string
 }
