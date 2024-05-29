@@ -12,7 +12,7 @@ const CustomSelectPositionMap: React.FC<CustomSelectPositionMapProps> = ({
   zoomLevel = 13,
 }) => {
   const [map, setMap] = useState()
-  // const mapRef = useRef()
+  const markerRef = useRef(null)
 
   const displayMap = useMemo(
     () => (
@@ -22,13 +22,13 @@ const CustomSelectPositionMap: React.FC<CustomSelectPositionMapProps> = ({
         scrollWheelZoom={false}
         attributionControl={false}
         zoomControl={false}
-        // ref={setMap}
+        
       >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
-        <Marker position={center} />
+        <Marker draggable={true} ref={markerRef} position={center} />
       </MapContainer>
     ),
     [],
