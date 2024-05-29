@@ -12,7 +12,7 @@ const DataTableWithToogle: React.FC<RowExpansionDemoProps> = ({
   onRowClick,
   expandedRows,
   onRowToggle,
-  emptyMessage
+  emptyMessage,
 }) => {
   const generateRandomKey = () => {
     return Math.random().toString(36).substring(7)
@@ -26,15 +26,13 @@ const DataTableWithToogle: React.FC<RowExpansionDemoProps> = ({
       dataKey={dataKey}
       onRowClick={onRowClick}
       tableStyle={tableStyle}
-      emptyMessage={emptyMessage}
-      >
+      emptyMessage={emptyMessage}>
       {columns.map((col) => (
         <Column
           key={generateRandomKey()}
           field={col.field}
           header={col.header}
           style={col.style}
-        
           expander={col.expander}
         />
       ))}

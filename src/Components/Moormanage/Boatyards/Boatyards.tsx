@@ -6,9 +6,7 @@ import {
   BoatYardData,
   BoatYardPayload,
   BoatYardResponse,
-  MooringResponseDtoList,
   MooringWithBoatYardResponse,
-  TechnicianPayload,
 } from '../../../Type/ApiTypes'
 import {
   useGetBoatyardsMutation,
@@ -328,10 +326,10 @@ const Boatyards = () => {
         style={{ display: 'flex', justifyContent: 'space-evenly' }}>
         <div
           data-testid="dataTable"
-          className="flex-grow  bg-[#FFFFFF] rounded-xl border-[1px] border-[#D5E1EA]  w-[515px] h-[650px] mb-0 ">
-          <div className="text-sm font-extrabold rounded-sm w-full   bg-[#D9D9D9]">
+          className="flex-grow  bg-[#FFFFFF] rounded-xl border-[1px] border-[#D5E1EA] w-[515px] h-[650px] mb-0 ">
+          <div className="text-sm font-extrabold rounded-sm w-full bg-[#D9D9D9]">
             <div
-              className="flex  align-items-center justify-between  bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px]"
+              className="flex  align-items-center justify-between bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px]"
               style={{ color: '#FFFFFF' }}>
               <h1 className="p-4">{properties.boatyardDetail}</h1>
             </div>

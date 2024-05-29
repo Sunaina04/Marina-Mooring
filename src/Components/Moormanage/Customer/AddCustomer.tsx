@@ -228,14 +228,14 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     }
   }, [editMode, customer])
 
-  const handleInputChange = (field: string, value: any) => {
+  const handleInputChangeS = (field: string, value: any) => {
     setFormData({
       ...formData,
       [field]: value,
     })
   }
 
-  const handleInputChangeS = (fieldName: string, value: any) => {
+  const handleInputChange = (fieldName: string, value: any) => {
     switch (fieldName) {
       case 'customerName':
         setCustomerName(value)
