@@ -125,7 +125,7 @@ const Boatyards = () => {
   const rowExpansionColumn = useMemo(
     () => [
       {
-        id: 'address',
+        id: 'street',
         label: 'Address',
         style: rowExpansionStyle,
       },
@@ -215,6 +215,14 @@ const Boatyards = () => {
       backgroundColor: rowData.id === selectedRowId ? '#FFD700' : '',
     }
   }
+
+  const parseCoordinates = (coordinates: any) => {
+    if (!coordinates) return null
+    const [latitude, longitude] = coordinates.split(' ').map(parseFloat)
+    return isNaN(latitude) || isNaN(longitude) ? null : [latitude, longitude]
+  }
+
+  const [latitude, longitude] = parseCoordinates(selectedBoatYard?.gpsCoordinates) || []
 
   const getBoatyardsData = useCallback(async () => {
     setIsLoading(true)
@@ -435,7 +443,7 @@ const Boatyards = () => {
               </div>
 
               <div
-                className=" h-[150px]  mt-[20px] mb-3  sticky"
+                className=" h-[150px] mt-[20px] mb-3 sticky"
                 style={{
                   flexGrow: 1,
                   border: '1px solid #D5E1EA',
@@ -444,7 +452,8 @@ const Boatyards = () => {
                   marginLeft: '10px',
                   marginRight: '10px',
                 }}>
-                <CustomSelectPositionMap onPositionChange={handlePositionChange} />
+                {/* <CustomDisplayPositionMap position={selectedBoatYard.gpsCoordinates} /> */}
+                <CustomDisplayPositionMap position={[latitude, longitude]} />
               </div>
 
               <div className="bg-#00426F overflow-x-hidden  mt-[13px] h-[250px] table-container  ">

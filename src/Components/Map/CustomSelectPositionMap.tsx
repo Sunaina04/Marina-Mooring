@@ -21,9 +21,7 @@ const CustomSelectPositionMap: React.FC<CustomSelectPositionMapProps> = ({
         zoom={zoomLevel}
         scrollWheelZoom={false}
         attributionControl={false}
-        zoomControl={false}
-        
-      >
+        zoomControl={false}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
