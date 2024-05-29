@@ -11,6 +11,7 @@ export const properties = {
   label: 'ADD NEW',
   customerMooringHeader: 'Moorings',
   MoormanageMoorings: 'MOORMANAGE/Moorings',
-  Customersadmins: 'Customersadmins',
+  Customersadmins:"Customersadmins",
+  workOrderHeader:'Work Orders',
   customerHeader: 'Customers',
 }

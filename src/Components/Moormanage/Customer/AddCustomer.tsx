@@ -99,6 +99,11 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       firstError = 'CustomerName'
     }
 
+    if (!customerId) {
+      errors.customerId = 'Customer ID is required'
+      if (!firstError) firstError = 'customerId'
+    }
+
     if (!phone) {
       errors.phone = 'Phone is required'
       if (!firstError) firstError = 'phone'
@@ -121,19 +126,49 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     }
 
     if (!sectorBlock) {
-      errors.sectorBlock = 'Sector/Block is required'
+      errors.sectorBlock = 'Apt/Suite is required'
       if (!firstError) firstError = 'sectorBlock'
     }
 
     if (!pinCode) {
-      errors.pinCode = 'Pin code is required'
+      errors.pinCode = 'Zipcode code is required'
       if (!firstError) firstError = 'pinCode'
     }
+    if (!selectedState || !selectedState.name) {
+      errors.state = 'State is required'
+      if (!firstError) firstError = 'state'
+    }
 
-    // if (!selectedCity) {
-    //   errors.selectedCity = 'City is required'
-    //   if (!firstError) firstError = 'selectedCity'
-    // }
+    if (!selectedCountry || !selectedCountry.name) {
+      errors.country = 'Country is required'
+      if (!firstError) firstError = 'country'
+    }
+
+    if (!formData.harbor) {
+      errors.harbor = 'Harbor is required'
+      if (!firstError) firstError = 'harbor'
+    }
+
+    if (!formData.mooringNumber) errors.mooringNumber = 'Mooring ID is required'
+    if (!formData.harbor) errors.harbor = 'Harbor is required'
+    if (!formData.waterDepth) errors.waterDepth = 'Water Depth is required'
+    if (!formData.gpsCoordinates) errors.gpsCoordinates = 'GPS Coordinates are required'
+    if (!formData.boatyardName) errors.boatyardName = 'Boatyard Name is required'
+    if (!formData.boatName) errors.boatName = 'Boat Name is required'
+    if (!formData.boatSize) errors.boatSize = 'Boat Size is required'
+    if (!formData.type) errors.type = 'Type is required'
+    if (!formData.boatWeight) errors.boatWeight = 'Weight is required'
+    if (!formData.sizeOfWeight) errors.sizeOfWeight = 'Size of Weight is required'
+    if (!formData.typeOfWeight) errors.typeOfWeight = 'Type of Weight is required'
+    if (!formData.topChainCondition) errors.topChainCondition = 'Top Chain Condition is required'
+    if (!formData.conditionOfEye) errors.conditionOfEye = 'Condition of Eye is required'
+    if (!formData.shackleSwivelCondition)
+      errors.shackleSwivelCondition = 'Shackle, Swivel Condition is required'
+    if (!formData.deptAtMeanHighWater)
+      errors.deptAtMeanHighWater = 'Dept at Mean High Water is required'
+    if (!formData.bottomChainCondition)
+      errors.bottomChainCondition = 'Bottom Chain Condition is required'
+    if (!formData.pennantCondition) errors.pennantCondition = 'Pennant Condition is required'
 
     setFirstErrorField(firstError)
     setFieldErrors(errors)
@@ -228,17 +263,27 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     }
   }, [editMode, customer])
 
-  const handleInputChangeS = (field: string, value: any) => {
+  const handleInputChange = (field: string, value: any) => {
     setFormData({
       ...formData,
       [field]: value,
     })
+
+    if (fieldErrors[field]) {
+      setFieldErrors({
+        ...fieldErrors,
+        [field]: '',
+      })
+    }
   }
 
-  const handleInputChange = (fieldName: string, value: any) => {
+  const handleInputChangeCustomer = (fieldName: string, value: any) => {
     switch (fieldName) {
       case 'customerName':
         setCustomerName(value)
+        break
+      case 'customerId':
+        setCustomerId(value)
         break
       case 'phone':
         setPhone(value)
@@ -255,6 +300,12 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       case 'pinCode':
         setPinCode(value)
         break
+      case 'state':
+        setSelectedState(value)
+        break
+      case 'country':
+        setSelectedCountry(value)
+        break
       default:
         setFormData({ ...formData, [fieldName]: value })
         break
@@ -267,20 +318,25 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       <div className="flex gap-6">
         <div>
           <div>
-            <span className="font-medium text-sm text-[#000000]">Customer Name</span>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Customer Name
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
             <div className="mt-2">
               <InputComponent
                 value={customerName}
-                onChange={(e) => handleInputChange('customerName', e.target.value)}
+                onChange={(e) => handleInputChangeCustomer('customerName', e.target.value)}
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.customerName ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
-              <p className="" id="name">
+              <p className="" id="customerName">
                 {fieldErrors.customerName && (
                   <small className="p-error">{fieldErrors.customerName}</small>
                 )}
@@ -290,18 +346,23 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           <div className="mt-4">
             <div>
               <div>
-                <span className="font-medium text-sm text-[#000000]">Email Address</span>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">
+                    Email Address
+                    <p className="text-red-600">*</p>
+                  </div>
+                </span>
               </div>
               <div className="mt-2">
                 <InputText
                   value={email}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    handleInputChange('email', e.target.value)
+                    handleInputChangeCustomer('email', e.target.value)
                   }
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: '1px solid #D5E1EA',
+                    border: fieldErrors.email ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                   }}
@@ -315,15 +376,20 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         </div>
         <div>
           <div>
-            <span className="font-medium text-sm text-[#000000]">Customer ID</span>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Customer ID
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
             <div className="mt-2">
               <InputComponent
                 value={customerId}
-                onChange={(e) => handleInputChange('customerId', e.target.value)}
+                onChange={(e) => handleInputChangeCustomer('customerId', e.target.value)}
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.customerId ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
@@ -336,17 +402,22 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             </div>
           </div>
           <div className="mt-4">
-            <span className="font-medium text-sm text-[#000000]">Phone</span>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Phone
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
             <div className="mt-2">
               <InputComponent
                 value={phone}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  handleInputChange('phone', e.target.value)
+                  handleInputChangeCustomer('phone', e.target.value)
                 }
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.phone ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
@@ -360,19 +431,24 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       </div>
       <div className="mt-5">
         <div>
-          <h1 className="font-medium text-sm text-[#000000]">Address</h1>
+          <h1 className="font-medium text-sm text-[#000000]">
+            <div className="flex gap-1">
+              Address
+              <p className="text-red-600">*</p>
+            </div>
+          </h1>
         </div>
         <div className="flex gap-6 mt-5 ">
           <div>
             <div>
               <InputText
                 value={streetHouse}
-                onChange={(e) => handleInputChange('streetHouse', e.target.value)}
+                onChange={(e) => handleInputChangeCustomer('streetHouse', e.target.value)}
                 placeholder="Street/house"
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.streetHouse ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   color: 'black',
                   fontSize: '0.8rem',
@@ -388,37 +464,40 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           <div>
             <div>
               <InputText
+                id="sectorBlock"
                 value={sectorBlock}
-                onChange={(e) => handleInputChange('AptSuite', e.target.value)}
+                onChange={(e) => handleInputChangeCustomer('sectorBlock', e.target.value)}
                 placeholder="Apt/Suite"
                 type="text"
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.sectorBlock ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   color: 'black',
                   fontSize: '0.8rem',
                 }}
               />
-              <p className="" id="AptSuite">
-                {fieldErrors.AptSuite && <small className="p-error">{fieldErrors.AptSuite}</small>}
+              <p className="" id="sectorBlock">
+                {fieldErrors.sectorBlock && (
+                  <small className="p-error">{fieldErrors.sectorBlock}</small>
+                )}
               </p>
             </div>
           </div>
           <div>
             <Dropdown
+              id="state"
               value={selectedState}
               options={statesData}
-              // onChange={(e: DropdownChangeEvent) => setSelectedState("selectedState",e.value)}
-              onChange={(e: DropdownChangeEvent) => handleInputChange('selectedState', e.value)}
+              onChange={(e) => handleInputChangeCustomer('state', e.target.value)}
               optionLabel="name"
               editable
               placeholder="State"
               style={{
                 width: '230px',
                 height: '32px',
-                border: '1px solid #D5E1EA',
+                border: fieldErrors.state ? '1px solid red' : '1px solid #D5E1EA',
                 borderRadius: '0.50rem',
                 color: 'black',
                 fontSize: '0.8rem',
@@ -426,15 +505,16 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             />
 
             <p className="" id="selectedState">
-              {fieldErrors.AptSuite && <small className="p-error">{fieldErrors.AptSuite}</small>}
+              {fieldErrors.state && <small className="p-error">{fieldErrors.state}</small>}
             </p>
           </div>
         </div>
         <div className="flex mt-5 gap-6">
           <div>
             <Dropdown
+              id="country"
               value={selectedCountry}
-              onChange={(e: DropdownChangeEvent) => setSelectedCountry(e.value)}
+              onChange={(e) => handleInputChangeCustomer('country', e.target.value)}
               options={countriesData}
               optionLabel="name"
               editable
@@ -443,25 +523,32 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               style={{
                 width: '230px',
                 height: '32px',
-                border: '1px solid #D5E1EA',
+                border: fieldErrors.country ? '1px solid red' : '1px solid #D5E1EA',
                 borderRadius: '0.50rem',
                 fontSize: '0.8rem',
               }}
             />
+            <p className="" id="selectedCountry">
+              {fieldErrors.country && <small className="p-error">{fieldErrors.country}</small>}
+            </p>
           </div>
           <div>
             <InputText
+              id="pinCode"
               value={pinCode}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPinCode(e.target.value)}
+              onChange={(e) => handleInputChangeCustomer('pinCode', e.target.value)}
               placeholder="Zipcode"
               style={{
                 width: '230px',
                 height: '32px',
-                border: '1px solid #D5E1EA',
+                border: fieldErrors.pinCode ? '1px solid red' : '1px solid #D5E1EA',
                 borderRadius: '0.50rem',
                 fontSize: '0.8rem',
               }}
             />
+            <p className="" id="pinCode">
+              {fieldErrors.pinCode && <small className="p-error">{fieldErrors.pinCode}</small>}
+            </p>
           </div>
         </div>
       </div>
@@ -472,7 +559,12 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       <div className="mt-6">
         <div className="flex gap-6 ">
           <div>
-            <span className="font-medium text-sm text-[#000000]">Mooring ID</span>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Mooring ID
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
             <div className="mt-2">
               <InputComponent
                 value={formData.mooringNumber}
@@ -480,16 +572,24 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.mooringNumber ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
+              {fieldErrors.mooringNumber && (
+                <small className="p-error">{fieldErrors.mooringNumber}</small>
+              )}
             </div>
           </div>
 
           <div>
-            <span className="font-medium text-sm text-[#000000]">Harbor</span>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Harbor
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
             <div className="mt-2">
               <InputComponent
                 value={formData.harbor}
@@ -497,16 +597,22 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.harbor ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
+              {fieldErrors.harbor && <small className="p-error">{fieldErrors.harbor}</small>}
             </div>
           </div>
 
           <div>
-            <span className="font-medium text-sm text-[#000000]">Water Depth</span>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Water Depth
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
             <div className="mt-2">
               <InputComponent
                 value={formData.waterDepth}
@@ -514,18 +620,26 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.waterDepth ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
+              {fieldErrors.waterDepth && (
+                <small className="p-error">{fieldErrors.waterDepth}</small>
+              )}
             </div>
           </div>
         </div>
 
         <div className="flex gap-6 mt-3">
           <div>
-            <span className="font-medium text-sm text-[#000000]">G.P.S Coordinates</span>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                G.P.S Coordinates
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
             <div className="mt-2">
               <InputComponent
                 value={formData.gpsCoordinates}
@@ -533,16 +647,24 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.gpsCoordinates ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
+              {fieldErrors.gpsCoordinates && (
+                <small className="p-error">{fieldErrors.gpsCoordinates}</small>
+              )}
             </div>
           </div>
 
           <div>
-            <span className="font-medium text-sm text-[#000000]">Boatyard Name</span>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Boatyard Name
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
             <div className="mt-2">
               <InputComponent
                 value={formData.boatyardName}
@@ -550,15 +672,23 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.boatyardName ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
+              {fieldErrors.boatyardName && (
+                <small className="p-error">{fieldErrors.boatyardName}</small>
+              )}
             </div>
           </div>
           <div>
-            <span className="font-medium text-sm text-[#000000]">Boat Name</span>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Boat Name
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
             <div className="mt-2">
               <InputComponent
                 value={formData.boatName}
@@ -566,18 +696,24 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.boatName ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
+              {fieldErrors.boatName && <small className="p-error">{fieldErrors.boatName}</small>}
             </div>
           </div>
         </div>
 
         <div className="flex gap-6 mt-3">
           <div>
-            <span className="font-medium text-sm text-[#000000]">Boat Size</span>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Boat Size
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
             <div className="mt-2">
               <InputComponent
                 value={formData.boatSize}
@@ -585,17 +721,23 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.boatSize ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
+              {fieldErrors.boatSize && <small className="p-error">{fieldErrors.boatSize}</small>}
             </div>
           </div>
 
           <div>
             <div>
-              <span className="font-medium text-sm text-[#000000]">Type</span>
+              <span className="font-medium text-sm text-[#000000]">
+                <div className="flex gap-1">
+                  Type
+                  <p className="text-red-600">*</p>
+                </div>
+              </span>
             </div>
 
             <div className="mt-2">
@@ -609,15 +751,21 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.type ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
+              {fieldErrors.type && <small className="p-error">{fieldErrors.type}</small>}
             </div>
           </div>
           <div>
-            <span className="font-medium text-sm text-[#000000]">Weight</span>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Weight
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
             <div className="mt-2">
               <InputComponent
                 value={formData.boatWeight}
@@ -625,11 +773,14 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.boatWeight ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
+              {fieldErrors.boatWeight && (
+                <small className="p-error">{fieldErrors.boatWeight}</small>
+              )}
             </div>
           </div>
         </div>
@@ -637,7 +788,12 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         <div className="flex gap-6 mt-3">
           <div>
             <div>
-              <span className="font-medium text-sm text-[#000000]">Size of Weight</span>
+              <span className="font-medium text-sm text-[#000000]">
+                <div className="flex gap-1">
+                  Size of Weight
+                  <p className="text-red-600">*</p>
+                </div>
+              </span>
             </div>
 
             <div className="mt-2">
@@ -651,17 +807,25 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.sizeOfWeight ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
+              {fieldErrors.sizeOfWeight && (
+                <small className="p-error">{fieldErrors.sizeOfWeight}</small>
+              )}
             </div>
           </div>
 
           <div>
             <div>
-              <span className="font-medium text-sm text-[#000000]">Type of Weight</span>
+              <span className="font-medium text-sm text-[#000000]">
+                <div className="flex gap-1">
+                  Type of Weight
+                  <p className="text-red-600">*</p>
+                </div>
+              </span>
             </div>
 
             <div className="mt-2">
@@ -675,16 +839,24 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.typeOfWeight ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
+              {fieldErrors.typeOfWeight && (
+                <small className="p-error">{fieldErrors.typeOfWeight}</small>
+              )}
             </div>
           </div>
           <div>
             <div>
-              <span className="font-medium text-sm text-[#000000]">Top Chain Condition</span>
+              <span className="font-medium text-sm text-[#000000]">
+                <div className="flex gap-1">
+                  Top Chain Condition
+                  <p className="text-red-600">*</p>
+                </div>
+              </span>
             </div>
 
             <div className="mt-2">
@@ -698,11 +870,14 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.topChainCondition ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
+              {fieldErrors.topChainCondition && (
+                <small className="p-error">{fieldErrors.topChainCondition}</small>
+              )}
             </div>
           </div>
         </div>
@@ -711,7 +886,12 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           <div className="mt-3">
             <div>
               <div>
-                <span className="font-medium text-sm text-[#000000]">Condition of Eye</span>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">
+                    Condition of Eye
+                    <p className="text-red-600">*</p>
+                  </div>
+                </span>
               </div>
               <div className="mt-2">
                 <Dropdown
@@ -724,17 +904,25 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: '1px solid #D5E1EA',
+                    border: fieldErrors.conditionOfEye ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                   }}
                 />
+                <p>
+                  {fieldErrors.conditionOfEye && (
+                    <small className="p-error">{fieldErrors.conditionOfEye}</small>
+                  )}
+                </p>
               </div>
             </div>
             <div className="mt-3">
               <div>
                 <span className="font-medium text-sm text-[#000000]">
-                  Shackle, Swivel Condition
+                  <div className="flex gap-1">
+                    Shackle, Swivel Condition
+                    <p className="text-red-600">*</p>
+                  </div>
                 </span>
               </div>
 
@@ -749,16 +937,28 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: '1px solid #D5E1EA',
+                    border: fieldErrors.shackleSwivelCondition
+                      ? '1px solid red'
+                      : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                   }}
                 />
+                <p>
+                  {fieldErrors.shackleSwivelCondition && (
+                    <small className="p-error">{fieldErrors.shackleSwivelCondition}</small>
+                  )}
+                </p>
               </div>
             </div>
             <div className="mt-3">
               <div>
-                <span className="font-medium text-sm text-[#000000]">Dept at Mean High Water</span>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">
+                    Dept at Mean High Water
+                    <p className="text-red-600">*</p>
+                  </div>
+                </span>
               </div>
 
               <div className="mt-2">
@@ -768,18 +968,28 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: '1px solid #D5E1EA',
+                    border: fieldErrors.deptAtMeanHighWater ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                   }}
                 />
+                <p>
+                  {fieldErrors.deptAtMeanHighWater && (
+                    <small className="p-error">{fieldErrors.deptAtMeanHighWater}</small>
+                  )}
+                </p>
               </div>
             </div>
           </div>
           <div>
             <div className="mt-3">
               <div>
-                <span className="font-medium text-sm text-[#000000]">Bootom Chain Condition</span>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">
+                    Bootom Chain Condition
+                    <p className="text-red-600">*</p>
+                  </div>
+                </span>
               </div>
 
               <div className="mt-2">
@@ -793,16 +1003,29 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: '1px solid #D5E1EA',
+                    border: fieldErrors.bottomChainCondition
+                      ? '1px solid red'
+                      : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                   }}
                 />
+
+                <p>
+                  {fieldErrors.bottomChainCondition && (
+                    <small className="p-error">{fieldErrors.bottomChainCondition}</small>
+                  )}
+                </p>
               </div>
             </div>
             <div className="mt-3">
               <div>
-                <span className="font-medium text-sm text-[#000000]">Pennant Condition</span>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">
+                    Pennant Condition
+                    <p className="text-red-600">*</p>
+                  </div>
+                </span>
               </div>
 
               <div className="mt-2">
@@ -816,11 +1039,17 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: '1px solid #D5E1EA',
+                    border: fieldErrors.pennantCondition ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                   }}
                 />
+
+                <p>
+                  {fieldErrors.pennantCondition && (
+                    <small className="p-error">{fieldErrors.pennantCondition}</small>
+                  )}
+                </p>
               </div>
             </div>
           </div>
@@ -832,7 +1061,15 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         </div>
       </div>
 
-      <div className="flex gap-4  bottom-8 absolute ">
+      <div
+        className="flex gap-6 bottom-2 absolute left-6"
+        style={{
+          width: '100%',
+          height: '80px',
+          backgroundColor: 'white',
+          padding: '0 12px',
+          // marginBottom: '2px',
+        }}>
         <Button
           onClick={SaveCustomer}
           label={'Save'}
@@ -846,7 +1083,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             boxShadow: 'none',
             color: 'white',
             borderRadius: '0.50rem',
-            top: '20px',
+            marginTop: '1rem',
           }}
         />
         <Button

@@ -47,6 +47,7 @@ const Boatyards = () => {
   const toast = useRef<Toast>(null)
 
   const handlePositionChange = (lat: number, lng: number) => {
+    console.log("here ")
     setPosition({ lat, lng })
   }
 
