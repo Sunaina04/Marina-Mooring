@@ -47,7 +47,7 @@ const Boatyards = () => {
   const toast = useRef<Toast>(null)
 
   const handlePositionChange = (lat: number, lng: number) => {
-    console.log("here ")
+    console.log('here ')
     setPosition({ lat, lng })
   }
 
@@ -227,9 +227,9 @@ const Boatyards = () => {
         .unwrap()
         .then(async (response) => {
           const { status, content } = response as BoatYardResponse
-          if (status === 200 && Array.isArray(content.content)) {
-            setboatyardsData(content.content)
-            setFilteredboatyardsData(content.content)
+          if (status === 200 && Array.isArray(content)) {
+            setboatyardsData(content)
+            setFilteredboatyardsData(content)
           } else {
             setIsLoading(false)
             toast?.current?.show({

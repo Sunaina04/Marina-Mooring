@@ -363,9 +363,7 @@ export interface BoatYardResponse {
   message: string
   errorList: []
   time: string
-  content: {
-    content: BoatYardPayload
-  }
+  content: BoatYardPayload
 }
 
 export interface MooringWithBoatYardContent {
