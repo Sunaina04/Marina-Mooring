@@ -1,6 +1,6 @@
 import CustomModal from '../../CustomComponent/CustomModal'
 import AddMoorings from './AddMoorings'
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo, useRef } from 'react'
 import { useGetMooringsMutation } from '../../../Services/MoorManage/MoormanageApi'
 import { InputSwitch, InputSwitchChangeEvent } from 'primereact/inputswitch'
 import { MooringPayload, MooringResponse } from '../../../Type/ApiTypes'
@@ -11,6 +11,7 @@ import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader'
 import { properties } from '../../Utils/MeassageProperties'
 import Header from '../../Layout/LayoutComponents/Header'
+import { Toast } from 'primereact/toast'
 
 const Moorings = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -29,6 +30,7 @@ const Moorings = () => {
   const [isChecked, setIsChecked] = useState(false)
   const [isDialogVisible, setIsDialogVisible] = useState(false)
   const [selectedMooring, setSelectedMooring] = useState<MooringPayload>()
+  const toast = useRef<Toast>(null)
 
   const handleInputChange = (e: InputSwitchChangeEvent) => {
     setIsChecked(e.value)
@@ -169,11 +171,14 @@ const Moorings = () => {
   return (
     <div className={modalVisible ? 'backdrop-blur-lg' : ''}>
       <Header header={properties.MoormanageMoorings} />
+      <Toast ref={toast} />
       <div className="flex justify-end mr-12 ">
         <div className="flex mt-14">
           <CustomModal
             buttonText={'ADD NEW'}
-            children={<AddMoorings moorings={selectedCustomer} editMode={editMode} />}
+            children={
+              <AddMoorings moorings={selectedCustomer} editMode={editMode} toastRef={toast} />
+            }
             headerText={<h1 className="text-xxl font-bold text-black ">Add Mooring</h1>}
             visible={modalVisible}
             onClick={handleButtonClick}

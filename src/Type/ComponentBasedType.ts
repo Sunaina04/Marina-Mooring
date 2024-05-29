@@ -51,6 +51,7 @@ export interface RowExpansionProps {
 export interface AddMooringProps {
   moorings: MooringPayload
   editMode: boolean
+  toastRef: React.RefObject<any>;
 }
 
 export interface Technician_Data {

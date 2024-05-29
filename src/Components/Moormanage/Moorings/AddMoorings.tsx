@@ -8,10 +8,12 @@ import { Button } from 'primereact/button'
 import { CityProps } from '../../../Type/CommonType'
 import { AddMooringProps } from '../../../Type/ComponentBasedType'
 
-const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
+const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }) => {
   const [value, setValue] = useState<string>('')
   const [selectedCity, setSelectedCity] = useState<CityProps | undefined>(undefined)
   const [saveMoorings] = useAddMooringsMutation()
+  const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
+  const [firstErrorField, setFirstErrorField] = useState('')
   const [formData, setFormData] = useState<any>({
     customerName: '',
     mooringNumber: '',
@@ -29,6 +31,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
     shackleSwivelCondition: '',
     pennantCondition: '',
     deptAtMeanHighWater: '',
+    boatYardName: '',
+    BootomChainCondition: '',
     note: '',
   })
 
@@ -63,18 +67,141 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
     { name: 'Paris', code: 'PRS' },
   ]
 
+  const validateFields = () => {
+    const errors: { [key: string]: string } = {}
+    let firstError = ''
+
+    if (!formData.customerName) {
+      errors.customerName = 'Customer Name is required'
+      if (!firstError) firstError = 'customerName'
+    }
+    if (!formData.mooringNumber) {
+      errors.mooringNumber = 'Mooring ID is required'
+      if (!firstError) firstError = 'mooringNumber'
+    }
+    if (!formData.harbor) {
+      errors.harbor = 'Harbor is required'
+      if (!firstError) firstError = 'harbor'
+    }
+    if (!formData.waterDepth) {
+      errors.waterDepth = 'Water Depth is required'
+      if (!firstError) firstError = 'waterDepth'
+    }
+    if (!formData.gpsCoordinates) {
+      errors.gpsCoordinates = 'GPS Coordinates are required'
+      if (!firstError) firstError = 'gpsCoordinates'
+    }
+    if (!formData.boatName) {
+      errors.boatName = 'Boat Name is required'
+      if (!firstError) firstError = 'boatName'
+    }
+    if (!formData.boatSize) {
+      errors.boatSize = 'Boat Size is required'
+      if (!firstError) firstError = 'boatSize'
+    }
+
+    if (!formData.boatYardName) {
+      errors.boatYardName = 'boatYardName is required'
+      if (!firstError) firstError = 'boatYardName'
+    }
+
+    if (!formData.boatWeight) {
+      errors.boatWeight = 'Weight is required'
+      if (!firstError) firstError = 'boatWeight'
+    }
+    if (!formData.sizeOfWeight) {
+      errors.sizeOfWeight = 'Size of Weight is required'
+      if (!firstError) firstError = 'sizeOfWeight'
+    }
+    if (!formData.typeOfWeight) {
+      errors.typeOfWeight = 'Type of Weight is required'
+      if (!firstError) firstError = 'typeOfWeight'
+    }
+    if (!formData.topChainCondition) {
+      errors.topChainCondition = 'Top Chain Condition is required'
+      if (!firstError) firstError = 'topChainCondition'
+    }
+
+    if (!formData.BootomChainCondition) {
+      errors.BootomChainCondition = 'Bootom Chain Condition is required'
+      if (!firstError) firstError = 'BootomChainCondition'
+    }
+
+    if (!formData.conditionOfEye) {
+      errors.conditionOfEye = 'Condition of Eye is required'
+      if (!firstError) firstError = 'conditionOfEye'
+    }
+    if (!formData.bottomChainCondition) {
+      errors.bottomChainCondition = 'Bottom Chain Condition is required'
+      if (!firstError) firstError = 'bottomChainCondition'
+    }
+    if (!formData.shackleSwivelCondition) {
+      errors.shackleSwivelCondition = 'Shackle, Swivel Condition is required'
+      if (!firstError) firstError = 'shackleSwivelCondition'
+    }
+    if (!formData.pennantCondition) {
+      errors.pennantCondition = 'Pennant Condition is required'
+      if (!firstError) firstError = 'pennantCondition'
+    }
+    if (!formData.deptAtMeanHighWater) {
+      errors.deptAtMeanHighWater = 'Dept at Mean High Water is required'
+      if (!firstError) firstError = 'deptAtMeanHighWater'
+    }
+
+    setFirstErrorField(firstError)
+    setFieldErrors(errors)
+    return errors
+  }
+
   const handleInputChange = (field: string, value: any) => {
     setFormData({
       ...formData,
       [field]: value,
     })
+
+    if (fieldErrors[field]) {
+      setFieldErrors({
+        ...fieldErrors,
+        [field]: '',
+      })
+    }
   }
 
   const SaveMoorings = async () => {
+    const errors = validateFields()
+    if (Object.keys(errors).length > 0) {
+      return
+    }
+
     const payload = {
       ...formData,
     }
-    const response = await saveMoorings(payload)
+
+    try {
+      const response = await saveMoorings(payload)
+      if (response) {
+        toastRef?.current?.show({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'User saved successfully',
+          life: 3000,
+        })
+      } else {
+        toastRef?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'An error occurred while saving the customer.',
+          life: 3000,
+        })
+      }
+    } catch (error) {
+      toastRef?.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'An unexpected error occurred',
+        life: 3000,
+      })
+    }
   }
 
   return (
@@ -82,7 +209,12 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
       <div className="h-[630px]">
         <div className="flex gap-6 ">
           <div>
-            <span className="font-medium text-sm text-[#000000]">Customer Name</span>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Customer Name
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
             <div className="mt-2">
               <InputComponent
                 value={formData.customerName}
@@ -90,16 +222,26 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.customerName ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
+              <p id="customerName">
+                {fieldErrors.customerName && (
+                  <small className="p-error">{fieldErrors.customerName}</small>
+                )}
+              </p>
             </div>
           </div>
 
           <div>
-            <span className="font-medium text-sm text-[#000000]">Mooring ID</span>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Mooring ID
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
             <div className="mt-2">
               <InputComponent
                 value={formData.mooringNumber}
@@ -107,16 +249,26 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.mooringNumber ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
+              <p id="mooringNumber">
+                {fieldErrors.mooringNumber && (
+                  <small className="p-error">{fieldErrors.mooringNumber}</small>
+                )}
+              </p>
             </div>
           </div>
 
           <div>
-            <span className="font-medium text-sm text-[#000000]">Harbor</span>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Harbor
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
             <div className="mt-2">
               <InputComponent
                 value={formData.harbor}
@@ -124,18 +276,26 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.harbor ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
+              <p id="harbor">
+                {fieldErrors.harbor && <small className="p-error">{fieldErrors.harbor}</small>}
+              </p>
             </div>
           </div>
         </div>
 
         <div className="flex gap-6 mt-3">
           <div>
-            <span className="font-medium text-sm text-[#000000]">Water Depth</span>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Water Depth
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
             <div className="mt-2">
               <InputComponent
                 value={formData.waterDepth}
@@ -143,16 +303,26 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.waterDepth ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
+              <p id="waterDepth">
+                {fieldErrors.waterDepth && (
+                  <small className="p-error">{fieldErrors.waterDepth}</small>
+                )}
+              </p>
             </div>
           </div>
 
           <div>
-            <span className="font-medium text-sm text-[#000000]">G.P.S Coordinates</span>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                G.P.S Coordinates
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
             <div className="mt-2">
               <InputComponent
                 value={formData.gpsCoordinates}
@@ -160,35 +330,55 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.gpsCoordinates ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
+              <p id="waterDepth">
+                {fieldErrors.gpsCoordinates && (
+                  <small className="p-error">{fieldErrors.gpsCoordinates}</small>
+                )}
+              </p>
             </div>
           </div>
 
           <div>
-            <span className="font-medium text-sm text-[#000000]">Boatyard Name</span>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Boatyard Name
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
             <div className="mt-2">
               <InputComponent
-                value={formData.boatName}
-                onChange={(e) => handleInputChange('boatName', e.target.value)}
+                value={formData.boatYardName}
+                onChange={(e) => handleInputChange('boatYardName', e.target.value)}
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.boatYardName ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
+              <p id="boatYardName">
+                {fieldErrors.boatYardName && (
+                  <small className="p-error">{fieldErrors.boatYardName}</small>
+                )}
+              </p>
             </div>
           </div>
         </div>
 
         <div className="flex gap-6 mt-3">
           <div>
-            <span className="font-medium text-sm text-[#000000]">Boat Name</span>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Boat Name
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
             <div className="mt-2">
               <InputComponent
                 // placeholder="Enter owner name"
@@ -198,16 +388,24 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.boatName ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
+              <p id="boatName">
+                {fieldErrors.boatName && <small className="p-error">{fieldErrors.boatName}</small>}
+              </p>
             </div>
           </div>
 
           <div>
-            <span className="font-medium text-sm text-[#000000]">Boat Size</span>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Boat Size
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
             <div className="mt-2">
               <InputComponent
                 value={formData.boatSize}
@@ -215,17 +413,25 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.boatSize ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
+              <p id="boatName">
+                {fieldErrors.boatSize && <small className="p-error">{fieldErrors.boatSize}</small>}
+              </p>
             </div>
           </div>
 
           <div>
             <div>
-              <span className="font-medium text-sm text-[#000000]">Type</span>
+              <span className="font-medium text-sm text-[#000000]">
+                <div className="flex gap-1">
+                  Type
+                  <p className="text-red-600">*</p>
+                </div>
+              </span>
             </div>
 
             <div className="mt-2">
@@ -239,18 +445,28 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.typeOfWeight ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
+              <p id="typeOfWeight">
+                {fieldErrors.typeOfWeight && (
+                  <small className="p-error">{fieldErrors.typeOfWeight}</small>
+                )}
+              </p>
             </div>
           </div>
         </div>
 
         <div className="flex gap-6 mt-3">
           <div>
-            <span className="font-medium text-sm text-[#000000]">Weight</span>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Weight
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
             <div className="mt-2">
               <InputComponent
                 value={formData.boatWeight}
@@ -258,17 +474,27 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.boatWeight ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
+              <p id="boatWeight">
+                {fieldErrors.boatWeight && (
+                  <small className="p-error">{fieldErrors.boatWeight}</small>
+                )}
+              </p>
             </div>
           </div>
 
           <div>
             <div>
-              <span className="font-medium text-sm text-[#000000]">Size of Weight</span>
+              <span className="font-medium text-sm text-[#000000]">
+                <div className="flex gap-1">
+                  Size of Weight
+                  <p className="text-red-600">*</p>
+                </div>
+              </span>
             </div>
 
             <div className="mt-2">
@@ -282,17 +508,27 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.sizeOfWeight ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
+              <p id="sizeOfWeight">
+                {fieldErrors.sizeOfWeight && (
+                  <small className="p-error">{fieldErrors.sizeOfWeight}</small>
+                )}
+              </p>
             </div>
           </div>
 
           <div>
             <div>
-              <span className="font-medium text-sm text-[#000000]">Type of Weight</span>
+              <span className="font-medium text-sm text-[#000000]">
+                <div className="flex gap-1">
+                  Type of Weight
+                  <p className="text-red-600">*</p>
+                </div>
+              </span>
             </div>
 
             <div className="mt-2">
@@ -306,11 +542,16 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldErrors.typeOfWeight ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
+              <p id="typeOfWeight">
+                {fieldErrors.typeOfWeight && (
+                  <small className="p-error">{fieldErrors.typeOfWeight}</small>
+                )}
+              </p>
             </div>
           </div>
         </div>
@@ -319,7 +560,12 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
           <div>
             <div>
               <div>
-                <span className="font-medium text-sm text-[#000000]">Top Chain Condition</span>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">
+                    Top Chain Condition
+                    <p className="text-red-600">*</p>
+                  </div>
+                </span>
               </div>
 
               <div className="mt-2">
@@ -333,22 +579,32 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: '1px solid #D5E1EA',
+                    border: fieldErrors.topChainCondition ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                   }}
                 />
+                <p id="typeOfWeight">
+                  {fieldErrors.topChainCondition && (
+                    <small className="p-error">{fieldErrors.topChainCondition}</small>
+                  )}
+                </p>
               </div>
             </div>
             <div className="mt-3">
               <div>
-                <span className="font-medium text-sm text-[#000000]">Bootom Chain Condition</span>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">
+                    Bootom Chain Condition
+                    <p className="text-red-600">*</p>
+                  </div>
+                </span>
               </div>
 
               <div className="mt-2">
                 <Dropdown
-                  value={formData.conditionOfEye}
-                  onChange={(e) => handleInputChange('conditionOfEye', e.value)}
+                  value={formData.BootomChainCondition}
+                  onChange={(e) => handleInputChange('BootomChainCondition', e.value)}
                   options={cities}
                   optionLabel="name"
                   editable
@@ -356,22 +612,34 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: '1px solid #D5E1EA',
+                    border: fieldErrors.BootomChainCondition
+                      ? '1px solid red'
+                      : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                   }}
                 />
+                <p id="conditionOfEye">
+                  {fieldErrors.BootomChainCondition && (
+                    <small className="p-error">{fieldErrors.BootomChainCondition}</small>
+                  )}
+                </p>
               </div>
             </div>
             <div className="mt-3">
               <div>
-                <span className="font-medium text-sm text-[#000000]">Pennant Condition</span>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">
+                    Pennant Condition
+                    <p className="text-red-600">*</p>
+                  </div>
+                </span>
               </div>
 
               <div className="mt-2">
                 <Dropdown
-                  value={selectedCity}
-                  onChange={(e: DropdownChangeEvent) => setSelectedCity(e.value)}
+                  value={formData.pennantCondition}
+                  onChange={(e) => handleInputChange('pennantCondition', e.value)}
                   options={cities}
                   optionLabel="name"
                   editable
@@ -379,11 +647,16 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: '1px solid #D5E1EA',
+                    border: fieldErrors.pennantCondition ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                   }}
                 />
+                <p id="conditionOfEye">
+                  {fieldErrors.pennantCondition && (
+                    <small className="p-error">{fieldErrors.pennantCondition}</small>
+                  )}
+                </p>
               </div>
             </div>
           </div>
@@ -391,7 +664,12 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
           <div>
             <div>
               <div>
-                <span className="font-medium text-sm text-[#000000]">Condition of Eye</span>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">
+                    Condition of Eye
+                    <p className="text-red-600">*</p>
+                  </div>
+                </span>
               </div>
               <div className="mt-2">
                 <Dropdown
@@ -404,22 +682,32 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: '1px solid #D5E1EA',
+                    border: fieldErrors.conditionOfEye ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                   }}
                 />
+                <p id="conditionOfEye">
+                  {fieldErrors.conditionOfEye && (
+                    <small className="p-error">{fieldErrors.conditionOfEye}</small>
+                  )}
+                </p>
               </div>
             </div>
             <div className="mt-3">
               <div>
-                <span className="font-medium text-sm text-[#000000]">Shackle, Swivel Condition</span>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">
+                    Shackle, Swivel Condition
+                    <p className="text-red-600">*</p>
+                  </div>
+                </span>
               </div>
 
               <div className="mt-2">
                 <Dropdown
-                  value={selectedCity}
-                  onChange={(e: DropdownChangeEvent) => setSelectedCity(e.value)}
+                  value={formData.shackleSwivelCondition}
+                  onChange={(e) => handleInputChange('shackleSwivelCondition', e.value)}
                   options={cities}
                   optionLabel="name"
                   editable
@@ -427,16 +715,28 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: '1px solid #D5E1EA',
+                    border: fieldErrors.shackleSwivelCondition
+                      ? '1px solid red'
+                      : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                   }}
                 />
+                <p id="shackleSwivelCondition">
+                  {fieldErrors.shackleSwivelCondition && (
+                    <small className="p-error">{fieldErrors.shackleSwivelCondition}</small>
+                  )}
+                </p>
               </div>
             </div>
             <div className="mt-3">
               <div>
-                <span className="font-medium text-sm text-[#000000]">Dept at Mean High Water</span>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">
+                    Dept at Mean High Water
+                    <p className="text-red-600">*</p>
+                  </div>
+                </span>
               </div>
 
               <div className="mt-2">
@@ -446,11 +746,16 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: '1px solid #D5E1EA',
+                    border: fieldErrors.deptAtMeanHighWater ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                   }}
                 />
+                <p id="deptAtMeanHighWater">
+                  {fieldErrors.deptAtMeanHighWater && (
+                    <small className="p-error">{fieldErrors.deptAtMeanHighWater}</small>
+                  )}
+                </p>
               </div>
             </div>
           </div>
@@ -462,14 +767,14 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
         </div>
 
         <div
-        className="flex gap-6 bottom-2 absolute left-6"
-        style={{
-          width: '100%',
-          height: '80px',
-          backgroundColor: 'white',
-          padding: '0 12px',
-         // marginBottom: '2px',
-        }}>
+          className="flex gap-6 bottom-2 absolute left-6"
+          style={{
+            width: '100%',
+            height: '80px',
+            backgroundColor: 'white',
+            padding: '0 12px',
+            // marginBottom: '2px',
+          }}>
           <Button
             onClick={SaveMoorings}
             label={'Save'}
