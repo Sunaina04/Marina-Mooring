@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { MapContainer, Marker, TileLayer } from 'react-leaflet'
 import L from 'leaflet'
 import './CustomMap.css'
@@ -12,6 +12,7 @@ const CustomSelectPositionMap: React.FC<CustomSelectPositionMapProps> = ({
   zoomLevel = 13,
 }) => {
   const [map, setMap] = useState()
+  // const mapRef = useRef()
 
   const displayMap = useMemo(
     () => (

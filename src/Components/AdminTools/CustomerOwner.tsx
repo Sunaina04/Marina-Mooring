@@ -328,7 +328,6 @@ const CustomerOwner = () => {
       <div className={`flex gap-10 ml-8 mt-10 ${isLoading ? 'blur-screen' : ''}`}>
         <div
           style={{
-            // flexGrow: 1,
             borderRadius: '15px',
             border: '1px solid #D5E1EA',
             backgroundColor: '#FFFFFF',
@@ -366,7 +365,6 @@ const CustomerOwner = () => {
           />
           <div
             data-testid="customer-admin-data"
-            // className="custom-scrollbar"
             style={{
               height: '600px',
               minHeight: 'calc(40vw - 600px)',
@@ -398,8 +396,6 @@ const CustomerOwner = () => {
                 scrollable={true}
                 columns={customerOwnerTableColumn}
                 onRowClick={(e) => {
-                  console.log(e, 'data')
-                  // setCustomerAdminUser()
                   setSelectedId(e.data.id)
                   getCustomerAdminsUsers(e.data.id)
                 }}

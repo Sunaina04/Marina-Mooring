@@ -188,7 +188,9 @@ export interface CustomerResponse {
   errorList: []
   time: string
   content: {
-    CustomerPayload: CustomerPayload
+    content: {
+      CustomerPayload: CustomerPayload
+    }
   }
 }
 

@@ -36,22 +36,14 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   const [latitude, setLatitude] = useState<number>()
   const [longitude, setLongitude] = useState<number>()
   const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<string>()
-  const [addBoatyard] = useAddBoatyardsMutation()
-  const { getStatesData } = StatesData()
-  const { getCountriesData } = CountriesData()
   const [countriesData, setCountriesData] = useState<Country[]>()
   const [statesData, setStatesData] = useState<State[]>()
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
   const [isLoading, setIsLoading] = useState(false)
-  const toast = useRef<Toast>(null)
 
-  const style = {
-    width: '13vw',
-    height: '4vh',
-    border: '1px solid gray',
-    borderRadius: '0.50rem',
-    fontSize: '0.80vw',
-  }
+  const [addBoatyard] = useAddBoatyardsMutation()
+  const { getStatesData } = StatesData()
+  const { getCountriesData } = CountriesData()
 
   const validateFields = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/

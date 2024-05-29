@@ -14,6 +14,7 @@ const DataTableComponent: React.FC<DataTableProps> = ({
   actionButtons,
   onRowClick,
   style,
+  emptyMessage
 }) => {
   const buttonBody = (rowData: any) => {
     return (
@@ -43,6 +44,7 @@ const DataTableComponent: React.FC<DataTableProps> = ({
         tableStyle={tableStyle}
         scrollable={scrollable}
         header={header}
+        emptyMessage={emptyMessage}
         onRowClick={onRowClick}
         rowClassName={getRowStyle}>
         {columns?.map((d) => (

@@ -9,14 +9,13 @@ const baseQueryWithInterceptor = async (
 ) => {
   try {
     const result = await baseQuery(args as FetchArgs | string, api, extraOptions)
-    return result
-  } catch (error: any) {
-    console.log('in catch', error)
-    if (error.status === 401 || error.status === 500) {
+    if (result?.error?.status === 500 || result?.error?.status === 401) {
       const token = sessionStorage.getItem('refreshToken')
-      const newToken = await refreshToken(token)
+      await refreshToken(token)
       return baseQuery(args as FetchArgs | string, api, extraOptions)
     }
+    return result
+  } catch (error: any) {
     throw error
   }
 }
@@ -37,7 +36,10 @@ const refreshToken = async (refreshToken: any) => {
       throw new Error('Failed to refresh token')
     }
     const data = await response.json()
-    return data.token
+    if (data?.status === 200) {
+      sessionStorage.setItem('getRefreshToken', data.token)
+      return data.token
+    }
   } catch (error) {
     console.error('Error refreshing token:', error)
     throw error
@@ -48,11 +50,20 @@ const refreshToken = async (refreshToken: any) => {
 const baseQuery = fetchBaseQuery({
   baseUrl: process.env.REACT_APP_BASE_URL,
   prepareHeaders: (headers, { getState, endpoint, extra }) => {
-    const token = (getState() as RootState).user.token || sessionStorage.getItem('token')
-    const noAuthEndpoints = ['login', 'resetPassword', 'forgetPassword']
-    if (token && !noAuthEndpoints.includes(endpoint)) {
-      headers.set('Authorization', `Bearer ${token}`)
+    if ((getState() as RootState).user.token || sessionStorage.getItem('token')) {
+      const token = (getState() as RootState).user.token || sessionStorage.getItem('token')
+      const noAuthEndpoints = ['login', 'resetPassword', 'forgetPassword']
+      if (token && !noAuthEndpoints.includes(endpoint)) {
+        headers.set('Authorization', `Bearer ${token}`)
+      } else {
+        const token = sessionStorage.getItem('getRefreshToken')
+        const noAuthEndpoints = ['login', 'resetPassword', 'forgetPassword']
+        if (token && !noAuthEndpoints.includes(endpoint)) {
+          headers.set('Authorization', `Bearer ${token}`)
+        }
+      }
     }
+
     return headers
   },
 })

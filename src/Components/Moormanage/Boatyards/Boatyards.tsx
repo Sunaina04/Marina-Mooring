@@ -6,9 +6,7 @@ import {
   BoatYardData,
   BoatYardPayload,
   BoatYardResponse,
-  MooringResponseDtoList,
   MooringWithBoatYardResponse,
-  TechnicianPayload,
 } from '../../../Type/ApiTypes'
 import {
   useGetBoatyardsMutation,
@@ -328,10 +326,10 @@ const Boatyards = () => {
         style={{ display: 'flex', justifyContent: 'space-evenly' }}>
         <div
           data-testid="dataTable"
-          className="flex-grow  bg-[#FFFFFF] rounded-xl border-[1px] border-[#D5E1EA]  w-[515px] h-[650px] mb-0 ">
-          <div className="text-sm font-extrabold rounded-sm w-full   bg-[#D9D9D9]">
+          className="flex-grow  bg-[#FFFFFF] rounded-xl border-[1px] border-[#D5E1EA] w-[515px] h-[650px] mb-0 ">
+          <div className="text-sm font-extrabold rounded-sm w-full bg-[#D9D9D9]">
             <div
-              className="flex  align-items-center justify-between  bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px]"
+              className="flex  align-items-center justify-between bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px]"
               style={{ color: '#FFFFFF' }}>
               <h1 className="p-4">{properties.boatyardDetail}</h1>
             </div>
@@ -362,34 +360,36 @@ const Boatyards = () => {
               backgroundColor: '#FFFFFF',
             }}
           />
-          {boatyardsData.length !== 0 ? (
-            <div className="bg-#00426F overflow-x-hidden overflow-y-scroll h-[500px] mt-[3px] ml-[15px] mr-[15px] table-container  ">
-              <DataTableWithToogle
-                tableStyle={{
-                  fontSize: '12px',
-                  color: '#000000',
-                  fontWeight: 600,
-                  backgroundColor: '#D9D9D9',
-                  cursor: 'pointer',
-                }}
-                data={boatyardsData}
-                rowExpansionTemplate={rowExpansionTemplate}
-                onRowToggle={(e: any) => {
-                  setExpandedRows(e.data)
-                }}
-                expandedRows={expandedRows}
-                dataKey="id"
-                columns={boatYardColumns}
-                onRowClick={(e: any) => handleRowClickBoatYardDetail(e)}
-                // tableStyle={{border:"1px solid red"}}
-              />
-            </div>
-          ) : (
-            <div className="text-center mt-40 mb-10">
-              <img src="/assets/images/empty.png" alt="Empty Data" className="w-20 mx-auto mb-4" />
-              <p className="text-gray-500">No data available</p>
-            </div>
-          )}
+          <div className="bg-#00426F overflow-x-hidden overflow-y-scroll h-[500px] mt-[3px] ml-[15px] mr-[15px] table-container  ">
+            <DataTableWithToogle
+              tableStyle={{
+                fontSize: '12px',
+                color: '#000000',
+                fontWeight: 600,
+                backgroundColor: '#D9D9D9',
+                cursor: 'pointer',
+              }}
+              data={boatyardsData}
+              rowExpansionTemplate={rowExpansionTemplate}
+              onRowToggle={(e: any) => {
+                setExpandedRows(e.data)
+              }}
+              expandedRows={expandedRows}
+              dataKey="id"
+              columns={boatYardColumns}
+              onRowClick={(e: any) => handleRowClickBoatYardDetail(e)}
+              emptyMessage={
+                <div className="text-center mt-14">
+                  <img
+                    src="/assets/images/empty.png"
+                    alt="Empty Data"
+                    className="w-20 mx-auto mb-4"
+                  />
+                  <p className="text-gray-500">No data available</p>
+                </div>
+              }
+            />
+          </div>
         </div>
 
         <div
@@ -438,35 +438,35 @@ const Boatyards = () => {
                   marginLeft: '10px',
                   marginRight: '10px',
                 }}>
-                <CustomDisplayPositionMap position={[45.4215, 75.691]} />
+                <CustomSelectPositionMap onPositionChange={handlePositionChange} />
               </div>
+
               <div className="bg-#00426F overflow-x-hidden  mt-[13px] h-[250px] table-container  ">
-                {mooringWithBoatyardsData.length === 0 ? (
-                  <div className="text-center mt-40 mb-10">
-                    <img
-                      src="/assets/images/empty.png"
-                      alt="Empty Data"
-                      className="w-20 mx-auto mb-4"
-                    />
-                    <p className="text-gray-500">No data available</p>
-                  </div>
-                ) : (
-                  <DataTableComponent
-                    tableStyle={{
-                      fontSize: '12px',
-                      color: '#000000',
-                    }}
-                    data={mooringWithBoatyardsData}
-                    columns={tableColumnsTechnicians}
-                    actionButtons={ActionButtonColumn}
-                    style={{
-                      borderBottom: '1px solid #D5E1EA',
-                      marginLeft: '5px',
-                      fontWeight: '400',
-                      color: '#000000',
-                    }}
-                  />
-                )}
+                <DataTableComponent
+                  tableStyle={{
+                    fontSize: '12px',
+                    color: '#000000',
+                  }}
+                  data={mooringWithBoatyardsData}
+                  columns={tableColumnsTechnicians}
+                  actionButtons={ActionButtonColumn}
+                  style={{
+                    borderBottom: '1px solid #D5E1EA',
+                    marginLeft: '5px',
+                    fontWeight: '400',
+                    color: '#000000',
+                  }}
+                  emptyMessage={
+                    <div className="text-center mt-14">
+                      <img
+                        src="/assets/images/empty.png"
+                        alt="Empty Data"
+                        className="w-20 mx-auto mb-4"
+                      />
+                      <p className="text-gray-500">No data available</p>
+                    </div>
+                  }
+                />
               </div>
             </>
           ) : (
