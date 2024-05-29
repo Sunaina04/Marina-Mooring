@@ -434,11 +434,11 @@ const Boatyards = () => {
             </div>
             <div className=" bg-[] mt-3 ">
               <div
-                className="flex justify-start  ml-4 mt-[30px]  "
+                className="flex justify-start ml-4 mt-[30px]"
                 style={{ fontSize: '10px', fontWeight: '700' }}>
                 <p>{properties.address}</p>
                 <p className="ml-[8.4vw]">{properties.mooringInventoried}</p>
-                <p className="ml-[5.7vw]">{properties.boatyardGPSCoordinates}</p>
+                <p className="ml-[10vw]">{properties.boatyardGPSCoordinates}</p>
               </div>
             </div>
           </div>
@@ -446,14 +446,12 @@ const Boatyards = () => {
           {selectedBoatYard ? (
             <>
               <div className="flex justify-start mt-4  font-normal text-[12px] ">
-                <p className="ml-3.5 w-[6vw]">
-                  {selectedBoatYard?.street}
-                  <br />
-                  {selectedBoatYard?.apt}
-                  <br />
-                  {selectedBoatYard?.state} ,{selectedBoatYard?.country}
+                <p className="ml-3.5 w-[8vw]">
+                  {selectedBoatYard?.street} {selectedBoatYard?.apt}{' '}
+                  {selectedBoatYard?.stateResponseDto?.name} ,
+                  {selectedBoatYard?.countryResponseDto?.name}
                 </p>
-                <p className="w-15 ml-[5.4vw]">{selectedBoatYard?.mooringInventoried}</p>
+                <p className="w-15 ml-[5vw]">{selectedBoatYard?.mooringInventoried}</p>
                 <p className="ml-[12vw]  underline">{selectedBoatYard?.gpsCoordinates}</p>
               </div>
 

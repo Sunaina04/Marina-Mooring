@@ -170,9 +170,11 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   }
   const SaveCustomer = async () => {
     const errors = validateFields()
+
     if (Object.keys(errors).length > 0) {
       return
     }
+
     const payload = {
       customerName: customerName,
       customerId: customerId,
@@ -248,6 +250,14 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       setStatesData(statesData)
     }
   }, [])
+
+  const handleClick = () => {
+    if (editMode) {
+      UpdateCustomer()
+    } else {
+      SaveCustomer()
+    }
+  }
 
   useEffect(() => {
     fetchDataAndUpdate()
@@ -1123,7 +1133,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           bottom: '0px',
         }}>
         <Button
-          onClick={SaveCustomer}
+          onClick={handleClick}
           label={'Save'}
           style={{
             width: '89px',
