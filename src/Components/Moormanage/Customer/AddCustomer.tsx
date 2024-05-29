@@ -689,7 +689,15 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         </div>
       </div>
 
-      <div className="flex gap-6 mt-10">
+      <div
+        className="flex gap-6 bottom-2 absolute left-6"
+        style={{
+          width: '100%',
+          height: '80px',
+          backgroundColor: 'white',
+          padding: '0 12px',
+         // marginBottom: '2px',
+        }}>
         <Button
           onClick={SaveCustomer}
           label={'Save'}
@@ -703,13 +711,23 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             boxShadow: 'none',
             color: 'white',
             borderRadius: '0.50rem',
+            marginTop:'1rem'
           }}
         />
         <Button
           onClick={() => {}}
           label={'Back'}
           text={true}
-          style={{ backgroundColor: 'white', color: 'black', border: 'none' }}
+          style={{
+            backgroundColor: 'white',
+            color: '#000000',
+            border: 'none',
+            width: '89px',
+            fontSize: '14px',
+            height: '42px',
+            fontWeight: '500',
+            top: '20px',
+          }}
         />
       </div>
     </div>

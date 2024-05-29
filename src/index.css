@@ -20,7 +20,8 @@
 }
 
 .p-selectbutton .p-button.p-highlight {
-  background-color: black;
+  background-color:#0098FF;
+  box-shadow: none;
 }
 
 .headerClass {

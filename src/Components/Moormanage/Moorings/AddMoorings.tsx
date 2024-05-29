@@ -79,7 +79,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
 
   return (
     <>
-      <div>
+      <div className="h-[630px]">
         <div className="flex gap-6 ">
           <div>
             <span className="font-medium text-sm text-[#000000]">Customer Name</span>
@@ -461,7 +461,15 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode }) => {
           </div>
         </div>
 
-        <div className="flex gap-4 mt-10">
+        <div
+        className="flex gap-6 bottom-2 absolute left-6"
+        style={{
+          width: '100%',
+          height: '80px',
+          backgroundColor: 'white',
+          padding: '0 12px',
+         // marginBottom: '2px',
+        }}>
           <Button
             onClick={SaveMoorings}
             label={'Save'}
