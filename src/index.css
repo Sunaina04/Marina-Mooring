@@ -55,19 +55,15 @@
 
   font-size: 13px !important;
 }
-/* .custom-scrollbar{
-  background-color: red;
-} */
 
-.p-datatable .p-datatable-tbody > tr :first-child{
+
+/* .p-datatable .p-datatable-tbody > tr :first-child{
   padding-top: 0;
 
 
-}
-
-/* .custom-dropdown-enabled {
-  cursor: pointer !important;
 } */
+
+
 
 .custom-dropdown-disabled {
   cursor: not-allowed !important;

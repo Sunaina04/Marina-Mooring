@@ -26,7 +26,7 @@
     "./eslint.config.mjs",
     "./tailwind.config.js",
     "./prettier.config.js"
-  ],
+, "index.d.ts"  ],
   "types": [
     "node",
     "react"

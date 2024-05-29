@@ -25,7 +25,8 @@ import { properties } from '../../Utils/MeassageProperties'
 import Header from '../../Layout/LayoutComponents/Header'
 import { IoSearchSharp } from 'react-icons/io5'
 import CustomSelectPositionMap from '../../Map/CustomSelectPositionMap'
-import '../Boatyards/Boatyard.module.css'
+// import "../Boatyards/Boatyard.module.css"
+import "../Boatyards/Boatyard.module.css";
 import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
 import { Toast } from 'primereact/toast'
 import { Params } from '../../../Type/CommonType'
@@ -295,7 +296,7 @@ const Boatyards = () => {
     <>
       <Toast ref={toast} />
       <Header header="MOORMANAGE/Boatyards" />
-      <div className="flex justify-end mr-14 mt-[40px]">
+      <div className="flex justify-end mr-14 mt-[40px] ">
         <div className="flex gap-6 ">
           <div>
             <div className="p-input-icon-left">

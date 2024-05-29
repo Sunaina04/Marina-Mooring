@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import CustomModal from '../../CustomComponent/CustomModal'
 import AddCustomer from './AddCustomer'
 import { FaEdit } from 'react-icons/fa'
@@ -28,6 +28,7 @@ import { customerAdmin } from '../../Utils/CustomData'
 import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader'
 import { properties } from '../../Utils/MeassageProperties'
 import { Params } from '../../../Type/CommonType'
+import { Toast } from 'primereact/toast'
 
 // const Customer = () => {
 //   return <></>
@@ -52,7 +53,7 @@ const Customer = () => {
   const [deleteCustomer] = useDeleteCustomerMutation()
 
   const [getCustomerWithMooring] = useGetCustomersWithMooringMutation()
-
+  const toast = useRef<Toast>(null)
   const handleButtonClick = () => {
     setModalVisible(true)
   }
@@ -95,10 +96,26 @@ const Customer = () => {
     console.log(customerRecordData)
     try {
       const response = await deleteCustomer({ id: customerRecordData?.id })
+     
       console.log(response)
-      getCustomerData()
+      if (response) {
+        toast.current?.show({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'User deleted successfully',
+          life: 3000,
+        });
+        getCustomerData();
+      }
+      setCustomerRecordData("")
     } catch (error) {
-      console.error('Error deleting customer:', error)
+      console.error('Error deleting customer:', error);
+      toast.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Error deleting customer',
+        life: 3000,
+      });
     }
   }
 
@@ -117,6 +134,7 @@ const Customer = () => {
     fontWeight: '700',
     fontSize: '10px',
     color: '#000000',
+  
   }
 
   const CustomerTableColumns = useMemo(
@@ -219,6 +237,7 @@ const Customer = () => {
   return (
     <div className={modalVisible ? 'backdrop-blur-lg' : ''}>
       <Header header="MOORMANAGE/Customer" />
+      <Toast ref={toast} />
       <div className="flex justify-end mr-12 ">
         <div className="flex mt-8 ">
           <CustomModal
@@ -310,7 +329,7 @@ const Customer = () => {
                 }}
                 scrollable={false}
                 columns={CustomerTableColumns}
-                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400'}}
                 onRowClick={(rowData) => handleCustomerTableRowClick(rowData)}
               />
             )}
