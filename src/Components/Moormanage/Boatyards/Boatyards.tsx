@@ -6,6 +6,8 @@ import {
   BoatYardData,
   BoatYardPayload,
   BoatYardResponse,
+  MooringPayload,
+  MooringWithBoatYardContent,
   MooringWithBoatYardResponse,
 } from '../../../Type/ApiTypes'
 import {
@@ -27,6 +29,7 @@ import '../Boatyards/Boatyard.module.css'
 import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
 import { Toast } from 'primereact/toast'
 import { Params } from '../../../Type/CommonType'
+import { Dialog } from 'primereact/dialog'
 
 const Boatyards = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -44,11 +47,19 @@ const Boatyards = () => {
   const [selectedRowId, setSelectedRowID] = useState()
   const [searchText, setSearchText] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [dialogVisible, setDialogVisible] = useState(false)
+  const [mooringRowData, setMooringRowData] = useState<MooringWithBoatYardContent>()
+
   const toast = useRef<Toast>(null)
 
   const handlePositionChange = (lat: number, lng: number) => {
-    console.log('here ')
     setPosition({ lat, lng })
+  }
+
+  const handleMooringTableRowClick = (rowData: any) => {
+    console.log(rowData)
+    setDialogVisible(true)
+    setMooringRowData(rowData.data)
   }
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,6 +81,7 @@ const Boatyards = () => {
         color: 'red',
         label: 'view',
         underline: true,
+        onClick: (rowData: any) => handleMooringTableRowClick(rowData),
       },
     ],
     headerStyle: { backgroundColor: '#00426F', color: 'black' },
@@ -471,6 +483,9 @@ const Boatyards = () => {
                     fontWeight: '400',
                     color: '#000000',
                   }}
+                  onRowClick={(rowData) => {
+                    handleMooringTableRowClick(rowData)
+                  }}
                   emptyMessage={
                     <div className="text-center mt-14">
                       <img
@@ -491,6 +506,87 @@ const Boatyards = () => {
             </div>
           )}
         </div>
+
+        {/* Dialog BOX */}
+        <Dialog
+          visible={dialogVisible}
+          onHide={() => setDialogVisible(false)}
+          header={
+            <div className="flex gap-4">
+              <div className="font-bold">Mooring Information</div>
+            </div>
+          }>
+          <hr className="border border-black  my-0 mx-0"></hr>
+
+          <div className="flex leading-10 gap-4">
+            <div>
+              <p>
+                <span style={{ fontWeight: 'bold' }}>ID:</span> {mooringRowData?.id}
+              </p>
+              <p>
+                <span style={{ fontWeight: 'bold' }}>Mooring No:</span>{' '}
+                {mooringRowData?.mooringNumber}
+              </p>
+              <p>
+                <span style={{ fontWeight: 'bold' }}>Boat Name:</span> {mooringRowData?.boatName}
+              </p>
+              <p>
+                <span style={{ fontWeight: 'bold' }}>Type:</span> {mooringRowData?.boatType}
+              </p>
+              <p>
+                <span style={{ fontWeight: 'bold' }}>Size of Weight:</span>{' '}
+                {mooringRowData?.sizeOfWeight}
+              </p>
+              <p>
+                <span style={{ fontWeight: 'bold' }}>Top Chain Condition:</span>{' '}
+                {mooringRowData?.topChainCondition}
+              </p>
+              <p className="tracking-tighter">
+                <span style={{ fontWeight: 'bold' }}>Bottom Chain Condition:</span>{' '}
+                {mooringRowData?.bottomChainCondition}
+              </p>
+              <p>
+                <span style={{ fontWeight: 'bold' }}>Pennant Condition:</span>{' '}
+                {mooringRowData?.pennantCondition}
+              </p>
+              <p>
+                <span style={{ fontWeight: 'bold' }}>Water Depth:</span>{' '}
+                {mooringRowData?.waterDepth}
+              </p>
+            </div>
+            <div>
+              <p>
+                <span style={{ fontWeight: 'bold' }}>Harbor:</span> {mooringRowData?.harbor}
+              </p>
+              <p>
+                <span style={{ fontWeight: 'bold' }}>G.P.S Coordinates:</span>{' '}
+                {mooringRowData?.gpsCoordinates}
+              </p>
+              <p>
+                <span style={{ fontWeight: 'bold' }}>Boat Size:</span> {mooringRowData?.boatSize}
+              </p>
+              <p>
+                <span style={{ fontWeight: 'bold' }}>Weight:</span> {mooringRowData?.boatWeight}
+              </p>
+              <p>
+                <span style={{ fontWeight: 'bold' }}>Type of Weight:</span>{' '}
+                {mooringRowData?.typeOfWeight}
+              </p>
+              <p>
+                <span style={{ fontWeight: 'bold' }}>Condition of Eye:</span>{' '}
+                {mooringRowData?.conditionOfEye}
+              </p>
+              <p>
+                <span style={{ fontWeight: 'bold' }}>Shackle, Swivel Condition:</span>{' '}
+                {mooringRowData?.shackleSwivelCondition}
+              </p>
+              {/* <p>
+                <span style={{ fontWeight: 'bold' }}>Dept at Mean High Water:</span>{' '}
+                {mooringRowData?.deptAtMeanHighWater}
+              </p> */}
+            </div>
+          </div>
+        </Dialog>
       </div>
     </>
   )
