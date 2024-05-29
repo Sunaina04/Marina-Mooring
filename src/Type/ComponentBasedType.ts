@@ -6,6 +6,7 @@ export interface CustomerDataProps {
   editMode: boolean
   closeModal: () => void
   getCustomer: () => void
+  toastRef?: any
 }
 export interface BoatYardProps {
   customerData: any

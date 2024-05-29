@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import InputComponent from '../../CommonComponent/InputComponent'
 import { InputText } from 'primereact/inputtext'
-import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown'
+import { Dropdown } from 'primereact/dropdown'
 import {
   useAddCustomerMutation,
   useUpdateCustomerMutation,
@@ -9,7 +9,6 @@ import {
 import { Button } from 'primereact/button'
 import { CustomerDataProps } from '../../../Type/ComponentBasedType'
 import { CityProps, Country, State } from '../../../Type/CommonType'
-import AddMoorings from '../Moorings/AddMoorings'
 import {
   bottomChainConditionOptions,
   chainConditionOptions,
@@ -23,12 +22,14 @@ import {
 import StatesData from '../../CommonComponent/MetaDataComponent/StatesData'
 import CountriesData from '../../CommonComponent/MetaDataComponent/CountriesData'
 import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
+import { CustomerResponse } from '../../../Type/ApiTypes'
 
 const AddCustomer: React.FC<CustomerDataProps> = ({
   customer,
   editMode,
   closeModal,
   getCustomer,
+  toastRef,
 }) => {
   const [value, setValue] = useState<string>('')
   const [selectedCountry, setSelectedCountry] = useState<Country>()
@@ -50,15 +51,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
   const [firstErrorField, setFirstErrorField] = useState('')
 
-  const cities: CityProps[] = [
-    { name: 'New York', code: 'NY' },
-    { name: 'Rome', code: 'RM' },
-    { name: 'London', code: 'LDN' },
-    { name: 'Istanbul', code: 'IST' },
-    { name: 'Paris', code: 'PRS' },
-    { name: 'India', code: 'IND' },
-    { name: 'Punjab', code: 'PNB' },
-  ]
   const [formData, setFormData] = useState<any>({
     mooringId: '',
     mooringName: '',
@@ -78,8 +70,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     bottomChainCondition: '',
     shackleSwivelCondition: '',
     pennantCondition: '',
-    depthAtMeanHighWater: '',
-    status: '',
+    deptAtMeanHighWater: 0,
+    status: 0,
   })
 
   const validateFields = () => {
@@ -167,6 +159,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       errors.shackleSwivelCondition = 'Shackle, Swivel Condition is required'
     if (!formData.deptAtMeanHighWater)
       errors.deptAtMeanHighWater = 'Dept at Mean High Water is required'
+    // if (!formData.status) errors.status = 'Status is required'
     if (!formData.bottomChainCondition)
       errors.bottomChainCondition = 'Bottom Chain Condition is required'
     if (!formData.pennantCondition) errors.pennantCondition = 'Pennant Condition is required'
@@ -187,11 +180,11 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       phone: phone,
       streetHouse: streetHouse,
       aptSuite: sectorBlock,
-      state: selectedState?.name,
-      country: pinCode,
+      state: selectedState?.id,
+      country: selectedCountry?.id,
+      zipCode: pinCode,
       mooringRequestDto: {
         mooringId: formData.mooringId,
-        mooringName: formData.mooringName,
         customerName: formData.customerName,
         harbor: formData.harbor,
         waterDepth: formData.waterDepth,
@@ -201,20 +194,29 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         boatSize: formData.boatSize,
         boatType: formData.boatType,
         boatWeight: formData.boatWeight,
-        sizeOfWeight: formData.sizeOfWeight,
-        typeOfWeight: formData.typeOfWeight,
-        conditionOfEye: formData.conditionEye.id,
-        topChainCondition: formData.topChainCondition,
-        bottomChainCondition: formData.bottomChainCondition,
-        shackleSwivelCondition: formData.shackleSwivelCondition,
-        pennantCondition: formData.pennantCondition,
-        depthAtMeanHighWater: formData.depthAtMeanHighWater,
-        status: formData.status,
+        sizeOfWeight: formData.sizeOfWeight.name,
+        typeOfWeight: formData.typeOfWeight.name,
+        conditionOfEye: formData.conditionEye,
+        topChainCondition: formData.topChainCondition.name,
+        bottomChainCondition: formData.bottomChainCondition.name,
+        shackleSwivelCondition: formData.shackleSwivelCondition.name,
+        pennantCondition: formData.pennantCondition.name,
+        deptAtMeanHighWater: formData.deptAtMeanHighWater,
+        statusId: 1,
       },
     }
-    const response = await addCustomer(payload)
-    closeModal()
-    getCustomer()
+    const response = await addCustomer(payload).unwrap()
+    const { status } = response as CustomerResponse
+    if (status === 200 || status === 201) {
+      closeModal()
+      getCustomer()
+      toastRef?.current?.show({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'Customer Saved successfully',
+        life: 3000,
+      })
+    }
   }
 
   const UpdateCustomer = async () => {
@@ -265,9 +267,13 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   }, [editMode, customer])
 
   const handleInputChange = (field: string, value: any) => {
+    const parsedValue = ['deptAtMeanHighWater', 'status'].includes(field)
+      ? parseInt(value, 10)
+      : value
+
     setFormData({
       ...formData,
-      [field]: value,
+      [field]: parsedValue,
     })
 
     if (fieldErrors[field]) {
@@ -1052,27 +1058,56 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   )}
                 </p>
               </div>
+
+              {/* <div className="mt-3">
+                <div>
+                  <span className="font-medium text-sm text-[#000000]">
+                    <div className="flex gap-1">
+                      Status
+                      <p className="text-red-600">*</p>
+                    </div>
+                  </span>
+                </div>
+
+                <div className="mt-2">
+                  <InputText
+                    value={formData.status}
+                    onChange={(e) => handleInputChange('status', e.target.value)}
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: fieldErrors.status ? '1px solid red' : '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.8rem',
+                    }}
+                  />
+                  <p>
+                    {fieldErrors.status && <small className="p-error">{fieldErrors.status}</small>}
+                  </p>
+                </div>
+              </div> */}
             </div>
           </div>
           <div className="mt-3">
             <div>
               <span className="font-medium text-sm text-[#000000]">Pin on Map</span>
             </div>
-            <div  style={{
-              flexShrink: 2,
-              
-              borderRadius: '10px',
-              padding: '0px',
-              height: '160px',
-              width:'230px',
-              gap: '0px',
+            <div
+              style={{
+                flexShrink: 2,
 
-              opacity: '0px',
-              display: 'flex',
-              alignItems: 'center',
-              backgroundColor: '#FFFFFF',
-            }}>
-              <CustomDisplayPositionMap  position={[78.965768, 79.8097687]}/>
+                borderRadius: '10px',
+                padding: '0px',
+                height: '160px',
+                width: '230px',
+                gap: '0px',
+
+                opacity: '0px',
+                display: 'flex',
+                alignItems: 'center',
+                backgroundColor: '#FFFFFF',
+              }}>
+              <CustomDisplayPositionMap position={[78.965768, 79.8097687]} />
             </div>
           </div>
         </div>

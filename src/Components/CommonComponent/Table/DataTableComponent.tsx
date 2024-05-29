@@ -14,7 +14,7 @@ const DataTableComponent: React.FC<DataTableProps> = ({
   actionButtons,
   onRowClick,
   style,
-  emptyMessage
+  emptyMessage,
 }) => {
   const buttonBody = (rowData: any) => {
     return (

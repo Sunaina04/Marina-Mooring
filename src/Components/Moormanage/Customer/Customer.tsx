@@ -96,7 +96,7 @@ const Customer = () => {
     console.log(customerRecordData)
     try {
       const response = await deleteCustomer({ id: customerRecordData?.id })
-     
+
       console.log(response)
       if (response) {
         toast.current?.show({
@@ -104,18 +104,18 @@ const Customer = () => {
           summary: 'Success',
           detail: 'User deleted successfully',
           life: 3000,
-        });
-        getCustomerData();
+        })
+        getCustomerData()
       }
-      setCustomerRecordData("")
+      setCustomerRecordData('')
     } catch (error) {
-      console.error('Error deleting customer:', error);
+      console.error('Error deleting customer:', error)
       toast.current?.show({
         severity: 'error',
         summary: 'Error',
         detail: 'Error deleting customer',
         life: 3000,
-      });
+      })
     }
   }
 
@@ -134,7 +134,6 @@ const Customer = () => {
     fontWeight: '700',
     fontSize: '10px',
     color: '#000000',
-  
   }
 
   const CustomerTableColumns = useMemo(
@@ -248,6 +247,7 @@ const Customer = () => {
                 editMode={editMode || modalVisible}
                 closeModal={handleModalClose}
                 getCustomer={getCustomerData}
+                toastRef={toast}
               />
             }
             headerText={<h1 className="text-xxl font-bold text-black ">Add Customer</h1>}
@@ -329,7 +329,7 @@ const Customer = () => {
                 }}
                 scrollable={false}
                 columns={CustomerTableColumns}
-                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400'}}
+                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
                 onRowClick={(rowData) => handleCustomerTableRowClick(rowData)}
               />
             )}

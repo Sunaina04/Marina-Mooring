@@ -2,18 +2,13 @@ import InputComponent from '../../CommonComponent/InputComponent'
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { Button } from 'primereact/button'
 import { Dropdown } from 'primereact/dropdown'
-import CustomStateMap from '../../Map/CustomSelectPositionMap'
 import { useAddBoatyardsMutation } from '../../../Services/MoorManage/MoormanageApi'
 import { BoatYardProps } from '../../../Type/ComponentBasedType'
-import useMetaData from '../../CommonComponent/MetaDataComponent/RolesData'
 import { Country, State } from '../../../Type/CommonType'
 import { BoatYardResponse } from '../../../Type/ApiTypes'
-import { InputText } from 'primereact/inputtext'
 import CustomSelectPositionMap from '../../Map/CustomSelectPositionMap'
-import RolesData from '../../CommonComponent/MetaDataComponent/RolesData'
 import StatesData from '../../CommonComponent/MetaDataComponent/StatesData'
 import CountriesData from '../../CommonComponent/MetaDataComponent/CountriesData'
-import { Toast } from 'primereact/toast'
 
 const AddBoatyards: React.FC<BoatYardProps> = ({
   closeModal,
@@ -84,14 +79,12 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   }
 
   const handlePositionChange = (lat: number, lng: number) => {
-    console.log('here')
     setLatitude(lat)
     setLongitude(lng)
     const formattedLat = lat.toFixed(3)
     const formattedLng = lng.toFixed(3)
     const concatenatedValue = `${formattedLat} ${formattedLng}`
     setGpsCoordinatesValue(concatenatedValue)
-    console.log('value', gpsCoordinatesValue)
   }
 
   const handleSave = async () => {

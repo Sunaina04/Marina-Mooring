@@ -26,7 +26,7 @@ import Header from '../../Layout/LayoutComponents/Header'
 import { IoSearchSharp } from 'react-icons/io5'
 import CustomSelectPositionMap from '../../Map/CustomSelectPositionMap'
 // import "../Boatyards/Boatyard.module.css"
-import "../Boatyards/Boatyard.module.css";
+import '../Boatyards/Boatyard.module.css'
 import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
 import { Toast } from 'primereact/toast'
 import { Params } from '../../../Type/CommonType'
@@ -49,7 +49,7 @@ const Boatyards = () => {
   const [searchText, setSearchText] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [dialogVisible, setDialogVisible] = useState(false)
-  const [mooringRowData, setMooringRowData] = useState<MooringWithBoatYardContent>()
+  const [mooringRowData, setMooringRowData] = useState<any>()
 
   const toast = useRef<Toast>(null)
 
@@ -58,9 +58,9 @@ const Boatyards = () => {
   }
 
   const handleMooringTableRowClick = (rowData: any) => {
-    console.log(rowData)
     setDialogVisible(true)
-    setMooringRowData(rowData.data)
+    setMooringRowData(rowData)
+    console.log('mooringRowData', rowData, mooringRowData)
   }
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,7 +82,9 @@ const Boatyards = () => {
         color: 'red',
         label: 'view',
         underline: true,
-        onClick: (rowData: any) => handleMooringTableRowClick(rowData),
+        onClick: (rowData) => {
+          handleMooringTableRowClick(rowData)
+        },
       },
     ],
     headerStyle: { backgroundColor: '#00426F', color: 'black' },
@@ -484,9 +486,9 @@ const Boatyards = () => {
                     fontWeight: '400',
                     color: '#000000',
                   }}
-                  onRowClick={(rowData) => {
-                    handleMooringTableRowClick(rowData)
-                  }}
+                  // onRowClick={(rowData) => {
+                  //   handleMooringTableRowClick(rowData)
+                  // }}
                   emptyMessage={
                     <div className="text-center mt-14">
                       <img
@@ -531,6 +533,7 @@ const Boatyards = () => {
               <p>
                 <span style={{ fontWeight: 'bold' }}>Boat Name:</span> {mooringRowData?.boatName}
               </p>
+
               <p>
                 <span style={{ fontWeight: 'bold' }}>Type:</span> {mooringRowData?.boatType}
               </p>
@@ -562,6 +565,14 @@ const Boatyards = () => {
               <p>
                 <span style={{ fontWeight: 'bold' }}>G.P.S Coordinates:</span>{' '}
                 {mooringRowData?.gpsCoordinates}
+              </p>
+              <p>
+                <span style={{ fontWeight: 'bold' }}>Boatyard Name:</span>{' '}
+                {mooringRowData?.boatyardName}
+              </p>
+              <p>
+                <span style={{ fontWeight: 'bold' }}>Customer Name:</span>{' '}
+                {mooringRowData?.customerName}
               </p>
               <p>
                 <span style={{ fontWeight: 'bold' }}>Boat Size:</span> {mooringRowData?.boatSize}
