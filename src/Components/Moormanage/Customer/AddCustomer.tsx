@@ -22,6 +22,7 @@ import {
 } from '../../Utils/CustomData'
 import StatesData from '../../CommonComponent/MetaDataComponent/StatesData'
 import CountriesData from '../../CommonComponent/MetaDataComponent/CountriesData'
+import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
 
 const AddCustomer: React.FC<CustomerDataProps> = ({
   customer,
@@ -314,7 +315,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   }
 
   return (
-    <div>
+    <div className="">
       <div className="flex gap-6">
         <div>
           <div>
@@ -882,7 +883,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           </div>
         </div>
 
-        <div className="flex gap-6 mt-3">
+        <div className="flex gap-6 mt-3 mb-16">
           <div className="mt-3">
             <div>
               <div>
@@ -1057,6 +1058,22 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             <div>
               <span className="font-medium text-sm text-[#000000]">Pin on Map</span>
             </div>
+            <div  style={{
+              flexShrink: 2,
+              
+              borderRadius: '10px',
+              padding: '0px',
+              height: '160px',
+              width:'230px',
+              gap: '0px',
+
+              opacity: '0px',
+              display: 'flex',
+              alignItems: 'center',
+              backgroundColor: '#FFFFFF',
+            }}>
+              <CustomDisplayPositionMap  position={[78.965768, 79.8097687]}/>
+            </div>
           </div>
         </div>
       </div>
@@ -1068,7 +1085,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           height: '80px',
           backgroundColor: 'white',
           padding: '0 12px',
-          // marginBottom: '2px',
+          bottom: '0px',
         }}>
         <Button
           onClick={SaveCustomer}
@@ -1087,7 +1104,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           }}
         />
         <Button
-          onClick={() => {}}
+          onClick={closeModal}
           label={'Back'}
           text={true}
           style={{
