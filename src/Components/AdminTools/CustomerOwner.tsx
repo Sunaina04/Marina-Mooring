@@ -6,7 +6,7 @@ import { ActionButtonColumnProps } from '../../Type/Components/TableTypes'
 import { CustomerPayload, GetUserResponse } from '../../Type/ApiTypes'
 import Header from '../Layout/LayoutComponents/Header'
 import useMetaData from '../CommonComponent/MetaDataComponent/RolesData'
-import { Role } from '../../Type/CommonType'
+import { Params, Role } from '../../Type/CommonType'
 import { useGetUsersMutation } from '../../Services/AdminTools/AdminToolsApi'
 import AddNewCustomer from './AddNewCustomer'
 import './CustomerOwner.module.css'
@@ -87,7 +87,6 @@ const CustomerOwner = () => {
   }
 
   const columnStyle = {
-    // width: '10vw',
     borderBottom: '1px solid #D5E1EA',
     backgroundColor: '#FFFFFF',
     color: '#000000',
@@ -100,10 +99,6 @@ const CustomerOwner = () => {
         id: 'id',
         label: 'ID',
         style: columnStyle,
-        // body: (data: any) => {
-        //   console.info("body data ", data);
-        //   return (<div style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500',   backgroundColor: 'red'}}>{data.id}</div>)
-        // }
       },
       {
         id: 'name',
@@ -160,9 +155,9 @@ const CustomerOwner = () => {
   const getUserHandler = useCallback(async () => {
     setIsLoading(true)
     try {
-      let params = {}
+      let params: Params = {}
       if (searchText) {
-        params = { searchText } // Add searchText to params if it exists
+        params.searchText = searchText
       }
       const response = await getUser(params).unwrap()
       const { status, message, content } = response as GetUserResponse
@@ -191,9 +186,13 @@ const CustomerOwner = () => {
     async (id: any) => {
       setIsLoading(true)
       try {
+        let params: Params = {}
+        if (searchUsersText || id) {
+          params.searchText = searchUsersText
+        }
         const response = await getUser({
           customerOwnerId: id,
-          searchText: searchUsersText,
+          params,
         }).unwrap()
         const { status, message, content } = response as GetUserResponse
         if (status === 200 && Array.isArray(content?.content)) {

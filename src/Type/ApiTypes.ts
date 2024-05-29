@@ -187,11 +187,7 @@ export interface CustomerResponse {
   status: number
   errorList: []
   time: string
-  content: {
-    content: {
-      CustomerPayload: CustomerPayload
-    }
-  }
+  content: { CustomerPayload: CustomerPayload }
 }
 
 export interface customerResponseDto {

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import CustomModal from '../../CustomComponent/CustomModal'
 import AddCustomer from './AddCustomer'
 import { FaEdit } from 'react-icons/fa'
@@ -27,6 +27,7 @@ import { CustomersHeader, TechniciansHeader } from '../../Utils/DataTableHeader'
 import { customerAdmin } from '../../Utils/CustomData'
 import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader'
 import { properties } from '../../Utils/MeassageProperties'
+import { Params } from '../../../Type/CommonType'
 
 // const Customer = () => {
 //   return <></>
@@ -148,13 +149,14 @@ const Customer = () => {
     backgroundColor: '#FFFFFF',
     fontSize: '10px',
     color: '#000000',
+    fontweight: '700',
   }
 
   const MooringTableColumn = useMemo(
     () => [
       {
         id: 'id',
-        label: 'ID:',
+        label: 'ID',
         style: MooringTableColumnStyle,
       },
       {
@@ -171,18 +173,23 @@ const Customer = () => {
     [],
   )
 
-  const getCustomerData = async () => {
+  const getCustomerData = useCallback(async () => {
     try {
-      const response = await getCustomer({}).unwrap()
+      let params: Params = {}
+      if (searchText) {
+        params.searchText = searchText
+      }
+
+      const response = await getCustomer(params).unwrap()
       const { status, content } = response as CustomerResponse
-      if (status === 200 && Array.isArray(content?.content)) {
-        setCustomerData(content?.content)
-        setFilteredCustomerData(content?.content)
+      if (status === 200 && Array.isArray(content)) {
+        setCustomerData(content)
+        setFilteredCustomerData(content)
       }
     } catch (error) {
       console.error('Error occurred while fetching customer data:', error)
     }
-  }
+  }, [getCustomer, searchText])
 
   const getCustomersWithMooring = async (id: number) => {
     try {
@@ -203,8 +210,11 @@ const Customer = () => {
   }
 
   useEffect(() => {
-    getCustomerData()
-  }, [])
+    const timeoutId = setTimeout(() => {
+      getCustomerData()
+    }, 600)
+    return () => clearTimeout(timeoutId)
+  }, [searchText])
 
   return (
     <div className={modalVisible ? 'backdrop-blur-lg' : ''}>
@@ -368,11 +378,11 @@ const Customer = () => {
                       color: '#000000',
                     }}>
                     <p>
-                      <span className="">ID: </span>
+                      <span className="font-semibold">ID: </span>
                       {customerRecordData?.customerId}
                     </p>
                     <p className="mt-6">
-                      <span className="">Phone: </span>
+                      <span className="font-semibold">Phone: </span>
                       {customerRecordData?.phone}
                     </p>
                   </div>
@@ -385,18 +395,24 @@ const Customer = () => {
                       color: '#000000',
                     }}>
                     <p>
-                      <span>Name: </span>
+                      <span className="font-semibold">Name: </span>
                       {customerRecordData?.customerName}
                     </p>
                     <p className="mt-6">
-                      <span className="">Email: </span>
+                      <span className="font-semibold">Email: </span>
                       {customerRecordData?.emailAddress}
                     </p>
                   </div>
                 </div>
-                <div className="">
+                <div
+                  style={{
+                    fontSize: '14px',
+                    fontWeight: '400',
+                    lineHeight: '16.41px',
+                    color: '#000000',
+                  }}>
                   <p className="ml-4">
-                    <span className="address-label">Address: </span>
+                    <span className="address-label font-semibold">Address: </span>
                     {customerRecordData?.aptSuite && <span>{customerRecordData?.aptSuite} </span>}
                     {customerRecordData?.streetHouse && (
                       <span>{customerRecordData?.streetHouse} </span>
@@ -406,9 +422,9 @@ const Customer = () => {
                     {customerRecordData?.country && <span>{customerRecordData?.country} </span>}
                   </p>
 
-                  <div className="flex mt-4 ml-4 mb-3">
+                  <div className="flex mt-5 ml-4 mb-3">
                     <div>
-                      <h1>Boatyard: </h1>
+                      <h1 className="font-semibold">Boatyard: </h1>
                     </div>
                     <div className="flex gap-3">
                       {boatYardData.map((boatyard, index) => (
@@ -421,7 +437,7 @@ const Customer = () => {
                             color: '#10293A',
                             backgroundColor: '#D5E1EA',
                             padding: '5px',
-                            marginLeft: '5px',
+                            margin: '-5px 0px 05px 5px',
                           }}>
                           {boatyard}
                         </p>
@@ -472,6 +488,7 @@ const Customer = () => {
                   color: '#000000',
                   fontWeight: 600,
                   backgroundColor: '#D9D9D9',
+                  cursor: 'pointer',
                 }}
                 onRowClick={(rowData) => {
                   handleMooringTableRowClick(rowData)
@@ -480,7 +497,6 @@ const Customer = () => {
                 data={mooringData}
               />
             )}
-            {/* </div> */}
 
             {/* Dialog BOX */}
             <Dialog

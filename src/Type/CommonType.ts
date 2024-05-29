@@ -67,3 +67,11 @@ export interface State {
   name: string
   label: string
 }
+
+export type Params = {
+  page?: number
+  size?: number
+  sortBy?: string
+  sortDir?: string
+  searchText?: string
+}

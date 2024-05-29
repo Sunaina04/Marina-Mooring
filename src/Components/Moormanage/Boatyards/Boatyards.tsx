@@ -26,6 +26,7 @@ import CustomSelectPositionMap from '../../Map/CustomSelectPositionMap'
 import '../Boatyards/Boatyard.module.css'
 import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
 import { Toast } from 'primereact/toast'
+import { Params } from '../../../Type/CommonType'
 
 const Boatyards = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -217,7 +218,11 @@ const Boatyards = () => {
   const getBoatyardsData = useCallback(async () => {
     setIsLoading(true)
     try {
-      await getBoatyards({ searchText: searchText })
+      let params: Params = {}
+      if (searchText) {
+        params.searchText = searchText
+      }
+      await getBoatyards(params)
         .unwrap()
         .then(async (response) => {
           const { status, content } = response as BoatYardResponse

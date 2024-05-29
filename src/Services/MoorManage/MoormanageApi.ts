@@ -19,9 +19,22 @@ const moormanageApi = userApi.injectEndpoints({
     }),
 
     getCustomer: builder.mutation({
-      query: ({}) => ({
+      query: ({
+        page,
+        size,
+        sortBy,
+        sortDir,
+        searchText,
+      }: {
+        page?: number
+        size?: number
+        sortBy?: string
+        sortDir?: string
+        searchText?: string
+      }) => ({
         url: 'api/v1/customer/',
         method: 'GET',
+        params: { page, size, sortBy, sortDir, searchText },
       }),
     }),
 
