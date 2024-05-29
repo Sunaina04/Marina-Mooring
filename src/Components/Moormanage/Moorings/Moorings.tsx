@@ -12,6 +12,7 @@ import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader
 import { properties } from '../../Utils/MeassageProperties'
 import Header from '../../Layout/LayoutComponents/Header'
 import { Toast } from 'primereact/toast'
+import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
 
 const Moorings = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -238,7 +239,7 @@ const Moorings = () => {
               iconStyle={{
                 position: 'absolute',
                 left: '15px',
-                top: '50%',
+                top: '65%',
                 transform: 'translateY(-50%)',
                 width: '18px',
                 height: '18px',
@@ -250,8 +251,9 @@ const Moorings = () => {
                 fontSize: '',
                 color: '#D5E1EA',
                 border: '1px solid #D5E1EA',
-                paddingLeft: '35px',
+                paddingLeft: '40px',
                 borderRadius: '5px',
+                marginTop:'15px'
               }}
               onChange={handleSearchChange}
               value={searchQuery}
@@ -294,7 +296,8 @@ const Moorings = () => {
             className="bg-no-repeat object-cover bg-auto rounded-md w-full h-full"
             alt="Sea"
           />
-          <div className="absolute top-72">
+         
+          {/* <div className="absolute top-72">
             <div className=""></div>
             <div className="rounded-md border-[1px] pb-1 border-gray-300 mt-16 ml-10 w-[17vw]  h-[13vh] bg-[#FFFFFF]">
               <p className="text-[0.7rem] ml-1 text-black">Status</p>
@@ -322,17 +325,17 @@ const Moorings = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
           <div className="absolute top-5 right-5 w-[25rem]">
             <div
               style={{
-                width: '398px',
+                width: '400px',
                 height: '51px',
                 border: '0.96 px solid #D5E1EA',
               }}
-              className={`flex ${isChecked ? 'bg-[#00426F] rounded-tl-[5px] rounded-tr-[5px]' : 'bg-[#FFFFFF] rounded-xl'}  py-3 pl-4 `}>
-              <div className="flex items-center fixed overflow-hidden">
+              className={`flex ${isChecked ? 'bg-[#00426F] rounded-tl-[5px] rounded-tr-[5px]' : 'bg-[#FFFFFF] rounded-xl'}  py-3 pl-4`}>
+              <div className="flex items-center overflow-hidden">
                 <span
                   className={`flex  text-[15px] font-[700] text-[#000000] ${isChecked ? 'text-[#FFFFFF] font-[700]' : ' '} `}>
                   Customers Record
@@ -340,7 +343,7 @@ const Moorings = () => {
                 {isChecked ? (
                   <span>
                     <FaEdit
-                      className="ml-2"
+                      className="ml-4"
                       style={{ color: 'white' }}
                       onClick={handleEdit}
                       data-testid="edit"
