@@ -370,10 +370,11 @@ const Boatyards = () => {
             iconStyle={{
               position: 'absolute',
               left: '15px',
-              top: '60%',
+              top: '65%',
               transform: 'translateY(-50%)',
-              width: '18px',
-              height: '18px',
+              width: '16px',
+              height: '16px',
+              fontWeight: 'bold',
             }}
             inputTextStyle={{
               flexGrow: 1,

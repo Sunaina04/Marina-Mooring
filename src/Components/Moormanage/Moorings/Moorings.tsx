@@ -113,7 +113,7 @@ const Moorings = () => {
         style: {
           width: '4vw',
           borderBottom: '1px solid #C0C0C0',
-          fontWeight: '400',
+          fontWeight: '700',
           color: '#000000',
           fontSize: '10px',
           backgroundColor: '#FFFFFF',
@@ -127,7 +127,7 @@ const Moorings = () => {
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#FFFFFF',
           fontSize: '10px',
-          fontWeight: '400',
+          fontWeight: '700',
           color: '#000000',
         },
       },
@@ -296,7 +296,9 @@ const Moorings = () => {
             className="bg-no-repeat object-cover bg-auto rounded-md w-full h-full"
             alt="Sea"
           />
-         
+          {/* <div>
+          <CustomDisplayPositionMap position={[78.965768, 79.8097687]}/>
+         </div> */}
           {/* <div className="absolute top-72">
             <div className=""></div>
             <div className="rounded-md border-[1px] pb-1 border-gray-300 mt-16 ml-10 w-[17vw]  h-[13vh] bg-[#FFFFFF]">
@@ -327,15 +329,15 @@ const Moorings = () => {
             </div>
           </div> */}
 
-          <div className="absolute top-5 right-5 w-[25rem]">
+          <div className="absolute top-5 right-5 w-[25rem] max-w-full">
             <div
               style={{
-                width: '400px',
+                maxWidth: '400px',
                 height: '51px',
                 border: '0.96 px solid #D5E1EA',
               }}
               className={`flex ${isChecked ? 'bg-[#00426F] rounded-tl-[5px] rounded-tr-[5px]' : 'bg-[#FFFFFF] rounded-xl'}  py-3 pl-4`}>
-              <div className="flex items-center overflow-hidden">
+              <div className="flex ">
                 <span
                   className={`flex  text-[15px] font-[700] text-[#000000] ${isChecked ? 'text-[#FFFFFF] font-[700]' : ' '} `}>
                   Customers Record
@@ -343,7 +345,7 @@ const Moorings = () => {
                 {isChecked ? (
                   <span>
                     <FaEdit
-                      className="ml-4"
+                      className="ml-4 mt-1"
                       style={{ color: 'white' }}
                       onClick={handleEdit}
                       data-testid="edit"
@@ -352,25 +354,26 @@ const Moorings = () => {
                 ) : (
                   ''
                 )}
-
+                <div className='ml-auto'>
                 <InputSwitch
                   checked={isChecked}
                   onChange={handleInputChange}
-                  className="border-none ml-20"
+                  className="border-none ml-36 "
                   color="green"
                 />
+                </div>
               </div>
             </div>
 
             {isChecked && (
-              <div className="">
-                <div className="bg-[#F2F2F2] px-2 h-[18vh]">
-                  <div className="flex gap-20 text-[14px] ">
+              <div className="w-full">
+                <div className="bg-[#F2F2F2] px-2" style={{minHeight:'24vh'}}>
+                  <div className="flex flex-wrap gap-20 text-[14px] ">
                     <div className=" mt-2 ">
                       <p className="text-[14px] font-[400]  text-[#000000]">ID:{edit.id}</p>
                       <p className="mt-4  w-40 text-[#000000] font-[400] ">Phone:{edit.phone}</p>
                     </div>
-                    <div className="mt-2">
+                    <div className="">
                       <p className="text-[14px] font-[400] mt-2 text-[#000000]">Name:{edit.name}</p>
                       <p className="text-[14px] font-[400] text-[#000000] mt-3">
                         Email:{edit.email}
@@ -380,7 +383,7 @@ const Moorings = () => {
                   <div className="text-[14px] font-[400] mt-3 text-[#000000]">
                     <p>Address:{edit.address}</p>
                   </div>
-                  <div className="text-[14px] mt-4 ">
+                  <div className="text-[14px] mt-4 pb-2 ">
                     <p>
                       Boatyard:
                       <span
@@ -389,11 +392,11 @@ const Moorings = () => {
                           color: '#00426F',
                           fontSize: '13px',
                           padding: '5px',
-                          width: '60px',
-                          height: '25px',
+                          // width: '60px',
+                          // height: '25px',
                           borderRadius: '5px',
                         }}
-                        className="ml-2">
+                        className="ml-2 inline-block">
                         Pioneer
                       </span>
                       <span
@@ -402,8 +405,8 @@ const Moorings = () => {
                           color: '#00426F',
                           fontSize: '13px',
                           padding: '5px',
-                          width: '60px',
-                          height: '25px',
+                          // width: '60px',
+                          // height: '25px',
                           borderRadius: '5px',
                         }}
                         className=" ml-2">
@@ -415,24 +418,24 @@ const Moorings = () => {
                           color: '#00426F',
                           fontSize: '13px',
                           padding: '5px',
-                          width: '60px',
-                          height: '25px',
+                          // width: '60px',
+                          // height: '25px',
                           borderRadius: '5px',
                         }}
                         className=" ml-2">
-                        Pioneer
+                        03Pioneer
                       </span>
                     </p>
                   </div>
                 </div>
 
-                <div>
+                <div className='w-full'>
                   <h3
-                    className={`${isChecked ? 'bg-[#00426F] text-[#FFFFFF]' : ''} font-[700] text-[15px] h-12 py-4 pl-2 `}>
+                    className={`${isChecked ? 'bg-[#00426F] text-[#FFFFFF]' : ''} font-[700] text-[15px] h-12 py-3 pl-2 `}>
                     Moorings
                   </h3>
 
-                  <div data-testid="customer-admin-users-table">
+                  <div data-testid="customer-admin-users-table" className='overflow-x-auto'>
                     <DataTableComponent
                       tableStyle={{
                         fontSize: '12px',
@@ -459,7 +462,7 @@ const Moorings = () => {
                     }>
                     <hr className="border border-black  my-0 mx-0"></hr>
                     {selectedMooring && (
-                      <div className="flex leading-10 gap-4">
+                      <div className="flex flex-wrap leading-10 gap-4">
                         <div>
                           <p>
                             <span style={{ fontWeight: 'bold' }}>ID:</span> {selectedMooring?.id}
