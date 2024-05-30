@@ -48,7 +48,7 @@ const Boatyards = () => {
   const [selectedRowId, setSelectedRowID] = useState()
   const [searchText, setSearchText] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const [dialogVisible, setDialogVisible] = useState(true)
+  const [dialogVisible, setDialogVisible] = useState(false)
   const [mooringRowData, setMooringRowData] = useState<any>()
 
   const toast = useRef<Toast>(null)
@@ -164,7 +164,7 @@ const Boatyards = () => {
         {boatyardsData ? (
           <DataTableComponent
             tableStyle={{
-              fontSize: '12px',
+              fontSize: '14px',
               color: '#000000',
               padding: '5rem',
             }}
@@ -183,7 +183,7 @@ const Boatyards = () => {
 
   const columnStyle = {
     backgroundColor: '#FFFFFF',
-    fontSize: '10px',
+    fontSize: '13px',
     color: 'black',
     fontWeight: '500',
     borderBottom: '1px solid #D5E1EA ',

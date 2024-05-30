@@ -90,7 +90,6 @@ const Customer = () => {
     setSelectedCustomer(customerRecordData)
     setModalVisible(true)
     setEditMode(true)
-    
   }
 
   const handleDelete = async (rowData: any) => {
@@ -215,12 +214,12 @@ const Customer = () => {
       const { status, content } = response as CustomersWithMooringResponse
       if (
         status === 200 &&
-        Array.isArray(content.customerResponseDto.mooringResponseDtoList) &&
+        Array.isArray(content?.customerResponseDto?.mooringResponseDtoList) &&
         Array.isArray(content.boatyardNames)
       ) {
-        setCustomerRecordData(content.customerResponseDto)
-        setMooringData(content.customerResponseDto.mooringResponseDtoList)
-        setBoatYardData(content.boatyardNames)
+        setCustomerRecordData(content?.customerResponseDto)
+        setMooringData(content?.customerResponseDto?.mooringResponseDtoList)
+        setBoatYardData(content?.boatyardNames)
       }
     } catch (error) {
       console.error('Error fetching moorings data:', error)
@@ -276,7 +275,7 @@ const Customer = () => {
           className="flex-grow  bg-[#FFFFFF] rounded-xl border-[1px] border-[#D5E1EA] w-[515px] h-[650px] mb-0 ">
           <div className="text-sm font-extrabold rounded-sm w-full bg-[#D9D9D9]">
             <div
-              className="flex  align-items-center justify-between bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px]"
+              className="flex  align-items-center justify-between bg-[#10293A] rounded-tl-[10px] rounded-tr-[10px]"
               style={{ color: '#FFFFFF' }}>
               <h1 className="p-4">{properties.customerHeader}</h1>
             </div>
@@ -521,25 +520,24 @@ const Customer = () => {
 
             {/* Dialog BOX */}
             <Dialog
-            position='center'
-            style={{
-              width: '600px',
-              minWidth: '300px',
-              height: '470px',
-              minHeight: '200px',
-              borderRadius: '1rem',
-              fontWeight:"400",
-              maxHeight: '50% !important',
-            }}
-            draggable={false}
-            
+              position="center"
+              style={{
+                width: '600px',
+                minWidth: '300px',
+                height: '470px',
+                minHeight: '200px',
+                borderRadius: '1rem',
+                fontWeight: '400',
+                maxHeight: '50% !important',
+              }}
+              draggable={false}
               visible={dialogVisible}
               onHide={() => setDialogVisible(false)}
               header={
                 <div className="flex gap-4">
                   <div className="font-bold">Mooring Information</div>
                   <div className="font-bold mt-1">
-                    <FaEdit onClick={handleEdit}  color='#0098FF'/>
+                    <FaEdit onClick={handleEdit} color="#0098FF" />
                   </div>
                 </div>
               }>

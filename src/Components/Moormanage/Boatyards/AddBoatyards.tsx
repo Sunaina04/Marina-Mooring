@@ -331,6 +331,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
                 borderRadius: '0.50rem',
                 fontSize: '0.8rem',
                 padding: '4px',
+                color:"black"
               }}
             />
 

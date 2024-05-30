@@ -9,9 +9,7 @@ import { CityProps } from '../../../Type/CommonType'
 import { AddMooringProps } from '../../../Type/ComponentBasedType'
 
 const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }) => {
-
-
-console.log("mooring",moorings);
+  console.log('mooring', moorings)
 
   const [value, setValue] = useState<string>('')
   const [selectedCity, setSelectedCity] = useState<CityProps | undefined>(undefined)
@@ -57,13 +55,10 @@ console.log("mooring",moorings);
     shackleSwivelCondition: moorings?.shackleSwivelCondition || '',
     pennantCondition: moorings?.pennantCondition || '',
     deptAtMeanHighWater: moorings?.deptAtMeanHighWater || '',
-  };
-
-
+  }
 
   useEffect(() => {
     if (editMode && moorings) {
-      
       setFormData(payload)
     }
   }, [editMode, moorings])
@@ -185,7 +180,7 @@ console.log("mooring",moorings);
     const payload = {
       ...formData,
     }
-console.log("dataaa",payload);
+    console.log('dataaa', payload)
 
     try {
       const response = await saveMoorings(payload)

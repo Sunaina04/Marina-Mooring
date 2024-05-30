@@ -23,6 +23,7 @@ import StatesData from '../../CommonComponent/MetaDataComponent/StatesData'
 import CountriesData from '../../CommonComponent/MetaDataComponent/CountriesData'
 import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
 import { CustomerResponse } from '../../../Type/ApiTypes'
+import { InputNumber } from 'primereact/inputnumber'
 
 const AddCustomer: React.FC<CustomerDataProps> = ({
   customer,
@@ -30,11 +31,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   closeModal,
   getCustomer,
   toastRef,
-  setCustomerData
+  setCustomerData,
 }) => {
-  console.log("boattype", customer.mooringResponseDtoList[0].typeOfWeight.type);
-  console.log(customer);
-
+  console.log('boattype', customer.mooringResponseDtoList[0].typeOfWeight.type)
+  console.log(customer)
 
   const [value, setValue] = useState<string>('')
   const [selectedCountry, setSelectedCountry] = useState<Country>()
@@ -55,7 +55,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [updateCustomer] = useUpdateCustomerMutation()
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
   const [firstErrorField, setFirstErrorField] = useState('')
-
+  const mooringResponseDtoList = customer?.mooringResponseDtoList || []
   const [formData, setFormData] = useState<any>({
     mooringId: '',
     mooringName: '',
@@ -75,11 +75,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     bottomChainCondition: '',
     shackleSwivelCondition: '',
     pennantCondition: '',
-    deptAtMeanHighWater: "",
+    deptAtMeanHighWater: '',
     status: 0,
   })
-
-
 
   const validateFields = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -217,8 +215,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     const response = await addCustomer(payload).unwrap()
     const { status } = response as CustomerResponse
 
-    console.log("status", status);
-
+    console.log('status', status)
 
     if (status === 200 || status === 201) {
       closeModal()
@@ -231,8 +228,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       })
     }
   }
-
-
 
   const UpdateCustomer = async () => {
     const payload = {
@@ -250,8 +245,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
     const response = await updateCustomer(payload)
 
-    console.log("update",response);
-    
+    console.log('update', response)
+
     closeModal()
     getCustomer()
   }
@@ -271,19 +266,14 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const handleClick = () => {
     if (editMode) {
       UpdateCustomer()
-
     } else {
       SaveCustomer()
-      
     }
   }
 
   useEffect(() => {
     fetchDataAndUpdate()
   }, [fetchDataAndUpdate])
-
-
-
 
   useEffect(() => {
     if (editMode && customer) {
@@ -299,38 +289,72 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       setSelectedCountry(customer.country || '')
       setFormData((prevState: any) => ({
         ...prevState,
-        mooringId: customer.mooringResponseDtoList[0]?.mooringId || [],
-        mooringName: customer.mooringResponseDtoList[0]?.mooringName || [],
+        mooringId: mooringResponseDtoList[0]?.mooringId || '',
+        mooringName: mooringResponseDtoList[0]?.mooringName || '',
         customerName: '',
-        harbor: customer.mooringResponseDtoList[0].harbor || [],
-        waterDepth: customer.mooringResponseDtoList[0].waterDepth || [],
-        gpsCoordinates: customer.mooringResponseDtoList[0].gpsCoordinates || [],
-        boatyardName: customer.mooringResponseDtoList[0].boatyardName || [],
-        boatName: customer.mooringResponseDtoList[0].boatName || [],
-        boatSize: customer.mooringResponseDtoList[0].boatSize,
-        boatType: customer.mooringResponseDtoList[0].boatType.boatType || [],
-        boatWeight: customer.mooringResponseDtoList[0].boatWeight || [],
-        sizeOfWeight: customer.mooringResponseDtoList[0].sizeOfWeight.weight || [],
-        typeOfWeight: customer.mooringResponseDtoList[0].typeOfWeight.type || [],
-        conditionOfEye: customer.mooringResponseDtoList[0].eyeCondition.condition || [],
-        topChainCondition: customer.mooringResponseDtoList[0].topChainCondition.condition || [],
-        bottomChainCondition: customer.mooringResponseDtoList[0].bottomChainCondition.condition || [],
-        shackleSwivelCondition: customer.mooringResponseDtoList[0].shackleSwivelCondition.condition || [],
-        pennantCondition: customer.mooringResponseDtoList[0].pennantCondition.condition || [],
-        deptAtMeanHighWater: customer.mooringResponseDtoList[0].depthAtMeanHighWater || [],
+        harbor: mooringResponseDtoList[0]?.harbor || '',
+        waterDepth: mooringResponseDtoList[0]?.waterDepth || '',
+        gpsCoordinates: mooringResponseDtoList[0]?.gpsCoordinates || '',
+        boatyardName: mooringResponseDtoList[0]?.boatyardName || '',
+        boatName: mooringResponseDtoList[0]?.boatName || '',
+        boatSize: mooringResponseDtoList[0]?.boatSize || '',
+        boatType: mooringResponseDtoList[0]?.boatType?.boatType || '',
+        boatWeight: mooringResponseDtoList[0]?.boatWeight || '',
+        sizeOfWeight: mooringResponseDtoList[0]?.sizeOfWeight?.weight || '',
+        typeOfWeight: mooringResponseDtoList[0]?.typeOfWeight?.type || '',
+        conditionOfEye: mooringResponseDtoList[0]?.eyeCondition?.condition || '',
+        topChainCondition: mooringResponseDtoList[0]?.topChainCondition?.condition || '',
+        bottomChainCondition: mooringResponseDtoList[0]?.bottomChainCondition?.condition || '',
+        shackleSwivelCondition: mooringResponseDtoList[0]?.shackleSwivelCondition?.condition || '',
+        pennantCondition: mooringResponseDtoList[0]?.pennantCondition?.condition || '',
+        deptAtMeanHighWater: mooringResponseDtoList[0]?.depthAtMeanHighWater || '',
         status: 0,
-
-      }));
-
-
+      }))
     }
   }, [editMode, customer])
 
+  // useEffect(() => {
+  //   if (editMode && customer) {
+  //     setValue(customer.note || '')
+  //     setCustomerName(customer.customerName || '')
+  //     setCustomerId(customer.customerId || '')
+  //     setPhone(customer.phone || '')
+  //     setEmail(customer.emailAddress || '')
+  //     setStreetHouse(customer.streetHouse || '')
+  //     setSectorBlock(customer.aptSuite || '')
+  //     setPinCode(customer.zipCode || '')
+  //     setSelectedState(customer.state || '')
+  //     setSelectedCountry(customer.country || '')
+  //     setFormData((prevState: any) => ({
+  //       ...prevState,
+  //       mooringId: customer?.mooringResponseDtoList[0]?.mooringId || "",
+  //       mooringName: customer?.mooringResponseDtoList[0]?.mooringName,
+  //       customerName: '',
+  //       harbor: customer.mooringResponseDtoList[0]?.harbor,
+  //       waterDepth: customer?.mooringResponseDtoList[0]?.waterDepth,
+  //       gpsCoordinates: customer?.mooringResponseDtoList[0]?.gpsCoordinates,
+  //       boatyardName: customer.mooringResponseDtoList[0].boatyardName,
+  //       boatName: customer.mooringResponseDtoList[0].boatName,
+  //       boatSize: customer.mooringResponseDtoList[0].boatSize,
+  //       boatType: customer.mooringResponseDtoList[0].boatType.boatType,
+  //       boatWeight: customer.mooringResponseDtoList[0].boatWeight,
+  //       sizeOfWeight: customer.mooringResponseDtoList[0].sizeOfWeight.weight,
+  //       typeOfWeight: customer.mooringResponseDtoList[0].typeOfWeight.type,
+  //       conditionOfEye: customer.mooringResponseDtoList[0].eyeCondition.condition,
+  //       topChainCondition: customer.mooringResponseDtoList[0].topChainCondition.condition,
+  //       bottomChainCondition: customer.mooringResponseDtoList[0].bottomChainCondition.condition,
+  //       shackleSwivelCondition: customer.mooringResponseDtoList[0].shackleSwivelCondition.condition,
+  //       pennantCondition: customer.mooringResponseDtoList[0].pennantCondition.condition,
+  //       deptAtMeanHighWater: customer.mooringResponseDtoList[0].depthAtMeanHighWater,
+  //       status: 0,
+
+  //     }));
+
+  //   }
+  // }, [editMode, customer])
+
   const handleInputChange = (field: string, value: any) => {
     const parsedValue = ['deptAtMeanHighWater', 'status'].includes(field)
-      ? parseInt(value, 10)
-      : value
-
     setFormData({
       ...formData,
       [field]: parsedValue,
@@ -380,379 +404,374 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     setFieldErrors((prevErrors) => ({ ...prevErrors, [fieldName]: '' }))
   }
 
+  // import React, { useCallback, useEffect, useState } from 'react'
+  // import InputComponent from '../../CommonComponent/InputComponent'
+  // import { InputText } from 'primereact/inputtext'
+  // import { Dropdown } from 'primereact/dropdown'
+  // import {
+  //   useAddCustomerMutation,
+  //   useUpdateCustomerMutation,
+  // } from '../../../Services/MoorManage/MoormanageApi'
+  // import { Button } from 'primereact/button'
+  // import { CustomerDataProps } from '../../../Type/ComponentBasedType'
+  // import { CityProps, Country, State } from '../../../Type/CommonType'
+  // import {
+  //   bottomChainConditionOptions,
+  //   chainConditionOptions,
+  //   conditionOfEyeOptions,
+  //   mooringTypeOptions,
+  //   pennantConditionOptions,
+  //   shackleSwivelConditionOptions,
+  //   sizeOfWeightOptions,
+  //   typeOfWeightOptions,
+  // } from '../../Utils/CustomData'
+  // import StatesData from '../../CommonComponent/MetaDataComponent/StatesData'
+  // import CountriesData from '../../CommonComponent/MetaDataComponent/CountriesData'
+  // import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
+  // import { CustomerResponse } from '../../../Type/ApiTypes'
 
+  // const AddCustomer: React.FC<CustomerDataProps> = ({
+  //   customer,
+  //   editMode,
+  //   closeModal,
+  //   getCustomer,
+  //   toastRef,
+  //   setCustomerData
+  // }) => {
+  //   // Safeguard access to customer properties
+  //   const mooringResponseDtoList = customer?.mooringResponseDtoList || [];
+  //   console.log("boattype", mooringResponseDtoList[0]?.typeOfWeight?.type);
+  //   console.log(customer);
 
+  //   const [value, setValue] = useState<string>('')
+  //   const [selectedCountry, setSelectedCountry] = useState<Country>()
+  //   const [selectedState, setSelectedState] = useState<State>()
+  //   const [customerName, setCustomerName] = useState<string>('')
+  //   const [customerId, setCustomerId] = useState<string>('')
+  //   const [phone, setPhone] = useState<string>('')
+  //   const [email, setEmail] = useState<string>('')
+  //   const [streetHouse, setStreetHouse] = useState<string>('')
+  //   const [sectorBlock, setSectorBlock] = useState<string>('')
+  //   const [pinCode, setPinCode] = useState<string>('')
+  //   const [countriesData, setCountriesData] = useState<Country[]>()
+  //   const [statesData, setStatesData] = useState<State[]>()
 
-// import React, { useCallback, useEffect, useState } from 'react'
-// import InputComponent from '../../CommonComponent/InputComponent'
-// import { InputText } from 'primereact/inputtext'
-// import { Dropdown } from 'primereact/dropdown'
-// import {
-//   useAddCustomerMutation,
-//   useUpdateCustomerMutation,
-// } from '../../../Services/MoorManage/MoormanageApi'
-// import { Button } from 'primereact/button'
-// import { CustomerDataProps } from '../../../Type/ComponentBasedType'
-// import { CityProps, Country, State } from '../../../Type/CommonType'
-// import {
-//   bottomChainConditionOptions,
-//   chainConditionOptions,
-//   conditionOfEyeOptions,
-//   mooringTypeOptions,
-//   pennantConditionOptions,
-//   shackleSwivelConditionOptions,
-//   sizeOfWeightOptions,
-//   typeOfWeightOptions,
-// } from '../../Utils/CustomData'
-// import StatesData from '../../CommonComponent/MetaDataComponent/StatesData'
-// import CountriesData from '../../CommonComponent/MetaDataComponent/CountriesData'
-// import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
-// import { CustomerResponse } from '../../../Type/ApiTypes'
+  //   const { getStatesData } = StatesData()
+  //   const { getCountriesData } = CountriesData()
+  //   const [addCustomer] = useAddCustomerMutation()
+  //   const [updateCustomer] = useUpdateCustomerMutation()
+  //   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
+  //   const [firstErrorField, setFirstErrorField] = useState('')
 
-// const AddCustomer: React.FC<CustomerDataProps> = ({
-//   customer,
-//   editMode,
-//   closeModal,
-//   getCustomer,
-//   toastRef,
-//   setCustomerData
-// }) => {
-//   // Safeguard access to customer properties
-//   const mooringResponseDtoList = customer?.mooringResponseDtoList || [];
-//   console.log("boattype", mooringResponseDtoList[0]?.typeOfWeight?.type);
-//   console.log(customer);
+  //   const [formData, setFormData] = useState<any>({
+  //     mooringId: '',
+  //     mooringName: '',
+  //     customerName: '',
+  //     harbor: '',
+  //     waterDepth: '',
+  //     gpsCoordinates: '',
+  //     boatyardName: '',
+  //     boatName: '',
+  //     boatSize: '',
+  //     boatType: '',
+  //     boatWeight: '',
+  //     sizeOfWeight: '',
+  //     typeOfWeight: '',
+  //     conditionOfEye: '',
+  //     topChainCondition: '',
+  //     bottomChainCondition: '',
+  //     shackleSwivelCondition: '',
+  //     pennantCondition: '',
+  //     deptAtMeanHighWater: "",
+  //     status: 0,
+  //   })
 
-//   const [value, setValue] = useState<string>('')
-//   const [selectedCountry, setSelectedCountry] = useState<Country>()
-//   const [selectedState, setSelectedState] = useState<State>()
-//   const [customerName, setCustomerName] = useState<string>('')
-//   const [customerId, setCustomerId] = useState<string>('')
-//   const [phone, setPhone] = useState<string>('')
-//   const [email, setEmail] = useState<string>('')
-//   const [streetHouse, setStreetHouse] = useState<string>('')
-//   const [sectorBlock, setSectorBlock] = useState<string>('')
-//   const [pinCode, setPinCode] = useState<string>('')
-//   const [countriesData, setCountriesData] = useState<Country[]>()
-//   const [statesData, setStatesData] = useState<State[]>()
+  //   const validateFields = () => {
+  //     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  //     const phoneRegex = /^\d{10}$/
+  //     const nameRegex = /^[a-zA-Z ]+$/
+  //     const errors: { [key: string]: string } = {}
+  //     let firstError = ''
 
-//   const { getStatesData } = StatesData()
-//   const { getCountriesData } = CountriesData()
-//   const [addCustomer] = useAddCustomerMutation()
-//   const [updateCustomer] = useUpdateCustomerMutation()
-//   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
-//   const [firstErrorField, setFirstErrorField] = useState('')
+  //     if (!customerName) {
+  //       errors.customerName = 'Customer name is required'
+  //       firstError = 'CustomerName'
+  //     } else if (!nameRegex.test(customerName)) {
+  //       errors.customerName = 'Name must only contain letters'
+  //       firstError = 'CustomerName'
+  //     } else if (customerName.length < 3) {
+  //       errors.customerName = 'CustomerName must be at least 3 characters long'
+  //       firstError = 'CustomerName'
+  //     }
 
-//   const [formData, setFormData] = useState<any>({
-//     mooringId: '',
-//     mooringName: '',
-//     customerName: '',
-//     harbor: '',
-//     waterDepth: '',
-//     gpsCoordinates: '',
-//     boatyardName: '',
-//     boatName: '',
-//     boatSize: '',
-//     boatType: '',
-//     boatWeight: '',
-//     sizeOfWeight: '',
-//     typeOfWeight: '',
-//     conditionOfEye: '',
-//     topChainCondition: '',
-//     bottomChainCondition: '',
-//     shackleSwivelCondition: '',
-//     pennantCondition: '',
-//     deptAtMeanHighWater: "",
-//     status: 0,
-//   })
+  //     if (!customerId) {
+  //       errors.customerId = 'Customer ID is required'
+  //       if (!firstError) firstError = 'customerId'
+  //     }
 
-//   const validateFields = () => {
-//     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-//     const phoneRegex = /^\d{10}$/
-//     const nameRegex = /^[a-zA-Z ]+$/
-//     const errors: { [key: string]: string } = {}
-//     let firstError = ''
+  //     if (!phone) {
+  //       errors.phone = 'Phone is required'
+  //       if (!firstError) firstError = 'phone'
+  //     } else if (!phoneRegex.test(phone)) {
+  //       errors.phone = 'Phone must be a 10-digit number'
+  //       if (!firstError) firstError = 'phone'
+  //     }
 
-//     if (!customerName) {
-//       errors.customerName = 'Customer name is required'
-//       firstError = 'CustomerName'
-//     } else if (!nameRegex.test(customerName)) {
-//       errors.customerName = 'Name must only contain letters'
-//       firstError = 'CustomerName'
-//     } else if (customerName.length < 3) {
-//       errors.customerName = 'CustomerName must be at least 3 characters long'
-//       firstError = 'CustomerName'
-//     }
+  //     if (!email) {
+  //       errors.email = 'Email is required'
+  //       if (!firstError) firstError = 'email'
+  //     } else if (!emailRegex.test(email)) {
+  //       errors.email = 'Please enter a valid email format'
+  //       if (!firstError) firstError = 'email'
+  //     }
 
-//     if (!customerId) {
-//       errors.customerId = 'Customer ID is required'
-//       if (!firstError) firstError = 'customerId'
-//     }
+  //     if (!streetHouse) {
+  //       errors.streetHouse = 'Street/House is required'
+  //       if (!firstError) firstError = 'streetHouse'
+  //     }
 
-//     if (!phone) {
-//       errors.phone = 'Phone is required'
-//       if (!firstError) firstError = 'phone'
-//     } else if (!phoneRegex.test(phone)) {
-//       errors.phone = 'Phone must be a 10-digit number'
-//       if (!firstError) firstError = 'phone'
-//     }
+  //     if (!sectorBlock) {
+  //       errors.sectorBlock = 'Apt/Suite is required'
+  //       if (!firstError) firstError = 'sectorBlock'
+  //     }
 
-//     if (!email) {
-//       errors.email = 'Email is required'
-//       if (!firstError) firstError = 'email'
-//     } else if (!emailRegex.test(email)) {
-//       errors.email = 'Please enter a valid email format'
-//       if (!firstError) firstError = 'email'
-//     }
+  //     if (!pinCode) {
+  //       errors.pinCode = 'Zipcode code is required'
+  //       if (!firstError) firstError = 'pinCode'
+  //     }
+  //     if (!selectedState || !selectedState.name) {
+  //       errors.state = 'State is required'
+  //       if (!firstError) firstError = 'state'
+  //     }
 
-//     if (!streetHouse) {
-//       errors.streetHouse = 'Street/House is required'
-//       if (!firstError) firstError = 'streetHouse'
-//     }
+  //     if (!selectedCountry || !selectedCountry.name) {
+  //       errors.country = 'Country is required'
+  //       if (!firstError) firstError = 'country'
+  //     }
 
-//     if (!sectorBlock) {
-//       errors.sectorBlock = 'Apt/Suite is required'
-//       if (!firstError) firstError = 'sectorBlock'
-//     }
+  //     if (!formData.harbor) {
+  //       errors.harbor = 'Harbor is required'
+  //       if (!firstError) firstError = 'harbor'
+  //     }
 
-//     if (!pinCode) {
-//       errors.pinCode = 'Zipcode code is required'
-//       if (!firstError) firstError = 'pinCode'
-//     }
-//     if (!selectedState || !selectedState.name) {
-//       errors.state = 'State is required'
-//       if (!firstError) firstError = 'state'
-//     }
+  //     if (!formData.mooringNumber) errors.mooringNumber = 'Mooring ID is required'
+  //     if (!formData.harbor) errors.harbor = 'Harbor is required'
+  //     if (!formData.waterDepth) errors.waterDepth = 'Water Depth is required'
+  //     if (!formData.gpsCoordinates) errors.gpsCoordinates = 'GPS Coordinates are required'
+  //     if (!formData.boatyardName) errors.boatyardName = 'Boatyard Name is required'
+  //     if (!formData.boatName) errors.boatName = 'Boat Name is required'
+  //     if (!formData.boatSize) errors.boatSize = 'Boat Size is required'
+  //     if (!formData.type) errors.type = 'Type is required'
+  //     if (!formData.boatWeight) errors.boatWeight = 'Weight is required'
+  //     if (!formData.sizeOfWeight) errors.sizeOfWeight = 'Size of Weight is required'
+  //     if (!formData.typeOfWeight) errors.typeOfWeight = 'Type of Weight is required'
+  //     if (!formData.topChainCondition) errors.topChainCondition = 'Top Chain Condition is required'
+  //     if (!formData.conditionOfEye) errors.conditionOfEye = 'Condition of Eye is required'
+  //     if (!formData.shackleSwivelCondition)
+  //       errors.shackleSwivelCondition = 'Shackle, Swivel Condition is required'
+  //     if (!formData.deptAtMeanHighWater)
+  //       errors.deptAtMeanHighWater = 'Dept at Mean High Water is required'
+  //     // if (!formData.status) errors.status = 'Status is required'
+  //     if (!formData.bottomChainCondition)
+  //       errors.bottomChainCondition = 'Bottom Chain Condition is required'
+  //     if (!formData.pennantCondition) errors.pennantCondition = 'Pennant Condition is required'
 
-//     if (!selectedCountry || !selectedCountry.name) {
-//       errors.country = 'Country is required'
-//       if (!firstError) firstError = 'country'
-//     }
+  //     setFirstErrorField(firstError)
+  //     setFieldErrors(errors)
+  //     return errors
+  //   }
 
-//     if (!formData.harbor) {
-//       errors.harbor = 'Harbor is required'
-//       if (!firstError) firstError = 'harbor'
-//     }
+  //   const SaveCustomer = async () => {
+  //     const errors = validateFields()
 
-//     if (!formData.mooringNumber) errors.mooringNumber = 'Mooring ID is required'
-//     if (!formData.harbor) errors.harbor = 'Harbor is required'
-//     if (!formData.waterDepth) errors.waterDepth = 'Water Depth is required'
-//     if (!formData.gpsCoordinates) errors.gpsCoordinates = 'GPS Coordinates are required'
-//     if (!formData.boatyardName) errors.boatyardName = 'Boatyard Name is required'
-//     if (!formData.boatName) errors.boatName = 'Boat Name is required'
-//     if (!formData.boatSize) errors.boatSize = 'Boat Size is required'
-//     if (!formData.type) errors.type = 'Type is required'
-//     if (!formData.boatWeight) errors.boatWeight = 'Weight is required'
-//     if (!formData.sizeOfWeight) errors.sizeOfWeight = 'Size of Weight is required'
-//     if (!formData.typeOfWeight) errors.typeOfWeight = 'Type of Weight is required'
-//     if (!formData.topChainCondition) errors.topChainCondition = 'Top Chain Condition is required'
-//     if (!formData.conditionOfEye) errors.conditionOfEye = 'Condition of Eye is required'
-//     if (!formData.shackleSwivelCondition)
-//       errors.shackleSwivelCondition = 'Shackle, Swivel Condition is required'
-//     if (!formData.deptAtMeanHighWater)
-//       errors.deptAtMeanHighWater = 'Dept at Mean High Water is required'
-//     // if (!formData.status) errors.status = 'Status is required'
-//     if (!formData.bottomChainCondition)
-//       errors.bottomChainCondition = 'Bottom Chain Condition is required'
-//     if (!formData.pennantCondition) errors.pennantCondition = 'Pennant Condition is required'
+  //     if (Object.keys(errors).length > 0) {
+  //       return
+  //     }
 
-//     setFirstErrorField(firstError)
-//     setFieldErrors(errors)
-//     return errors
-//   }
+  //     const payload = {
+  //       customerName: customerName,
+  //       customerId: customerId,
+  //       emailAddress: email,
+  //       phone: phone,
+  //       streetHouse: streetHouse,
+  //       aptSuite: sectorBlock,
+  //       state: selectedState?.id,
+  //       country: selectedCountry?.id,
+  //       zipCode: pinCode,
+  //       mooringRequestDto: {
+  //         mooringId: formData.mooringId,
+  //         customerName: formData.customerName,
+  //         harbor: formData.harbor,
+  //         waterDepth: formData.waterDepth,
+  //         gpsCoordinates: formData.gpsCoordinates,
+  //         boatyardName: formData.boatyardName,
+  //         boatName: formData.boatName,
+  //         boatSize: formData.boatSize,
+  //         boatType: formData.boatType,
+  //         boatWeight: formData.boatWeight,
+  //         sizeOfWeight: formData.sizeOfWeight.name,
+  //         typeOfWeight: formData.typeOfWeight.name,
+  //         conditionOfEye: formData.conditionEye,
+  //         topChainCondition: formData.topChainCondition.name,
+  //         bottomChainCondition: formData.bottomChainCondition.name,
+  //         shackleSwivelCondition: formData.shackleSwivelCondition.name,
+  //         pennantCondition: formData.pennantCondition.name,
+  //         deptAtMeanHighWater: formData.deptAtMeanHighWater,
+  //         statusId: 1,
+  //       },
+  //     }
+  //     const response = await addCustomer(payload).unwrap()
+  //     const { status } = response as CustomerResponse
 
-//   const SaveCustomer = async () => {
-//     const errors = validateFields()
+  //     console.log("response", status);
 
-//     if (Object.keys(errors).length > 0) {
-//       return
-//     }
+  //     if (status === 200 || status === 201) {
+  //       closeModal()
+  //       getCustomer()
+  //       toastRef?.current?.show({
+  //         severity: 'success',
+  //         summary: 'Success',
+  //         detail: 'Customer Saved successfully',
+  //         life: 3000,
+  //       })
+  //     }
+  //   }
 
-//     const payload = {
-//       customerName: customerName,
-//       customerId: customerId,
-//       emailAddress: email,
-//       phone: phone,
-//       streetHouse: streetHouse,
-//       aptSuite: sectorBlock,
-//       state: selectedState?.id,
-//       country: selectedCountry?.id,
-//       zipCode: pinCode,
-//       mooringRequestDto: {
-//         mooringId: formData.mooringId,
-//         customerName: formData.customerName,
-//         harbor: formData.harbor,
-//         waterDepth: formData.waterDepth,
-//         gpsCoordinates: formData.gpsCoordinates,
-//         boatyardName: formData.boatyardName,
-//         boatName: formData.boatName,
-//         boatSize: formData.boatSize,
-//         boatType: formData.boatType,
-//         boatWeight: formData.boatWeight,
-//         sizeOfWeight: formData.sizeOfWeight.name,
-//         typeOfWeight: formData.typeOfWeight.name,
-//         conditionOfEye: formData.conditionEye,
-//         topChainCondition: formData.topChainCondition.name,
-//         bottomChainCondition: formData.bottomChainCondition.name,
-//         shackleSwivelCondition: formData.shackleSwivelCondition.name,
-//         pennantCondition: formData.pennantCondition.name,
-//         deptAtMeanHighWater: formData.deptAtMeanHighWater,
-//         statusId: 1,
-//       },
-//     }
-//     const response = await addCustomer(payload).unwrap()
-//     const { status } = response as CustomerResponse
+  //   const UpdateCustomer = async () => {
+  //     const payload = {
+  //       customerName,
+  //       customerId,
+  //       phone,
+  //       emailAddress: email,
+  //       streetHouse,
+  //       sectorBlock,
+  //       state: selectedState?.name || '',
+  //       country: selectedCountry?.name || '',
+  //       pinCode,
+  //       note: value,
+  //     }
 
-//     console.log("response", status);
+  //     const response = await updateCustomer(payload)
 
-//     if (status === 200 || status === 201) {
-//       closeModal()
-//       getCustomer()
-//       toastRef?.current?.show({
-//         severity: 'success',
-//         summary: 'Success',
-//         detail: 'Customer Saved successfully',
-//         life: 3000,
-//       })
-//     }
-//   }
+  //     console.log("update",response);
 
-//   const UpdateCustomer = async () => {
-//     const payload = {
-//       customerName,
-//       customerId,
-//       phone,
-//       emailAddress: email,
-//       streetHouse,
-//       sectorBlock,
-//       state: selectedState?.name || '',
-//       country: selectedCountry?.name || '',
-//       pinCode,
-//       note: value,
-//     }
+  //     closeModal()
+  //     getCustomer()
+  //   }
 
-//     const response = await updateCustomer(payload)
+  //   const fetchDataAndUpdate = useCallback(async () => {
+  //     const { statesData } = await getStatesData()
+  //     const { countriesData } = await getCountriesData()
+  //     if (countriesData !== null) {
+  //       setCountriesData(countriesData)
+  //     }
 
-//     console.log("update",response);
-    
-//     closeModal()
-//     getCustomer()
-//   }
+  //     if (statesData !== null) {
+  //       setStatesData(statesData)
+  //     }
+  //   }, [])
 
-//   const fetchDataAndUpdate = useCallback(async () => {
-//     const { statesData } = await getStatesData()
-//     const { countriesData } = await getCountriesData()
-//     if (countriesData !== null) {
-//       setCountriesData(countriesData)
-//     }
+  //   const handleClick = () => {
+  //     if (editMode) {
+  //       UpdateCustomer()
+  //     } else {
+  //       SaveCustomer()
+  //     }
+  //   }
 
-//     if (statesData !== null) {
-//       setStatesData(statesData)
-//     }
-//   }, [])
+  //   useEffect(() => {
+  //     fetchDataAndUpdate()
+  //   }, [fetchDataAndUpdate])
 
-//   const handleClick = () => {
-//     if (editMode) {
-//       UpdateCustomer()
-//     } else {
-//       SaveCustomer()
-//     }
-//   }
+  //   useEffect(() => {
+  //     if (editMode && customer) {
+  //       setValue(customer.note || '')
+  //       setCustomerName(customer.customerName || '')
+  //       setCustomerId(customer.customerId || '')
+  //       setPhone(customer.phone || '')
+  //       setEmail(customer.emailAddress || '')
+  //       setStreetHouse(customer.streetHouse || '')
+  //       setSectorBlock(customer.aptSuite || '')
+  //       setPinCode(customer.zipCode || '')
+  //       setSelectedState(customer.state || '')
+  //       setSelectedCountry(customer.country || '')
+  //       setFormData((prevState: any) => ({
+  //         ...prevState,
+  //         mooringId: mooringResponseDtoList[0]?.mooringId || '',
+  //         mooringName: mooringResponseDtoList[0]?.mooringName || '',
+  //         customerName: '',
+  //         harbor: mooringResponseDtoList[0]?.harbor || '',
+  //         waterDepth: mooringResponseDtoList[0]?.waterDepth || '',
+  //         gpsCoordinates: mooringResponseDtoList[0]?.gpsCoordinates || '',
+  //         boatyardName: mooringResponseDtoList[0]?.boatyardName || '',
+  //         boatName: mooringResponseDtoList[0]?.boatName || '',
+  //         boatSize: mooringResponseDtoList[0]?.boatSize || '',
+  //         boatType: mooringResponseDtoList[0]?.boatType?.boatType || '',
+  //         boatWeight: mooringResponseDtoList[0]?.boatWeight || '',
+  //         sizeOfWeight: mooringResponseDtoList[0]?.sizeOfWeight?.weight || '',
+  //         typeOfWeight: mooringResponseDtoList[0]?.typeOfWeight?.type || '',
+  //         conditionOfEye: mooringResponseDtoList[0]?.eyeCondition?.condition || '',
+  //         topChainCondition: mooringResponseDtoList[0]?.topChainCondition?.condition || '',
+  //         bottomChainCondition: mooringResponseDtoList[0]?.bottomChainCondition?.condition || '',
+  //         shackleSwivelCondition: mooringResponseDtoList[0]?.shackleSwivelCondition?.condition || '',
+  //         pennantCondition: mooringResponseDtoList[0]?.pennantCondition?.condition || '',
+  //         deptAtMeanHighWater: mooringResponseDtoList[0]?.depthAtMeanHighWater || '',
+  //         status: 0,
+  //       }));
+  //     }
+  //   }, [editMode, customer])
 
-//   useEffect(() => {
-//     fetchDataAndUpdate()
-//   }, [fetchDataAndUpdate])
+  //   const handleInputChange = (field: string, value: any) => {
+  //     const parsedValue = ['deptAtMeanHighWater', 'status'].includes(field)
 
-//   useEffect(() => {
-//     if (editMode && customer) {
-//       setValue(customer.note || '')
-//       setCustomerName(customer.customerName || '')
-//       setCustomerId(customer.customerId || '')
-//       setPhone(customer.phone || '')
-//       setEmail(customer.emailAddress || '')
-//       setStreetHouse(customer.streetHouse || '')
-//       setSectorBlock(customer.aptSuite || '')
-//       setPinCode(customer.zipCode || '')
-//       setSelectedState(customer.state || '')
-//       setSelectedCountry(customer.country || '')
-//       setFormData((prevState: any) => ({
-//         ...prevState,
-//         mooringId: mooringResponseDtoList[0]?.mooringId || '',
-//         mooringName: mooringResponseDtoList[0]?.mooringName || '',
-//         customerName: '',
-//         harbor: mooringResponseDtoList[0]?.harbor || '',
-//         waterDepth: mooringResponseDtoList[0]?.waterDepth || '',
-//         gpsCoordinates: mooringResponseDtoList[0]?.gpsCoordinates || '',
-//         boatyardName: mooringResponseDtoList[0]?.boatyardName || '',
-//         boatName: mooringResponseDtoList[0]?.boatName || '',
-//         boatSize: mooringResponseDtoList[0]?.boatSize || '',
-//         boatType: mooringResponseDtoList[0]?.boatType?.boatType || '',
-//         boatWeight: mooringResponseDtoList[0]?.boatWeight || '',
-//         sizeOfWeight: mooringResponseDtoList[0]?.sizeOfWeight?.weight || '',
-//         typeOfWeight: mooringResponseDtoList[0]?.typeOfWeight?.type || '',
-//         conditionOfEye: mooringResponseDtoList[0]?.eyeCondition?.condition || '',
-//         topChainCondition: mooringResponseDtoList[0]?.topChainCondition?.condition || '',
-//         bottomChainCondition: mooringResponseDtoList[0]?.bottomChainCondition?.condition || '',
-//         shackleSwivelCondition: mooringResponseDtoList[0]?.shackleSwivelCondition?.condition || '',
-//         pennantCondition: mooringResponseDtoList[0]?.pennantCondition?.condition || '',
-//         deptAtMeanHighWater: mooringResponseDtoList[0]?.depthAtMeanHighWater || '',
-//         status: 0,
-//       }));
-//     }
-//   }, [editMode, customer])
+  //     setFormData({
+  //       ...formData,
+  //       [field]: parsedValue,
+  //     })
 
-//   const handleInputChange = (field: string, value: any) => {
-//     const parsedValue = ['deptAtMeanHighWater', 'status'].includes(field)
-//       ? parseInt(value, 10)
-//       : value
+  //     if (fieldErrors[field]) {
+  //       setFieldErrors({
+  //         ...fieldErrors,
+  //         [field]: '',
+  //       })
+  //     }
+  //   }
 
-//     setFormData({
-//       ...formData,
-//       [field]: parsedValue,
-//     })
-
-//     if (fieldErrors[field]) {
-//       setFieldErrors({
-//         ...fieldErrors,
-//         [field]: '',
-//       })
-//     }
-//   }
-
-//   const handleInputChangeCustomer = (fieldName: string, value: any) => {
-//     switch (fieldName) {
-//       case 'customerName':
-//         setCustomerName(value)
-//         break
-//       case 'customerId':
-//         setCustomerId(value)
-//         break
-//       case 'phone':
-//         setPhone(value)
-//         break
-//       case 'email':
-//         setEmail(value)
-//         break
-//       case 'streetHouse':
-//         setStreetHouse(value)
-//         break
-//       case 'sectorBlock':
-//         setSectorBlock(value)
-//         break
-//       case 'pinCode':
-//         setPinCode(value)
-//         break
-//       case 'state':
-//         setSelectedState(value)
-//         break
-//       case 'country':
-//         setSelectedCountry(value)
-//         break
-//       default:
-//         setFormData({ ...formData, [fieldName]: value })
-//         break
-//     }
-//     setFieldErrors((prevErrors) => ({ ...prevErrors, [fieldName]: '' }))
-//   }
+  //   const handleInputChangeCustomer = (fieldName: string, value: any) => {
+  //     switch (fieldName) {
+  //       case 'customerName':
+  //         setCustomerName(value)
+  //         break
+  //       case 'customerId':
+  //         setCustomerId(value)
+  //         break
+  //       case 'phone':
+  //         setPhone(value)
+  //         break
+  //       case 'email':
+  //         setEmail(value)
+  //         break
+  //       case 'streetHouse':
+  //         setStreetHouse(value)
+  //         break
+  //       case 'sectorBlock':
+  //         setSectorBlock(value)
+  //         break
+  //       case 'pinCode':
+  //         setPinCode(value)
+  //         break
+  //       case 'state':
+  //         setSelectedState(value)
+  //         break
+  //       case 'country':
+  //         setSelectedCountry(value)
+  //         break
+  //       default:
+  //         setFormData({ ...formData, [fieldName]: value })
+  //         break
+  //     }
+  //     setFieldErrors((prevErrors) => ({ ...prevErrors, [fieldName]: '' }))
+  //   }
 
   return (
     <div className="">
@@ -1018,9 +1037,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   fontSize: '0.8rem',
                 }}
               />
-              {fieldErrors.mooringId && (
-                <small className="p-error">{fieldErrors.mooringId}</small>
-              )}
+              {fieldErrors.mooringId && <small className="p-error">{fieldErrors.mooringId}</small>}
             </div>
           </div>
 
@@ -1396,16 +1413,16 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               <div>
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
-                    Dept at Mean High Water
+                    Depth at Mean High Water
                     <p className="text-red-600">*</p>
                   </div>
                 </span>
               </div>
 
               <div className="mt-2">
-                <InputText
+                <InputNumber
                   value={formData.deptAtMeanHighWater}
-                  onChange={(e) => handleInputChange('deptAtMeanHighWater', e.target.value)}
+                  onChange={(e) => handleInputChange('deptAtMeanHighWater', e.value)}
                   style={{
                     width: '230px',
                     height: '32px',

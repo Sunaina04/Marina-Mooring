@@ -253,7 +253,7 @@ const Moorings = () => {
                 border: '1px solid #D5E1EA',
                 paddingLeft: '40px',
                 borderRadius: '5px',
-                marginTop:'15px'
+                marginTop: '15px',
               }}
               onChange={handleSearchChange}
               value={searchQuery}
@@ -354,20 +354,20 @@ const Moorings = () => {
                 ) : (
                   ''
                 )}
-                <div className='ml-auto'>
-                <InputSwitch
-                  checked={isChecked}
-                  onChange={handleInputChange}
-                  className="border-none ml-36 "
-                  color="green"
-                />
+                <div className="ml-auto">
+                  <InputSwitch
+                    checked={isChecked}
+                    onChange={handleInputChange}
+                    className="border-none ml-36 "
+                    color="green"
+                  />
                 </div>
               </div>
             </div>
 
             {isChecked && (
               <div className="w-full">
-                <div className="bg-[#F2F2F2] px-2" style={{minHeight:'24vh'}}>
+                <div className="bg-[#F2F2F2] px-2" style={{ minHeight: '24vh' }}>
                   <div className="flex flex-wrap gap-20 text-[14px] ">
                     <div className=" mt-2 ">
                       <p className="text-[14px] font-[400]  text-[#000000]">ID:{edit.id}</p>
@@ -423,13 +423,13 @@ const Moorings = () => {
                   </div>
                 </div>
 
-                <div className='w-full'>
+                <div className="w-full">
                   <h3
                     className={`${isChecked ? 'bg-[#00426F] text-[#FFFFFF]' : ''} font-[700] text-[15px] h-12 py-3 pl-2 `}>
                     Moorings
                   </h3>
 
-                  <div data-testid="customer-admin-users-table" className='overflow-x-auto'>
+                  <div data-testid="customer-admin-users-table" className="overflow-x-auto">
                     <DataTableComponent
                       tableStyle={{
                         fontSize: '12px',

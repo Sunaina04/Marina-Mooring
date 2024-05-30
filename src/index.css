@@ -20,7 +20,7 @@
 }
 
 .p-selectbutton .p-button.p-highlight {
-  background-color:#0098FF;
+  background-color: #0098ff;
   box-shadow: none;
 }
 
@@ -51,11 +51,10 @@
 }
 
 #stateDropdown span {
-  color: #a4a4a4 !important;
+  color: black !important;
 
   font-size: 13px !important;
 }
-
 
 /* .p-datatable .p-datatable-tbody > tr :first-child{
   padding-top: 0;
@@ -63,9 +62,6 @@
 
 } */
 
-
-
 .custom-dropdown-disabled {
   cursor: not-allowed !important;
 }
-
