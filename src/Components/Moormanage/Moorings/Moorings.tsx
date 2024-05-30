@@ -392,8 +392,6 @@ const Moorings = () => {
                           color: '#00426F',
                           fontSize: '13px',
                           padding: '5px',
-                          // width: '60px',
-                          // height: '25px',
                           borderRadius: '5px',
                         }}
                         className="ml-2 inline-block">
@@ -405,8 +403,6 @@ const Moorings = () => {
                           color: '#00426F',
                           fontSize: '13px',
                           padding: '5px',
-                          // width: '60px',
-                          // height: '25px',
                           borderRadius: '5px',
                         }}
                         className=" ml-2">
@@ -418,8 +414,6 @@ const Moorings = () => {
                           color: '#00426F',
                           fontSize: '13px',
                           padding: '5px',
-                          // width: '60px',
-                          // height: '25px',
                           borderRadius: '5px',
                         }}
                         className=" ml-2">

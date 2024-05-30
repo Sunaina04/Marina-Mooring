@@ -535,12 +535,7 @@ const Boatyards = () => {
                 <div className="font-bold">Mooring Information</div>
               </div>
             }>
-            <div
-
-              style={{ border: "1px solid #D5E1EA" }}
-
-            >
-
+            <div style={{ border: '1px solid #D5E1EA' }}>
               <hr />
             </div>
 

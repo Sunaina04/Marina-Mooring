@@ -216,7 +216,7 @@ console.log("dataaa",payload);
 
   return (
     <>
-      <div className="h-[630px]">
+      <div className="">
         <div className="flex gap-6 ">
           <div>
             <span className="font-medium text-sm text-[#000000]">
@@ -566,7 +566,7 @@ console.log("dataaa",payload);
           </div>
         </div>
 
-        <div className="flex gap-6 mt-3">
+        <div className="flex gap-6 mt-3 mb-20">
           <div>
             <div>
               <div>
@@ -783,7 +783,7 @@ console.log("dataaa",payload);
             height: '80px',
             backgroundColor: 'white',
             padding: '0 12px',
-            // marginBottom: '2px',
+            bottom: '0px',
           }}>
           <Button
             onClick={SaveMoorings}
