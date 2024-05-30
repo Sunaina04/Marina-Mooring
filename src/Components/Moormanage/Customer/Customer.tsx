@@ -90,6 +90,7 @@ const Customer = () => {
     setSelectedCustomer(customerRecordData)
     setModalVisible(true)
     setEditMode(true)
+    
   }
 
   const handleDelete = async (rowData: any) => {
@@ -248,6 +249,7 @@ const Customer = () => {
                 closeModal={handleModalClose}
                 getCustomer={getCustomerData}
                 toastRef={toast}
+                // setCustomerData={setCustomerData}
               />
             }
             headerText={<h1 className="text-xxl font-bold text-black ">Add Customer</h1>}
@@ -397,11 +399,11 @@ const Customer = () => {
                       color: '#000000',
                     }}>
                     <p>
-                      <span className="font-semibold">ID: </span>
+                      <span className="">ID: </span>
                       {customerRecordData?.customerId}
                     </p>
                     <p className="mt-6">
-                      <span className="font-semibold">Phone: </span>
+                      <span className="">Phone: </span>
                       {customerRecordData?.phone}
                     </p>
                   </div>
@@ -414,11 +416,11 @@ const Customer = () => {
                       color: '#000000',
                     }}>
                     <p>
-                      <span className="font-semibold">Name: </span>
+                      <span className="">Name: </span>
                       {customerRecordData?.customerName}
                     </p>
                     <p className="mt-6">
-                      <span className="font-semibold">Email: </span>
+                      <span className="">Email: </span>
                       {customerRecordData?.emailAddress}
                     </p>
                   </div>
@@ -431,7 +433,7 @@ const Customer = () => {
                     color: '#000000',
                   }}>
                   <p className="ml-4">
-                    <span className="address-label font-semibold">Address: </span>
+                    <span className="address-label ">Address: </span>
                     {customerRecordData?.aptSuite && <span>{customerRecordData?.aptSuite} </span>}
                     {customerRecordData?.streetHouse && (
                       <span>{customerRecordData?.streetHouse} </span>
@@ -443,7 +445,7 @@ const Customer = () => {
 
                   <div className="flex mt-5 ml-4 mb-3">
                     <div>
-                      <h1 className="font-semibold">Boatyard: </h1>
+                      <h1 className="">Boatyard: </h1>
                     </div>
                     <div className="flex gap-3">
                       {boatYardData.map((boatyard, index) => (
@@ -519,84 +521,96 @@ const Customer = () => {
 
             {/* Dialog BOX */}
             <Dialog
+            position='center'
+            style={{
+              width: '600px',
+              minWidth: '300px',
+              height: '470px',
+              minHeight: '200px',
+              borderRadius: '1rem',
+              fontWeight:"400",
+              maxHeight: '50% !important',
+            }}
+            draggable={false}
+            
               visible={dialogVisible}
               onHide={() => setDialogVisible(false)}
               header={
                 <div className="flex gap-4">
                   <div className="font-bold">Mooring Information</div>
                   <div className="font-bold mt-1">
-                    <FaEdit onClick={handleEdit} />
+                    <FaEdit onClick={handleEdit}  color='#0098FF'/>
                   </div>
                 </div>
               }>
-              <hr className="border border-black  my-0 mx-0"></hr>
+              <hr className="border border-[#D5E1EA] my-0 mx-0"></hr>
 
-              <div className="flex leading-10 gap-4">
+              <div className="flex leading-10 p-4 gap-[8rem]">
                 <div>
                   <p>
-                    <span style={{ fontWeight: 'bold' }}>ID:</span> {mooringRowData?.id}
+                    <span>ID:</span> {mooringRowData?.id}
                   </p>
                   <p>
-                    <span style={{ fontWeight: 'bold' }}>Mooring No:</span>{' '}
+                    <span>Mooring No:</span>
                     {mooringRowData?.mooringNumber}
                   </p>
                   <p>
-                    <span style={{ fontWeight: 'bold' }}>Boat Name:</span>{' '}
+                    <span>Boat Name:</span>
                     {mooringRowData?.boatName}
                   </p>
                   <p>
-                    <span style={{ fontWeight: 'bold' }}>Type:</span> {mooringRowData?.boatType}
+                    <span>Type:</span> {mooringRowData?.boatType}
                   </p>
                   <p>
-                    <span style={{ fontWeight: 'bold' }}>Size of Weight:</span>{' '}
+                    <span>Size of Weight:</span>
                     {mooringRowData?.sizeOfWeight}
                   </p>
                   <p>
-                    <span style={{ fontWeight: 'bold' }}>Top Chain Condition:</span>{' '}
+                    <span>Top Chain Condition:</span>
                     {mooringRowData?.topChainCondition}
                   </p>
                   <p className="tracking-tighter">
-                    <span style={{ fontWeight: 'bold' }}>Bottom Chain Condition:</span>{' '}
+                    <span>Bottom Chain Condition:</span>
                     {mooringRowData?.bottomChainCondition}
                   </p>
                   <p>
-                    <span style={{ fontWeight: 'bold' }}>Pennant Condition:</span>{' '}
+                    <span>Pennant Condition:</span>
                     {mooringRowData?.pennantCondition}
                   </p>
                   <p>
-                    <span style={{ fontWeight: 'bold' }}>Water Depth:</span>{' '}
+                    <span>Water Depth:</span>
                     {mooringRowData?.waterDepth}
                   </p>
                 </div>
                 <div>
                   <p>
-                    <span style={{ fontWeight: 'bold' }}>Harbor:</span> {mooringRowData?.harbor}
+                    <span>Harbor:</span> {mooringRowData?.harbor}
                   </p>
                   <p>
-                    <span style={{ fontWeight: 'bold' }}>G.P.S Coordinates:</span>{' '}
+                    <span>G.P.S Coordinates:</span>
                     {mooringRowData?.gpsCoordinates}
                   </p>
                   <p>
-                    <span style={{ fontWeight: 'bold' }}>Boat Size:</span>{' '}
+                    <span>Boat Size:</span>
                     {mooringRowData?.boatSize}
                   </p>
                   <p>
-                    <span style={{ fontWeight: 'bold' }}>Weight:</span> {mooringRowData?.boatWeight}
+                    <span>Weight:</span> {mooringRowData?.boatWeight}
                   </p>
                   <p>
-                    <span style={{ fontWeight: 'bold' }}>Type of Weight:</span>{' '}
+                    <span>Type of Weight:</span>
                     {mooringRowData?.typeOfWeight}
                   </p>
                   <p>
-                    <span style={{ fontWeight: 'bold' }}>Condition of Eye:</span>{' '}
+                    <span>Condition of Eye:</span>
                     {mooringRowData?.conditionOfEye}
                   </p>
                   <p>
-                    <span style={{ fontWeight: 'bold' }}>Shackle, Swivel Condition:</span>{' '}
+                    <span>Shackle, Swivel Condition:</span>
                     {mooringRowData?.shackleSwivelCondition}
                   </p>
                   <p>
-                    <span style={{ fontWeight: 'bold' }}>Dept at Mean High Water:</span>{' '}
+                    <span>Dept at Mean High Water:</span>
                     {mooringRowData?.deptAtMeanHighWater}
                   </p>
                 </div>

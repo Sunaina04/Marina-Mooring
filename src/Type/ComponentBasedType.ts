@@ -7,6 +7,7 @@ export interface CustomerDataProps {
   closeModal: () => void
   getCustomer: () => void
   toastRef?: any
+  setCustomerData?:any
 }
 export interface BoatYardProps {
   customerData: any
@@ -144,7 +145,7 @@ export interface HeaderProps {
 }
 
 export interface CustomModalProps {
-  buttonText: string
+  buttonText?: string
   headerText: string | JSX.Element
   children: React.ReactNode
   dialogProps?: {

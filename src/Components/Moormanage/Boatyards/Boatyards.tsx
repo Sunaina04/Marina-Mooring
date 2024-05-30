@@ -48,7 +48,7 @@ const Boatyards = () => {
   const [selectedRowId, setSelectedRowID] = useState()
   const [searchText, setSearchText] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const [dialogVisible, setDialogVisible] = useState(false)
+  const [dialogVisible, setDialogVisible] = useState(true)
   const [mooringRowData, setMooringRowData] = useState<any>()
 
   const toast = useRef<Toast>(null)
@@ -425,7 +425,7 @@ const Boatyards = () => {
         <div
           data-testid="customer-admin-users-table"
           className=" flex-grow bg-[#FFFFFF]  rounded-xl border-[1px]  border-gray-300 w-[515px] h-[650px] mr-[50px]  mb-0  s">
-          <div className="s">
+          <div className="">
             <div className="text-sm font-extrabold rounded-sm w-full   bg-[#D9D9D9]">
               <div
                 className="flex  align-items-center justify-between  bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px]"
@@ -436,10 +436,13 @@ const Boatyards = () => {
             <div className=" bg-[] mt-3 ">
               <div
                 className="flex justify-start ml-4 mt-[30px]"
-                style={{ fontSize: '10px', fontWeight: '700' }}>
+                style={{ fontSize: '10px', fontWeight: '700', lineHeight: '11.72px' }}>
                 <p>{properties.address}</p>
-                <p className="ml-[8.4vw]">{properties.mooringInventoried}</p>
+                <p className="ml-[12vw]">{properties.mooringInventoried}</p>
                 <p className="ml-[10vw]">{properties.boatyardGPSCoordinates}</p>
+              </div>
+              <div className="mt-4">
+                <hr style={{ border: '1px solid #D5E1EA' }} />
               </div>
             </div>
           </div>
@@ -447,17 +450,21 @@ const Boatyards = () => {
           {selectedBoatYard ? (
             <>
               <div className="flex justify-start mt-4  font-normal text-[12px] ">
-                <p className="ml-3.5 w-[8vw]">
-                  {selectedBoatYard?.street} {selectedBoatYard?.apt}{' '}
+                <p
+                  // style={{border:"1px solid red"}}
+                  className="ml-3.5 ">
+                  {selectedBoatYard?.street} {selectedBoatYard?.apt}
                   {selectedBoatYard?.stateResponseDto?.name} ,
                   {selectedBoatYard?.countryResponseDto?.name}
                 </p>
-                <p className="w-15 ml-[5vw]">{selectedBoatYard?.mooringInventoried}</p>
-                <p className="ml-[12vw]  underline">{selectedBoatYard?.gpsCoordinates}</p>
+                <div className="flex ml-[110px] gap-[16rem]">
+                  <p className="">{selectedBoatYard?.mooringInventoried}</p>
+                  <p className=" underline">{selectedBoatYard?.gpsCoordinates}</p>
+                </div>
               </div>
 
               <div
-                className=" h-[150px] mt-[20px] mb-3 sticky"
+                className=" h-[150px] mt-[30px] mb-6 sticky"
                 style={{
                   flexGrow: 1,
                   border: '1px solid #D5E1EA',
@@ -510,94 +517,102 @@ const Boatyards = () => {
         </div>
 
         {/* Dialog BOX */}
-        <Dialog
-          visible={dialogVisible}
-          onHide={() => setDialogVisible(false)}
-          header={
-            <div className="flex gap-4">
-              <div className="font-bold">Mooring Information</div>
-            </div>
-          }>
-          <hr className="border border-black  my-0 mx-0"></hr>
+        <div>
+          <Dialog
+            draggable={false}
+            visible={dialogVisible}
+            style={{
+              width: '500px',
+              minWidth: '300px',
+              height: '490px',
+              minHeight: '200px',
+              borderRadius: '1rem',
+              maxHeight: '50% !important',
+            }}
+            onHide={() => setDialogVisible(false)}
+            header={
+              <div className="flex gap-4">
+                <div className="font-bold">Mooring Information</div>
+              </div>
+            }>
+            <div
 
-          <div className="flex leading-10 gap-4">
-            <div>
-              <p>
-                <span style={{ fontWeight: 'bold' }}>ID:</span> {mooringRowData?.id}
-              </p>
-              <p>
-                <span style={{ fontWeight: 'bold' }}>Mooring No:</span>{' '}
-                {mooringRowData?.mooringNumber}
-              </p>
-              <p>
-                <span style={{ fontWeight: 'bold' }}>Boat Name:</span> {mooringRowData?.boatName}
-              </p>
+              style={{ border: "1px solid #D5E1EA" }}
 
-              <p>
-                <span style={{ fontWeight: 'bold' }}>Type:</span> {mooringRowData?.boatType}
-              </p>
-              <p>
-                <span style={{ fontWeight: 'bold' }}>Size of Weight:</span>{' '}
-                {mooringRowData?.sizeOfWeight}
-              </p>
-              <p>
-                <span style={{ fontWeight: 'bold' }}>Top Chain Condition:</span>{' '}
-                {mooringRowData?.topChainCondition}
-              </p>
-              <p className="tracking-tighter">
-                <span style={{ fontWeight: 'bold' }}>Bottom Chain Condition:</span>{' '}
-                {mooringRowData?.bottomChainCondition}
-              </p>
-              <p>
-                <span style={{ fontWeight: 'bold' }}>Pennant Condition:</span>{' '}
-                {mooringRowData?.pennantCondition}
-              </p>
-              <p>
-                <span style={{ fontWeight: 'bold' }}>Water Depth:</span>{' '}
-                {mooringRowData?.waterDepth}
-              </p>
+            >
+
+              <hr />
             </div>
-            <div>
-              <p>
-                <span style={{ fontWeight: 'bold' }}>Harbor:</span> {mooringRowData?.harbor}
-              </p>
-              <p>
-                <span style={{ fontWeight: 'bold' }}>G.P.S Coordinates:</span>{' '}
-                {mooringRowData?.gpsCoordinates}
-              </p>
-              <p>
-                <span style={{ fontWeight: 'bold' }}>Boatyard Name:</span>{' '}
-                {mooringRowData?.boatyardName}
-              </p>
-              <p>
-                <span style={{ fontWeight: 'bold' }}>Customer Name:</span>{' '}
-                {mooringRowData?.customerName}
-              </p>
-              <p>
-                <span style={{ fontWeight: 'bold' }}>Boat Size:</span> {mooringRowData?.boatSize}
-              </p>
-              <p>
-                <span style={{ fontWeight: 'bold' }}>Weight:</span> {mooringRowData?.boatWeight}
-              </p>
-              <p>
-                <span style={{ fontWeight: 'bold' }}>Type of Weight:</span>{' '}
-                {mooringRowData?.typeOfWeight}
-              </p>
-              <p>
-                <span style={{ fontWeight: 'bold' }}>Condition of Eye:</span>{' '}
-                {mooringRowData?.conditionOfEye}
-              </p>
-              <p>
-                <span style={{ fontWeight: 'bold' }}>Shackle, Swivel Condition:</span>{' '}
-                {mooringRowData?.shackleSwivelCondition}
-              </p>
-              {/* <p>
-                <span style={{ fontWeight: 'bold' }}>Dept at Mean High Water:</span>{' '}
-                {mooringRowData?.deptAtMeanHighWater}
-              </p> */}
+
+            <div
+              style={{
+                fontSize: '14px',
+                fontWeight: '400',
+                color: '#000000',
+              }}
+              className="flex justify-between leading-10 gap-8 p-4">
+              <div>
+                <p>
+                  <span>ID:</span> {mooringRowData?.id}
+                </p>
+                <p>
+                  <span>Mooring No:</span> {mooringRowData?.mooringNumber}
+                </p>
+                <p>
+                  <span>Boat Name:</span> {mooringRowData?.boatName}
+                </p>
+
+                <p>
+                  <span>Type:</span> {mooringRowData?.boatType}
+                </p>
+                <p>
+                  <span>Size of Weight:</span> {mooringRowData?.sizeOfWeight}
+                </p>
+                <p>
+                  <span>Top Chain Condition:</span> {mooringRowData?.topChainCondition}
+                </p>
+                <p className="tracking-tighter">
+                  <span>Bottom Chain Condition:</span> {mooringRowData?.bottomChainCondition}
+                </p>
+                <p>
+                  <span>Pennant Condition:</span> {mooringRowData?.pennantCondition}
+                </p>
+                <p>
+                  <span>Water Depth:</span> {mooringRowData?.waterDepth}
+                </p>
+              </div>
+              <div>
+                <p>
+                  <span>Harbor:</span> {mooringRowData?.harbor}
+                </p>
+                <p>
+                  <span>G.P.S Coordinates:</span> {mooringRowData?.gpsCoordinates}
+                </p>
+                <p>
+                  <span>Boatyard Name:</span> {mooringRowData?.boatyardName}
+                </p>
+                <p>
+                  <span>Customer Name:</span> {mooringRowData?.customerName}
+                </p>
+                <p>
+                  <span>Boat Size:</span> {mooringRowData?.boatSize}
+                </p>
+                <p>
+                  <span>Weight:</span> {mooringRowData?.boatWeight}
+                </p>
+                <p>
+                  <span>Type of Weight:</span> {mooringRowData?.typeOfWeight}
+                </p>
+                <p>
+                  <span>Condition of Eye:</span> {mooringRowData?.conditionOfEye}
+                </p>
+                <p>
+                  <span>Shackle, Swivel Condition:</span> {mooringRowData?.shackleSwivelCondition}
+                </p>
+              </div>
             </div>
-          </div>
-        </Dialog>
+          </Dialog>
+        </div>
       </div>
     </>
   )

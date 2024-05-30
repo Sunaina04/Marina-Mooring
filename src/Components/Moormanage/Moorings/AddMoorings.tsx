@@ -9,6 +9,10 @@ import { CityProps } from '../../../Type/CommonType'
 import { AddMooringProps } from '../../../Type/ComponentBasedType'
 
 const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }) => {
+
+
+console.log("mooring",moorings);
+
   const [value, setValue] = useState<string>('')
   const [selectedCity, setSelectedCity] = useState<CityProps | undefined>(undefined)
   const [saveMoorings] = useAddMooringsMutation()
@@ -36,26 +40,31 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
     note: '',
   })
 
+  const payload = {
+    customerName: moorings?.customerName || '',
+    mooringNumber: moorings?.mooringNumber || '',
+    harbor: moorings?.harbor || '',
+    waterDepth: moorings?.waterDepth || '',
+    gpsCoordinates: moorings?.gpsCoordinates || '',
+    boatName: moorings?.boatName || '',
+    boatSize: moorings?.boatSize || '',
+    boatWeight: moorings?.boatWeight || '',
+    sizeOfWeight: moorings?.sizeOfWeight || '',
+    typeOfWeight: moorings?.typeOfWeight || '',
+    topChainCondition: moorings?.topChainCondition || '',
+    conditionOfEye: moorings?.conditionOfEye || '',
+    bottomChainCondition: moorings?.bottomChainCondition || '',
+    shackleSwivelCondition: moorings?.shackleSwivelCondition || '',
+    pennantCondition: moorings?.pennantCondition || '',
+    deptAtMeanHighWater: moorings?.deptAtMeanHighWater || '',
+  };
+
+
+
   useEffect(() => {
     if (editMode && moorings) {
-      setFormData({
-        customerName: moorings.customerName || '',
-        mooringNumber: moorings.mooringNumber || '',
-        harbor: moorings.harbor || '',
-        waterDepth: moorings.waterDepth || '',
-        gpsCoordinates: moorings.gpsCoordinates || '',
-        boatName: moorings.boatName || '',
-        boatSize: moorings.boatSize || '',
-        boatWeight: moorings.boatWeight || '',
-        sizeOfWeight: moorings.sizeOfWeight || '',
-        typeOfWeight: moorings.typeOfWeight || '',
-        topChainCondition: moorings.topChainCondition || '',
-        conditionOfEye: moorings.conditionOfEye || '',
-        bottomChainCondition: moorings.bottomChainCondition || '',
-        shackleSwivelCondition: moorings.shackleSwivelCondition || '',
-        pennantCondition: moorings.pennantCondition || '',
-        deptAtMeanHighWater: moorings.deptAtMeanHighWater || '',
-      })
+      
+      setFormData(payload)
     }
   }, [editMode, moorings])
 
@@ -176,6 +185,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
     const payload = {
       ...formData,
     }
+console.log("dataaa",payload);
 
     try {
       const response = await saveMoorings(payload)
