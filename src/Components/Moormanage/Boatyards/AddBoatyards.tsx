@@ -5,27 +5,22 @@ import { Dropdown } from 'primereact/dropdown'
 import { useAddBoatyardsMutation } from '../../../Services/MoorManage/MoormanageApi'
 import { BoatYardProps } from '../../../Type/ComponentBasedType'
 import { Country, State } from '../../../Type/CommonType'
-import { BoatYardResponse } from '../../../Type/ApiTypes'
+import { BoatYardResponse, CustomerPayload, GetUserResponse } from '../../../Type/ApiTypes'
 import CustomSelectPositionMap from '../../Map/CustomSelectPositionMap'
-import {
-  CountriesData,
-  CustomersData,
-  StatesData,
-} from '../../CommonComponent/MetaDataComponent/MeataDataApi'
+import { CountriesData, StatesData } from '../../CommonComponent/MetaDataComponent/MeataDataApi'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { LatLngExpression } from 'leaflet'
 import { useSelector } from 'react-redux'
+import { useGetUsersMutation } from '../../../Services/AdminTools/AdminToolsApi'
 
 const AddBoatyards: React.FC<BoatYardProps> = ({
   closeModal,
   boatYardData,
-  gpsCoordinates,
   setModalVisible,
-  customerOwnerId,
   toastRef,
 }) => {
   const userData = useSelector((state: any) => state.user?.userData)
-  const role = userData?.role?.name
+  const role = userData?.role?.id
   const [boatyardId, setBoatyardId] = useState('')
   const [boatyardName, setBoatyardName] = useState('')
   const [emailAddress, setEmailAddress] = useState('')
@@ -34,6 +29,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   const [aptSuite, setAptSuite] = useState('')
   const [state, setState] = useState<State>()
   const [country, setCountry] = useState<Country>()
+  const [customerOwnerId, setCustomerOwnerId] = useState<CustomerPayload>()
   const [zipCode, setZipCode] = useState('')
 
   const [mainContact, setMainContact] = useState('')
@@ -41,13 +37,13 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<string>()
   const [countriesData, setCountriesData] = useState<Country[]>()
   const [statesData, setStatesData] = useState<State[]>()
-  const [customersData, setCustomersData] = useState<State[]>([])
+  const [getCustomerOwnerData, setgetCustomerOwnerData] = useState<CustomerPayload[]>([])
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
   const [isLoading, setIsLoading] = useState(false)
   const [addBoatyard] = useAddBoatyardsMutation()
   const { getStatesData } = StatesData()
   const { getCountriesData } = CountriesData()
-  const { getCustomersData } = CustomersData(2)
+  const [getUser] = useGetUsersMutation()
 
   const validateFields = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -121,7 +117,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
         countryId: country?.id,
         mainContact: mainContact,
         gpsCoordinates: gpsCoordinatesValue,
-        customerOwnerId: customerOwnerId ? customerOwnerId : '',
+        customerOwnerId: customerOwnerId?.id ? customerOwnerId?.id : '',
       }
       const response = await addBoatyard(payload).unwrap()
       const { status, message } = response as BoatYardResponse
@@ -156,10 +152,35 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
     }
   }
 
+  const handleBack = () => {
+    setModalVisible(false)
+  }
+
+  const getUserHandler = useCallback(async () => {
+    setIsLoading(true)
+    try {
+      const response = await getUser({}).unwrap()
+      const { status, message, content } = response as GetUserResponse
+      if (status === 200 && Array.isArray(content)) {
+        setIsLoading(false)
+        if (content.length > 0) {
+          setgetCustomerOwnerData(content)
+          console.log(getCustomerOwnerData)
+        } else {
+          setgetCustomerOwnerData([])
+        }
+      } else {
+        setIsLoading(false)
+      }
+    } catch (error) {
+      console.error('Error occurred while fetching customer data:', error)
+    }
+  }, [getUser])
+
   const fetchDataAndUpdate = useCallback(async () => {
     const { statesData } = await getStatesData()
     const { countriesData } = await getCountriesData()
-    const { customersData } = await getCustomersData()
+
     if (countriesData !== null) {
       setCountriesData(countriesData)
     }
@@ -167,19 +188,12 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
     if (statesData !== null) {
       setStatesData(statesData)
     }
-
-    if (customersData !== null) {
-      setCustomersData(customersData)
-    }
   }, [])
 
   useEffect(() => {
     fetchDataAndUpdate()
+    getUserHandler()
   }, [fetchDataAndUpdate])
-
-  const handleBack = () => {
-    setModalVisible(false)
-  }
 
   return (
     <>
@@ -232,6 +246,39 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
             </div>
             <p>{errorMessage.name && <small className="p-error">{errorMessage.name}</small>}</p>
           </div>
+
+          {role === 1 && (
+            <div>
+              <span className="font-medium text-sm text-[#000000]">
+                Customer Owner <span className="text-red-500">*</span>
+              </span>
+              <div className="mt-1">
+                <Dropdown
+                  id="customerOwnerDropdown"
+                  value={customerOwnerId}
+                  options={getCustomerOwnerData}
+                  optionLabel="name"
+                  placeholder="Customer Owner"
+                  onChange={(e) => {
+                    setCustomerOwnerId(e.target.value)
+                    setErrorMessage((prev) => ({ ...prev, customerOwner: '' }))
+                  }}
+                  style={{
+                    width: '230px',
+                    height: '32px',
+                    border: errorMessage.customerOwner ? '1px solid red' : '1px solid #D5E1EA',
+                    borderRadius: '0.50rem',
+                    fontSize: '10px',
+                  }}
+                />
+              </div>
+              <p>
+                {errorMessage.customerOwner && (
+                  <small className="p-error">{errorMessage.customerOwner}</small>
+                )}
+              </p>
+            </div>
+          )}
         </div>
 
         <div className="flex  gap-6 mt-4">

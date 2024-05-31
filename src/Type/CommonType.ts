@@ -35,8 +35,8 @@ export interface SidebarState {
 }
 
 export interface InitialState {
-  token: undefined | string
-  userData: UserData | undefined
+  token: string
+  userData: UserData | null
   isOpen: boolean
   sidebar: SidebarState
 }
@@ -66,6 +66,11 @@ export interface State {
   id: number
   name: string
   label: string
+}
+
+export interface Customer {
+  id: number
+  customerName: string
 }
 
 export type Params = {

@@ -85,7 +85,7 @@ export const TypeOfWeightData = () => {
   return { getTypeOfWeightData }
 }
 
-export const CustomersData = (customerOwnerId: number) => {
+export const CustomersData = (customerOwnerId: any) => {
   const [getCustomers] = useGetCustomersMutation()
 
   const fetchCustomersData = async (getData: any) => {

@@ -49,7 +49,6 @@ const Boatyards = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [dialogVisible, setDialogVisible] = useState(false)
   const [mooringRowData, setMooringRowData] = useState<any>([])
-  const [customerOwnerId, setCustomerOwnerId] = useState()
 
   const [getBoatyards] = useGetBoatyardsMutation()
   const [getMooringsWithBoatyard] = useGetMooringWithBoatyardMutation()
