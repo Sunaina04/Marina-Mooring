@@ -30,6 +30,22 @@ const metaDataApi = userApi.injectEndpoints({
         params: { pageNumber, pageSize },
       }),
     }),
+
+    getCustomers: builder.mutation({
+      query: ({
+        pageNumber,
+        pageSize,
+        customerOwnerId,
+      }: {
+        pageNumber?: number
+        pageSize?: number
+        customerOwnerId?: number
+      }) => ({
+        url: 'api/v1/metadata/customers',
+        method: 'GET',
+        params: { pageNumber, pageSize, customerOwnerId },
+      }),
+    }),
   }),
 })
 
@@ -38,4 +54,5 @@ export const {
   useGetStatesMutation,
   useGetCountriesMutation,
   useGetTypeOfWeightMutation,
+  useGetCustomersMutation,
 } = metaDataApi
