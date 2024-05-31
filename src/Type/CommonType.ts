@@ -70,6 +70,13 @@ export interface State {
   label: string
 }
 
+export interface MetaData {
+  id: number
+  name: string
+  label: string
+}
+
+
 export interface Customer {
   id: number
   customerName: string
