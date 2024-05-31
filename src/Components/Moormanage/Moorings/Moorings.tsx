@@ -12,7 +12,9 @@ import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader
 import { properties } from '../../Utils/MeassageProperties'
 import Header from '../../Layout/LayoutComponents/Header'
 import { Toast } from 'primereact/toast'
+
 import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
+
 
 const Moorings = () => {
   const [modalVisible, setModalVisible] = useState(false)

@@ -46,6 +46,86 @@ const metaDataApi = userApi.injectEndpoints({
         params: { pageNumber, pageSize, customerOwnerId },
       }),
     }),
+
+    getTopChainCondition: builder.mutation({
+      query: ({ pageNumber, pageSize }: { pageNumber?: number; pageSize?: number }) => ({
+        url: 'api/v1/metadata/topChainCondition',
+        method: 'GET',
+        params: { pageNumber, pageSize },
+      }),
+    }),
+
+    getStatus: builder.mutation({
+      query: ({ pageNumber, pageSize }: { pageNumber?: number; pageSize?: number }) => ({
+        url: 'api/v1/metadata/status',
+        method: 'GET',
+        params: { pageNumber, pageSize },
+      }),
+    }),
+
+    getSizeOfWeight: builder.mutation({
+      query: ({ pageNumber, pageSize }: { pageNumber?: number; pageSize?: number }) => ({
+        url: 'api/v1/metadata/sizeOfWeight',
+        method: 'GET',
+        params: { pageNumber, pageSize },
+      }),
+    }),
+
+    getShackleSwivelConditions: builder.mutation({
+      query: ({ pageNumber, pageSize }: { pageNumber?: number; pageSize?: number }) => ({
+        url: 'api/v1/metadata/shackleSwivelConditions',
+        method: 'GET',
+        params: { pageNumber, pageSize },
+      }),
+    }),
+
+    getPennantConditions: builder.mutation({
+      query: ({ pageNumber, pageSize }: { pageNumber?: number; pageSize?: number }) => ({
+        url: 'api/v1/metadata/pennantConditions',
+        method: 'GET',
+        params: { pageNumber, pageSize },
+      }),
+    }),
+
+    getEyeCondition: builder.mutation({
+      query: ({ pageNumber, pageSize }: { pageNumber?: number; pageSize?: number }) => ({
+        url: 'api/v1/metadata/eyeCondition',
+        method: 'GET',
+        params: { pageNumber, pageSize },
+      }),
+    }),
+
+    getBottomChainConditions: builder.mutation({
+      query: ({ pageNumber, pageSize }: { pageNumber?: number; pageSize?: number }) => ({
+        url: 'api/v1/metadata/bottomChainConditions',
+        method: 'GET',
+        params: { pageNumber, pageSize },
+      }),
+    }),
+
+    getBoatyards: builder.mutation({
+      query: ({
+        pageNumber,
+        pageSize,
+        customerOwnerId,
+      }: {
+        pageNumber?: number
+        pageSize?: number
+        customerOwnerId?: number
+      }) => ({
+        url: 'api/v1/metadata/boatyards',
+        method: 'GET',
+        params: { pageNumber, pageSize, customerOwnerId },
+      }),
+    }),
+
+    getBoatType: builder.mutation({
+      query: ({ pageNumber, pageSize }: { pageNumber?: number; pageSize?: number }) => ({
+        url: 'api/v1/metadata/boatType',
+        method: 'GET',
+        params: { pageNumber, pageSize },
+      }),
+    }),
   }),
 })
 
@@ -55,4 +135,13 @@ export const {
   useGetCountriesMutation,
   useGetTypeOfWeightMutation,
   useGetCustomersMutation,
+  useGetTopChainConditionMutation,
+  useGetStatusMutation,
+  useGetSizeOfWeightMutation,
+  useGetShackleSwivelConditionsMutation,
+  useGetPennantConditionsMutation,
+  useGetEyeConditionMutation,
+  useGetBottomChainConditionsMutation,
+  useGetBoatyardsMutation,
+  useGetBoatTypeMutation,
 } = metaDataApi

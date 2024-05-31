@@ -1,8 +1,17 @@
 import {
+  useGetBoatTypeMutation,
+  useGetBoatyardsMutation,
+  useGetBottomChainConditionsMutation,
   useGetCountriesMutation,
   useGetCustomersMutation,
+  useGetEyeConditionMutation,
+  useGetPennantConditionsMutation,
   useGetRolesMutation,
+  useGetShackleSwivelConditionsMutation,
+  useGetSizeOfWeightMutation,
   useGetStatesMutation,
+  useGetStatusMutation,
+  useGetTopChainConditionMutation,
   useGetTypeOfWeightMutation,
 } from '../../../Services/MetaDataApi'
 import { MetaDataResponse } from '../../../Type/ApiTypes'
@@ -102,4 +111,191 @@ export const CustomersData = (customerOwnerId: any) => {
   const getCustomersData = async () => ({ customersData: await fetchCustomersData(getCustomers) })
 
   return { getCustomersData }
+}
+
+export const TypeOfChainCondition = () => {
+  const [getTopChainCondition] = useGetTopChainConditionMutation()
+
+  const fetchTypeOfChainCondition = async (getData: any) => {
+    try {
+      const response = await getData({})
+      const { status, content } = response.data as MetaDataResponse
+      return status === 200 && Array.isArray(content) ? content : null
+    } catch (error) {
+      console.error('Error fetching metadata:', error)
+      return null
+    }
+  }
+
+  const getTypeOfChainData = async () => ({
+    typeOfChainData: await fetchTypeOfChainCondition(getTopChainCondition),
+  })
+
+  return { getTypeOfChainData }
+}
+
+export const TypeOfStatus = () => {
+  const [getStatus] = useGetStatusMutation()
+
+  const fetchTypeOfStatus = async (getData: any) => {
+    try {
+      const response = await getData({})
+      const { status, content } = response.data as MetaDataResponse
+      return status === 200 && Array.isArray(content) ? content : null
+    } catch (error) {
+      console.error('Error fetching metadata:', error)
+      return null
+    }
+  }
+
+  const getTypeOfStatusData = async () => ({
+    typeOfStatusData: await fetchTypeOfStatus(getStatus),
+  })
+
+  return { getTypeOfStatusData }
+}
+
+export const TypeOfSizeOfWeight = () => {
+  const [getSizeOfWeight] = useGetSizeOfWeightMutation()
+
+  const fetchTypeOfSizeOfWeight = async (getData: any) => {
+    try {
+      const response = await getData({})
+      const { status, content } = response.data as MetaDataResponse
+      return status === 200 && Array.isArray(content) ? content : null
+    } catch (error) {
+      console.error('Error fetching metadata:', error)
+      return null
+    }
+  }
+
+  const getTypeOfSizeOfWeightData = async () => ({
+    TypeOfSizeOfWeightData: await fetchTypeOfSizeOfWeight(getSizeOfWeight),
+  })
+
+  return { getTypeOfSizeOfWeightData }
+}
+
+export const TypeOfShackleSwivel = () => {
+  const [getShackleSwivelConditions] = useGetShackleSwivelConditionsMutation()
+
+  const fetchTypeOfShackleSwivel = async (getData: any) => {
+    try {
+      const response = await getData({})
+      const { status, content } = response.data as MetaDataResponse
+      return status === 200 && Array.isArray(content) ? content : null
+    } catch (error) {
+      console.error('Error fetching metadata:', error)
+      return null
+    }
+  }
+
+  const getTypeOfShackleSwivelData = async () => ({
+    typeOfShackleSwivelData: await fetchTypeOfShackleSwivel(getShackleSwivelConditions),
+  })
+
+  return { getTypeOfShackleSwivelData }
+}
+
+export const TypeOfPennant = () => {
+  const [getPennantConditions] = useGetPennantConditionsMutation()
+
+  const fetchTypeOfPennant = async (getData: any) => {
+    try {
+      const response = await getData({})
+      const { status, content } = response.data as MetaDataResponse
+      return status === 200 && Array.isArray(content) ? content : null
+    } catch (error) {
+      console.error('Error fetching metadata:', error)
+      return null
+    }
+  }
+
+  const getTypeOfPennantData = async () => ({
+    typeOfPennantData: await fetchTypeOfPennant(getPennantConditions),
+  })
+
+  return { getTypeOfPennantData }
+}
+
+export const TypeOfEye = () => {
+  const [getEyeCondition] = useGetEyeConditionMutation()
+
+  const fetchTypeOfEye = async (getData: any) => {
+    try {
+      const response = await getData({})
+      const { status, content } = response.data as MetaDataResponse
+      return status === 200 && Array.isArray(content) ? content : null
+    } catch (error) {
+      console.error('Error fetching metadata:', error)
+      return null
+    }
+  }
+
+  const getTypeOfEyeData = async () => ({
+    typeOfEyeData: await fetchTypeOfEye(getEyeCondition),
+  })
+
+  return { getTypeOfEyeData }
+}
+
+export const TypeOfBottomChain = () => {
+  const [getBottomChainConditions] = useGetBottomChainConditionsMutation()
+
+  const fetchTypeOfBottomChain = async (getData: any) => {
+    try {
+      const response = await getData({})
+      const { status, content } = response.data as MetaDataResponse
+      return status === 200 && Array.isArray(content) ? content : null
+    } catch (error) {
+      console.error('Error fetching metadata:', error)
+      return null
+    }
+  }
+
+  const getTypeOfBottomChainData = async () => ({
+    typeOfBootomChainData: await fetchTypeOfBottomChain(getBottomChainConditions),
+  })
+
+  return { getTypeOfBottomChainData }
+}
+
+export const TypeOfBoatYards = (customerOwnerId: any) => {
+  const [getBoatyards] = useGetBoatyardsMutation()
+
+  const fetchBoatYardsData = async (getData: any) => {
+    try {
+      const response = await getData({ customerOwnerId: customerOwnerId })
+      const { status, content } = response.data as MetaDataResponse
+      return status === 200 && Array.isArray(content) ? content : null
+    } catch (error) {
+      console.error('Error fetching metadata:', error)
+      return null
+    }
+  }
+
+  const getBoatYardsData = async () => ({ boatYards: await fetchBoatYardsData(getBoatyards) })
+
+  return { getBoatYardsData }
+}
+
+export const TypeOfBoatType = () => {
+  const [getBoatType] = useGetBoatTypeMutation()
+
+  const fetchTypeOfBoatType = async (getData: any) => {
+    try {
+      const response = await getData({})
+      const { status, content } = response.data as MetaDataResponse
+      return status === 200 && Array.isArray(content) ? content : null
+    } catch (error) {
+      console.error('Error fetching metadata:', error)
+      return null
+    }
+  }
+
+  const getTypeOfBoatTypeData = async () => ({
+    typeOfBoatTypeData: await fetchTypeOfBoatType(getBoatType),
+  })
+
+  return { getTypeOfBoatTypeData }
 }
