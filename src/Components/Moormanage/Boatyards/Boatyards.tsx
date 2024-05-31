@@ -36,6 +36,7 @@ import { ProgressSpinner } from 'primereact/progressspinner'
 const Boatyards = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [boatyardsData, setboatyardsData] = useState<BoatYardPayload[]>([])
+
   const [mooringWithBoatyardsData, setMooringWithBoatyardsData] = useState<
     MooringWithBoatYardResponse[]
   >([])
@@ -51,6 +52,7 @@ const Boatyards = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [dialogVisible, setDialogVisible] = useState(false)
   const [mooringRowData, setMooringRowData] = useState<any>([])
+
   const toast = useRef<Toast>(null)
 
   const handlePositionChange = (lat: number, lng: number) => {
@@ -349,7 +351,7 @@ const Boatyards = () => {
         style={{ display: 'flex', justifyContent: 'space-evenly' }}>
         <div
           data-testid="dataTable"
-          className="flex-grow  bg-[#FFFFFF] rounded-xl border-[1px] border-[#D5E1EA] w-[515px] h-[650px] mb-0 ">
+          className="flex-grow  bg-[#FFFFFF] rounded-xl border-[1px] border-[#D5E1EA] w-[515px] h-[695px] mb-0 ">
           <div className="text-sm font-extrabold rounded-sm w-full bg-[#D9D9D9]">
             <div
               className="flex  align-items-center justify-between bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px]"
@@ -418,7 +420,7 @@ const Boatyards = () => {
 
         <div
           data-testid="customer-admin-users-table"
-          className=" flex-grow bg-[#FFFFFF]  rounded-xl border-[1px]  border-gray-300 w-[515px] h-[650px] mr-[50px]  mb-0  s">
+          className=" flex-grow bg-[#FFFFFF]  rounded-xl border-[1px]  border-gray-300 w-[515px] h-[695px] mr-[50px]  mb-0 ">
           <div className="">
             <div className="text-sm font-extrabold rounded-sm w-full   bg-[#D9D9D9]">
               <div
@@ -429,11 +431,11 @@ const Boatyards = () => {
             </div>
             <div className=" bg-[] mt-3 ">
               <div
-                className="flex justify-start ml-4 mt-[30px]"
+                className="flex justify-between p-3 mt-[10px]"
                 style={{ fontSize: '10px', fontWeight: '700', lineHeight: '11.72px' }}>
                 <p>{properties.address}</p>
-                <p className="ml-[12vw]">{properties.mooringInventoried}</p>
-                <p className="ml-[10vw]">{properties.boatyardGPSCoordinates}</p>
+                <p className="">{properties.mooringInventoried}</p>
+                <p className="">{properties.boatyardGPSCoordinates}</p>
               </div>
               <div className="mt-4">
                 <hr style={{ border: '1px solid #D5E1EA' }} />
@@ -456,18 +458,17 @@ const Boatyards = () => {
 
           {selectedBoatYard ? (
             <>
-              <div className="flex justify-start mt-4  font-normal text-[12px] ">
-                <p className="ml-3.5 ">
-                  {selectedBoatYard?.street} {selectedBoatYard?.apt} ,{' '}
-                  {selectedBoatYard?.stateResponseDto?.name} ,{' '}
+              <div className="flex justify-between mt-4 p-3  font-normal text-[12px] ">
+                <p
+                  className="">
+                  {selectedBoatYard?.street} {selectedBoatYard?.apt} ,
+                  {selectedBoatYard?.stateResponseDto?.name} ,
                   {selectedBoatYard?.countryResponseDto?.name}
                 </p>
-                <div className="flex ml-[12vw]">
-                  <p className="">{selectedBoatYard?.mooringInventoried}</p>
-                </div>
-                <div className="flex ml-[12vw]">
-                  <p className=" underline">{selectedBoatYard?.gpsCoordinates}</p>
-                </div>
+
+                <p className="mr-[12rem]">{selectedBoatYard?.mooringInventoried}</p>
+
+                <p className=" underline mr-[1rem]">{selectedBoatYard?.gpsCoordinates}</p>
               </div>
 
               <div

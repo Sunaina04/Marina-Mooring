@@ -37,7 +37,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   const [statesData, setStatesData] = useState<State[]>()
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
   const [isLoading, setIsLoading] = useState(false)
-  const defaultCenter: LatLngExpression = [31.63398, 74.87226]
+  const [message, setMessage] = useState<any>([])
   const [addBoatyard] = useAddBoatyardsMutation()
   const { getStatesData } = StatesData()
   const { getCountriesData } = CountriesData()
@@ -46,6 +46,8 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const phoneRegex = /^\d{10}$/
     const nameRegex = /^[a-zA-Z ]+$/
+    const gpsRegex = /^\d{1,2}\.\d+ \d{1,2}\.\d+$/
+
     const errors: { [key: string]: string } = {}
 
     if (!boatyardName) {
@@ -68,11 +70,13 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
       errors.email = 'Please enter a valid email format'
     }
 
+    if (!gpsCoordinatesValue) {
+      errors.gpsCoordinatesValue = 'GPS Coordinates is required'
+    } else if (!gpsRegex.test(gpsCoordinatesValue)) {
+      errors.gpsCoordinatesValue = 'Invalid GPS coordinates format'
+    }
     if (!address) errors.address = 'Street/house is required'
-
     if (!zipCode) errors.zipCode = 'Zip code is required'
-    if (!gpsCoordinatesValue) errors.gpsCoordinatesValue = 'GPS Coordinates is required'
-
     if (!mainContact) errors.mainContact = 'Main contact is required'
     if (!country) errors.country = 'Country  is required'
     if (!state) errors.state = 'State  is required'
@@ -112,7 +116,17 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
         gpsCoordinates: gpsCoordinatesValue,
       }
       const response = await addBoatyard(payload).unwrap()
-      const { status } = response as BoatYardResponse
+      const { status, message } = response as BoatYardResponse
+
+      if (message) {
+        toastRef.current.show({
+          severity: status === 200 || status === 201 ? 'success' : 'error',
+          summary: status === 200 || status === 201 ? 'Success' : 'Error',
+          detail: message,
+          life: 3000,
+        })
+      }
+
       if (status === 200 || status === 201) {
         closeModal()
         boatYardData()
