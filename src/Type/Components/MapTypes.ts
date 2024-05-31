@@ -1,3 +1,5 @@
+import { LatLngExpression } from 'leaflet'
+
 type MarkerPosition = [number, number]
 
 export interface MarkerData {
@@ -7,8 +9,9 @@ export interface MarkerData {
 
 export interface CustomSelectPositionMapProps {
   onPositionChange: (lat: number, lng: number) => void
-  center?: MarkerPosition
-  zoomLevel?: number
+  center: LatLngExpression | undefined
+  setCenter: React.Dispatch<React.SetStateAction<LatLngExpression | undefined>>
+  zoomLevel: number
 }
 
 export interface DisplayPositionProps {

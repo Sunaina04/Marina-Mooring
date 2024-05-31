@@ -8,6 +8,8 @@ import { Country, State } from '../../../Type/CommonType'
 import { BoatYardResponse } from '../../../Type/ApiTypes'
 import CustomSelectPositionMap from '../../Map/CustomSelectPositionMap'
 import { CountriesData, StatesData } from '../../CommonComponent/MetaDataComponent/MeataDataApi'
+import { ProgressSpinner } from 'primereact/progressspinner'
+import { LatLngExpression } from 'leaflet'
 
 const AddBoatyards: React.FC<BoatYardProps> = ({
   closeModal,
@@ -29,12 +31,13 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   const [mainContact, setMainContact] = useState('')
   const [latitude, setLatitude] = useState<number>()
   const [longitude, setLongitude] = useState<number>()
+  const [center, setCenter] = useState<LatLngExpression | undefined>([30.6983149, 76.656095])
   const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<string>()
   const [countriesData, setCountriesData] = useState<Country[]>()
   const [statesData, setStatesData] = useState<State[]>()
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
   const [isLoading, setIsLoading] = useState(false)
-
+  const defaultCenter: LatLngExpression = [31.63398, 74.87226]
   const [addBoatyard] = useAddBoatyardsMutation()
   const { getStatesData } = StatesData()
   const { getCountriesData } = CountriesData()
@@ -78,8 +81,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   }
 
   const handlePositionChange = (lat: number, lng: number) => {
-    setLatitude(lat)
-    setLongitude(lng)
+    setCenter([lat, lng])
     const formattedLat = lat.toFixed(3)
     const formattedLng = lng.toFixed(3)
     const concatenatedValue = `${formattedLat} ${formattedLng}`
@@ -92,6 +94,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
       setErrorMessage(errors)
       return
     }
+    setIsLoading(true)
 
     try {
       const payload = {
@@ -113,6 +116,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
       if (status === 200 || status === 201) {
         closeModal()
         boatYardData()
+        setIsLoading(false)
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
@@ -121,6 +125,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
         })
       }
     } catch (error) {
+      setIsLoading(false)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
@@ -259,6 +264,21 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
             <p>{errorMessage.phone && <small className="p-error">{errorMessage.phone}</small>}</p>
           </div>
         </div>
+
+        {isLoading && (
+          <ProgressSpinner
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: '50px',
+              height: '50px',
+            }}
+            strokeWidth="4"
+          />
+        )}
+
         <div className="mt-3">
           <span className="font-medium text-sm text-[#000000]">
             Address <span className="text-red-500">*</span>
@@ -457,7 +477,12 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
           </div>
 
           <div className="w-full h-[150px] p-2 rounded-lg mt-[22px]">
-            <CustomSelectPositionMap onPositionChange={handlePositionChange} zoomLevel={50} />
+            <CustomSelectPositionMap
+              onPositionChange={handlePositionChange}
+              zoomLevel={50}
+              center={center}
+              setCenter={setCenter}
+            />
           </div>
         </div>
 
