@@ -499,5 +499,5 @@ export interface MetaDataResponse {
   status: number
   errorList: []
   time: number
-  content: Content
+  content: {content:Content}
 }

@@ -8,7 +8,7 @@ import {
 } from '../../../Services/MoorManage/MoormanageApi'
 import { Button } from 'primereact/button'
 import { CustomerDataProps } from '../../../Type/ComponentBasedType'
-import { CityProps, Country, State } from '../../../Type/CommonType'
+import { CityProps, Country, MetaData, State } from '../../../Type/CommonType'
 import {
   bottomChainConditionOptions,
   chainConditionOptions,
@@ -22,7 +22,13 @@ import {
 import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
 import { CustomerResponse } from '../../../Type/ApiTypes'
 import { InputNumber } from 'primereact/inputnumber'
-import { CountriesData, StatesData } from '../../CommonComponent/MetaDataComponent/MeataDataApi'
+import {
+  CountriesData,
+  StatesData,
+  TypeOfBoatType,
+  TypeOfWeightData,
+  TypeOfChainCondition,
+} from '../../CommonComponent/MetaDataComponent/MeataDataApi'
 
 const AddCustomer: React.FC<CustomerDataProps> = ({
   customer,
@@ -44,8 +50,13 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [pinCode, setPinCode] = useState<string>('')
   const [countriesData, setCountriesData] = useState<Country[]>()
   const [statesData, setStatesData] = useState<State[]>()
-
+  const [type, setType] = useState<MetaData[]>([])
+  const [weightData, setWeightData] = useState<MetaData[]>([])
+  const [chainData, setChainData] = useState<MetaData[]>([])
   const { getStatesData } = StatesData()
+  const { getTypeOfBoatTypeData } = TypeOfBoatType()
+  const { getTypeOfWeightData } = TypeOfWeightData()
+  const { getTypeOfChainData } = TypeOfChainCondition()
   const { getCountriesData } = CountriesData()
   const [addCustomer] = useAddCustomerMutation()
   const [updateCustomer] = useUpdateCustomerMutation()
@@ -244,13 +255,26 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const fetchDataAndUpdate = useCallback(async () => {
     const { statesData } = await getStatesData()
     const { countriesData } = await getCountriesData()
+    const { typeOfBoatTypeData } = await getTypeOfBoatTypeData()
+    const { typeOfWeightData } = await getTypeOfWeightData()
+    const { typeOfChainData } = await getTypeOfChainData()
     if (countriesData !== null) {
       setCountriesData(countriesData)
     }
-
     if (statesData !== null) {
       setStatesData(statesData)
     }
+    if (typeOfBoatTypeData !== null) {
+      setType(typeOfBoatTypeData)
+    }
+    if (typeOfWeightData !== null) {
+      setWeightData(typeOfWeightData)
+    }
+
+    if (typeOfChainData !== null) {
+      setChainData(typeOfChainData)
+    }
+    console.log('dataaa', typeOfWeightData)
   }, [])
 
   const handleClick = () => {
@@ -823,8 +847,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               <Dropdown
                 value={formData.boatType}
                 onChange={(e) => handleInputChange('type', e.value)}
-                options={mooringTypeOptions}
-                optionLabel="name"
+                options={type}
+                optionLabel="boatType"
                 editable
                 placeholder="Skiff"
                 style={{
@@ -879,8 +903,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               <Dropdown
                 value={formData.sizeOfWeight}
                 onChange={(e) => handleInputChange('sizeOfWeight', e.value)}
-                options={sizeOfWeightOptions}
-                optionLabel="name"
+                options={weightData}
+                optionLabel="type"
                 editable
                 placeholder="Select"
                 style={{
@@ -942,8 +966,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               <Dropdown
                 value={formData.topChainCondition}
                 onChange={(e) => handleInputChange('topChainCondition', e.value)}
-                options={chainConditionOptions}
-                optionLabel="name"
+                options={chainData}
+                optionLabel="condition"
                 editable
                 placeholder="Select"
                 style={{
