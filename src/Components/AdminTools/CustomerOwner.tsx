@@ -170,12 +170,6 @@ const CustomerOwner = () => {
         }
       } else {
         setIsLoading(false)
-        toast?.current?.show({
-          severity: 'error',
-          summary: 'Error',
-          detail: message,
-          life: 3000,
-        })
       }
     } catch (error) {
       console.error('Error occurred while fetching customer data:', error)
@@ -449,7 +443,6 @@ const CustomerOwner = () => {
               style={{
                 position: 'absolute',
                 top: '50%',
-                // left: '5%',
                 transform: 'translate(-50%, -50%)',
                 width: '50px',
                 height: '50px',

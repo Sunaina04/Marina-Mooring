@@ -31,6 +31,7 @@ import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
 import { Toast } from 'primereact/toast'
 import { Params } from '../../../Type/CommonType'
 import { Dialog } from 'primereact/dialog'
+import { ProgressSpinner } from 'primereact/progressspinner'
 
 const Boatyards = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -251,16 +252,11 @@ const Boatyards = () => {
         .then(async (response) => {
           const { status, content } = response as BoatYardResponse
           if (status === 200 && Array.isArray(content)) {
+            setIsLoading(false)
             setboatyardsData(content)
             setFilteredboatyardsData(content)
           } else {
             setIsLoading(false)
-            toast?.current?.show({
-              severity: 'error',
-              summary: 'Error',
-              detail: 'Error While Fetching Boatyards',
-              life: 3000,
-            })
           }
         })
     } catch (error) {
@@ -295,7 +291,7 @@ const Boatyards = () => {
   }, [selectedBoatYard])
 
   return (
-    <>
+    <div className={modalVisible ? 'backdrop-blur-lg' : ''}>
       <Toast ref={toast} />
       <Header header="MOORMANAGE/Boatyards" />
       <div className="flex justify-end mr-14 mt-[40px] ">
@@ -447,12 +443,23 @@ const Boatyards = () => {
             </div>
           </div>
 
+          {isLoading && (
+            <ProgressSpinner
+              style={{
+                position: 'absolute',
+                top: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: '50px',
+                height: '50px',
+              }}
+              strokeWidth="4"
+            />
+          )}
+
           {selectedBoatYard ? (
             <>
               <div className="flex justify-start mt-4  font-normal text-[12px] ">
-                <p
-                  // style={{border:"1px solid red"}}
-                  className="ml-3.5 ">
+                <p className="ml-3.5 ">
                   {selectedBoatYard?.street} {selectedBoatYard?.apt}
                   {selectedBoatYard?.stateResponseDto?.name} ,
                   {selectedBoatYard?.countryResponseDto?.name}
@@ -473,7 +480,6 @@ const Boatyards = () => {
                   marginLeft: '10px',
                   marginRight: '10px',
                 }}>
-                {/* <CustomDisplayPositionMap position={selectedBoatYard.gpsCoordinates} /> */}
                 <CustomDisplayPositionMap position={[latitude, longitude]} />
               </div>
 
@@ -492,9 +498,6 @@ const Boatyards = () => {
                     fontWeight: '400',
                     color: '#000000',
                   }}
-                  // onRowClick={(rowData) => {
-                  //   handleMooringTableRowClick(rowData)
-                  // }}
                   emptyMessage={
                     <div className="text-center mt-14">
                       <img
@@ -609,7 +612,7 @@ const Boatyards = () => {
           </Dialog>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

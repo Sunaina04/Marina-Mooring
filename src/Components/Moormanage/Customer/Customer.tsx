@@ -86,18 +86,14 @@ const Customer = () => {
   }
 
   const handleEdit = (rowData: any) => {
-    console.log(customerRecordData)
     setSelectedCustomer(customerRecordData)
     setModalVisible(true)
     setEditMode(true)
   }
 
   const handleDelete = async (rowData: any) => {
-    console.log(customerRecordData)
     try {
       const response = await deleteCustomer({ id: customerRecordData?.id })
-
-      console.log(response)
       if (response) {
         toast.current?.show({
           severity: 'success',
