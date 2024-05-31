@@ -164,9 +164,9 @@ const Permission = () => {
         customerAdminId: customerAdminId,
       }).unwrap()
       const { status, content } = response as GetUserResponse
-      if (status === 200 && Array.isArray(content?.content)) {
+      if (status === 200 && Array.isArray(content)) {
         setIsLoading(false)
-        setgetCustomerOwnerUserData(content?.content)
+        setgetCustomerOwnerUserData(content)
       }
     } catch (error) {
       setIsLoading(false)

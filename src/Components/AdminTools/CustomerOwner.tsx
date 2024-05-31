@@ -161,10 +161,10 @@ const CustomerOwner = () => {
       }
       const response = await getUser(params).unwrap()
       const { status, message, content } = response as GetUserResponse
-      if (status === 200 && Array.isArray(content?.content)) {
+      if (status === 200 && Array.isArray(content)) {
         setIsLoading(false)
-        if (content?.content.length > 0) {
-          setgetCustomerOwnerData(content?.content)
+        if (content.length > 0) {
+          setgetCustomerOwnerData(content)
         } else {
           setgetCustomerOwnerData([])
         }
@@ -189,10 +189,10 @@ const CustomerOwner = () => {
           params,
         }).unwrap()
         const { status, message, content } = response as GetUserResponse
-        if (status === 200 && Array.isArray(content?.content)) {
+        if (status === 200 && Array.isArray(content)) {
           setIsLoading(false)
-          if (content?.content.length > 0) {
-            setgetCustomerOwnerUserData(content?.content)
+          if (content.length > 0) {
+            setgetCustomerOwnerUserData(content)
             setIsRowClick(true)
             setSelectedRow(id)
             setCustomerAdminId(id)
@@ -204,12 +204,6 @@ const CustomerOwner = () => {
         } else {
           setIsRowClick(false)
           setIsLoading(false)
-          toast?.current?.show({
-            severity: 'error',
-            summary: 'Error',
-            detail: message,
-            life: 3000,
-          })
           setgetCustomerOwnerUserData([])
         }
       } catch (error) {

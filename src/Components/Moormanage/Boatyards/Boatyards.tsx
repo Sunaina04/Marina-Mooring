@@ -61,7 +61,6 @@ const Boatyards = () => {
   const handleMooringTableRowClick = (rowData: any) => {
     setDialogVisible(true)
     setMooringRowData(rowData)
-    console.log('mooringRowData', rowData, mooringRowData)
   }
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -460,12 +459,14 @@ const Boatyards = () => {
             <>
               <div className="flex justify-start mt-4  font-normal text-[12px] ">
                 <p className="ml-3.5 ">
-                  {selectedBoatYard?.street} {selectedBoatYard?.apt}
-                  {selectedBoatYard?.stateResponseDto?.name} ,
+                  {selectedBoatYard?.street} {selectedBoatYard?.apt} ,{' '}
+                  {selectedBoatYard?.stateResponseDto?.name} ,{' '}
                   {selectedBoatYard?.countryResponseDto?.name}
                 </p>
-                <div className="flex ml-[110px] gap-[16rem]">
+                <div className="flex ml-[12vw]">
                   <p className="">{selectedBoatYard?.mooringInventoried}</p>
+                </div>
+                <div className="flex ml-[12vw]">
                   <p className=" underline">{selectedBoatYard?.gpsCoordinates}</p>
                 </div>
               </div>

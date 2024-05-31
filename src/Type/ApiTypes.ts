@@ -12,12 +12,18 @@ export interface UserLoginPayload {
   countryResponseDto: Country
 }
 export interface UserResponse {
-  content: GetUserResponse
-  empty: boolean
-  first: boolean
-  last: boolean
-  number: boolean
-  numberOfElements: number
+  id: number
+  name: string
+  email: string
+  phoneNumber: string
+  customerOwnerId: string
+  roleResponseDto: Role
+  stateResponseDto: State
+  countryResponseDto: Country
+  street: string
+  apt: string
+  zipCode: string
+  companyName: string
 }
 
 export interface GetUserResponse {
