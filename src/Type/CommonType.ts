@@ -39,6 +39,8 @@ export interface InitialState {
   userData: UserData | null
   isOpen: boolean
   sidebar: SidebarState
+  customerId: number | null
+  customerName: string
 }
 
 export interface FormFieldsProps {
@@ -79,4 +81,5 @@ export type Params = {
   sortBy?: string
   sortDir?: string
   searchText?: string
+  customerOwnerId?: number | null
 }

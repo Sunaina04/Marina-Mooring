@@ -6,8 +6,6 @@ import {
   BoatYardData,
   BoatYardPayload,
   BoatYardResponse,
-  MooringPayload,
-  MooringWithBoatYardContent,
   MooringWithBoatYardResponse,
 } from '../../../Type/ApiTypes'
 import {
@@ -16,23 +14,22 @@ import {
 } from '../../../Services/MoorManage/MoormanageApi'
 import DataTableWithToogle from '../../CommonComponent/Table/DataTableWithToogle'
 import { ActionButtonColumnProps, Product } from '../../../Type/Components/TableTypes'
-import { boatyardMooring, getProductsWithOrdersData } from '../../Utils/CustomData'
-import { DataTable } from 'primereact/datatable'
-import { Column } from 'primereact/column'
 import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 import { properties } from '../../Utils/MeassageProperties'
 import Header from '../../Layout/LayoutComponents/Header'
 import { IoSearchSharp } from 'react-icons/io5'
-import CustomSelectPositionMap from '../../Map/CustomSelectPositionMap'
 import '../Boatyards/Boatyard.module.css'
 import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
 import { Toast } from 'primereact/toast'
 import { Params } from '../../../Type/CommonType'
 import { Dialog } from 'primereact/dialog'
 import { ProgressSpinner } from 'primereact/progressspinner'
+import { useSelector } from 'react-redux'
+import { selectCustomerId } from '../../../Store/Slice/userSlice'
 
 const Boatyards = () => {
+  const selectedCustomerId = useSelector(selectCustomerId)
   const [modalVisible, setModalVisible] = useState(false)
   const [boatyardsData, setboatyardsData] = useState<BoatYardPayload[]>([])
 
@@ -247,6 +244,9 @@ const Boatyards = () => {
       if (searchText) {
         params.searchText = searchText
       }
+      if (selectedCustomerId) {
+        params.customerOwnerId = selectedCustomerId
+      }
       await getBoatyards(params)
         .unwrap()
         .then(async (response) => {
@@ -262,7 +262,7 @@ const Boatyards = () => {
     } catch (error) {
       console.error('Error fetching getBoatyardsdata:', error)
     }
-  }, [getBoatyards, searchText])
+  }, [getBoatyards, searchText, selectedCustomerId])
 
   const getMooringsWithBoatyardData = useCallback(async () => {
     try {
@@ -284,7 +284,7 @@ const Boatyards = () => {
       getBoatyardsData()
     }, 600)
     return () => clearTimeout(timeoutId)
-  }, [searchText])
+  }, [searchText, selectedCustomerId])
 
   useEffect(() => {
     if (selectedBoatYard) getMooringsWithBoatyardData()

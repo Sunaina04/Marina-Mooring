@@ -24,9 +24,27 @@ export const userSlice = createSlice({
     toggleSidebar: (state) => {
       state.sidebar.isOpen = !state.sidebar.isOpen
     },
+    setCustomerId: (state, action: PayloadAction<number>) => {
+      state.customerId = action.payload
+    },
+    setCustomerName: (state, action: PayloadAction<string>) => {
+      state.customerName = action.payload
+    },
   },
 })
 
-export const { setLogout, setUserData, setOpen, toggleSidebar, setToken } = userSlice.actions
+export const {
+  setLogout,
+  setUserData,
+  setOpen,
+  toggleSidebar,
+  setToken,
+  setCustomerId,
+  setCustomerName,
+} = userSlice.actions
+
 export const selectSidebar = (state: RootState) => state.user.sidebar
+export const selectCustomerId = (state: RootState) => state.user.customerId
+export const selectCustomerName = (state: RootState) => state.user.customerName
+
 export default userSlice.reducer

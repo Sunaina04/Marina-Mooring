@@ -3,31 +3,59 @@ import { Button } from 'primereact/button'
 import { Avatar } from 'primereact/avatar'
 import { Dropdown } from 'primereact/dropdown'
 import { HeaderProps } from '../../../Type/ComponentBasedType'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Role } from '../../../Type/CommonType'
 import { RolesData } from '../../CommonComponent/MetaDataComponent/MeataDataApi'
+import { useGetUsersMutation } from '../../../Services/AdminTools/AdminToolsApi'
+import { CustomerPayload, GetUserResponse } from '../../../Type/ApiTypes'
+import { setCustomerId, setCustomerName, selectCustomerName } from '../../../Store/Slice/userSlice'
 
 const Header: React.FC<HeaderProps> = ({ header }) => {
   const userData = useSelector((state: any) => state.user?.userData)
-  const role = userData?.role?.name
+  const role = userData?.role?.id
+  const dispatch = useDispatch()
+  const selectedCustomerName = useSelector(selectCustomerName)
   const [expanded, setExpanded] = useState(false)
   const [selectRole, setSelectRole] = useState(userData?.role.name)
-  const { getRolesData } = RolesData()
   const [rolesData, setRolesData] = useState<Role[]>()
+  const [getCustomerOwnerData, setgetCustomerOwnerData] = useState<CustomerPayload[]>([])
+  const { getRolesData } = RolesData()
+  const [getUser] = useGetUsersMutation()
 
   const handleMenu = () => {
     setExpanded(!expanded)
   }
 
-  const fetchDataAndUpdate = useCallback(async () => {
-    const { rolesData } = await getRolesData()
-    if (rolesData !== null) {
-      setRolesData(rolesData)
+  const handleCustomerIdSelection = (customerId: any) => {
+    dispatch(setCustomerName(customerId?.name))
+    dispatch(setCustomerId(customerId?.id))
+  }
+
+  // const fetchDataAndUpdate = useCallback(async () => {
+  //   const { rolesData } = await getRolesData()
+  //   if (rolesData !== null) {
+  //     setRolesData(rolesData)
+  //   }
+  // }, [])
+
+  const getUserHandler = useCallback(async () => {
+    try {
+      const response = await getUser({}).unwrap()
+      const { status, message, content } = response as GetUserResponse
+      if (status === 200 && Array.isArray(content)) {
+        if (content.length > 0) {
+          setgetCustomerOwnerData(content)
+        } else {
+          setgetCustomerOwnerData([])
+        }
+      }
+    } catch (error) {
+      console.error('Error occurred while fetching customer data:', error)
     }
-  }, [])
+  }, [getUser])
 
   useEffect(() => {
-    fetchDataAndUpdate()
+    getUserHandler()
   }, [])
 
   return (
@@ -57,15 +85,18 @@ const Header: React.FC<HeaderProps> = ({ header }) => {
           minWidth: '300px',
           justifyContent: 'end',
         }}>
-        {role === 'ADMINISTRATOR' && (
+        {role === 1 && (
           <Dropdown
-            value={selectRole}
-            onChange={(e) => setSelectRole(e.value)}
+            value={selectedCustomerName}
+            onChange={(e) => {
+              handleCustomerIdSelection(e.value)
+            }}
             optionLabel="name"
-            options={rolesData}
+            placeholder="Select"
+            options={getCustomerOwnerData}
             editable
             style={{
-              width: '142px',
+              width: '160px',
               height: '32px',
               minHeight: '32px',
               border: '1px solid gray',
