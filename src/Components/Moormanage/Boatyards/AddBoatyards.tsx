@@ -118,15 +118,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
       const response = await addBoatyard(payload).unwrap()
       const { status, message } = response as BoatYardResponse
 
-      if (message) {
-        toastRef.current.show({
-          severity: status === 200 || status === 201 ? 'success' : 'error',
-          summary: status === 200 || status === 201 ? 'Success' : 'Error',
-          detail: message,
-          life: 3000,
-        })
-      }
-
       if (status === 200 || status === 201) {
         closeModal()
         boatYardData()
@@ -135,6 +126,14 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
           severity: 'success',
           summary: 'Success',
           detail: 'Boatyard Saved successfully',
+          life: 3000,
+        })
+      } else {
+        setIsLoading(false)
+        toastRef?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
           life: 3000,
         })
       }

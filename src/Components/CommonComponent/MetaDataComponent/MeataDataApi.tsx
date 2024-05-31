@@ -61,3 +61,24 @@ export const RolesData = () => {
 
   return { getRolesData }
 }
+
+export const TypeOfWeightData = () => {
+  const [getTypeOfWeight] = useGetRolesMutation()
+
+  const fetchTypeOfWeightData = async (getData: any) => {
+    try {
+      const response = await getData({})
+      const { status, content } = response.data as MetaDataResponse
+      return status === 200 && Array.isArray(content) ? content : null
+    } catch (error) {
+      console.error('Error fetching metadata:', error)
+      return null
+    }
+  }
+
+  const getTypeOfWeightData = async () => ({
+    rolesData: await fetchTypeOfWeightData(getTypeOfWeight),
+  })
+
+  return { getTypeOfWeightData }
+}

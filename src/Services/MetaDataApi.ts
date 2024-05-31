@@ -22,7 +22,20 @@ const metaDataApi = userApi.injectEndpoints({
         method: 'GET',
       }),
     }),
+
+    getTypeOfWeight: builder.mutation({
+      query: ({ pageNumber, pageSize }: { pageNumber?: number; pageSize?: number }) => ({
+        url: 'api/v1/metadata/typeOfWeight',
+        method: 'GET',
+        params: { pageNumber, pageSize },
+      }),
+    }),
   }),
 })
 
-export const { useGetRolesMutation, useGetStatesMutation, useGetCountriesMutation } = metaDataApi
+export const {
+  useGetRolesMutation,
+  useGetStatesMutation,
+  useGetCountriesMutation,
+  useGetTypeOfWeightMutation,
+} = metaDataApi
