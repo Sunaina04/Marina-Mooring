@@ -40,7 +40,6 @@ const Boatyards = () => {
   const [expandedRows, setExpandedRows] = useState<any>()
   const [selectedBoatYard, setSelectedBoatYard] = useState<any>()
   const [editMode, setEditMode] = useState(false)
-  const [position, setPosition] = useState<{ lat: number; lng: number } | undefined>(undefined)
   const [selectedRowId, setSelectedRowID] = useState()
   const [searchText, setSearchText] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -51,10 +50,6 @@ const Boatyards = () => {
   const [getMooringsWithBoatyard] = useGetMooringWithBoatyardMutation()
 
   const toast = useRef<Toast>(null)
-
-  const handlePositionChange = (lat: number, lng: number) => {
-    setPosition({ lat, lng })
-  }
 
   const handleMooringTableRowClick = (rowData: any) => {
     setDialogVisible(true)
@@ -265,13 +260,19 @@ const Boatyards = () => {
   }, [getBoatyards, searchText, selectedCustomerId])
 
   const getMooringsWithBoatyardData = useCallback(async () => {
+    setIsLoading(true)
     try {
       await getMooringsWithBoatyard({ id: selectedBoatYard?.id })
         .unwrap()
         .then(async (response) => {
           const { status, content } = response as MooringWithBoatYardResponse
-          if (status === 200 && Array.isArray(content)) {
+          if (status === 200 && Array.isArray(content) && content.length > 0) {
+            console.log('here')
+            setIsLoading(false)
             setMooringWithBoatyardsData(content)
+          } else {
+            setIsLoading(false)
+            console.log('here')
           }
         })
     } catch (error) {
@@ -489,7 +490,7 @@ const Boatyards = () => {
                     fontSize: '12px',
                     color: '#000000',
                   }}
-                  data={mooringWithBoatyardsData}
+                  data={mooringWithBoatyardsData ? mooringWithBoatyardsData : undefined}
                   columns={tableColumnsTechnicians}
                   actionButtons={ActionButtonColumn}
                   style={{

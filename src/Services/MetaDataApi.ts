@@ -103,7 +103,7 @@ const metaDataApi = userApi.injectEndpoints({
       }),
     }),
 
-    getBoatyards: builder.mutation({
+    getBoatyardsType: builder.mutation({
       query: ({
         pageNumber,
         pageSize,
@@ -142,6 +142,6 @@ export const {
   useGetPennantConditionsMutation,
   useGetEyeConditionMutation,
   useGetBottomChainConditionsMutation,
-  useGetBoatyardsMutation,
   useGetBoatTypeMutation,
+  useGetBoatyardsTypeMutation,
 } = metaDataApi

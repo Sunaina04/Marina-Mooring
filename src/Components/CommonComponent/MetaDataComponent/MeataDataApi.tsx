@@ -1,6 +1,5 @@
 import {
   useGetBoatTypeMutation,
-  useGetBoatyardsMutation,
   useGetBottomChainConditionsMutation,
   useGetCountriesMutation,
   useGetCustomersMutation,
@@ -13,6 +12,7 @@ import {
   useGetStatusMutation,
   useGetTopChainConditionMutation,
   useGetTypeOfWeightMutation,
+  useGetBoatyardsTypeMutation,
 } from '../../../Services/MetaDataApi'
 import { MetaDataResponse } from '../../../Type/ApiTypes'
 
@@ -261,7 +261,7 @@ export const TypeOfBottomChain = () => {
 }
 
 export const TypeOfBoatYards = (customerOwnerId: any) => {
-  const [getBoatyards] = useGetBoatyardsMutation()
+  const [getBoatyards] = useGetBoatyardsTypeMutation()
 
   const fetchBoatYardsData = async (getData: any) => {
     try {
