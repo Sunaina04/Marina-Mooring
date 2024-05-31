@@ -485,6 +485,7 @@ export interface WorkOrderResponse {
 
 export interface ContentData {
   name: string
+  customerName: string
   id: number
   label: undefined
 }

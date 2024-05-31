@@ -7,17 +7,25 @@ import { BoatYardProps } from '../../../Type/ComponentBasedType'
 import { Country, State } from '../../../Type/CommonType'
 import { BoatYardResponse } from '../../../Type/ApiTypes'
 import CustomSelectPositionMap from '../../Map/CustomSelectPositionMap'
-import { CountriesData, StatesData } from '../../CommonComponent/MetaDataComponent/MeataDataApi'
+import {
+  CountriesData,
+  CustomersData,
+  StatesData,
+} from '../../CommonComponent/MetaDataComponent/MeataDataApi'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { LatLngExpression } from 'leaflet'
+import { useSelector } from 'react-redux'
 
 const AddBoatyards: React.FC<BoatYardProps> = ({
   closeModal,
   boatYardData,
   gpsCoordinates,
   setModalVisible,
+  customerOwnerId,
   toastRef,
 }) => {
+  const userData = useSelector((state: any) => state.user?.userData)
+  const role = userData?.role?.name
   const [boatyardId, setBoatyardId] = useState('')
   const [boatyardName, setBoatyardName] = useState('')
   const [emailAddress, setEmailAddress] = useState('')
@@ -29,18 +37,17 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   const [zipCode, setZipCode] = useState('')
 
   const [mainContact, setMainContact] = useState('')
-  const [latitude, setLatitude] = useState<number>()
-  const [longitude, setLongitude] = useState<number>()
   const [center, setCenter] = useState<LatLngExpression | undefined>([30.6983149, 76.656095])
   const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<string>()
   const [countriesData, setCountriesData] = useState<Country[]>()
   const [statesData, setStatesData] = useState<State[]>()
+  const [customersData, setCustomersData] = useState<State[]>([])
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
   const [isLoading, setIsLoading] = useState(false)
-  const [message, setMessage] = useState<any>([])
   const [addBoatyard] = useAddBoatyardsMutation()
   const { getStatesData } = StatesData()
   const { getCountriesData } = CountriesData()
+  const { getCustomersData } = CustomersData(2)
 
   const validateFields = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -114,6 +121,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
         countryId: country?.id,
         mainContact: mainContact,
         gpsCoordinates: gpsCoordinatesValue,
+        customerOwnerId: customerOwnerId ? customerOwnerId : '',
       }
       const response = await addBoatyard(payload).unwrap()
       const { status, message } = response as BoatYardResponse
@@ -151,12 +159,17 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   const fetchDataAndUpdate = useCallback(async () => {
     const { statesData } = await getStatesData()
     const { countriesData } = await getCountriesData()
+    const { customersData } = await getCustomersData()
     if (countriesData !== null) {
       setCountriesData(countriesData)
     }
 
     if (statesData !== null) {
       setStatesData(statesData)
+    }
+
+    if (customersData !== null) {
+      setCustomersData(customersData)
     }
   }, [])
 

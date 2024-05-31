@@ -1,10 +1,10 @@
 import {
   useGetCountriesMutation,
+  useGetCustomersMutation,
   useGetRolesMutation,
   useGetStatesMutation,
   useGetTypeOfWeightMutation,
 } from '../../../Services/MetaDataApi'
-import { useGetCustomerMutation } from '../../../Services/MoorManage/MoormanageApi'
 import { MetaDataResponse } from '../../../Type/ApiTypes'
 
 export const StatesData = () => {
@@ -79,18 +79,18 @@ export const TypeOfWeightData = () => {
   }
 
   const getTypeOfWeightData = async () => ({
-    rolesData: await fetchTypeOfWeightData(getTypeOfWeight),
+    typeOfWeightData: await fetchTypeOfWeightData(getTypeOfWeight),
   })
 
   return { getTypeOfWeightData }
 }
 
-export const CustomersData = () => {
-  const [getCustomers] = useGetCustomerMutation()
+export const CustomersData = (customerOwnerId: number) => {
+  const [getCustomers] = useGetCustomersMutation()
 
   const fetchCustomersData = async (getData: any) => {
     try {
-      const response = await getData({})
+      const response = await getData({ customerOwnerId: customerOwnerId })
       const { status, content } = response.data as MetaDataResponse
       return status === 200 && Array.isArray(content) ? content : null
     } catch (error) {
@@ -99,7 +99,7 @@ export const CustomersData = () => {
     }
   }
 
-  const getCustomersData = async () => ({ rolesData: await fetchCustomersData(getCustomers) })
+  const getCustomersData = async () => ({ customersData: await fetchCustomersData(getCustomers) })
 
   return { getCustomersData }
 }

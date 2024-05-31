@@ -25,7 +25,6 @@ import { properties } from '../../Utils/MeassageProperties'
 import Header from '../../Layout/LayoutComponents/Header'
 import { IoSearchSharp } from 'react-icons/io5'
 import CustomSelectPositionMap from '../../Map/CustomSelectPositionMap'
-// import "../Boatyards/Boatyard.module.css"
 import '../Boatyards/Boatyard.module.css'
 import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
 import { Toast } from 'primereact/toast'
@@ -45,13 +44,15 @@ const Boatyards = () => {
   const [selectedBoatYard, setSelectedBoatYard] = useState<any>()
   const [editMode, setEditMode] = useState(false)
   const [position, setPosition] = useState<{ lat: number; lng: number } | undefined>(undefined)
-  const [getBoatyards] = useGetBoatyardsMutation()
-  const [getMooringsWithBoatyard] = useGetMooringWithBoatyardMutation()
   const [selectedRowId, setSelectedRowID] = useState()
   const [searchText, setSearchText] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [dialogVisible, setDialogVisible] = useState(false)
   const [mooringRowData, setMooringRowData] = useState<any>([])
+  const [customerOwnerId, setCustomerOwnerId] = useState()
+
+  const [getBoatyards] = useGetBoatyardsMutation()
+  const [getMooringsWithBoatyard] = useGetMooringWithBoatyardMutation()
 
   const toast = useRef<Toast>(null)
 
@@ -459,8 +460,7 @@ const Boatyards = () => {
           {selectedBoatYard ? (
             <>
               <div className="flex justify-between mt-4 p-3  font-normal text-[12px] ">
-                <p
-                  className="">
+                <p className="">
                   {selectedBoatYard?.street} {selectedBoatYard?.apt} ,
                   {selectedBoatYard?.stateResponseDto?.name} ,
                   {selectedBoatYard?.countryResponseDto?.name}

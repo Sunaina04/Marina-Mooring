@@ -7,12 +7,13 @@ export interface CustomerDataProps {
   closeModal: () => void
   getCustomer: () => void
   toastRef?: any
-  setCustomerData?:any
+  setCustomerData?: any
 }
 export interface BoatYardProps {
   customerData: any
   editMode: boolean
   toastRef?: any
+  customerOwnerId?: string
   gpsCoordinates?: string
   closeModal: () => void
   boatYardData: () => void
@@ -52,7 +53,7 @@ export interface RowExpansionProps {
 export interface AddMooringProps {
   moorings: MooringPayload
   editMode: boolean
-  toastRef: React.RefObject<any>;
+  toastRef: React.RefObject<any>
 }
 
 export interface Technician_Data {
