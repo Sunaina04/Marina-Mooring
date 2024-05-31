@@ -8,9 +8,11 @@ import { CustomerAdminDataProps } from '../../Type/ComponentBasedType'
 import { SaveUserResponse } from '../../Type/ApiTypes'
 import { useAddUserMutation, useUpdateUserMutation } from '../../Services/AdminTools/AdminToolsApi'
 import { ProgressSpinner } from 'primereact/progressspinner'
-import RolesData from '../CommonComponent/MetaDataComponent/RolesData'
-import StatesData from '../CommonComponent/MetaDataComponent/StatesData'
-import CountriesData from '../CommonComponent/MetaDataComponent/CountriesData'
+import {
+  CountriesData,
+  RolesData,
+  StatesData,
+} from '../CommonComponent/MetaDataComponent/MeataDataApi'
 
 const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   customerData,
@@ -462,9 +464,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           overflowY: 'scroll',
           overflowX: 'scroll',
           paddingBottom: '50px',
-        }}
-        
-        >
+        }}>
         <div className="flex gap-8 mt-5 ml-4">
           <div>
             <span className="font-medium text-sm text-[#000000]">
@@ -1015,8 +1015,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
         {/* Save and Back buttons */}
         {/* <div style={{ width: '100%', backgroundColor: 'white', padding: '0 12px' }}> */}
-
-
       </div>
       <div
         className="flex gap-4 ml-4 bottom-2 absolute left-6"
@@ -1026,9 +1024,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           backgroundColor: 'white',
           padding: '0 12px',
           marginBottom: '2px',
-        }}
-        
-        >
+        }}>
         <Button
           label={editMode ? 'Update' : 'Save'}
           onClick={handleClick}
@@ -1061,7 +1057,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           }}
         />
       </div>
-
 
       {/* </div> */}
     </>

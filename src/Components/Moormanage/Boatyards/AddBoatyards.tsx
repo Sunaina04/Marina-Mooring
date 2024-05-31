@@ -7,8 +7,7 @@ import { BoatYardProps } from '../../../Type/ComponentBasedType'
 import { Country, State } from '../../../Type/CommonType'
 import { BoatYardResponse } from '../../../Type/ApiTypes'
 import CustomSelectPositionMap from '../../Map/CustomSelectPositionMap'
-import StatesData from '../../CommonComponent/MetaDataComponent/StatesData'
-import CountriesData from '../../CommonComponent/MetaDataComponent/CountriesData'
+import { CountriesData, StatesData } from '../../CommonComponent/MetaDataComponent/MeataDataApi'
 
 const AddBoatyards: React.FC<BoatYardProps> = ({
   closeModal,
@@ -331,7 +330,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
                 borderRadius: '0.50rem',
                 fontSize: '0.8rem',
                 padding: '4px',
-                color:"black"
+                color: 'black',
               }}
             />
 

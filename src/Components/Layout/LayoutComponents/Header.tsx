@@ -4,8 +4,8 @@ import { Avatar } from 'primereact/avatar'
 import { Dropdown } from 'primereact/dropdown'
 import { HeaderProps } from '../../../Type/ComponentBasedType'
 import { useSelector } from 'react-redux'
-import RolesData from '../../CommonComponent/MetaDataComponent/RolesData'
 import { Role } from '../../../Type/CommonType'
+import { RolesData } from '../../CommonComponent/MetaDataComponent/MeataDataApi'
 
 const Header: React.FC<HeaderProps> = ({ header }) => {
   const userData = useSelector((state: any) => state.user?.userData)

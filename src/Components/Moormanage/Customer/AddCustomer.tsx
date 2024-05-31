@@ -19,11 +19,10 @@ import {
   sizeOfWeightOptions,
   typeOfWeightOptions,
 } from '../../Utils/CustomData'
-import StatesData from '../../CommonComponent/MetaDataComponent/StatesData'
-import CountriesData from '../../CommonComponent/MetaDataComponent/CountriesData'
 import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
 import { CustomerResponse } from '../../../Type/ApiTypes'
 import { InputNumber } from 'primereact/inputnumber'
+import { CountriesData, StatesData } from '../../CommonComponent/MetaDataComponent/MeataDataApi'
 
 const AddCustomer: React.FC<CustomerDataProps> = ({
   customer,
