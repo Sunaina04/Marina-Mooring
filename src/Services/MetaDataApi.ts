@@ -31,7 +31,7 @@ const metaDataApi = userApi.injectEndpoints({
       }),
     }),
 
-    getCustomers: builder.mutation({
+    getCustomersData: builder.mutation({
       query: ({
         pageNumber,
         pageSize,
@@ -134,7 +134,7 @@ export const {
   useGetStatesMutation,
   useGetCountriesMutation,
   useGetTypeOfWeightMutation,
-  useGetCustomersMutation,
+  useGetCustomersDataMutation,
   useGetTopChainConditionMutation,
   useGetStatusMutation,
   useGetSizeOfWeightMutation,

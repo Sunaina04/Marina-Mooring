@@ -4,11 +4,12 @@ import { InputText } from 'primereact/inputtext'
 import { Dropdown } from 'primereact/dropdown'
 import {
   useAddCustomerMutation,
+  useGetBoatyardsMutation,
   useUpdateCustomerMutation,
 } from '../../../Services/MoorManage/MoormanageApi'
 import { Button } from 'primereact/button'
 import { CustomerDataProps } from '../../../Type/ComponentBasedType'
-import { CityProps, Country, MetaData, State } from '../../../Type/CommonType'
+import { CityProps, Country, MetaData, Params, State } from '../../../Type/CommonType'
 import {
   bottomChainConditionOptions,
   chainConditionOptions,
@@ -20,7 +21,7 @@ import {
   typeOfWeightOptions,
 } from '../../Utils/CustomData'
 import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
-import { CustomerResponse } from '../../../Type/ApiTypes'
+import { BoatYardPayload, BoatYardResponse, CustomerResponse } from '../../../Type/ApiTypes'
 import { InputNumber } from 'primereact/inputnumber'
 import {
   CountriesData,
@@ -29,6 +30,10 @@ import {
   TypeOfWeightData,
   TypeOfChainCondition,
 } from '../../CommonComponent/MetaDataComponent/MeataDataApi'
+import { useSelector } from 'react-redux'
+import { selectCustomerId } from '../../../Store/Slice/userSlice'
+import CustomSelectPositionMap from '../../Map/CustomSelectPositionMap'
+import { LatLngExpression } from 'leaflet'
 
 const AddCustomer: React.FC<CustomerDataProps> = ({
   customer,
@@ -38,11 +43,12 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   toastRef,
   setCustomerData,
 }) => {
+  const selectedCustomerId = useSelector(selectCustomerId)
   const [value, setValue] = useState<string>('')
   const [selectedCountry, setSelectedCountry] = useState<Country>()
   const [selectedState, setSelectedState] = useState<State>()
   const [customerName, setCustomerName] = useState<string>('')
-  const [customerId, setCustomerId] = useState<string>('')
+  const [customerId, setCustomerId] = useState<number>(0)
   const [phone, setPhone] = useState<string>('')
   const [email, setEmail] = useState<string>('')
   const [streetHouse, setStreetHouse] = useState<string>('')
@@ -61,6 +67,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [addCustomer] = useAddCustomerMutation()
   const [updateCustomer] = useUpdateCustomerMutation()
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
+  const [boatyardsData, setboatyardsData] = useState<BoatYardPayload[]>([])
+  const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<string>()
+  const [center, setCenter] = useState<LatLngExpression | undefined>([30.6983149, 76.656095])
   const [firstErrorField, setFirstErrorField] = useState('')
   const mooringResponseDtoList = customer?.mooringResponseDtoList || []
   const [formData, setFormData] = useState<any>({
@@ -86,10 +95,22 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     status: 0,
   })
 
+  const [getBoatyards] = useGetBoatyardsMutation()
+
+  const handlePositionChange = (lat: number, lng: number) => {
+    setCenter([lat, lng])
+    const formattedLat = lat.toFixed(3)
+    const formattedLng = lng.toFixed(3)
+    const concatenatedValue = `${formattedLat} ${formattedLng}`
+    setGpsCoordinatesValue(concatenatedValue)
+  }
+
   const validateFields = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const phoneRegex = /^\d{10}$/
     const nameRegex = /^[a-zA-Z ]+$/
+    const gpsRegex = /^\d{1,2}\.\d+ \d{1,2}\.\d+$/
+
     const errors: { [key: string]: string } = {}
     let firstError = ''
 
@@ -154,14 +175,19 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       if (!firstError) firstError = 'harbor'
     }
 
-    if (!formData.mooringNumber) errors.mooringNumber = 'Mooring ID is required'
+    if (!gpsCoordinatesValue) {
+      errors.gpsCoordinatesValue = 'GPS Coordinates is required'
+    } else if (!gpsRegex.test(gpsCoordinatesValue)) {
+      errors.gpsCoordinatesValue = 'Invalid GPS coordinates format'
+    }
+
+    if (!formData.mooringId) errors.mooringId = 'Mooring ID is required'
     if (!formData.harbor) errors.harbor = 'Harbor is required'
     if (!formData.waterDepth) errors.waterDepth = 'Water Depth is required'
-    if (!formData.gpsCoordinates) errors.gpsCoordinates = 'GPS Coordinates are required'
     if (!formData.boatyardName) errors.boatyardName = 'Boatyard Name is required'
     if (!formData.boatName) errors.boatName = 'Boat Name is required'
     if (!formData.boatSize) errors.boatSize = 'Boat Size is required'
-    if (!formData.type) errors.type = 'Type is required'
+    if (!formData.boatType) errors.type = 'Type is required'
     if (!formData.boatWeight) errors.boatWeight = 'Weight is required'
     if (!formData.sizeOfWeight) errors.sizeOfWeight = 'Size of Weight is required'
     if (!formData.typeOfWeight) errors.typeOfWeight = 'Type of Weight is required'
@@ -180,6 +206,94 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     setFieldErrors(errors)
     return errors
   }
+
+  const handleInputChange = (field: string, value: any) => {
+    setFormData({
+      ...formData,
+      [field]: value,
+    })
+
+    if (fieldErrors[field]) {
+      setFieldErrors({
+        ...fieldErrors,
+        [field]: '',
+      })
+    }
+  }
+
+  const handleInputChangeCustomer = (fieldName: string, value: any) => {
+    switch (fieldName) {
+      case 'customerName':
+        setCustomerName(value)
+        break
+      case 'customerId':
+        setCustomerId(value)
+        break
+      case 'phone':
+        setPhone(value)
+        break
+      case 'email':
+        setEmail(value)
+        break
+      case 'streetHouse':
+        setStreetHouse(value)
+        break
+      case 'sectorBlock':
+        setSectorBlock(value)
+        break
+      case 'pinCode':
+        setPinCode(value)
+        break
+      case 'state':
+        setSelectedState(value)
+        break
+      case 'country':
+        setSelectedCountry(value)
+        break
+      default:
+        setFormData({ ...formData, [fieldName]: value })
+        break
+    }
+    setFieldErrors((prevErrors) => ({ ...prevErrors, [fieldName]: '' }))
+  }
+
+  const handleEditMode = () => {
+    setValue(customer.note || '')
+    setCustomerName(customer.customerName || '')
+    setCustomerId(customer.customerId || '')
+    setPhone(customer.phone || '')
+    setEmail(customer.emailAddress || '')
+    setStreetHouse(customer.streetHouse || '')
+    setSectorBlock(customer.aptSuite || '')
+    setPinCode(customer.zipCode || '')
+    setSelectedState(customer.state || '')
+    setSelectedCountry(customer.country || '')
+    setFormData((prevState: any) => ({
+      ...prevState,
+      mooringId: mooringResponseDtoList[0]?.mooringId || '',
+      mooringName: mooringResponseDtoList[0]?.mooringName || '',
+      customerName: '',
+      harbor: mooringResponseDtoList[0]?.harbor || '',
+      waterDepth: mooringResponseDtoList[0]?.waterDepth || '',
+      gpsCoordinates: mooringResponseDtoList[0]?.gpsCoordinates || '',
+      boatyardName: mooringResponseDtoList[0]?.boatyardName || '',
+      boatName: mooringResponseDtoList[0]?.boatName || '',
+      boatSize: mooringResponseDtoList[0]?.boatSize || '',
+      boatType: mooringResponseDtoList[0]?.boatType?.boatType || '',
+      boatWeight: mooringResponseDtoList[0]?.boatWeight || '',
+      sizeOfWeight: mooringResponseDtoList[0]?.sizeOfWeight?.weight || '',
+      typeOfWeight: mooringResponseDtoList[0]?.typeOfWeight?.type || '',
+      conditionOfEye: mooringResponseDtoList[0]?.eyeCondition?.condition || '',
+      topChainCondition: mooringResponseDtoList[0]?.topChainCondition?.condition || '',
+      bottomChainCondition: mooringResponseDtoList[0]?.bottomChainCondition?.condition || '',
+      shackleSwivelCondition: mooringResponseDtoList[0]?.shackleSwivelCondition?.condition || '',
+      pennantCondition: mooringResponseDtoList[0]?.pennantCondition?.condition || '',
+      deptAtMeanHighWater: mooringResponseDtoList[0]?.depthAtMeanHighWater || '',
+      status: 0,
+    }))
+  }
+
+  console.log(formData.conditionOfEye)
   const SaveCustomer = async () => {
     const errors = validateFields()
 
@@ -197,26 +311,28 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       state: selectedState?.id,
       country: selectedCountry?.id,
       zipCode: pinCode,
+      customerOwnerId: selectedCustomerId,
       mooringRequestDto: {
         mooringId: formData.mooringId,
-        customerName: formData.customerName,
+        customerId: customerId,
         harbor: formData.harbor,
         waterDepth: formData.waterDepth,
-        gpsCoordinates: formData.gpsCoordinates,
-        boatyardName: formData.boatyardName,
+        gpsCoordinates: gpsCoordinatesValue,
+        boatyardId: formData.boatyardName.id,
         boatName: formData.boatName,
         boatSize: formData.boatSize,
-        boatType: formData.boatType,
+        boatTypeId: formData.boatType.id,
         boatWeight: formData.boatWeight,
-        sizeOfWeight: formData.sizeOfWeight.name,
-        typeOfWeight: formData.typeOfWeight.name,
-        conditionOfEye: formData.conditionEye,
-        topChainCondition: formData.topChainCondition.name,
-        bottomChainCondition: formData.bottomChainCondition.name,
-        shackleSwivelCondition: formData.shackleSwivelCondition.name,
-        pennantCondition: formData.pennantCondition.name,
-        deptAtMeanHighWater: formData.deptAtMeanHighWater,
-        statusId: 1,
+        sizeOfWeightId: formData.sizeOfWeight.id,
+        typeOfWeightId: formData.typeOfWeight.id,
+        eyeConditionId: formData.conditionOfEye.id,
+        topChainConditionId: formData.topChainCondition.id,
+        bottomChainConditionId: formData.bottomChainCondition.id,
+        shackleSwivelConditionId: formData.shackleSwivelCondition.id,
+        pennantConditionId: formData.pennantCondition.id,
+        depthAtMeanHighWater: formData.deptAtMeanHighWater,
+        customerOwnerId: selectedCustomerId,
+        // statusId: 1,
       },
     }
     const response = await addCustomer(payload).unwrap()
@@ -274,7 +390,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     if (typeOfChainData !== null) {
       setChainData(typeOfChainData)
     }
-    console.log('dataaa', typeOfWeightData)
   }, [])
 
   const handleClick = () => {
@@ -285,141 +400,39 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     }
   }
 
+  const getBoatyardsData = useCallback(async () => {
+    try {
+      let params: Params = {}
+      if (selectedCustomerId) {
+        params.customerOwnerId = selectedCustomerId
+      }
+      await getBoatyards(params)
+        .unwrap()
+        .then(async (response) => {
+          const { status, content } = response as BoatYardResponse
+          if (status === 200 && Array.isArray(content)) {
+            setboatyardsData(content)
+          }
+        })
+    } catch (error) {
+      console.error('Error fetching getBoatyardsdata:', error)
+    }
+  }, [getBoatyards])
+
   useEffect(() => {
     fetchDataAndUpdate()
+    getBoatyardsData()
   }, [fetchDataAndUpdate])
 
   useEffect(() => {
     if (editMode && customer) {
-      setValue(customer.note || '')
-      setCustomerName(customer.customerName || '')
-      setCustomerId(customer.customerId || '')
-      setPhone(customer.phone || '')
-      setEmail(customer.emailAddress || '')
-      setStreetHouse(customer.streetHouse || '')
-      setSectorBlock(customer.aptSuite || '')
-      setPinCode(customer.zipCode || '')
-      setSelectedState(customer.state || '')
-      setSelectedCountry(customer.country || '')
-      setFormData((prevState: any) => ({
-        ...prevState,
-        mooringId: mooringResponseDtoList[0]?.mooringId || '',
-        mooringName: mooringResponseDtoList[0]?.mooringName || '',
-        customerName: '',
-        harbor: mooringResponseDtoList[0]?.harbor || '',
-        waterDepth: mooringResponseDtoList[0]?.waterDepth || '',
-        gpsCoordinates: mooringResponseDtoList[0]?.gpsCoordinates || '',
-        boatyardName: mooringResponseDtoList[0]?.boatyardName || '',
-        boatName: mooringResponseDtoList[0]?.boatName || '',
-        boatSize: mooringResponseDtoList[0]?.boatSize || '',
-        boatType: mooringResponseDtoList[0]?.boatType?.boatType || '',
-        boatWeight: mooringResponseDtoList[0]?.boatWeight || '',
-        sizeOfWeight: mooringResponseDtoList[0]?.sizeOfWeight?.weight || '',
-        typeOfWeight: mooringResponseDtoList[0]?.typeOfWeight?.type || '',
-        conditionOfEye: mooringResponseDtoList[0]?.eyeCondition?.condition || '',
-        topChainCondition: mooringResponseDtoList[0]?.topChainCondition?.condition || '',
-        bottomChainCondition: mooringResponseDtoList[0]?.bottomChainCondition?.condition || '',
-        shackleSwivelCondition: mooringResponseDtoList[0]?.shackleSwivelCondition?.condition || '',
-        pennantCondition: mooringResponseDtoList[0]?.pennantCondition?.condition || '',
-        deptAtMeanHighWater: mooringResponseDtoList[0]?.depthAtMeanHighWater || '',
-        status: 0,
-      }))
+      handleEditMode()
     }
   }, [editMode, customer])
 
-  // useEffect(() => {
-  //   if (editMode && customer) {
-  //     setValue(customer.note || '')
-  //     setCustomerName(customer.customerName || '')
-  //     setCustomerId(customer.customerId || '')
-  //     setPhone(customer.phone || '')
-  //     setEmail(customer.emailAddress || '')
-  //     setStreetHouse(customer.streetHouse || '')
-  //     setSectorBlock(customer.aptSuite || '')
-  //     setPinCode(customer.zipCode || '')
-  //     setSelectedState(customer.state || '')
-  //     setSelectedCountry(customer.country || '')
-  //     setFormData((prevState: any) => ({
-  //       ...prevState,
-  //       mooringId: customer?.mooringResponseDtoList[0]?.mooringId || "",
-  //       mooringName: customer?.mooringResponseDtoList[0]?.mooringName,
-  //       customerName: '',
-  //       harbor: customer.mooringResponseDtoList[0]?.harbor,
-  //       waterDepth: customer?.mooringResponseDtoList[0]?.waterDepth,
-  //       gpsCoordinates: customer?.mooringResponseDtoList[0]?.gpsCoordinates,
-  //       boatyardName: customer.mooringResponseDtoList[0].boatyardName,
-  //       boatName: customer.mooringResponseDtoList[0].boatName,
-  //       boatSize: customer.mooringResponseDtoList[0].boatSize,
-  //       boatType: customer.mooringResponseDtoList[0].boatType.boatType,
-  //       boatWeight: customer.mooringResponseDtoList[0].boatWeight,
-  //       sizeOfWeight: customer.mooringResponseDtoList[0].sizeOfWeight.weight,
-  //       typeOfWeight: customer.mooringResponseDtoList[0].typeOfWeight.type,
-  //       conditionOfEye: customer.mooringResponseDtoList[0].eyeCondition.condition,
-  //       topChainCondition: customer.mooringResponseDtoList[0].topChainCondition.condition,
-  //       bottomChainCondition: customer.mooringResponseDtoList[0].bottomChainCondition.condition,
-  //       shackleSwivelCondition: customer.mooringResponseDtoList[0].shackleSwivelCondition.condition,
-  //       pennantCondition: customer.mooringResponseDtoList[0].pennantCondition.condition,
-  //       deptAtMeanHighWater: customer.mooringResponseDtoList[0].depthAtMeanHighWater,
-  //       status: 0,
-
-  //     }));
-
-  //   }
-  // }, [editMode, customer])
-
-  const handleInputChange = (field: string, value: any) => {
-    const parsedValue = ['deptAtMeanHighWater', 'status'].includes(field)
-    setFormData({
-      ...formData,
-      [field]: parsedValue,
-    })
-
-    if (fieldErrors[field]) {
-      setFieldErrors({
-        ...fieldErrors,
-        [field]: '',
-      })
-    }
-  }
-
-  const handleInputChangeCustomer = (fieldName: string, value: any) => {
-    switch (fieldName) {
-      case 'customerName':
-        setCustomerName(value)
-        break
-      case 'customerId':
-        setCustomerId(value)
-        break
-      case 'phone':
-        setPhone(value)
-        break
-      case 'email':
-        setEmail(value)
-        break
-      case 'streetHouse':
-        setStreetHouse(value)
-        break
-      case 'sectorBlock':
-        setSectorBlock(value)
-        break
-      case 'pinCode':
-        setPinCode(value)
-        break
-      case 'state':
-        setSelectedState(value)
-        break
-      case 'country':
-        setSelectedCountry(value)
-        break
-      default:
-        setFormData({ ...formData, [fieldName]: value })
-        break
-    }
-    setFieldErrors((prevErrors) => ({ ...prevErrors, [fieldName]: '' }))
-  }
-
   return (
     <div className="">
+      {/* Add Customer */}
       <div className="flex gap-6">
         <div>
           <div>
@@ -488,9 +501,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               </div>
             </span>
             <div className="mt-2">
-              <InputComponent
+              <InputNumber
                 value={customerId}
-                onChange={(e) => handleInputChangeCustomer('customerId', e.target.value)}
+                onChange={(e) => handleInputChangeCustomer('customerId', e.value)}
+                min={0}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -657,6 +671,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Add Mooring */}
       <div className="mt-8 text-xl text-black font-bold">
         <h3>Add Mooring</h3>
       </div>
@@ -673,7 +689,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             <div className="mt-2">
               <InputComponent
                 value={formData.mooringId}
-                onChange={(e) => handleInputChange('mooringNumber', e.target.value)}
+                onChange={(e) => handleInputChange('mooringId', e.target.value)}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -745,18 +761,20 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             </span>
             <div className="mt-2">
               <InputComponent
-                value={formData.gpsCoordinates}
-                onChange={(e) => handleInputChange('gpsCoordinates', e.target.value)}
+                value={gpsCoordinatesValue}
+                onChange={(e) => {
+                  setGpsCoordinatesValue(e.target.value)
+                }}
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: fieldErrors.gpsCoordinates ? '1px solid red' : '1px solid #D5E1EA',
+                  border: fieldErrors.gpsCoordinatesValue ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
-              {fieldErrors.gpsCoordinates && (
-                <small className="p-error">{fieldErrors.gpsCoordinates}</small>
+              {fieldErrors.gpsCoordinatesValue && (
+                <small className="p-error">{fieldErrors.gpsCoordinatesValue}</small>
               )}
             </div>
           </div>
@@ -769,9 +787,12 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               </div>
             </span>
             <div className="mt-2">
-              <InputComponent
+              <Dropdown
                 value={formData.boatyardName}
                 onChange={(e) => handleInputChange('boatyardName', e.target.value)}
+                options={boatyardsData}
+                optionLabel="boatyardName"
+                editable
                 style={{
                   width: '230px',
                   height: '32px',
@@ -846,11 +867,11 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             <div className="mt-2">
               <Dropdown
                 value={formData.boatType}
-                onChange={(e) => handleInputChange('type', e.value)}
+                onChange={(e) => handleInputChange('boatType', e.value)}
                 options={type}
                 optionLabel="boatType"
                 editable
-                placeholder="Skiff"
+                placeholder="Boat Type"
                 style={{
                   width: '230px',
                   height: '32px',
@@ -1068,6 +1089,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 <InputNumber
                   value={formData.deptAtMeanHighWater}
                   onChange={(e) => handleInputChange('deptAtMeanHighWater', e.value)}
+                  min={0}
                   style={{
                     width: '230px',
                     height: '32px',
@@ -1154,34 +1176,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   )}
                 </p>
               </div>
-
-              {/* <div className="mt-3">
-                <div>
-                  <span className="font-medium text-sm text-[#000000]">
-                    <div className="flex gap-1">
-                      Status
-                      <p className="text-red-600">*</p>
-                    </div>
-                  </span>
-                </div>
-
-                <div className="mt-2">
-                  <InputText
-                    value={formData.status}
-                    onChange={(e) => handleInputChange('status', e.target.value)}
-                    style={{
-                      width: '230px',
-                      height: '32px',
-                      border: fieldErrors.status ? '1px solid red' : '1px solid #D5E1EA',
-                      borderRadius: '0.50rem',
-                      fontSize: '0.8rem',
-                    }}
-                  />
-                  <p>
-                    {fieldErrors.status && <small className="p-error">{fieldErrors.status}</small>}
-                  </p>
-                </div>
-              </div> */}
             </div>
           </div>
           <div className="mt-3">
@@ -1190,20 +1184,15 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             </div>
             <div
               style={{
-                flexShrink: 2,
-
-                borderRadius: '10px',
-                padding: '0px',
-                height: '160px',
+                height: '200px',
                 width: '230px',
-                gap: '0px',
-
-                opacity: '0px',
-                display: 'flex',
-                alignItems: 'center',
-                backgroundColor: '#FFFFFF',
               }}>
-              <CustomDisplayPositionMap position={[78.965768, 79.8097687]} />
+              <CustomSelectPositionMap
+                onPositionChange={handlePositionChange}
+                zoomLevel={50}
+                center={center}
+                setCenter={setCenter}
+              />
             </div>
           </div>
         </div>

@@ -3,12 +3,14 @@ import L from 'leaflet'
 import './CustomMap.css'
 import DefaultIcon from './DefaultIcon'
 import { CustomDisplayPositionMapProps } from '../../Type/Components/MapTypes'
+import { useRef } from 'react'
 
 const CustomDisplayPositionMap: React.FC<CustomDisplayPositionMapProps> = ({
-  position = [45.4215, 75.691],
-  zoomLevel = 9,
+  position,
+  zoomLevel,
   popUpMessage,
 }) => {
+  const markerRef = useRef(null)
   return (
     <MapContainer
       center={position}
@@ -20,8 +22,8 @@ const CustomDisplayPositionMap: React.FC<CustomDisplayPositionMapProps> = ({
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
-      <Marker position={position}>
-        <Popup>{popUpMessage}</Popup>
+      <Marker position={position} ref={markerRef}>
+        {/* <Popup>{popUpMessage}</Popup> */}
       </Marker>
     </MapContainer>
   )

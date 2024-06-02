@@ -4,8 +4,6 @@ import { Avatar } from 'primereact/avatar'
 import { Dropdown } from 'primereact/dropdown'
 import { HeaderProps } from '../../../Type/ComponentBasedType'
 import { useDispatch, useSelector } from 'react-redux'
-import { Role } from '../../../Type/CommonType'
-import { RolesData } from '../../CommonComponent/MetaDataComponent/MeataDataApi'
 import { useGetUsersMutation } from '../../../Services/AdminTools/AdminToolsApi'
 import { CustomerPayload, GetUserResponse } from '../../../Type/ApiTypes'
 import { setCustomerId, setCustomerName, selectCustomerName } from '../../../Store/Slice/userSlice'
@@ -16,10 +14,7 @@ const Header: React.FC<HeaderProps> = ({ header }) => {
   const dispatch = useDispatch()
   const selectedCustomerName = useSelector(selectCustomerName)
   const [expanded, setExpanded] = useState(false)
-  const [selectRole, setSelectRole] = useState(userData?.role.name)
-  const [rolesData, setRolesData] = useState<Role[]>()
   const [getCustomerOwnerData, setgetCustomerOwnerData] = useState<CustomerPayload[]>([])
-  const { getRolesData } = RolesData()
   const [getUser] = useGetUsersMutation()
 
   const handleMenu = () => {
@@ -30,13 +25,6 @@ const Header: React.FC<HeaderProps> = ({ header }) => {
     dispatch(setCustomerName(customerId?.name))
     dispatch(setCustomerId(customerId?.id))
   }
-
-  // const fetchDataAndUpdate = useCallback(async () => {
-  //   const { rolesData } = await getRolesData()
-  //   if (rolesData !== null) {
-  //     setRolesData(rolesData)
-  //   }
-  // }, [])
 
   const getUserHandler = useCallback(async () => {
     try {

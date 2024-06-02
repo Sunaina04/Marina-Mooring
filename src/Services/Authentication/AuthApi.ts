@@ -73,6 +73,13 @@ const authApi = userApi.injectEndpoints({
         params: { refreshToken },
       }),
     }),
+
+    logout: builder.mutation({
+      query: () => ({
+        url: 'api/v1/auth/logout',
+        method: 'POST',
+      }),
+    }),
   }),
 })
 
@@ -83,4 +90,5 @@ export const {
   useResetPasswordMutation,
   useValidateEmailMutation,
   useRefreshTokenMutation,
+  useLogoutMutation,
 } = authApi

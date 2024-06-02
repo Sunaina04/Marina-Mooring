@@ -43,6 +43,7 @@ const Boatyards = () => {
   const [selectedRowId, setSelectedRowID] = useState()
   const [searchText, setSearchText] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [isLoader, setIsLoader] = useState(false)
   const [dialogVisible, setDialogVisible] = useState(false)
   const [mooringRowData, setMooringRowData] = useState<any>([])
 
@@ -215,7 +216,11 @@ const Boatyards = () => {
   )
 
   const handleRowClickBoatYardDetail = (rowData: any) => {
-    setSelectedBoatYard(rowData.data)
+    setSelectedBoatYard('')
+    const timeoutId = setTimeout(() => {
+      setSelectedBoatYard(rowData.data)
+    }, 600)
+    return () => clearTimeout(timeoutId)
   }
 
   const getRowStyle = (rowData: any) => {
@@ -259,7 +264,7 @@ const Boatyards = () => {
     }
   }, [getBoatyards, searchText, selectedCustomerId])
 
-  const getMooringsWithBoatyardData = useCallback(async () => {
+  const getMooringsWithBoatyardData = async () => {
     setIsLoading(true)
     try {
       await getMooringsWithBoatyard({ id: selectedBoatYard?.id })
@@ -267,28 +272,39 @@ const Boatyards = () => {
         .then(async (response) => {
           const { status, content } = response as MooringWithBoatYardResponse
           if (status === 200 && Array.isArray(content) && content.length > 0) {
-            console.log('here')
             setIsLoading(false)
             setMooringWithBoatyardsData(content)
           } else {
             setIsLoading(false)
-            console.log('here')
           }
         })
     } catch (error) {
       console.error('Error fetching getMooringsWithBoatyardData:', error)
     }
-  }, [selectedBoatYard])
+  }
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       getBoatyardsData()
-    }, 600)
+    }, 2000)
     return () => clearTimeout(timeoutId)
   }, [searchText, selectedCustomerId])
 
   useEffect(() => {
-    if (selectedBoatYard) getMooringsWithBoatyardData()
+    const timeoutId = setTimeout(() => {
+      if (selectedBoatYard) getMooringsWithBoatyardData()
+    }, 600)
+    return () => clearTimeout(timeoutId)
+  }, [selectedBoatYard])
+
+  useEffect(() => {
+    setIsLoader(true)
+    const timeoutId = setTimeout(() => {
+      setIsLoader(false)
+    }, 400)
+    return () => {
+      clearTimeout(timeoutId)
+    }
   }, [selectedBoatYard])
 
   return (
@@ -421,16 +437,16 @@ const Boatyards = () => {
 
         <div
           data-testid="customer-admin-users-table"
-          className=" flex-grow bg-[#FFFFFF]  rounded-xl border-[1px]  border-gray-300 w-[515px] h-[695px] mr-[50px]  mb-0 ">
+          className=" flex-grow bg-[#FFFFFF] rounded-xl border-[1px] border-gray-300 w-[515px] h-[695px] mr-[50px]  mb-0 ">
           <div className="">
-            <div className="text-sm font-extrabold rounded-sm w-full   bg-[#D9D9D9]">
+            <div className="text-sm font-extrabold rounded-sm w-full bg-[#D9D9D9]">
               <div
-                className="flex  align-items-center justify-between  bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px]"
+                className="flex align-items-center justify-between bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px]"
                 style={{ color: '#FFFFFF' }}>
                 <h1 className="p-4">{properties.boatyardMooringHeader}</h1>
               </div>
             </div>
-            <div className=" bg-[] mt-3 ">
+            <div className={`bg-[] mt-3 ${isLoader ? 'blur-screen' : ''}`}>
               <div
                 className="flex justify-between p-3 mt-[10px]"
                 style={{ fontSize: '10px', fontWeight: '700', lineHeight: '11.72px' }}>
@@ -459,7 +475,8 @@ const Boatyards = () => {
 
           {selectedBoatYard ? (
             <>
-              <div className="flex justify-between mt-4 p-3  font-normal text-[12px] ">
+              <div
+                className={`flex justify-between mt-4 p-3  font-normal text-[12px] ${isLoader ? 'blur-screen' : ''}`}>
                 <p className="">
                   {selectedBoatYard?.street} {selectedBoatYard?.apt} ,
                   {selectedBoatYard?.stateResponseDto?.name} ,
@@ -472,7 +489,7 @@ const Boatyards = () => {
               </div>
 
               <div
-                className=" h-[150px] mt-[30px] mb-6 sticky"
+                className={`"h-[150px] mt-[30px] mb-6 sticky" ${isLoader ? 'blur-screen' : ''}`}
                 style={{
                   flexGrow: 1,
                   border: '1px solid #D5E1EA',
@@ -481,9 +498,22 @@ const Boatyards = () => {
                   marginLeft: '10px',
                   marginRight: '10px',
                 }}>
-                <CustomDisplayPositionMap position={[latitude, longitude]} />
+                <CustomDisplayPositionMap position={[latitude, longitude]} zoomLevel={10} />
               </div>
 
+              {isLoader && (
+                <ProgressSpinner
+                  style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '73%',
+                    transform: 'translate(-50%, -50%)',
+                    width: '50px',
+                    height: '50px',
+                  }}
+                  strokeWidth="4"
+                />
+              )}
               <div className="bg-#00426F overflow-x-hidden  mt-[13px] h-[250px] table-container  ">
                 <DataTableComponent
                   tableStyle={{
@@ -549,7 +579,7 @@ const Boatyards = () => {
                 fontWeight: '300',
                 color: '#000000',
               }}
-              className="flex  leading-[3.50rem] gap-32 p-4">
+              className="flex leading-[3.50rem] gap-32 p-4">
               <div>
                 <p>
                   <span>ID :</span> {mooringRowData?.id}

@@ -2,7 +2,6 @@ import {
   useGetBoatTypeMutation,
   useGetBottomChainConditionsMutation,
   useGetCountriesMutation,
-  useGetCustomersMutation,
   useGetEyeConditionMutation,
   useGetPennantConditionsMutation,
   useGetRolesMutation,
@@ -13,6 +12,7 @@ import {
   useGetTopChainConditionMutation,
   useGetTypeOfWeightMutation,
   useGetBoatyardsTypeMutation,
+  useGetCustomersDataMutation,
 } from '../../../Services/MetaDataApi'
 import { MetaDataResponse } from '../../../Type/ApiTypes'
 
@@ -95,7 +95,7 @@ export const TypeOfWeightData = () => {
 }
 
 export const CustomersData = (customerOwnerId: any) => {
-  const [getCustomers] = useGetCustomersMutation()
+  const [getCustomers] = useGetCustomersDataMutation()
 
   const fetchCustomersData = async (getData: any) => {
     try {

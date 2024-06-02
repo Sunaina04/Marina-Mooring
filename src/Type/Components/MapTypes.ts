@@ -20,12 +20,12 @@ export interface DisplayPositionProps {
 }
 
 export interface DisplayMapProps {
-  center: MarkerPosition
+  center: LatLngExpression
   zoomLevel?: number
 }
 
 export interface CustomDisplayPositionMapProps {
-  position?: MarkerPosition
+  position: LatLngExpression
   zoomLevel?: number
   popUpMessage?: string
 }

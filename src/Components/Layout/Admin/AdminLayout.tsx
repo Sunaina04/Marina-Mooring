@@ -4,12 +4,14 @@ import SidebarMenu from '../LayoutComponents/SidebarMenu'
 import { useDispatch, useSelector } from 'react-redux'
 import { setOpen } from '../../../Store/Slice/userSlice'
 import { RootState } from '../../../Store/Store'
+import { useLogoutMutation } from '../../../Services/Authentication/AuthApi'
 
 const AdminLayout = () => {
   const [openSubMenus, setOpenSubMenus] = useState(new Array(SidebarMenu.length).fill(false))
   const [selectedCategory, setSelectedCategory] = useState<any>()
   const [selectedSubcategory, setSelectedSubcategory] = useState<any>()
   const open = useSelector((state: RootState) => state.user.isOpen)
+  const [getLogout] = useLogoutMutation()
   const dispatch = useDispatch()
   const menuItems = SidebarMenu()
 
@@ -34,6 +36,18 @@ const AdminLayout = () => {
 
   const handleToggleDrawer = () => {
     dispatch(setOpen(!open))
+  }
+
+  const handleLogout = async () => {
+    try {
+      const response = await getLogout({}).unwrap()
+      console.log(response)
+      // const { status, message, content } = response
+      // if (status === 200 && Array.isArray(content)) {
+      // }
+    } catch (error) {
+      console.error('Error occurred while fetching customer data:', error)
+    }
   }
 
   return (
@@ -232,7 +246,8 @@ const AdminLayout = () => {
                 flexDirection: 'row',
                 alignItems: 'center',
                 position: 'relative',
-              }}>
+              }}
+              onClick={handleLogout}>
               <img
                 src="/assets/images/logout.svg"
                 alt="Logout"
