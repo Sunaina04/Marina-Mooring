@@ -32,15 +32,14 @@ export interface DataTableProps {
   actionButtons?: ActionButtonColumnProps
   onRowClick?: (event: DataTableRowClickEvent) => void
   rowStyle?: (rowData: any) => React.CSSProperties
-  selectedRow?: String
-  selectionMode?: 'single' | 'radiobutton' | undefined;
-  selection?: any[number] | undefined | null;
-  metaKeySelection?: boolean | undefined;
-  onSelectionChange?(event: DataTableSelectionSingleChangeEvent<any>): void;
-  dataKey?: string | undefined;
-  emptyMessage?: string | React.ReactNode | ((frozen: boolean) => React.ReactNode) | undefined;
+  selectedRow?: (event: DataTableRowClickEvent) => void
+  selectionMode?: 'single' | 'radiobutton' | undefined
+  selection?: any[number] | undefined | null
+  metaKeySelection?: boolean | undefined
+  onSelectionChange?(event: DataTableSelectionSingleChangeEvent<any>): void
+  dataKey?: string | undefined
+  emptyMessage?: string | React.ReactNode | ((frozen: boolean) => React.ReactNode) | undefined
 }
-
 
 export interface ButtonProps {
   underline?: boolean
@@ -108,5 +107,5 @@ export interface RowExpansionDemoProps {
   onRowClick?: (event: DataTableRowClickEvent) => void
   expandedRows?: DataTableValueArray | DataTableExpandedRows | undefined
   onRowToggle?(event: DataTableRowToggleEvent): void
-  emptyMessage?: string | React.ReactNode | ((frozen: boolean) => React.ReactNode) | undefined;
+  emptyMessage?: string | React.ReactNode | ((frozen: boolean) => React.ReactNode) | undefined
 }

@@ -50,11 +50,11 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
     sizeOfWeight: moorings?.sizeOfWeight || '',
     typeOfWeight: moorings?.typeOfWeight || '',
     topChainCondition: moorings?.topChainCondition || '',
-    conditionOfEye: moorings?.conditionOfEye || '',
+    conditionOfEye: moorings?.eyeCondition || '',
     bottomChainCondition: moorings?.bottomChainCondition || '',
     shackleSwivelCondition: moorings?.shackleSwivelCondition || '',
     pennantCondition: moorings?.pennantCondition || '',
-    deptAtMeanHighWater: moorings?.deptAtMeanHighWater || '',
+    deptAtMeanHighWater: moorings?.depthAtMeanHighWater || '',
   }
 
   useEffect(() => {

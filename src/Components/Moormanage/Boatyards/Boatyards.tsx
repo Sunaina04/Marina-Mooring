@@ -252,9 +252,14 @@ const Boatyards = () => {
         .then(async (response) => {
           const { status, content } = response as BoatYardResponse
           if (status === 200 && Array.isArray(content)) {
-            setIsLoading(false)
             setboatyardsData(content)
             setFilteredboatyardsData(content)
+            const timeoutId = setTimeout(() => {
+              setIsLoading(false)
+            }, 400)
+            return () => {
+              clearTimeout(timeoutId)
+            }
           } else {
             setIsLoading(false)
           }

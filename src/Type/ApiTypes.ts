@@ -221,6 +221,16 @@ export interface CustomersWithMooringResponse {
   content: customerResponseDto
 }
 
+export interface MooringMetaDataTypes {
+  id: number
+  condition: string
+  description: string
+  weight: string
+  unitType: string
+  boatType: string
+  type: string
+}
+
 export interface MooringPayload {
   id: number
   mooringNumber: string
@@ -230,16 +240,16 @@ export interface MooringPayload {
   gpsCoordinates: string
   boatName: string
   boatSize: string
-  boatType: string
+  boatType: MooringMetaDataTypes
   boatWeight: string
-  conditionOfEye: string
-  bottomChainCondition: string
-  topChainCondition: string
-  shackleSwivelCondition: string
-  pennantCondition: string
-  sizeOfWeight: string
-  typeOfWeight: string
-  deptAtMeanHighWater: string
+  eyeCondition: MooringMetaDataTypes
+  bottomChainCondition: MooringMetaDataTypes
+  topChainCondition: MooringMetaDataTypes
+  shackleSwivelCondition: MooringMetaDataTypes
+  pennantCondition: MooringMetaDataTypes
+  sizeOfWeight: MooringMetaDataTypes
+  typeOfWeight: MooringMetaDataTypes
+  depthAtMeanHighWater: number
 }
 
 export interface MooringResponseDtoList {
@@ -253,15 +263,15 @@ export interface MooringResponseDtoList {
   boatyardName: string
   boatName: string
   boatSize: string
-  boatType: string
+  boatType: MooringMetaDataTypes
   boatWeight: string
-  sizeOfWeight: string
-  typeOfWeight: string
-  conditionOfEye: string
-  topChainCondition: string
-  bottomChainCondition: string
-  shackleSwivelCondition: string
-  pennantCondition: string
+  eyeCondition: MooringMetaDataTypes
+  bottomChainCondition: MooringMetaDataTypes
+  topChainCondition: MooringMetaDataTypes
+  shackleSwivelCondition: MooringMetaDataTypes
+  pennantCondition: MooringMetaDataTypes
+  sizeOfWeight: MooringMetaDataTypes
+  typeOfWeight: MooringMetaDataTypes
   depthAtMeanHighWater: number
 }
 
@@ -499,5 +509,5 @@ export interface MetaDataResponse {
   status: number
   errorList: []
   time: number
-  content: {content:Content}
+  content: { content: Content }
 }

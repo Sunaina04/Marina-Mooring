@@ -70,15 +70,17 @@ const moormanageApi = userApi.injectEndpoints({
         size,
         sortBy,
         sortDir,
+        customerOwnerId,
       }: {
         page?: number
         size?: number
         sortBy?: string
         sortDir?: string
+        customerOwnerId?: number
       }) => ({
         url: 'api/v1/mooring/',
         method: 'GET',
-        params: { page, size, sortBy, sortDir },
+        params: { page, size, sortBy, sortDir, customerOwnerId },
       }),
     }),
 
@@ -236,8 +238,8 @@ const moormanageApi = userApi.injectEndpoints({
 
     //FetchCustomersWithMooring
     getCustomersWithMooring: builder.mutation({
-      query: ({ name }: { name?: number }) => ({
-        url: `api/v1/customer/fetchCustomerWithMoorings/${name}`,
+      query: ({ id }: { id?: number }) => ({
+        url: `api/v1/customer/fetchCustomerWithMoorings/${id}`,
         method: 'GET',
       }),
     }),

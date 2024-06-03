@@ -58,9 +58,9 @@ const Customer = () => {
 
   const [getCustomer] = useGetCustomerMutation()
   const [deleteCustomer] = useDeleteCustomerMutation()
-
   const [getCustomerWithMooring] = useGetCustomersWithMooringMutation()
   const toast = useRef<Toast>(null)
+
   const handleButtonClick = () => {
     setModalVisible(true)
   }
@@ -217,7 +217,7 @@ const Customer = () => {
 
   const getCustomersWithMooring = async (id: number) => {
     try {
-      const response = await getCustomerWithMooring({ name: id }).unwrap()
+      const response = await getCustomerWithMooring({ id: id }).unwrap()
       const { status, content } = response as CustomersWithMooringResponse
       if (
         status === 200 &&
@@ -564,23 +564,23 @@ const Customer = () => {
                     {mooringRowData?.boatName}
                   </p>
                   <p>
-                    <span>Type:</span> {mooringRowData?.boatType}
+                    <span>Type:</span> {mooringRowData?.boatType?.boatType}
                   </p>
                   <p>
                     <span>Size of Weight:</span>
-                    {mooringRowData?.sizeOfWeight}
+                    {mooringRowData?.sizeOfWeight?.weight}
                   </p>
                   <p>
                     <span>Top Chain Condition:</span>
-                    {mooringRowData?.topChainCondition}
+                    {mooringRowData?.topChainCondition?.condition}
                   </p>
                   <p className="tracking-tighter">
                     <span>Bottom Chain Condition:</span>
-                    {mooringRowData?.bottomChainCondition}
+                    {mooringRowData?.bottomChainCondition?.condition}
                   </p>
                   <p>
                     <span>Pennant Condition:</span>
-                    {mooringRowData?.pennantCondition}
+                    {mooringRowData?.pennantCondition?.condition}
                   </p>
                   <p>
                     <span>Water Depth:</span>
@@ -604,19 +604,19 @@ const Customer = () => {
                   </p>
                   <p>
                     <span>Type of Weight:</span>
-                    {mooringRowData?.typeOfWeight}
+                    {mooringRowData?.typeOfWeight?.type}
                   </p>
                   <p>
                     <span>Condition of Eye:</span>
-                    {mooringRowData?.conditionOfEye}
+                    {mooringRowData?.eyeCondition?.condition}
                   </p>
                   <p>
                     <span>Shackle, Swivel Condition:</span>
-                    {mooringRowData?.shackleSwivelCondition}
+                    {mooringRowData?.shackleSwivelCondition?.condition}
                   </p>
                   <p>
                     <span>Dept at Mean High Water:</span>
-                    {mooringRowData?.deptAtMeanHighWater}
+                    {mooringRowData?.depthAtMeanHighWater}
                   </p>
                 </div>
               </div>
