@@ -4,13 +4,12 @@ import { InputText } from 'primereact/inputtext'
 import { Dropdown } from 'primereact/dropdown'
 import {
   useAddCustomerMutation,
-  useGetBoatyardsMutation,
   useUpdateCustomerMutation,
 } from '../../../Services/MoorManage/MoormanageApi'
 import { Button } from 'primereact/button'
 import { CustomerDataProps } from '../../../Type/ComponentBasedType'
 import { Country, MetaData, Params, State } from '../../../Type/CommonType'
-import { BoatYardPayload, BoatYardResponse, CustomerResponse } from '../../../Type/ApiTypes'
+import { CustomerResponse } from '../../../Type/ApiTypes'
 import { InputNumber } from 'primereact/inputnumber'
 import {
   CountriesData,
@@ -36,7 +35,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   closeModal,
   getCustomer,
   toastRef,
-  setCustomerData,
 }) => {
   const selectedCustomerId = useSelector(selectCustomerId)
   const [value, setValue] = useState<string>('')
@@ -60,26 +58,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [shackleSwivelData, setShackleSwivelData] = useState<MetaData[]>([])
   const [pennantData, setPennantData] = useState<MetaData[]>([])
   const [boatyardName, setBoatyardName] = useState<MetaData[]>([])
-
-  const { getStatesData } = StatesData()
-  const { getTypeOfBoatTypeData } = TypeOfBoatType()
-  const { getTypeOfWeightData } = TypeOfWeightData()
-  const { getTypeOfChainData } = TypeOfChainCondition()
-  const { getTypeOfEyeData } = TypeOfEye()
-  const { getTypeOfBottomChainData } = TypeOfBottomChain()
-  const { getTypeOfShackleSwivelData } = TypeOfShackleSwivel()
-  const { getTypeOfPennantData } = TypeOfPennant()
-  const { getTypeOfSizeOfWeightData } = TypeOfSizeOfWeight()
-  const { getBoatYardNameData } = BoatyardNameData(selectedCustomerId)
-  const { getCountriesData } = CountriesData()
-  const [addCustomer] = useAddCustomerMutation()
-  const [updateCustomer] = useUpdateCustomerMutation()
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
-  const [boatyardsData, setboatyardsData] = useState<BoatYardPayload[]>([])
   const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<string>()
   const [center, setCenter] = useState<LatLngExpression | undefined>([30.6983149, 76.656095])
   const [firstErrorField, setFirstErrorField] = useState('')
-  const mooringResponseDtoList = customer?.mooringResponseDtoList || []
   const [formData, setFormData] = useState<any>({
     mooringId: '',
     mooringName: '',
@@ -103,7 +85,20 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     status: 0,
   })
 
-  const [getBoatyards] = useGetBoatyardsMutation()
+  const { getStatesData } = StatesData()
+  const { getTypeOfBoatTypeData } = TypeOfBoatType()
+  const { getTypeOfWeightData } = TypeOfWeightData()
+  const { getTypeOfChainData } = TypeOfChainCondition()
+  const { getTypeOfEyeData } = TypeOfEye()
+  const { getTypeOfBottomChainData } = TypeOfBottomChain()
+  const { getTypeOfShackleSwivelData } = TypeOfShackleSwivel()
+  const { getTypeOfPennantData } = TypeOfPennant()
+  const { getTypeOfSizeOfWeightData } = TypeOfSizeOfWeight()
+  const { getBoatYardNameData } = BoatyardNameData(selectedCustomerId)
+  const { getCountriesData } = CountriesData()
+  const [addCustomer] = useAddCustomerMutation()
+  const [updateCustomer] = useUpdateCustomerMutation()
+  const mooringResponseDtoList = customer?.mooringResponseDtoList || []
 
   const handlePositionChange = (lat: number, lng: number) => {
     setCenter([lat, lng])
