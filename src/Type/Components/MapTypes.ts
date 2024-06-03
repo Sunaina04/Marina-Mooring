@@ -27,10 +27,17 @@ export interface DisplayMapProps {
 export interface CustomDisplayPositionMapProps {
   style?: React.CSSProperties
   position: LatLngExpression
+  markerPostion?: LatLngExpression
   zoomLevel?: number
   popUpMessage?: string
 }
 
+export interface Mooring {
+  position: LatLngExpression
+  status: string
+}
+
 export interface CustomMooringPositionMapProps extends CustomDisplayPositionMapProps {
-  icon?: L.Icon
+  iconsByStatus: { [key: string]: L.Icon }
+  moorings: Mooring[]
 }

@@ -34,7 +34,7 @@ import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
 import CustomMooringPositionMap from '../../Map/CustomMooringPositionMap'
-
+import { GearOffIcon, GearOnIcon, NeedInspectionIcon, NotInUseIcon } from '../../Map/DefaultIcon'
 
 // const Customer = () => {
 //   return (
@@ -45,7 +45,6 @@ import CustomMooringPositionMap from '../../Map/CustomMooringPositionMap'
 // }
 
 const Customer = () => {
-
   const selectedCustomerId = useSelector(selectCustomerId)
   const [modalVisible, setModalVisible] = useState(false)
   const [customerData, setCustomerData] = useState<CustomerPayload[]>([])
@@ -197,8 +196,6 @@ const Customer = () => {
     [],
   )
 
-
-  
   const getCustomerData = useCallback(async () => {
     try {
       let params: Params = {}
@@ -266,6 +263,19 @@ const Customer = () => {
     }, 600)
     return () => clearTimeout(timeoutId)
   }, [searchText, selectedCustomerId])
+
+  const moorings = [
+    { position: [30.698, 76.657], status: 'NeedInspection' },
+    { position: [30.701, 76.66], status: 'NotInUse' },
+    // Add more moorings as needed
+  ]
+
+  const iconsByStatus = {
+    GearOn: GearOnIcon,
+    GearOff: GearOffIcon,
+    NeedInspection: NeedInspectionIcon,
+    NotInUse: NotInUseIcon,
+  }
 
   return (
     <div className={modalVisible ? 'backdrop-blur-lg' : ''}>
@@ -388,6 +398,9 @@ const Customer = () => {
               position={coordinatesArray || [30.698, 76.657]}
               zoomLevel={10}
               style={{ height: '700px' }}
+              iconsByStatus={iconsByStatus}
+              // @ts-expect-error
+              moorings={moorings}
             />
           </div>
         </div>

@@ -506,7 +506,7 @@ const Boatyards = () => {
               </div>
 
               <div
-                className={`"h-[150px] mt-[30px] mb-6 sticky" ${isLoader ? 'blur-screen' : ''}`}
+                className={`"h-[150px] mt-[30px] mb-6 sticky" ${isLoader || modalVisible ? 'blur-screen' : ''}`}
                 style={{
                   flexGrow: 1,
                   border: '1px solid #D5E1EA',

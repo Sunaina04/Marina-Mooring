@@ -12,6 +12,7 @@ import { ProgressSpinner } from 'primereact/progressspinner'
 import { LatLngExpression } from 'leaflet'
 import { useSelector } from 'react-redux'
 import { useGetUsersMutation } from '../../../Services/AdminTools/AdminToolsApi'
+import { selectCustomerId } from '../../../Store/Slice/userSlice'
 
 const AddBoatyards: React.FC<BoatYardProps> = ({
   closeModal,
@@ -21,6 +22,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
 }) => {
   const userData = useSelector((state: any) => state.user?.userData)
   const role = userData?.role?.id
+  const selectedCustomerId = useSelector(selectCustomerId)
   const [boatyardId, setBoatyardId] = useState('')
   const [boatyardName, setBoatyardName] = useState('')
   const [emailAddress, setEmailAddress] = useState('')
@@ -29,7 +31,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   const [aptSuite, setAptSuite] = useState('')
   const [state, setState] = useState<State>()
   const [country, setCountry] = useState<Country>()
-  const [customerOwnerId, setCustomerOwnerId] = useState<CustomerPayload>()
   const [zipCode, setZipCode] = useState('')
 
   const [mainContact, setMainContact] = useState('')
@@ -49,7 +50,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const phoneRegex = /^\d{10}$/
     const nameRegex = /^[a-zA-Z ]+$/
-    const gpsRegex = /^\d{1,2}\.\d+ \d{1,2}\.\d+$/
 
     const errors: { [key: string]: string } = {}
 
@@ -75,8 +75,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
 
     if (!gpsCoordinatesValue) {
       errors.gpsCoordinatesValue = 'GPS Coordinates is required'
-    } else if (!gpsRegex.test(gpsCoordinatesValue)) {
-      errors.gpsCoordinatesValue = 'Invalid GPS coordinates format'
     }
     if (!address) errors.address = 'Street/house is required'
     if (!zipCode) errors.zipCode = 'Zip code is required'
@@ -117,7 +115,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
         countryId: country?.id,
         mainContact: mainContact,
         gpsCoordinates: gpsCoordinatesValue,
-        customerOwnerId: customerOwnerId?.id ? customerOwnerId?.id : '',
+        customerOwnerId: selectedCustomerId,
       }
       const response = await addBoatyard(payload).unwrap()
       const { status, message } = response as BoatYardResponse
@@ -165,7 +163,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
         setIsLoading(false)
         if (content.length > 0) {
           setgetCustomerOwnerData(content)
-          console.log(getCustomerOwnerData)
         } else {
           setgetCustomerOwnerData([])
         }
@@ -246,39 +243,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
             </div>
             <p>{errorMessage.name && <small className="p-error">{errorMessage.name}</small>}</p>
           </div>
-
-          {role === 1 && (
-            <div>
-              <span className="font-medium text-sm text-[#000000]">
-                Customer Owner <span className="text-red-500">*</span>
-              </span>
-              <div className="mt-1">
-                <Dropdown
-                  id="customerOwnerDropdown"
-                  value={customerOwnerId}
-                  options={getCustomerOwnerData}
-                  optionLabel="name"
-                  placeholder="Customer Owner"
-                  onChange={(e) => {
-                    setCustomerOwnerId(e.target.value)
-                    setErrorMessage((prev) => ({ ...prev, customerOwner: '' }))
-                  }}
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: errorMessage.customerOwner ? '1px solid red' : '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '10px',
-                  }}
-                />
-              </div>
-              <p>
-                {errorMessage.customerOwner && (
-                  <small className="p-error">{errorMessage.customerOwner}</small>
-                )}
-              </p>
-            </div>
-          )}
         </div>
 
         <div className="flex  gap-6 mt-4">

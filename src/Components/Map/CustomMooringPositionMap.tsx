@@ -9,7 +9,8 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
   zoomLevel,
   popUpMessage,
   style,
-  icon,
+  iconsByStatus,
+  moorings,
 }) => {
   const markerRef = useRef(null)
 
@@ -25,9 +26,11 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
-      <Marker position={position} ref={markerRef} icon={icon || DefaultIcon}>
-        <Popup>{popUpMessage}</Popup>
-      </Marker>
+      {moorings.map((mooring, index) => (
+        <Marker key={index} position={mooring.position} icon={iconsByStatus[mooring.status]}>
+          <Popup>{mooring.status}</Popup>
+        </Marker>
+      ))}
     </MapContainer>
   )
 }
