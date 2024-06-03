@@ -9,8 +9,6 @@ import { CityProps } from '../../../Type/CommonType'
 import { AddMooringProps } from '../../../Type/ComponentBasedType'
 
 const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }) => {
-  console.log('mooring', moorings)
-
   const [value, setValue] = useState<string>('')
   const [selectedCity, setSelectedCity] = useState<CityProps | undefined>(undefined)
   const [saveMoorings] = useAddMooringsMutation()
@@ -180,7 +178,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
     const payload = {
       ...formData,
     }
-    console.log('dataaa', payload)
 
     try {
       const response = await saveMoorings(payload)
