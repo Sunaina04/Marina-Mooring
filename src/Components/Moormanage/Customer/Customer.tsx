@@ -93,33 +93,39 @@ const Customer = () => {
   }
 
   const handleEdit = (rowData: any) => {
-    setSelectedCustomer(customerRecordData)
-    setModalVisible(true)
-    setEditMode(true)
+    if (customerRecord == true) {
+      setSelectedCustomer(customerRecordData)
+      setModalVisible(true)
+      setEditMode(true)
+    }
   }
 
   const handleDelete = async (rowData: any) => {
-    try {
-      const response = await deleteCustomer({ id: customerRecordData?.id })
-      if (response) {
+    if (customerRecord == true) {
+      try {
+        const response = await deleteCustomer({ id: customerRecordData?.id })
+        if (response) {
+          toast.current?.show({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'User deleted successfully',
+            life: 3000,
+          })
+          getCustomerData()
+        }
+        setCustomerRecordData('')
+      } catch (error) {
+        console.error('Error deleting customer:', error)
         toast.current?.show({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'User deleted successfully',
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Error deleting customer',
           life: 3000,
         })
-        getCustomerData()
       }
-      setCustomerRecordData('')
-    } catch (error) {
-      console.error('Error deleting customer:', error)
-      toast.current?.show({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'Error deleting customer',
-        life: 3000,
-      })
     }
+
+    setCustomerRecord(false)
   }
 
   const handleCustomerTableRowClick = (rowData: any) => {
@@ -279,7 +285,7 @@ const Customer = () => {
         style={{ display: 'flex', justifyContent: 'space-evenly' }}>
         <div
           data-testid="dataTable"
-          className="flex-grow  bg-[#FFFFFF] rounded-xl border-[1px] border-[#D5E1EA] w-[515px] h-[650px] mb-0 ">
+          className="flex-grow  bg-[#FFFFFF] rounded-xl border-[1px] border-[#D5E1EA] w-[515px] h-[705px] mb-0 ">
           <div className="text-sm font-extrabold rounded-sm w-full bg-[#D9D9D9]">
             <div
               className="flex  align-items-center justify-between bg-[#10293A] rounded-tl-[10px] rounded-tr-[10px]"

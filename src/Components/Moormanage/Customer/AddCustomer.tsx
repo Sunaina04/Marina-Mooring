@@ -29,6 +29,12 @@ import {
   TypeOfBoatType,
   TypeOfWeightData,
   TypeOfChainCondition,
+  TypeOfEye,
+  TypeOfBottomChain,
+  TypeOfShackleSwivel,
+  TypeOfPennant,
+  TypeOfSizeOfWeight,
+  BoatyardNameData,
 } from '../../CommonComponent/MetaDataComponent/MeataDataApi'
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
@@ -59,10 +65,23 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [type, setType] = useState<MetaData[]>([])
   const [weightData, setWeightData] = useState<MetaData[]>([])
   const [chainData, setChainData] = useState<MetaData[]>([])
+  const [sizeOfWeight, setSizeOfWeight] = useState<MetaData[]>([])
+  const [conditionOfEye, setConditionOfEye] = useState<MetaData[]>([])
+  const [bottomChainCondition, setBottomChainCondition] = useState<MetaData[]>([])
+  const [shackleSwivelData, setShackleSwivelData] = useState<MetaData[]>([])
+  const [pennantData, setPennantData] = useState<MetaData[]>([])
+  const [boatyardName, setBoatyardName] = useState<MetaData[]>([])
+
   const { getStatesData } = StatesData()
   const { getTypeOfBoatTypeData } = TypeOfBoatType()
   const { getTypeOfWeightData } = TypeOfWeightData()
   const { getTypeOfChainData } = TypeOfChainCondition()
+  const { getTypeOfEyeData } = TypeOfEye()
+  const { getTypeOfBottomChainData } = TypeOfBottomChain()
+  const { getTypeOfShackleSwivelData } = TypeOfShackleSwivel()
+  const { getTypeOfPennantData } = TypeOfPennant()
+  const { getTypeOfSizeOfWeightData } = TypeOfSizeOfWeight()
+  // const {getBoatYardData} =BoatyardNameData()
   const { getCountriesData } = CountriesData()
   const [addCustomer] = useAddCustomerMutation()
   const [updateCustomer] = useUpdateCustomerMutation()
@@ -374,6 +393,13 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     const { typeOfBoatTypeData } = await getTypeOfBoatTypeData()
     const { typeOfWeightData } = await getTypeOfWeightData()
     const { typeOfChainData } = await getTypeOfChainData()
+    const { TypeOfSizeOfWeightData } = await getTypeOfSizeOfWeightData()
+    const { typeOfEyeData } = await getTypeOfEyeData()
+    const { typeOfBootomChainData } = await getTypeOfBottomChainData()
+    const { typeOfShackleSwivelData } = await getTypeOfShackleSwivelData()
+    const { typeOfPennantData } = await getTypeOfPennantData()
+    // const {boatYard} =await getBoatYardData();
+
     if (countriesData !== null) {
       setCountriesData(countriesData)
     }
@@ -386,10 +412,31 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     if (typeOfWeightData !== null) {
       setWeightData(typeOfWeightData)
     }
-
     if (typeOfChainData !== null) {
       setChainData(typeOfChainData)
     }
+    if (TypeOfSizeOfWeightData !== null) {
+      setSizeOfWeight(TypeOfSizeOfWeightData)
+    }
+    if (typeOfEyeData !== null) {
+      setConditionOfEye(typeOfEyeData)
+    }
+
+    if (typeOfBootomChainData !== null) {
+      setBottomChainCondition(typeOfBootomChainData)
+    }
+
+    if (typeOfShackleSwivelData !== null) {
+      setShackleSwivelData(typeOfShackleSwivelData)
+    }
+
+    if (typeOfPennantData !== null) {
+      setPennantData(typeOfPennantData)
+    }
+
+    // if (boatYard !== null) {
+    //   setBoatyardName(boatYard)
+    // }
   }, [])
 
   const handleClick = () => {
@@ -924,8 +971,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               <Dropdown
                 value={formData.sizeOfWeight}
                 onChange={(e) => handleInputChange('sizeOfWeight', e.value)}
-                options={weightData}
-                optionLabel="type"
+                options={sizeOfWeight}
+                optionLabel="weight"
                 editable
                 placeholder="Select"
                 style={{
@@ -956,8 +1003,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               <Dropdown
                 value={formData.typeOfWeight}
                 onChange={(e) => handleInputChange('typeOfWeight', e.value)}
-                options={typeOfWeightOptions}
-                optionLabel="name"
+                options={weightData}
+                optionLabel="type"
                 editable
                 placeholder="Select"
                 style={{
@@ -1021,8 +1068,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 <Dropdown
                   value={formData.conditionOfEye}
                   onChange={(e) => handleInputChange('conditionOfEye', e.value)}
-                  options={conditionOfEyeOptions}
-                  optionLabel="name"
+                  options={conditionOfEye}
+                  optionLabel="condition"
                   editable
                   placeholder="Select"
                   style={{
@@ -1054,8 +1101,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 <Dropdown
                   value={formData.shackleSwivelCondition}
                   onChange={(e) => handleInputChange('shackleSwivelCondition', e.value)}
-                  options={shackleSwivelConditionOptions}
-                  optionLabel="name"
+                  options={shackleSwivelData}
+                  optionLabel="condition"
                   editable
                   placeholder="Select"
                   style={{
@@ -1121,8 +1168,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 <Dropdown
                   value={formData.bottomChainCondition}
                   onChange={(e) => handleInputChange('bottomChainCondition', e.value)}
-                  options={bottomChainConditionOptions}
-                  optionLabel="name"
+                  options={bottomChainCondition}
+                  optionLabel="condition"
                   editable
                   placeholder="Select"
                   style={{
@@ -1157,8 +1204,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 <Dropdown
                   value={formData.pennantCondition}
                   onChange={(e) => handleInputChange('pennantCondition', e.value)}
-                  options={pennantConditionOptions}
-                  optionLabel="name"
+                  options={pennantData}
+                  optionLabel="condition"
                   editable
                   placeholder="Select"
                   style={{

@@ -94,10 +94,29 @@ export const TypeOfWeightData = () => {
   return { getTypeOfWeightData }
 }
 
-export const CustomersData = (customerOwnerId: any) => {
-  const [getCustomers] = useGetCustomersDataMutation()
+// export const CustomersData = (customerOwnerId: any) => {
+//   const [getCustomers] = useGetCustomersDataMutation()
 
-  const fetchCustomersData = async (getData: any) => {
+//   const fetchCustomersData = async (getData: any) => {
+//     try {
+//       const response = await getData({ customerOwnerId: customerOwnerId })
+//       const { status, content } = response.data as MetaDataResponse
+//       return status === 200 && Array.isArray(content) ? content : null
+//     } catch (error) {
+//       console.error('Error fetching metadata:', error)
+//       return null
+//     }
+//   }
+
+//   const getCustomersData = async () => ({ customersData: await fetchCustomersData(getCustomers) })
+
+//   return { getCustomersData }
+// }
+
+export const BoatyardNameData = (customerOwnerId: any) => {
+  const [getboatyrad] = useGetBoatyardsTypeMutation()
+
+  const fetchBoatyardName = async (getData: any) => {
     try {
       const response = await getData({ customerOwnerId: customerOwnerId })
       const { status, content } = response.data as MetaDataResponse
@@ -108,9 +127,9 @@ export const CustomersData = (customerOwnerId: any) => {
     }
   }
 
-  const getCustomersData = async () => ({ customersData: await fetchCustomersData(getCustomers) })
+  const getBoatYardData = async () => ({ boatYard: await fetchBoatyardName(getboatyrad) })
 
-  return { getCustomersData }
+  return { getBoatYardData }
 }
 
 export const TypeOfChainCondition = () => {

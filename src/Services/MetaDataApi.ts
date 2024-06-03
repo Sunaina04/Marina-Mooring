@@ -71,6 +71,8 @@ const metaDataApi = userApi.injectEndpoints({
       }),
     }),
 
+    
+
     getShackleSwivelConditions: builder.mutation({
       query: ({ pageNumber, pageSize }: { pageNumber?: number; pageSize?: number }) => ({
         url: 'api/v1/metadata/shackleSwivelConditions',
