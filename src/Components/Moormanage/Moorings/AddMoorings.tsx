@@ -1,19 +1,59 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { InputTextarea } from 'primereact/inputtextarea'
 import { InputText } from 'primereact/inputtext'
 import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown'
 import InputComponent from '../../CommonComponent/InputComponent'
 import { useAddMooringsMutation } from '../../../Services/MoorManage/MoormanageApi'
 import { Button } from 'primereact/button'
-import { CityProps } from '../../../Type/CommonType'
+import { CityProps, MetaData } from '../../../Type/CommonType'
 import { AddMooringProps } from '../../../Type/ComponentBasedType'
+import CustomSelectPositionMap from '../../Map/CustomSelectPositionMap'
+import { LatLngExpression } from 'leaflet'
+import {
+  CustomerName,
+  TypeOfBoatType,
+  TypeOfBottomChain,
+  TypeOfChainCondition,
+  TypeOfEye,
+  TypeOfPennant,
+  TypeOfShackleSwivel,
+  TypeOfSizeOfWeight,
+  TypeOfWeightData,
+} from '../../CommonComponent/MetaDataComponent/MeataDataApi'
+import { useSelector } from 'react-redux'
+import { selectCustomerId } from '../../../Store/Slice/userSlice'
 
 const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }) => {
+  const selectedCustomerId = useSelector(selectCustomerId)
+  const { getTypeOfBoatTypeData } = TypeOfBoatType()
+  const { getTypeOfWeightData } = TypeOfWeightData()
+  const { getTypeOfChainData } = TypeOfChainCondition()
+  const { getTypeOfEyeData } = TypeOfEye()
+  const { getTypeOfBottomChainData } = TypeOfBottomChain()
+  const { getTypeOfShackleSwivelData } = TypeOfShackleSwivel()
+  const { getTypeOfPennantData } = TypeOfPennant()
+  const { getTypeOfSizeOfWeightData } = TypeOfSizeOfWeight()
+  const { getCustomerNameData } = CustomerName(selectedCustomerId);
+
+
+  const [type, setType] = useState<MetaData[]>([])
+  const [weightData, setWeightData] = useState<MetaData[]>([])
+  const [chainData, setChainData] = useState<MetaData[]>([])
+  const [sizeOfWeight, setSizeOfWeight] = useState<MetaData[]>([])
+  const [conditionOfEye, setConditionOfEye] = useState<MetaData[]>([])
+  const [bottomChainCondition, setBottomChainCondition] = useState<MetaData[]>([])
+  const [shackleSwivelData, setShackleSwivelData] = useState<MetaData[]>([])
+  const [pennantData, setPennantData] = useState<MetaData[]>([])
+
+  const [customerName, setcustomerName] = useState<MetaData[]>([])
+
   const [value, setValue] = useState<string>('')
   const [selectedCity, setSelectedCity] = useState<CityProps | undefined>(undefined)
   const [saveMoorings] = useAddMooringsMutation()
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
   const [firstErrorField, setFirstErrorField] = useState('')
+  const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<string>()
+  const [center, setCenter] = useState<LatLngExpression | undefined>([30.6983149, 76.656095])
   const [formData, setFormData] = useState<any>({
     customerName: '',
     mooringNumber: '',
@@ -55,11 +95,51 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
     deptAtMeanHighWater: moorings?.depthAtMeanHighWater || '',
   }
 
-  useEffect(() => {
-    if (editMode && moorings) {
-      setFormData(payload)
+  const fetchMetaData = useCallback(async () => {
+    const { typeOfBoatTypeData } = await getTypeOfBoatTypeData()
+    const { typeOfWeightData } = await getTypeOfWeightData()
+    const { typeOfChainData } = await getTypeOfChainData()
+    const { TypeOfSizeOfWeightData } = await getTypeOfSizeOfWeightData()
+    const { typeOfEyeData } = await getTypeOfEyeData()
+    const { typeOfBootomChainData } = await getTypeOfBottomChainData()
+    const { typeOfShackleSwivelData } = await getTypeOfShackleSwivelData()
+    const { typeOfPennantData } = await getTypeOfPennantData()
+    // const { nameOfCustomer } = await getCustomerNameData();
+
+
+    if (typeOfWeightData !== null) {
+      setWeightData(typeOfWeightData)
     }
-  }, [editMode, moorings])
+    if (typeOfChainData !== null) {
+      setChainData(typeOfChainData)
+    }
+    if (TypeOfSizeOfWeightData !== null) {
+      setSizeOfWeight(TypeOfSizeOfWeightData)
+    }
+    if (typeOfEyeData !== null) {
+      setConditionOfEye(typeOfEyeData)
+    }
+
+    if (typeOfBootomChainData !== null) {
+      setBottomChainCondition(typeOfBootomChainData)
+    }
+
+    if (typeOfShackleSwivelData !== null) {
+      setShackleSwivelData(typeOfShackleSwivelData)
+    }
+
+    if (typeOfPennantData !== null) {
+      setPennantData(typeOfPennantData)
+    }
+    if (typeOfBoatTypeData !== null) {
+      setType(typeOfBoatTypeData)
+    }
+    // if (nameOfCustomer !== null) {
+    //   setcustomerName(nameOfCustomer)
+    // }
+    // console.log(nameOfCustomer);
+
+  }, [])
 
   const cities: CityProps[] = [
     { name: 'New York', code: 'NY' },
@@ -70,6 +150,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
   ]
 
   const validateFields = () => {
+    const gpsRegex = /^\d{1,2}\.\d+ \d{1,2}\.\d+$/
     const errors: { [key: string]: string } = {}
     let firstError = ''
 
@@ -89,10 +170,20 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
       errors.waterDepth = 'Water Depth is required'
       if (!firstError) firstError = 'waterDepth'
     }
-    if (!formData.gpsCoordinates) {
-      errors.gpsCoordinates = 'GPS Coordinates are required'
-      if (!firstError) firstError = 'gpsCoordinates'
+
+
+    // if (!formData.gpsCoordinates) {
+    //   errors.gpsCoordinates = 'GPS Coordinates are required'
+    //   if (!firstError) firstError = 'gpsCoordinates'
+    // }
+
+    if (!gpsCoordinatesValue || formData.gpsCoordinates) {
+      errors.gpsCoordinatesValue = 'GPS Coordinates is required'
+    } else if (!gpsRegex.test(gpsCoordinatesValue)) {
+      errors.gpsCoordinatesValue = 'Invalid GPS coordinates format'
     }
+
+
     if (!formData.boatName) {
       errors.boatName = 'Boat Name is required'
       if (!firstError) firstError = 'boatName'
@@ -178,6 +269,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
     const payload = {
       ...formData,
     }
+    // console.log('dataaa', payload)
 
     try {
       const response = await saveMoorings(payload)
@@ -206,6 +298,24 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
     }
   }
 
+  const handlePositionChange = (lat: number, lng: number) => {
+    setCenter([lat, lng])
+    const formattedLat = lat.toFixed(3)
+    const formattedLng = lng.toFixed(3)
+    const concatenatedValue = `${formattedLat} ${formattedLng}`
+    setGpsCoordinatesValue(concatenatedValue)
+  }
+
+  useEffect(() => {
+    fetchMetaData()
+  }, [])
+
+  useEffect(() => {
+    if (editMode && moorings) {
+      setFormData(payload)
+    }
+  }, [editMode, moorings])
+
   return (
     <>
       <div className="">
@@ -218,9 +328,13 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
               </div>
             </span>
             <div className="mt-2">
-              <InputComponent
-                value={formData.customerName}
+              <Dropdown
+                value={formData.typeOfWeight}
                 onChange={(e) => handleInputChange('customerName', e.target.value)}
+                options={cities}
+                optionLabel="name"
+                editable
+                placeholder="Select"
                 style={{
                   width: '230px',
                   height: '32px',
@@ -229,6 +343,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
                   fontSize: '0.8rem',
                 }}
               />
+
               <p id="customerName">
                 {fieldErrors.customerName && (
                   <small className="p-error">{fieldErrors.customerName}</small>
@@ -327,8 +442,10 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
             </span>
             <div className="mt-2">
               <InputComponent
-                value={formData.gpsCoordinates}
-                onChange={(e) => handleInputChange('gpsCoordinates', e.target.value)}
+                value={gpsCoordinatesValue}
+                onChange={(e) => {
+                  setGpsCoordinatesValue(e.target.value)
+                }}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -353,9 +470,13 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
               </div>
             </span>
             <div className="mt-2">
-              <InputComponent
+              <Dropdown
                 value={formData.boatYardName}
                 onChange={(e) => handleInputChange('boatYardName', e.target.value)}
+                options={cities}
+                optionLabel="name"
+                editable
+                placeholder="Select"
                 style={{
                   width: '230px',
                   height: '32px',
@@ -383,8 +504,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
             </span>
             <div className="mt-2">
               <InputComponent
-                // placeholder="Enter owner name"
-                // type="text"
                 value={formData.boatName}
                 onChange={(e) => handleInputChange('boatName', e.target.value)}
                 style={{
@@ -440,10 +559,10 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
               <Dropdown
                 value={formData.typeOfWeight}
                 onChange={(e) => handleInputChange('typeOfWeight', e.value)}
-                options={cities}
-                optionLabel="name"
+                options={weightData}
+                optionLabel="boatType"
                 editable
-                placeholder="Skiff"
+                placeholder="Select"
                 style={{
                   width: '230px',
                   height: '32px',
@@ -503,8 +622,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
               <Dropdown
                 value={formData.sizeOfWeight}
                 onChange={(e) => handleInputChange('sizeOfWeight', e.value)}
-                options={cities}
-                optionLabel="name"
+                options={sizeOfWeight}
+                optionLabel="weight"
                 editable
                 placeholder="Select"
                 style={{
@@ -537,8 +656,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
               <Dropdown
                 value={formData.typeOfWeight}
                 onChange={(e) => handleInputChange('typeOfWeight', e.value)}
-                options={cities}
-                optionLabel="name"
+                options={weightData}
+                optionLabel="type"
                 editable
                 placeholder="Select"
                 style={{
@@ -574,8 +693,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
                 <Dropdown
                   value={formData.topChainCondition}
                   onChange={(e) => handleInputChange('topChainCondition', e.value)}
-                  options={cities}
-                  optionLabel="name"
+                  options={chainData}
+                  optionLabel="condition"
                   editable
                   placeholder="Select"
                   style={{
@@ -607,8 +726,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
                 <Dropdown
                   value={formData.BootomChainCondition}
                   onChange={(e) => handleInputChange('BootomChainCondition', e.value)}
-                  options={cities}
-                  optionLabel="name"
+                  options={bottomChainCondition}
+                  optionLabel="condition"
                   editable
                   placeholder="Select"
                   style={{
@@ -642,8 +761,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
                 <Dropdown
                   value={formData.pennantCondition}
                   onChange={(e) => handleInputChange('pennantCondition', e.value)}
-                  options={cities}
-                  optionLabel="name"
+                  options={pennantData}
+                  optionLabel="condition"
                   editable
                   placeholder="Select"
                   style={{
@@ -677,8 +796,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
                 <Dropdown
                   value={formData.conditionOfEye}
                   onChange={(e) => handleInputChange('conditionOfEye', e.value)}
-                  options={cities}
-                  optionLabel="name"
+                  options={conditionOfEye}
+                  optionLabel="condition"
                   editable
                   placeholder="Select"
                   style={{
@@ -710,8 +829,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
                 <Dropdown
                   value={formData.shackleSwivelCondition}
                   onChange={(e) => handleInputChange('shackleSwivelCondition', e.value)}
-                  options={cities}
-                  optionLabel="name"
+                  options={shackleSwivelData}
+                  optionLabel="condition"
                   editable
                   placeholder="Select"
                   style={{
@@ -762,8 +881,22 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
             </div>
           </div>
           <div>
-            <div>
-              <span className="font-medium text-sm text-[#000000]">Pin on Map</span>
+            <div className="mt-3">
+              <div>
+                <span className="font-medium text-sm text-[#000000]">Pin on Map</span>
+              </div>
+              <div
+                style={{
+                  height: '200px',
+                  width: '230px',
+                }}>
+                <CustomSelectPositionMap
+                  onPositionChange={handlePositionChange}
+                  zoomLevel={50}
+                  center={center}
+                  setCenter={setCenter}
+                />
+              </div>
             </div>
           </div>
         </div>

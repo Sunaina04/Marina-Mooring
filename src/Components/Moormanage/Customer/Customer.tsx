@@ -27,10 +27,11 @@ import { CustomersHeader, TechniciansHeader } from '../../Utils/DataTableHeader'
 import { customerAdmin } from '../../Utils/CustomData'
 import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader'
 import { properties } from '../../Utils/MeassageProperties'
-import { Params } from '../../../Type/CommonType'
+import { MetaData, Params } from '../../../Type/CommonType'
 import { Toast } from 'primereact/toast'
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
+
 
 // const Customer = () => {
 //   return (
@@ -41,6 +42,7 @@ import { selectCustomerId } from '../../../Store/Slice/userSlice'
 // }
 
 const Customer = () => {
+
   const selectedCustomerId = useSelector(selectCustomerId)
   const [modalVisible, setModalVisible] = useState(false)
   const [customerData, setCustomerData] = useState<CustomerPayload[]>([])
@@ -181,6 +183,8 @@ const Customer = () => {
     [],
   )
 
+
+  
   const getCustomerData = useCallback(async () => {
     try {
       let params: Params = {}
@@ -220,6 +224,8 @@ const Customer = () => {
       console.error('Error fetching moorings data:', error)
     }
   }
+
+  
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
