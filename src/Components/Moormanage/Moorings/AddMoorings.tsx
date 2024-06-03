@@ -10,6 +10,7 @@ import { AddMooringProps } from '../../../Type/ComponentBasedType'
 import CustomSelectPositionMap from '../../Map/CustomSelectPositionMap'
 import { LatLngExpression } from 'leaflet'
 import {
+  BoatyardNameData,
   CustomersData,
   TypeOfBoatType,
   TypeOfBottomChain,
@@ -22,6 +23,7 @@ import {
 } from '../../CommonComponent/MetaDataComponent/MetaDataApi'
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
+import { CustomerResponse } from '../../../Type/ApiTypes'
 
 const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }) => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -34,6 +36,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
   const { getTypeOfPennantData } = TypeOfPennant()
   const { getTypeOfSizeOfWeightData } = TypeOfSizeOfWeight()
   const { getCustomersData } = CustomersData(selectedCustomerId)
+  const { getBoatYardNameData } = BoatyardNameData(selectedCustomerId)
 
   const [type, setType] = useState<MetaData[]>([])
   const [weightData, setWeightData] = useState<MetaData[]>([])
@@ -44,6 +47,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
   const [shackleSwivelData, setShackleSwivelData] = useState<MetaData[]>([])
   const [pennantData, setPennantData] = useState<MetaData[]>([])
   const [customerName, setcustomerName] = useState<MetaData[]>([])
+  const [boatyardsName, setBoatYardsName] = useState<MetaData[]>([])
   const [value, setValue] = useState<string>('')
   const [selectedCity, setSelectedCity] = useState<CityProps | undefined>(undefined)
   const [saveMoorings] = useAddMooringsMutation()
@@ -81,6 +85,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
     waterDepth: moorings?.waterDepth || '',
     gpsCoordinates: moorings?.gpsCoordinates || '',
     boatName: moorings?.boatName || '',
+    boatYardName: moorings?.boatyardName || '',
     boatSize: moorings?.boatSize || '',
     boatWeight: moorings?.boatWeight || '',
     sizeOfWeight: moorings?.sizeOfWeight || '',
@@ -103,6 +108,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
     const { typeOfShackleSwivelData } = await getTypeOfShackleSwivelData()
     const { typeOfPennantData } = await getTypeOfPennantData()
     const { customersData } = await getCustomersData()
+    const { boatYardName } = await getBoatYardNameData()
 
     if (typeOfWeightData !== null) {
       setWeightData(typeOfWeightData)
@@ -134,15 +140,18 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
     if (customersData !== null) {
       setcustomerName(customersData)
     }
-    console.log(customersData)
+
+    if (boatYardName !== null) {
+      setBoatYardsName(boatYardName)
+    }
   }, [])
 
-  const cities: CityProps[] = [
-    { name: 'New York', code: 'NY' },
-    { name: 'Rome', code: 'RM' },
-    { name: 'London', code: 'LDN' },
-    { name: 'Istanbul', code: 'IST' },
-    { name: 'Paris', code: 'PRS' },
+  const cities = [
+    { id: 0, name: 'New York', code: 'NY' },
+    { id: 1, name: 'Rome', code: 'RM' },
+    { id: 2, name: 'London', code: 'LDN' },
+    { id: 3, name: 'Istanbul', code: 'IST' },
+    { id: 4, name: 'Paris', code: 'PRS' },
   ]
 
   const validateFields = () => {
@@ -167,16 +176,10 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
       if (!firstError) firstError = 'waterDepth'
     }
 
-    // if (!formData.gpsCoordinates) {
+    // if (!formData.gpsCoordinatesValue) {
     //   errors.gpsCoordinates = 'GPS Coordinates are required'
     //   if (!firstError) firstError = 'gpsCoordinates'
     // }
-
-    if (!gpsCoordinatesValue || formData.gpsCoordinates) {
-      errors.gpsCoordinatesValue = 'GPS Coordinates is required'
-    } else if (!gpsRegex.test(gpsCoordinatesValue)) {
-      errors.gpsCoordinatesValue = 'Invalid GPS coordinates format'
-    }
 
     if (!formData.boatName) {
       errors.boatName = 'Boat Name is required'
@@ -214,8 +217,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
       if (!firstError) firstError = 'topChainCondition'
     }
 
-    if (!formData.BootomChainCondition) {
-      errors.BootomChainCondition = 'Bootom Chain Condition is required'
+    if (!formData.bottomChainCondition) {
+      errors.bottomChainCondition = 'Bootom Chain Condition is required'
       if (!firstError) firstError = 'BootomChainCondition'
     }
 
@@ -264,34 +267,47 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
     if (Object.keys(errors).length > 0) {
       return
     }
-
     const payload = {
-      ...formData,
+      customerId: formData.customerName?.id,
+      mooringId: formData.mooringNumber,
+      harbor: formData.harbor,
+      waterDepth: formData.waterDepth,
+      gpsCoordinates: formData.gpsCoordinates,
+      boatyardId: formData.boatYardName?.id,
+      boatName: formData.boatName,
+      boatSize: formData.boatSize,
+      boatTypeId: formData.type?.id,
+      boatWeight: formData.boatWeight,
+      sizeOfWeightId: formData.sizeOfWeight?.id,
+      typeOfWeightId: formData.typeOfWeight?.id,
+      eyeConditionId: formData.conditionOfEye?.id,
+      topChainConditionId: formData.topChainCondition?.id,
+      bottomChainConditionId: formData.bottomChainCondition?.id,
+      shackleSwivelConditionId: formData.shackleSwivelCondition?.id,
+      pennantConditionId: formData.pennantCondition?.id,
+      depthAtMeanHighWater: formData.deptAtMeanHighWater?.id,
+      customerOwnerId: selectedCustomerId,
     }
-    // console.log('dataaa', payload)
 
-    try {
-      const response = await saveMoorings(payload)
-      if (response) {
-        toastRef?.current?.show({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'User saved successfully',
-          life: 3000,
-        })
-      } else {
-        toastRef?.current?.show({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'An error occurred while saving the customer.',
-          life: 3000,
-        })
-      }
-    } catch (error) {
+    const response = await saveMoorings(payload).unwrap()
+    const { status, message } = response as CustomerResponse
+    if (status === 200 || status === 201) {
+      // closeModal()
+      // getCustomer()
+      // if (getCustomerRecord) {
+      //   getCustomerRecord()
+      // }
+      toastRef?.current?.show({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'Customer Updated successfully',
+        life: 3000,
+      })
+    } else {
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: 'An unexpected error occurred',
+        detail: message,
         life: 3000,
       })
     }
@@ -302,7 +318,11 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
     const formattedLat = lat.toFixed(3)
     const formattedLng = lng.toFixed(3)
     const concatenatedValue = `${formattedLat} ${formattedLng}`
-    setGpsCoordinatesValue(concatenatedValue)
+
+    setFormData((prevFormData: any) => ({
+      ...prevFormData,
+      gpsCoordinates: concatenatedValue,
+    }))
   }
 
   useEffect(() => {
@@ -441,10 +461,13 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
             </span>
             <div className="mt-2">
               <InputComponent
-                value={gpsCoordinatesValue}
-                onChange={(e) => {
-                  setGpsCoordinatesValue(e.target.value)
-                }}
+                value={formData.gpsCoordinates}
+                onChange={(e) => handleInputChange('gpsCoordinates', e.target.value)}
+                // onChange={(e) => {
+                //   setGpsCoordinatesValue(e.target.value)
+                //   setFieldErrors((prevErrors) => ({ ...prevErrors, gpsCoordinatesValue: '' }))
+                // }}
+
                 style={{
                   width: '230px',
                   height: '32px',
@@ -470,10 +493,10 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
             </span>
             <div className="mt-2">
               <Dropdown
-                value={formData.boatYardName}
+                value={formData?.boatYardName}
                 onChange={(e) => handleInputChange('boatYardName', e.target.value)}
-                options={cities}
-                optionLabel="name"
+                options={boatyardsName}
+                optionLabel="boatyardName"
                 editable
                 placeholder="Select"
                 style={{
@@ -565,7 +588,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: fieldErrors.typeOfWeight ? '1px solid red' : '1px solid #D5E1EA',
+                  border: fieldErrors.type ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
@@ -721,8 +744,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
 
               <div className="mt-2">
                 <Dropdown
-                  value={formData.BootomChainCondition}
-                  onChange={(e) => handleInputChange('BootomChainCondition', e.value)}
+                  value={formData.bottomChainCondition}
+                  onChange={(e) => handleInputChange('bottomChainCondition', e.value)}
                   options={bottomChainCondition}
                   optionLabel="condition"
                   editable
@@ -737,7 +760,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
                     fontSize: '0.8rem',
                   }}
                 />
-                <p id="conditionOfEye">
+                <p id="bottomChainCondition">
                   {fieldErrors.BootomChainCondition && (
                     <small className="p-error">{fieldErrors.BootomChainCondition}</small>
                   )}
@@ -943,3 +966,14 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
 }
 
 export default AddMoorings
+function closeModal() {
+  throw new Error('Function not implemented.')
+}
+
+function getCustomer() {
+  throw new Error('Function not implemented.')
+}
+
+function getCustomerRecord() {
+  throw new Error('Function not implemented.')
+}

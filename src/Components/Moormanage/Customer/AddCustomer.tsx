@@ -61,6 +61,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [boatyardName, setBoatyardName] = useState<MetaData[]>([])
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
   const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<string>()
+  console.log('gps', gpsCoordinatesValue)
   const [center, setCenter] = useState<LatLngExpression | undefined>([30.6983149, 76.656095])
   const [firstErrorField, setFirstErrorField] = useState('')
   const [formData, setFormData] = useState<any>({
@@ -96,6 +97,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const { getTypeOfPennantData } = TypeOfPennant()
   const { getTypeOfSizeOfWeightData } = TypeOfSizeOfWeight()
   const { getBoatYardNameData } = BoatyardNameData(selectedCustomerId)
+
   const { getCountriesData } = CountriesData()
   const [addCustomer] = useAddCustomerMutation()
   const [updateCustomer] = useUpdateCustomerMutation()

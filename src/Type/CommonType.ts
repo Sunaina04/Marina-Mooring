@@ -3,6 +3,7 @@ import { BoatYardData, UserData } from './ApiTypes'
 export interface CityProps {
   name: string
   code: string
+  // id:number
 }
 
 export interface DataProps {

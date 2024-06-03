@@ -232,6 +232,7 @@ export interface MooringMetaDataTypes {
 }
 
 export interface MooringPayload {
+  boatyardName: string
   id: number
   mooringNumber: string
   customerName: string
