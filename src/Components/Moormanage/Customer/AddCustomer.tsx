@@ -281,7 +281,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       harbor: mooringResponseDtoList[0]?.harbor || '',
       waterDepth: mooringResponseDtoList[0]?.waterDepth || '',
       gpsCoordinates: mooringResponseDtoList[0]?.gpsCoordinates || '',
-      boatyardName: mooringResponseDtoList[0]?.boatyardName || '',
+      boatyardName: mooringResponseDtoList[0]?.boatyardResponseDto?.boatyardName || '',
       boatName: mooringResponseDtoList[0]?.boatName || '',
       boatSize: mooringResponseDtoList[0]?.boatSize || '',
       boatType: mooringResponseDtoList[0]?.boatType?.boatType || '',
@@ -387,9 +387,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           ? formData.waterDepth
           : customer?.mooringResponseDtoList[0]?.waterDepth,
         gpsCoordinates: gpsCoordinatesValue,
-        // boatyardId: formData.boatyardName.id
-        //   ? formData.boatyardName.id
-        //   : customer?.mooringResponseDtoList[0]?.boatyardName,
+        boatyardId: formData.boatyardName.id
+          ? formData.boatyardName.id
+          : customer?.mooringResponseDtoList[0]?.boatyardResponseDto?.id,
         boatName: formData.boatName
           ? formData.boatName
           : customer?.mooringResponseDtoList[0]?.boatName,

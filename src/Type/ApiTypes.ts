@@ -196,6 +196,13 @@ export interface CustomerResponse {
   content: { CustomerPayload: CustomerPayload }
 }
 
+export interface DeleteCustomerResponse {
+  message: string
+  status: number
+  errorList: []
+  time: string
+}
+
 export interface customerResponseDto {
   customerResponseDto: {
     id: number

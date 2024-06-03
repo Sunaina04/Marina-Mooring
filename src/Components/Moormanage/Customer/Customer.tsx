@@ -16,6 +16,7 @@ import {
   CustomerPayload,
   CustomerResponse,
   CustomersWithMooringResponse,
+  DeleteCustomerResponse,
   MooringPayload,
   MooringResponse,
   MooringResponseDtoList,
@@ -57,7 +58,7 @@ const Customer = () => {
   const [dialogVisible, setDialogVisible] = useState(false)
   const [searchText, setSearchText] = useState('')
   const [customerId, setCustomerId] = useState()
-
+  const [coordinatesArray, setCoordinatesArray] = useState()
   const [getCustomer] = useGetCustomerMutation()
   const [deleteCustomer] = useDeleteCustomerMutation()
   const [getCustomerWithMooring] = useGetCustomersWithMooringMutation()
@@ -87,8 +88,10 @@ const Customer = () => {
   const handleDelete = async (rowData: any) => {
     if (customerRecord == true) {
       try {
-        const response = await deleteCustomer({ id: customerRecordData?.id })
-        if (response) {
+        const response = await deleteCustomer({ id: customerRecordData?.id }).unwrap()
+        const { status, message } = response as DeleteCustomerResponse
+        console.log(response)
+        if (status === 200) {
           toast.current?.show({
             severity: 'success',
             summary: 'Success',
@@ -97,14 +100,20 @@ const Customer = () => {
           })
           getCustomerData()
           setMooringData([])
+        } else {
+          toast.current?.show({
+            severity: 'error',
+            summary: 'Error',
+            detail: message,
+            life: 3000,
+          })
         }
         setCustomerRecordData('')
       } catch (error) {
-        console.error('Error deleting customer:', error)
         toast.current?.show({
           severity: 'error',
           summary: 'Error',
-          detail: 'Error deleting customer',
+          detail: 'Error while deleting customer',
           life: 3000,
         })
       }
@@ -122,6 +131,7 @@ const Customer = () => {
   const handleMooringTableRowClick = (rowData: any) => {
     setDialogVisible(true)
     setMooringRowData(rowData.data)
+    setCustomerRecordData('')
   }
 
   const customerTableColumnStyle = {
@@ -197,10 +207,17 @@ const Customer = () => {
       }
 
       const response = await getCustomer(params).unwrap()
-      const { status, content } = response as CustomerResponse
+      const { status, content, message } = response as CustomerResponse
       if (status === 200 && Array.isArray(content)) {
         setCustomerData(content)
         setFilteredCustomerData(content)
+      } else {
+        toast?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
       }
     } catch (error) {
       console.error('Error occurred while fetching customer data:', error)
@@ -210,7 +227,7 @@ const Customer = () => {
   const getCustomersWithMooring = async (id: number) => {
     try {
       const response = await getCustomerWithMooring({ id: id }).unwrap()
-      const { status, content } = response as CustomersWithMooringResponse
+      const { status, content, message } = response as CustomersWithMooringResponse
       if (
         status === 200 &&
         Array.isArray(content?.customerResponseDto?.mooringResponseDtoList) &&
@@ -219,15 +236,25 @@ const Customer = () => {
         setCustomerRecordData(content?.customerResponseDto)
         setMooringData(content?.customerResponseDto?.mooringResponseDtoList)
         setBoatYardData(content?.boatyardNames)
+        const coordinatesString = customerRecordData?.mooringResponseDtoList[0]?.gpsCoordinates
+        const coordinateArray = coordinatesString?.split(' ').map(parseFloat)
+        setCoordinatesArray(coordinateArray)
+      } else {
+        setCustomerRecord(false)
+        setCustomerRecordData('')
+        setMooringData([])
+        setBoatYardData([])
+        toast?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
       }
     } catch (error) {
       console.error('Error fetching moorings data:', error)
     }
   }
-
-  const coordinatesString = customerRecordData?.mooringResponseDtoList[0]?.gpsCoordinates
-  const coordinatesArray = coordinatesString?.split(' ').map(parseFloat)
-  console.log(coordinatesArray)
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -235,12 +262,6 @@ const Customer = () => {
     }, 600)
     return () => clearTimeout(timeoutId)
   }, [searchText, selectedCustomerId])
-
-  // console.log(
-  //   'mooringData.map(value => value.gpsCoordinates)',
-  //   mooringData.map((value) => value.gpsCoordinates),
-  //   mooringRowData?.gpsCoordinates,
-  // )
 
   return (
     <div className={modalVisible ? 'backdrop-blur-lg' : ''}>
@@ -392,11 +413,13 @@ const Customer = () => {
                   onClick={handleEdit}
                   className="mr-3 mt-3 text-[white]"
                   data-testid="FaEdit"
+                  style={{ cursor: customerRecord ? 'pointer' : 'not-allowed' }}
                 />
                 <RiDeleteBin5Fill
                   onClick={handleDelete}
                   className="text-white mr-2 mt-3"
                   data-testid="RiDeleteBin5Fill"
+                  style={{ cursor: customerRecord ? 'pointer' : 'not-allowed' }}
                 />
               </div>
             </div>
