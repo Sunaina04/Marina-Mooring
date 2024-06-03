@@ -584,11 +584,12 @@ const Boatyards = () => {
             header={
               <div className="flex gap-4">
                 <div className="font-bolder text-[black]">Mooring Information</div>
+                {/* <div className="font-bold mt-1">
+                    <FaEdit onClick={handleEdit} color="#0098FF" />
+                  </div> */}
               </div>
             }>
-            <div style={{ border: '1px solid #D5E1EA' }}>
-              <hr />
-            </div>
+            <hr className="border border-[#000000] my-0 mx-0"></hr>
 
             <div
               style={{
@@ -599,64 +600,64 @@ const Boatyards = () => {
               className="flex leading-[3.50rem] gap-32 p-4">
               <div>
                 <p>
-                  <span>ID :</span> {mooringRowData?.id}
+                  <span>ID : </span> {mooringRowData?.id}
                 </p>
                 <p>
-                  <span>Mooring No :</span> {mooringRowData?.mooringNumber}
+                  <span>Mooring No : </span> {mooringRowData?.mooringNumber}
                 </p>
                 <p>
-                  <span>Boat Name :</span> {mooringRowData?.boatName}
+                  <span>Boat Name : </span> {mooringRowData?.boatName}
                 </p>
 
                 <p>
-                  <span>Type :</span> {mooringRowData?.boatType?.boatType}
+                  <span>Type : </span> {mooringRowData?.boatType?.boatType}
                 </p>
                 <p className="flex gap-1">
-                  <span>Size of Weight :</span> {mooringRowData?.sizeOfWeight?.weight}
+                  <span>Size of Weight : </span> {mooringRowData?.sizeOfWeight?.weight}
                   <span>{mooringRowData?.sizeOfWeight?.unitType}</span>
                 </p>
 
                 <p>
-                  <span>Top Chain Condition :</span> {mooringRowData?.topChainCondition?.condition}
+                  <span>Top Chain Condition : </span> {mooringRowData?.topChainCondition?.condition}
                 </p>
                 <p className="tracking-tighter">
-                  <span>Bottom Chain Condition :</span>{' '}
+                  <span>Bottom Chain Condition : </span>{' '}
                   {mooringRowData?.bottomChainCondition?.condition}
                 </p>
                 <p>
-                  <span>Pennant Condition :</span> {mooringRowData?.pennantCondition?.condition}
+                  <span>Pennant Condition : </span> {mooringRowData?.pennantCondition?.condition}
                 </p>
                 <p>
-                  <span>Water Depth :</span> {mooringRowData?.waterDepth}
+                  <span>Water Depth : </span> {mooringRowData?.waterDepth}
                 </p>
               </div>
               <div>
                 <p>
-                  <span>Harbor :</span> {mooringRowData?.harbor}
+                  <span>Harbor : </span> {mooringRowData?.harbor}
                 </p>
                 <p>
-                  <span>G.P.S Coordinates :</span> {mooringRowData?.gpsCoordinates}
+                  <span>G.P.S Coordinates : </span> {mooringRowData?.gpsCoordinates}
                 </p>
                 <p>
-                  <span>Boatyard Name :</span> {mooringRowData?.boatyardName}
+                  <span>Boatyard Name : </span> {mooringRowData?.boatyardName}
                 </p>
                 <p>
-                  <span>Customer Name :</span> {mooringRowData?.customerName}
+                  <span>Customer Name : </span> {mooringRowData?.customerName}
                 </p>
                 <p>
-                  <span>Boat Size :</span> {mooringRowData?.boatSize}
+                  <span>Boat Size : </span> {mooringRowData?.boatSize}
                 </p>
                 <p>
-                  <span>Weight :</span> {mooringRowData?.boatWeight}
+                  <span>Weight : </span> {mooringRowData?.boatWeight}
                 </p>
                 <p>
-                  <span>Type of Weight :</span> {mooringRowData?.typeOfWeight?.type}
+                  <span>Type of Weight : </span> {mooringRowData?.typeOfWeight?.type}
                 </p>
                 <p>
-                  <span>Condition of Eye :</span> {mooringRowData?.eyeCondition?.condition}
+                  <span>Condition of Eye : </span> {mooringRowData?.eyeCondition?.condition}
                 </p>
                 <p>
-                  <span>Shackle, Swivel Condition :</span>{' '}
+                  <span>Shackle, Swivel Condition : </span>{' '}
                   {mooringRowData?.shackleSwivelCondition?.condition}
                 </p>
               </div>

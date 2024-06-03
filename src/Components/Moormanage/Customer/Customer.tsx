@@ -261,7 +261,6 @@ const Customer = () => {
                 closeModal={handleModalClose}
                 getCustomer={getCustomerData}
                 toastRef={toast}
-                // setCustomerData={setCustomerData}
               />
             }
             headerText={<h1 className="text-xxl font-bold text-black ">Add Customer</h1>}
@@ -271,8 +270,8 @@ const Customer = () => {
             dialogStyle={{
               width: '800px',
               minWidth: '800px',
-              height: '630px',
-              minHeight: '630px',
+              height: editMode ? '500px' : '630px',
+              minHeight: editMode ? '500px' : '630px',
               borderRadius: '1rem',
               maxHeight: '95% !important',
             }}
@@ -535,7 +534,7 @@ const Customer = () => {
             <Dialog
               position="center"
               style={{
-                width: '600px',
+                width: '740px',
                 minWidth: '300px',
                 height: '470px',
                 minHeight: '200px',
@@ -548,80 +547,86 @@ const Customer = () => {
               onHide={() => setDialogVisible(false)}
               header={
                 <div className="flex gap-4">
-                  <div className="font-bold">Mooring Information</div>
+                  <div className="font-bolder text-[black]">Mooring Information</div>
                   <div className="font-bold mt-1">
                     <FaEdit onClick={handleEdit} color="#0098FF" />
                   </div>
                 </div>
               }>
-              <hr className="border border-[#D5E1EA] my-0 mx-0"></hr>
+              <hr className="border border-[#000000] my-0 mx-0"></hr>
 
-              <div className="flex leading-10 p-4 gap-[8rem]">
+              <div
+                style={{
+                  fontSize: '14px',
+                  fontWeight: '300',
+                  color: '#000000',
+                }}
+                className="flex leading-[3.50rem] gap-32 p-4">
                 <div>
                   <p>
-                    <span>ID:</span> {mooringRowData?.id}
+                    <span>ID: </span> {mooringRowData?.id}
                   </p>
                   <p>
-                    <span>Mooring No:</span>
+                    <span>Mooring No: </span>
                     {mooringRowData?.mooringNumber}
                   </p>
                   <p>
-                    <span>Boat Name:</span>
+                    <span>Boat Name: </span>
                     {mooringRowData?.boatName}
                   </p>
                   <p>
-                    <span>Type:</span> {mooringRowData?.boatType?.boatType}
+                    <span>Type: </span> {mooringRowData?.boatType?.boatType}
                   </p>
                   <p>
-                    <span>Size of Weight:</span>
+                    <span>Size of Weight: </span>
                     {mooringRowData?.sizeOfWeight?.weight}
                   </p>
                   <p>
-                    <span>Top Chain Condition:</span>
+                    <span>Top Chain Condition: </span>
                     {mooringRowData?.topChainCondition?.condition}
                   </p>
                   <p className="tracking-tighter">
-                    <span>Bottom Chain Condition:</span>
+                    <span>Bottom Chain Condition: </span>
                     {mooringRowData?.bottomChainCondition?.condition}
                   </p>
                   <p>
-                    <span>Pennant Condition:</span>
+                    <span>Pennant Condition: </span>
                     {mooringRowData?.pennantCondition?.condition}
                   </p>
                   <p>
-                    <span>Water Depth:</span>
+                    <span>Water Depth: </span>
                     {mooringRowData?.waterDepth}
                   </p>
                 </div>
                 <div>
                   <p>
-                    <span>Harbor:</span> {mooringRowData?.harbor}
+                    <span>Harbor: </span> {mooringRowData?.harbor}
                   </p>
                   <p>
-                    <span>G.P.S Coordinates:</span>
+                    <span>G.P.S Coordinates: </span>
                     {mooringRowData?.gpsCoordinates}
                   </p>
                   <p>
-                    <span>Boat Size:</span>
+                    <span>Boat Size: </span>
                     {mooringRowData?.boatSize}
                   </p>
                   <p>
-                    <span>Weight:</span> {mooringRowData?.boatWeight}
+                    <span>Weight: </span> {mooringRowData?.boatWeight}
                   </p>
                   <p>
-                    <span>Type of Weight:</span>
+                    <span>Type of Weight: </span>
                     {mooringRowData?.typeOfWeight?.type}
                   </p>
                   <p>
-                    <span>Condition of Eye:</span>
+                    <span>Condition of Eye: </span>
                     {mooringRowData?.eyeCondition?.condition}
                   </p>
                   <p>
-                    <span>Shackle, Swivel Condition:</span>
+                    <span>Shackle, Swivel Condition: </span>
                     {mooringRowData?.shackleSwivelCondition?.condition}
                   </p>
                   <p>
-                    <span>Dept at Mean High Water:</span>
+                    <span>Dept at Mean High Water: </span>
                     {mooringRowData?.depthAtMeanHighWater}
                   </p>
                 </div>

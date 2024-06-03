@@ -48,8 +48,8 @@ const moormanageApi = userApi.injectEndpoints({
     }),
 
     updateCustomer: builder.mutation({
-      query: (payload: CustomerPayload) => ({
-        url: 'api/v1/customer/',
+      query: ({ payload, id }: { payload: CustomerPayload; id: number }) => ({
+        url: `api/v1/customer/${id}`,
         method: 'PUT',
         body: payload,
       }),
