@@ -42,6 +42,7 @@ const Boatyards = () => {
   const [editMode, setEditMode] = useState(false)
   const [selectedRowId, setSelectedRowID] = useState()
   const [searchText, setSearchText] = useState('')
+  const [searchFieldText, setSearchFieldText] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [isLoader, setIsLoader] = useState(false)
   const [dialogVisible, setDialogVisible] = useState(false)
@@ -58,7 +59,13 @@ const Boatyards = () => {
   }
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchFieldText('')
     setSearchText(e.target.value)
+  }
+
+  const handleSearchField = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText('')
+    setSearchFieldText(e.target.value)
   }
 
   const handleButtonClick = () => {
@@ -244,6 +251,9 @@ const Boatyards = () => {
       if (searchText) {
         params.searchText = searchText
       }
+      if (searchFieldText) {
+        params.searchText = searchFieldText
+      }
       if (selectedCustomerId) {
         params.customerOwnerId = selectedCustomerId
       }
@@ -267,7 +277,7 @@ const Boatyards = () => {
     } catch (error) {
       console.error('Error fetching getBoatyardsdata:', error)
     }
-  }, [getBoatyards, searchText, selectedCustomerId])
+  }, [getBoatyards, searchText, searchFieldText, selectedCustomerId])
 
   const getMooringsWithBoatyardData = async () => {
     setIsLoading(true)
@@ -293,7 +303,7 @@ const Boatyards = () => {
       getBoatyardsData()
     }, 2000)
     return () => clearTimeout(timeoutId)
-  }, [searchText, selectedCustomerId])
+  }, [searchText, selectedCustomerId, searchFieldText])
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -322,6 +332,8 @@ const Boatyards = () => {
             <div className="p-input-icon-left">
               <IoSearchSharp className="ml-2 text-blue-900" />
               <InputText
+                value={searchFieldText}
+                onChange={handleSearchField}
                 placeholder="Search"
                 className="h-[44px] w-[237px] cursor-pointer pl-8 rounded-lg text-bold  "
               />
@@ -451,17 +463,17 @@ const Boatyards = () => {
                 <h1 className="p-4">{properties.boatyardMooringHeader}</h1>
               </div>
             </div>
-            <div className={`bg-[] mt-3 ${isLoader ? 'blur-screen' : ''}`}>
+            <div className={`bg-[] mt-3 ml-5 ${isLoader ? 'blur-screen' : ''}`}>
               <div
-                className="flex justify-between p-3 mt-[10px]"
+                className="flex justify-between p-3 mt-[10px] mr-10"
                 style={{ fontSize: '10px', fontWeight: '700', lineHeight: '11.72px' }}>
                 <p>{properties.address}</p>
                 <p className="">{properties.mooringInventoried}</p>
                 <p className="">{properties.boatyardGPSCoordinates}</p>
               </div>
-              <div className="mt-4">
-                <hr style={{ border: '1px solid #D5E1EA' }} />
-              </div>
+            </div>
+            <div className="mt-4">
+              <hr style={{ border: '1px solid #D5E1EA' }} />
             </div>
           </div>
 
@@ -481,16 +493,16 @@ const Boatyards = () => {
           {selectedBoatYard ? (
             <>
               <div
-                className={`flex justify-between mt-4 p-3  font-normal text-[12px] ${isLoader ? 'blur-screen' : ''}`}>
+                className={`flex justify-between mt-4 p-3 ml-5 font-normal text-[12px] ${isLoader ? 'blur-screen' : ''}`}>
                 <p className="">
                   {selectedBoatYard?.street} {selectedBoatYard?.apt} ,
                   {selectedBoatYard?.stateResponseDto?.name} ,
                   {selectedBoatYard?.countryResponseDto?.name}
                 </p>
 
-                <p className="mr-[12rem]">{selectedBoatYard?.mooringInventoried}</p>
+                <p className="mr-[6rem]">{selectedBoatYard?.mooringInventoried}</p>
 
-                <p className=" underline mr-[1rem]">{selectedBoatYard?.gpsCoordinates}</p>
+                <p className="underline mr-[1rem]">{selectedBoatYard?.gpsCoordinates}</p>
               </div>
 
               <div
@@ -641,7 +653,7 @@ const Boatyards = () => {
                   <span>Type of Weight :</span> {mooringRowData?.typeOfWeight?.type}
                 </p>
                 <p>
-                  <span>Condition of Eye :</span> {mooringRowData?.conditionOfEye?.condition}
+                  <span>Condition of Eye :</span> {mooringRowData?.eyeCondition?.condition}
                 </p>
                 <p>
                   <span>Shackle, Swivel Condition :</span>{' '}

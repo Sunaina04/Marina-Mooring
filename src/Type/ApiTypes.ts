@@ -394,15 +394,15 @@ export interface MooringWithBoatYardContent {
   boatyardName: string
   boatName: string
   boatSize: string
-  boatType: string
+  boatType: MooringMetaDataTypes
   boatWeight: string
-  sizeOfWeight: string
-  typeOfWeight: string
-  conditionOfEye: string
-  topChainCondition: string
-  bottomChainCondition: string
-  shackleSwivelCondition: string
-  pennantCondition: string
+  eyeCondition: MooringMetaDataTypes
+  bottomChainCondition: MooringMetaDataTypes
+  topChainCondition: MooringMetaDataTypes
+  shackleSwivelCondition: MooringMetaDataTypes
+  pennantCondition: MooringMetaDataTypes
+  sizeOfWeight: MooringMetaDataTypes
+  typeOfWeight: MooringMetaDataTypes
   depthAtMeanHighWater: number
   status: string
   boatyardNames: string
