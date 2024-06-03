@@ -501,6 +501,7 @@ export interface ContentData {
 }
 
 export interface Content {
+  content(content: any): unknown
   data: ContentData
 }
 

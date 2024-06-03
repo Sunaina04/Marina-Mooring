@@ -320,3 +320,24 @@ export const TypeOfBoatType = () => {
 
   return { getTypeOfBoatTypeData }
 }
+
+
+
+export const CustomerName = (customerOwnerId: any) => {
+  const [getCustomerName] = useGetCustomersDataMutation();
+
+  const fetchCustomerName = async (getData: any) => {
+    try {
+      const response = await getData({ customerOwnerId: customerOwnerId })
+      const { status, content } = response.data as MetaDataResponse
+      return status === 200 && Array.isArray(content?.content) ? content?.content : null
+    } catch (error) {
+      console.error('Error fetching metadata:', error)
+      return null
+    }
+  }
+
+  const getCustomerNameData = async () => ({ nameOfCustomer: await fetchCustomerName(getCustomerName) })
+
+  return { getCustomerNameData }
+}
