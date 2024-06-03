@@ -265,7 +265,7 @@ const Customer = () => {
   }, [searchText, selectedCustomerId])
 
   const moorings = [
-    { position: [30.698, 76.657], status: 'NeedInspection' },
+    { position: [30.698, 76.657], status: 'mooringStatus' },
     { position: [30.701, 76.66], status: 'NotInUse' },
     // Add more moorings as needed
   ]
@@ -393,14 +393,15 @@ const Customer = () => {
             className="w-[413px] h-full object-cover rounded-md border-[1px] border-gray-300"
             alt="Sea Image"
           /> */}
-          <div className="max-w-[413px] rounded-md border-[1px]">
+          <div
+            className={`"max-w-[413px] rounded-md border-[1px]" ${modalVisible} ? 'blur-screen' : ''`}>
             <CustomMooringPositionMap
               position={coordinatesArray || [30.698, 76.657]}
               zoomLevel={10}
-              style={{ height: '700px' }}
+              style={{ height: '700px', display: modalVisible ? 'none' : '' }}
               iconsByStatus={iconsByStatus}
               // @ts-expect-error
-              moorings={moorings}
+              moorings={mooringData}
             />
           </div>
         </div>
