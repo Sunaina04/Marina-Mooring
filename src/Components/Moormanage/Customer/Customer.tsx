@@ -47,7 +47,6 @@ const Customer = () => {
   const [editMode, setEditMode] = useState(false)
   const [customerRecord, setCustomerRecord] = useState(false)
   const [selectedCustomer, setSelectedCustomer] = useState<any>()
-  const [searchQuery, setSearchQuery] = useState<string>('')
   const [filteredCustomerData, setFilteredCustomerData] = useState<CustomerPayload[]>([])
   const [customerRecordData, setCustomerRecordData] = useState<any>()
   const [mooringData, setMooringData] = useState<MooringResponseDtoList[]>([])
@@ -74,24 +73,6 @@ const Customer = () => {
     setSearchText(e.target.value)
   }
 
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const query = event.target.value
-    setSearchQuery(query)
-    const filteredData = customerData.filter((data) => {
-      const id = typeof data.customerId === 'string' ? data.customerId.toLowerCase() : ''
-      const customerName =
-        typeof data.customerName === 'string' ? data.customerName.toLowerCase() : ''
-      const emailAddress =
-        typeof data.emailAddress === 'string' ? data.emailAddress.toLowerCase() : ''
-      return (
-        id.includes(query.toLowerCase()) ||
-        customerName.includes(query.toLowerCase()) ||
-        emailAddress.includes(query.toLowerCase())
-      )
-    })
-    setFilteredCustomerData(filteredData)
-  }
-
   const handleEdit = (rowData: any) => {
     if (customerRecord == true) {
       setSelectedCustomer(customerRecordData)
@@ -112,6 +93,7 @@ const Customer = () => {
             life: 3000,
           })
           getCustomerData()
+          setMooringData([])
         }
         setCustomerRecordData('')
       } catch (error) {
@@ -270,8 +252,8 @@ const Customer = () => {
             dialogStyle={{
               width: '800px',
               minWidth: '800px',
-              height: editMode ? '500px' : '630px',
-              minHeight: editMode ? '500px' : '630px',
+              height: '630px',
+              minHeight: '630px',
               borderRadius: '1rem',
               maxHeight: '95% !important',
             }}

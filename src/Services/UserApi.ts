@@ -50,8 +50,15 @@ const refreshToken = async (refreshToken: any) => {
 const baseQuery = fetchBaseQuery({
   baseUrl: process.env.REACT_APP_BASE_URL,
   prepareHeaders: (headers, { getState, endpoint, extra }) => {
-    if ((getState() as RootState).user.token || sessionStorage.getItem('token')) {
-      const token = (getState() as RootState).user.token || sessionStorage.getItem('token')
+    if (
+      (getState() as RootState).user.token ||
+      sessionStorage.getItem('token') ||
+      sessionStorage.getItem('getRefreshToken')
+    ) {
+      const token =
+        (getState() as RootState).user.token ||
+        sessionStorage.getItem('token') ||
+        sessionStorage.getItem('getRefreshToken')
       const noAuthEndpoints = ['login', 'resetPassword', 'forgetPassword']
       if (token && !noAuthEndpoints.includes(endpoint)) {
         headers.set('Authorization', `Bearer ${token}`)
