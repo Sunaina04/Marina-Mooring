@@ -12,7 +12,7 @@ import {
   CountriesData,
   RolesData,
   StatesData,
-} from '../CommonComponent/MetaDataComponent/MeataDataApi'
+} from '../CommonComponent/MetaDataComponent/MetaDataApi'
 
 const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   customerData,

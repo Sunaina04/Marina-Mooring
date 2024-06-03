@@ -23,7 +23,7 @@ import {
   TypeOfPennant,
   TypeOfSizeOfWeight,
   BoatyardNameData,
-} from '../../CommonComponent/MetaDataComponent/MeataDataApi'
+} from '../../CommonComponent/MetaDataComponent/MetaDataApi'
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import CustomSelectPositionMap from '../../Map/CustomSelectPositionMap'

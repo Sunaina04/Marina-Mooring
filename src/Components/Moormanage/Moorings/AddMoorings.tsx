@@ -10,7 +10,7 @@ import { AddMooringProps } from '../../../Type/ComponentBasedType'
 import CustomSelectPositionMap from '../../Map/CustomSelectPositionMap'
 import { LatLngExpression } from 'leaflet'
 import {
-  CustomerName,
+  CustomersData,
   TypeOfBoatType,
   TypeOfBottomChain,
   TypeOfChainCondition,
@@ -19,7 +19,7 @@ import {
   TypeOfShackleSwivel,
   TypeOfSizeOfWeight,
   TypeOfWeightData,
-} from '../../CommonComponent/MetaDataComponent/MeataDataApi'
+} from '../../CommonComponent/MetaDataComponent/MetaDataApi'
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 
@@ -33,7 +33,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
   const { getTypeOfShackleSwivelData } = TypeOfShackleSwivel()
   const { getTypeOfPennantData } = TypeOfPennant()
   const { getTypeOfSizeOfWeightData } = TypeOfSizeOfWeight()
-  const { getCustomerNameData } = CustomerName(selectedCustomerId)
+  const { getCustomersData } = CustomersData(selectedCustomerId)
 
   const [type, setType] = useState<MetaData[]>([])
   const [weightData, setWeightData] = useState<MetaData[]>([])
@@ -43,9 +43,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
   const [bottomChainCondition, setBottomChainCondition] = useState<MetaData[]>([])
   const [shackleSwivelData, setShackleSwivelData] = useState<MetaData[]>([])
   const [pennantData, setPennantData] = useState<MetaData[]>([])
-
   const [customerName, setcustomerName] = useState<MetaData[]>([])
-
   const [value, setValue] = useState<string>('')
   const [selectedCity, setSelectedCity] = useState<CityProps | undefined>(undefined)
   const [saveMoorings] = useAddMooringsMutation()
@@ -104,7 +102,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
     const { typeOfBootomChainData } = await getTypeOfBottomChainData()
     const { typeOfShackleSwivelData } = await getTypeOfShackleSwivelData()
     const { typeOfPennantData } = await getTypeOfPennantData()
-    // const { nameOfCustomer } = await getCustomerNameData();
+    const { customersData } = await getCustomersData()
 
     if (typeOfWeightData !== null) {
       setWeightData(typeOfWeightData)
@@ -133,10 +131,10 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
     if (typeOfBoatTypeData !== null) {
       setType(typeOfBoatTypeData)
     }
-    // if (nameOfCustomer !== null) {
-    //   setcustomerName(nameOfCustomer)
-    // }
-    // console.log(nameOfCustomer);
+    if (customersData !== null) {
+      setcustomerName(customersData)
+    }
+    console.log(customersData)
   }, [])
 
   const cities: CityProps[] = [
@@ -332,8 +330,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
               <Dropdown
                 value={formData.customerName}
                 onChange={(e) => handleInputChange('customerName', e.target.value)}
-                options={cities}
-                optionLabel="name"
+                options={customerName}
+                optionLabel="customerName"
                 editable
                 placeholder="Select"
                 style={{
