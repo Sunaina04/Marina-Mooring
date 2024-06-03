@@ -35,6 +35,7 @@ import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
 import CustomMooringPositionMap from '../../Map/CustomMooringPositionMap'
 
+
 // const Customer = () => {
 //   return (
 //     <>
@@ -44,6 +45,7 @@ import CustomMooringPositionMap from '../../Map/CustomMooringPositionMap'
 // }
 
 const Customer = () => {
+
   const selectedCustomerId = useSelector(selectCustomerId)
   const [modalVisible, setModalVisible] = useState(false)
   const [customerData, setCustomerData] = useState<CustomerPayload[]>([])
@@ -195,6 +197,8 @@ const Customer = () => {
     [],
   )
 
+
+  
   const getCustomerData = useCallback(async () => {
     try {
       let params: Params = {}
