@@ -6,6 +6,7 @@ export interface CustomerDataProps {
   editMode: boolean
   closeModal: () => void
   getCustomer: () => void
+  getCustomerRecord?: () => void
   toastRef?: any
   setCustomerData?: any
 }

@@ -1,17 +1,18 @@
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import L from 'leaflet'
 import './CustomMap.css'
-import DefaultIcon from './DefaultIcon'
-import { CustomDisplayPositionMapProps } from '../../Type/Components/MapTypes'
+import { CustomMooringPositionMapProps } from '../../Type/Components/MapTypes'
 import { useRef } from 'react'
 
-const CustomDisplayPositionMap: React.FC<CustomDisplayPositionMapProps> = ({
+const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
   position,
   zoomLevel,
   popUpMessage,
   style,
+  icon,
 }) => {
   const markerRef = useRef(null)
+
   return (
     <MapContainer
       style={style}
@@ -24,13 +25,16 @@ const CustomDisplayPositionMap: React.FC<CustomDisplayPositionMapProps> = ({
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
-      <Marker position={position} ref={markerRef}>
-        {/* <Popup>{popUpMessage}</Popup> */}
+      <Marker position={position} ref={markerRef} icon={icon || DefaultIcon}>
+        <Popup>{popUpMessage}</Popup>
       </Marker>
     </MapContainer>
   )
 }
 
-L.Marker.prototype.options.icon = DefaultIcon
+const DefaultIcon = L.icon({
+  iconUrl: '/assets/images/marker-icon.png',
+  iconSize: [40, 50],
+})
 
-export default CustomDisplayPositionMap
+export default CustomMooringPositionMap

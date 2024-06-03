@@ -34,6 +34,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   editMode,
   closeModal,
   getCustomer,
+  getCustomerRecord,
   toastRef,
 }) => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -163,12 +164,12 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       errors.pinCode = 'Zipcode code is required'
       if (!firstError) firstError = 'pinCode'
     }
-    if (!selectedState || !selectedState.name) {
+    if (!selectedState) {
       errors.state = 'State is required'
       if (!firstError) firstError = 'state'
     }
 
-    if (!selectedCountry || !selectedCountry.name) {
+    if (!selectedCountry) {
       errors.country = 'Country is required'
       if (!firstError) firstError = 'country'
     }
@@ -261,16 +262,16 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   }
 
   const handleEditMode = () => {
-    setValue(customer.note || '')
-    setCustomerName(customer.customerName || '')
-    setCustomerId(customer.customerId || '')
-    setPhone(customer.phone || '')
-    setEmail(customer.emailAddress || '')
-    setStreetHouse(customer.streetHouse || '')
-    setSectorBlock(customer.aptSuite || '')
-    setPinCode(customer.zipCode || '')
-    setSelectedState(customer.state || '')
-    setSelectedCountry(customer.country || '')
+    setValue(customer?.note || '')
+    setCustomerName(customer?.customerName || '')
+    setCustomerId(customer?.customerId || '')
+    setPhone(customer?.phone || '')
+    setEmail(customer?.emailAddress || '')
+    setStreetHouse(customer?.streetHouse || '')
+    setSectorBlock(customer?.aptSuite || '')
+    setPinCode(customer?.zipCode || '')
+    setSelectedState(customer?.stateResponseDto?.name || undefined)
+    setSelectedCountry(customer?.countryResponseDto?.name || undefined)
     setGpsCoordinatesValue(mooringResponseDtoList[0]?.gpsCoordinates || '')
     setFormData((prevState: any) => ({
       ...prevState,
@@ -360,6 +361,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
   const UpdateCustomer = async () => {
     const errors = validateFields()
+
     if (Object.keys(errors).length > 0) {
       return
     }
@@ -370,29 +372,60 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       phone: phone,
       streetHouse: streetHouse,
       aptSuite: sectorBlock,
-      state: selectedState?.id,
-      country: selectedCountry?.id,
+      state: selectedState?.id ? selectedState?.id : customer?.stateResponseDto?.id,
+      country: selectedCountry?.id ? selectedCountry?.id : customer?.stateResponseDto?.id,
       zipCode: pinCode,
       customerOwnerId: selectedCustomerId,
       mooringRequestDto: {
-        mooringId: formData.mooringId,
+        id: customer?.mooringResponseDtoList[0]?.id,
+        mooringId: formData.mooringId
+          ? formData.mooringId
+          : customer?.mooringResponseDtoList[0]?.mooringId,
         customerId: customerId,
-        harbor: formData.harbor,
-        waterDepth: formData.waterDepth,
+        harbor: formData.harbor ? formData.harbor : customer?.mooringResponseDtoList[0]?.harbor,
+        waterDepth: formData.waterDepth
+          ? formData.waterDepth
+          : customer?.mooringResponseDtoList[0]?.waterDepth,
         gpsCoordinates: gpsCoordinatesValue,
-        boatyardId: formData.boatyardName.id,
-        boatName: formData.boatName,
-        boatSize: formData.boatSize,
-        boatTypeId: formData.boatType.id,
-        boatWeight: formData.boatWeight,
-        sizeOfWeightId: formData.sizeOfWeight.id,
-        typeOfWeightId: formData.typeOfWeight.id,
-        eyeConditionId: formData.conditionOfEye.id,
-        topChainConditionId: formData.topChainCondition.id,
-        bottomChainConditionId: formData.bottomChainCondition.id,
-        shackleSwivelConditionId: formData.shackleSwivelCondition.id,
-        pennantConditionId: formData.pennantCondition.id,
-        depthAtMeanHighWater: formData.deptAtMeanHighWater,
+        // boatyardId: formData.boatyardName.id
+        //   ? formData.boatyardName.id
+        //   : customer?.mooringResponseDtoList[0]?.boatyardName,
+        boatName: formData.boatName
+          ? formData.boatName
+          : customer?.mooringResponseDtoList[0]?.boatName,
+        boatSize: formData.boatSize
+          ? formData.boatSize
+          : customer?.mooringResponseDtoList[0]?.boatSize,
+        boatTypeId: formData.boatType.id
+          ? formData.boatType.id
+          : customer?.mooringResponseDtoList[0]?.boatType.id,
+        boatWeight: formData.boatWeight
+          ? formData.boatWeight
+          : customer?.mooringResponseDtoList[0]?.boatWeight,
+        sizeOfWeightId: formData.sizeOfWeight.id
+          ? formData.sizeOfWeight.id
+          : customer?.mooringResponseDtoList[0]?.sizeOfWeight.id,
+        typeOfWeightId: formData.typeOfWeight.id
+          ? formData.typeOfWeight.id
+          : customer?.mooringResponseDtoList[0]?.typeOfWeight.id,
+        eyeConditionId: formData.conditionOfEye.id
+          ? formData.conditionOfEye.id
+          : customer?.mooringResponseDtoList[0]?.eyeCondition.id,
+        topChainConditionId: formData.topChainCondition.id
+          ? formData.topChainCondition.id
+          : customer?.mooringResponseDtoList[0]?.topChainCondition.id,
+        bottomChainConditionId: formData.bottomChainCondition.id
+          ? formData.bottomChainCondition.id
+          : customer?.mooringResponseDtoList[0]?.bottomChainCondition.id,
+        shackleSwivelConditionId: formData.shackleSwivelCondition.id
+          ? formData.shackleSwivelCondition.id
+          : customer?.mooringResponseDtoList[0]?.shackleSwivelCondition.id,
+        pennantConditionId: formData.pennantCondition.id
+          ? formData.pennantCondition.id
+          : customer?.mooringResponseDtoList[0]?.pennantCondition.id,
+        depthAtMeanHighWater: formData.deptAtMeanHighWater
+          ? formData.deptAtMeanHighWater
+          : customer?.mooringResponseDtoList[0]?.deptAtMeanHighWater,
         customerOwnerId: selectedCustomerId,
         // statusId: 1,
       },
@@ -400,9 +433,28 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     const response = await updateCustomer({
       payload: editCustomerPayload,
       id: customer?.id,
-    })
-    closeModal()
-    getCustomer()
+    }).unwrap()
+    const { status, message } = response as CustomerResponse
+    if (status === 200 || status === 201) {
+      closeModal()
+      getCustomer()
+      if (getCustomerRecord) {
+        getCustomerRecord()
+      }
+      toastRef?.current?.show({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'Customer Updated successfully',
+        life: 3000,
+      })
+    } else {
+      toastRef?.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: message,
+        life: 3000,
+      })
+    }
   }
 
   const fetchDataAndUpdate = useCallback(async () => {

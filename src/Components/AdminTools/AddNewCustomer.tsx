@@ -246,8 +246,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       street,
       apt,
       zipCode,
-      stateId: state?.id ? state?.id : customerData?.state,
-      countryId: country?.id ? country?.id : customerData?.country,
+      stateId: state?.id ? state?.id : customerData?.stateResponseDto?.id,
+      countryId: country?.id ? country?.id : customerData?.countryResponseDto?.id,
       roleId: role?.id ? role?.id : customerData?.role,
       customerOwnerId: editCustomerMode ? '' : customerData?.customerOwnerId,
     }

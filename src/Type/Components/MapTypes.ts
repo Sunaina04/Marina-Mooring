@@ -25,7 +25,12 @@ export interface DisplayMapProps {
 }
 
 export interface CustomDisplayPositionMapProps {
+  style?: React.CSSProperties
   position: LatLngExpression
   zoomLevel?: number
   popUpMessage?: string
+}
+
+export interface CustomMooringPositionMapProps extends CustomDisplayPositionMapProps {
+  icon?: L.Icon
 }

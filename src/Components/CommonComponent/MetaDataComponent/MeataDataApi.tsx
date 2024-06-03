@@ -94,24 +94,24 @@ export const TypeOfWeightData = () => {
   return { getTypeOfWeightData }
 }
 
-// export const CustomersData = (customerOwnerId: any) => {
-//   const [getCustomers] = useGetCustomersDataMutation()
+export const CustomersData = (customerOwnerId: any) => {
+  const [getCustomers] = useGetCustomersDataMutation()
 
-//   const fetchCustomersData = async (getData: any) => {
-//     try {
-//       const response = await getData({ customerOwnerId: customerOwnerId })
-//       const { status, content } = response.data as MetaDataResponse
-//       return status === 200 && Array.isArray(content) ? content : null
-//     } catch (error) {
-//       console.error('Error fetching metadata:', error)
-//       return null
-//     }
-//   }
+  const fetchCustomersData = async (getData: any) => {
+    try {
+      const response = await getData({ customerOwnerId: customerOwnerId })
+      const { status, content } = response.data as MetaDataResponse
+      return status === 200 && Array.isArray(content) ? content : null
+    } catch (error) {
+      console.error('Error fetching metadata:', error)
+      return null
+    }
+  }
 
-//   const getCustomersData = async () => ({ customersData: await fetchCustomersData(getCustomers) })
+  const getCustomersData = async () => ({ customersData: await fetchCustomersData(getCustomers) })
 
-//   return { getCustomersData }
-// }
+  return { getCustomersData }
+}
 
 export const BoatyardNameData = (customerOwnerId: any) => {
   const [getboatyardName] = useGetBoatyardsTypeMutation()

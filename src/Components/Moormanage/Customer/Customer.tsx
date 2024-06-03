@@ -31,6 +31,8 @@ import { Params } from '../../../Type/CommonType'
 import { Toast } from 'primereact/toast'
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
+import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
+import CustomMooringPositionMap from '../../Map/CustomMooringPositionMap'
 
 // const Customer = () => {
 //   return (
@@ -54,6 +56,7 @@ const Customer = () => {
   const [mooringRowData, setMooringRowData] = useState<MooringPayload>()
   const [dialogVisible, setDialogVisible] = useState(false)
   const [searchText, setSearchText] = useState('')
+  const [customerId, setCustomerId] = useState()
 
   const [getCustomer] = useGetCustomerMutation()
   const [deleteCustomer] = useDeleteCustomerMutation()
@@ -112,6 +115,7 @@ const Customer = () => {
 
   const handleCustomerTableRowClick = (rowData: any) => {
     setCustomerRecord(true)
+    setCustomerId(rowData.data.id)
     getCustomersWithMooring(rowData.data.id)
   }
 
@@ -221,12 +225,22 @@ const Customer = () => {
     }
   }
 
+  const coordinatesString = customerRecordData?.mooringResponseDtoList[0]?.gpsCoordinates
+  const coordinatesArray = coordinatesString?.split(' ').map(parseFloat)
+  console.log(coordinatesArray)
+
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       getCustomerData()
     }, 600)
     return () => clearTimeout(timeoutId)
   }, [searchText, selectedCustomerId])
+
+  // console.log(
+  //   'mooringData.map(value => value.gpsCoordinates)',
+  //   mooringData.map((value) => value.gpsCoordinates),
+  //   mooringRowData?.gpsCoordinates,
+  // )
 
   return (
     <div className={modalVisible ? 'backdrop-blur-lg' : ''}>
@@ -242,6 +256,11 @@ const Customer = () => {
                 editMode={editMode}
                 closeModal={handleModalClose}
                 getCustomer={getCustomerData}
+                getCustomerRecord={() => {
+                  if (customerId) {
+                    getCustomersWithMooring(customerId)
+                  }
+                }}
                 toastRef={toast}
               />
             }
@@ -334,16 +353,17 @@ const Customer = () => {
         {/* middle container */}
 
         <div className="min-w-[20vw]">
-          <img
+          {/* <img
             src="/assets/images/map.png"
             className="w-[413px] h-full object-cover rounded-md border-[1px] border-gray-300"
             alt="Sea Image"
-          />
-          <div className="absolute top-5 left-0" data-testid="timeline1">
-            {/* <Timeline /> */}
-          </div>
-          <div className="absolute top-20 right-0" data-testid="timeline2">
-            {/* <Timeline /> */}
+          /> */}
+          <div className="max-w-[413px] rounded-md border-[1px]">
+            <CustomMooringPositionMap
+              position={coordinatesArray || [30.698, 76.657]}
+              zoomLevel={10}
+              style={{ height: '700px' }}
+            />
           </div>
         </div>
 
