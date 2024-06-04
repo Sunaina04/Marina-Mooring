@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import CustomModal from '../../CustomComponent/CustomModal'
-import { FormsPayload, FormsResponse } from '../../../Type/ApiTypes'
+import { ErrorResponse, FormsPayload, FormsResponse } from '../../../Type/ApiTypes'
 import {
   useDownloadFormMutation,
   useGetFormsMutation,
@@ -42,6 +42,8 @@ const Forms = () => {
         filename: rowData.formName,
       }).unwrap()
     } catch (error) {
+      const { message } = error as ErrorResponse
+
       console.error('Error fetching forms:', error)
     }
   }
@@ -54,6 +56,7 @@ const Forms = () => {
         setFormsData(content)
       }
     } catch (error) {
+      const { message } = error as ErrorResponse
       console.error('Error fetching forms:', error)
     }
   }

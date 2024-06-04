@@ -5,7 +5,7 @@ import { Dropdown } from 'primereact/dropdown'
 import { HeaderProps } from '../../../Type/ComponentBasedType'
 import { useDispatch, useSelector } from 'react-redux'
 import { useGetUsersMutation } from '../../../Services/AdminTools/AdminToolsApi'
-import { CustomerPayload, GetUserResponse } from '../../../Type/ApiTypes'
+import { CustomerPayload, ErrorResponse, GetUserResponse } from '../../../Type/ApiTypes'
 import { setCustomerId, setCustomerName, selectCustomerName } from '../../../Store/Slice/userSlice'
 
 const Header: React.FC<HeaderProps> = ({ header }) => {
@@ -38,7 +38,8 @@ const Header: React.FC<HeaderProps> = ({ header }) => {
         }
       }
     } catch (error) {
-      console.error('Error occurred while fetching customer data:', error)
+      const { message } = error as ErrorResponse
+      console.error('Error occurred while fetching customer data:', message)
     }
   }, [getUser])
 
