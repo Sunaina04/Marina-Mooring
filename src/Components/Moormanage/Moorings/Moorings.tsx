@@ -433,93 +433,90 @@ const Moorings = () => {
         </div>
 
         <div className="">
-          <div
-            style={{
-              height: '51px',
-              border: '0.96 px solid #D5E1EA',
-            }}
-            className={'flex bg-[#00426F]  rounded-tr-[5px] rounded-xl'}>
-            <div className="flex ">
-              <span className="flex  text-[15px]  text-[#FFFFFF] font-[700]">Customers Record</span>
-
-              <span>
+          <div style={{ width: '500px', height: '650px' }}>
+            <div className="bg-[#00426F] rounded-r-md  rounded-l-md flex justify-between pb-2">
+              <div className="text-sm font-semibold rounded-t-md bg-[]">
+                <h1 className="p-4 text-white">{'Customers Record'}</h1>
+              </div>
+              <div className="flex">
                 <FaEdit
-                  className="ml-4 mt-1"
-                  onClick={handleEdit}
-                  data-testid="edit"
-                  style={{ color: 'white', cursor: mooringRecord ? 'pointer' : 'not-allowed' }}
+                  // onClick={handleEdit}
+                  className="mr-3 mt-3 text-[white]"
+                  data-testid="FaEdit"
+                  style={{ cursor: mooringRecord ? 'pointer' : 'not-allowed' }}
                 />
-              </span>
-
-              <RiDeleteBin5Fill
-                onClick={() => {
-                  handleDelete()
-                }}
-                className="text-white mr-2 mt-3"
-                data-testid="RiDeleteBin5Fill"
-                style={{ color: 'white', cursor: mooringRecord ? 'pointer' : 'not-allowed' }}
-              />
+                <RiDeleteBin5Fill
+                  onClick={handleDelete}
+                  className="text-white mr-2 mt-3"
+                  data-testid="RiDeleteBin5Fill"
+                  style={{ cursor: mooringRecord ? 'pointer' : 'not-allowed' }}
+                />
+              </div>
             </div>
-          </div>
 
-          <div style={{ border: '1px solid red', height: '650px' }} className="w-full">
-            <div className="bg-[#FFFFFF] px-2">
-              <div className="flex flex-wrap gap-20 text-[14px] ">
-                <div className=" mt-2 ">
-                  <p className="text-[14px] font-[400]  text-[#000000]">
-                    ID: {customerRecordData?.customerId}
-                  </p>
-                  <p className="mt-4  w-40 text-[#000000] font-[400] ">
-                    Phone: {customerRecordData?.phone}
-                  </p>
-                </div>
-                <div className="">
-                  <p className="text-[14px] font-[400] mt-2 text-[#000000]">
-                    Name: {customerRecordData?.customerName}
-                  </p>
-                  <p className="text-[14px] font-[400] text-[#000000] mt-3">
-                    Email: {customerRecordData?.emailAddress}
-                  </p>
-                </div>
-              </div>
-              <div className="text-[14px] font-[400] mt-3 text-[#000000]">
-                <p>
-                  Address: {customerRecordData?.streetHouse} {customerRecordData?.aptSuite}
-                  {', '}
-                  {customerRecordData?.stateResponseDto?.name}
-                  {', '}
-                  {customerRecordData?.countryResponseDto?.name}
-                </p>
-              </div>
-              <div className="text-[14px] mt-4 pb-2 ">
-                <div>
-                  <h1 className="">Boatyard: </h1>
-                </div>
-                <div className="flex gap-3">
-                  {boatYardData.map((boatyard, index) => (
-                    <p
-                      key={index}
-                      style={{
-                        borderRadius: '5px',
-                        fontWeight: '400',
-                        fontSize: '12px',
-                        color: '#10293A',
-                        backgroundColor: '#D5E1EA',
-                        padding: '5px',
-                        margin: '-5px 0px 05px 5px',
-                      }}>
-                      {boatyard}
+            {customerRecordData ? (
+              <div className="bg-[#FFFFFF] px-2">
+                <div className="flex flex-wrap gap-20 text-[14px] ">
+                  <div className=" mt-2 ">
+                    <p className="text-[14px] font-[400]  text-[#000000]">
+                      ID : {customerRecordData?.customerId}
                     </p>
-                  ))}
+                    <p className="mt-4  w-40 text-[#000000] font-[400] ">
+                      Phone : {customerRecordData?.phone}
+                    </p>
+                  </div>
+                  <div className="">
+                    <p className="text-[14px] font-[400] mt-2 text-[#000000]">
+                      Name : {customerRecordData?.customerName}
+                    </p>
+                    <p className="text-[14px] font-[400] text-[#000000] mt-3">
+                      Email : {customerRecordData?.emailAddress}
+                    </p>
+                  </div>
+                </div>
+                <div className="text-[14px] font-[400] mt-3 text-[#000000]">
+                  <p>
+                    Address : {customerRecordData?.streetHouse} {customerRecordData?.aptSuite}
+                    {customerRecordData?.stateResponseDto?.name}
+                    {customerRecordData?.countryResponseDto?.name}
+                  </p>
+                </div>
+                <div className=" flex text-[14px] mt-4 pb-2 overflow-x-auto">
+                  <div>
+                    <h1 className="">Boatyard : </h1>
+                  </div>
+                  <div className="">
+                    {boatYardData.map((boatyard, index) => (
+                      <p
+                        key={index}
+                        style={{
+                          borderRadius: '5px',
+                          fontWeight: '400',
+                          fontSize: '12px',
+                          color: '#10293A',
+                          backgroundColor: '#D5E1EA',
+                          padding: '5px',
+                          // width:"20px"
+                        }}>
+                        {boatyard}
+                      </p>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : (
+              <div className="text-center bg-[#FFFFFF] px-2 h-[150px]">
+                <img
+                  src="/assets/images/empty.png"
+                  alt="Empty Data"
+                  className="w-10 mx-auto mb-3"
+                />
+                <p className="text-gray-500 mb-10">No data available</p>
+              </div>
+            )}
 
-            <div style={{ border: '1px solid red' }} className="w-full">
-              <h3
-                className={`${isChecked ? 'bg-[#00426F] text-[#FFFFFF]' : ''} font-[700] text-[15px] h-12 py-3 pl-2 `}>
-                Moorings
-              </h3>
+            <div style={{ height: '505px', backgroundColor: 'white' }}>
+              <h3 className="bg-[#00426F] text-[#FFFFFF] font-[700] th-12 py-3 pl-2 ">Moorings</h3>
 
               <div data-testid="customer-admin-users-table" className="overflow-x-auto">
                 <DataTableComponent
@@ -533,13 +530,22 @@ const Moorings = () => {
                   data={mooringResponseData}
                   columns={tableColumnsMoorings}
                   onRowClick={(rowData: any) => {
-                    console.log(rowData)
                     setDialogVisible(true)
                     setMooringRowData(rowData.data)
                   }}
                   style={{
                     cursor: 'pointer',
                   }}
+                  emptyMessage={
+                    <div className="text-center mt-40">
+                      <img
+                        src="/assets/images/empty.png"
+                        alt="Empty Data"
+                        className="w-28 mx-auto mb-4"
+                      />
+                      <p className="text-gray-500">No data available</p>
+                    </div>
+                  }
                 />
               </div>
             </div>
@@ -563,9 +569,9 @@ const Moorings = () => {
                   <div className="font-bolder text-[black]">Mooring Information</div>
                   <div className="font-bold mt-1">
                     <FaEdit
-                      onClick={handleMooringEdit}
+                      // onClick={handleMooringEdit}
                       color="#0098FF"
-                      style={{ cursor: 'pointer' }}
+                      style={{ cursor: 'not-allowed' }}
                     />
                   </div>
                 </div>
