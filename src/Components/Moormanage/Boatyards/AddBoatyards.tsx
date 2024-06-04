@@ -2,7 +2,10 @@ import InputComponent from '../../CommonComponent/InputComponent'
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { Button } from 'primereact/button'
 import { Dropdown } from 'primereact/dropdown'
-import { useAddBoatyardsMutation } from '../../../Services/MoorManage/MoormanageApi'
+import {
+  useAddBoatyardsMutation,
+  useUpdateBoatyardsMutation,
+} from '../../../Services/MoorManage/MoormanageApi'
 import { BoatYardProps } from '../../../Type/ComponentBasedType'
 import { Country, State } from '../../../Type/CommonType'
 import { BoatYardResponse } from '../../../Type/ApiTypes'
@@ -12,11 +15,14 @@ import { ProgressSpinner } from 'primereact/progressspinner'
 import { LatLngExpression } from 'leaflet'
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
+import { async } from 'q'
 
 const AddBoatyards: React.FC<BoatYardProps> = ({
   closeModal,
   boatYardData,
   setModalVisible,
+  customerData,
+  editMode,
   toastRef,
 }) => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -38,6 +44,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
   const [isLoading, setIsLoading] = useState(false)
   const [addBoatyard] = useAddBoatyardsMutation()
+  const [updateCustomer] = useUpdateBoatyardsMutation()
   const { getStatesData } = StatesData()
   const { getCountriesData } = CountriesData()
 
@@ -88,7 +95,9 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
     setGpsCoordinatesValue(concatenatedValue)
   }
 
-  const handleSave = async () => {
+  const handleEditMode = () => {}
+
+  const saveBoatyards = async () => {
     const errors = validateFields()
     if (Object.keys(errors).length > 0) {
       setErrorMessage(errors)
@@ -145,6 +154,13 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
     }
   }
 
+  const handleSave = () => {
+    if (editMode) {
+    } else {
+      saveBoatyards()
+    }
+  }
+
   const handleBack = () => {
     setModalVisible(false)
   }
@@ -165,6 +181,12 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   useEffect(() => {
     fetchDataAndUpdate()
   }, [fetchDataAndUpdate])
+
+  useEffect(() => {
+    if (editMode && customerData) {
+      handleEditMode()
+    }
+  }, [editMode, customerData])
 
   return (
     <>

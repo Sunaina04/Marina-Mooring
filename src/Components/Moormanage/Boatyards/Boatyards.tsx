@@ -6,9 +6,12 @@ import {
   BoatYardData,
   BoatYardPayload,
   BoatYardResponse,
+  DeleteCustomerResponse,
   MooringWithBoatYardResponse,
 } from '../../../Type/ApiTypes'
 import {
+  useDeleteBoatyardsMutation,
+  useDeleteCustomerMutation,
   useGetBoatyardsMutation,
   useGetMooringWithBoatyardMutation,
 } from '../../../Services/MoorManage/MoormanageApi'
@@ -27,6 +30,8 @@ import { Dialog } from 'primereact/dialog'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
+import { FaEdit } from 'react-icons/fa'
+import { RiDeleteBin5Fill } from 'react-icons/ri'
 
 const Boatyards = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -34,6 +39,7 @@ const Boatyards = () => {
   const role = userData?.role?.id
   const [modalVisible, setModalVisible] = useState(false)
   const [boatyardsData, setboatyardsData] = useState<BoatYardPayload[]>([])
+ 
 
   const [mooringWithBoatyardsData, setMooringWithBoatyardsData] = useState<
     MooringWithBoatYardResponse[]
@@ -41,6 +47,8 @@ const Boatyards = () => {
   const [filteredboatyardsData, setFilteredboatyardsData] = useState<BoatYardPayload[]>([])
   const [expandedRows, setExpandedRows] = useState<any>()
   const [selectedBoatYard, setSelectedBoatYard] = useState<any>()
+  console.log("dataaa",selectedBoatYard);
+  
   const [editMode, setEditMode] = useState(false)
   const [selectedRowId, setSelectedRowID] = useState()
   const [searchText, setSearchText] = useState('')
@@ -49,8 +57,13 @@ const Boatyards = () => {
   const [isLoader, setIsLoader] = useState(false)
   const [dialogVisible, setDialogVisible] = useState(false)
   const [mooringRowData, setMooringRowData] = useState<any>([])
-
+  // console.log("mooringRowData",mooringRowData);
+  const [boatYardRecord, setBoatyardRecord] = useState(false)
+  const [boatYardRecordData, setBoatYardRecordData] = useState<any>([])
+  console.log("boatYardRecordData",boatYardRecordData.id);
   const [getBoatyards] = useGetBoatyardsMutation()
+  const [deleteBoatyard] =  useDeleteBoatyardsMutation()
+
   const [getMooringsWithBoatyard] = useGetMooringWithBoatyardMutation()
 
   const toast = useRef<Toast>(null)
@@ -226,18 +239,72 @@ const Boatyards = () => {
 
   const handleRowClickBoatYardDetail = (rowData: any) => {
     setSelectedBoatYard('')
-    setMooringWithBoatyardsData([])
+    setBoatyardRecord(true)
     const timeoutId = setTimeout(() => {
       setSelectedBoatYard(rowData.data)
+    
+
     }, 600)
     return () => clearTimeout(timeoutId)
   }
 
-  const getRowStyle = (rowData: any) => {
-    return {
-      backgroundColor: rowData.id === selectedRowId ? '#FFD700' : '',
+
+  const handleEdit = (rowData: any) => {
+    if (boatYardRecord == true) {
+      setBoatYardRecordData(selectedBoatYard)
+      setModalVisible(true)
+      setEditMode(true)
     }
+    
   }
+
+
+  const handleDelete = async (rowData: any) => {
+    if (boatYardRecord == true) {
+      try {
+        const response = await deleteBoatyard({id:selectedBoatYard?.id}).unwrap()
+        const { status, message } = response as DeleteCustomerResponse
+        console.log(response)
+        if (status === 200) {
+          toast.current?.show({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'BoatYard deleted successfully',
+            life: 3000,
+          })
+          setSelectedBoatYard("")
+          getBoatyardsData()
+          
+        } else {
+          toast.current?.show({
+            severity: 'error',
+            summary: 'Error',
+            detail: message,
+            life: 3000,
+          })
+        }
+        setBoatYardRecordData('')
+      } catch (error) {
+        toast.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Error while deleting customer',
+          life: 3000,
+        })
+      }
+    }
+
+  setBoatyardRecord(false)
+
+  
+    
+  }
+
+
+
+
+
+
 
   const parseCoordinates = (coordinates: any) => {
     if (!coordinates) return null
@@ -343,6 +410,7 @@ const Boatyards = () => {
             buttonText={'ADD NEW'}
             children={
               <AddBoatyards
+            
                 closeModal={handleModalClose}
                 boatYardData={getBoatyardsData}
                 customerData={selectedBoatYard}
@@ -453,6 +521,7 @@ const Boatyards = () => {
         </div>
 
         <div
+          // style={{border:"1px solid red"}}
           data-testid="customer-admin-users-table"
           className=" flex-grow bg-[#FFFFFF] rounded-xl border-[1px] border-gray-300 w-[515px] h-[695px] mr-[50px]  mb-0 ">
           <div className="">
@@ -461,7 +530,23 @@ const Boatyards = () => {
                 className="flex align-items-center justify-between bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px]"
                 style={{ color: '#FFFFFF' }}>
                 <h1 className="p-4">{properties.boatyardMooringHeader}</h1>
+                <div className="flex">
+                <FaEdit
+                  onClick={handleEdit}
+                  className="mr-4 mt-3  text-[white]"
+                  data-testid="FaEdit"
+                  style={{ cursor: boatYardRecord ? 'pointer' : 'not-allowed' }}
+                />
+                <RiDeleteBin5Fill
+                  onClick={handleDelete}
+                  className="text-white mr-4 mt-3"
+                  data-testid="RiDeleteBin5Fill"
+                  style={{ cursor: boatYardRecord ? 'pointer' : 'not-allowed' }}
+                />
               </div>
+              </div>
+
+              
             </div>
             <div className={`bg-[] mt-3 ml-5 ${isLoader ? 'blur-screen' : ''}`}>
               <div
@@ -493,6 +578,7 @@ const Boatyards = () => {
           {selectedBoatYard ? (
             <>
               <div
+             
                 className={`flex justify-between mt-4 p-3 ml-5 font-normal text-[12px] ${isLoader ? 'blur-screen' : ''}`}>
                 <p className="">
                   {selectedBoatYard?.street} {selectedBoatYard?.apt} ,
@@ -500,9 +586,11 @@ const Boatyards = () => {
                   {selectedBoatYard?.countryResponseDto?.name}
                 </p>
 
-                <p className="mr-[6rem]">{selectedBoatYard?.mooringInventoried}</p>
+                <p
+                // style={{border:"1px solid red"}}
+                className="mr-[13rem]">{selectedBoatYard?.mooringInventoried}</p>
 
-                <p className="underline mr-[1rem]">{selectedBoatYard?.gpsCoordinates}</p>
+                <p className="underline mr-[4rem]">{selectedBoatYard?.gpsCoordinates}</p>
               </div>
 
               <div
@@ -531,7 +619,9 @@ const Boatyards = () => {
                   strokeWidth="4"
                 />
               )}
-              <div className="bg-#00426F overflow-x-hidden  mt-[13px] h-[250px] table-container  ">
+              <div 
+             
+              className="bg-#00426F overflow-x-hidden  mt-[13px] h-[250px] table-container  ">
                 <DataTableComponent
                   tableStyle={{
                     fontSize: '12px',
@@ -670,3 +760,5 @@ const Boatyards = () => {
 }
 
 export default Boatyards
+
+
