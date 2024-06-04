@@ -34,7 +34,6 @@ import CustomMooringPositionMap from '../../Map/CustomMooringPositionMap'
 // }
 
 const Moorings = () => {
-  const selectedCustomerId = useSelector(selectCustomerId)
   const userData = useSelector((state: any) => state.user?.userData)
   const role = userData?.role?.id
   const [modalVisible, setModalVisible] = useState(false)

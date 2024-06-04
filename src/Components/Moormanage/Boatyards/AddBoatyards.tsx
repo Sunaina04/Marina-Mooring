@@ -44,7 +44,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
   const [isLoading, setIsLoading] = useState(false)
   const [addBoatyard] = useAddBoatyardsMutation()
-  const [updateCustomer] = useUpdateBoatyardsMutation()
+  const [updateBoatyard] = useUpdateBoatyardsMutation()
   const { getStatesData } = StatesData()
   const { getCountriesData } = CountriesData()
 
@@ -95,7 +95,22 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
     setGpsCoordinatesValue(concatenatedValue)
   }
 
-  const handleEditMode = () => {}
+  const handleEditMode = () => {
+    if (editMode && customerData) {
+      setBoatyardId(customerData?.boatyardId || '')
+      setBoatyardName(customerData?.boatyardName || '')
+      setPhone(customerData?.phone || '')
+      setEmailAddress(customerData?.emailAddress || '')
+      setAddress(customerData?.street || '')
+      setAptSuite(customerData?.apt || '')
+      setZipCode(customerData?.zipCode || '')
+      setState(customerData?.stateResponseDto?.name || undefined)
+      setMainContact(customerData?.mainContact || '')
+      setCountry(customerData?.countryResponseDto?.name || undefined)
+      setGpsCoordinatesValue(customerData?.gpsCoordinates || '')
+      setState(customerData?.stateResponseDto?.name || undefined)
+    }
+  }
 
   const saveBoatyards = async () => {
     const errors = validateFields()
@@ -154,8 +169,69 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
     }
   }
 
+  const updateBoatyards = async () => {
+    const errors = validateFields()
+    if (Object.keys(errors).length > 0) {
+      setErrorMessage(errors)
+      return
+    }
+    setIsLoading(true)
+
+    try {
+      const editBoatYardPayload = {
+        boatyardId: boatyardId,
+        boatyardName: boatyardName,
+        phone: phone,
+        emailAddress: emailAddress,
+        street: address,
+        apt: aptSuite,
+        zipCode: zipCode,
+        contact: mainContact,
+        stateId: state?.id ? state?.id : customerData?.stateResponseDto?.id,
+        countryId: country?.id ? country?.id : customerData?.countryResponseDto?.id,
+        mainContact: mainContact,
+        gpsCoordinates: gpsCoordinatesValue,
+        customerOwnerId: selectedCustomerId,
+      }
+      const response = await updateBoatyard({
+        payload: editBoatYardPayload,
+        id: customerData?.id,
+      }).unwrap()
+      const { status, message } = response as BoatYardResponse
+
+      if (status === 200 || status === 201) {
+        closeModal()
+        boatYardData()
+        setIsLoading(false)
+        toastRef?.current?.show({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Boatyard Updated successfully',
+          life: 3000,
+        })
+      } else {
+        setIsLoading(false)
+        toastRef?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+      }
+    } catch (error) {
+      setIsLoading(false)
+      toastRef?.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: error,
+        life: 3000,
+      })
+    }
+  }
+
   const handleSave = () => {
     if (editMode) {
+      updateBoatyards()
     } else {
       saveBoatyards()
     }

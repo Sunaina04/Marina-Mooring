@@ -235,6 +235,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     const errors = validateFields()
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors)
+      console.log(errors)
       return
     }
 

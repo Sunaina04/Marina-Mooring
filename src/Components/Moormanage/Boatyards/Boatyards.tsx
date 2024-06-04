@@ -39,7 +39,6 @@ const Boatyards = () => {
   const role = userData?.role?.id
   const [modalVisible, setModalVisible] = useState(false)
   const [boatyardsData, setboatyardsData] = useState<BoatYardPayload[]>([])
- 
 
   const [mooringWithBoatyardsData, setMooringWithBoatyardsData] = useState<
     MooringWithBoatYardResponse[]
@@ -47,23 +46,17 @@ const Boatyards = () => {
   const [filteredboatyardsData, setFilteredboatyardsData] = useState<BoatYardPayload[]>([])
   const [expandedRows, setExpandedRows] = useState<any>()
   const [selectedBoatYard, setSelectedBoatYard] = useState<any>()
-  console.log("dataaa",selectedBoatYard);
-  
   const [editMode, setEditMode] = useState(false)
-  const [selectedRowId, setSelectedRowID] = useState()
   const [searchText, setSearchText] = useState('')
   const [searchFieldText, setSearchFieldText] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [isLoader, setIsLoader] = useState(false)
   const [dialogVisible, setDialogVisible] = useState(false)
   const [mooringRowData, setMooringRowData] = useState<any>([])
-  // console.log("mooringRowData",mooringRowData);
   const [boatYardRecord, setBoatyardRecord] = useState(false)
-  const [boatYardRecordData, setBoatYardRecordData] = useState<any>([])
-  console.log("boatYardRecordData",boatYardRecordData.id);
-  const [getBoatyards] = useGetBoatyardsMutation()
-  const [deleteBoatyard] =  useDeleteBoatyardsMutation()
 
+  const [getBoatyards] = useGetBoatyardsMutation()
+  const [deleteBoatyard] = useDeleteBoatyardsMutation()
   const [getMooringsWithBoatyard] = useGetMooringWithBoatyardMutation()
 
   const toast = useRef<Toast>(null)
@@ -76,6 +69,8 @@ const Boatyards = () => {
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchFieldText('')
     setSearchText(e.target.value)
+    setSelectedBoatYard('')
+    setMooringRowData('')
   }
 
   const handleSearchField = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,6 +84,9 @@ const Boatyards = () => {
 
   const handleModalClose = () => {
     setModalVisible(false)
+    setEditMode(false)
+    setSelectedBoatYard('')
+    setMooringRowData('')
   }
 
   const ActionButtonColumn: ActionButtonColumnProps = {
@@ -242,29 +240,22 @@ const Boatyards = () => {
     setBoatyardRecord(true)
     const timeoutId = setTimeout(() => {
       setSelectedBoatYard(rowData.data)
-    
-
     }, 600)
     return () => clearTimeout(timeoutId)
   }
 
-
   const handleEdit = (rowData: any) => {
     if (boatYardRecord == true) {
-      setBoatYardRecordData(selectedBoatYard)
       setModalVisible(true)
       setEditMode(true)
     }
-    
   }
-
 
   const handleDelete = async (rowData: any) => {
     if (boatYardRecord == true) {
       try {
-        const response = await deleteBoatyard({id:selectedBoatYard?.id}).unwrap()
+        const response = await deleteBoatyard({ id: selectedBoatYard?.id }).unwrap()
         const { status, message } = response as DeleteCustomerResponse
-        console.log(response)
         if (status === 200) {
           toast.current?.show({
             severity: 'success',
@@ -272,9 +263,8 @@ const Boatyards = () => {
             detail: 'BoatYard deleted successfully',
             life: 3000,
           })
-          setSelectedBoatYard("")
+          setSelectedBoatYard('')
           getBoatyardsData()
-          
         } else {
           toast.current?.show({
             severity: 'error',
@@ -283,7 +273,6 @@ const Boatyards = () => {
             life: 3000,
           })
         }
-        setBoatYardRecordData('')
       } catch (error) {
         toast.current?.show({
           severity: 'error',
@@ -294,17 +283,8 @@ const Boatyards = () => {
       }
     }
 
-  setBoatyardRecord(false)
-
-  
-    
+    setBoatyardRecord(false)
   }
-
-
-
-
-
-
 
   const parseCoordinates = (coordinates: any) => {
     if (!coordinates) return null
@@ -410,7 +390,6 @@ const Boatyards = () => {
             buttonText={'ADD NEW'}
             children={
               <AddBoatyards
-            
                 closeModal={handleModalClose}
                 boatYardData={getBoatyardsData}
                 customerData={selectedBoatYard}
@@ -531,22 +510,20 @@ const Boatyards = () => {
                 style={{ color: '#FFFFFF' }}>
                 <h1 className="p-4">{properties.boatyardMooringHeader}</h1>
                 <div className="flex">
-                <FaEdit
-                  onClick={handleEdit}
-                  className="mr-4 mt-3  text-[white]"
-                  data-testid="FaEdit"
-                  style={{ cursor: boatYardRecord ? 'pointer' : 'not-allowed' }}
-                />
-                <RiDeleteBin5Fill
-                  onClick={handleDelete}
-                  className="text-white mr-4 mt-3"
-                  data-testid="RiDeleteBin5Fill"
-                  style={{ cursor: boatYardRecord ? 'pointer' : 'not-allowed' }}
-                />
+                  <FaEdit
+                    onClick={handleEdit}
+                    className="mr-4 mt-3  text-[white]"
+                    data-testid="FaEdit"
+                    style={{ cursor: boatYardRecord ? 'pointer' : 'not-allowed' }}
+                  />
+                  <RiDeleteBin5Fill
+                    onClick={handleDelete}
+                    className="text-white mr-4 mt-3"
+                    data-testid="RiDeleteBin5Fill"
+                    style={{ cursor: boatYardRecord ? 'pointer' : 'not-allowed' }}
+                  />
+                </div>
               </div>
-              </div>
-
-              
             </div>
             <div className={`bg-[] mt-3 ml-5 ${isLoader ? 'blur-screen' : ''}`}>
               <div
@@ -578,7 +555,6 @@ const Boatyards = () => {
           {selectedBoatYard ? (
             <>
               <div
-             
                 className={`flex justify-between mt-4 p-3 ml-5 font-normal text-[12px] ${isLoader ? 'blur-screen' : ''}`}>
                 <p className="">
                   {selectedBoatYard?.street} {selectedBoatYard?.apt} ,
@@ -587,8 +563,10 @@ const Boatyards = () => {
                 </p>
 
                 <p
-                // style={{border:"1px solid red"}}
-                className="mr-[13rem]">{selectedBoatYard?.mooringInventoried}</p>
+                  // style={{border:"1px solid red"}}
+                  className="mr-[13rem]">
+                  {selectedBoatYard?.mooringInventoried}
+                </p>
 
                 <p className="underline mr-[4rem]">{selectedBoatYard?.gpsCoordinates}</p>
               </div>
@@ -619,9 +597,7 @@ const Boatyards = () => {
                   strokeWidth="4"
                 />
               )}
-              <div 
-             
-              className="bg-#00426F overflow-x-hidden  mt-[13px] h-[250px] table-container  ">
+              <div className="bg-#00426F overflow-x-hidden  mt-[13px] h-[250px] table-container  ">
                 <DataTableComponent
                   tableStyle={{
                     fontSize: '12px',
@@ -760,5 +736,3 @@ const Boatyards = () => {
 }
 
 export default Boatyards
-
-
