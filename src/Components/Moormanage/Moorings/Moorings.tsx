@@ -2,12 +2,14 @@ import CustomModal from '../../CustomComponent/CustomModal'
 import AddMoorings from './AddMoorings'
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import {
+  useDeleteMooringsMutation,
   useGetCustomersWithMooringMutation,
   useGetMooringsMutation,
 } from '../../../Services/MoorManage/MoormanageApi'
 import { InputSwitch, InputSwitchChangeEvent } from 'primereact/inputswitch'
 import {
   CustomersWithMooringResponse,
+  DeleteCustomerResponse,
   MooringPayload,
   MooringResponse,
   MooringResponseDtoList,
@@ -24,6 +26,7 @@ import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
 import CustomMooringPositionMap from '../../Map/CustomMooringPositionMap'
+import { RiDeleteBin5Fill } from 'react-icons/ri'
 
 // const Moorings = () => {
 //   return (
@@ -43,9 +46,11 @@ const Moorings = () => {
   const [boatYardData, setBoatYardData] = useState<any[]>([])
   const [selectedCustomer, setSelectedCustomer] = useState<any>()
   const [mooringRowData, setMooringRowData] = useState()
+  const [mooringRecord, setMooringRecord] = useState(false)
   const [editMode, setEditMode] = useState(false)
   const [searchText, setSearchText] = useState('')
   const [customerId, setCustomerId] = useState()
+  const [mooringId, setMooringId] = useState()
   const [rowClick, setRowClick] = useState(false)
   const [filteredMooringData, setFilteredMooringData] = useState<MooringPayload[]>([])
   const [isChecked, setIsChecked] = useState(false)
@@ -55,6 +60,7 @@ const Moorings = () => {
 
   const toast = useRef<Toast>(null)
   const [getMoorings] = useGetMooringsMutation()
+  const [deleteMooring] = useDeleteMooringsMutation()
   const [getCustomerWithMooring] = useGetCustomersWithMooringMutation()
 
   const handleInputChange = (e: InputSwitchChangeEvent) => {
@@ -82,13 +88,51 @@ const Moorings = () => {
 
   const handleMooringRowClick = (rowData: any) => {
     setRowClick(true)
+    setMooringRecord(true)
     setCustomerId(rowData?.customerId)
+    setMooringId(rowData?.id)
     getCustomersWithMooring(rowData?.customerId)
   }
 
   const handleEdit = (rowData: any) => {
     setSelectedCustomer(rowData)
     setEditMode(true)
+  }
+
+  const handleDelete = async (rowData: any) => {
+    if (mooringRecord == true) {
+      try {
+        const response = await deleteMooring({ id: mooringId }).unwrap()
+        const { status, message } = response as DeleteCustomerResponse
+        console.log(response)
+        if (status === 200) {
+          toast.current?.show({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'User deleted successfully',
+            life: 3000,
+          })
+          getMooringsData()
+          setMooringData([])
+        } else {
+          toast.current?.show({
+            severity: 'error',
+            summary: 'Error',
+            detail: message,
+            life: 3000,
+          })
+        }
+        setCustomerRecordData('')
+      } catch (error) {
+        toast.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Error while deleting customer',
+          life: 3000,
+        })
+      }
+    }
+    setMooringRecord(false)
   }
 
   const tableColumns = useMemo(
@@ -179,10 +223,17 @@ const Moorings = () => {
         params.searchText = searchText
       }
       const response = await getMoorings(params).unwrap()
-      const { status, content } = response as MooringResponse
+      const { status, content, message } = response as MooringResponse
       if (status === 200 && Array.isArray(content)) {
         setMooringData(content)
         setFilteredMooringData(content)
+      } else {
+        toast?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
       }
     } catch (error) {
       console.error('Error fetching moorings data:', error)
@@ -383,6 +434,12 @@ const Moorings = () => {
                       style={{ color: 'white' }}
                       onClick={handleEdit}
                       data-testid="edit"
+                    />
+                    <RiDeleteBin5Fill
+                      onClick={handleDelete}
+                      className="text-white mr-2 mt-3"
+                      data-testid="RiDeleteBin5Fill"
+                      style={{ cursor: mooringRecord ? 'pointer' : 'not-allowed' }}
                     />
                   </span>
                 ) : (

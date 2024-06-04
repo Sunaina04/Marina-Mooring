@@ -308,7 +308,7 @@ const Boatyards = () => {
       await getBoatyards(params)
         .unwrap()
         .then(async (response) => {
-          const { status, content } = response as BoatYardResponse
+          const { status, content, message } = response as BoatYardResponse
           if (status === 200 && Array.isArray(content)) {
             setboatyardsData(content)
             setFilteredboatyardsData(content)
@@ -320,6 +320,12 @@ const Boatyards = () => {
             }
           } else {
             setIsLoading(false)
+            toast?.current?.show({
+              severity: 'error',
+              summary: 'Error',
+              detail: message,
+              life: 3000,
+            })
           }
         })
     } catch (error) {
