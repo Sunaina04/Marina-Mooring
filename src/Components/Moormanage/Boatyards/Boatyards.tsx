@@ -237,6 +237,7 @@ const Boatyards = () => {
 
   const handleRowClickBoatYardDetail = (rowData: any) => {
     setSelectedBoatYard('')
+    setMooringWithBoatyardsData([])
     setBoatyardRecord(true)
     const timeoutId = setTimeout(() => {
       setSelectedBoatYard(rowData.data)
