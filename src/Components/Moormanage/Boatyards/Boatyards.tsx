@@ -669,7 +669,7 @@ const Boatyards = () => {
                   <span>ID : </span> {mooringRowData?.id}
                 </p>
                 <p>
-                  <span>Mooring No : </span> {mooringRowData?.mooringNumber}
+                  <span>Mooring ID : </span> {mooringRowData?.mooringId}
                 </p>
                 <p>
                   <span>Boat Name : </span> {mooringRowData?.boatName}

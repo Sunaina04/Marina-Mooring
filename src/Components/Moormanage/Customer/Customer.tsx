@@ -3,14 +3,12 @@ import CustomModal from '../../CustomComponent/CustomModal'
 import AddCustomer from './AddCustomer'
 import { FaEdit } from 'react-icons/fa'
 import { RiDeleteBin5Fill } from 'react-icons/ri'
-import { FaCircle } from 'react-icons/fa6'
 import { Dialog } from 'primereact/dialog'
 
 import {
   useDeleteCustomerMutation,
   useGetCustomerMutation,
   useGetCustomersWithMooringMutation,
-  useGetMooringsMutation,
 } from '../../../Services/MoorManage/MoormanageApi'
 import {
   CustomerPayload,
@@ -18,17 +16,14 @@ import {
   CustomersWithMooringResponse,
   DeleteCustomerResponse,
   MooringPayload,
-  MooringResponse,
   MooringResponseDtoList,
 } from '../../../Type/ApiTypes'
 
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 import Header from '../../Layout/LayoutComponents/Header'
-import { CustomersHeader, TechniciansHeader } from '../../Utils/DataTableHeader'
-import { customerAdmin } from '../../Utils/CustomData'
 import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader'
 import { properties } from '../../Utils/MeassageProperties'
-import { MetaData, Params } from '../../../Type/CommonType'
+import { Params } from '../../../Type/CommonType'
 import { Toast } from 'primereact/toast'
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
@@ -46,11 +41,10 @@ import { GearOffIcon, GearOnIcon, NeedInspectionIcon, NotInUseIcon } from '../..
 
 const Customer = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
-  const userData = useSelector((state: any) => state.user?.userData)
-  const role = userData?.role?.id
   const [modalVisible, setModalVisible] = useState(false)
   const [customerData, setCustomerData] = useState<CustomerPayload[]>([])
   const [editMode, setEditMode] = useState(false)
+  const [editCustomerMode, setEditCustomerMode] = useState(false)
   const [customerRecord, setCustomerRecord] = useState(false)
   const [selectedCustomer, setSelectedCustomer] = useState<any>()
   const [filteredCustomerData, setFilteredCustomerData] = useState<CustomerPayload[]>([])
@@ -74,18 +68,27 @@ const Customer = () => {
   const handleModalClose = () => {
     setModalVisible(false)
     setEditMode(false)
+    setEditCustomerMode(false)
+    setDialogVisible(false)
   }
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value)
   }
 
-  const handleEdit = (rowData: any) => {
+  const handleEdit = () => {
     if (customerRecord == true) {
       setSelectedCustomer(customerRecordData)
+      setEditCustomerMode(true)
       setModalVisible(true)
       setEditMode(true)
     }
+  }
+
+  const handleMooringEdit = () => {
+    setSelectedCustomer(customerRecordData)
+    setModalVisible(true)
+    setEditMode(true)
   }
 
   const handleDelete = async (rowData: any) => {
@@ -134,7 +137,6 @@ const Customer = () => {
   const handleMooringTableRowClick = (rowData: any) => {
     setDialogVisible(true)
     setMooringRowData(rowData.data)
-    setCustomerRecordData('')
   }
 
   const customerTableColumnStyle = {
@@ -285,7 +287,9 @@ const Customer = () => {
             children={
               <AddCustomer
                 customer={selectedCustomer}
+                mooringRowData={mooringRowData}
                 editMode={editMode}
+                editCustomerMode={editCustomerMode}
                 closeModal={handleModalClose}
                 getCustomer={getCustomerData}
                 getCustomerRecord={() => {
@@ -303,8 +307,8 @@ const Customer = () => {
             dialogStyle={{
               width: '800px',
               minWidth: '800px',
-              height: '630px',
-              minHeight: '630px',
+              height: editCustomerMode ? '500px' : '630px',
+              minHeight: editCustomerMode ? '500px' : '630px',
               borderRadius: '1rem',
               maxHeight: '95% !important',
             }}
@@ -386,11 +390,11 @@ const Customer = () => {
 
         <div className="min-w-[20vw]">
           <div
-            className={`"max-w-[413px] rounded-md border-[1px]" ${modalVisible} ? 'blur-screen' : ''`}>
+            className={`max-w-[413px] rounded-md border-[1px] ${modalVisible ? 'blur-screen' : ''}`}>
             <CustomMooringPositionMap
               position={coordinatesArray || [30.698, 76.657]}
               zoomLevel={10}
-              style={{ height: '700px', display: modalVisible ? 'none' : '' }}
+              style={{ height: '700px' }}
               iconsByStatus={iconsByStatus}
               // @ts-expect-error
               moorings={mooringData}
@@ -584,7 +588,11 @@ const Customer = () => {
                 <div className="flex gap-4">
                   <div className="font-bolder text-[black]">Mooring Information</div>
                   <div className="font-bold mt-1">
-                    <FaEdit onClick={handleEdit} color="#0098FF" />
+                    <FaEdit
+                      onClick={handleMooringEdit}
+                      color="#0098FF"
+                      style={{ cursor: 'pointer' }}
+                    />
                   </div>
                 </div>
               }>
@@ -602,8 +610,8 @@ const Customer = () => {
                     <span>ID: </span> {mooringRowData?.id}
                   </p>
                   <p>
-                    <span>Mooring No: </span>
-                    {mooringRowData?.mooringNumber}
+                    <span>Mooring ID: </span>
+                    {mooringRowData?.mooringId}
                   </p>
                   <p>
                     <span>Boat Name: </span>
@@ -661,7 +669,7 @@ const Customer = () => {
                     {mooringRowData?.shackleSwivelCondition?.condition}
                   </p>
                   <p>
-                    <span>Dept at Mean High Water: </span>
+                    <span>Depth at Mean High Water: </span>
                     {mooringRowData?.depthAtMeanHighWater}
                   </p>
                 </div>

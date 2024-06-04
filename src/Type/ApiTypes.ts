@@ -243,6 +243,7 @@ export interface MooringPayload {
   boatyardName: string
   id: number
   mooringNumber: string
+  mooringId: string
   customerName: string
   harbor: string
   waterDepth: string

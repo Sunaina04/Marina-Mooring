@@ -1,6 +1,6 @@
 import CustomModal from '../../CustomComponent/CustomModal'
 import AddMoorings from './AddMoorings'
-import React, { useState, useEffect, useMemo, useRef } from 'react'
+import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import {
   useGetCustomersWithMooringMutation,
   useGetMooringsMutation,
@@ -44,18 +44,10 @@ const Moorings = () => {
   const [selectedCustomer, setSelectedCustomer] = useState<any>()
   const [mooringRowData, setMooringRowData] = useState()
   const [editMode, setEditMode] = useState(false)
-  const [searchQuery, setSearchQuery] = useState<string>('')
   const [searchText, setSearchText] = useState('')
   const [customerId, setCustomerId] = useState()
   const [rowClick, setRowClick] = useState(false)
   const [filteredMooringData, setFilteredMooringData] = useState<MooringPayload[]>([])
-  const [edit, setEdit] = useState<CustomerProps>({
-    id: '#43453',
-    name: 'John Smith',
-    phone: '+1 234 543 4324',
-    email: 'john@gmail.com',
-    address: 'Suite 333 17529 Miller Spur South Ervinstad',
-  })
   const [isChecked, setIsChecked] = useState(false)
   const [isDialogVisible, setIsDialogVisible] = useState(false)
   const [selectedMooring, setSelectedMooring] = useState<MooringPayload>()
@@ -71,6 +63,14 @@ const Moorings = () => {
     }
   }
 
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value)
+    setCustomerRecordData('')
+    setCustomerMooringData([])
+    setBoatYardData([])
+    setMooringResponseData('')
+  }
+
   const handleButtonClick = () => {
     setModalVisible(true)
   }
@@ -80,27 +80,8 @@ const Moorings = () => {
     setEditMode(false)
   }
 
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const query = event.target.value
-    setSearchQuery(query)
-    const filteredData = mooringData.filter((data) => {
-      const id = typeof data.id === 'number' ? data.id.toString() : ''
-      const customerName =
-        typeof data.customerName === 'string' ? data.customerName.toLowerCase() : ''
-      const gpsCoordinates =
-        typeof data.gpsCoordinates === 'string' ? data.gpsCoordinates.toLowerCase() : ''
-      return (
-        id.includes(query.toLowerCase()) ||
-        customerName.includes(query.toLowerCase()) ||
-        gpsCoordinates.includes(query.toLowerCase())
-      )
-    })
-    setFilteredMooringData(filteredData)
-  }
-
   const handleMooringRowClick = (rowData: any) => {
     setRowClick(true)
-    setMooringRowData(rowData)
     setCustomerId(rowData?.customerId)
     getCustomersWithMooring(rowData?.customerId)
   }
@@ -191,7 +172,7 @@ const Moorings = () => {
     [],
   )
 
-  const getMooringsData = async () => {
+  const getMooringsData = useCallback(async () => {
     try {
       let params: Params = {}
       if (searchText) {
@@ -206,7 +187,7 @@ const Moorings = () => {
     } catch (error) {
       console.error('Error fetching moorings data:', error)
     }
-  }
+  }, [searchText, getMoorings])
 
   const getCustomersWithMooring = async (id: number) => {
     try {
@@ -228,8 +209,11 @@ const Moorings = () => {
   }
 
   useEffect(() => {
-    getMooringsData()
-  }, [])
+    const timeoutId = setTimeout(() => {
+      getMooringsData()
+    }, 2000)
+    return () => clearTimeout(timeoutId)
+  }, [searchText])
 
   return (
     <div className={modalVisible ? 'backdrop-blur-lg' : ''}>
@@ -298,6 +282,8 @@ const Moorings = () => {
             }}
             className="bg-[F2F2F2]">
             <InputTextWithHeader
+              value={searchText}
+              onChange={handleSearch}
               headerStyle={{
                 height: '70px',
                 top: '294px',
@@ -324,14 +310,12 @@ const Moorings = () => {
                 width: '400px',
                 cursor: 'pointer',
                 fontSize: '',
-                color: '#D5E1EA',
+                color: '#000000',
                 border: '1px solid #D5E1EA',
                 paddingLeft: '40px',
                 borderRadius: '5px',
                 marginTop: '15px',
               }}
-              onChange={handleSearchChange}
-              value={searchQuery}
               borderBottom={{ border: '1px solid #D5E1EA' }}
             />
             <div className="mt-2">{/* <hr style={{ border: ' 0.20px solid #D5E1EA' }} /> */}</div>

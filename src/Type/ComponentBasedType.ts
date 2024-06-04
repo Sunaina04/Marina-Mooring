@@ -3,7 +3,9 @@ import { MooringPayload, VendorPayload, WorkOrderPayload } from './ApiTypes'
 
 export interface CustomerDataProps {
   customer: any
+  mooringRowData?: any
   editMode: boolean
+  editCustomerMode?: boolean
   closeModal: () => void
   getCustomer: () => void
   getCustomerRecord?: () => void

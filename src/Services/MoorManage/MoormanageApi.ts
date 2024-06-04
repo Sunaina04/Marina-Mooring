@@ -70,17 +70,19 @@ const moormanageApi = userApi.injectEndpoints({
         size,
         sortBy,
         sortDir,
+        searchText,
         customerOwnerId,
       }: {
         page?: number
         size?: number
         sortBy?: string
         sortDir?: string
+        searchText?: string
         customerOwnerId?: number
       }) => ({
         url: 'api/v1/mooring/',
         method: 'GET',
-        params: { page, size, sortBy, sortDir, customerOwnerId },
+        params: { page, size, sortBy, sortDir, searchText, customerOwnerId },
       }),
     }),
 

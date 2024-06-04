@@ -31,7 +31,9 @@ import { LatLngExpression } from 'leaflet'
 
 const AddCustomer: React.FC<CustomerDataProps> = ({
   customer,
+  mooringRowData,
   editMode,
+  editCustomerMode,
   closeModal,
   getCustomer,
   getCustomerRecord,
@@ -61,7 +63,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [boatyardName, setBoatyardName] = useState<MetaData[]>([])
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
   const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<string>()
-  console.log('gps', gpsCoordinatesValue)
   const [center, setCenter] = useState<LatLngExpression | undefined>([30.6983149, 76.656095])
   const [firstErrorField, setFirstErrorField] = useState('')
   const [formData, setFormData] = useState<any>({
@@ -83,7 +84,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     bottomChainCondition: '',
     shackleSwivelCondition: '',
     pennantCondition: '',
-    deptAtMeanHighWater: '',
+    depthAtMeanHighWater: '',
     status: 0,
   })
 
@@ -198,12 +199,81 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     if (!formData.conditionOfEye) errors.conditionOfEye = 'Condition of Eye is required'
     if (!formData.shackleSwivelCondition)
       errors.shackleSwivelCondition = 'Shackle, Swivel Condition is required'
-    if (!formData.deptAtMeanHighWater)
-      errors.deptAtMeanHighWater = 'Dept at Mean High Water is required'
+    if (!formData.depthAtMeanHighWater)
+      errors.depthAtMeanHighWater = 'Depth at Mean High Water is required'
     // if (!formData.status) errors.status = 'Status is required'
     if (!formData.bottomChainCondition)
       errors.bottomChainCondition = 'Bottom Chain Condition is required'
     if (!formData.pennantCondition) errors.pennantCondition = 'Pennant Condition is required'
+
+    setFirstErrorField(firstError)
+    setFieldErrors(errors)
+    return errors
+  }
+
+  const validateCustomerFields = () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const phoneRegex = /^\d{10}$/
+    const nameRegex = /^[a-zA-Z ]+$/
+
+    const errors: { [key: string]: string } = {}
+    let firstError = ''
+
+    if (!customerName) {
+      errors.customerName = 'Customer name is required'
+      firstError = 'CustomerName'
+    } else if (!nameRegex.test(customerName)) {
+      errors.customerName = 'Name must only contain letters'
+      firstError = 'CustomerName'
+    } else if (customerName.length < 3) {
+      errors.customerName = 'CustomerName must be at least 3 characters long'
+      firstError = 'CustomerName'
+    }
+
+    if (!customerId) {
+      errors.customerId = 'Customer ID is required'
+      if (!firstError) firstError = 'customerId'
+    }
+
+    if (!phone) {
+      errors.phone = 'Phone is required'
+      if (!firstError) firstError = 'phone'
+    } else if (!phoneRegex.test(phone)) {
+      errors.phone = 'Phone must be a 10-digit number'
+      if (!firstError) firstError = 'phone'
+    }
+
+    if (!email) {
+      errors.email = 'Email is required'
+      if (!firstError) firstError = 'email'
+    } else if (!emailRegex.test(email)) {
+      errors.email = 'Please enter a valid email format'
+      if (!firstError) firstError = 'email'
+    }
+
+    if (!streetHouse) {
+      errors.streetHouse = 'Street/House is required'
+      if (!firstError) firstError = 'streetHouse'
+    }
+
+    if (!sectorBlock) {
+      errors.sectorBlock = 'Apt/Suite is required'
+      if (!firstError) firstError = 'sectorBlock'
+    }
+
+    if (!pinCode) {
+      errors.pinCode = 'Zipcode code is required'
+      if (!firstError) firstError = 'pinCode'
+    }
+    if (!selectedState) {
+      errors.state = 'State is required'
+      if (!firstError) firstError = 'state'
+    }
+
+    if (!selectedCountry) {
+      errors.country = 'Country is required'
+      if (!firstError) firstError = 'country'
+    }
 
     setFirstErrorField(firstError)
     setFieldErrors(errors)
@@ -261,7 +331,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   }
 
   const handleEditMode = () => {
-    setValue(customer?.note || '')
     setCustomerName(customer?.customerName || '')
     setCustomerId(customer?.customerId || '')
     setPhone(customer?.phone || '')
@@ -271,28 +340,28 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     setPinCode(customer?.zipCode || '')
     setSelectedState(customer?.stateResponseDto?.name || undefined)
     setSelectedCountry(customer?.countryResponseDto?.name || undefined)
-    setGpsCoordinatesValue(mooringResponseDtoList[0]?.gpsCoordinates || '')
+    setGpsCoordinatesValue(mooringRowData?.gpsCoordinates || '')
     setFormData((prevState: any) => ({
       ...prevState,
-      mooringId: mooringResponseDtoList[0]?.mooringId || '',
-      mooringName: mooringResponseDtoList[0]?.mooringName || '',
+      mooringId: mooringRowData?.mooringId || '',
+      mooringName: mooringRowData?.mooringName || '',
       customerName: '',
-      harbor: mooringResponseDtoList[0]?.harbor || '',
-      waterDepth: mooringResponseDtoList[0]?.waterDepth || '',
-      gpsCoordinates: mooringResponseDtoList[0]?.gpsCoordinates || '',
-      boatyardName: mooringResponseDtoList[0]?.boatyardResponseDto?.boatyardName || '',
-      boatName: mooringResponseDtoList[0]?.boatName || '',
-      boatSize: mooringResponseDtoList[0]?.boatSize || '',
-      boatType: mooringResponseDtoList[0]?.boatType?.boatType || '',
-      boatWeight: mooringResponseDtoList[0]?.boatWeight || '',
-      sizeOfWeight: mooringResponseDtoList[0]?.sizeOfWeight?.weight || '',
-      typeOfWeight: mooringResponseDtoList[0]?.typeOfWeight?.type || '',
-      conditionOfEye: mooringResponseDtoList[0]?.eyeCondition?.condition || '',
-      topChainCondition: mooringResponseDtoList[0]?.topChainCondition?.condition || '',
-      shackleSwivelCondition: mooringResponseDtoList[0]?.shackleSwivelCondition?.condition || '',
-      pennantCondition: mooringResponseDtoList[0]?.pennantCondition?.condition || '',
-      deptAtMeanHighWater: mooringResponseDtoList[0]?.depthAtMeanHighWater || '',
-      bottomChainCondition: mooringResponseDtoList[0]?.bottomChainCondition?.condition || '',
+      harbor: mooringRowData?.harbor || '',
+      waterDepth: mooringRowData?.waterDepth || '',
+      gpsCoordinates: mooringRowData?.gpsCoordinates || '',
+      boatyardName: mooringRowData?.boatyardResponseDto?.boatyardName || '',
+      boatName: mooringRowData?.boatName || '',
+      boatSize: mooringRowData?.boatSize || '',
+      boatType: mooringRowData?.boatType?.boatType || '',
+      boatWeight: mooringRowData?.boatWeight || '',
+      sizeOfWeight: mooringRowData?.sizeOfWeight?.weight || '',
+      typeOfWeight: mooringRowData?.typeOfWeight?.type || '',
+      conditionOfEye: mooringRowData?.eyeCondition?.condition || '',
+      topChainCondition: mooringRowData?.topChainCondition?.condition || '',
+      shackleSwivelCondition: mooringRowData?.shackleSwivelCondition?.condition || '',
+      pennantCondition: mooringRowData?.pennantCondition?.condition || '',
+      depthAtMeanHighWater: mooringRowData?.depthAtMeanHighWater || '',
+      bottomChainCondition: mooringRowData?.bottomChainCondition?.condition || '',
       status: 0,
     }))
   }
@@ -332,7 +401,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         bottomChainConditionId: formData.bottomChainCondition.id,
         shackleSwivelConditionId: formData.shackleSwivelCondition.id,
         pennantConditionId: formData.pennantCondition.id,
-        depthAtMeanHighWater: formData.deptAtMeanHighWater,
+        depthAtMeanHighWater: formData.depthAtMeanHighWater,
         customerOwnerId: selectedCustomerId,
         // statusId: 1,
       },
@@ -368,10 +437,16 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   }
 
   const UpdateCustomer = async () => {
-    const errors = validateFields()
-
-    if (Object.keys(errors).length > 0) {
-      return
+    if (editCustomerMode) {
+      const errors = validateCustomerFields()
+      if (Object.keys(errors).length > 0) {
+        return
+      }
+    } else {
+      const errors = validateFields()
+      if (Object.keys(errors).length > 0) {
+        return
+      }
     }
 
     try {
@@ -387,55 +462,43 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         zipCode: pinCode,
         customerOwnerId: selectedCustomerId,
         mooringRequestDto: {
-          id: customer?.mooringResponseDtoList[0]?.id,
-          mooringId: formData.mooringId
-            ? formData.mooringId
-            : customer?.mooringResponseDtoList[0]?.mooringId,
+          id: mooringRowData?.id,
+          mooringId: formData.mooringId ? formData.mooringId : mooringRowData?.mooringId,
           customerId: customerId,
-          harbor: formData.harbor ? formData.harbor : customer?.mooringResponseDtoList[0]?.harbor,
-          waterDepth: formData.waterDepth
-            ? formData.waterDepth
-            : customer?.mooringResponseDtoList[0]?.waterDepth,
+          harbor: formData.harbor ? formData.harbor : mooringRowData?.harbor,
+          waterDepth: formData.waterDepth ? formData.waterDepth : mooringRowData?.waterDepth,
           gpsCoordinates: gpsCoordinatesValue,
           boatyardId: formData.boatyardName.id
             ? formData.boatyardName.id
-            : customer?.mooringResponseDtoList[0]?.boatyardResponseDto?.id,
-          boatName: formData.boatName
-            ? formData.boatName
-            : customer?.mooringResponseDtoList[0]?.boatName,
-          boatSize: formData.boatSize
-            ? formData.boatSize
-            : customer?.mooringResponseDtoList[0]?.boatSize,
-          boatTypeId: formData.boatType.id
-            ? formData.boatType.id
-            : customer?.mooringResponseDtoList[0]?.boatType.id,
-          boatWeight: formData.boatWeight
-            ? formData.boatWeight
-            : customer?.mooringResponseDtoList[0]?.boatWeight,
+            : mooringRowData?.boatyardResponseDto?.id,
+          boatName: formData.boatName ? formData.boatName : mooringRowData?.boatName,
+          boatSize: formData.boatSize ? formData.boatSize : mooringRowData?.boatSize,
+          boatTypeId: formData.boatType.id ? formData.boatType.id : mooringRowData?.boatType.id,
+          boatWeight: formData.boatWeight ? formData.boatWeight : mooringRowData?.boatWeight,
           sizeOfWeightId: formData.sizeOfWeight.id
             ? formData.sizeOfWeight.id
-            : customer?.mooringResponseDtoList[0]?.sizeOfWeight.id,
+            : mooringRowData?.sizeOfWeight.id,
           typeOfWeightId: formData.typeOfWeight.id
             ? formData.typeOfWeight.id
-            : customer?.mooringResponseDtoList[0]?.typeOfWeight.id,
+            : mooringRowData?.typeOfWeight.id,
           eyeConditionId: formData.conditionOfEye.id
             ? formData.conditionOfEye.id
-            : customer?.mooringResponseDtoList[0]?.eyeCondition.id,
+            : mooringRowData?.eyeCondition.id,
           topChainConditionId: formData.topChainCondition.id
             ? formData.topChainCondition.id
-            : customer?.mooringResponseDtoList[0]?.topChainCondition.id,
+            : mooringRowData?.topChainCondition.id,
           bottomChainConditionId: formData.bottomChainCondition.id
             ? formData.bottomChainCondition.id
-            : customer?.mooringResponseDtoList[0]?.bottomChainCondition.id,
+            : mooringRowData?.bottomChainCondition.id,
           shackleSwivelConditionId: formData.shackleSwivelCondition.id
             ? formData.shackleSwivelCondition.id
-            : customer?.mooringResponseDtoList[0]?.shackleSwivelCondition.id,
+            : mooringRowData?.shackleSwivelCondition.id,
           pennantConditionId: formData.pennantCondition.id
             ? formData.pennantCondition.id
-            : customer?.mooringResponseDtoList[0]?.pennantCondition.id,
-          depthAtMeanHighWater: formData.deptAtMeanHighWater
-            ? formData.deptAtMeanHighWater
-            : customer?.mooringResponseDtoList[0]?.deptAtMeanHighWater,
+            : mooringRowData?.pennantCondition.id,
+          depthAtMeanHighWater: formData.depthAtMeanHighWater
+            ? formData.depthAtMeanHighWater
+            : mooringRowData?.depthAtMeanHighWater,
           customerOwnerId: selectedCustomerId,
           // statusId: 1,
         },
@@ -789,531 +852,549 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
       {/* Add Mooring */}
 
-      <div className="mt-8 text-xl text-black font-bold">
-        <h3>Add Mooring</h3>
-      </div>
-
-      <div className="mt-6">
-        <div className="flex gap-6 ">
-          <div>
-            <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
-                Mooring ID
-                <p className="text-red-600">*</p>
-              </div>
-            </span>
-            <div className="mt-2">
-              <InputComponent
-                value={formData.mooringId}
-                onChange={(e) => handleInputChange('mooringId', e.target.value)}
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: fieldErrors.mooringId ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                }}
-              />
-              {fieldErrors.mooringId && <small className="p-error">{fieldErrors.mooringId}</small>}
-            </div>
+      {!editCustomerMode && (
+        <>
+          <div className="mt-8 text-xl text-black font-bold">
+            <h3>Add Mooring</h3>
           </div>
 
-          <div>
-            <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
-                Harbor
-                <p className="text-red-600">*</p>
-              </div>
-            </span>
-            <div className="mt-2">
-              <InputComponent
-                value={formData.harbor}
-                onChange={(e) => handleInputChange('harbor', e.target.value)}
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: fieldErrors.harbor ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                }}
-              />
-              {fieldErrors.harbor && <small className="p-error">{fieldErrors.harbor}</small>}
-            </div>
-          </div>
-
-          <div>
-            <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
-                Water Depth
-                <p className="text-red-600">*</p>
-              </div>
-            </span>
-            <div className="mt-2">
-              <InputComponent
-                value={formData.waterDepth}
-                onChange={(e) => handleInputChange('waterDepth', e.target.value)}
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: fieldErrors.waterDepth ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                }}
-              />
-              {fieldErrors.waterDepth && (
-                <small className="p-error">{fieldErrors.waterDepth}</small>
-              )}
-            </div>
-          </div>
-        </div>
-
-        <div className="flex gap-6 mt-3">
-          <div>
-            <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
-                G.P.S Coordinates
-                <p className="text-red-600">*</p>
-              </div>
-            </span>
-            <div className="mt-2">
-              <InputComponent
-                value={gpsCoordinatesValue}
-                onChange={(e) => {
-                  setGpsCoordinatesValue(e.target.value)
-                  setFieldErrors((prevErrors) => ({ ...prevErrors, gpsCoordinatesValue: '' }))
-                }}
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: fieldErrors.gpsCoordinatesValue ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                }}
-              />
-              {fieldErrors.gpsCoordinatesValue && (
-                <small className="p-error">{fieldErrors.gpsCoordinatesValue}</small>
-              )}
-            </div>
-          </div>
-
-          <div>
-            <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
-                Boatyard Name
-                <p className="text-red-600">*</p>
-              </div>
-            </span>
-            <div className="mt-2">
-              <Dropdown
-                value={formData.boatyardName}
-                onChange={(e) => handleInputChange('boatyardName', e.target.value)}
-                options={boatyardName}
-                optionLabel="boatyardName"
-                editable
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: fieldErrors.boatyardName ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                }}
-              />
-              {fieldErrors.boatyardName && (
-                <small className="p-error">{fieldErrors.boatyardName}</small>
-              )}
-            </div>
-          </div>
-          <div>
-            <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
-                Boat Name
-                <p className="text-red-600">*</p>
-              </div>
-            </span>
-            <div className="mt-2">
-              <InputComponent
-                value={formData.boatName}
-                onChange={(e) => handleInputChange('boatName', e.target.value)}
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: fieldErrors.boatName ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                }}
-              />
-              {fieldErrors.boatName && <small className="p-error">{fieldErrors.boatName}</small>}
-            </div>
-          </div>
-        </div>
-
-        <div className="flex gap-6 mt-3">
-          <div>
-            <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
-                Boat Size
-                <p className="text-red-600">*</p>
-              </div>
-            </span>
-            <div className="mt-2">
-              <InputComponent
-                value={formData.boatSize}
-                onChange={(e) => handleInputChange('boatSize', e.target.value)}
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: fieldErrors.boatSize ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                }}
-              />
-              {fieldErrors.boatSize && <small className="p-error">{fieldErrors.boatSize}</small>}
-            </div>
-          </div>
-
-          <div>
-            <div>
-              <span className="font-medium text-sm text-[#000000]">
-                <div className="flex gap-1">
-                  Type
-                  <p className="text-red-600">*</p>
+          <div className="mt-6">
+            <div className="flex gap-6 ">
+              <div>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">
+                    Mooring ID
+                    <p className="text-red-600">*</p>
+                  </div>
+                </span>
+                <div className="mt-2">
+                  <InputComponent
+                    value={formData.mooringId}
+                    onChange={(e) => handleInputChange('mooringId', e.target.value)}
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: fieldErrors.mooringId ? '1px solid red' : '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.8rem',
+                    }}
+                  />
+                  {fieldErrors.mooringId && (
+                    <small className="p-error">{fieldErrors.mooringId}</small>
+                  )}
                 </div>
-              </span>
-            </div>
-
-            <div className="mt-2">
-              <Dropdown
-                value={formData.boatType}
-                onChange={(e) => handleInputChange('boatType', e.value)}
-                options={type}
-                optionLabel="boatType"
-                editable
-                placeholder="Boat Type"
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: fieldErrors.boatType ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                }}
-              />
-              {fieldErrors.boatType && <small className="p-error">{fieldErrors.boatType}</small>}
-            </div>
-          </div>
-          <div>
-            <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
-                Weight
-                <p className="text-red-600">*</p>
               </div>
-            </span>
-            <div className="mt-2">
-              <InputComponent
-                value={formData.boatWeight}
-                onChange={(e) => handleInputChange('boatWeight', e.target.value)}
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: fieldErrors.boatWeight ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                }}
-              />
-              {fieldErrors.boatWeight && (
-                <small className="p-error">{fieldErrors.boatWeight}</small>
-              )}
-            </div>
-          </div>
-        </div>
 
-        <div className="flex gap-6 mt-3">
-          <div>
-            <div>
-              <span className="font-medium text-sm text-[#000000]">
-                <div className="flex gap-1">
-                  Size of Weight
-                  <p className="text-red-600">*</p>
+              <div>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">
+                    Harbor
+                    <p className="text-red-600">*</p>
+                  </div>
+                </span>
+                <div className="mt-2">
+                  <InputComponent
+                    value={formData.harbor}
+                    onChange={(e) => handleInputChange('harbor', e.target.value)}
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: fieldErrors.harbor ? '1px solid red' : '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.8rem',
+                    }}
+                  />
+                  {fieldErrors.harbor && <small className="p-error">{fieldErrors.harbor}</small>}
                 </div>
-              </span>
-            </div>
+              </div>
 
-            <div className="mt-2">
-              <Dropdown
-                value={formData.sizeOfWeight}
-                onChange={(e) => handleInputChange('sizeOfWeight', e.value)}
-                options={sizeOfWeight}
-                optionLabel="weight"
-                editable
-                placeholder="Select"
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: fieldErrors.sizeOfWeight ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                }}
-              />
-              {fieldErrors.sizeOfWeight && (
-                <small className="p-error">{fieldErrors.sizeOfWeight}</small>
-              )}
-            </div>
-          </div>
-
-          <div>
-            <div>
-              <span className="font-medium text-sm text-[#000000]">
-                <div className="flex gap-1">
-                  Type of Weight
-                  <p className="text-red-600">*</p>
+              <div>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">
+                    Water Depth
+                    <p className="text-red-600">*</p>
+                  </div>
+                </span>
+                <div className="mt-2">
+                  <InputComponent
+                    value={formData.waterDepth}
+                    onChange={(e) => handleInputChange('waterDepth', e.target.value)}
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: fieldErrors.waterDepth ? '1px solid red' : '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.8rem',
+                    }}
+                  />
+                  {fieldErrors.waterDepth && (
+                    <small className="p-error">{fieldErrors.waterDepth}</small>
+                  )}
                 </div>
-              </span>
+              </div>
             </div>
 
-            <div className="mt-2">
-              <Dropdown
-                value={formData.typeOfWeight}
-                onChange={(e) => handleInputChange('typeOfWeight', e.value)}
-                options={weightData}
-                optionLabel="type"
-                editable
-                placeholder="Select"
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: fieldErrors.typeOfWeight ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                }}
-              />
-              {fieldErrors.typeOfWeight && (
-                <small className="p-error">{fieldErrors.typeOfWeight}</small>
-              )}
-            </div>
-          </div>
-          <div>
-            <div>
-              <span className="font-medium text-sm text-[#000000]">
-                <div className="flex gap-1">
-                  Top Chain Condition
-                  <p className="text-red-600">*</p>
+            <div className="flex gap-6 mt-3">
+              <div>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">
+                    G.P.S Coordinates
+                    <p className="text-red-600">*</p>
+                  </div>
+                </span>
+                <div className="mt-2">
+                  <InputComponent
+                    value={gpsCoordinatesValue}
+                    onChange={(e) => {
+                      setGpsCoordinatesValue(e.target.value)
+                      setFieldErrors((prevErrors) => ({ ...prevErrors, gpsCoordinatesValue: '' }))
+                    }}
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: fieldErrors.gpsCoordinatesValue
+                        ? '1px solid red'
+                        : '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.8rem',
+                    }}
+                  />
+                  {fieldErrors.gpsCoordinatesValue && (
+                    <small className="p-error">{fieldErrors.gpsCoordinatesValue}</small>
+                  )}
                 </div>
-              </span>
+              </div>
+
+              <div>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">
+                    Boatyard Name
+                    <p className="text-red-600">*</p>
+                  </div>
+                </span>
+                <div className="mt-2">
+                  <Dropdown
+                    value={formData.boatyardName}
+                    onChange={(e) => handleInputChange('boatyardName', e.target.value)}
+                    options={boatyardName}
+                    optionLabel="boatyardName"
+                    editable
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: fieldErrors.boatyardName ? '1px solid red' : '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.8rem',
+                    }}
+                  />
+                  {fieldErrors.boatyardName && (
+                    <small className="p-error">{fieldErrors.boatyardName}</small>
+                  )}
+                </div>
+              </div>
+              <div>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">
+                    Boat Name
+                    <p className="text-red-600">*</p>
+                  </div>
+                </span>
+                <div className="mt-2">
+                  <InputComponent
+                    value={formData.boatName}
+                    onChange={(e) => handleInputChange('boatName', e.target.value)}
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: fieldErrors.boatName ? '1px solid red' : '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.8rem',
+                    }}
+                  />
+                  {fieldErrors.boatName && (
+                    <small className="p-error">{fieldErrors.boatName}</small>
+                  )}
+                </div>
+              </div>
             </div>
 
-            <div className="mt-2">
-              <Dropdown
-                value={formData.topChainCondition}
-                onChange={(e) => handleInputChange('topChainCondition', e.value)}
-                options={chainData}
-                optionLabel="condition"
-                editable
-                placeholder="Select"
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: fieldErrors.topChainCondition ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                }}
-              />
-              {fieldErrors.topChainCondition && (
-                <small className="p-error">{fieldErrors.topChainCondition}</small>
-              )}
+            <div className="flex gap-6 mt-3">
+              <div>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">
+                    Boat Size
+                    <p className="text-red-600">*</p>
+                  </div>
+                </span>
+                <div className="mt-2">
+                  <InputComponent
+                    value={formData.boatSize}
+                    onChange={(e) => handleInputChange('boatSize', e.target.value)}
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: fieldErrors.boatSize ? '1px solid red' : '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.8rem',
+                    }}
+                  />
+                  {fieldErrors.boatSize && (
+                    <small className="p-error">{fieldErrors.boatSize}</small>
+                  )}
+                </div>
+              </div>
+
+              <div>
+                <div>
+                  <span className="font-medium text-sm text-[#000000]">
+                    <div className="flex gap-1">
+                      Type
+                      <p className="text-red-600">*</p>
+                    </div>
+                  </span>
+                </div>
+
+                <div className="mt-2">
+                  <Dropdown
+                    value={formData.boatType}
+                    onChange={(e) => handleInputChange('boatType', e.value)}
+                    options={type}
+                    optionLabel="boatType"
+                    editable
+                    placeholder="Boat Type"
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: fieldErrors.boatType ? '1px solid red' : '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.8rem',
+                    }}
+                  />
+                  {fieldErrors.boatType && (
+                    <small className="p-error">{fieldErrors.boatType}</small>
+                  )}
+                </div>
+              </div>
+              <div>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">
+                    Weight
+                    <p className="text-red-600">*</p>
+                  </div>
+                </span>
+                <div className="mt-2">
+                  <InputComponent
+                    value={formData.boatWeight}
+                    onChange={(e) => handleInputChange('boatWeight', e.target.value)}
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: fieldErrors.boatWeight ? '1px solid red' : '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.8rem',
+                    }}
+                  />
+                  {fieldErrors.boatWeight && (
+                    <small className="p-error">{fieldErrors.boatWeight}</small>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="flex gap-6 mt-3">
+              <div>
+                <div>
+                  <span className="font-medium text-sm text-[#000000]">
+                    <div className="flex gap-1">
+                      Size of Weight
+                      <p className="text-red-600">*</p>
+                    </div>
+                  </span>
+                </div>
+
+                <div className="mt-2">
+                  <Dropdown
+                    value={formData.sizeOfWeight}
+                    onChange={(e) => handleInputChange('sizeOfWeight', e.value)}
+                    options={sizeOfWeight}
+                    optionLabel="weight"
+                    editable
+                    placeholder="Select"
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: fieldErrors.sizeOfWeight ? '1px solid red' : '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.8rem',
+                    }}
+                  />
+                  {fieldErrors.sizeOfWeight && (
+                    <small className="p-error">{fieldErrors.sizeOfWeight}</small>
+                  )}
+                </div>
+              </div>
+
+              <div>
+                <div>
+                  <span className="font-medium text-sm text-[#000000]">
+                    <div className="flex gap-1">
+                      Type of Weight
+                      <p className="text-red-600">*</p>
+                    </div>
+                  </span>
+                </div>
+
+                <div className="mt-2">
+                  <Dropdown
+                    value={formData.typeOfWeight}
+                    onChange={(e) => handleInputChange('typeOfWeight', e.value)}
+                    options={weightData}
+                    optionLabel="type"
+                    editable
+                    placeholder="Select"
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: fieldErrors.typeOfWeight ? '1px solid red' : '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.8rem',
+                    }}
+                  />
+                  {fieldErrors.typeOfWeight && (
+                    <small className="p-error">{fieldErrors.typeOfWeight}</small>
+                  )}
+                </div>
+              </div>
+              <div>
+                <div>
+                  <span className="font-medium text-sm text-[#000000]">
+                    <div className="flex gap-1">
+                      Top Chain Condition
+                      <p className="text-red-600">*</p>
+                    </div>
+                  </span>
+                </div>
+
+                <div className="mt-2">
+                  <Dropdown
+                    value={formData.topChainCondition}
+                    onChange={(e) => handleInputChange('topChainCondition', e.value)}
+                    options={chainData}
+                    optionLabel="condition"
+                    editable
+                    placeholder="Select"
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: fieldErrors.topChainCondition ? '1px solid red' : '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.8rem',
+                    }}
+                  />
+                  {fieldErrors.topChainCondition && (
+                    <small className="p-error">{fieldErrors.topChainCondition}</small>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="flex gap-6 mt-3 mb-16">
+              <div className="mt-3">
+                <div>
+                  <div>
+                    <span className="font-medium text-sm text-[#000000]">
+                      <div className="flex gap-1">
+                        Condition of Eye
+                        <p className="text-red-600">*</p>
+                      </div>
+                    </span>
+                  </div>
+                  <div className="mt-2">
+                    <Dropdown
+                      value={formData.conditionOfEye}
+                      onChange={(e) => handleInputChange('conditionOfEye', e.value)}
+                      options={conditionOfEye}
+                      optionLabel="condition"
+                      editable
+                      placeholder="Select"
+                      style={{
+                        width: '230px',
+                        height: '32px',
+                        border: fieldErrors.conditionOfEye ? '1px solid red' : '1px solid #D5E1EA',
+                        borderRadius: '0.50rem',
+                        fontSize: '0.8rem',
+                      }}
+                    />
+                    <p>
+                      {fieldErrors.conditionOfEye && (
+                        <small className="p-error">{fieldErrors.conditionOfEye}</small>
+                      )}
+                    </p>
+                  </div>
+                </div>
+                <div className="mt-3">
+                  <div>
+                    <span className="font-medium text-sm text-[#000000]">
+                      <div className="flex gap-1">
+                        Shackle, Swivel Condition
+                        <p className="text-red-600">*</p>
+                      </div>
+                    </span>
+                  </div>
+
+                  <div className="mt-2">
+                    <Dropdown
+                      value={formData.shackleSwivelCondition}
+                      onChange={(e) => handleInputChange('shackleSwivelCondition', e.value)}
+                      options={shackleSwivelData}
+                      optionLabel="condition"
+                      editable
+                      placeholder="Select"
+                      style={{
+                        width: '230px',
+                        height: '32px',
+                        border: fieldErrors.shackleSwivelCondition
+                          ? '1px solid red'
+                          : '1px solid #D5E1EA',
+                        borderRadius: '0.50rem',
+                        fontSize: '0.8rem',
+                      }}
+                    />
+                    <p>
+                      {fieldErrors.shackleSwivelCondition && (
+                        <small className="p-error">{fieldErrors.shackleSwivelCondition}</small>
+                      )}
+                    </p>
+                  </div>
+                </div>
+                <div className="mt-3">
+                  <div>
+                    <span className="font-medium text-sm text-[#000000]">
+                      <div className="flex gap-1">
+                        Depth at Mean High Water
+                        <p className="text-red-600">*</p>
+                      </div>
+                    </span>
+                  </div>
+
+                  <div className="mt-2">
+                    <InputNumber
+                      value={formData.depthAtMeanHighWater}
+                      onChange={(e) => handleInputChange('depthAtMeanHighWater', e.value)}
+                      min={0}
+                      style={{
+                        width: '230px',
+                        height: '32px',
+                        border: fieldErrors.depthAtMeanHighWater
+                          ? '1px solid red'
+                          : '1px solid #D5E1EA',
+                        borderRadius: '0.50rem',
+                        fontSize: '0.8rem',
+                      }}
+                    />
+                    <p>
+                      {fieldErrors.depthAtMeanHighWater && (
+                        <small className="p-error">{fieldErrors.depthAtMeanHighWater}</small>
+                      )}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div className="mt-3">
+                  <div>
+                    <span className="font-medium text-sm text-[#000000]">
+                      <div className="flex gap-1">
+                        Bootom Chain Condition
+                        <p className="text-red-600">*</p>
+                      </div>
+                    </span>
+                  </div>
+
+                  <div className="mt-2">
+                    <Dropdown
+                      value={formData.bottomChainCondition}
+                      onChange={(e) => handleInputChange('bottomChainCondition', e.value)}
+                      options={bottomChainCondition}
+                      optionLabel="condition"
+                      editable
+                      placeholder="Select"
+                      style={{
+                        width: '230px',
+                        height: '32px',
+                        border: fieldErrors.bottomChainCondition
+                          ? '1px solid red'
+                          : '1px solid #D5E1EA',
+                        borderRadius: '0.50rem',
+                        fontSize: '0.8rem',
+                      }}
+                    />
+
+                    <p>
+                      {fieldErrors.bottomChainCondition && (
+                        <small className="p-error">{fieldErrors.bottomChainCondition}</small>
+                      )}
+                    </p>
+                  </div>
+                </div>
+                <div className="mt-3">
+                  <div>
+                    <span className="font-medium text-sm text-[#000000]">
+                      <div className="flex gap-1">
+                        Pennant Condition
+                        <p className="text-red-600">*</p>
+                      </div>
+                    </span>
+                  </div>
+
+                  <div className="mt-2">
+                    <Dropdown
+                      value={formData.pennantCondition}
+                      onChange={(e) => handleInputChange('pennantCondition', e.value)}
+                      options={pennantData}
+                      optionLabel="condition"
+                      editable
+                      placeholder="Select"
+                      style={{
+                        width: '230px',
+                        height: '32px',
+                        border: fieldErrors.pennantCondition
+                          ? '1px solid red'
+                          : '1px solid #D5E1EA',
+                        borderRadius: '0.50rem',
+                        fontSize: '0.8rem',
+                      }}
+                    />
+
+                    <p>
+                      {fieldErrors.pennantCondition && (
+                        <small className="p-error">{fieldErrors.pennantCondition}</small>
+                      )}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-3">
+                <div>
+                  <span className="font-medium text-sm text-[#000000]">Pin on Map</span>
+                </div>
+                <div
+                  style={{
+                    height: '200px',
+                    width: '230px',
+                  }}>
+                  <CustomSelectPositionMap
+                    onPositionChange={handlePositionChange}
+                    zoomLevel={50}
+                    center={center}
+                    setCenter={setCenter}
+                  />
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-
-        <div className="flex gap-6 mt-3 mb-16">
-          <div className="mt-3">
-            <div>
-              <div>
-                <span className="font-medium text-sm text-[#000000]">
-                  <div className="flex gap-1">
-                    Condition of Eye
-                    <p className="text-red-600">*</p>
-                  </div>
-                </span>
-              </div>
-              <div className="mt-2">
-                <Dropdown
-                  value={formData.conditionOfEye}
-                  onChange={(e) => handleInputChange('conditionOfEye', e.value)}
-                  options={conditionOfEye}
-                  optionLabel="condition"
-                  editable
-                  placeholder="Select"
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: fieldErrors.conditionOfEye ? '1px solid red' : '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                  }}
-                />
-                <p>
-                  {fieldErrors.conditionOfEye && (
-                    <small className="p-error">{fieldErrors.conditionOfEye}</small>
-                  )}
-                </p>
-              </div>
-            </div>
-            <div className="mt-3">
-              <div>
-                <span className="font-medium text-sm text-[#000000]">
-                  <div className="flex gap-1">
-                    Shackle, Swivel Condition
-                    <p className="text-red-600">*</p>
-                  </div>
-                </span>
-              </div>
-
-              <div className="mt-2">
-                <Dropdown
-                  value={formData.shackleSwivelCondition}
-                  onChange={(e) => handleInputChange('shackleSwivelCondition', e.value)}
-                  options={shackleSwivelData}
-                  optionLabel="condition"
-                  editable
-                  placeholder="Select"
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: fieldErrors.shackleSwivelCondition
-                      ? '1px solid red'
-                      : '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                  }}
-                />
-                <p>
-                  {fieldErrors.shackleSwivelCondition && (
-                    <small className="p-error">{fieldErrors.shackleSwivelCondition}</small>
-                  )}
-                </p>
-              </div>
-            </div>
-            <div className="mt-3">
-              <div>
-                <span className="font-medium text-sm text-[#000000]">
-                  <div className="flex gap-1">
-                    Depth at Mean High Water
-                    <p className="text-red-600">*</p>
-                  </div>
-                </span>
-              </div>
-
-              <div className="mt-2">
-                <InputNumber
-                  value={formData.deptAtMeanHighWater}
-                  onChange={(e) => handleInputChange('deptAtMeanHighWater', e.value)}
-                  min={0}
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: fieldErrors.deptAtMeanHighWater ? '1px solid red' : '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                  }}
-                />
-                <p>
-                  {fieldErrors.deptAtMeanHighWater && (
-                    <small className="p-error">{fieldErrors.deptAtMeanHighWater}</small>
-                  )}
-                </p>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div className="mt-3">
-              <div>
-                <span className="font-medium text-sm text-[#000000]">
-                  <div className="flex gap-1">
-                    Bootom Chain Condition
-                    <p className="text-red-600">*</p>
-                  </div>
-                </span>
-              </div>
-
-              <div className="mt-2">
-                <Dropdown
-                  value={formData.bottomChainCondition}
-                  onChange={(e) => handleInputChange('bottomChainCondition', e.value)}
-                  options={bottomChainCondition}
-                  optionLabel="condition"
-                  editable
-                  placeholder="Select"
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: fieldErrors.bottomChainCondition
-                      ? '1px solid red'
-                      : '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                  }}
-                />
-
-                <p>
-                  {fieldErrors.bottomChainCondition && (
-                    <small className="p-error">{fieldErrors.bottomChainCondition}</small>
-                  )}
-                </p>
-              </div>
-            </div>
-            <div className="mt-3">
-              <div>
-                <span className="font-medium text-sm text-[#000000]">
-                  <div className="flex gap-1">
-                    Pennant Condition
-                    <p className="text-red-600">*</p>
-                  </div>
-                </span>
-              </div>
-
-              <div className="mt-2">
-                <Dropdown
-                  value={formData.pennantCondition}
-                  onChange={(e) => handleInputChange('pennantCondition', e.value)}
-                  options={pennantData}
-                  optionLabel="condition"
-                  editable
-                  placeholder="Select"
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: fieldErrors.pennantCondition ? '1px solid red' : '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                  }}
-                />
-
-                <p>
-                  {fieldErrors.pennantCondition && (
-                    <small className="p-error">{fieldErrors.pennantCondition}</small>
-                  )}
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="mt-3">
-            <div>
-              <span className="font-medium text-sm text-[#000000]">Pin on Map</span>
-            </div>
-            <div
-              style={{
-                height: '200px',
-                width: '230px',
-              }}>
-              <CustomSelectPositionMap
-                onPositionChange={handlePositionChange}
-                zoomLevel={50}
-                center={center}
-                setCenter={setCenter}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
+        </>
+      )}
 
       <div
         className="flex gap-6 bottom-2 absolute left-6"

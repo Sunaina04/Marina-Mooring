@@ -129,7 +129,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       !permission &&
       (role?.id === 3 || role?.id === 4)
     )
-      errors.selectedCustomerId = 'Customer Admin is required'
+      errors.selectedCustomerId = 'Customer Owner is required'
     if (errors.selectedCustomerId && !firstError) {
       firstError = 'selectedCustomerId'
     }
@@ -606,7 +606,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
               <div className="mt-3">
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
-                    Customer Admin
+                    Customer Owner
                     {customerAdminDropdownEnabled && <p className="text-red-600">*</p>}
                   </div>
                 </span>
