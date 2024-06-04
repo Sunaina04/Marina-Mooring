@@ -28,7 +28,9 @@ import { CustomerResponse } from '../../../Type/ApiTypes'
 const AddMoorings: React.FC<AddMooringProps> = ({
   moorings,
   editMode,
+  editCustomerMode,
   toastRef,
+  mooringRowData,
   closeModal,
   getCustomer,
   getCustomerRecord,
@@ -83,6 +85,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     note: '',
   })
 
+  console.log('mooringRowData', moorings)
   const payload = {
     customerName: moorings?.customerName || '',
     mooringNumber: moorings?.mooringNumber || '',
@@ -258,11 +261,13 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     }
   }
 
+  const handleEditMode = () => {}
+
   const SaveMoorings = async () => {
     const errors = validateFields()
-    // if (Object.keys(errors).length > 0) {
-    //   return
-    // }
+    if (Object.keys(errors).length > 0) {
+      return
+    }
 
     try {
       const payload = {
@@ -293,7 +298,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
-          detail: 'Customer Updated successfully',
+          detail: 'Mooring Updated successfully',
           life: 3000,
         })
         closeModal()
@@ -339,7 +344,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
 
   useEffect(() => {
     if (editMode && moorings) {
-      setFormData(payload)
+      handleEditMode()
     }
   }, [editMode, moorings])
 

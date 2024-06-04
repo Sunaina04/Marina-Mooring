@@ -55,6 +55,8 @@ export interface RowExpansionProps {
 export interface AddMooringProps {
   moorings: MooringPayload
   editMode: boolean
+  editCustomerMode: boolean
+  mooringRowData: any
   toastRef: React.RefObject<any>
   closeModal: () => void
   getCustomer: () => void

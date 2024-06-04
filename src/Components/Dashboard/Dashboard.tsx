@@ -6,6 +6,7 @@ import Header from '../Layout/LayoutComponents/Header'
 import { ActionButtonColumnProps, TableColumnProps } from '../../Type/Components/TableTypes'
 import { dasboardTable } from '../Utils/CustomData'
 import CustomDisplayPositionMap from '../Map/CustomDisplayPositionMap'
+import CustomMooringPositionMap from '../Map/CustomMooringPositionMap'
 
 const Dashboard = () => {
   const [date, setDate] = useState<NullableDateArray>(null)
@@ -128,29 +129,18 @@ const Dashboard = () => {
       <Header header="DASHBOARD" />
       <div className="flex flex-shrink  ml-12 gap-6 mt-10">
         <div className="right flex flex-col ">
-          <div
-            style={{
-              flexShrink: 1,
-              border: '1px solid #D5E1EA',
-              borderRadius: '10px',
-              padding: '0px',
-              height: '334.01px',
-              gap: '0px',
-
-              opacity: '0px',
-              display: 'flex',
-              alignItems: 'center',
-              backgroundColor: '#FFFFFF',
-            }}>
-            {/* <div>
-              <h1 className="">map</h1> */}
-            <CustomDisplayPositionMap position={[78.965768, 79.8097687]} />
-            {/* </div> */}
+          <div style={{ height: '500px', width: '50vw' }}>
+            <CustomMooringPositionMap
+              position={[30.698, 76.657]}
+              zoomLevel={10}
+              style={{ height: '100%', width: '100%' }}
+            />
           </div>
+
           <div
             style={{
               height: '300.2px',
-              maxWidth: '728.9px',
+              maxWidth: '50vw',
               gap: '0px',
               borderRadius: '10px',
               opacity: '0px',

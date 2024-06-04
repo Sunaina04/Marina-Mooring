@@ -177,7 +177,6 @@ const Customer = () => {
     fontSize: '10px',
     color: '#000000',
     fontweight: '700',
-    
   }
 
   const MooringTableColumn = useMemo(
@@ -494,9 +493,7 @@ const Customer = () => {
                     {customerRecordData?.country && <span>{customerRecordData?.country} </span>}
                   </p>
 
-                  <div
-
-                    className="flex mt-5 ml-4 mb-3 overflow-x-auto">
+                  <div className="flex mt-5 ml-4 mb-3 overflow-x-auto">
                     <div>
                       <h1 className="">Boatyard: </h1>
                     </div>
@@ -531,7 +528,6 @@ const Customer = () => {
             )}
           </div>
 
-
           <div>
             <p
               style={{
@@ -556,12 +552,9 @@ const Customer = () => {
                 <p className="text-gray-500">No data available</p>
               </div>
             ) : (
-              <div
-
-                style={{ height: "400px", overflow: 'auto' }}
-              >
+              <div style={{ height: '400px', overflow: 'auto' }}>
                 <DataTableComponent
-                  style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400', }}
+                  style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
                   scrollable
                   tableStyle={{
                     fontSize: '12px',
@@ -569,17 +562,14 @@ const Customer = () => {
                     fontWeight: 600,
                     backgroundColor: '#D9D9D9',
                     cursor: 'pointer',
-
                   }}
                   onRowClick={(rowData) => {
                     handleMooringTableRowClick(rowData)
                   }}
                   columns={MooringTableColumn}
                   data={mooringData}
-
                 />
               </div>
-
             )}
 
             {/* Dialog BOX */}

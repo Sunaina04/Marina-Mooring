@@ -38,6 +38,6 @@ export interface Mooring {
 }
 
 export interface CustomMooringPositionMapProps extends CustomDisplayPositionMapProps {
-  iconsByStatus: { [key: string]: L.Icon }
-  moorings: Mooring[]
+  iconsByStatus?: { [key: string]: L.Icon }
+  moorings?: Mooring[]
 }

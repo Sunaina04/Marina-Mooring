@@ -54,8 +54,8 @@ const Moorings = () => {
   const [rowClick, setRowClick] = useState(false)
   const [filteredMooringData, setFilteredMooringData] = useState<MooringPayload[]>([])
   const [isChecked, setIsChecked] = useState(false)
-  const [isDialogVisible, setIsDialogVisible] = useState(false)
   const [dialogVisible, setDialogVisible] = useState(false)
+  const [editCustomerMode, setEditCustomerMode] = useState(false)
   const [selectedMooring, setSelectedMooring] = useState<MooringPayload>()
   const [customerMooringData, setCustomerMooringData] = useState<MooringResponseDtoList[]>([])
 
@@ -84,24 +84,28 @@ const Moorings = () => {
 
   const handleModalClose = () => {
     setModalVisible(false)
+    setDialogVisible(false)
+    setEditCustomerMode(false)
     setEditMode(false)
   }
 
   const handleMooringRowClick = (rowData: any) => {
     setRowClick(true)
     setMooringRecord(true)
-    setMooringRowData(rowData)
     setCustomerId(rowData?.customerId)
     setMooringId(rowData?.id)
     getCustomersWithMooring(rowData?.customerId)
   }
 
   const handleEdit = (rowData: any) => {
-    setSelectedCustomer(rowData)
-    setEditMode(true)
+    if (mooringRecord == true) {
+      setSelectedCustomer(rowData)
+      setEditCustomerMode(true)
+      setEditMode(true)
+    }
   }
 
-  const handleDelete = async (rowData: any) => {
+  const handleDelete = async () => {
     if (mooringRecord == true) {
       try {
         const response = await deleteMooring({ id: mooringId }).unwrap()
@@ -135,6 +139,12 @@ const Moorings = () => {
       }
     }
     setMooringRecord(false)
+  }
+
+  const handleMooringEdit = () => {
+    setEditMode(true)
+    setModalVisible(true)
+    setSelectedCustomer(customerRecordData)
   }
 
   const tableColumns = useMemo(
@@ -279,7 +289,9 @@ const Moorings = () => {
             children={
               <AddMoorings
                 moorings={selectedCustomer}
+                mooringRowData={mooringRowData}
                 editMode={editMode}
+                editCustomerMode={editCustomerMode}
                 toastRef={toast}
                 closeModal={handleModalClose}
                 getCustomer={getMooringsData}
@@ -433,18 +445,19 @@ const Moorings = () => {
               <span>
                 <FaEdit
                   className="ml-4 mt-1"
-                  style={{ color: 'white' }}
                   onClick={handleEdit}
                   data-testid="edit"
+                  style={{ color: 'white', cursor: mooringRecord ? 'pointer' : 'not-allowed' }}
                 />
               </span>
 
               <RiDeleteBin5Fill
-                onClick={() => {}}
+                onClick={() => {
+                  handleDelete()
+                }}
                 className="text-white mr-2 mt-3"
                 data-testid="RiDeleteBin5Fill"
-                style={{ color: 'white' }}
-                // style={{ cursor: customerRecord ? 'pointer' : 'not-allowed' }}
+                style={{ color: 'white', cursor: mooringRecord ? 'pointer' : 'not-allowed' }}
               />
             </div>
           </div>
@@ -519,101 +532,16 @@ const Moorings = () => {
                   scrollable={true}
                   data={mooringResponseData}
                   columns={tableColumnsMoorings}
+                  onRowClick={(rowData: any) => {
+                    console.log(rowData)
+                    setDialogVisible(true)
+                    setMooringRowData(rowData.data)
+                  }}
+                  style={{
+                    cursor: 'pointer',
+                  }}
                 />
               </div>
-
-              <Dialog
-                visible={isDialogVisible}
-                onHide={() => setIsDialogVisible(false)}
-                header={
-                  <div className="flex gap-4">
-                    <div className="font-bold">Mooring Information</div>
-                    <div className="font-bold mt-1">
-                      <FaEdit onClick={handleEdit} />
-                    </div>
-                  </div>
-                }>
-                <hr className="border border-black  my-0 mx-0"></hr>
-                {selectedMooring && (
-                  <div className="flex flex-wrap leading-10 gap-4">
-                    <div>
-                      <p>
-                        <span style={{ fontWeight: 'bold' }}>ID:</span> {selectedMooring?.id}
-                      </p>
-                      <p>
-                        <span style={{ fontWeight: 'bold' }}>Mooring No:</span>{' '}
-                        {selectedMooring?.mooringNumber}
-                      </p>
-                      <p>
-                        <span style={{ fontWeight: 'bold' }}>Boat Name:</span>{' '}
-                        {selectedMooring?.boatName}
-                      </p>
-                      <p>
-                        <span style={{ fontWeight: 'bold' }}>Type:</span>{' '}
-                        {selectedMooring?.boatType?.boatType}
-                      </p>
-                      <p>
-                        <span style={{ fontWeight: 'bold' }}>Size of Weight:</span>{' '}
-                        {selectedMooring?.sizeOfWeight?.weight}
-                      </p>
-                      <p>
-                        <span style={{ fontWeight: 'bold' }}>Top Chain Condition:</span>{' '}
-                        {selectedMooring?.topChainCondition?.condition}
-                      </p>
-                      <p className="tracking-tighter">
-                        <span style={{ fontWeight: 'bold' }}>Bottom Chain Condition:</span>{' '}
-                        {selectedMooring?.bottomChainCondition?.condition}
-                      </p>
-                      <p>
-                        <span style={{ fontWeight: 'bold' }}>Pennant Condition:</span>{' '}
-                        {selectedMooring?.pennantCondition?.condition}
-                      </p>
-                      <p>
-                        <span style={{ fontWeight: 'bold' }}>Water Depth:</span>{' '}
-                        {selectedMooring?.waterDepth}
-                      </p>
-                    </div>
-                    <div>
-                      <p>
-                        <span style={{ fontWeight: 'bold' }}>Harbor:</span>{' '}
-                        {selectedMooring?.harbor}
-                      </p>
-                      <p>
-                        <span style={{ fontWeight: 'bold' }}>G.P.S Coordinates:</span>{' '}
-                        {selectedMooring?.gpsCoordinates}
-                      </p>
-                      <p>
-                        <span style={{ fontWeight: 'bold' }}>Boat Size:</span>{' '}
-                        {selectedMooring?.boatSize}
-                      </p>
-                      <p>
-                        <span style={{ fontWeight: 'bold' }}>Weight:</span>{' '}
-                        {selectedMooring?.boatWeight}
-                      </p>
-
-                      <p>
-                        <span style={{ fontWeight: 'bold' }}>Type of Weight:</span>{' '}
-                        {selectedMooring?.typeOfWeight?.type}
-                      </p>
-
-                      <p>
-                        <span style={{ fontWeight: 'bold' }}>Condition of Eye:</span>{' '}
-                        {selectedMooring?.eyeCondition?.condition}
-                      </p>
-
-                      <p>
-                        <span style={{ fontWeight: 'bold' }}>Shackle, Swivel Condition:</span>{' '}
-                        {selectedMooring?.shackleSwivelCondition?.condition}
-                      </p>
-
-                      <p>
-                        <span style={{ fontWeight: 'bold' }}>Dept at Mean High Water:</span>{' '}
-                        {selectedMooring?.depthAtMeanHighWater}
-                      </p>
-                    </div>
-                  </div>
-                )}
-              </Dialog>
             </div>
 
             <Dialog
@@ -635,7 +563,7 @@ const Moorings = () => {
                   <div className="font-bolder text-[black]">Mooring Information</div>
                   <div className="font-bold mt-1">
                     <FaEdit
-                      // onClick={handleMooringEdit}
+                      onClick={handleMooringEdit}
                       color="#0098FF"
                       style={{ cursor: 'pointer' }}
                     />
