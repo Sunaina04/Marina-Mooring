@@ -5,13 +5,12 @@ import { Dropdown } from 'primereact/dropdown'
 import { useAddBoatyardsMutation } from '../../../Services/MoorManage/MoormanageApi'
 import { BoatYardProps } from '../../../Type/ComponentBasedType'
 import { Country, State } from '../../../Type/CommonType'
-import { BoatYardResponse, CustomerPayload, GetUserResponse } from '../../../Type/ApiTypes'
+import { BoatYardResponse } from '../../../Type/ApiTypes'
 import CustomSelectPositionMap from '../../Map/CustomSelectPositionMap'
 import { CountriesData, StatesData } from '../../CommonComponent/MetaDataComponent/MetaDataApi'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { LatLngExpression } from 'leaflet'
 import { useSelector } from 'react-redux'
-import { useGetUsersMutation } from '../../../Services/AdminTools/AdminToolsApi'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 
 const AddBoatyards: React.FC<BoatYardProps> = ({
@@ -20,8 +19,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   setModalVisible,
   toastRef,
 }) => {
-  const userData = useSelector((state: any) => state.user?.userData)
-  const role = userData?.role?.id
   const selectedCustomerId = useSelector(selectCustomerId)
   const [boatyardId, setBoatyardId] = useState('')
   const [boatyardName, setBoatyardName] = useState('')
@@ -38,13 +35,11 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<string>()
   const [countriesData, setCountriesData] = useState<Country[]>()
   const [statesData, setStatesData] = useState<State[]>()
-  const [getCustomerOwnerData, setgetCustomerOwnerData] = useState<CustomerPayload[]>([])
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
   const [isLoading, setIsLoading] = useState(false)
   const [addBoatyard] = useAddBoatyardsMutation()
   const { getStatesData } = StatesData()
   const { getCountriesData } = CountriesData()
-  const [getUser] = useGetUsersMutation()
 
   const validateFields = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -154,26 +149,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
     setModalVisible(false)
   }
 
-  const getUserHandler = useCallback(async () => {
-    setIsLoading(true)
-    try {
-      const response = await getUser({}).unwrap()
-      const { status, message, content } = response as GetUserResponse
-      if (status === 200 && Array.isArray(content)) {
-        setIsLoading(false)
-        if (content.length > 0) {
-          setgetCustomerOwnerData(content)
-        } else {
-          setgetCustomerOwnerData([])
-        }
-      } else {
-        setIsLoading(false)
-      }
-    } catch (error) {
-      console.error('Error occurred while fetching customer data:', error)
-    }
-  }, [getUser])
-
   const fetchDataAndUpdate = useCallback(async () => {
     const { statesData } = await getStatesData()
     const { countriesData } = await getCountriesData()
@@ -189,7 +164,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
 
   useEffect(() => {
     fetchDataAndUpdate()
-    getUserHandler()
   }, [fetchDataAndUpdate])
 
   return (
