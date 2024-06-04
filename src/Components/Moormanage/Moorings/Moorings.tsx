@@ -421,68 +421,75 @@ const Moorings = () => {
         </div>
 
         <div className="">
-          <div
-            style={{
-              height: '51px',
-              border: '0.96 px solid #D5E1EA',
-            }}
-            className={'flex bg-[#00426F]  rounded-tr-[5px] rounded-xl'}>
-            <div className="flex ">
-              <span className="flex  text-[15px]  text-[#FFFFFF] font-[700]">Customers Record</span>
+          <div style={{ width: '500px', height: '650px' }}>
+            <div
+              style={{
+                height: '51px',
+                border: '0.96 px solid #D5E1EA',
+              }}
+              className=" bg-[#00426F] rounded-tr-[5px] rounded-tl-[5px] p-3 ">
+              <div className="flex  justify-between">
+                <div>
+                  <span className="flex  text-[15px]  text-[#FFFFFF] font-[700]">
+                    Customers Record
+                  </span>
+                </div>
 
-              <span>
-                <FaEdit
-                  className="ml-4 mt-1"
-                  style={{ color: 'white' }}
-                  onClick={handleEdit}
-                  data-testid="edit"
-                />
-              </span>
+                <div className="flex gap-4">
+                  <FaEdit
+                    className=""
+                    style={{ color: 'white' }}
+                    onClick={handleEdit}
+                    data-testid="edit"
+                  />
 
-              <RiDeleteBin5Fill
-                onClick={() => {}}
-                className="text-white mr-2 mt-3"
-                data-testid="RiDeleteBin5Fill"
-                style={{ color: 'white' }}
-                // style={{ cursor: customerRecord ? 'pointer' : 'not-allowed' }}
-              />
+                  <RiDeleteBin5Fill
+                    className=""
+                    onClick={() => {}}
+                    data-testid="RiDeleteBin5Fill"
+                    style={{ color: 'white' }}
+                    // style={{ cursor: customerRecord ? 'pointer' : 'not-allowed' }}
+                  />
+                </div>
+              </div>
             </div>
-          </div>
+            {/* 
+{
 
-          <div style={{ border: '1px solid red', height: '650px' }} className="w-full">
+rowClick==true?"":
+} */}
+
             <div className="bg-[#FFFFFF] px-2">
               <div className="flex flex-wrap gap-20 text-[14px] ">
                 <div className=" mt-2 ">
                   <p className="text-[14px] font-[400]  text-[#000000]">
-                    ID: {customerRecordData?.customerId}
+                    ID : {customerRecordData?.customerId}
                   </p>
                   <p className="mt-4  w-40 text-[#000000] font-[400] ">
-                    Phone: {customerRecordData?.phone}
+                    Phone : {customerRecordData?.phone}
                   </p>
                 </div>
                 <div className="">
                   <p className="text-[14px] font-[400] mt-2 text-[#000000]">
-                    Name: {customerRecordData?.customerName}
+                    Name : {customerRecordData?.customerName}
                   </p>
                   <p className="text-[14px] font-[400] text-[#000000] mt-3">
-                    Email: {customerRecordData?.emailAddress}
+                    Email : {customerRecordData?.emailAddress}
                   </p>
                 </div>
               </div>
               <div className="text-[14px] font-[400] mt-3 text-[#000000]">
                 <p>
-                  Address: {customerRecordData?.streetHouse} {customerRecordData?.aptSuite}
-                  {', '}
+                  Address : {customerRecordData?.streetHouse} {customerRecordData?.aptSuite}
                   {customerRecordData?.stateResponseDto?.name}
-                  {', '}
                   {customerRecordData?.countryResponseDto?.name}
                 </p>
               </div>
-              <div className="text-[14px] mt-4 pb-2 ">
+              <div className=" flex text-[14px] mt-4 pb-2 overflow-x-auto">
                 <div>
-                  <h1 className="">Boatyard: </h1>
+                  <h1 className="">Boatyard : </h1>
                 </div>
-                <div className="flex gap-3">
+                <div className="">
                   {boatYardData.map((boatyard, index) => (
                     <p
                       key={index}
@@ -493,7 +500,7 @@ const Moorings = () => {
                         color: '#10293A',
                         backgroundColor: '#D5E1EA',
                         padding: '5px',
-                        margin: '-5px 0px 05px 5px',
+                        // width:"20px"
                       }}>
                       {boatyard}
                     </p>
@@ -502,11 +509,8 @@ const Moorings = () => {
               </div>
             </div>
 
-            <div style={{ border: '1px solid red' }} className="w-full">
-              <h3
-                className={`${isChecked ? 'bg-[#00426F] text-[#FFFFFF]' : ''} font-[700] text-[15px] h-12 py-3 pl-2 `}>
-                Moorings
-              </h3>
+            <div style={{ height: '505px', backgroundColor: 'white' }}>
+              <h3 className="bg-[#00426F] text-[#FFFFFF] font-[700] th-12 py-3 pl-2 ">Moorings</h3>
 
               <div data-testid="customer-admin-users-table" className="overflow-x-auto">
                 <DataTableComponent
@@ -519,6 +523,16 @@ const Moorings = () => {
                   scrollable={true}
                   data={mooringResponseData}
                   columns={tableColumnsMoorings}
+                  emptyMessage={
+                    <div className="text-center mt-40">
+                      <img
+                        src="/assets/images/empty.png"
+                        alt="Empty Data"
+                        className="w-28 mx-auto mb-4"
+                      />
+                      <p className="text-gray-500">No data available</p>
+                    </div>
+                  }
                 />
               </div>
 
