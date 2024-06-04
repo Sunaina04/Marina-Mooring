@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useLoginMutation } from '../../Services/Authentication/AuthApi'
 import { ErrorResponse, LoginResponse, ResetPasswordResponse } from '../../Type/ApiTypes'
 import { useDispatch, useSelector } from 'react-redux'
-import { setToken, setUserData } from '../../Store/Slice/userSlice'
+import { setCustomerId, setCustomerName, setToken, setUserData } from '../../Store/Slice/userSlice'
 import { Link, useNavigate } from 'react-router-dom'
 import { InputText } from 'primereact/inputtext'
 import { Button } from 'primereact/button'
@@ -83,6 +83,8 @@ export default function LoginForm() {
         sessionStorage.setItem('refreshToken', refreshToken)
         dispatch(setUserData({ ...user }))
         dispatch(setToken(token))
+        dispatch(setCustomerId(''))
+        dispatch(setCustomerName(''))
         setUsername('')
         setPassword('')
         setIsLoading(false)
