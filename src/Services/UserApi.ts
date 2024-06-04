@@ -1,5 +1,7 @@
 import { createApi, fetchBaseQuery, BaseQueryApi, FetchArgs } from '@reduxjs/toolkit/query/react'
 import { RootState } from '../Store/Store'
+import { useSelector } from 'react-redux'
+import { selectCustomerId, selectUserRole } from '../Store/Slice/userSlice'
 
 // Function to fetch base query with interceptor
 const baseQueryWithInterceptor = async (
@@ -50,6 +52,9 @@ const refreshToken = async (refreshToken: any) => {
 const baseQuery = fetchBaseQuery({
   baseUrl: process.env.REACT_APP_BASE_URL,
   prepareHeaders: (headers, { getState, endpoint, extra }) => {
+    const state = getState() as RootState
+    const selectedCustomerId = selectCustomerId(state)
+    const userRole = selectUserRole(state)
     if (
       (getState() as RootState).user.token ||
       sessionStorage.getItem('token') ||
@@ -62,6 +67,9 @@ const baseQuery = fetchBaseQuery({
       const noAuthEndpoints = ['login', 'resetPassword', 'forgetPassword']
       if (token && !noAuthEndpoints.includes(endpoint)) {
         headers.set('Authorization', `Bearer ${token}`)
+        if (userRole === 1 && selectedCustomerId) {
+          headers.set('CUSTOMER_OWNER_ID', selectedCustomerId)
+        }
       } else {
         const token = sessionStorage.getItem('getRefreshToken')
         const noAuthEndpoints = ['login', 'resetPassword', 'forgetPassword']

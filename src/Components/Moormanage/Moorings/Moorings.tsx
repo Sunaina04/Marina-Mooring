@@ -22,6 +22,8 @@ import Header from '../../Layout/LayoutComponents/Header'
 import { Toast } from 'primereact/toast'
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
+import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
+import CustomMooringPositionMap from '../../Map/CustomMooringPositionMap'
 
 // const Moorings = () => {
 //   return (
@@ -33,15 +35,20 @@ import { selectCustomerId } from '../../../Store/Slice/userSlice'
 
 const Moorings = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
+  const userData = useSelector((state: any) => state.user?.userData)
+  const role = userData?.role?.id
   const [modalVisible, setModalVisible] = useState(false)
   const [mooringData, setMooringData] = useState<MooringPayload[]>([])
   const [customerRecordData, setCustomerRecordData] = useState<any>()
+  const [mooringResponseData, setMooringResponseData] = useState<any>()
   const [boatYardData, setBoatYardData] = useState<any[]>([])
   const [selectedCustomer, setSelectedCustomer] = useState<any>()
   const [mooringRowData, setMooringRowData] = useState()
   const [editMode, setEditMode] = useState(false)
   const [searchQuery, setSearchQuery] = useState<string>('')
   const [searchText, setSearchText] = useState('')
+  const [customerId, setCustomerId] = useState()
+  const [rowClick, setRowClick] = useState(false)
   const [filteredMooringData, setFilteredMooringData] = useState<MooringPayload[]>([])
   const [edit, setEdit] = useState<CustomerProps>({
     id: '#43453',
@@ -60,7 +67,9 @@ const Moorings = () => {
   const [getCustomerWithMooring] = useGetCustomersWithMooringMutation()
 
   const handleInputChange = (e: InputSwitchChangeEvent) => {
-    setIsChecked(e.value)
+    if (rowClick) {
+      setIsChecked(e.value)
+    }
   }
 
   const handleButtonClick = () => {
@@ -91,8 +100,9 @@ const Moorings = () => {
   }
 
   const handleMooringRowClick = (rowData: any) => {
+    setRowClick(true)
     setMooringRowData(rowData)
-    console.log(rowData?.customerId)
+    setCustomerId(rowData?.customerId)
     getCustomersWithMooring(rowData?.customerId)
   }
 
@@ -188,9 +198,6 @@ const Moorings = () => {
       if (searchText) {
         params.searchText = searchText
       }
-      if (selectedCustomerId) {
-        params.customerOwnerId = selectedCustomerId
-      }
       const response = await getMoorings(params).unwrap()
       const { status, content } = response as MooringResponse
       if (status === 200 && Array.isArray(content)) {
@@ -214,6 +221,7 @@ const Moorings = () => {
         setCustomerRecordData(content?.customerResponseDto)
         setCustomerMooringData(content?.customerResponseDto?.mooringResponseDtoList)
         setBoatYardData(content?.boatyardNames)
+        setMooringResponseData(content?.customerResponseDto?.mooringResponseDtoList)
       }
     } catch (error) {
       console.error('Error fetching moorings data:', error)
@@ -233,7 +241,18 @@ const Moorings = () => {
           <CustomModal
             buttonText={'ADD NEW'}
             children={
-              <AddMoorings moorings={selectedCustomer} editMode={editMode} toastRef={toast} />
+              <AddMoorings
+                moorings={selectedCustomer}
+                editMode={editMode}
+                toastRef={toast}
+                closeModal={handleModalClose}
+                getCustomer={getMooringsData}
+                getCustomerRecord={() => {
+                  if (customerId) {
+                    getCustomersWithMooring(customerId)
+                  }
+                }}
+              />
             }
             headerText={<h1 className="text-xxl font-bold text-black ">Add Mooring</h1>}
             visible={modalVisible}
@@ -350,46 +369,18 @@ const Moorings = () => {
           </div>
         </div>
 
-        <div className="relative mr-10 min-w-[20vw] max-w-[80vw]">
-          <img
-            src="/assets/images/map.png"
-            className="bg-no-repeat object-cover bg-auto rounded-md w-full h-full"
-            alt="Sea"
+        <div
+          className={`"relative mr-10" ${modalVisible} ? 'blur-screen' : ''`}
+          style={{ height: '700px', width: '53vw' }}>
+          <CustomMooringPositionMap
+            position={[30.698, 76.657]}
+            zoomLevel={10}
+            style={{ height: '100%', width: '100%', display: modalVisible ? 'none' : '' }}
+            // iconsByStatus={iconsByStatus}
+            // @ts-expect-error
+            moorings={mooringData}
           />
-          {/* <div>
-          <CustomDisplayPositionMap position={[78.965768, 79.8097687]}/>
-         </div> */}
-          {/* <div className="absolute top-72">
-            <div className=""></div>
-            <div className="rounded-md border-[1px] pb-1 border-gray-300 mt-16 ml-10 w-[17vw]  h-[13vh] bg-[#FFFFFF]">
-              <p className="text-[0.7rem] ml-1 text-black">Status</p>
-              <hr className="m-1 border-black" />
-              <div className="flex">
-                <div>
-                  <FaCircle className="h-3 text-red-600 mt-1" data-testid="Facircle1" />
-                  <FaCircle className="h-3 text-green-600 mt-2" data-testid="Facircle2" />
-                </div>
-                <div>
-                  <p className="text-[0.6rem] text-black mt-1">Need inspection</p>
-                  <p className="text-[0.6rem] text-black tracking-tighter mt-[0.3rem]">
-                    Gear On (in the water)
-                  </p>
-                </div>
-                <div className="ml-1">
-                  <FaCircle className="h-3 text-violet-600 mt-1 " data-testid="Facircle3" />
-                  <FaCircle className="h-3 text-gray-500 mt-2" data-testid="Facircle4" />
-                </div>
-                <div>
-                  <p className="text-[0.6rem] text-black tracking-tighter mt-1">
-                    Gear Off (out of the water)
-                  </p>
-                  <p className="text-[0.6rem] text-black mt-[0.3rem]">Not in Use</p>
-                </div>
-              </div>
-            </div>
-          </div> */}
-
-          <div className="absolute top-5 right-5 w-[25rem] max-w-full">
+          <div className="absolute top-5 right-5 w-[25rem] max-w-full z-10">
             <div
               style={{
                 maxWidth: '400px',
@@ -420,6 +411,7 @@ const Moorings = () => {
                     onChange={handleInputChange}
                     className="border-none ml-36 "
                     color="green"
+                    style={{ cursor: rowClick ? 'pointer' : 'not-allowed' }}
                   />
                 </div>
               </div>
@@ -427,59 +419,55 @@ const Moorings = () => {
 
             {isChecked && (
               <div className="w-full">
-                <div className="bg-[#F2F2F2] px-2" style={{ minHeight: '24vh' }}>
+                <div className="bg-[#FFFFFF] px-2" style={{ minHeight: '24vh' }}>
                   <div className="flex flex-wrap gap-20 text-[14px] ">
                     <div className=" mt-2 ">
-                      <p className="text-[14px] font-[400]  text-[#000000]">ID:{edit.id}</p>
-                      <p className="mt-4  w-40 text-[#000000] font-[400] ">Phone:{edit.phone}</p>
+                      <p className="text-[14px] font-[400]  text-[#000000]">
+                        ID: {customerRecordData?.customerId}
+                      </p>
+                      <p className="mt-4  w-40 text-[#000000] font-[400] ">
+                        Phone: {customerRecordData?.phone}
+                      </p>
                     </div>
                     <div className="">
-                      <p className="text-[14px] font-[400] mt-2 text-[#000000]">Name:{edit.name}</p>
+                      <p className="text-[14px] font-[400] mt-2 text-[#000000]">
+                        Name: {customerRecordData?.customerName}
+                      </p>
                       <p className="text-[14px] font-[400] text-[#000000] mt-3">
-                        Email:{edit.email}
+                        Email: {customerRecordData?.emailAddress}
                       </p>
                     </div>
                   </div>
                   <div className="text-[14px] font-[400] mt-3 text-[#000000]">
-                    <p>Address:{edit.address}</p>
+                    <p>
+                      Address: {customerRecordData?.streetHouse} {customerRecordData?.aptSuite}
+                      {', '}
+                      {customerRecordData?.stateResponseDto?.name}
+                      {', '}
+                      {customerRecordData?.countryResponseDto?.name}
+                    </p>
                   </div>
                   <div className="text-[14px] mt-4 pb-2 ">
-                    <p>
-                      Boatyard:
-                      <span
-                        style={{
-                          backgroundColor: '#D5E1EA',
-                          color: '#00426F',
-                          fontSize: '13px',
-                          padding: '5px',
-                          borderRadius: '5px',
-                        }}
-                        className="ml-2 inline-block">
-                        Pioneer
-                      </span>
-                      <span
-                        style={{
-                          backgroundColor: '#D5E1EA',
-                          color: '#00426F',
-                          fontSize: '13px',
-                          padding: '5px',
-                          borderRadius: '5px',
-                        }}
-                        className=" ml-2">
-                        02Pioneer
-                      </span>
-                      <span
-                        style={{
-                          backgroundColor: '#D5E1EA',
-                          color: '#00426F',
-                          fontSize: '13px',
-                          padding: '5px',
-                          borderRadius: '5px',
-                        }}
-                        className=" ml-2">
-                        03Pioneer
-                      </span>
-                    </p>
+                    <div>
+                      <h1 className="">Boatyard: </h1>
+                    </div>
+                    <div className="flex gap-3">
+                      {boatYardData.map((boatyard, index) => (
+                        <p
+                          key={index}
+                          style={{
+                            borderRadius: '5px',
+                            fontWeight: '400',
+                            fontSize: '12px',
+                            color: '#10293A',
+                            backgroundColor: '#D5E1EA',
+                            padding: '5px',
+                            margin: '-5px 0px 05px 5px',
+                          }}>
+                          {boatyard}
+                        </p>
+                      ))}
+                    </div>
                   </div>
                 </div>
 
@@ -495,10 +483,10 @@ const Moorings = () => {
                         fontSize: '12px',
                         color: '#000000',
                         fontWeight: 600,
-                        backgroundColor: '#D9D9D9',
+                        backgroundColor: '#FFFFFF',
                       }}
                       scrollable={true}
-                      data={undefined}
+                      data={mooringResponseData}
                       columns={tableColumnsMoorings}
                     />
                   </div>

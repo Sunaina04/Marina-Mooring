@@ -115,7 +115,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const phoneRegex = /^\d{10}$/
     const nameRegex = /^[a-zA-Z ]+$/
-    const gpsRegex = /^\d{1,2}\.\d+ \d{1,2}\.\d+$/
 
     const errors: { [key: string]: string } = {}
     let firstError = ''
@@ -183,8 +182,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
     if (!gpsCoordinatesValue) {
       errors.gpsCoordinatesValue = 'GPS Coordinates is required'
-    } else if (!gpsRegex.test(gpsCoordinatesValue)) {
-      errors.gpsCoordinatesValue = 'Invalid GPS coordinates format'
     }
 
     if (!formData.mooringId) errors.mooringId = 'Mooring ID is required'
@@ -340,22 +337,31 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         // statusId: 1,
       },
     }
-    const response = await addCustomer(payload).unwrap()
-    const { status, message } = response as CustomerResponse
-    if (status === 200 || status === 201) {
-      closeModal()
-      getCustomer()
-      toastRef?.current?.show({
-        severity: 'success',
-        summary: 'Success',
-        detail: 'Customer Saved successfully',
-        life: 3000,
-      })
-    } else {
+    try {
+      const response = await addCustomer(payload).unwrap()
+      const { status, message } = response as CustomerResponse
+      if (status === 200 || status === 201) {
+        closeModal()
+        getCustomer()
+        toastRef?.current?.show({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Customer Saved successfully',
+          life: 3000,
+        })
+      } else {
+        toastRef?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+      }
+    } catch (error) {
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: message,
+        detail: error,
         life: 3000,
       })
     }
@@ -367,93 +373,103 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     if (Object.keys(errors).length > 0) {
       return
     }
-    const editCustomerPayload = {
-      customerName: customerName,
-      customerId: customerId,
-      emailAddress: email,
-      phone: phone,
-      streetHouse: streetHouse,
-      aptSuite: sectorBlock,
-      state: selectedState?.id ? selectedState?.id : customer?.stateResponseDto?.id,
-      country: selectedCountry?.id ? selectedCountry?.id : customer?.stateResponseDto?.id,
-      zipCode: pinCode,
-      customerOwnerId: selectedCustomerId,
-      mooringRequestDto: {
-        id: customer?.mooringResponseDtoList[0]?.id,
-        mooringId: formData.mooringId
-          ? formData.mooringId
-          : customer?.mooringResponseDtoList[0]?.mooringId,
+
+    try {
+      const editCustomerPayload = {
+        customerName: customerName,
         customerId: customerId,
-        harbor: formData.harbor ? formData.harbor : customer?.mooringResponseDtoList[0]?.harbor,
-        waterDepth: formData.waterDepth
-          ? formData.waterDepth
-          : customer?.mooringResponseDtoList[0]?.waterDepth,
-        gpsCoordinates: gpsCoordinatesValue,
-        boatyardId: formData.boatyardName.id
-          ? formData.boatyardName.id
-          : customer?.mooringResponseDtoList[0]?.boatyardResponseDto?.id,
-        boatName: formData.boatName
-          ? formData.boatName
-          : customer?.mooringResponseDtoList[0]?.boatName,
-        boatSize: formData.boatSize
-          ? formData.boatSize
-          : customer?.mooringResponseDtoList[0]?.boatSize,
-        boatTypeId: formData.boatType.id
-          ? formData.boatType.id
-          : customer?.mooringResponseDtoList[0]?.boatType.id,
-        boatWeight: formData.boatWeight
-          ? formData.boatWeight
-          : customer?.mooringResponseDtoList[0]?.boatWeight,
-        sizeOfWeightId: formData.sizeOfWeight.id
-          ? formData.sizeOfWeight.id
-          : customer?.mooringResponseDtoList[0]?.sizeOfWeight.id,
-        typeOfWeightId: formData.typeOfWeight.id
-          ? formData.typeOfWeight.id
-          : customer?.mooringResponseDtoList[0]?.typeOfWeight.id,
-        eyeConditionId: formData.conditionOfEye.id
-          ? formData.conditionOfEye.id
-          : customer?.mooringResponseDtoList[0]?.eyeCondition.id,
-        topChainConditionId: formData.topChainCondition.id
-          ? formData.topChainCondition.id
-          : customer?.mooringResponseDtoList[0]?.topChainCondition.id,
-        bottomChainConditionId: formData.bottomChainCondition.id
-          ? formData.bottomChainCondition.id
-          : customer?.mooringResponseDtoList[0]?.bottomChainCondition.id,
-        shackleSwivelConditionId: formData.shackleSwivelCondition.id
-          ? formData.shackleSwivelCondition.id
-          : customer?.mooringResponseDtoList[0]?.shackleSwivelCondition.id,
-        pennantConditionId: formData.pennantCondition.id
-          ? formData.pennantCondition.id
-          : customer?.mooringResponseDtoList[0]?.pennantCondition.id,
-        depthAtMeanHighWater: formData.deptAtMeanHighWater
-          ? formData.deptAtMeanHighWater
-          : customer?.mooringResponseDtoList[0]?.deptAtMeanHighWater,
+        emailAddress: email,
+        phone: phone,
+        streetHouse: streetHouse,
+        aptSuite: sectorBlock,
+        state: selectedState?.id ? selectedState?.id : customer?.stateResponseDto?.id,
+        country: selectedCountry?.id ? selectedCountry?.id : customer?.stateResponseDto?.id,
+        zipCode: pinCode,
         customerOwnerId: selectedCustomerId,
-        // statusId: 1,
-      },
-    }
-    const response = await updateCustomer({
-      payload: editCustomerPayload,
-      id: customer?.id,
-    }).unwrap()
-    const { status, message } = response as CustomerResponse
-    if (status === 200 || status === 201) {
-      closeModal()
-      getCustomer()
-      if (getCustomerRecord) {
-        getCustomerRecord()
+        mooringRequestDto: {
+          id: customer?.mooringResponseDtoList[0]?.id,
+          mooringId: formData.mooringId
+            ? formData.mooringId
+            : customer?.mooringResponseDtoList[0]?.mooringId,
+          customerId: customerId,
+          harbor: formData.harbor ? formData.harbor : customer?.mooringResponseDtoList[0]?.harbor,
+          waterDepth: formData.waterDepth
+            ? formData.waterDepth
+            : customer?.mooringResponseDtoList[0]?.waterDepth,
+          gpsCoordinates: gpsCoordinatesValue,
+          boatyardId: formData.boatyardName.id
+            ? formData.boatyardName.id
+            : customer?.mooringResponseDtoList[0]?.boatyardResponseDto?.id,
+          boatName: formData.boatName
+            ? formData.boatName
+            : customer?.mooringResponseDtoList[0]?.boatName,
+          boatSize: formData.boatSize
+            ? formData.boatSize
+            : customer?.mooringResponseDtoList[0]?.boatSize,
+          boatTypeId: formData.boatType.id
+            ? formData.boatType.id
+            : customer?.mooringResponseDtoList[0]?.boatType.id,
+          boatWeight: formData.boatWeight
+            ? formData.boatWeight
+            : customer?.mooringResponseDtoList[0]?.boatWeight,
+          sizeOfWeightId: formData.sizeOfWeight.id
+            ? formData.sizeOfWeight.id
+            : customer?.mooringResponseDtoList[0]?.sizeOfWeight.id,
+          typeOfWeightId: formData.typeOfWeight.id
+            ? formData.typeOfWeight.id
+            : customer?.mooringResponseDtoList[0]?.typeOfWeight.id,
+          eyeConditionId: formData.conditionOfEye.id
+            ? formData.conditionOfEye.id
+            : customer?.mooringResponseDtoList[0]?.eyeCondition.id,
+          topChainConditionId: formData.topChainCondition.id
+            ? formData.topChainCondition.id
+            : customer?.mooringResponseDtoList[0]?.topChainCondition.id,
+          bottomChainConditionId: formData.bottomChainCondition.id
+            ? formData.bottomChainCondition.id
+            : customer?.mooringResponseDtoList[0]?.bottomChainCondition.id,
+          shackleSwivelConditionId: formData.shackleSwivelCondition.id
+            ? formData.shackleSwivelCondition.id
+            : customer?.mooringResponseDtoList[0]?.shackleSwivelCondition.id,
+          pennantConditionId: formData.pennantCondition.id
+            ? formData.pennantCondition.id
+            : customer?.mooringResponseDtoList[0]?.pennantCondition.id,
+          depthAtMeanHighWater: formData.deptAtMeanHighWater
+            ? formData.deptAtMeanHighWater
+            : customer?.mooringResponseDtoList[0]?.deptAtMeanHighWater,
+          customerOwnerId: selectedCustomerId,
+          // statusId: 1,
+        },
       }
-      toastRef?.current?.show({
-        severity: 'success',
-        summary: 'Success',
-        detail: 'Customer Updated successfully',
-        life: 3000,
-      })
-    } else {
+      const response = await updateCustomer({
+        payload: editCustomerPayload,
+        id: customer?.id,
+      }).unwrap()
+      const { status, message } = response as CustomerResponse
+      if (status === 200 || status === 201) {
+        closeModal()
+        getCustomer()
+        if (getCustomerRecord) {
+          getCustomerRecord()
+        }
+        toastRef?.current?.show({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Customer Updated successfully',
+          life: 3000,
+        })
+      } else {
+        toastRef?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+      }
+    } catch (error) {
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: message,
+        detail: error,
         life: 3000,
       })
     }

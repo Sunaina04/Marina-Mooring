@@ -30,6 +30,8 @@ import { selectCustomerId } from '../../../Store/Slice/userSlice'
 
 const Boatyards = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
+  const userData = useSelector((state: any) => state.user?.userData)
+  const role = userData?.role?.id
   const [modalVisible, setModalVisible] = useState(false)
   const [boatyardsData, setboatyardsData] = useState<BoatYardPayload[]>([])
 
@@ -224,6 +226,7 @@ const Boatyards = () => {
 
   const handleRowClickBoatYardDetail = (rowData: any) => {
     setSelectedBoatYard('')
+    setMooringWithBoatyardsData([])
     const timeoutId = setTimeout(() => {
       setSelectedBoatYard(rowData.data)
     }, 600)
@@ -253,9 +256,6 @@ const Boatyards = () => {
       }
       if (searchFieldText) {
         params.searchText = searchFieldText
-      }
-      if (selectedCustomerId) {
-        params.customerOwnerId = selectedCustomerId
       }
       await getBoatyards(params)
         .unwrap()

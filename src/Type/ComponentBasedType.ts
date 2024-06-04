@@ -54,7 +54,9 @@ export interface AddMooringProps {
   moorings: MooringPayload
   editMode: boolean
   toastRef: React.RefObject<any>
-
+  closeModal: () => void
+  getCustomer: () => void
+  getCustomerRecord?: () => void
 }
 
 export interface Technician_Data {

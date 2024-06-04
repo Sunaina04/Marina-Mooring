@@ -46,6 +46,8 @@ import { GearOffIcon, GearOnIcon, NeedInspectionIcon, NotInUseIcon } from '../..
 
 const Customer = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
+  const userData = useSelector((state: any) => state.user?.userData)
+  const role = userData?.role?.id
   const [modalVisible, setModalVisible] = useState(false)
   const [customerData, setCustomerData] = useState<CustomerPayload[]>([])
   const [editMode, setEditMode] = useState(false)
@@ -202,11 +204,6 @@ const Customer = () => {
       if (searchText) {
         params.searchText = searchText
       }
-
-      if (selectedCustomerId) {
-        params.customerOwnerId = selectedCustomerId
-      }
-
       const response = await getCustomer(params).unwrap()
       const { status, content, message } = response as CustomerResponse
       if (status === 200 && Array.isArray(content)) {
@@ -388,11 +385,6 @@ const Customer = () => {
         {/* middle container */}
 
         <div className="min-w-[20vw]">
-          {/* <img
-            src="/assets/images/map.png"
-            className="w-[413px] h-full object-cover rounded-md border-[1px] border-gray-300"
-            alt="Sea Image"
-          /> */}
           <div
             className={`"max-w-[413px] rounded-md border-[1px]" ${modalVisible} ? 'blur-screen' : ''`}>
             <CustomMooringPositionMap

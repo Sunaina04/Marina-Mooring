@@ -25,7 +25,14 @@ import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import { CustomerResponse } from '../../../Type/ApiTypes'
 
-const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }) => {
+const AddMoorings: React.FC<AddMooringProps> = ({
+  moorings,
+  editMode,
+  toastRef,
+  closeModal,
+  getCustomer,
+  getCustomerRecord,
+}) => {
   const selectedCustomerId = useSelector(selectCustomerId)
   const { getTypeOfBoatTypeData } = TypeOfBoatType()
   const { getTypeOfWeightData } = TypeOfWeightData()
@@ -48,13 +55,11 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
   const [pennantData, setPennantData] = useState<MetaData[]>([])
   const [customerName, setcustomerName] = useState<MetaData[]>([])
   const [boatyardsName, setBoatYardsName] = useState<MetaData[]>([])
-  const [value, setValue] = useState<string>('')
-  const [selectedCity, setSelectedCity] = useState<CityProps | undefined>(undefined)
-  const [saveMoorings] = useAddMooringsMutation()
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
   const [firstErrorField, setFirstErrorField] = useState('')
-  const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<string>()
   const [center, setCenter] = useState<LatLngExpression | undefined>([30.6983149, 76.656095])
+  const [saveMoorings] = useAddMooringsMutation()
+
   const [formData, setFormData] = useState<any>({
     customerName: '',
     mooringNumber: '',
@@ -146,16 +151,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
     }
   }, [])
 
-  const cities = [
-    { id: 0, name: 'New York', code: 'NY' },
-    { id: 1, name: 'Rome', code: 'RM' },
-    { id: 2, name: 'London', code: 'LDN' },
-    { id: 3, name: 'Istanbul', code: 'IST' },
-    { id: 4, name: 'Paris', code: 'PRS' },
-  ]
-
   const validateFields = () => {
-    const gpsRegex = /^\d{1,2}\.\d+ \d{1,2}\.\d+$/
     const errors: { [key: string]: string } = {}
     let firstError = ''
 
@@ -176,10 +172,10 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
       if (!firstError) firstError = 'waterDepth'
     }
 
-    // if (!formData.gpsCoordinatesValue) {
-    //   errors.gpsCoordinates = 'GPS Coordinates are required'
-    //   if (!firstError) firstError = 'gpsCoordinates'
-    // }
+    if (!formData.gpsCoordinates) {
+      errors.gpsCoordinates = 'GPS Coordinates are required'
+      if (!firstError) firstError = 'gpsCoordinates'
+    }
 
     if (!formData.boatName) {
       errors.boatName = 'Boat Name is required'
@@ -264,50 +260,62 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
 
   const SaveMoorings = async () => {
     const errors = validateFields()
-    if (Object.keys(errors).length > 0) {
-      return
-    }
-    const payload = {
-      customerId: formData.customerName?.id,
-      mooringId: formData.mooringNumber,
-      harbor: formData.harbor,
-      waterDepth: formData.waterDepth,
-      gpsCoordinates: formData.gpsCoordinates,
-      boatyardId: formData.boatYardName?.id,
-      boatName: formData.boatName,
-      boatSize: formData.boatSize,
-      boatTypeId: formData.type?.id,
-      boatWeight: formData.boatWeight,
-      sizeOfWeightId: formData.sizeOfWeight?.id,
-      typeOfWeightId: formData.typeOfWeight?.id,
-      eyeConditionId: formData.conditionOfEye?.id,
-      topChainConditionId: formData.topChainCondition?.id,
-      bottomChainConditionId: formData.bottomChainCondition?.id,
-      shackleSwivelConditionId: formData.shackleSwivelCondition?.id,
-      pennantConditionId: formData.pennantCondition?.id,
-      depthAtMeanHighWater: formData.deptAtMeanHighWater?.id,
-      customerOwnerId: selectedCustomerId,
-    }
+    // if (Object.keys(errors).length > 0) {
+    //   return
+    // }
 
-    const response = await saveMoorings(payload).unwrap()
-    const { status, message } = response as CustomerResponse
-    if (status === 200 || status === 201) {
-      // closeModal()
-      // getCustomer()
-      // if (getCustomerRecord) {
-      //   getCustomerRecord()
-      // }
-      toastRef?.current?.show({
-        severity: 'success',
-        summary: 'Success',
-        detail: 'Customer Updated successfully',
-        life: 3000,
-      })
-    } else {
+    try {
+      const payload = {
+        customerId: formData.customerName?.id,
+        mooringId: formData.mooringNumber,
+        harbor: formData.harbor,
+        waterDepth: formData.waterDepth,
+        gpsCoordinates: formData.gpsCoordinates,
+        boatyardId: formData.boatYardName?.id,
+        boatName: formData.boatName,
+        boatSize: formData.boatSize,
+        boatTypeId: formData.type?.id,
+        boatWeight: formData.boatWeight,
+        sizeOfWeightId: formData.sizeOfWeight?.id,
+        typeOfWeightId: formData.typeOfWeight?.id,
+        eyeConditionId: formData.conditionOfEye?.id,
+        topChainConditionId: formData.topChainCondition?.id,
+        bottomChainConditionId: formData.bottomChainCondition?.id,
+        shackleSwivelConditionId: formData.shackleSwivelCondition?.id,
+        pennantConditionId: formData.pennantCondition?.id,
+        depthAtMeanHighWater: formData.deptAtMeanHighWater?.id,
+        customerOwnerId: selectedCustomerId,
+      }
+
+      const response = await saveMoorings(payload).unwrap()
+      const { status, message } = response as CustomerResponse
+      if (status === 200 || status === 201) {
+        toastRef?.current?.show({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Customer Updated successfully',
+          life: 3000,
+        })
+        closeModal()
+        getCustomer()
+        if (getCustomerRecord) {
+          getCustomerRecord()
+        }
+      } else {
+        console.log('Error', message)
+        toastRef?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+      }
+    } catch (error) {
+      console.log('Error here', error)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: message,
+        detail: error,
         life: 3000,
       })
     }
@@ -463,11 +471,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
               <InputComponent
                 value={formData.gpsCoordinates}
                 onChange={(e) => handleInputChange('gpsCoordinates', e.target.value)}
-                // onChange={(e) => {
-                //   setGpsCoordinatesValue(e.target.value)
-                //   setFieldErrors((prevErrors) => ({ ...prevErrors, gpsCoordinatesValue: '' }))
-                // }}
-
                 style={{
                   width: '230px',
                   height: '32px',
@@ -966,14 +969,3 @@ const AddMoorings: React.FC<AddMooringProps> = ({ moorings, editMode, toastRef }
 }
 
 export default AddMoorings
-function closeModal() {
-  throw new Error('Function not implemented.')
-}
-
-function getCustomer() {
-  throw new Error('Function not implemented.')
-}
-
-function getCustomerRecord() {
-  throw new Error('Function not implemented.')
-}

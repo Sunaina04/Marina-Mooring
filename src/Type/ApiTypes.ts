@@ -94,10 +94,11 @@ export interface UserData {
   creationDate: string
   lastModifiedDate: string
   phoneNumber: string
+  role: RoleData
 }
 
 export interface RoleData {
-  id: string
+  id: number
   creationDate: string
   lastModifiedDate: string
   name: string

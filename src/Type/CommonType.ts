@@ -40,7 +40,7 @@ export interface InitialState {
   userData: UserData | null
   isOpen: boolean
   sidebar: SidebarState
-  customerId: number | null
+  customerId: string
   customerName: string
 }
 
@@ -76,7 +76,6 @@ export interface MetaData {
   name: string
   label: string
 }
-
 
 export interface Customer {
   id: number
