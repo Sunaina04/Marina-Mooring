@@ -68,7 +68,7 @@ const baseQuery = fetchBaseQuery({
       if (token && !noAuthEndpoints.includes(endpoint)) {
         headers.set('Authorization', `Bearer ${token}`)
         if (userRole === 1 && selectedCustomerId) {
-          headers.set('CUSTOMER_OWNER_ID', selectedCustomerId.toString())
+          headers.set('CUSTOMER_OWNER_ID', selectedCustomerId)
         }
       } else {
         const token = sessionStorage.getItem('getRefreshToken')
