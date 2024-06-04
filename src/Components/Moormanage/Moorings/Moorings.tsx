@@ -373,22 +373,24 @@ const Moorings = () => {
 
             <div className="mt-2">
               {mooringData.length > 0 ? (
-                <DataTableComponent
-                  data={mooringData}
-                  tableStyle={{
-                    fontSize: '12px',
-                    color: '#000000',
-                    fontWeight: 600,
-                    backgroundColor: '#D9D9D9',
-                    cursor: 'pointer',
-                  }}
-                  scrollable={false}
-                  columns={tableColumns}
-                  style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
-                  onRowClick={(row) => {
-                    handleMooringRowClick(row.data)
-                  }}
-                />
+                <div className="h-[560px] overflow-y-auto">
+                  <DataTableComponent
+                    data={mooringData}
+                    tableStyle={{
+                      fontSize: '12px',
+                      color: '#000000',
+                      fontWeight: 600,
+                      backgroundColor: '#D9D9D9',
+                      cursor: 'pointer',
+                    }}
+                    scrollable={true}
+                    columns={tableColumns}
+                    style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+                    onRowClick={(row) => {
+                      handleMooringRowClick(row.data)
+                    }}
+                  />
+                </div>
               ) : (
                 <div className="text-center mt-40">
                   <img
@@ -403,229 +405,214 @@ const Moorings = () => {
           </div>
         </div>
 
-        <div
-          className={`"relative mr-10" ${modalVisible} ? 'blur-screen' : ''`}
-          style={{ height: '700px', width: '53vw' }}>
-          <CustomMooringPositionMap
-            position={[30.698, 76.657]}
-            zoomLevel={10}
-            style={{ height: '100%', width: '100%', display: modalVisible ? 'none' : '' }}
-            // iconsByStatus={iconsByStatus}
-            // @ts-expect-error
-            moorings={mooringData}
-          />
-          <div className="absolute top-5 right-5 w-[25rem] max-w-full z-10">
-            <div
-              style={{
-                maxWidth: '400px',
-                height: '51px',
-                border: '0.96 px solid #D5E1EA',
-              }}
-              className={`flex ${isChecked ? 'bg-[#00426F] rounded-tl-[5px] rounded-tr-[5px]' : 'bg-[#FFFFFF] rounded-xl'}  py-3 pl-4`}>
-              <div className="flex ">
-                <span
-                  className={`flex  text-[15px] font-[700] text-[#000000] ${isChecked ? 'text-[#FFFFFF] font-[700]' : ' '} `}>
-                  Customers Record
-                </span>
-                {isChecked ? (
-                  <span>
-                    <FaEdit
-                      className="ml-4 mt-1"
-                      style={{ color: 'white' }}
-                      onClick={handleEdit}
-                      data-testid="edit"
-                    />
-                    <RiDeleteBin5Fill
-                      onClick={handleDelete}
-                      className="text-white mr-2 mt-3"
-                      data-testid="RiDeleteBin5Fill"
-                      style={{ cursor: mooringRecord ? 'pointer' : 'not-allowed' }}
-                    />
-                  </span>
-                ) : (
-                  ''
-                )}
-                <div className="ml-auto">
-                  <InputSwitch
-                    checked={isChecked}
-                    onChange={handleInputChange}
-                    className="border-none ml-36 "
-                    color="green"
-                    style={{ cursor: rowClick ? 'pointer' : 'not-allowed' }}
-                  />
+        <div className="">
+          <div style={{ height: '700px', width: '25vw' }}>
+            <CustomMooringPositionMap
+              position={[30.698, 76.657]}
+              zoomLevel={10}
+              style={{ height: '100%', width: '100%', display: modalVisible ? 'none' : '' }}
+              // iconsByStatus={iconsByStatus}
+              // @ts-expect-error
+              moorings={mooringData}
+            />
+          </div>
+        </div>
+
+        <div className="">
+          <div
+            style={{
+              height: '51px',
+              border: '0.96 px solid #D5E1EA',
+            }}
+            className={'flex bg-[#00426F]  rounded-tr-[5px] rounded-xl'}>
+            <div className="flex ">
+              <span className="flex  text-[15px]  text-[#FFFFFF] font-[700]">Customers Record</span>
+
+              <span>
+                <FaEdit
+                  className="ml-4 mt-1"
+                  style={{ color: 'white' }}
+                  onClick={handleEdit}
+                  data-testid="edit"
+                />
+              </span>
+
+              <RiDeleteBin5Fill
+                  onClick={()=>{}}
+                  className="text-white mr-2 mt-3"
+                  data-testid="RiDeleteBin5Fill"
+                  style={{ color: 'white' }}
+                  // style={{ cursor: customerRecord ? 'pointer' : 'not-allowed' }}
+                />
+            </div>
+          </div>
+
+          <div style={{ border: '1px solid red', height: '650px' }} className="w-full">
+            <div className="bg-[#FFFFFF] px-2">
+              <div className="flex flex-wrap gap-20 text-[14px] ">
+                <div className=" mt-2 ">
+                  <p className="text-[14px] font-[400]  text-[#000000]">
+                    ID: {customerRecordData?.customerId}
+                  </p>
+                  <p className="mt-4  w-40 text-[#000000] font-[400] ">
+                    Phone: {customerRecordData?.phone}
+                  </p>
+                </div>
+                <div className="">
+                  <p className="text-[14px] font-[400] mt-2 text-[#000000]">
+                    Name: {customerRecordData?.customerName}
+                  </p>
+                  <p className="text-[14px] font-[400] text-[#000000] mt-3">
+                    Email: {customerRecordData?.emailAddress}
+                  </p>
+                </div>
+              </div>
+              <div className="text-[14px] font-[400] mt-3 text-[#000000]">
+                <p>
+                  Address: {customerRecordData?.streetHouse} {customerRecordData?.aptSuite}
+                  {', '}
+                  {customerRecordData?.stateResponseDto?.name}
+                  {', '}
+                  {customerRecordData?.countryResponseDto?.name}
+                </p>
+              </div>
+              <div className="text-[14px] mt-4 pb-2 ">
+                <div>
+                  <h1 className="">Boatyard: </h1>
+                </div>
+                <div className="flex gap-3">
+                  {boatYardData.map((boatyard, index) => (
+                    <p
+                      key={index}
+                      style={{
+                        borderRadius: '5px',
+                        fontWeight: '400',
+                        fontSize: '12px',
+                        color: '#10293A',
+                        backgroundColor: '#D5E1EA',
+                        padding: '5px',
+                        margin: '-5px 0px 05px 5px',
+                      }}>
+                      {boatyard}
+                    </p>
+                  ))}
                 </div>
               </div>
             </div>
 
-            {isChecked && (
-              <div className="w-full">
-                <div className="bg-[#FFFFFF] px-2" style={{ minHeight: '24vh' }}>
-                  <div className="flex flex-wrap gap-20 text-[14px] ">
-                    <div className=" mt-2 ">
-                      <p className="text-[14px] font-[400]  text-[#000000]">
-                        ID: {customerRecordData?.customerId}
-                      </p>
-                      <p className="mt-4  w-40 text-[#000000] font-[400] ">
-                        Phone: {customerRecordData?.phone}
-                      </p>
-                    </div>
-                    <div className="">
-                      <p className="text-[14px] font-[400] mt-2 text-[#000000]">
-                        Name: {customerRecordData?.customerName}
-                      </p>
-                      <p className="text-[14px] font-[400] text-[#000000] mt-3">
-                        Email: {customerRecordData?.emailAddress}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="text-[14px] font-[400] mt-3 text-[#000000]">
-                    <p>
-                      Address: {customerRecordData?.streetHouse} {customerRecordData?.aptSuite}
-                      {', '}
-                      {customerRecordData?.stateResponseDto?.name}
-                      {', '}
-                      {customerRecordData?.countryResponseDto?.name}
-                    </p>
-                  </div>
-                  <div className="text-[14px] mt-4 pb-2 ">
-                    <div>
-                      <h1 className="">Boatyard: </h1>
-                    </div>
-                    <div className="flex gap-3">
-                      {boatYardData.map((boatyard, index) => (
-                        <p
-                          key={index}
-                          style={{
-                            borderRadius: '5px',
-                            fontWeight: '400',
-                            fontSize: '12px',
-                            color: '#10293A',
-                            backgroundColor: '#D5E1EA',
-                            padding: '5px',
-                            margin: '-5px 0px 05px 5px',
-                          }}>
-                          {boatyard}
-                        </p>
-                      ))}
-                    </div>
-                  </div>
-                </div>
+            <div style={{ border: '1px solid red' }} className="w-full">
+              <h3
+                className={`${isChecked ? 'bg-[#00426F] text-[#FFFFFF]' : ''} font-[700] text-[15px] h-12 py-3 pl-2 `}>
+                Moorings
+              </h3>
 
-                <div className="w-full">
-                  <h3
-                    className={`${isChecked ? 'bg-[#00426F] text-[#FFFFFF]' : ''} font-[700] text-[15px] h-12 py-3 pl-2 `}>
-                    Moorings
-                  </h3>
-
-                  <div data-testid="customer-admin-users-table" className="overflow-x-auto">
-                    <DataTableComponent
-                      tableStyle={{
-                        fontSize: '12px',
-                        color: '#000000',
-                        fontWeight: 600,
-                        backgroundColor: '#FFFFFF',
-                      }}
-                      scrollable={true}
-                      data={mooringResponseData}
-                      columns={tableColumnsMoorings}
-                    />
-                  </div>
-
-                  <Dialog
-                    visible={isDialogVisible}
-                    onHide={() => setIsDialogVisible(false)}
-                    header={
-                      <div className="flex gap-4">
-                        <div className="font-bold">Mooring Information</div>
-                        <div className="font-bold mt-1">
-                          <FaEdit onClick={handleEdit} />
-                        </div>
-                      </div>
-                    }>
-                    <hr className="border border-black  my-0 mx-0"></hr>
-                    {selectedMooring && (
-                      <div className="flex flex-wrap leading-10 gap-4">
-                        <div>
-                          <p>
-                            <span style={{ fontWeight: 'bold' }}>ID:</span> {selectedMooring?.id}
-                          </p>
-                          <p>
-                            <span style={{ fontWeight: 'bold' }}>Mooring No:</span>{' '}
-                            {selectedMooring?.mooringNumber}
-                          </p>
-                          <p>
-                            <span style={{ fontWeight: 'bold' }}>Boat Name:</span>{' '}
-                            {selectedMooring?.boatName}
-                          </p>
-                          <p>
-                            <span style={{ fontWeight: 'bold' }}>Type:</span>{' '}
-                            {selectedMooring?.boatType?.boatType}
-                          </p>
-                          <p>
-                            <span style={{ fontWeight: 'bold' }}>Size of Weight:</span>{' '}
-                            {selectedMooring?.sizeOfWeight?.weight}
-                          </p>
-                          <p>
-                            <span style={{ fontWeight: 'bold' }}>Top Chain Condition:</span>{' '}
-                            {selectedMooring?.topChainCondition?.condition}
-                          </p>
-                          <p className="tracking-tighter">
-                            <span style={{ fontWeight: 'bold' }}>Bottom Chain Condition:</span>{' '}
-                            {selectedMooring?.bottomChainCondition?.condition}
-                          </p>
-                          <p>
-                            <span style={{ fontWeight: 'bold' }}>Pennant Condition:</span>{' '}
-                            {selectedMooring?.pennantCondition?.condition}
-                          </p>
-                          <p>
-                            <span style={{ fontWeight: 'bold' }}>Water Depth:</span>{' '}
-                            {selectedMooring?.waterDepth}
-                          </p>
-                        </div>
-                        <div>
-                          <p>
-                            <span style={{ fontWeight: 'bold' }}>Harbor:</span>{' '}
-                            {selectedMooring?.harbor}
-                          </p>
-                          <p>
-                            <span style={{ fontWeight: 'bold' }}>G.P.S Coordinates:</span>{' '}
-                            {selectedMooring?.gpsCoordinates}
-                          </p>
-                          <p>
-                            <span style={{ fontWeight: 'bold' }}>Boat Size:</span>{' '}
-                            {selectedMooring?.boatSize}
-                          </p>
-                          <p>
-                            <span style={{ fontWeight: 'bold' }}>Weight:</span>{' '}
-                            {selectedMooring?.boatWeight}
-                          </p>
-
-                          <p>
-                            <span style={{ fontWeight: 'bold' }}>Type of Weight:</span>{' '}
-                            {selectedMooring?.typeOfWeight?.type}
-                          </p>
-
-                          <p>
-                            <span style={{ fontWeight: 'bold' }}>Condition of Eye:</span>{' '}
-                            {selectedMooring?.eyeCondition?.condition}
-                          </p>
-
-                          <p>
-                            <span style={{ fontWeight: 'bold' }}>Shackle, Swivel Condition:</span>{' '}
-                            {selectedMooring?.shackleSwivelCondition?.condition}
-                          </p>
-
-                          <p>
-                            <span style={{ fontWeight: 'bold' }}>Dept at Mean High Water:</span>{' '}
-                            {selectedMooring?.depthAtMeanHighWater}
-                          </p>
-                        </div>
-                      </div>
-                    )}
-                  </Dialog>
-                </div>
+              <div data-testid="customer-admin-users-table" className="overflow-x-auto">
+                <DataTableComponent
+                  tableStyle={{
+                    fontSize: '12px',
+                    color: '#000000',
+                    fontWeight: 600,
+                    backgroundColor: '#FFFFFF',
+                  }}
+                  scrollable={true}
+                  data={mooringResponseData}
+                  columns={tableColumnsMoorings}
+                />
               </div>
-            )}
+
+              <Dialog
+                visible={isDialogVisible}
+                onHide={() => setIsDialogVisible(false)}
+                header={
+                  <div className="flex gap-4">
+                    <div className="font-bold">Mooring Information</div>
+                    <div className="font-bold mt-1">
+                      <FaEdit onClick={handleEdit} />
+                    </div>
+                  </div>
+                }>
+                <hr className="border border-black  my-0 mx-0"></hr>
+                {selectedMooring && (
+                  <div className="flex flex-wrap leading-10 gap-4">
+                    <div>
+                      <p>
+                        <span style={{ fontWeight: 'bold' }}>ID:</span> {selectedMooring?.id}
+                      </p>
+                      <p>
+                        <span style={{ fontWeight: 'bold' }}>Mooring No:</span>{' '}
+                        {selectedMooring?.mooringNumber}
+                      </p>
+                      <p>
+                        <span style={{ fontWeight: 'bold' }}>Boat Name:</span>{' '}
+                        {selectedMooring?.boatName}
+                      </p>
+                      <p>
+                        <span style={{ fontWeight: 'bold' }}>Type:</span>{' '}
+                        {selectedMooring?.boatType?.boatType}
+                      </p>
+                      <p>
+                        <span style={{ fontWeight: 'bold' }}>Size of Weight:</span>{' '}
+                        {selectedMooring?.sizeOfWeight?.weight}
+                      </p>
+                      <p>
+                        <span style={{ fontWeight: 'bold' }}>Top Chain Condition:</span>{' '}
+                        {selectedMooring?.topChainCondition?.condition}
+                      </p>
+                      <p className="tracking-tighter">
+                        <span style={{ fontWeight: 'bold' }}>Bottom Chain Condition:</span>{' '}
+                        {selectedMooring?.bottomChainCondition?.condition}
+                      </p>
+                      <p>
+                        <span style={{ fontWeight: 'bold' }}>Pennant Condition:</span>{' '}
+                        {selectedMooring?.pennantCondition?.condition}
+                      </p>
+                      <p>
+                        <span style={{ fontWeight: 'bold' }}>Water Depth:</span>{' '}
+                        {selectedMooring?.waterDepth}
+                      </p>
+                    </div>
+                    <div>
+                      <p>
+                        <span style={{ fontWeight: 'bold' }}>Harbor:</span>{' '}
+                        {selectedMooring?.harbor}
+                      </p>
+                      <p>
+                        <span style={{ fontWeight: 'bold' }}>G.P.S Coordinates:</span>{' '}
+                        {selectedMooring?.gpsCoordinates}
+                      </p>
+                      <p>
+                        <span style={{ fontWeight: 'bold' }}>Boat Size:</span>{' '}
+                        {selectedMooring?.boatSize}
+                      </p>
+                      <p>
+                        <span style={{ fontWeight: 'bold' }}>Weight:</span>{' '}
+                        {selectedMooring?.boatWeight}
+                      </p>
+
+                      <p>
+                        <span style={{ fontWeight: 'bold' }}>Type of Weight:</span>{' '}
+                        {selectedMooring?.typeOfWeight?.type}
+                      </p>
+
+                      <p>
+                        <span style={{ fontWeight: 'bold' }}>Condition of Eye:</span>{' '}
+                        {selectedMooring?.eyeCondition?.condition}
+                      </p>
+
+                      <p>
+                        <span style={{ fontWeight: 'bold' }}>Shackle, Swivel Condition:</span>{' '}
+                        {selectedMooring?.shackleSwivelCondition?.condition}
+                      </p>
+
+                      <p>
+                        <span style={{ fontWeight: 'bold' }}>Dept at Mean High Water:</span>{' '}
+                        {selectedMooring?.depthAtMeanHighWater}
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </Dialog>
+            </div>
           </div>
         </div>
       </div>

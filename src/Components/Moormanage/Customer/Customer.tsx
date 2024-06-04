@@ -177,6 +177,7 @@ const Customer = () => {
     fontSize: '10px',
     color: '#000000',
     fontweight: '700',
+    
   }
 
   const MooringTableColumn = useMemo(
@@ -493,7 +494,9 @@ const Customer = () => {
                     {customerRecordData?.country && <span>{customerRecordData?.country} </span>}
                   </p>
 
-                  <div className="flex mt-5 ml-4 mb-3">
+                  <div
+
+                    className="flex mt-5 ml-4 mb-3 overflow-x-auto">
                     <div>
                       <h1 className="">Boatyard: </h1>
                     </div>
@@ -507,8 +510,7 @@ const Customer = () => {
                             fontSize: '12px',
                             color: '#10293A',
                             backgroundColor: '#D5E1EA',
-                            padding: '5px',
-                            margin: '-5px 0px 05px 5px',
+                            padding: '8px',
                           }}>
                           {boatyard}
                         </p>
@@ -528,6 +530,8 @@ const Customer = () => {
               </div>
             )}
           </div>
+
+
           <div>
             <p
               style={{
@@ -541,7 +545,7 @@ const Customer = () => {
             </p>
           </div>
 
-          <div className="overflow-x-hidden overflow-y-scroll ">
+          <div className=" ">
             {mooringData.length === 0 ? (
               <div className="text-center mt-40">
                 <img
@@ -552,21 +556,30 @@ const Customer = () => {
                 <p className="text-gray-500">No data available</p>
               </div>
             ) : (
-              <DataTableComponent
-                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
-                tableStyle={{
-                  fontSize: '12px',
-                  color: '#000000',
-                  fontWeight: 600,
-                  backgroundColor: '#D9D9D9',
-                  cursor: 'pointer',
-                }}
-                onRowClick={(rowData) => {
-                  handleMooringTableRowClick(rowData)
-                }}
-                columns={MooringTableColumn}
-                data={mooringData}
-              />
+              <div
+
+                style={{ height: "400px", overflow: 'auto' }}
+              >
+                <DataTableComponent
+                  style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400', }}
+                  scrollable
+                  tableStyle={{
+                    fontSize: '12px',
+                    color: '#000000',
+                    fontWeight: 600,
+                    backgroundColor: '#D9D9D9',
+                    cursor: 'pointer',
+
+                  }}
+                  onRowClick={(rowData) => {
+                    handleMooringTableRowClick(rowData)
+                  }}
+                  columns={MooringTableColumn}
+                  data={mooringData}
+
+                />
+              </div>
+
             )}
 
             {/* Dialog BOX */}
