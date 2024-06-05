@@ -188,7 +188,7 @@ const Customer = () => {
         style: MooringTableColumnStyle,
       },
       {
-        id: 'mooringName',
+        id: 'mooringId',
         label: 'Mooring Name',
         style: MooringTableColumnStyle,
       },

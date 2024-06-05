@@ -3,7 +3,7 @@ import CustomModal from '../CustomComponent/CustomModal'
 import DataTableComponent from '../CommonComponent/Table/DataTableComponent'
 import { properties } from '../Utils/MeassageProperties'
 import { ActionButtonColumnProps } from '../../Type/Components/TableTypes'
-import { CustomerPayload, ErrorResponse, GetUserResponse } from '../../Type/ApiTypes'
+import { CustomerPayload, GetUserResponse } from '../../Type/ApiTypes'
 import Header from '../Layout/LayoutComponents/Header'
 import { Params, Role } from '../../Type/CommonType'
 import { useGetUsersMutation } from '../../Services/AdminTools/AdminToolsApi'
@@ -26,7 +26,7 @@ const CustomerOwner = () => {
   const [customerAdminId, setCustomerAdminId] = useState('')
   const [searchText, setSearchText] = useState('')
   const [searchUsersText, setSearchUsersText] = useState('')
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
   const [getCustomerOwnerData, setgetCustomerOwnerData] = useState<CustomerPayload[]>([])
   const [getCustomerOwnerUserData, setgetCustomerOwnerUserData] = useState<CustomerPayload[]>([])
   const [selectedId, setSelectedId] = useState<any>('')
@@ -171,7 +171,6 @@ const CustomerOwner = () => {
         setIsLoading(false)
       }
     } catch (error) {
-      const { message } = error as ErrorResponse
       console.error('Error occurred while fetching customer data:', error)
     }
   }, [getUser, searchText])
@@ -181,10 +180,13 @@ const CustomerOwner = () => {
       setIsLoading(true)
       try {
         let params: Params = {}
-        if (searchUsersText) {
+        if (searchUsersText || id) {
           params.searchText = searchUsersText
         }
-        const response = await getUser(params).unwrap()
+        const response = await getUser({
+          customerOwnerId: id,
+          searchText: searchUsersText,
+        }).unwrap()
         const { status, message, content } = response as GetUserResponse
         if (status === 200 && Array.isArray(content)) {
           setIsLoading(false)
@@ -204,7 +206,6 @@ const CustomerOwner = () => {
           setgetCustomerOwnerUserData([])
         }
       } catch (error) {
-        const { message } = error as ErrorResponse
         console.error('Error occurred while fetching customer data:', error)
       }
     },

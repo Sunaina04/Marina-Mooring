@@ -219,7 +219,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     const errors: { [key: string]: string } = {}
     let firstError = ''
 
-
     if (!customerName) {
       errors.customerName = 'Customer name is required'
       firstError = 'CustomerName'
@@ -487,8 +486,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         phone: phone,
         streetHouse: streetHouse,
         aptSuite: sectorBlock,
-        state: selectedState?.id ? selectedState?.id : customer?.stateResponseDto?.id,
-        country: selectedCountry?.id ? selectedCountry?.id : customer?.stateResponseDto?.id,
+        state: selectedState?.id,
+        country: selectedCountry?.id,
         zipCode: pinCode,
         customerOwnerId: selectedCustomerId,
       }
@@ -545,47 +544,49 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         country: selectedCountry?.id ? selectedCountry?.id : customer?.stateResponseDto?.id,
         zipCode: pinCode,
         customerOwnerId: selectedCustomerId,
-        mooringRequestDto: {
-          id: mooringRowData?.id,
-          mooringId: formData.mooringId ? formData.mooringId : mooringRowData?.mooringId,
-          customerId: customerId,
-          harbor: formData.harbor ? formData.harbor : mooringRowData?.harbor,
-          waterDepth: formData.waterDepth ? formData.waterDepth : mooringRowData?.waterDepth,
-          gpsCoordinates: gpsCoordinatesValue,
-          boatyardId: formData.boatyardName.id
-            ? formData.boatyardName.id
-            : mooringRowData?.boatyardResponseDto?.id,
-          boatName: formData.boatName ? formData.boatName : mooringRowData?.boatName,
-          boatSize: formData.boatSize ? formData.boatSize : mooringRowData?.boatSize,
-          boatTypeId: formData.boatType.id ? formData.boatType.id : mooringRowData?.boatType.id,
-          boatWeight: formData.boatWeight ? formData.boatWeight : mooringRowData?.boatWeight,
-          sizeOfWeightId: formData.sizeOfWeight.id
-            ? formData.sizeOfWeight.id
-            : mooringRowData?.sizeOfWeight.id,
-          typeOfWeightId: formData.typeOfWeight.id
-            ? formData.typeOfWeight.id
-            : mooringRowData?.typeOfWeight.id,
-          eyeConditionId: formData.conditionOfEye.id
-            ? formData.conditionOfEye.id
-            : mooringRowData?.eyeCondition.id,
-          topChainConditionId: formData.topChainCondition.id
-            ? formData.topChainCondition.id
-            : mooringRowData?.topChainCondition.id,
-          bottomChainConditionId: formData.bottomChainCondition.id
-            ? formData.bottomChainCondition.id
-            : mooringRowData?.bottomChainCondition.id,
-          shackleSwivelConditionId: formData.shackleSwivelCondition.id
-            ? formData.shackleSwivelCondition.id
-            : mooringRowData?.shackleSwivelCondition.id,
-          pennantConditionId: formData.pennantCondition.id
-            ? formData.pennantCondition.id
-            : mooringRowData?.pennantCondition.id,
-          depthAtMeanHighWater: formData.depthAtMeanHighWater
-            ? formData.depthAtMeanHighWater
-            : mooringRowData?.depthAtMeanHighWater,
-          customerOwnerId: selectedCustomerId,
-          // statusId: 1,
-        },
+        mooringRequestDtoList: [
+          {
+            id: mooringRowData?.id,
+            mooringId: formData.mooringId ? formData.mooringId : mooringRowData?.mooringId,
+            customerId: customerId,
+            harbor: formData.harbor ? formData.harbor : mooringRowData?.harbor,
+            waterDepth: formData.waterDepth ? formData.waterDepth : mooringRowData?.waterDepth,
+            gpsCoordinates: gpsCoordinatesValue,
+            boatyardId: formData.boatyardName.id
+              ? formData.boatyardName.id
+              : mooringRowData?.boatyardResponseDto?.id,
+            boatName: formData.boatName ? formData.boatName : mooringRowData?.boatName,
+            boatSize: formData.boatSize ? formData.boatSize : mooringRowData?.boatSize,
+            boatTypeId: formData.boatType.id ? formData.boatType.id : mooringRowData?.boatType.id,
+            boatWeight: formData.boatWeight ? formData.boatWeight : mooringRowData?.boatWeight,
+            sizeOfWeightId: formData.sizeOfWeight.id
+              ? formData.sizeOfWeight.id
+              : mooringRowData?.sizeOfWeight.id,
+            typeOfWeightId: formData.typeOfWeight.id
+              ? formData.typeOfWeight.id
+              : mooringRowData?.typeOfWeight.id,
+            eyeConditionId: formData.conditionOfEye.id
+              ? formData.conditionOfEye.id
+              : mooringRowData?.eyeCondition.id,
+            topChainConditionId: formData.topChainCondition.id
+              ? formData.topChainCondition.id
+              : mooringRowData?.topChainCondition.id,
+            bottomChainConditionId: formData.bottomChainCondition.id
+              ? formData.bottomChainCondition.id
+              : mooringRowData?.bottomChainCondition.id,
+            shackleSwivelConditionId: formData.shackleSwivelCondition.id
+              ? formData.shackleSwivelCondition.id
+              : mooringRowData?.shackleSwivelCondition.id,
+            pennantConditionId: formData.pennantCondition.id
+              ? formData.pennantCondition.id
+              : mooringRowData?.pennantCondition.id,
+            depthAtMeanHighWater: formData.depthAtMeanHighWater
+              ? formData.depthAtMeanHighWater
+              : mooringRowData?.depthAtMeanHighWater,
+            customerOwnerId: selectedCustomerId,
+            // statusId: 1,
+          },
+        ],
       }
       const response = await updateCustomer({
         payload: editMooringPayload,

@@ -88,5 +88,5 @@ export type Params = {
   sortBy?: string
   sortDir?: string
   searchText?: string
-  customerOwnerId?: number | null
+  customerOwnerId?: number
 }

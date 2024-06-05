@@ -84,7 +84,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     bottomChainCondition: '',
     shackleSwivelCondition: '',
     pennantCondition: '',
-    deptAtMeanHighWater: '',
+    depthAtMeanHighWater: '',
     boatYardName: '',
     BootomChainCondition: '',
     note: '',
@@ -221,9 +221,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       errors.pennantCondition = 'Pennant Condition is required'
       if (!firstError) firstError = 'pennantCondition'
     }
-    if (!formData.deptAtMeanHighWater) {
-      errors.deptAtMeanHighWater = 'Depth at Mean High Water is required'
-      if (!firstError) firstError = 'deptAtMeanHighWater'
+    if (!formData.depthAtMeanHighWater) {
+      errors.depthAtMeanHighWater = 'Depth at Mean High Water is required'
+      if (!firstError) firstError = 'depthAtMeanHighWater'
     }
 
     setFirstErrorField(firstError)
@@ -250,7 +250,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       ...prevState,
       mooringNumber: mooringRowData?.mooringId || '',
       mooringName: mooringRowData?.mooringName || '',
-      customerName: mooringRowData?.customerName || '',
+      customerName: moorings?.customerName || '',
       harbor: mooringRowData?.harbor || '',
       waterDepth: mooringRowData?.waterDepth || '',
       gpsCoordinates: mooringRowData?.gpsCoordinates || '',
@@ -265,9 +265,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       topChainCondition: mooringRowData?.topChainCondition?.condition || '',
       shackleSwivelCondition: mooringRowData?.shackleSwivelCondition?.condition || '',
       pennantCondition: mooringRowData?.pennantCondition?.condition || '',
-      deptAtMeanHighWater: mooringRowData?.depthAtMeanHighWater || '',
+      depthAtMeanHighWater: mooringRowData?.depthAtMeanHighWater || '',
       bottomChainCondition: mooringRowData?.bottomChainCondition?.condition || '',
-      status: 0,
+      status: 1,
     }))
   }
 
@@ -295,7 +295,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
         bottomChainConditionId: formData.bottomChainCondition?.id,
         shackleSwivelConditionId: formData.shackleSwivelCondition?.id,
         pennantConditionId: formData.pennantCondition?.id,
-        depthAtMeanHighWater: formData.deptAtMeanHighWater?.id,
+        depthAtMeanHighWater: formData.depthAtMeanHighWater,
         customerOwnerId: selectedCustomerId,
       }
 
@@ -383,7 +383,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       }
       const response = await updateMooring({
         payload: editMooringPayload,
-        id: 5,
+        id: mooringRowData?.id,
       }).unwrap()
       const { status, message } = response as CustomerResponse
       if (status === 200 || status === 201) {
@@ -990,19 +990,21 @@ const AddMoorings: React.FC<AddMooringProps> = ({
 
               <div className="mt-2">
                 <InputText
-                  value={formData.deptAtMeanHighWater}
-                  onChange={(e) => handleInputChange('deptAtMeanHighWater', e.target.value)}
+                  value={formData.depthAtMeanHighWater}
+                  onChange={(e) => handleInputChange('depthAtMeanHighWater', e.target.value)}
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: fieldErrors.deptAtMeanHighWater ? '1px solid red' : '1px solid #D5E1EA',
+                    border: fieldErrors.depthAtMeanHighWater
+                      ? '1px solid red'
+                      : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                   }}
                 />
-                <p id="deptAtMeanHighWater">
-                  {fieldErrors.deptAtMeanHighWater && (
-                    <small className="p-error">{fieldErrors.deptAtMeanHighWater}</small>
+                <p id="depthAtMeanHighWater">
+                  {fieldErrors.depthAtMeanHighWater && (
+                    <small className="p-error">{fieldErrors.depthAtMeanHighWater}</small>
                   )}
                 </p>
               </div>
