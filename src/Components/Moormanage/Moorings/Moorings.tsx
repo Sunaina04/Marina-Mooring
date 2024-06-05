@@ -6,7 +6,7 @@ import {
   useGetCustomersWithMooringMutation,
   useGetMooringsMutation,
 } from '../../../Services/MoorManage/MoormanageApi'
-import { InputSwitch, InputSwitchChangeEvent } from 'primereact/inputswitch'
+import { InputSwitchChangeEvent } from 'primereact/inputswitch'
 import {
   CustomersWithMooringResponse,
   DeleteCustomerResponse,
@@ -15,27 +15,18 @@ import {
   MooringResponse,
   MooringResponseDtoList,
 } from '../../../Type/ApiTypes'
-import { FaCircle, FaEdit } from 'react-icons/fa'
+import { FaEdit } from 'react-icons/fa'
 import { Dialog } from 'primereact/dialog'
-import { CustomerData, CustomerProps, Params } from '../../../Type/CommonType'
+import { Params } from '../../../Type/CommonType'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader'
 import { properties } from '../../Utils/MeassageProperties'
 import Header from '../../Layout/LayoutComponents/Header'
 import { Toast } from 'primereact/toast'
 import { useSelector } from 'react-redux'
-import { selectCustomerId } from '../../../Store/Slice/userSlice'
-import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
 import CustomMooringPositionMap from '../../Map/CustomMooringPositionMap'
 import { RiDeleteBin5Fill } from 'react-icons/ri'
-
-// const Moorings = () => {
-//   return (
-//     <>
-//       <Header header={properties.MoormanageMoorings} />
-//     </>
-//   )
-// }
+import { ProgressSpinner } from 'primereact/progressspinner'
 
 const Moorings = () => {
   const userData = useSelector((state: any) => state.user?.userData)
@@ -53,11 +44,12 @@ const Moorings = () => {
   const [customerId, setCustomerId] = useState()
   const [mooringId, setMooringId] = useState()
   const [rowClick, setRowClick] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+  const [coordinatesArray, setCoordinatesArray] = useState()
   const [filteredMooringData, setFilteredMooringData] = useState<MooringPayload[]>([])
   const [isChecked, setIsChecked] = useState(false)
   const [dialogVisible, setDialogVisible] = useState(false)
   const [editCustomerMode, setEditCustomerMode] = useState(false)
-  const [selectedMooring, setSelectedMooring] = useState<MooringPayload>()
   const [customerMooringData, setCustomerMooringData] = useState<MooringResponseDtoList[]>([])
 
   const toast = useRef<Toast>(null)
@@ -238,9 +230,12 @@ const Moorings = () => {
       const response = await getMoorings(params).unwrap()
       const { status, content, message } = response as MooringResponse
       if (status === 200 && Array.isArray(content)) {
+        setIsLoading(false)
         setMooringData(content)
         setFilteredMooringData(content)
       } else {
+        setIsLoading(false)
+
         toast?.current?.show({
           severity: 'error',
           summary: 'Error',
@@ -267,6 +262,9 @@ const Moorings = () => {
         setCustomerMooringData(content?.customerResponseDto?.mooringResponseDtoList)
         setBoatYardData(content?.boatyardNames)
         setMooringResponseData(content?.customerResponseDto?.mooringResponseDtoList)
+        const coordinatesString = customerRecordData?.mooringResponseDtoList[0]?.gpsCoordinates
+        const coordinateArray = coordinatesString?.split(' ').map(parseFloat)
+        setCoordinatesArray(coordinateArray)
       }
     } catch (error) {
       const { message } = error as ErrorResponse
@@ -386,9 +384,8 @@ const Moorings = () => {
               }}
               borderBottom={{ border: '1px solid #D5E1EA' }}
             />
-            <div className="mt-2">{/* <hr style={{ border: ' 0.20px solid #D5E1EA' }} /> */}</div>
 
-            <div className="mt-2">
+            <div className={`mt-2 ${isLoading ? 'blur-screen' : ''}`}>
               {mooringData.length > 0 ? (
                 <div className="h-[560px] overflow-y-auto">
                   <DataTableComponent
@@ -422,12 +419,27 @@ const Moorings = () => {
           </div>
         </div>
 
-        <div className="">
-          <div style={{ height: '700px', width: '25vw' }}>
+        {isLoading && (
+          <ProgressSpinner
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: '50px',
+              height: '50px',
+            }}
+            strokeWidth="4"
+          />
+        )}
+
+        <div className="min-w-[20vw]">
+          <div
+            className={`max-w-[413px] rounded-md border-[1px] ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
             <CustomMooringPositionMap
-              position={[30.698, 76.657]}
+              position={coordinatesArray || [30.698, 76.657]}
               zoomLevel={10}
-              style={{ height: '100%', width: '100%', display: modalVisible ? 'none' : '' }}
+              style={{ height: '700px' }}
               // iconsByStatus={iconsByStatus}
               // @ts-expect-error
               moorings={mooringData}
@@ -458,7 +470,7 @@ const Moorings = () => {
             </div>
 
             {customerRecordData ? (
-              <div className="bg-[#FFFFFF] px-2">
+              <div className={`bg-[#FFFFFF] px-2 ${isLoading ? 'blur-screen' : ''}`}>
                 <div className="flex flex-wrap gap-20 text-[14px] ">
                   <div className=" mt-2 ">
                     <p className="text-[14px] font-[400]  text-[#000000]">
@@ -508,7 +520,8 @@ const Moorings = () => {
                 </div>
               </div>
             ) : (
-              <div className="text-center bg-[#FFFFFF] px-2 h-[150px]">
+              <div
+                className={`text-center bg-[#FFFFFF] px-2 h-[150px] ${isLoading ? 'blur-screen' : ''}`}>
                 <img
                   src="/assets/images/empty.png"
                   alt="Empty Data"
@@ -518,7 +531,9 @@ const Moorings = () => {
               </div>
             )}
 
-            <div style={{ height: '505px', backgroundColor: 'white' }}>
+            <div
+              className={`${isLoading ? 'blur-screen' : ''}`}
+              style={{ height: '505px', backgroundColor: 'white' }}>
               <h3 className="bg-[#00426F] text-[#FFFFFF] font-[700] th-12 py-3 pl-2 ">Moorings</h3>
 
               <div data-testid="customer-admin-users-table" className="overflow-x-auto">

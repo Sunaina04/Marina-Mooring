@@ -33,14 +33,6 @@ import CustomMooringPositionMap from '../../Map/CustomMooringPositionMap'
 import { GearOffIcon, GearOnIcon, NeedInspectionIcon, NotInUseIcon } from '../../Map/DefaultIcon'
 import { ProgressSpinner } from 'primereact/progressspinner'
 
-// const Customer = () => {
-//   return (
-//     <>
-//       <Header header="MOORMANAGE/Customer" />
-//     </>
-//   )
-// }
-
 const Customer = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
   const [modalVisible, setModalVisible] = useState(false)
@@ -58,7 +50,6 @@ const Customer = () => {
   const [searchText, setSearchText] = useState('')
   const [customerId, setCustomerId] = useState()
   const [isLoading, setIsLoading] = useState(true)
-  const [isLoader, setIsLoader] = useState(false)
   const [coordinatesArray, setCoordinatesArray] = useState()
   const [getCustomer] = useGetCustomerMutation()
   const [deleteCustomer] = useDeleteCustomerMutation()
