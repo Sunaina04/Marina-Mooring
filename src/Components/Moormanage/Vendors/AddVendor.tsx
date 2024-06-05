@@ -203,8 +203,8 @@ const AddVendor: React.FC<AddVendorProps> = ({
                     setErrorMessage((prev) => ({ ...prev, name: '' }))
                   }}
                   style={{
-                    width: '12vw',
-                    height: '4vh',
+                    width: '230px',
+                    height: '32px',
                     border: errorMessage.name ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.80vw',
@@ -223,8 +223,8 @@ const AddVendor: React.FC<AddVendorProps> = ({
                     setErrorMessage((prev) => ({ ...prev, phone: '' }))
                   }}
                   style={{
-                    width: '12vw',
-                    height: '4vh',
+                    width: '230px',
+                    height: '32px',
                     border: errorMessage.phone ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.80vw',
@@ -240,9 +240,9 @@ const AddVendor: React.FC<AddVendorProps> = ({
                   value={website}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => setWebsite(e.target.value)}
                   style={{
-                    width: '10vw',
-                    height: '4vh',
-                    border: '1px solid gray',
+                    width: '230px',
+                    height: '32px',
+                    border: '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.80vw',
                   }}
@@ -251,234 +251,302 @@ const AddVendor: React.FC<AddVendorProps> = ({
             </div>
           </div>
         </div>
-        <div>
-          <div className="mt-5 ml-1 flex">
+        <div className="flex mt-2 gap-4">
+          <div className="mt-5">
             <div>
               <h1 className="text-sm font-bold text-black">Address</h1>
             </div>
-            <div className="ml-[16.50rem]">
-              <h1 className="text-sm font-bold text-black">Remit Address</h1>
-            </div>
-          </div>
 
-          <div className="flex gap-2 mt-2">
-            <div>
-              <div className="mt-2">
-                <InputText
-                  placeholder="Street/Building"
-                  value={streetBuilding}
-                  onChange={(e) => {
-                    setStreetBuilding(e.target.value)
-                    setErrorMessage((prev) => ({ ...prev, streetBuilding: '' }))
-                  }}
-                  style={{
-                    width: '10vw',
-                    height: '4vh',
-                    border: errorMessage.streetBuilding ? '1px solid red' : '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.70rem',
-                  }}
-                />
+            <div className=" flex gap-2 mt-2">
+              <div>
+                <div>
+                  <div className="mt-2">
+                    <InputText
+                      placeholder="Street/Building"
+                      value={streetBuilding}
+                      onChange={(e) => {
+                        setStreetBuilding(e.target.value)
+                        setErrorMessage((prev) => ({ ...prev, streetBuilding: '' }))
+                      }}
+                      style={{
+                        width: '178.39px',
+                        height: '32px',
+                        border: errorMessage.streetBuilding ? '1px solid red' : '1px solid #D5E1EA',
+                        borderRadius: '0.50rem',
+                        fontSize: '0.70rem',
+                      }}
+                    />
+                  </div>
+                  <p>
+                    {errorMessage.streetBuilding && (
+                      <small className="p-error">{errorMessage.streetBuilding}</small>
+                    )}
+                  </p>
+                </div>
+                <div>
+                  <div className="mt-2">
+                    <Dropdown
+                      value={selectedCity}
+                      onChange={(e: DropdownChangeEvent) => setSelectedCity(e.value as CityProps)}
+                      options={cities}
+                      optionLabel="name"
+                      editable
+                      placeholder="Country"
+                      className=""
+                      style={{
+                        width: '178.39px',
+                        height: '32px',
+                        border: '1px solid  #D5E1EA',
+                        borderRadius: '0.50rem',
+                        fontSize: '0.70rem',
+                      }}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <div className="mt-2 ">
+                    <InputText
+                      type="number"
+                      placeholder="Zip Code"
+                      value={addressZipCode !== undefined ? addressZipCode.toString() : ''}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        const inputVal = e.target.value
+                        const newValue = inputVal !== '' ? parseInt(inputVal, 10) : undefined
+                        setAddressZipCode(newValue)
+                        setErrorMessage((prev) => ({ ...prev, addressZipCode: '' }))
+                      }}
+                      style={{
+                        width: '178.39px',
+                        height: '32px',
+                        border: errorMessage.addressZipCode ? '1px solid red' : '1px solid #D5E1EA',
+                        borderRadius: '0.50rem',
+                        fontSize: '0.70rem',
+                      }}
+                    />
+                  </div>
+                  <p>
+                    {errorMessage.addressZipCode && (
+                      <small className="p-error">{errorMessage.addressZipCode}</small>
+                    )}
+                  </p>
+                </div>
               </div>
-              <p>
-                {errorMessage.streetBuilding && (
-                  <small className="p-error">{errorMessage.streetBuilding}</small>
-                )}
-              </p>
-            </div>
-            <div>
-              <div className="mt-2">
-                <InputText
-                  placeholder="Apt/Suite"
-                  value={aptSuite}
-                  onChange={(e) => {
-                    setAptSuite(e.target.value)
-                    setErrorMessage((prev) => ({ ...prev, aptSuite: '' }))
-                  }}
-                  style={{
-                    width: '10vw',
-                    height: '4vh',
-                    border: errorMessage.streetBuilding ? '1px solid red' : '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.70rem',
-                  }}
-                />
+              <div className="">
+                <div>
+                  <div className="mt-2">
+                    <InputText
+                      placeholder="Apt/Suite"
+                      value={aptSuite}
+                      onChange={(e) => {
+                        setAptSuite(e.target.value)
+                        setErrorMessage((prev) => ({ ...prev, aptSuite: '' }))
+                      }}
+                      style={{
+                        width: '178.39px',
+                        height: '32px',
+                        border: errorMessage.streetBuilding ? '1px solid red' : '1px solid #D5E1EA',
+                        borderRadius: '0.50rem',
+                        fontSize: '0.70rem',
+                      }}
+                    />
+                  </div>
+                  <p>
+                    {errorMessage.aptSuite && (
+                      <small className="p-error">{errorMessage.aptSuite}</small>
+                    )}
+                  </p>
+                </div>
+                <div>
+                  <div className="mt-2">
+                    <Dropdown
+                      value={selectedCity}
+                      onChange={(e: DropdownChangeEvent) => setSelectedCity(e.value as CityProps)}
+                      options={cities}
+                      optionLabel="name"
+                      editable
+                      placeholder="State"
+                      className=""
+                      style={{
+                        width: '178.39px',
+                        height: '32px',
+                        border: '1px solid  #D5E1EA',
+                        borderRadius: '0.50rem',
+                        fontSize: '0.70rem',
+                      }}
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <div className="mt-2 ">
+                    <InputText
+                      placeholder="Email Address"
+                      value={emailAddress}
+                      onChange={(e) => {
+                        setEmailAddress(e.target.value)
+                        setErrorMessage((prev) => ({ ...prev, emailAddress: '' }))
+                      }}
+                      style={{
+                        width: '178.39px',
+                        height: '32px',
+                        border: errorMessage.emailAddress ? '1px solid red' : '1px solid #D5E1EA',
+                        borderRadius: '0.50rem',
+                        fontSize: '0.70rem',
+                      }}
+                    />
+                  </div>
+                </div>
               </div>
-              <p>
-                {errorMessage.aptSuite && (
-                  <small className="p-error">{errorMessage.aptSuite}</small>
-                )}
-              </p>
-            </div>
-            <div>
-              <div className="mt-2">
-                <InputText
-                  placeholder="Street/Building"
-                  value={remitStreetBuilding}
-                  onChange={(e) => {
-                    setRemitStreetBuilding(e.target.value)
-                    setErrorMessage((prev) => ({ ...prev, streetBuilding: '' }))
-                  }}
-                  style={{
-                    width: '10vw',
-                    height: '4vh',
-                    border: errorMessage.streetBuilding ? '1px solid red' : '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.70rem',
-                  }}
-                />
-              </div>
-              <p>
-                {errorMessage.streetBuilding && (
-                  <small className="p-error">{errorMessage.streetBuilding}</small>
-                )}
-              </p>
-            </div>
-            <div>
-              <div className="mt-2">
-                <InputText
-                  placeholder="Apt/Suite"
-                  value={remitAptSuite}
-                  onChange={(e) => {
-                    setRemitAptSuite(e.target.value)
-                    setErrorMessage((prev) => ({ ...prev, aptSuite: '' }))
-                  }}
-                  style={{
-                    width: '10vw',
-                    height: '4vh',
-                    border: errorMessage.aptSuite ? '1px solid red' : '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.70rem',
-                  }}
-                />
-              </div>
-              <p>
-                {errorMessage.aptSuite && (
-                  <small className="p-error">{errorMessage.aptSuite}</small>
-                )}
-              </p>
             </div>
           </div>
-          <div className="flex mt-5 gap-2">
-            <div className="">
-              <Dropdown
-                value={selectedCity}
-                onChange={(e: DropdownChangeEvent) => setSelectedCity(e.value as CityProps)}
-                options={cities}
-                optionLabel="name"
-                editable
-                placeholder="Country"
-                className=""
-                style={{
-                  width: '10vw',
-                  height: '4vh',
-                  border: '1px solid gray',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.40rem',
-                }}
-              />
-            </div>
-            <div>
-              <Dropdown
-                value={selectedCity}
-                onChange={(e: DropdownChangeEvent) => setSelectedCity(e.value as CityProps)}
-                options={cities}
-                optionLabel="name"
-                editable
-                placeholder="State"
-                className=""
-                style={{
-                  width: '10vw',
-                  height: '4vh',
-                  border: '1px solid gray',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.70rem',
-                }}
-              />
-            </div>
-            <div className="">
-              <Dropdown
-                value={selectedCity}
-                onChange={(e: DropdownChangeEvent) => setSelectedCity(e.value as CityProps)}
-                options={cities}
-                optionLabel="name"
-                editable
-                placeholder="Country"
-                className=""
-                style={{
-                  width: '10vw',
-                  height: '4vh',
-                  border: '1px solid gray',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.70rem',
-                }}
-              />
-            </div>
-            <div className="">
-              <Dropdown
-                value={selectedCity}
-                onChange={(e: DropdownChangeEvent) => setSelectedCity(e.value as CityProps)}
-                options={cities}
-                optionLabel="name"
-                editable
-                placeholder="State"
-                className=""
-                style={{
-                  width: '10vw',
-                  height: '4vh',
-                  border: '1px solid gray',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.70rem',
-                }}
-              />
+          <div>
+            <div className="mt-1 py-5 px-5 rounded-lg" style={{ backgroundColor: '#F5F5F5' }}>
+              <div>
+                <h1 className="text-sm font-bold text-black">Remit Address</h1>
+              </div>
+              <div className="flex mt-2 gap-2">
+                <div className="mt-1">
+                  <div>
+                    <div className="">
+                      <InputText
+                        placeholder="Street/Building"
+                        value={remitStreetBuilding}
+                        onChange={(e) => {
+                          setRemitStreetBuilding(e.target.value)
+                          setErrorMessage((prev) => ({ ...prev, streetBuilding: '' }))
+                        }}
+                        style={{
+                          width: '178.39px',
+                          height: '32px',
+                          border: errorMessage.streetBuilding
+                            ? '1px solid red'
+                            : '1px solid #D5E1EA',
+                          borderRadius: '0.50rem',
+                          fontSize: '0.70rem',
+                        }}
+                      />
+                    </div>
+                    <p>
+                      {errorMessage.streetBuilding && (
+                        <small className="p-error">{errorMessage.streetBuilding}</small>
+                      )}
+                    </p>
+                  </div>
+                  <div className="mt-1.5">
+                    <Dropdown
+                      value={selectedCity}
+                      onChange={(e: DropdownChangeEvent) => setSelectedCity(e.value as CityProps)}
+                      options={cities}
+                      optionLabel="name"
+                      editable
+                      placeholder="Country"
+                      className=""
+                      style={{
+                        width: '178.39px',
+                        height: '32px',
+                        border: '1px solid  #D5E1EA',
+                        borderRadius: '0.50rem',
+                        fontSize: '0.40rem',
+                      }}
+                    />
+                  </div>
+
+                  <div className="mt-2">
+                    <InputText
+                      type="number"
+                      placeholder="Zip Code"
+                      value={addressZipCode !== undefined ? addressZipCode.toString() : ''}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        const inputVal = e.target.value
+                        const newValue = inputVal !== '' ? parseInt(inputVal, 10) : undefined
+                        setAddressZipCode(newValue)
+                        setErrorMessage((prev) => ({ ...prev, addressZipCode: '' }))
+                      }}
+                      style={{
+                        width: '178.39px',
+                        height: '32px',
+                        border: errorMessage.addressZipCode ? '1px solid red' : '1px solid #D5E1EA',
+                        borderRadius: '0.50rem',
+                        fontSize: '0.70rem',
+                      }}
+                    />
+                    <p>
+                      {errorMessage.addressZipCode && (
+                        <small className="p-error">{errorMessage.addressZipCode}</small>
+                      )}
+                    </p>
+                  </div>
+                </div>
+
+                <div>
+                  <div>
+                    <div className="mt-1">
+                      <InputText
+                        placeholder="Apt/Suite"
+                        value={remitAptSuite}
+                        onChange={(e) => {
+                          setRemitAptSuite(e.target.value)
+                          setErrorMessage((prev) => ({ ...prev, aptSuite: '' }))
+                        }}
+                        style={{
+                          width: '178.39px',
+                          height: '32px',
+                          border: errorMessage.aptSuite ? '1px solid red' : '1px solid #D5E1EA',
+                          borderRadius: '0.50rem',
+                          fontSize: '0.70rem',
+                        }}
+                      />
+                    </div>
+                    <p>
+                      {errorMessage.aptSuite && (
+                        <small className="p-error">{errorMessage.aptSuite}</small>
+                      )}
+                    </p>
+                  </div>
+                  <div>
+                    <div className="mt-2">
+                      <Dropdown
+                        value={selectedCity}
+                        onChange={(e: DropdownChangeEvent) => setSelectedCity(e.value as CityProps)}
+                        options={cities}
+                        optionLabel="name"
+                        editable
+                        placeholder="State"
+                        className=""
+                        style={{
+                          width: '178.39px',
+                          height: '32px',
+                          border: '1px solid  #D5E1EA',
+                          borderRadius: '0.50rem',
+                          fontSize: '0.70rem',
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <div className="mt-2">
+                    <InputText
+                      placeholder="Email Address"
+                      value={emailAddress}
+                      onChange={(e) => {
+                        setEmailAddress(e.target.value)
+                        setErrorMessage((prev) => ({ ...prev, emailAddress: '' }))
+                      }}
+                      style={{
+                        width: '178.39px',
+                        height: '32px',
+                        border: errorMessage.emailAddress ? '1px solid red' : '1px solid #D5E1EA',
+                        borderRadius: '0.50rem',
+                        fontSize: '0.70rem',
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="flex mt-2 gap-2">
-          {/* Address Zip Code */}
-          <div className="mt-2 ">
-            <InputText
-              type="number"
-              placeholder="Zip Code"
-              value={addressZipCode !== undefined ? addressZipCode.toString() : ''}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                const inputVal = e.target.value
-                const newValue = inputVal !== '' ? parseInt(inputVal, 10) : undefined
-                setAddressZipCode(newValue)
-                setErrorMessage((prev) => ({ ...prev, addressZipCode: '' }))
-              }}
-              style={{
-                width: '10vw',
-                height: '4vh',
-                border: errorMessage.addressZipCode ? '1px solid red' : '1px solid #D5E1EA',
-                borderRadius: '0.50rem',
-                fontSize: '0.70rem',
-              }}
-            />
-            <p>
-              {errorMessage.addressZipCode && (
-                <small className="p-error">{errorMessage.addressZipCode}</small>
-              )}
-            </p>
-          </div>
-          <div className="mt-2 ">
-            <InputText
-              placeholder="Email Address"
-              value={emailAddress}
-              onChange={(e) => {
-                setEmailAddress(e.target.value)
-                setErrorMessage((prev) => ({ ...prev, emailAddress: '' }))
-              }}
-              style={{
-                width: '10vw',
-                height: '4vh',
-                border: errorMessage.emailAddress ? '1px solid red' : '1px solid #D5E1EA',
-                borderRadius: '0.50rem',
-                fontSize: '0.70rem',
-              }}
-            />
-          </div>
+        {/* <div className="flex mt-2 gap-2">
           <p>
             {errorMessage.salesRepEmail && (
               <small className="p-error">{errorMessage.salesRepEmail}</small>
@@ -504,12 +572,12 @@ const AddVendor: React.FC<AddVendorProps> = ({
             />
           </div>
           <p>
-              {errorMessage.addressZipCode && (
-                <small className="p-error">{errorMessage.addressZipCode}</small>
-              )}
-            </p>
+            {errorMessage.addressZipCode && (
+              <small className="p-error">{errorMessage.addressZipCode}</small>
+            )}
+          </p>
 
-          {/* Remit Email Address */}
+          
           <div className="mt-2 ">
             <InputText
               placeholder="Email Address"
@@ -527,7 +595,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
               }}
             />
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div>
@@ -543,9 +611,9 @@ const AddVendor: React.FC<AddVendorProps> = ({
               }
               type="text"
               style={{
-                width: '14vw',
-                height: '4vh',
-                border: '1px solid gray',
+                width: '230px',
+                height: '32px',
+                border: '1px solid  #D5E1EA',
                 borderRadius: '0.50rem',
                 fontSize: '0.70rem',
                 padding: '1em',
@@ -555,9 +623,9 @@ const AddVendor: React.FC<AddVendorProps> = ({
         </div>
       </div>
 
-      <div className="mt-8" style={{ backgroundColor: '#F5F5F5' }}>
+      <div className="py-3 px-5 mt-4 rounded-lg" style={{ backgroundColor: '#F5F5F5' }}>
         <div className="">
-          <h1 className="text-sm font-bold">Sales Representative</h1>
+          <h1 className="text-sm font-bold mt-2">Sales Representative</h1>
         </div>
 
         <div className="flex   mt-2 gap-2 ">
@@ -570,9 +638,9 @@ const AddVendor: React.FC<AddVendorProps> = ({
                 placeholder=""
                 type="text"
                 style={{
-                  width: '12vw',
-                  height: '4vh',
-                  border: '1px solid gray',
+                  width: '230px',
+                  height: '32px',
+                  border: '1px solid  #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.70rem',
                 }}
@@ -594,9 +662,9 @@ const AddVendor: React.FC<AddVendorProps> = ({
                   placeholder=""
                   type="text"
                   style={{
-                    width: '12vw',
-                    height: '4vh',
-                    border: '1px solid gray',
+                    width: '230px',
+                    height: '32px',
+                    border: '1px solid  #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.70rem',
                   }}
@@ -619,9 +687,9 @@ const AddVendor: React.FC<AddVendorProps> = ({
                   placeholder=""
                   type="text"
                   style={{
-                    width: '12vw',
-                    height: '4vh',
-                    border: '1px solid gray',
+                    width: '230px',
+                    height: '32px',
+                    border: '1px solid  #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.70rem',
                   }}
@@ -631,7 +699,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
           </div>
         </div>
 
-        <div className="flex mt-5 gap-4">
+        <div className="flex gap-4">
           <div className="mt-2">
             <div>
               <span>Email</span>
@@ -641,9 +709,9 @@ const AddVendor: React.FC<AddVendorProps> = ({
                 placeholder=""
                 type="text"
                 style={{
-                  width: '14vw',
-                  height: '4vh',
-                  border: '1px solid gray',
+                  width: '230px',
+                  height: '32px',
+                  border: '1px solid  #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.70rem',
                 }}
@@ -658,9 +726,9 @@ const AddVendor: React.FC<AddVendorProps> = ({
             <div className="mt-1">
               <InputTextarea
                 style={{
-                  width: '14vw',
-                  height: '4vh',
-                  border: '1px solid gray',
+                  width: '487.77px',
+                  height: '32px',
+                  border: '1px solid  #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.70rem',
                 }}
