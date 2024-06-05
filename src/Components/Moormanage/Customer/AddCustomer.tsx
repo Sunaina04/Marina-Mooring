@@ -219,6 +219,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     const errors: { [key: string]: string } = {}
     let firstError = ''
 
+
     if (!customerName) {
       errors.customerName = 'Customer name is required'
       firstError = 'CustomerName'
