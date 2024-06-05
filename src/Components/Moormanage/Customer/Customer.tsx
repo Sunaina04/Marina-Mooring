@@ -365,7 +365,8 @@ const Customer = () => {
             }}
           />
 
-          <div className="bg-#00426F overflow-x-hidden overflow-y-scroll h-[500px] mt-[3px] ml-[15px] mr-[15px] table-container  ">
+          <div
+            className={`bg-#00426F overflow-x-hidden h-[500px] mt-[3px] ml-[15px] mr-[15px] table-container ${isLoading ? 'blur-screen' : ''}`}>
             {customerData.length === 0 ? (
               <div className="text-center mt-40">
                 <img
@@ -398,7 +399,7 @@ const Customer = () => {
             style={{
               position: 'absolute',
               top: '50%',
-              left: '35%',
+              left: '50%',
               transform: 'translate(-50%, -50%)',
               width: '50px',
               height: '50px',
@@ -411,7 +412,7 @@ const Customer = () => {
 
         <div className="min-w-[20vw]">
           <div
-            className={`max-w-[413px] rounded-md border-[1px] ${modalVisible ? 'blur-screen' : ''}`}>
+            className={`max-w-[413px] rounded-md border-[1px] ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
             <CustomMooringPositionMap
               position={coordinatesArray || [30.698, 76.657]}
               zoomLevel={10}
@@ -439,7 +440,7 @@ const Customer = () => {
             marginRight: '40px',
           }}>
           <div className="rounded-md border">
-            <div className="bg-[#10293A] rounded-r-md  rounded-l-md flex justify-between pb-2">
+            <div className="bg-[#10293A] rounded-r-md rounded-l-md flex justify-between pb-2">
               <div className="text-sm font-semibold rounded-t-md bg-[]">
                 <h1 className="p-4 text-white">{'Customers Record'}</h1>
               </div>
