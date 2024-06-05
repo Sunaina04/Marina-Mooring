@@ -56,6 +56,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
     const errors: { [key: string]: string } = {}
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const phoneRegex = /^\d{10}$/
+    const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/
 
     if (!formData.phone) {
       errors.phone = 'Phone is required'
@@ -81,10 +82,13 @@ const AddVendor: React.FC<AddVendorProps> = ({
       errors.emailForRepresentative = 'Please enter a valid email format'
     }
 
+    if (!formData.website) {
+      errors.website = 'Website is required'
+    } else if (!urlRegex.test(formData.website)) {
+      errors.website = 'Please enter a valid URL'
+    }
+
     if (!formData.companyName) errors.companyName = 'companyName is required'
-
-    if (!formData.website) errors.website = 'website is required'
-
     if (!formData.streetBuildingForAddress)
       errors.streetBuildingForAddress = 'street/Building is required'
     if (!formData.aptSuiteForAddress) errors.aptSuiteForAddress = 'aptSuite is required'
