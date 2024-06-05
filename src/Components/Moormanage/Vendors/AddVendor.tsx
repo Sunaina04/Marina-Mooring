@@ -8,8 +8,15 @@ import { useAddVendorsMutation } from '../../../Services/MoorManage/MoormanageAp
 import { Button } from 'primereact/button'
 import { CityProps } from '../../../Type/CommonType'
 import { AddVendorProps } from '../../../Type/ComponentBasedType'
+import { VendorPayload, VendorResponse } from '../../../Type/ApiTypes'
 
-const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, getVendor }) => {
+const AddVendor: React.FC<AddVendorProps> = ({
+  vendors,
+  editMode,
+  closeModal,
+  getVendor,
+  toastRef,
+}) => {
   const [checked, setChecked] = useState<boolean>(false)
   const [companyName, setCompanyName] = useState<string>('')
   const [phone, setPhone] = useState<string>('')
@@ -29,6 +36,59 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
   const [salesRepEmail, setSalesRepEmail] = useState<string>('')
   const [note, setNote] = useState<string>('')
   const [addVendor] = useAddVendorsMutation()
+  const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
+
+  const validateFields = () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const phoneRegex = /^\d{10}$/
+    const nameRegex = /^[a-zA-Z ]+$/
+
+    const errors: { [key: string]: string } = {}
+
+    if (!companyName) {
+      errors.name = 'Boatyard Name is required'
+    } else if (!nameRegex.test(companyName)) {
+      errors.name = 'Name must only contain letters'
+    }
+
+    // if (!boatyardId) errors.id = 'Boatyard ID is required'
+
+    if (!phone) {
+      errors.phone = 'Phone is required'
+    } else if (!phoneRegex.test(phone)) {
+      errors.phone = 'Phone must be a 10-digit number'
+    }
+
+    if (!emailAddress) {
+      errors.email = 'Email is required'
+    } else if (!emailRegex.test(emailAddress)) {
+      errors.email = 'Please enter a valid email format'
+    }
+
+    if (!streetBuilding) errors.streetBuilding = 'Street/house is required'
+    if (!aptSuite) errors.aptSuite = 'Zip code is required'
+    if (!selectedCity) errors.selectedCity = 'Main contact is required'
+    // if (!country) errors.country = 'Country  is required'
+    // if (!state) errors.state = 'State  is required'
+    if (!addressZipCode) errors.addressZipCode = 'Apt/Suite is required'
+
+    if (!firstName) errors.firstName = 'First Name is required'
+    if (!lastName) errors.lastName = 'Last Name is required'
+
+    if (!salesRepPhone) {
+      errors.salesRepPhone = 'Sales Rep Phone is required'
+    } else if (!phoneRegex.test(salesRepPhone)) {
+      errors.salesRepPhone = 'Sales Rep Phone must be a 10-digit number'
+    }
+
+    if (!salesRepEmail) {
+      errors.salesRepEmail = 'Sales Rep Email is required'
+    } else if (!emailRegex.test(salesRepEmail)) {
+      errors.salesRepEmail = 'Please enter a valid email format'
+    }
+
+    return errors
+  }
 
   useEffect(() => {
     if (editMode) {
@@ -73,24 +133,59 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
   ]
 
   const saveVendor = async () => {
-    const payload = {
-      companyName: companyName,
-      companyPhoneNumber: phone,
-      website: website,
-      street: streetBuilding,
-      aptSuite: aptSuite,
-      country: selectedCity?.name || '',
-      zipCode: addressZipCode,
-      companyEmail: emailAddress,
-      accountNumber: accountNumber,
-      firstName: firstName,
-      lastName: lastName,
-      salesRepPhoneNumber: salesRepPhone,
-      salesRepEmail: salesRepEmail,
-      salesRepNote: note,
-      primarySalesRep: true,
+    const errors = validateFields()
+    if (Object.keys(errors).length > 0) {
+      setErrorMessage(errors)
+      return
     }
-    const response = await addVendor(payload)
+    try {
+      const payload = {
+        companyName: companyName,
+        companyPhoneNumber: phone,
+        website: website,
+        street: streetBuilding,
+        aptSuite: aptSuite,
+        country: selectedCity?.name || '',
+        zipCode: addressZipCode,
+        companyEmail: emailAddress,
+        accountNumber: accountNumber,
+        firstName: firstName,
+        lastName: lastName,
+        salesRepPhoneNumber: salesRepPhone,
+        salesRepEmail: salesRepEmail,
+        salesRepNote: note,
+        primarySalesRep: true,
+      }
+      const response = await addVendor(payload).unwrap()
+      const { status, message } = response as VendorResponse
+      if (status === 200 || status === 201) {
+        closeModal()
+        getVendor()
+        // setIsLoading(false)
+        toastRef?.current?.show({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Boatyard Saved successfully',
+          life: 3000,
+        })
+      } else {
+        // setIsLoading(false)
+        toastRef?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+      }
+    } catch (error) {
+      // setIsLoading(false)
+      toastRef?.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: error,
+        life: 3000,
+      })
+    }
   }
 
   return (
@@ -103,34 +198,40 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
               <div className="mt-2">
                 <InputComponent
                   value={companyName}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  onChange={(e) => {
                     setCompanyName(e.target.value)
-                  }
+                    setErrorMessage((prev) => ({ ...prev, name: '' }))
+                  }}
                   style={{
                     width: '12vw',
                     height: '4vh',
-                    border: '1px solid gray',
+                    border: errorMessage.name ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.80vw',
                   }}
                 />
               </div>
+              <p>{errorMessage.name && <small className="p-error">{errorMessage.name}</small>}</p>
             </div>
             <div>
               <span className="font-semibold text-sm text-black">Phone</span>
               <div className="mt-2">
                 <InputComponent
                   value={phone}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPhone(e.target.value)}
+                  onChange={(e) => {
+                    setPhone(e.target.value)
+                    setErrorMessage((prev) => ({ ...prev, phone: '' }))
+                  }}
                   style={{
                     width: '12vw',
                     height: '4vh',
-                    border: '1px solid gray',
+                    border: errorMessage.phone ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.80vw',
                   }}
                 />
               </div>
+              <p>{errorMessage.phone && <small className="p-error">{errorMessage.phone}</small>}</p>
             </div>
             <div>
               <span className="font-semibold text-sm text-black">Website</span>
@@ -166,70 +267,96 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                 <InputText
                   placeholder="Street/Building"
                   value={streetBuilding}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  onChange={(e) => {
                     setStreetBuilding(e.target.value)
-                  }
+                    setErrorMessage((prev) => ({ ...prev, streetBuilding: '' }))
+                  }}
                   style={{
                     width: '10vw',
                     height: '4vh',
-                    border: '1px solid gray',
+                    border: errorMessage.streetBuilding ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.70rem',
                   }}
                 />
               </div>
+              <p>
+                {errorMessage.streetBuilding && (
+                  <small className="p-error">{errorMessage.streetBuilding}</small>
+                )}
+              </p>
             </div>
             <div>
               <div className="mt-2">
                 <InputText
                   placeholder="Apt/Suite"
                   value={aptSuite}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAptSuite(e.target.value)}
+                  onChange={(e) => {
+                    setAptSuite(e.target.value)
+                    setErrorMessage((prev) => ({ ...prev, aptSuite: '' }))
+                  }}
                   style={{
                     width: '10vw',
                     height: '4vh',
-                    border: '1px solid gray',
+                    border: errorMessage.streetBuilding ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.70rem',
                   }}
                 />
               </div>
+              <p>
+                {errorMessage.aptSuite && (
+                  <small className="p-error">{errorMessage.aptSuite}</small>
+                )}
+              </p>
             </div>
             <div>
               <div className="mt-2">
                 <InputText
                   placeholder="Street/Building"
                   value={remitStreetBuilding}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  onChange={(e) => {
                     setRemitStreetBuilding(e.target.value)
-                  }
+                    setErrorMessage((prev) => ({ ...prev, streetBuilding: '' }))
+                  }}
                   style={{
                     width: '10vw',
                     height: '4vh',
-                    border: '1px solid gray',
+                    border: errorMessage.streetBuilding ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.70rem',
                   }}
                 />
               </div>
+              <p>
+                {errorMessage.streetBuilding && (
+                  <small className="p-error">{errorMessage.streetBuilding}</small>
+                )}
+              </p>
             </div>
             <div>
               <div className="mt-2">
                 <InputText
                   placeholder="Apt/Suite"
                   value={remitAptSuite}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  onChange={(e) => {
                     setRemitAptSuite(e.target.value)
-                  }
+                    setErrorMessage((prev) => ({ ...prev, aptSuite: '' }))
+                  }}
                   style={{
                     width: '10vw',
                     height: '4vh',
-                    border: '1px solid gray',
+                    border: errorMessage.aptSuite ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.70rem',
                   }}
                 />
               </div>
+              <p>
+                {errorMessage.aptSuite && (
+                  <small className="p-error">{errorMessage.aptSuite}</small>
+                )}
+              </p>
             </div>
           </div>
           <div className="flex mt-5 gap-2">
@@ -319,30 +446,44 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                 const inputVal = e.target.value
                 const newValue = inputVal !== '' ? parseInt(inputVal, 10) : undefined
                 setAddressZipCode(newValue)
+                setErrorMessage((prev) => ({ ...prev, addressZipCode: '' }))
               }}
               style={{
                 width: '10vw',
                 height: '4vh',
-                border: '1px solid gray',
+                border: errorMessage.addressZipCode ? '1px solid red' : '1px solid #D5E1EA',
                 borderRadius: '0.50rem',
                 fontSize: '0.70rem',
               }}
             />
+            <p>
+              {errorMessage.addressZipCode && (
+                <small className="p-error">{errorMessage.addressZipCode}</small>
+              )}
+            </p>
           </div>
           <div className="mt-2 ">
             <InputText
               placeholder="Email Address"
               value={emailAddress}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmailAddress(e.target.value)}
+              onChange={(e) => {
+                setEmailAddress(e.target.value)
+                setErrorMessage((prev) => ({ ...prev, emailAddress: '' }))
+              }}
               style={{
                 width: '10vw',
                 height: '4vh',
-                border: '1px solid gray',
+                border: errorMessage.emailAddress ? '1px solid red' : '1px solid #D5E1EA',
                 borderRadius: '0.50rem',
                 fontSize: '0.70rem',
               }}
             />
           </div>
+          <p>
+            {errorMessage.salesRepEmail && (
+              <small className="p-error">{errorMessage.salesRepEmail}</small>
+            )}
+          </p>
           <div className="mt-2 ">
             <InputText
               placeholder="Zip Code"
@@ -351,27 +492,36 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                 const inputVal = e.target.value
                 const newValue = inputVal !== '' ? parseInt(inputVal, 10) : undefined
                 setRemitZipCode(newValue)
+                setErrorMessage((prev) => ({ ...prev, addressZipCode: '' }))
               }}
               style={{
                 width: '10vw',
                 height: '4vh',
-                border: '1px solid gray',
+                border: errorMessage.addressZipCode ? '1px solid red' : '1px solid #D5E1EA',
                 borderRadius: '0.50rem',
                 fontSize: '0.70rem',
               }}
             />
           </div>
+          <p>
+              {errorMessage.addressZipCode && (
+                <small className="p-error">{errorMessage.addressZipCode}</small>
+              )}
+            </p>
 
           {/* Remit Email Address */}
           <div className="mt-2 ">
             <InputText
               placeholder="Email Address"
               value={emailAddress}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmailAddress(e.target.value)}
+              onChange={(e) => {
+                setEmailAddress(e.target.value)
+                setErrorMessage((prev) => ({ ...prev, emailAddress: '' }))
+              }}
               style={{
                 width: '10vw',
                 height: '4vh',
-                border: '1px solid gray',
+                border: errorMessage.emailAddress ? '1px solid red' : '1px solid #D5E1EA',
                 borderRadius: '0.50rem',
                 fontSize: '0.70rem',
               }}
@@ -398,14 +548,14 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                 border: '1px solid gray',
                 borderRadius: '0.50rem',
                 fontSize: '0.70rem',
-                padding:"1em"
+                padding: '1em',
               }}
             />
           </div>
         </div>
       </div>
 
-      <div className="mt-8 bg-slate-50">
+      <div className="mt-8" style={{ backgroundColor: '#F5F5F5' }}>
         <div className="">
           <h1 className="text-sm font-bold">Sales Representative</h1>
         </div>
@@ -501,31 +651,37 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
             </div>
           </div>
 
-          <div className="mt-1">
+          <div className="mt-2">
             <div className="">
               <span>Note</span>
             </div>
             <div className="mt-1">
               <InputTextarea
-                className="w-[25vw] h-[1vh] rounded-lg  border-[1px] border-gray-500"
+                style={{
+                  width: '14vw',
+                  height: '4vh',
+                  border: '1px solid gray',
+                  borderRadius: '0.50rem',
+                  fontSize: '0.70rem',
+                }}
                 autoResize
                 value={note}
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setNote(e.target.value)}
-                rows={5}
-                cols={30}
+                // rows={5}
+                // cols={30}
               />
             </div>
           </div>
         </div>
       </div>
 
-      <div className="card flex justify-content-center gap-3">
+      {/* <div className="card flex justify-content-center gap-3">
         <Checkbox onChange={(e) => setChecked(e.checked ?? false)} checked={checked}></Checkbox>
 
         <div>
           <p>Primary Sales Representative</p>
         </div>
-      </div>
+      </div> */}
 
       <div className="flex gap-3 mt-4 ">
         <Button

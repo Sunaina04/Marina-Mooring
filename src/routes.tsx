@@ -25,6 +25,7 @@ import Permission from './Components/AdminTools/Permission'
 import Admin from './Components/EmployeeManagement/Admin'
 import LoginForm from './Components/Login/LoginForm'
 import CustomerAdmin from './Components/AdminTools/CustomerOwner'
+import InventoryDetails from './Components/Moormanage/Vendors/InventoryDetails'
 
 const routes = [
   {
@@ -70,6 +71,10 @@ const routes = [
           {
             path: 'vendors',
             element: <Vendors />,
+          },
+          {
+            path: 'inventoryDetails',
+            element: <InventoryDetails />,
           },
           {
             path: 'technicians',
