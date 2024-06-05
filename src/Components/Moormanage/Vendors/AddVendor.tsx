@@ -63,6 +63,12 @@ const AddVendor: React.FC<AddVendorProps> = ({
       errors.phone = 'Phone must be a 10-digit number'
     }
 
+    if (!formData.phoneForRepresentative) {
+      errors.phoneForRepresentative = 'Phone is required'
+    } else if (!phoneRegex.test(formData.phoneForRepresentative)) {
+      errors.phoneForRepresentative = 'Phone must be a 10-digit number'
+    }
+
     if (!formData.emailForAddress) {
       errors.emailForAddress = 'Email is required'
     } else if (!emailRegex.test(formData.emailForAddress)) {
@@ -558,7 +564,11 @@ const AddVendor: React.FC<AddVendorProps> = ({
             <div className="mt-1 py-5 px-5 rounded-lg" style={{ backgroundColor: '#F5F5F5' }}>
               <div>
                 <h1 style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
+                  <div className="flex gap-1">
                   Remit Address
+                  <p className="text-red-600">*</p>
+                </div>
+
                 </h1>
               </div>
               <div className="flex mt-2 gap-2">
