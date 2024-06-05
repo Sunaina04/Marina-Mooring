@@ -27,6 +27,7 @@ import { useSelector } from 'react-redux'
 import CustomMooringPositionMap from '../../Map/CustomMooringPositionMap'
 import { RiDeleteBin5Fill } from 'react-icons/ri'
 import { ProgressSpinner } from 'primereact/progressspinner'
+import AddCustomer from '../Customer/AddCustomer'
 
 const Moorings = () => {
   const userData = useSelector((state: any) => state.user?.userData)
@@ -50,6 +51,8 @@ const Moorings = () => {
   const [isChecked, setIsChecked] = useState(false)
   const [dialogVisible, setDialogVisible] = useState(false)
   const [editCustomerMode, setEditCustomerMode] = useState(false)
+  const [editMooringMode, setEditMooringMode] = useState(false)
+  const [customerModalVisible, setCustomerModalVisible] = useState(false)
   const [customerMooringData, setCustomerMooringData] = useState<MooringResponseDtoList[]>([])
 
   const toast = useRef<Toast>(null)
@@ -92,6 +95,7 @@ const Moorings = () => {
 
   const handleEdit = (rowData: any) => {
     if (mooringRecord == true) {
+      setCustomerModalVisible(true)
       setSelectedCustomer(rowData)
       setEditCustomerMode(true)
       setEditMode(true)
@@ -235,7 +239,6 @@ const Moorings = () => {
         setFilteredMooringData(content)
       } else {
         setIsLoading(false)
-
         toast?.current?.show({
           severity: 'error',
           summary: 'Error',
@@ -455,7 +458,7 @@ const Moorings = () => {
               </div>
               <div className="flex">
                 <FaEdit
-                  // onClick={handleEdit}
+                  onClick={handleEdit}
                   className="mr-3 mt-3 text-[white]"
                   data-testid="FaEdit"
                   style={{ cursor: mooringRecord ? 'pointer' : 'not-allowed' }}
@@ -676,6 +679,46 @@ const Moorings = () => {
           </div>
         </div>
       </div>
+
+      {customerModalVisible && (
+        <CustomModal
+          button={true}
+          children={
+            <AddCustomer
+              customer={selectedCustomer}
+              mooringRowData={mooringRowData}
+              editMode={editMode}
+              editCustomerMode={editCustomerMode}
+              editMooringMode={false}
+              closeModal={handleModalClose}
+              getCustomer={getMooringsData}
+              getCustomerRecord={() => {
+                if (customerId) {
+                  getCustomersWithMooring(customerId)
+                }
+              }}
+              toastRef={toast}
+            />
+          }
+          headerText={
+            editMooringMode ? (
+              <h1 className="text-xxl font-bold text-black ">Add Mooring</h1>
+            ) : (
+              <h1 className="text-xxl font-bold text-black ">Add Customer</h1>
+            )
+          }
+          visible={modalVisible}
+          onHide={handleModalClose}
+          dialogStyle={{
+            width: '800px',
+            minWidth: '800px',
+            height: editCustomerMode ? '500px' : '630px',
+            minHeight: editCustomerMode ? '500px' : '630px',
+            borderRadius: '1rem',
+            maxHeight: '95% !important',
+          }}
+        />
+      )}
     </div>
   )
 }

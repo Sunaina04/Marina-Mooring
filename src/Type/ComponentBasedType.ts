@@ -6,6 +6,7 @@ export interface CustomerDataProps {
   mooringRowData?: any
   editMode: boolean
   editCustomerMode?: boolean
+  editMooringMode?: boolean
   closeModal: () => void
   getCustomer: () => void
   getCustomerRecord?: () => void
@@ -154,6 +155,7 @@ export interface HeaderProps {
 }
 
 export interface CustomModalProps {
+  button?: boolean
   buttonText?: string
   headerText: string | JSX.Element
   children: React.ReactNode
@@ -161,12 +163,13 @@ export interface CustomModalProps {
     [key: string]: any
   }
   visible: boolean
-  onClick: () => void
+  onClick?: () => void
   onHide: () => void
   buttonStyle?: React.CSSProperties | undefined
   dialogStyle?: React.CSSProperties
   footerContent?: React.ReactNode
 }
+
 export interface inputHeader {
   header?: string
   iconStyle?: React.CSSProperties

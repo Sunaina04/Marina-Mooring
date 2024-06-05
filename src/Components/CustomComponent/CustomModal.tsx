@@ -14,28 +14,33 @@ const CustomModal: React.FC<CustomModalProps> = ({
   buttonStyle,
   dialogStyle,
   footerContent,
+  button,
 }) => {
   return (
     <div className="card flex justify-content-center">
-      <Button
-        label={buttonText}
-        icon={<img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8 ml-4 mb-0.5" />}
-        onClick={onClick}
-        style={{
-          width: '121px',
-          height: '44px',
-          minHeight: '44px',
-          backgroundColor: '#0098FF',
-          cursor: 'pointer',
-          fontSize: '15px',
-          fontWeight: 600,
-          color: '#FFFFFF',
-          borderRadius: '5px',
-          boxShadow: 'none',
-          lineHeight: '18.75px',
-          letterSpacing: '0.20000000298023224px',
-        }}
-      />
+      {!button && (
+        <Button
+          label={buttonText}
+          icon={
+            <img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8 ml-4 mb-0.5" />
+          }
+          onClick={onClick}
+          style={{
+            width: '121px',
+            height: '44px',
+            minHeight: '44px',
+            backgroundColor: '#0098FF',
+            cursor: 'pointer',
+            fontSize: '15px',
+            fontWeight: 600,
+            color: '#FFFFFF',
+            borderRadius: '5px',
+            boxShadow: 'none',
+            lineHeight: '18.75px',
+            letterSpacing: '0.20000000298023224px',
+          }}
+        />
+      )}
       <Dialog
         header={headerText}
         {...dialogProps}

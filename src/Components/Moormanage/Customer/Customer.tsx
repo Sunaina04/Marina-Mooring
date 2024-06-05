@@ -39,6 +39,7 @@ const Customer = () => {
   const [customerData, setCustomerData] = useState<CustomerPayload[]>([])
   const [editMode, setEditMode] = useState(false)
   const [editCustomerMode, setEditCustomerMode] = useState(false)
+  const [editMooringMode, setEditMooringMode] = useState(false)
   const [customerRecord, setCustomerRecord] = useState(false)
   const [selectedCustomer, setSelectedCustomer] = useState<any>()
   const [filteredCustomerData, setFilteredCustomerData] = useState<CustomerPayload[]>([])
@@ -58,12 +59,16 @@ const Customer = () => {
 
   const handleButtonClick = () => {
     setModalVisible(true)
+    setEditMode(false)
+    setEditCustomerMode(false)
+    setEditMooringMode(false)
   }
 
   const handleModalClose = () => {
     setModalVisible(false)
     setEditMode(false)
     setEditCustomerMode(false)
+    setEditMooringMode(false)
     setDialogVisible(false)
   }
 
@@ -82,6 +87,7 @@ const Customer = () => {
 
   const handleMooringEdit = () => {
     setSelectedCustomer(customerRecordData)
+    setEditMooringMode(true)
     setModalVisible(true)
     setEditMode(true)
   }
@@ -289,6 +295,7 @@ const Customer = () => {
                 mooringRowData={mooringRowData}
                 editMode={editMode}
                 editCustomerMode={editCustomerMode}
+                editMooringMode={editMooringMode}
                 closeModal={handleModalClose}
                 getCustomer={getCustomerData}
                 getCustomerRecord={() => {
@@ -299,7 +306,13 @@ const Customer = () => {
                 toastRef={toast}
               />
             }
-            headerText={<h1 className="text-xxl font-bold text-black ">Add Customer</h1>}
+            headerText={
+              editMooringMode ? (
+                <h1 className="text-xxl font-bold text-black ">Add Mooring</h1>
+              ) : (
+                <h1 className="text-xxl font-bold text-black ">Add Customer</h1>
+              )
+            }
             visible={modalVisible}
             onClick={handleButtonClick}
             onHide={handleModalClose}

@@ -34,6 +34,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   mooringRowData,
   editMode,
   editCustomerMode,
+  editMooringMode,
   closeModal,
   getCustomer,
   getCustomerRecord,
@@ -102,7 +103,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const { getCountriesData } = CountriesData()
   const [addCustomer] = useAddCustomerMutation()
   const [updateCustomer] = useUpdateCustomerMutation()
-  const mooringResponseDtoList = customer?.mooringResponseDtoList || []
 
   const handlePositionChange = (lat: number, lng: number) => {
     setCenter([lat, lng])
@@ -280,6 +280,37 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     return errors
   }
 
+  const validateMooringFields = () => {
+    const errors: { [key: string]: string } = {}
+
+    if (!gpsCoordinatesValue) {
+      errors.gpsCoordinatesValue = 'GPS Coordinates is required'
+    }
+    if (!formData.harbor) errors.harbor = 'Harbor is required'
+    if (!formData.mooringId) errors.mooringId = 'Mooring ID is required'
+    if (!formData.harbor) errors.harbor = 'Harbor is required'
+    if (!formData.waterDepth) errors.waterDepth = 'Water Depth is required'
+    if (!formData.boatyardName) errors.boatyardName = 'Boatyard Name is required'
+    if (!formData.boatName) errors.boatName = 'Boat Name is required'
+    if (!formData.boatSize) errors.boatSize = 'Boat Size is required'
+    if (!formData.boatType) errors.boatType = 'Type is required'
+    if (!formData.boatWeight) errors.boatWeight = 'Weight is required'
+    if (!formData.sizeOfWeight) errors.sizeOfWeight = 'Size of Weight is required'
+    if (!formData.typeOfWeight) errors.typeOfWeight = 'Type of Weight is required'
+    if (!formData.topChainCondition) errors.topChainCondition = 'Top Chain Condition is required'
+    if (!formData.conditionOfEye) errors.conditionOfEye = 'Condition of Eye is required'
+    if (!formData.shackleSwivelCondition)
+      errors.shackleSwivelCondition = 'Shackle, Swivel Condition is required'
+    if (!formData.depthAtMeanHighWater)
+      errors.depthAtMeanHighWater = 'Depth at Mean High Water is required'
+    if (!formData.bottomChainCondition)
+      errors.bottomChainCondition = 'Bottom Chain Condition is required'
+    if (!formData.pennantCondition) errors.pennantCondition = 'Pennant Condition is required'
+
+    setFieldErrors(errors)
+    return errors
+  }
+
   const handleInputChange = (field: string, value: any) => {
     setFormData({
       ...formData,
@@ -439,20 +470,67 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   }
 
   const UpdateCustomer = async () => {
-    if (editCustomerMode) {
-      const errors = validateCustomerFields()
-      if (Object.keys(errors).length > 0) {
-        return
-      }
-    } else {
-      const errors = validateFields()
-      if (Object.keys(errors).length > 0) {
-        return
-      }
+    const errors = validateCustomerFields()
+    if (Object.keys(errors).length > 0) {
+      return
     }
 
     try {
       const editCustomerPayload = {
+        customerName: customerName,
+        customerId: customerId,
+        emailAddress: email,
+        phone: phone,
+        streetHouse: streetHouse,
+        aptSuite: sectorBlock,
+        state: selectedState?.id ? selectedState?.id : customer?.stateResponseDto?.id,
+        country: selectedCountry?.id ? selectedCountry?.id : customer?.stateResponseDto?.id,
+        zipCode: pinCode,
+        customerOwnerId: selectedCustomerId,
+      }
+      const response = await updateCustomer({
+        payload: editCustomerPayload,
+        id: customer?.id,
+      }).unwrap()
+      const { status, message } = response as CustomerResponse
+      if (status === 200 || status === 201) {
+        closeModal()
+        getCustomer()
+        if (getCustomerRecord) {
+          getCustomerRecord()
+        }
+        toastRef?.current?.show({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Customer Updated successfully',
+          life: 3000,
+        })
+      } else {
+        toastRef?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+      }
+    } catch (error) {
+      const { message } = error as ErrorResponse
+      toastRef?.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: message,
+        life: 3000,
+      })
+    }
+  }
+
+  const UpdateMooring = async () => {
+    const errors = validateMooringFields()
+    if (Object.keys(errors).length > 0) {
+      return
+    }
+    try {
+      const editMooringPayload = {
         customerName: customerName,
         customerId: customerId,
         emailAddress: email,
@@ -506,7 +584,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         },
       }
       const response = await updateCustomer({
-        payload: editCustomerPayload,
+        payload: editMooringPayload,
         id: customer?.id,
       }).unwrap()
       const { status, message } = response as CustomerResponse
@@ -519,7 +597,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
-          detail: 'Customer Updated successfully',
+          detail: 'Mooring Updated successfully',
           life: 3000,
         })
       } else {
@@ -594,8 +672,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   }, [])
 
   const handleClick = () => {
-    if (editMode) {
+    if (editCustomerMode) {
       UpdateCustomer()
+    } else if (editMooringMode) {
+      UpdateMooring()
     } else {
       SaveCustomer()
     }
@@ -614,251 +694,258 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   return (
     <div className="">
       {/* Add Customer */}
-      <div className="flex gap-6">
-        <div>
-          <div>
-            <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
-                Customer Name
-                <p className="text-red-600">*</p>
-              </div>
-            </span>
-            <div className="mt-2">
-              <InputComponent
-                value={customerName}
-                onChange={(e) => handleInputChangeCustomer('customerName', e.target.value)}
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: fieldErrors.customerName ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                }}
-              />
-              <p className="" id="customerName">
-                {fieldErrors.customerName && (
-                  <small className="p-error">{fieldErrors.customerName}</small>
-                )}
-              </p>
-            </div>
-          </div>
-          <div className="mt-4">
+
+      {!editMooringMode && (
+        <>
+          <div className="flex gap-6">
             <div>
               <div>
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
-                    Email Address
+                    Customer Name
                     <p className="text-red-600">*</p>
                   </div>
                 </span>
+                <div className="mt-2">
+                  <InputComponent
+                    value={customerName}
+                    onChange={(e) => handleInputChangeCustomer('customerName', e.target.value)}
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: fieldErrors.customerName ? '1px solid red' : '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.8rem',
+                    }}
+                  />
+                  <p className="" id="customerName">
+                    {fieldErrors.customerName && (
+                      <small className="p-error">{fieldErrors.customerName}</small>
+                    )}
+                  </p>
+                </div>
               </div>
-              <div className="mt-2">
-                <InputText
-                  value={email}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    handleInputChangeCustomer('email', e.target.value)
-                  }
+              <div className="mt-4">
+                <div>
+                  <div>
+                    <span className="font-medium text-sm text-[#000000]">
+                      <div className="flex gap-1">
+                        Email Address
+                        <p className="text-red-600">*</p>
+                      </div>
+                    </span>
+                  </div>
+                  <div className="mt-2">
+                    <InputText
+                      value={email}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        handleInputChangeCustomer('email', e.target.value)
+                      }
+                      style={{
+                        width: '230px',
+                        height: '32px',
+                        border: fieldErrors.email ? '1px solid red' : '1px solid #D5E1EA',
+                        borderRadius: '0.50rem',
+                        fontSize: '0.8rem',
+                      }}
+                    />
+                    <p className="" id="email">
+                      {fieldErrors.email && <small className="p-error">{fieldErrors.email}</small>}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">
+                    Customer ID
+                    <p className="text-red-600">*</p>
+                  </div>
+                </span>
+                <div className="mt-2">
+                  <InputComponent
+                    value={customerId}
+                    onChange={(e) => handleInputChangeCustomer('customerId', e.target.value)}
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: fieldErrors.customerId ? '1px solid red' : '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.8rem',
+                    }}
+                  />
+                  <p className="" id="customerId">
+                    {fieldErrors.customerId && (
+                      <small className="p-error">{fieldErrors.customerId}</small>
+                    )}
+                  </p>
+                </div>
+              </div>
+              <div className="mt-4">
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">
+                    Phone
+                    <p className="text-red-600">*</p>
+                  </div>
+                </span>
+                <div className="mt-2">
+                  <InputComponent
+                    value={phone}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      handleInputChangeCustomer('phone', e.target.value)
+                    }
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: fieldErrors.phone ? '1px solid red' : '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.8rem',
+                    }}
+                  />
+                  <p className="" id="phone">
+                    {fieldErrors.phone && <small className="p-error">{fieldErrors.phone}</small>}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="mt-5">
+            <div>
+              <h1 className="font-medium text-sm text-[#000000]">
+                <div className="flex gap-1">
+                  Address
+                  <p className="text-red-600">*</p>
+                </div>
+              </h1>
+            </div>
+            <div className="flex gap-6 mt-5 ">
+              <div>
+                <div>
+                  <InputText
+                    value={streetHouse}
+                    onChange={(e) => handleInputChangeCustomer('streetHouse', e.target.value)}
+                    placeholder="Street/house"
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: fieldErrors.streetHouse ? '1px solid red' : '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      color: 'black',
+                      fontSize: '0.8rem',
+                    }}
+                  />
+                  <p className="" id="streetHouse">
+                    {fieldErrors.streetHouse && (
+                      <small className="p-error">{fieldErrors.streetHouse}</small>
+                    )}
+                  </p>
+                </div>
+              </div>
+              <div>
+                <div>
+                  <InputText
+                    id="sectorBlock"
+                    value={sectorBlock}
+                    onChange={(e) => handleInputChangeCustomer('sectorBlock', e.target.value)}
+                    placeholder="Apt/Suite"
+                    type="text"
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: fieldErrors.sectorBlock ? '1px solid red' : '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      color: 'black',
+                      fontSize: '0.8rem',
+                    }}
+                  />
+                  <p className="" id="sectorBlock">
+                    {fieldErrors.sectorBlock && (
+                      <small className="p-error">{fieldErrors.sectorBlock}</small>
+                    )}
+                  </p>
+                </div>
+              </div>
+              <div>
+                <Dropdown
+                  id="state"
+                  value={selectedState}
+                  options={statesData}
+                  onChange={(e) => handleInputChangeCustomer('state', e.target.value)}
+                  optionLabel="name"
+                  editable
+                  placeholder="State"
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: fieldErrors.email ? '1px solid red' : '1px solid #D5E1EA',
+                    border: fieldErrors.state ? '1px solid red' : '1px solid #D5E1EA',
+                    borderRadius: '0.50rem',
+                    color: 'black',
+                    fontSize: '0.8rem',
+                  }}
+                />
+
+                <p className="" id="selectedState">
+                  {fieldErrors.state && <small className="p-error">{fieldErrors.state}</small>}
+                </p>
+              </div>
+            </div>
+            <div className="flex mt-5 gap-6">
+              <div>
+                <Dropdown
+                  id="country"
+                  value={selectedCountry}
+                  onChange={(e) => handleInputChangeCustomer('country', e.target.value)}
+                  options={countriesData}
+                  optionLabel="name"
+                  editable
+                  placeholder="Country"
+                  className=""
+                  style={{
+                    width: '230px',
+                    height: '32px',
+                    border: fieldErrors.country ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                   }}
                 />
-                <p className="" id="email">
-                  {fieldErrors.email && <small className="p-error">{fieldErrors.email}</small>}
+                <p className="" id="selectedCountry">
+                  {fieldErrors.country && <small className="p-error">{fieldErrors.country}</small>}
+                </p>
+              </div>
+              <div>
+                <InputText
+                  id="pinCode"
+                  value={pinCode}
+                  onChange={(e) => handleInputChangeCustomer('pinCode', e.target.value)}
+                  placeholder="Zipcode"
+                  style={{
+                    width: '230px',
+                    height: '32px',
+                    border: fieldErrors.pinCode ? '1px solid red' : '1px solid #D5E1EA',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
+                  }}
+                />
+                <p className="" id="pinCode">
+                  {fieldErrors.pinCode && <small className="p-error">{fieldErrors.pinCode}</small>}
                 </p>
               </div>
             </div>
           </div>
-        </div>
-        <div>
-          <div>
-            <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
-                Customer ID
-                <p className="text-red-600">*</p>
-              </div>
-            </span>
-            <div className="mt-2">
-              <InputComponent
-                value={customerId}
-                onChange={(e) => handleInputChangeCustomer('customerId', e.target.value)}
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: fieldErrors.customerId ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                }}
-              />
-              <p className="" id="customerId">
-                {fieldErrors.customerId && (
-                  <small className="p-error">{fieldErrors.customerId}</small>
-                )}
-              </p>
-            </div>
-          </div>
-          <div className="mt-4">
-            <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
-                Phone
-                <p className="text-red-600">*</p>
-              </div>
-            </span>
-            <div className="mt-2">
-              <InputComponent
-                value={phone}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  handleInputChangeCustomer('phone', e.target.value)
-                }
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: fieldErrors.phone ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                }}
-              />
-              <p className="" id="phone">
-                {fieldErrors.phone && <small className="p-error">{fieldErrors.phone}</small>}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="mt-5">
-        <div>
-          <h1 className="font-medium text-sm text-[#000000]">
-            <div className="flex gap-1">
-              Address
-              <p className="text-red-600">*</p>
-            </div>
-          </h1>
-        </div>
-        <div className="flex gap-6 mt-5 ">
-          <div>
-            <div>
-              <InputText
-                value={streetHouse}
-                onChange={(e) => handleInputChangeCustomer('streetHouse', e.target.value)}
-                placeholder="Street/house"
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: fieldErrors.streetHouse ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  color: 'black',
-                  fontSize: '0.8rem',
-                }}
-              />
-              <p className="" id="streetHouse">
-                {fieldErrors.streetHouse && (
-                  <small className="p-error">{fieldErrors.streetHouse}</small>
-                )}
-              </p>
-            </div>
-          </div>
-          <div>
-            <div>
-              <InputText
-                id="sectorBlock"
-                value={sectorBlock}
-                onChange={(e) => handleInputChangeCustomer('sectorBlock', e.target.value)}
-                placeholder="Apt/Suite"
-                type="text"
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: fieldErrors.sectorBlock ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  color: 'black',
-                  fontSize: '0.8rem',
-                }}
-              />
-              <p className="" id="sectorBlock">
-                {fieldErrors.sectorBlock && (
-                  <small className="p-error">{fieldErrors.sectorBlock}</small>
-                )}
-              </p>
-            </div>
-          </div>
-          <div>
-            <Dropdown
-              id="state"
-              value={selectedState}
-              options={statesData}
-              onChange={(e) => handleInputChangeCustomer('state', e.target.value)}
-              optionLabel="name"
-              editable
-              placeholder="State"
-              style={{
-                width: '230px',
-                height: '32px',
-                border: fieldErrors.state ? '1px solid red' : '1px solid #D5E1EA',
-                borderRadius: '0.50rem',
-                color: 'black',
-                fontSize: '0.8rem',
-              }}
-            />
-
-            <p className="" id="selectedState">
-              {fieldErrors.state && <small className="p-error">{fieldErrors.state}</small>}
-            </p>
-          </div>
-        </div>
-        <div className="flex mt-5 gap-6">
-          <div>
-            <Dropdown
-              id="country"
-              value={selectedCountry}
-              onChange={(e) => handleInputChangeCustomer('country', e.target.value)}
-              options={countriesData}
-              optionLabel="name"
-              editable
-              placeholder="Country"
-              className=""
-              style={{
-                width: '230px',
-                height: '32px',
-                border: fieldErrors.country ? '1px solid red' : '1px solid #D5E1EA',
-                borderRadius: '0.50rem',
-                fontSize: '0.8rem',
-              }}
-            />
-            <p className="" id="selectedCountry">
-              {fieldErrors.country && <small className="p-error">{fieldErrors.country}</small>}
-            </p>
-          </div>
-          <div>
-            <InputText
-              id="pinCode"
-              value={pinCode}
-              onChange={(e) => handleInputChangeCustomer('pinCode', e.target.value)}
-              placeholder="Zipcode"
-              style={{
-                width: '230px',
-                height: '32px',
-                border: fieldErrors.pinCode ? '1px solid red' : '1px solid #D5E1EA',
-                borderRadius: '0.50rem',
-                fontSize: '0.8rem',
-              }}
-            />
-            <p className="" id="pinCode">
-              {fieldErrors.pinCode && <small className="p-error">{fieldErrors.pinCode}</small>}
-            </p>
-          </div>
-        </div>
-      </div>
+        </>
+      )}
 
       {/* Add Mooring */}
 
       {!editCustomerMode && (
         <>
-          <div className="mt-8 text-xl text-black font-bold">
-            <h3>Add Mooring</h3>
-          </div>
+          {!editMooringMode && (
+            <div className="mt-8 text-xl text-black font-bold">
+              <h3>Add Mooring</h3>
+            </div>
+          )}
 
           <div className="mt-6">
             <div className="flex gap-6 ">
