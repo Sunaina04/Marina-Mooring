@@ -199,7 +199,7 @@ const Vendors = () => {
                 getVendor={getVendorData}
               />
             }
-            headerText={<h1 className="text-xl font-extrabold text-black ml-4">New User</h1>}
+            headerText={<h1 className="text-xl font-extrabold text-black ml-4">Add Company</h1>}
             visible={modalVisible}
             onClick={handleButtonClick}
             onHide={handleModalClose}
@@ -216,7 +216,7 @@ const Vendors = () => {
               marginLeft: '8px',
             }}
             dialogStyle={{
-              width: '800px',
+              width: '851px',
               minWidth: '800px',
               height: '630px',
               minHeight: '630px',

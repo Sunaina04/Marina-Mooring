@@ -3,7 +3,10 @@ import { InputTextarea } from 'primereact/inputtextarea'
 import { InputText } from 'primereact/inputtext'
 import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown'
 import InputComponent from '../../CommonComponent/InputComponent'
-import { useAddMooringsMutation } from '../../../Services/MoorManage/MoormanageApi'
+import {
+  useAddMooringsMutation,
+  useUpdateMooringsMutation,
+} from '../../../Services/MoorManage/MoormanageApi'
 import { Button } from 'primereact/button'
 import { CityProps, MetaData } from '../../../Type/CommonType'
 import { AddMooringProps } from '../../../Type/ComponentBasedType'
@@ -56,11 +59,13 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   const [shackleSwivelData, setShackleSwivelData] = useState<MetaData[]>([])
   const [pennantData, setPennantData] = useState<MetaData[]>([])
   const [customerName, setcustomerName] = useState<MetaData[]>([])
+  const [customerId, setCustomerId] = useState<string>('')
   const [boatyardsName, setBoatYardsName] = useState<MetaData[]>([])
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
   const [firstErrorField, setFirstErrorField] = useState('')
   const [center, setCenter] = useState<LatLngExpression | undefined>([30.6983149, 76.656095])
   const [saveMoorings] = useAddMooringsMutation()
+  const [updateMooring] = useUpdateMooringsMutation()
 
   const [formData, setFormData] = useState<any>({
     customerName: '',
@@ -84,26 +89,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     BootomChainCondition: '',
     note: '',
   })
-
-  const payload = {
-    customerName: moorings?.customerName || '',
-    mooringNumber: moorings?.mooringNumber || '',
-    harbor: moorings?.harbor || '',
-    waterDepth: moorings?.waterDepth || '',
-    gpsCoordinates: moorings?.gpsCoordinates || '',
-    boatName: moorings?.boatName || '',
-    boatYardName: moorings?.boatyardName || '',
-    boatSize: moorings?.boatSize || '',
-    boatWeight: moorings?.boatWeight || '',
-    sizeOfWeight: moorings?.sizeOfWeight || '',
-    typeOfWeight: moorings?.typeOfWeight || '',
-    topChainCondition: moorings?.topChainCondition || '',
-    conditionOfEye: moorings?.eyeCondition || '',
-    bottomChainCondition: moorings?.bottomChainCondition || '',
-    shackleSwivelCondition: moorings?.shackleSwivelCondition || '',
-    pennantCondition: moorings?.pennantCondition || '',
-    deptAtMeanHighWater: moorings?.depthAtMeanHighWater || '',
-  }
 
   const fetchMetaData = useCallback(async () => {
     const { typeOfBoatTypeData } = await getTypeOfBoatTypeData()
@@ -237,7 +222,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       if (!firstError) firstError = 'pennantCondition'
     }
     if (!formData.deptAtMeanHighWater) {
-      errors.deptAtMeanHighWater = 'Dept at Mean High Water is required'
+      errors.deptAtMeanHighWater = 'Depth at Mean High Water is required'
       if (!firstError) firstError = 'deptAtMeanHighWater'
     }
 
@@ -260,14 +245,37 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     }
   }
 
-  const handleEditMode = () => {}
+  const handleEditMode = () => {
+    setFormData((prevState: any) => ({
+      ...prevState,
+      mooringNumber: mooringRowData?.mooringId || '',
+      mooringName: mooringRowData?.mooringName || '',
+      customerName: mooringRowData?.customerName || '',
+      harbor: mooringRowData?.harbor || '',
+      waterDepth: mooringRowData?.waterDepth || '',
+      gpsCoordinates: mooringRowData?.gpsCoordinates || '',
+      boatYardName: mooringRowData?.boatyardResponseDto?.boatyardName || '',
+      boatName: mooringRowData?.boatName || '',
+      boatSize: mooringRowData?.boatSize || '',
+      type: mooringRowData?.boatType?.boatType || '',
+      boatWeight: mooringRowData?.boatWeight || '',
+      sizeOfWeight: mooringRowData?.sizeOfWeight?.weight || '',
+      typeOfWeight: mooringRowData?.typeOfWeight?.type || '',
+      conditionOfEye: mooringRowData?.eyeCondition?.condition || '',
+      topChainCondition: mooringRowData?.topChainCondition?.condition || '',
+      shackleSwivelCondition: mooringRowData?.shackleSwivelCondition?.condition || '',
+      pennantCondition: mooringRowData?.pennantCondition?.condition || '',
+      deptAtMeanHighWater: mooringRowData?.depthAtMeanHighWater || '',
+      bottomChainCondition: mooringRowData?.bottomChainCondition?.condition || '',
+      status: 0,
+    }))
+  }
 
   const SaveMoorings = async () => {
     const errors = validateFields()
     if (Object.keys(errors).length > 0) {
       return
     }
-
     try {
       const payload = {
         customerId: formData.customerName?.id,
@@ -306,7 +314,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
           getCustomerRecord()
         }
       } else {
-        console.log('here', message)
         toastRef?.current?.show({
           severity: 'error',
           summary: 'Error',
@@ -326,6 +333,91 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     }
   }
 
+  const UpdateMooring = async () => {
+    const errors = validateFields()
+    if (Object.keys(errors).length > 0) {
+      return
+    }
+    try {
+      const editMooringPayload = {
+        id: mooringRowData?.id,
+        mooringId: formData.mooringNumber ? formData.mooringNumber : mooringRowData?.mooringId,
+        customerId: formData.customerName?.id
+          ? formData.customerName?.id
+          : mooringRowData?.customerId,
+        harbor: formData.harbor ? formData.harbor : mooringRowData?.harbor,
+        waterDepth: formData.waterDepth ? formData.waterDepth : mooringRowData?.waterDepth,
+        gpsCoordinates: formData.gpsCoordinates,
+        boatyardId: formData.boatyardName
+          ? formData.boatyardName
+          : mooringRowData?.boatyardResponseDto?.id,
+        boatName: formData.boatName ? formData.boatName : mooringRowData?.boatName,
+        boatSize: formData.boatSize ? formData.boatSize : mooringRowData?.boatSize,
+        boatTypeId: formData.type.id ? formData.type.id : mooringRowData?.boatType.id,
+        boatWeight: formData.boatWeight ? formData.boatWeight : mooringRowData?.boatWeight,
+        sizeOfWeightId: formData.sizeOfWeight.id
+          ? formData.sizeOfWeight.id
+          : mooringRowData?.sizeOfWeight.id,
+        typeOfWeightId: formData.typeOfWeight.id
+          ? formData.typeOfWeight.id
+          : mooringRowData?.typeOfWeight.id,
+        eyeConditionId: formData.conditionOfEye.id
+          ? formData.conditionOfEye.id
+          : mooringRowData?.eyeCondition.id,
+        topChainConditionId: formData.topChainCondition.id
+          ? formData.topChainCondition.id
+          : mooringRowData?.topChainCondition.id,
+        bottomChainConditionId: formData.bottomChainCondition.id
+          ? formData.bottomChainCondition.id
+          : mooringRowData?.bottomChainCondition.id,
+        shackleSwivelConditionId: formData.shackleSwivelCondition.id
+          ? formData.shackleSwivelCondition.id
+          : mooringRowData?.shackleSwivelCondition.id,
+        pennantConditionId: formData.pennantCondition.id
+          ? formData.pennantCondition.id
+          : mooringRowData?.pennantCondition.id,
+        depthAtMeanHighWater: formData.depthAtMeanHighWater
+          ? formData.depthAtMeanHighWater
+          : mooringRowData?.depthAtMeanHighWater,
+        customerOwnerId: selectedCustomerId,
+      }
+      const response = await updateMooring({
+        payload: editMooringPayload,
+        id: 5,
+      }).unwrap()
+      const { status, message } = response as CustomerResponse
+      if (status === 200 || status === 201) {
+        toastRef?.current?.show({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Mooring Updated successfully',
+          life: 3000,
+        })
+        closeModal()
+        getCustomer()
+        if (getCustomerRecord) {
+          getCustomerRecord()
+        }
+      } else {
+        toastRef?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+      }
+    } catch (error) {
+      const { message, data } = error as ErrorResponse
+      console.log('Error in Catch', error)
+      toastRef?.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: data?.message,
+        life: 3000,
+      })
+    }
+  }
+
   const handlePositionChange = (lat: number, lng: number) => {
     setCenter([lat, lng])
     const formattedLat = lat.toFixed(3)
@@ -336,6 +428,14 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       ...prevFormData,
       gpsCoordinates: concatenatedValue,
     }))
+  }
+
+  const handleClick = () => {
+    if (editMode) {
+      UpdateMooring()
+    } else {
+      SaveMoorings()
+    }
   }
 
   useEffect(() => {
@@ -882,7 +982,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               <div>
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
-                    Dept at Mean High Water
+                    Depth at Mean High Water
                     <p className="text-red-600">*</p>
                   </div>
                 </span>
@@ -939,7 +1039,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
             bottom: '0px',
           }}>
           <Button
-            onClick={SaveMoorings}
+            onClick={handleClick}
             label={'Save'}
             style={{
               width: '89px',

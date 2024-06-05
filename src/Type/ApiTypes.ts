@@ -180,6 +180,29 @@ export interface CustomerPayload {
   zipCode: string
 }
 
+export interface UpdateMooringPayload {
+  id: number
+  mooringId: string
+  customerId: number
+  harbor: string
+  waterDepth: string
+  gpsCoordinates: '9number                                                                                  152'
+  boatyardId: number
+  boatName: string
+  boatSize: string
+  boatTypeId: number
+  boatWeight: string
+  sizeOfWeightId: number
+  typeOfWeightId: number
+  eyeConditionId: number
+  topChainConditionId: number
+  bottomChainConditionId: number
+  shackleSwivelConditionId: number
+  pennantConditionId: number
+  depthAtMeanHighWater: number
+  statusId: number
+}
+
 export interface AddCustomerPayload {
   id: number
   customerName: string

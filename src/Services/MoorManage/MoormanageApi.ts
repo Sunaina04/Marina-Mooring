@@ -3,6 +3,7 @@ import {
   CustomerPayload,
   MooringPayload,
   TechnicianPayload,
+  UpdateMooringPayload,
   VendorPayload,
 } from '../../Type/ApiTypes'
 import { userApi } from '../UserApi'
@@ -94,7 +95,7 @@ const moormanageApi = userApi.injectEndpoints({
     }),
 
     updateMoorings: builder.mutation({
-      query: ({ payload, id }: { payload: CustomerPayload; id: number }) => ({
+      query: ({ payload, id }: { payload: UpdateMooringPayload; id: number }) => ({
         url: `api/v1/mooring/${id}`,
         method: 'PUT',
         body: payload,
