@@ -31,16 +31,13 @@ const AddVendor: React.FC<AddVendorProps> = ({
     stateForAddress: '',
     zipCodeForAddress: '',
     emailForAddress: '',
-
     streetBuildingForRemit: '',
     aptSuiteForRemit: '',
     countryForRemit: '',
     stateForRemit: '',
     zipCodeForRemit: '',
     emailForRemit: '',
-
     accountNumber: '',
-
     firstName: '',
     lastName: '',
     phoneForRepresentative: '',
@@ -150,54 +147,57 @@ const AddVendor: React.FC<AddVendorProps> = ({
     //   setErrorMessage(errors)
     //   return
     // }
-    // try {
-    //   const payload = {
-    //     companyName: companyName,
-    //     companyPhoneNumber: phone,
-    //     website: website,
-    //     street: streetBuilding,
-    //     aptSuite: aptSuite,
-    //     country: selectedCity?.name || '',
-    //     zipCode: addressZipCode,
-    //     companyEmail: emailAddress,
-    //     accountNumber: accountNumber,
-    //     firstName: firstName,
-    //     lastName: lastName,
-    //     salesRepPhoneNumber: salesRepPhone,
-    //     salesRepEmail: salesRepEmail,
-    //     salesRepNote: note,
-    //     primarySalesRep: true,
-    //   }
-    //   const response = await addVendor(payload).unwrap()
-    //   const { status, message } = response as VendorResponse
-    //   if (status === 200 || status === 201) {
-    //     closeModal()
-    //     getVendor()
-    //     // setIsLoading(false)
-    //     toastRef?.current?.show({
-    //       severity: 'success',
-    //       summary: 'Success',
-    //       detail: 'Boatyard Saved successfully',
-    //       life: 3000,
-    //     })
-    //   } else {
-    //     // setIsLoading(false)
-    //     toastRef?.current?.show({
-    //       severity: 'error',
-    //       summary: 'Error',
-    //       detail: message,
-    //       life: 3000,
-    //     })
-    //   }
-    // } catch (error) {
-    //   // setIsLoading(false)
-    //   toastRef?.current?.show({
-    //     severity: 'error',
-    //     summary: 'Error',
-    //     detail: error,
-    //     life: 3000,
-    //   })
-    // }
+    try {
+      const payload = {
+        companyName: formData?.companyName,
+        companyPhoneNumber: formData?.phone,
+        website: formData?.website,
+        street: formData?.streetBuildingForAddress,
+        aptSuite: formData?.aptSuiteForAddress,
+        stateId: formData?.stateForAddress,
+        countryId: formData?.countryForAddress?.id || '',
+        zipCode: formData?.zipCodeForAddress?.id,
+        companyEmail: formData?.emailForAddress,
+        accountNumber: formData?.accountNumber,
+        remitStreet: formData?.streetBuildingForRemit,
+        remitApt: formData?.aptSuiteForRemit,
+        remitStateId: formData?.stateForRemit?.id,
+        remitCountryId: formData?.countryForRemit?.id,
+        remitZipCode: formData?.zipCodeForRemit,
+        remitEmailAddress: formData?.emailForRemit,
+        firstName: formData?.firstName,
+        lastName: formData?.lastName,
+        salesRepPhoneNumber: formData?.salesRepPhone,
+        salesRepEmail: formData?.salesRepEmail,
+        salesRepNote: formData?.note,
+      }
+      const response = await addVendor(payload).unwrap()
+      const { status, message } = response as VendorResponse
+      if (status === 200 || status === 201) {
+        closeModal()
+        getVendor()
+        toastRef?.current?.show({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Boatyard Saved successfully',
+          life: 3000,
+        })
+      } else {
+        toastRef?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+      }
+    } catch (error) {
+      toastRef?.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: error,
+        life: 3000,
+      })
+    }
   }
 
   return (
