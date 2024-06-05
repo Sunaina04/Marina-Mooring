@@ -20,10 +20,8 @@ const AddVendor: React.FC<AddVendorProps> = ({
 }) => {
   const [checked, setChecked] = useState<boolean>(false)
   const [addVendor] = useAddVendorsMutation()
-
   const { getStatesData } = StatesData()
   const { getCountriesData } = CountriesData()
-
   const [countriesData, setCountriesData] = useState<Country[]>()
   const [statesData, setStatesData] = useState<State[]>()
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
@@ -51,7 +49,6 @@ const AddVendor: React.FC<AddVendorProps> = ({
     note: '',
   })
 
-  console.log('data', formData.companyName)
   const validateMooringFields = () => {
     const errors: { [key: string]: string } = {}
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -249,9 +246,12 @@ const AddVendor: React.FC<AddVendorProps> = ({
         <div className="flex">
           <div className="flex gap-8">
             <div>
-              <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
+              <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}></span>
+              <div className="flex gap-1">
                 Company Name
-              </span>
+                <p className="text-red-600">*</p>
+              </div>
+
               <div className="mt-2">
                 <InputComponent
                   onChange={(e) => handleInputChange('companyName', e.target.value)}
@@ -270,7 +270,12 @@ const AddVendor: React.FC<AddVendorProps> = ({
               )}
             </div>
             <div>
-              <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>Phone</span>
+              <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
+                <div className="flex gap-1">
+                  Phone
+                  <p className="text-red-600">*</p>
+                </div>
+              </span>
               <div className="mt-2">
                 <InputComponent
                   onChange={(e) => handleInputChange('phone', e.target.value)}
@@ -287,7 +292,12 @@ const AddVendor: React.FC<AddVendorProps> = ({
               {fieldErrors.phone && <small className="p-error">{fieldErrors.phone}</small>}
             </div>
             <div>
-              <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>Website</span>
+              <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
+                <div className="flex gap-1">
+                  Website
+                  <p className="text-red-600">*</p>
+                </div>
+              </span>
               <div className="mt-2">
                 <InputComponent
                   onChange={(e) => handleInputChange('website', e.target.value)}
@@ -310,7 +320,12 @@ const AddVendor: React.FC<AddVendorProps> = ({
         <div className="flex mt-3 gap-4">
           <div className="mt-5">
             <div>
-              <h1 style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>Address</h1>
+              <h1 style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
+                <div className="flex gap-1">
+                  Address
+                  <p className="text-red-600">*</p>
+                </div>
+              </h1>
             </div>
 
             <div className=" flex gap-2 mt-2">
@@ -695,7 +710,10 @@ const AddVendor: React.FC<AddVendorProps> = ({
         <div className="mt-8">
           <div className="ml-1 text-black font-semibold text-sm">
             <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
-              Account Number
+              <div className="flex gap-1">
+                Account Number
+                <p className="text-red-600">*</p>
+              </div>
             </span>
           </div>
           <div className="mt-2">
@@ -734,7 +752,10 @@ const AddVendor: React.FC<AddVendorProps> = ({
           <div className="mt-2">
             <div>
               <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
-                First Name
+                <div className="flex gap-1">
+                  First Name
+                  <p className="text-red-600">*</p>
+                </div>
               </span>
             </div>
             <div className="mt-1">
@@ -764,14 +785,17 @@ const AddVendor: React.FC<AddVendorProps> = ({
             <div className="mt-2">
               <div>
                 <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
-                  Last Name
+                  <div className="flex gap-1">
+                    Last Name
+                    <p className="text-red-600">*</p>
+                  </div>
                 </span>
               </div>
               <div className="mt-1">
                 <InputText
                   value={formData.lastName}
                   onChange={(e) => handleInputChange('lastName', e.target.value)}
-                  placeholder="lastname"
+                  placeholder=""
                   type="text"
                   style={{
                     width: '230px',
@@ -794,7 +818,12 @@ const AddVendor: React.FC<AddVendorProps> = ({
           <div className="card flex justify-content-center mt-2 ">
             <div className="">
               <div>
-                <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>Phone</span>
+                <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
+                  <div className="flex gap-1">
+                    Phone
+                    <p className="text-red-600">*</p>
+                  </div>
+                </span>
               </div>
               <div className="mt-1">
                 <InputText
@@ -826,13 +855,18 @@ const AddVendor: React.FC<AddVendorProps> = ({
         <div className="flex gap-4">
           <div className="mt-2">
             <div>
-              <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>Email</span>
+              <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
+                <div className="flex gap-1">
+                  Email
+                  <p className="text-red-600">*</p>
+                </div>
+              </span>
             </div>
             <div className="mt-1">
               <InputText
                 value={formData.emailForRepresentative}
                 onChange={(e) => handleInputChange('emailForRepresentative', e.target.value)}
-                placeholder="email"
+                placeholder=""
                 type="text"
                 style={{
                   width: '230px',
@@ -855,7 +889,12 @@ const AddVendor: React.FC<AddVendorProps> = ({
 
           <div className="mt-2">
             <div className="">
-              <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>Note</span>
+              <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
+                <div className="flex gap-1">
+                  Note
+                  <p className="text-red-600">*</p>
+                </div>
+              </span>
             </div>
             <div className="mt-1">
               <InputTextarea
