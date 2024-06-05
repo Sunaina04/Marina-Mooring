@@ -1053,6 +1053,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               boxShadow: 'none',
               color: 'white',
               borderRadius: '0.50rem',
+              marginTop:'10px'
             }}
           />
           <Button
@@ -1067,6 +1068,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               border: 'none',
               width: '89px',
               height: '42px',
+              marginTop:'10px'
             }}
           />
         </div>
