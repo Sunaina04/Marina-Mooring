@@ -194,7 +194,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
         <div className="flex">
           <div className="flex gap-8">
             <div>
-              <span className="font-semibold text-sm text-black">Company Name</span>
+              <span style={{fontWeight:'400', fontSize:'14px', color:'#000000'}}>Company Name</span>
               <div className="mt-2">
                 <InputComponent
                   value={companyName}
@@ -214,7 +214,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
               <p>{errorMessage.name && <small className="p-error">{errorMessage.name}</small>}</p>
             </div>
             <div>
-              <span className="font-semibold text-sm text-black">Phone</span>
+              <span style={{fontWeight:'400', fontSize:'14px', color:'#000000'}}>Phone</span>
               <div className="mt-2">
                 <InputComponent
                   value={phone}
@@ -234,7 +234,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
               <p>{errorMessage.phone && <small className="p-error">{errorMessage.phone}</small>}</p>
             </div>
             <div>
-              <span className="font-semibold text-sm text-black">Website</span>
+              <span style={{fontWeight:'400', fontSize:'14px', color:'#000000'}}>Website</span>
               <div className="mt-2">
                 <InputComponent
                   value={website}
@@ -251,10 +251,10 @@ const AddVendor: React.FC<AddVendorProps> = ({
             </div>
           </div>
         </div>
-        <div className="flex mt-2 gap-4">
+        <div className="flex mt-3 gap-4">
           <div className="mt-5">
             <div>
-              <h1 className="text-sm font-bold text-black">Address</h1>
+              <h1 style={{fontWeight:'400', fontSize:'14px', color:'#000000'}}>Address</h1>
             </div>
 
             <div className=" flex gap-2 mt-2">
@@ -274,6 +274,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
                         border: errorMessage.streetBuilding ? '1px solid red' : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.70rem',
+                        paddingLeft:'0.5rem',
                       }}
                     />
                   </div>
@@ -321,6 +322,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
                         border: errorMessage.addressZipCode ? '1px solid red' : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.70rem',
+                        paddingLeft:'0.5rem',
                       }}
                     />
                   </div>
@@ -347,6 +349,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
                         border: errorMessage.streetBuilding ? '1px solid red' : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.70rem',
+                        paddingLeft:'0.5rem',
                       }}
                     />
                   </div>
@@ -392,6 +395,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
                         border: errorMessage.emailAddress ? '1px solid red' : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.70rem',
+                        paddingLeft:'0.5rem',
                       }}
                     />
                   </div>
@@ -402,7 +406,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
           <div>
             <div className="mt-1 py-5 px-5 rounded-lg" style={{ backgroundColor: '#F5F5F5' }}>
               <div>
-                <h1 className="text-sm font-bold text-black">Remit Address</h1>
+                <h1 style={{fontWeight:'400', fontSize:'14px', color:'#000000'}}>Remit Address</h1>
               </div>
               <div className="flex mt-2 gap-2">
                 <div className="mt-1">
@@ -423,6 +427,8 @@ const AddVendor: React.FC<AddVendorProps> = ({
                             : '1px solid #D5E1EA',
                           borderRadius: '0.50rem',
                           fontSize: '0.70rem',
+                          backgroundColor:'#F5F5F5',
+                          paddingLeft:'0.5rem',
                         }}
                       />
                     </div>
@@ -432,7 +438,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
                       )}
                     </p>
                   </div>
-                  <div className="mt-1.5">
+                  <div className="mt-2">
                     <Dropdown
                       value={selectedCity}
                       onChange={(e: DropdownChangeEvent) => setSelectedCity(e.value as CityProps)}
@@ -446,7 +452,8 @@ const AddVendor: React.FC<AddVendorProps> = ({
                         height: '32px',
                         border: '1px solid  #D5E1EA',
                         borderRadius: '0.50rem',
-                        fontSize: '0.40rem',
+                        fontSize: '0.70rem',
+                        backgroundColor:'#F5F5F5',
                       }}
                     />
                   </div>
@@ -468,6 +475,8 @@ const AddVendor: React.FC<AddVendorProps> = ({
                         border: errorMessage.addressZipCode ? '1px solid red' : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.70rem',
+                        backgroundColor:'#F5F5F5',
+                        paddingLeft:'0.5rem',
                       }}
                     />
                     <p>
@@ -494,6 +503,8 @@ const AddVendor: React.FC<AddVendorProps> = ({
                           border: errorMessage.aptSuite ? '1px solid red' : '1px solid #D5E1EA',
                           borderRadius: '0.50rem',
                           fontSize: '0.70rem',
+                          backgroundColor:'#F5F5F5',
+                          paddingLeft:'0.5rem',
                         }}
                       />
                     </div>
@@ -519,6 +530,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
                           border: '1px solid  #D5E1EA',
                           borderRadius: '0.50rem',
                           fontSize: '0.70rem',
+                          backgroundColor:'#F5F5F5',
                         }}
                       />
                     </div>
@@ -537,6 +549,8 @@ const AddVendor: React.FC<AddVendorProps> = ({
                         border: errorMessage.emailAddress ? '1px solid red' : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.70rem',
+                        backgroundColor:'#F5F5F5',
+                        paddingLeft:'0.5rem',
                       }}
                     />
                   </div>
@@ -601,9 +615,9 @@ const AddVendor: React.FC<AddVendorProps> = ({
       <div>
         <div className="mt-8">
           <div className="ml-1 text-black font-semibold text-sm">
-            <span>Account Number</span>
+            <span style={{fontWeight:'400', fontSize:'14px', color:'#000000'}}>Account Number</span>
           </div>
-          <div className="mt-1">
+          <div className="mt-2">
             <InputText
               value={accountNumber}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -623,15 +637,15 @@ const AddVendor: React.FC<AddVendorProps> = ({
         </div>
       </div>
 
-      <div className="py-3 px-5 mt-4 rounded-lg" style={{ backgroundColor: '#F5F5F5' }}>
+      <div className="py-3 pl-3 mb-20 mt-4 rounded-lg" style={{ backgroundColor: '#F5F5F5',  height:'250px' }}>
         <div className="">
-          <h1 className="text-sm font-bold mt-2">Sales Representative</h1>
+          <h1 style={{fontWeight:'500', fontSize:'24px', color:'#000000'}}>Sales Representative</h1>
         </div>
 
-        <div className="flex   mt-2 gap-2 ">
+        <div className="flex   mt-2 gap-4 ">
           <div className="mt-2">
             <div>
-              <span>First Name</span>
+              <span style={{fontWeight:'400', fontSize:'14px', color:'#000000'}}>First Name</span>
             </div>
             <div className="mt-1">
               <InputText
@@ -643,6 +657,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
                   border: '1px solid  #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.70rem',
+                  backgroundColor:'#F5F5F5',
                 }}
               />
             </div>
@@ -651,7 +666,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
           <div>
             <div className="mt-2">
               <div>
-                <span>Last Name</span>
+                <span style={{fontWeight:'400', fontSize:'14px', color:'#000000'}}>Last Name</span>
               </div>
               <div className="mt-1">
                 <InputText
@@ -667,6 +682,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
                     border: '1px solid  #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.70rem',
+                    backgroundColor:'#F5F5F5',
                   }}
                 />
               </div>
@@ -676,7 +692,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
           <div className="card flex justify-content-center mt-2 ">
             <div className="">
               <div>
-                <span>Phone</span>
+                <span style={{fontWeight:'400', fontSize:'14px', color:'#000000'}}>Phone</span>
               </div>
               <div className="mt-1">
                 <InputText
@@ -692,6 +708,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
                     border: '1px solid  #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.70rem',
+                    backgroundColor:'#F5F5F5',
                   }}
                 />
               </div>
@@ -702,7 +719,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
         <div className="flex gap-4">
           <div className="mt-2">
             <div>
-              <span>Email</span>
+              <span style={{fontWeight:'400', fontSize:'14px', color:'#000000'}}>Email</span>
             </div>
             <div className="mt-1">
               <InputText
@@ -714,6 +731,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
                   border: '1px solid  #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.70rem',
+                  backgroundColor:'#F5F5F5',
                 }}
               />
             </div>
@@ -721,7 +739,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
 
           <div className="mt-2">
             <div className="">
-              <span>Note</span>
+              <span style={{fontWeight:'400', fontSize:'14px', color:'#000000'}}>Note</span>
             </div>
             <div className="mt-1">
               <InputTextarea
@@ -731,6 +749,8 @@ const AddVendor: React.FC<AddVendorProps> = ({
                   border: '1px solid  #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.70rem',
+                  backgroundColor:'#F5F5F5',
+                  boxShadow:'none'
                 }}
                 autoResize
                 value={note}
@@ -743,34 +763,43 @@ const AddVendor: React.FC<AddVendorProps> = ({
         </div>
       </div>
 
-      {/* <div className="card flex justify-content-center gap-3">
-        <Checkbox onChange={(e) => setChecked(e.checked ?? false)} checked={checked}></Checkbox>
-
-        <div>
-          <p>Primary Sales Representative</p>
-        </div>
-      </div> */}
-
-      <div className="flex gap-3 mt-4 ">
+      <div
+        className="flex gap-6 bottom-2 absolute left-6"
+        style={{
+          width: '100%',
+          height: '80px',
+          backgroundColor: 'white',
+          padding: '0 12px',
+          bottom: '0px',
+        }}>
         <Button
           onClick={saveVendor}
           label={'Save'}
           style={{
-            width: '5vw',
-            backgroundColor: 'black',
+            width: '89px',
+            height: '42px',
+            backgroundColor: '#0098FF',
             cursor: 'pointer',
             fontWeight: 'bolder',
-            fontSize: '1vw',
-            border: '1px solid  gray',
+            fontSize: '1rem',
+            boxShadow: 'none',
             color: 'white',
             borderRadius: '0.50rem',
           }}
         />
         <Button
-          onClick={closeModal}
+          onClick={function (): void {
+            throw new Error('Function not implemented.')
+          }}
           label={'Back'}
           text={true}
-          style={{ backgroundColor: 'white', color: 'black', border: 'none' }}
+          style={{
+            backgroundColor: 'white',
+            color: '#000000',
+            border: 'none',
+            width: '89px',
+            height: '42px',
+          }}
         />
       </div>
     </>

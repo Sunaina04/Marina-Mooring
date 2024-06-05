@@ -27,16 +27,16 @@ const Vendors = () => {
   const [deleteVendor] = useDeleteVendorMutation()
 
   const handleButtonClick = () => {
-     setModalVisible(true)
+    setModalVisible(true)
   }
   const navigate = useNavigate()
 
- const getVendorData = useCallback(async () => {
+  const getVendorData = useCallback(async () => {
     //setIsLoading(true)
     try {
-       let params: Params = {} as Params & { [key: string]: any };
+      let params: Params = {} as Params & { [key: string]: any }
       if (searchText) {
-        (params as any).searchText = searchText
+        ;(params as any).searchText = searchText
       }
       // if (selectedCustomerId) {
       //   params.customerOwnerId = selectedCustomerId
@@ -46,7 +46,7 @@ const Vendors = () => {
         .then(async (response) => {
           const { status, content } = response as VendorResponse
           if (status === 200 && Array.isArray(content)) {
-           // setIsLoading(false)
+            // setIsLoading(false)
             setVendorData(content)
             setFilteredboatyardsData(content)
           } else {
@@ -95,8 +95,6 @@ const Vendors = () => {
     setModalVisible(false)
     setEditMode(false)
   }
-
-  
 
   useEffect(() => {
     getVendorData()
@@ -176,79 +174,85 @@ const Vendors = () => {
   )
   return (
     <>
-      <Header header="MOORMANAGE/Vendor" />
-      <div className="flex justify-end">
-        <div className="flex gap-4 mr-12 mt-14">
-          <div>
-            <div className="p-input-icon-left">
-              <IoSearchSharp className="ml-2 text-blue-900" />
-              <InputText
-                placeholder="Search"
-                className="h-[44px] w-[237px] cursor-pointer pl-8 rounded-lg text-bold  "
-              />
+      <div className={modalVisible ? 'backdrop-blur-lg' : ''}>
+        <Header header="MOORMANAGE/Vendor" />
+        <div className="flex justify-end">
+          <div className="flex gap-4 mr-12 mt-14">
+            <div>
+              <div className="p-input-icon-left">
+                <IoSearchSharp className="ml-2 text-blue-900" />
+                <InputText
+                  placeholder="Search"
+                  className="h-[44px] w-[237px] cursor-pointer pl-8 rounded-lg text-bold  "
+                />
+              </div>
             </div>
-          </div>
 
-          <CustomModal
-            buttonText={'ADD NEW'}
-            children={
-              <AddVendor
-                vendors={selectedCustomer}
-                editMode={editMode}
-                closeModal={handleModalClose}
-                getVendor={getVendorData}
-              />
-            }
-            headerText={<h1 className="text-xl font-extrabold text-black ml-4">Add Company</h1>}
-            visible={modalVisible}
-            onClick={handleButtonClick}
-            onHide={handleModalClose}
-            buttonStyle={{
-              width: '121px',
-              height: '44px',
-              minHeight: '44px',
-              backgroundColor: '#0098FF',
-              cursor: 'pointer',
-              fontSize: '16px',
-              fontWeight: 700,
-              color: 'white',
-              borderRadius: '0.50rem',
-              marginLeft: '8px',
+            <CustomModal
+              buttonText={'ADD NEW'}
+              children={
+                <AddVendor
+                  vendors={selectedCustomer}
+                  editMode={editMode}
+                  closeModal={handleModalClose}
+                  getVendor={getVendorData}
+                />
+              }
+              headerText={
+                <h1 style={{ fontWeight: '500', fontSize: '24px', color: '#000000' }}>
+                  Add Company
+                </h1>
+              }
+              visible={modalVisible}
+              onClick={handleButtonClick}
+              onHide={handleModalClose}
+              buttonStyle={{
+                width: '121px',
+                height: '44px',
+                minHeight: '44px',
+                backgroundColor: '#0098FF',
+                cursor: 'pointer',
+                fontSize: '16px',
+                fontWeight: 700,
+                color: 'white',
+                borderRadius: '0.50rem',
+                marginLeft: '8px',
+              }}
+              dialogStyle={{
+                width: '851px',
+                minWidth: '800px',
+                height: '630px',
+                minHeight: '630px',
+                borderRadius: '1rem',
+                maxHeight: '95% !important',
+              }}
+            />
+          </div>
+        </div>
+
+        <div
+          style={{
+            height: '657px',
+            borderRadius: '10px',
+            border: '1px solid #D5E1EA',
+            opacity: '0px',
+            backgroundColor: '#FFFFFF',
+          }}
+          className=" ml-[3rem] mr-[2.30rem] mt-8">
+          <DataTableSearchFieldComponent
+            tableStyle={{
+              fontSize: '12px',
+              color: '#000000',
+              fontWeight: '400',
+              padding: '2rem',
             }}
-            dialogStyle={{
-              width: '851px',
-              minWidth: '800px',
-              height: '630px',
-              minHeight: '630px',
-              borderRadius: '1rem',
-              maxHeight: '95% !important',
-            }}
+            data={vendorDataa}
+            columns={VendorColumns}
+            header={undefined}
+            actionButtons={ActionButtonColumn}
+            style={{ backgroundColor: '#FFFFFF', borderBottom: '1px solid #D5E1EA ' }}
           />
         </div>
-      </div>
-
-      <div
-        style={{
-          height: '657px',
-          borderRadius: '10px',
-          border: '1px solid #D5E1EA',
-          opacity: '0px',
-          backgroundColor: '#FFFFFF',
-        }}
-        className=" ml-[3rem] mr-[2.30rem] mt-8">
-        <DataTableSearchFieldComponent
-          tableStyle={{
-            fontSize: '12px',
-            color: '#000000',
-            fontWeight: '400',
-            padding: '2rem',
-          }}
-          data={vendorDataa}
-          columns={VendorColumns}
-          header={undefined}
-          actionButtons={ActionButtonColumn}
-          style={{ backgroundColor: '#FFFFFF', borderBottom: '1px solid #D5E1EA ' }}
-        />
       </div>
     </>
   )
