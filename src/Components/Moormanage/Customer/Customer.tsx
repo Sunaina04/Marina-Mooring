@@ -418,20 +418,20 @@ const Customer = () => {
             marginRight: '40px',
           }}>
           <div className="rounded-md border">
-            <div className="bg-[#10293A] rounded-r-md  rounded-l-md flex justify-between pb-2">
+            <div className="bg-[#10293A] rounded-t-[10px] flex justify-between pb-2">
               <div className="text-sm font-semibold rounded-t-md bg-[]">
                 <h1 className="p-4 text-white">{'Customers Record'}</h1>
               </div>
               <div className="flex">
                 <FaEdit
                   onClick={handleEdit}
-                  className="mr-3 mt-3 text-[white]"
+                  className="mr-3 mt-[19px] text-[white]"
                   data-testid="FaEdit"
                   style={{ cursor: customerRecord ? 'pointer' : 'not-allowed' }}
                 />
                 <RiDeleteBin5Fill
                   onClick={handleDelete}
-                  className="text-white mr-2 mt-3"
+                  className="text-white mr-2 mt-[19px] "
                   data-testid="RiDeleteBin5Fill"
                   style={{ cursor: customerRecord ? 'pointer' : 'not-allowed' }}
                 />
@@ -578,7 +578,7 @@ const Customer = () => {
               style={{
                 width: '740px',
                 minWidth: '300px',
-                height: '470px',
+                height: '503px',
                 minHeight: '200px',
                 borderRadius: '1rem',
                 fontWeight: '400',

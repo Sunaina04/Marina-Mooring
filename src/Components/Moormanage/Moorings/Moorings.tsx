@@ -10,6 +10,7 @@ import { InputSwitch, InputSwitchChangeEvent } from 'primereact/inputswitch'
 import {
   CustomersWithMooringResponse,
   DeleteCustomerResponse,
+  ErrorResponse,
   MooringPayload,
   MooringResponse,
   MooringResponseDtoList,
@@ -110,7 +111,6 @@ const Moorings = () => {
       try {
         const response = await deleteMooring({ id: mooringId }).unwrap()
         const { status, message } = response as DeleteCustomerResponse
-        console.log(response)
         if (status === 200) {
           toast.current?.show({
             severity: 'success',
@@ -130,10 +130,11 @@ const Moorings = () => {
         }
         setCustomerRecordData('')
       } catch (error) {
+        const { message } = error as ErrorResponse
         toast.current?.show({
           severity: 'error',
           summary: 'Error',
-          detail: 'Error while deleting customer',
+          detail: message,
           life: 3000,
         })
       }
@@ -248,6 +249,7 @@ const Moorings = () => {
         })
       }
     } catch (error) {
+      const { message } = error as ErrorResponse
       console.error('Error fetching moorings data:', error)
     }
   }, [searchText, getMoorings])
@@ -267,6 +269,7 @@ const Moorings = () => {
         setMooringResponseData(content?.customerResponseDto?.mooringResponseDtoList)
       }
     } catch (error) {
+      const { message } = error as ErrorResponse
       console.error('Error fetching moorings data:', error)
     }
   }

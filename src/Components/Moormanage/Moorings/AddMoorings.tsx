@@ -23,7 +23,7 @@ import {
 } from '../../CommonComponent/MetaDataComponent/MetaDataApi'
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
-import { CustomerResponse } from '../../../Type/ApiTypes'
+import { CustomerResponse, ErrorResponse } from '../../../Type/ApiTypes'
 
 const AddMoorings: React.FC<AddMooringProps> = ({
   moorings,
@@ -85,7 +85,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     note: '',
   })
 
-  console.log('mooringRowData', moorings)
   const payload = {
     customerName: moorings?.customerName || '',
     mooringNumber: moorings?.mooringNumber || '',
@@ -298,7 +297,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
-          detail: 'Mooring Updated successfully',
+          detail: 'Mooring Saved successfully',
           life: 3000,
         })
         closeModal()
@@ -307,7 +306,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
           getCustomerRecord()
         }
       } else {
-        console.log('Error', message)
+        console.log('here', message)
         toastRef?.current?.show({
           severity: 'error',
           summary: 'Error',
@@ -316,11 +315,12 @@ const AddMoorings: React.FC<AddMooringProps> = ({
         })
       }
     } catch (error) {
-      console.log('Error here', error)
+      const { message, data } = error as ErrorResponse
+      console.log('Error in Catch', error)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: error,
+        detail: data.message,
         life: 3000,
       })
     }

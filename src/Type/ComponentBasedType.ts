@@ -75,6 +75,7 @@ export interface AddVendorProps {
   editMode: boolean
   closeModal: () => void
   getVendor: () => void
+  toastRef?: any
 }
 
 export interface MoorPayProps {
