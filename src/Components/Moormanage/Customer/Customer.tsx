@@ -461,7 +461,7 @@ const Customer = () => {
             </div>
 
             {customerRecordData ? (
-              <div className="">
+              <div className={`${isLoading ? 'blur-screen' : ''}`}>
                 <div className="flex gap-10 p-4 ">
                   <div
                     style={{
@@ -539,7 +539,7 @@ const Customer = () => {
                 </div>
               </div>
             ) : (
-              <div className="text-center ">
+              <div className={`text-center ${isLoading ? 'blur-screen' : ''}`}>
                 <img
                   src="/assets/images/empty.png"
                   alt="Empty Data"
@@ -563,7 +563,7 @@ const Customer = () => {
             </p>
           </div>
 
-          <div className=" ">
+          <div className={`${isLoading ? 'blur-screen' : ''}`}>
             {mooringData.length === 0 ? (
               <div className="text-center mt-40">
                 <img
