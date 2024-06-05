@@ -7,7 +7,50 @@ import { Button } from 'primereact/button'
 function AddInventory() {
   const [checked, setChecked] = useState<boolean>(false)
   const [unChecked, setUnChecked] = useState<boolean>(false)
- 
+  const [formData, setFormData] = useState({
+    itemName: '',
+    cost: '',
+    salePrice: '',
+    itemsName: '',
+    type: '',
+  })
+  const [errors, setErrors] = useState<{ [key: string]: string }>({})
+
+  const cities = [
+    { name: 'New York', code: 'NY' },
+    { name: 'Rome', code: 'RM' },
+    { name: 'London', code: 'LDN' },
+    { name: 'Istanbul', code: 'IST' },
+    { name: 'Paris', code: 'PRS' },
+  ]
+
+  const handleInputChange = (field: string, value: any) => {
+    setFormData({
+      ...formData,
+      [field]: value,
+    })
+    setErrors({
+      ...errors,
+      [field]: '',
+    })
+  }
+
+  const validateFields = () => {
+    const newErrors: { [key: string]: string } = {}
+    if (!formData.type) newErrors.type = 'Type is required'
+    if (!formData.itemName) newErrors.itemName = 'Item Name/Number is required'
+    if (!formData.cost) newErrors.cost = 'Cost is required'
+    if (!formData.salePrice) newErrors.salePrice = 'Sale Price is required'
+    if (!checked && !unChecked) newErrors.taxable = 'Please select Taxable Yes or No'
+
+    setErrors(newErrors)
+    return newErrors
+  }
+
+  const handleSave = () => {
+    const validationErrors = validateFields()
+    if (Object.keys(validationErrors).length > 0) return
+  }
 
   return (
     <>
@@ -17,75 +60,118 @@ function AddInventory() {
             style={{
               width: '230px',
               height: '32px',
-              border: '1px solid #D5E1EA',
+              border: errors.type ? '1px solid red' : '1px solid #D5E1EA',
               borderRadius: '0.50rem',
-              fontSize: '12px',
+              fontSize: '0.8rem',
             }}
+            placeholder='Select Type'
+            onChange={(e) => handleInputChange('type', e.target.value)}
+            value={formData.type}
+            options={cities}
+            optionLabel="name"
           />
+          <p className="" >
+            {errors.type && <small className="p-error">{errors.type}</small>}
+          </p>
         </div>
         <div className="flex gap-5 mt-5">
           <div>
             <div className="font-medium text-sm text-[#000000]">
-              <p>Item Name/Number</p>
+              <div className="flex gap-1">
+                Item Name/Number
+                <p className="text-red-600">*</p>
+              </div>
             </div>
             <div className="mt-2">
               <InputComponent
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: errors.itemName ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
+                onChange={(e) => handleInputChange('itemName', e.target.value)}
+                value={formData.itemName}
               />
+
+              <p className="">
+                {errors.itemName && <small className="p-error">{errors.itemName}</small>}
+              </p>
             </div>
           </div>
           <div>
             <div className="font-medium text-sm text-[#000000]">
-              <p>Cost</p>
+              <div className="flex gap-1">
+                Cost
+                <p className="text-red-600">*</p>
+              </div>
             </div>
             <div className="mt-2">
               <InputComponent
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: errors.cost ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
+                onChange={(e) => handleInputChange('cost', e.target.value)}
+                value={formData.cost}
               />
+              <p className="">{errors.cost && <small className="p-error">{errors.cost}</small>}</p>
             </div>
           </div>
         </div>
         <div className="flex gap-5 mt-5">
           <div>
             <div className="font-medium text-sm text-[#000000]">
-              <p>Sale Price</p>
+              <div className="flex gap-1">
+                Sale Price
+                <p className="text-red-600">*</p>
+              </div>
             </div>
             <div className="mt-2">
               <InputComponent
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: errors.salePrice ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
+                onChange={(e) => handleInputChange('salePrice', e.target.value)}
+                value={formData.salePrice}
               />
+              <p className="">
+                {errors.salePrice && <small className="p-error">{errors.salePrice}</small>}
+              </p>
             </div>
           </div>
 
           <div>
             <div className="font-medium text-sm text-[#000000]">
-              <p>Taxable</p>
+              <div className="flex gap-1">
+                Taxable
+                <p className="text-red-600">*</p>
+              </div>
             </div>
             <div className="flex mt-3 gap-5">
               <div className="flex gap-2">
                 <div>
                   <Checkbox
-                    onChange={(e) => setChecked(e.checked ?? false)}
+                    onChange={(e) => {
+                      setChecked(e.checked ?? false)
+                      setUnChecked(!e.checked)
+                      setErrors((prevErrors) => ({ ...prevErrors, taxable: '' }))
+                    }}
                     checked={checked}
-                    style={{ border: '1px solid #D5E1EA', height:'22px', width:'22px', borderRadius:'5px' }}
+                    style={{
+                      border: '1px solid #D5E1EA',
+                      height: '22px',
+                      width: '22px',
+                      borderRadius: '5px',
+                    }}
                   />
                 </div>
                 <div className="font-medium text-sm text-[#000000]">
@@ -95,14 +181,25 @@ function AddInventory() {
               <div className="flex gap-2">
                 <div>
                   <Checkbox
-                    onChange={(e) => setUnChecked(e.checked ?? false)}
+                    onChange={(e) => {
+                      setUnChecked(e.checked ?? false)
+                      setChecked(!e.checked)
+                      setErrors((prevErrors) => ({ ...prevErrors, taxable: '' }))
+                    }}
                     checked={unChecked}
-                    style={{ border: '1px solid #D5E1EA', height:'22px', width:'22px', borderRadius:'5px' }}></Checkbox>
+                    style={{
+                      border: '1px solid #D5E1EA',
+                      height: '22px',
+                      width: '22px',
+                      borderRadius: '5px',
+                    }}></Checkbox>
                 </div>
                 <div className="font-medium text-sm text-[#000000]">
                   <p>No</p>
                 </div>
               </div>
+
+              {errors.taxable && <small className="p-error">{errors.taxable}</small>}
             </div>
           </div>
         </div>
@@ -110,6 +207,7 @@ function AddInventory() {
         <div className="mt-10">
           <Button
             label={'Save'}
+            onClick={handleSave}
             style={{
               width: '89px',
               height: '42px',
