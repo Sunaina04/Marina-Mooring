@@ -340,11 +340,11 @@ const Moorings = () => {
           <div
             style={{
               width: '680px',
-              height: '650px',
+              height: '703px',
               top: '277px',
               left: '107px',
               gap: '0px',
-              borderRadius: '5px',
+              borderRadius: '10px',
               border: '1px solid #D5E1EA',
               opacity: '0px',
               backgroundColor: 'white',

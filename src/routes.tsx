@@ -27,6 +27,7 @@ import LoginForm from './Components/Login/LoginForm'
 import CustomerAdmin from './Components/AdminTools/CustomerOwner'
 import InventoryDetails from './Components/Moormanage/Vendors/InventoryDetails'
 
+
 const routes = [
   {
     path: '',

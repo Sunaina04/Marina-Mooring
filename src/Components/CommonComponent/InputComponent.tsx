@@ -22,7 +22,7 @@ interface InputComponentProps {
   disabled?: boolean;
   required?: boolean;
   autoFocus?: boolean;
-  style?: InputStyle;
+  style?: React.CSSProperties;
   name?: string;
   onFocus?: any;
   onBlur?: any;
