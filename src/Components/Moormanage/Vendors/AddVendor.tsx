@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { InputTextarea } from 'primereact/inputtextarea'
 import InputComponent from '../../CommonComponent/InputComponent'
 import { InputText } from 'primereact/inputtext'
@@ -6,9 +6,10 @@ import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown'
 import { Checkbox } from 'primereact/checkbox'
 import { useAddVendorsMutation } from '../../../Services/MoorManage/MoormanageApi'
 import { Button } from 'primereact/button'
-import { CityProps } from '../../../Type/CommonType'
+import { CityProps, Country, State } from '../../../Type/CommonType'
 import { AddVendorProps } from '../../../Type/ComponentBasedType'
 import { VendorPayload, VendorResponse } from '../../../Type/ApiTypes'
+import { CountriesData, StatesData } from '../../CommonComponent/MetaDataComponent/MetaDataApi'
 
 const AddVendor: React.FC<AddVendorProps> = ({
   vendors,
@@ -19,7 +20,12 @@ const AddVendor: React.FC<AddVendorProps> = ({
 }) => {
   const [checked, setChecked] = useState<boolean>(false)
   const [addVendor] = useAddVendorsMutation()
-  const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
+
+  const { getStatesData } = StatesData()
+  const { getCountriesData } = CountriesData()
+
+  const [countriesData, setCountriesData] = useState<Country[]>()
+  const [statesData, setStatesData] = useState<State[]>()
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
   const [formData, setFormData] = useState<any>({
     companyName: '',
@@ -45,44 +51,67 @@ const AddVendor: React.FC<AddVendorProps> = ({
     note: '',
   })
 
-  const validateFields = () => {
-    //     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    // const phoneRegex = /^\d{10}$/
-    // const nameRegex = /^[a-zA-Z ]+$/
-    // const errors: { [key: string]: string } = {}
-    // if (!formData.companyName) {
-    //   errors.companyName = 'Company Name is required'
-    // } else if (!nameRegex.test(companyName)) {
-    //   errors.companyName = 'Company Name must only contain letters'
-    // }
-    // if (!phone) {
-    //   errors.phone = 'Phone is required'
-    // } else if (!phoneRegex.test(phone)) {
-    //   errors.phone = 'Phone must be a 10-digit number'
-    // }
-    // if (!website) errors.website = 'websiteis required'
-    // if (!emailAddress) {
-    //   errors.emailAddress = 'Email is required'
-    // } else if (!emailRegex.test(emailAddress)) {
-    //   errors.emailAddress = 'Please enter a valid email format'
-    // }
-    // if (!streetBuilding) errors.streetBuilding = 'Street/Building is required'
-    // if (!aptSuite) errors.aptSuite = 'Apt/Suite is required'
-    // if (!selectedCity) errors.selectedCity = 'City is required'
-    // if (!addressZipCode) errors.addressZipCode = 'Zip Code is required'
-    // if (!firstName) errors.firstName = 'First Name is required'
-    // if (!lastName) errors.lastName = 'Last Name is required'
-    // if (!salesRepPhone) {
-    //   errors.salesRepPhone = 'Sales Rep Phone is required'
-    // } else if (!phoneRegex.test(salesRepPhone)) {
-    //   errors.salesRepPhone = 'Sales Rep Phone must be a 10-digit number'
-    // }
-    // if (!salesRepEmail) {
-    //   errors.salesRepEmail = 'Sales Rep Email is required'
-    // } else if (!emailRegex.test(salesRepEmail)) {
-    //   errors.salesRepEmail = 'Please enter a valid email format'
-    // }
-    // return errors
+  console.log('data', formData.companyName)
+  const validateMooringFields = () => {
+    const errors: { [key: string]: string } = {}
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const phoneRegex = /^\d{10}$/
+    const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/
+
+    if (!formData.phone) {
+      errors.phone = 'Phone is required'
+    } else if (!phoneRegex.test(formData.phone)) {
+      errors.phone = 'Phone must be a 10-digit number'
+    }
+
+    if (!formData.emailForAddress) {
+      errors.emailForAddress = 'Email is required'
+    } else if (!emailRegex.test(formData.emailForAddress)) {
+      errors.emailForAddress = 'Please enter a valid email format'
+    }
+
+    if (!formData.emailForRemit) {
+      errors.emailForRemit = 'Email is required'
+    } else if (!emailRegex.test(formData.emailForRemit)) {
+      errors.emailForRemit = 'Please enter a valid email format'
+    }
+
+    if (!formData.emailForRepresentative) {
+      errors.emailForRepresentative = 'Email is required'
+    } else if (!emailRegex.test(formData.emailForRemit)) {
+      errors.emailForRepresentative = 'Please enter a valid email format'
+    }
+
+    if (!formData.website) {
+      errors.website = 'Website is required'
+    } else if (!urlRegex.test(formData.website)) {
+      errors.website = 'Please enter a valid URL'
+    }
+
+    if (!formData.companyName) errors.companyName = 'companyName is required'
+    if (!formData.streetBuildingForAddress)
+      errors.streetBuildingForAddress = 'street/Building is required'
+    if (!formData.aptSuiteForAddress) errors.aptSuiteForAddress = 'aptSuite is required'
+    if (!formData.countryForAddress) errors.countryForAddress = 'country is required'
+    if (!formData.stateForAddress) errors.stateForAddress = 'state is required'
+    if (!formData.zipCodeForAddress) errors.zipCodeForAddress = 'zipCode is required'
+
+    if (!formData.streetBuildingForRemit)
+      errors.streetBuildingForRemit = 'street/Building is required'
+    if (!formData.aptSuiteForRemit) errors.aptSuiteForRemit = 'apt/Suite is required'
+    if (!formData.countryForRemit) errors.countryForRemit = 'country is required'
+    if (!formData.stateForRemit) errors.stateForRemit = 'state is required'
+    if (!formData.zipCodeForRemit) errors.zipCodeForRemit = 'zipCode is required'
+
+    if (!formData.accountNumber) errors.accountNumber = 'accountNumber is required'
+
+    if (!formData.firstName) errors.firstName = 'firstName is required'
+    if (!formData.lastName) errors.lastName = 'lastName is required'
+    if (!formData.phoneForRepresentative) errors.phoneForRepresentative = 'phone is required'
+    if (!formData.note) errors.note = 'note is required'
+
+    setFieldErrors(errors)
+    return errors
   }
 
   const handleInputChange = (field: string, value: any) => {
@@ -99,13 +128,21 @@ const AddVendor: React.FC<AddVendorProps> = ({
     }
   }
 
-  const cities: CityProps[] = [
-    { name: 'New York', code: 'NY' },
-    { name: 'Rome', code: 'RM' },
-    { name: 'London', code: 'LDN' },
-    { name: 'Istanbul', code: 'IST' },
-    { name: 'Paris', code: 'PRS' },
-  ]
+  const fetchDataAndUpdate = useCallback(async () => {
+    const { statesData } = await getStatesData()
+    const { countriesData } = await getCountriesData()
+
+    if (countriesData !== null) {
+      setCountriesData(countriesData)
+    }
+    if (statesData !== null) {
+      setStatesData(statesData)
+    }
+  }, [])
+
+  useEffect(() => {
+    fetchDataAndUpdate()
+  }, [fetchDataAndUpdate])
 
   const handleEditMode = () => {
     setFormData((prevState: any) => ({
@@ -135,6 +172,11 @@ const AddVendor: React.FC<AddVendorProps> = ({
   }
 
   const saveVendor = async () => {
+    const errors = validateMooringFields()
+    if (Object.keys(errors).length > 0) {
+      return
+    }
+
     // const errors = validateFields()
     // if (Object.keys(errors).length > 0) {
     //   setErrorMessage(errors)
@@ -217,13 +259,15 @@ const AddVendor: React.FC<AddVendorProps> = ({
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: errorMessage.name ? '1px solid red' : '1px solid #D5E1EA',
+                    border: fieldErrors.companyName ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.80vw',
                   }}
                 />
               </div>
-              <p>{errorMessage.name && <small className="p-error">{errorMessage.name}</small>}</p>
+              {fieldErrors.companyName && (
+                <small className="p-error">{fieldErrors.companyName}</small>
+              )}
             </div>
             <div>
               <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>Phone</span>
@@ -234,13 +278,13 @@ const AddVendor: React.FC<AddVendorProps> = ({
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: errorMessage.phone ? '1px solid red' : '1px solid #D5E1EA',
+                    border: fieldErrors.phone ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.80vw',
                   }}
                 />
               </div>
-              <p>{errorMessage.phone && <small className="p-error">{errorMessage.phone}</small>}</p>
+              {fieldErrors.phone && <small className="p-error">{fieldErrors.phone}</small>}
             </div>
             <div>
               <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>Website</span>
@@ -251,14 +295,14 @@ const AddVendor: React.FC<AddVendorProps> = ({
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: errorMessage.website ? '1px solid red' : '1px solid #D5E1EA',
+                    border: fieldErrors.website ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.80vw',
                   }}
                 />
               </div>
               <p>
-                {errorMessage.website && <small className="p-error">{errorMessage.website}</small>}
+                {fieldErrors.website && <small className="p-error">{fieldErrors.website}</small>}
               </p>
             </div>
           </div>
@@ -282,7 +326,9 @@ const AddVendor: React.FC<AddVendorProps> = ({
                       style={{
                         width: '178.39px',
                         height: '32px',
-                        border: errorMessage.streetBuilding ? '1px solid red' : '1px solid #D5E1EA',
+                        border: fieldErrors.streetBuildingForAddress
+                          ? '1px solid red'
+                          : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.70rem',
                         paddingLeft: '0.5rem',
@@ -290,9 +336,11 @@ const AddVendor: React.FC<AddVendorProps> = ({
                     />
                   </div>
                   <p>
-                    {errorMessage.streetBuilding && (
-                      <small className="p-error">{errorMessage.streetBuilding}</small>
-                    )}
+                    <p>
+                      {fieldErrors.streetBuildingForAddress && (
+                        <small className="p-error">{fieldErrors.streetBuildingForAddress}</small>
+                      )}
+                    </p>
                   </p>
                 </div>
                 <div>
@@ -300,7 +348,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
                     <Dropdown
                       value={formData.countryForAddress}
                       onChange={(e) => handleInputChange('countryForAddress', e.target.value)}
-                      options={cities}
+                      options={countriesData}
                       optionLabel="name"
                       editable
                       placeholder="Country"
@@ -308,24 +356,31 @@ const AddVendor: React.FC<AddVendorProps> = ({
                       style={{
                         width: '178.39px',
                         height: '32px',
-                        border: '1px solid  #D5E1EA',
+                        border: fieldErrors.countryForAddress
+                          ? '1px solid red'
+                          : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.70rem',
                       }}
                     />
                   </div>
+                  {fieldErrors.countryForAddress && (
+                    <small className="p-error">{fieldErrors.countryForAddress}</small>
+                  )}
                 </div>
                 <div>
                   <div className="mt-2 ">
                     <InputText
-                      type="number"
+                      type="text"
                       placeholder="Zip Code"
                       value={formData.zipCodeForAddress}
                       onChange={(e) => handleInputChange('zipCodeForAddress', e.target.value)}
                       style={{
                         width: '178.39px',
                         height: '32px',
-                        border: errorMessage.addressZipCode ? '1px solid red' : '1px solid #D5E1EA',
+                        border: fieldErrors.zipCodeForAddress
+                          ? '1px solid red'
+                          : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.70rem',
                         paddingLeft: '0.5rem',
@@ -333,8 +388,8 @@ const AddVendor: React.FC<AddVendorProps> = ({
                     />
                   </div>
                   <p>
-                    {errorMessage.addressZipCode && (
-                      <small className="p-error">{errorMessage.addressZipCode}</small>
+                    {fieldErrors.zipCodeForAddress && (
+                      <small className="p-error">{fieldErrors.zipCodeForAddress}</small>
                     )}
                   </p>
                 </div>
@@ -349,7 +404,9 @@ const AddVendor: React.FC<AddVendorProps> = ({
                       style={{
                         width: '178.39px',
                         height: '32px',
-                        border: errorMessage.streetBuilding ? '1px solid red' : '1px solid #D5E1EA',
+                        border: fieldErrors.aptSuiteForAddress
+                          ? '1px solid red'
+                          : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.70rem',
                         paddingLeft: '0.5rem',
@@ -357,8 +414,8 @@ const AddVendor: React.FC<AddVendorProps> = ({
                     />
                   </div>
                   <p>
-                    {errorMessage.aptSuite && (
-                      <small className="p-error">{errorMessage.aptSuite}</small>
+                    {fieldErrors.aptSuiteForAddress && (
+                      <small className="p-error">{fieldErrors.aptSuiteForAddress}</small>
                     )}
                   </p>
                 </div>
@@ -367,7 +424,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
                     <Dropdown
                       value={formData.stateForAddress}
                       onChange={(e) => handleInputChange('stateForAddress', e.target.value)}
-                      options={cities}
+                      options={statesData}
                       optionLabel="name"
                       editable
                       placeholder="State"
@@ -375,12 +432,18 @@ const AddVendor: React.FC<AddVendorProps> = ({
                       style={{
                         width: '178.39px',
                         height: '32px',
-                        border: '1px solid  #D5E1EA',
+                        border: fieldErrors.stateForAddress ? '1px solid red' : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.70rem',
                       }}
                     />
                   </div>
+
+                  <p>
+                    {fieldErrors.stateForAddress && (
+                      <small className="p-error">{fieldErrors.stateForAddress}</small>
+                    )}
+                  </p>
                 </div>
 
                 <div>
@@ -392,13 +455,19 @@ const AddVendor: React.FC<AddVendorProps> = ({
                       style={{
                         width: '178.39px',
                         height: '32px',
-                        border: errorMessage.emailAddress ? '1px solid red' : '1px solid #D5E1EA',
+                        border: fieldErrors.emailForAddress ? '1px solid red' : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.70rem',
                         paddingLeft: '0.5rem',
                       }}
                     />
                   </div>
+
+                  <p>
+                    {fieldErrors.emailForAddress && (
+                      <small className="p-error">{fieldErrors.emailForAddress}</small>
+                    )}
+                  </p>
                 </div>
               </div>
             </div>
@@ -423,7 +492,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
                         style={{
                           width: '178.39px',
                           height: '32px',
-                          border: errorMessage.streetBuilding
+                          border: fieldErrors.streetBuildingForRemit
                             ? '1px solid red'
                             : '1px solid #D5E1EA',
                           borderRadius: '0.50rem',
@@ -434,8 +503,8 @@ const AddVendor: React.FC<AddVendorProps> = ({
                       />
                     </div>
                     <p>
-                      {errorMessage.streetBuilding && (
-                        <small className="p-error">{errorMessage.streetBuilding}</small>
+                      {fieldErrors.streetBuildingForRemit && (
+                        <small className="p-error">{fieldErrors.streetBuildingForRemit}</small>
                       )}
                     </p>
                   </div>
@@ -444,7 +513,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
                       // value={selectedCity}
                       value={formData.countryForRemit}
                       onChange={(e) => handleInputChange('countryForRemit', e.target.value)}
-                      options={cities}
+                      options={countriesData}
                       optionLabel="name"
                       editable
                       placeholder="Country"
@@ -452,12 +521,18 @@ const AddVendor: React.FC<AddVendorProps> = ({
                       style={{
                         width: '178.39px',
                         height: '32px',
-                        border: '1px solid  #D5E1EA',
+                        border: fieldErrors.countryForRemit ? '1px solid red' : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.70rem',
                         backgroundColor: '#F5F5F5',
                       }}
                     />
+
+                    <p>
+                      {fieldErrors.countryForRemit && (
+                        <small className="p-error">{fieldErrors.countryForRemit}</small>
+                      )}
+                    </p>
                   </div>
 
                   <div className="mt-2">
@@ -469,16 +544,17 @@ const AddVendor: React.FC<AddVendorProps> = ({
                       style={{
                         width: '178.39px',
                         height: '32px',
-                        border: errorMessage.addressZipCode ? '1px solid red' : '1px solid #D5E1EA',
+                        border: fieldErrors.zipCodeForRemit ? '1px solid red' : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.70rem',
                         backgroundColor: '#F5F5F5',
                         paddingLeft: '0.5rem',
                       }}
                     />
+
                     <p>
-                      {errorMessage.addressZipCode && (
-                        <small className="p-error">{errorMessage.addressZipCode}</small>
+                      {fieldErrors.zipCodeForRemit && (
+                        <small className="p-error">{fieldErrors.zipCodeForRemit}</small>
                       )}
                     </p>
                   </div>
@@ -494,7 +570,9 @@ const AddVendor: React.FC<AddVendorProps> = ({
                         style={{
                           width: '178.39px',
                           height: '32px',
-                          border: errorMessage.aptSuite ? '1px solid red' : '1px solid #D5E1EA',
+                          border: fieldErrors.aptSuiteForRemit
+                            ? '1px solid red'
+                            : '1px solid #D5E1EA',
                           borderRadius: '0.50rem',
                           fontSize: '0.70rem',
                           backgroundColor: '#F5F5F5',
@@ -503,8 +581,8 @@ const AddVendor: React.FC<AddVendorProps> = ({
                       />
                     </div>
                     <p>
-                      {errorMessage.aptSuite && (
-                        <small className="p-error">{errorMessage.aptSuite}</small>
+                      {fieldErrors.aptSuiteForRemit && (
+                        <small className="p-error">{fieldErrors.aptSuiteForRemit}</small>
                       )}
                     </p>
                   </div>
@@ -513,7 +591,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
                       <Dropdown
                         onChange={(e) => handleInputChange('stateForRemit', e.target.value)}
                         value={formData.stateForRemit}
-                        options={cities}
+                        options={statesData}
                         optionLabel="name"
                         editable
                         placeholder="State"
@@ -521,12 +599,17 @@ const AddVendor: React.FC<AddVendorProps> = ({
                         style={{
                           width: '178.39px',
                           height: '32px',
-                          border: '1px solid  #D5E1EA',
+                          border: fieldErrors.stateForRemit ? '1px solid red' : '1px solid #D5E1EA',
                           borderRadius: '0.50rem',
                           fontSize: '0.70rem',
                           backgroundColor: '#F5F5F5',
                         }}
                       />
+                      <p>
+                        {fieldErrors.stateForRemit && (
+                          <small className="p-error">{fieldErrors.stateForRemit}</small>
+                        )}
+                      </p>
                     </div>
                   </div>
                   <div className="mt-2">
@@ -537,13 +620,18 @@ const AddVendor: React.FC<AddVendorProps> = ({
                       style={{
                         width: '178.39px',
                         height: '32px',
-                        border: errorMessage.emailAddress ? '1px solid red' : '1px solid #D5E1EA',
+                        border: fieldErrors.emailForRemit ? '1px solid red' : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.70rem',
                         backgroundColor: '#F5F5F5',
                         paddingLeft: '0.5rem',
                       }}
                     />
+                    <p>
+                      {fieldErrors.emailForRemit && (
+                        <small className="p-error">{fieldErrors.emailForRemit}</small>
+                      )}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -618,12 +706,17 @@ const AddVendor: React.FC<AddVendorProps> = ({
               style={{
                 width: '230px',
                 height: '32px',
-                border: '1px solid  #D5E1EA',
+                border: fieldErrors.accountNumber ? '1px solid red' : '1px solid #D5E1EA',
                 borderRadius: '0.50rem',
                 fontSize: '0.70rem',
                 padding: '1em',
               }}
             />
+            <p>
+              {fieldErrors.accountNumber && (
+                <small className="p-error">{fieldErrors.accountNumber}</small>
+              )}
+            </p>
           </div>
         </div>
       </div>
@@ -653,12 +746,17 @@ const AddVendor: React.FC<AddVendorProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid  #D5E1EA',
+                  border: fieldErrors.firstName ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.70rem',
                   backgroundColor: '#F5F5F5',
                 }}
               />
+              <p>
+                {fieldErrors.firstName && (
+                  <small className="p-error">{fieldErrors.firstName}</small>
+                )}
+              </p>
             </div>
           </div>
 
@@ -678,12 +776,17 @@ const AddVendor: React.FC<AddVendorProps> = ({
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: '1px solid  #D5E1EA',
+                    border: fieldErrors.lastName ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.70rem',
                     backgroundColor: '#F5F5F5',
                   }}
                 />
+                <p>
+                  {fieldErrors.lastName && (
+                    <small className="p-error">{fieldErrors.lastName}</small>
+                  )}
+                </p>
               </div>
             </div>
           </div>
@@ -702,12 +805,19 @@ const AddVendor: React.FC<AddVendorProps> = ({
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: '1px solid  #D5E1EA',
+                    border: fieldErrors.phoneForRepresentative
+                      ? '1px solid red'
+                      : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.70rem',
                     backgroundColor: '#F5F5F5',
                   }}
                 />
+                <p>
+                  {fieldErrors.phoneForRepresentative && (
+                    <small className="p-error">{fieldErrors.phoneForRepresentative}</small>
+                  )}
+                </p>
               </div>
             </div>
           </div>
@@ -727,12 +837,19 @@ const AddVendor: React.FC<AddVendorProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid  #D5E1EA',
+                  border: fieldErrors.emailForRepresentative
+                    ? '1px solid red'
+                    : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.70rem',
                   backgroundColor: '#F5F5F5',
                 }}
               />
+              <p>
+                {fieldErrors.emailForRepresentative && (
+                  <small className="p-error">{fieldErrors.emailForRepresentative}</small>
+                )}
+              </p>
             </div>
           </div>
 
@@ -747,7 +864,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
                 style={{
                   width: '487.77px',
                   height: '32px',
-                  border: '1px solid  #D5E1EA',
+                  border: fieldErrors.note ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.70rem',
                   backgroundColor: '#F5F5F5',
@@ -760,6 +877,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
                 // cols={30}
               />
             </div>
+            <p>{fieldErrors.note && <small className="p-error">{fieldErrors.note}</small>}</p>
           </div>
         </div>
       </div>
