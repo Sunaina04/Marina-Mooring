@@ -7,6 +7,7 @@ import {
   BoatYardPayload,
   BoatYardResponse,
   DeleteCustomerResponse,
+  ErrorResponse,
   MooringWithBoatYardResponse,
 } from '../../../Type/ApiTypes'
 import {
@@ -49,7 +50,7 @@ const Boatyards = () => {
   const [editMode, setEditMode] = useState(false)
   const [searchText, setSearchText] = useState('')
   const [searchFieldText, setSearchFieldText] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [isLoader, setIsLoader] = useState(false)
   const [dialogVisible, setDialogVisible] = useState(false)
   const [mooringRowData, setMooringRowData] = useState<any>([])
@@ -216,8 +217,8 @@ const Boatyards = () => {
         style: columnStyle,
       },
       {
-        field: 'noOfBoatYards',
-        header: 'No.of Boatyards',
+        field: 'emailAddress',
+        header: 'Email Address',
         style: columnStyle,
       },
       {
@@ -225,17 +226,18 @@ const Boatyards = () => {
         header: 'Total Mooring Inventoried',
         style: columnStyle,
       },
-      {
-        field: '',
-        header: '',
-        expander: allowExpansion,
-        style: { backgroundColor: '#FFFFFF', borderBottom: '1px solid #D5E1EA ' },
-      },
+      // {
+      //   field: '',
+      //   header: '',
+      //   expander: allowExpansion,
+      //   style: { backgroundColor: '#FFFFFF', borderBottom: '1px solid #D5E1EA ' },
+      // },
     ],
     [allowExpansion],
   )
 
   const handleRowClickBoatYardDetail = (rowData: any) => {
+    setIsLoader(true)
     setSelectedBoatYard('')
     setMooringWithBoatyardsData([])
     setBoatyardRecord(true)
@@ -245,14 +247,14 @@ const Boatyards = () => {
     return () => clearTimeout(timeoutId)
   }
 
-  const handleEdit = (rowData: any) => {
+  const handleEdit = () => {
     if (boatYardRecord == true) {
       setModalVisible(true)
       setEditMode(true)
     }
   }
 
-  const handleDelete = async (rowData: any) => {
+  const handleDelete = async () => {
     if (boatYardRecord == true) {
       try {
         const response = await deleteBoatyard({ id: selectedBoatYard?.id }).unwrap()
@@ -275,6 +277,7 @@ const Boatyards = () => {
           })
         }
       } catch (error) {
+        const { message } = error as ErrorResponse
         toast.current?.show({
           severity: 'error',
           summary: 'Error',
@@ -296,7 +299,6 @@ const Boatyards = () => {
   const [latitude, longitude] = parseCoordinates(selectedBoatYard?.gpsCoordinates) || []
 
   const getBoatyardsData = useCallback(async () => {
-    setIsLoading(true)
     try {
       let params: Params = {}
       if (searchText) {
@@ -329,12 +331,12 @@ const Boatyards = () => {
           }
         })
     } catch (error) {
-      console.error('Error fetching getBoatyardsdata:', error)
+      const { message } = error as ErrorResponse
+      console.error('Error fetching getBoatyardsdata:', message)
     }
   }, [getBoatyards, searchText, searchFieldText, selectedCustomerId])
 
   const getMooringsWithBoatyardData = async () => {
-    setIsLoading(true)
     try {
       await getMooringsWithBoatyard({ id: selectedBoatYard?.id })
         .unwrap()
@@ -348,6 +350,7 @@ const Boatyards = () => {
           }
         })
     } catch (error) {
+      const { message } = error as ErrorResponse
       console.error('Error fetching getMooringsWithBoatyardData:', error)
     }
   }
@@ -474,7 +477,7 @@ const Boatyards = () => {
               backgroundColor: '#FFFFFF',
             }}
           />
-          <div className="bg-#00426F overflow-x-hidden overflow-y-scroll h-[500px] mt-[3px] ml-[15px] mr-[15px] table-container  ">
+          <div className="bg-#00426F overflow-x-hidden  h-[500px] mt-[3px] ml-[15px] mr-[15px] table-container  ">
             <DataTableWithToogle
               tableStyle={{
                 fontSize: '12px',
@@ -484,11 +487,11 @@ const Boatyards = () => {
                 cursor: 'pointer',
               }}
               data={boatyardsData}
-              rowExpansionTemplate={rowExpansionTemplate}
-              onRowToggle={(e: any) => {
-                setExpandedRows(e.data)
-              }}
-              expandedRows={expandedRows}
+              // rowExpansionTemplate={rowExpansionTemplate}
+              // onRowToggle={(e: any) => {
+              //   setExpandedRows(e.data)
+              // }}
+              // expandedRows={expandedRows}
               dataKey="id"
               columns={boatYardColumns}
               onRowClick={(e: any) => handleRowClickBoatYardDetail(e)}
@@ -568,13 +571,7 @@ const Boatyards = () => {
                   {selectedBoatYard?.stateResponseDto?.name} ,
                   {selectedBoatYard?.countryResponseDto?.name}
                 </p>
-
-                <p
-                  // style={{border:"1px solid red"}}
-                  className="mr-[13rem]">
-                  {selectedBoatYard?.mooringInventoried}
-                </p>
-
+                <p className="mr-[13rem]">{selectedBoatYard?.mooringInventoried}</p>
                 <p className="underline mr-[4rem]">{selectedBoatYard?.gpsCoordinates}</p>
               </div>
 

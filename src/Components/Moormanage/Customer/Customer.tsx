@@ -15,6 +15,7 @@ import {
   CustomerResponse,
   CustomersWithMooringResponse,
   DeleteCustomerResponse,
+  ErrorResponse,
   MooringPayload,
   MooringResponseDtoList,
 } from '../../../Type/ApiTypes'
@@ -30,6 +31,7 @@ import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
 import CustomMooringPositionMap from '../../Map/CustomMooringPositionMap'
 import { GearOffIcon, GearOnIcon, NeedInspectionIcon, NotInUseIcon } from '../../Map/DefaultIcon'
+import { ProgressSpinner } from 'primereact/progressspinner'
 
 // const Customer = () => {
 //   return (
@@ -55,6 +57,8 @@ const Customer = () => {
   const [dialogVisible, setDialogVisible] = useState(false)
   const [searchText, setSearchText] = useState('')
   const [customerId, setCustomerId] = useState()
+  const [isLoading, setIsLoading] = useState(true)
+  const [isLoader, setIsLoader] = useState(false)
   const [coordinatesArray, setCoordinatesArray] = useState()
   const [getCustomer] = useGetCustomerMutation()
   const [deleteCustomer] = useDeleteCustomerMutation()
@@ -96,7 +100,6 @@ const Customer = () => {
       try {
         const response = await deleteCustomer({ id: customerRecordData?.id }).unwrap()
         const { status, message } = response as DeleteCustomerResponse
-        console.log(response)
         if (status === 200) {
           toast.current?.show({
             severity: 'success',
@@ -116,10 +119,11 @@ const Customer = () => {
         }
         setCustomerRecordData('')
       } catch (error) {
+        const { message: msg } = error as ErrorResponse
         toast.current?.show({
           severity: 'error',
           summary: 'Error',
-          detail: 'Error while deleting customer',
+          detail: msg,
           life: 3000,
         })
       }
@@ -209,9 +213,11 @@ const Customer = () => {
       const response = await getCustomer(params).unwrap()
       const { status, content, message } = response as CustomerResponse
       if (status === 200 && Array.isArray(content)) {
+        setIsLoading(false)
         setCustomerData(content)
         setFilteredCustomerData(content)
       } else {
+        setIsLoading(false)
         toast?.current?.show({
           severity: 'error',
           summary: 'Error',
@@ -220,7 +226,8 @@ const Customer = () => {
         })
       }
     } catch (error) {
-      console.error('Error occurred while fetching customer data:', error)
+      const { message: msg } = error as ErrorResponse
+      console.error('Error occurred while fetching customer data:', msg)
     }
   }, [getCustomer, searchText, selectedCustomerId])
 
@@ -252,7 +259,8 @@ const Customer = () => {
         })
       }
     } catch (error) {
-      console.error('Error fetching moorings data:', error)
+      const { message: msg } = error as ErrorResponse
+      console.error('Error fetching moorings data:', msg)
     }
   }
 
@@ -385,6 +393,19 @@ const Customer = () => {
             )}
           </div>
         </div>
+        {isLoading && (
+          <ProgressSpinner
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '35%',
+              transform: 'translate(-50%, -50%)',
+              width: '50px',
+              height: '50px',
+            }}
+            strokeWidth="4"
+          />
+        )}
 
         {/* middle container */}
 

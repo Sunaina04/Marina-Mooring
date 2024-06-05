@@ -1,6 +1,10 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ErrorResponseForgotPassword, validateEmailResponse } from '../../Type/ApiTypes'
+import {
+  ErrorResponse,
+  ErrorResponseForgotPassword,
+  validateEmailResponse,
+} from '../../Type/ApiTypes'
 import { Button } from 'primereact/button'
 import { useForgotPasswordMutation } from '../../Services/Authentication/AuthApi'
 import { InputText } from 'primereact/inputtext'

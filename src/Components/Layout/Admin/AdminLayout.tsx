@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setOpen } from '../../../Store/Slice/userSlice'
 import { RootState } from '../../../Store/Store'
 import { useLogoutMutation } from '../../../Services/Authentication/AuthApi'
+import { ErrorResponse } from '../../../Type/ApiTypes'
 
 const AdminLayout = () => {
   const [openSubMenus, setOpenSubMenus] = useState(new Array(SidebarMenu.length).fill(false))
@@ -41,12 +42,12 @@ const AdminLayout = () => {
   const handleLogout = async () => {
     try {
       const response = await getLogout({}).unwrap()
-      console.log(response)
       // const { status, message, content } = response
       // if (status === 200 && Array.isArray(content)) {
       // }
     } catch (error) {
-      console.error('Error occurred while fetching customer data:', error)
+      const { message } = error as ErrorResponse
+      console.error('Error occurred while fetching customer data:', message)
     }
   }
 

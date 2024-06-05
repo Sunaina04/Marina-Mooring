@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Dialog } from 'primereact/dialog'
 import { Button } from 'primereact/button'
 import AddWorkOrders from './AddWorkOrders'
-import { WorkOrderPayload, WorkOrderResponse } from '../../../Type/ApiTypes'
+import { ErrorResponse, WorkOrderPayload, WorkOrderResponse } from '../../../Type/ApiTypes'
 import { useGetWorkOrdersMutation } from '../../../Services/MoorServe/MoorserveApi'
 import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
@@ -87,6 +87,7 @@ const WorkOrders = () => {
         setWorkOrderData(content)
       }
     } catch (error) {
+      const { message } = error as ErrorResponse
       console.error('Error fetching work order data:', error)
     }
   }

@@ -144,7 +144,11 @@ export interface AuthenticationData {
 export interface ErrorResponse {
   status: number
   message: string
-  data: string
+  data: {
+    content: string
+    message: string
+    status: number
+  }
 }
 
 export type ErrorResponseForgotPassword = {

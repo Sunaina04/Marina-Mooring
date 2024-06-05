@@ -8,7 +8,7 @@ import {
 } from '../../../Services/MoorManage/MoormanageApi'
 import { BoatYardProps } from '../../../Type/ComponentBasedType'
 import { Country, State } from '../../../Type/CommonType'
-import { BoatYardResponse } from '../../../Type/ApiTypes'
+import { BoatYardResponse, ErrorResponse } from '../../../Type/ApiTypes'
 import CustomSelectPositionMap from '../../Map/CustomSelectPositionMap'
 import { CountriesData, StatesData } from '../../CommonComponent/MetaDataComponent/MetaDataApi'
 import { ProgressSpinner } from 'primereact/progressspinner'
@@ -159,11 +159,12 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
         })
       }
     } catch (error) {
+      const { message, data } = error as ErrorResponse
       setIsLoading(false)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: error,
+        detail: data?.message,
         life: 3000,
       })
     }
@@ -219,11 +220,12 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
         })
       }
     } catch (error) {
+      const { message, data } = error as ErrorResponse
       setIsLoading(false)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: error,
+        detail: data?.message,
         life: 3000,
       })
     }

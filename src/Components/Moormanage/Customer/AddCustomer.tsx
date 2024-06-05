@@ -9,7 +9,7 @@ import {
 import { Button } from 'primereact/button'
 import { CustomerDataProps } from '../../../Type/ComponentBasedType'
 import { Country, MetaData, Params, State } from '../../../Type/CommonType'
-import { CustomerResponse } from '../../../Type/ApiTypes'
+import { CustomerResponse, ErrorResponse } from '../../../Type/ApiTypes'
 import { InputNumber } from 'primereact/inputnumber'
 import {
   CountriesData,
@@ -44,7 +44,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [selectedCountry, setSelectedCountry] = useState<Country>()
   const [selectedState, setSelectedState] = useState<State>()
   const [customerName, setCustomerName] = useState<string>('')
-  const [customerId, setCustomerId] = useState<number>(0)
+  const [customerId, setCustomerId] = useState<string>('')
   const [phone, setPhone] = useState<string>('')
   const [email, setEmail] = useState<string>('')
   const [streetHouse, setStreetHouse] = useState<string>('')
@@ -427,10 +427,12 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         })
       }
     } catch (error) {
+      const { message } = error as ErrorResponse
+
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: error,
+        detail: message,
         life: 3000,
       })
     }
@@ -529,10 +531,11 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         })
       }
     } catch (error) {
+      const { message } = error as ErrorResponse
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: error,
+        detail: message,
         life: 3000,
       })
     }
@@ -679,10 +682,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               </div>
             </span>
             <div className="mt-2">
-              <InputNumber
+              <InputComponent
                 value={customerId}
-                onChange={(e) => handleInputChangeCustomer('customerId', e.value)}
-                min={0}
+                onChange={(e) => handleInputChangeCustomer('customerId', e.target.value)}
                 style={{
                   width: '230px',
                   height: '32px',

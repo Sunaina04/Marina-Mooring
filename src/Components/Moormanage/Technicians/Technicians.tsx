@@ -3,7 +3,7 @@ import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import { SelectButton, SelectButtonChangeEvent } from 'primereact/selectbutton'
 import { Calendar } from 'primereact/calendar'
-import { TechnicianPayload, TechnicianResponse } from '../../../Type/ApiTypes'
+import { ErrorResponse, TechnicianPayload, TechnicianResponse } from '../../../Type/ApiTypes'
 import { useGetTechnicianMutation } from '../../../Services/MoorManage/MoormanageApi'
 import { BillsData, NullableDateArray } from '../../../Type/CommonType'
 import { Button } from 'primereact/button'
@@ -28,6 +28,7 @@ const useFetchTechnicians = () => {
         setFilteredTechnicianData(content)
       }
     } catch (error) {
+      const { message } = error as ErrorResponse
       console.error('Error fetching technician data:', error)
     }
   }, [getTechnicians])
@@ -39,100 +40,99 @@ const useFetchTechnicians = () => {
   return { technicianData, filteredTechnicianData }
 }
 
- const Technicians = () => {
-//   const [date, setDate] = useState<NullableDateArray>(null)
-//   const options: string[] = ['Open', 'Completed']
-//   const [value, setValue] = useState<string>(options[0])
-//   const [dataVisible, setDataVisible] = useState(false)
-//   const [technicianRecord, setTechnicianRecord] = useState()
-//   const [globalFilter, setGlobalFilter] = useState<string | undefined>(undefined)
-//   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date())
-//   const { technicianData, filteredTechnicianData } = useFetchTechnicians()
+const Technicians = () => {
+  //   const [date, setDate] = useState<NullableDateArray>(null)
+  //   const options: string[] = ['Open', 'Completed']
+  //   const [value, setValue] = useState<string>(options[0])
+  //   const [dataVisible, setDataVisible] = useState(false)
+  //   const [technicianRecord, setTechnicianRecord] = useState()
+  //   const [globalFilter, setGlobalFilter] = useState<string | undefined>(undefined)
+  //   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date())
+  //   const { technicianData, filteredTechnicianData } = useFetchTechnicians()
 
-//   const [workOrderData, setWorkOrderData] = useState<BillsData[]>([
-//     {
-//       id: 0,
-//       technician: 'Suncatcher',
-//       techniciansName: 'John Smith',
-//       dueDate: '3-12-2024',
-//     },
-//   ])
+  //   const [workOrderData, setWorkOrderData] = useState<BillsData[]>([
+  //     {
+  //       id: 0,
+  //       technician: 'Suncatcher',
+  //       techniciansName: 'John Smith',
+  //       dueDate: '3-12-2024',
+  //     },
+  //   ])
 
-//   const TechnicianTableColumnStyle = {
-//     fontSize: '10px',
-//     height: '12px',
-//     color: '#000000',
-//   }
-//   const WorkOrdersColumnStyle = {
-//     fontSize: '10px',
-//     height: '12px',
-//     color: 'white',
-//     backgroundColor: '#00426F',
-//     marginTop:'1rem'
-//   }
+  //   const TechnicianTableColumnStyle = {
+  //     fontSize: '10px',
+  //     height: '12px',
+  //     color: '#000000',
+  //   }
+  //   const WorkOrdersColumnStyle = {
+  //     fontSize: '10px',
+  //     height: '12px',
+  //     color: 'white',
+  //     backgroundColor: '#00426F',
+  //     marginTop:'1rem'
+  //   }
 
-//   const TechnicianTableColumn = useMemo(
-//     () => [
-//       { id: 'id', label: 'ID', style: TechnicianTableColumnStyle },
-//       { id: 'name', label: 'Technicians Name', style: TechnicianTableColumnStyle },
-//       { id: 'email', label: 'Open Work Orders', style: TechnicianTableColumnStyle },
-//       { id: 'phoneNumber', label: 'Completed Jobs', style: TechnicianTableColumnStyle },
-//     ],
-//     [],
-//   )
-//   const WorkOrdersColumn = useMemo(
-//     () => [
-//       { id: 'id', label: 'ID', style: WorkOrdersColumnStyle },
-//       { id: 'name', label: 'Mooring', style: WorkOrdersColumnStyle },
-//       { id: 'email', label: 'Customer Name', style: WorkOrdersColumnStyle },
-//       { id: 'phoneNumber', label: 'Due Date', style: WorkOrdersColumnStyle },
-//     ],
-//     [],
-//   )
+  //   const TechnicianTableColumn = useMemo(
+  //     () => [
+  //       { id: 'id', label: 'ID', style: TechnicianTableColumnStyle },
+  //       { id: 'name', label: 'Technicians Name', style: TechnicianTableColumnStyle },
+  //       { id: 'email', label: 'Open Work Orders', style: TechnicianTableColumnStyle },
+  //       { id: 'phoneNumber', label: 'Completed Jobs', style: TechnicianTableColumnStyle },
+  //     ],
+  //     [],
+  //   )
+  //   const WorkOrdersColumn = useMemo(
+  //     () => [
+  //       { id: 'id', label: 'ID', style: WorkOrdersColumnStyle },
+  //       { id: 'name', label: 'Mooring', style: WorkOrdersColumnStyle },
+  //       { id: 'email', label: 'Customer Name', style: WorkOrdersColumnStyle },
+  //       { id: 'phoneNumber', label: 'Due Date', style: WorkOrdersColumnStyle },
+  //     ],
+  //     [],
+  //   )
 
-//   const handleDateSelect = (date: Date) => {
-//     setSelectedDate(date)
-//   }
+  //   const handleDateSelect = (date: Date) => {
+  //     setSelectedDate(date)
+  //   }
 
-//   const handleDateUnselect = () => {
-//     setSelectedDate(undefined)
-//   }
+  //   const handleDateUnselect = () => {
+  //     setSelectedDate(undefined)
+  //   }
 
-//   const handleRowSelection = (e: any) => {
-//     setTechnicianRecord(e.data)
-//     setDataVisible(true)
-//   }
-//   const workOrder = (
-//     <>
-//       <div className="flex gap-40 mt-3">
-//         <div>
-//           <p className="text-[18px] text-black w-[106px] h-[21px]"> Work Orders </p>
-//         </div>
-//         <div>
-//           <SelectButton value={value} onChange={(e) => setValue(e.value)} options={options} />
-//         </div>
-//       </div>
-//     </>
-//   )
-//   const actionButtons = [
-//     () => (
-//       <>
-//         <div className="flex">
-//           <Button
-//             label="View"
-//             style={{
-//               fontWeight: 'bold',
-//               textDecoration: 'underline',
-//               cursor: 'pointer',
-//             }}
-//             // onClick={handleViewInventory}
-//           />
-//         </div>
-//       </>
-//     ),
-//   ]
- 
-  
+  //   const handleRowSelection = (e: any) => {
+  //     setTechnicianRecord(e.data)
+  //     setDataVisible(true)
+  //   }
+  //   const workOrder = (
+  //     <>
+  //       <div className="flex gap-40 mt-3">
+  //         <div>
+  //           <p className="text-[18px] text-black w-[106px] h-[21px]"> Work Orders </p>
+  //         </div>
+  //         <div>
+  //           <SelectButton value={value} onChange={(e) => setValue(e.value)} options={options} />
+  //         </div>
+  //       </div>
+  //     </>
+  //   )
+  //   const actionButtons = [
+  //     () => (
+  //       <>
+  //         <div className="flex">
+  //           <Button
+  //             label="View"
+  //             style={{
+  //               fontWeight: 'bold',
+  //               textDecoration: 'underline',
+  //               cursor: 'pointer',
+  //             }}
+  //             // onClick={handleViewInventory}
+  //           />
+  //         </div>
+  //       </>
+  //     ),
+  //   ]
+
   return (
     <>
       <Header header="MOORMANAGE/Technicians" />

@@ -5,7 +5,7 @@ import { Button } from 'primereact/button'
 import InputComponent from '../CommonComponent/InputComponent'
 import { Country, Role, State } from '../../Type/CommonType'
 import { CustomerAdminDataProps } from '../../Type/ComponentBasedType'
-import { SaveUserResponse } from '../../Type/ApiTypes'
+import { ErrorResponse, SaveUserResponse } from '../../Type/ApiTypes'
 import { useAddUserMutation, useUpdateUserMutation } from '../../Services/AdminTools/AdminToolsApi'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import {
@@ -235,7 +235,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     const errors = validateFields()
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors)
-      console.log(errors)
       return
     }
 
@@ -287,10 +286,11 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         })
       }
     } catch (error) {
+      const { message } = error as ErrorResponse
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: error,
+        detail: message,
         life: 3000,
       })
     }
@@ -376,10 +376,12 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         setIsLoading(false)
       }
     } catch (error) {
+      const { message } = error as ErrorResponse
+
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: error,
+        detail: message,
         life: 3000,
       })
     }

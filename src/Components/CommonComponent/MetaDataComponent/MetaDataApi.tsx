@@ -14,7 +14,7 @@ import {
   useGetBoatyardsTypeMutation,
   useGetCustomersDataMutation,
 } from '../../../Services/MetaDataApi'
-import { MetaDataResponse } from '../../../Type/ApiTypes'
+import { ErrorResponse, MetaDataResponse } from '../../../Type/ApiTypes'
 
 export const StatesData = () => {
   const [getStates] = useGetStatesMutation()
@@ -25,7 +25,8 @@ export const StatesData = () => {
       const { status, content } = response.data as MetaDataResponse
       return status === 200 && Array.isArray(content) ? content : null
     } catch (error) {
-      console.error('Error fetching metadata:', error)
+      const { message } = error as ErrorResponse
+      console.error('Error fetching metadata:', message)
       return null
     }
   }
@@ -44,7 +45,8 @@ export const CountriesData = () => {
       const { status, content } = response.data as MetaDataResponse
       return status === 200 && Array.isArray(content) ? content : null
     } catch (error) {
-      console.error('Error fetching metadata:', error)
+      const { message } = error as ErrorResponse
+      console.error('Error fetching metadata:', message)
       return null
     }
   }
@@ -63,7 +65,8 @@ export const RolesData = () => {
       const { status, content } = response.data as MetaDataResponse
       return status === 200 && Array.isArray(content) ? content : null
     } catch (error) {
-      console.error('Error fetching metadata:', error)
+      const { message } = error as ErrorResponse
+      console.error('Error fetching metadata:', message)
       return null
     }
   }
@@ -82,7 +85,8 @@ export const TypeOfWeightData = () => {
       const { status, content } = response.data as MetaDataResponse
       return status === 200 && Array.isArray(content) ? content : null
     } catch (error) {
-      console.error('Error fetching metadata:', error)
+      const { message } = error as ErrorResponse
+      console.error('Error fetching metadata:', message)
       return null
     }
   }
@@ -103,7 +107,8 @@ export const BoatyardNameData = (customerOwnerId: any) => {
       const { status, content } = response.data as MetaDataResponse
       return status === 200 && Array.isArray(content) ? content : null
     } catch (error) {
-      console.error('Error fetching metadata:', error)
+      const { message } = error as ErrorResponse
+      console.error('Error fetching metadata:', message)
       return null
     }
   }
@@ -124,7 +129,8 @@ export const TypeOfChainCondition = () => {
       const { status, content } = response.data as MetaDataResponse
       return status === 200 && Array.isArray(content) ? content : null
     } catch (error) {
-      console.error('Error fetching metadata:', error)
+      const { message } = error as ErrorResponse
+      console.error('Error fetching metadata:', message)
       return null
     }
   }
@@ -145,7 +151,8 @@ export const TypeOfStatus = () => {
       const { status, content } = response.data as MetaDataResponse
       return status === 200 && Array.isArray(content) ? content : null
     } catch (error) {
-      console.error('Error fetching metadata:', error)
+      const { message } = error as ErrorResponse
+      console.error('Error fetching metadata:', message)
       return null
     }
   }
@@ -166,7 +173,8 @@ export const TypeOfSizeOfWeight = () => {
       const { status, content } = response.data as MetaDataResponse
       return status === 200 && Array.isArray(content) ? content : null
     } catch (error) {
-      console.error('Error fetching metadata:', error)
+      const { message } = error as ErrorResponse
+      console.error('Error fetching metadata:', message)
       return null
     }
   }
@@ -187,7 +195,8 @@ export const TypeOfShackleSwivel = () => {
       const { status, content } = response.data as MetaDataResponse
       return status === 200 && Array.isArray(content) ? content : null
     } catch (error) {
-      console.error('Error fetching metadata:', error)
+      const { message } = error as ErrorResponse
+      console.error('Error fetching metadata:', message)
       return null
     }
   }
@@ -208,7 +217,8 @@ export const TypeOfPennant = () => {
       const { status, content } = response.data as MetaDataResponse
       return status === 200 && Array.isArray(content) ? content : null
     } catch (error) {
-      console.error('Error fetching metadata:', error)
+      const { message } = error as ErrorResponse
+      console.error('Error fetching metadata:', message)
       return null
     }
   }
@@ -229,7 +239,8 @@ export const TypeOfEye = () => {
       const { status, content } = response.data as MetaDataResponse
       return status === 200 && Array.isArray(content) ? content : null
     } catch (error) {
-      console.error('Error fetching metadata:', error)
+      const { message } = error as ErrorResponse
+      console.error('Error fetching metadata:', message)
       return null
     }
   }
@@ -250,7 +261,8 @@ export const TypeOfBottomChain = () => {
       const { status, content } = response.data as MetaDataResponse
       return status === 200 && Array.isArray(content) ? content : null
     } catch (error) {
-      console.error('Error fetching metadata:', error)
+      const { message } = error as ErrorResponse
+      console.error('Error fetching metadata:', message)
       return null
     }
   }
@@ -271,7 +283,8 @@ export const TypeOfBoatYards = (customerOwnerId: any) => {
       const { status, content } = response.data as MetaDataResponse
       return status === 200 && Array.isArray(content) ? content : null
     } catch (error) {
-      console.error('Error fetching metadata:', error)
+      const { message } = error as ErrorResponse
+      console.error('Error fetching metadata:', message)
       return null
     }
   }
@@ -290,7 +303,8 @@ export const TypeOfBoatType = () => {
       const { status, content } = response.data as MetaDataResponse
       return status === 200 && Array.isArray(content) ? content : null
     } catch (error) {
-      console.error('Error fetching metadata:', error)
+      const { message } = error as ErrorResponse
+      console.error('Error fetching metadata:', message)
       return null
     }
   }
@@ -302,25 +316,6 @@ export const TypeOfBoatType = () => {
   return { getTypeOfBoatTypeData }
 }
 
-// export const CustomerName = (customerOwnerId: any) => {
-//   const [getCustomerName] = useGetCustomersDataMutation();
-
-//   const fetchCustomerName = async (getData: any) => {
-//     try {
-//       const response = await getData({ customerOwnerId: customerOwnerId })
-//       const { status, content } = response.data as MetaDataResponse
-//       return status === 200 && Array.isArray(content?.content) ? content?.content : null
-//     } catch (error) {
-//       console.error('Error fetching metadata:', error)
-//       return null
-//     }
-//   }
-
-//   const getCustomerNameData = async () => ({ nameOfCustomer: await fetchCustomerName(getCustomerName) })
-
-//   return { getCustomerNameData }
-// }
-
 export const CustomersData = (customerOwnerId: any) => {
   const [getCustomers] = useGetCustomersDataMutation()
 
@@ -330,7 +325,8 @@ export const CustomersData = (customerOwnerId: any) => {
       const { status, content } = response.data as MetaDataResponse
       return status === 200 && Array.isArray(content) ? content : null
     } catch (error) {
-      console.error('Error fetching metadata:', error)
+      const { message } = error as ErrorResponse
+      console.error('Error fetching metadata:', message)
       return null
     }
   }

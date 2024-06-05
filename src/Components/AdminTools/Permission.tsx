@@ -5,7 +5,12 @@ import Header from '../Layout/LayoutComponents/Header'
 import { InputText } from 'primereact/inputtext'
 import { ActionButtonColumnProps } from '../../Type/Components/TableTypes'
 import { useSelector } from 'react-redux'
-import { CustomerPayload, DeleteUserResponse, GetUserResponse } from '../../Type/ApiTypes'
+import {
+  CustomerPayload,
+  DeleteUserResponse,
+  ErrorResponse,
+  GetUserResponse,
+} from '../../Type/ApiTypes'
 import { useDeleteUserMutation, useGetUsersMutation } from '../../Services/AdminTools/AdminToolsApi'
 import AddNewCustomer from './AddNewCustomer'
 import { Toast } from 'primereact/toast'
@@ -151,6 +156,8 @@ const Permission = () => {
         getCustomerAdminsUsers()
       }
     } catch (error) {
+      const { message } = error as ErrorResponse
+
       setIsLoading(false)
       console.error('Error occurred while fetching customer data:', error)
     }
@@ -169,6 +176,7 @@ const Permission = () => {
         setgetCustomerOwnerUserData(content)
       }
     } catch (error) {
+      const { message } = error as ErrorResponse
       setIsLoading(false)
       console.error('Error occurred while fetching customer data:', error)
     }
