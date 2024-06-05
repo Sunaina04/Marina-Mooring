@@ -183,7 +183,7 @@ const Vendors = () => {
         <Header header="MOORMANAGE/Vendor" />
         <Toast ref={toast} />
         <div className="flex justify-end">
-          <div className="flex gap-4 mr-12 mt-14">
+          <div className="flex gap-4 mr-12 mt-8">
             <div>
               <div className="p-input-icon-left">
                 <IoSearchSharp className="ml-2 text-blue-900" />
@@ -204,6 +204,7 @@ const Vendors = () => {
                   editMode={editMode}
                   closeModal={handleModalClose}
                   getVendor={getVendorData}
+                  toastRef={toast}
                 />
               }
               headerText={
@@ -240,7 +241,7 @@ const Vendors = () => {
 
         <div
           style={{
-            height: '657px',
+            height: '750px',
             borderRadius: '10px',
             border: '1px solid #D5E1EA',
             opacity: '0px',

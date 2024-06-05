@@ -2,13 +2,15 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { InputTextarea } from 'primereact/inputtextarea'
 import InputComponent from '../../CommonComponent/InputComponent'
 import { InputText } from 'primereact/inputtext'
-import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown'
-import { Checkbox } from 'primereact/checkbox'
-import { useAddVendorsMutation } from '../../../Services/MoorManage/MoormanageApi'
+import { Dropdown } from 'primereact/dropdown'
+import {
+  useAddVendorsMutation,
+  useUpdateVendorMutation,
+} from '../../../Services/MoorManage/MoormanageApi'
 import { Button } from 'primereact/button'
-import { CityProps, Country, State } from '../../../Type/CommonType'
+import { Country, State } from '../../../Type/CommonType'
 import { AddVendorProps } from '../../../Type/ComponentBasedType'
-import { VendorPayload, VendorResponse } from '../../../Type/ApiTypes'
+import { VendorResponse } from '../../../Type/ApiTypes'
 import { CountriesData, StatesData } from '../../CommonComponent/MetaDataComponent/MetaDataApi'
 
 const AddVendor: React.FC<AddVendorProps> = ({
@@ -18,8 +20,8 @@ const AddVendor: React.FC<AddVendorProps> = ({
   getVendor,
   toastRef,
 }) => {
-  const [checked, setChecked] = useState<boolean>(false)
   const [addVendor] = useAddVendorsMutation()
+  const [editVendor] = useUpdateVendorMutation()
   const { getStatesData } = StatesData()
   const { getCountriesData } = CountriesData()
   const [countriesData, setCountriesData] = useState<Country[]>()
@@ -75,7 +77,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
 
     if (!formData.emailForRepresentative) {
       errors.emailForRepresentative = 'Email is required'
-    } else if (!emailRegex.test(formData.emailForRemit)) {
+    } else if (!emailRegex.test(formData.emailForRepresentative)) {
       errors.emailForRepresentative = 'Please enter a valid email format'
     }
 
@@ -137,9 +139,13 @@ const AddVendor: React.FC<AddVendorProps> = ({
     }
   }, [])
 
-  useEffect(() => {
-    fetchDataAndUpdate()
-  }, [fetchDataAndUpdate])
+  const handleClick = () => {
+    if (editMode) {
+      updateVendor()
+    } else {
+      saveVendor()
+    }
+  }
 
   const handleEditMode = () => {
     setFormData((prevState: any) => ({
@@ -162,9 +168,9 @@ const AddVendor: React.FC<AddVendorProps> = ({
       accountNumber: vendors?.accountNumber || '',
       firstName: vendors?.firstName || '',
       lastName: vendors?.lastName || '',
-      // phoneForRepresentative: vendors?. || '',
-      // emailForRepresentative: vendors?. || '',
-      // note: vendors?. || '',
+      phoneForRepresentative: vendors?.salesRepPhoneNumber || '',
+      emailForRepresentative: vendors?.salesRepEmail || '',
+      note: vendors?.salesRepNote || '',
     }))
   }
 
@@ -174,11 +180,6 @@ const AddVendor: React.FC<AddVendorProps> = ({
       return
     }
 
-    // const errors = validateFields()
-    // if (Object.keys(errors).length > 0) {
-    //   setErrorMessage(errors)
-    //   return
-    // }
     try {
       const payload = {
         companyName: formData?.companyName,
@@ -186,7 +187,66 @@ const AddVendor: React.FC<AddVendorProps> = ({
         website: formData?.website,
         street: formData?.streetBuildingForAddress,
         aptSuite: formData?.aptSuiteForAddress,
-        stateId: formData?.stateForAddress,
+        stateId: formData?.stateForAddress?.id,
+        countryId: formData?.countryForAddress?.id || '',
+        zipCode: formData?.zipCodeForAddress,
+        companyEmail: formData?.emailForAddress,
+        accountNumber: formData?.accountNumber,
+        remitStreet: formData?.streetBuildingForRemit,
+        remitApt: formData?.aptSuiteForRemit,
+        remitStateId: formData?.stateForRemit?.id,
+        remitCountryId: formData?.countryForRemit?.id,
+        remitZipCode: formData?.zipCodeForRemit,
+        remitEmailAddress: formData?.emailForRemit,
+        firstName: formData?.firstName,
+        lastName: formData?.lastName,
+        salesRepPhoneNumber: formData?.phoneForRepresentative,
+        salesRepEmail: formData?.emailForRepresentative,
+        salesRepNote: formData?.note,
+      }
+      const response = await addVendor(payload).unwrap()
+      const { status, message } = response as VendorResponse
+      if (status === 200 || status === 201) {
+        toastRef?.current?.show({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Vendor Saved successfully',
+          life: 3000,
+        })
+        closeModal()
+        getVendor()
+      } else {
+        toastRef?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+      }
+    } catch (error) {
+      toastRef?.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: error,
+        life: 3000,
+      })
+    }
+  }
+
+  const updateVendor = async () => {
+    const errors = validateMooringFields()
+    if (Object.keys(errors).length > 0) {
+      return
+    }
+
+    try {
+      const payload = {
+        companyName: formData?.companyName,
+        companyPhoneNumber: formData?.phone,
+        website: formData?.website,
+        street: formData?.streetBuildingForAddress,
+        aptSuite: formData?.aptSuiteForAddress,
+        stateId: formData?.stateForAddress?.id,
         countryId: formData?.countryForAddress?.id || '',
         zipCode: formData?.zipCodeForAddress?.id,
         companyEmail: formData?.emailForAddress,
@@ -203,17 +263,20 @@ const AddVendor: React.FC<AddVendorProps> = ({
         salesRepEmail: formData?.salesRepEmail,
         salesRepNote: formData?.note,
       }
-      const response = await addVendor(payload).unwrap()
+      const response = await editVendor({
+        payload: payload,
+        id: vendors?.id,
+      }).unwrap()
       const { status, message } = response as VendorResponse
       if (status === 200 || status === 201) {
-        closeModal()
-        getVendor()
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
-          detail: 'Boatyard Saved successfully',
+          detail: 'Vendor Updated successfully',
           life: 3000,
         })
+        closeModal()
+        getVendor()
       } else {
         toastRef?.current?.show({
           severity: 'error',
@@ -235,10 +298,13 @@ const AddVendor: React.FC<AddVendorProps> = ({
   useEffect(() => {
     if (editMode && vendors) {
       handleEditMode()
-      console.log('vendors', vendors)
     } else {
     }
   }, [editMode, vendors])
+
+  useEffect(() => {
+    fetchDataAndUpdate()
+  }, [fetchDataAndUpdate])
 
   return (
     <>
@@ -246,11 +312,12 @@ const AddVendor: React.FC<AddVendorProps> = ({
         <div className="flex">
           <div className="flex gap-8">
             <div>
-              <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}></span>
-              <div className="flex gap-1">
-                Company Name
-                <p className="text-red-600">*</p>
-              </div>
+              <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
+                <div className="flex gap-1">
+                  Company Name
+                  <p className="text-red-600">*</p>
+                </div>
+              </span>
 
               <div className="mt-2">
                 <InputComponent
@@ -525,7 +592,6 @@ const AddVendor: React.FC<AddVendorProps> = ({
                   </div>
                   <div className="mt-2">
                     <Dropdown
-                      // value={selectedCity}
                       value={formData.countryForRemit}
                       onChange={(e) => handleInputChange('countryForRemit', e.target.value)}
                       options={countriesData}
@@ -653,57 +719,6 @@ const AddVendor: React.FC<AddVendorProps> = ({
             </div>
           </div>
         </div>
-
-        {/* <div className="flex mt-2 gap-2">
-          <p>
-            {errorMessage.salesRepEmail && (
-              <small className="p-error">{errorMessage.salesRepEmail}</small>
-            )}
-          </p>
-          <div className="mt-2 ">
-            <InputText
-              placeholder="Zip Code"
-              value={remitZipCode !== undefined ? remitZipCode.toString() : ''}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                const inputVal = e.target.value
-                const newValue = inputVal !== '' ? parseInt(inputVal, 10) : undefined
-                setRemitZipCode(newValue)
-                setErrorMessage((prev) => ({ ...prev, addressZipCode: '' }))
-              }}
-              style={{
-                width: '10vw',
-                height: '4vh',
-                border: errorMessage.addressZipCode ? '1px solid red' : '1px solid #D5E1EA',
-                borderRadius: '0.50rem',
-                fontSize: '0.70rem',
-              }}
-            />
-          </div>
-          <p>
-            {errorMessage.addressZipCode && (
-              <small className="p-error">{errorMessage.addressZipCode}</small>
-            )}
-          </p>
-
-          
-          <div className="mt-2 ">
-            <InputText
-              placeholder="Email Address"
-              value={emailAddress}
-              onChange={(e) => {
-                setEmailAddress(e.target.value)
-                setErrorMessage((prev) => ({ ...prev, emailAddress: '' }))
-              }}
-              style={{
-                width: '10vw',
-                height: '4vh',
-                border: errorMessage.emailAddress ? '1px solid red' : '1px solid #D5E1EA',
-                borderRadius: '0.50rem',
-                fontSize: '0.70rem',
-              }}
-            />
-          </div>
-        </div> */}
       </div>
 
       <div>
@@ -931,7 +946,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
           bottom: '0px',
         }}>
         <Button
-          onClick={saveVendor}
+          onClick={handleClick}
           label={'Save'}
           style={{
             width: '89px',
@@ -946,9 +961,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
           }}
         />
         <Button
-          onClick={function (): void {
-            throw new Error('Function not implemented.')
-          }}
+          onClick={closeModal}
           label={'Back'}
           text={true}
           style={{
