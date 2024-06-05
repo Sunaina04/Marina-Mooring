@@ -270,31 +270,34 @@ const Permission = () => {
             flexGrow: 1,
             borderRadius: '10px',
           }}>
-          {getCustomerOwnerUserData.length === 0 ? (
-            <div className="text-center mt-40">
-              <img src="/assets/images/empty.png" alt="Empty Data" className="w-32 mx-auto mb-4" />
-              <p className="text-gray-500">No data available</p>
-            </div>
-          ) : (
-            <div data-testid="permission-users-table">
-              <DataTableComponent
-                tableStyle={{
-                  fontSize: '12px',
-                  color: '#000000',
-                  fontWeight: 600,
-                  backgroundColor: '#D9D9D9',
-                  borderRadius: '0 0 10px 10px',
-                  minHeight: 'calc(40vw - 600px)',
-                  overflow: 'auto',
-                }}
-                scrollable={true}
-                data={getCustomerOwnerUserData}
-                columns={tableColumnsPermission}
-                actionButtons={ActionButtonColumn}
-                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
-              />
-            </div>
-          )}
+          <div data-testid="permission-users-table">
+            <DataTableComponent
+              tableStyle={{
+                fontSize: '12px',
+                color: '#000000',
+                fontWeight: 600,
+                backgroundColor: '#D9D9D9',
+                borderRadius: '0 0 10px 10px',
+                minHeight: 'calc(40vw - 600px)',
+                overflow: 'auto',
+              }}
+              scrollable={true}
+              data={getCustomerOwnerUserData}
+              columns={tableColumnsPermission}
+              actionButtons={ActionButtonColumn}
+              style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
+              emptyMessage={
+                <div className="text-center mt-14">
+                  <img
+                    src="/assets/images/empty.png"
+                    alt="Empty Data"
+                    className="w-20 mx-auto mb-4"
+                  />
+                  <p className="text-gray-500">No data available</p>
+                </div>
+              }
+            />
+          </div>
         </div>
       </div>
     </>
