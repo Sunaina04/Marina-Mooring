@@ -20,10 +20,8 @@ const AddVendor: React.FC<AddVendorProps> = ({
 }) => {
   const [checked, setChecked] = useState<boolean>(false)
   const [addVendor] = useAddVendorsMutation()
-
   const { getStatesData } = StatesData()
   const { getCountriesData } = CountriesData()
-
   const [countriesData, setCountriesData] = useState<Country[]>()
   const [statesData, setStatesData] = useState<State[]>()
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
