@@ -6,7 +6,7 @@ import { setCustomerId, setCustomerName, setToken, setUserData } from '../../Sto
 import { Link, useNavigate } from 'react-router-dom'
 import { InputText } from 'primereact/inputtext'
 import { Button } from 'primereact/button'
-import './Login.module.css'
+import './Login.css'
 import { ProgressSpinner } from 'primereact/progressspinner'
 
 export default function LoginForm() {
@@ -107,6 +107,7 @@ export default function LoginForm() {
     <>
       <div
         className="w-full h-screen flex justify-center items-center"
+        id='header'
         style={{
           backgroundImage: "url('/assets/images/loginBackgroundImage.png')",
           backgroundSize: 'cover',
@@ -122,7 +123,9 @@ export default function LoginForm() {
               className="mx-auto w-60 h-14 mb-5"
             />
           </div>
-          <div className="flex flex-col justify-center text-center mt-[5rem]">
+          <div 
+          
+          className="flex flex-col justify-center text-center mt-[5rem]">
             <div className="text-red-500 mb-5 text-sm">{errors.email && <p>{errors.email}</p>}</div>
             <div className="flex flex-col items-center">
               <div className="p-input-icon-left">

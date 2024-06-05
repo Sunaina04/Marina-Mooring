@@ -452,7 +452,7 @@ const Customer = () => {
             </div>
 
             {customerRecordData ? (
-              <div className={`${isLoading ? 'blur-screen' : ''}`}>
+              <div className="">
                 <div className="flex gap-10 p-4 ">
                   <div
                     style={{
@@ -506,11 +506,15 @@ const Customer = () => {
                     {customerRecordData?.country && <span>{customerRecordData?.country} </span>}
                   </p>
 
-                  <div className="flex mt-5 ml-4 mb-3 overflow-x-auto">
+                  <div
+            
+                  className="flex mt-5 ml-4 mb-3 overflow-x-auto">
                     <div>
                       <h1 className="">Boatyard: </h1>
                     </div>
-                    <div className="flex gap-3">
+                    <div
+                    // style={{border:"1px solid red"}}
+                    className="flex gap-4 ">
                       {boatYardData.map((boatyard, index) => (
                         <p
                           key={index}
@@ -520,7 +524,7 @@ const Customer = () => {
                             fontSize: '12px',
                             color: '#10293A',
                             backgroundColor: '#D5E1EA',
-                            padding: '8px',
+                            padding: '4px',
                           }}>
                           {boatyard}
                         </p>
@@ -530,7 +534,7 @@ const Customer = () => {
                 </div>
               </div>
             ) : (
-              <div className={`text-center ${isLoading ? 'blur-screen' : ''}`}>
+              <div className="text-center ">
                 <img
                   src="/assets/images/empty.png"
                   alt="Empty Data"
@@ -554,7 +558,7 @@ const Customer = () => {
             </p>
           </div>
 
-          <div className={`${isLoading ? 'blur-screen' : ''}`}>
+          <div className=" ">
             {mooringData.length === 0 ? (
               <div className="text-center mt-40">
                 <img
