@@ -33,14 +33,6 @@ import CustomMooringPositionMap from '../../Map/CustomMooringPositionMap'
 import { GearOffIcon, GearOnIcon, NeedInspectionIcon, NotInUseIcon } from '../../Map/DefaultIcon'
 import { ProgressSpinner } from 'primereact/progressspinner'
 
-// const Customer = () => {
-//   return (
-//     <>
-//       <Header header="MOORMANAGE/Customer" />
-//     </>
-//   )
-// }
-
 const Customer = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
   const [modalVisible, setModalVisible] = useState(false)
@@ -58,7 +50,6 @@ const Customer = () => {
   const [searchText, setSearchText] = useState('')
   const [customerId, setCustomerId] = useState()
   const [isLoading, setIsLoading] = useState(true)
-  const [isLoader, setIsLoader] = useState(false)
   const [coordinatesArray, setCoordinatesArray] = useState()
   const [getCustomer] = useGetCustomerMutation()
   const [deleteCustomer] = useDeleteCustomerMutation()
@@ -365,7 +356,8 @@ const Customer = () => {
             }}
           />
 
-          <div className="bg-#00426F overflow-x-hidden overflow-y-scroll h-[500px] mt-[3px] ml-[15px] mr-[15px] table-container  ">
+          <div
+            className={`bg-#00426F overflow-x-hidden h-[500px] mt-[3px] ml-[15px] mr-[15px] table-container ${isLoading ? 'blur-screen' : ''}`}>
             {customerData.length === 0 ? (
               <div className="text-center mt-40">
                 <img
@@ -398,7 +390,7 @@ const Customer = () => {
             style={{
               position: 'absolute',
               top: '50%',
-              left: '35%',
+              left: '50%',
               transform: 'translate(-50%, -50%)',
               width: '50px',
               height: '50px',
@@ -411,7 +403,7 @@ const Customer = () => {
 
         <div className="min-w-[20vw]">
           <div
-            className={`max-w-[413px] rounded-md border-[1px] ${modalVisible ? 'blur-screen' : ''}`}>
+            className={`max-w-[413px] rounded-md border-[1px] ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
             <CustomMooringPositionMap
               position={coordinatesArray || [30.698, 76.657]}
               zoomLevel={10}
@@ -514,11 +506,15 @@ const Customer = () => {
                     {customerRecordData?.country && <span>{customerRecordData?.country} </span>}
                   </p>
 
-                  <div className="flex mt-5 ml-4 mb-3 overflow-x-auto">
+                  <div
+            
+                  className="flex mt-5 ml-4 mb-3 overflow-x-auto">
                     <div>
                       <h1 className="">Boatyard: </h1>
                     </div>
-                    <div className="flex gap-3">
+                    <div
+                    // style={{border:"1px solid red"}}
+                    className="flex gap-4 ">
                       {boatYardData.map((boatyard, index) => (
                         <p
                           key={index}
@@ -528,7 +524,7 @@ const Customer = () => {
                             fontSize: '12px',
                             color: '#10293A',
                             backgroundColor: '#D5E1EA',
-                            padding: '8px',
+                            padding: '4px',
                           }}>
                           {boatyard}
                         </p>

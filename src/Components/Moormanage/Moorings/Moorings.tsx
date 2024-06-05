@@ -6,7 +6,7 @@ import {
   useGetCustomersWithMooringMutation,
   useGetMooringsMutation,
 } from '../../../Services/MoorManage/MoormanageApi'
-import { InputSwitch, InputSwitchChangeEvent } from 'primereact/inputswitch'
+import { InputSwitchChangeEvent } from 'primereact/inputswitch'
 import {
   CustomersWithMooringResponse,
   DeleteCustomerResponse,
@@ -15,27 +15,18 @@ import {
   MooringResponse,
   MooringResponseDtoList,
 } from '../../../Type/ApiTypes'
-import { FaCircle, FaEdit } from 'react-icons/fa'
+import { FaEdit } from 'react-icons/fa'
 import { Dialog } from 'primereact/dialog'
-import { CustomerData, CustomerProps, Params } from '../../../Type/CommonType'
+import { Params } from '../../../Type/CommonType'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader'
 import { properties } from '../../Utils/MeassageProperties'
 import Header from '../../Layout/LayoutComponents/Header'
 import { Toast } from 'primereact/toast'
 import { useSelector } from 'react-redux'
-import { selectCustomerId } from '../../../Store/Slice/userSlice'
-import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
 import CustomMooringPositionMap from '../../Map/CustomMooringPositionMap'
 import { RiDeleteBin5Fill } from 'react-icons/ri'
-
-// const Moorings = () => {
-//   return (
-//     <>
-//       <Header header={properties.MoormanageMoorings} />
-//     </>
-//   )
-// }
+import { ProgressSpinner } from 'primereact/progressspinner'
 
 const Moorings = () => {
   const userData = useSelector((state: any) => state.user?.userData)
@@ -53,11 +44,12 @@ const Moorings = () => {
   const [customerId, setCustomerId] = useState()
   const [mooringId, setMooringId] = useState()
   const [rowClick, setRowClick] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+  const [coordinatesArray, setCoordinatesArray] = useState()
   const [filteredMooringData, setFilteredMooringData] = useState<MooringPayload[]>([])
   const [isChecked, setIsChecked] = useState(false)
   const [dialogVisible, setDialogVisible] = useState(false)
   const [editCustomerMode, setEditCustomerMode] = useState(false)
-  const [selectedMooring, setSelectedMooring] = useState<MooringPayload>()
   const [customerMooringData, setCustomerMooringData] = useState<MooringResponseDtoList[]>([])
 
   const toast = useRef<Toast>(null)
@@ -238,9 +230,12 @@ const Moorings = () => {
       const response = await getMoorings(params).unwrap()
       const { status, content, message } = response as MooringResponse
       if (status === 200 && Array.isArray(content)) {
+        setIsLoading(false)
         setMooringData(content)
         setFilteredMooringData(content)
       } else {
+        setIsLoading(false)
+
         toast?.current?.show({
           severity: 'error',
           summary: 'Error',
@@ -267,6 +262,9 @@ const Moorings = () => {
         setCustomerMooringData(content?.customerResponseDto?.mooringResponseDtoList)
         setBoatYardData(content?.boatyardNames)
         setMooringResponseData(content?.customerResponseDto?.mooringResponseDtoList)
+        const coordinatesString = customerRecordData?.mooringResponseDtoList[0]?.gpsCoordinates
+        const coordinateArray = coordinatesString?.split(' ').map(parseFloat)
+        setCoordinatesArray(coordinateArray)
       }
     } catch (error) {
       const { message } = error as ErrorResponse
@@ -338,7 +336,7 @@ const Moorings = () => {
         <div>
           <div
             style={{
-              width: '450px',
+              width: '680px',
               height: '650px',
               top: '277px',
               left: '107px',
@@ -375,7 +373,7 @@ const Moorings = () => {
               }}
               inputTextStyle={{
                 height: '44px',
-                width: '400px',
+                width: '635px',
                 cursor: 'pointer',
                 fontSize: '',
                 color: '#000000',
@@ -386,9 +384,8 @@ const Moorings = () => {
               }}
               borderBottom={{ border: '1px solid #D5E1EA' }}
             />
-            <div className="mt-2">{/* <hr style={{ border: ' 0.20px solid #D5E1EA' }} /> */}</div>
 
-            <div className="mt-2">
+            <div className={`mt-2 ${isLoading ? 'blur-screen' : ''}`}>
               {mooringData.length > 0 ? (
                 <div className="h-[560px] overflow-y-auto">
                   <DataTableComponent
@@ -422,12 +419,27 @@ const Moorings = () => {
           </div>
         </div>
 
-        <div className="">
-          <div style={{ height: '700px', width: '25vw' }}>
+        {isLoading && (
+          <ProgressSpinner
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: '50px',
+              height: '50px',
+            }}
+            strokeWidth="4"
+          />
+        )}
+
+        <div className="min-w-[20vw]">
+          <div
+            className={`max-w-[413px] rounded-md border-[1px] ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
             <CustomMooringPositionMap
-              position={[30.698, 76.657]}
+              position={coordinatesArray || [30.698, 76.657]}
               zoomLevel={10}
-              style={{ height: '100%', width: '100%', display: modalVisible ? 'none' : '' }}
+              style={{ height: '700px' }}
               // iconsByStatus={iconsByStatus}
               // @ts-expect-error
               moorings={mooringData}
@@ -435,22 +447,34 @@ const Moorings = () => {
           </div>
         </div>
 
-        <div className="">
-          <div style={{ width: '500px', height: '650px' }}>
-            <div className="bg-[#00426F] rounded-r-md  rounded-l-md flex justify-between pb-2">
+        <div
+          style={{
+            top: '277px',
+            left: '107px',
+            gap: '0px',
+            width: '413px',
+            borderRadius: '10px',
+            border: '1px solid #D5E1EA',
+            opacity: '0px',
+            backgroundColor: 'white',
+            flexGrow: 1,
+            marginRight: '40px',
+          }}>
+          <div className="rounded-md border">
+            <div className="bg-[#00426F] rounded-t-[10px] flex justify-between pb-2">
               <div className="text-sm font-semibold rounded-t-md bg-[]">
                 <h1 className="p-4 text-white">{'Customers Record'}</h1>
               </div>
               <div className="flex">
                 <FaEdit
-                  // onClick={handleEdit}
-                  className="mr-3 mt-3 text-[white]"
+                  onClick={handleEdit}
+                  className="mr-3 mt-[19px] text-[white]"
                   data-testid="FaEdit"
                   style={{ cursor: mooringRecord ? 'pointer' : 'not-allowed' }}
                 />
                 <RiDeleteBin5Fill
                   onClick={handleDelete}
-                  className="text-white mr-2 mt-3"
+                  className="text-white mr-2 mt-[19px] "
                   data-testid="RiDeleteBin5Fill"
                   style={{ cursor: mooringRecord ? 'pointer' : 'not-allowed' }}
                 />
@@ -458,86 +482,135 @@ const Moorings = () => {
             </div>
 
             {customerRecordData ? (
-              <div className="bg-[#FFFFFF] px-2">
-                <div className="flex flex-wrap gap-20 text-[14px] ">
-                  <div className=" mt-2 ">
-                    <p className="text-[14px] font-[400]  text-[#000000]">
-                      ID : {customerRecordData?.customerId}
+              <div className="">
+                <div className="flex gap-10 p-4 ">
+                  <div
+                    style={{
+                      fontSize: '14px',
+                      fontWeight: '400',
+                      lineHeight: '16.41px',
+                      color: '#000000',
+                    }}>
+                    <p>
+                      <span className="">ID: </span>
+                      {customerRecordData?.customerId}
                     </p>
-                    <p className="mt-4  w-40 text-[#000000] font-[400] ">
-                      Phone : {customerRecordData?.phone}
+                    <p className="mt-6">
+                      <span className="">Phone: </span>
+                      {customerRecordData?.phone}
                     </p>
                   </div>
-                  <div className="">
-                    <p className="text-[14px] font-[400] mt-2 text-[#000000]">
-                      Name : {customerRecordData?.customerName}
+
+                  <div
+                    style={{
+                      fontSize: '14px',
+                      fontWeight: '400',
+                      lineHeight: '16.41px',
+                      color: '#000000',
+                    }}>
+                    <p>
+                      <span className="">Name: </span>
+                      {customerRecordData?.customerName}
                     </p>
-                    <p className="text-[14px] font-[400] text-[#000000] mt-3">
-                      Email : {customerRecordData?.emailAddress}
+                    <p className="mt-6">
+                      <span className="">Email: </span>
+                      {customerRecordData?.emailAddress}
                     </p>
                   </div>
                 </div>
-                <div className="text-[14px] font-[400] mt-3 text-[#000000]">
-                  <p>
-                    Address : {customerRecordData?.streetHouse} {customerRecordData?.aptSuite}
-                    {customerRecordData?.stateResponseDto?.name}
-                    {customerRecordData?.countryResponseDto?.name}
+                <div
+                  style={{
+                    fontSize: '14px',
+                    fontWeight: '400',
+                    lineHeight: '16.41px',
+                    color: '#000000',
+                  }}>
+                  <p className="ml-4">
+                    <span className="address-label ">Address: </span>
+                    {customerRecordData?.aptSuite && <span>{customerRecordData?.aptSuite} </span>}
+                    {customerRecordData?.streetHouse && (
+                      <span>{customerRecordData?.streetHouse} </span>
+                    )}
+                    {customerRecordData?.city && <span>{customerRecordData?.city}, </span>}
+                    {customerRecordData?.state && <span>{customerRecordData?.state}, </span>}
+                    {customerRecordData?.country && <span>{customerRecordData?.country} </span>}
                   </p>
-                </div>
-                <div className=" flex text-[14px] mt-4 pb-2 overflow-x-auto">
-                  <div>
-                    <h1 className="">Boatyard : </h1>
-                  </div>
-                  <div className="">
-                    {boatYardData.map((boatyard, index) => (
-                      <p
-                        key={index}
-                        style={{
-                          borderRadius: '5px',
-                          fontWeight: '400',
-                          fontSize: '12px',
-                          color: '#10293A',
-                          backgroundColor: '#D5E1EA',
-                          padding: '5px',
-                          // width:"20px"
-                        }}>
-                        {boatyard}
-                      </p>
-                    ))}
+
+                  <div className="flex mt-5 ml-4 mb-3 overflow-x-auto">
+                    <div>
+                      <h1 className="">Boatyard: </h1>
+                    </div>
+                    <div className="flex gap-4 ">
+                      {boatYardData.map((boatyard, index) => (
+                        <p
+                          key={index}
+                          style={{
+                            borderRadius: '5px',
+                            fontWeight: '400',
+                            fontSize: '12px',
+                            color: '#10293A',
+                            backgroundColor: '#D5E1EA',
+                            padding: '4px',
+                          }}>
+                          {boatyard}
+                        </p>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
             ) : (
-              <div className="text-center bg-[#FFFFFF] px-2 h-[150px]">
+              <div className="text-center ">
                 <img
                   src="/assets/images/empty.png"
                   alt="Empty Data"
-                  className="w-10 mx-auto mb-3"
+                  className="w-10 mx-auto mt-10 mb-3"
                 />
                 <p className="text-gray-500 mb-10">No data available</p>
               </div>
             )}
+          </div>
 
-            <div style={{ height: '505px', backgroundColor: 'white' }}>
-              <h3 className="bg-[#00426F] text-[#FFFFFF] font-[700] th-12 py-3 pl-2 ">Moorings</h3>
+          <div>
+            <p
+              style={{
+                backgroundColor: '#00426F',
+                fontWeight: '700',
+                color: 'white',
+                padding: '14px',
+                fontSize: '15px',
+              }}>
+              Moorings
+            </p>
+          </div>
 
-              <div data-testid="customer-admin-users-table" className="overflow-x-auto">
+          <div className=" ">
+            {mooringData.length === 0 ? (
+              <div className="text-center mt-40">
+                <img
+                  src="/assets/images/empty.png"
+                  alt="Empty Data"
+                  className="w-20 mx-auto mb-4"
+                />
+                <p className="text-gray-500">No data available</p>
+              </div>
+            ) : (
+              <div style={{ height: '400px', overflow: 'auto' }}>
                 <DataTableComponent
+                  style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+                  scrollable
                   tableStyle={{
                     fontSize: '12px',
                     color: '#000000',
                     fontWeight: 600,
-                    backgroundColor: '#FFFFFF',
+                    backgroundColor: '#D9D9D9',
+                    cursor: 'pointer',
                   }}
-                  scrollable={true}
                   data={mooringResponseData}
                   columns={tableColumnsMoorings}
                   onRowClick={(rowData: any) => {
                     setDialogVisible(true)
                     setMooringRowData(rowData.data)
-                  }}
-                  style={{
-                    cursor: 'pointer',
                   }}
                   emptyMessage={
                     <div className="text-center mt-40">
@@ -551,14 +624,15 @@ const Moorings = () => {
                   }
                 />
               </div>
-            </div>
+            )}
 
+            {/* Dialog BOX */}
             <Dialog
               position="center"
               style={{
                 width: '740px',
                 minWidth: '300px',
-                height: '470px',
+                height: '503px',
                 minHeight: '200px',
                 borderRadius: '1rem',
                 fontWeight: '400',
@@ -572,9 +646,9 @@ const Moorings = () => {
                   <div className="font-bolder text-[black]">Mooring Information</div>
                   <div className="font-bold mt-1">
                     <FaEdit
-                      // onClick={handleMooringEdit}
+                      onClick={handleMooringEdit}
                       color="#0098FF"
-                      style={{ cursor: 'not-allowed' }}
+                      style={{ cursor: 'pointer' }}
                     />
                   </div>
                 </div>
