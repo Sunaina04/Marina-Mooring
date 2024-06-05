@@ -51,7 +51,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
     note: '',
   })
 
-  const validateMooringFields = () => {
+  const validateAddVendorFields = () => {
     const errors: { [key: string]: string } = {}
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const phoneRegex = /^\d{10}$/
@@ -181,7 +181,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
   }
 
   const saveVendor = async () => {
-    const errors = validateMooringFields()
+    const errors = validateAddVendorFields()
     if (Object.keys(errors).length > 0) {
       return
     }
@@ -240,7 +240,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
   }
 
   const updateVendor = async () => {
-    const errors = validateMooringFields()
+    const errors = validateAddVendorFields()
     if (Object.keys(errors).length > 0) {
       return
     }
