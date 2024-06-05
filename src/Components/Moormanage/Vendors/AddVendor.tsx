@@ -165,7 +165,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
-          detail: 'Boatyard Saved successfully',
+          detail: 'Vendor Saved successfully',
           life: 3000,
         })
       } else {
@@ -194,7 +194,9 @@ const AddVendor: React.FC<AddVendorProps> = ({
         <div className="flex">
           <div className="flex gap-8">
             <div>
-              <span style={{fontWeight:'400', fontSize:'14px', color:'#000000'}}>Company Name</span>
+              <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
+                Company Name
+              </span>
               <div className="mt-2">
                 <InputComponent
                   value={companyName}
@@ -214,7 +216,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
               <p>{errorMessage.name && <small className="p-error">{errorMessage.name}</small>}</p>
             </div>
             <div>
-              <span style={{fontWeight:'400', fontSize:'14px', color:'#000000'}}>Phone</span>
+              <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>Phone</span>
               <div className="mt-2">
                 <InputComponent
                   value={phone}
@@ -234,7 +236,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
               <p>{errorMessage.phone && <small className="p-error">{errorMessage.phone}</small>}</p>
             </div>
             <div>
-              <span style={{fontWeight:'400', fontSize:'14px', color:'#000000'}}>Website</span>
+              <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>Website</span>
               <div className="mt-2">
                 <InputComponent
                   value={website}
@@ -254,7 +256,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
         <div className="flex mt-3 gap-4">
           <div className="mt-5">
             <div>
-              <h1 style={{fontWeight:'400', fontSize:'14px', color:'#000000'}}>Address</h1>
+              <h1 style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>Address</h1>
             </div>
 
             <div className=" flex gap-2 mt-2">
@@ -274,7 +276,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
                         border: errorMessage.streetBuilding ? '1px solid red' : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.70rem',
-                        paddingLeft:'0.5rem',
+                        paddingLeft: '0.5rem',
                       }}
                     />
                   </div>
@@ -322,7 +324,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
                         border: errorMessage.addressZipCode ? '1px solid red' : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.70rem',
-                        paddingLeft:'0.5rem',
+                        paddingLeft: '0.5rem',
                       }}
                     />
                   </div>
@@ -349,7 +351,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
                         border: errorMessage.streetBuilding ? '1px solid red' : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.70rem',
-                        paddingLeft:'0.5rem',
+                        paddingLeft: '0.5rem',
                       }}
                     />
                   </div>
@@ -395,7 +397,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
                         border: errorMessage.emailAddress ? '1px solid red' : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.70rem',
-                        paddingLeft:'0.5rem',
+                        paddingLeft: '0.5rem',
                       }}
                     />
                   </div>
@@ -406,7 +408,9 @@ const AddVendor: React.FC<AddVendorProps> = ({
           <div>
             <div className="mt-1 py-5 px-5 rounded-lg" style={{ backgroundColor: '#F5F5F5' }}>
               <div>
-                <h1 style={{fontWeight:'400', fontSize:'14px', color:'#000000'}}>Remit Address</h1>
+                <h1 style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
+                  Remit Address
+                </h1>
               </div>
               <div className="flex mt-2 gap-2">
                 <div className="mt-1">
@@ -427,8 +431,8 @@ const AddVendor: React.FC<AddVendorProps> = ({
                             : '1px solid #D5E1EA',
                           borderRadius: '0.50rem',
                           fontSize: '0.70rem',
-                          backgroundColor:'#F5F5F5',
-                          paddingLeft:'0.5rem',
+                          backgroundColor: '#F5F5F5',
+                          paddingLeft: '0.5rem',
                         }}
                       />
                     </div>
@@ -453,7 +457,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
                         border: '1px solid  #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.70rem',
-                        backgroundColor:'#F5F5F5',
+                        backgroundColor: '#F5F5F5',
                       }}
                     />
                   </div>
@@ -475,8 +479,8 @@ const AddVendor: React.FC<AddVendorProps> = ({
                         border: errorMessage.addressZipCode ? '1px solid red' : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.70rem',
-                        backgroundColor:'#F5F5F5',
-                        paddingLeft:'0.5rem',
+                        backgroundColor: '#F5F5F5',
+                        paddingLeft: '0.5rem',
                       }}
                     />
                     <p>
@@ -503,8 +507,8 @@ const AddVendor: React.FC<AddVendorProps> = ({
                           border: errorMessage.aptSuite ? '1px solid red' : '1px solid #D5E1EA',
                           borderRadius: '0.50rem',
                           fontSize: '0.70rem',
-                          backgroundColor:'#F5F5F5',
-                          paddingLeft:'0.5rem',
+                          backgroundColor: '#F5F5F5',
+                          paddingLeft: '0.5rem',
                         }}
                       />
                     </div>
@@ -530,7 +534,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
                           border: '1px solid  #D5E1EA',
                           borderRadius: '0.50rem',
                           fontSize: '0.70rem',
-                          backgroundColor:'#F5F5F5',
+                          backgroundColor: '#F5F5F5',
                         }}
                       />
                     </div>
@@ -549,8 +553,8 @@ const AddVendor: React.FC<AddVendorProps> = ({
                         border: errorMessage.emailAddress ? '1px solid red' : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.70rem',
-                        backgroundColor:'#F5F5F5',
-                        paddingLeft:'0.5rem',
+                        backgroundColor: '#F5F5F5',
+                        paddingLeft: '0.5rem',
                       }}
                     />
                   </div>
@@ -615,7 +619,9 @@ const AddVendor: React.FC<AddVendorProps> = ({
       <div>
         <div className="mt-8">
           <div className="ml-1 text-black font-semibold text-sm">
-            <span style={{fontWeight:'400', fontSize:'14px', color:'#000000'}}>Account Number</span>
+            <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
+              Account Number
+            </span>
           </div>
           <div className="mt-2">
             <InputText
@@ -637,15 +643,21 @@ const AddVendor: React.FC<AddVendorProps> = ({
         </div>
       </div>
 
-      <div className="py-3 pl-3 mb-20 mt-4 rounded-lg" style={{ backgroundColor: '#F5F5F5',  height:'250px' }}>
+      <div
+        className="py-3 pl-3 mb-20 mt-4 rounded-lg"
+        style={{ backgroundColor: '#F5F5F5', height: '250px' }}>
         <div className="">
-          <h1 style={{fontWeight:'500', fontSize:'24px', color:'#000000'}}>Sales Representative</h1>
+          <h1 style={{ fontWeight: '500', fontSize: '24px', color: '#000000' }}>
+            Sales Representative
+          </h1>
         </div>
 
         <div className="flex   mt-2 gap-4 ">
           <div className="mt-2">
             <div>
-              <span style={{fontWeight:'400', fontSize:'14px', color:'#000000'}}>First Name</span>
+              <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
+                First Name
+              </span>
             </div>
             <div className="mt-1">
               <InputText
@@ -657,7 +669,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
                   border: '1px solid  #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.70rem',
-                  backgroundColor:'#F5F5F5',
+                  backgroundColor: '#F5F5F5',
                 }}
               />
             </div>
@@ -666,7 +678,9 @@ const AddVendor: React.FC<AddVendorProps> = ({
           <div>
             <div className="mt-2">
               <div>
-                <span style={{fontWeight:'400', fontSize:'14px', color:'#000000'}}>Last Name</span>
+                <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
+                  Last Name
+                </span>
               </div>
               <div className="mt-1">
                 <InputText
@@ -682,7 +696,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
                     border: '1px solid  #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.70rem',
-                    backgroundColor:'#F5F5F5',
+                    backgroundColor: '#F5F5F5',
                   }}
                 />
               </div>
@@ -692,7 +706,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
           <div className="card flex justify-content-center mt-2 ">
             <div className="">
               <div>
-                <span style={{fontWeight:'400', fontSize:'14px', color:'#000000'}}>Phone</span>
+                <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>Phone</span>
               </div>
               <div className="mt-1">
                 <InputText
@@ -708,7 +722,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
                     border: '1px solid  #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.70rem',
-                    backgroundColor:'#F5F5F5',
+                    backgroundColor: '#F5F5F5',
                   }}
                 />
               </div>
@@ -719,7 +733,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
         <div className="flex gap-4">
           <div className="mt-2">
             <div>
-              <span style={{fontWeight:'400', fontSize:'14px', color:'#000000'}}>Email</span>
+              <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>Email</span>
             </div>
             <div className="mt-1">
               <InputText
@@ -731,7 +745,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
                   border: '1px solid  #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.70rem',
-                  backgroundColor:'#F5F5F5',
+                  backgroundColor: '#F5F5F5',
                 }}
               />
             </div>
@@ -739,7 +753,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
 
           <div className="mt-2">
             <div className="">
-              <span style={{fontWeight:'400', fontSize:'14px', color:'#000000'}}>Note</span>
+              <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>Note</span>
             </div>
             <div className="mt-1">
               <InputTextarea
@@ -749,8 +763,8 @@ const AddVendor: React.FC<AddVendorProps> = ({
                   border: '1px solid  #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.70rem',
-                  backgroundColor:'#F5F5F5',
-                  boxShadow:'none'
+                  backgroundColor: '#F5F5F5',
+                  boxShadow: 'none',
                 }}
                 autoResize
                 value={note}

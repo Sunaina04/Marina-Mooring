@@ -115,7 +115,6 @@ const Moorings = () => {
             detail: 'User deleted successfully',
             life: 3000,
           })
-          getMooringsData()
           setMooringData([])
         } else {
           toast.current?.show({
