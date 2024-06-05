@@ -21,7 +21,7 @@ const Vendors = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [vendorData, setVendorData] = useState<VendorPayload[]>([])
   const [filteredboatyardsData, setFilteredboatyardsData] = useState<VendorPayload[]>([])
-  const [selectedCustomer, setSelectedCustomer] = useState<any>(undefined)
+  const [selectedCustomer, setSelectedCustomer] = useState<any>()
   const [editMode, setEditMode] = useState(false)
   const [searchText, setSearchText] = useState('')
   const [isLoading, setIsLoading] = useState(true)
@@ -62,6 +62,7 @@ const Vendors = () => {
   }, [getVendors, searchText])
 
   const handleEdit = (rowData: any) => {
+    setModalVisible(true)
     setSelectedCustomer(rowData)
     setEditMode(true)
   }

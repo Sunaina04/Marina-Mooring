@@ -99,40 +99,6 @@ const AddVendor: React.FC<AddVendorProps> = ({
     }
   }
 
-  // useEffect(() => {
-  //   if (editMode) {
-  //     setCompanyName(vendors.companyName || '')
-  //     setPhone(vendors.companyPhoneNumber || '')
-  //     setWebsite(vendors.website || '')
-  //     setStreetBuilding(vendors.street || '')
-  //     setAptSuite(vendors.aptSuite || '')
-  //     setSelectedCity({ name: vendors.country, code: '' })
-  //     setAddressZipCode(vendors.zipCode || undefined)
-  //     setEmailAddress(vendors.companyEmail || '')
-  //     setAccountNumber(vendors.accountNumber || '')
-  //     setFirstName(vendors.firstName || '')
-  //     setLastName(vendors.lastName || '')
-  //     setSalesRepPhone(vendors.salesRepPhoneNumber || '')
-  //     setSalesRepEmail(vendors.salesRepEmail || '')
-  //     setNote(vendors.salesRepNote || '')
-  //   } else {
-  //     setCompanyName('')
-  //     setPhone('')
-  //     setWebsite('')
-  //     setStreetBuilding('')
-  //     setAptSuite('')
-  //     setSelectedCity(undefined)
-  //     setAddressZipCode(undefined)
-  //     setEmailAddress('')
-  //     setAccountNumber('')
-  //     setFirstName('')
-  //     setLastName('')
-  //     setSalesRepPhone('')
-  //     setSalesRepEmail('')
-  //     setNote('')
-  //   }
-  // }, [editMode, vendors])
-
   const cities: CityProps[] = [
     { name: 'New York', code: 'NY' },
     { name: 'Rome', code: 'RM' },
@@ -140,6 +106,33 @@ const AddVendor: React.FC<AddVendorProps> = ({
     { name: 'Istanbul', code: 'IST' },
     { name: 'Paris', code: 'PRS' },
   ]
+
+  const handleEditMode = () => {
+    setFormData((prevState: any) => ({
+      ...prevState,
+      companyName: vendors?.companyName || '',
+      phone: vendors?.companyPhoneNumber || '',
+      website: vendors?.website || '',
+      streetBuildingForAddress: vendors?.street || '',
+      aptSuiteForAddress: vendors?.companyEmail || '',
+      countryForAddress: vendors?.countryResponseDto?.name || '',
+      stateForAddress: vendors?.stateResponseDto?.name || '',
+      zipCodeForAddress: vendors?.zipCode || '',
+      emailForAddress: vendors?.companyEmail || '',
+      streetBuildingForRemit: vendors?.remitStreet || '',
+      aptSuiteForRemit: vendors?.remitApt || '',
+      countryForRemit: vendors?.remitCountryResponseDto?.name || '',
+      stateForRemit: vendors?.remitStateResponseDto?.name || '',
+      zipCodeForRemit: vendors?.remitZipCode || '',
+      emailForRemit: vendors?.remitEmailAddress || '',
+      accountNumber: vendors?.accountNumber || '',
+      firstName: vendors?.firstName || '',
+      lastName: vendors?.lastName || '',
+      // phoneForRepresentative: vendors?. || '',
+      // emailForRepresentative: vendors?. || '',
+      // note: vendors?. || '',
+    }))
+  }
 
   const saveVendor = async () => {
     // const errors = validateFields()
@@ -199,6 +192,14 @@ const AddVendor: React.FC<AddVendorProps> = ({
       })
     }
   }
+
+  useEffect(() => {
+    if (editMode && vendors) {
+      handleEditMode()
+      console.log('vendors', vendors)
+    } else {
+    }
+  }, [editMode, vendors])
 
   return (
     <>

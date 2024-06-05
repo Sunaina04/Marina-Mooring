@@ -1,4 +1,4 @@
-import { Country, Role, State } from './CommonType'
+import { Country, MetaData, Role, State } from './CommonType'
 
 export interface UserLoginPayload {
   name: string
@@ -339,7 +339,15 @@ export interface VendorPayload {
   salesRepPhoneNumber: string
   salesRepEmail: string
   salesRepNote: string
-  primarySalesRep: boolean
+  stateResponseDto: MetaData
+  countryResponseDto: MetaData
+  remitStreet: string
+  remitApt: string
+  remitStateResponseDto: MetaData
+  remitCountryResponseDto: MetaData
+  remitZipCode: string
+  remitEmailAddress: string
+  userId: 2
 }
 
 export interface VendorResponse {
