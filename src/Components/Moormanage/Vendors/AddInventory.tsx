@@ -6,13 +6,15 @@ import { Button } from 'primereact/button'
 import { TypeOfInventoryType } from '../../CommonComponent/MetaDataComponent/MetaDataApi'
 import { MetaData } from '../../../Type/CommonType'
 import { useAddInventoryMutation } from '../../../Services/MoorManage/MoormanageApi'
+import { AddInventoryProps, CustomerDataProps } from '../../../Type/ComponentBasedType'
+import { VendorResponse } from '../../../Type/ApiTypes'
 
-function AddInventory() {
+const AddInventory: React.FC<AddInventoryProps> = ({ vendorId, toastRef, closeModal }) => {
   const { getTypeOfInventoryTypeData } = TypeOfInventoryType()
   const [checked, setChecked] = useState<boolean>(false)
   const [unChecked, setUnChecked] = useState<boolean>(false)
   const [inventoryType, setInventoryType] = useState<MetaData[]>([])
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<any>({
     itemName: '',
     cost: '',
     salePrice: '',
@@ -59,33 +61,32 @@ function AddInventory() {
         itemName: formData?.itemName,
         taxable: checked,
       }
-      console.log('forms', formData, payload)
-      const response = await addInventory(payload).unwrap()
-      // const { status, message } = response as VendorResponse
-      // if (status === 200 || status === 201) {
-      //   toastRef?.current?.show({
-      //     severity: 'success',
-      //     summary: 'Success',
-      //     detail: 'Vendor Saved successfully',
-      //     life: 3000,
-      //   })
-      //   closeModal()
-      //   getVendor()
-      // } else {
-      //   toastRef?.current?.show({
-      //     severity: 'error',
-      //     summary: 'Error',
-      //     detail: message,
-      //     life: 3000,
-      //   })
-      // }
+      const response = await addInventory({ vendorId: vendorId, payload }).unwrap()
+      const { status, message } = response as VendorResponse
+      if (status === 200 || status === 201) {
+        toastRef?.current?.show({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Vendor Saved successfully',
+          life: 3000,
+        })
+        closeModal()
+        // getVendor()
+      } else {
+        toastRef?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+      }
     } catch (error) {
-      // toastRef?.current?.show({
-      //   severity: 'error',
-      //   summary: 'Error',
-      //   detail: error,
-      //   life: 3000,
-      // })
+      toastRef?.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: error,
+        life: 3000,
+      })
     }
   }
 
@@ -111,6 +112,7 @@ function AddInventory() {
               border: errors.type ? '1px solid red' : '1px solid #D5E1EA',
               borderRadius: '0.50rem',
               fontSize: '0.8rem',
+              // paddingBottom:"10px"
             }}
             placeholder="Select Type"
             onChange={(e) => handleInputChange('type', e.target.value)}
@@ -253,7 +255,7 @@ function AddInventory() {
         <div className="mt-10">
           <Button
             label={'Save'}
-            onClick={handleSave}
+            onClick={() => {}}
             style={{
               width: '89px',
               height: '42px',

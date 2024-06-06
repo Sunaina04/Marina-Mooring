@@ -79,6 +79,12 @@ export interface AddVendorProps {
   toastRef?: any
 }
 
+export interface AddInventoryProps {
+  vendorId: any
+  closeModal: () => void
+  toastRef?: any
+}
+
 export interface MoorPayProps {
   invoice: string
   mooringId: string

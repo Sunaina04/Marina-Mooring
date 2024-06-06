@@ -291,7 +291,7 @@ const moormanageApi = userApi.injectEndpoints({
         url: `api/v1/inventory/`,
         method: 'POST',
         body: payload,
-        params: vendorId,
+        params: { vendorId },
       }),
     }),
 
