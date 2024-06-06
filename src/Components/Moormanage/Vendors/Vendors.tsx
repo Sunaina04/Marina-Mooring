@@ -143,9 +143,7 @@ const Vendors = () => {
           color: 'black',
           label: 'View Inventory',
           onClick: (rowData) => {
-            if (rowData.inventoryItems > 0) {
-              navigate(`/moormanage/inventoryDetails?vendorId=${rowData.id}`)
-            }
+            navigate(`/moormanage/inventoryDetails?vendorId=${rowData.id}`)
           },
           underline: true,
           style: {
