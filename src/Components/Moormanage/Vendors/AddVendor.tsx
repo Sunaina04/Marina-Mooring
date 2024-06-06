@@ -56,7 +56,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const phoneRegex = /^\d{10}$/
     const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/
- 
+
     if (!formData.phone) {
       errors.phone = 'Phone is required'
     } else if (!phoneRegex.test(formData.phone)) {
@@ -72,25 +72,25 @@ const AddVendor: React.FC<AddVendorProps> = ({
     } else if (!emailRegex.test(formData.emailForAddress)) {
       errors.emailForAddress = 'Please enter a valid email format'
     }
- 
+
     if (!formData.emailForRemit) {
       errors.emailForRemit = 'Email is required'
     } else if (!emailRegex.test(formData.emailForRemit)) {
       errors.emailForRemit = 'Please enter a valid email format'
     }
- 
+
     if (!formData.emailForRepresentative) {
       errors.emailForRepresentative = 'Email is required'
     } else if (!emailRegex.test(formData.emailForRepresentative)) {
       errors.emailForRepresentative = 'Please enter a valid email format'
     }
- 
+
     if (!formData.website) {
       errors.website = 'Website is required'
     } else if (!urlRegex.test(formData.website)) {
       errors.website = 'Please enter a valid URL'
     }
- 
+
     if (!formData.companyName) errors.companyName = 'companyName is required'
     if (!formData.streetBuildingForAddress)
       errors.streetBuildingForAddress = 'street/Building is required'
@@ -98,21 +98,21 @@ const AddVendor: React.FC<AddVendorProps> = ({
     if (!formData.countryForAddress) errors.countryForAddress = 'country is required'
     if (!formData.stateForAddress) errors.stateForAddress = 'state is required'
     if (!formData.zipCodeForAddress) errors.zipCodeForAddress = 'zipCode is required'
- 
+
     if (!formData.streetBuildingForRemit)
       errors.streetBuildingForRemit = 'street/Building is required'
     if (!formData.aptSuiteForRemit) errors.aptSuiteForRemit = 'apt/Suite is required'
     if (!formData.countryForRemit) errors.countryForRemit = 'country is required'
     if (!formData.stateForRemit) errors.stateForRemit = 'state is required'
     if (!formData.zipCodeForRemit) errors.zipCodeForRemit = 'zipCode is required'
- 
+
     if (!formData.accountNumber) errors.accountNumber = 'accountNumber is required'
- 
+
     if (!formData.firstName) errors.firstName = 'firstName is required'
     if (!formData.lastName) errors.lastName = 'lastName is required'
     if (!formData.phoneForRepresentative) errors.phoneForRepresentative = 'phone is required'
     if (!formData.note) errors.note = 'note is required'
- 
+
     setFieldErrors(errors)
     return errors
   }
@@ -381,7 +381,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
                     border: fieldErrors.website ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.70rem',
-                    paddingLeft:'0.5rem',
+                    paddingLeft: '0.5rem',
                   }}
                 />
               </div>
@@ -566,10 +566,9 @@ const AddVendor: React.FC<AddVendorProps> = ({
               <div>
                 <h1 style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
                   <div className="flex gap-1">
-                  Remit Address
-                  <p className="text-red-600">*</p>
-                </div>
-
+                    Remit Address
+                    <p className="text-red-600">*</p>
+                  </div>
                 </h1>
               </div>
               <div className="flex mt-2 gap-2">
@@ -796,8 +795,8 @@ const AddVendor: React.FC<AddVendorProps> = ({
                   border: fieldErrors.firstName ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.70rem',
-                  backgroundColor:'#F5F5F5',
-                  paddingLeft:'0.5rem',
+                  backgroundColor: '#F5F5F5',
+                  paddingLeft: '0.5rem',
                 }}
               />
               <p>
@@ -830,8 +829,8 @@ const AddVendor: React.FC<AddVendorProps> = ({
                     border: fieldErrors.lastName ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.70rem',
-                    backgroundColor:'#F5F5F5',
-                    paddingLeft:'0.5rem',
+                    backgroundColor: '#F5F5F5',
+                    paddingLeft: '0.5rem',
                   }}
                 />
                 <p>
@@ -867,8 +866,8 @@ const AddVendor: React.FC<AddVendorProps> = ({
                       : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.70rem',
-                    backgroundColor:'#F5F5F5',
-                    paddingLeft:'0.5rem',
+                    backgroundColor: '#F5F5F5',
+                    paddingLeft: '0.5rem',
                   }}
                 />
                 <p>
@@ -905,8 +904,8 @@ const AddVendor: React.FC<AddVendorProps> = ({
                     : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.70rem',
-                  backgroundColor:'#F5F5F5',
-                  paddingLeft:'0.5rem',
+                  backgroundColor: '#F5F5F5',
+                  paddingLeft: '0.5rem',
                 }}
               />
               <p>
@@ -936,10 +935,10 @@ const AddVendor: React.FC<AddVendorProps> = ({
                   border: fieldErrors.note ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.70rem',
-                  backgroundColor:'#F5F5F5',
-                  boxShadow:'none',
-                  paddingLeft:'0.5rem',
-                  paddingTop:'0.5rem',
+                  backgroundColor: '#F5F5F5',
+                  boxShadow: 'none',
+                  paddingLeft: '0.5rem',
+                  paddingTop: '0.5rem',
                 }}
                 autoResize
                 // value={note}
@@ -975,7 +974,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
             boxShadow: 'none',
             color: 'white',
             borderRadius: '0.50rem',
-            marginTop:'10px'
+            marginTop: '10px',
           }}
         />
         <Button
@@ -988,7 +987,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
             border: 'none',
             width: '89px',
             height: '42px',
-            marginTop:'10px'
+            marginTop: '10px',
           }}
         />
       </div>

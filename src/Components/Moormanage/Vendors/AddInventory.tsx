@@ -106,19 +106,20 @@ const AddInventory: React.FC<AddInventoryProps> = ({ id, toastRef, closeModal })
       <div className="ml-4">
         <div>
           <Dropdown
+            value={formData.type}
+            options={inventoryType}
+            onChange={(e) => handleInputChange('type', e.target.value)}
+            optionLabel="type"
+            editable
+            placeholder="Select Type"
             style={{
               width: '230px',
               height: '32px',
               border: errors.type ? '1px solid red' : '1px solid #D5E1EA',
               borderRadius: '0.50rem',
+              color: 'black',
               fontSize: '0.8rem',
-              // paddingBottom:"10px"
             }}
-            placeholder="Select Type"
-            onChange={(e) => handleInputChange('type', e.target.value)}
-            value={formData.type}
-            options={inventoryType}
-            optionLabel="type"
           />
           <p className="">{errors.type && <small className="p-error">{errors.type}</small>}</p>
         </div>

@@ -71,8 +71,6 @@ const metaDataApi = userApi.injectEndpoints({
       }),
     }),
 
-    
-
     getShackleSwivelConditions: builder.mutation({
       query: ({ pageNumber, pageSize }: { pageNumber?: number; pageSize?: number }) => ({
         url: 'api/v1/metadata/shackleSwivelConditions',
@@ -129,7 +127,6 @@ const metaDataApi = userApi.injectEndpoints({
       }),
     }),
 
-
     getInventoryType: builder.mutation({
       query: ({ pageNumber, pageSize }: { pageNumber?: number; pageSize?: number }) => ({
         url: 'api/v1/metadata/inventoryType',
@@ -137,7 +134,6 @@ const metaDataApi = userApi.injectEndpoints({
         params: { pageNumber, pageSize },
       }),
     }),
-
   }),
 })
 
@@ -156,5 +152,5 @@ export const {
   useGetBottomChainConditionsMutation,
   useGetBoatTypeMutation,
   useGetBoatyardsTypeMutation,
-  useGetInventoryTypeMutation
+  useGetInventoryTypeMutation,
 } = metaDataApi

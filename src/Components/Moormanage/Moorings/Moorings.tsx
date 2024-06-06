@@ -109,13 +109,14 @@ const Moorings = () => {
         const response = await deleteMooring({ id: mooringId }).unwrap()
         const { status, message } = response as DeleteCustomerResponse
         if (status === 200) {
+          getMooringsData()
+          setMooringResponseData('')
           toast.current?.show({
             severity: 'success',
             summary: 'Success',
-            detail: 'User deleted successfully',
+            detail: message,
             life: 3000,
           })
-          setMooringData([])
         } else {
           toast.current?.show({
             severity: 'error',
@@ -543,7 +544,7 @@ const Moorings = () => {
                   </p>
 
                   <div className="flex mt-5 ml-4 mb-3 overflow-x-auto">
-                    <div className='mt-1'>
+                    <div className="mt-1">
                       <h1 className="">Boatyard: </h1>
                     </div>
                     <div className="flex gap-4 ml-1">
