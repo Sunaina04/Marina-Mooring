@@ -10,7 +10,7 @@ import {
 import { Button } from 'primereact/button'
 import { Country, State } from '../../../Type/CommonType'
 import { AddVendorProps } from '../../../Type/ComponentBasedType'
-import { VendorResponse } from '../../../Type/ApiTypes'
+import { ErrorResponse, VendorResponse } from '../../../Type/ApiTypes'
 import { CountriesData, StatesData } from '../../CommonComponent/MetaDataComponent/MetaDataApi'
 
 const AddVendor: React.FC<AddVendorProps> = ({
@@ -228,10 +228,11 @@ const AddVendor: React.FC<AddVendorProps> = ({
         })
       }
     } catch (error) {
+      const { message, data } = error as ErrorResponse
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: error,
+        detail: data?.message,
         life: 3000,
       })
     }
@@ -290,10 +291,11 @@ const AddVendor: React.FC<AddVendorProps> = ({
         })
       }
     } catch (error) {
+      const { message, data } = error as ErrorResponse
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: error,
+        detail: data.message,
         life: 3000,
       })
     }

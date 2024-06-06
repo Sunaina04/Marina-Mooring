@@ -82,7 +82,10 @@ export interface AddVendorProps {
 export interface AddInventoryProps {
   id: any
   closeModal: () => void
+  getInventoryHandler: () => void
   toastRef?: any
+  editMode: boolean
+  selectedInventory: any
 }
 
 export interface MoorPayProps {

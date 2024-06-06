@@ -5,11 +5,21 @@ import { Checkbox } from 'primereact/checkbox'
 import { Button } from 'primereact/button'
 import { TypeOfInventoryType } from '../../CommonComponent/MetaDataComponent/MetaDataApi'
 import { MetaData } from '../../../Type/CommonType'
-import { useAddInventoryMutation } from '../../../Services/MoorManage/MoormanageApi'
+import {
+  useAddInventoryMutation,
+  useUpdateInventoryMutation,
+} from '../../../Services/MoorManage/MoormanageApi'
 import { AddInventoryProps, CustomerDataProps } from '../../../Type/ComponentBasedType'
-import { VendorResponse } from '../../../Type/ApiTypes'
+import { CustomerResponse, ErrorResponse, VendorResponse } from '../../../Type/ApiTypes'
 
-const AddInventory: React.FC<AddInventoryProps> = ({ id, toastRef, closeModal }) => {
+const AddInventory: React.FC<AddInventoryProps> = ({
+  id,
+  toastRef,
+  closeModal,
+  editMode,
+  selectedInventory,
+  getInventoryHandler,
+}) => {
   const { getTypeOfInventoryTypeData } = TypeOfInventoryType()
   const [checked, setChecked] = useState<boolean>(false)
   const [unChecked, setUnChecked] = useState<boolean>(false)
@@ -23,6 +33,7 @@ const AddInventory: React.FC<AddInventoryProps> = ({ id, toastRef, closeModal })
   })
   const [errors, setErrors] = useState<{ [key: string]: string }>({})
   const [addInventory] = useAddInventoryMutation()
+  const [UpdateInventory] = useUpdateInventoryMutation()
 
   const handleInputChange = (field: string, value: any) => {
     setFormData({
@@ -47,6 +58,21 @@ const AddInventory: React.FC<AddInventoryProps> = ({ id, toastRef, closeModal })
     return newErrors
   }
 
+  const handleEditMode = () => {
+    setFormData((prevState: any) => ({
+      ...prevState,
+      itemName: selectedInventory?.itemName || '',
+      type: selectedInventory?.inventoryType?.type || '',
+      cost: selectedInventory?.cost || '',
+      salePrice: selectedInventory?.salePrice,
+    }))
+    if (selectedInventory?.taxable === true) {
+      setChecked(true)
+    } else {
+      setUnChecked(true)
+    }
+  }
+
   const handleSave = async () => {
     const validationErrors = validateFields()
     if (Object.keys(validationErrors).length > 0) {
@@ -64,6 +90,7 @@ const AddInventory: React.FC<AddInventoryProps> = ({ id, toastRef, closeModal })
       const response = await addInventory({ vendorId: id, payload: savePayload }).unwrap()
       const { status, message } = response as VendorResponse
       if (status === 200 || status === 201) {
+        getInventoryHandler()
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
@@ -71,7 +98,6 @@ const AddInventory: React.FC<AddInventoryProps> = ({ id, toastRef, closeModal })
           life: 3000,
         })
         closeModal()
-        // getVendor()
       } else {
         toastRef?.current?.show({
           severity: 'error',
@@ -81,10 +107,65 @@ const AddInventory: React.FC<AddInventoryProps> = ({ id, toastRef, closeModal })
         })
       }
     } catch (error) {
+      const { message, data } = error as ErrorResponse
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: error,
+        detail: data.message,
+        life: 3000,
+      })
+    }
+  }
+
+  const handleUpdate = async () => {
+    const errors = validateFields()
+    if (Object.keys(errors).length > 0) {
+      return
+    }
+
+    if (selectedInventory?.taxable === true) {
+      setChecked(true)
+    } else {
+      setUnChecked(true)
+    }
+
+    try {
+      const editPayload = {
+        inventoryTypeId: formData?.type?.id,
+        cost: formData?.cost,
+        salePrice: formData?.salePrice,
+        itemName: formData?.itemName,
+        taxable: checked,
+      }
+      const response = await UpdateInventory({
+        vendorId: id,
+        payload: editPayload,
+        id: selectedInventory?.id,
+      }).unwrap()
+      const { status, message } = response as CustomerResponse
+      if (status === 200 || status === 201) {
+        getInventoryHandler()
+        closeModal()
+        toastRef?.current?.show({
+          severity: 'success',
+          summary: 'Success',
+          detail: message,
+          life: 3000,
+        })
+      } else {
+        toastRef?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+      }
+    } catch (error) {
+      const { message } = error as ErrorResponse
+      toastRef?.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: message,
         life: 3000,
       })
     }
@@ -96,6 +177,12 @@ const AddInventory: React.FC<AddInventoryProps> = ({ id, toastRef, closeModal })
       setInventoryType(typeOfBoatTypeData)
     }
   }, [])
+
+  useEffect(() => {
+    if (editMode) {
+      handleEditMode()
+    }
+  }, [editMode])
 
   useEffect(() => {
     fetchDataInventoryType()
@@ -257,7 +344,11 @@ const AddInventory: React.FC<AddInventoryProps> = ({ id, toastRef, closeModal })
           <Button
             label={'Save'}
             onClick={() => {
-              handleSave()
+              if (editMode) {
+                handleUpdate()
+              } else {
+                handleSave()
+              }
             }}
             style={{
               width: '89px',

@@ -17,6 +17,7 @@ import {
 import { useLocation } from 'react-router-dom'
 import { DeleteCustomerResponse, GetInventoryResponse } from '../../../Type/ApiTypes'
 import { Toast } from 'primereact/toast'
+import { ProgressSpinner } from 'primereact/progressspinner'
 
 const InventoryDetails: React.FC = () => {
   const [searchText, setSearchText] = useState('')
@@ -24,6 +25,7 @@ const InventoryDetails: React.FC = () => {
   const [inventoryEdit, setInventoryEdit] = useState(false)
   const [inventoryData, setInventoryData] = useState<any[]>()
   const [sectectedInventory, setSelectedInventory] = useState<any>([])
+  const [editMode, setEditMode] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const location = useLocation()
   const queryParams = new URLSearchParams(location.search)
@@ -32,9 +34,10 @@ const InventoryDetails: React.FC = () => {
   const [deleteInventory] = useDeleteInventoryMutation()
   const toast = useRef<Toast>(null)
 
-  const handleEdit = () => {
+  const handleEdit = (rowData: any) => {
+    setEditMode(true)
     setModalVisible(true)
-    // setSelectedInventory(inventoryData)
+    setSelectedInventory(rowData)
   }
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,6 +48,7 @@ const InventoryDetails: React.FC = () => {
   }
   const handleModalClose = () => {
     setModalVisible(false)
+    setEditMode(false)
   }
 
   const VendorInventoryColumns = useMemo(
@@ -127,7 +131,9 @@ const InventoryDetails: React.FC = () => {
         {
           color: 'green',
           label: 'Edit',
-          onClick: handleEdit,
+          onClick: (rowData) => {
+            handleEdit(rowData)
+          },
           underline: true,
         },
         {
@@ -154,6 +160,7 @@ const InventoryDetails: React.FC = () => {
       const response = await deleteInventory({ id: rowData?.id, vendorId: vendorId }).unwrap()
       const { status, message } = response as DeleteCustomerResponse
       if (status === 200) {
+        setIsLoading(false)
         toast.current?.show({
           severity: 'success',
           summary: 'Success',
@@ -189,8 +196,6 @@ const InventoryDetails: React.FC = () => {
         } else {
           setInventoryData([])
         }
-      } else {
-        setIsLoading(false)
       }
     } catch (error) {
       console.error('Error occurred while fetching customer data:', error)
@@ -223,7 +228,16 @@ const InventoryDetails: React.FC = () => {
 
           <CustomModal
             buttonText={'ADD NEW'}
-            children={<AddInventory id={vendorId} toastRef={toast} closeModal={handleModalClose} />}
+            children={
+              <AddInventory
+                id={vendorId}
+                toastRef={toast}
+                editMode={editMode}
+                selectedInventory={sectectedInventory}
+                getInventoryHandler={getInventoryHandler}
+                closeModal={handleModalClose}
+              />
+            }
             headerText={<h1 className="text-xl font-extrabold text-black ml-4">Add Inventory</h1>}
             visible={modalVisible}
             onClick={handleButtonClick}
@@ -271,6 +285,20 @@ const InventoryDetails: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {isLoading && (
+        <ProgressSpinner
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '50px',
+            height: '50px',
+          }}
+          strokeWidth="4"
+        />
+      )}
 
       <div
         // style={{border:"1px solid red"}}

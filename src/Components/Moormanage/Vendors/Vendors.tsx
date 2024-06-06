@@ -143,10 +143,15 @@ const Vendors = () => {
           color: 'black',
           label: 'View Inventory',
           onClick: (rowData) => {
-            navigate(`/moormanage/inventoryDetails?vendorId=${rowData.id}`)
+            if (rowData.inventoryItems > 0) {
+              navigate(`/moormanage/inventoryDetails?vendorId=${rowData.id}`)
+            }
           },
           underline: true,
-          style: { margin: 0 },
+          style: {
+            margin: 0,
+            // cursor: rowData.inventoryItems > 0 ? 'pointer' : 'not-allowed'
+          },
         },
         {
           color: 'green',
@@ -170,14 +175,21 @@ const Vendors = () => {
         borderTopRightRadius: '10px',
         borderBottom: '1px solid #C0C0C0',
       },
-      style: { borderBottom: '1px solid #D5E1EA ', width: '14rem', fontWeight: 500 },
+      style: {
+        borderBottom: '1px solid #D5E1EA ',
+        width: '14rem',
+        fontWeight: 500,
+      },
     }),
     [],
   )
 
   useEffect(() => {
-    getVendorData()
-  }, [])
+    const timeoutId = setTimeout(() => {
+      getVendorData()
+    }, 600)
+    return () => clearTimeout(timeoutId)
+  }, [searchText])
 
   return (
     <>

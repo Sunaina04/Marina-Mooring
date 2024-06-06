@@ -118,15 +118,17 @@ const moormanageApi = userApi.injectEndpoints({
         size,
         sortBy,
         sortDir,
+        searchText,
       }: {
         page?: number
         size?: number
         sortBy?: string
         sortDir?: string
+        searchText?: string
       }) => ({
         url: 'api/v1/vendor/',
         method: 'GET',
-        params: { page, size, sortBy, sortDir },
+        params: { page, size, sortBy, sortDir, searchText },
       }),
     }),
 
@@ -297,18 +299,18 @@ const moormanageApi = userApi.injectEndpoints({
 
     updateInventory: builder.mutation({
       query: ({
-        payload,
         vendorId,
+        payload,
         id,
       }: {
-        payload: InventoryPayload
         vendorId: number
+        payload: InventoryPayload
         id: number
       }) => ({
         url: `api/v1/inventory/${id}`,
         method: 'PUT',
         body: payload,
-        params: vendorId,
+        params: { vendorId },
       }),
     }),
   }),
