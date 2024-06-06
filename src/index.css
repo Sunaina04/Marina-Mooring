@@ -1,13 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* 
-.p-selectbutton .p-button.p-highlight {
-  background-color: black;
-}
-.p-selectbutton .p-button.p-highlight:hover {
-  background-color: black;
-} */
 
 .p-dialog {
   border-radius: 10px;
@@ -27,7 +20,8 @@
 }
 
 .p-selectbutton .p-button.p-highlight {
-  background-color: black;
+  background-color: #0098ff;
+  box-shadow: none;
 }
 
 .headerClass {
@@ -37,14 +31,38 @@
 /* searchDataTable */
 
 .p-datatable .p-datatable-tbody > tr {
-  background: #f2f2f2;
+  background: #ffffff;
 }
 
 .p-datatable-thead > th {
   background: #f2f2f2;
 }
-.p-datatable-header {
-  background: #f2f2f2;
+
+.p-datatable-emptymessage {
+  background: #ffffff;
+}
+/* 
+.p-inputswitch-slider{
+  background-color: green;
+} */
+
+.p-inputtext::placeholder {
+  color: #a4a4a4 !important;
 }
 
+#stateDropdown span {
+  color: black !important;
+
+  font-size: 13px !important;
+}
+
+/* .p-datatable .p-datatable-tbody > tr :first-child{
+  padding-top: 0;
+
+
+} */
+
+.custom-dropdown-disabled {
+  cursor: not-allowed !important;
+}
 

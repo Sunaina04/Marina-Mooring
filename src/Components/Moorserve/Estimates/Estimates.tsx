@@ -8,6 +8,8 @@ import { EstimateProps } from '../../../Type/ComponentBasedType'
 import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
+import Header from '../../Layout/LayoutComponents/Header'
+import { EstimateData } from '../../Utils/CustomData'
 
 const Estimates = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -48,7 +50,7 @@ const Estimates = () => {
   ])
 
   const handleButtonClick = () => {
-    setIsModalOpen(true)
+    //  setIsModalOpen(true)
   }
 
   const handleModalClose = () => {
@@ -82,79 +84,80 @@ const Estimates = () => {
     </div>
   )
 
+  const columnStyle = {
+    backgroundColor: '#FFFFFF',
+    color: '#000000',
+    fontWeight: '500',
+    fontSize: '12px',
+  }
 
-
-  const tableColumns = useMemo(
+  const workOrderColumns = useMemo(
     () => [
       {
-        id: 'invoice',
-        label: 'Invoice',
-        style: { width: '6vw', backgroundColor: '#F2F2F2' },
+        id: 'customerId',
+        label: 'Customer ID',
+        style: columnStyle,
+      },
+      {
+        id: 'customerName',
+        label: 'CustomerName',
+        style: columnStyle,
       },
       {
         id: 'mooringId',
         label: 'Mooring ID',
-        style: { width: '12vw', backgroundColor: '#F2F2F2' },
+        style: columnStyle,
       },
       {
-        id: 'customerName',
-        label: 'Customer Name',
-        style: { width: '10vw', backgroundColor: '#F2F2F2' },
+        id: 'boatyard',
+        label: 'Boatyard',
+        style: columnStyle,
       },
       {
-        id: 'technicianName',
-        label: 'Technician Name',
-        style: { width: '12vw', backgroundColor: '#F2F2F2' },
+        id: 'assigned',
+        label: 'Assigned to',
+        style: columnStyle,
       },
       {
-        id: 'services',
-        label: 'Services',
-        style: { width: '10vw', backgroundColor: '#F2F2F2' },
-      },
-      {
-        id: 'time',
-        label: 'Time',
-        style: { width: '10vw', backgroundColor: '#F2F2F2' },
-      },
-      {
-        id: 'amount',
-        label: 'Amount',
-        style: { width: '10vw', backgroundColor: '#F2F2F2' },
+        id: 'dueDate',
+        label: 'Due Date',
+        style: columnStyle,
       },
     ],
     [],
   )
-
 
   const ActionButtonColumn: ActionButtonColumnProps = {
     header: 'Action',
     buttons: [
       {
         color: 'black',
+        label: 'Convert',
+        underline: true,
+      },
+
+      {
+        color: 'black',
         label: 'Edit',
         underline: true,
-      }
+      },
     ],
-    headerStyle:  {backgroundColor:"#F2F2F2"}
+    headerStyle: { backgroundColor: '#FFFFFF', color: '#000000', fontWeight: '500' },
+    style: { borderBottom: '1px solid #D5E1EA', backgroundColor: '#FFFFFF', fontWeight: '400' },
   }
-
-
-
-
 
   return (
     <>
-      <div className="flex justify-between items-center ml-12">
-        <div>
-          <h1 className="mt-14 ml-[7.50vw] opacity-30 text-2xl font-normal">MOORSERVE/Estimates</h1>
-        </div>
-        <div className="flex gap-1 ml-[15rem] text-[gray] font-extrabold mt-14">
+      <Header header="MOORSERVE/Estimates" />
+
+      {/* <div className="flex justify-end gap-6 mt-14 mr-16">
+        <div className="flex text-blue-900 font-extrabold">
           <div>
             <img
               src="/assets/images/download.png"
               alt=""
-              className="w-5 "
-              style={{ filter: 'grayscale(100%)', color: 'gray' }}
+              className="w-5"
+              style={{ filter: 'grayscale(100%)', color: 'blue' }}
             />
           </div>
 
@@ -164,38 +167,97 @@ const Estimates = () => {
 
           <div></div>
         </div>
-        <div className="items-center mr-[10rem] mt-14">
+        <div className="items-center">
           <CustomModal
-            data-testid="modal"
-            onClick={handleButtonClick}
+            buttonText={'ADD NEW'}
+            children={<AddEstimates />}
+            headerText={<h1 className="text-xl font-extrabold text-black ml-4">New User</h1>}
             visible={false}
+            onClick={handleButtonClick}
             onHide={handleModalClose}
-            header={header}
-          >
-            <AddEstimates/>
-          </CustomModal>
+            buttonStyle={{
+              width: '121px',
+              height: '44px',
+              minHeight: '44px',
+              backgroundColor: '#0098FF',
+              cursor: 'pointer',
+              fontSize: '16px',
+              fontWeight: 700,
+              color: 'white',
+              borderRadius: '0.50rem',
+              marginLeft: '8px',
+            }}
+            dialogStyle={{
+              width: '800px',
+              minWidth: '800px',
+              height: '630px',
+              minHeight: '630px',
+              borderRadius: '1rem',
+              maxHeight: '95% !important',
+            }}
+          />
         </div>
       </div>
-  
-      <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[64vw]  ml-32 mt-12 ">
 
-        <DataTableComponent
-         tableStyle={{
-          fontSize: '12px',
-          color: '#000000',
-          fontWeight: 600,
+      <div
+        style={{
+          height: '640px',
+          gap: '0px',
+          borderRadius: '10px',
+          border: '1px solid #D5E1EA',
+          opacity: '0px',
+          backgroundColor: '#FFFFFF',
         }}
-        data={boatData}
-        columns={tableColumns}
-        header={header}
-        actionButtons={ActionButtonColumn}
-        style={{ backgroundColor: '#F2F2F2' }}
-        
+        className="bg-[F2F2F2]  ml-12  mt-6 mr-14">
+        <div className="flex flex-wrap align-items-center justify-between  bg-[#00426F] p-2   rounded-tl-[5px] rounded-tr-[5px]">
+          <span
+            style={{
+              fontSize: '18px',
+              fontWeight: '700',
+              lineHeight: '21.09px',
+              letterSpacing: '0.4837472140789032px',
+              color: '#FFFFFF',
+              padding: '8px',
+            }}>
+            Estimate
+          </span>
+
+          <div className="relative inline-block">
+            <div className="relative">
+              <img
+                src="/assets/images/Search.png"
+                alt="search icon"
+                className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5"
+                data-testid="search-icon"
+              />
+              <InputText
+                placeholder="Search"
+                className="pl-10 w-[237px] 
+                  bg-[#00426F]
+              
+                  h-[35px] rounded-lg border text-white border-[#D5E1EA] focus:outline-none"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="text-center mt-40">
+          <img src="/assets/images/empty.png" alt="Empty Data" className="w-32 mx-auto mb-4" />
+          <p className="text-gray-500">No data available</p>
+        </div>
+
+        <DataTableSearchFieldComponent
+          tableStyle={{
+            fontSize: '12px',
+            color: '#000000',
+            fontWeight: 600,
+          }}
+          data={EstimateData}
+          columns={workOrderColumns}
+          actionButtons={ActionButtonColumn}
+          style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '200' }}
         />
-      
-      </div>
-
-
+      </div> */}
     </>
   )
 }

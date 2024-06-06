@@ -1,15 +1,68 @@
+import { Country, MetaData, Role, State } from './CommonType'
+
 export interface UserLoginPayload {
   name: string
   email: string
   phoneNumber: string
   password: string
   userID: string
-  customerAdminId: string
+  customerOwnerId: string
+  roleResponseDto: Role
+  stateResponseDto: State
+  countryResponseDto: Country
+}
+export interface UserResponse {
+  id: number
+  name: string
+  email: string
+  phoneNumber: string
+  customerOwnerId: string
+  roleResponseDto: Role
+  stateResponseDto: State
+  countryResponseDto: Country
+  street: string
+  apt: string
+  zipCode: string
+  companyName: string
+}
+
+export interface GetUserResponse {
+  message: string
+  status: number
+  errorList: [string]
+  time: string
+  content: UserResponse
+}
+
+export interface DeleteUserResponse {
+  message: string
+  status: number
+  errorList: []
+  time: number
+  content: number
+}
+
+export interface AddUserPayload {
+  name: string
+  email: string
+  phoneNumber: string
+  password: string
+  userID: string
   role: string
   state: string
   country: string
+  street: string
+  apt: string
+  zipCode: string
+  confirmPassword: string
 }
-
+export interface SaveUserResponse {
+  message: string
+  status: number
+  errorList: [string]
+  time: string
+  content: {}
+}
 export interface LoginPayload {
   username: string
   password: string
@@ -41,10 +94,11 @@ export interface UserData {
   creationDate: string
   lastModifiedDate: string
   phoneNumber: string
+  role: RoleData
 }
 
 export interface RoleData {
-  id: string
+  id: number
   creationDate: string
   lastModifiedDate: string
   name: string
@@ -56,6 +110,7 @@ export interface LoginResponse {
   message: string
   user: UserData
   token: string
+  refreshToken: string
   role: RoleData
 }
 
@@ -89,7 +144,11 @@ export interface AuthenticationData {
 export interface ErrorResponse {
   status: number
   message: string
-  data: string
+  data: {
+    content: string
+    message: string
+    status: number
+  }
 }
 
 export type ErrorResponseForgotPassword = {
@@ -121,6 +180,29 @@ export interface CustomerPayload {
   zipCode: string
 }
 
+export interface UpdateMooringPayload {
+  id: number
+  mooringId: string
+  customerId: number
+  harbor: string
+  waterDepth: string
+  gpsCoordinates: '9number                                                                                  152'
+  boatyardId: number
+  boatName: string
+  boatSize: string
+  boatTypeId: number
+  boatWeight: string
+  sizeOfWeightId: number
+  typeOfWeightId: number
+  eyeConditionId: number
+  topChainConditionId: number
+  bottomChainConditionId: number
+  shackleSwivelConditionId: number
+  pennantConditionId: number
+  depthAtMeanHighWater: number
+  statusId: number
+}
+
 export interface AddCustomerPayload {
   id: number
   customerName: string
@@ -139,30 +221,95 @@ export interface CustomerResponse {
   status: number
   errorList: []
   time: string
-  content: {
-    CustomerPayload: CustomerPayload
+  content: { CustomerPayload: CustomerPayload }
+}
+
+export interface DeleteCustomerResponse {
+  message: string
+  status: number
+  errorList: []
+  time: string
+}
+
+export interface customerResponseDto {
+  customerResponseDto: {
+    id: number
+    customerName: string
+    customerId: string
+    phone: string
+    emailAddress: string
+    streetHouse: string
+    aptSuite: string
+    state: string
+    country: string
+    zipCode: string
+    mooringResponseDtoList: MooringResponseDtoList
   }
+  boatyardNames: []
+}
+
+export interface CustomersWithMooringResponse {
+  message: string
+  status: number
+  errorList: []
+  time: number
+  content: customerResponseDto
+}
+
+export interface MooringMetaDataTypes {
+  id: number
+  condition: string
+  description: string
+  weight: string
+  unitType: string
+  boatType: string
+  type: string
 }
 
 export interface MooringPayload {
+  boatyardName: string
   id: number
   mooringNumber: string
+  mooringId: string
   customerName: string
   harbor: string
   waterDepth: string
   gpsCoordinates: string
   boatName: string
   boatSize: string
-  boatType: string
+  boatType: MooringMetaDataTypes
   boatWeight: string
-  conditionOfEye: string
-  bottomChainCondition: string
-  topChainCondition: string
-  shackleSwivelCondition: string
-  pennantCondition: string
-  sizeOfWeight: string
-  typeOfWeight: string
-  deptAtMeanHighWater: string
+  eyeCondition: MooringMetaDataTypes
+  bottomChainCondition: MooringMetaDataTypes
+  topChainCondition: MooringMetaDataTypes
+  shackleSwivelCondition: MooringMetaDataTypes
+  pennantCondition: MooringMetaDataTypes
+  sizeOfWeight: MooringMetaDataTypes
+  typeOfWeight: MooringMetaDataTypes
+  depthAtMeanHighWater: number
+}
+
+export interface MooringResponseDtoList {
+  id: number
+  mooringId: string
+  mooringName: string
+  customerName: string
+  harbor: string
+  waterDepth: string
+  gpsCoordinates: string
+  boatyardName: string
+  boatName: string
+  boatSize: string
+  boatType: MooringMetaDataTypes
+  boatWeight: string
+  eyeCondition: MooringMetaDataTypes
+  bottomChainCondition: MooringMetaDataTypes
+  topChainCondition: MooringMetaDataTypes
+  shackleSwivelCondition: MooringMetaDataTypes
+  pennantCondition: MooringMetaDataTypes
+  sizeOfWeight: MooringMetaDataTypes
+  typeOfWeight: MooringMetaDataTypes
+  depthAtMeanHighWater: number
 }
 
 export interface MooringResponse {
@@ -192,7 +339,15 @@ export interface VendorPayload {
   salesRepPhoneNumber: string
   salesRepEmail: string
   salesRepNote: string
-  primarySalesRep: boolean
+  stateResponseDto: MetaData
+  countryResponseDto: MetaData
+  remitStreet: string
+  remitApt: string
+  remitStateResponseDto: MetaData
+  remitCountryResponseDto: MetaData
+  remitZipCode: string
+  remitEmailAddress: string
+  userId: 2
 }
 
 export interface VendorResponse {
@@ -203,6 +358,31 @@ export interface VendorResponse {
   content: {
     VendorPayload: VendorPayload
   }
+}
+
+export interface GetInventoryResponse {
+  message: string
+  status: number
+  errorList: []
+  time: number
+  content: [
+    {
+      id: number
+      itemName: string
+      cost: number
+      salePrice: number
+      taxable: boolean
+      inventoryType: {
+        id: number
+        creationDate: number
+        createdBy: string
+        lastModifiedDate: number
+        lastModifiedBy: string
+        type: string
+        description: string
+      }
+    },
+  ]
 }
 
 export type BoatYardData = {
@@ -230,10 +410,38 @@ export type BoatYardData = {
 export interface BoatYardPayload {
   id: number
   boatyardId: string
-  mooringName: string
-  ownerName: string
+  boatyardName: string
   emailAddress: string
   phone: string
+  street: string
+  apt: string
+  state: string
+  country: string
+  zipCode: string
+  mainContact: string
+  gpsCoordinates: string
+  mooringInventoried: number
+  mooringResponseDtoList: []
+}
+
+export interface RowExpansionBoatYardData {
+  Response: [
+    {
+      id: number
+      boatyardId: string
+      boatyardName: string
+      emailAddress: string
+      phone: string
+      street: string
+      apt: string
+      state: string
+      country: string
+      zipCode: string
+      mainContact: string
+      gpsCoordinates: string
+      mooringInventoried: number
+    },
+  ]
 }
 
 export interface BoatYardResponse {
@@ -241,9 +449,42 @@ export interface BoatYardResponse {
   message: string
   errorList: []
   time: string
-  content: {
-    BoatYardPayload: BoatYardPayload
-  }
+  content: BoatYardPayload
+}
+
+export interface MooringWithBoatYardContent {
+  id: 1
+  mooringName: string
+  mooringId: string
+  customerName: string
+  mooringNumber: number
+  harbor: string
+  waterDepth: string
+  gpsCoordinates: string
+  boatyardName: string
+  boatName: string
+  boatSize: string
+  boatType: MooringMetaDataTypes
+  boatWeight: string
+  eyeCondition: MooringMetaDataTypes
+  bottomChainCondition: MooringMetaDataTypes
+  topChainCondition: MooringMetaDataTypes
+  shackleSwivelCondition: MooringMetaDataTypes
+  pennantCondition: MooringMetaDataTypes
+  sizeOfWeight: MooringMetaDataTypes
+  typeOfWeight: MooringMetaDataTypes
+  depthAtMeanHighWater: number
+  status: string
+  boatyardNames: string
+  customerId: string
+}
+
+export interface MooringWithBoatYardResponse {
+  message: string
+  status: number
+  errorList: []
+  time: number
+  content: MooringWithBoatYardContent
 }
 
 export interface TechnicianPayload {
@@ -324,11 +565,13 @@ export interface WorkOrderResponse {
 
 export interface ContentData {
   name: string
+  customerName: string
   id: number
   label: undefined
 }
 
 export interface Content {
+  content(content: any): unknown
   data: ContentData
 }
 
@@ -338,4 +581,13 @@ export interface MetaDataResponse {
   errorList: []
   time: number
   content: Content
+}
+
+export interface InventoryPayload {
+  id: number
+  inventoryTypeId: number
+  itemName: string
+  cost: number
+  salePrice: number
+  taxable: boolean
 }

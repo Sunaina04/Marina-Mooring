@@ -1,5 +1,6 @@
-import React from "react";
+import React, { CSSProperties, FocusEventHandler } from "react";
 import { InputText } from "primereact/inputtext";
+import { BsEyeSlash } from "react-icons/bs";
 
 interface InputStyle {
   width?: string;
@@ -9,7 +10,9 @@ interface InputStyle {
   border?: string; 
   fontFamily?: string;
   borderRadius?: string; 
+  
 }
+
 
 interface InputComponentProps {
   placeholder?: string;
@@ -19,8 +22,13 @@ interface InputComponentProps {
   disabled?: boolean;
   required?: boolean;
   autoFocus?: boolean;
-  style?: InputStyle;
+  style?: React.CSSProperties;
   name?: string;
+  onFocus?: any;
+  onBlur?: any;
+  
+  
+  
 }
 
 const InputComponent: React.FC<InputComponentProps> = ({
@@ -32,7 +40,11 @@ const InputComponent: React.FC<InputComponentProps> = ({
   required,
   autoFocus,
   style,
-  name
+  name,
+  onFocus,
+  onBlur,
+  
+
 }) => {
   return (
     <div className="p-inputgroup">
@@ -46,7 +58,12 @@ const InputComponent: React.FC<InputComponentProps> = ({
         autoFocus={autoFocus}
         name={name}
         style={style}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        
       />
+
+      
     </div>
   );
 };

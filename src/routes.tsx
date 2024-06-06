@@ -1,7 +1,6 @@
 import React from 'react'
 import ForgotPassword from './Components/ForgotPassword/ForgotPassword'
 import Dashboard from './Components/Dashboard/Dashboard'
-import LoginMain from './Components/Login/LoginMain'
 import ResetPassword from './Components/ResetPassword/ResetPassword'
 import SignUp from './Components/SignUp/SignUp'
 import AdminLayout from './Components/Layout/Admin/AdminLayout'
@@ -22,17 +21,21 @@ import TimeCards from './Components/Moorserve/TimeCards/TimeCards'
 import Forms from './Components/Moorserve/Forms/Forms'
 import ReportsMoorserve from './Components/Moorserve/Reports/ReportsMoorserve'
 import Customer from './Components/Moormanage/Customer/Customer'
-import Permission from './Components/AdminTools/CustomerAdmin'
+import Permission from './Components/AdminTools/Permission'
 import Admin from './Components/EmployeeManagement/Admin'
+import LoginForm from './Components/Login/LoginForm'
+import CustomerAdmin from './Components/AdminTools/CustomerOwner'
+import InventoryDetails from './Components/Moormanage/Vendors/InventoryDetails'
+
 
 const routes = [
   {
     path: '',
-    element: <LoginMain />,
+    element: <LoginForm />,
   },
   {
     path: 'login',
-    element: <LoginMain />,
+    element: <LoginForm />,
   },
   {
     path: 'signup',
@@ -46,17 +49,6 @@ const routes = [
     path: 'forgotPassword',
     element: <ForgotPassword />,
   },
-  {
-    path: 'admin/login',
-    element: <Admin />,
-    children: [
-      {
-        path: 'permisiion',
-        element: <Permission />,
-      },
-    ],
-  },
-
   {
     path: '',
     element: <AdminLayout />,
@@ -80,6 +72,10 @@ const routes = [
           {
             path: 'vendors',
             element: <Vendors />,
+          },
+          {
+            path: 'inventoryDetails',
+            element: <InventoryDetails />,
           },
           {
             path: 'technicians',
@@ -119,7 +115,7 @@ const routes = [
         children: [
           {
             path: 'workOrders',
-            element: <WorkOrders/>,
+            element: <WorkOrders />,
           },
           {
             path: 'estimates',
@@ -141,6 +137,10 @@ const routes = [
       },
       {
         path: 'customerAdmin',
+        element: <CustomerAdmin />,
+      },
+      {
+        path: 'permission',
         element: <Permission />,
       },
     ],

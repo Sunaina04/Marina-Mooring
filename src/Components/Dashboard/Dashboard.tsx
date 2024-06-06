@@ -1,94 +1,168 @@
-import { DataTable } from 'primereact/datatable'
-import { Column } from 'primereact/column'
-import { useState } from 'react'
-import { FaCircle } from 'react-icons/fa6'
-import Timeline from '../CustomComponent/Timeline'
+import { useMemo, useState } from 'react'
 import Accordition from '../CommonComponent/Accordion'
-import { BillsData, BoatData } from '../../Type/ComponentBasedType'
 import { NullableDateArray } from '../../Type/CommonType'
 import DataTableComponent from '../CommonComponent/Table/DataTableComponent'
+import Header from '../Layout/LayoutComponents/Header'
+import { ActionButtonColumnProps, TableColumnProps } from '../../Type/Components/TableTypes'
+import { dasboardTable } from '../Utils/CustomData'
+import CustomDisplayPositionMap from '../Map/CustomDisplayPositionMap'
+import CustomMooringPositionMap from '../Map/CustomMooringPositionMap'
 
 const Dashboard = () => {
   const [date, setDate] = useState<NullableDateArray>(null)
   const options: string[] = ['Pending', 'Cleared']
   const [value, setValue] = useState<string>(options[0])
+  const columns: TableColumnProps[] = useMemo(
+    () => [
+      {
+        id: 'id',
+        label: 'ID',
+        style: {
+          fontSize: '10px',
+          width: '12vw',
+          backgroundColor: '#FFFFFF',
+          color: '#000000',
+          fontWeight: '700',
+        },
+      },
+      {
+        id: 'customerName',
+        label: 'Customer Name',
+        style: {
+          fontSize: '10px',
+          width: '18vw',
+          backgroundColor: '#FFFFFF',
+          color: '#000000',
+          fontWeight: '700',
+        },
+      },
+      {
+        id: 'mooringId',
+        label: 'Mooring ID',
+        style: {
+          fontSize: '10px',
+          width: '18vw',
+          backgroundColor: '#FFFFFF',
+          color: '#000000',
+          fontWeight: '700',
+        },
+      },
+
+      {
+        id: 'mooringServiceDate',
+        label: 'Mooring service Date',
+        style: {
+          fontSize: '10px',
+          width: '20vw',
+          backgroundColor: '#FFFFFF',
+          color: '#000000',
+          fontWeight: '700',
+        },
+      },
+      {
+        id: 'mooringLocation ',
+        label: 'Mooring Location ',
+        style: {
+          fontSize: '10px',
+          width: '20vw',
+          backgroundColor: '#FFFFFF',
+          color: '#000000',
+          fontWeight: '700',
+        },
+      },
+      {
+        id: 'status',
+        label: 'Status',
+        style: {
+          fontSize: '10px',
+          width: '24vw',
+          backgroundColor: '#FFFFFF',
+          color: '#000000',
+          fontWeight: '700',
+        },
+      },
+    ],
+    [],
+  )
+
+  const ActionButtonColumn: ActionButtonColumnProps = {
+    header: '',
+    buttons: [
+      {
+        underline: true,
+        label: 'Edit',
+        color: 'green',
+      },
+    ],
+    headerStyle: { backgroundColor: '#FFFFFF' },
+  }
+
   const Boatsheader = (
-    <div className="flex flex-wrap align-items-center justify-between gap-2 p-4">
-      <span className="text-xl font-extrabold">Moorings Due for Service</span>
+    <div className="flex flex-wrap align-items-center justify-between gap-2 p-4 bg-[#FFFFFF] ">
       <span
         style={{
-          fontFamily: 'Lato',
-          fontSize: '14px',
-          fontWeight: 700,
-          lineHeight: '16.8px',
-          letterSpacing: '0.4837472140789032px',
+          fontWeight: '700',
+          fontSize: '16px',
+          lineHeight: '18.75px',
+          letterSpacing: '0.46px',
+          color: '#000000',
+        }}>
+        Moorings Due for Service
+      </span>
+      <span
+        style={{
+          width: '80px',
+          height: '16px',
+          opacity: '50%',
+          fontSize: '13.59px',
+          fontWeight: '400',
+          lineHeight: '15.92px',
+          letterSpacing: '0.46px',
           textAlign: 'right',
-        }}
-        className="font-[Lato], font-bold leading-4 text-right tracking-tight">
-        View All
+        }}>
+        View all
       </span>
     </div>
   )
-
   return (
     <>
-      <div className="flex ml-12 hello">
-        <div>
-          <h1 className="mt-14 ml-12 opacity-30 text-2xl font-normal">DASHBOARD</h1>
-        </div>
-      </div>
+      <Header header="DASHBOARD" />
+      <div className="flex flex-shrink  ml-12 gap-6 mt-10">
+        <div className="right flex flex-col ">
+          <div style={{ height: '500px', width: '50vw' }}>
+            <CustomMooringPositionMap
+              position={[30.698, 76.657]}
+              zoomLevel={10}
+              style={{ height: '100%', width: '100%' }}
+            />
+          </div>
 
-      <div className="flex justify-between p-4 ml-8">
-        <div className="flex flex-col ">
-          <div className="w-[43vw] h-14 mt-11">
-            <img src="/assets/images/map.png" />
-            <div className="-translate-y-[45vh] translate-x-[5vw]">
-              <Timeline />
-            </div>
-            <div className="-translate-y-[45vh] translate-x-[20vw]">
-              <Timeline />
-            </div>
-          </div>
-          <div className="absolute -translate-y-[19vh] translate-x-[25vw] bottom-0  rounded-md border-[1px] p-1 border-gray-300 w-[17vw] h-[13vh] bg-white">
-            <p className="text-[0.7rem] ml-1  text-black">Status</p>
-            <hr className="m-1 border-black" />
-            <div className="flex">
-              <div>
-                <FaCircle className="h-3 text-red-600 mt-1" />
-                <FaCircle className="h-3 text-green-600 mt-4" />
-              </div>
-              <div>
-                <p className="text-[0.6rem] text-black mt-1">Need inspection</p>
-                <p className="text-[0.6rem] text-black tracking-tighter mt-[0.9rem]">
-                  Gear On (in the water)
-                </p>
-              </div>
-              <div className="ml-1">
-                <FaCircle className="h-3 text-violet-600 mt-1 " />
-                <FaCircle className="h-3 text-gray-500 mt-4" />
-              </div>
-              <div>
-                <p className="text-[0.6rem] text-black tracking-tighter mt-1">
-                  Gear Off (out of the water)
-                </p>
-                <p className="text-[0.6rem] text-black tracking-tighter mt-[0.9rem]">Not in Use</p>
-              </div>
-            </div>
-          </div>
-          <div className="bg-[#F2F2F2] rounded-xl border-[1px] border-[#D1D1D1] p- mt-[20rem] w-[43vw] ">
+          <div
+            style={{
+              height: '300.2px',
+              maxWidth: '50vw',
+              gap: '0px',
+              borderRadius: '10px',
+              opacity: '0px',
+              border: '1px solid #D5E1EA',
+              backgroundColor: '#FFFFFF',
+              marginTop: '20px',
+            }}>
             <DataTableComponent
+              columns={columns}
+              actionButtons={ActionButtonColumn}
               header={Boatsheader}
-              tableStyle={{
-                fontSize: '0.90rem',
-                fontWeight: 'bold',
-              }}
-              scrollable={true}
-              columns={[]}
             />
           </div>
         </div>
-        <div className="mr-50 mt-11">
-          <Accordition />
+        <div
+          className="left "
+          style={{
+            flexShrink: 1,
+          }}>
+          <div>
+            <Accordition />
+          </div>
         </div>
       </div>
     </>

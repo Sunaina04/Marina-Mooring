@@ -1,19 +1,32 @@
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import L from 'leaflet'
 import './CustomMap.css'
-import DefaultIcon from './DefaultIcon'
 import { CustomDisplayPositionMapProps } from '../../Type/Components/MapTypes'
+import { useRef } from 'react'
+import { DefaultIcon } from './DefaultIcon'
 
 const CustomDisplayPositionMap: React.FC<CustomDisplayPositionMapProps> = ({
-  position = [31.63398, 74.872261],
-  zoomLevel = 9,
+  position,
+  zoomLevel,
   popUpMessage,
+  style,
 }) => {
+  const markerRef = useRef(null)
   return (
-    <MapContainer center={position} zoom={zoomLevel}>
-      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-      <Marker position={position}>
-        <Popup>{popUpMessage}</Popup>
+    <MapContainer
+      style={style}
+      center={position}
+      zoom={zoomLevel}
+      scrollWheelZoom={false}
+      attributionControl={false}
+      // zoomControl={false}
+    >
+      <TileLayer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      />
+      <Marker position={position} ref={markerRef}>
+        {/* <Popup>{popUpMessage}</Popup> */}
       </Marker>
     </MapContainer>
   )

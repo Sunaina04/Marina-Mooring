@@ -1,188 +1,170 @@
-import React, { useState } from "react";
-import { IoAddOutline } from "react-icons/io5";
-import { FiMinus } from "react-icons/fi";
-import { FaCalendar } from "react-icons/fa";
-import { BsFileCheckFill } from "react-icons/bs";
-import { Column } from "primereact/column";
-import { DataTable } from "primereact/datatable";
-import StatCard from "../StatCard/StatCard";
+import React, { useMemo, useState } from 'react'
+import { IoAddOutline } from 'react-icons/io5'
+import { FiMinus } from 'react-icons/fi'
+import { FaCalendar } from 'react-icons/fa'
+import { BsFileCheckFill } from 'react-icons/bs'
+import { Column } from 'primereact/column'
+import { DataTable } from 'primereact/datatable'
+import StatCard from '../StatCard/StatCard'
+import DataTableComponent from './Table/DataTableComponent'
+import { ActionButtonColumnProps, TableColumnProps } from '../../Type/Components/TableTypes'
+import { AccorditionDataTable } from '../Utils/CustomData'
+import DatePickerComponent from './DatePickerComponent'
 
 const Accordion = () => {
-  const [accordion, setAccordion] = useState("faq1");
-  const [billsData, setBillsData] = useState([
-    {
-      workOrderNo: "B0210",
-      customerName: "Suncatcher",
-      assignedTo: "John Smith",
-      date: "15, March 2024",
-    },
-    {
-      workOrderNo: "B0210",
-      customerName: "Suncatcher",
-      assignedTo: "John Smith",
-      date: "15, March 2024",
-    },
-    {
-      workOrderNo: "B0210",
-      customerName: "Suncatcher",
-      assignedTo: "John Smith",
-      date: "15, March 2024",
-    },
-    {
-      workOrderNo: "B0210",
-      customerName: "Suncatcher",
-      assignedTo: "John Smith",
-      date: "15, March 2024",
-    },
-  ]);
+  const [accordion, setAccordion] = useState('faq1')
 
   const statCardsData = [
     [
-      { title: "Total Customers", percentage: 17, count: 42324 },
-      { title: "Total Customers", percentage: 17, count: 43324 },
-      { title: "Total Customers", percentage: 17, count: 44324 },
-      { title: "Total Customers", percentage: 17, count: 58765 },
-      { title: "Total Customers", percentage: 17, count: 42324 },
-      { title: "Total Customers", percentage: 17, count: 46789 },
+      { title: 'Total Customers', percentage: 17, count: 42324 },
+      { title: 'Total Customers', percentage: 17, count: 43324 },
+      { title: 'Total Customers', percentage: 17, count: 44324 },
+      { title: 'Total Customers', percentage: 17, count: 58765 },
+      { title: 'Total Customers', percentage: 17, count: 42324 },
+      { title: 'Total Customers', percentage: 17, count: 46789 },
     ],
-  ];
+  ]
 
   const handleToggle = (id: string) => {
-    setAccordion((prevState) => (prevState === id ? "" : id));
-  };
+    setAccordion((prevState) => (prevState === id ? '' : id))
+  }
+
+  const columns: TableColumnProps[] = useMemo(
+    () => [
+      {
+        id: 'orderNo',
+        label: 'Order No.',
+        style: { fontSize: '10px', width: '12vw', backgroundColor: '#FFFFFF', color: '#000000' },
+      },
+      {
+        id: 'mooringId',
+        label: 'Mooring ID',
+        style: { fontSize: '10px', width: '12vw', backgroundColor: '#FFFFFF', color: '#000000' },
+      },
+      {
+        id: 'customerName',
+        label: 'Customer Name',
+        style: { fontSize: '10px', width: '18vw', backgroundColor: '#FFFFFF', color: '#000000' },
+      },
+      {
+        id: 'assignedTo',
+        label: 'Assigned To',
+        style: { fontSize: '10px', width: '12vw', backgroundColor: '#FFFFFF', color: '#000000' },
+      },
+      {
+        id: 'date',
+        label: 'Date',
+        style: { fontSize: '10px', width: '20vw', backgroundColor: '#FFFFFF', color: 'black' },
+      },
+    ],
+    [],
+  )
+
+  const ActionButtonColumn: ActionButtonColumnProps = {
+    header: '',
+    buttons: [
+      {
+        underline: true,
+        label: 'view',
+        filled: true,
+      },
+    ],
+    headerStyle: { backgroundColor: '#FFFFFF' },
+  }
 
   return (
-    <div className="wrapper">
-      <div className="tab px-4 py-2 bg-[#F8F8F8] border-[1px] border-[#D1D1D1] relative mb-8 rounded-md w-[34vw]">
+    <div className="flex   flex-col wrapper" >
+      <div className=" tab px-5 relative mb-4 rounded-md bg-white border-[1px] border-[#D5E1EA] mr-8  ">
         <label
           htmlFor="faq1"
-          className="flex items-center cursor-pointer font-semibold text-lg after:absolute after:right-5 after:text-2xl after:text-gray-400 hover:after:text-gray-950 peer-checked:after:transform peer-checked:after:rotate-45 h-10"
-          onClick={() => handleToggle("faq1")}
-        >
-          <div className="flex mt-3 gap-2 p-1">
-            <div className="mt-[0.30rem]">
-              <FaCalendar style={{ fontSize: "1rem" }} />
-            </div>
-
+          className="cursor-pointer flex items-center justify-between h-14"
+          onClick={() => handleToggle('faq1')}>
+          <div className="flex items-center gap-4">
             <div>
-              <h1 className="w-40">Calendar</h1>
+              <img alt="icon" src="/assets/images/Calendar.svg" style={{ width: '23px', }} />
             </div>
-
-            <div className="ml-[20rem] mt-1">
-              {accordion === "faq1" ? <FiMinus /> : <IoAddOutline />}
+            <div>
+              <h1 className="text-[16px] font-[500] text-[#10293A] leading-[18.75px]">Calendar</h1>
+            </div>
+          </div>
+          <div>
+            <div className="">
+              {accordion === 'faq1' ? (
+                <FiMinus style={{ color: '#10293A' }} />
+              ) : (
+                <IoAddOutline style={{ color: '#10293A' }} />
+              )}
             </div>
           </div>
         </label>
         <div
-          className={`content mt-5 transition-all ease-in-out duration-500 overflow-hidden ${
-            accordion === "faq1" ? "" : "hidden"
-          }`}
-        >
-          helllooo
+          className={`content mt-5 transition-all ease-in-out duration-500 ${accordion === 'faq1' ? '' : 'hidden'}`}>
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <DatePickerComponent />
+          </div>
         </div>
       </div>
-      <div className="tab px-5 relative mb-4 rounded-md  bg-white border-[1px] border-[#D1D1D1]   w-[34vw]">
+      <div className="tab px-5 relative mb-4 rounded-md bg-[#FFFFFF] border-[1px] border-[#D5E1EA] mr-8">
         <label
           htmlFor="faq2"
-          className=" cursor-pointer   flex text-center after:absolute peer-checked:after:transform peer-checked:after:rotate-45 h-14"
-          onClick={() => handleToggle("faq2")}
-        >
-          <div className="flex mt-3 gap-2 p-1">
-            <div className="mt-1">
-              <BsFileCheckFill style={{ fontSize: "1rem" }} />
-            </div>
+          className="cursor-pointer flex items-center justify-between h-14"
+          onClick={() => handleToggle('faq2')}>
+          <div className="flex items-center gap-4">
             <div>
-              <h1 className="w-40 text-black font-extrabold">
+              <img alt="icon" src="/assets/images/file.svg" style={{ width: '23px' }} />
+            </div>
+            <div style={{flexShrink:1}}>
+              <h1 className="text-[16px] font-[500] text-[#10293A] leading-[18.75px]">
                 Open Work Orders
               </h1>
             </div>
-            <div className="ml-[20rem] mt-1">
-              {accordion === "faq2" ? <FiMinus /> : <IoAddOutline />}
+          </div>
+
+          <div>
+            <div className="">
+              {accordion === 'faq2' ? (
+                <FiMinus style={{ color: '#10293A' }} />
+              ) : (
+                <IoAddOutline style={{ color: '#10293A' }} />
+              )}
             </div>
           </div>
         </label>
         <label
           htmlFor="faq3"
-          className={`content mt-5 transition-all ease-in-out duration-500 overflow-hidden ${
-            accordion === "faq2" ? "" : "hidden"
-          }`}
-        >
-          <div className="">
-            <DataTable
-              value={billsData}
-              header={""}
-              tableStyle={{
-                fontSize: "0.60rem",
-                fontWeight: "bold",
-              }}
-              scrollable={true}
-            >
-              <Column
-                style={{ width: "7vw" }}
-                field="workOrderNo"
-                header="Order "
-              ></Column>
-              <Column
-                style={{ width: "7vw" }}
-                field="workOrderNo"
-                header="Mooring ID"
-              ></Column>
-              <Column
-                style={{ width: "8vw" }}
-                field="customerName"
-                header="Customer Name"
-              ></Column>
-              <Column
-                style={{ width: "8vw" }}
-                field="assignedTo"
-                header="Assigned To"
-              ></Column>
-              <Column
-                style={{ width: "7vw" }}
-                field="date"
-                header="Date"
-              ></Column>
-
-              <Column
-                header=""
-                body={() => (
-                  <div className="flex gap-4">
-                    <span className="text-black underline cursor-pointer">
-                      View
-                    </span>
-                  </div>
-                )}
-              ></Column>
-            </DataTable>
-          </div>
+          className={`content mt-5 transition-all ease-in-out duration-500 ${accordion === 'faq2' ? '' : 'hidden'}`}>
+          <DataTableComponent
+            data={AccorditionDataTable}
+            columns={columns}
+            actionButtons={ActionButtonColumn}
+            scrollable
+            tableStyle={{ fontSize: '10px' }}
+          />
         </label>
       </div>
 
-      <div className="tab px-5 py-2 bg-white border-[1px] border-[#D1D1D1] relative mb-2 rounded-md w-[34vw]">
+      <div className="tab px-5 py-3 bg-white border-[1px] border-[#D5E1EA] relative mb-2 rounded-md mr-8">
         <label
           htmlFor="faq3"
-          className="cursor-pointer font-semibold text-lg after:absolute after:right-5 after:text-2xl after:text-gray-400 hover:after:text-gray-950 peer-checked:after:transform peer-checked:after:rotate-45 h-8"
-          onClick={() => handleToggle("faq3")}
-        >
-          <div className="flex mt-3 gap-2 p-1">
-            <span className="">
-              <img alt="icon" src="/assets/images/ship.png" style={{ width: "23px" }} />
-            </span>
-
-            <div>
-              <h1 className="w-44 ">Total Moorings</h1>
+          className="cursor-pointer flex items-center justify-between h-8"
+          onClick={() => handleToggle('faq3')}>
+          <div className="flex items-center gap-2">
+            <img alt="icon" src="/assets/images/Group.svg" style={{ width: '25px' }} />
+            <div className="ml-2 " style={{flexShrink:1}}>
+              <h1 className="text-[#10293A] font-[500] leading-[18.75px]">Total Moorings</h1>
             </div>
+          </div>
 
-            <div className="ml-[18.50rem]">
-              {accordion === "faq3" ? <FiMinus /> : <IoAddOutline />}
-            </div>
+          <div className="">
+            {accordion === 'faq3' ? (
+              <FiMinus style={{ color: '#10293A' }} />
+            ) : (
+              <IoAddOutline style={{ color: '#10293A' }} />
+            )}
           </div>
         </label>
         <div
-          className={`content mt-5 transition-all ease-in-out duration-500 overflow-hidden ${
-            accordion === "faq3" ? "" : "hidden"
-          }`}
-        >
+          className={`content mt-5 transition-all ease-in-out duration-500 ${accordion === 'faq3' ? '' : 'hidden'}`}>
           <div>
             {statCardsData.map((items) => (
               <StatCard key={items[0].title} items={items} />
@@ -191,7 +173,7 @@ const Accordion = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Accordion;
+export default Accordion

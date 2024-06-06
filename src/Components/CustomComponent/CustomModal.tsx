@@ -1,82 +1,57 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Button } from 'primereact/button'
 import { Dialog } from 'primereact/dialog'
-
-export const style = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: "''",
-  transform: 'translate(-50%, -50%)',
-  bgcolor: 'background.white',
-  borderRadius: '25px',
-  p: 3,
-  maxHeight: '90vh',
-  overflowY: 'auto',
-}
-interface CustomModalProps {
-  onClick: () => void
-  visible: boolean
-  style?: React.CSSProperties
-  onHide: () => void
-  children?: React.ReactNode
-  header?: React.ReactNode
-  label?: string
-  icon?: boolean
-}
+import { CustomModalProps } from '../../Type/ComponentBasedType'
 
 const CustomModal: React.FC<CustomModalProps> = ({
-  onClick,
-  visible,
-  style,
-  onHide,
+  buttonText,
+  headerText,
+  dialogProps,
   children,
-  header,
-  label,
-  icon,
+  visible,
+  onClick,
+  onHide,
+  buttonStyle,
+  dialogStyle,
+  footerContent,
+  button,
 }) => {
-  const [internalVisible, setInternalVisible] = useState<boolean>(false)
-
   return (
-    <>
-      <div className="flex gap-4">
+    <div className="card flex justify-content-center">
+      {!button && (
         <Button
-          onClick={() => {
-            setInternalVisible(true)
-          }}
-          className="shadow-none"
-          style={style}>
-          {!icon && (
-            <img
-              src="/assets/images/plus.png"
-              alt="icon"
-              className="w-4 ml-3 mr-3"
-              style={{
-                filter: 'invert(100%)',
-                color: 'white',
-                fontWeight: 'bolder',
-              }}
-            />
-          )}
-          {label ? label : 'ADD NEW'}
-        </Button>
-
-        <Dialog
-          header={header}
-          visible={visible || internalVisible}
+          label={buttonText}
+          icon={
+            <img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8 ml-4 mb-0.5" />
+          }
+          onClick={onClick}
           style={{
-            width: '60vw',
-            // height: '100vh',
-            borderRadius: '1rem',
-            maxHeight: '95% !important'
+            width: '121px',
+            height: '44px',
+            minHeight: '44px',
+            backgroundColor: '#0098FF',
+            cursor: 'pointer',
+            fontSize: '15px',
+            fontWeight: 600,
+            color: '#FFFFFF',
+            borderRadius: '5px',
+            boxShadow: 'none',
+            lineHeight: '18.75px',
+            letterSpacing: '0.20000000298023224px',
           }}
-          onHide={() => {
-            onHide()
-            setInternalVisible(false)
-          }}>
-          {children}
-        </Dialog>
-      </div>
-    </>
+        />
+      )}
+      <Dialog
+        header={headerText}
+        {...dialogProps}
+        visible={visible}
+        modal={false}
+        onHide={onHide}
+        draggable={false}
+        style={dialogStyle}>
+        {children}
+      </Dialog>
+    </div>
   )
 }
 

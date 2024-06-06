@@ -3,9 +3,11 @@ import { textColors } from '../../Components/Utils/Properties'
 import { CSSProperties } from 'react'
 import {
   DataTableExpandedRows,
+  DataTableRowClickEvent,
   DataTableRowData,
   DataTableRowExpansionTemplate,
   DataTableRowToggleEvent,
+  DataTableSelectionSingleChangeEvent,
   DataTableValueArray,
 } from 'primereact/datatable'
 
@@ -14,7 +16,7 @@ export type TableBodyType =
   | ((data?: any, options?: ColumnBodyOptions) => React.ReactNode)
 
 export interface TableColumnProps {
-  id: string | undefined
+  id: string
   label: String
   style?: React.CSSProperties | undefined
   body?: TableBodyType
@@ -23,21 +25,33 @@ export interface TableColumnProps {
 export interface DataTableProps {
   data?: any[]
   scrollable?: boolean
-  columns: TableColumnProps[]
+  columns?: TableColumnProps[]
   tableStyle?: React.CSSProperties | undefined
   style?: React.CSSProperties | undefined
   header?: any
   actionButtons?: ActionButtonColumnProps
+  onRowClick?: (event: DataTableRowClickEvent) => void
+  rowStyle?: (rowData: any) => React.CSSProperties
+  selectedRow?: (event: DataTableRowClickEvent) => void
+  selectionMode?: 'single' | 'radiobutton' | undefined
+  selection?: any[number] | undefined | null
+  metaKeySelection?: boolean | undefined
+  onSelectionChange?(event: DataTableSelectionSingleChangeEvent<any>): void
+  dataKey?: string | undefined
+  emptyMessage?: string | React.ReactNode | ((frozen: boolean) => React.ReactNode) | undefined
 }
 
 export interface ButtonProps {
   underline?: boolean
   color?: keyof typeof textColors
+  padding?: string
   filled?: boolean
   disabled?: boolean
   hidden?: boolean
   onClick?: (data?: any) => void
   label: string
+  fontWeight?: number
+  style?: React.CSSProperties | undefined
 }
 
 // Can be defined single in future
@@ -46,6 +60,7 @@ export interface ActionButtonColumnProps {
   header?: React.ReactNode | ((options: ColumnHeaderOptions) => React.ReactNode)
   buttons?: ButtonProps[]
   style?: React.CSSProperties | undefined
+  onRowClick?: (event: DataTableRowClickEvent) => void
 }
 
 export interface Order {
@@ -77,6 +92,7 @@ export interface RowColumn {
   expander?: boolean | ((data: any, options: ColumnBodyOptions) => boolean)
   field: string
   header: string
+
   style?: React.CSSProperties
 }
 export interface RowExpansionDemoProps {
@@ -88,6 +104,8 @@ export interface RowExpansionDemoProps {
   dataKey?: string | undefined
   tableStyle?: React.CSSProperties
   columns: RowColumn[]
+  onRowClick?: (event: DataTableRowClickEvent) => void
   expandedRows?: DataTableValueArray | DataTableExpandedRows | undefined
   onRowToggle?(event: DataTableRowToggleEvent): void
+  emptyMessage?: string | React.ReactNode | ((frozen: boolean) => React.ReactNode) | undefined
 }

@@ -3,6 +3,7 @@ import { BoatYardData, UserData } from './ApiTypes'
 export interface CityProps {
   name: string
   code: string
+  // id:number
 }
 
 export interface DataProps {
@@ -30,10 +31,17 @@ export interface BillsData {
   techniciansName: string
   dueDate: string
 }
+export interface SidebarState {
+  isOpen: boolean
+}
 
 export interface InitialState {
-  token: undefined | string
-  userData: UserData | undefined
+  token: string
+  userData: UserData | null
+  isOpen: boolean
+  sidebar: SidebarState
+  customerId: string
+  customerName: string
 }
 
 export interface FormFieldsProps {
@@ -46,7 +54,9 @@ export interface FormFieldsProps {
 export type NullableDateArray = (Date | null)[] | null
 
 export interface Role {
+  id: number
   name: string
+  description: string
 }
 
 export interface Country {
@@ -61,3 +71,22 @@ export interface State {
   label: string
 }
 
+export interface MetaData {
+  id: number
+  name: string
+  label: string
+}
+
+export interface Customer {
+  id: number
+  customerName: string
+}
+
+export type Params = {
+  page?: number
+  size?: number
+  sortBy?: string
+  sortDir?: string
+  searchText?: string
+  customerOwnerId?: number
+}

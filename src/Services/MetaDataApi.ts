@@ -22,7 +22,135 @@ const metaDataApi = userApi.injectEndpoints({
         method: 'GET',
       }),
     }),
+
+    getTypeOfWeight: builder.mutation({
+      query: ({ pageNumber, pageSize }: { pageNumber?: number; pageSize?: number }) => ({
+        url: 'api/v1/metadata/typeOfWeight',
+        method: 'GET',
+        params: { pageNumber, pageSize },
+      }),
+    }),
+
+    getCustomersData: builder.mutation({
+      query: ({
+        pageNumber,
+        pageSize,
+        customerOwnerId,
+      }: {
+        pageNumber?: number
+        pageSize?: number
+        customerOwnerId?: number
+      }) => ({
+        url: 'api/v1/metadata/customers',
+        method: 'GET',
+        params: { pageNumber, pageSize, customerOwnerId },
+      }),
+    }),
+
+    getTopChainCondition: builder.mutation({
+      query: ({ pageNumber, pageSize }: { pageNumber?: number; pageSize?: number }) => ({
+        url: 'api/v1/metadata/topChainCondition',
+        method: 'GET',
+        params: { pageNumber, pageSize },
+      }),
+    }),
+
+    getStatus: builder.mutation({
+      query: ({ pageNumber, pageSize }: { pageNumber?: number; pageSize?: number }) => ({
+        url: 'api/v1/metadata/status',
+        method: 'GET',
+        params: { pageNumber, pageSize },
+      }),
+    }),
+
+    getSizeOfWeight: builder.mutation({
+      query: ({ pageNumber, pageSize }: { pageNumber?: number; pageSize?: number }) => ({
+        url: 'api/v1/metadata/sizeOfWeight',
+        method: 'GET',
+        params: { pageNumber, pageSize },
+      }),
+    }),
+
+    getShackleSwivelConditions: builder.mutation({
+      query: ({ pageNumber, pageSize }: { pageNumber?: number; pageSize?: number }) => ({
+        url: 'api/v1/metadata/shackleSwivelConditions',
+        method: 'GET',
+        params: { pageNumber, pageSize },
+      }),
+    }),
+
+    getPennantConditions: builder.mutation({
+      query: ({ pageNumber, pageSize }: { pageNumber?: number; pageSize?: number }) => ({
+        url: 'api/v1/metadata/pennantConditions',
+        method: 'GET',
+        params: { pageNumber, pageSize },
+      }),
+    }),
+
+    getEyeCondition: builder.mutation({
+      query: ({ pageNumber, pageSize }: { pageNumber?: number; pageSize?: number }) => ({
+        url: 'api/v1/metadata/eyeCondition',
+        method: 'GET',
+        params: { pageNumber, pageSize },
+      }),
+    }),
+
+    getBottomChainConditions: builder.mutation({
+      query: ({ pageNumber, pageSize }: { pageNumber?: number; pageSize?: number }) => ({
+        url: 'api/v1/metadata/bottomChainConditions',
+        method: 'GET',
+        params: { pageNumber, pageSize },
+      }),
+    }),
+
+    getBoatyardsType: builder.mutation({
+      query: ({
+        pageNumber,
+        pageSize,
+        customerOwnerId,
+      }: {
+        pageNumber?: number
+        pageSize?: number
+        customerOwnerId?: number
+      }) => ({
+        url: 'api/v1/metadata/boatyards',
+        method: 'GET',
+        params: { pageNumber, pageSize, customerOwnerId },
+      }),
+    }),
+
+    getBoatType: builder.mutation({
+      query: ({ pageNumber, pageSize }: { pageNumber?: number; pageSize?: number }) => ({
+        url: 'api/v1/metadata/boatType',
+        method: 'GET',
+        params: { pageNumber, pageSize },
+      }),
+    }),
+
+    getInventoryType: builder.mutation({
+      query: ({ pageNumber, pageSize }: { pageNumber?: number; pageSize?: number }) => ({
+        url: 'api/v1/metadata/inventoryType',
+        method: 'GET',
+        params: { pageNumber, pageSize },
+      }),
+    }),
   }),
 })
 
-export const { useGetRolesMutation, useGetStatesMutation, useGetCountriesMutation } = metaDataApi
+export const {
+  useGetRolesMutation,
+  useGetStatesMutation,
+  useGetCountriesMutation,
+  useGetTypeOfWeightMutation,
+  useGetCustomersDataMutation,
+  useGetTopChainConditionMutation,
+  useGetStatusMutation,
+  useGetSizeOfWeightMutation,
+  useGetShackleSwivelConditionsMutation,
+  useGetPennantConditionsMutation,
+  useGetEyeConditionMutation,
+  useGetBottomChainConditionsMutation,
+  useGetBoatTypeMutation,
+  useGetBoatyardsTypeMutation,
+  useGetInventoryTypeMutation,
+} = metaDataApi

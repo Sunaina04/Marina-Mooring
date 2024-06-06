@@ -1,42 +1,78 @@
-
-import { DataTable } from 'primereact/datatable'
 import CustomModal from '../../CustomComponent/CustomModal'
 import AddMoorings from './AddMoorings'
-import React, { useState, useEffect, useMemo } from 'react'
-import { Column } from 'primereact/column'
-import { useGetMooringsMutation } from '../../../Services/MoorManage/MoormanageApi'
-import { InputSwitch, InputSwitchChangeEvent } from 'primereact/inputswitch'
-import { MooringPayload, MooringResponse } from '../../../Type/ApiTypes'
-import { FaCircle, FaEdit } from 'react-icons/fa'
+import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react'
+import {
+  useDeleteMooringsMutation,
+  useGetCustomersWithMooringMutation,
+  useGetMooringsMutation,
+} from '../../../Services/MoorManage/MoormanageApi'
+import { InputSwitchChangeEvent } from 'primereact/inputswitch'
+import {
+  CustomersWithMooringResponse,
+  DeleteCustomerResponse,
+  ErrorResponse,
+  MooringPayload,
+  MooringResponse,
+  MooringResponseDtoList,
+} from '../../../Type/ApiTypes'
+import { FaEdit } from 'react-icons/fa'
 import { Dialog } from 'primereact/dialog'
-import { CustomerData, CustomerProps } from '../../../Type/CommonType'
+import { Params } from '../../../Type/CommonType'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader'
 import { properties } from '../../Utils/MeassageProperties'
+import Header from '../../Layout/LayoutComponents/Header'
+import { Toast } from 'primereact/toast'
+import { useSelector } from 'react-redux'
+import CustomMooringPositionMap from '../../Map/CustomMooringPositionMap'
+import { RiDeleteBin5Fill } from 'react-icons/ri'
+import { ProgressSpinner } from 'primereact/progressspinner'
+import AddCustomer from '../Customer/AddCustomer'
+
 const Moorings = () => {
+  const userData = useSelector((state: any) => state.user?.userData)
+  const role = userData?.role?.id
   const [modalVisible, setModalVisible] = useState(false)
   const [mooringData, setMooringData] = useState<MooringPayload[]>([])
-  const [selectedCustomer, setSelectedCustomer] = useState<any>(undefined)
+  const [customerRecordData, setCustomerRecordData] = useState<any>()
+  const [mooringResponseData, setMooringResponseData] = useState<any>()
+  const [boatYardData, setBoatYardData] = useState<any[]>([])
+  const [selectedCustomer, setSelectedCustomer] = useState<any>()
+  const [mooringRowData, setMooringRowData] = useState<MooringPayload>()
+  const [mooringRecord, setMooringRecord] = useState(false)
   const [editMode, setEditMode] = useState(false)
-  const [searchQuery, setSearchQuery] = useState<string>('')
+  const [searchText, setSearchText] = useState('')
+  const [customerId, setCustomerId] = useState()
+  const [mooringId, setMooringId] = useState()
+  const [rowClick, setRowClick] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+  const [coordinatesArray, setCoordinatesArray] = useState()
   const [filteredMooringData, setFilteredMooringData] = useState<MooringPayload[]>([])
-  const [edit, setEdit] = useState<CustomerProps>({
-    id: '#43453',
-    name: 'John Smith',
-    phone: '+1 234 543 4324',
-    email: 'john@gmail.com',
-    address: 'Suite 333 17529 Miller Spur South Ervinstad',
-  })
   const [isChecked, setIsChecked] = useState(false)
-  const [isDialogVisible, setIsDialogVisible] = useState(false)
-  const [selectedMooring, setSelectedMooring] = useState<MooringPayload>()
+  const [dialogVisible, setDialogVisible] = useState(false)
+  const [editCustomerMode, setEditCustomerMode] = useState(false)
+  const [editMooringMode, setEditMooringMode] = useState(false)
+  const [customerModalVisible, setCustomerModalVisible] = useState(false)
+  const [customerMooringData, setCustomerMooringData] = useState<MooringResponseDtoList[]>([])
+
+  const toast = useRef<Toast>(null)
+  const [getMoorings] = useGetMooringsMutation()
+  const [deleteMooring] = useDeleteMooringsMutation()
+  const [getCustomerWithMooring] = useGetCustomersWithMooringMutation()
 
   const handleInputChange = (e: InputSwitchChangeEvent) => {
-    console.log(e.value)
-    setIsChecked(e.value)
+    if (rowClick) {
+      setIsChecked(e.value)
+    }
   }
 
-  const [getMoorings] = useGetMooringsMutation()
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value)
+    setCustomerRecordData('')
+    setCustomerMooringData([])
+    setBoatYardData([])
+    setMooringResponseData('')
+  }
 
   const handleButtonClick = () => {
     setModalVisible(true)
@@ -44,363 +80,709 @@ const Moorings = () => {
 
   const handleModalClose = () => {
     setModalVisible(false)
+    setCustomerModalVisible(false)
+    setDialogVisible(false)
+    setEditCustomerMode(false)
     setEditMode(false)
   }
 
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const query = event.target.value
-    setSearchQuery(query)
-    const filteredData = mooringData.filter((data) => {
-      const id = typeof data.id === 'number' ? data.id.toString() : ''
-      const customerName =
-        typeof data.customerName === 'string' ? data.customerName.toLowerCase() : ''
-      const gpsCoordinates =
-        typeof data.gpsCoordinates === 'string' ? data.gpsCoordinates.toLowerCase() : ''
-      return (
-        id.includes(query.toLowerCase()) ||
-        customerName.includes(query.toLowerCase()) ||
-        gpsCoordinates.includes(query.toLowerCase())
-      )
-    })
-    setFilteredMooringData(filteredData)
+  const handleMooringRowClick = (rowData: any) => {
+    setRowClick(true)
+    setMooringRecord(true)
+    setCustomerId(rowData?.customerId)
+    setMooringId(rowData?.id)
+    getCustomersWithMooring(rowData?.customerId)
   }
-  const boatData: CustomerData[] = [
-    {
-      id: '#001',
-      email: 'M001',
-      name: 'John Doe',
-      phone: 9789756452,
-    },
-    {
-      id: '#001',
-      email: 'M001',
-      name: 'John Doe',
-      phone: 9789756452,
-    },
-    {
-      id: '#001',
-      email: 'M001',
-      name: 'John Doe',
-      phone: 9789756452,
-    },
-    {
-      id: '#001',
-      email: 'M001',
-      name: 'John Doe',
-      phone: 9789756452,
-    },
-  ]
+
+  const handleEdit = (rowData: any) => {
+    if (mooringRecord == true) {
+      setCustomerModalVisible(true)
+      setSelectedCustomer(rowData)
+      setEditCustomerMode(true)
+      setEditMode(true)
+    }
+  }
+
+  const handleDelete = async () => {
+    if (mooringRecord == true) {
+      try {
+        const response = await deleteMooring({ id: mooringId }).unwrap()
+        const { status, message } = response as DeleteCustomerResponse
+        if (status === 200) {
+          getMooringsData()
+          setMooringResponseData('')
+          toast.current?.show({
+            severity: 'success',
+            summary: 'Success',
+            detail: message,
+            life: 3000,
+          })
+        } else {
+          toast.current?.show({
+            severity: 'error',
+            summary: 'Error',
+            detail: message,
+            life: 3000,
+          })
+        }
+        setCustomerRecordData('')
+      } catch (error) {
+        const { message } = error as ErrorResponse
+        toast.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+      }
+    }
+    setMooringRecord(false)
+  }
+
+  const handleMooringEdit = () => {
+    setEditMode(true)
+    setModalVisible(true)
+    setSelectedCustomer(customerRecordData)
+  }
+
   const tableColumns = useMemo(
     () => [
       {
         id: 'id',
         label: 'ID:',
-        style: { width: '4vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
+        style: {
+          width: '4vw',
+          borderBottom: '1px solid #C0C0C0',
+          fontWeight: '700',
+          color: '#000000',
+          backgroundColor: '#FFFFFF',
+        },
       },
       {
-        id: 'mooringName',
+        id: 'mooringId',
         label: 'Mooring Name:',
-        style: { width: '6vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
+        style: {
+          width: '6vw',
+          borderBottom: '1px solid #C0C0C0',
+          backgroundColor: '#FFFFFF',
+          fontWeight: '700',
+          color: '#000000',
+        },
       },
       {
         id: 'gpsCoordinates',
         label: 'GPS Coordinates:',
-        style: { width: '6vw', borderBottom: '1px solid #C0C0C0', backgroundColor: '#F2F2F2' },
+        style: {
+          width: '6vw',
+          borderBottom: '1px solid #C0C0C0',
+          backgroundColor: '#FFFFFF',
+          fontWeight: '700',
+          color: '#000000',
+        },
       },
     ],
     [],
   )
 
-  const getMooringsData = async () => {
+  const tableColumnsMoorings = useMemo(
+    () => [
+      {
+        id: 'id',
+        label: 'ID:',
+        style: {
+          width: '4vw',
+          borderBottom: '1px solid #C0C0C0',
+          fontWeight: '700',
+          color: '#000000',
+          fontSize: '10px',
+          backgroundColor: '#FFFFFF',
+        },
+      },
+      {
+        id: 'mooringId',
+        label: 'Mooring Name:',
+        style: {
+          width: '6vw',
+          borderBottom: '1px solid #C0C0C0',
+          backgroundColor: '#FFFFFF',
+          fontSize: '10px',
+          fontWeight: '700',
+          color: '#000000',
+        },
+      },
+      {
+        id: 'gpsCoordinates',
+        label: 'GPS Coordinates:',
+        style: {
+          width: '6vw',
+          borderBottom: '1px solid #C0C0C0',
+          backgroundColor: '#FFFFFF',
+          fontSize: '10px',
+          fontWeight: '700',
+          color: '#000000',
+        },
+      },
+    ],
+    [],
+  )
+
+  const getMooringsData = useCallback(async () => {
     try {
-      const response = await getMoorings({}).unwrap();
-      const { status, content } = response as MooringResponse;
+      let params: Params = {}
+      if (searchText) {
+        params.searchText = searchText
+      }
+      const response = await getMoorings(params).unwrap()
+      const { status, content, message } = response as MooringResponse
       if (status === 200 && Array.isArray(content)) {
-        setMooringData(content);
-        setFilteredMooringData(content);
+        setIsLoading(false)
+        setMooringData(content)
+        setFilteredMooringData(content)
+      } else {
+        setIsLoading(false)
+        toast?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
       }
     } catch (error) {
-      console.error("Error fetching moorings data:", error);
+      const { message } = error as ErrorResponse
+      console.error('Error fetching moorings data:', error)
     }
-  };
+  }, [searchText, getMoorings])
 
-  const handleEdit = (rowData: any) => {
-    setSelectedCustomer(rowData)
-    setEditMode(true)
+  const getCustomersWithMooring = async (id: number) => {
+    try {
+      const response = await getCustomerWithMooring({ id: id }).unwrap()
+      const { status, content } = response as CustomersWithMooringResponse
+      if (
+        status === 200 &&
+        Array.isArray(content?.customerResponseDto?.mooringResponseDtoList) &&
+        Array.isArray(content.boatyardNames)
+      ) {
+        setCustomerRecordData(content?.customerResponseDto)
+        setCustomerMooringData(content?.customerResponseDto?.mooringResponseDtoList)
+        setBoatYardData(content?.boatyardNames)
+        setMooringResponseData(content?.customerResponseDto?.mooringResponseDtoList)
+        const coordinatesString = customerRecordData?.mooringResponseDtoList[0]?.gpsCoordinates
+        const coordinateArray = coordinatesString?.split(' ').map(parseFloat)
+        setCoordinatesArray(coordinateArray)
+      }
+    } catch (error) {
+      const { message } = error as ErrorResponse
+      console.error('Error fetching moorings data:', error)
+    }
   }
 
   useEffect(() => {
-    getMooringsData()
-  }, [])
-
+    const timeoutId = setTimeout(() => {
+      getMooringsData()
+    }, 2000)
+    return () => clearTimeout(timeoutId)
+  }, [searchText])
 
   return (
-    <>
-      <div className="flex items-center justify-between ml-12 overflow-hidden">
-        <div>
-          <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">{properties.MoormanageMoorings}</h1>
-        </div>
-        <div className="flex gap-4 items-center mr-20  mt-14">
+    <div className={modalVisible ? 'backdrop-blur-lg' : ''}>
+      <Header header={properties.MoormanageMoorings} />
+      <Toast ref={toast} />
+      <div className="flex justify-end mr-12 ">
+        <div className="flex mt-14">
           <CustomModal
-            label={'ADD NEW'}
-            style={{
-              width: "8vw",
-              height: "7vh",
-              backgroundColor: "black",
-              cursor: "pointer",
-              fontSize: "15px",
-              fontWeight: "bold",
-              color: "white",
-            }}
+            buttonText={'ADD NEW'}
+            children={
+              <AddMoorings
+                moorings={selectedCustomer}
+                mooringRowData={mooringRowData}
+                editMode={editMode}
+                editCustomerMode={editCustomerMode}
+                toastRef={toast}
+                closeModal={handleModalClose}
+                getCustomer={getMooringsData}
+                getCustomerRecord={() => {
+                  if (customerId) {
+                    getCustomersWithMooring(customerId)
+                  }
+                }}
+              />
+            }
+            headerText={<h1 className="text-xxl font-bold text-black ">Add Mooring</h1>}
+            visible={modalVisible}
             onClick={handleButtonClick}
-            visible={modalVisible || editMode}
             onHide={handleModalClose}
-            header={<h1 className="text-lg font-bold text-black ml-4">Add Mooring</h1>}
-          >
-            <AddMoorings moorings={selectedCustomer} editMode={editMode} />
-          </CustomModal>
+            buttonStyle={{
+              width: '121px',
+              height: '44px',
+              minHeight: '44px',
+              backgroundColor: '#0098FF',
+              cursor: 'pointer',
+              fontSize: '16px',
+              fontWeight: 700,
+              color: 'white',
+              borderRadius: '0.50rem',
+              boxShadow: 'none',
+              marginLeft: '8px',
+            }}
+            dialogStyle={{
+              width: '800px',
+              minWidth: '800px',
+              height: '630px',
+              minHeight: '630px',
+              borderRadius: '1rem',
+              maxHeight: '95% !important',
+            }}
+          />
         </div>
       </div>
 
       <div className="flex ml-12 gap-4 mt-10">
-        <div className="bg-[F2F2F2] rounded-md border-[1px]  border-gray-300 w-[35vw] h-[60%]">
-
-          <InputTextWithHeader header={properties.customerMooringHeader} placeholder={'Search by name, ID,mooring no,boat name,phone no...'}
-            style={{ marginLeft: "1rem", color: "A4A4A4" }}
-            inputTextStyle={{ height: "5vh", width: "38vh", cursor: "pointer", fontSize: "0.63rem", color: "#A4A4A4", border: "1px solid #A4A4A4", paddingLeft: "3rem", borderRadius: "0.45rem" }}
-            onChange={handleSearchChange}
-            value={searchQuery}
-          />
-          <div className="border-[1px]  border-[#9F9F9F]   mt-3 "></div>
-          <DataTableComponent
-            data={mooringData}
-            tableStyle={{
-              fontSize: '12px',
-              color: '#000000',
-              fontWeight: 600,
-              backgroundColor: '#D9D9D9',
+        <div>
+          <div
+            style={{
+              width: '680px',
+              height: '703px',
+              top: '277px',
+              left: '107px',
+              gap: '0px',
+              borderRadius: '10px',
+              border: '1px solid #D5E1EA',
+              opacity: '0px',
+              backgroundColor: 'white',
             }}
-            scrollable={true}
-            columns={tableColumns}
-            header={""}
-          />
-        </div>
+            className="bg-[F2F2F2]">
+            <InputTextWithHeader
+              value={searchText}
+              onChange={handleSearch}
+              headerStyle={{
+                height: '70px',
+                top: '294px',
+                left: '124px',
+                gap: '0px',
+                opacity: '0px',
+                color: '#FFFFFF',
+                backgroundColor: '#00426F',
+                borderTopLeftRadius: '10px',
+                borderTopRightRadius: '10px',
+              }}
+              header={'Moorings'}
+              placeholder={'Search by name, ID, mooring no, boat name, phone no.... '}
+              iconStyle={{
+                position: 'absolute',
+                left: '15px',
+                top: '65%',
+                transform: 'translateY(-50%)',
+                width: '18px',
+                height: '18px',
+              }}
+              inputTextStyle={{
+                height: '44px',
+                width: '635px',
+                cursor: 'pointer',
+                fontSize: '',
+                color: '#000000',
+                border: '1px solid #D5E1EA',
+                paddingLeft: '40px',
+                borderRadius: '5px',
+                marginTop: '15px',
+              }}
+              borderBottom={{ border: '1px solid #D5E1EA' }}
+            />
 
-        <div className="relative">
-          <img
-            src="/assets/images/map.png"
-            className="bg-no-repeat object-cover bg-auto rounded-md w-full h-[105vh]"
-            alt="Sea"
-          />
-          <div className="absolute top-72">
-            <div className="">
-            </div>
-            <div className="rounded-md border-[1px] pb-1 border-gray-300 mt-16 ml-10 w-[17vw]  h-[13vh] bg-white">
-              <p className="text-[0.7rem] ml-1 text-black">Status</p>
-              <hr className="m-1 border-black" />
-              <div className="flex">
-                <div>
-                  <FaCircle className="h-3 text-red-600 mt-1" data-testid="Facircle1" />
-                  <FaCircle className="h-3 text-green-600 mt-2" data-testid="Facircle2" />
+            <div className={`mt-2 ${isLoading ? 'blur-screen' : ''}`}>
+              {mooringData.length > 0 ? (
+                <div className="h-[560px] overflow-y-auto">
+                  <DataTableComponent
+                    data={mooringData}
+                    tableStyle={{
+                      fontSize: '12px',
+                      color: '#000000',
+                      fontWeight: 600,
+                      backgroundColor: '#D9D9D9',
+                      cursor: 'pointer',
+                    }}
+                    scrollable={true}
+                    columns={tableColumns}
+                    style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+                    onRowClick={(row) => {
+                      handleMooringRowClick(row.data)
+                    }}
+                  />
                 </div>
-                <div>
-                  <p className="text-[0.6rem] text-black mt-1">Need inspection</p>
-                  <p className="text-[0.6rem] text-black tracking-tighter mt-[0.3rem]">
-                    Gear On (in the water)
-                  </p>
+              ) : (
+                <div className="text-center mt-40">
+                  <img
+                    src="/assets/images/empty.png"
+                    alt="Empty Data"
+                    className="w-32 mx-auto mb-4"
+                  />
+                  <p className="text-gray-500">No data available</p>
                 </div>
-                <div className="ml-1">
-                  <FaCircle className="h-3 text-violet-600 mt-1 " data-testid="Facircle3" />
-                  <FaCircle className="h-3 text-gray-500 mt-2" data-testid="Facircle4" />
-                </div>
-                <div>
-                  <p className="text-[0.6rem] text-black tracking-tighter mt-1">
-                    Gear Off (out of the water)
-                  </p>
-                  <p className="text-[0.6rem] text-black mt-[0.3rem]">Not in Use</p>
-                </div>
-              </div>
+              )}
             </div>
           </div>
-          <div className=" border-gray-300 absolute top-5 right-5  w-[25em]  ">
+        </div>
 
+        {isLoading && (
+          <ProgressSpinner
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: '50px',
+              height: '50px',
+            }}
+            strokeWidth="4"
+          />
+        )}
 
-            <div className="flex rounded-md bg-gray-500  py-3 pl-4 ">
-              <div className="flex items-center">
-                <span className="font-bold">Customers Record</span>
-                <span>
-                  <FaEdit className="ml-2" onClick={handleEdit} data-testid="edit" />
-                </span>
-                <InputSwitch
-                  checked={isChecked}
-                  onChange={handleInputChange}
-                  className="border-none ml-20"
-                  color='green'
+        <div className="min-w-[20vw]">
+          <div
+            className={`max-w-[413px] rounded-md border-[1px] ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
+            <CustomMooringPositionMap
+              position={coordinatesArray || [30.698, 76.657]}
+              zoomLevel={10}
+              style={{ height: '700px' }}
+              // iconsByStatus={iconsByStatus}
+              // @ts-expect-error
+              moorings={mooringData}
+            />
+          </div>
+        </div>
+
+        <div
+          style={{
+            top: '277px',
+            left: '107px',
+            gap: '0px',
+            width: '413px',
+            borderRadius: '10px',
+            border: '1px solid #D5E1EA',
+            opacity: '0px',
+            backgroundColor: 'white',
+            flexGrow: 1,
+            marginRight: '40px',
+          }}>
+          <div className="rounded-md border">
+            <div className="bg-[#00426F] rounded-t-[10px] flex justify-between pb-2">
+              <div className="text-sm font-semibold rounded-t-md bg-[]">
+                <h1 className="p-4 text-white">{'Customers Record'}</h1>
+              </div>
+              <div className="flex">
+                <FaEdit
+                  onClick={handleEdit}
+                  className="mr-3 mt-[19px] text-[white]"
+                  data-testid="FaEdit"
+                  style={{ cursor: mooringRecord ? 'pointer' : 'not-allowed' }}
+                />
+                <RiDeleteBin5Fill
+                  onClick={handleDelete}
+                  className="text-white mr-2 mt-[19px] "
+                  data-testid="RiDeleteBin5Fill"
+                  style={{ cursor: mooringRecord ? 'pointer' : 'not-allowed' }}
                 />
               </div>
             </div>
 
-            {isChecked && (
-              <div className=''>
-                <div className="bg-[#F2F2F2] px-2">
-                  <div className="flex gap-32 ">
-                    <div className="font-bold text-sm ml-2 tracking-tighter">
-                      <p>ID:{edit.id}</p>
-                      <p>Phone:{edit.phone}</p>
-                    </div>
-                    <div className="font-bold text-sm tracking-tighter">
-                      <p>Name:{edit.name}</p>
-                      <p>Email:{edit.email}</p>
-                    </div>
-                  </div>
-                  <div className="font-bold text-sm  ml-2 mt-2">
-                    <p>Address:{edit.address}</p>
-                  </div>
-                  <div className="font-bold text-sm mt-2 ml-2 pb-2">
+            {customerRecordData ? (
+              <div className="">
+                <div className="flex gap-10 p-4 ">
+                  <div
+                    style={{
+                      fontSize: '14px',
+                      fontWeight: '400',
+                      lineHeight: '16.41px',
+                      color: '#000000',
+                    }}>
                     <p>
-                      Boatyard:
-                      <span className="bg-[#D9D9D9] ml-2">Pioneer</span>{' '}
-                      <span className="bg-[#D9D9D9] ml-2">02Pioneer</span>{' '}
-                      <span className="bg-[#D9D9D9] ml-2">Pioneer</span>
+                      <span className="">ID: </span>
+                      {customerRecordData?.customerId}
+                    </p>
+                    <p className="mt-6">
+                      <span className="">Phone: </span>
+                      {customerRecordData?.phone}
+                    </p>
+                  </div>
+
+                  <div
+                    style={{
+                      fontSize: '14px',
+                      fontWeight: '400',
+                      lineHeight: '16.41px',
+                      color: '#000000',
+                    }}>
+                    <p>
+                      <span className="">Name: </span>
+                      {customerRecordData?.customerName}
+                    </p>
+                    <p className="mt-6">
+                      <span className="">Email: </span>
+                      {customerRecordData?.emailAddress}
                     </p>
                   </div>
                 </div>
-
-                <div className="">
-                  <h3 className="bg-[#D9D9D9] font-bold h12 py-4 pl-2 ">Moorings</h3>
-                  <DataTable
-                    className="bg[#F2F2F2]"
-                    value={mooringData}
-                    scrollable={true}
-                    selectionMode="single"
-                    onRowSelect={(e) => {
-                      setSelectedMooring(e.data)
-                      setIsDialogVisible(true)
-                    }}
-                    style={{ overflow: 'scroll', maxHeight: '60vh' }}>
-                    <Column
-                      field="id"
-                      header="ID"
-                      headerClassName="text-sm"
-                      style={{ fontSize: '0.75rem' }}></Column>
-                    <Column
-                      field="mooringName"
-                      header="Mooring Name"
-                      headerStyle={{ fontSize: '0.875rem' }}
-                      style={{ fontSize: '0.75rem' }}></Column>
-                    <Column
-                      field="gpsCoordinates"
-                      header="GPS Coordinate"
-                      headerStyle={{ fontSize: '0.87rem' }}
-                      style={{ fontSize: '0.75rem' }}></Column>
-                  </DataTable>
-                  <Dialog
-                    visible={isDialogVisible}
-                    onHide={() => setIsDialogVisible(false)}
-                    header={
-                      <div className="flex gap-4">
-                        <div className="font-bold">Mooring Information</div>
-                        <div className="font-bold mt-1">
-                          <FaEdit onClick={handleEdit} />
-                        </div>
-                      </div>
-                    }>
-                    <hr className="border border-black  my-0 mx-0"></hr>
-                    {selectedMooring && (
-                      <div className="flex leading-10 gap-4">
-                        <div>
-                          <p>
-                            <span style={{ fontWeight: 'bold' }}>ID:</span> {selectedMooring?.id}
-                          </p>
-                          <p>
-                            <span style={{ fontWeight: 'bold' }}>Mooring No:</span>{' '}
-                            {selectedMooring?.mooringNumber}
-                          </p>
-                          <p>
-                            <span style={{ fontWeight: 'bold' }}>Boat Name:</span>{' '}
-                            {selectedMooring?.boatName}
-                          </p>
-                          <p>
-                            <span style={{ fontWeight: 'bold' }}>Type:</span>{' '}
-                            {selectedMooring?.boatType}
-                          </p>
-                          <p>
-                            <span style={{ fontWeight: 'bold' }}>Size of Weight:</span>{' '}
-                            {selectedMooring?.sizeOfWeight}
-                          </p>
-                          <p>
-                            <span style={{ fontWeight: 'bold' }}>Top Chain Condition:</span>{' '}
-                            {selectedMooring?.topChainCondition}
-                          </p>
-                          <p className="tracking-tighter">
-                            <span style={{ fontWeight: 'bold' }}>Bottom Chain Condition:</span>{' '}
-                            {selectedMooring?.bottomChainCondition}
-                          </p>
-                          <p>
-                            <span style={{ fontWeight: 'bold' }}>Pennant Condition:</span>{' '}
-                            {selectedMooring?.pennantCondition}
-                          </p>
-                          <p>
-                            <span style={{ fontWeight: 'bold' }}>Water Depth:</span>{' '}
-                            {selectedMooring?.waterDepth}
-                          </p>
-                        </div>
-                        <div>
-                          <p>
-                            <span style={{ fontWeight: 'bold' }}>Harbor:</span>{' '}
-                            {selectedMooring?.harbor}
-                          </p>
-                          <p>
-                            <span style={{ fontWeight: 'bold' }}>G.P.S Coordinates:</span>{' '}
-                            {selectedMooring?.gpsCoordinates}
-                          </p>
-                          <p>
-                            <span style={{ fontWeight: 'bold' }}>Boat Size:</span>{' '}
-                            {selectedMooring?.boatSize}
-                          </p>
-                          <p>
-                            <span style={{ fontWeight: 'bold' }}>Weight:</span>{' '}
-                            {selectedMooring?.boatWeight}
-                          </p>
-
-                          <p>
-                            <span style={{ fontWeight: 'bold' }}>Type of Weight:</span>{' '}
-                            {selectedMooring?.typeOfWeight}
-                          </p>
-
-                          <p>
-                            <span style={{ fontWeight: 'bold' }}>Condition of Eye:</span>{' '}
-                            {selectedMooring?.conditionOfEye}
-                          </p>
-
-                          <p>
-                            <span style={{ fontWeight: 'bold' }}>Shackle, Swivel Condition:</span>{' '}
-                            {selectedMooring?.shackleSwivelCondition}
-                          </p>
-
-                          <p>
-                            <span style={{ fontWeight: 'bold' }}>Dept at Mean High Water:</span>{' '}
-                            {selectedMooring?.deptAtMeanHighWater}
-                          </p>
-                        </div>
-                      </div>
+                <div
+                  style={{
+                    fontSize: '14px',
+                    fontWeight: '400',
+                    lineHeight: '16.41px',
+                    color: '#000000',
+                  }}>
+                  <p className="ml-4">
+                    <span className="address-label ">Address: </span>
+                    {customerRecordData?.aptSuite && <span>{customerRecordData?.aptSuite} </span>}
+                    {customerRecordData?.streetHouse && (
+                      <span>{customerRecordData?.streetHouse} </span>
                     )}
-                  </Dialog>
+                    {customerRecordData?.stateResponseDto?.name && (
+                      <span>{customerRecordData?.stateResponseDto?.name}, </span>
+                    )}
+                    {customerRecordData?.countryResponseDto?.name && (
+                      <span>{customerRecordData?.countryResponseDto?.name} </span>
+                    )}
+                  </p>
+
+                  <div className="flex mt-5 ml-4 mb-3 overflow-x-auto">
+                    <div className="mt-1">
+                      <h1 className="">Boatyard: </h1>
+                    </div>
+                    <div className="flex gap-4 ml-1">
+                      {boatYardData.map((boatyard, index) => (
+                        <p
+                          key={index}
+                          style={{
+                            borderRadius: '5px',
+                            fontWeight: '400',
+                            fontSize: '12px',
+                            color: '#10293A',
+                            backgroundColor: '#D5E1EA',
+                            padding: '4px',
+                          }}>
+                          {boatyard}
+                        </p>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-
-
               </div>
-
-
-
+            ) : (
+              <div className="text-center ">
+                <img
+                  src="/assets/images/empty.png"
+                  alt="Empty Data"
+                  className="w-10 mx-auto mt-10 mb-3"
+                />
+                <p className="text-gray-500 mb-10">No data available</p>
+              </div>
             )}
           </div>
+
+          <div>
+            <p
+              style={{
+                backgroundColor: '#00426F',
+                fontWeight: '700',
+                color: 'white',
+                padding: '14px',
+                fontSize: '15px',
+              }}>
+              Moorings
+            </p>
+          </div>
+
+          <div className=" ">
+            {mooringData.length === 0 ? (
+              <div className="text-center mt-40">
+                <img
+                  src="/assets/images/empty.png"
+                  alt="Empty Data"
+                  className="w-20 mx-auto mb-4"
+                />
+                <p className="text-gray-500">No data available</p>
+              </div>
+            ) : (
+              <div style={{ height: '400px', overflow: 'auto' }}>
+                <DataTableComponent
+                  style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+                  scrollable
+                  tableStyle={{
+                    fontSize: '12px',
+                    color: '#000000',
+                    fontWeight: 600,
+                    backgroundColor: '#D9D9D9',
+                    cursor: 'pointer',
+                  }}
+                  data={mooringResponseData}
+                  columns={tableColumnsMoorings}
+                  onRowClick={(rowData: any) => {
+                    setDialogVisible(true)
+                    setMooringRowData(rowData.data)
+                  }}
+                  emptyMessage={
+                    <div className="text-center mt-40">
+                      <img
+                        src="/assets/images/empty.png"
+                        alt="Empty Data"
+                        className="w-28 mx-auto mb-4"
+                      />
+                      <p className="text-gray-500">No data available</p>
+                    </div>
+                  }
+                />
+              </div>
+            )}
+
+            {/* Dialog BOX */}
+            <Dialog
+              position="center"
+              style={{
+                width: '740px',
+                minWidth: '300px',
+                height: '503px',
+                minHeight: '200px',
+                borderRadius: '1rem',
+                fontWeight: '400',
+                maxHeight: '50% !important',
+              }}
+              draggable={false}
+              visible={dialogVisible}
+              onHide={() => setDialogVisible(false)}
+              header={
+                <div className="flex gap-4">
+                  <div className="font-bolder text-[black]">Mooring Information</div>
+                  <div className="font-bold mt-1">
+                    <FaEdit
+                      onClick={handleMooringEdit}
+                      color="#0098FF"
+                      style={{ cursor: 'pointer' }}
+                    />
+                  </div>
+                </div>
+              }>
+              <hr className="border border-[#000000] my-0 mx-0"></hr>
+
+              <div
+                style={{
+                  fontSize: '14px',
+                  fontWeight: '300',
+                  color: '#000000',
+                }}
+                className="flex leading-[3.50rem] gap-32 p-4">
+                <div>
+                  <p>
+                    <span>ID: </span> {mooringRowData?.id}
+                  </p>
+                  <p>
+                    <span>Mooring ID: </span>
+                    {mooringRowData?.mooringId}
+                  </p>
+                  <p>
+                    <span>Boat Name: </span>
+                    {mooringRowData?.boatName}
+                  </p>
+                  <p>
+                    <span>Type: </span> {mooringRowData?.boatType?.boatType}
+                  </p>
+                  <p>
+                    <span>Size of Weight: </span>
+                    {mooringRowData?.sizeOfWeight?.weight}
+                  </p>
+                  <p>
+                    <span>Top Chain Condition: </span>
+                    {mooringRowData?.topChainCondition?.condition}
+                  </p>
+                  <p className="tracking-tighter">
+                    <span>Bottom Chain Condition: </span>
+                    {mooringRowData?.bottomChainCondition?.condition}
+                  </p>
+                  <p>
+                    <span>Pennant Condition: </span>
+                    {mooringRowData?.pennantCondition?.condition}
+                  </p>
+                  <p>
+                    <span>Water Depth: </span>
+                    {mooringRowData?.waterDepth}
+                  </p>
+                </div>
+                <div>
+                  <p>
+                    <span>Harbor: </span> {mooringRowData?.harbor}
+                  </p>
+                  <p>
+                    <span>G.P.S Coordinates: </span>
+                    {mooringRowData?.gpsCoordinates}
+                  </p>
+                  <p>
+                    <span>Boat Size: </span>
+                    {mooringRowData?.boatSize}
+                  </p>
+                  <p>
+                    <span>Weight: </span> {mooringRowData?.boatWeight}
+                  </p>
+                  <p>
+                    <span>Type of Weight: </span>
+                    {mooringRowData?.typeOfWeight?.type}
+                  </p>
+                  <p>
+                    <span>Condition of Eye: </span>
+                    {mooringRowData?.eyeCondition?.condition}
+                  </p>
+                  <p>
+                    <span>Shackle, Swivel Condition: </span>
+                    {mooringRowData?.shackleSwivelCondition?.condition}
+                  </p>
+                  <p>
+                    <span>Depth at Mean High Water: </span>
+                    {mooringRowData?.depthAtMeanHighWater}
+                  </p>
+                </div>
+              </div>
+            </Dialog>
+          </div>
         </div>
-
-
-
       </div>
-    </>
+
+      {customerModalVisible && (
+        <CustomModal
+          button={true}
+          children={
+            <AddCustomer
+              customer={customerRecordData}
+              mooringRowData={mooringRowData}
+              editMode={editMode}
+              editCustomerMode={editCustomerMode}
+              editMooringMode={false}
+              closeModal={handleModalClose}
+              getCustomer={getMooringsData}
+              getCustomerRecord={() => {
+                if (customerId) {
+                  getCustomersWithMooring(customerId)
+                }
+              }}
+              toastRef={toast}
+            />
+          }
+          headerText={
+            editMooringMode ? (
+              <h1 className="text-xxl font-bold text-black ">Add Mooring</h1>
+            ) : (
+              <h1 className="text-xxl font-bold text-black ">Add Customer</h1>
+            )
+          }
+          visible={customerModalVisible}
+          onHide={handleModalClose}
+          dialogStyle={{
+            width: '800px',
+            minWidth: '800px',
+            height: editCustomerMode ? '500px' : '630px',
+            minHeight: editCustomerMode ? '500px' : '630px',
+            borderRadius: '1rem',
+            maxHeight: '95% !important',
+          }}
+        />
+      )}
+    </div>
   )
 }
 

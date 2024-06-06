@@ -4,178 +4,192 @@ import { MoorPayProps } from '../../../Type/ComponentBasedType'
 import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
 import AddCustomer from '../../Moormanage/Customer/AddCustomer'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
+import Header from '../../Layout/LayoutComponents/Header'
+import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 
 const AccountRecievable = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [accountRecievableData, setAccountRecievableData] = useState<MoorPayProps[]>([
-    {
-      invoice: '#425',
-      mooringid: '#6658',
-      name: 'John Smith',
-      technicianName: 'jim Carry',
-      services: 'Regular Services',
-      time: '2hrs',
-      amount: '$12',
-    },
+  // const [isModalOpen, setIsModalOpen] = useState(false)
+  // const [accountRecievableData, setAccountRecievableData] = useState<MoorPayProps[]>([])
 
-    {
-      invoice: '#425',
-      mooringid: '#6658',
-      name: 'John Smith',
-      technicianName: 'jim Carry',
-      services: 'Regular Services',
-      time: '2hrs',
-      amount: '$12',
-    },
-    {
-      invoice: '#425',
-      mooringid: '#6658',
-      name: 'John Smith',
-      technicianName: 'jim Carry',
-      services: 'Regular Services',
-      time: '2hrs',
-      amount: '$12',
-    },
-    {
-      invoice: '#425',
-      mooringid: '#6658',
-      name: 'John Smith',
-      technicianName: 'jim Carry',
-      services: 'Regular Services',
-      time: '2hrs',
-      amount: '$12',
-    },
-  ])
+  // const handleButtonClick = () => {
+  //   // setIsModalOpen(true)
+  // }
 
-  const handleButtonClick = () => {
-    setIsModalOpen(true)
-  }
+  // const handleModalClose = () => {
+  //   setIsModalOpen(false)
+  // }
 
-  const handleModalClose = () => {
-    setIsModalOpen(false)
-  }
+  // const header = (
+  //   <div className="flex flex-wrap align-items-center ">
+  //     <h1 className="text-xl font-bold text-white">Account Receivable</h1>
+  //   </div>
+  // )
 
-  const header = (
-    <div className="flex flex-wrap align-items-center justify-between gap-2 ">
-      <span className="text-xl font-bold">Account Recievable</span>
-    </div>
-  )
+  // const columnStyle = {
+  //   borderBottom: '1px solid #C0C0C0',
+  //   backgroundColor: '#FFFFFF',
+  //   color: '#000000',
+  //   fontWeight: 'bold',
+  // }
 
-  const tableColumns = useMemo(
-    () => [
-      {
-        id: 'invoice',
-        label: 'Invoice',
-        style: { width: '6vw', backgroundColor: '#F2F2F2' },
-      },
-      {
-        id: 'mooringId',
-        label: 'Mooring ID',
-        style: { width: '12vw', backgroundColor: '#F2F2F2' },
-      },
-      {
-        id: 'customerName',
-        label: 'Customer Name',
-        style: { width: '10vw', backgroundColor: '#F2F2F2' },
-      },
-      {
-        id: 'technicianName',
-        label: 'Technician Name',
-        style: { width: '12vw', backgroundColor: '#F2F2F2' },
-      },
-      {
-        id: 'services',
-        label: 'Services',
-        style: { width: '10vw', backgroundColor: '#F2F2F2' },
-      },
-      {
-        id: 'time',
-        label: 'Time',
-        style: { width: '10vw', backgroundColor: '#F2F2F2' },
-      },
-      {
-        id: 'amount',
-        label: 'Amount',
-        style: { width: '10vw', backgroundColor: '#F2F2F2' },
-      },
-    ],
-    [],
-  )
+  // const accountRecievableTableColumn = useMemo(
+  //   () => [
+  //     {
+  //       id: 'invoice',
+  //       label: 'Invoice',
+  //       style: columnStyle,
+  //     },
+  //     {
+  //       id: 'mooringId',
+  //       label: 'Mooring ID',
+  //       style: columnStyle,
+  //     },
+  //     {
+  //       id: 'customerName',
+  //       label: 'Customer Name',
+  //       style: columnStyle,
+  //     },
+  //     {
+  //       id: 'technicianName',
+  //       label: 'Technician Name',
+  //       style: columnStyle,
+  //     },
+  //     {
+  //       id: 'services',
+  //       label: 'Services',
+  //       style: columnStyle,
+  //     },
+  //     {
+  //       id: 'time',
+  //       label: 'Time',
+  //       style: columnStyle,
+  //     },
+  //     {
+  //       id: 'amount',
+  //       label: 'Amount',
+  //       style: columnStyle,
+  //     },
+  //   ],
+  //   [],
+  // )
 
-  const ActionButtonColumn: ActionButtonColumnProps = {
-    header: 'Action',
-    buttons: [
-      {
-        color: 'green',
-        label: 'Approve',
-        underline: true,
-        filled: true,
-      },
-      {
-        color: 'red',
-        label: 'deny',
-        underline: true,
-        filled: true,
-      },
-    ],
-    headerStyle: { backgroundColor: '#F2F2F2' },
-  }
+  // const ActionButtonColumn: ActionButtonColumnProps = {
+  //   header: 'Action',
+  //   buttons: [
+  //     {
+  //       color: 'green',
+  //       label: 'Approve',
+  //       filled: true,
+  //     },
+  //     {
+  //       color: 'red',
+  //       label: 'Deny',
+  //       filled: true,
+  //     },
+  //   ],
+  //   headerStyle: {
+  //     backgroundColor: '#FFFFFF',
+  //     height: '3.50rem',
+  //     fontWeight: 'bold',
+  //     color: 'black',
+  //     borderBottom: '1px solid #C0C0C0',
+  //   },
+  //   style: { borderBottom: '1px solid #D5E1EA' },
+  // }
 
   return (
     <>
-      <div className="flex justify-between items-center ml-12">
-        <div>
-          <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">
-            Moormanage/Account Receivable
-          </h1>
-        </div>
+      <Header header="MOORPAY/Account Receivable" />
 
-        <div className="flex gap-1 ml-[18rem] text-[gray] font-extrabold mt-14">
-          <div>
-            <img
-              src="/assets/images/download.png"
-              alt=""
-              className="w-5 "
-              style={{ filter: 'grayscale(100%)', color: 'gray' }}
-            />
+      {/* <div className="flex justify-end mr-16">
+        <div className="flex gap-4 ml-[18rem] text-[gray] font-extrabold mt-14">
+          <div style={{ marginTop: '0.8rem' }}>
+            <img src="/assets/images/downloadIcon.png" alt="" className="w-5 " />
           </div>
 
-          <div>
-            <h1>DownLoad Excel</h1>
+          <div style={{ marginTop: '0.6rem', color: '#00426F', marginRight: '1.5rem' }}>
+            <h1>Download Excel</h1>
           </div>
-
-          <div></div>
         </div>
-        <div className="items-center mr-[10rem] mt-14">
+        <div className="mt-14 ">
           <CustomModal
+            buttonText={'ADD NEW'}
+            children={
+              <AddCustomer
+                customer={undefined}
+                editMode={false}
+                closeModal={() => {}}
+                getCustomer={() => {}}
+              />
+            }
+            headerText={<h1 className="text-xl font-extrabold text-black ml-4">New User</h1>}
+            visible={isModalOpen}
             onClick={handleButtonClick}
-            visible={false}
             onHide={handleModalClose}
-            header={header}>
-            <AddCustomer
-              customer={undefined}
-              editMode={false}
-              closeModal={() => {}}
-              getCustomer={() => {}}
-            />
-          </CustomModal>
+            buttonStyle={{
+              width: '121px',
+              height: '44px',
+              minHeight: '44px',
+              backgroundColor: '#0098FF',
+              cursor: 'pointer',
+              fontSize: '16px',
+              fontWeight: 700,
+              color: 'white',
+              borderRadius: '0.50rem',
+              marginLeft: '8px',
+            }}
+            dialogStyle={{
+              width: '800px',
+              minWidth: '800px',
+              height: '630px',
+              minHeight: '630px',
+              borderRadius: '1rem',
+              maxHeight: '95% !important',
+            }}
+          />
         </div>
       </div>
 
-      <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-[67vw]  ml-32 mb-80">
-        <DataTableSearchFieldComponent
+      <div
+        style={{
+          height: '648px',
+          gap: '0px',
+          borderRadius: '10px',
+          border: '1px solid #D5E1EA',
+          opacity: '0px',
+          backgroundColor: '#FFFFFF',
+        }}
+        className="bg-[F2F2F2]  ml-12  mt-10 mr-14">
+        <div className="flex flex-wrap align-items-center justify-between  bg-[#00426F] p-2   rounded-tl-[10px] rounded-tr-[10px]">
+          <span
+            style={{
+              fontSize: '18px',
+              fontWeight: '700',
+              lineHeight: '21.09px',
+              letterSpacing: '0.4837472140789032px',
+              color: '#FFFFFF',
+              padding: '8px',
+            }}>
+            Account Receivable
+          </span>
+        </div>
+
+        <div className="text-center mt-40">
+          <img src="/assets/images/empty.png" alt="Empty Data" className="w-32 mx-auto mb-4" />
+          <p className="text-gray-500">No data available</p>
+        </div>
+        <DataTableComponent
           tableStyle={{
             fontSize: '12px',
             color: '#000000',
             fontWeight: 600,
           }}
-          data={accountRecievableData}
-          columns={tableColumns}
-          header={header}
+          data={undefined}
+          columns={accountRecievableTableColumn}
           actionButtons={ActionButtonColumn}
-          style={{ backgroundColor: '#F2F2F2' }}
+          style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
         />
-      </div>
+      </div> */}
     </>
   )
 }

@@ -1,32 +1,36 @@
-import { useMemo, useState } from 'react'
-import { MapContainer, Marker, TileLayer } from 'react-leaflet'
-import L from 'leaflet'
+import { LegacyRef, MutableRefObject, useMemo, useRef, useState } from 'react'
+import { MapContainer, Marker, TileLayer, useMapEvents } from 'react-leaflet'
+import L, { Map } from 'leaflet'
 import './CustomMap.css'
 import DisplayPosition from './DisplayPosition'
-import DefaultIcon from './DefaultIcon'
 import { CustomSelectPositionMapProps } from '../../Type/Components/MapTypes'
+import { DefaultIcon } from './DefaultIcon'
 
 const CustomSelectPositionMap: React.FC<CustomSelectPositionMapProps> = ({
   onPositionChange,
-  center = [31.63398, 74.87226],
-  zoomLevel = 13,
+  center,
+  zoomLevel,
+  setCenter,
 }) => {
-  const [map, setMap] = useState()
+  const [map, setMap] = useState<LegacyRef<Map> | undefined>()
+  const markerRef = useRef(null)
 
   const displayMap = useMemo(
     () => (
       <MapContainer
         center={center}
         zoom={zoomLevel}
-        scrollWheelZoom={false}
         attributionControl={false}
-        zoomControl={false}
+        // @ts-expect-error
         ref={setMap}>
-        <TileLayer url="/assets/images/map.png" noWrap={true} />
-        <Marker position={center} />
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        />
+        <Marker draggable={false} ref={markerRef} position={center || [30.6983149, 76.656095]} />
       </MapContainer>
     ),
-    [],
+    [center],
   )
   return (
     <div>

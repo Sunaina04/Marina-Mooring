@@ -1,14 +1,17 @@
 export const properties = {
   header: 'MOORMANAGE/Boatyards',
   boatyardMooringHeader: 'Boatyard Moorings',
-  boatyardDeatile: 'Boatyards Detail',
+  boatyardDetail: 'Boatyards Detail',
   address: 'Address',
   mooringInventoried: 'Mooring Inventoried',
   boatyardGPSCoordinates: 'Boatyard GPS Coordinates',
-  moormanagePermission: 'Moormanage/Permission',
-  Customersadmins: 'Customers-admins',
-  CustomerAdminUsers: 'Customer-adminUsers',
+  moormanagePermission: 'MOORMANAGE/Permission',
+  CustomersOwner: 'Customer Owner',
+  CustomerOwnerUsers: 'Customer Owner Users',
   label: 'ADD NEW',
-  customerMooringHeader:"Moorings",
-  MoormanageMoorings:"Moormanage/Moorings"
+  customerMooringHeader: 'Moorings',
+  MoormanageMoorings: 'MOORMANAGE/Moorings',
+  Customersadmins: 'Customersadmins',
+  workOrderHeader: 'Work Orders',
+  customerHeader: 'Customers',
 }

@@ -1,8 +1,8 @@
-import  { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import CustomModal from '../../CustomComponent/CustomModal'
-import { FormsPayload, FormsResponse } from '../../../Type/ApiTypes'
+import { ErrorResponse, FormsPayload, FormsResponse } from '../../../Type/ApiTypes'
 import {
   useDownloadFormMutation,
   useGetFormsMutation,
@@ -10,6 +10,12 @@ import {
 import { Button } from 'primereact/button'
 import useSubmit from '../../../Services/CustomHook/useSubmit'
 import FormFields from '../../CustomComponent/FormFields'
+import Header from '../../Layout/LayoutComponents/Header'
+import AddCustomer from '../../Moormanage/Customer/AddCustomer'
+import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
+import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
+import { FormDataa } from '../../Utils/CustomData'
+import { InputText } from 'primereact/inputtext'
 
 const Forms = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -17,13 +23,13 @@ const Forms = () => {
   const [customerName, setCustomerName] = useState('')
   const [customerID, setCustomerID] = useState('')
   const [formName, setFormName] = useState('')
-  const [file, setFile] = useState<File | undefined>(undefined) 
+  const [file, setFile] = useState<File | undefined>(undefined)
   const [getForms] = useGetFormsMutation()
   const [downloadForms] = useDownloadFormMutation()
   const { error, response, handleSubmit } = useSubmit()
 
   const handleButtonClick = () => {
-    setIsModalOpen(true)
+    // setIsModalOpen(true)
   }
 
   const handleModalClose = () => {
@@ -36,6 +42,8 @@ const Forms = () => {
         filename: rowData.formName,
       }).unwrap()
     } catch (error) {
+      const { message } = error as ErrorResponse
+
       console.error('Error fetching forms:', error)
     }
   }
@@ -48,6 +56,7 @@ const Forms = () => {
         setFormsData(content)
       }
     } catch (error) {
+      const { message } = error as ErrorResponse
       console.error('Error fetching forms:', error)
     }
   }
@@ -71,112 +80,158 @@ const Forms = () => {
     getFormsData()
   }, [])
 
-  const header = (
-    <div className="flex flex-wrap align-items-center justify-between gap-2 p-4">
-      <span className="text-xl font-bold">Forms</span>
-    </div>
+  const columnStyle = {
+    backgroundColor: '#FFFFFF',
+    color: '#000000',
+    fontWeight: '500',
+    fontSize: '12px',
+  }
+
+  const FormsColumns = useMemo(
+    () => [
+      {
+        id: 'id',
+        label: 'ID',
+        style: columnStyle,
+      },
+      {
+        id: 'submittedBy',
+        label: 'Submitted by',
+        style: columnStyle,
+      },
+      {
+        id: 'formName',
+        label: 'Form Name',
+        style: columnStyle,
+      },
+      {
+        id: 'submittedDate',
+        label: 'Submitted Date',
+        style: columnStyle,
+      },
+    ],
+    [],
   )
+  const ActionButtonColumn: ActionButtonColumnProps = {
+    header: 'Action',
+    buttons: [
+      {
+        color: 'black',
+        label: 'Download',
+        underline: true,
+      },
+    ],
+    headerStyle: {
+      backgroundColor: '#FFFFFF',
+      color: '#000000',
+      fontWeight: '500',
+      fontSize: '12px',
+    },
+    style: { borderBottom: '1px solid #D5E1EA', backgroundColor: '#FFFFFF', fontWeight: '400' },
+  }
 
   return (
     <>
-      <div className="flex justify-between items-center ml-12">
-        <div>
-          <h1 className="mt-14 ml-8 opacity-30 text-2xl font-normal">MOORSERVE/Forms Library</h1>
-        </div>
+      <Header header="MOORSERVE/Forms" />
 
-        <div className=" mr-64 mt-14">
+      {/* <div className="flex justify-end">
+        <div className=" mr-16 mt-14">
           <CustomModal
-            header="Form Details"
-            onClick={handleButtonClick}
+            buttonText={'Upload New'}
+            children={
+              <AddCustomer
+                customer={undefined}
+                editMode={false}
+                closeModal={() => {}}
+                getCustomer={() => {}}
+              />
+            }
+            headerText={<h1 className="text-xl font-extrabold text-black ml-4">New User</h1>}
             visible={isModalOpen}
+            onClick={handleButtonClick}
             onHide={handleModalClose}
-            label="Upload New"
-            icon={true}>
-            <div className="flex gap-4">
-              <FormFields
-                label="Customer Name"
-                value={customerName}
-                onChange={(e) => setCustomerName(e.target.value)}
-              />
-              <FormFields
-                label="ID"
-                value={customerID}
-                onChange={(e) => setCustomerID(e.target.value)}
-              />
-              <FormFields
-                label="Form Name"
-                value={formName}
-                onChange={(e) => setFormName(e.target.value)}
-              />
-            </div>
-
-            <div className="mt-4">
-              <FormFields
-                label="Upload File"
-                type="file"
-                onChange={(e) => setFile(e.target.files?.[0] || undefined)}
-              />
-            </div>
-
-            <div className="mt-6 flex ">
-              <Button
-                type="button"
-                onClick={handleSave}
-                label={'Save'}
-                style={{
-                  width: '5vw',
-                  backgroundColor: 'black',
-                  cursor: 'pointer',
-                  fontWeight: 'bolder',
-                  fontSize: '1vw',
-                  border: '1px solid  gray',
-                  color: 'white',
-                  borderRadius: '0.50rem',
-                }}
-              />
-
-              <Button
-                type="button"
-                onClick={handleModalClose}
-                label={'Cancel'}
-                style={{
-                  width: '5vw',
-                  backgroundColor: 'black',
-                  cursor: 'pointer',
-                  fontWeight: 'bolder',
-                  fontSize: '1vw',
-                  border: '1px solid  gray',
-                  color: 'white',
-                  borderRadius: '0.50rem',
-                }}
-              />
-            </div>
-          </CustomModal>
+            buttonStyle={{
+              width: '121px',
+              height: '44px',
+              minHeight: '44px',
+              backgroundColor: '#0098FF',
+              cursor: 'pointer',
+              fontSize: '14px',
+              fontWeight: 700,
+              color: 'white',
+              borderRadius: '0.50rem',
+              marginLeft: '8px',
+            }}
+            dialogStyle={{
+              width: '800px',
+              minWidth: '800px',
+              height: '630px',
+              minHeight: '630px',
+              borderRadius: '1rem',
+              maxHeight: '95% !important',
+            }}
+          />
         </div>
       </div>
-      <div className="bg-[#F2F2F2] rounded-md border-[1px] border-[#D1D1D1] p-2 mt-12 w-[61vw] ml-20">
-        <DataTable value={formsData} header={header} tableStyle={{}}>
-          <Column header="ID" field="id" style={{ width: '4vw' }}></Column>
-          <Column field="submittedBy" header="Submitted by" style={{ width: '12vw' }}></Column>
-          <Column field="formName" header="Form Name" style={{ width: '11vw' }}></Column>
-          <Column field="submittedDate" header="Submitted Date" style={{ width: '12vw' }}></Column>
-          <Column
-            header="Action"
-            style={{ width: '12vw' }}
-            body={(rowData) => (
-              <p
-                onClick={() => handleDownload(rowData)}
-                style={{
-                  width: '5vw',
-                  cursor: 'pointer',
-                  fontWeight: 'bolder',
-                  fontSize: '1vw',
-                }}>
-                DownLoad
-              </p>
-            )}></Column>
-        </DataTable>
-      </div>
+
+      <div
+        style={{
+          height: '640px',
+          gap: '0px',
+          borderRadius: '10px',
+          border: '1px solid #D5E1EA',
+          opacity: '0px',
+          backgroundColor: '#FFFFFF',
+        }}
+        className="bg-[F2F2F2]  ml-12  mt-6 mr-14">
+        <div className="flex flex-wrap align-items-center justify-between  bg-[#00426F] p-2   rounded-tl-[5px] rounded-tr-[5px]">
+          <span
+            style={{
+              fontSize: '18px',
+              fontWeight: '700',
+              lineHeight: '21.09px',
+              letterSpacing: '0.4837472140789032px',
+              color: '#FFFFFF',
+              padding: '8px',
+            }}>
+            Forms
+          </span>
+
+          <div className="relative inline-block">
+            <div className="relative">
+              <img
+                src="/assets/images/Search.png"
+                alt="search icon"
+                className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5"
+                data-testid="search-icon"
+              />
+              <InputText
+                placeholder="Search"
+                className="pl-10 w-[237px] 
+                  bg-[#00426F]
+              
+                  h-[35px] rounded-lg border text-white border-[#D5E1EA] focus:outline-none"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="text-center mt-40">
+          <img src="/assets/images/empty.png" alt="Empty Data" className="w-32 mx-auto mb-4" />
+          <p className="text-gray-500">No data available</p>
+        </div>
+        <DataTableComponent
+          tableStyle={{
+            fontSize: '12px',
+            color: '#000000',
+            fontWeight: 600,
+          }}
+          data={undefined}
+          columns={FormsColumns}
+          actionButtons={ActionButtonColumn}
+          style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '200' }}
+        />
+      </div> */}
     </>
   )
 }
