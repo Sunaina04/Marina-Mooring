@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader'
 import CustomModal from '../../CustomComponent/CustomModal'
 import Header from '../../Layout/LayoutComponents/Header'
@@ -9,12 +9,21 @@ import { DataTable } from 'primereact/datatable'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import AddInventory from './AddInventory'
+import { Params } from '../../../Type/CommonType'
+import { useGetInventoryDetailsMutation } from '../../../Services/MoorManage/MoormanageApi'
+import { useLocation } from 'react-router-dom'
+import { GetInventoryResponse } from '../../../Type/ApiTypes'
 
 const InventoryDetails: React.FC = () => {
   const [searchText, setSearchText] = useState('')
   const [modalVisible, setModalVisible] = useState(false)
   const [inventoryEdit, setInventoryEdit] = useState(false)
   const [inventoryData, setInventoryData] = useState<any[]>()
+  const [isLoading, setIsLoading] = useState(true)
+  const location = useLocation()
+  const queryParams = new URLSearchParams(location.search)
+  const vendorId = queryParams.get('vendorId')
+  const [getInventory] = useGetInventoryDetailsMutation()
 
   const handleEdit = () => {
     setInventoryEdit(true)
@@ -29,7 +38,6 @@ const InventoryDetails: React.FC = () => {
   const handleModalClose = () => {
     setModalVisible(false)
   }
-
 
   const VendorInventoryColumns = useMemo(
     () => [
@@ -46,7 +54,7 @@ const InventoryDetails: React.FC = () => {
         },
       },
       {
-        id: 'type',
+        id: 'inventoryType.type',
         label: 'Type',
         style: {
           width: '9vw',
@@ -103,6 +111,7 @@ const InventoryDetails: React.FC = () => {
     ],
     [],
   )
+
   const ActionButtonColumn: ActionButtonColumnProps = useMemo(
     () => ({
       header: 'Action',
@@ -129,6 +138,36 @@ const InventoryDetails: React.FC = () => {
     }),
     [],
   )
+
+  const getInventoryHandler = useCallback(async () => {
+    try {
+      let params: Params = {}
+      if (searchText) {
+        params.searchText = searchText
+      }
+      const response = await getInventory({ vendorId: vendorId, params }).unwrap()
+      const { status, message, content } = response as GetInventoryResponse
+      if (status === 200 && Array.isArray(content)) {
+        setIsLoading(false)
+        if (content.length > 0) {
+          setInventoryData(content)
+        } else {
+          setInventoryData([])
+        }
+      } else {
+        setIsLoading(false)
+      }
+    } catch (error) {
+      console.error('Error occurred while fetching customer data:', error)
+    }
+  }, [getInventory, searchText])
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      getInventoryHandler()
+    }, 600)
+    return () => clearTimeout(timeoutId)
+  }, [searchText])
 
   return (
     <>
@@ -193,14 +232,12 @@ const InventoryDetails: React.FC = () => {
       </div>
 
       <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-100% ml-14 mr-10 mt-20">
-       
-          <DataTableComponent
-            
-            columns={VendorInventoryColumns}
-            actionButtons={ActionButtonColumn}
-            scrollable={true}
-          />
-
+        <DataTableComponent
+          columns={VendorInventoryColumns}
+          actionButtons={ActionButtonColumn}
+          scrollable={true}
+          data={inventoryData}
+        />
       </div>
     </>
   )

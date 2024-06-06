@@ -360,6 +360,31 @@ export interface VendorResponse {
   }
 }
 
+export interface GetInventoryResponse {
+  message: string
+  status: number
+  errorList: []
+  time: number
+  content: [
+    {
+      id: number
+      itemName: string
+      cost: number
+      salePrice: number
+      taxable: boolean
+      inventoryType: {
+        id: number
+        creationDate: number
+        createdBy: string
+        lastModifiedDate: number
+        lastModifiedBy: string
+        type: string
+        description: string
+      }
+    },
+  ]
+}
+
 export type BoatYardData = {
   id: string
   moorings: string
