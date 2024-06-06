@@ -128,6 +128,16 @@ const metaDataApi = userApi.injectEndpoints({
         params: { pageNumber, pageSize },
       }),
     }),
+
+
+    getInventoryType: builder.mutation({
+      query: ({ pageNumber, pageSize }: { pageNumber?: number; pageSize?: number }) => ({
+        url: 'api/v1/metadata/inventoryType',
+        method: 'GET',
+        params: { pageNumber, pageSize },
+      }),
+    }),
+
   }),
 })
 
@@ -146,4 +156,5 @@ export const {
   useGetBottomChainConditionsMutation,
   useGetBoatTypeMutation,
   useGetBoatyardsTypeMutation,
+  useGetInventoryTypeMutation
 } = metaDataApi

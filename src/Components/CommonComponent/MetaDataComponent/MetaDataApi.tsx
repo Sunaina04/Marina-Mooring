@@ -13,6 +13,7 @@ import {
   useGetTypeOfWeightMutation,
   useGetBoatyardsTypeMutation,
   useGetCustomersDataMutation,
+  useGetInventoryTypeMutation,
 } from '../../../Services/MetaDataApi'
 import { ErrorResponse, MetaDataResponse } from '../../../Type/ApiTypes'
 
@@ -334,4 +335,28 @@ export const CustomersData = (customerOwnerId: any) => {
   const getCustomersData = async () => ({ customersData: await fetchCustomersData(getCustomers) })
 
   return { getCustomersData }
+}
+
+
+
+export const TypeOfInventoryType = () => {
+  const [getInventoryType] = useGetInventoryTypeMutation()
+
+  const fetchTypeInventoryType = async (getData: any) => {
+    try {
+      const response = await getData({})
+      const { status, content } = response.data as MetaDataResponse
+      return status === 200 && Array.isArray(content) ? content : null
+    } catch (error) {
+      const { message } = error as ErrorResponse
+      console.error('Error fetching metadata:', message)
+      return null
+    }
+  }
+
+  const getTypeOfInventoryTypeData = async () => ({
+    typeOfBoatTypeData: await fetchTypeInventoryType(getInventoryType),
+  })
+
+  return { getTypeOfInventoryTypeData }
 }

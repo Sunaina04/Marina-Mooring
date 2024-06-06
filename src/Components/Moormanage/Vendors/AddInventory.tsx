@@ -1,12 +1,16 @@
 import { Dropdown } from 'primereact/dropdown'
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import InputComponent from '../../CommonComponent/InputComponent'
 import { Checkbox } from 'primereact/checkbox'
 import { Button } from 'primereact/button'
+import { TypeOfInventoryType } from '../../CommonComponent/MetaDataComponent/MetaDataApi'
+import { MetaData } from '../../../Type/CommonType'
 
 function AddInventory() {
+  const { getTypeOfInventoryTypeData } = TypeOfInventoryType()
   const [checked, setChecked] = useState<boolean>(false)
   const [unChecked, setUnChecked] = useState<boolean>(false)
+  const [inventoryType, setInventoryType] = useState<MetaData[]>([])
   const [formData, setFormData] = useState({
     itemName: '',
     cost: '',
@@ -52,6 +56,20 @@ function AddInventory() {
     if (Object.keys(validationErrors).length > 0) return
   }
 
+  const fetchDataInventoryType = useCallback(async () => {
+    const { typeOfBoatTypeData } = await getTypeOfInventoryTypeData()
+    if (typeOfBoatTypeData !== null) {
+      setInventoryType(typeOfBoatTypeData)
+    }
+
+  }, [])
+
+  useEffect(() => {
+    fetchDataInventoryType()
+  }, [fetchDataInventoryType])
+
+
+
   return (
     <>
       <div className="ml-4">
@@ -67,8 +85,8 @@ function AddInventory() {
             placeholder='Select Type'
             onChange={(e) => handleInputChange('type', e.target.value)}
             value={formData.type}
-            options={cities}
-            optionLabel="name"
+            options={inventoryType}
+            optionLabel="type"
           />
           <p className="" >
             {errors.type && <small className="p-error">{errors.type}</small>}
