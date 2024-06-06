@@ -543,10 +543,10 @@ const Moorings = () => {
                   </p>
 
                   <div className="flex mt-5 ml-4 mb-3 overflow-x-auto">
-                    <div>
+                    <div className='mt-1'>
                       <h1 className="">Boatyard: </h1>
                     </div>
-                    <div className="flex gap-4 ">
+                    <div className="flex gap-4 ml-1">
                       {boatYardData.map((boatyard, index) => (
                         <p
                           key={index}

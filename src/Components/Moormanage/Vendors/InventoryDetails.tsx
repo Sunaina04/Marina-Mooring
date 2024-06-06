@@ -252,18 +252,22 @@ const InventoryDetails: React.FC = () => {
         </div>
       </div>
       <div className="rounded-md border-[1px] border-gray-300 w-100% h-[110px] ml-14 mr-10 mt-5 bg-white">
-        <div className="flex justify-around  mt-5">
+        <div className="flex justify-between pr-4 pl-4  mt-5">
           <div style={{ fontSize: '14px', color: '#000000', fontWeight: '400' }}>
             <p>ID:</p>
+            <p className="mt-5">5</p>
           </div>
           <div>
             <p>Sales Representative</p>
+            <p className="mt-5">jon Doe</p>
           </div>
           <div>
             <p>Phone Number:</p>
+            <p className="mt-5">8968569696</p>
           </div>
           <div>
             <p>Email Address:</p>
+            <p className="mt-5">jon@gmail.com</p>
           </div>
         </div>
       </div>
@@ -285,8 +289,8 @@ const InventoryDetails: React.FC = () => {
           data={inventoryData}
           style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
           emptyMessage={
-            <div className="text-center mt-14">
-              <img src="/assets/images/empty.png" alt="Empty Data" className="w-20 mx-auto mb-4" />
+            <div className="text-center mt-40">
+              <img src="/assets/images/empty.png" alt="Empty Data" className="w-28 mx-auto mb-4" />
               <p className="text-gray-500">No data available</p>
             </div>
           }
