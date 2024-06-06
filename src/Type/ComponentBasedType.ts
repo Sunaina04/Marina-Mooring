@@ -154,6 +154,7 @@ export interface CustomerAdminDataProps {
   setEditCustomer?: Dispatch<SetStateAction<any>>
   setSelectedCustomerUser: Dispatch<SetStateAction<any>>
   setSelectedCustomer: Dispatch<SetStateAction<any>>
+  setSelectedCustomerUsers?: Dispatch<SetStateAction<any>>
 }
 
 export interface HeaderProps {

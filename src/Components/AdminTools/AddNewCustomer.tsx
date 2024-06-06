@@ -26,6 +26,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   customerUsers,
   permission,
   toastRef,
+  setSelectedCustomerUsers,
   setSelectedCustomerUser,
   setSelectedCustomer,
   setEditCustomer,
@@ -269,6 +270,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         getUser()
         if (getCustomerUser) {
           getCustomerUser()
+        }
+        if (editMode && setSelectedCustomerUsers) {
+          setSelectedCustomerUsers([])
         }
         if (setEditCustomer) {
           setEditCustomer(false)

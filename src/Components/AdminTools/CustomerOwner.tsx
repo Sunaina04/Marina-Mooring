@@ -12,8 +12,12 @@ import './CustomerOwner.module.css'
 import InputTextWithHeader from '../CommonComponent/Table/InputTextWithHeader'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { Toast } from 'primereact/toast'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectCustomerId, setCustomerId, setCustomerName } from '../../Store/Slice/userSlice'
 
 const CustomerOwner = () => {
+  const dispatch = useDispatch()
+  const selectedCustomerId = useSelector(selectCustomerId)
   const [modalVisible, setModalVisible] = useState(false)
   const [selectedCustomer, setSelectedCustomer] = useState<any>()
   const [selectedCustomerUser, setSelectedCustomerUser] = useState<any>()
@@ -158,6 +162,8 @@ const CustomerOwner = () => {
       if (searchText) {
         params.searchText = searchText
       }
+      dispatch(setCustomerId(''))
+      dispatch(setCustomerName(''))
       const response = await getUser(params).unwrap()
       const { status, message, content } = response as GetUserResponse
       if (status === 200 && Array.isArray(content)) {
@@ -184,7 +190,7 @@ const CustomerOwner = () => {
           params.searchText = searchUsersText
         }
         const response = await getUser({
-          customerOwnerId: id,
+          // customerOwnerId: selectedCustomerId,
           searchText: searchUsersText,
         }).unwrap()
         const { status, message, content } = response as GetUserResponse
@@ -221,12 +227,12 @@ const CustomerOwner = () => {
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      if (customerAdminId) {
-        getCustomerAdminsUsers(customerAdminId)
+      if (selectedCustomerId) {
+        getCustomerAdminsUsers(selectedCustomerId)
       }
     }, 600)
     return () => clearTimeout(timeoutId)
-  }, [searchUsersText])
+  }, [searchUsersText, selectedCustomerId])
 
   return (
     <div className={modalVisible ? 'backdrop-blur-lg' : ''}>
@@ -296,6 +302,7 @@ const CustomerOwner = () => {
                 toastRef={toast}
                 setSelectedCustomerUser={setSelectedCustomerUser}
                 setSelectedCustomer={setSelectedCustomer}
+                setSelectedCustomerUsers={setgetCustomerOwnerUserData}
               />
             }
             headerText={<span className="font-large text-2xl text-[#000000] ml-4">New User</span>}
@@ -384,6 +391,8 @@ const CustomerOwner = () => {
                 onRowClick={(e) => {
                   setSelectedId(e.data.id)
                   getCustomerAdminsUsers(e.data.id)
+                  dispatch(setCustomerName(e?.data?.name))
+                  dispatch(setCustomerId(e?.data?.id))
                 }}
                 selectedRow={selectedId}
                 style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
