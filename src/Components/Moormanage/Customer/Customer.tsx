@@ -523,12 +523,11 @@ const Customer = () => {
                   </p>
 
                   <div className="flex mt-5 ml-4 mb-3 overflow-x-auto">
-                    <div>
+                    <div className="mt-1">
                       <h1 className="">Boatyard: </h1>
                     </div>
                     <div
-                      // style={{border:"1px solid red"}}
-                      className="flex gap-4 ">
+                      className="flex gap-4 ml-1">
                       {boatYardData.map((boatyard, index) => (
                         <p
                           key={index}

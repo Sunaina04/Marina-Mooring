@@ -215,6 +215,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const phoneRegex = /^\d{10}$/
     const nameRegex = /^[a-zA-Z ]+$/
+    const numberRegex = /^\d+$/;
 
     const errors: { [key: string]: string } = {}
     let firstError = ''
@@ -229,11 +230,19 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       errors.customerName = 'CustomerName must be at least 3 characters long'
       firstError = 'CustomerName'
     }
-
     if (!customerId) {
-      errors.customerId = 'Customer ID is required'
-      if (!firstError) firstError = 'customerId'
+      errors.customerId = 'Customer ID is required';
+      if (!firstError) firstError = 'customerId';
+    } else if (!numberRegex.test(customerId)) {
+      errors.customerId = 'Customer ID must only contain numbers';
+      if (!firstError) firstError = 'customerId';
     }
+
+
+    // if (!customerId) {
+    //   errors.customerId = 'Customer ID is required'
+    //   if (!firstError) firstError = 'customerId'
+    // }
 
     if (!phone) {
       errors.phone = 'Phone is required'
@@ -781,10 +790,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       fontSize: '0.8rem',
                     }}
                   />
+                  <p>
                   <p className="" id="customerId">
-                    {fieldErrors.customerId && (
-                      <small className="p-error">{fieldErrors.customerId}</small>
-                    )}
+                      {fieldErrors.customerId && <small className="p-error">{fieldErrors.customerId}</small>}
+                    </p>
                   </p>
                 </div>
               </div>
