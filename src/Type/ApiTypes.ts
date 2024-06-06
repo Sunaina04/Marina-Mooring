@@ -381,6 +381,32 @@ export interface GetInventoryResponse {
         type: string
         description: string
       }
+      vendorResponseDto: {
+        id: number
+        companyName: string
+        companyPhoneNumber: string
+        website: string
+        street: string
+        aptSuite: string
+        stateResponseDto: string
+        countryResponseDto: string
+        zipCode: string
+        companyEmail: string
+        accountNumber: string
+        remitStreet: string
+        remitApt: string
+        remitStateResponseDto: string
+        remitCountryResponseDto: string
+        remitZipCode: string
+        remitEmailAddress: string
+        firstName: string
+        lastName: string
+        salesRepPhoneNumber: string
+        salesRepEmail: string
+        salesRepNote: string
+        userId: string
+        inventoryItems: string
+      }
     },
   ]
 }

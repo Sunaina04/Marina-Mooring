@@ -265,26 +265,28 @@ const InventoryDetails: React.FC = () => {
           />
         </div>
       </div>
-      <div className="rounded-md border-[1px] border-gray-300 w-100% h-[110px] ml-14 mr-10 mt-5 bg-white">
-        <div className="flex justify-between pr-4 pl-4  mt-5">
-          <div style={{ fontSize: '14px', color: '#000000', fontWeight: '400' }}>
-            <p>ID:</p>
-            <p className="mt-5">5</p>
-          </div>
-          <div>
-            <p>Sales Representative</p>
-            <p className="mt-5">jon Doe</p>
-          </div>
-          <div>
-            <p>Phone Number:</p>
-            <p className="mt-5">8968569696</p>
-          </div>
-          <div>
-            <p>Email Address:</p>
-            <p className="mt-5">jon@gmail.com</p>
+      {inventoryData && (
+        <div className="rounded-md border-[1px] border-gray-300 w-100% h-[110px] ml-14 mr-10 mt-5 bg-white">
+          <div className="flex justify-between pr-4 pl-4  mt-5">
+            <div style={{ fontSize: '14px', color: '#000000', fontWeight: '400' }}>
+              <p>ID:</p>
+              <p className="mt-5">{inventoryData[0]?.vendorResponseDto?.id}</p>
+            </div>
+            <div>
+              <p>Sales Representative</p>
+              <p className="mt-5">{inventoryData[0]?.vendorResponseDto?.firstName}</p>
+            </div>
+            <div>
+              <p>Phone Number:</p>
+              <p className="mt-5">{inventoryData[0]?.vendorResponseDto?.salesRepPhoneNumber}</p>
+            </div>
+            <div>
+              <p>Email Address:</p>
+              <p className="mt-5">{inventoryData[0]?.vendorResponseDto?.salesRepEmail}</p>
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {isLoading && (
         <ProgressSpinner
