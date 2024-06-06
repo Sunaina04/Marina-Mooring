@@ -23,7 +23,7 @@ const CustomerOwner = () => {
   const [selectedCustomerUser, setSelectedCustomerUser] = useState<any>()
   const [editMode, setEditMode] = useState(false)
   const [editCustomer, setEditCustomer] = useState(false)
-  const [isRowClick, setIsRowClick] = useState(false)
+  const [passWordDisplay, setPassWordDisplay] = useState(false)
   const [selectedRow, setSelectedRow] = useState<any>()
   const [rolesData, setRolesData] = useState<Role[]>()
   const [selectRole, setSelectRole] = useState()
@@ -40,6 +40,7 @@ const CustomerOwner = () => {
   const toast = useRef<Toast>(null)
 
   const handleModalClose = () => {
+    setPassWordDisplay(false)
     setModalVisible(false)
     setSelectedCustomerUser('')
     setSelectedCustomer('')
@@ -56,17 +57,19 @@ const CustomerOwner = () => {
   }
 
   const handleEditButtonClick = (rowData: any) => {
+    setPassWordDisplay(true)
     setSelectedCustomer(rowData)
     setModalVisible(true)
-    setEditCustomer(true)
+    setEditCustomer(false)
     setEditMode(true)
   }
 
   const handleEditButtonUsersClick = (rowData: any) => {
     setSelectedCustomerUser(rowData)
-    setEditCustomer(false)
+    setPassWordDisplay(true)
+    setEditCustomer(true)
     setModalVisible(true)
-    setEditMode(true)
+    // setEditMode(true)
   }
 
   const ActionButtonColumn: ActionButtonColumnProps = {
@@ -186,11 +189,10 @@ const CustomerOwner = () => {
       setIsLoading(true)
       try {
         let params: Params = {}
-        if (searchUsersText || id) {
+        if (searchUsersText) {
           params.searchText = searchUsersText
         }
         const response = await getUser({
-          // customerOwnerId: selectedCustomerId,
           searchText: searchUsersText,
         }).unwrap()
         const { status, message, content } = response as GetUserResponse
@@ -198,16 +200,13 @@ const CustomerOwner = () => {
           setIsLoading(false)
           if (content.length > 0) {
             setgetCustomerOwnerUserData(content)
-            setIsRowClick(true)
             setSelectedRow(id)
             setCustomerAdminId(id)
           } else {
             setgetCustomerOwnerUserData([])
             setCustomerAdminId(id)
-            setIsRowClick(false)
           }
         } else {
-          setIsRowClick(false)
           setIsLoading(false)
           setgetCustomerOwnerUserData([])
         }
@@ -275,8 +274,8 @@ const CustomerOwner = () => {
             dialogStyle={{
               width: '840px',
               minWidth: '840px',
-              height: '600px',
-              minHeight: '600px',
+              height: passWordDisplay ? '500px' : '600px',
+              minHeight: passWordDisplay ? '500px' : '600px',
               borderRadius: '1rem',
               maxHeight: '60% !important',
             }}
@@ -298,6 +297,7 @@ const CustomerOwner = () => {
                 setModalVisible={setModalVisible}
                 setEditCustomer={setEditCustomer}
                 setIsVisible={() => {}}
+                passWordDisplay={passWordDisplay}
                 customerUsers={getCustomerOwnerData}
                 toastRef={toast}
                 setSelectedCustomerUser={setSelectedCustomerUser}
@@ -390,7 +390,7 @@ const CustomerOwner = () => {
                 columns={customerOwnerTableColumn}
                 onRowClick={(e) => {
                   setSelectedId(e.data.id)
-                  getCustomerAdminsUsers(e.data.id)
+                  // getCustomerAdminsUsers(e.data.id)
                   dispatch(setCustomerName(e?.data?.name))
                   dispatch(setCustomerId(e?.data?.id))
                 }}

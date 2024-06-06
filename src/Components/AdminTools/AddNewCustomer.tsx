@@ -13,6 +13,8 @@ import {
   RolesData,
   StatesData,
 } from '../CommonComponent/MetaDataComponent/MetaDataApi'
+import { useDispatch } from 'react-redux'
+import { setCustomerId, setCustomerName } from '../../Store/Slice/userSlice'
 
 const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   customerData,
@@ -30,7 +32,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   setSelectedCustomerUser,
   setSelectedCustomer,
   setEditCustomer,
+  passWordDisplay,
 }) => {
+  const dispatch = useDispatch()
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
@@ -146,13 +150,14 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     if (errors.state && !firstError) {
       firstError = 'state'
     }
-    if (!password && !editMode) {
+    if (!password && !passWordDisplay) {
       errors.password = 'Password is required'
     }
     if (errors.password && !firstError) {
       firstError = 'password'
     }
-    if (!confirmPassword && !editMode) errors.confirmPassword = 'Confirm Password is required'
+    if (!confirmPassword && !passWordDisplay)
+      errors.confirmPassword = 'Confirm Password is required'
     if (password !== confirmPassword) errors.confirmPassword = 'Passwords do not match'
     if (errors.confirmPassword && !firstError) {
       firstError = 'confirmPassword'
@@ -268,11 +273,69 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           life: 3000,
         })
         getUser()
+        if (setEditCustomer) {
+          setEditCustomer(false)
+        }
+        setModalVisible(false)
+        setIsLoading(false)
+        closeModal()
+      } else {
+        setIsLoading(false)
+        toastRef?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+      }
+    } catch (error) {
+      const { message } = error as ErrorResponse
+      toastRef?.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: message,
+        life: 3000,
+      })
+    }
+  }
+
+  const handleCustomerUserEdit = async () => {
+    const errors = validateFields()
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors)
+      return
+    }
+
+    const editUserPayload = {
+      name,
+      companyName: companyName,
+      phoneNumber: phone,
+      email,
+      street,
+      apt,
+      zipCode,
+      stateId: state?.id,
+      countryId: country?.id,
+      roleId: role?.id,
+      customerOwnerId: editCustomerMode ? '' : customerData?.customerOwnerId,
+    }
+
+    setIsLoading(true)
+    try {
+      const response = await editCustomer({
+        payload: editUserPayload,
+        id: customerData?.id,
+      }).unwrap()
+      const { status, message } = response as SaveUserResponse
+      if (status === 200 || status === 201) {
+        toastRef?.current?.show({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Customer User Updated successfully',
+          life: 3000,
+        })
         if (getCustomerUser) {
           getCustomerUser()
-        }
-        if (editMode && setSelectedCustomerUsers) {
-          setSelectedCustomerUsers([])
         }
         if (setEditCustomer) {
           setEditCustomer(false)
@@ -392,8 +455,10 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   }
 
   const handleClick = () => {
-    if (editMode || editCustomerMode) {
+    if (editMode) {
       handleEdit()
+    } else if (editCustomerMode) {
+      handleCustomerUserEdit()
     } else {
       handleSave()
     }
@@ -421,7 +486,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   }, [])
 
   const handleEditMode = () => {
-    if (editMode && customerData) {
+    if ((editMode || editCustomerMode) && customerData) {
       setName(customerData?.name || '')
       setCompanyName(customerData?.userID || '')
       setPhone(customerData?.phoneNumber || '')
@@ -437,7 +502,11 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         (customer: any) => customer.id === customerAdminId,
       )
       const selectedCustomerAdminName = selectedCustomerAdmin ? selectedCustomerAdmin.name : ''
-      setSelectedCustomerId(selectedCustomerAdminName)
+      if (customerData?.roleResponseDto.id !== 2) {
+        setSelectedCustomerId(selectedCustomerAdminName)
+      }
+      dispatch(setCustomerName(selectedCustomerAdminName))
+      dispatch(setCustomerId(selectedCustomerAdmin ? selectedCustomerAdmin.id : ''))
     }
   }
 
@@ -468,8 +537,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       <div
         style={{
           height: 'calc(600px - 150px)',
-          overflowY: 'scroll',
-          overflowX: 'scroll',
           paddingBottom: '50px',
         }}>
         <div className="flex gap-8 mt-5 ml-4">
@@ -843,7 +910,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           </div>
         </div>
 
-        {!editMode && (
+        {!passWordDisplay && (
           <div className="flex mt-5 gap-8 ml-4">
             <div>
               <span className="font-medium text-sm text-[#000000]">

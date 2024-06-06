@@ -149,6 +149,7 @@ export interface CustomerAdminDataProps {
   onBlur?: (e: FocusEvent) => void
   customerUsers?: any
   permission?: boolean
+  passWordDisplay?: boolean
   toastRef?: any
   editCustomerMode?: boolean
   setEditCustomer?: Dispatch<SetStateAction<any>>
