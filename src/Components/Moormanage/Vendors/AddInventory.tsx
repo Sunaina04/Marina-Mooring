@@ -9,7 +9,7 @@ import { useAddInventoryMutation } from '../../../Services/MoorManage/Moormanage
 import { AddInventoryProps, CustomerDataProps } from '../../../Type/ComponentBasedType'
 import { VendorResponse } from '../../../Type/ApiTypes'
 
-const AddInventory: React.FC<AddInventoryProps> = ({ vendorId, toastRef, closeModal }) => {
+const AddInventory: React.FC<AddInventoryProps> = ({ id, toastRef, closeModal }) => {
   const { getTypeOfInventoryTypeData } = TypeOfInventoryType()
   const [checked, setChecked] = useState<boolean>(false)
   const [unChecked, setUnChecked] = useState<boolean>(false)
@@ -54,20 +54,20 @@ const AddInventory: React.FC<AddInventoryProps> = ({ vendorId, toastRef, closeMo
     }
 
     try {
-      const payload = {
+      const savePayload = {
         inventoryTypeId: formData?.type?.id,
         cost: formData?.cost,
         salePrice: formData?.salePrice,
         itemName: formData?.itemName,
         taxable: checked,
       }
-      const response = await addInventory({ vendorId: vendorId, payload }).unwrap()
+      const response = await addInventory({ vendorId: id, payload: savePayload }).unwrap()
       const { status, message } = response as VendorResponse
       if (status === 200 || status === 201) {
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
-          detail: 'Vendor Saved successfully',
+          detail: 'Inventory Saved successfully',
           life: 3000,
         })
         closeModal()
@@ -255,7 +255,9 @@ const AddInventory: React.FC<AddInventoryProps> = ({ vendorId, toastRef, closeMo
         <div className="mt-10">
           <Button
             label={'Save'}
-            onClick={() => {}}
+            onClick={() => {
+              handleSave()
+            }}
             style={{
               width: '89px',
               height: '42px',

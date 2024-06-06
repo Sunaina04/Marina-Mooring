@@ -223,9 +223,7 @@ const InventoryDetails: React.FC = () => {
 
           <CustomModal
             buttonText={'ADD NEW'}
-            children={
-              <AddInventory vendorId={vendorId} toastRef={toast} closeModal={handleModalClose} />
-            }
+            children={<AddInventory id={vendorId} toastRef={toast} closeModal={handleModalClose} />}
             headerText={<h1 className="text-xl font-extrabold text-black ml-4">Add Inventory</h1>}
             visible={modalVisible}
             onClick={handleButtonClick}
@@ -286,6 +284,12 @@ const InventoryDetails: React.FC = () => {
           scrollable={true}
           data={inventoryData}
           style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+          emptyMessage={
+            <div className="text-center mt-14">
+              <img src="/assets/images/empty.png" alt="Empty Data" className="w-20 mx-auto mb-4" />
+              <p className="text-gray-500">No data available</p>
+            </div>
+          }
         />
       </div>
     </>

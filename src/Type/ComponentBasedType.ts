@@ -80,7 +80,7 @@ export interface AddVendorProps {
 }
 
 export interface AddInventoryProps {
-  vendorId: any
+  id: any
   closeModal: () => void
   toastRef?: any
 }

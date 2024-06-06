@@ -41,11 +41,13 @@ const Header: React.FC<HeaderProps> = ({ header }) => {
       const { message } = error as ErrorResponse
       console.error('Error occurred while fetching customer data:', message)
     }
-  }, [getUser])
+  }, [getUser, role === 1])
 
   useEffect(() => {
-    getUserHandler()
-  }, [])
+    if (role === 1) {
+      getUserHandler()
+    }
+  }, [role === 1])
 
   return (
     <div

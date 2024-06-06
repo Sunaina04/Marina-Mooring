@@ -287,8 +287,8 @@ const moormanageApi = userApi.injectEndpoints({
     }),
 
     addInventory: builder.mutation({
-      query: ({ payload, vendorId }: { payload: InventoryPayload; vendorId: number }) => ({
-        url: `api/v1/inventory/`,
+      query: ({ vendorId, payload }: { vendorId: number; payload: InventoryPayload }) => ({
+        url: 'api/v1/inventory/',
         method: 'POST',
         body: payload,
         params: { vendorId },
