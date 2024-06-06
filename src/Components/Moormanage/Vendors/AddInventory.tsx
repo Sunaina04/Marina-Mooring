@@ -5,6 +5,7 @@ import { Checkbox } from 'primereact/checkbox'
 import { Button } from 'primereact/button'
 import { TypeOfInventoryType } from '../../CommonComponent/MetaDataComponent/MetaDataApi'
 import { MetaData } from '../../../Type/CommonType'
+import { useAddInventoryMutation } from '../../../Services/MoorManage/MoormanageApi'
 
 function AddInventory() {
   const { getTypeOfInventoryTypeData } = TypeOfInventoryType()
@@ -19,14 +20,7 @@ function AddInventory() {
     type: '',
   })
   const [errors, setErrors] = useState<{ [key: string]: string }>({})
-
-  const cities = [
-    { name: 'New York', code: 'NY' },
-    { name: 'Rome', code: 'RM' },
-    { name: 'London', code: 'LDN' },
-    { name: 'Istanbul', code: 'IST' },
-    { name: 'Paris', code: 'PRS' },
-  ]
+  const [addInventory] = useAddInventoryMutation()
 
   const handleInputChange = (field: string, value: any) => {
     setFormData({
@@ -51,9 +45,48 @@ function AddInventory() {
     return newErrors
   }
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const validationErrors = validateFields()
-    if (Object.keys(validationErrors).length > 0) return
+    if (Object.keys(validationErrors).length > 0) {
+      return
+    }
+
+    try {
+      const payload = {
+        inventoryTypeId: formData?.type?.id,
+        cost: formData?.cost,
+        salePrice: formData?.salePrice,
+        itemName: formData?.itemName,
+        taxable: checked,
+      }
+      console.log('forms', formData, payload)
+      const response = await addInventory(payload).unwrap()
+      // const { status, message } = response as VendorResponse
+      // if (status === 200 || status === 201) {
+      //   toastRef?.current?.show({
+      //     severity: 'success',
+      //     summary: 'Success',
+      //     detail: 'Vendor Saved successfully',
+      //     life: 3000,
+      //   })
+      //   closeModal()
+      //   getVendor()
+      // } else {
+      //   toastRef?.current?.show({
+      //     severity: 'error',
+      //     summary: 'Error',
+      //     detail: message,
+      //     life: 3000,
+      //   })
+      // }
+    } catch (error) {
+      // toastRef?.current?.show({
+      //   severity: 'error',
+      //   summary: 'Error',
+      //   detail: error,
+      //   life: 3000,
+      // })
+    }
   }
 
   const fetchDataInventoryType = useCallback(async () => {
@@ -61,14 +94,11 @@ function AddInventory() {
     if (typeOfBoatTypeData !== null) {
       setInventoryType(typeOfBoatTypeData)
     }
-
   }, [])
 
   useEffect(() => {
     fetchDataInventoryType()
   }, [fetchDataInventoryType])
-
-
 
   return (
     <>
@@ -82,15 +112,13 @@ function AddInventory() {
               borderRadius: '0.50rem',
               fontSize: '0.8rem',
             }}
-            placeholder='Select Type'
+            placeholder="Select Type"
             onChange={(e) => handleInputChange('type', e.target.value)}
             value={formData.type}
             options={inventoryType}
             optionLabel="type"
           />
-          <p className="" >
-            {errors.type && <small className="p-error">{errors.type}</small>}
-          </p>
+          <p className="">{errors.type && <small className="p-error">{errors.type}</small>}</p>
         </div>
         <div className="flex gap-5 mt-5">
           <div>

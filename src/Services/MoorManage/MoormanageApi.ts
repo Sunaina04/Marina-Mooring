@@ -1,6 +1,7 @@
 import {
   BoatYardPayload,
   CustomerPayload,
+  InventoryPayload,
   MooringPayload,
   TechnicianPayload,
   UpdateMooringPayload,
@@ -276,6 +277,40 @@ const moormanageApi = userApi.injectEndpoints({
         params: { pageNumber, pageSize, sortBy, sortDir, searchText, vendorId },
       }),
     }),
+
+    deleteInventory: builder.mutation({
+      query: ({ vendorId, id }: { vendorId: number; id: number }) => ({
+        url: `api/v1/inventory/${id}`,
+        method: 'DELETE',
+        params: { vendorId },
+      }),
+    }),
+
+    addInventory: builder.mutation({
+      query: ({ payload, vendorId }: { payload: InventoryPayload; vendorId: number }) => ({
+        url: `api/v1/inventory/`,
+        method: 'POST',
+        body: payload,
+        params: vendorId,
+      }),
+    }),
+
+    updateInventory: builder.mutation({
+      query: ({
+        payload,
+        vendorId,
+        id,
+      }: {
+        payload: InventoryPayload
+        vendorId: number
+        id: number
+      }) => ({
+        url: `api/v1/inventory/${id}`,
+        method: 'PUT',
+        body: payload,
+        params: vendorId,
+      }),
+    }),
   }),
 })
 
@@ -304,4 +339,7 @@ export const {
   useGetCustomersWithMooringMutation,
   useGetMooringWithBoatyardMutation,
   useGetInventoryDetailsMutation,
+  useDeleteInventoryMutation,
+  useAddInventoryMutation,
+  useUpdateInventoryMutation,
 } = moormanageApi

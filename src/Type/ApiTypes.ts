@@ -582,3 +582,12 @@ export interface MetaDataResponse {
   time: number
   content: Content
 }
+
+export interface InventoryPayload {
+  id: number
+  inventoryTypeId: number
+  itemName: string
+  cost: number
+  salePrice: number
+  taxable: boolean
+}

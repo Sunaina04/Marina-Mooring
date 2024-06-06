@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader'
 import CustomModal from '../../CustomComponent/CustomModal'
 import Header from '../../Layout/LayoutComponents/Header'
@@ -10,9 +10,13 @@ import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import AddInventory from './AddInventory'
 import { Params } from '../../../Type/CommonType'
-import { useGetInventoryDetailsMutation } from '../../../Services/MoorManage/MoormanageApi'
+import {
+  useDeleteInventoryMutation,
+  useGetInventoryDetailsMutation,
+} from '../../../Services/MoorManage/MoormanageApi'
 import { useLocation } from 'react-router-dom'
-import { GetInventoryResponse } from '../../../Type/ApiTypes'
+import { DeleteCustomerResponse, GetInventoryResponse } from '../../../Type/ApiTypes'
+import { Toast } from 'primereact/toast'
 
 const InventoryDetails: React.FC = () => {
   const [searchText, setSearchText] = useState('')
@@ -24,6 +28,8 @@ const InventoryDetails: React.FC = () => {
   const queryParams = new URLSearchParams(location.search)
   const vendorId = queryParams.get('vendorId')
   const [getInventory] = useGetInventoryDetailsMutation()
+  const [deleteInventory] = useDeleteInventoryMutation()
+  const toast = useRef<Toast>(null)
 
   const handleEdit = () => {
     setInventoryEdit(true)
@@ -126,6 +132,9 @@ const InventoryDetails: React.FC = () => {
           color: 'red',
           label: 'Delete',
           underline: true,
+          onClick: (rowData) => {
+            handleDelete(rowData)
+          },
         },
       ],
       headerStyle: {
@@ -138,6 +147,31 @@ const InventoryDetails: React.FC = () => {
     }),
     [],
   )
+
+  const handleDelete = async (rowData: any) => {
+    try {
+      const response = await deleteInventory({ id: rowData?.id, vendorId: vendorId }).unwrap()
+      const { status, message } = response as DeleteCustomerResponse
+      if (status === 200) {
+        toast.current?.show({
+          severity: 'success',
+          summary: 'Success',
+          detail: message,
+          life: 3000,
+        })
+      } else {
+        toast.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+      }
+      getInventoryHandler()
+    } catch (error) {
+      console.error('Error deleting customer:', error)
+    }
+  }
 
   const getInventoryHandler = useCallback(async () => {
     try {
@@ -172,6 +206,8 @@ const InventoryDetails: React.FC = () => {
   return (
     <>
       <Header header="MOORMANAGE/Vendor" />
+      <Toast ref={toast} />
+
       <div className="flex justify-end">
         <div className="flex gap-4 mr-12 mt-14">
           <div>
