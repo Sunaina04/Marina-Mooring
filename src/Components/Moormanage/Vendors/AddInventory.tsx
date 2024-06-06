@@ -5,8 +5,9 @@ import { Checkbox } from 'primereact/checkbox'
 import { Button } from 'primereact/button'
 import { TypeOfInventoryType } from '../../CommonComponent/MetaDataComponent/MetaDataApi'
 import { MetaData } from '../../../Type/CommonType'
+import { AddInventoryProps, CustomerDataProps } from '../../../Type/ComponentBasedType'
 
-function AddInventory() {
+const  AddInventory: React.FC<AddInventoryProps> =()=> {
   const { getTypeOfInventoryTypeData } = TypeOfInventoryType()
   const [checked, setChecked] = useState<boolean>(false)
   const [unChecked, setUnChecked] = useState<boolean>(false)
@@ -19,14 +20,6 @@ function AddInventory() {
     type: '',
   })
   const [errors, setErrors] = useState<{ [key: string]: string }>({})
-
-  const cities = [
-    { name: 'New York', code: 'NY' },
-    { name: 'Rome', code: 'RM' },
-    { name: 'London', code: 'LDN' },
-    { name: 'Istanbul', code: 'IST' },
-    { name: 'Paris', code: 'PRS' },
-  ]
 
   const handleInputChange = (field: string, value: any) => {
     setFormData({
@@ -81,6 +74,7 @@ function AddInventory() {
               border: errors.type ? '1px solid red' : '1px solid #D5E1EA',
               borderRadius: '0.50rem',
               fontSize: '0.8rem',
+              // paddingBottom:"10px"
             }}
             placeholder='Select Type'
             onChange={(e) => handleInputChange('type', e.target.value)}

@@ -19,14 +19,22 @@ const InventoryDetails: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [inventoryEdit, setInventoryEdit] = useState(false)
   const [inventoryData, setInventoryData] = useState<any[]>()
+  const [sectectedInventory, setSelectedInventory] = useState<any>([])
   const [isLoading, setIsLoading] = useState(true)
   const location = useLocation()
   const queryParams = new URLSearchParams(location.search)
   const vendorId = queryParams.get('vendorId')
   const [getInventory] = useGetInventoryDetailsMutation()
 
+
   const handleEdit = () => {
-    setInventoryEdit(true)
+    setModalVisible(true)
+    // setSelectedInventory(inventoryData)
+
+
+
+
+
   }
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,12 +53,13 @@ const InventoryDetails: React.FC = () => {
         id: 'id',
         label: 'SKU',
         style: {
-          width: '9vw',
+          width: '5vw',
           backgroundColor: '#00426F',
           color: '#FFFFFF',
           fontSize: '11.18px',
           fontWeight: '700',
           borderTopLeftRadius: '10px',
+          
         },
       },
       {
@@ -131,10 +140,9 @@ const InventoryDetails: React.FC = () => {
       headerStyle: {
         backgroundColor: '#00426F',
         color: '#FFFFFF',
-        // height: '3.50rem',
         borderTopRightRadius: '10px',
       },
-      style: { width: '7rem', fontSize: '11.18px' },
+      style: { width: '7rem',borderBottom: '1px solid #D5E1EA',  fontSize: '11.18px' },
     }),
     [],
   )
@@ -173,7 +181,7 @@ const InventoryDetails: React.FC = () => {
     <>
       <Header header="MOORMANAGE/Vendor" />
       <div className="flex justify-end">
-        <div className="flex gap-4 mr-12 mt-14">
+        <div className="flex gap-4 mr-12 mt-8">
           <div>
             <div className="p-input-icon-left">
               <IoSearchSharp className="ml-2 text-blue-900" />
@@ -214,7 +222,7 @@ const InventoryDetails: React.FC = () => {
           />
         </div>
       </div>
-      <div className="rounded-md border-[1px] border-gray-300 w-100% h-[110px] ml-14 mr-10 mt-10 bg-white">
+      <div className="rounded-md border-[1px] border-gray-300 w-100% h-[110px] ml-14 mr-10 mt-5 bg-white">
         <div className="flex justify-around  mt-5">
           <div style={{ fontSize: '14px', color: '#000000', fontWeight: '400' }}>
             <p>ID:</p>
@@ -231,12 +239,23 @@ const InventoryDetails: React.FC = () => {
         </div>
       </div>
 
-      <div className="bg-[F2F2F2] rounded-md border-[1px] border-gray-300 w-100% ml-14 mr-10 mt-20">
+      <div 
+      
+      // style={{border:"1px solid red"}}
+      className="bg-white rounded-md border-[1px] h-[600px]  border-gray-300 w-100% ml-14 mr-10 mt-8">
         <DataTableComponent
+          tableStyle={{
+            fontSize: '12px',
+            color: '#000000',
+            fontWeight: 600,
+            backgroundColor: '#D9D9D9',
+            cursor: 'pointer',
+          }}
           columns={VendorInventoryColumns}
           actionButtons={ActionButtonColumn}
           scrollable={true}
           data={inventoryData}
+          style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
         />
       </div>
     </>
