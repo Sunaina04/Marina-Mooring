@@ -38,6 +38,8 @@ export interface DataTableProps {
   metaKeySelection?: boolean | undefined
   onSelectionChange?(event: DataTableSelectionSingleChangeEvent<any>): void
   dataKey?: string | undefined
+  multiple?: boolean | undefined
+
   emptyMessage?: string | React.ReactNode | ((frozen: boolean) => React.ReactNode) | undefined
 }
 

@@ -253,7 +253,7 @@ const Vendors = () => {
 
         <div
           style={{
-            height: '750px',
+            height: '715px',
             borderRadius: '10px',
             border: '1px solid #D5E1EA',
             opacity: '0px',
@@ -285,11 +285,11 @@ const Vendors = () => {
             actionButtons={ActionButtonColumn}
             style={{ backgroundColor: '#FFFFFF', borderBottom: '1px solid #D5E1EA ' }}
             emptyMessage={
-              <div className="text-center mt-14">
+              <div className="text-center mt-40">
                 <img
                   src="/assets/images/empty.png"
                   alt="Empty Data"
-                  className="w-20 mx-auto mb-4"
+                  className="w-32 mx-auto mb-4"
                 />
                 <p className="text-gray-500">No data available</p>
               </div>

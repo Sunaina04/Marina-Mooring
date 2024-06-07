@@ -109,14 +109,13 @@ const Moorings = () => {
         const response = await deleteMooring({ id: mooringId }).unwrap()
         const { status, message } = response as DeleteCustomerResponse
         if (status === 200) {
-          getMooringsData()
-          setMooringResponseData('')
           toast.current?.show({
             severity: 'success',
             summary: 'Success',
-            detail: message,
+            detail: 'User deleted successfully',
             life: 3000,
           })
+          setMooringData([])
         } else {
           toast.current?.show({
             severity: 'error',
@@ -287,6 +286,7 @@ const Moorings = () => {
     <div className={modalVisible ? 'backdrop-blur-lg' : ''}>
       <Header header={properties.MoormanageMoorings} />
       <Toast ref={toast} />
+
       <div className="flex justify-end mr-12 ">
         <div className="flex mt-14">
           <CustomModal
@@ -341,7 +341,7 @@ const Moorings = () => {
           <div
             style={{
               width: '680px',
-              height: '703px',
+              height: '680px',
               top: '277px',
               left: '107px',
               gap: '0px',
@@ -391,7 +391,7 @@ const Moorings = () => {
 
             <div className={`mt-2 ${isLoading ? 'blur-screen' : ''}`}>
               {mooringData.length > 0 ? (
-                <div className="h-[560px] overflow-y-auto">
+                <div className=" overflow-y-auto">
                   <DataTableComponent
                     data={mooringData}
                     tableStyle={{
@@ -437,13 +437,13 @@ const Moorings = () => {
           />
         )}
 
-        <div className="min-w-[20vw]">
+        <div className="">
           <div
-            className={`max-w-[413px] rounded-md border-[1px] ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
+            className={` rounded-md border-[1px] ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
             <CustomMooringPositionMap
               position={coordinatesArray || [30.698, 76.657]}
               zoomLevel={10}
-              style={{ height: '700px' }}
+              style={{ height: '680px', width: '400px' }}
               // iconsByStatus={iconsByStatus}
               // @ts-expect-error
               moorings={mooringData}

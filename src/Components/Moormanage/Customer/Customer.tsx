@@ -394,6 +394,7 @@ const Customer = () => {
                 columns={CustomerTableColumns}
                 style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
                 onRowClick={(rowData) => handleCustomerTableRowClick(rowData)}
+                
               />
             )}
           </div>

@@ -465,14 +465,15 @@ const CustomerOwner = () => {
                 tableStyle={{
                   fontSize: '12px',
                   color: '#000000',
-                  fontWeight: 400,
-                  backgroundColor: '#FFFFFF',
+                  fontWeight: 600,
+                  backgroundColor: '#D9D9D9',
+                  cursor: 'pointer',
                 }}
                 scrollable={true}
                 data={getCustomerOwnerUserData}
                 columns={customerOwnerUserTableColumn}
                 actionButtons={ActionButtonUsersColumn}
-                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
               />
             ) : (
               <div className="text-center mt-40">

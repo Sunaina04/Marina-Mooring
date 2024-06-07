@@ -265,7 +265,7 @@ const Permission = () => {
           paddingLeft: '25px',
         }}>
         <div
-          className="bg-[#FFFFFF] border-[1px] h-[600px] border-gray-300 mb-10 rounded-lg"
+          className="bg-[#FFFFFF] border-[1px] h-[680px] border-gray-300  rounded-lg"
           style={{
             flexGrow: 1,
             borderRadius: '10px',
@@ -278,7 +278,6 @@ const Permission = () => {
                 fontWeight: 600,
                 backgroundColor: '#D9D9D9',
                 borderRadius: '0 0 10px 10px',
-                minHeight: 'calc(40vw - 600px)',
                 overflow: 'auto',
               }}
               scrollable={true}
