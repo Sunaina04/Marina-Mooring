@@ -215,6 +215,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const phoneRegex = /^\d{10}$/
     const nameRegex = /^[a-zA-Z ]+$/
+    const zipCodeRegex = /^\d+$/;
   
     const errors: { [key: string]: string } = {}
     let firstError = ''
@@ -265,6 +266,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       errors.pinCode = 'Zipcode code is required'
       if (!firstError) firstError = 'pinCode'
     }
+    
     if (!selectedState) {
       errors.state = 'State is required'
       if (!firstError) firstError = 'state'

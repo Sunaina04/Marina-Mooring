@@ -95,6 +95,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const phoneRegex = /^\d{10}$/
     const nameRegex = /^[a-zA-Z ]+$/
+    const zipCodeRegex = /^\d+$/;
     const errors: { [key: string]: string } = {}
     let firstError = ''
     if (!name) {
@@ -131,10 +132,14 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     if (errors.apt && !firstError) {
       firstError = 'apt'
     }
-    if (!zipCode) errors.zipCode = 'ZipCode is required'
-    if (errors.zipCode && !firstError) {
-      firstError = 'zipCode'
+   
+    if (!zipCode) {
+      errors.zipCode = 'ZipCode is required';
+    } else if (!zipCodeRegex.test(zipCode)) {
+      errors.zipCode = 'ZipCode only contains numbers';
     }
+
+
     if (!role) errors.role = 'Role is required'
     if (errors.role && !firstError) {
       firstError = 'role'
@@ -276,13 +281,18 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         id: customerData?.id,
       }).unwrap()
       const { status, message } = response as SaveUserResponse
+      console.log("message",message);
+      
+
       if (status === 200 || status === 201) {
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
-          detail: 'User Updated successfully',
+          detail: message,
           life: 3000,
         })
+
+       
         getUser()
         if (setEditCustomer) {
           setEditCustomer(false)
@@ -432,6 +442,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         payload: addUserPayload,
       }).unwrap()
       const { status, message } = response as SaveUserResponse
+
+      // console.log("messagehi",message);
+
       if (status === 200 || status === 201) {
         toastRef?.current?.show({
           severity: 'success',
@@ -457,6 +470,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     } catch (error) {
       const { message } = error as ErrorResponse
 
+      console.log("message",message);
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',

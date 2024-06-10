@@ -11,6 +11,7 @@ import {
 } from '../../../Services/MoorManage/MoormanageApi'
 import { AddInventoryProps, CustomerDataProps } from '../../../Type/ComponentBasedType'
 import { CustomerResponse, ErrorResponse, VendorResponse } from '../../../Type/ApiTypes'
+import { ProgressSpinner } from 'primereact/progressspinner'
 
 const AddInventory: React.FC<AddInventoryProps> = ({
   id,
@@ -24,6 +25,7 @@ const AddInventory: React.FC<AddInventoryProps> = ({
   const [checked, setChecked] = useState<boolean>(false)
   const [unChecked, setUnChecked] = useState<boolean>(false)
   const [inventoryType, setInventoryType] = useState<MetaData[]>([])
+  const [isLoading, setIsLoading] = useState(true)
   const [formData, setFormData] = useState<any>({
     itemName: '',
     cost: '',
@@ -90,6 +92,7 @@ const AddInventory: React.FC<AddInventoryProps> = ({
       const response = await addInventory({ vendorId: id, payload: savePayload }).unwrap()
       const { status, message } = response as VendorResponse
       if (status === 200 || status === 201) {
+        setIsLoading(false)
         getInventoryHandler()
         toastRef?.current?.show({
           severity: 'success',
@@ -99,6 +102,7 @@ const AddInventory: React.FC<AddInventoryProps> = ({
         })
         closeModal()
       } else {
+        setIsLoading(false)
         toastRef?.current?.show({
           severity: 'error',
           summary: 'Error',
@@ -236,6 +240,22 @@ const AddInventory: React.FC<AddInventoryProps> = ({
               </p>
             </div>
           </div>
+
+          {isLoading && (
+            <ProgressSpinner
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: '50px',
+                height: '50px',
+              }}
+              strokeWidth="4"
+            />
+          )}
+
+
           <div>
             <div className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
