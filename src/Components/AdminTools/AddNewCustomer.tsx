@@ -5,8 +5,17 @@ import { Button } from 'primereact/button'
 import InputComponent from '../CommonComponent/InputComponent'
 import { Country, Role, State } from '../../Type/CommonType'
 import { CustomerAdminDataProps } from '../../Type/ComponentBasedType'
-import { ErrorResponse, SaveUserResponse } from '../../Type/ApiTypes'
-import { useAddUserMutation, useUpdateUserMutation } from '../../Services/AdminTools/AdminToolsApi'
+import {
+  CustomerPayload,
+  ErrorResponse,
+  GetUserResponse,
+  SaveUserResponse,
+} from '../../Type/ApiTypes'
+import {
+  useAddUserMutation,
+  useGetUsersMutation,
+  useUpdateUserMutation,
+} from '../../Services/AdminTools/AdminToolsApi'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import {
   CountriesData,
@@ -55,14 +64,16 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const [selectedCustomerId, setSelectedCustomerId] = useState<any>()
   const [firstErrorField, setFirstErrorField] = useState('')
   const [customerAdminDropdownEnabled, setCustomerAdminDropdownEnabled] = useState(false)
-  const [addCustomer] = useAddUserMutation()
-  const [editCustomer] = useUpdateUserMutation()
-  const { getRolesData } = RolesData()
-  const { getStatesData } = StatesData()
-  const { getCountriesData } = CountriesData()
+  const [getCustomerOwnerData, setgetCustomerOwnerData] = useState<CustomerPayload[]>([])
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [addCustomer] = useAddUserMutation()
+  const [editCustomer] = useUpdateUserMutation()
+  const [getUsersData] = useGetUsersMutation()
+  const { getRolesData } = RolesData()
+  const { getStatesData } = StatesData()
+  const { getCountriesData } = CountriesData()
 
   const [passwordCriteria, setPasswordCriteria] = useState({
     uppercase: false,
@@ -511,6 +522,27 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     }
   }
 
+  const getUserHandler = useCallback(async () => {
+    try {
+      dispatch(setCustomerId(''))
+      dispatch(setCustomerName(''))
+      const response = await getUsersData({}).unwrap()
+      const { status, message, content } = response as GetUserResponse
+      if (status === 200 && Array.isArray(content)) {
+        setIsLoading(false)
+        if (content.length > 0) {
+          setgetCustomerOwnerData(content)
+        } else {
+          setgetCustomerOwnerData([])
+        }
+      } else {
+        setIsLoading(false)
+      }
+    } catch (error) {
+      console.error('Error occurred while fetching customer data:', error)
+    }
+  }, [getUser])
+
   useEffect(() => {
     if (firstErrorField) {
       document.getElementById(firstErrorField)?.scrollIntoView({ behavior: 'smooth' })
@@ -520,6 +552,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   useEffect(() => {
     if (role && (role?.id === 3 || role?.id === 4)) {
       setCustomerAdminDropdownEnabled(true)
+      getUserHandler()
     } else {
       setCustomerAdminDropdownEnabled(false)
     }
@@ -695,7 +728,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                       setFieldErrors((prevErrors) => ({ ...prevErrors, selectedCustomerId: '' }))
                     }
                   }}
-                  options={customerUsers}
+                  options={getCustomerOwnerData}
                   optionLabel="name"
                   editable
                   placeholder="Select"
