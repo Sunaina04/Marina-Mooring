@@ -15,7 +15,6 @@ import { ProgressSpinner } from 'primereact/progressspinner'
 import { LatLngExpression } from 'leaflet'
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
-import { async } from 'q'
 
 const AddBoatyards: React.FC<BoatYardProps> = ({
   closeModal,
@@ -52,7 +51,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const phoneRegex = /^\d{10}$/
     const nameRegex = /^[a-zA-Z ]+$/
-
+    const zipCodeRegex = /^\d+$/
     const errors: { [key: string]: string } = {}
 
     if (!boatyardName) {
@@ -60,9 +59,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
     } else if (!nameRegex.test(boatyardName)) {
       errors.name = 'Name must only contain letters'
     }
-
     if (!boatyardId) errors.id = 'Boatyard ID is required'
-
     if (!phone) {
       errors.phone = 'Phone is required'
     } else if (!phoneRegex.test(phone)) {
@@ -79,7 +76,11 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
       errors.gpsCoordinatesValue = 'GPS Coordinates is required'
     }
     if (!address) errors.address = 'Street/house is required'
-    if (!zipCode) errors.zipCode = 'Zip code is required'
+    if (!zipCode) {
+      errors.zipCode = 'Zipcode is required'
+    } else if (!zipCodeRegex.test(zipCode)) {
+      errors.zipCode = 'Zipcode contain only numbers'
+    }
     if (!mainContact) errors.mainContact = 'Main contact is required'
     if (!country) errors.country = 'Country  is required'
     if (!state) errors.state = 'State  is required'

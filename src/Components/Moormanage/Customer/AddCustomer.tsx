@@ -99,11 +99,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const { getTypeOfPennantData } = TypeOfPennant()
   const { getTypeOfSizeOfWeightData } = TypeOfSizeOfWeight()
   const { getBoatYardNameData } = BoatyardNameData(selectedCustomerId)
-
   const { getCountriesData } = CountriesData()
   const [addCustomer] = useAddCustomerMutation()
   const [updateCustomer] = useUpdateCustomerMutation()
-
   const handlePositionChange = (lat: number, lng: number) => {
     setCenter([lat, lng])
     const formattedLat = lat.toFixed(3)
@@ -116,7 +114,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const phoneRegex = /^\d{10}$/
     const nameRegex = /^[a-zA-Z ]+$/
-
+    const zipCodeRegex = /^\d+$/;
+  
     const errors: { [key: string]: string } = {}
     let firstError = ''
 
@@ -163,9 +162,13 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     }
 
     if (!pinCode) {
-      errors.pinCode = 'Zipcode code is required'
-      if (!firstError) firstError = 'pinCode'
+      errors.pinCode = 'Zipcode is required';
+      if (!firstError) firstError = 'pinCode';
+    } else if (!zipCodeRegex.test(pinCode)) {
+      errors.pinCode = 'Zipcode contain only numbers';
+      if (!firstError) firstError = 'pinCode';
     }
+
     if (!selectedState) {
       errors.state = 'State is required'
       if (!firstError) firstError = 'state'
@@ -184,7 +187,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     if (!gpsCoordinatesValue) {
       errors.gpsCoordinatesValue = 'GPS Coordinates is required'
     }
-
     if (!formData.mooringId) errors.mooringId = 'Mooring ID is required'
     if (!formData.harbor) errors.harbor = 'Harbor is required'
     if (!formData.waterDepth) errors.waterDepth = 'Water Depth is required'
@@ -201,7 +203,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       errors.shackleSwivelCondition = 'Shackle, Swivel Condition is required'
     if (!formData.depthAtMeanHighWater)
       errors.depthAtMeanHighWater = 'Depth at Mean High Water is required'
-    // if (!formData.status) errors.status = 'Status is required'
     if (!formData.bottomChainCondition)
       errors.bottomChainCondition = 'Bottom Chain Condition is required'
     if (!formData.pennantCondition) errors.pennantCondition = 'Pennant Condition is required'
@@ -215,8 +216,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const phoneRegex = /^\d{10}$/
     const nameRegex = /^[a-zA-Z ]+$/
-    const zipCodeRegex = /^\d+$/;
-  
+   
     const errors: { [key: string]: string } = {}
     let firstError = ''
 
@@ -266,7 +266,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       errors.pinCode = 'Zipcode code is required'
       if (!firstError) firstError = 'pinCode'
     }
-    
     if (!selectedState) {
       errors.state = 'State is required'
       if (!firstError) firstError = 'state'

@@ -436,9 +436,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         payload: addUserPayload,
       }).unwrap()
       const { status, message } = response as SaveUserResponse
-
-      // console.log("messagehi",message);
-
       if (status === 200 || status === 201) {
         toastRef?.current?.show({
           severity: 'success',
@@ -463,8 +460,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       }
     } catch (error) {
       const { message } = error as ErrorResponse
-
-      console.log('message', message)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',

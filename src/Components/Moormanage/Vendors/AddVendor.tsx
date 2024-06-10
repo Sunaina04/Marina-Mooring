@@ -56,7 +56,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const phoneRegex = /^\d{10}$/
     const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/
-
+    const zipCodeRegex = /^\d+$/;
     if (!formData.phone) {
       errors.phone = 'Phone is required'
     } else if (!phoneRegex.test(formData.phone)) {
@@ -96,18 +96,23 @@ const AddVendor: React.FC<AddVendorProps> = ({
       errors.streetBuildingForAddress = 'street/Building is required'
     if (!formData.aptSuiteForAddress) errors.aptSuiteForAddress = 'aptSuite is required'
     if (!formData.countryForAddress) errors.countryForAddress = 'country is required'
-    if (!formData.stateForAddress) errors.stateForAddress = 'state is required'
-    if (!formData.zipCodeForAddress) errors.zipCodeForAddress = 'zipCode is required'
-
+    if (!formData.stateForAddress) errors.stateForAddress = 'state is required' 
+    if (!formData.zipCodeForAddress) {
+      errors.zipCodeForAddress = 'Zip Code is required';
+    } else if (!zipCodeRegex.test(formData.zipCodeForAddress)) {
+      errors.zipCodeForAddress = 'Zip Code contain only numbers';
+    }
     if (!formData.streetBuildingForRemit)
       errors.streetBuildingForRemit = 'street/Building is required'
     if (!formData.aptSuiteForRemit) errors.aptSuiteForRemit = 'apt/Suite is required'
     if (!formData.countryForRemit) errors.countryForRemit = 'country is required'
     if (!formData.stateForRemit) errors.stateForRemit = 'state is required'
-    if (!formData.zipCodeForRemit) errors.zipCodeForRemit = 'zipCode is required'
-
+    if (!formData.zipCodeForRemit) {
+      errors.zipCodeForRemit = 'Zip Code is required';
+    } else if (!zipCodeRegex.test(formData.zipCodeForRemit)) {
+      errors.zipCodeForRemit = 'Zip Code contain only numbers';
+    }
     if (!formData.accountNumber) errors.accountNumber = 'accountNumber is required'
-
     if (!formData.firstName) errors.firstName = 'firstName is required'
     if (!formData.lastName) errors.lastName = 'lastName is required'
     if (!formData.phoneForRepresentative) errors.phoneForRepresentative = 'phone is required'
