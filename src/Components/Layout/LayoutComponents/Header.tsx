@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useGetUsersMutation } from '../../../Services/AdminTools/AdminToolsApi'
 import { CustomerPayload, ErrorResponse, GetUserResponse } from '../../../Type/ApiTypes'
 import { setCustomerId, setCustomerName, selectCustomerName } from '../../../Store/Slice/userSlice'
+import { RootState } from '../../../Store/Store'
+import { fetchCustomers } from '../../../Store/Slice/customerSlice'
 
 const Header: React.FC<HeaderProps> = ({ header }) => {
   const userData = useSelector((state: any) => state.user?.userData)
@@ -15,6 +17,7 @@ const Header: React.FC<HeaderProps> = ({ header }) => {
   const selectedCustomerName = useSelector(selectCustomerName)
   const [expanded, setExpanded] = useState(false)
   const [getCustomerOwnerData, setgetCustomerOwnerData] = useState<CustomerPayload[]>([])
+  // const customers = useSelector((state: RootState) => state.customers.customers)
   const [getUser] = useGetUsersMutation()
 
   const handleMenu = () => {
@@ -50,6 +53,12 @@ const Header: React.FC<HeaderProps> = ({ header }) => {
       getUserHandler()
     }
   }, [role === 1])
+
+  // useEffect(() => {
+  //   if (role === 1) {
+  //     dispatch(fetchCustomers())
+  //   }
+  // }, [role, dispatch])
 
   return (
     <div

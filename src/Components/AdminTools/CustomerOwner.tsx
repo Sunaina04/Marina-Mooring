@@ -192,9 +192,7 @@ const CustomerOwner = () => {
         if (searchUsersText) {
           params.searchText = searchUsersText
         }
-        const response = await getUser({
-          searchText: searchUsersText,
-        }).unwrap()
+        const response = await getUser(params).unwrap()
         const { status, message, content } = response as GetUserResponse
         if (status === 200 && Array.isArray(content)) {
           setIsLoading(false)

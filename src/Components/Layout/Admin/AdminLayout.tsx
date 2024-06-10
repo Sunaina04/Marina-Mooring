@@ -248,7 +248,8 @@ const AdminLayout = () => {
                 alignItems: 'center',
                 position: 'relative',
               }}
-              onClick={handleLogout}>
+              // onClick={handleLogout}
+            >
               <img
                 src="/assets/images/logout.svg"
                 alt="Logout"

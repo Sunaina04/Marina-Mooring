@@ -17,9 +17,9 @@ import userReducer from './Slice/userSlice'
 import { userApi } from '../Services/UserApi'
 
 const rootReducer = combineReducers({
-  user: userReducer, 
+  user: userReducer,
   [userApi.reducerPath]: userApi.reducer,
-});
+})
 
 const persistConfig = {
   key: 'root',
