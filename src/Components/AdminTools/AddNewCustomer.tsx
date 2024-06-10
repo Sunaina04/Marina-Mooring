@@ -305,6 +305,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       setFieldErrors(errors)
       return
     }
+    dispatch(setCustomerId(editMode ? '' : customerData?.customerOwnerId))
 
     const editUserPayload = {
       name,
@@ -317,7 +318,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       stateId: state?.id,
       countryId: country?.id,
       roleId: role?.id,
-      customerOwnerId: editCustomerMode ? '' : customerData?.customerOwnerId,
+      // customerOwnerId: editCustomerMode ? '' : customerData?.customerOwnerId,
     }
 
     setIsLoading(true)
@@ -396,6 +397,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       return
     }
     setIsLoading(true)
+    dispatch(setCustomerId(permission ? customerAdminId : selectedCustomerAdminId))
     try {
       // Encode the password using base64
       const encodedPassword = btoa(password)
@@ -411,7 +413,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         stateId: state?.id,
         countryId: country?.id,
         roleId: role?.id,
-        customerOwnerId: permission ? customerAdminId : selectedCustomerAdminId,
+        // customerOwnerId: permission ? customerAdminId : selectedCustomerAdminId,
         confirmPassword: encodedPassword, // Using base64 encoded password for confirmPassword
       }
 
