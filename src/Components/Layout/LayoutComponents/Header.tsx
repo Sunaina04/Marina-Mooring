@@ -27,6 +27,8 @@ const Header: React.FC<HeaderProps> = ({ header }) => {
   }
 
   const getUserHandler = useCallback(async () => {
+    dispatch(setCustomerId(''))
+    dispatch(setCustomerName(''))
     try {
       const response = await getUser({}).unwrap()
       const { status, message, content } = response as GetUserResponse
@@ -42,7 +44,6 @@ const Header: React.FC<HeaderProps> = ({ header }) => {
       console.error('Error occurred while fetching customer data:', message)
     }
   }, [getUser, role === 1])
-  
 
   useEffect(() => {
     if (role === 1) {

@@ -390,9 +390,6 @@ const CustomerOwner = () => {
                 columns={customerOwnerTableColumn}
                 onRowClick={(e) => {
                   setSelectedId(e.data.id)
-                  // getCustomerAdminsUsers(e.data.id)
-                  console.log('name', e?.data?.name, 'id', e?.data?.id)
-
                   dispatch(setCustomerName(e?.data?.name))
                   dispatch(setCustomerId(e?.data?.id))
                 }}
