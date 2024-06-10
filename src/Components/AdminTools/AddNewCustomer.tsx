@@ -413,7 +413,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         stateId: state?.id,
         countryId: country?.id,
         roleId: role?.id,
-        // customerOwnerId: permission ? customerAdminId : selectedCustomerAdminId,
         confirmPassword: encodedPassword, // Using base64 encoded password for confirmPassword
       }
 
@@ -429,10 +428,10 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           detail: 'User Saved successfully',
           life: 3000,
         })
-        getUser()
-        if (getCustomerUser) {
-          getCustomerUser()
+        if (role?.id === 2) {
+          getUser()
         }
+        dispatch(setCustomerId(''))
         setIsLoading(false)
         setModalVisible(false)
       } else {
