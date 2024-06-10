@@ -85,7 +85,7 @@ const CustomerOwner = () => {
     ],
     headerStyle: {
       backgroundColor: '#FFFFFF',
-      borderBottom: '1px solid #C0C0C0',
+      borderBottom: '1px solid #D5E1EA',
       color: '#000000',
       fontWeight: 500,
     },
@@ -391,9 +391,12 @@ const CustomerOwner = () => {
                 onRowClick={(e) => {
                   setSelectedId(e.data.id)
                   // getCustomerAdminsUsers(e.data.id)
+                  console.log('name', e?.data?.name, 'id', e?.data?.id)
+
                   dispatch(setCustomerName(e?.data?.name))
                   dispatch(setCustomerId(e?.data?.id))
                 }}
+                multiple={true}
                 selectedRow={selectedId}
                 style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
                 actionButtons={ActionButtonColumn}

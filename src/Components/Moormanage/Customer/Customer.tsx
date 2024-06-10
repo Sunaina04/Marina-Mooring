@@ -26,8 +26,8 @@ import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader
 import { properties } from '../../Utils/MeassageProperties'
 import { Params } from '../../../Type/CommonType'
 import { Toast } from 'primereact/toast'
-import { useSelector } from 'react-redux'
-import { selectCustomerId } from '../../../Store/Slice/userSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectCustomerId, selectCustomerName, setCustomerId, setCustomerName } from '../../../Store/Slice/userSlice'
 import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
 import CustomMooringPositionMap from '../../Map/CustomMooringPositionMap'
 import { GearOffIcon, GearOnIcon, NeedInspectionIcon, NotInUseIcon } from '../../Map/DefaultIcon'
@@ -37,6 +37,8 @@ const Customer = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
   const [modalVisible, setModalVisible] = useState(false)
   const [customerData, setCustomerData] = useState<CustomerPayload[]>([])
+  console.log("customerData", customerData);
+  const dispatch = useDispatch()
   const [editMode, setEditMode] = useState(false)
   const [editCustomerMode, setEditCustomerMode] = useState(false)
   const [editMooringMode, setEditMooringMode] = useState(false)
@@ -394,7 +396,8 @@ const Customer = () => {
                 columns={CustomerTableColumns}
                 style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
                 onRowClick={(rowData) => handleCustomerTableRowClick(rowData)}
-                
+                selection={selectedCustomer}
+                selectionMode="single"
               />
             )}
           </div>
@@ -527,8 +530,7 @@ const Customer = () => {
                     <div className="mt-1">
                       <h1 className="">Boatyard: </h1>
                     </div>
-                    <div
-                      className="flex gap-4 ml-1">
+                    <div className="flex gap-4 ml-1">
                       {boatYardData.map((boatyard, index) => (
                         <p
                           key={index}
@@ -614,6 +616,7 @@ const Customer = () => {
                 borderRadius: '1rem',
                 fontWeight: '400',
                 maxHeight: '50% !important',
+                border: '1px solid red',
               }}
               draggable={false}
               visible={dialogVisible}
