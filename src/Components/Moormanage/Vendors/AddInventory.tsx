@@ -25,7 +25,7 @@ const AddInventory: React.FC<AddInventoryProps> = ({
   const [checked, setChecked] = useState<boolean>(false)
   const [unChecked, setUnChecked] = useState<boolean>(false)
   const [inventoryType, setInventoryType] = useState<MetaData[]>([])
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState<any>({
     itemName: '',
     cost: '',
@@ -81,6 +81,7 @@ const AddInventory: React.FC<AddInventoryProps> = ({
       return
     }
 
+    setIsLoading(true);
     try {
       const savePayload = {
         inventoryTypeId: formData?.type?.id,
@@ -102,7 +103,7 @@ const AddInventory: React.FC<AddInventoryProps> = ({
         })
         closeModal()
       } else {
-        setIsLoading(false)
+        setIsLoading(true)
         toastRef?.current?.show({
           severity: 'error',
           summary: 'Error',

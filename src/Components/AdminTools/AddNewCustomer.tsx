@@ -573,7 +573,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     <>
       <div
         style={{
-          height: 'calc(600px - 150px)',
+          // height: 'calc(600px - 150px)',
           paddingBottom: '50px',
         }}>
         <div className="flex gap-8 mt-5 ml-4">

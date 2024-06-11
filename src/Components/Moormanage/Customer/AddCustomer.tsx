@@ -28,7 +28,7 @@ import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import CustomSelectPositionMap from '../../Map/CustomSelectPositionMap'
 import { LatLngExpression } from 'leaflet'
-
+import { ProgressSpinner } from 'primereact/progressspinner'
 const AddCustomer: React.FC<CustomerDataProps> = ({
   customer,
   mooringRowData,
@@ -44,8 +44,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [value, setValue] = useState<string>('')
   const [selectedCountry, setSelectedCountry] = useState<Country>()
   const [selectedState, setSelectedState] = useState<State>()
-  const [customerName, setCustomerName] = useState<string>('')
-  const [customerId, setCustomerId] = useState<string>('')
+  const [firstName, setFirstName] = useState<string>('')
+  const [lastName, setLastName] = useState<string>('')
   const [phone, setPhone] = useState<string>('')
   const [email, setEmail] = useState<string>('')
   const [streetHouse, setStreetHouse] = useState<string>('')
@@ -66,6 +66,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<string>()
   const [center, setCenter] = useState<LatLngExpression | undefined>([30.6983149, 76.656095])
   const [firstErrorField, setFirstErrorField] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState<any>({
     mooringId: '',
     mooringName: '',
@@ -115,24 +116,24 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     const phoneRegex = /^\d{10}$/
     const nameRegex = /^[a-zA-Z ]+$/
     const zipCodeRegex = /^\d+$/;
-  
+
     const errors: { [key: string]: string } = {}
     let firstError = ''
 
-    if (!customerName) {
-      errors.customerName = 'Customer name is required'
+    if (!firstName) {
+      errors.firstName = 'Customer name is required'
+      firstError = 'firstName'
+    } else if (!nameRegex.test(firstName)) {
+      errors.firstName = 'firstName must only contain letters'
       firstError = 'CustomerName'
-    } else if (!nameRegex.test(customerName)) {
-      errors.customerName = 'Name must only contain letters'
-      firstError = 'CustomerName'
-    } else if (customerName.length < 3) {
-      errors.customerName = 'CustomerName must be at least 3 characters long'
-      firstError = 'CustomerName'
+    } else if (firstName.length < 3) {
+      errors.firstName = 'firstName must be at least 3 characters long'
+      firstError = 'firstName'
     }
 
-    if (!customerId) {
-      errors.customerId = 'Customer ID is required'
-      if (!firstError) firstError = 'customerId'
+    if (!lastName) {
+      errors.lastName = 'LastName  is required'
+      if (!firstError) firstError = 'lastName'
     }
 
     if (!phone) {
@@ -216,24 +217,24 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const phoneRegex = /^\d{10}$/
     const nameRegex = /^[a-zA-Z ]+$/
-   
+
     const errors: { [key: string]: string } = {}
     let firstError = ''
 
-    if (!customerName) {
-      errors.customerName = 'Customer name is required'
-      firstError = 'CustomerName'
-    } else if (!nameRegex.test(customerName)) {
-      errors.customerName = 'Name must only contain letters'
-      firstError = 'CustomerName'
-    } else if (customerName.length < 3) {
-      errors.customerName = 'CustomerName must be at least 3 characters long'
-      firstError = 'CustomerName'
+    if (!firstName) {
+      errors.firstName = 'firstName name is required'
+      firstError = 'firstName'
+    } else if (!nameRegex.test(firstName)) {
+      errors.firstName = 'firstName must only contain letters'
+      firstError = 'firstName'
+    } else if (firstName.length < 3) {
+      errors.customerName = 'firstName must be at least 3 characters long'
+      firstError = 'firstName'
     }
-   
-    if (!customerId) {
-      errors.customerId = 'Customer ID is required'
-      if (!firstError) firstError = 'customerId'
+
+    if (!lastName) {
+      errors.lastName = 'LastName is required'
+      if (!firstError) firstError = 'lastName'
     }
 
     if (!phone) {
@@ -329,10 +330,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const handleInputChangeCustomer = (fieldName: string, value: any) => {
     switch (fieldName) {
       case 'customerName':
-        setCustomerName(value)
+        setFirstName(value)
         break
       case 'customerId':
-        setCustomerId(value)
+        setLastName(value)
         break
       case 'phone':
         setPhone(value)
@@ -363,8 +364,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   }
 
   const handleEditMode = () => {
-    setCustomerName(customer?.customerName || '')
-    setCustomerId(customer?.customerId || '')
+    setFirstName(customer?.customerName || '')
+    setLastName(customer?.customerId || '')
     setPhone(customer?.phone || '')
     setEmail(customer?.emailAddress || '')
     setStreetHouse(customer?.streetHouse || '')
@@ -404,9 +405,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       return
     }
 
+    setIsLoading(true)
     const payload = {
-      customerName: customerName,
-      customerId: customerId,
+      firstName: firstName,
+      lastName: lastName,
       emailAddress: email,
       phone: phone,
       streetHouse: streetHouse,
@@ -418,7 +420,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       mooringRequestDtoList: [
         {
           mooringId: formData.mooringId,
-          customerId: customerId,
+          lastName: lastName,
           harbor: formData.harbor,
           waterDepth: formData.waterDepth,
           gpsCoordinates: gpsCoordinatesValue,
@@ -453,6 +455,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           detail: 'Customer Saved successfully',
           life: 3000,
         })
+        setIsLoading(false)
       } else {
         toastRef?.current?.show({
           severity: 'error',
@@ -463,7 +466,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       }
     } catch (error) {
       const { message } = error as ErrorResponse
-
+      setIsLoading(true)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
@@ -481,8 +484,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
     try {
       const editCustomerPayload = {
-        customerName: customerName,
-        customerId: customerId,
+        firstName: firstName,
+        lastName: lastName,
         emailAddress: email,
         phone: phone,
         streetHouse: streetHouse,
@@ -535,8 +538,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     }
     try {
       const editMooringPayload = {
-        customerName: customerName,
-        customerId: customerId,
+        firstName: firstName,
+        lastName: lastName,
         emailAddress: email,
         phone: phone,
         streetHouse: streetHouse,
@@ -549,7 +552,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           {
             id: mooringRowData?.id,
             mooringId: formData.mooringId ? formData.mooringId : mooringRowData?.mooringId,
-            customerId: customerId,
+            lastName: lastName,
             harbor: formData.harbor ? formData.harbor : mooringRowData?.harbor,
             waterDepth: formData.waterDepth ? formData.waterDepth : mooringRowData?.waterDepth,
             gpsCoordinates: gpsCoordinatesValue,
@@ -708,14 +711,14 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               <div>
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
-                    Customer Name
+                    First Name
                     <p className="text-red-600">*</p>
                   </div>
                 </span>
                 <div className="mt-2">
                   <InputComponent
-                    value={customerName}
-                    onChange={(e) => handleInputChangeCustomer('customerName', e.target.value)}
+                    value={firstName}
+                    onChange={(e) => handleInputChangeCustomer('firstName', e.target.value)}
                     style={{
                       width: '230px',
                       height: '32px',
@@ -724,7 +727,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       fontSize: '0.8rem',
                     }}
                   />
-                  <p className="" id="customerName">
+                  <p className="" id="firstName">
                     {fieldErrors.customerName && (
                       <small className="p-error">{fieldErrors.customerName}</small>
                     )}
@@ -766,24 +769,24 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               <div>
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
-                    Customer ID
+                    Last Name
                     <p className="text-red-600">*</p>
                   </div>
                 </span>
                 <div className="mt-2">
                   <InputComponent
-                    value={customerId}
-                    onChange={(e) => handleInputChangeCustomer('customerId', e.target.value)}
+                    value={lastName}
+                    onChange={(e) => handleInputChangeCustomer('lastName', e.target.value)}
                     style={{
                       width: '230px',
                       height: '32px',
-                      border: fieldErrors.customerId ? '1px solid red' : '1px solid #D5E1EA',
+                      border: fieldErrors.lastName ? '1px solid red' : '1px solid #D5E1EA',
                       borderRadius: '0.50rem',
                       fontSize: '0.8rem',
                     }}
                   />
                   <p>
-                    <p className="" id="customerId">
+                    <p className="" id="lastName">
                       {fieldErrors.customerId && (
                         <small className="p-error">{fieldErrors.customerId}</small>
                       )}
