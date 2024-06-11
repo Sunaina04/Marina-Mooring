@@ -5,7 +5,7 @@ import { ResetPasswordResponse } from '../../Type/ApiTypes'
 import { useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { ProgressSpinner } from 'primereact/progressspinner'
-import "./ResetPassword.css"
+import './ResetPassword.css'
 
 const ResetPassword = () => {
   const urlParams = new URLSearchParams(window.location.search)
@@ -40,7 +40,7 @@ const ResetPassword = () => {
         lowercase: /[a-z]/.test(value),
         number: /\d/.test(value),
         specialChar: /[!@#$%^&*(),.?":{}|<>]/.test(value),
-        length: value.length >= 9,
+        length: value.length >= 10,
       })
 
       // Check if all criteria are met
@@ -101,7 +101,7 @@ const ResetPassword = () => {
     <>
       <div
         className="w-full h-screen flex justify-center items-center"
-        id='message'
+        id="message"
         style={{
           backgroundImage: "url('/assets/images/loginBackgroundImage.png')",
           backgroundSize: 'cover',
