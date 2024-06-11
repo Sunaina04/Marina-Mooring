@@ -44,8 +44,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [value, setValue] = useState<string>('')
   const [selectedCountry, setSelectedCountry] = useState<Country>()
   const [selectedState, setSelectedState] = useState<State>()
-  const [firstName, setFirstName] = useState<string>('')
-  const [lastName, setLastName] = useState<string>('')
+  const [customerName, setCustomerName] = useState<string>('')
+  const [customerId, setCustomerId] = useState<string>('')
   const [phone, setPhone] = useState<string>('')
   const [email, setEmail] = useState<string>('')
   const [streetHouse, setStreetHouse] = useState<string>('')
@@ -120,20 +120,20 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     const errors: { [key: string]: string } = {}
     let firstError = ''
 
-    if (!firstName) {
-      errors.firstName = 'Customer name is required'
-      firstError = 'firstName'
-    } else if (!nameRegex.test(firstName)) {
-      errors.firstName = 'firstName must only contain letters'
+    if (!customerName) {
+      errors.customerName = 'Customer name is required'
       firstError = 'CustomerName'
-    } else if (firstName.length < 3) {
-      errors.firstName = 'firstName must be at least 3 characters long'
-      firstError = 'firstName'
+    } else if (!nameRegex.test(customerName)) {
+      errors.customerName = 'Name must only contain letters'
+      firstError = 'CustomerName'
+    } else if (customerName.length < 3) {
+      errors.customerName = 'CustomerName must be at least 3 characters long'
+      firstError = 'CustomerName'
     }
 
-    if (!lastName) {
-      errors.lastName = 'LastName  is required'
-      if (!firstError) firstError = 'lastName'
+    if (!customerId) {
+      errors.customerId = 'Customer ID is required'
+      if (!firstError) firstError = 'customerId'
     }
 
     if (!phone) {
@@ -221,24 +221,21 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     const errors: { [key: string]: string } = {}
     let firstError = ''
 
-    if (!firstName) {
-      errors.firstName = 'firstName name is required'
-      firstError = 'firstName'
-    } else if (!nameRegex.test(firstName)) {
-      errors.firstName = 'firstName must only contain letters'
-      firstError = 'firstName'
-    } else if (firstName.length < 3) {
-      errors.customerName = 'firstName must be at least 3 characters long'
-      firstError = 'firstName'
+    if (!customerName) {
+      errors.customerName = 'Customer name is required'
+      firstError = 'CustomerName'
+    } else if (!nameRegex.test(customerName)) {
+      errors.customerName = 'Name must only contain letters'
+      firstError = 'CustomerName'
+    } else if (customerName.length < 3) {
+      errors.customerName = 'CustomerName must be at least 3 characters long'
+      firstError = 'CustomerName'
     }
 
-    // if (!customerId) {
-    //   errors.customerId = 'Customer ID is required'
-    //   if (!firstError) firstError = 'customerId'
-    // if (!lastName) {
-    //   errors.lastName = 'LastName is required'
-    //   if (!firstError) firstError = 'lastName'
-    // }
+    if (!customerId) {
+      errors.customerId = 'Customer ID is required'
+      if (!firstError) firstError = 'customerId'
+    }
 
     if (!phone) {
       errors.phone = 'Phone is required'
@@ -333,10 +330,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const handleInputChangeCustomer = (fieldName: string, value: any) => {
     switch (fieldName) {
       case 'customerName':
-        setFirstName(value)
+        setCustomerName(value)
         break
       case 'customerId':
-        setLastName(value)
+        setCustomerId(value)
         break
       case 'phone':
         setPhone(value)
@@ -367,8 +364,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   }
 
   const handleEditMode = () => {
-    setFirstName(customer?.customerName || '')
-    setLastName(customer?.customerId || '')
+    setCustomerName(customer?.customerName || '')
+    setCustomerId(customer?.customerId || '')
     setPhone(customer?.phone || '')
     setEmail(customer?.emailAddress || '')
     setStreetHouse(customer?.streetHouse || '')
@@ -410,8 +407,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
     setIsLoading(true)
     const payload = {
-      firstName: firstName,
-      lastName: lastName,
+      customerName: customerName,
+      customerId: customerId,
       emailAddress: email,
       phone: phone,
       streetHouse: streetHouse,
@@ -423,7 +420,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       mooringRequestDtoList: [
         {
           mooringId: formData.mooringId,
-          lastName: lastName,
+          customerId: customerId,
           harbor: formData.harbor,
           waterDepth: formData.waterDepth,
           gpsCoordinates: gpsCoordinatesValue,
@@ -487,8 +484,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
     try {
       const editCustomerPayload = {
-        firstName: firstName,
-        lastName: lastName,
+        customerName: customerName,
+        customerId: customerId,
         emailAddress: email,
         phone: phone,
         streetHouse: streetHouse,
@@ -541,8 +538,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     }
     try {
       const editMooringPayload = {
-        firstName: firstName,
-        lastName: lastName,
+        customerName: customerName,
+        customerId: customerId,
         emailAddress: email,
         phone: phone,
         streetHouse: streetHouse,
@@ -555,7 +552,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           {
             id: mooringRowData?.id,
             mooringId: formData.mooringId ? formData.mooringId : mooringRowData?.mooringId,
-            lastName: lastName,
+            customerId: customerId,
             harbor: formData.harbor ? formData.harbor : mooringRowData?.harbor,
             waterDepth: formData.waterDepth ? formData.waterDepth : mooringRowData?.waterDepth,
             gpsCoordinates: gpsCoordinatesValue,
@@ -714,14 +711,14 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               <div>
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
-                    First Name
+                    Customer Name
                     <p className="text-red-600">*</p>
                   </div>
                 </span>
                 <div className="mt-2">
                   <InputComponent
-                    value={firstName}
-                    onChange={(e) => handleInputChangeCustomer('firstName', e.target.value)}
+                    value={customerName}
+                    onChange={(e) => handleInputChangeCustomer('customerName', e.target.value)}
                     style={{
                       width: '230px',
                       height: '32px',
@@ -730,7 +727,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       fontSize: '0.8rem',
                     }}
                   />
-                  <p className="" id="firstName">
+                  <p className="" id="customerName">
                     {fieldErrors.customerName && (
                       <small className="p-error">{fieldErrors.customerName}</small>
                     )}
@@ -772,24 +769,24 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               <div>
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
-                    Last Name
+                    Customer ID
                     <p className="text-red-600">*</p>
                   </div>
                 </span>
                 <div className="mt-2">
                   <InputComponent
-                    value={lastName}
-                    onChange={(e) => handleInputChangeCustomer('lastName', e.target.value)}
+                    value={customerId}
+                    onChange={(e) => handleInputChangeCustomer('customerId', e.target.value)}
                     style={{
                       width: '230px',
                       height: '32px',
-                      border: fieldErrors.lastName ? '1px solid red' : '1px solid #D5E1EA',
+                      border: fieldErrors.customerId ? '1px solid red' : '1px solid #D5E1EA',
                       borderRadius: '0.50rem',
                       fontSize: '0.8rem',
                     }}
                   />
                   <p>
-                    <p className="" id="lastName">
+                    <p className="" id="customerId">
                       {fieldErrors.customerId && (
                         <small className="p-error">{fieldErrors.customerId}</small>
                       )}
