@@ -12,7 +12,7 @@ import { Country, State } from '../../../Type/CommonType'
 import { AddVendorProps } from '../../../Type/ComponentBasedType'
 import { ErrorResponse, VendorResponse } from '../../../Type/ApiTypes'
 import { CountriesData, StatesData } from '../../CommonComponent/MetaDataComponent/MetaDataApi'
-
+import { ProgressSpinner } from 'primereact/progressspinner'
 const AddVendor: React.FC<AddVendorProps> = ({
   vendors,
   editMode,
@@ -27,6 +27,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
   const [countriesData, setCountriesData] = useState<Country[]>()
   const [statesData, setStatesData] = useState<State[]>()
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
+  const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState<any>({
     companyName: '',
     phone: '',
@@ -188,6 +189,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
     if (Object.keys(errors).length > 0) {
       return
     }
+    setIsLoading(true)
 
     try {
       const payload = {
@@ -224,7 +226,9 @@ const AddVendor: React.FC<AddVendorProps> = ({
         })
         closeModal()
         getVendor()
+        setIsLoading(false)
       } else {
+        setIsLoading(true)
         toastRef?.current?.show({
           severity: 'error',
           summary: 'Error',
@@ -737,7 +741,19 @@ const AddVendor: React.FC<AddVendorProps> = ({
           </div>
         </div>
       </div>
-
+      {isLoading && (
+            <ProgressSpinner
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: '50px',
+                height: '50px',
+              }}
+              strokeWidth="4"
+            />
+          )}
       <div>
         <div className="mt-5">
           <div className="ml-1 text-black font-semibold text-sm">

@@ -62,6 +62,7 @@ const CustomerOwner = () => {
     setModalVisible(true)
     setEditCustomer(false)
     setEditMode(true)
+    
   }
 
   const handleEditButtonUsersClick = (rowData: any) => {
@@ -215,6 +216,9 @@ const CustomerOwner = () => {
     [getUser, searchUsersText],
   )
 
+
+
+  
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       getUserHandler()
@@ -265,7 +269,7 @@ const CustomerOwner = () => {
           />
         </div> */}
 
-        <div className="mt-8">
+        <div className="mt-6">
           <CustomModal
             buttonText={'ADD NEW'}
             onHide={handleModalClose}
@@ -316,7 +320,7 @@ const CustomerOwner = () => {
         </div>
       </div>
 
-      <div className={`flex gap-10 ml-8 mt-10 ${isLoading ? 'blur-screen' : ''}`}>
+      <div className={`flex gap-10 ml-8 mt-5 ${isLoading ? 'blur-screen' : ''}`}>
         <div
           style={{
             borderRadius: '15px',
