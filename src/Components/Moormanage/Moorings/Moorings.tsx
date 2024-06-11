@@ -441,11 +441,9 @@ const Moorings = () => {
           <div
             className={` rounded-md border-[1px] ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
             <CustomMooringPositionMap
-              position={coordinatesArray || [30.698, 76.657]}
+              position={[30.698, 76.657]}
               zoomLevel={10}
               style={{ height: '680px', width: '400px' }}
-              // iconsByStatus={iconsByStatus}
-              // @ts-expect-error
               moorings={mooringData}
             />
           </div>

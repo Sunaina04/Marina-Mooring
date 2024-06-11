@@ -31,6 +31,8 @@ import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import CustomMooringPositionMap from '../../Map/CustomMooringPositionMap'
 import { GearOffIcon, GearOnIcon, NeedInspectionIcon, NotInUseIcon } from '../../Map/DefaultIcon'
 import { ProgressSpinner } from 'primereact/progressspinner'
+import { LatLngExpression } from 'leaflet'
+import { LatLngExpressionValue } from '../../../Type/Components/MapTypes'
 
 const Customer = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -50,7 +52,7 @@ const Customer = () => {
   const [searchText, setSearchText] = useState('')
   const [customerId, setCustomerId] = useState()
   const [isLoading, setIsLoading] = useState(true)
-  const [coordinatesArray, setCoordinatesArray] = useState()
+  const [coordinatesArray, setCoordinatesArray] = useState<any[]>([])
   const [getCustomer] = useGetCustomerMutation()
   const [deleteCustomer] = useDeleteCustomerMutation()
   const [getCustomerWithMooring] = useGetCustomersWithMooringMutation()
@@ -239,9 +241,35 @@ const Customer = () => {
         setCustomerRecordData(content?.customerResponseDto)
         setMooringData(content?.customerResponseDto?.mooringResponseDtoList)
         setBoatYardData(content?.boatyardNames)
-        const coordinatesString = customerRecordData?.mooringResponseDtoList[0]?.gpsCoordinates
-        const coordinateArray = coordinatesString?.split(' ').map(parseFloat)
-        setCoordinatesArray(coordinateArray)
+        // const coordinatesString = customerRecordData?.mooringResponseDtoList[0]?.gpsCoordinates
+        // const coordinateArray = coordinatesString?.split(' ').map(parseFloat)
+        interface LatLngExpressionValue {
+          lat: number
+          lng: number
+        }
+
+        const gpsCoordinates = mooringData.map((item) => {
+          const coordinatesString = item?.gpsCoordinates
+          console.log('coordinatesString', coordinatesString)
+
+          if (coordinatesString) {
+            const coordinatesArray: number[] = coordinatesString.split(' ').map(parseFloat)
+
+            if (coordinatesArray.length === 2) {
+              return {
+                lat: coordinatesArray[0],
+                lng: coordinatesArray[1],
+              }
+            } else {
+              return null
+            }
+          } else {
+            return null // or handle missing coordinates as needed
+          }
+        })
+
+        console.log('gpsCoordinates', gpsCoordinates)
+        setCoordinatesArray(gpsCoordinates.filter((coord) => coord !== null)) // Filter out null values
       } else {
         setCustomerRecord(false)
         setCustomerRecordData('')
@@ -419,11 +447,10 @@ const Customer = () => {
           <div
             className={`max-w-[413px] rounded-md border-[1px] ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
             <CustomMooringPositionMap
-              position={coordinatesArray || [30.698, 76.657]}
+              position={[30.698, 76.657]}
               zoomLevel={10}
               style={{ height: '700px' }}
               iconsByStatus={iconsByStatus}
-              // @ts-expect-error
               moorings={mooringData}
             />
           </div>

@@ -32,12 +32,17 @@ export interface CustomDisplayPositionMapProps {
   popUpMessage?: string
 }
 
+export interface LatLngExpressionValue {
+  lat: number
+  lng: number
+}
+
 export interface Mooring {
-  position: LatLngExpression
+  position: any[]
   status: string
 }
 
 export interface CustomMooringPositionMapProps extends CustomDisplayPositionMapProps {
   iconsByStatus?: { [key: string]: L.Icon }
-  moorings?: Mooring[]
+  moorings?: any
 }
