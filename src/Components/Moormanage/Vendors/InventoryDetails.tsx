@@ -9,9 +9,15 @@ import AddInventory from './AddInventory'
 import {
   useDeleteInventoryMutation,
   useGetInventoryDetailsMutation,
+  useGetVendorByIdMutation,
 } from '../../../Services/MoorManage/MoormanageApi'
 import { useLocation } from 'react-router-dom'
-import { DeleteCustomerResponse, GetInventoryResponse } from '../../../Type/ApiTypes'
+import {
+  DeleteCustomerResponse,
+  GetInventoryResponse,
+  GetVendorResponse,
+  VendorPayload,
+} from '../../../Type/ApiTypes'
 import { Toast } from 'primereact/toast'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { useSelector } from 'react-redux'
@@ -22,6 +28,7 @@ const InventoryDetails: React.FC = () => {
   const [searchText, setSearchText] = useState('')
   const [modalVisible, setModalVisible] = useState(false)
   const [inventoryData, setInventoryData] = useState<any[]>()
+  const [vendorData, setVendorData] = useState<any>()
   const [sectectedInventory, setSelectedInventory] = useState<any>([])
   const [editMode, setEditMode] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
@@ -29,6 +36,7 @@ const InventoryDetails: React.FC = () => {
   const queryParams = new URLSearchParams(location.search)
   const vendorId = queryParams.get('vendorId')
   const [getInventory] = useGetInventoryDetailsMutation()
+  const [getVendorById] = useGetVendorByIdMutation()
   const [deleteInventory] = useDeleteInventoryMutation()
   const toast = useRef<Toast>(null)
 
@@ -189,9 +197,12 @@ const InventoryDetails: React.FC = () => {
         if (content.length > 0) {
           setInventoryData(content)
         } else {
+          setIsLoading(false)
           setInventoryData([])
         }
       } else {
+        setIsLoading(false)
+        setInventoryData([])
         toast?.current?.show({
           severity: 'error',
           summary: 'Error',
@@ -204,12 +215,28 @@ const InventoryDetails: React.FC = () => {
     }
   }, [getInventory, searchText, selectedCustomerId])
 
+  const getVendorByIdHandler = useCallback(async () => {
+    try {
+      const response = await getVendorById({ id: vendorId }).unwrap()
+      const { status, message, content } = response as GetVendorResponse
+      if (status === 200) {
+        setVendorData(content)
+      }
+    } catch (error) {
+      console.error('Error occurred while fetching customer data:', error)
+    }
+  }, [getVendorById, selectedCustomerId])
+
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       getInventoryHandler()
     }, 600)
     return () => clearTimeout(timeoutId)
   }, [searchText, selectedCustomerId])
+
+  useEffect(() => {
+    getVendorByIdHandler()
+  }, [vendorId, selectedCustomerId])
 
   return (
     <>
@@ -274,21 +301,19 @@ const InventoryDetails: React.FC = () => {
           <div className="flex justify-between pr-4 pl-4  mt-4">
             <div style={{ fontSize: '14px', color: '#000000', fontWeight: '500' }}>
               <p>ID:</p>
-              <p className="mt-1 text-lg">{inventoryData[0]?.vendorResponseDto?.id}</p>
+              <p className="mt-1 text-lg">{vendorData?.id}</p>
             </div>
             <div style={{ fontSize: '14px', color: '#000000', fontWeight: '500' }}>
               <p>Sales Representative:</p>
-              <p className="mt-1 text-lg">{inventoryData[0]?.vendorResponseDto?.firstName}</p>
+              <p className="mt-1 text-lg">{vendorData?.firstName}</p>
             </div>
             <div style={{ fontSize: '14px', color: '#000000', fontWeight: '500' }}>
               <p>Phone Number:</p>
-              <p className="mt-1 text-lg">
-                {inventoryData[0]?.vendorResponseDto?.salesRepPhoneNumber}
-              </p>
+              <p className="mt-1 text-lg">{vendorData?.salesRepPhoneNumber}</p>
             </div>
             <div style={{ fontSize: '14px', color: '#000000', fontWeight: '500' }}>
               <p>Email Address:</p>
-              <p className="mt-1 text-lg">{inventoryData[0]?.vendorResponseDto?.salesRepEmail}</p>
+              <p className="mt-1 text-lg">{vendorData?.salesRepEmail}</p>
             </div>
           </div>
         </div>

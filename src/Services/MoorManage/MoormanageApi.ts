@@ -132,6 +132,13 @@ const moormanageApi = userApi.injectEndpoints({
       }),
     }),
 
+    getVendorById: builder.mutation({
+      query: ({ id }: { id: number }) => ({
+        url: `api/v1/vendor/${id}`,
+        method: 'GET',
+      }),
+    }),
+
     deleteVendor: builder.mutation({
       query: ({ id }: { id?: number }) => ({
         url: `api/v1/vendor/${id}`,
@@ -327,6 +334,7 @@ export const {
   useUpdateMooringsMutation,
   useAddVendorsMutation,
   useGetVendorsMutation,
+  useGetVendorByIdMutation,
   useDeleteVendorMutation,
   useUpdateVendorMutation,
   useAddBoatyardsMutation,

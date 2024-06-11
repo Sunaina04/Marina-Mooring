@@ -347,7 +347,7 @@ export interface VendorPayload {
   remitCountryResponseDto: MetaData
   remitZipCode: string
   remitEmailAddress: string
-  userId: 2
+  userId: number
 }
 
 export interface VendorResponse {
@@ -358,6 +358,14 @@ export interface VendorResponse {
   content: {
     VendorPayload: VendorPayload
   }
+}
+
+export interface GetVendorResponse {
+  message: string
+  status: number
+  errorList: []
+  time: string
+  content: VendorPayload
 }
 
 export interface GetInventoryResponse {

@@ -149,7 +149,7 @@ const Customer = () => {
   }
 
   const firstLastName = (data: any) => {
-    return data.firstName + " " + data.lastName;
+    return data.firstName + ' ' + data.lastName
   }
 
   const CustomerTableColumns = useMemo(
@@ -256,12 +256,12 @@ const Customer = () => {
 
         const gpsCoordinates = mooringData.map((item) => {
           const coordinatesString = item?.gpsCoordinates
-          console.log('coordinatesString', coordinatesString)
+          // console.log('coordinatesString', coordinatesString)
 
           if (coordinatesString) {
             const coordinatesArray: number[] = coordinatesString.split(' ').map(parseFloat)
 
-            if (coordinatesArray.length === 2) {
+            if (coordinatesArray) {
               return {
                 lat: coordinatesArray[0],
                 lng: coordinatesArray[1],
@@ -274,7 +274,7 @@ const Customer = () => {
           }
         })
 
-        console.log('gpsCoordinates', gpsCoordinates)
+        // console.log('gpsCoordinates', gpsCoordinates)
         setCoordinatesArray(gpsCoordinates.filter((coord) => coord !== null)) // Filter out null values
       } else {
         setCustomerRecord(false)
@@ -527,7 +527,7 @@ const Customer = () => {
                     }}>
                     <p>
                       <span className="">Name: </span>
-                      {customerRecordData?.firstName + " " + customerRecordData?.lastName}
+                      {customerRecordData?.firstName + ' ' + customerRecordData?.lastName}
                     </p>
                     <p className="mt-6">
                       <span className="">Email: </span>
