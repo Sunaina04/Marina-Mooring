@@ -55,29 +55,37 @@ const baseQuery = fetchBaseQuery({
     const state = getState() as RootState
     const selectedCustomerId = selectCustomerId(state)
     const userRole = selectUserRole(state)
+    console.log('endpoint', endpoint)
     if (
       (getState() as RootState).user.token ||
       sessionStorage.getItem('token') ||
       sessionStorage.getItem('getRefreshToken')
     ) {
+      console.log('here 1')
       const token =
         (getState() as RootState).user.token ||
         sessionStorage.getItem('token') ||
         sessionStorage.getItem('getRefreshToken')
-      const noAuthEndpoints = ['login', 'resetPassword', 'forgetPassword']
+      const noAuthEndpoints = ['login', 'resetPassword', 'forgotPassword']
       if (token && !noAuthEndpoints.includes(endpoint)) {
+        console.log('here 2')
+
         headers.set('Authorization', `Bearer ${token}`)
         if (userRole === 1 && selectedCustomerId) {
           headers.set('CUSTOMER_OWNER_ID', selectedCustomerId)
         }
       } else {
+        console.log('here 3')
         const token = sessionStorage.getItem('getRefreshToken')
-        const noAuthEndpoints = ['login', 'resetPassword', 'forgetPassword']
+        const noAuthEndpoints = ['login', 'resetPassword', 'forgotPassword']
         if (token && !noAuthEndpoints.includes(endpoint)) {
+          console.log('here 4')
           headers.set('Authorization', `Bearer ${token}`)
         }
       }
     }
+
+    console.log('here headers', headers)
 
     return headers
   },
