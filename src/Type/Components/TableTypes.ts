@@ -17,7 +17,7 @@ export type TableBodyType =
 
 export interface TableColumnProps {
   id: string
-  label: String
+  label?: String
   style?: React.CSSProperties | undefined
   body?: TableBodyType
 }
