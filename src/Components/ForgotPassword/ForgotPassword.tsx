@@ -93,12 +93,12 @@ const ForgotPassword = () => {
           <div className="flex flex-col justify-center text-center mt-[3rem]">
             {errors && (
               <div className="mb-4">
-                <span className="mb-8 text-red-500 text-sm">{errors}</span>
+                <span className="text-red-500 text-sm">{errors}</span>
               </div>
             )}
             {message && (
               <div className="mb-4">
-                <span className="mb-8 text-green-500 text-sm">{message}</span>
+                <span className="text-green-500 text-sm">{message}</span>
               </div>
             )}
             <div className="flex flex-col gap-5">

@@ -146,7 +146,7 @@ export default function LoginForm() {
             />
           </div>
           <div className="flex flex-col justify-center text-center mt-[5rem]">
-            <div className="text-red-500 mb-5 text-sm">{errors.email && <p>{errors.email}</p>}</div>
+            <div className="text-red-500 mb-2 text-sm">{errors.email && <p>{errors.email}</p>}</div>
             <div className="flex flex-col items-center">
               <div className="p-input-icon-left" id="input-field">
                 <InputText

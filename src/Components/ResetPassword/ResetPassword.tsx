@@ -6,6 +6,9 @@ import { useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import './ResetPassword.css'
+import { Toast } from 'primereact/toast'
+import { Divider } from 'primereact/divider'
+import { Password } from 'primereact/password'
 
 const ResetPassword = () => {
   const urlParams = new URLSearchParams(window.location.search)
@@ -97,6 +100,19 @@ const ResetPassword = () => {
     }
   }
 
+  const footer = (
+    <>
+      <Divider />
+      <p className="mt-2">Suggestions</p>
+      <ul className="pl-2 ml-2 mt-0 line-height-3">
+        <li>At least one lowercase</li>
+        <li>At least one uppercase</li>
+        <li>At least one numeric</li>
+        <li>Minimum 8 characters</li>
+      </ul>
+    </>
+  )
+
   return (
     <>
       <div
@@ -118,29 +134,34 @@ const ResetPassword = () => {
           <div className="flex flex-col justify-center text-center">
             <div className="flex flex-col gap-5 mt-20">
               {message && (
-                <div className="mb-4 flex justify-center">
-                  <span className="mb-8 text-red-500 text-sm break-words max-w-md overflow-wrap-normal">
+                <div className="flex justify-center">
+                  <span className="text-red-500 text-sm break-words max-w-md overflow-wrap-normal">
                     {message}
                   </span>
                 </div>
               )}
               <div className="relative">
-                <InputText
-                  style={{
-                    padding: '0 4rem 0 3rem',
-                    border: '1px solid #C5D9E0',
-                    fontSize: '16px',
-                    color: '#00426F',
-                    borderRadius: '10px',
-                    width: '500px',
-                    height: '60px',
-                  }}
-                  placeholder="New Password"
-                  name="newPassword"
-                  type={showPassword.newPassword ? 'text' : 'password'}
-                  onChange={handleChange}
-                  value={password}
-                />
+                <div>
+                  <div className="card flex justify-content-center">
+                    <Password
+                      placeholder="New Password"
+                      name="newPassword"
+                      type={showPassword.newPassword ? 'text' : 'password'}
+                      onChange={handleChange}
+                      value={password}
+                      footer={footer}
+                      style={{
+                        padding: '0 4rem 0 3rem',
+                        border: '1px solid #C5D9E0',
+                        fontSize: '16px',
+                        color: '#00426F',
+                        borderRadius: '10px',
+                        width: '500px',
+                        height: '60px',
+                      }}
+                    />
+                  </div>
+                </div>
                 <img
                   src="/assets/images/key.png"
                   alt="Key Icon"
@@ -173,93 +194,6 @@ const ResetPassword = () => {
                     cursor: 'pointer',
                   }}
                 />
-                <div
-                  style={{
-                    width: '500px',
-                    fontSize: '14px',
-                    position: 'absolute',
-                    top: '100%',
-                    left: '0',
-                    backgroundColor: '#fff',
-                    padding: '10px',
-                    borderRadius: '5px',
-                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-                    maxHeight: '200px',
-                    overflowY: 'auto',
-                    zIndex: '999',
-                    display: isTyping ? 'block' : 'none',
-                  }}
-                  id="password-message">
-                  <h3 className="font-medium text-sm text-[#000000] flex justify-center mr-3">
-                    PASSWORD MUST CONTAIN:
-                  </h3>
-                  <div className="flex items-center gap-6 p-1 mt-2">
-                    {passwordCriteria.uppercase ? (
-                      <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
-                    ) : (
-                      <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
-                    )}
-                    <p
-                      className={`password-message-item ${
-                        passwordCriteria.uppercase ? 'text-green-500' : 'text-red-500'
-                      }`}>
-                      At least <span className="font-[500]"> one uppercase letter</span>
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-6 p-1">
-                    {passwordCriteria.lowercase ? (
-                      <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
-                    ) : (
-                      <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
-                    )}
-
-                    <p
-                      className={`password-message-item ${
-                        passwordCriteria.lowercase ? 'text-green-500' : 'text-red-500'
-                      }`}>
-                      At least <span className="font-[500]">one lowercase letter</span>
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-6 p-1">
-                    {passwordCriteria.number ? (
-                      <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
-                    ) : (
-                      <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
-                    )}
-                    <p
-                      className={`password-message-item ${
-                        passwordCriteria.number ? 'text-green-500' : 'text-red-500'
-                      }`}>
-                      At least<span className="font-[500]">one number</span>
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-6 p-1">
-                    {passwordCriteria.specialChar ? (
-                      <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
-                    ) : (
-                      <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
-                    )}
-                    <p
-                      className={`password-message-item ${
-                        passwordCriteria.specialChar ? 'text-green-500' : 'text-red-500'
-                      }`}>
-                      At least<span className="font-[500]">one special character</span>
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-6 p-1">
-                    {passwordCriteria.length ? (
-                      <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
-                    ) : (
-                      <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
-                    )}
-                    <p
-                      className={`password-message-item ${
-                        passwordCriteria.length ? 'text-green-500' : 'text-red-500'
-                      }`}>
-                      At least <span className="font-[500]">10 characters</span>
-                    </p>
-                  </div>
-                </div>
               </div>
               {isLoading && (
                 <ProgressSpinner
@@ -274,23 +208,28 @@ const ResetPassword = () => {
                   strokeWidth="4"
                 />
               )}
-              <div className="p-input-icon-left relative flex justify-center">
-                <InputText
-                  style={{
-                    padding: '0 4rem 0 3rem',
-                    border: '1px solid #C5D9E0',
-                    fontSize: '16px',
-                    color: '#00426F',
-                    borderRadius: '10px',
-                    width: '500px',
-                    height: '60px',
-                  }}
-                  placeholder="Confirm Password"
-                  name="confirmPassword"
-                  type={showPassword.confirmPassword ? 'text' : 'password'}
-                  onChange={handleChange}
-                  value={confirmPassword}
-                />
+              <div className="p-input-icon-left relative  flex justify-center">
+                <div>
+                  <div className="card flex justify-content-center">
+                    <Password
+                      placeholder="Confirm Password"
+                      name="confirmPassword"
+                      type={showPassword.confirmPassword ? 'text' : 'password'}
+                      onChange={handleChange}
+                      value={confirmPassword}
+                      footer={footer}
+                      style={{
+                        padding: '0 4rem 0 3rem',
+                        border: '1px solid #C5D9E0',
+                        fontSize: '16px',
+                        color: '#00426F',
+                        borderRadius: '10px',
+                        width: '500px',
+                        height: '60px',
+                      }}
+                    />
+                  </div>
+                </div>
                 <img
                   src="/assets/images/key.png"
                   alt="Key Icon"
