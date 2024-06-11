@@ -154,8 +154,13 @@ const Customer = () => {
         style: customerTableColumnStyle,
       },
       {
-        id: 'customerName',
+        id: 'firstName',
         label: 'Name:',
+        style: customerTableColumnStyle,
+      },
+      {
+        id: 'lastName',
+        label: '',
         style: customerTableColumnStyle,
       },
       {

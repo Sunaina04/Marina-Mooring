@@ -374,9 +374,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   }
 
   const handleEditMode = () => {
-    setFirstName(customer?.customerName || '')
-    //changes
-    setLastName(customer?.customerId || '')
+    setFirstName(customer?.firstName || '')
+    setLastName(customer?.lastName || '')
     setPhone(customer?.phone || '')
     setEmail(customer?.emailAddress || '')
     setStreetHouse(customer?.streetHouse || '')
