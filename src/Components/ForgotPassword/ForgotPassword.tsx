@@ -23,13 +23,13 @@ const ForgotPassword = () => {
 
   const validateEmailHandler = async () => {
     if (email.length === 0) {
-      // setErrors('Email cannot be empty ')
-      toast.current?.show({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'Email cannot be empty',
-        life: 3000,
-      })
+      setErrors('Email cannot be empty ')
+      // toast.current?.show({
+      //   severity: 'error',
+      //   summary: 'Error',
+      //   detail: 'Email cannot be empty',
+      //   life: 3000,
+      // })
 
       return
     }
@@ -73,7 +73,7 @@ const ForgotPassword = () => {
 
   return (
     <>
-    <Toast ref={toast} />
+      <Toast ref={toast} />
       <div
         className="w-full h-screen flex justify-center items-center"
         style={{

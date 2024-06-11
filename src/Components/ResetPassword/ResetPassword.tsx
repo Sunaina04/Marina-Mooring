@@ -2,11 +2,10 @@ import { Button } from 'primereact/button'
 import { InputText } from 'primereact/inputtext'
 import { useResetPasswordMutation } from '../../Services/Authentication/AuthApi'
 import { ResetPasswordResponse } from '../../Type/ApiTypes'
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { ProgressSpinner } from 'primereact/progressspinner'
-import "./ResetPassword.css"
-import { Toast } from 'primereact/toast'
+import './ResetPassword.css'
 
 const ResetPassword = () => {
   const urlParams = new URLSearchParams(window.location.search)
@@ -30,7 +29,6 @@ const ResetPassword = () => {
   })
   const [isTyping, setIsTyping] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const toast = useRef<Toast>(null)
 
   const handleChange = (e: { target: { name: any; value: any } }) => {
     const { name, value } = e.target
@@ -66,24 +64,12 @@ const ResetPassword = () => {
 
   const handleResetPassword = async () => {
     if (!password || !confirmPassword) {
-      // setMessage('Both password fields are required.')
-      toast.current?.show({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'Both password fields are required.',
-        life: 3000,
-      })
+      setMessage('Both password fields are required.')
       return
     }
 
     if (password !== confirmPassword) {
-      // setMessage('Passwords do not match.')
-      toast.current?.show({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'Passwords do not match',
-        life: 3000,
-      })
+      setMessage('Passwords do not match.')
       return
     }
 
@@ -104,13 +90,7 @@ const ResetPassword = () => {
         navigateToLoginPage('/Login')
         setIsLoading(false)
       } else {
-        // setMessage(message || 'Password reset failed.')
-        toast.current?.show({
-          severity: 'error',
-          summary: 'Error',
-          detail:message || 'Password reset failed.',
-          life: 3000,
-        })
+        setMessage(message || 'Password reset failed.')
       }
     } catch (error: any) {
       console.error('Error occurred during password reset:', error)
@@ -119,7 +99,6 @@ const ResetPassword = () => {
 
   return (
     <>
-    <Toast ref={toast} />
       <div
         className="w-full h-screen flex justify-center items-center"
         id="message"

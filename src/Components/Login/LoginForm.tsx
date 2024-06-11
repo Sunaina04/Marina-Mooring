@@ -51,42 +51,42 @@ export default function LoginForm() {
     setErrors({ email: '', password: '' })
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (username.trim().length === 0) {
-      // setErrors((prev) => ({
-      //   ...prev,
-      //   email: 'Email cannot be empty',
-      // }))
-      toast.current?.show({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'Email cannot be empty',
-        life: 3000,
-      })
+      setErrors((prev) => ({
+        ...prev,
+        email: 'Email cannot be empty',
+      }))
+      // toast.current?.show({
+      //   severity: 'error',
+      //   summary: 'Error',
+      //   detail: 'Email cannot be empty',
+      //   life: 3000,
+      // })
       return
     }
     if (!emailRegex.test(username.trim())) {
-      // setErrors((prev) => ({
-      //   ...prev,
-      //   email: 'Invalid email format',
-      // }))
-      toast.current?.show({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'Invalid email format',
-        life: 3000,
-      })
+      setErrors((prev) => ({
+        ...prev,
+        email: 'Invalid email format',
+      }))
+      // toast.current?.show({
+      //   severity: 'error',
+      //   summary: 'Error',
+      //   detail: 'Invalid email format',
+      //   life: 3000,
+      // })
       return
     }
     if (password.trim().length === 0) {
-      // setErrors((prev) => ({
-      //   ...prev,
-      //   password: 'Password cannot be empty',
-      // }))
-      toast.current?.show({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'Password cannot be empty',
-        life: 3000,
-      })
+      setErrors((prev) => ({
+        ...prev,
+        password: 'Password cannot be empty',
+      }))
+      // toast.current?.show({
+      //   severity: 'error',
+      //   summary: 'Error',
+      //   detail: 'Password cannot be empty',
+      //   life: 3000,
+      // })
       return
     }
     setIsLoading(true)
@@ -128,7 +128,7 @@ export default function LoginForm() {
     <>
       <div
         className="w-full h-screen flex justify-center items-center"
-        id='header'
+        id="header"
         style={{
           backgroundImage: "url('/assets/images/loginBackgroundImage.png')",
           backgroundSize: 'cover',
@@ -142,15 +142,13 @@ export default function LoginForm() {
               src="/assets/images/moorfindLogo.png"
               alt="Logo"
               className="mx-auto w-60 h-14 mb-5"
-              id='logo'
+              id="logo"
             />
           </div>
-          <div 
-          
-          className="flex flex-col justify-center text-center mt-[5rem]">
-            {/* <div className="text-red-500 mb-5 text-sm">{errors.email && <p>{errors.email}</p>}</div> */}
+          <div className="flex flex-col justify-center text-center mt-[5rem]">
+            <div className="text-red-500 mb-5 text-sm">{errors.email && <p>{errors.email}</p>}</div>
             <div className="flex flex-col items-center">
-              <div className="p-input-icon-left"  id="input-field">
+              <div className="p-input-icon-left" id="input-field">
                 <InputText
                   placeholder="Enter Your Email"
                   name="username"

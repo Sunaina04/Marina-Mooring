@@ -15,7 +15,6 @@ import { Toast } from 'primereact/toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCustomerId, setCustomerId, setCustomerName } from '../../Store/Slice/userSlice'
 
-
 const CustomerOwner = () => {
   const dispatch = useDispatch()
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -37,7 +36,7 @@ const CustomerOwner = () => {
   const [selectedId, setSelectedId] = useState<any>('')
   const id = getCustomerOwnerData.map((items) => items.id)
   const [getUser] = useGetUsersMutation()
- 
+
   const toast = useRef<Toast>(null)
 
   const handleModalClose = () => {
@@ -63,7 +62,6 @@ const CustomerOwner = () => {
     setModalVisible(true)
     setEditCustomer(false)
     setEditMode(true)
-    
   }
 
   const handleEditButtonUsersClick = (rowData: any) => {
@@ -217,9 +215,6 @@ const CustomerOwner = () => {
     [getUser, searchUsersText],
   )
 
-
-
-  
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       getUserHandler()

@@ -22,6 +22,48 @@ const baseQueryWithInterceptor = async (
   }
 }
 
+// Fetch base query configuration
+const baseQuery = fetchBaseQuery({
+  baseUrl: process.env.REACT_APP_BASE_URL,
+  prepareHeaders: (headers, { getState, endpoint, extra }) => {
+    const state = getState() as RootState
+    const selectedCustomerId = selectCustomerId(state)
+    const userRole = selectUserRole(state)
+    if (
+      (getState() as RootState).user.token ||
+      sessionStorage.getItem('token') ||
+      sessionStorage.getItem('getRefreshToken')
+    ) {
+      const token =
+        (getState() as RootState).user.token ||
+        sessionStorage.getItem('token') ||
+        sessionStorage.getItem('getRefreshToken')
+      const noAuthEndpoints = ['login', 'resetPassword', 'forgotPassword', 'getCustomersOwners']
+      if (token && !noAuthEndpoints.includes(endpoint)) {
+        headers.set('Authorization', `Bearer ${token}`)
+        if (userRole === 1 && selectedCustomerId) {
+          headers.set('CUSTOMER_OWNER_ID', selectedCustomerId)
+        }
+      } else {
+        const token = sessionStorage.getItem('getRefreshToken')
+        const noAuthEndpoints = ['login', 'resetPassword', 'forgotPassword']
+        if (token && !noAuthEndpoints.includes(endpoint)) {
+          headers.set('Authorization', `Bearer ${token}`)
+        }
+      }
+    }
+
+    return headers
+  },
+})
+
+// Create API client
+export const userApi = createApi({
+  reducerPath: 'api',
+  baseQuery: baseQueryWithInterceptor,
+  endpoints: (builder) => ({}),
+})
+
 // Function to refresh token
 const refreshToken = async (refreshToken: any) => {
   try {
@@ -47,45 +89,3 @@ const refreshToken = async (refreshToken: any) => {
     throw error
   }
 }
-
-// Fetch base query configuration
-const baseQuery = fetchBaseQuery({
-  baseUrl: process.env.REACT_APP_BASE_URL,
-  prepareHeaders: (headers, { getState, endpoint, extra }) => {
-    const state = getState() as RootState
-    const selectedCustomerId = selectCustomerId(state)
-    const userRole = selectUserRole(state)
-    if (
-      (getState() as RootState).user.token ||
-      sessionStorage.getItem('token') ||
-      sessionStorage.getItem('getRefreshToken')
-    ) {
-      const token =
-        (getState() as RootState).user.token ||
-        sessionStorage.getItem('token') ||
-        sessionStorage.getItem('getRefreshToken')
-      const noAuthEndpoints = ['login', 'resetPassword', 'forgotPassword']
-      if (token && !noAuthEndpoints.includes(endpoint)) {
-        headers.set('Authorization', `Bearer ${token}`)
-        if (userRole === 1 && selectedCustomerId) {
-          headers.set('CUSTOMER_OWNER_ID', selectedCustomerId)
-        }
-      } else {
-        const token = sessionStorage.getItem('getRefreshToken')
-        const noAuthEndpoints = ['login', 'resetPassword', 'forgotPassword']
-        if (token && !noAuthEndpoints.includes(endpoint)) {
-          headers.set('Authorization', `Bearer ${token}`)
-        }
-      }
-    }
-
-    return headers
-  },
-})
-
-// Create API client
-export const userApi = createApi({
-  reducerPath: 'api',
-  baseQuery: baseQueryWithInterceptor,
-  endpoints: (builder) => ({}),
-})

@@ -10,19 +10,20 @@ import { setCustomerId, setCustomerName, selectCustomerName } from '../../../Sto
 import { RootState } from '../../../Store/Store'
 import { fetchCustomers } from '../../../Store/Slice/customerSlice'
 import { useLocation } from 'react-router-dom'
+import { useGetCustomersOwnersMutation } from '../../../Services/MetaDataApi'
 
 const Header: React.FC<HeaderProps> = ({ header }) => {
   const userData = useSelector((state: any) => state.user?.userData)
   const location = useLocation()
   const queryParams = new URLSearchParams(location.search)
-  console.log('url', queryParams)
+  // console.log('url', queryParams)
   const role = userData?.role?.id
   const dispatch = useDispatch()
   const selectedCustomerName = useSelector(selectCustomerName)
   const [expanded, setExpanded] = useState(false)
   const [getCustomerOwnerData, setgetCustomerOwnerData] = useState<CustomerPayload[]>([])
   // const customers = useSelector((state: RootState) => state.customers.customers)
-  const [getUser] = useGetUsersMutation()
+  const [getUser] = useGetCustomersOwnersMutation()
 
   const handleMenu = () => {
     setExpanded(!expanded)
@@ -34,8 +35,6 @@ const Header: React.FC<HeaderProps> = ({ header }) => {
   }
 
   const getUserHandler = useCallback(async () => {
-    dispatch(setCustomerId(''))
-    dispatch(setCustomerName(''))
     try {
       const response = await getUser({}).unwrap()
       const { status, message, content } = response as GetUserResponse
@@ -64,7 +63,6 @@ const Header: React.FC<HeaderProps> = ({ header }) => {
   //   }
   // }, [role, dispatch])
 
-
   // import React, { useState } from 'react';
   // import { Button } from 'primereact/button';
   // import { Avatar } from 'primereact/avatar';
@@ -73,8 +71,8 @@ const Header: React.FC<HeaderProps> = ({ header }) => {
   // import { useDispatch, useSelector } from 'react-redux';
   // import { setCustomerId, setCustomerName, selectCustomerName } from '../../../Store/Slice/userSlice';
   // import { useLocation } from 'react-router-dom';
-  // import { useFetchUsers } from './useFetchUsers'; 
-  
+  // import { useFetchUsers } from './useFetchUsers';
+
   // const Header: React.FC<HeaderProps> = ({ header }) => {
   //   const userData = useSelector((state: any) => state.user?.userData);
   //   const location = useLocation();
@@ -84,24 +82,17 @@ const Header: React.FC<HeaderProps> = ({ header }) => {
   //   const dispatch = useDispatch();
   //   const selectedCustomerName = useSelector(selectCustomerName);
   //   const [expanded, setExpanded] = useState(false);
-  
-    
+
   //   const { getCustomerOwner, getUserData } = useFetchUsers(role);
-  
+
   //   const handleMenu = () => {
   //     setExpanded(!expanded);
   //   };
-  
+
   //   const handleCustomerIdSelection = (customerId: any) => {
   //     dispatch(setCustomerName(customerId?.name));
   //     dispatch(setCustomerId(customerId?.id));
   //   };
-
-
-
-
-
-
 
   return (
     <div

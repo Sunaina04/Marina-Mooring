@@ -323,7 +323,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       }
     } catch (error) {
       const { message, data } = error as ErrorResponse
-      console.log('Error in Catch', error)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
@@ -408,7 +407,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       }
     } catch (error) {
       const { message, data } = error as ErrorResponse
-      console.log('Error in Catch', error)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',

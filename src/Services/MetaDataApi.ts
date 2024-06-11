@@ -47,6 +47,24 @@ const metaDataApi = userApi.injectEndpoints({
       }),
     }),
 
+    getCustomersOwners: builder.mutation({
+      query: ({
+        pageNumber,
+        pageSize,
+        sortBy,
+        sortDir,
+      }: {
+        pageNumber?: number
+        pageSize?: number
+        sortBy?: string
+        sortDir?: string
+      }) => ({
+        url: 'api/v1/metadata/customerOwners',
+        method: 'GET',
+        params: { pageNumber, pageSize, sortBy, sortDir },
+      }),
+    }),
+
     getTopChainCondition: builder.mutation({
       query: ({ pageNumber, pageSize }: { pageNumber?: number; pageSize?: number }) => ({
         url: 'api/v1/metadata/topChainCondition',
@@ -153,4 +171,5 @@ export const {
   useGetBoatTypeMutation,
   useGetBoatyardsTypeMutation,
   useGetInventoryTypeMutation,
+  useGetCustomersOwnersMutation,
 } = metaDataApi
