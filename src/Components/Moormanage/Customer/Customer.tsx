@@ -147,7 +147,7 @@ const Customer = () => {
   }
 
   const firstLastName = (data: any) => {
-      return data.firstName+ " "+ data.lastName;
+    return data.firstName + " " + data.lastName;
   }
 
   const CustomerTableColumns = useMemo(
@@ -163,7 +163,7 @@ const Customer = () => {
         body: firstLastName,
         style: customerTableColumnStyle,
       },
-     
+
       {
         id: 'emailAddress',
         label: 'Email:',
@@ -500,7 +500,7 @@ const Customer = () => {
                     }}>
                     <p>
                       <span className="">Name: </span>
-                      {customerRecordData?.customerName}
+                      {customerRecordData?.firstName + " " + customerRecordData?.lastName}
                     </p>
                     <p className="mt-6">
                       <span className="">Email: </span>
