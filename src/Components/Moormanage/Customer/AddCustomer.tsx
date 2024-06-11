@@ -114,8 +114,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const phoneRegex = /^\d{10}$/
     const nameRegex = /^[a-zA-Z ]+$/
-    const zipCodeRegex = /^\d+$/;
-  
+    const zipCodeRegex = /^\d+$/
+
     const errors: { [key: string]: string } = {}
     let firstError = ''
 
@@ -162,11 +162,11 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     }
 
     if (!pinCode) {
-      errors.pinCode = 'Zipcode is required';
-      if (!firstError) firstError = 'pinCode';
+      errors.pinCode = 'Zipcode is required'
+      if (!firstError) firstError = 'pinCode'
     } else if (!zipCodeRegex.test(pinCode)) {
-      errors.pinCode = 'Zipcode contain only numbers';
-      if (!firstError) firstError = 'pinCode';
+      errors.pinCode = 'Zipcode contain only numbers'
+      if (!firstError) firstError = 'pinCode'
     }
 
     if (!selectedState) {
@@ -216,7 +216,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const phoneRegex = /^\d{10}$/
     const nameRegex = /^[a-zA-Z ]+$/
-   
+
     const errors: { [key: string]: string } = {}
     let firstError = ''
 
@@ -230,7 +230,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       errors.customerName = 'CustomerName must be at least 3 characters long'
       firstError = 'CustomerName'
     }
-   
+
     if (!customerId) {
       errors.customerId = 'Customer ID is required'
       if (!firstError) firstError = 'customerId'

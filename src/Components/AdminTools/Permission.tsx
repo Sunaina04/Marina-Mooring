@@ -246,6 +246,7 @@ const Permission = () => {
               setModalVisible={setModalVisible}
               customerData={selectedCustomer}
               permission={true}
+              passWordDisplay={editMode}
               toastRef={toast}
               setSelectedCustomerUser={function (value: any): void {
                 throw new Error('Function not implemented.')
