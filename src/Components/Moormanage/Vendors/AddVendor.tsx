@@ -960,8 +960,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
                   fontSize: '0.70rem',
                   backgroundColor: '#F5F5F5',
                   boxShadow: 'none',
-                  paddingLeft: '0.5rem',
-                  paddingTop: '0.5rem',
+                  padding:"10px"
                 }}
               />
               <p>{fieldErrors.note && <small className="p-error">{fieldErrors.note}</small>}</p>

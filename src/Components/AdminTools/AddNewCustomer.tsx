@@ -22,9 +22,9 @@ import {
   RolesData,
   StatesData,
 } from '../CommonComponent/MetaDataComponent/MetaDataApi'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setCustomerId, setCustomerName } from '../../Store/Slice/userSlice'
-
+// import { useFetchUsers } from '../Layout/LayoutComponents/useFetchUsers'
 const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   customerData,
   editMode,
@@ -74,6 +74,10 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const { getRolesData } = RolesData()
   const { getStatesData } = StatesData()
   const { getCountriesData } = CountriesData()
+
+  // const userData = useSelector((state: any) => state.user?.userData);
+  // const roleOne = userData?.role?.id;
+  // const { getCustomerOwner, getUserData } = useFetchUsers(roleOne);
 
   const [passwordCriteria, setPasswordCriteria] = useState({
     uppercase: false,
