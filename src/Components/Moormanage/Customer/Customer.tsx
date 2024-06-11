@@ -141,8 +141,8 @@ const Customer = () => {
 
   const customerTableColumnStyle = {
     backgroundColor: '#FFFFFF',
-    fontWeight: '700',
-    fontSize: '10px',
+    fontWeight: '500',
+    fontSize: '12px',
     color: '#000000',
   }
 
@@ -150,7 +150,7 @@ const Customer = () => {
     () => [
       {
         id: 'customerId',
-        label: 'ID:',
+        label: 'Customer Id:',
         style: customerTableColumnStyle,
       },
       {
@@ -476,7 +476,7 @@ const Customer = () => {
                       color: '#000000',
                     }}>
                     <p>
-                      <span className="">ID: </span>
+                      <span className="">Customer Id: </span>
                       {customerRecordData?.customerId}
                     </p>
                     <p className="mt-6">

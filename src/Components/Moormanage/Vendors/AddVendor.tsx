@@ -92,12 +92,12 @@ const AddVendor: React.FC<AddVendorProps> = ({
       errors.website = 'Please enter a valid URL'
     }
 
-    if (!formData.companyName) errors.companyName = 'Company Name is required'
+    if (!formData.companyName) errors.companyName = 'companyName is required'
     if (!formData.streetBuildingForAddress)
-      errors.streetBuildingForAddress = 'Street/Building is required'
-    if (!formData.aptSuiteForAddress) errors.aptSuiteForAddress = 'Apt/Suite is required'
-    if (!formData.countryForAddress) errors.countryForAddress = 'Country is required'
-    if (!formData.stateForAddress) errors.stateForAddress = 'State is required'
+      errors.streetBuildingForAddress = 'street/Building is required'
+    if (!formData.aptSuiteForAddress) errors.aptSuiteForAddress = 'aptSuite is required'
+    if (!formData.countryForAddress) errors.countryForAddress = 'country is required'
+    if (!formData.stateForAddress) errors.stateForAddress = 'state is required' 
     if (!formData.zipCodeForAddress) {
       errors.zipCodeForAddress = 'Zip Code is required'
     } else if (!zipCodeRegex.test(formData.zipCodeForAddress)) {
@@ -113,11 +113,11 @@ const AddVendor: React.FC<AddVendorProps> = ({
     } else if (!zipCodeRegex.test(formData.zipCodeForRemit)) {
       errors.zipCodeForRemit = 'Zip Code contain only numbers'
     }
-    if (!formData.accountNumber) errors.accountNumber = 'Account Number is required'
-    if (!formData.firstName) errors.firstName = 'FirstName is required'
-    if (!formData.lastName) errors.lastName = 'LastName is required'
-    if (!formData.phoneForRepresentative) errors.phoneForRepresentative = 'Phone is required'
-    if (!formData.note) errors.note = 'Note is required'
+    if (!formData.accountNumber) errors.accountNumber = 'accountNumber is required'
+    if (!formData.firstName) errors.firstName = 'firstName is required'
+    if (!formData.lastName) errors.lastName = 'lastName is required'
+    if (!formData.phoneForRepresentative) errors.phoneForRepresentative = 'phone is required'
+    if (!formData.note) errors.note = 'note is required'
 
     setFieldErrors(errors)
     return errors

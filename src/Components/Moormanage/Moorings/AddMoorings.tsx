@@ -81,8 +81,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     type: '',
     topChainCondition: '',
     conditionOfEye: '',
-    bottomChainCondition: '',
-    shackleSwivelCondition: '',
+    bottomChainConditions: '',
+    // shackleSwivelCondition: '',
     pennantCondition: '',
     depthAtMeanHighWater: '',
     boatYardName: '',
@@ -174,7 +174,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     }
 
     if (!formData.boatYardName) {
-      errors.boatYardName = 'boatYardName is required'
+      errors.boatYardName = 'BoatYardName is required'
       if (!firstError) firstError = 'boatYardName'
     }
 
@@ -200,8 +200,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       if (!firstError) firstError = 'topChainCondition'
     }
 
-    if (!formData.bottomChainCondition) {
-      errors.bottomChainCondition = 'Bootom Chain Condition is required'
+    if (!formData.BootomChainCondition) {
+      errors.BootomChainCondition = 'Bottom Chain Condition is required'
       if (!firstError) firstError = 'BootomChainCondition'
     }
 
@@ -209,10 +209,10 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       errors.conditionOfEye = 'Condition of Eye is required'
       if (!firstError) firstError = 'conditionOfEye'
     }
-    if (!formData.bottomChainCondition) {
-      errors.bottomChainCondition = 'Bottom Chain Condition is required'
-      if (!firstError) firstError = 'bottomChainCondition'
-    }
+    // if (!formData.bottomChainCondition) {
+    //   errors.bottomChainCondition = 'Bottom Chain Condition is required'
+    //   if (!firstError) firstError = 'bottomChainCondition'
+    // }
     if (!formData.shackleSwivelCondition) {
       errors.shackleSwivelCondition = 'Shackle, Swivel Condition is required'
       if (!firstError) firstError = 'shackleSwivelCondition'
@@ -844,7 +844,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               <div>
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
-                    Bootom Chain Condition
+                    Bottom Chain Condition
                     <p className="text-red-600">*</p>
                   </div>
                 </span>
@@ -852,8 +852,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({
 
               <div className="mt-2">
                 <Dropdown
-                  value={formData.bottomChainCondition}
-                  onChange={(e) => handleInputChange('bottomChainCondition', e.value)}
+                  value={formData.BootomChainCondition}
+                  onChange={(e) => handleInputChange('BootomChainCondition', e.value)}
                   options={bottomChainCondition}
                   optionLabel="condition"
                   editable
@@ -868,7 +868,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                     fontSize: '0.8rem',
                   }}
                 />
-                <p id="bottomChainCondition">
+                <p id="BootomChainCondition">
                   {fieldErrors.BootomChainCondition && (
                     <small className="p-error">{fieldErrors.BootomChainCondition}</small>
                   )}
@@ -1053,7 +1053,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               boxShadow: 'none',
               color: 'white',
               borderRadius: '0.50rem',
-              marginTop:'10px'
+              marginTop: '10px',
             }}
           />
           <Button
@@ -1068,7 +1068,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               border: 'none',
               width: '89px',
               height: '42px',
-              marginTop:'10px'
+              marginTop: '10px',
             }}
           />
         </div>
