@@ -250,7 +250,6 @@ const moormanageApi = userApi.injectEndpoints({
       }),
     }),
 
-    
     getMooringWithBoatyard: builder.mutation({
       query: ({ id }: { id?: number }) => ({
         url: `api/v1/boatyard/fetchMooringsWithBoatyard/${id}`,

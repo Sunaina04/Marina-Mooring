@@ -1,15 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader'
 import CustomModal from '../../CustomComponent/CustomModal'
 import Header from '../../Layout/LayoutComponents/Header'
 import { IoSearchSharp } from 'react-icons/io5'
 import { InputText } from 'primereact/inputtext'
-import { Column } from 'primereact/column'
-import { DataTable } from 'primereact/datatable'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import AddInventory from './AddInventory'
-import { Params } from '../../../Type/CommonType'
 import {
   useDeleteInventoryMutation,
   useGetInventoryDetailsMutation,
@@ -18,11 +14,13 @@ import { useLocation } from 'react-router-dom'
 import { DeleteCustomerResponse, GetInventoryResponse } from '../../../Type/ApiTypes'
 import { Toast } from 'primereact/toast'
 import { ProgressSpinner } from 'primereact/progressspinner'
+import { useSelector } from 'react-redux'
+import { selectCustomerId } from '../../../Store/Slice/userSlice'
 
 const InventoryDetails: React.FC = () => {
+  const selectedCustomerId = useSelector(selectCustomerId)
   const [searchText, setSearchText] = useState('')
   const [modalVisible, setModalVisible] = useState(false)
-  const [inventoryEdit, setInventoryEdit] = useState(false)
   const [inventoryData, setInventoryData] = useState<any[]>()
   const [sectectedInventory, setSelectedInventory] = useState<any>([])
   const [editMode, setEditMode] = useState(false)
@@ -60,7 +58,7 @@ const InventoryDetails: React.FC = () => {
           width: '5vw',
           backgroundColor: '#00426F',
           color: '#FFFFFF',
-          fontSize: '11.18px',
+          fontSize: '12px',
           fontWeight: '700',
           borderTopLeftRadius: '10px',
         },
@@ -69,10 +67,10 @@ const InventoryDetails: React.FC = () => {
         id: 'inventoryType.type',
         label: 'Type',
         style: {
-          width: '9vw',
+          width: '15vw',
           backgroundColor: '#00426F',
           color: '#FFFFFF',
-          fontSize: '11.18px',
+          fontSize: '12px',
           fontWeight: '700',
         },
       },
@@ -83,7 +81,7 @@ const InventoryDetails: React.FC = () => {
           width: '9vw',
           backgroundColor: '#00426F',
           color: '#FFFFFF',
-          fontSize: '11.18px',
+          fontSize: '12px',
           fontWeight: '700',
         },
       },
@@ -94,7 +92,7 @@ const InventoryDetails: React.FC = () => {
           width: '9vw',
           backgroundColor: '#00426F',
           color: '#FFFFFF',
-          fontSize: '11.18px',
+          fontSize: '12px',
           fontWeight: '700',
         },
       },
@@ -105,7 +103,7 @@ const InventoryDetails: React.FC = () => {
           width: '9vw',
           backgroundColor: '#00426F',
           color: '#FFFFFF',
-          fontSize: '11.18px',
+          fontSize: '12px',
           fontWeight: '700',
         },
       },
@@ -116,7 +114,7 @@ const InventoryDetails: React.FC = () => {
           width: '9vw',
           backgroundColor: '#00426F',
           color: '#FFFFFF',
-          fontSize: '11.18px',
+          fontSize: '12px',
           fontWeight: '700',
         },
       },
@@ -150,7 +148,7 @@ const InventoryDetails: React.FC = () => {
         color: '#FFFFFF',
         borderTopRightRadius: '10px',
       },
-      style: { width: '7rem', borderBottom: '1px solid #D5E1EA', fontSize: '11.18px' },
+      style: { width: '7rem', borderBottom: '1px solid #D5E1EA', fontSize: '12px' },
     }),
     [],
   )
@@ -182,12 +180,9 @@ const InventoryDetails: React.FC = () => {
   }
 
   const getInventoryHandler = useCallback(async () => {
+    setIsLoading(true)
     try {
-      let params: Params = {}
-      if (searchText) {
-        params.searchText = searchText
-      }
-      const response = await getInventory({ vendorId: vendorId, params }).unwrap()
+      const response = await getInventory({ vendorId: vendorId, searchText: searchText }).unwrap()
       const { status, message, content } = response as GetInventoryResponse
       if (status === 200 && Array.isArray(content)) {
         setIsLoading(false)
@@ -196,18 +191,25 @@ const InventoryDetails: React.FC = () => {
         } else {
           setInventoryData([])
         }
+      } else {
+        toast?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
       }
     } catch (error) {
       console.error('Error occurred while fetching customer data:', error)
     }
-  }, [getInventory, searchText])
+  }, [getInventory, searchText, selectedCustomerId])
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       getInventoryHandler()
     }, 600)
     return () => clearTimeout(timeoutId)
-  }, [searchText])
+  }, [searchText, selectedCustomerId])
 
   return (
     <>
@@ -220,6 +222,8 @@ const InventoryDetails: React.FC = () => {
             <div className="p-input-icon-left">
               <IoSearchSharp className="ml-2 text-blue-900" />
               <InputText
+                value={searchText}
+                onChange={handleSearch}
                 placeholder="search sku, name, type"
                 className="h-[44px] w-[237px] cursor-pointer pl-8 rounded-lg text-bold  "
               />
@@ -266,45 +270,31 @@ const InventoryDetails: React.FC = () => {
         </div>
       </div>
       {inventoryData && (
-        <div className="rounded-md border-[1px] border-gray-300 w-100% h-[110px] ml-14 mr-10 mt-5 bg-white">
-          <div className="flex justify-between pr-4 pl-4  mt-5">
-            <div style={{ fontSize: '14px', color: '#000000', fontWeight: '400' }}>
+        <div className="rounded-md border-[1px] border-gray-300 w-100% h-[90px] ml-14 mr-10 mt-5 bg-white">
+          <div className="flex justify-between pr-4 pl-4  mt-4">
+            <div style={{ fontSize: '14px', color: '#000000', fontWeight: '500' }}>
               <p>ID:</p>
-              <p className="mt-5">{inventoryData[0]?.vendorResponseDto?.id}</p>
+              <p className="mt-1 text-lg">{inventoryData[0]?.vendorResponseDto?.id}</p>
             </div>
-            <div>
-              <p>Sales Representative</p>
-              <p className="mt-5">{inventoryData[0]?.vendorResponseDto?.firstName}</p>
+            <div style={{ fontSize: '14px', color: '#000000', fontWeight: '500' }}>
+              <p>Sales Representative:</p>
+              <p className="mt-1 text-lg">{inventoryData[0]?.vendorResponseDto?.firstName}</p>
             </div>
-            <div>
+            <div style={{ fontSize: '14px', color: '#000000', fontWeight: '500' }}>
               <p>Phone Number:</p>
-              <p className="mt-5">{inventoryData[0]?.vendorResponseDto?.salesRepPhoneNumber}</p>
+              <p className="mt-1 text-lg">
+                {inventoryData[0]?.vendorResponseDto?.salesRepPhoneNumber}
+              </p>
             </div>
-            <div>
+            <div style={{ fontSize: '14px', color: '#000000', fontWeight: '500' }}>
               <p>Email Address:</p>
-              <p className="mt-5">{inventoryData[0]?.vendorResponseDto?.salesRepEmail}</p>
+              <p className="mt-1 text-lg">{inventoryData[0]?.vendorResponseDto?.salesRepEmail}</p>
             </div>
           </div>
         </div>
       )}
 
-      {isLoading && (
-        <ProgressSpinner
-          style={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: '50px',
-            height: '50px',
-          }}
-          strokeWidth="4"
-        />
-      )}
-
-      <div
-        // style={{border:"1px solid red"}}
-        className="bg-white rounded-md border-[1px] h-[600px]  border-gray-300 w-100% ml-14 mr-10 mt-8">
+      <div className="bg-white rounded-md border-[1px] h-[600px]  border-gray-300 w-100% ml-14 mr-10 mt-8">
         <DataTableComponent
           tableStyle={{
             fontSize: '12px',
@@ -322,6 +312,19 @@ const InventoryDetails: React.FC = () => {
             <div className="text-center mt-40">
               <img src="/assets/images/empty.png" alt="Empty Data" className="w-28 mx-auto mb-4" />
               <p className="text-gray-500">No data available</p>
+              {isLoading && (
+                <ProgressSpinner
+                  style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: '50px',
+                    height: '50px',
+                  }}
+                  strokeWidth="4"
+                />
+              )}
             </div>
           }
         />
