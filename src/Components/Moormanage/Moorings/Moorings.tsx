@@ -28,10 +28,10 @@ import CustomMooringPositionMap from '../../Map/CustomMooringPositionMap'
 import { RiDeleteBin5Fill } from 'react-icons/ri'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import AddCustomer from '../Customer/AddCustomer'
+import { selectCustomerId } from '../../../Store/Slice/userSlice'
 
 const Moorings = () => {
-  const userData = useSelector((state: any) => state.user?.userData)
-  const role = userData?.role?.id
+  const selectedCustomerId = useSelector(selectCustomerId)
   const [modalVisible, setModalVisible] = useState(false)
   const [mooringData, setMooringData] = useState<MooringPayload[]>([])
   const [customerRecordData, setCustomerRecordData] = useState<any>()
@@ -250,7 +250,7 @@ const Moorings = () => {
       const { message } = error as ErrorResponse
       console.error('Error fetching moorings data:', error)
     }
-  }, [searchText, getMoorings])
+  }, [searchText, getMoorings, selectedCustomerId])
 
   const getCustomersWithMooring = async (id: number) => {
     try {
@@ -280,7 +280,7 @@ const Moorings = () => {
       getMooringsData()
     }, 2000)
     return () => clearTimeout(timeoutId)
-  }, [searchText])
+  }, [searchText, selectedCustomerId])
 
   return (
     <div className={modalVisible ? 'backdrop-blur-lg' : ''}>

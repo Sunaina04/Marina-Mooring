@@ -9,9 +9,13 @@ import { CustomerPayload, ErrorResponse, GetUserResponse } from '../../../Type/A
 import { setCustomerId, setCustomerName, selectCustomerName } from '../../../Store/Slice/userSlice'
 import { RootState } from '../../../Store/Store'
 import { fetchCustomers } from '../../../Store/Slice/customerSlice'
+import { useLocation } from 'react-router-dom'
 
 const Header: React.FC<HeaderProps> = ({ header }) => {
   const userData = useSelector((state: any) => state.user?.userData)
+  const location = useLocation()
+  const queryParams = new URLSearchParams(location.search)
+  console.log('url', queryParams)
   const role = userData?.role?.id
   const dispatch = useDispatch()
   const selectedCustomerName = useSelector(selectCustomerName)

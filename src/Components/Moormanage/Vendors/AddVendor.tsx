@@ -57,7 +57,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const phoneRegex = /^\d{10}$/
     const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/
-    const zipCodeRegex = /^\d+$/;
+    const zipCodeRegex = /^\d+$/
     if (!formData.phone) {
       errors.phone = 'Phone is required'
     } else if (!phoneRegex.test(formData.phone)) {
@@ -92,32 +92,32 @@ const AddVendor: React.FC<AddVendorProps> = ({
       errors.website = 'Please enter a valid URL'
     }
 
-    if (!formData.companyName) errors.companyName = 'companyName is required'
+    if (!formData.companyName) errors.companyName = 'Company Name is required'
     if (!formData.streetBuildingForAddress)
-      errors.streetBuildingForAddress = 'street/Building is required'
-    if (!formData.aptSuiteForAddress) errors.aptSuiteForAddress = 'aptSuite is required'
-    if (!formData.countryForAddress) errors.countryForAddress = 'country is required'
-    if (!formData.stateForAddress) errors.stateForAddress = 'state is required' 
+      errors.streetBuildingForAddress = 'Street/Building is required'
+    if (!formData.aptSuiteForAddress) errors.aptSuiteForAddress = 'Apt/Suite is required'
+    if (!formData.countryForAddress) errors.countryForAddress = 'Country is required'
+    if (!formData.stateForAddress) errors.stateForAddress = 'State is required'
     if (!formData.zipCodeForAddress) {
-      errors.zipCodeForAddress = 'Zip Code is required';
+      errors.zipCodeForAddress = 'Zip Code is required'
     } else if (!zipCodeRegex.test(formData.zipCodeForAddress)) {
-      errors.zipCodeForAddress = 'Zip Code contain only numbers';
+      errors.zipCodeForAddress = 'Zip Code contain only numbers'
     }
     if (!formData.streetBuildingForRemit)
-      errors.streetBuildingForRemit = 'street/Building is required'
-    if (!formData.aptSuiteForRemit) errors.aptSuiteForRemit = 'apt/Suite is required'
-    if (!formData.countryForRemit) errors.countryForRemit = 'country is required'
-    if (!formData.stateForRemit) errors.stateForRemit = 'state is required'
+      errors.streetBuildingForRemit = 'Street/Building is required'
+    if (!formData.aptSuiteForRemit) errors.aptSuiteForRemit = 'Apt/Suite is required'
+    if (!formData.countryForRemit) errors.countryForRemit = 'Country is required'
+    if (!formData.stateForRemit) errors.stateForRemit = 'State is required'
     if (!formData.zipCodeForRemit) {
-      errors.zipCodeForRemit = 'Zip Code is required';
+      errors.zipCodeForRemit = 'Zip Code is required'
     } else if (!zipCodeRegex.test(formData.zipCodeForRemit)) {
-      errors.zipCodeForRemit = 'Zip Code contain only numbers';
+      errors.zipCodeForRemit = 'Zip Code contain only numbers'
     }
-    if (!formData.accountNumber) errors.accountNumber = 'accountNumber is required'
-    if (!formData.firstName) errors.firstName = 'firstName is required'
-    if (!formData.lastName) errors.lastName = 'lastName is required'
-    if (!formData.phoneForRepresentative) errors.phoneForRepresentative = 'phone is required'
-    if (!formData.note) errors.note = 'note is required'
+    if (!formData.accountNumber) errors.accountNumber = 'Account Number is required'
+    if (!formData.firstName) errors.firstName = 'FirstName is required'
+    if (!formData.lastName) errors.lastName = 'LastName is required'
+    if (!formData.phoneForRepresentative) errors.phoneForRepresentative = 'Phone is required'
+    if (!formData.note) errors.note = 'Note is required'
 
     setFieldErrors(errors)
     return errors
@@ -742,18 +742,18 @@ const AddVendor: React.FC<AddVendorProps> = ({
         </div>
       </div>
       {isLoading && (
-            <ProgressSpinner
-              style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                width: '50px',
-                height: '50px',
-              }}
-              strokeWidth="4"
-            />
-          )}
+        <ProgressSpinner
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '50px',
+            height: '50px',
+          }}
+          strokeWidth="4"
+        />
+      )}
       <div>
         <div className="mt-5">
           <div className="ml-1 text-black font-semibold text-sm">
@@ -949,7 +949,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
               </span>
             </div>
             <div className="mt-1">
-              <InputTextarea
+              <InputComponent
                 value={formData.note}
                 onChange={(e) => handleInputChange('note', e.target.value)}
                 style={{
@@ -963,14 +963,9 @@ const AddVendor: React.FC<AddVendorProps> = ({
                   paddingLeft: '0.5rem',
                   paddingTop: '0.5rem',
                 }}
-                autoResize
-                // value={note}
-
-                // rows={5}
-                // cols={30}
               />
+              <p>{fieldErrors.note && <small className="p-error">{fieldErrors.note}</small>}</p>
             </div>
-            <p>{fieldErrors.note && <small className="p-error">{fieldErrors.note}</small>}</p>
           </div>
         </div>
       </div>

@@ -27,13 +27,7 @@ import { properties } from '../../Utils/MeassageProperties'
 import { Params } from '../../../Type/CommonType'
 import { Toast } from 'primereact/toast'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  selectCustomerId,
-  selectCustomerName,
-  setCustomerId,
-  setCustomerName,
-} from '../../../Store/Slice/userSlice'
-import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
+import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import CustomMooringPositionMap from '../../Map/CustomMooringPositionMap'
 import { GearOffIcon, GearOnIcon, NeedInspectionIcon, NotInUseIcon } from '../../Map/DefaultIcon'
 import { ProgressSpinner } from 'primereact/progressspinner'
@@ -42,7 +36,6 @@ const Customer = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
   const [modalVisible, setModalVisible] = useState(false)
   const [customerData, setCustomerData] = useState<CustomerPayload[]>([])
-  const dispatch = useDispatch()
   const [editMode, setEditMode] = useState(false)
   const [editCustomerMode, setEditCustomerMode] = useState(false)
   const [editMooringMode, setEditMooringMode] = useState(false)

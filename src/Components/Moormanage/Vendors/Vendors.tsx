@@ -9,15 +9,17 @@ import {
 } from '../../../Services/MoorManage/MoormanageApi'
 import { DeleteCustomerResponse, VendorPayload, VendorResponse } from '../../../Type/ApiTypes'
 import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
-import { boatData, vendorDataa } from '../../Utils/CustomData'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import Header from '../../Layout/LayoutComponents/Header'
 import { IoSearchSharp } from 'react-icons/io5'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { Toast } from 'primereact/toast'
 import { Params } from '../../../Type/CommonType'
+import { useSelector } from 'react-redux'
+import { selectCustomerId } from '../../../Store/Slice/userSlice'
 
 const Vendors = () => {
+  const selectedCustomerId = useSelector(selectCustomerId)
   const [modalVisible, setModalVisible] = useState(false)
   const [vendorData, setVendorData] = useState<VendorPayload[]>([])
   const [filteredboatyardsData, setFilteredboatyardsData] = useState<VendorPayload[]>([])
@@ -39,6 +41,7 @@ const Vendors = () => {
   }
 
   const getVendorData = useCallback(async () => {
+    setIsLoading(true)
     try {
       let params: Params = {}
       if (searchText) {
@@ -47,19 +50,25 @@ const Vendors = () => {
       await getVendors(params)
         .unwrap()
         .then(async (response: any) => {
-          const { status, content } = response as VendorResponse
+          const { status, content, message } = response as VendorResponse
           if (status === 200 && Array.isArray(content)) {
             setIsLoading(false)
             setVendorData(content)
             setFilteredboatyardsData(content)
           } else {
             setIsLoading(false)
+            toast?.current?.show({
+              severity: 'error',
+              summary: 'Error',
+              detail: message,
+              life: 3000,
+            })
           }
         })
     } catch (error) {
       console.error('Error fetching getBoatyardsdata:', error)
     }
-  }, [getVendors, searchText])
+  }, [getVendors, searchText, selectedCustomerId])
 
   const handleEdit = (rowData: any) => {
     setModalVisible(true)
@@ -187,7 +196,7 @@ const Vendors = () => {
       getVendorData()
     }, 600)
     return () => clearTimeout(timeoutId)
-  }, [searchText])
+  }, [searchText, selectedCustomerId])
 
   return (
     <>
@@ -250,7 +259,6 @@ const Vendors = () => {
             />
           </div>
         </div>
-
         <div
           style={{
             height: '715px',
@@ -260,19 +268,6 @@ const Vendors = () => {
             backgroundColor: '#FFFFFF',
           }}
           className={`ml-[3rem] mr-[2.30rem] mt-8 ${isLoading ? 'blur-screen' : ''}`}>
-          {isLoading && (
-            <ProgressSpinner
-              style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                width: '50px',
-                height: '50px',
-              }}
-              strokeWidth="4"
-            />
-          )}
           <DataTableSearchFieldComponent
             tableStyle={{
               fontSize: '12px',
@@ -292,6 +287,19 @@ const Vendors = () => {
                   className="w-32 mx-auto mb-4"
                 />
                 <p className="text-gray-500">No data available</p>
+                {isLoading && (
+                  <ProgressSpinner
+                    style={{
+                      position: 'absolute',
+                      top: '60%',
+                      left: '50%',
+                      transform: 'translate(-50%, -50%)',
+                      width: '50px',
+                      height: '50px',
+                    }}
+                    strokeWidth="4"
+                  />
+                )}
               </div>
             }
           />

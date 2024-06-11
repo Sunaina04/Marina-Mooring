@@ -299,6 +299,7 @@ const Boatyards = () => {
   const [latitude, longitude] = parseCoordinates(selectedBoatYard?.gpsCoordinates) || []
 
   const getBoatyardsData = useCallback(async () => {
+    setIsLoading(true)
     try {
       let params: Params = {}
       if (searchText) {
