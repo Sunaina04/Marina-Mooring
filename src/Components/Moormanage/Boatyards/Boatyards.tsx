@@ -254,6 +254,7 @@ const Boatyards = () => {
     }
   }
 
+ 
   const handleDelete = async () => {
     if (boatYardRecord == true) {
       try {
@@ -393,7 +394,7 @@ const Boatyards = () => {
                 value={searchFieldText}
                 onChange={handleSearchField}
                 placeholder="Search"
-                className="h-[44px] w-[237px] cursor-pointer pl-8 rounded-lg text-bold  "
+                className="h-[44px] w-[237px] cursor-pointer pl-8 rounded-lg text-bold "
               />
             </div>
           </div>

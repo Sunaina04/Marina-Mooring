@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useLoginMutation } from '../../Services/Authentication/AuthApi'
 import { ErrorResponse, LoginResponse, ResetPasswordResponse } from '../../Type/ApiTypes'
 import { useDispatch, useSelector } from 'react-redux'
@@ -8,6 +8,7 @@ import { InputText } from 'primereact/inputtext'
 import { Button } from 'primereact/button'
 import './Login.css'
 import { ProgressSpinner } from 'primereact/progressspinner'
+import { Toast } from 'primereact/toast'
 
 export default function LoginForm() {
   const dispatch = useDispatch()
@@ -21,6 +22,8 @@ export default function LoginForm() {
     password: '',
   })
   const [isLoading, setIsLoading] = useState(false)
+
+  const toast = useRef<Toast>(null)
 
   const handleChange = (e: any) => {
     const { name, value } = e.target
@@ -48,24 +51,42 @@ export default function LoginForm() {
     setErrors({ email: '', password: '' })
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (username.trim().length === 0) {
-      setErrors((prev) => ({
-        ...prev,
-        email: 'Email cannot be empty',
-      }))
+      // setErrors((prev) => ({
+      //   ...prev,
+      //   email: 'Email cannot be empty',
+      // }))
+      toast.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Email cannot be empty',
+        life: 3000,
+      })
       return
     }
     if (!emailRegex.test(username.trim())) {
-      setErrors((prev) => ({
-        ...prev,
-        email: 'Invalid email format',
-      }))
+      // setErrors((prev) => ({
+      //   ...prev,
+      //   email: 'Invalid email format',
+      // }))
+      toast.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Invalid email format',
+        life: 3000,
+      })
       return
     }
     if (password.trim().length === 0) {
-      setErrors((prev) => ({
-        ...prev,
-        password: 'Password cannot be empty',
-      }))
+      // setErrors((prev) => ({
+      //   ...prev,
+      //   password: 'Password cannot be empty',
+      // }))
+      toast.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Password cannot be empty',
+        life: 3000,
+      })
       return
     }
     setIsLoading(true)
@@ -121,20 +142,22 @@ export default function LoginForm() {
               src="/assets/images/moorfindLogo.png"
               alt="Logo"
               className="mx-auto w-60 h-14 mb-5"
+              id='logo'
             />
           </div>
           <div 
           
           className="flex flex-col justify-center text-center mt-[5rem]">
-            <div className="text-red-500 mb-5 text-sm">{errors.email && <p>{errors.email}</p>}</div>
+            {/* <div className="text-red-500 mb-5 text-sm">{errors.email && <p>{errors.email}</p>}</div> */}
             <div className="flex flex-col items-center">
-              <div className="p-input-icon-left">
+              <div className="p-input-icon-left"  id="input-field">
                 <InputText
                   placeholder="Enter Your Email"
                   name="username"
                   value={username}
                   onChange={handleChange}
                   onKeyUp={handleKeyUp}
+                  id="input-field"
                   style={{
                     width: '500px',
                     height: '60px',

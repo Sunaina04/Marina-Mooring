@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   ErrorResponse,
@@ -10,6 +10,7 @@ import { useForgotPasswordMutation } from '../../Services/Authentication/AuthApi
 import { InputText } from 'primereact/inputtext'
 import './ForgotPassword.module.css'
 import { ProgressSpinner } from 'primereact/progressspinner'
+import { Toast } from 'primereact/toast'
 
 const ForgotPassword = () => {
   const navigateToLoginPage = useNavigate()
@@ -18,10 +19,18 @@ const ForgotPassword = () => {
   const [errors, setErrors] = useState<any>([])
   const [message, setMessage] = useState<any>([])
   const [isLoading, setIsLoading] = useState(false)
+  const toast = useRef<Toast>(null)
 
   const validateEmailHandler = async () => {
     if (email.length === 0) {
-      setErrors('Email cannot be empty ')
+      // setErrors('Email cannot be empty ')
+      toast.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Email cannot be empty',
+        life: 3000,
+      })
+
       return
     }
     setIsLoading(true)
@@ -64,6 +73,7 @@ const ForgotPassword = () => {
 
   return (
     <>
+    <Toast ref={toast} />
       <div
         className="w-full h-screen flex justify-center items-center"
         style={{

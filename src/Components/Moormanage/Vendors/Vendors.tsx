@@ -198,6 +198,7 @@ const Vendors = () => {
     return () => clearTimeout(timeoutId)
   }, [searchText, selectedCustomerId])
 
+ 
   return (
     <>
       <div className={modalVisible ? 'backdrop-blur-lg' : ''}>
@@ -276,6 +277,7 @@ const Vendors = () => {
               padding: '2rem',
             }}
             data={vendorData}
+           
             columns={VendorColumns}
             actionButtons={ActionButtonColumn}
             style={{ backgroundColor: '#FFFFFF', borderBottom: '1px solid #D5E1EA ' }}

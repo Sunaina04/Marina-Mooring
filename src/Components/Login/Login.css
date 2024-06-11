@@ -20,12 +20,21 @@
   width: calc(100% - 40px); 
   padding: 0 40px 0 10px; 
 } */
+/* @media (max-width:320px) {
+  #header{
+    width:100%
+  }
 
-/* #header{
+  #logo {
+    margin-top: 3rem;
+    width: 150px
+  }
 
-  background-image: url('/assets/images/loginBackgroundImage.png')",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
+  #input-field {
+    width: 100px;
+    height: 10px
+  }
+  
 } */
 
 /* #header{

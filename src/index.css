@@ -66,3 +66,8 @@
   cursor: not-allowed !important;
 }
 
+.p-datatable .p-datatable-header {
+  background-color: white;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+}

@@ -12,6 +12,7 @@ const Dashboard = () => {
   const [date, setDate] = useState<NullableDateArray>(null)
   const options: string[] = ['Pending', 'Cleared']
   const [value, setValue] = useState<string>(options[0])
+  const [serviceData, setServiceData] = useState<any>('')
   const columns: TableColumnProps[] = useMemo(
     () => [
       {
@@ -53,7 +54,7 @@ const Dashboard = () => {
         label: 'Mooring service Date',
         style: {
           fontSize: '10px',
-          width: '20vw',
+          width: '23vw',
           backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: '700',
@@ -98,37 +99,41 @@ const Dashboard = () => {
   }
 
   const Boatsheader = (
-    <div className="flex flex-wrap align-items-center justify-between gap-2 p-4 bg-[#FFFFFF] ">
-      <span
-        style={{
-          fontWeight: '700',
-          fontSize: '16px',
-          lineHeight: '18.75px',
-          letterSpacing: '0.46px',
-          color: '#000000',
-        }}>
-        Moorings Due for Service
-      </span>
-      <span
-        style={{
-          width: '80px',
-          height: '16px',
-          opacity: '50%',
-          fontSize: '13.59px',
-          fontWeight: '400',
-          lineHeight: '15.92px',
-          letterSpacing: '0.46px',
-          textAlign: 'right',
-        }}>
-        View all
-      </span>
+    <div>
+      <div className="flex justify-between gap-2 p-4 bg-white">
+        <div
+          style={{
+            fontWeight: '700',
+            fontSize: '16px',
+            // lineHeight: '18.75px',
+            // letterSpacing: '0.46px',
+            color: '#000000',
+          }}>
+          Moorings Due for Service
+        </div>
+        <div
+          style={{
+            width: '80px',
+            height: '16px',
+            opacity: '50%',
+            fontSize: '13.59px',
+            fontWeight: '500',
+            // lineHeight: '15.92px',
+            // letterSpacing: '0.46px',
+            // textAlign: 'right',
+          }}>
+          View all
+        </div>
+      </div>
+      <hr style={{ border: '1px solid #D5E1EA' }} />
     </div>
   )
+
   return (
     <>
       <Header header="DASHBOARD" />
-      <div className="flex flex-shrink  ml-12 gap-6 mt-10">
-        <div className="right flex flex-col ">
+      <div className="flex ml-12 gap-6 mt-10">
+        <div className=" flex flex-col ">
           <div style={{ height: '500px', width: '50vw' }}>
             <CustomMooringPositionMap
               position={[30.698, 76.657]}
@@ -148,19 +153,29 @@ const Dashboard = () => {
               backgroundColor: '#FFFFFF',
               marginTop: '20px',
             }}>
-            <DataTableComponent
-              columns={columns}
-              actionButtons={ActionButtonColumn}
-              header={Boatsheader}
-            />
+            
+              <DataTableComponent
+                columns={columns}
+                actionButtons={ActionButtonColumn}
+                header={Boatsheader}
+                tableStyle={{ backgroundColor: '#FFFFFF' }}
+                data={serviceData}
+                emptyMessage={
+                  <div className="text-center mt-14">
+                    <img
+                      src="/assets/images/empty.png"
+                      alt="Empty Data"
+                      className="w-20 mx-auto mb-4"
+                    />
+                    <p className="text-gray-500">No data available</p>
+                  </div>
+                }
+              />
+           
           </div>
         </div>
-        <div
-          className="left "
-          style={{
-            flexShrink: 1,
-          }}>
-          <div>
+        <div style={{ flexGrow: 1 }}>
+          <div style={{ height: '100%', overflow: 'hidden' }}>
             <Accordition />
           </div>
         </div>
