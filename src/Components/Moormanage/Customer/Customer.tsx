@@ -544,16 +544,13 @@ const Customer = () => {
                   }}>
                   <p className="ml-4">
                     <span className="address-label ">Address: </span>
-                    {customerRecordData?.aptSuite && <span>{customerRecordData?.aptSuite} </span>}
-                    {customerRecordData?.streetHouse && (
-                      <span>{customerRecordData?.streetHouse} </span>
-                    )}
-                    {customerRecordData?.stateResponseDto?.name && (
-                      <span>{customerRecordData?.stateResponseDto?.name}, </span>
-                    )}
-                    {customerRecordData?.countryResponseDto?.name && (
-                      <span>{customerRecordData?.countryResponseDto?.name} </span>
-                    )}
+                    {customerRecordData?.aptSuite +
+                      ' ' +
+                      customerRecordData?.streetHouse +
+                      ' ' +
+                      customerRecordData?.stateResponseDto?.name +
+                      ' ' +
+                      customerRecordData?.countryResponseDto?.name}
                   </p>
 
                   <div className="flex mt-5 ml-4 mb-3 overflow-x-auto">

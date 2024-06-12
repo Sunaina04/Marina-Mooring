@@ -1,4 +1,4 @@
-import { Country, MetaData, Role, State } from './CommonType'
+import { Country, MetaData, MetaDataCustomer, Role, State } from './CommonType'
 
 export interface UserLoginPayload {
   name: string
@@ -272,6 +272,8 @@ export interface MooringPayload {
   mooringNumber: string
   mooringId: string
   customerName: string
+  firstName: string
+  lastName: string
   harbor: string
   waterDepth: string
   gpsCoordinates: string
@@ -605,7 +607,7 @@ export interface ContentData {
 }
 
 export interface Content {
-  content(content: any): unknown
+  content: any
   data: ContentData
 }
 
@@ -615,6 +617,14 @@ export interface MetaDataResponse {
   errorList: []
   time: number
   content: Content
+}
+
+export interface MetaDataCustomerResponse {
+  message: string
+  status: number
+  errorList: []
+  time: number
+  content: MetaDataCustomer
 }
 
 export interface InventoryPayload {

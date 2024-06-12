@@ -50,7 +50,7 @@ const Estimates = () => {
   ])
 
   const handleButtonClick = () => {
-    //  setIsModalOpen(true)
+    setIsModalOpen(true)
   }
 
   const handleModalClose = () => {
@@ -150,7 +150,7 @@ const Estimates = () => {
     <>
       <Header header="MOORSERVE/Estimates" />
 
-      {/* <div className="flex justify-end gap-6 mt-14 mr-16">
+      <div className="flex justify-end gap-6 mt-14 mr-16">
         <div className="flex text-blue-900 font-extrabold">
           <div>
             <img
@@ -172,7 +172,7 @@ const Estimates = () => {
             buttonText={'ADD NEW'}
             children={<AddEstimates />}
             headerText={<h1 className="text-xl font-extrabold text-black ml-4">New User</h1>}
-            visible={false}
+            visible={isModalOpen}
             onClick={handleButtonClick}
             onHide={handleModalClose}
             buttonStyle={{
@@ -257,7 +257,7 @@ const Estimates = () => {
           actionButtons={ActionButtonColumn}
           style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '200' }}
         />
-      </div> */}
+      </div>
     </>
   )
 }

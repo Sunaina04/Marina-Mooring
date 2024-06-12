@@ -8,7 +8,7 @@ import {
   useUpdateMooringsMutation,
 } from '../../../Services/MoorManage/MoormanageApi'
 import { Button } from 'primereact/button'
-import { CityProps, MetaData } from '../../../Type/CommonType'
+import { CityProps, MetaData, MetaDataCustomer } from '../../../Type/CommonType'
 import { AddMooringProps } from '../../../Type/ComponentBasedType'
 import CustomSelectPositionMap from '../../Map/CustomSelectPositionMap'
 import { LatLngExpression } from 'leaflet'
@@ -31,7 +31,6 @@ import { CustomerResponse, ErrorResponse } from '../../../Type/ApiTypes'
 const AddMoorings: React.FC<AddMooringProps> = ({
   moorings,
   editMode,
-  editCustomerMode,
   toastRef,
   mooringRowData,
   closeModal,
@@ -55,10 +54,10 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   const [chainData, setChainData] = useState<MetaData[]>([])
   const [sizeOfWeight, setSizeOfWeight] = useState<MetaData[]>([])
   const [conditionOfEye, setConditionOfEye] = useState<MetaData[]>([])
-  const [bottomChainCondition, setBottomChainCondition] = useState<MetaData[]>([])
+  const [bottomChainCondition, setbottomChainCondition] = useState<MetaData[]>([])
   const [shackleSwivelData, setShackleSwivelData] = useState<MetaData[]>([])
   const [pennantData, setPennantData] = useState<MetaData[]>([])
-  const [customerName, setcustomerName] = useState<MetaData[]>([])
+  const [customerName, setcustomerName] = useState<MetaDataCustomer[]>([])
   const [customerId, setCustomerId] = useState<string>('')
   const [boatyardsName, setBoatYardsName] = useState<MetaData[]>([])
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
@@ -81,12 +80,11 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     type: '',
     topChainCondition: '',
     conditionOfEye: '',
-    bottomChainConditions: '',
-    // shackleSwivelCondition: '',
+    bottomChainCondition: '',
+    shackleSwivelCondition: '',
     pennantCondition: '',
     depthAtMeanHighWater: '',
     boatYardName: '',
-    BootomChainCondition: '',
     note: '',
   })
 
@@ -96,7 +94,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     const { typeOfChainData } = await getTypeOfChainData()
     const { TypeOfSizeOfWeightData } = await getTypeOfSizeOfWeightData()
     const { typeOfEyeData } = await getTypeOfEyeData()
-    const { typeOfBootomChainData } = await getTypeOfBottomChainData()
+    const { typeOfBottomChainData } = await getTypeOfBottomChainData()
     const { typeOfShackleSwivelData } = await getTypeOfShackleSwivelData()
     const { typeOfPennantData } = await getTypeOfPennantData()
     const { customersData } = await getCustomersData()
@@ -115,8 +113,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       setConditionOfEye(typeOfEyeData)
     }
 
-    if (typeOfBootomChainData !== null) {
-      setBottomChainCondition(typeOfBootomChainData)
+    if (typeOfBottomChainData !== null) {
+      setbottomChainCondition(typeOfBottomChainData)
     }
 
     if (typeOfShackleSwivelData !== null) {
@@ -142,86 +140,83 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     const errors: { [key: string]: string } = {}
     let firstError = ''
 
-    if (!formData.customerName) {
+    if (!formData?.customerName) {
       errors.customerName = 'Customer Name is required'
       if (!firstError) firstError = 'customerName'
     }
-    if (!formData.mooringNumber) {
+    if (!formData?.mooringNumber) {
       errors.mooringNumber = 'Mooring ID is required'
       if (!firstError) firstError = 'mooringNumber'
     }
-    if (!formData.harbor) {
+    if (!formData?.harbor) {
       errors.harbor = 'Harbor is required'
       if (!firstError) firstError = 'harbor'
     }
-    if (!formData.waterDepth) {
+    if (!formData?.waterDepth) {
       errors.waterDepth = 'Water Depth is required'
       if (!firstError) firstError = 'waterDepth'
     }
 
-    if (!formData.gpsCoordinates) {
+    if (!formData?.gpsCoordinates) {
       errors.gpsCoordinates = 'GPS Coordinates are required'
       if (!firstError) firstError = 'gpsCoordinates'
     }
 
-    if (!formData.boatName) {
+    if (!formData?.boatName) {
       errors.boatName = 'Boat Name is required'
       if (!firstError) firstError = 'boatName'
     }
-    if (!formData.boatSize) {
+    if (!formData?.boatSize) {
       errors.boatSize = 'Boat Size is required'
       if (!firstError) firstError = 'boatSize'
     }
 
-    if (!formData.boatYardName) {
+    if (!formData?.boatYardName) {
       errors.boatYardName = 'BoatYardName is required'
       if (!firstError) firstError = 'boatYardName'
     }
 
-    if (!formData.boatWeight) {
+    if (!formData?.boatWeight) {
       errors.boatWeight = 'Weight is required'
       if (!firstError) firstError = 'boatWeight'
     }
-    if (!formData.sizeOfWeight) {
+    if (!formData?.sizeOfWeight) {
       errors.sizeOfWeight = 'Size of Weight is required'
       if (!firstError) firstError = 'sizeOfWeight'
     }
-    if (!formData.typeOfWeight) {
+    if (!formData?.typeOfWeight) {
       errors.typeOfWeight = 'Type of Weight is required'
       if (!firstError) firstError = 'typeOfWeight'
     }
-    if (!formData.type) {
+    if (!formData?.type) {
       errors.type = 'Type  is required'
       if (!firstError) firstError = 'type'
     }
 
-    if (!formData.topChainCondition) {
+    if (!formData?.topChainCondition) {
       errors.topChainCondition = 'Top Chain Condition is required'
       if (!firstError) firstError = 'topChainCondition'
     }
 
-    if (!formData.BootomChainCondition) {
-      errors.BootomChainCondition = 'Bottom Chain Condition is required'
-      if (!firstError) firstError = 'BootomChainCondition'
+    if (!formData?.bottomChainCondition) {
+      errors.bottomChainCondition = 'Bottom Chain Condition is required'
+      if (!firstError) firstError = 'bottomChainCondition'
     }
 
-    if (!formData.conditionOfEye) {
+    if (!formData?.conditionOfEye) {
       errors.conditionOfEye = 'Condition of Eye is required'
       if (!firstError) firstError = 'conditionOfEye'
     }
-    // if (!formData.bottomChainCondition) {
-    //   errors.bottomChainCondition = 'Bottom Chain Condition is required'
-    //   if (!firstError) firstError = 'bottomChainCondition'
-    // }
-    if (!formData.shackleSwivelCondition) {
+
+    if (!formData?.shackleSwivelCondition) {
       errors.shackleSwivelCondition = 'Shackle, Swivel Condition is required'
       if (!firstError) firstError = 'shackleSwivelCondition'
     }
-    if (!formData.pennantCondition) {
+    if (!formData?.pennantCondition) {
       errors.pennantCondition = 'Pennant Condition is required'
       if (!firstError) firstError = 'pennantCondition'
     }
-    if (!formData.depthAtMeanHighWater) {
+    if (!formData?.depthAtMeanHighWater) {
       errors.depthAtMeanHighWater = 'Depth at Mean High Water is required'
       if (!firstError) firstError = 'depthAtMeanHighWater'
     }
@@ -250,7 +245,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       ...prevState,
       mooringNumber: mooringRowData?.mooringId || '',
       mooringName: mooringRowData?.mooringName || '',
-      customerName: moorings?.customerName || '',
+      customerName: moorings?.firstName || '',
       harbor: mooringRowData?.harbor || '',
       waterDepth: mooringRowData?.waterDepth || '',
       gpsCoordinates: mooringRowData?.gpsCoordinates || '',
@@ -278,24 +273,24 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     }
     try {
       const payload = {
-        customerId: formData.customerName?.id,
-        mooringId: formData.mooringNumber,
-        harbor: formData.harbor,
-        waterDepth: formData.waterDepth,
-        gpsCoordinates: formData.gpsCoordinates,
-        boatyardId: formData.boatYardName?.id,
-        boatName: formData.boatName,
-        boatSize: formData.boatSize,
-        boatTypeId: formData.type?.id,
-        boatWeight: formData.boatWeight,
-        sizeOfWeightId: formData.sizeOfWeight?.id,
-        typeOfWeightId: formData.typeOfWeight?.id,
-        eyeConditionId: formData.conditionOfEye?.id,
-        topChainConditionId: formData.topChainCondition?.id,
-        bottomChainConditionId: formData.bottomChainCondition?.id,
-        shackleSwivelConditionId: formData.shackleSwivelCondition?.id,
-        pennantConditionId: formData.pennantCondition?.id,
-        depthAtMeanHighWater: formData.depthAtMeanHighWater,
+        customerId: formData?.customerName?.id,
+        mooringId: formData?.mooringNumber,
+        harbor: formData?.harbor,
+        waterDepth: formData?.waterDepth,
+        gpsCoordinates: formData?.gpsCoordinates,
+        boatyardId: formData?.boatYardName?.id,
+        boatName: formData?.boatName,
+        boatSize: formData?.boatSize,
+        boatTypeId: formData?.type?.id,
+        boatWeight: formData?.boatWeight,
+        sizeOfWeightId: formData?.sizeOfWeight?.id,
+        typeOfWeightId: formData?.typeOfWeight?.id,
+        eyeConditionId: formData?.conditionOfEye?.id,
+        topChainConditionId: formData?.topChainCondition?.id,
+        bottomChainConditionId: formData?.bottomChainCondition?.id,
+        shackleSwivelConditionId: formData?.shackleSwivelCondition?.id,
+        pennantConditionId: formData?.pennantCondition?.id,
+        depthAtMeanHighWater: formData?.depthAtMeanHighWater,
         customerOwnerId: selectedCustomerId,
       }
 
@@ -340,43 +335,43 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     try {
       const editMooringPayload = {
         id: mooringRowData?.id,
-        mooringId: formData.mooringNumber ? formData.mooringNumber : mooringRowData?.mooringId,
-        customerId: formData.customerName?.id
-          ? formData.customerName?.id
+        mooringId: formData?.mooringNumber ? formData?.mooringNumber : mooringRowData?.mooringId,
+        customerId: formData?.customerName?.id
+          ? formData?.customerName?.id
           : mooringRowData?.customerId,
-        harbor: formData.harbor ? formData.harbor : mooringRowData?.harbor,
-        waterDepth: formData.waterDepth ? formData.waterDepth : mooringRowData?.waterDepth,
-        gpsCoordinates: formData.gpsCoordinates,
-        boatyardId: formData.boatyardName
-          ? formData.boatyardName
+        harbor: formData?.harbor ? formData?.harbor : mooringRowData?.harbor,
+        waterDepth: formData?.waterDepth ? formData?.waterDepth : mooringRowData?.waterDepth,
+        gpsCoordinates: formData?.gpsCoordinates,
+        boatyardId: formData?.boatyardName
+          ? formData?.boatyardName
           : mooringRowData?.boatyardResponseDto?.id,
-        boatName: formData.boatName ? formData.boatName : mooringRowData?.boatName,
-        boatSize: formData.boatSize ? formData.boatSize : mooringRowData?.boatSize,
-        boatTypeId: formData.type.id ? formData.type.id : mooringRowData?.boatType.id,
-        boatWeight: formData.boatWeight ? formData.boatWeight : mooringRowData?.boatWeight,
-        sizeOfWeightId: formData.sizeOfWeight.id
-          ? formData.sizeOfWeight.id
+        boatName: formData?.boatName ? formData?.boatName : mooringRowData?.boatName,
+        boatSize: formData?.boatSize ? formData?.boatSize : mooringRowData?.boatSize,
+        boatTypeId: formData?.type.id ? formData?.type.id : mooringRowData?.boatType.id,
+        boatWeight: formData?.boatWeight ? formData?.boatWeight : mooringRowData?.boatWeight,
+        sizeOfWeightId: formData?.sizeOfWeight.id
+          ? formData?.sizeOfWeight.id
           : mooringRowData?.sizeOfWeight.id,
-        typeOfWeightId: formData.typeOfWeight.id
-          ? formData.typeOfWeight.id
+        typeOfWeightId: formData?.typeOfWeight.id
+          ? formData?.typeOfWeight.id
           : mooringRowData?.typeOfWeight.id,
-        eyeConditionId: formData.conditionOfEye.id
-          ? formData.conditionOfEye.id
-          : mooringRowData?.eyeCondition.id,
-        topChainConditionId: formData.topChainCondition.id
-          ? formData.topChainCondition.id
-          : mooringRowData?.topChainCondition.id,
-        bottomChainConditionId: formData.bottomChainCondition.id
-          ? formData.bottomChainCondition.id
-          : mooringRowData?.bottomChainCondition.id,
-        shackleSwivelConditionId: formData.shackleSwivelCondition.id
-          ? formData.shackleSwivelCondition.id
-          : mooringRowData?.shackleSwivelCondition.id,
-        pennantConditionId: formData.pennantCondition.id
-          ? formData.pennantCondition.id
-          : mooringRowData?.pennantCondition.id,
-        depthAtMeanHighWater: formData.depthAtMeanHighWater
-          ? formData.depthAtMeanHighWater
+        eyeConditionId: formData?.conditionOfEye.id
+          ? formData?.conditionOfEye.id
+          : mooringRowData?.eyeCondition?.id,
+        topChainConditionId: formData?.topChainCondition?.id
+          ? formData?.topChainCondition?.id
+          : mooringRowData?.topChainCondition?.id,
+        bottomChainConditionId: formData?.bottomChainCondition?.id
+          ? formData?.bottomChainCondition?.id
+          : mooringRowData?.bottomChainCondition?.id,
+        shackleSwivelConditionId: formData?.shackleSwivelCondition?.id
+          ? formData?.shackleSwivelCondition?.id
+          : mooringRowData?.shackleSwivelCondition?.id,
+        pennantConditionId: formData?.pennantCondition?.id
+          ? formData?.pennantCondition?.id
+          : mooringRowData?.pennantCondition?.id,
+        depthAtMeanHighWater: formData?.depthAtMeanHighWater
+          ? formData?.depthAtMeanHighWater
           : mooringRowData?.depthAtMeanHighWater,
         customerOwnerId: selectedCustomerId,
       }
@@ -459,10 +454,10 @@ const AddMoorings: React.FC<AddMooringProps> = ({
             </span>
             <div className="mt-2">
               <Dropdown
-                value={formData.customerName}
+                value={formData?.customerName}
                 onChange={(e) => handleInputChange('customerName', e.target.value)}
                 options={customerName}
-                optionLabel="customerName"
+                optionLabel="firstName"
                 editable
                 placeholder="Select"
                 style={{
@@ -491,7 +486,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
             </span>
             <div className="mt-2">
               <InputComponent
-                value={formData.mooringNumber}
+                value={formData?.mooringNumber}
                 onChange={(e) => handleInputChange('mooringNumber', e.target.value)}
                 style={{
                   width: '230px',
@@ -518,7 +513,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
             </span>
             <div className="mt-2">
               <InputComponent
-                value={formData.harbor}
+                value={formData?.harbor}
                 onChange={(e) => handleInputChange('harbor', e.target.value)}
                 style={{
                   width: '230px',
@@ -545,7 +540,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
             </span>
             <div className="mt-2">
               <InputComponent
-                value={formData.waterDepth}
+                value={formData?.waterDepth}
                 onChange={(e) => handleInputChange('waterDepth', e.target.value)}
                 style={{
                   width: '230px',
@@ -572,7 +567,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
             </span>
             <div className="mt-2">
               <InputComponent
-                value={formData.gpsCoordinates}
+                value={formData?.gpsCoordinates}
                 onChange={(e) => handleInputChange('gpsCoordinates', e.target.value)}
                 style={{
                   width: '230px',
@@ -632,7 +627,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
             </span>
             <div className="mt-2">
               <InputComponent
-                value={formData.boatName}
+                value={formData?.boatName}
                 onChange={(e) => handleInputChange('boatName', e.target.value)}
                 style={{
                   width: '230px',
@@ -657,7 +652,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
             </span>
             <div className="mt-2">
               <InputComponent
-                value={formData.boatSize}
+                value={formData?.boatSize}
                 onChange={(e) => handleInputChange('boatSize', e.target.value)}
                 style={{
                   width: '230px',
@@ -685,7 +680,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
 
             <div className="mt-2">
               <Dropdown
-                value={formData.type}
+                value={formData?.type}
                 onChange={(e) => handleInputChange('type', e.value)}
                 options={type}
                 optionLabel="boatType"
@@ -716,7 +711,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
             </span>
             <div className="mt-2">
               <InputComponent
-                value={formData.boatWeight}
+                value={formData?.boatWeight}
                 onChange={(e) => handleInputChange('boatWeight', e.target.value)}
                 style={{
                   width: '230px',
@@ -746,7 +741,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
 
             <div className="mt-2">
               <Dropdown
-                value={formData.sizeOfWeight}
+                value={formData?.sizeOfWeight}
                 onChange={(e) => handleInputChange('sizeOfWeight', e.value)}
                 options={sizeOfWeight}
                 optionLabel="weight"
@@ -780,7 +775,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
 
             <div className="mt-2">
               <Dropdown
-                value={formData.typeOfWeight}
+                value={formData?.typeOfWeight}
                 onChange={(e) => handleInputChange('typeOfWeight', e.value)}
                 options={weightData}
                 optionLabel="type"
@@ -817,7 +812,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
 
               <div className="mt-2">
                 <Dropdown
-                  value={formData.topChainCondition}
+                  value={formData?.topChainCondition}
                   onChange={(e) => handleInputChange('topChainCondition', e.value)}
                   options={chainData}
                   optionLabel="condition"
@@ -850,8 +845,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({
 
               <div className="mt-2">
                 <Dropdown
-                  value={formData.BootomChainCondition}
-                  onChange={(e) => handleInputChange('BootomChainCondition', e.value)}
+                  value={formData?.bottomChainCondition}
+                  onChange={(e) => handleInputChange('bottomChainCondition', e.value)}
                   options={bottomChainCondition}
                   optionLabel="condition"
                   editable
@@ -859,16 +854,16 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: fieldErrors.BootomChainCondition
+                    border: fieldErrors.bottomChainCondition
                       ? '1px solid red'
                       : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                   }}
                 />
-                <p id="BootomChainCondition">
-                  {fieldErrors.BootomChainCondition && (
-                    <small className="p-error">{fieldErrors.BootomChainCondition}</small>
+                <p id="bottomChainCondition">
+                  {fieldErrors.bottomChainCondition && (
+                    <small className="p-error">{fieldErrors.bottomChainCondition}</small>
                   )}
                 </p>
               </div>
@@ -885,7 +880,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
 
               <div className="mt-2">
                 <Dropdown
-                  value={formData.pennantCondition}
+                  value={formData?.pennantCondition}
                   onChange={(e) => handleInputChange('pennantCondition', e.value)}
                   options={pennantData}
                   optionLabel="condition"
@@ -920,7 +915,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               </div>
               <div className="mt-2">
                 <Dropdown
-                  value={formData.conditionOfEye}
+                  value={formData?.conditionOfEye}
                   onChange={(e) => handleInputChange('conditionOfEye', e.value)}
                   options={conditionOfEye}
                   optionLabel="condition"
@@ -953,7 +948,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
 
               <div className="mt-2">
                 <Dropdown
-                  value={formData.shackleSwivelCondition}
+                  value={formData?.shackleSwivelCondition}
                   onChange={(e) => handleInputChange('shackleSwivelCondition', e.value)}
                   options={shackleSwivelData}
                   optionLabel="condition"
@@ -988,7 +983,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
 
               <div className="mt-2">
                 <InputText
-                  value={formData.depthAtMeanHighWater}
+                  value={formData?.depthAtMeanHighWater}
                   onChange={(e) => handleInputChange('depthAtMeanHighWater', e.target.value)}
                   style={{
                     width: '230px',

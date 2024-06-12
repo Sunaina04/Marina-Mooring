@@ -103,6 +103,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const { getCountriesData } = CountriesData()
   const [addCustomer] = useAddCustomerMutation()
   const [updateCustomer] = useUpdateCustomerMutation()
+
   const handlePositionChange = (lat: number, lng: number) => {
     setCenter([lat, lng])
     const formattedLat = lat.toFixed(3)
@@ -120,25 +121,15 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     const errors: { [key: string]: string } = {}
     let firstError = ''
 
-    // if (!firstName) {
-    //   errors.firstName = 'firstName  is required'
-    //   firstError = 'firstName'
-    // } else if (!nameRegex.test(firstName)) {
-    //   errors.firstName = 'firstName must only contain letters'
-    //   firstError = 'firstName'
-    // } else if (firstName.length < 3) {
-    //   errors.firstName = 'firstName must be at least 3 characters long'
-    //   firstError = 'firstName'
-    // }
     if (!firstName) {
-      errors.firstName = 'First name is required';
-      firstError = 'firstName';
+      errors.firstName = 'First name is required'
+      firstError = 'firstName'
     } else if (!nameRegex.test(firstName)) {
-      errors.firstName = 'First name must only contain letters';
-      firstError = 'firstName';
+      errors.firstName = 'First name must only contain letters'
+      firstError = 'firstName'
     } else if (firstName.length < 3) {
-      errors.firstName = 'First name must be at least 3 characters long';
-      firstError = 'firstName';
+      errors.firstName = 'First name must be at least 3 characters long'
+      firstError = 'firstName'
     }
 
     if (!lastName) {
@@ -639,54 +630,60 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   }
 
   const fetchDataAndUpdate = useCallback(async () => {
-    const { statesData } = await getStatesData()
-    const { countriesData } = await getCountriesData()
-    const { typeOfBoatTypeData } = await getTypeOfBoatTypeData()
-    const { typeOfWeightData } = await getTypeOfWeightData()
-    const { typeOfChainData } = await getTypeOfChainData()
-    const { TypeOfSizeOfWeightData } = await getTypeOfSizeOfWeightData()
-    const { typeOfEyeData } = await getTypeOfEyeData()
-    const { typeOfBootomChainData } = await getTypeOfBottomChainData()
-    const { typeOfShackleSwivelData } = await getTypeOfShackleSwivelData()
-    const { typeOfPennantData } = await getTypeOfPennantData()
-    const { boatYardName } = await getBoatYardNameData()
+    if (editCustomerMode || !editMode) {
+      const { statesData } = await getStatesData()
+      const { countriesData } = await getCountriesData()
 
-    if (countriesData !== null) {
-      setCountriesData(countriesData)
-    }
-    if (statesData !== null) {
-      setStatesData(statesData)
-    }
-    if (typeOfBoatTypeData !== null) {
-      setType(typeOfBoatTypeData)
-    }
-    if (typeOfWeightData !== null) {
-      setWeightData(typeOfWeightData)
-    }
-    if (typeOfChainData !== null) {
-      setChainData(typeOfChainData)
-    }
-    if (TypeOfSizeOfWeightData !== null) {
-      setSizeOfWeight(TypeOfSizeOfWeightData)
-    }
-    if (typeOfEyeData !== null) {
-      setConditionOfEye(typeOfEyeData)
+      if (countriesData !== null) {
+        setCountriesData(countriesData)
+      }
+      if (statesData !== null) {
+        setStatesData(statesData)
+      }
     }
 
-    if (typeOfBootomChainData !== null) {
-      setBottomChainCondition(typeOfBootomChainData)
-    }
+    if (editMooringMode || !editMode) {
+      const { typeOfBoatTypeData } = await getTypeOfBoatTypeData()
+      const { typeOfWeightData } = await getTypeOfWeightData()
+      const { typeOfChainData } = await getTypeOfChainData()
+      const { TypeOfSizeOfWeightData } = await getTypeOfSizeOfWeightData()
+      const { typeOfEyeData } = await getTypeOfEyeData()
+      const { typeOfBottomChainData } = await getTypeOfBottomChainData()
+      const { typeOfShackleSwivelData } = await getTypeOfShackleSwivelData()
+      const { typeOfPennantData } = await getTypeOfPennantData()
+      const { boatYardName } = await getBoatYardNameData()
 
-    if (typeOfShackleSwivelData !== null) {
-      setShackleSwivelData(typeOfShackleSwivelData)
-    }
+      if (typeOfBoatTypeData !== null) {
+        setType(typeOfBoatTypeData)
+      }
+      if (typeOfWeightData !== null) {
+        setWeightData(typeOfWeightData)
+      }
+      if (typeOfChainData !== null) {
+        setChainData(typeOfChainData)
+      }
+      if (TypeOfSizeOfWeightData !== null) {
+        setSizeOfWeight(TypeOfSizeOfWeightData)
+      }
+      if (typeOfEyeData !== null) {
+        setConditionOfEye(typeOfEyeData)
+      }
 
-    if (typeOfPennantData !== null) {
-      setPennantData(typeOfPennantData)
-    }
+      if (typeOfBottomChainData !== null) {
+        setBottomChainCondition(typeOfBottomChainData)
+      }
 
-    if (boatYardName !== null) {
-      setBoatyardName(boatYardName)
+      if (typeOfShackleSwivelData !== null) {
+        setShackleSwivelData(typeOfShackleSwivelData)
+      }
+
+      if (typeOfPennantData !== null) {
+        setPennantData(typeOfPennantData)
+      }
+
+      if (boatYardName !== null) {
+        setBoatyardName(boatYardName)
+      }
     }
   }, [])
 
