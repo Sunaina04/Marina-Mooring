@@ -106,12 +106,12 @@ const WorkOrders = () => {
     <>
       <Header header="MOORSERVE/Work Orders" />
 
-      <div className="">
+      {/* <div className="">
         <div className="flex justify-end mr-16 mt-14">
           <div>
             <Button
               label={'Create New'}
-              onClick={() => setVisible(true)}
+              onClick={() => setVisible(false)}
               style={{
                 width: '121px',
                 height: '44px',
@@ -197,7 +197,7 @@ const WorkOrders = () => {
             style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '200' }}
           />
         </div>
-      </div>
+      </div> */}
     </>
   )
 }
