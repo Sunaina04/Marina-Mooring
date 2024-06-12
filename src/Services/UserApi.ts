@@ -38,10 +38,11 @@ const baseQuery = fetchBaseQuery({
         (getState() as RootState).user.token ||
         sessionStorage.getItem('token') ||
         sessionStorage.getItem('getRefreshToken')
-      const noAuthEndpoints = ['login', 'resetPassword', 'forgotPassword', 'getCustomersOwners']
+      const noAuthEndpoints = ['login', 'resetPassword', 'forgotPassword']
       if (token && !noAuthEndpoints.includes(endpoint)) {
         headers.set('Authorization', `Bearer ${token}`)
-        if (userRole === 1 && selectedCustomerId) {
+        const noAuthEndpoints = ['getCustomersOwners']
+        if (userRole === 1 && selectedCustomerId && !noAuthEndpoints.includes(endpoint)) {
           headers.set('CUSTOMER_OWNER_ID', selectedCustomerId)
         }
       } else {
