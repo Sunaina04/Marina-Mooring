@@ -236,6 +236,14 @@ const Permission = () => {
             onClick={handleButtonClick}
             visible={modalVisible}
             onHide={handleModalClose}
+            dialogStyle={{
+              width: '840px',
+              minWidth: '840px',
+              height: editMode ? '500px' : '600px',
+              minHeight: editMode ? '500px' : '600px',
+              borderRadius: '1rem',
+              maxHeight: '60% !important',
+            }}
             headerText={<h1 className="text-xl font-bold text-#000000 ml-4">New User</h1>}>
             <AddNewCustomer
               customerAdminId={customerAdminId}
@@ -248,12 +256,8 @@ const Permission = () => {
               permission={true}
               passWordDisplay={editMode}
               toastRef={toast}
-              setSelectedCustomerUser={function (value: any): void {
-                throw new Error('Function not implemented.')
-              }}
-              setSelectedCustomer={function (value: any): void {
-                throw new Error('Function not implemented.')
-              }}
+              setSelectedCustomerUser={() => {}}
+              setSelectedCustomer={() => {}}
             />
           </CustomModal>
         </div>
