@@ -104,7 +104,7 @@ const WorkOrders = () => {
   }, [])
 
   return (
-    <>
+    <div className={visible ? 'backdrop-blur-lg' : ''}>
       <Header header="MOORSERVE/Work Orders" />
 
       <div className="">
@@ -131,7 +131,7 @@ const WorkOrders = () => {
               header={''}
               visible={visible}
               modal={false}
-              style={{ width: '50vw' }}
+              style={{ width: '851px' }}
               onHide={() => setVisible(false)}>
               <AddWorkOrders
                 workOrderData={selectedCustomer}
@@ -206,7 +206,7 @@ const WorkOrders = () => {
           />
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

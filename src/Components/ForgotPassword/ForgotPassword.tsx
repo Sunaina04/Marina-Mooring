@@ -33,6 +33,18 @@ const ForgotPassword = () => {
 
       return
     }
+    
+    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    // if (!emailRegex.test(email.trim())) {
+    //   toast.current?.show({
+    //     severity: 'error',
+    //     summary: 'Error',
+    //     detail: 'Invalid email format',
+    //     life: 3000,
+    //   })
+    //   return
+    // }
+    
     setIsLoading(true)
     try {
       const data = await validateEmail({ email }).unwrap()

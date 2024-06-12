@@ -50,13 +50,12 @@ const Estimates = () => {
   ])
 
   const handleButtonClick = () => {
-    //  setIsModalOpen(true)
+    setIsModalOpen(true)
   }
 
   const handleModalClose = () => {
     setIsModalOpen(false)
   }
-
 
   const columnStyle = {
     backgroundColor: '#FFFFFF',
@@ -125,12 +124,8 @@ const Estimates = () => {
       <Header header="MOORSERVE/Estimates" />
       <div className="flex justify-end gap-6 mt-10 mr-16">
         <div className="flex text-gray-600 mt-3 font-extrabold">
-          <div className=''>
-            <img
-              src="/assets/images/Group.png"
-              alt=""
-              className="w-24 font-bold"
-            />
+          <div className="">
+            <img src="/assets/images/Group.png" alt="" className="w-24 font-bold" />
           </div>
         </div>
         <div className="items-center">
@@ -138,7 +133,7 @@ const Estimates = () => {
             buttonText={'ADD NEW'}
             children={<AddEstimates />}
             headerText={<h1 className="text-xl font-extrabold text-black ml-4">New User</h1>}
-            visible={false}
+            visible={isModalOpen}
             onClick={handleButtonClick}
             onHide={handleModalClose}
             buttonStyle={{
@@ -198,7 +193,7 @@ const Estimates = () => {
                 data-testid="search-icon"
               />
               <InputText
-              id='placeholder'
+                id="placeholder"
                 placeholder="Search"
                 className="pl-10 w-[237px] 
                   bg-[#00426F]
@@ -223,14 +218,9 @@ const Estimates = () => {
           style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
           emptyMessage={
             <div className="text-center mt-40">
-              <img
-                src="/assets/images/empty.png"
-                alt="Empty Data"
-                className="w-28 mx-auto mb-4"
-              />
+              <img src="/assets/images/empty.png" alt="Empty Data" className="w-28 mx-auto mb-4" />
               <p className="text-gray-500">No data available</p>
             </div>
-
           }
         />
       </div>
