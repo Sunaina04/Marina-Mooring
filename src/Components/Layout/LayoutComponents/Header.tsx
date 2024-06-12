@@ -12,7 +12,7 @@ import { fetchCustomers } from '../../../Store/Slice/customerSlice'
 import { useLocation } from 'react-router-dom'
 import { useGetCustomersOwnersMutation } from '../../../Services/MetaDataApi'
 
-const Header: React.FC<HeaderProps> = ({ header }) => {
+const Header: React.FC<HeaderProps> = ({ header, customer }) => {
   const userData = useSelector((state: any) => state.user?.userData)
   const location = useLocation()
   const queryParams = new URLSearchParams(location.search)
@@ -49,13 +49,13 @@ const Header: React.FC<HeaderProps> = ({ header }) => {
       const { message } = error as ErrorResponse
       console.error('Error occurred while fetching customer data:', message)
     }
-  }, [getUser, role === 1])
+  }, [getUser, role === 1, customer])
 
   useEffect(() => {
     if (role === 1) {
       getUserHandler()
     }
-  }, [role === 1])
+  }, [role === 1, customer])
 
   // useEffect(() => {
   //   if (role === 1) {

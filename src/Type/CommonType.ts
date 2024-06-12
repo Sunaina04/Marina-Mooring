@@ -77,6 +77,12 @@ export interface MetaData {
   label: string
 }
 
+export interface MetaDataCustomer {
+  id: number
+  firstName: string
+  lastName: string
+}
+
 export interface Customer {
   id: number
   customerName: string

@@ -145,6 +145,7 @@ export interface CustomerAdminDataProps {
   editMode: boolean
   isVisible?: boolean
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>
+  setIsCustomerUpdated?: React.Dispatch<React.SetStateAction<boolean>>
   customerAdminId?: string
   closeModal: () => void
   getUser: () => void
@@ -165,6 +166,7 @@ export interface CustomerAdminDataProps {
 
 export interface HeaderProps {
   header: string
+  customer?: boolean
 }
 
 export interface CustomModalProps {

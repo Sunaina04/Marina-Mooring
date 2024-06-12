@@ -27,6 +27,7 @@ const CustomerOwner = () => {
   const [selectedRow, setSelectedRow] = useState<any>()
   const [rolesData, setRolesData] = useState<Role[]>()
   const [selectRole, setSelectRole] = useState()
+  const [customerUpdated, setCustomerUpdated] = useState(false)
   const [customerAdminId, setCustomerAdminId] = useState('')
   const [searchText, setSearchText] = useState('')
   const [searchUsersText, setSearchUsersText] = useState('')
@@ -46,6 +47,7 @@ const CustomerOwner = () => {
     setSelectedCustomer('')
     setEditCustomer(false)
     setEditMode(false)
+    setCustomerUpdated(true)
   }
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -234,7 +236,7 @@ const CustomerOwner = () => {
   return (
     <div className={modalVisible ? 'backdrop-blur-lg' : ''}>
       <Toast ref={toast} />
-      <Header header="MOORMANAGE/Permission" />
+      <Header header="MOORMANAGE/Permission" customer={customerUpdated} />
 
       <div className="flex mr-12 justify-end ">
         {/* Commenting for now, will use later */}
@@ -317,6 +319,7 @@ const CustomerOwner = () => {
                 setSelectedCustomerUser={setSelectedCustomerUser}
                 setSelectedCustomer={setSelectedCustomer}
                 setSelectedCustomerUsers={setgetCustomerOwnerUserData}
+                setIsCustomerUpdated={setCustomerUpdated}
               />
             }
             headerText={<span className="font-large text-2xl text-[#000000] ml-4">New User</span>}

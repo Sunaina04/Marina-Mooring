@@ -42,6 +42,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   setSelectedCustomer,
   setEditCustomer,
   passWordDisplay,
+  setIsCustomerUpdated,
 }) => {
   const dispatch = useDispatch()
   const [name, setName] = useState('')
@@ -74,9 +75,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const { getRolesData } = RolesData()
   const { getStatesData } = StatesData()
   const { getCountriesData } = CountriesData()
-
-  const userData = useSelector((state: any) => state.user?.userData)
-  const roleOne = userData?.role?.id
 
   const [passwordCriteria, setPasswordCriteria] = useState({
     uppercase: false,
@@ -294,6 +292,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         if (setEditCustomer) {
           setEditCustomer(false)
         }
+        if (setIsCustomerUpdated) {
+          setIsCustomerUpdated(true)
+        }
         setModalVisible(false)
         setIsLoading(false)
         closeModal()
@@ -336,7 +337,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       stateId: state?.id,
       countryId: country?.id,
       roleId: role?.id,
-      // customerOwnerId: editCustomerMode ? '' : customerData?.customerOwnerId,
     }
 
     setIsLoading(true)
@@ -360,6 +360,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           setEditCustomer(false)
         }
         setModalVisible(false)
+        if (setIsCustomerUpdated) {
+          setIsCustomerUpdated(true)
+        }
         setIsLoading(false)
         closeModal()
       } else {
@@ -448,6 +451,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         })
         if (role?.id === 2) {
           getUser()
+        }
+        if (setIsCustomerUpdated) {
+          setIsCustomerUpdated(true)
         }
         dispatch(setCustomerId(''))
         setIsLoading(false)

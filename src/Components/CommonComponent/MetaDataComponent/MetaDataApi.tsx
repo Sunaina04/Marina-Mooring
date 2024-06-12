@@ -15,7 +15,7 @@ import {
   useGetCustomersDataMutation,
   useGetInventoryTypeMutation,
 } from '../../../Services/MetaDataApi'
-import { ErrorResponse, MetaDataResponse } from '../../../Type/ApiTypes'
+import { ErrorResponse, MetaDataCustomerResponse, MetaDataResponse } from '../../../Type/ApiTypes'
 
 export const StatesData = () => {
   const [getStates] = useGetStatesMutation()
@@ -269,7 +269,7 @@ export const TypeOfBottomChain = () => {
   }
 
   const getTypeOfBottomChainData = async () => ({
-    typeOfBootomChainData: await fetchTypeOfBottomChain(getBottomChainConditions),
+    typeOfBottomChainData: await fetchTypeOfBottomChain(getBottomChainConditions),
   })
 
   return { getTypeOfBottomChainData }
@@ -323,7 +323,7 @@ export const CustomersData = (customerOwnerId: any) => {
   const fetchCustomersData = async (getData: any) => {
     try {
       const response = await getData({ customerOwnerId: customerOwnerId })
-      const { status, content } = response.data as MetaDataResponse
+      const { status, content } = response.data as MetaDataCustomerResponse
       return status === 200 && Array.isArray(content) ? content : null
     } catch (error) {
       const { message } = error as ErrorResponse
@@ -336,8 +336,6 @@ export const CustomersData = (customerOwnerId: any) => {
 
   return { getCustomersData }
 }
-
-
 
 export const TypeOfInventoryType = () => {
   const [getInventoryType] = useGetInventoryTypeMutation()
