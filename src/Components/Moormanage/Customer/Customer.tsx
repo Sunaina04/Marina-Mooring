@@ -319,9 +319,25 @@ const Customer = () => {
       <Header header="MOORMANAGE/Customer" />
       <Toast ref={toast} />
       <div className="flex justify-end mr-12 ">
-        <div className="flex mt-8 ">
+        <div className="flex mt-6 ">
           <CustomModal
             buttonText={'ADD NEW'}
+            buttonStyle={{
+              width: '121px',
+              height: '44px',
+              minHeight: '44px',
+              backgroundColor: '#0098FF',
+              cursor: 'pointer',
+              fontSize: '14px',
+              fontWeight: 600,
+              color: 'white',
+              borderRadius: '0.50rem',
+              marginLeft: '8px',
+              boxShadow: 'none',
+            }}
+            icon={
+              <img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8 ml-4 mb-0.5" />
+            }
             children={
               <AddCustomer
                 customer={selectedCustomer}
@@ -362,11 +378,11 @@ const Customer = () => {
       </div>
 
       <div
-        className="ml-[50px] gap-[19px] mt-10 "
+        className="ml-[50px] gap-[19px] mt-5 "
         style={{ display: 'flex', justifyContent: 'space-evenly' }}>
         <div
           data-testid="dataTable"
-          className="flex-grow  bg-[#FFFFFF] rounded-xl border-[1px] border-[#D5E1EA] w-[515px] h-[705px] mb-0 ">
+          className="flex-grow  bg-[#FFFFFF] rounded-xl border-[1px] border-[#D5E1EA] w-[515px] h-[732px] mb-0 ">
           <div className="text-sm font-extrabold rounded-sm w-full bg-[#D9D9D9]">
             <div
               className="flex  align-items-center justify-between bg-[#10293A] rounded-tl-[10px] rounded-tr-[10px]"
@@ -455,7 +471,7 @@ const Customer = () => {
             <CustomMooringPositionMap
               position={[30.698, 76.657]}
               zoomLevel={10}
-              style={{ height: '700px' }}
+              style={{ height: '732px' }}
               iconsByStatus={iconsByStatus}
               moorings={mooringData}
             />
@@ -615,7 +631,7 @@ const Customer = () => {
                 <p className="text-gray-500">No data available</p>
               </div>
             ) : (
-              <div style={{ height: '400px', overflow: 'auto' }}>
+              <div style={{ height: '732px', overflow: 'auto' }}>
                 <DataTableComponent
                   style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
                   scrollable

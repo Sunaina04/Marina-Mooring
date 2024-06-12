@@ -8,8 +8,9 @@ import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTable
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import Header from '../../Layout/LayoutComponents/Header'
 import './WorkOrder.module.css'
-import { vendor } from '../../Utils/CustomData'
+import { boatyardMooring, vendor } from '../../Utils/CustomData'
 import { InputText } from 'primereact/inputtext'
+import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 
 const WorkOrders = () => {
   const [visible, setVisible] = useState(false)
@@ -106,8 +107,8 @@ const WorkOrders = () => {
     <>
       <Header header="MOORSERVE/Work Orders" />
 
-      {/* <div className="">
-        <div className="flex justify-end mr-16 mt-14">
+      <div className="">
+        <div className="flex justify-end mr-16 mt-10">
           <div>
             <Button
               label={'Create New'}
@@ -118,8 +119,8 @@ const WorkOrders = () => {
                 minHeight: '44px',
                 backgroundColor: '#0098FF',
                 cursor: 'pointer',
-                fontSize: '16px',
-                fontWeight: 700,
+                fontSize: '14px',
+                fontWeight: 600,
                 color: 'white',
                 borderRadius: '0.50rem',
                 marginLeft: '8px',
@@ -143,7 +144,7 @@ const WorkOrders = () => {
 
         <div
           style={{
-            height: '640px',
+            height: '713px',
             gap: '0px',
             borderRadius: '10px',
             border: '1px solid #D5E1EA',
@@ -151,7 +152,7 @@ const WorkOrders = () => {
             backgroundColor: '#FFFFFF',
           }}
           className="bg-[F2F2F2]  ml-12  mt-6 mr-14">
-          <div className="flex flex-wrap align-items-center justify-between  bg-[#00426F] p-2   rounded-tl-[5px] rounded-tr-[5px]">
+          <div className="flex flex-wrap align-items-center justify-between  bg-[#00426F] p-2   rounded-tl-[10px] rounded-tr-[10px]">
             <span
               style={{
                 fontSize: '18px',
@@ -174,30 +175,37 @@ const WorkOrders = () => {
                 />
                 <InputText
                   placeholder="Search"
-                  className="pl-10 w-[237px] bg-[#00426F] h-[35px] rounded-lg border border-[#D5E1EA] placeholder:text-[#FFFFFF] text-[#FFFFFF] focus:outline-none"
+                  id="placeholder"
+                  className="pl-10 w-[237px] bg-[#00426F] h-[35px] rounded-lg border border-[#D5E1EA] placeholder:text-[#FFFFFF]  focus:outline-none"
                 />
               </div>
             </div>
           </div>
-
-          <div className="text-center mt-40">
-            <img src="/assets/images/empty.png" alt="Empty Data" className="w-32 mx-auto mb-4" />
-            <p className="text-gray-500">No data available</p>
-          </div>
-
-          <DataTableSearchFieldComponent
+          <DataTableComponent
             tableStyle={{
               fontSize: '12px',
               color: '#000000',
               fontWeight: 600,
+              backgroundColor: '#D9D9D9',
+              cursor: 'pointer',
             }}
             data={undefined}
             columns={workOrderColumns}
             actionButtons={ActionButtonColumn}
-            style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '200' }}
+            style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+            emptyMessage={
+              <div className="text-center mt-40">
+                <img
+                  src="/assets/images/empty.png"
+                  alt="Empty Data"
+                  className="w-28 mx-auto mb-4"
+                />
+                <p className="text-gray-500">No data available</p>
+              </div>
+            }
           />
         </div>
-      </div> */}
+      </div>
     </>
   )
 }

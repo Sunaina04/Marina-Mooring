@@ -254,7 +254,6 @@ const Boatyards = () => {
     }
   }
 
- 
   const handleDelete = async () => {
     if (boatYardRecord == true) {
       try {
@@ -385,7 +384,7 @@ const Boatyards = () => {
     <div className={modalVisible ? 'backdrop-blur-lg' : ''}>
       <Toast ref={toast} />
       <Header header="MOORMANAGE/Boatyards" />
-      <div className="flex justify-end mr-14 mt-[40px] ">
+      <div className="flex justify-end mr-14 mt-6 ">
         <div className="flex gap-6 ">
           <div>
             <div className="p-input-icon-left">
@@ -400,6 +399,22 @@ const Boatyards = () => {
           </div>
           <CustomModal
             buttonText={'ADD NEW'}
+            buttonStyle={{
+              width: '121px',
+              height: '44px',
+              minHeight: '44px',
+              backgroundColor: '#0098FF',
+              cursor: 'pointer',
+              fontSize: '14px',
+              fontWeight: 600,
+              color: 'white',
+              borderRadius: '0.50rem',
+              marginLeft: '8px',
+              boxShadow: 'none',
+            }}
+            icon={
+              <img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8 ml-4 mb-0.5" />
+            }
             children={
               <AddBoatyards
                 closeModal={handleModalClose}
@@ -414,19 +429,6 @@ const Boatyards = () => {
             visible={modalVisible}
             onClick={handleButtonClick}
             onHide={handleModalClose}
-            buttonStyle={{
-              width: '121px',
-              height: '44px',
-              minHeight: '44px',
-              backgroundColor: '#0098FF',
-              cursor: 'pointer',
-              fontSize: '16px',
-              fontWeight: 700,
-              color: 'white',
-              borderRadius: '0.50rem',
-              marginLeft: '8px',
-              marginTop: '40px',
-            }}
             dialogStyle={{
               width: '820px',
               minWidth: '800px',
@@ -440,11 +442,11 @@ const Boatyards = () => {
       </div>
 
       <div
-        className="ml-[50px] gap-[19px] mt-10 "
+        className="ml-[50px] gap-[19px] mt-5"
         style={{ display: 'flex', justifyContent: 'space-evenly' }}>
         <div
           data-testid="dataTable"
-          className="flex-grow  bg-[#FFFFFF] rounded-xl border-[1px] border-[#D5E1EA] w-[515px] h-[695px] mb-0 ">
+          className="flex-grow  bg-[#FFFFFF] rounded-xl border-[1px] border-[#D5E1EA] w-[515px] h-[732px] mb-0 ">
           <div className="text-sm font-extrabold rounded-sm w-full bg-[#D9D9D9]">
             <div
               className="flex  align-items-center justify-between bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px]"
@@ -514,7 +516,7 @@ const Boatyards = () => {
         <div
           // style={{border:"1px solid red"}}
           data-testid="customer-admin-users-table"
-          className=" flex-grow bg-[#FFFFFF] rounded-xl border-[1px] border-gray-300 w-[515px] h-[695px] mr-[50px]  mb-0 ">
+          className=" flex-grow bg-[#FFFFFF] rounded-xl border-[1px] border-gray-300 w-[515px] h-[732px] mr-[50px]  mb-0 ">
           <div className="">
             <div className="text-sm font-extrabold rounded-sm w-full bg-[#D9D9D9]">
               <div

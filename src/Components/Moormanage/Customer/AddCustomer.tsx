@@ -116,7 +116,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     const phoneRegex = /^\d{10}$/
     const nameRegex = /^[a-zA-Z ]+$/
     const zipCodeRegex = /^\d+$/
-
+    const numberRegex = /^\d+$/;
     const errors: { [key: string]: string } = {}
     let firstError = ''
 
@@ -180,6 +180,14 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       if (!firstError) firstError = 'pinCode'
     }
 
+    if (!formData.depthAtMeanHighWater) {
+      errors.depthAtMeanHighWater = 'Depth at Mean High Water is required';
+      if (!firstError) firstError = 'depthAtMeanHighWater';
+    } else if (!numberRegex.test(String(formData.depthAtMeanHighWater))) {
+      errors.depthAtMeanHighWater = 'Depth at Mean High Water must be a number';
+      if (!firstError) firstError = 'depthAtMeanHighWater';
+    }
+
     if (!selectedState) {
       errors.state = 'State is required'
       if (!firstError) firstError = 'state'
@@ -212,8 +220,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     if (!formData.conditionOfEye) errors.conditionOfEye = 'Condition of Eye is required'
     if (!formData.shackleSwivelCondition)
       errors.shackleSwivelCondition = 'Shackle, Swivel Condition is required'
-    if (!formData.depthAtMeanHighWater)
-      errors.depthAtMeanHighWater = 'Depth at Mean High Water is required'
     if (!formData.bottomChainCondition)
       errors.bottomChainCondition = 'Bottom Chain Condition is required'
     if (!formData.pennantCondition) errors.pennantCondition = 'Pennant Condition is required'
@@ -222,6 +228,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     setFieldErrors(errors)
     return errors
   }
+
 
   const validateCustomerFields = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -1387,25 +1394,21 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     </span>
                   </div>
                   <div className="mt-2">
-                    <InputNumber
+                    <InputComponent
                       value={formData.depthAtMeanHighWater}
-                      onChange={(e) => handleInputChange('depthAtMeanHighWater', e.value)}
-                      min={0}
+                      onChange={(e) => handleInputChange('depthAtMeanHighWater', e.target.value)}
                       style={{
                         width: '230px',
                         height: '32px',
-                        border: fieldErrors.depthAtMeanHighWater
-                          ? '1px solid red'
-                          : '1px solid #D5E1EA',
+                        border: fieldErrors.depthAtMeanHighWater ? '1px solid red' : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.8rem',
                       }}
                     />
-                    <p>
-                      {fieldErrors.depthAtMeanHighWater && (
-                        <small className="p-error">{fieldErrors.depthAtMeanHighWater}</small>
-                      )}
-                    </p>
+                    {fieldErrors.depthAtMeanHighWater && (
+                      <small className="p-error">{fieldErrors.depthAtMeanHighWater}</small>
+                    )}
+
                   </div>
                 </div>
               </div>

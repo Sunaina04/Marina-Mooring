@@ -139,6 +139,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   }, [])
 
   const validateFields = () => {
+    const numberRegex = /^\d+$/
     const errors: { [key: string]: string } = {}
     let firstError = ''
 
@@ -209,10 +210,10 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       errors.conditionOfEye = 'Condition of Eye is required'
       if (!firstError) firstError = 'conditionOfEye'
     }
-    // if (!formData.bottomChainCondition) {
-    //   errors.bottomChainCondition = 'Bottom Chain Condition is required'
-    //   if (!firstError) firstError = 'bottomChainCondition'
-    // }
+    if (!formData.bottomChainCondition) {
+      errors.bottomChainCondition = 'Bottom Chain Condition is required'
+      if (!firstError) firstError = 'bottomChainCondition'
+    }
     if (!formData.shackleSwivelCondition) {
       errors.shackleSwivelCondition = 'Shackle, Swivel Condition is required'
       if (!firstError) firstError = 'shackleSwivelCondition'
@@ -221,8 +222,12 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       errors.pennantCondition = 'Pennant Condition is required'
       if (!firstError) firstError = 'pennantCondition'
     }
+
     if (!formData.depthAtMeanHighWater) {
       errors.depthAtMeanHighWater = 'Depth at Mean High Water is required'
+      if (!firstError) firstError = 'depthAtMeanHighWater'
+    } else if (!numberRegex.test(String(formData.depthAtMeanHighWater))) {
+      errors.depthAtMeanHighWater = 'Depth at Mean High Water must be a number'
       if (!firstError) firstError = 'depthAtMeanHighWater'
     }
 

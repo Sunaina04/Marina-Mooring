@@ -288,9 +288,25 @@ const Moorings = () => {
       <Toast ref={toast} />
 
       <div className="flex justify-end mr-12 ">
-        <div className="flex mt-14">
+        <div className="flex mt-6">
           <CustomModal
             buttonText={'ADD NEW'}
+            buttonStyle={{
+              width: '121px',
+              height: '44px',
+              minHeight: '44px',
+              backgroundColor: '#0098FF',
+              cursor: 'pointer',
+              fontSize: '14px',
+              fontWeight: 600,
+              color: 'white',
+              borderRadius: '0.50rem',
+              marginLeft: '8px',
+              boxShadow: 'none',
+            }}
+            icon={
+              <img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8 ml-4 mb-0.5" />
+            }
             children={
               <AddMoorings
                 moorings={selectedCustomer}
@@ -311,19 +327,6 @@ const Moorings = () => {
             visible={modalVisible}
             onClick={handleButtonClick}
             onHide={handleModalClose}
-            buttonStyle={{
-              width: '121px',
-              height: '44px',
-              minHeight: '44px',
-              backgroundColor: '#0098FF',
-              cursor: 'pointer',
-              fontSize: '16px',
-              fontWeight: 700,
-              color: 'white',
-              borderRadius: '0.50rem',
-              boxShadow: 'none',
-              marginLeft: '8px',
-            }}
             dialogStyle={{
               width: '800px',
               minWidth: '800px',
@@ -336,12 +339,12 @@ const Moorings = () => {
         </div>
       </div>
 
-      <div className="flex ml-12 gap-4 mt-10">
+      <div className="flex ml-12 gap-4 mt-5">
         <div>
           <div
             style={{
               width: '680px',
-              height: '680px',
+              height: '732px',
               top: '277px',
               left: '107px',
               gap: '0px',
@@ -443,7 +446,7 @@ const Moorings = () => {
             <CustomMooringPositionMap
               position={[30.698, 76.657]}
               zoomLevel={10}
-              style={{ height: '680px', width: '400px' }}
+              style={{ height: '732px', width: '400px' }}
               moorings={mooringData}
             />
           </div>
