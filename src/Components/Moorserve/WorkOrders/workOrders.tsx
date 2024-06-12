@@ -112,7 +112,7 @@ const WorkOrders = () => {
           <div>
             <Button
               label={'Create New'}
-              onClick={() => setVisible(false)}
+              onClick={() => setVisible(true)}
               style={{
                 width: '121px',
                 height: '44px',
