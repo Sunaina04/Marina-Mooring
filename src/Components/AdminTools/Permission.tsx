@@ -195,7 +195,7 @@ const Permission = () => {
 
       <div className="flex mr-12 justify-end">
         <Toast ref={toast} />
-        <div className="mt-14 mr-5 relative">
+        <div className="mt-5 mr-5 relative">
           <InputText
             value={searchInput}
             onChange={(e) => {
@@ -230,10 +230,26 @@ const Permission = () => {
           />
         </div>
 
-        <div className="mt-14">
+        <div className="mt-[20px]">
           <CustomModal
             buttonText={'ADD NEW'}
             onClick={handleButtonClick}
+            icon={
+              <img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8 ml-4 mb-0.5" />
+            }
+            buttonStyle={{
+              width: '121px',
+              height: '44px',
+              minHeight: '44px',
+              backgroundColor: '#0098FF',
+              cursor: 'pointer',
+              fontSize: '14px',
+              fontWeight: 600,
+              color: 'white',
+              borderRadius: '0.50rem',
+              marginLeft: '8px',
+              boxShadow: 'none',
+            }}
             visible={modalVisible}
             onHide={handleModalClose}
             dialogStyle={{
@@ -264,13 +280,13 @@ const Permission = () => {
       </div>
 
       <div
-        className={`flex gap-10 ml-8 mt-10 ${isLoading ? 'blur-screen' : ''}`}
+        className={`flex gap-10 ml-6 mt-8 ${isLoading ? 'blur-screen' : ''}`}
         style={{
           paddingRight: '40px',
           paddingLeft: '25px',
         }}>
         <div
-          className="bg-[#FFFFFF] border-[1px] h-[680px] border-gray-300  rounded-lg"
+          className="bg-[#FFFFFF] border-[1px] h-[725px] border-gray-300  rounded-lg"
           style={{
             flexGrow: 1,
             borderRadius: '10px',
