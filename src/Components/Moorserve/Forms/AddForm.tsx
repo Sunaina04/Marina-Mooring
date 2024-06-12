@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import InputComponent from '../../CommonComponent/InputComponent'
 import { Button } from 'primereact/button'
+import { Dropdown } from 'primereact/dropdown'
 
 const AddForm = () => {
   const [customerName, setCustomerName] = useState<string>('')
@@ -20,9 +21,9 @@ const AddForm = () => {
               </div>
             </span>
             <div className="mt-1">
-              <InputComponent
+              <Dropdown
                 value={customerName}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                onChange={(e) =>
                   setCustomerName(e.target.value)
                 }
                 style={{
