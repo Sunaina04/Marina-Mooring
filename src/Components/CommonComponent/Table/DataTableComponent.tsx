@@ -16,11 +16,13 @@ const DataTableComponent: React.FC<DataTableProps> = ({
   style,
   emptyMessage,
   selectionMode,
+  onSelectionChange,
   selection,
+  dataKey,
 }) => {
   const buttonBody = (rowData: any) => {
     return (
-      <div className="flex gap-4  ">
+      <div className="flex gap-4">
         {actionButtons?.buttons?.map((b, index) => (
           <DataTableButton
             {...b}
@@ -35,20 +37,26 @@ const DataTableComponent: React.FC<DataTableProps> = ({
     )
   }
 
-  const getRowStyle = (rowData: any) => {
-    return rowStyle ? rowStyle(rowData) : {}
+  const getRowClassName = (rowData: any) => {
+    return {
+      'p-highlight': selection && selection.id === rowData.id,
+    }
   }
 
   return (
-    <div className="card ">
+    <div className="card">
       <DataTable
         value={data}
+        selectionMode={selectionMode}
+        selection={selection}
+        onSelectionChange={onSelectionChange}
+        dataKey={dataKey}
         tableStyle={tableStyle}
         scrollable={scrollable}
         header={header}
         emptyMessage={emptyMessage}
         onRowClick={onRowClick}
-        rowClassName={getRowStyle}>
+        rowClassName={getRowClassName}>
         {columns?.map((d) => (
           <Column
             key={d.id}
@@ -62,7 +70,7 @@ const DataTableComponent: React.FC<DataTableProps> = ({
         {actionButtons && (
           <Column
             header={actionButtons.header}
-            body={(rowData) => buttonBody(rowData)}
+            body={buttonBody}
             style={actionButtons.style}
             headerStyle={actionButtons.headerStyle}
           />

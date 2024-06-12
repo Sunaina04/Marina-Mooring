@@ -47,6 +47,7 @@ const Boatyards = () => {
   const [filteredboatyardsData, setFilteredboatyardsData] = useState<BoatYardPayload[]>([])
   const [expandedRows, setExpandedRows] = useState<any>()
   const [selectedBoatYard, setSelectedBoatYard] = useState<any>()
+  const [selectedProduct, setSelectedProduct] = useState()
   const [editMode, setEditMode] = useState(false)
   const [searchText, setSearchText] = useState('')
   const [searchFieldText, setSearchFieldText] = useState('')
@@ -496,6 +497,12 @@ const Boatyards = () => {
               //   setExpandedRows(e.data)
               // }}
               // expandedRows={expandedRows}
+              selectionMode="single"
+              onSelectionChange={(e: any) => {
+                setSelectedProduct(e.value)
+              }}
+              selection={selectedProduct}
+              rowStyle={(rowData: any) => rowData}
               dataKey="id"
               columns={boatYardColumns}
               onRowClick={(e: any) => handleRowClickBoatYardDetail(e)}
@@ -614,6 +621,13 @@ const Boatyards = () => {
                   data={mooringWithBoatyardsData ? mooringWithBoatyardsData : undefined}
                   columns={tableColumnsTechnicians}
                   actionButtons={ActionButtonColumn}
+                  selectionMode="single"
+                  dataKey="id"
+                  onSelectionChange={(e) => {
+                    setSelectedProduct(e.value)
+                  }}
+                  selection={selectedProduct}
+                  rowStyle={(rowData: any) => rowData}
                   style={{
                     borderBottom: '1px solid #D5E1EA',
                     marginLeft: '5px',

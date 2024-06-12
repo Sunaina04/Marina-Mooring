@@ -122,7 +122,7 @@ const Estimates = () => {
   return (
     <div className={isModalOpen ? 'backdrop-blur-lg' : ''}>
       <Header header="MOORSERVE/Estimates" />
-      <div className="flex justify-end gap-6 mt-10 mr-16">
+      {/* <div className="flex justify-end gap-6 mt-10 mr-16">
         <div className="flex text-gray-600 mt-3 font-extrabold">
           <div className="">
             <img src="/assets/images/Group.png" alt="" className="w-24 font-bold" />
@@ -220,7 +220,7 @@ const Estimates = () => {
             </div>
           }
         />
-      </div>
+      </div> */}
     </div>
   )
 }

@@ -14,6 +14,7 @@ import {
 import { useDeleteUserMutation, useGetUsersMutation } from '../../Services/AdminTools/AdminToolsApi'
 import AddNewCustomer from './AddNewCustomer'
 import { Toast } from 'primereact/toast'
+import { ProgressSpinner } from 'primereact/progressspinner'
 
 const Permission = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -26,7 +27,7 @@ const Permission = () => {
   const [deleteUser] = useDeleteUserMutation()
   const [getCustomerOwnerUserData, setgetCustomerOwnerUserData] = useState<CustomerPayload[]>([])
   const toast = useRef<Toast>(null)
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   const handleEditButtonClick = (rowData: any) => {
     setEditMode(true)
@@ -190,7 +191,7 @@ const Permission = () => {
   }, [searchInput])
 
   return (
-    <>
+    <div className={modalVisible ? 'backdrop-blur-lg' : ''}>
       <Header header="MOORMANAGE/Permission" />
 
       <div className="flex mr-12 justify-end">
@@ -286,10 +287,13 @@ const Permission = () => {
           paddingLeft: '25px',
         }}>
         <div
-          className="bg-[#FFFFFF] border-[1px] h-[725px] border-gray-300  rounded-lg"
+          className="bg-[#FFFFFF] border-[1px] border-gray-300  rounded-lg"
           style={{
             flexGrow: 1,
             borderRadius: '10px',
+            height: '700px',
+            minHeight: 'calc(40vw - 700px)',
+            overflow: 'auto',
           }}>
           <div data-testid="permission-users-table">
             <DataTableComponent
@@ -314,13 +318,26 @@ const Permission = () => {
                     className="w-20 mx-auto mb-4"
                   />
                   <p className="text-gray-500">No data available</p>
+                  {isLoading && (
+                    <ProgressSpinner
+                      style={{
+                        position: 'absolute',
+                        top: '80%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: '50px',
+                        height: '50px',
+                      }}
+                      strokeWidth="4"
+                    />
+                  )}
                 </div>
               }
             />
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

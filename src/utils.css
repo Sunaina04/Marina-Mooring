@@ -118,3 +118,7 @@ body {
     background: transparent;
   }
 }
+
+.p-highlight {
+  background-color: #d5e1ea !important; /* Change this to your desired highlight color */
+}

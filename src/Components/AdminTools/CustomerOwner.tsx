@@ -35,6 +35,7 @@ const CustomerOwner = () => {
   const [getCustomerOwnerData, setgetCustomerOwnerData] = useState<CustomerPayload[]>([])
   const [getCustomerOwnerUserData, setgetCustomerOwnerUserData] = useState<CustomerPayload[]>([])
   const [selectedId, setSelectedId] = useState<any>('')
+  const [selectedProduct, setSelectedProduct] = useState()
   const id = getCustomerOwnerData.map((items) => items.id)
   const [getUser] = useGetUsersMutation()
 
@@ -404,14 +405,19 @@ const CustomerOwner = () => {
                   minWidth: '30vw',
                 }}
                 scrollable={true}
+                selectionMode="single"
+                onSelectionChange={(e) => {
+                  setSelectedProduct(e.value)
+                }}
+                selection={selectedProduct}
+                dataKey="id"
+                rowStyle={(rowData: any) => rowData}
                 columns={customerOwnerTableColumn}
                 onRowClick={(e) => {
                   setSelectedId(e.data.id)
                   dispatch(setCustomerName(e?.data?.name))
                   dispatch(setCustomerId(e?.data?.id))
                 }}
-                multiple={true}
-                selectedRow={selectedId}
                 style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
                 actionButtons={ActionButtonColumn}
               />

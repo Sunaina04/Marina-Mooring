@@ -41,6 +41,8 @@ const Moorings = () => {
   const [mooringRowData, setMooringRowData] = useState<MooringPayload>()
   const [mooringRecord, setMooringRecord] = useState(false)
   const [editMode, setEditMode] = useState(false)
+  const [selectedProduct, setSelectedProduct] = useState()
+  const [selectedMooring, setSelectedMooring] = useState()
   const [searchText, setSearchText] = useState('')
   const [customerId, setCustomerId] = useState()
   const [mooringId, setMooringId] = useState()
@@ -410,6 +412,13 @@ const Moorings = () => {
                 onRowClick={(row) => {
                   handleMooringRowClick(row.data)
                 }}
+                selectionMode="single"
+                onSelectionChange={(e) => {
+                  setSelectedProduct(e.value)
+                }}
+                selection={selectedProduct}
+                dataKey="id"
+                rowStyle={(rowData: any) => rowData}
               />
             )}
           </div>
@@ -419,7 +428,7 @@ const Moorings = () => {
             style={{
               position: 'absolute',
               top: '50%',
-              left: '50%',
+              left: '25%',
               transform: 'translate(-50%, -50%)',
               width: '50px',
               height: '50px',
@@ -504,6 +513,7 @@ const Moorings = () => {
                       fontWeight: '400',
                       lineHeight: '16.41px',
                       color: '#000000',
+                      marginLeft: '100px',
                     }}>
                     <p>
                       <span className="">Name: </span>
@@ -537,7 +547,7 @@ const Moorings = () => {
                     <div className="mt-1">
                       <h1 className="">Boatyard: </h1>
                     </div>
-                    <div className="flex gap-4 ml-1">
+                    <div className="flex gap-4 ml-2">
                       {boatYardData.map((boatyard, index) => (
                         <p
                           key={index}
@@ -599,6 +609,13 @@ const Moorings = () => {
                   setDialogVisible(true)
                   setMooringRowData(rowData.data)
                 }}
+                selectionMode="single"
+                onSelectionChange={(e) => {
+                  setSelectedMooring(e.value)
+                }}
+                selection={selectedMooring}
+                dataKey="id"
+                rowStyle={(rowData: any) => rowData}
                 emptyMessage={
                   <div className="text-center mt-40">
                     <img

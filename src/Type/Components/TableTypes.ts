@@ -33,12 +33,13 @@ export interface DataTableProps {
   onRowClick?: (event: DataTableRowClickEvent) => void
   rowStyle?: (rowData: any) => React.CSSProperties
   selectedRow?: (event: DataTableRowClickEvent) => void
-  selectionMode?: 'single' | 'radiobutton' | undefined
-  selection?: any[number] | undefined | null
+  rowClassName?: (event: DataTableRowClickEvent) => void
+  selectionMode?: 'single' | 'radiobutton'
+  selection?: any[number]
   metaKeySelection?: boolean | undefined
   onSelectionChange?(event: DataTableSelectionSingleChangeEvent<any>): void
-  dataKey?: string | undefined
-  multiple?: boolean | undefined
+  dataKey?: string
+  multiple?: boolean
   emptyMessage?: string | React.ReactNode | ((frozen: boolean) => React.ReactNode) | undefined
 }
 
@@ -104,9 +105,13 @@ export interface RowExpansionDemoProps {
   ): React.ReactNode
   dataKey?: string | undefined
   tableStyle?: React.CSSProperties
+  selectionMode?: 'single' | 'radiobutton'
   columns: RowColumn[]
+  selection?: any[number]
   onRowClick?: (event: DataTableRowClickEvent) => void
+  rowStyle?: (rowData: any) => React.CSSProperties
   expandedRows?: DataTableValueArray | DataTableExpandedRows | undefined
+  onSelectionChange?(event: DataTableSelectionSingleChangeEvent<any>): void
   onRowToggle?(event: DataTableRowToggleEvent): void
   emptyMessage?: string | React.ReactNode | ((frozen: boolean) => React.ReactNode) | undefined
 }

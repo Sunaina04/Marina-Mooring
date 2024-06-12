@@ -13,10 +13,20 @@ const DataTableWithToogle: React.FC<RowExpansionDemoProps> = ({
   expandedRows,
   onRowToggle,
   emptyMessage,
+  selectionMode,
+  onSelectionChange,
+  selection,
 }) => {
   const generateRandomKey = () => {
     return Math.random().toString(36).substring(7)
   }
+
+  const getRowClassName = (rowData: any) => {
+    return {
+      'p-highlight': selection && selection.id === rowData.id,
+    }
+  }
+
   return (
     <DataTable
       value={data}
@@ -26,6 +36,10 @@ const DataTableWithToogle: React.FC<RowExpansionDemoProps> = ({
       dataKey={dataKey}
       onRowClick={onRowClick}
       tableStyle={tableStyle}
+      selection={selection}
+      onSelectionChange={onSelectionChange}
+      selectionMode={selectionMode}
+      rowClassName={getRowClassName}
       emptyMessage={emptyMessage}>
       {columns.map((col) => (
         <Column

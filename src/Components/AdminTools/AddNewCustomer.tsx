@@ -449,7 +449,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           detail: 'User Saved successfully',
           life: 3000,
         })
-        if (role?.id === 2) {
+        if (role?.id === 2 || getUser) {
           getUser()
         }
         if (setIsCustomerUpdated) {
