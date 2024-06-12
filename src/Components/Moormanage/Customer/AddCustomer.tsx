@@ -1386,7 +1386,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       </div>
                     </span>
                   </div>
-
                   <div className="mt-2">
                     <InputNumber
                       value={formData.depthAtMeanHighWater}
