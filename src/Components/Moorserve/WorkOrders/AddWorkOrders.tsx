@@ -93,7 +93,12 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
         {/* Customer Name */}
         <div className="flex gap-6">
           <div>
-            <span className="font-medium text-sm text-[#000000]">Customer Name</span>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Customer Name
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
             <div className="mt-1">
               <InputComponent
                 value={customerName}
@@ -114,7 +119,12 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
 
           {/* Customer ID */}
           <div>
-            <span className="font-medium text-sm text-[#000000]">Customer ID</span>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Customer ID
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
             <div className="mt-1">
               <InputComponent
                 value={customerId}
@@ -133,7 +143,12 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
 
           {/* Mooring ID */}
           <div>
-            <span className="font-medium text-sm text-[#000000]">Mooring ID</span>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Mooring ID
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
             <div className="mt-1">
               <Dropdown
                 value={mooringId}
@@ -141,7 +156,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
                 options={[]}
                 optionLabel="name"
                 editable
-                //  placeholder=""
                 style={{
                   width: '230px',
                   height: '32px',
@@ -157,7 +171,12 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
         {/* Boatyards */}
         <div className="flex gap-6 mt-3">
           <div>
-            <span className="font-medium text-sm text-[#000000]">Boatyard</span>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Boatyard
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
             <div className="mt-1">
               <Dropdown
                 value={boatyards}
@@ -176,7 +195,12 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
 
           {/* Assigned to */}
           <div>
-            <span className="font-medium text-sm text-[#000000]">Assigned to</span>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Assigned to
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
             <div className="mt-1">
               <Dropdown
                 value={assignedTo}
@@ -184,7 +208,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
                 options={[]}
                 optionLabel="name"
                 editable
-                placeholder="State"
                 style={{
                   width: '230px',
                   height: '32px',
@@ -198,12 +221,16 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
 
           {/* Due Date */}
           <div className="">
-            <span className="font-medium text-sm text-[#000000]">Due Date</span>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Due Date
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
             <div className="mt-1">
               <InputComponent
                 value={dueDate}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDueDate(e.target.value)}
-                placeholder="Sector/Block"
                 type="text"
                 style={{
                   width: '230px',
@@ -221,14 +248,18 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
         {/* Schedule Date */}
         <div className="flex gap-6 mt-3">
           <div>
-            <span className="font-medium text-sm text-[#000000]">Schedule Date</span>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Schedule Date
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
             <div className="mt-1">
               <InputComponent
                 value={scheduleDate}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setScheduleDate(e.target.value)
                 }
-                placeholder="Street/house"
                 style={{
                   width: '230px',
                   height: '32px',
@@ -243,7 +274,12 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
 
           {/* Status */}
           <div>
-            <span className="font-medium text-sm text-[#000000]">Status</span>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Status
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
             <div className="mt-1">
               <Dropdown
                 value={workOrderStatus}
@@ -251,7 +287,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
                 options={[]}
                 optionLabel="name"
                 editable
-                placeholder="State"
                 style={{
                   width: '230px',
                   height: '32px',
@@ -265,7 +300,12 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
 
           {/* Time (in minutes) */}
           <div className="card  ">
-            <span className="font-medium text-sm text-[#000000]">Time(in minutes)</span>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Time(in minutes)
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
             <div
               className="mt-1"
               style={{
@@ -289,7 +329,12 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
 
         {/* Report Problem */}
         <div className=" mt-4 mb-20">
-          <span className="text-sm font-bold">Report Problem</span>
+          <span className="font-medium text-sm text-[#000000]">
+            <div className="flex gap-1">
+              Report Problem
+              <p className="text-red-600">*</p>
+            </div>
+          </span>
           <div className="mt-1">
             <div className="">
               <InputComponent
@@ -310,7 +355,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
 
         {/* Save and Back buttons */}
         <div
-          className="flex gap-6 bottom-2 absolute left-6"
+          className="flex gap-6 bottom-2 absolute left-7"
           style={{
             width: '100%',
             height: '80px',

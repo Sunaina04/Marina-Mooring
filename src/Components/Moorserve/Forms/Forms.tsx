@@ -16,6 +16,7 @@ import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import { FormDataa } from '../../Utils/CustomData'
 import { InputText } from 'primereact/inputtext'
+import AddForm from './AddForm'
 
 const Forms = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -29,7 +30,7 @@ const Forms = () => {
   const { error, response, handleSubmit } = useSubmit()
 
   const handleButtonClick = () => {
-    // setIsModalOpen(true)
+     setIsModalOpen(true)
   }
 
   const handleModalClose = () => {
@@ -152,22 +153,17 @@ const Forms = () => {
               boxShadow: 'none',
             }}
             children={
-              <AddCustomer
-                customer={undefined}
-                editMode={false}
-                closeModal={() => {}}
-                getCustomer={() => {}}
-              />
+              <AddForm/>
             }
-            headerText={<h1 className="text-xl font-extrabold text-black ml-4">New User</h1>}
+            headerText={<h1 className="text-xl font-extrabold text-black ml-4">Form Details</h1>}
             visible={isModalOpen}
             onClick={handleButtonClick}
             onHide={handleModalClose}
             dialogStyle={{
-              width: '800px',
-              minWidth: '800px',
-              height: '630px',
-              minHeight: '630px',
+              width: '851px',
+              minWidth: '851px',
+              height: '496px',
+              minHeight: '496px',
               borderRadius: '1rem',
               maxHeight: '95% !important',
             }}

@@ -11,6 +11,7 @@ import './WorkOrder.module.css'
 import { boatyardMooring, vendor } from '../../Utils/CustomData'
 import { InputText } from 'primereact/inputtext'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
+import CustomModal from '../../CustomComponent/CustomModal'
 
 const WorkOrders = () => {
   const [visible, setVisible] = useState(false)
@@ -99,6 +100,13 @@ const WorkOrders = () => {
     setVisible(true)
   }
 
+  const handleModalClose = () => {
+    setVisible(false)
+  }
+  const handleButtonClick = () => {
+    setVisible(true)
+  }
+
   useEffect(() => {
     getWorkOrderData()
   }, [])
@@ -110,10 +118,20 @@ const WorkOrders = () => {
       <div className="">
         <div className="flex justify-end mr-16 mt-10">
           <div>
-            <Button
-              label={'Create New'}
-              onClick={() => setVisible(true)}
-              style={{
+            <CustomModal
+              buttonText={'Create New'}
+              children={
+                <AddWorkOrders
+                  workOrderData={selectedCustomer}
+                  editMode={editMode}
+                  setVisible={setVisible}
+                />
+              }
+              headerText={<h1 className="text-xl font-extrabold text-black ml-4">Work Order</h1>}
+              visible={visible}
+              onClick={handleButtonClick}
+              onHide={handleModalClose}
+              buttonStyle={{
                 width: '121px',
                 height: '44px',
                 minHeight: '44px',
@@ -125,20 +143,13 @@ const WorkOrders = () => {
                 borderRadius: '0.50rem',
                 marginLeft: '8px',
                 boxShadow: 'none',
-              }}></Button>
-
-            <Dialog
-              header={''}
-              visible={visible}
-              modal={false}
-              style={{ width: '851px' }}
-              onHide={() => setVisible(false)}>
-              <AddWorkOrders
-                workOrderData={selectedCustomer}
-                editMode={editMode}
-                setVisible={setVisible}
-              />
-            </Dialog>
+              }}
+              dialogStyle={{
+                width: '851px',
+                height: '526px',
+                borderRadius: '1rem',
+              }}
+            />
           </div>
         </div>
 

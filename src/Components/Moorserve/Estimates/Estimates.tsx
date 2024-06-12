@@ -120,7 +120,7 @@ const Estimates = () => {
   }
 
   return (
-    <>
+    <div className={isModalOpen ? 'backdrop-blur-lg' : ''}>
       <Header header="MOORSERVE/Estimates" />
       <div className="flex justify-end gap-6 mt-10 mr-16">
         <div className="flex text-gray-600 mt-3 font-extrabold">
@@ -132,7 +132,7 @@ const Estimates = () => {
           <CustomModal
             buttonText={'ADD NEW'}
             children={<AddEstimates />}
-            headerText={<h1 className="text-xl font-extrabold text-black ml-4">New User</h1>}
+            headerText={<h1 className="text-xl font-extrabold text-black ml-4">Estimate Form</h1>}
             visible={isModalOpen}
             onClick={handleButtonClick}
             onHide={handleModalClose}
@@ -150,12 +150,9 @@ const Estimates = () => {
               boxShadow: 'none',
             }}
             dialogStyle={{
-              width: '800px',
-              minWidth: '800px',
-              height: '630px',
-              minHeight: '630px',
+              width: '851px',
+              height: '526px',
               borderRadius: '1rem',
-              maxHeight: '95% !important',
             }}
           />
         </div>
@@ -224,7 +221,7 @@ const Estimates = () => {
           }
         />
       </div>
-    </>
+    </div>
   )
 }
 
