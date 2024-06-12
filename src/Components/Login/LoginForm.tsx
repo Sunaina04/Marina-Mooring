@@ -27,15 +27,17 @@ export default function LoginForm() {
 
   const handleChange = (e: any) => {
     const { name, value } = e.target
+    
     if (name === 'username') {
       setUsername(value)
+    
     } else if (name === 'password') {
       setPassword(value)
     }
-    setErrors((prev) => ({
-      ...prev,
-      [name]: '',
-    }))
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name === 'username' ? 'email' : 'password']: '',
+    }));
   }
   const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
@@ -55,12 +57,12 @@ export default function LoginForm() {
         ...prev,
         email: 'Email cannot be empty',
       }))
-      // toast.current?.show({
-      //   severity: 'error',
-      //   summary: 'Error',
-      //   detail: 'Email cannot be empty',
-      //   life: 3000,
-      // })
+      toast.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Email cannot be empty',
+        life: 3000,
+      })
       return
     }
     if (!emailRegex.test(username.trim())) {
@@ -68,12 +70,12 @@ export default function LoginForm() {
         ...prev,
         email: 'Invalid email format',
       }))
-      // toast.current?.show({
-      //   severity: 'error',
-      //   summary: 'Error',
-      //   detail: 'Invalid email format',
-      //   life: 3000,
-      // })
+      toast.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Invalid email format',
+        life: 3000,
+      })
       return
     }
     if (password.trim().length === 0) {
@@ -81,12 +83,12 @@ export default function LoginForm() {
         ...prev,
         password: 'Password cannot be empty',
       }))
-      // toast.current?.show({
-      //   severity: 'error',
-      //   summary: 'Error',
-      //   detail: 'Password cannot be empty',
-      //   life: 3000,
-      // })
+      toast.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Password cannot be empty',
+        life: 3000,
+      })
       return
     }
     setIsLoading(true)
@@ -123,6 +125,7 @@ export default function LoginForm() {
       }
     }
   }
+
 
   return (
     <>
