@@ -34,9 +34,9 @@ const AddEstimates = () => {
                 </div>
               </span>
               <div className="mt-1">
-                <InputComponent
+                <Dropdown
                   value={customerName}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  onChange={(e) =>
                     setCustomerName(e.target.value)
                   }
                   style={{
@@ -52,7 +52,7 @@ const AddEstimates = () => {
             </div>
 
             {/* Customer ID */}
-            <div>
+            {/* <div>
               <span className="font-medium text-sm text-[#000000]">
                 <div className="flex gap-1">
                   Customer ID
@@ -75,7 +75,7 @@ const AddEstimates = () => {
                   }}
                 />
               </div>
-            </div>
+            </div> */}
 
             {/* Mooring ID */}
             <div>

@@ -25,67 +25,79 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
   const [workOrderStatus, setWorkOrderStatus] = useState<string>('')
   const [saveWorkOrder] = useAddWorkOrderMutation()
   const [updateWorkOrder] = useUpdateWorkOrderMutation()
+  const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
+  const [workOrder, setWorkOrder] = useState<any>({
+    customerName: '',
+    mooringId: '',
+    boatyards: '',
+    assignedTo: '',
+    dueDate: '',
+    scheduleDate: '',
+    workOrderStatus: '',
+    value: '',
+  })
 
-  const SaveWorkOrder = async () => {
-    const payload = {
-      customerName,
-      customerId,
-      mooringNumber: mooringId,
-      boatYard: boatyards,
-      assignedTo,
-      dueDate,
-      scheduleDate,
-      workOrderStatus,
-      time: '00:25',
-      reportProblem: value,
+  const validateFields = () => {
+    const errors: { [key: string]: string } = {}
+
+    if (!workOrder.customerName) {
+      errors.customerame = 'Customer Name is required'
     }
 
-    const response = await saveWorkOrder(payload).unwrap()
-    const { content, status } = response as WorkOrderResponse
-    if (status === 200) {
+    if (!workOrder.mooringId) {
+      errors.mooringId = 'Mooring Id is required'
+    }
+
+    if (!workOrder.boatyards) {
+      errors.boatyards = 'Boatyard is required'
+    }
+
+    if (!workOrder.assignedTo) {
+      errors.assigned = 'Assigned to is required'
+    }
+
+    if (!workOrder.dueDate) {
+      errors.dueDate = 'Due Date is required'
+    }
+
+    if (!workOrder.scheduleDate) {
+      errors.scheduleDate = 'Schedule Date is required'
+    }
+
+    if (!workOrder.workOrderStatus) {
+      errors.workOrderStatus = 'Work order Status is required'
+    }
+
+    if (!workOrder.value) {
+      errors.value = 'value is required'
+    }
+
+    setErrorMessage(errors)
+    return errors
+  }
+
+  const handleInputChange = (field: string, value: any) => {
+    setWorkOrder({
+      ...workOrder,
+      [field]: value,
+    })
+
+    if (errorMessage[field]) {
+      setErrorMessage({
+        ...errorMessage,
+        [field]: '',
+      })
     }
   }
 
-  const UpdateWorkOrder = async () => {
-    const payload = {
-      id: workOrderData.id,
-      customerName,
-      customerId,
-      mooringNumber: mooringId,
-      boatYard: boatyards,
-      assignedTo,
-      dueDate,
-      scheduleDate,
-      workOrderStatus,
-      time: '00:25',
-      reportProblem: value,
+  const SaveWorkOrder = () => {
+    const errors = validateFields()
+    if (Object.keys(errors).length > 0) {
+      setErrorMessage(errors)
+      alert('Please fill in all required fields.')
+      return
     }
-    const response = await updateWorkOrder({ id: workOrderData.id, payload: payload })
   }
-
-  useEffect(() => {
-    if (workOrderData && Object.keys(workOrderData).length !== 0) {
-      setCustomerName(workOrderData.customerName)
-      setCustomerId(workOrderData.customerId)
-      setMooringId(workOrderData.mooringNumber)
-      setBoatyards(workOrderData.boatYard)
-      setAssignedTo(workOrderData.assignedTo)
-      setDueDate(workOrderData.dueDate)
-      setScheduleDate(workOrderData.scheduleDate)
-      setWorkOrderStatus(workOrderData.status)
-      setValue(workOrderData.reportProblem)
-    } else {
-      setCustomerName('')
-      setCustomerId('')
-      setMooringId('')
-      setBoatyards('')
-      setAssignedTo('')
-      setDueDate('')
-      setScheduleDate('')
-      setWorkOrderStatus('')
-      setValue('')
-    }
-  }, [workOrderData])
 
   return (
     <div>
@@ -100,25 +112,28 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
               </div>
             </span>
             <div className="mt-1">
-              <InputComponent
+              <Dropdown
                 value={customerName}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setCustomerName(e.target.value)
-                }
+                onChange={(e) => handleInputChange('customerName', e.target.value)}
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: errorMessage.customerName ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   paddingLeft: '0.5rem',
                 }}
               />
             </div>
+            <p>
+              {errorMessage.CustomerName && (
+                <small className="p-error">{errorMessage.customerName}</small>
+              )}
+            </p>
           </div>
 
           {/* Customer ID */}
-          <div>
+          {/* <div>
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
                 Customer ID
@@ -139,7 +154,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
                 }}
               />
             </div>
-          </div>
+          </div> */}
 
           {/* Mooring ID */}
           <div>
@@ -152,19 +167,24 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
             <div className="mt-1">
               <Dropdown
                 value={mooringId}
-                onChange={(e) => setMooringId(e.value)}
+                onChange={(e) => handleInputChange('mooringId', e.target.value)}
                 options={[]}
                 optionLabel="name"
                 editable
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: errorMessage.mooringId ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
             </div>
+            <p>
+              {errorMessage.mooringId && (
+                <small className="p-error">{errorMessage.mooringId}</small>
+              )}
+            </p>
           </div>
         </div>
 
@@ -180,7 +200,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
             <div className="mt-1">
               <Dropdown
                 value={boatyards}
-                onChange={(e) => setBoatyards(e.target.value)}
+                onChange={(e) => handleInputChange('boatyards', e.target.value)}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -204,7 +224,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
             <div className="mt-1">
               <Dropdown
                 value={assignedTo}
-                onChange={(e) => setAssignedTo(e.value)}
+                onChange={(e) => handleInputChange('assignedTo', e.target.value)}
                 options={[]}
                 optionLabel="name"
                 editable
@@ -230,7 +250,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
             <div className="mt-1">
               <InputComponent
                 value={dueDate}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDueDate(e.target.value)}
+                onChange={(e) => handleInputChange('dueDate', e.target.value)}
                 type="text"
                 style={{
                   width: '230px',
@@ -257,9 +277,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
             <div className="mt-1">
               <InputComponent
                 value={scheduleDate}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setScheduleDate(e.target.value)
-                }
+                onChange={(e) => handleInputChange('scheduleDate', e.target.value)}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -283,7 +301,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
             <div className="mt-1">
               <Dropdown
                 value={workOrderStatus}
-                onChange={(e) => setWorkOrderStatus(e.value)}
+                onChange={(e) => handleInputChange('workOrderStatus', e.target.value)}
                 options={[]}
                 optionLabel="name"
                 editable
@@ -364,7 +382,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
             bottom: '0px',
           }}>
           <Button
-            onClick={editMode ? updateWorkOrder : SaveWorkOrder}
+            onClick={SaveWorkOrder}
             label={'Save'}
             style={{
               width: '89px',
