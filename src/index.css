@@ -50,6 +50,10 @@
   color: #a4a4a4 !important;
 }
 
+#placeholder::placeholder{
+  color: #ffffff!important;
+
+}
 #stateDropdown span {
   color: black !important;
 

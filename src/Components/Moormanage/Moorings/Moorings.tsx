@@ -294,6 +294,22 @@ const Moorings = () => {
         <div className="flex mt-8">
           <CustomModal
             buttonText={'ADD NEW'}
+            buttonStyle={{
+              width: '121px',
+              height: '44px',
+              minHeight: '44px',
+              backgroundColor: '#0098FF',
+              cursor: 'pointer',
+              fontSize: '14px',
+              fontWeight: 600,
+              color: 'white',
+              borderRadius: '0.50rem',
+              marginLeft: '8px',
+              boxShadow: 'none',
+            }}
+            icon={
+              <img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8 ml-4 mb-0.5" />
+            }
             children={
               <AddMoorings
                 moorings={selectedCustomer}
@@ -314,19 +330,6 @@ const Moorings = () => {
             visible={modalVisible}
             onClick={handleButtonClick}
             onHide={handleModalClose}
-            buttonStyle={{
-              width: '121px',
-              height: '44px',
-              minHeight: '44px',
-              backgroundColor: '#0098FF',
-              cursor: 'pointer',
-              fontSize: '16px',
-              fontWeight: 700,
-              color: 'white',
-              borderRadius: '0.50rem',
-              boxShadow: 'none',
-              marginLeft: '8px',
-            }}
             dialogStyle={{
               width: '800px',
               minWidth: '800px',

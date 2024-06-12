@@ -57,33 +57,6 @@ const Estimates = () => {
     setIsModalOpen(false)
   }
 
-  const header = (
-    <div className="flex flex-wrap align-items-center justify-between gap-2 p-4">
-      <span className="text-xl font-bold">Estimate</span>
-      <span
-        style={{
-          fontFamily: 'Lato',
-          fontSize: '14px',
-          fontWeight: 700,
-          lineHeight: '16.8px',
-          letterSpacing: '0.4837472140789032px',
-          textAlign: 'right',
-        }}>
-        <div className="flex  items-center  ">
-          <div>
-            <div className="p-input-icon-left">
-              <i className="pi pi-search text-[#D2D2D2]" />
-              <InputText
-                placeholder="Search"
-                className="h-[5vh] cursor-pointer rounded-lg bg-white font-bold"
-              />
-            </div>
-          </div>
-        </div>
-      </span>
-    </div>
-  )
-
   const columnStyle = {
     backgroundColor: '#FFFFFF',
     color: '#000000',
@@ -149,23 +122,11 @@ const Estimates = () => {
   return (
     <>
       <Header header="MOORSERVE/Estimates" />
-
-      <div className="flex justify-end gap-6 mt-14 mr-16">
-        <div className="flex text-blue-900 font-extrabold">
-          <div>
-            <img
-              src="/assets/images/download.png"
-              alt=""
-              className="w-5"
-              style={{ filter: 'grayscale(100%)', color: 'blue' }}
-            />
+      <div className="flex justify-end gap-6 mt-10 mr-16">
+        <div className="flex text-gray-600 mt-3 font-extrabold">
+          <div className="">
+            <img src="/assets/images/Group.png" alt="" className="w-24 font-bold" />
           </div>
-
-          <div>
-            <h1>DownLoad </h1>
-          </div>
-
-          <div></div>
         </div>
         <div className="items-center">
           <CustomModal
@@ -181,11 +142,12 @@ const Estimates = () => {
               minHeight: '44px',
               backgroundColor: '#0098FF',
               cursor: 'pointer',
-              fontSize: '16px',
-              fontWeight: 700,
+              fontSize: '14px',
+              fontWeight: 600,
               color: 'white',
               borderRadius: '0.50rem',
               marginLeft: '8px',
+              boxShadow: 'none',
             }}
             dialogStyle={{
               width: '800px',
@@ -201,7 +163,7 @@ const Estimates = () => {
 
       <div
         style={{
-          height: '640px',
+          height: '712px',
           gap: '0px',
           borderRadius: '10px',
           border: '1px solid #D5E1EA',
@@ -209,7 +171,7 @@ const Estimates = () => {
           backgroundColor: '#FFFFFF',
         }}
         className="bg-[F2F2F2]  ml-12  mt-6 mr-14">
-        <div className="flex flex-wrap align-items-center justify-between  bg-[#00426F] p-2   rounded-tl-[5px] rounded-tr-[5px]">
+        <div className="flex flex-wrap align-items-center justify-between  bg-[#00426F] p-2   rounded-tl-[10px] rounded-tr-[10px]">
           <span
             style={{
               fontSize: '18px',
@@ -231,6 +193,7 @@ const Estimates = () => {
                 data-testid="search-icon"
               />
               <InputText
+                id="placeholder"
                 placeholder="Search"
                 className="pl-10 w-[237px] 
                   bg-[#00426F]
@@ -241,21 +204,24 @@ const Estimates = () => {
           </div>
         </div>
 
-        <div className="text-center mt-40">
-          <img src="/assets/images/empty.png" alt="Empty Data" className="w-32 mx-auto mb-4" />
-          <p className="text-gray-500">No data available</p>
-        </div>
-
-        <DataTableSearchFieldComponent
+        <DataTableComponent
           tableStyle={{
             fontSize: '12px',
             color: '#000000',
             fontWeight: 600,
+            backgroundColor: '#D9D9D9',
+            cursor: 'pointer',
           }}
           data={EstimateData}
           columns={workOrderColumns}
           actionButtons={ActionButtonColumn}
-          style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '200' }}
+          style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+          emptyMessage={
+            <div className="text-center mt-40">
+              <img src="/assets/images/empty.png" alt="Empty Data" className="w-28 mx-auto mb-4" />
+              <p className="text-gray-500">No data available</p>
+            </div>
+          }
         />
       </div>
     </>

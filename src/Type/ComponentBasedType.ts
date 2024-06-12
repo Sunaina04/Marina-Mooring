@@ -1,5 +1,7 @@
 import { Dispatch, SetStateAction } from 'react'
 import { MooringPayload, VendorPayload, WorkOrderPayload } from './ApiTypes'
+import { ButtonProps } from 'primereact/button'
+import { IconType } from 'primereact/utils'
 
 export interface CustomerDataProps {
   customer: any
@@ -171,6 +173,7 @@ export interface CustomModalProps {
   button?: boolean
   buttonText?: string
   headerText: string | JSX.Element
+  icon?: IconType<ButtonProps> | undefined
   children: React.ReactNode
   dialogProps?: {
     [key: string]: any

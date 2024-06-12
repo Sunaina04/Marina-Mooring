@@ -17,6 +17,7 @@ import { Toast } from 'primereact/toast'
 import { Params } from '../../../Type/CommonType'
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
+import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 
 const Vendors = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -198,14 +199,13 @@ const Vendors = () => {
     return () => clearTimeout(timeoutId)
   }, [searchText, selectedCustomerId])
 
- 
   return (
     <>
       <div className={modalVisible ? 'backdrop-blur-lg' : ''}>
         <Header header="MOORMANAGE/Vendor" />
         <Toast ref={toast} />
         <div className="flex justify-end">
-          <div className="flex gap-4 mr-12 mt-8">
+          <div className="flex gap-4 mr-12 mt-6">
             <div>
               <div className="p-input-icon-left">
                 <IoSearchSharp className="ml-2 text-blue-900" />
@@ -220,6 +220,22 @@ const Vendors = () => {
 
             <CustomModal
               buttonText={'ADD NEW'}
+              buttonStyle={{
+                width: '121px',
+                height: '44px',
+                minHeight: '44px',
+                backgroundColor: '#0098FF',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: 600,
+                color: 'white',
+                borderRadius: '0.50rem',
+                marginLeft: '8px',
+                boxShadow: 'none',
+              }}
+              icon={
+                <img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8 ml-4 mb-0.5" />
+              }
               children={
                 <AddVendor
                   vendors={selectedCustomer}
@@ -237,18 +253,6 @@ const Vendors = () => {
               visible={modalVisible}
               onClick={handleButtonClick}
               onHide={handleModalClose}
-              buttonStyle={{
-                width: '121px',
-                height: '44px',
-                minHeight: '44px',
-                backgroundColor: '#0098FF',
-                cursor: 'pointer',
-                fontSize: '16px',
-                fontWeight: 700,
-                color: 'white',
-                borderRadius: '0.50rem',
-                marginLeft: '8px',
-              }}
               dialogStyle={{
                 width: '851px',
                 minWidth: '800px',
@@ -262,14 +266,14 @@ const Vendors = () => {
         </div>
         <div
           style={{
-            height: '715px',
+            height: '720px',
             borderRadius: '10px',
             border: '1px solid #D5E1EA',
             opacity: '0px',
             backgroundColor: '#FFFFFF',
           }}
           className={`ml-[3rem] mr-[2.30rem] mt-8 ${isLoading ? 'blur-screen' : ''}`}>
-          <DataTableSearchFieldComponent
+          <DataTableComponent
             tableStyle={{
               fontSize: '12px',
               color: '#000000',
@@ -277,7 +281,6 @@ const Vendors = () => {
               padding: '2rem',
             }}
             data={vendorData}
-           
             columns={VendorColumns}
             actionButtons={ActionButtonColumn}
             style={{ backgroundColor: '#FFFFFF', borderBottom: '1px solid #D5E1EA ' }}
