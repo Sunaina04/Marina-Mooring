@@ -218,7 +218,7 @@ const WorkOrders = () => {
                 <InputText
                   placeholder="Search"
                   id="placeholder"
-                  className="pl-10 w-[237px] bg-[#00426F] h-[35px] rounded-lg border border-[#D5E1EA] placeholder:text-[#FFFFFF]  focus:outline-none"
+                  className="pl-10 w-[237px] bg-[#00426F] h-[35px] rounded-lg border text-[white] border-[#D5E1EA] placeholder:text-[#FFFFFF]  focus:outline-none"
                 />
               </div>
             </div>

@@ -41,12 +41,15 @@ const Boatyards = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [boatyardsData, setboatyardsData] = useState<BoatYardPayload[]>([])
 
+  // console.log("boatyardsData", boatyardsData[0].id);
+
   const [mooringWithBoatyardsData, setMooringWithBoatyardsData] = useState<
     MooringWithBoatYardResponse[]
   >([])
   const [filteredboatyardsData, setFilteredboatyardsData] = useState<BoatYardPayload[]>([])
   const [expandedRows, setExpandedRows] = useState<any>()
   const [selectedBoatYard, setSelectedBoatYard] = useState<any>()
+
   const [selectedProduct, setSelectedProduct] = useState()
   const [editMode, setEditMode] = useState(false)
   const [searchText, setSearchText] = useState('')
@@ -80,6 +83,7 @@ const Boatyards = () => {
     setSearchFieldText(e.target.value)
   }
 
+
   const handleButtonClick = () => {
     setModalVisible(true)
   }
@@ -87,9 +91,8 @@ const Boatyards = () => {
   const handleModalClose = () => {
     setModalVisible(false)
     setEditMode(false)
-    setSelectedBoatYard('')
+    // setSelectedBoatYard('')
     setMooringRowData('')
-    setBoatyardRecord(false)
   }
 
   const ActionButtonColumn: ActionButtonColumnProps = {
@@ -239,6 +242,7 @@ const Boatyards = () => {
   )
 
   const handleRowClickBoatYardDetail = (rowData: any) => {
+    // alert("hi")
     setIsLoader(true)
     setSelectedBoatYard('')
     setMooringWithBoatyardsData([])
@@ -316,6 +320,12 @@ const Boatyards = () => {
           const { status, content, message } = response as BoatYardResponse
           if (status === 200 && Array.isArray(content)) {
             setboatyardsData(content)
+            if (selectedBoatYard) {
+              const data = content.find((data) => data.id === selectedBoatYard.id)
+              if (data) {
+                setSelectedBoatYard(data)
+              }
+            }
             setFilteredboatyardsData(content)
             const timeoutId = setTimeout(() => {
               setIsLoading(false)
@@ -337,7 +347,7 @@ const Boatyards = () => {
       const { message } = error as ErrorResponse
       console.error('Error fetching getBoatyardsdata:', message)
     }
-  }, [getBoatyards, searchText, searchFieldText, selectedCustomerId])
+  }, [getBoatyards, searchText, searchFieldText, selectedCustomerId, selectedBoatYard])
 
   const getMooringsWithBoatyardData = async () => {
     try {
@@ -382,6 +392,96 @@ const Boatyards = () => {
     }
   }, [selectedBoatYard])
 
+  const random = useMemo(() => {
+    return (
+      <AddBoatyards
+        closeModal={handleModalClose}
+        boatYardData={getBoatyardsData}
+        customerData={selectedBoatYard}
+        editMode={editMode}
+        setModalVisible={setModalVisible}
+        toastRef={toast}
+      />
+    )
+  }, [selectedBoatYard, getBoatyardsData, editMode, toast, setModalVisible, handleModalClose])
+
+  const BoatyardMoorings = useMemo(() => {
+    return (
+      <>
+        <div
+          className={`flex justify-between mt-4 p-3 ml-5 font-normal text-[12px] ${isLoader ? 'blur-screen' : ''}`}>
+          <p className="">
+            {selectedBoatYard?.street} {selectedBoatYard?.apt} ,
+            {selectedBoatYard?.stateResponseDto?.name} ,{selectedBoatYard?.countryResponseDto?.name}
+          </p>
+          <p className="mr-[13rem]">{selectedBoatYard?.mooringInventoried}</p>
+          <p className="underline mr-[4rem]">{selectedBoatYard?.gpsCoordinates}</p>
+        </div>
+
+        <div
+          className={`h-[150px] mt-[30px] mb-6 sticky ${isLoader || modalVisible ? 'blur-screen' : ''}`}
+          style={{
+            flexGrow: 1,
+            border: '1px solid #D5E1EA',
+            borderRadius: '10px',
+            padding: '0px',
+            marginLeft: '10px',
+            marginRight: '10px',
+          }}>
+          <CustomDisplayPositionMap position={[latitude, longitude]} zoomLevel={10} />
+        </div>
+
+        {isLoader && (
+          <ProgressSpinner
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '73%',
+              transform: 'translate(-50%, -50%)',
+              width: '50px',
+              height: '50px',
+            }}
+            strokeWidth="4"
+          />
+        )}
+        <div className="bg-#00426F overflow-x-hidden  mt-[13px] h-[250px] table-container  ">
+          <DataTableComponent
+            tableStyle={{
+              fontSize: '12px',
+              color: '#000000',
+            }}
+            data={mooringWithBoatyardsData ? mooringWithBoatyardsData : undefined}
+            columns={tableColumnsTechnicians}
+            actionButtons={ActionButtonColumn}
+            selectionMode="single"
+            dataKey="id"
+            onSelectionChange={(e) => {
+              setSelectedProduct(e.value)
+            }}
+            selection={selectedProduct}
+            rowStyle={(rowData: any) => rowData}
+            style={{
+              borderBottom: '1px solid #D5E1EA',
+              marginLeft: '5px',
+              fontWeight: '400',
+              color: '#000000',
+            }}
+            emptyMessage={
+              <div className="text-center mt-14">
+                <img
+                  src="/assets/images/empty.png"
+                  alt="Empty Data"
+                  className="w-20 mx-auto mb-4"
+                />
+                <p className="text-gray-500">No data available</p>
+              </div>
+            }
+          />
+        </div>
+      </>
+    )
+  }, [selectedBoatYard, boatyardsData])
+
   return (
     <div className={modalVisible ? 'backdrop-blur-lg' : ''}>
       <Toast ref={toast} />
@@ -417,16 +517,7 @@ const Boatyards = () => {
             icon={
               <img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8 ml-4 mb-0.5" />
             }
-            children={
-              <AddBoatyards
-                closeModal={handleModalClose}
-                boatYardData={getBoatyardsData}
-                customerData={selectedBoatYard}
-                editMode={editMode}
-                setModalVisible={setModalVisible}
-                toastRef={toast}
-              />
-            }
+            children={random}
             headerText={<h1 className="text-xl font-extrabold text-black ml-4">Add Boatyard</h1>}
             visible={modalVisible}
             onClick={handleButtonClick}
@@ -575,79 +666,7 @@ const Boatyards = () => {
           )}
 
           {selectedBoatYard ? (
-            <>
-              <div
-                className={`flex justify-between mt-4 p-3 ml-5 font-normal text-[12px] ${isLoader ? 'blur-screen' : ''}`}>
-                <p className="">
-                  {selectedBoatYard?.street} {selectedBoatYard?.apt} ,
-                  {selectedBoatYard?.stateResponseDto?.name} ,
-                  {selectedBoatYard?.countryResponseDto?.name}
-                </p>
-                <p className="mr-[13rem]">{selectedBoatYard?.mooringInventoried}</p>
-                <p className="underline mr-[4rem]">{selectedBoatYard?.gpsCoordinates}</p>
-              </div>
-
-              <div
-                className={`"h-[150px] mt-[30px] mb-6 sticky" ${isLoader || modalVisible ? 'blur-screen' : ''}`}
-                style={{
-                  flexGrow: 1,
-                  border: '1px solid #D5E1EA',
-                  borderRadius: '10px',
-                  padding: '0px',
-                  marginLeft: '10px',
-                  marginRight: '10px',
-                }}>
-                <CustomDisplayPositionMap position={[latitude, longitude]} zoomLevel={10} />
-              </div>
-
-              {isLoader && (
-                <ProgressSpinner
-                  style={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '73%',
-                    transform: 'translate(-50%, -50%)',
-                    width: '50px',
-                    height: '50px',
-                  }}
-                  strokeWidth="4"
-                />
-              )}
-              <div className="bg-#00426F overflow-x-hidden  mt-[13px] h-[250px] table-container  ">
-                <DataTableComponent
-                  tableStyle={{
-                    fontSize: '12px',
-                    color: '#000000',
-                  }}
-                  data={mooringWithBoatyardsData ? mooringWithBoatyardsData : undefined}
-                  columns={tableColumnsTechnicians}
-                  actionButtons={ActionButtonColumn}
-                  selectionMode="single"
-                  dataKey="id"
-                  onSelectionChange={(e) => {
-                    setSelectedProduct(e.value)
-                  }}
-                  selection={selectedProduct}
-                  rowStyle={(rowData: any) => rowData}
-                  style={{
-                    borderBottom: '1px solid #D5E1EA',
-                    marginLeft: '5px',
-                    fontWeight: '400',
-                    color: '#000000',
-                  }}
-                  emptyMessage={
-                    <div className="text-center mt-14">
-                      <img
-                        src="/assets/images/empty.png"
-                        alt="Empty Data"
-                        className="w-20 mx-auto mb-4"
-                      />
-                      <p className="text-gray-500">No data available</p>
-                    </div>
-                  }
-                />
-              </div>
-            </>
+            BoatyardMoorings
           ) : (
             <div className="text-center mt-40 mb-10">
               <img src="/assets/images/empty.png" alt="Empty Data" className="w-20 mx-auto mb-4" />
