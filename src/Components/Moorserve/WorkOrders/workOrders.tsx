@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Dialog } from 'primereact/dialog'
 import { Button } from 'primereact/button'
 import AddWorkOrders from './AddWorkOrders'
@@ -12,13 +12,25 @@ import { boatyardMooring, vendor } from '../../Utils/CustomData'
 import { InputText } from 'primereact/inputtext'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 import CustomModal from '../../CustomComponent/CustomModal'
+import { useSelector } from 'react-redux'
+import { selectCustomerId } from '../../../Store/Slice/userSlice'
+import { Params } from 'react-router-dom'
+import { Toast } from 'primereact/toast'
 
 const WorkOrders = () => {
+  const selectedCustomerId = useSelector(selectCustomerId)
   const [visible, setVisible] = useState(false)
+  const [searchText, setSearchText] = useState('')
+  const [isLoading, setIsLoading] = useState(true)
   const [workOrderData, setWorkOrderData] = useState<WorkOrderPayload[]>([])
   const [selectedCustomer, setSelectedCustomer] = useState<any>(undefined)
   const [editMode, setEditMode] = useState(false)
   const [getWorkOrder] = useGetWorkOrdersMutation()
+  const toast = useRef<Toast>(null)
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value)
+  }
 
   const ActionButtonColumn: ActionButtonColumnProps = {
     header: '',
@@ -40,30 +52,35 @@ const WorkOrders = () => {
     fontSize: '12px',
   }
 
+  const firstLastName = (data: any) => {
+    return data.customerResponseDto.firstName + ' ' + data.customerResponseDto.lastName
+  }
+
   const workOrderColumns = useMemo(
     () => [
       {
-        id: 'customerId',
+        id: 'customerResponseDto.customerId',
         label: 'Customer ID',
         style: columnStyle,
       },
       {
-        id: 'customerName',
+        id: 'firstName',
         label: 'CustomerName',
         style: columnStyle,
+        body: firstLastName,
       },
       {
-        id: 'mooringId',
+        id: 'mooringResponseDto.mooringId',
         label: 'Mooring ID',
         style: columnStyle,
       },
       {
-        id: 'boatyard',
+        id: 'boatyardResponseDto.boatyardId',
         label: 'Boatyard',
         style: columnStyle,
       },
       {
-        id: 'assigned',
+        id: 'technicianUserResponseDto.name',
         label: 'Assigned to',
         style: columnStyle,
       },
@@ -81,18 +98,30 @@ const WorkOrders = () => {
     [],
   )
 
-  const getWorkOrderData = async () => {
+  const getWorkOrderData = useCallback(async () => {
     try {
+      let params: Params = {}
+      // if (searchText) {
+      //   params.searchText = searchText
+      // }
       const response = await getWorkOrder({}).unwrap()
-      const { status, content } = response as WorkOrderResponse
+      const { status, content, message } = response as WorkOrderResponse
       if (status === 200 && Array.isArray(content)) {
         setWorkOrderData(content)
+      } else {
+        setIsLoading(false)
+        toast?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
       }
     } catch (error) {
-      const { message } = error as ErrorResponse
-      console.error('Error fetching work order data:', error)
+      const { message: msg } = error as ErrorResponse
+      console.error('Error occurred while fetching customer data:', msg)
     }
-  }
+  }, [searchText, selectedCustomerId])
 
   const handleEdit = (rowData: any) => {
     setSelectedCustomer(rowData)
@@ -109,11 +138,12 @@ const WorkOrders = () => {
 
   useEffect(() => {
     getWorkOrderData()
-  }, [])
+  }, [selectedCustomerId])
 
   return (
     <div className={visible ? 'backdrop-blur-lg' : ''}>
       <Header header="MOORSERVE/Work Orders" />
+      <Toast ref={toast} />
 
       <div className="">
         <div className="flex justify-end mr-16 mt-10">
@@ -125,6 +155,7 @@ const WorkOrders = () => {
                   workOrderData={selectedCustomer}
                   editMode={editMode}
                   setVisible={setVisible}
+                  toastRef={toast}
                 />
               }
               headerText={<h1 className="text-xl font-extrabold text-black ml-4">Work Order</h1>}
@@ -200,7 +231,7 @@ const WorkOrders = () => {
               backgroundColor: '#D9D9D9',
               cursor: 'pointer',
             }}
-            data={undefined}
+            data={workOrderData}
             columns={workOrderColumns}
             actionButtons={ActionButtonColumn}
             style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}

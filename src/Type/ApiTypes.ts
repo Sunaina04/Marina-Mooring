@@ -291,6 +291,16 @@ export interface MooringPayload {
   depthAtMeanHighWater: number
 }
 
+export interface MooringStatus {
+  id: number
+  creationDate: string
+  createdBy: string
+  lastModifiedDate: string
+  lastModifiedBy: string
+  status: string
+  description: string
+}
+
 export interface MooringResponseDtoList {
   id: number
   mooringId: string
@@ -312,6 +322,10 @@ export interface MooringResponseDtoList {
   sizeOfWeight: MooringMetaDataTypes
   typeOfWeight: MooringMetaDataTypes
   depthAtMeanHighWater: number
+  mainContact: string
+  mooringStatus: MooringStatus
+  customerId: number | string
+  userId: number
 }
 
 export interface MooringResponse {
@@ -572,21 +586,78 @@ export interface UploadPayload {
 }
 
 export interface WorkOrderPayload {
-  id: number
-  creationDate: string
-  createdBy: string
-  lastModifiedDate: string
-  lastModifiedBy: string
-  customerName: string
-  customerId: string
-  mooringNumber: string
-  boatYard: string
-  assignedTo: string
+  customerId: number
+  mooringId: number
+  boatyardId: number
+  technicianId: number
+  workOrderStatusId: number
   dueDate: string
-  scheduleDate: string
-  status: string
+  scheduledDate: string
   time: string
-  reportProblem: string
+  problem: string
+}
+
+export interface CustomerResponseDto {
+  id: 1
+  firstName: 'Kira'
+  lastName: 'More'
+  customerId: '1'
+  phone: '9876554321'
+  emailAddress: 'cust1@gmail.com'
+  streetHouse: 'Test'
+  aptSuite: 'Test'
+  stateResponseDto: null
+  countryResponseDto: null
+  zipCode: '64937'
+  userId: null
+  mooringResponseDtoList: null
+}
+
+export interface BoatYardResponseDto {
+  id: number
+  boatyardId: string
+  boatyardName: string
+  emailAddress: string
+  phone: string
+  street: string
+  apt: string
+  stateResponseDto: State
+  countryResponseDto: Country
+  zipCode: string
+  mainContact: string
+  gpsCoordinates: string
+  mooringInventoried: number
+  userId: number
+}
+
+export interface TechnicianUserResponseDto {
+  id: number
+  name: string
+  email: string
+  phoneNumber: string
+  customerOwnerId: number
+  roleResponseDto: Role
+  stateResponseDto: State
+  countryResponseDto: Country
+  street: string
+  apt: string
+  zipCode: string
+  companyName: string
+}
+
+export interface CustomerOwnerUserResponseDto {
+  id: number
+  name: string
+  email: string
+  phoneNumber: string
+  customerOwnerId: null
+  roleResponseDto: Role
+  stateResponseDto: State
+  countryResponseDto: Country
+  street: string
+  apt: string
+  zipCode: string
+  companyName: string
 }
 
 export interface WorkOrderResponse {
@@ -595,7 +666,16 @@ export interface WorkOrderResponse {
   errorList: []
   time: string
   content: {
-    WorkOrderPayload: WorkOrderPayload
+    id: number
+    dueDate: number
+    scheduledDate: string
+    time: string
+    problem: string
+    customerResponseDto: CustomerResponseDto
+    mooringResponseDto: MooringResponseDtoList
+    boatyardResponseDto: BoatYardResponseDto
+    technicianUserResponseDto: TechnicianUserResponseDto
+    customerOwnerUserResponseDto: CustomerOwnerUserResponseDto
   }
 }
 
