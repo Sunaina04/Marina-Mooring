@@ -14,7 +14,7 @@ export const GetMooringBasedOnCustomerIdAndBoatyardId = () => {
   const [getMooringBasedOnCustomerIdAndBoatyardId] =
     useGetMooringBasedOnCustomerIdAndBoatyardIdMutation()
 
-  const fetchgetMooringBasedOnCustomerIdAndBoatyardId = async (getData: any) => {
+  const fetchMooringBasedOnCustomerIdAndBoatyardId = async (getData: any) => {
     try {
       const response = await getData({})
       const { status, content } = response.data as MetaDataResponse
@@ -26,7 +26,7 @@ export const GetMooringBasedOnCustomerIdAndBoatyardId = () => {
     }
   }
   const getMooringBasedOnCustomerIdAndBoatyardIdData = async () => ({
-    basedOnCustomerIdAndBoatyardId: await fetchgetMooringBasedOnCustomerIdAndBoatyardId(
+    mooringbasedOnCustomerIdAndBoatyardId: await fetchMooringBasedOnCustomerIdAndBoatyardId(
       getMooringBasedOnCustomerIdAndBoatyardId,
     ),
   })
@@ -37,7 +37,7 @@ export const GetMooringBasedOnCustomerIdAndBoatyardId = () => {
 export const GetMooringsBasedOnCustomerId = () => {
   const [getMooringsBasedOnCustomerId] = useGetMooringsBasedOnBoatyardIdMutation()
 
-  const fetchgetgetMooringsBasedOnCustomerIdData = async (getData: any) => {
+  const fetchMooringsBasedOnCustomerIdData = async (getData: any) => {
     try {
       const response = await getData({})
       const { status, content } = response.data as MetaDataResponse
@@ -48,19 +48,19 @@ export const GetMooringsBasedOnCustomerId = () => {
       return null
     }
   }
-  const getgetMooringsBasedOnCustomerIdData = async () => ({
-    getMooringsBasedOnBoatyardIdData: await fetchgetgetMooringsBasedOnCustomerIdData(
+  const getMooringsBasedOnCustomerIdData = async () => ({
+    mooringsBasedOnCustomerId: await fetchMooringsBasedOnCustomerIdData(
       getMooringsBasedOnCustomerId,
     ),
   })
 
-  return { getgetMooringsBasedOnCustomerIdData }
+  return { getMooringsBasedOnCustomerIdData }
 }
 
 export const GetMooringsBasedOnBoatyardId = () => {
   const [getMooringsBasedOnBoatyardId] = useGetMooringsBasedOnCustomerIdMutation()
 
-  const fetchgetMooringBasedOnCustomerIdAndBoatyardId = async (getData: any) => {
+  const fetchMooringBasedOnCustomerIdAndBoatyardId = async (getData: any) => {
     try {
       const response = await getData({})
       const { status, content } = response.data as MetaDataResponse
@@ -72,7 +72,7 @@ export const GetMooringsBasedOnBoatyardId = () => {
     }
   }
   const getMooringsBasedOnBoatyardIdData = async () => ({
-    mooringBasedOnCustomerIdAndBoatyardId: await fetchgetMooringBasedOnCustomerIdAndBoatyardId(
+    mooringBasedOnBoatyardId: await fetchMooringBasedOnCustomerIdAndBoatyardId(
       getMooringsBasedOnBoatyardId,
     ),
   })
@@ -94,11 +94,11 @@ export const GetBoatyardBasedOnMooringId = () => {
       return null
     }
   }
-  const getBoatyardBasedOnMooringId = async () => ({
-    getBoatyardBasedOnMooringId: await fetchBoatyardBasedOnMooringId(BoatyardBasedOnMooringId),
+  const getBoatyardBasedOnMooringIdData = async () => ({
+    boatyardBasedOnMooringId: await fetchBoatyardBasedOnMooringId(BoatyardBasedOnMooringId),
   })
 
-  return { getBoatyardBasedOnMooringId }
+  return { getBoatyardBasedOnMooringIdData }
 }
 
 export const GetCustomerBasedOnMooringId = () => {
@@ -115,11 +115,11 @@ export const GetCustomerBasedOnMooringId = () => {
       return null
     }
   }
-  const getCustomerBasedOnMooringId = async () => ({
-    getCustomerBasedOnMooringId: await fetchCustomerBasedOnMooringId(CustomerBasedOnMooringId),
+  const getCustomerBasedOnMooringIdData = async () => ({
+    customerBasedOnMooringId: await fetchCustomerBasedOnMooringId(CustomerBasedOnMooringId),
   })
 
-  return { getCustomerBasedOnMooringId }
+  return { getCustomerBasedOnMooringIdData }
 }
 
 export const GetTechnicians = () => {
@@ -136,11 +136,11 @@ export const GetTechnicians = () => {
       return null
     }
   }
-  const getTechnicians = async () => ({
+  const getTechniciansData = async () => ({
     getTechnicians: await fetchTechniciansData(Technicians),
   })
 
-  return { getTechnicians }
+  return { getTechniciansData }
 }
 
 export const GetMooringIds = () => {
@@ -158,7 +158,7 @@ export const GetMooringIds = () => {
     }
   }
   const getMooringIdsData = async () => ({
-    mooringIdsData: await fetchMooringIdsData(MooringIdsData),
+    mooringIds: await fetchMooringIdsData(MooringIdsData),
   })
 
   return { getMooringIdsData }

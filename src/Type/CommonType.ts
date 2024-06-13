@@ -75,6 +75,9 @@ export interface MetaData {
   id: number
   name: string
   label: string
+  mooringId: string
+  status: string
+  description: string
 }
 
 export interface MetaDataCustomer {

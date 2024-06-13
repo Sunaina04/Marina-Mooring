@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { InputTextarea } from 'primereact/inputtextarea'
 import { InputText } from 'primereact/inputtext'
 import { Dropdown } from 'primereact/dropdown'
@@ -12,6 +12,17 @@ import {
 import { Button } from 'primereact/button'
 import { WorkOrderProps } from '../../../Type/ComponentBasedType'
 import InputComponent from '../../CommonComponent/InputComponent'
+import {
+  GetBoatyardBasedOnMooringId,
+  GetCustomerBasedOnMooringId,
+  GetMooringBasedOnCustomerIdAndBoatyardId,
+  GetMooringIds,
+  GetMooringsBasedOnBoatyardId,
+  GetMooringsBasedOnCustomerId,
+  GetTechnicians,
+  GetWorkOrderStatus,
+} from '../../CommonComponent/MetaDataComponent/MoorserveMetaDataApi'
+import { MetaData } from '../../../Type/CommonType'
 
 const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setVisible }) => {
   const [value, setValue] = useState<string>('')
@@ -23,8 +34,15 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
   const [dueDate, setDueDate] = useState<string>('')
   const [scheduleDate, setScheduleDate] = useState<string>('')
   const [workOrderStatus, setWorkOrderStatus] = useState<string>('')
-  const [saveWorkOrder] = useAddWorkOrderMutation()
-  const [updateWorkOrder] = useUpdateWorkOrderMutation()
+  const [basedOnCustomerIdAndBoatyardId, setbasedOnCustomerIdAndBoatyardId] = useState<MetaData[]>()
+  const [mooringsBasedOnBoatyardIdData, setMooringsBasedOnBoatyardIdData] = useState<MetaData[]>()
+  const [mooringBasedOnCustomerId, setMooringBasedOnCustomerId] = useState<MetaData[]>()
+  const [boatyardBasedOnMooringId, setBoatyardBasedOnMooringId] = useState<MetaData[]>()
+  const [customerBasedOnMooringId, setCustomerBasedOnMooringId] = useState<MetaData[]>()
+  const [technicians, setTechnicians] = useState<MetaData[]>()
+  const [moorings, setMoorings] = useState<MetaData[]>()
+  const [workOrderStatusValue, setWorkOrderStatusValue] = useState<MetaData[]>()
+
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
   const [workOrder, setWorkOrder] = useState<any>({
     customerName: '',
@@ -36,6 +54,17 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
     workOrderStatus: '',
     value: '',
   })
+  const [saveWorkOrder] = useAddWorkOrderMutation()
+  const [updateWorkOrder] = useUpdateWorkOrderMutation()
+  const { getMooringBasedOnCustomerIdAndBoatyardIdData } =
+    GetMooringBasedOnCustomerIdAndBoatyardId()
+  const { getMooringsBasedOnCustomerIdData } = GetMooringsBasedOnCustomerId()
+  const { getMooringsBasedOnBoatyardIdData } = GetMooringsBasedOnBoatyardId()
+  const { getBoatyardBasedOnMooringIdData } = GetBoatyardBasedOnMooringId()
+  const { getCustomerBasedOnMooringIdData } = GetCustomerBasedOnMooringId()
+  const { getTechniciansData } = GetTechnicians()
+  const { getMooringIdsData } = GetMooringIds()
+  const { getWorkOrderStatusData } = GetWorkOrderStatus()
 
   const validateFields = () => {
     const errors: { [key: string]: string } = {}
@@ -98,6 +127,54 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
       return
     }
   }
+
+  const fetchDataAndUpdate = useCallback(async () => {
+    const { mooringbasedOnCustomerIdAndBoatyardId } =
+      await getMooringBasedOnCustomerIdAndBoatyardIdData()
+    const { mooringsBasedOnCustomerId } = await getMooringsBasedOnCustomerIdData()
+    const { mooringBasedOnBoatyardId } = await getMooringsBasedOnBoatyardIdData()
+    const { boatyardBasedOnMooringId } = await getBoatyardBasedOnMooringIdData()
+    const { customerBasedOnMooringId } = await getCustomerBasedOnMooringIdData()
+    const { getTechnicians } = await getTechniciansData()
+    const { mooringIds } = await getMooringIdsData()
+    const { WorkOrderStatus } = await getWorkOrderStatusData()
+
+    if (mooringbasedOnCustomerIdAndBoatyardId !== null) {
+      setbasedOnCustomerIdAndBoatyardId(mooringbasedOnCustomerIdAndBoatyardId)
+    }
+
+    if (mooringBasedOnBoatyardId !== null) {
+      setMooringsBasedOnBoatyardIdData(mooringBasedOnBoatyardId)
+    }
+
+    if (mooringsBasedOnCustomerId !== null) {
+      setMooringBasedOnCustomerId(mooringsBasedOnCustomerId)
+    }
+
+    if (boatyardBasedOnMooringId !== null) {
+      setBoatyardBasedOnMooringId(boatyardBasedOnMooringId)
+    }
+
+    if (customerBasedOnMooringId !== null) {
+      setCustomerBasedOnMooringId(customerBasedOnMooringId)
+    }
+
+    if (getTechnicians !== null) {
+      setTechnicians(getTechnicians)
+    }
+
+    if (mooringIds !== null) {
+      setMoorings(mooringIds)
+    }
+
+    if (WorkOrderStatus !== null) {
+      setWorkOrderStatusValue(WorkOrderStatus)
+    }
+  }, [])
+
+  useEffect(() => {
+    fetchDataAndUpdate()
+  }, [fetchDataAndUpdate])
 
   return (
     <div>
@@ -168,8 +245,8 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
               <Dropdown
                 value={mooringId}
                 onChange={(e) => handleInputChange('mooringId', e.target.value)}
-                options={[]}
-                optionLabel="name"
+                options={moorings}
+                optionLabel="mooringId"
                 editable
                 style={{
                   width: '230px',
@@ -225,7 +302,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
               <Dropdown
                 value={assignedTo}
                 onChange={(e) => handleInputChange('assignedTo', e.target.value)}
-                options={[]}
+                options={technicians}
                 optionLabel="name"
                 editable
                 style={{
@@ -302,8 +379,8 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
               <Dropdown
                 value={workOrderStatus}
                 onChange={(e) => handleInputChange('workOrderStatus', e.target.value)}
-                options={[]}
-                optionLabel="name"
+                options={workOrderStatusValue}
+                optionLabel="status"
                 editable
                 style={{
                   width: '230px',

@@ -115,7 +115,7 @@ const WorkOrders = () => {
     <div className={visible ? 'backdrop-blur-lg' : ''}>
       <Header header="MOORSERVE/Work Orders" />
 
-      {/* <div className="">
+      <div className="">
         <div className="flex justify-end mr-16 mt-10">
           <div>
             <CustomModal
@@ -216,7 +216,7 @@ const WorkOrders = () => {
             }
           />
         </div>
-      </div> */}
+      </div>
     </div>
   )
 }
