@@ -254,6 +254,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
     }
 
     try {
+      setIsLoading(true)
       const payload = {
         companyName: formData?.companyName,
         companyPhoneNumber: formData?.phone,
@@ -283,6 +284,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
       }).unwrap()
       const { status, message } = response as VendorResponse
       if (status === 200 || status === 201) {
+        setIsLoading(false)
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
@@ -301,6 +303,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
       }
     } catch (error) {
       const { message, data } = error as ErrorResponse
+      setIsLoading(true)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',

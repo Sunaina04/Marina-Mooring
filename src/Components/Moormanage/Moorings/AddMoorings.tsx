@@ -27,7 +27,7 @@ import {
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import { CustomerResponse, ErrorResponse } from '../../../Type/ApiTypes'
-
+import { ProgressSpinner } from 'primereact/progressspinner'
 const AddMoorings: React.FC<AddMooringProps> = ({
   moorings,
   editMode,
@@ -65,7 +65,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   const [center, setCenter] = useState<LatLngExpression | undefined>([30.6983149, 76.656095])
   const [saveMoorings] = useAddMooringsMutation()
   const [updateMooring] = useUpdateMooringsMutation()
-
+  const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState<any>({
     customerName: '',
     mooringNumber: '',
@@ -280,6 +280,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       return
     }
     try {
+      setIsLoading(true)
       const payload = {
         customerId: formData?.customerName?.id,
         mooringId: formData?.mooringNumber,
@@ -305,6 +306,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       const response = await saveMoorings(payload).unwrap()
       const { status, message } = response as CustomerResponse
       if (status === 200 || status === 201) {
+        setIsLoading(false)
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
@@ -326,6 +328,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       }
     } catch (error) {
       const { message, data } = error as ErrorResponse
+      setIsLoading(true)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
@@ -341,6 +344,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       return
     }
     try {
+      setIsLoading(true)
       const editMooringPayload = {
         id: mooringRowData?.id,
         mooringId: formData?.mooringNumber ? formData?.mooringNumber : mooringRowData?.mooringId,
@@ -389,6 +393,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       }).unwrap()
       const { status, message } = response as CustomerResponse
       if (status === 200 || status === 201) {
+        setIsLoading(false)
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
@@ -410,6 +415,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       }
     } catch (error) {
       const { message, data } = error as ErrorResponse
+      setIsLoading(true)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
@@ -650,6 +656,21 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               </p>
             </div>
           </div>
+
+          {isLoading && (
+            <ProgressSpinner
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '45%',
+                transform: 'translate(-50%, -50%)',
+                width: '50px',
+                height: '50px',
+              }}
+              strokeWidth="4"
+            />
+          )}
+
 
           <div>
             <span className="font-medium text-sm text-[#000000]">
@@ -1058,9 +1079,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
             }}
           />
           <Button
-            onClick={function (): void {
-              throw new Error('Function not implemented.')
-            }}
+            onClick={closeModal}
             label={'Back'}
             text={true}
             style={{

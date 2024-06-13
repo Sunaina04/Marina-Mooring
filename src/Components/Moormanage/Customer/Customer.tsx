@@ -461,7 +461,7 @@ const Customer = () => {
             style={{
               position: 'absolute',
               top: '50%',
-              left: '25%',
+              left: '40%',
               transform: 'translate(-50%, -50%)',
               width: '50px',
               height: '50px',
@@ -674,7 +674,6 @@ const Customer = () => {
                 borderRadius: '1rem',
                 fontWeight: '400',
                 maxHeight: '50% !important',
-                border: '1px solid red',
               }}
               draggable={false}
               visible={dialogVisible}
