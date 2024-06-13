@@ -70,7 +70,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
     const errors: { [key: string]: string } = {}
 
     if (!workOrder.customerName) {
-      errors.customerame = 'Customer Name is required'
+      errors.customerName = 'Customer Name is required'
     }
 
     if (!workOrder.mooringId) {
@@ -82,7 +82,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
     }
 
     if (!workOrder.assignedTo) {
-      errors.assigned = 'Assigned to is required'
+      errors.assignedTo = 'Assigned to is required'
     }
 
     if (!workOrder.dueDate) {
@@ -97,8 +97,12 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
       errors.workOrderStatus = 'Work order Status is required'
     }
 
+    if (!workOrder.time) {
+      errors.time = 'Time is required'
+    }
+
     if (!workOrder.value) {
-      errors.value = 'value is required'
+      errors.value = 'Problem description is required'
     }
 
     setErrorMessage(errors)
@@ -123,7 +127,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
     const errors = validateFields()
     if (Object.keys(errors).length > 0) {
       setErrorMessage(errors)
-      alert('Please fill in all required fields.')
       return
     }
   }
@@ -190,8 +193,11 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
             </span>
             <div className="mt-1">
               <Dropdown
-                value={customerName}
+                value={workOrder.customerName}
                 onChange={(e) => handleInputChange('customerName', e.target.value)}
+                options={[]}
+                optionLabel="name"
+                editable
                 style={{
                   width: '230px',
                   height: '32px',
@@ -203,7 +209,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
               />
             </div>
             <p>
-              {errorMessage.CustomerName && (
+              {errorMessage.customerName && (
                 <small className="p-error">{errorMessage.customerName}</small>
               )}
             </p>
@@ -243,7 +249,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
             </span>
             <div className="mt-1">
               <Dropdown
-                value={mooringId}
+                value={workOrder.mooringId}
                 onChange={(e) => handleInputChange('mooringId', e.target.value)}
                 options={moorings}
                 optionLabel="mooringId"
@@ -276,18 +282,26 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
             </span>
             <div className="mt-1">
               <Dropdown
-                value={boatyards}
+                value={workOrder.boatyards}
                 onChange={(e) => handleInputChange('boatyards', e.target.value)}
+                options={[]}
+                optionLabel="name"
+                editable
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: errorMessage.boatyards ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   paddingLeft: '0.5rem',
                 }}
               />
             </div>
+            <p>
+              {errorMessage.boatyards && (
+                <small className="p-error">{errorMessage.boatyards}</small>
+              )}
+            </p>
           </div>
 
           {/* Assigned to */}
@@ -300,7 +314,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
             </span>
             <div className="mt-1">
               <Dropdown
-                value={assignedTo}
+                value={workOrder.assignedTo}
                 onChange={(e) => handleInputChange('assignedTo', e.target.value)}
                 options={technicians}
                 optionLabel="name"
@@ -308,12 +322,17 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: errorMessage.assignedTo ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
             </div>
+            <p>
+              {errorMessage.assignedTo && (
+                <small className="p-error">{errorMessage.assignedTo}</small>
+              )}
+            </p>
           </div>
 
           {/* Due Date */}
@@ -326,19 +345,24 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
             </span>
             <div className="mt-1">
               <InputComponent
-                value={dueDate}
+                value={workOrder.dueDate}
                 onChange={(e) => handleInputChange('dueDate', e.target.value)}
                 type="text"
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: errorMessage.dueDate ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   paddingLeft: '0.5rem',
                 }}
               />
             </div>
+            <p>
+              {errorMessage.dueDate && (
+                <small className="p-error">{errorMessage.dueDate}</small>
+              )}
+            </p>
           </div>
         </div>
 
@@ -353,18 +377,23 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
             </span>
             <div className="mt-1">
               <InputComponent
-                value={scheduleDate}
+                value={workOrder.scheduleDate}
                 onChange={(e) => handleInputChange('scheduleDate', e.target.value)}
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: errorMessage.scheduleDate ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   paddingLeft: '0.5rem',
                 }}
               />
             </div>
+            <p>
+              {errorMessage.scheduleDate && (
+                <small className="p-error">{errorMessage.scheduleDate}</small>
+              )}
+            </p>
           </div>
 
           {/* Status */}
@@ -377,7 +406,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
             </span>
             <div className="mt-1">
               <Dropdown
-                value={workOrderStatus}
+                value={workOrder.workOrderStatus}
                 onChange={(e) => handleInputChange('workOrderStatus', e.target.value)}
                 options={workOrderStatusValue}
                 optionLabel="status"
@@ -385,19 +414,24 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: errorMessage.workOrderStatus ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
             </div>
+            <p>
+              {errorMessage.workOrderStatus && (
+                <small className="p-error">{errorMessage.workOrderStatus}</small>
+              )}
+            </p>
           </div>
 
           {/* Time (in minutes) */}
           <div className="card  ">
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
-                Time(in minutes)
+                Time <span>(in minutes)</span>
                 <p className="text-red-600">*</p>
               </div>
             </span>
@@ -406,7 +440,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
               style={{
                 width: '8vw',
                 height: '32px',
-                border: '1px solid #D5E1EA',
+                border: errorMessage.time ? '1px solid red' : '1px solid #D5E1EA',
                 borderRadius: '0.50rem',
               }}>
               <div className="flex justify-around text-center">
@@ -419,6 +453,11 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
                 </h1>
               </div>
             </div>
+             <p>
+              {errorMessage.time && (
+                <small className="p-error">{errorMessage.time}</small>
+              )}
+            </p>
           </div>
         </div>
 
@@ -433,12 +472,12 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
           <div className="mt-1">
             <div className="">
               <InputComponent
-                value={value}
-                onChange={(e) => setValue(e.target.value)}
+                value={workOrder.value}
+                onChange={(e) =>  handleInputChange('value', e.target.value)}
                 style={{
                   width: '740px',
                   height: '66px',
-                  border: '1px solid #D5E1EA',
+                  border: errorMessage.value ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   boxShadow: 'none',
                   paddingLeft: '0.5rem',
@@ -446,6 +485,11 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
               />
             </div>
           </div>
+          <p>
+              {errorMessage.value && (
+                <small className="p-error">{errorMessage.value}</small>
+              )}
+            </p>
         </div>
 
         {/* Save and Back buttons */}
