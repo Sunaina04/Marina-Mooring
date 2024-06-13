@@ -161,7 +161,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
       }
     } catch (error) {
       const { message, data } = error as ErrorResponse
-      setIsLoading(false)
+      setIsLoading(true)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
@@ -180,6 +180,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
     setIsLoading(true)
 
     try {
+      setIsLoading(true)
       const editBoatYardPayload = {
         boatyardId: boatyardId,
         boatyardName: boatyardName,
@@ -202,9 +203,9 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
       const { status, message } = response as BoatYardResponse
 
       if (status === 200 || status === 201) {
+        setIsLoading(false)
         closeModal()
         boatYardData()
-        setIsLoading(false)
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
@@ -222,7 +223,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
       }
     } catch (error) {
       const { message, data } = error as ErrorResponse
-      setIsLoading(false)
+      setIsLoading(true)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',

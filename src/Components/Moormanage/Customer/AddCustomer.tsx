@@ -10,7 +10,6 @@ import { Button } from 'primereact/button'
 import { CustomerDataProps } from '../../../Type/ComponentBasedType'
 import { Country, MetaData, Params, State } from '../../../Type/CommonType'
 import { CustomerResponse, ErrorResponse } from '../../../Type/ApiTypes'
-import { InputNumber } from 'primereact/inputnumber'
 import {
   CountriesData,
   StatesData,
@@ -491,6 +490,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     }
 
     try {
+      setIsLoading(true)
       const editCustomerPayload = {
         firstName: firstName,
         lastName: lastName,
@@ -509,6 +509,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       }).unwrap()
       const { status, message } = response as CustomerResponse
       if (status === 200 || status === 201) {
+        setIsLoading(false)
         closeModal()
         getCustomer()
         if (getCustomerRecord) {
@@ -521,6 +522,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           life: 3000,
         })
       } else {
+        setIsLoading(false);
         toastRef?.current?.show({
           severity: 'error',
           summary: 'Error',
@@ -529,6 +531,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         })
       }
     } catch (error) {
+      setIsLoading(true)
       const { message } = error as ErrorResponse
       toastRef?.current?.show({
         severity: 'error',
@@ -545,6 +548,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       return
     }
     try {
+      setIsLoading(true)
       const editMooringPayload = {
         firstName: firstName,
         lastName: lastName,
@@ -606,6 +610,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       }).unwrap()
       const { status, message } = response as CustomerResponse
       if (status === 200 || status === 201) {
+        setIsLoading(false)
         closeModal()
         getCustomer()
         if (getCustomerRecord) {
@@ -627,6 +632,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       }
     } catch (error) {
       const { message } = error as ErrorResponse
+      setIsLoading(true)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
@@ -836,6 +842,23 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               </div>
             </div>
           </div>
+          {isLoading && (
+            <ProgressSpinner
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '45%',
+                transform: 'translate(-50%, -50%)',
+                width: '50px',
+                height: '50px',
+              }}
+              strokeWidth="4"
+            />
+          )}
+
+
+
+
           <div className="mt-5">
             <div>
               <h1 className="font-medium text-sm text-[#000000]">
@@ -1022,6 +1045,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 </div>
               </div>
 
+
+
+
               <div>
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
@@ -1157,6 +1183,25 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   )}
                 </div>
               </div>
+
+
+              {isLoading && (
+                <ProgressSpinner
+                  style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '45%',
+                    transform: 'translate(-50%, -50%)',
+                    width: '50px',
+                    height: '50px',
+                  }}
+                  strokeWidth="4"
+                />
+              )}
+
+
+
+
 
               <div>
                 <div>

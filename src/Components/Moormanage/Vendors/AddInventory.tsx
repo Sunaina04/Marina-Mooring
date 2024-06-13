@@ -135,6 +135,7 @@ const AddInventory: React.FC<AddInventoryProps> = ({
     }
 
     try {
+      setIsLoading(true)
       const editPayload = {
         inventoryTypeId: formData?.type?.id,
         cost: formData?.cost,
@@ -149,6 +150,7 @@ const AddInventory: React.FC<AddInventoryProps> = ({
       }).unwrap()
       const { status, message } = response as CustomerResponse
       if (status === 200 || status === 201) {
+        setIsLoading(false)
         getInventoryHandler()
         closeModal()
         toastRef?.current?.show({
@@ -167,6 +169,7 @@ const AddInventory: React.FC<AddInventoryProps> = ({
       }
     } catch (error) {
       const { message } = error as ErrorResponse
+      setIsLoading(true)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',

@@ -259,7 +259,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       setFieldErrors(errors)
       return
     }
-
+    setIsLoading(true)
     const editUserPayload = {
       name,
       companyName: companyName,
@@ -274,7 +274,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       customerOwnerId: editCustomerMode ? '' : customerData?.customerOwnerId,
     }
 
-    setIsLoading(true)
     try {
       const response = await editCustomer({
         payload: editUserPayload,
@@ -282,6 +281,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       }).unwrap()
       const { status, message } = response as SaveUserResponse
       if (status === 200 || status === 201) {
+        setIsLoading(false)
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
@@ -296,7 +296,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           setIsCustomerUpdated(true)
         }
         setModalVisible(false)
-        setIsLoading(false)
         closeModal()
       } else {
         setIsLoading(false)
@@ -309,6 +308,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       }
     } catch (error) {
       const { message } = error as ErrorResponse
+      setIsLoading(true)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
@@ -657,7 +657,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   height: '32px',
                   border:
                     fieldErrors.email ||
-                    (errorMessage && errorMessage.includes('Email already present'))
+                      (errorMessage && errorMessage.includes('Email already present'))
                       ? '1px solid red'
                       : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
@@ -768,8 +768,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 {role?.id === 1 || role?.id === 2
                   ? ' '
                   : fieldErrors.selectedCustomerId && (
-                      <small className="p-error">{fieldErrors.selectedCustomerId}</small>
-                    )}
+                    <small className="p-error">{fieldErrors.selectedCustomerId}</small>
+                  )}
               </p>
             </div>
           )}
