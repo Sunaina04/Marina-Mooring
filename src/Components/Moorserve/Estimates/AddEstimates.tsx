@@ -19,6 +19,82 @@ const AddEstimates = () => {
   const [dueDate, setDueDate] = useState<string>('')
   const [scheduleDate, setScheduleDate] = useState<string>('')
   const [workOrderStatus, setWorkOrderStatus] = useState<string>('')
+  const [fieldError, setFieldError] = useState<{ [key: string]: string }>({})
+  const [workEstimate, setWorkEstimate] = useState<any>({
+    customerName: '',
+    mooringId: '',
+    boatyards: '',
+    assignedTo: '',
+    dueDate: '',
+    scheduleDate: '',
+    workOrderStatus: '',
+    value: '',
+  })
+
+  const validateFields = () => {
+    const errors: { [key: string]: string } = {}
+
+    if (!workEstimate.customerName) {
+      errors.customerName = 'Customer Name is required'
+    }
+
+    if (!workEstimate.mooringId) {
+      errors.mooringId = 'Mooring Id is required'
+    }
+
+    if (!workEstimate.boatyards) {
+      errors.boatyards = 'Boatyard is required'
+    }
+
+    if (!workEstimate.assignedTo) {
+      errors.assignedTo = 'Assigned to is required'
+    }
+
+    if (!workEstimate.dueDate) {
+      errors.dueDate = 'Due Date is required'
+    }
+
+    if (!workEstimate.scheduleDate) {
+      errors.scheduleDate = 'Schedule Date is required'
+    }
+
+    if (!workEstimate.workOrderStatus) {
+      errors.workOrderStatus = 'Work order Status is required'
+    }
+
+    if (!workEstimate.time) {
+      errors.time = 'Time is required'
+    }
+
+    if (!workEstimate.value) {
+      errors.value = 'Problem description is required'
+    }
+
+    setFieldError(errors)
+    return errors
+  }
+
+  const handleInputChange = (field: string, value: any) => {
+    setWorkEstimate({
+      ...workEstimate,
+      [field]: value,
+    })
+
+    if (fieldError[field]) {
+      setFieldError({
+        ...fieldError,
+        [field]: '',
+      })
+    }
+  }
+
+  const saveEstimate = () => {
+    const errors = validateFields()
+    if (Object.keys(errors).length > 0) {
+      setFieldError(errors)
+      return
+    }
+  }
 
   return (
     <div>
@@ -35,20 +111,26 @@ const AddEstimates = () => {
               </span>
               <div className="mt-1">
                 <Dropdown
-                  value={customerName}
-                  onChange={(e) =>
-                    setCustomerName(e.target.value)
-                  }
+                  value={workEstimate.customerName}
+                  onChange={(e) => handleInputChange('customerName', e.target.value)}
+                  options={[]}
+                  optionLabel="name"
+                  editable
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: '1px solid #D5E1EA',
+                    border: fieldError.customerName ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                     paddingLeft: '0.5rem',
                   }}
                 />
               </div>
+              <p>
+                {fieldError.customerName && (
+                  <small className="p-error">{fieldError.customerName}</small>
+                )}
+              </p>
             </div>
 
             {/* Customer ID */}
@@ -87,20 +169,23 @@ const AddEstimates = () => {
               </span>
               <div className="mt-1">
                 <Dropdown
-                  value={mooringId}
-                  onChange={(e) => setMooringId(e.value)}
+                  value={workEstimate.mooringId}
+                  onChange={(e) => handleInputChange('mooringId', e.target.value)}
                   options={[]}
                   optionLabel="name"
                   editable
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: '1px solid #D5E1EA',
+                    border: fieldError.mooringId ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                   }}
                 />
               </div>
+              <p>
+                {fieldError.mooringId && <small className="p-error">{fieldError.mooringId}</small>}
+              </p>
             </div>
           </div>
 
@@ -115,18 +200,24 @@ const AddEstimates = () => {
               </span>
               <div className="mt-1">
                 <Dropdown
-                  value={boatyards}
-                  onChange={(e) => setBoatyards(e.target.value)}
+                  value={workEstimate.boatyards}
+                  onChange={(e) => handleInputChange('boatyards', e.target.value)}
+                  options={[]}
+                  optionLabel="name"
+                  editable
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: '1px solid #D5E1EA',
+                    border: fieldError.boatyards ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                     paddingLeft: '0.5rem',
                   }}
                 />
               </div>
+              <p>
+                {fieldError.boatyards && <small className="p-error">{fieldError.boatyards}</small>}
+              </p>
             </div>
 
             {/* Assigned to */}
@@ -139,19 +230,24 @@ const AddEstimates = () => {
               </span>
               <div className="mt-1">
                 <Dropdown
-                  value={assignedTo}
-                  onChange={(e) => setAssignedTo(e.value)}
+                  value={workEstimate.assignedTo}
+                  onChange={(e) => handleInputChange('assignedTo', e.target.value)}
                   options={[]}
                   editable
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: '1px solid #D5E1EA',
+                    border: fieldError.assignedTo ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                   }}
                 />
               </div>
+              <p>
+                {fieldError.assignedTo && (
+                  <small className="p-error">{fieldError.assignedTo}</small>
+                )}
+              </p>
             </div>
 
             {/* Due Date */}
@@ -164,19 +260,20 @@ const AddEstimates = () => {
               </span>
               <div className="mt-1">
                 <InputComponent
-                  value={dueDate}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDueDate(e.target.value)}
+                  value={workEstimate.dueDate}
+                  onChange={(e) => handleInputChange('dueDate', e.target.value)}
                   type="text"
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: '1px solid #D5E1EA',
+                    border: fieldError.dueDate ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                     paddingLeft: '0.5rem',
                   }}
                 />
               </div>
+              <p>{fieldError.dueDate && <small className="p-error">{fieldError.dueDate}</small>}</p>
             </div>
           </div>
 
@@ -191,20 +288,23 @@ const AddEstimates = () => {
               </span>
               <div className="mt-1">
                 <InputComponent
-                  value={scheduleDate}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setScheduleDate(e.target.value)
-                  }
+                  value={workEstimate.scheduleDate}
+                  onChange={(e) => handleInputChange('scheduleDate', e.target.value)}
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: '1px solid #D5E1EA',
+                    border: fieldError.scheduleDate ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                     paddingLeft: '0.5rem',
                   }}
                 />
               </div>
+              <p>
+                {fieldError.scheduleDate && (
+                  <small className="p-error">{fieldError.scheduleDate}</small>
+                )}
+              </p>
             </div>
 
             {/* Status */}
@@ -217,20 +317,25 @@ const AddEstimates = () => {
               </span>
               <div className="mt-1">
                 <Dropdown
-                  value={workOrderStatus}
-                  onChange={(e) => setWorkOrderStatus(e.value)}
+                  value={workEstimate.workOrderStatus}
+                  onChange={(e) => handleInputChange('workOrderStatus', e.target.value)}
                   options={[]}
                   optionLabel="name"
                   editable
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: '1px solid #D5E1EA',
+                    border: fieldError.workOrderStatus ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                   }}
                 />
               </div>
+              <p>
+                {fieldError.workOrderStatus && (
+                  <small className="p-error">{fieldError.workOrderStatus}</small>
+                )}
+              </p>
             </div>
 
             {/* Time (in minutes) */}
@@ -246,7 +351,7 @@ const AddEstimates = () => {
                 style={{
                   width: '8vw',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: fieldError.time ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                 }}>
                 <div className="flex justify-around text-center">
@@ -259,6 +364,7 @@ const AddEstimates = () => {
                   </h1>
                 </div>
               </div>
+              <p>{fieldError.time && <small className="p-error">{fieldError.time}</small>}</p>
             </div>
           </div>
 
@@ -273,12 +379,12 @@ const AddEstimates = () => {
             <div className="mt-1">
               <div className="">
                 <InputComponent
-                  value={value}
-                  onChange={(e) => setValue(e.target.value)}
+                  value={workEstimate.value}
+                  onChange={(e) => handleInputChange('value', e.target.value)}
                   style={{
                     width: '740px',
                     height: '66px',
-                    border: '1px solid #D5E1EA',
+                    border: fieldError.value ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     boxShadow: 'none',
                     paddingLeft: '0.5rem',
@@ -286,6 +392,7 @@ const AddEstimates = () => {
                 />
               </div>
             </div>
+            <p>{fieldError.value && <small className="p-error">{fieldError.value}</small>}</p>
           </div>
 
           {/* Save and Back buttons */}
@@ -299,7 +406,7 @@ const AddEstimates = () => {
               bottom: '0px',
             }}>
             <Button
-              //  onClick={editMode ? updateWorkOrder : SaveWorkOrder}
+              onClick={saveEstimate}
               label={'Save'}
               style={{
                 width: '89px',

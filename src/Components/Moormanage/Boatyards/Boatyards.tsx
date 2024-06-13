@@ -89,6 +89,7 @@ const Boatyards = () => {
     setEditMode(false)
     setSelectedBoatYard('')
     setMooringRowData('')
+    setBoatyardRecord(false)
   }
 
   const ActionButtonColumn: ActionButtonColumnProps = {
