@@ -303,7 +303,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
                 value={assignedTo}
                 onChange={(e) => handleInputChange('assignedTo', e.target.value)}
                 options={technicians}
-                optionLabel="name"
+                optionLabel="technicianName"
                 editable
                 style={{
                   width: '230px',
