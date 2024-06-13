@@ -79,6 +79,9 @@ export interface MetaData {
   status: string
   description: string
   technicianName: string
+  firstName: string
+  lastName: string
+  boatyardName: string
 }
 
 export interface MetaDataCustomer {

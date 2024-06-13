@@ -10,13 +10,13 @@ import {
 } from '../../../Services/MoorServe/MoorserveMetaDataApi'
 import { ErrorResponse, MetaDataCustomerResponse, MetaDataResponse } from '../../../Type/ApiTypes'
 
-export const GetMooringBasedOnCustomerIdAndBoatyardId = () => {
+export const GetMooringBasedOnCustomerIdAndBoatyardId = (customerId: any, boatyardId: any) => {
   const [getMooringBasedOnCustomerIdAndBoatyardId] =
     useGetMooringBasedOnCustomerIdAndBoatyardIdMutation()
 
   const fetchMooringBasedOnCustomerIdAndBoatyardId = async (getData: any) => {
     try {
-      const response = await getData({})
+      const response = await getData({ customerId: customerId, boatyardId: boatyardId })
       const { status, content } = response.data as MetaDataResponse
       return status === 200 && Array.isArray(content) ? content : null
     } catch (error) {
@@ -34,12 +34,12 @@ export const GetMooringBasedOnCustomerIdAndBoatyardId = () => {
   return { getMooringBasedOnCustomerIdAndBoatyardIdData }
 }
 
-export const GetMooringsBasedOnCustomerId = () => {
-  const [getMooringsBasedOnCustomerId] = useGetMooringsBasedOnBoatyardIdMutation()
+export const GetMooringsBasedOnCustomerId = (customerId: any) => {
+  const [getMooringsBasedOnCustomerId] = useGetMooringsBasedOnCustomerIdMutation()
 
   const fetchMooringsBasedOnCustomerIdData = async (getData: any) => {
     try {
-      const response = await getData({})
+      const response = await getData({ customerId: customerId })
       const { status, content } = response.data as MetaDataResponse
       return status === 200 && Array.isArray(content) ? content : null
     } catch (error) {
@@ -57,12 +57,12 @@ export const GetMooringsBasedOnCustomerId = () => {
   return { getMooringsBasedOnCustomerIdData }
 }
 
-export const GetMooringsBasedOnBoatyardId = () => {
-  const [getMooringsBasedOnBoatyardId] = useGetMooringsBasedOnCustomerIdMutation()
+export const GetMooringsBasedOnBoatyardId = (boatyardId: any) => {
+  const [getMooringsBasedOnBoatyardId] = useGetMooringsBasedOnBoatyardIdMutation()
 
   const fetchMooringBasedOnCustomerIdAndBoatyardId = async (getData: any) => {
     try {
-      const response = await getData({})
+      const response = await getData({ boatyardId: boatyardId })
       const { status, content } = response.data as MetaDataResponse
       return status === 200 && Array.isArray(content) ? content : null
     } catch (error) {
@@ -80,12 +80,12 @@ export const GetMooringsBasedOnBoatyardId = () => {
   return { getMooringsBasedOnBoatyardIdData }
 }
 
-export const GetBoatyardBasedOnMooringId = () => {
+export const GetBoatyardBasedOnMooringId = (mooringId: any) => {
   const [BoatyardBasedOnMooringId] = useGetBoatyardBasedOnMooringIdMutation()
 
   const fetchBoatyardBasedOnMooringId = async (getData: any) => {
     try {
-      const response = await getData({})
+      const response = await getData({ mooringId: mooringId })
       const { status, content } = response.data as MetaDataResponse
       return status === 200 && Array.isArray(content) ? content : null
     } catch (error) {
@@ -101,12 +101,12 @@ export const GetBoatyardBasedOnMooringId = () => {
   return { getBoatyardBasedOnMooringIdData }
 }
 
-export const GetCustomerBasedOnMooringId = () => {
+export const GetCustomerBasedOnMooringId = (mooringId: any) => {
   const [CustomerBasedOnMooringId] = useGetCustomerBasedOnMooringIdMutation()
 
   const fetchCustomerBasedOnMooringId = async (getData: any) => {
     try {
-      const response = await getData({})
+      const response = await getData({ mooringId: mooringId })
       const { status, content } = response.data as MetaDataResponse
       return status === 200 && Array.isArray(content) ? content : null
     } catch (error) {
