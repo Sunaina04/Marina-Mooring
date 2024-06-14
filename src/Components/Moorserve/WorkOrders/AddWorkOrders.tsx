@@ -35,6 +35,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   editMode,
   setVisible,
   toastRef,
+  closeModal,
 }) => {
   const selectedCustomerId = useSelector(selectCustomerId)
   const [workOrder, setWorkOrder] = useState<any>({
@@ -167,9 +168,14 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       dueDate: workOrderData?.dueDate,
       scheduleDate: workOrderData?.scheduledDate,
       workOrderStatus: workOrderData?.workOrderStatusDto?.status,
-      // time: string
       value: workOrderData?.problem,
     }))
+    const parseTime = (timeString: any) => {
+      const [hours, minutes, seconds] = timeString.split(':').map(Number)
+      return { minutes: hours * 60 + minutes, seconds }
+    }
+    const parsedTime = parseTime(workOrderData.time)
+    setTime(parsedTime)
   }
 
   const handleIncrement = () => {
@@ -213,16 +219,15 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       setErrorMessage(errors)
       return
     }
-
     const payload = {
       mooringId: workOrder?.mooringId?.id,
       customerId: workOrder?.customerName?.id,
       boatyardId: workOrder?.boatyards?.id,
       technicianId: workOrder?.assignedTo?.id,
       dueDate: workOrder?.dueDate,
-      scheduleDate: workOrder?.scheduleDate,
+      scheduledDate: workOrder?.scheduleDate,
       workOrderStatusId: workOrder?.workOrderStatus?.id,
-      // time: string
+      time: '00:' + formatTime(time.minutes, time.seconds),
       problem: workOrder?.value,
     }
 
@@ -230,6 +235,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       const response = await saveWorkOrder(payload).unwrap()
       const { status, message } = response as WorkOrderResponse
       if (status === 200 || status === 201) {
+        closeModal()
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
@@ -266,24 +272,24 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     try {
       setIsLoading(true)
       const editCustomerPayload = {
-        mooringId: workOrder?.mooringId?.id,
-        customerId: workOrder?.customerName?.id,
-        boatyardId: workOrder?.boatyards?.id,
-        technicianId: workOrder?.assignedTo?.id,
-        dueDate: workOrder?.dueDate,
-        scheduleDate: workOrder?.scheduleDate,
-        workOrderStatusId: workOrder?.workOrderStatus?.id,
-        // time: string
-        problem: workOrder?.value,
+        mooringId: workOrder?.mooringId?.id || workOrderData?.mooringResponseDto?.id,
+        customerId: workOrder?.customerName?.id || workOrderData?.customerResponseDto?.id,
+        boatyardId: workOrder?.boatyards?.id || workOrderData?.boatyardResponseDto?.id,
+        technicianId: workOrder?.assignedTo?.id || workOrderData?.technicianUserResponseDto?.id,
+        dueDate: workOrder?.dueDate || workOrderData?.dueDate,
+        scheduledDate: workOrder?.scheduleDate || workOrderData?.scheduledDate,
+        workOrderStatusId: workOrder?.workOrderStatus?.id || workOrderData?.workOrderStatusDto?.id,
+        time: '00:' + formatTime(time.minutes, time.seconds) || workOrderData?.time,
+        problem: workOrder?.value || workOrderData?.problem,
       }
       const response = await updateWorkOrder({
         payload: editCustomerPayload,
-        // id: customer?.id,
+        id: workOrderData?.id,
       }).unwrap()
       const { status, message } = response as WorkOrderResponse
       if (status === 200 || status === 201) {
         setIsLoading(false)
-
+        closeModal()
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
@@ -739,7 +745,13 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
             bottom: '0px',
           }}>
           <Button
-            onClick={SaveWorkOrder}
+            onClick={() => {
+              if (editMode) {
+                UpdateWorkOrder()
+              } else {
+                SaveWorkOrder()
+              }
+            }}
             label={'Save'}
             style={{
               width: '89px',

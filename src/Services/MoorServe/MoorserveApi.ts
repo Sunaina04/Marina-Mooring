@@ -15,7 +15,7 @@ const MoorserveApi = userApi.injectEndpoints({
     //Get Work Order By Id
     getWorkOrderById: builder.mutation({
       query: ({ id }: { id?: string }) => ({
-        url: `api/v1/workorder/${id}`,
+        url: `api/v1/workOrder/${id}`,
         method: 'GET',
       }),
     }),
@@ -44,7 +44,7 @@ const MoorserveApi = userApi.injectEndpoints({
     //Edit WorkOrder
     updateWorkOrder: builder.mutation({
       query: ({ payload, id }: { payload: WorkOrderPayload; id: number }) => ({
-        url: `api/v1/workorder/${id}`,
+        url: `api/v1/workOrder/${id}`,
         method: 'PUT',
         body: payload,
       }),
@@ -53,7 +53,7 @@ const MoorserveApi = userApi.injectEndpoints({
     //Delete Work Order
     deleteWorkOrder: builder.mutation({
       query: ({ id }: { id?: string }) => ({
-        url: `api/v1/workorder/${id}`,
+        url: `api/v1/workOrder/${id}`,
         method: 'DELETE',
       }),
     }),

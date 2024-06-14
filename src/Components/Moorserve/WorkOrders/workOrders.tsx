@@ -132,6 +132,8 @@ const WorkOrders = () => {
 
   const handleModalClose = () => {
     setVisible(false)
+    setEditMode(false)
+    getWorkOrderData()
   }
   const handleButtonClick = () => {
     setVisible(true)
@@ -160,6 +162,7 @@ const WorkOrders = () => {
                   editMode={editMode}
                   setVisible={setVisible}
                   toastRef={toast}
+                  closeModal={handleModalClose}
                 />
               }
               headerText={<h1 className="text-xl font-extrabold text-black ml-4">Work Order</h1>}

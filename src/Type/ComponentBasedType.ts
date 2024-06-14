@@ -123,6 +123,7 @@ export interface WorkOrderProps {
   editMode: boolean
   setVisible: React.Dispatch<React.SetStateAction<boolean>>
   toastRef?: any
+  closeModal: () => void
 }
 
 export interface PermissionData {

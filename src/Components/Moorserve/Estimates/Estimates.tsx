@@ -22,6 +22,7 @@ const Estimates = () => {
 
   const handleModalClose = () => {
     setIsModalOpen(false)
+    setEditMode(false)
   }
 
   const columnStyle = {
@@ -103,6 +104,7 @@ const Estimates = () => {
                 workOrderData={selectedCustomer}
                 editMode={editMode}
                 setVisible={setIsModalOpen}
+                closeModal={handleModalClose}
               />
             }
             headerText={<h1 className="text-xl font-extrabold text-black ml-4">Estimate Form</h1>}
