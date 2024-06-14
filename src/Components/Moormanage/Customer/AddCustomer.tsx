@@ -116,7 +116,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     const phoneRegex = /^\d{10}$/
     const nameRegex = /^[a-zA-Z ]+$/
     const zipCodeRegex = /^\d+$/
-    const numberRegex = /^\d+$/;
+    const numberRegex = /^\d+$/
     const errors: { [key: string]: string } = {}
     let firstError = ''
 
@@ -171,11 +171,11 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     }
 
     if (!formData.depthAtMeanHighWater) {
-      errors.depthAtMeanHighWater = 'Depth at Mean High Water is required';
-      if (!firstError) firstError = 'depthAtMeanHighWater';
+      errors.depthAtMeanHighWater = 'Depth at Mean High Water is required'
+      if (!firstError) firstError = 'depthAtMeanHighWater'
     } else if (!numberRegex.test(String(formData.depthAtMeanHighWater))) {
-      errors.depthAtMeanHighWater = 'Depth at Mean High Water must be a number';
-      if (!firstError) firstError = 'depthAtMeanHighWater';
+      errors.depthAtMeanHighWater = 'Depth at Mean High Water must be a number'
+      if (!firstError) firstError = 'depthAtMeanHighWater'
     }
 
     if (!selectedState) {
@@ -218,7 +218,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     setFieldErrors(errors)
     return errors
   }
-
 
   const validateCustomerFields = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -459,7 +458,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
-          detail: 'Customer Saved successfully',
+          detail: message,
           life: 3000,
         })
         setIsLoading(false)
@@ -522,7 +521,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           life: 3000,
         })
       } else {
-        setIsLoading(false);
+        setIsLoading(false)
         toastRef?.current?.show({
           severity: 'error',
           summary: 'Error',
@@ -619,7 +618,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
-          detail: 'Mooring Updated successfully',
+          detail: message,
           life: 3000,
         })
       } else {
@@ -856,9 +855,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             />
           )}
 
-
-
-
           <div className="mt-5">
             <div>
               <h1 className="font-medium text-sm text-[#000000]">
@@ -1045,9 +1041,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 </div>
               </div>
 
-
-
-
               <div>
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
@@ -1184,7 +1177,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 </div>
               </div>
 
-
               {isLoading && (
                 <ProgressSpinner
                   style={{
@@ -1198,10 +1190,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   strokeWidth="4"
                 />
               )}
-
-
-
-
 
               <div>
                 <div>
@@ -1442,7 +1430,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       style={{
                         width: '230px',
                         height: '32px',
-                        border: fieldErrors.depthAtMeanHighWater ? '1px solid red' : '1px solid #D5E1EA',
+                        border: fieldErrors.depthAtMeanHighWater
+                          ? '1px solid red'
+                          : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.8rem',
                       }}
@@ -1450,7 +1440,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     {fieldErrors.depthAtMeanHighWater && (
                       <small className="p-error">{fieldErrors.depthAtMeanHighWater}</small>
                     )}
-
                   </div>
                 </div>
               </div>

@@ -239,7 +239,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
-          detail: 'Customer Saved successfully',
+          detail: message,
           life: 3000,
         })
         setIsLoading(false)
@@ -293,7 +293,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
-          detail: 'Customer Updated successfully',
+          detail: message,
           life: 3000,
         })
       } else {
