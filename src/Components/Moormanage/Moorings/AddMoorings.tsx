@@ -57,7 +57,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   const [bottomChainCondition, setbottomChainCondition] = useState<MetaData[]>([])
   const [shackleSwivelData, setShackleSwivelData] = useState<MetaData[]>([])
   const [pennantData, setPennantData] = useState<MetaData[]>([])
-  const [customerName, setcustomerName] = useState<MetaDataCustomer[]>([])
+  const [customerName, setcustomerName] = useState<any[]>([])
+  console.log('name', customerName)
+
   const [customerId, setCustomerId] = useState<string>('')
   const [boatyardsName, setBoatYardsName] = useState<MetaData[]>([])
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
@@ -127,8 +129,13 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     if (typeOfBoatTypeData !== null) {
       setType(typeOfBoatTypeData)
     }
+
     if (customersData !== null) {
-      setcustomerName(customersData)
+      const firstLastName = customersData.map((item) => ({
+        label: item.firstName + ' ' + item.lastName,
+        value: item.id,
+      }))
+      setcustomerName(firstLastName)
     }
 
     if (boatYardName !== null) {
@@ -471,7 +478,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 value={formData?.customerName}
                 onChange={(e) => handleInputChange('customerName', e.target.value)}
                 options={customerName}
-                optionLabel="firstName"
+                optionLabel="label"
+                optionValue="value"
                 editable
                 placeholder="Select"
                 style={{
@@ -670,7 +678,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               strokeWidth="4"
             />
           )}
-
 
           <div>
             <span className="font-medium text-sm text-[#000000]">
