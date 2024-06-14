@@ -1,4 +1,3 @@
-
 * input::placeholder {
   color: #d5e1ea !important;
   font-size: small;
@@ -114,6 +113,6 @@ body {
   }
 }
 
-/* .p-highlight {
-  background-color: #d5e1ea !important; 
-} */
+.p-highlight {
+  background-color: #d5e1ea !important;
+}

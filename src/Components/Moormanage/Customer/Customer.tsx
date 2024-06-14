@@ -133,7 +133,6 @@ const Customer = () => {
   }
 
   const handleCustomerTableRowClick = (rowData: any) => {
-    
     setCustomerRecord(true)
     setCustomerId(rowData.data.id)
     getCustomersWithMooring(rowData.data.id)
@@ -185,7 +184,7 @@ const Customer = () => {
 
   const MooringTableColumnStyle = {
     backgroundColor: '#FFFFFF',
-    fontSize: '10px',
+    fontSize: '12px',
     color: '#000000',
     fontweight: '700',
   }

@@ -595,6 +595,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   paddingLeft: '0.5rem',
+                  paddingRight: '0.5rem',
                 }}
               />
             </div>
@@ -624,6 +625,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   paddingLeft: '0.5rem',
+                  paddingRight: '0.5rem',
                 }}
               />
             </div>

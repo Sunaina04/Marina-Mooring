@@ -40,17 +40,14 @@ const Boatyards = () => {
   const role = userData?.role?.id
   const [modalVisible, setModalVisible] = useState(false)
   const [boatyardsData, setboatyardsData] = useState<BoatYardPayload[]>([])
-
-  // console.log("boatyardsData", boatyardsData[0].id);
-
   const [mooringWithBoatyardsData, setMooringWithBoatyardsData] = useState<
     MooringWithBoatYardResponse[]
   >([])
   const [filteredboatyardsData, setFilteredboatyardsData] = useState<BoatYardPayload[]>([])
   const [expandedRows, setExpandedRows] = useState<any>()
   const [selectedBoatYard, setSelectedBoatYard] = useState<any>()
-
   const [selectedProduct, setSelectedProduct] = useState()
+  const [selectedMooring, setSelectedMooring] = useState()
   const [editMode, setEditMode] = useState(false)
   const [searchText, setSearchText] = useState('')
   const [searchFieldText, setSearchFieldText] = useState('')
@@ -82,7 +79,6 @@ const Boatyards = () => {
     setSearchText('')
     setSearchFieldText(e.target.value)
   }
-
 
   const handleButtonClick = () => {
     setModalVisible(true)
@@ -121,11 +117,11 @@ const Boatyards = () => {
 
   const tableColumnsTechnicians = useMemo(
     () => [
-      {
-        id: 'id',
-        label: 'ID',
-        style: techniciansTableStyle,
-      },
+      // {
+      //   id: 'id',
+      //   label: 'ID',
+      //   style: techniciansTableStyle,
+      // },
       {
         id: 'mainContact',
         label: 'Main Contact',
@@ -202,33 +198,33 @@ const Boatyards = () => {
   }
 
   const columnStyle = {
-    backgroundColor: '#FFFFFF',
-    fontSize: '13px',
-    color: 'black',
-    fontWeight: '500',
-    borderBottom: '1px solid #D5E1EA ',
+    backgroundColor: '#00426F',
+    fontSize: '12px',
+    fontWeight: '700',
+    color: '#FFFFFF',
+    padding: '15px',
   }
 
   const boatYardColumns = useMemo(
     () => [
       {
-        field: 'id',
-        header: 'ID',
+        id: 'boatyardId',
+        label: 'ID',
         style: columnStyle,
       },
       {
-        field: 'boatyardName',
-        header: 'Name',
+        id: 'boatyardName',
+        label: 'Name',
         style: columnStyle,
       },
       {
-        field: 'emailAddress',
-        header: 'Email Address',
+        id: 'emailAddress',
+        label: 'Email Address',
         style: columnStyle,
       },
       {
-        field: 'mooringInventoried',
-        header: 'Total Mooring Inventoried',
+        id: 'mooringInventoried',
+        label: 'Total Mooring Inventoried',
         style: columnStyle,
       },
       // {
@@ -238,11 +234,11 @@ const Boatyards = () => {
       //   style: { backgroundColor: '#FFFFFF', borderBottom: '1px solid #D5E1EA ' },
       // },
     ],
-    [allowExpansion],
+    // [allowExpansion],
+    [],
   )
 
   const handleRowClickBoatYardDetail = (rowData: any) => {
-    // alert("hi")
     setIsLoader(true)
     setSelectedBoatYard('')
     setMooringWithBoatyardsData([])
@@ -450,7 +446,7 @@ const Boatyards = () => {
               fontSize: '12px',
               color: '#000000',
             }}
-            data={mooringWithBoatyardsData ? mooringWithBoatyardsData : undefined}
+            data={mooringWithBoatyardsData}
             columns={tableColumnsTechnicians}
             actionButtons={ActionButtonColumn}
             selectionMode="single"
@@ -480,7 +476,7 @@ const Boatyards = () => {
         </div>
       </>
     )
-  }, [selectedBoatYard, boatyardsData])
+  }, [selectedBoatYard, boatyardsData, mooringWithBoatyardsData])
 
   return (
     <div className={modalVisible ? 'backdrop-blur-lg' : ''}>
@@ -575,7 +571,7 @@ const Boatyards = () => {
             }}
           />
           <div className="bg-#00426F overflow-x-hidden  h-[500px] mt-[3px] ml-[15px] mr-[15px] table-container  ">
-            <DataTableWithToogle
+            <DataTableComponent
               tableStyle={{
                 fontSize: '12px',
                 color: '#000000',
@@ -591,9 +587,9 @@ const Boatyards = () => {
               // expandedRows={expandedRows}
               selectionMode="single"
               onSelectionChange={(e: any) => {
-                setSelectedProduct(e.value)
+                setSelectedMooring(e.value)
               }}
-              selection={selectedProduct}
+              selection={selectedMooring}
               rowStyle={(rowData: any) => rowData}
               dataKey="id"
               columns={boatYardColumns}

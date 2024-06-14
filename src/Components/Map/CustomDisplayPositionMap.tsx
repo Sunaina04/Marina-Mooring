@@ -1,8 +1,8 @@
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
-import L from 'leaflet'
+import L, { Map } from 'leaflet'
 import './CustomMap.css'
 import { CustomDisplayPositionMapProps } from '../../Type/Components/MapTypes'
-import { useRef } from 'react'
+import { LegacyRef, useRef, useState } from 'react'
 import { DefaultIcon } from './DefaultIcon'
 
 const CustomDisplayPositionMap: React.FC<CustomDisplayPositionMapProps> = ({
@@ -11,6 +11,7 @@ const CustomDisplayPositionMap: React.FC<CustomDisplayPositionMapProps> = ({
   popUpMessage,
   style,
 }) => {
+  const [map, setMap] = useState<LegacyRef<Map> | undefined>()
   const markerRef = useRef(null)
   return (
     <MapContainer
