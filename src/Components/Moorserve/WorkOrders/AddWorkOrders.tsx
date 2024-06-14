@@ -177,7 +177,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     setTime(parsedTime)
   }
 
- 
   const handleIncrement = () => {
     let { minutes, seconds } = time
     if (seconds < 59) {
@@ -242,7 +241,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
-          detail: message,
+          detail: 'Customer Saved successfully',
           life: 3000,
         })
         setIsLoading(false)
@@ -296,7 +295,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
-          detail: message,
+          detail: 'Customer Updated successfully',
           life: 3000,
         })
       } else {
