@@ -29,6 +29,7 @@ import {
 } from '../../CommonComponent/MetaDataComponent/MetaDataApi'
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
+import { Calendar } from 'primereact/calendar'
 
 const AddWorkOrders: React.FC<WorkOrderProps> = ({
   workOrderData,
@@ -132,9 +133,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       errors.workOrderStatus = 'Work order Status is required'
     }
 
-    // if (!workOrder.time) {
-    //   errors.time = 'Time is required'
-    // }
+    if (time.minutes === 0 && time.seconds === 0) errors.time = 'Time is required.'
 
     if (!workOrder.value) {
       errors.value = 'Problem description is required'
@@ -178,38 +177,42 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     setTime(parsedTime)
   }
 
+ 
   const handleIncrement = () => {
-    setTime((prevTime) => {
-      if (prevTime.seconds === 59) {
-        return { minutes: prevTime.minutes + 1, seconds: 0 }
-      }
-      return { ...prevTime, seconds: prevTime.seconds + 1 }
-    })
+    let { minutes, seconds } = time
+    if (seconds < 59) {
+      seconds += 1
+    } else {
+      minutes += 1
+      seconds = 0
+    }
+    setTime({ minutes, seconds })
+    setErrorMessage((prevError) => ({ ...prevError, time: '' }))
   }
 
   const handleDecrement = () => {
-    setTime((prevTime) => {
-      if (prevTime.seconds === 0) {
-        if (prevTime.minutes > 0) {
-          return { minutes: prevTime.minutes - 1, seconds: 59 }
-        }
-        return { minutes: 0, seconds: 0 }
-      }
-      return { ...prevTime, seconds: prevTime.seconds - 1 }
-    })
+    let { minutes, seconds } = time
+    if (seconds > 0) {
+      seconds -= 1
+    } else if (minutes > 0) {
+      minutes -= 1
+      seconds = 59
+    }
+    setTime({ minutes, seconds })
+    setErrorMessage((prevError) => ({ ...prevError, time: '' }))
   }
 
   const handleTimeChange = (event: { target: { value: any } }) => {
-    const value = event.target.value
-    const [min, sec] = value.split(':').map(Number)
+    const [min, sec] = event.target.value.split(':').map(Number)
     if (!isNaN(min) && !isNaN(sec) && min >= 0 && sec >= 0 && sec < 60) {
       setTime({ minutes: min, seconds: sec })
+      setErrorMessage((prevError) => ({ ...prevError, time: '' }))
     }
   }
 
   const formatTime = (minutes: number, seconds: number) => {
-    const formattedMinutes = String(minutes).padStart(2, '0')
-    const formattedSeconds = String(seconds).padStart(2, '0')
+    const formattedMinutes = minutes.toString().padStart(2, '0')
+    const formattedSeconds = seconds.toString().padStart(2, '0')
     return `${formattedMinutes}:${formattedSeconds}`
   }
 
@@ -582,10 +585,10 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
               </div>
             </span>
             <div className="mt-1">
-              <InputComponent
+              <Calendar
                 value={workOrder.dueDate}
                 onChange={(e) => handleInputChange('dueDate', e.target.value)}
-                type="text"
+                // type="text"
                 style={{
                   width: '230px',
                   height: '32px',
@@ -612,7 +615,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
               </div>
             </span>
             <div className="mt-1">
-              <InputComponent
+              <Calendar
                 value={workOrder.scheduleDate}
                 onChange={(e) => handleInputChange('scheduleDate', e.target.value)}
                 style={{
@@ -666,8 +669,8 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
           {/* Time (in minutes) */}
           <div className="card  ">
             <span>
-              <div className="flex gap-1">
-                <span className="font-medium text-sm text-[#000000] mt-0.5"> Time </span>{' '}
+              <div className="flex flex-wrap gap-1">
+                <p className="font-medium text-sm text-[#000000] mt-0.5"> Time </p>
                 <span>(in minutes)</span>
                 <p className="text-red-600">*</p>
               </div>
@@ -675,14 +678,15 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
             <div
               className=""
               style={{
-                width: '8vw',
+                // width: '8vw',
+                maxWidth: '100%',
                 height: '32px',
                 border: errorMessage.time ? '1px solid red' : '1px solid #D5E1EA',
                 borderRadius: '0.50rem',
               }}>
               <div className="flex justify-around text-center">
                 <h1
-                  className="mt-1 p-[0.1rem] bg-slate-400 rounded-md cursor-pointer"
+                  className="mt-1 p-[0.1rem] bg-slate-300 rounded-md cursor-pointer"
                   onClick={handleDecrement}>
                   <GrFormSubtract />
                 </h1>
@@ -691,10 +695,13 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                   value={formatTime(time.minutes, time.seconds)}
                   onChange={handleTimeChange}
                   className="text-center w-16"
-                  style={{ boxShadow: 'none' }}
+                  style={{
+                    boxShadow: 'none',
+                    //  border: errorMessage.time ? '1px solid red' : '1px solid #D5E1EA',
+                  }}
                 />
                 <h1
-                  className="mt-1 p-[0.1rem] bg-slate-400 rounded-md cursor-pointer"
+                  className="mt-1 p-[0.1rem] bg-slate-300 rounded-md cursor-pointer"
                   onClick={handleIncrement}>
                   <IoIosAdd />
                 </h1>
