@@ -133,6 +133,7 @@ const Customer = () => {
   }
 
   const handleCustomerTableRowClick = (rowData: any) => {
+    
     setCustomerRecord(true)
     setCustomerId(rowData.data.id)
     getCustomersWithMooring(rowData.data.id)

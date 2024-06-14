@@ -84,6 +84,21 @@ export interface MetaData {
   boatyardName: string
 }
 
+export interface MetaDataTechnician {
+  id: number
+  name: string
+  email: string
+  phoneNumber: string
+  customerOwnerId: number
+  roleResponseDto: Role
+  stateResponseDto: State
+  countryResponseDto: Country
+  street: string
+  apt: string
+  zipCode: string
+  companyName: string
+}
+
 export interface MetaDataCustomer {
   id: number
   firstName: string

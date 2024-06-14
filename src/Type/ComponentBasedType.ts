@@ -122,6 +122,7 @@ export interface WorkOrderProps {
   workOrderData: WorkOrderPayload
   editMode: boolean
   setVisible: React.Dispatch<React.SetStateAction<boolean>>
+  toastRef?: any
 }
 
 export interface PermissionData {

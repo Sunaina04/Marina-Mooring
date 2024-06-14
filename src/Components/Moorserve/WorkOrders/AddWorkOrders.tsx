@@ -4,7 +4,7 @@ import { InputText } from 'primereact/inputtext'
 import { Dropdown } from 'primereact/dropdown'
 import { IoIosAdd } from 'react-icons/io'
 import { GrFormSubtract } from 'react-icons/gr'
-import { WorkOrderResponse } from '../../../Type/ApiTypes'
+import { ErrorResponse, WorkOrderResponse } from '../../../Type/ApiTypes'
 import {
   useAddWorkOrderMutation,
   useUpdateWorkOrderMutation,
@@ -22,7 +22,7 @@ import {
   GetTechnicians,
   GetWorkOrderStatus,
 } from '../../CommonComponent/MetaDataComponent/MoorserveMetaDataApi'
-import { MetaData, MetaDataCustomer } from '../../../Type/CommonType'
+import { MetaData, MetaDataCustomer, MetaDataTechnician } from '../../../Type/CommonType'
 import {
   BoatyardNameData,
   CustomersData,
@@ -30,7 +30,12 @@ import {
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 
-const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setVisible }) => {
+const AddWorkOrders: React.FC<WorkOrderProps> = ({
+  workOrderData,
+  editMode,
+  setVisible,
+  toastRef,
+}) => {
   const selectedCustomerId = useSelector(selectCustomerId)
   const [workOrder, setWorkOrder] = useState<any>({
     customerName: '',
@@ -58,12 +63,13 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
   const [mooringBasedOnCustomerId, setMooringBasedOnCustomerId] = useState<MetaData[]>()
   const [boatyardBasedOnMooringId, setBoatyardBasedOnMooringId] = useState<MetaData[]>()
   const [customerBasedOnMooringId, setCustomerBasedOnMooringId] = useState<MetaData[]>()
-  const [technicians, setTechnicians] = useState<MetaData[]>()
+  const [technicians, setTechnicians] = useState<MetaDataTechnician[]>()
   const [moorings, setMoorings] = useState<MetaData[]>()
   const [workOrderStatusValue, setWorkOrderStatusValue] = useState<MetaData[]>()
   const [customerNameValue, setcustomerNameValue] = useState<MetaDataCustomer[]>([])
   const [boatyardsName, setBoatYardsName] = useState<MetaData[]>([])
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
+  const [isLoading, setIsLoading] = useState(false)
 
   const { getMooringBasedOnCustomerIdAndBoatyardIdData } = GetMooringBasedOnCustomerIdAndBoatyardId(
     workOrder?.customerName?.id && workOrder?.customerName?.id,
@@ -134,9 +140,9 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
       errors.workOrderStatus = 'Work order Status is required'
     }
 
-    if (!workOrder.time) {
-      errors.time = 'Time is required'
-    }
+    // if (!workOrder.time) {
+    //   errors.time = 'Time is required'
+    // }
 
     if (!workOrder.value) {
       errors.value = 'Problem description is required'
@@ -160,11 +166,53 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
     }
   }
 
-  const SaveWorkOrder = () => {
+  const SaveWorkOrder = async () => {
     const errors = validateFields()
     if (Object.keys(errors).length > 0) {
       setErrorMessage(errors)
       return
+    }
+
+    const payload = {
+      mooringId: workOrder?.mooringId?.id,
+      customerId: workOrder?.customerName?.id,
+      boatyardId: workOrder?.boatyards?.id,
+      technicianId: workOrder?.assignedTo?.id,
+      dueDate: workOrder?.dueDate,
+      scheduleDate: workOrder?.scheduleDate,
+      workOrderStatusId: workOrder?.workOrderStatus?.id,
+      // time: string
+      // problem: string
+    }
+
+    try {
+      const response = await saveWorkOrder(payload).unwrap()
+      const { status, message } = response as WorkOrderResponse
+      if (status === 200 || status === 201) {
+        toastRef?.current?.show({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Customer Saved successfully',
+          life: 3000,
+        })
+        setIsLoading(false)
+      } else {
+        toastRef?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+      }
+    } catch (error) {
+      const { message } = error as ErrorResponse
+      setIsLoading(true)
+      toastRef?.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: message,
+        life: 3000,
+      })
     }
   }
 
@@ -437,7 +485,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
                 value={workOrder.assignedTo}
                 onChange={(e) => handleInputChange('assignedTo', e.target.value)}
                 options={technicians}
-                optionLabel="technicianName"
+                optionLabel="name"
                 editable
                 style={{
                   width: '230px',
