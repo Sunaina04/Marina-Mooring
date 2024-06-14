@@ -2,7 +2,6 @@ import { useMemo, useState } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import CustomModal from '../../CustomComponent/CustomModal'
-import AddEstimates from './AddEstimates'
 import { InputText } from 'primereact/inputtext'
 import { EstimateProps } from '../../../Type/ComponentBasedType'
 import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
@@ -10,44 +9,12 @@ import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 import Header from '../../Layout/LayoutComponents/Header'
 import { EstimateData } from '../../Utils/CustomData'
+import AddWorkOrders from '../WorkOrders/AddWorkOrders'
 
 const Estimates = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [boatData, setBoatData] = useState<EstimateProps[]>([
-    {
-      customerId: '1',
-      customerName: 'jon Smith',
-      mooringId: '#75677',
-      boatyard: 'pioneer',
-      assigned: 'Clara Ortiz',
-      duedate: '15,March 2024',
-    },
-
-    {
-      customerId: '1',
-      customerName: 'jon Smith',
-      mooringId: '#75677',
-      boatyard: 'pioneer',
-      assigned: 'Clara Ortiz',
-      duedate: '15,March 2024',
-    },
-    {
-      customerId: '1',
-      customerName: 'jon Smith',
-      mooringId: '#75677',
-      boatyard: 'pioneer',
-      assigned: 'Clara Ortiz',
-      duedate: '15,March 2024',
-    },
-    {
-      customerId: '1',
-      customerName: 'jon Smith',
-      mooringId: '#75677',
-      boatyard: 'pioneer',
-      assigned: 'Clara Ortiz',
-      duedate: '15,March 2024',
-    },
-  ])
+  const [selectedCustomer, setSelectedCustomer] = useState<any>(undefined)
+  const [editMode, setEditMode] = useState(false)
 
   const handleButtonClick = () => {
     setIsModalOpen(true)
@@ -131,7 +98,13 @@ const Estimates = () => {
         <div className="items-center">
           <CustomModal
             buttonText={'ADD NEW'}
-            children={<AddEstimates />}
+            children={
+              <AddWorkOrders
+                workOrderData={selectedCustomer}
+                editMode={editMode}
+                setVisible={setIsModalOpen}
+              />
+            }
             headerText={<h1 className="text-xl font-extrabold text-black ml-4">Estimate Form</h1>}
             visible={isModalOpen}
             onClick={handleButtonClick}

@@ -135,7 +135,7 @@ const Forms = () => {
     <>
       <Header header="MOORSERVE/Forms" />
 
-      {/* <div className="flex justify-end">
+     <div className="flex justify-end">
         <div className=" mr-16 mt-10">
           <CustomModal
             buttonText={'Upload New'}
@@ -233,7 +233,7 @@ const Forms = () => {
             </div>
           }
         />
-      </div> */}
+      </div> 
     </>
   )
 }

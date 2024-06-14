@@ -51,6 +51,8 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
   const [dueDate, setDueDate] = useState<string>('')
   const [scheduleDate, setScheduleDate] = useState<string>('')
   const [workOrderStatus, setWorkOrderStatus] = useState<string>('')
+  const [minutes, setMinutes] = useState(0)
+  const [seconds, setSeconds] = useState(0)
   const [basedOnCustomerIdAndBoatyardId, setbasedOnCustomerIdAndBoatyardId] = useState<MetaData[]>()
   const [mooringsBasedOnBoatyardIdData, setMooringsBasedOnBoatyardIdData] = useState<MetaData[]>()
   const [mooringBasedOnCustomerId, setMooringBasedOnCustomerId] = useState<MetaData[]>()
@@ -259,6 +261,43 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
       fetchDataAndUpdateBasedOnCuatomerIdAndBoatyardId()
     }
   }, [workOrder?.customerName?.id, workOrder?.boatyards?.id])
+  const handleIncrement = () => {
+    setSeconds((prevSeconds) => {
+      if (prevSeconds === 59) {
+        setMinutes((prevMinutes) => prevMinutes + 1)
+        return 0
+      }
+      return prevSeconds + 1
+    })
+  }
+
+  const handleDecrement = () => {
+    setSeconds((prevSeconds) => {
+      if (prevSeconds === 0) {
+        if (minutes > 0) {
+          setMinutes((prevMinutes) => prevMinutes - 1)
+          return 59
+        }
+        return 0
+      }
+      return prevSeconds - 1
+    })
+  }
+
+  const handleTimeChange = (event: { target: { value: any } }) => {
+    const value = event.target.value
+    const [min, sec] = value.split(':').map(Number)
+    if (!isNaN(min) && !isNaN(sec) && min >= 0 && sec >= 0 && sec < 60) {
+      setMinutes(min)
+      setSeconds(sec)
+    }
+  }
+
+  const formatTime = (minutes: number, seconds: number) => {
+    const formattedMinutes = String(minutes).padStart(2, '0')
+    const formattedSeconds = String(seconds).padStart(2, '0')
+    return `${formattedMinutes}:${formattedSeconds}`
+  }
 
   return (
     <div>
@@ -508,14 +547,15 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
 
           {/* Time (in minutes) */}
           <div className="card  ">
-            <span className="font-medium text-sm text-[#000000]">
+            <span>
               <div className="flex gap-1">
-                Time <span>(in minutes)</span>
+                <span className="font-medium text-sm text-[#000000] mt-0.5"> Time </span>{' '}
+                <span>(in minutes)</span>
                 <p className="text-red-600">*</p>
               </div>
             </span>
             <div
-              className="mt-1"
+              className=""
               style={{
                 width: '8vw',
                 height: '32px',
@@ -523,11 +563,20 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
                 borderRadius: '0.50rem',
               }}>
               <div className="flex justify-around text-center">
-                <h1 className="mt-1 p-[0.1rem] bg-slate-400 rounded-md">
+                <h1
+                  className="mt-1 p-[0.1rem] bg-slate-400 rounded-md cursor-pointer"
+                  onClick={handleDecrement}>
                   <GrFormSubtract />
                 </h1>
-                <p>00:25</p>
-                <h1 className="mt-1 p-[0.1rem] bg-slate-400 rounded-md">
+                <input
+                  type="text"
+                  value={formatTime(minutes, seconds)}
+                  onChange={handleTimeChange}
+                  className="text-center w-16 shadow-none"
+                />
+                <h1
+                  className="mt-1 p-[0.1rem] bg-slate-400 rounded-md cursor-pointer"
+                  onClick={handleIncrement}>
                   <IoIosAdd />
                 </h1>
               </div>
@@ -546,8 +595,10 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
           </span>
           <div className="mt-1">
             <div className="">
-              <InputComponent
+              <InputTextarea
                 value={workOrder.value}
+                rows={3}
+                cols={30}
                 onChange={(e) => handleInputChange('value', e.target.value)}
                 style={{
                   width: '740px',
@@ -556,6 +607,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({ workOrderData, editMode, setV
                   borderRadius: '0.50rem',
                   boxShadow: 'none',
                   paddingLeft: '0.5rem',
+                  resize: 'none',
                 }}
               />
             </div>

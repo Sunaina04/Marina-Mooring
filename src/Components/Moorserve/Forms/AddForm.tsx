@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import InputComponent from '../../CommonComponent/InputComponent'
 import { Button } from 'primereact/button'
 import { Dropdown } from 'primereact/dropdown'
+import { FileUpload } from 'primereact/fileupload'
 
 const AddForm = () => {
   const [customerName, setCustomerName] = useState<string>('')
@@ -155,18 +156,16 @@ const AddForm = () => {
             </div>
           </span>
           <div className="mt-1">
-            <InputComponent
-              value={formData.uploadFile}
-              onChange={(e) => handleInputChange('uploadFile', e.target.value)}
+            <FileUpload
+            //   value={formData.uploadFile}
+            //   onChange={(e) => handleInputChange('uploadFile', e.target.value)}
+            mode='basic'
               style={{
                 width: '700px',
                 height: '174px',
                 border: fieldsError.uploadFile ? '1px solid red' : '1px solid #D5E1EA',
                 borderRadius: '0.50rem',
                 fontSize: '0.8rem',
-                paddingLeft: '0.5rem',
-                paddingTop: '0.5rem',
-                boxSizing: 'border-box',
               }}
             />
           </div>
