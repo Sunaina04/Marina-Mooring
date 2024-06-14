@@ -56,8 +56,9 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   const [dueDate, setDueDate] = useState<string>('')
   const [scheduleDate, setScheduleDate] = useState<string>('')
   const [workOrderStatus, setWorkOrderStatus] = useState<string>('')
-  const [minutes, setMinutes] = useState(0)
-  const [seconds, setSeconds] = useState(0)
+  const [time, setTime] = useState({minutes:0,seconds:0})
+  // const [minutes, setMinutes] = useState(0) 
+  // const [seconds, setSeconds] = useState(0)
   const [basedOnCustomerIdAndBoatyardId, setbasedOnCustomerIdAndBoatyardId] = useState<MetaData[]>()
   const [mooringsBasedOnBoatyardIdData, setMooringsBasedOnBoatyardIdData] = useState<MetaData[]>()
   const [mooringBasedOnCustomerId, setMooringBasedOnCustomerId] = useState<MetaData[]>()
@@ -309,44 +310,42 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       fetchDataAndUpdateBasedOnCuatomerIdAndBoatyardId()
     }
   }, [workOrder?.customerName?.id, workOrder?.boatyards?.id])
+
+
   const handleIncrement = () => {
-    setSeconds((prevSeconds) => {
-      if (prevSeconds === 59) {
-        setMinutes((prevMinutes) => prevMinutes + 1)
-        return 0
+    setTime((prevTime) => {
+      if (prevTime.seconds === 59) {
+        return { minutes: prevTime.minutes + 1, seconds: 0 };
       }
-      return prevSeconds + 1
-    })
-  }
-
+      return { ...prevTime, seconds: prevTime.seconds + 1 };
+    });
+  };
+  
   const handleDecrement = () => {
-    setSeconds((prevSeconds) => {
-      if (prevSeconds === 0) {
-        if (minutes > 0) {
-          setMinutes((prevMinutes) => prevMinutes - 1)
-          return 59
+    setTime((prevTime) => {
+      if (prevTime.seconds === 0) {
+        if (prevTime.minutes > 0) {
+          return { minutes: prevTime.minutes - 1, seconds: 59 };
         }
-        return 0
+        return { minutes: 0, seconds: 0 };
       }
-      return prevSeconds - 1
-    })
-  }
-
+      return { ...prevTime, seconds: prevTime.seconds - 1 };
+    });
+  };
+  
   const handleTimeChange = (event: { target: { value: any } }) => {
-    const value = event.target.value
-    const [min, sec] = value.split(':').map(Number)
+    const value = event.target.value;
+    const [min, sec] = value.split(':').map(Number);
     if (!isNaN(min) && !isNaN(sec) && min >= 0 && sec >= 0 && sec < 60) {
-      setMinutes(min)
-      setSeconds(sec)
+      setTime({ minutes: min, seconds: sec });
     }
-  }
-
+  };
+  
   const formatTime = (minutes: number, seconds: number) => {
-    const formattedMinutes = String(minutes).padStart(2, '0')
-    const formattedSeconds = String(seconds).padStart(2, '0')
-    return `${formattedMinutes}:${formattedSeconds}`
-  }
-
+    const formattedMinutes = String(minutes).padStart(2, '0');
+    const formattedSeconds = String(seconds).padStart(2, '0');
+    return `${formattedMinutes}:${formattedSeconds}`;
+  };
   return (
     <div>
       <div className="w-full h-full ml-4">
@@ -618,9 +617,10 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 </h1>
                 <input
                   type="text"
-                  value={formatTime(minutes, seconds)}
+                  value={formatTime(time.minutes, time.seconds)}
                   onChange={handleTimeChange}
-                  className="text-center w-16 shadow-none"
+                  className="text-center w-16"
+                  style={{boxShadow:'none'}}
                 />
                 <h1
                   className="mt-1 p-[0.1rem] bg-slate-400 rounded-md cursor-pointer"
