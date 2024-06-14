@@ -1,7 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import AddWorkOrders from '../WorkOrders/AddWorkOrders'
 import { ErrorResponse, WorkOrderPayload, WorkOrderResponse } from '../../../Type/ApiTypes'
-import { useGetWorkOrdersMutation } from '../../../Services/MoorServe/MoorserveApi'
+import {
+  useGetEstimateMutation,
+  useGetWorkOrdersMutation,
+} from '../../../Services/MoorServe/MoorserveApi'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import Header from '../../Layout/LayoutComponents/Header'
 import { boatyardMooring, vendor } from '../../Utils/CustomData'
@@ -18,10 +21,10 @@ const Estimates = () => {
   const [visible, setVisible] = useState(false)
   const [searchText, setSearchText] = useState('')
   const [isLoading, setIsLoading] = useState(true)
-  const [workOrderData, setWorkOrderData] = useState<WorkOrderPayload[]>([])
+  const [estimateData, setEstimateData] = useState<WorkOrderPayload[]>([])
   const [selectedCustomer, setSelectedCustomer] = useState<any>(undefined)
   const [editMode, setEditMode] = useState(false)
-  const [getWorkOrder] = useGetWorkOrdersMutation()
+  const [getEstimate] = useGetEstimateMutation()
   const toast = useRef<Toast>(null)
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -106,16 +109,16 @@ const Estimates = () => {
     [],
   )
 
-  const getWorkOrderData = useCallback(async () => {
+  const getEstimateData = useCallback(async () => {
     try {
       let params: Params = {}
       if (searchText) {
         params.searchText = searchText
       }
-      const response = await getWorkOrder(params).unwrap()
+      const response = await getEstimate(params).unwrap()
       const { status, content, message } = response as WorkOrderResponse
       if (status === 200 && Array.isArray(content)) {
-        setWorkOrderData(content)
+        setEstimateData(content)
       } else {
         setIsLoading(false)
         toast?.current?.show({
@@ -140,7 +143,7 @@ const Estimates = () => {
   const handleModalClose = () => {
     setVisible(false)
     setEditMode(false)
-    getWorkOrderData()
+    getEstimateData()
   }
   const handleButtonClick = () => {
     setVisible(true)
@@ -148,7 +151,7 @@ const Estimates = () => {
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      getWorkOrderData()
+      getEstimateData()
     }, 600)
     return () => clearTimeout(timeoutId)
   }, [searchText, selectedCustomerId])
@@ -254,7 +257,7 @@ const Estimates = () => {
               backgroundColor: '#D9D9D9',
               cursor: 'pointer',
             }}
-            data={workOrderData}
+            data={estimateData}
             columns={workOrderColumns}
             actionButtons={ActionButtonColumn}
             style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
