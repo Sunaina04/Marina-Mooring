@@ -14,8 +14,8 @@ import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 import CustomModal from '../../CustomComponent/CustomModal'
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
-import { Params } from 'react-router-dom'
 import { Toast } from 'primereact/toast'
+import { Params } from '../../../Type/CommonType'
 
 const WorkOrders = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -39,6 +39,7 @@ const WorkOrders = () => {
         color: 'black',
         label: 'Edit',
         underline: true,
+        onClick: (row) => handleEdit(row),
       },
     ],
     headerStyle: { backgroundColor: '#FFFFFF' },
@@ -90,7 +91,7 @@ const WorkOrders = () => {
         style: columnStyle,
       },
       {
-        id: 'status',
+        id: 'workOrderStatusDto.status',
         label: 'Status',
         style: columnStyle,
       },
@@ -101,10 +102,10 @@ const WorkOrders = () => {
   const getWorkOrderData = useCallback(async () => {
     try {
       let params: Params = {}
-      // if (searchText) {
-      //   params.searchText = searchText
-      // }
-      const response = await getWorkOrder({}).unwrap()
+      if (searchText) {
+        params.searchText = searchText
+      }
+      const response = await getWorkOrder(params).unwrap()
       const { status, content, message } = response as WorkOrderResponse
       if (status === 200 && Array.isArray(content)) {
         setWorkOrderData(content)
@@ -137,8 +138,11 @@ const WorkOrders = () => {
   }
 
   useEffect(() => {
-    getWorkOrderData()
-  }, [selectedCustomerId])
+    const timeoutId = setTimeout(() => {
+      getWorkOrderData()
+    }, 600)
+    return () => clearTimeout(timeoutId)
+  }, [searchText, selectedCustomerId])
 
   return (
     <div className={visible ? 'backdrop-blur-lg' : ''}>
@@ -216,6 +220,8 @@ const WorkOrders = () => {
                   data-testid="search-icon"
                 />
                 <InputText
+                  value={searchText}
+                  onChange={handleSearch}
                   placeholder="Search"
                   id="placeholder"
                   className="pl-10 w-[237px] bg-[#00426F] h-[35px] rounded-lg border text-[white] border-[#D5E1EA] placeholder:text-[#FFFFFF]  focus:outline-none"

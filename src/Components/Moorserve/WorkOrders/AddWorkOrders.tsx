@@ -47,15 +47,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     workOrderStatus: '',
     value: '',
   })
-  const [value, setValue] = useState<string>('')
-  const [customerName, setCustomerName] = useState<string>('')
-  const [customerId, setCustomerId] = useState<string>('')
-  const [mooringId, setMooringId] = useState<string>('')
-  const [boatyards, setBoatyards] = useState<string>('')
-  const [assignedTo, setAssignedTo] = useState<string>('')
-  const [dueDate, setDueDate] = useState<string>('')
-  const [scheduleDate, setScheduleDate] = useState<string>('')
-  const [workOrderStatus, setWorkOrderStatus] = useState<string>('')
   const [minutes, setMinutes] = useState(0)
   const [seconds, setSeconds] = useState(0)
   const [basedOnCustomerIdAndBoatyardId, setbasedOnCustomerIdAndBoatyardId] = useState<MetaData[]>()
@@ -166,6 +157,49 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     }
   }
 
+  const handleEditMode = () => {
+    setWorkOrder((prevState: any) => ({
+      ...prevState,
+      mooringId: workOrderData?.mooringResponseDto?.mooringId,
+      customerName: workOrderData?.customerResponseDto?.firstName,
+      boatyards: workOrderData?.boatyardResponseDto?.boatyardName,
+      assignedTo: workOrderData?.technicianUserResponseDto?.name,
+      dueDate: workOrderData?.dueDate,
+      scheduleDate: workOrderData?.scheduledDate,
+      workOrderStatus: workOrderData?.workOrderStatusDto?.status,
+      // time: string
+      value: workOrderData?.problem,
+    }))
+  }
+
+  const handleDecrement = () => {
+    setSeconds((prevSeconds) => {
+      if (prevSeconds === 0) {
+        if (minutes > 0) {
+          setMinutes((prevMinutes) => prevMinutes - 1)
+          return 59
+        }
+        return 0
+      }
+      return prevSeconds - 1
+    })
+  }
+
+  const handleTimeChange = (event: { target: { value: any } }) => {
+    const value = event.target.value
+    const [min, sec] = value.split(':').map(Number)
+    if (!isNaN(min) && !isNaN(sec) && min >= 0 && sec >= 0 && sec < 60) {
+      setMinutes(min)
+      setSeconds(sec)
+    }
+  }
+
+  const formatTime = (minutes: number, seconds: number) => {
+    const formattedMinutes = String(minutes).padStart(2, '0')
+    const formattedSeconds = String(seconds).padStart(2, '0')
+    return `${formattedMinutes}:${formattedSeconds}`
+  }
+
   const SaveWorkOrder = async () => {
     const errors = validateFields()
     if (Object.keys(errors).length > 0) {
@@ -182,7 +216,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       scheduleDate: workOrder?.scheduleDate,
       workOrderStatusId: workOrder?.workOrderStatus?.id,
       // time: string
-      // problem: string
+      problem: workOrder?.value,
     }
 
     try {
@@ -207,6 +241,60 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     } catch (error) {
       const { message } = error as ErrorResponse
       setIsLoading(true)
+      toastRef?.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: message,
+        life: 3000,
+      })
+    }
+  }
+
+  const UpdateWorkOrder = async () => {
+    const errors = validateFields()
+    if (Object.keys(errors).length > 0) {
+      return
+    }
+
+    try {
+      setIsLoading(true)
+      const editCustomerPayload = {
+        mooringId: workOrder?.mooringId?.id,
+        customerId: workOrder?.customerName?.id,
+        boatyardId: workOrder?.boatyards?.id,
+        technicianId: workOrder?.assignedTo?.id,
+        dueDate: workOrder?.dueDate,
+        scheduleDate: workOrder?.scheduleDate,
+        workOrderStatusId: workOrder?.workOrderStatus?.id,
+        // time: string
+        problem: workOrder?.value,
+      }
+      const response = await updateWorkOrder({
+        payload: editCustomerPayload,
+        // id: customer?.id,
+      }).unwrap()
+      const { status, message } = response as WorkOrderResponse
+      if (status === 200 || status === 201) {
+        setIsLoading(false)
+
+        toastRef?.current?.show({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Customer Updated successfully',
+          life: 3000,
+        })
+      } else {
+        setIsLoading(false)
+        toastRef?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+      }
+    } catch (error) {
+      setIsLoading(true)
+      const { message } = error as ErrorResponse
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
@@ -319,33 +407,11 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     })
   }
 
-  const handleDecrement = () => {
-    setSeconds((prevSeconds) => {
-      if (prevSeconds === 0) {
-        if (minutes > 0) {
-          setMinutes((prevMinutes) => prevMinutes - 1)
-          return 59
-        }
-        return 0
-      }
-      return prevSeconds - 1
-    })
-  }
-
-  const handleTimeChange = (event: { target: { value: any } }) => {
-    const value = event.target.value
-    const [min, sec] = value.split(':').map(Number)
-    if (!isNaN(min) && !isNaN(sec) && min >= 0 && sec >= 0 && sec < 60) {
-      setMinutes(min)
-      setSeconds(sec)
+  useEffect(() => {
+    if (editMode) {
+      handleEditMode()
     }
-  }
-
-  const formatTime = (minutes: number, seconds: number) => {
-    const formattedMinutes = String(minutes).padStart(2, '0')
-    const formattedSeconds = String(seconds).padStart(2, '0')
-    return `${formattedMinutes}:${formattedSeconds}`
-  }
+  }, [editMode])
 
   return (
     <div>

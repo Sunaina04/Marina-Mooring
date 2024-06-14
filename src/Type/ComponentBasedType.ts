@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react'
-import { MooringPayload, VendorPayload, WorkOrderPayload } from './ApiTypes'
+import { MooringPayload, VendorPayload, WorkOrderPayload, WorkOrderResponse } from './ApiTypes'
 import { ButtonProps } from 'primereact/button'
 import { IconType } from 'primereact/utils'
 
@@ -119,7 +119,7 @@ export interface TimeCardsProps {
 }
 
 export interface WorkOrderProps {
-  workOrderData: WorkOrderPayload
+  workOrderData: any
   editMode: boolean
   setVisible: React.Dispatch<React.SetStateAction<boolean>>
   toastRef?: any

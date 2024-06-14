@@ -660,6 +660,16 @@ export interface CustomerOwnerUserResponseDto {
   companyName: string
 }
 
+export interface WorkOrderStatusDto {
+  id: number
+  creationDate: string
+  createdBy: string
+  lastModifiedDate: string
+  lastModifiedBy: string
+  status: string
+  description: string
+}
+
 export interface WorkOrderResponse {
   message: string
   status: number
@@ -676,6 +686,7 @@ export interface WorkOrderResponse {
     boatyardResponseDto: BoatYardResponseDto
     technicianUserResponseDto: TechnicianUserResponseDto
     customerOwnerUserResponseDto: CustomerOwnerUserResponseDto
+    workOrderStatusDto: WorkOrderStatusDto
   }
 }
 
