@@ -27,11 +27,15 @@ const CustomSelectPositionMap: React.FC<CustomSelectPositionMapProps> = ({
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
-        <Marker draggable={false} ref={markerRef} position={center || [30.6983149, 76.656095]} />
+        <Marker
+          // draggable={false}
+          ref={markerRef}
+          position={center ? center : [30.6983149, 76.656095]}></Marker>
       </MapContainer>
     ),
     [center],
   )
+
   return (
     <div>
       {map ? <DisplayPosition map={map} onPositionChange={onPositionChange} /> : null}

@@ -58,8 +58,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   const [shackleSwivelData, setShackleSwivelData] = useState<MetaData[]>([])
   const [pennantData, setPennantData] = useState<MetaData[]>([])
   const [customerName, setcustomerName] = useState<any[]>([])
-  console.log('name', customerName)
-
   const [customerId, setCustomerId] = useState<string>('')
   const [boatyardsName, setBoatYardsName] = useState<MetaData[]>([])
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})

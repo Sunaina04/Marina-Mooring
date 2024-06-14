@@ -21,10 +21,6 @@ import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import { Toast } from 'primereact/toast'
 // const useFetchTechnicians = () => {
- 
- 
-
-
 
 //   const getTechniciansData = useCallback(async () => {
 //     try {
@@ -52,8 +48,6 @@ import { Toast } from 'primereact/toast'
 //   return { technicianData, filteredTechnicianData,selectedCustomerId }
 // }
 
-
-
 const Technicians = () => {
   const [date, setDate] = useState<NullableDateArray>(null)
   const options: string[] = ['Open', 'Completed']
@@ -70,11 +64,7 @@ const Technicians = () => {
   const [getTechnicians] = useGetTechnicianDataMutation()
   const [searchText, setSearchText] = useState('')
   const toast = useRef<Toast>(null)
-  console.log("searchText",searchText);
-  
   const selectedCustomerId = useSelector(selectCustomerId)
-
-
 
   const [workOrderData, setWorkOrderData] = useState<BillsData[]>([
     {
@@ -159,7 +149,6 @@ const Technicians = () => {
     setSearchText(e.target.value)
   }
 
-
   const getTechniciansData = useCallback(async () => {
     try {
       let params: Params = {}
@@ -167,10 +156,10 @@ const Technicians = () => {
         params.searchText = searchText
       }
       const response = await getTechnicians({}).unwrap()
-      const { status, content ,message} = response as TechnicianResponse
+      const { status, content, message } = response as TechnicianResponse
       if (status === 200 && Array.isArray(content)) {
         setTechnicianData(content)
-          setFilteredTechnicianData(content)
+        setFilteredTechnicianData(content)
       } else {
         setIsLoading(false)
         toast?.current?.show({
@@ -179,15 +168,13 @@ const Technicians = () => {
           detail: message,
           life: 3000,
         })
-        console.log("error");
-        
+        console.log('error')
       }
     } catch (error) {
       const { message: msg } = error as ErrorResponse
       console.error('Error occurred while fetching customer data:', msg)
     }
   }, [])
-  
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -195,8 +182,6 @@ const Technicians = () => {
     }, 600)
     return () => clearTimeout(timeoutId)
   }, [searchText, selectedCustomerId])
-
-
 
   return (
     <>
@@ -252,8 +237,8 @@ const Technicians = () => {
               marginLeft: '3rem',
             }}>
             <InputTextWithHeader
-             value={searchText}
-             onChange={handleSearch}
+              value={searchText}
+              onChange={handleSearch}
               placeholder="Search by name, ID..."
               inputTextStyle={{
                 height: '44px',
