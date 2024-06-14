@@ -227,6 +227,7 @@ const moormanageApi = userApi.injectEndpoints({
       }),
     }),
 
+
     getTechnicianById: builder.mutation({
       query: ({ id }: { id?: number }) => ({
         url: `api/v1/technician/${id}`,
@@ -320,6 +321,30 @@ const moormanageApi = userApi.injectEndpoints({
         params: { vendorId },
       }),
     }),
+
+
+    getTechnicianData: builder.mutation({
+      query: ({
+        pageNumber,
+        pageSize,
+        sortBy,
+        sortDir,
+        searchText,
+      }: {
+        pageNumber?: number
+        pageSize?: number
+        sortBy?: string
+        sortDir?: string
+        searchText?:string
+      }) => ({
+        url: '/api/v1/user/fetchTechnicians',
+        method: 'GET',
+        params: { pageNumber, pageSize, sortBy, sortDir,searchText},
+      }),
+    }),
+
+
+
   }),
 })
 
@@ -352,4 +377,5 @@ export const {
   useDeleteInventoryMutation,
   useAddInventoryMutation,
   useUpdateInventoryMutation,
+  useGetTechnicianDataMutation
 } = moormanageApi

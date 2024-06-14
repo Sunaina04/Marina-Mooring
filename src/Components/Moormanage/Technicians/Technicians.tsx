@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import { SelectButton, SelectButtonChangeEvent } from 'primereact/selectbutton'
 import { Calendar } from 'primereact/calendar'
 import { ErrorResponse, TechnicianPayload, TechnicianResponse } from '../../../Type/ApiTypes'
 import { useGetTechnicianMutation } from '../../../Services/MoorManage/MoormanageApi'
-import { BillsData, NullableDateArray } from '../../../Type/CommonType'
+import { BillsData, NullableDateArray, Params } from '../../../Type/CommonType'
 import { Button } from 'primereact/button'
 import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
 import { IoSearch } from 'react-icons/io5'
@@ -16,31 +16,43 @@ import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader
 import { properties } from '../../Utils/MeassageProperties'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
+import { useGetTechnicianDataMutation } from '../../../Services/MoorManage/MoormanageApi'
+import { useSelector } from 'react-redux'
+import { selectCustomerId } from '../../../Store/Slice/userSlice'
+import { Toast } from 'primereact/toast'
+// const useFetchTechnicians = () => {
+ 
+ 
 
-const useFetchTechnicians = () => {
-  const [technicianData, setTechnicianData] = useState<TechnicianPayload[]>([])
-  const [filteredTechnicianData, setFilteredTechnicianData] = useState<TechnicianPayload[]>([])
-  const [getTechnicians] = useGetTechnicianMutation()
-  const getTechniciansData = useCallback(async () => {
-    try {
-      const response = await getTechnicians({}).unwrap()
-      const { status, content } = response as TechnicianResponse
-      if (status === 200 && Array.isArray(content)) {
-        setTechnicianData(content)
-        setFilteredTechnicianData(content)
-      }
-    } catch (error) {
-      const { message } = error as ErrorResponse
-      console.error('Error fetching technician data:', error)
-    }
-  }, [getTechnicians])
 
-  useEffect(() => {
-    getTechniciansData()
-  }, [getTechniciansData])
 
-  return { technicianData, filteredTechnicianData }
-}
+//   const getTechniciansData = useCallback(async () => {
+//     try {
+
+//       let params:Params={}
+//       if (searchText) {
+//         params.searchText = searchText
+//       }
+//       const response = await getTechnicians({}).unwrap()
+//       const { status, content ,message} = response as TechnicianResponse
+//       if (status === 200 && Array.isArray(content)) {
+//         setTechnicianData(content)
+//         setFilteredTechnicianData(content)
+//       }
+//     } catch (error) {
+//       const { message } = error as ErrorResponse
+//       console.error('Error fetching technician data:', error)
+//     }
+//   }, [getTechnicians,searchText])
+
+//   useEffect(() => {
+//     getTechniciansData()
+//   }, [getTechniciansData,selectedCustomerId])
+
+//   return { technicianData, filteredTechnicianData,selectedCustomerId }
+// }
+
+
 
 const Technicians = () => {
   const [date, setDate] = useState<NullableDateArray>(null)
@@ -50,8 +62,20 @@ const Technicians = () => {
   const [technicianRecord, setTechnicianRecord] = useState()
   const [globalFilter, setGlobalFilter] = useState<string | undefined>(undefined)
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date())
-  const { technicianData, filteredTechnicianData } = useFetchTechnicians()
+  // const { technicianData, filteredTechnicianData } = useFetchTechnicians()
   const [isLoading, setIsLoading] = useState(false)
+
+  const [technicianData, setTechnicianData] = useState<TechnicianPayload[]>([])
+  const [filteredTechnicianData, setFilteredTechnicianData] = useState<TechnicianPayload[]>([])
+  const [getTechnicians] = useGetTechnicianDataMutation()
+  const [searchText, setSearchText] = useState('')
+  const toast = useRef<Toast>(null)
+  console.log("searchText",searchText);
+  
+  const selectedCustomerId = useSelector(selectCustomerId)
+
+
+
   const [workOrderData, setWorkOrderData] = useState<BillsData[]>([
     {
       id: 0,
@@ -131,6 +155,49 @@ const Technicians = () => {
     style: { borderBottom: '1px solid #D5E1EA' },
   }
 
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value)
+  }
+
+
+  const getTechniciansData = useCallback(async () => {
+    try {
+      let params: Params = {}
+      if (searchText) {
+        params.searchText = searchText
+      }
+      const response = await getTechnicians({}).unwrap()
+      const { status, content ,message} = response as TechnicianResponse
+      if (status === 200 && Array.isArray(content)) {
+        setTechnicianData(content)
+          setFilteredTechnicianData(content)
+      } else {
+        setIsLoading(false)
+        toast?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+        console.log("error");
+        
+      }
+    } catch (error) {
+      const { message: msg } = error as ErrorResponse
+      console.error('Error occurred while fetching customer data:', msg)
+    }
+  }, [])
+  
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      getTechniciansData()
+    }, 600)
+    return () => clearTimeout(timeoutId)
+  }, [searchText, selectedCustomerId])
+
+
+
   return (
     <>
       <Header header="MOORMANAGE/Technicians" />
@@ -185,6 +252,8 @@ const Technicians = () => {
               marginLeft: '3rem',
             }}>
             <InputTextWithHeader
+             value={searchText}
+             onChange={handleSearch}
               placeholder="Search by name, ID..."
               inputTextStyle={{
                 height: '44px',
