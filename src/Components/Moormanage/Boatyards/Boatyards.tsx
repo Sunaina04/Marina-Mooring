@@ -637,7 +637,7 @@ const Boatyards = () => {
             </div>
             <div className={`bg-[] mt-3 ml-5 ${isLoader ? 'blur-screen' : ''}`}>
               <div
-                className="flex justify-between p-3 mt-[10px] mr-10 "
+                className="flex justify-between p-2 mt-[10px] mr-10 "
                 style={{ fontSize: '13px', fontWeight: '500', lineHeight: '11.72px' }}>
                 <p>{properties.address}</p>
                 <p className="">{properties.mooringInventoried}</p>
