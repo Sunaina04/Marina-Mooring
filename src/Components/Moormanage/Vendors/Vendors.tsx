@@ -67,6 +67,7 @@ const Vendors = () => {
           }
         })
     } catch (error) {
+      setIsLoading(false)
       console.error('Error fetching getBoatyardsdata:', error)
     }
   }, [getVendors, searchText, selectedCustomerId])
@@ -78,10 +79,12 @@ const Vendors = () => {
   }
 
   const handleDelete = async (rowData: any) => {
+    setIsLoading(true)
     try {
       const response = await deleteVendor({ id: rowData?.id }).unwrap()
       const { status, message } = response as DeleteCustomerResponse
       if (status === 200) {
+        setIsLoading(false)
         toast.current?.show({
           severity: 'success',
           summary: 'Success',
@@ -89,6 +92,7 @@ const Vendors = () => {
           life: 3000,
         })
       } else {
+        setIsLoading(false)
         toast.current?.show({
           severity: 'error',
           summary: 'Error',
@@ -98,6 +102,7 @@ const Vendors = () => {
       }
       getVendorData()
     } catch (error) {
+      setIsLoading(false)
       console.error('Error deleting customer:', error)
     }
   }
@@ -194,6 +199,7 @@ const Vendors = () => {
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
+      setIsLoading(true)
       getVendorData()
     }, 600)
     return () => clearTimeout(timeoutId)

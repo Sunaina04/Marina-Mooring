@@ -211,6 +211,7 @@ const Customer = () => {
   )
 
   const getCustomerData = useCallback(async () => {
+    setIsLoading(true)
     try {
       let params: Params = {}
       if (searchText) {
@@ -232,12 +233,14 @@ const Customer = () => {
         })
       }
     } catch (error) {
+      setIsLoading(false)
       const { message: msg } = error as ErrorResponse
       console.error('Error occurred while fetching customer data:', msg)
     }
   }, [getCustomer, searchText, selectedCustomerId])
 
   const getCustomersWithMooring = async (id: number) => {
+    setIsLoading(true)
     try {
       const response = await getCustomerWithMooring({ id: id }).unwrap()
       const { status, content, message } = response as CustomersWithMooringResponse
@@ -246,6 +249,7 @@ const Customer = () => {
         Array.isArray(content?.customerResponseDto?.mooringResponseDtoList) &&
         Array.isArray(content.boatyardNames)
       ) {
+        setIsLoading(false)
         setCustomerRecordData(content?.customerResponseDto)
         setMooringData(content?.customerResponseDto?.mooringResponseDtoList)
         setBoatYardData(content?.boatyardNames)
@@ -279,6 +283,7 @@ const Customer = () => {
         // console.log('gpsCoordinates', gpsCoordinates)
         setCoordinatesArray(gpsCoordinates.filter((coord) => coord !== null)) // Filter out null values
       } else {
+        setIsLoading(false)
         setCustomerRecord(false)
         setCustomerRecordData('')
         setMooringData([])
@@ -291,6 +296,7 @@ const Customer = () => {
         })
       }
     } catch (error) {
+      setIsLoading(false)
       const { message: msg } = error as ErrorResponse
       console.error('Error fetching moorings data:', msg)
     }

@@ -41,6 +41,8 @@ export interface DataTableProps {
   dataKey?: string
   multiple?: boolean
   emptyMessage?: string | React.ReactNode | ((frozen: boolean) => React.ReactNode) | undefined
+  rows?: number
+  rowsPerPageOptions?: any[]
 }
 
 export interface ButtonProps {

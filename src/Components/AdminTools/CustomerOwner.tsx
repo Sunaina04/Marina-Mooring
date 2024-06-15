@@ -14,6 +14,7 @@ import { ProgressSpinner } from 'primereact/progressspinner'
 import { Toast } from 'primereact/toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCustomerId, setCustomerId, setCustomerName } from '../../Store/Slice/userSlice'
+import { Paginator } from 'primereact/paginator'
 
 const CustomerOwner = () => {
   const dispatch = useDispatch()
@@ -40,6 +41,13 @@ const CustomerOwner = () => {
   const [getUser] = useGetUsersMutation()
 
   const toast = useRef<Toast>(null)
+  const [pageNumber, setPageNumber] = useState(0)
+  const [pageSize, setPageSize] = useState(10)
+
+  const onPageChange = (event: any) => {
+    setPageNumber(event.page)
+    setPageSize(event.rows)
+  }
 
   const handleModalClose = () => {
     setPassWordDisplay(false)
@@ -168,6 +176,12 @@ const CustomerOwner = () => {
       if (searchText) {
         params.searchText = searchText
       }
+      if (pageNumber) {
+        params.pageNumber = pageNumber
+      }
+      if (pageSize) {
+        params.pageSize = pageSize
+      }
       dispatch(setCustomerId(''))
       dispatch(setCustomerName(''))
       const response = await getUser(params).unwrap()
@@ -185,7 +199,7 @@ const CustomerOwner = () => {
     } catch (error) {
       console.error('Error occurred while fetching customer data:', error)
     }
-  }, [getUser, searchText])
+  }, [getUser, searchText, pageSize, pageNumber])
 
   const getCustomerAdminsUsers = useCallback(
     async (id: any) => {
@@ -223,7 +237,7 @@ const CustomerOwner = () => {
       getUserHandler()
     }, 600)
     return () => clearTimeout(timeoutId)
-  }, [searchText])
+  }, [searchText, pageSize, pageNumber])
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -382,45 +396,68 @@ const CustomerOwner = () => {
               overflow: 'auto',
             }}>
             {getCustomerOwnerData.length === 0 ? (
-              <div className="text-center mt-40">
-                <img
-                  src="/assets/images/empty.png"
-                  alt="Empty Data"
-                  className="w-32 mx-auto mb-4"
-                />
-                <p className="text-gray-500">No data available</p>
-              </div>
+              <>
+                <div className="text-center mt-40">
+                  <img
+                    src="/assets/images/empty.png"
+                    alt="Empty Data"
+                    className="w-32 mx-auto mb-4"
+                  />
+                  <p className="text-gray-500">No data available</p>
+                </div>
+
+                <div className="card">
+                  <Paginator
+                    first={pageNumber}
+                    rows={pageSize}
+                    totalRecords={120}
+                    rowsPerPageOptions={[10, 20, 30]}
+                    onPageChange={onPageChange}
+                  />
+                </div>
+              </>
             ) : (
-              <DataTableComponent
-                data={getCustomerOwnerData}
-                tableStyle={{
-                  fontSize: '12px',
-                  color: '#000000',
-                  fontWeight: 600,
-                  backgroundColor: '#D9D9D9',
-                  cursor: 'pointer',
-                  marginLeft: '20px',
-                  marginRight: '20px',
-                  width: '30vw',
-                  minWidth: '30vw',
-                }}
-                scrollable={true}
-                selectionMode="single"
-                onSelectionChange={(e) => {
-                  setSelectedProduct(e.value)
-                }}
-                selection={selectedProduct}
-                dataKey="id"
-                rowStyle={(rowData: any) => rowData}
-                columns={customerOwnerTableColumn}
-                onRowClick={(e) => {
-                  setSelectedId(e.data.id)
-                  dispatch(setCustomerName(e?.data?.name))
-                  dispatch(setCustomerId(e?.data?.id))
-                }}
-                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
-                actionButtons={ActionButtonColumn}
-              />
+              <>
+                <DataTableComponent
+                  data={getCustomerOwnerData}
+                  tableStyle={{
+                    fontSize: '12px',
+                    color: '#000000',
+                    fontWeight: 600,
+                    backgroundColor: '#D9D9D9',
+                    cursor: 'pointer',
+                    marginLeft: '20px',
+                    marginRight: '20px',
+                    width: '30vw',
+                    minWidth: '30vw',
+                  }}
+                  scrollable={true}
+                  selectionMode="single"
+                  onSelectionChange={(e) => {
+                    setSelectedProduct(e.value)
+                  }}
+                  selection={selectedProduct}
+                  dataKey="id"
+                  rowStyle={(rowData: any) => rowData}
+                  columns={customerOwnerTableColumn}
+                  onRowClick={(e) => {
+                    setSelectedId(e.data.id)
+                    dispatch(setCustomerName(e?.data?.name))
+                    dispatch(setCustomerId(e?.data?.id))
+                  }}
+                  style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
+                  actionButtons={ActionButtonColumn}
+                />
+                <div className="card">
+                  <Paginator
+                    first={pageNumber}
+                    rows={pageSize}
+                    totalRecords={120}
+                    rowsPerPageOptions={[10, 20, 30]}
+                    onPageChange={onPageChange}
+                  />
+                </div>
+              </>
             )}
           </div>
         </div>
@@ -484,20 +521,31 @@ const CustomerOwner = () => {
             }}
             data-testid="customer-admin-users-table">
             {getCustomerOwnerUserData.length > 0 ? (
-              <DataTableComponent
-                tableStyle={{
-                  fontSize: '12px',
-                  color: '#000000',
-                  fontWeight: 600,
-                  backgroundColor: '#D9D9D9',
-                  cursor: 'pointer',
-                }}
-                scrollable={true}
-                data={getCustomerOwnerUserData}
-                columns={customerOwnerUserTableColumn}
-                actionButtons={ActionButtonUsersColumn}
-                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
-              />
+              <>
+                <DataTableComponent
+                  tableStyle={{
+                    fontSize: '12px',
+                    color: '#000000',
+                    fontWeight: 600,
+                    backgroundColor: '#D9D9D9',
+                    cursor: 'pointer',
+                  }}
+                  scrollable={true}
+                  data={getCustomerOwnerUserData}
+                  columns={customerOwnerUserTableColumn}
+                  actionButtons={ActionButtonUsersColumn}
+                  style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
+                />
+                {/* <div className="card">
+                  <Paginator
+                    first={first}
+                    rows={rows}
+                    totalRecords={120}
+                    rowsPerPageOptions={[10, 20, 30]}
+                    onPageChange={onPageChange}
+                  />
+                </div> */}
+              </>
             ) : (
               <div className="text-center mt-40">
                 <img

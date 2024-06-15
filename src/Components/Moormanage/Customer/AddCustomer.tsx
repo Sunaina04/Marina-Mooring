@@ -463,6 +463,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         })
         setIsLoading(false)
       } else {
+        setIsLoading(false)
         toastRef?.current?.show({
           severity: 'error',
           summary: 'Error',
@@ -472,7 +473,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       }
     } catch (error) {
       const { message } = error as ErrorResponse
-      setIsLoading(true)
+      setIsLoading(false)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
@@ -530,7 +531,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         })
       }
     } catch (error) {
-      setIsLoading(true)
+      setIsLoading(false)
       const { message } = error as ErrorResponse
       toastRef?.current?.show({
         severity: 'error',
@@ -622,6 +623,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           life: 3000,
         })
       } else {
+        setIsLoading(false)
         toastRef?.current?.show({
           severity: 'error',
           summary: 'Error',
@@ -631,7 +633,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       }
     } catch (error) {
       const { message } = error as ErrorResponse
-      setIsLoading(true)
+      setIsLoading(false)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',

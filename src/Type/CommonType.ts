@@ -111,8 +111,8 @@ export interface Customer {
 }
 
 export type Params = {
-  page?: number
-  size?: number
+  pageNumber?: number
+  pageSize?: number
   sortBy?: string
   sortDir?: string
   searchText?: string

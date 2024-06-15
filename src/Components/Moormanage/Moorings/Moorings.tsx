@@ -228,6 +228,7 @@ const Moorings = () => {
   )
 
   const getMooringsData = useCallback(async () => {
+    setIsLoading(true)
     try {
       let params: Params = {}
       if (searchText) {
@@ -249,12 +250,14 @@ const Moorings = () => {
         })
       }
     } catch (error) {
+      setIsLoading(false)
       const { message } = error as ErrorResponse
       console.error('Error fetching moorings data:', error)
     }
   }, [searchText, getMoorings, selectedCustomerId])
 
   const getCustomersWithMooring = async (id: number) => {
+    setIsLoading(true)
     try {
       const response = await getCustomerWithMooring({ id: id }).unwrap()
       const { status, content } = response as CustomersWithMooringResponse
@@ -263,6 +266,7 @@ const Moorings = () => {
         Array.isArray(content?.customerResponseDto?.mooringResponseDtoList) &&
         Array.isArray(content.boatyardNames)
       ) {
+        setIsLoading(false)
         setCustomerRecordData(content?.customerResponseDto)
         setCustomerMooringData(content?.customerResponseDto?.mooringResponseDtoList)
         setBoatYardData(content?.boatyardNames)
@@ -275,6 +279,7 @@ const Moorings = () => {
         setMooringResponseData('')
       }
     } catch (error) {
+      setIsLoading(false)
       const { message } = error as ErrorResponse
       console.error('Error fetching moorings data:', error)
     }

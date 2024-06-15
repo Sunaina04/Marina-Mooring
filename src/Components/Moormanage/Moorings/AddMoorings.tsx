@@ -258,7 +258,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       ...prevState,
       mooringNumber: mooringRowData?.mooringId || '',
       mooringName: mooringRowData?.mooringName || '',
-      customerName: moorings?.firstName || '',
+      customerName: moorings?.firstName + ' ' + moorings.lastName || '',
       harbor: mooringRowData?.harbor || '',
       waterDepth: mooringRowData?.waterDepth || '',
       gpsCoordinates: mooringRowData?.gpsCoordinates || '',
@@ -324,6 +324,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
           getCustomerRecord()
         }
       } else {
+        setIsLoading(false)
         toastRef?.current?.show({
           severity: 'error',
           summary: 'Error',
@@ -333,7 +334,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       }
     } catch (error) {
       const { message, data } = error as ErrorResponse
-      setIsLoading(true)
+      setIsLoading(false)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
@@ -420,7 +421,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       }
     } catch (error) {
       const { message, data } = error as ErrorResponse
-      setIsLoading(true)
+      setIsLoading(false)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',

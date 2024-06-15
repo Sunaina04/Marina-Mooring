@@ -54,6 +54,9 @@ const DataTableComponent: React.FC<DataTableProps> = ({
         tableStyle={tableStyle}
         scrollable={scrollable}
         header={header}
+        // paginator
+        // rows={5}
+        // rowsPerPageOptions={[5, 10, 25, 50]}
         emptyMessage={emptyMessage}
         onRowClick={onRowClick}
         rowClassName={getRowClassName}>
