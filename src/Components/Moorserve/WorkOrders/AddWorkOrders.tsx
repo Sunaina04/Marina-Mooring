@@ -720,7 +720,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
               <p className="text-red-600">*</p>
             </div>
           </span>
-          <div className="mt-1">
+          <div className="mt-1 text-[#000000]">
             <div className="">
               <InputTextarea
                 value={workOrder.value}
@@ -734,6 +734,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                   borderRadius: '0.50rem',
                   boxShadow: 'none',
                   paddingLeft: '0.5rem',
+                  fontSize: '0.8rem',
                   resize: 'none',
                 }}
               />

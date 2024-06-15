@@ -37,7 +37,14 @@ const AddInventory: React.FC<AddInventoryProps> = ({
   const [addInventory] = useAddInventoryMutation()
   const [UpdateInventory] = useUpdateInventoryMutation()
 
+  
+
   const handleInputChange = (field: string, value: any) => {
+
+    if (field === 'cost' && value !== '' && !/^\d*\.?\d*$/.test(value)) {
+      return
+    }
+    
     setFormData({
       ...formData,
       [field]: value,
