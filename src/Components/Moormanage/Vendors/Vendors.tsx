@@ -114,23 +114,23 @@ const Vendors = () => {
 
   const VendorColumns = useMemo(
     () => [
-      {
-       id:'',
-        label: 'ID',
-        style: {
-          width: '9vw',
-          backgroundColor: '#00426F',
-          color: '#FFFFFF',
-          fontSize: '11.18px',
-          fontWeight: '700',
-          borderTopLeftRadius: '10px',
-        },
+      // {
+      //  id:'',
+      //   label: 'ID',
+      //   style: {
+      //     width: '9vw',
+      //     backgroundColor: '#00426F',
+      //     color: '#FFFFFF',
+      //     fontSize: '11.18px',
+      //     fontWeight: '700',
+      //     borderTopLeftRadius: '10px',
+      //   },
         
-      },
+      // },
       {
         id: 'companyName',
         label: 'Company Name',
-        style: { width: '16vw', backgroundColor: '#00426F', color: '#FFFFFF' },
+        style: { width: '16vw', backgroundColor: '#00426F', color: '#FFFFFF',  borderTopLeftRadius: '10px', },
       },
       {
         id: 'companyPhoneNumber',
