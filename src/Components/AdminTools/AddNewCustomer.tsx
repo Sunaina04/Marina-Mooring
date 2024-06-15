@@ -657,7 +657,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   height: '32px',
                   border:
                     fieldErrors.email ||
-                      (errorMessage && errorMessage.includes('Email already present'))
+                    (errorMessage && errorMessage.includes('Email already present'))
                       ? '1px solid red'
                       : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
@@ -720,7 +720,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
             </p>
           </div>
 
-          {!permission && (
+          {!permission && customerAdminDropdownEnabled && (
             <div>
               <div className="mt-3">
                 <span className="font-medium text-sm text-[#000000]">
@@ -768,13 +768,13 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 {role?.id === 1 || role?.id === 2
                   ? ' '
                   : fieldErrors.selectedCustomerId && (
-                    <small className="p-error">{fieldErrors.selectedCustomerId}</small>
-                  )}
+                      <small className="p-error">{fieldErrors.selectedCustomerId}</small>
+                    )}
               </p>
             </div>
           )}
 
-          {!permission && (
+          {!permission && role?.id === 2 && (
             <div>
               <div className="mt-3">
                 <span className="font-medium text-sm text-[#000000]">
@@ -800,7 +800,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                     padding: '1.2em',
-                    cursor: role?.id === 2 ? 'pointer' : 'not-allowed',
                   }}
                 />
               </div>

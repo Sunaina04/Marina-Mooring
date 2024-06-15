@@ -44,7 +44,7 @@ const adminToolsApi = userApi.injectEndpoints({
       query: ({ userId, customerOwnerId }: { userId?: number; customerOwnerId?: number }) => ({
         url: `api/v1/user/${userId}`,
         method: 'DELETE',
-        params: customerOwnerId,
+        params: { customerOwnerId },
       }),
     }),
 

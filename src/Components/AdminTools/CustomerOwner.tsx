@@ -3,10 +3,10 @@ import CustomModal from '../CustomComponent/CustomModal'
 import DataTableComponent from '../CommonComponent/Table/DataTableComponent'
 import { properties } from '../Utils/MeassageProperties'
 import { ActionButtonColumnProps } from '../../Type/Components/TableTypes'
-import { CustomerPayload, GetUserResponse } from '../../Type/ApiTypes'
+import { CustomerPayload, DeleteCustomerResponse, GetUserResponse } from '../../Type/ApiTypes'
 import Header from '../Layout/LayoutComponents/Header'
 import { Params, Role } from '../../Type/CommonType'
-import { useGetUsersMutation } from '../../Services/AdminTools/AdminToolsApi'
+import { useDeleteUserMutation, useGetUsersMutation } from '../../Services/AdminTools/AdminToolsApi'
 import AddNewCustomer from './AddNewCustomer'
 import './CustomerOwner.module.css'
 import InputTextWithHeader from '../CommonComponent/Table/InputTextWithHeader'
@@ -39,6 +39,7 @@ const CustomerOwner = () => {
   const [selectedProduct, setSelectedProduct] = useState()
   const id = getCustomerOwnerData.map((items) => items.id)
   const [getUser] = useGetUsersMutation()
+  const [deleteCustomerOwner] = useDeleteUserMutation()
 
   const toast = useRef<Toast>(null)
   const [pageNumber, setPageNumber] = useState(0)
@@ -93,6 +94,13 @@ const CustomerOwner = () => {
         fontWeight: 500,
         onClick: (rowData) => handleEditButtonClick(rowData),
       },
+      {
+        color: 'black',
+        label: 'Disable',
+        underline: true,
+        fontWeight: 500,
+        onClick: (rowData) => handleDeleteCustomerOwner(rowData),
+      },
     ],
     headerStyle: {
       backgroundColor: '#FFFFFF',
@@ -140,6 +148,13 @@ const CustomerOwner = () => {
         underline: true,
         fontWeight: 500,
         onClick: (rowData) => handleEditButtonUsersClick(rowData),
+      },
+      {
+        color: 'black',
+        label: 'Disable',
+        underline: true,
+        fontWeight: 500,
+        onClick: (rowData) => handleDeleteCustomerOwnerUser(rowData),
       },
     ],
     headerStyle: {
@@ -231,6 +246,75 @@ const CustomerOwner = () => {
     },
     [getUser, searchUsersText],
   )
+
+  const handleDeleteCustomerOwner = async (rowData: any) => {
+    setIsLoading(true)
+    try {
+      let params: Params = {}
+      if (rowData?.customerOwnerId) {
+        params.customerOwnerId = rowData?.customerOwnerId
+      }
+      const response = await deleteCustomerOwner({
+        userId: rowData?.id,
+      }).unwrap()
+      const { status, message } = response as DeleteCustomerResponse
+      if (status === 200) {
+        getUserHandler()
+        setIsLoading(false)
+        toast.current?.show({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'User deleted successfully',
+          life: 3000,
+        })
+      } else {
+        setIsLoading(false)
+        toast.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+      }
+      getUserHandler()
+    } catch (error) {
+      setIsLoading(false)
+      console.error('Error deleting customer:', error)
+    }
+  }
+
+  const handleDeleteCustomerOwnerUser = async (rowData: any) => {
+    setIsLoading(true)
+    try {
+      const response = await deleteCustomerOwner({
+        userId: rowData?.id,
+        customerOwnerId: rowData?.customerOwnerId,
+      }).unwrap()
+      const { status, message } = response as DeleteCustomerResponse
+      if (status === 200) {
+        getCustomerAdminsUsers(selectedCustomerId)
+        setIsLoading(false)
+        toast.current?.show({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'User deleted successfully',
+          life: 3000,
+        })
+      } else {
+        setIsLoading(false)
+        toast.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+      }
+      getCustomerAdminsUsers(selectedCustomerId)
+    } catch (error) {
+      setIsLoading(false)
+      console.error('Error deleting customer:', error)
+    }
+  }
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {

@@ -25,7 +25,7 @@
 
 .p-highlight {
   background-color: #ffffff !important;
-  border: 1px solid #ffffff !important;
+  /* border: 1px solid #ffffff !important; */
   color: black !important;
   border: none;
 }
