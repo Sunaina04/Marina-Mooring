@@ -411,7 +411,7 @@ const Boatyards = () => {
             {selectedBoatYard?.street} {selectedBoatYard?.apt} ,
             {selectedBoatYard?.stateResponseDto?.name} ,{selectedBoatYard?.countryResponseDto?.name}
           </p>
-          <p className="mr-[13rem]">{selectedBoatYard?.mooringInventoried}</p>
+          <p className="mr-[10rem]">{selectedBoatYard?.mooringInventoried}</p>
           <p className="underline mr-[4rem]">{selectedBoatYard?.gpsCoordinates}</p>
         </div>
 
@@ -635,10 +635,15 @@ const Boatyards = () => {
                 </div>
               </div>
             </div>
-            <div className={`bg-[] mt-3 ml-5 ${isLoader ? 'blur-screen' : ''}`}>
+            <div className={`bg-[] mt-2 ml-5 ${isLoader ? 'blur-screen' : ''}`}>
               <div
-                className="flex justify-between p-2 mt-[10px] mr-10 "
-                style={{ fontSize: '13px', fontWeight: '500', lineHeight: '11.72px' }}>
+                className="flex justify-between p-2 mr-10 "
+                style={{
+                  fontSize: '13px',
+                  fontWeight: '500',
+                  lineHeight: '11.72px',
+                  marginBottom: '-6px',
+                }}>
                 <p>{properties.address}</p>
                 <p className="">{properties.mooringInventoried}</p>
                 <p className="">{properties.boatyardGPSCoordinates}</p>
