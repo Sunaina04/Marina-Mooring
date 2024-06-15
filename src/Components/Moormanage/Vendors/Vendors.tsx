@@ -115,7 +115,7 @@ const Vendors = () => {
   const VendorColumns = useMemo(
     () => [
       {
-        id: 'id',
+       id:'',
         label: 'ID',
         style: {
           width: '9vw',
@@ -125,6 +125,7 @@ const Vendors = () => {
           fontWeight: '700',
           borderTopLeftRadius: '10px',
         },
+        
       },
       {
         id: 'companyName',

@@ -107,7 +107,7 @@ const Boatyards = () => {
     style: { borderBottom: '1px solid #D5E1EA' },
   }
 
-  const techniciansTableStyle = {
+  const boatyardTableStyle = {
     backgroundColor: '#00426F',
     borderBottom: '1px solid #C0C0C0',
     color: '#FFFFFF',
@@ -115,27 +115,28 @@ const Boatyards = () => {
     fontSize: '10px',
   }
 
-  const tableColumnsTechnicians = useMemo(
+  const tableColumnsBoatyards = useMemo(
     () => [
-      // {
-      //   id: 'id',
-      //   label: 'ID',
-      //   style: techniciansTableStyle,
-      // },
+      {
+        id: 'id',
+        label: 'ID',
+        style: boatyardTableStyle,
+      },
+
       {
         id: 'mainContact',
         label: 'Main Contact',
-        style: techniciansTableStyle,
+        style: boatyardTableStyle,
       },
       {
         id: 'mooringId',
         label: 'Mooring ID',
-        style: techniciansTableStyle,
+        style: boatyardTableStyle,
       },
       {
         id: 'boatName',
         label: 'Boat Name',
-        style: techniciansTableStyle,
+        style: boatyardTableStyle,
       },
     ],
     [],
@@ -446,8 +447,8 @@ const Boatyards = () => {
               fontSize: '12px',
               color: '#000000',
             }}
-            data={mooringWithBoatyardsData}
-            columns={tableColumnsTechnicians}
+            data={mooringWithBoatyardsData ? mooringWithBoatyardsData : undefined}
+            columns={tableColumnsBoatyards}
             actionButtons={ActionButtonColumn}
             selectionMode="single"
             dataKey="id"
@@ -636,8 +637,8 @@ const Boatyards = () => {
             </div>
             <div className={`bg-[] mt-3 ml-5 ${isLoader ? 'blur-screen' : ''}`}>
               <div
-                className="flex justify-between p-3 mt-[10px] mr-10"
-                style={{ fontSize: '10px', fontWeight: '700', lineHeight: '11.72px' }}>
+                className="flex justify-between p-3 mt-[10px] mr-10 "
+                style={{ fontSize: '13px', fontWeight: '500', lineHeight: '11.72px' }}>
                 <p>{properties.address}</p>
                 <p className="">{properties.mooringInventoried}</p>
                 <p className="">{properties.boatyardGPSCoordinates}</p>
