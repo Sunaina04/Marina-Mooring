@@ -1,4 +1,4 @@
-import { LegacyRef, MutableRefObject, useMemo, useRef, useState } from 'react'
+import { LegacyRef, MutableRefObject, useEffect, useMemo, useRef, useState } from 'react'
 import { MapContainer, Marker, TileLayer, useMapEvents } from 'react-leaflet'
 import L, { Map } from 'leaflet'
 import './CustomMap.css'
@@ -12,21 +12,24 @@ const CustomSelectPositionMap: React.FC<CustomSelectPositionMapProps> = ({
   zoomLevel,
   setCenter,
 }) => {
-  const [map, setMap] = useState<LegacyRef<Map> | undefined>()
+  const [map, setMap] = useState<any>()
   const markerRef = useRef(null)
+
+  useEffect(() => {
+    if (map) {
+      // Now you have access to the map instance
+      console.log(map.getCenter()) // Example: log the current center of the map
+    }
+  }, [map])
 
   const displayMap = useMemo(
     () => (
-      <MapContainer
-        center={center}
-        zoom={zoomLevel}
-        attributionControl={false}
-        // @ts-expect-error
-        ref={setMap}>
+      <MapContainer center={center} zoom={zoomLevel} attributionControl={false} ref={setMap}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
+        {/* {console.log('resetting center', center)} */}
         <Marker
           // draggable={false}
           ref={markerRef}

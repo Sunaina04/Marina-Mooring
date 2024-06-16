@@ -294,25 +294,11 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
 
   useEffect(() => {
     if (gpsCoordinatesValue) {
-      setCenter(getFomattedCoordinate(customerData?.gpsCoordinates || gpsCoordinatesValue))
-      // try {
-      //   let [lat, long]: any = gpsCoordinatesValue.split(' ')
-      //   if (lat.split('.').length > 2) {
-      //     const [degree, minute, second]: any = lat.split('.').map((num: any) => parseInt(num))
-      //     lat = degree + minute / 60 + second / 3600
-      //   }
-      //   if (long.split('.').length > 2) {
-      //     const [degree, minute, second]: any = long.split('.').map((num: any) => parseInt(num))
-      //     long = degree + minute / 60 + second / 3600
-      //   }
-      //   if (!(isNaN(lat) || isNaN(long))) {
-      //     setCenter([+lat, +long])
-      //   }
-      // } catch (error) {
-      //   console.log('Error In Setting Center', center)
-      // }
+      const coordinates = getFomattedCoordinate(gpsCoordinatesValue)
+      setCenter(coordinates)
+      handlePositionChange(coordinates[0], coordinates[1])
     }
-  }, [gpsCoordinatesValue, editMode, customerData?.gpsCoordinates])
+  }, [gpsCoordinatesValue])
 
   return (
     <>

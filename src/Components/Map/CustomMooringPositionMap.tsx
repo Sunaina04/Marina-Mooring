@@ -3,6 +3,7 @@ import L from 'leaflet'
 import './CustomMap.css'
 import { CustomMooringPositionMapProps } from '../../Type/Components/MapTypes'
 import { useRef } from 'react'
+import { DefaultIcon } from './DefaultIcon'
 
 const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
   position,
@@ -30,10 +31,7 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
   )
 }
 
-const DefaultIcon = L.icon({
-  iconUrl: '/assets/images/marker-icon.png',
-  iconSize: [40, 50],
-})
+L.Marker.prototype.options.icon = DefaultIcon
 
 export default CustomMooringPositionMap
 

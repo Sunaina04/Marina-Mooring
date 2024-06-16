@@ -33,6 +33,7 @@ import { GearOffIcon, GearOnIcon, NeedInspectionIcon, NotInUseIcon } from '../..
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { LatLngExpression } from 'leaflet'
 import { LatLngExpressionValue } from '../../../Type/Components/MapTypes'
+import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
 
 const Customer = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -239,6 +240,15 @@ const Customer = () => {
     }
   }, [getCustomer, searchText, selectedCustomerId])
 
+  const parseCoordinates = (coordinates: any) => {
+    if (!coordinates) return null
+    const [latitude, longitude] = coordinates.split(' ').map(parseFloat)
+    return isNaN(latitude) || isNaN(longitude) ? null : [latitude, longitude]
+  }
+
+  console.log('mooringData[0]?.gpsCoordinates', mooringData[0]?.gpsCoordinates)
+
+  const [latitude, longitude] = parseCoordinates(mooringData[0]?.gpsCoordinates) || [34.089, 76.157]
   const getCustomersWithMooring = async (id: number) => {
     setIsLoading(true)
     try {
@@ -478,11 +488,26 @@ const Customer = () => {
 
         {/* middle container */}
 
-        <div className="min-w-[20vw]">
+        {/* <div
+          className={`h-[150px] mt-[30px] mb-6 sticky ${isLoader || modalVisible ? 'blur-screen' : ''}`}
+          style={{
+            flexGrow: 1,
+            border: '1px solid #D5E1EA',
+            borderRadius: '10px',
+            padding: '0px',
+            marginLeft: '10px',
+            marginRight: '10px',
+          }}>
+          <CustomDisplayPositionMap position={[latitude, longitude]} zoomLevel={10} />
+        </div> */}
+
+        <div className="min-w-[20vw] min-h[50vw]">
           <div
-            className={`max-w-[413px] rounded-md border-[1px] ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
+            className={`max-w-[413px] max-h-[732px] rounded-md border-[1px] ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
+            {/* <CustomDisplayPositionMap position={[latitude, longitude]} zoomLevel={10} /> */}
+
             <CustomMooringPositionMap
-              position={[30.698, 76.657]}
+              position={[latitude, longitude]}
               zoomLevel={10}
               style={{ height: '732px' }}
               iconsByStatus={iconsByStatus}
@@ -642,7 +667,7 @@ const Customer = () => {
                 <p className="text-gray-500">No data available</p>
               </div>
             ) : (
-              <div style={{ height: '732px', overflow: 'auto' }}>
+              <div style={{ overflow: 'auto' }}>
                 <DataTableComponent
                   style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
                   scrollable
