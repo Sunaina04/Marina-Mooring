@@ -34,6 +34,7 @@ import { ProgressSpinner } from 'primereact/progressspinner'
 import { LatLngExpression } from 'leaflet'
 import { LatLngExpressionValue } from '../../../Type/Components/MapTypes'
 import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
+import { Paginator } from 'primereact/paginator'
 
 const Customer = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -60,6 +61,14 @@ const Customer = () => {
   const [deleteCustomer] = useDeleteCustomerMutation()
   const [getCustomerWithMooring] = useGetCustomersWithMooringMutation()
   const toast = useRef<Toast>(null)
+
+  const [pageNumber, setPageNumber] = useState(0)
+  const [pageSize, setPageSize] = useState(10)
+
+  const onPageChange = (event: any) => {
+    setPageNumber(event.page)
+    setPageSize(event.rows)
+  }
 
   const handleButtonClick = () => {
     setModalVisible(true)
@@ -439,36 +448,60 @@ const Customer = () => {
           <div
             className={`bg-#00426F overflow-x-hidden h-[500px] mt-[3px] ml-[15px] mr-[15px] table-container ${isLoading ? 'blur-screen' : ''}`}>
             {customerData.length === 0 ? (
-              <div className="text-center mt-40">
-                <img
-                  src="/assets/images/empty.png"
-                  alt="Empty Data"
-                  className="w-28 mx-auto mb-4"
-                />
-                <p className="text-gray-500">No data available</p>
-              </div>
+              <>
+                <div className="text-center mt-40">
+                  <img
+                    src="/assets/images/empty.png"
+                    alt="Empty Data"
+                    className="w-28 mx-auto mb-4"
+                  />
+                  <p className="text-gray-500">No data available</p>
+                </div>
+
+                <div className="card">
+                  <Paginator
+                    first={pageNumber}
+                    rows={pageSize}
+                    totalRecords={120}
+                    rowsPerPageOptions={[10, 20, 30]}
+                    onPageChange={onPageChange}
+                  />
+                </div>
+              </>
             ) : (
-              <DataTableComponent
-                data={customerData}
-                tableStyle={{
-                  fontSize: '12px',
-                  color: '#000000',
-                  fontWeight: 600,
-                  backgroundColor: '#D9D9D9',
-                  cursor: 'pointer',
-                }}
-                scrollable={false}
-                columns={CustomerTableColumns}
-                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
-                onRowClick={(rowData) => handleCustomerTableRowClick(rowData)}
-                selectionMode="single"
-                onSelectionChange={(e) => {
-                  setSelectedProduct(e.value)
-                }}
-                selection={selectedProduct}
-                dataKey="id"
-                rowStyle={(rowData: any) => rowData}
-              />
+              <>
+                <DataTableComponent
+                  data={customerData}
+                  tableStyle={{
+                    fontSize: '12px',
+                    color: '#000000',
+                    fontWeight: 600,
+                    backgroundColor: '#D9D9D9',
+                    cursor: 'pointer',
+                  }}
+                  scrollable={false}
+                  columns={CustomerTableColumns}
+                  style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+                  onRowClick={(rowData) => handleCustomerTableRowClick(rowData)}
+                  selectionMode="single"
+                  onSelectionChange={(e) => {
+                    setSelectedProduct(e.value)
+                  }}
+                  selection={selectedProduct}
+                  dataKey="id"
+                  rowStyle={(rowData: any) => rowData}
+                />
+                <div className="card">
+                  <Paginator
+                    first={pageNumber}
+                    rows={pageSize}
+                    totalRecords={120}
+                    rowsPerPageOptions={[10, 20, 30]}
+                    onPageChange={onPageChange}
+                    // style={{marginTop:'15rem'}}
+                  />
+                </div>
+              </>
             )}
           </div>
         </div>
