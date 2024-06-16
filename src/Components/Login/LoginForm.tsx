@@ -27,17 +27,16 @@ export default function LoginForm() {
 
   const handleChange = (e: any) => {
     const { name, value } = e.target
-    
+
     if (name === 'username') {
       setUsername(value)
-    
     } else if (name === 'password') {
       setPassword(value)
     }
     setErrors((prevErrors) => ({
       ...prevErrors,
       [name === 'username' ? 'email' : 'password']: '',
-    }));
+    }))
   }
   const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
@@ -137,10 +136,9 @@ export default function LoginForm() {
     }
   }
 
-
   return (
     <>
-     <Toast ref={toast} />
+      <Toast ref={toast} />
       <div
         className="w-full h-screen flex justify-center items-center"
         id="header"

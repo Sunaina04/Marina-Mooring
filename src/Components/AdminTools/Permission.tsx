@@ -15,6 +15,8 @@ import { useDeleteUserMutation, useGetUsersMutation } from '../../Services/Admin
 import AddNewCustomer from './AddNewCustomer'
 import { Toast } from 'primereact/toast'
 import { ProgressSpinner } from 'primereact/progressspinner'
+import { Paginator } from 'primereact/paginator'
+import { Params } from '../../Type/CommonType'
 
 const Permission = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -28,6 +30,16 @@ const Permission = () => {
   const [getCustomerOwnerUserData, setgetCustomerOwnerUserData] = useState<CustomerPayload[]>([])
   const toast = useRef<Toast>(null)
   const [isLoading, setIsLoading] = useState(true)
+  const [totalRecords, setTotalRecords] = useState(0)
+  const [pageNumber, setPageNumber] = useState(0)
+  const [pageNumber1, setPageNumber1] = useState(0)
+  const [pageSize, setPageSize] = useState(10)
+
+  const onPageChange = (event: any) => {
+    setPageNumber(event.page)
+    setPageNumber1(event.first)
+    setPageSize(event.rows)
+  }
 
   const handleEditButtonClick = (rowData: any) => {
     setEditMode(true)
@@ -167,10 +179,17 @@ const Permission = () => {
   const getCustomerAdminsUsers = async () => {
     setIsLoading(true)
     try {
-      const response = await getUser({
-        searchText: searchInput,
-        customerAdminId: customerAdminId,
-      }).unwrap()
+      let params: Params = {}
+      if (searchInput) {
+        params.searchText = searchInput
+      }
+      if (pageNumber) {
+        params.pageNumber = pageNumber
+      }
+      if (pageSize) {
+        params.pageSize = pageSize
+      }
+      const response = await getUser(params).unwrap()
       const { status, content } = response as GetUserResponse
       if (status === 200 && Array.isArray(content)) {
         setIsLoading(false)
@@ -188,7 +207,7 @@ const Permission = () => {
       getCustomerAdminsUsers()
     }, 600)
     return () => clearTimeout(timeoutId)
-  }, [searchInput])
+  }, [searchInput, pageNumber, pageSize])
 
   return (
     <div className={modalVisible ? 'backdrop-blur-lg' : ''}>
@@ -291,8 +310,8 @@ const Permission = () => {
           style={{
             flexGrow: 1,
             borderRadius: '10px',
-            height: '700px',
-            minHeight: 'calc(40vw - 700px)',
+            height: '550px',
+            minHeight: 'calc(40vw - 550px)',
             overflow: 'auto',
           }}>
           <div data-testid="permission-users-table">
@@ -332,7 +351,21 @@ const Permission = () => {
                     />
                   )}
                 </div>
-              }
+              }></DataTableComponent>
+            <Paginator
+              first={pageNumber1}
+              rows={pageSize}
+              totalRecords={120} // Set this dynamically based on your actual total records
+              rowsPerPageOptions={[5, 10, 20, 30]}
+              onPageChange={onPageChange}
+              style={{
+                position: 'sticky',
+                bottom: 0,
+                zIndex: 1,
+                backgroundColor: 'white',
+                borderTop: '1px solid #D5E1EA',
+                padding: '0.5rem',
+              }}
             />
           </div>
         </div>

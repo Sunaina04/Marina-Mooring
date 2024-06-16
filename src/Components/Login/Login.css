@@ -1,45 +1,45 @@
-/* ::placeholder {
-  color: #00426f !important;
+.login-button {
+  /* Existing styles */
+  border: 1px solid #c5d9e0;
+  font-size: 22px;
+  line-height: 25.78px;
+  color: #ffffff;
+  border-radius: 10px;
+  background-color: #0098ff;
+  text-align: center;
+  display: flex;
+  font-weight: 500;
+  justify-content: center;
 }
 
-.input-container {
-  position: relative;
-  width: 25vw;
-  height: 7vh;
-  margin-bottom: 10px; 
+.info-text {
+  width: 100%;
+  max-width: 500px;
+  font-size: 14px;
+  text-align: center;
+  line-height: 22px;
+  margin-top: 1rem;
+  color: #00426f;
 }
 
-.input-container .input-icon {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  left: 10px;
+/* Media Query for Responsive Design */
+@media (max-width: 768px) {
+  .login-container {
+    padding: 1rem;
+  }
+
+  .input-text-custom {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .login-button {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .info-text {
+    width: 100%;
+    max-width: 100%;
+  }
 }
-
-.input-container input {
-  width: calc(100% - 40px); 
-  padding: 0 40px 0 10px; 
-} */
-/* @media (max-width:320px) {
-  #header{
-    width:100%
-  }
-
-  #logo {
-    margin-top: 3rem;
-    width: 150px
-  }
-
-  #input-field {
-    width: 100px;
-    height: 10px
-  }
-  
-} */
-
-/* #header{
-
-  background-image: url('/assets/images/loginBackgroundImage.png')",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-} */

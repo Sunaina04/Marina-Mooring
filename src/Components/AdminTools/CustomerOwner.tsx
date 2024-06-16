@@ -43,10 +43,12 @@ const CustomerOwner = () => {
 
   const toast = useRef<Toast>(null)
   const [pageNumber, setPageNumber] = useState(0)
+  const [pageNumber1, setPageNumber1] = useState(0)
   const [pageSize, setPageSize] = useState(10)
 
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
+    setPageNumber1(event.first)
     setPageSize(event.rows)
   }
 
@@ -434,31 +436,24 @@ const CustomerOwner = () => {
         </div>
       </div>
 
-      <div className={`flex gap-10 ml-8 mt-5 ${isLoading ? 'blur-screen' : ''}`}>
-        <div
-          style={{
-            borderRadius: '15px',
-            border: '1px solid #D5E1EA',
-            backgroundColor: '#FFFFFF',
-            marginLeft: '40px',
-          }}>
-          <div className="text-md font-semibold rounded-t-md bg-[#00426F]">
+      <div
+        className={`flex flex-col md:flex-row gap-10 ml-8 mt-5 ${isLoading ? 'blur-screen' : ''}`}>
+        <div className="flex-1 border border-gray-300 bg-white rounded-lg md:ml-10 overflow-hidden">
+          <div className="text-md font-semibold rounded-t-lg bg-[#00426F]">
             <h1 className="p-4 text-white">{properties.CustomersOwner}</h1>
           </div>
           <InputTextWithHeader
             value={searchText}
             onChange={handleSearch}
-            placeholder="Search by name, ID, phone no.... "
+            placeholder="Search by name, ID, phone no...."
             inputTextStyle={{
-              width: '30vw',
-              minWidth: '30vw',
+              width: '100%',
               height: '44px',
               padding: '0 2rem 0 2.5rem',
               border: '1px solid #C5D9E0',
               fontSize: '14px',
               color: '#000000',
               borderRadius: '4px',
-              minHeight: '44px',
               fontWeight: 400,
               backgroundColor: '#FFFFFF',
             }}
@@ -474,11 +469,8 @@ const CustomerOwner = () => {
           />
           <div
             data-testid="customer-admin-data"
-            style={{
-              height: '600px',
-              minHeight: 'calc(40vw - 600px)',
-              overflow: 'auto',
-            }}>
+            className="overflow-y-auto p-4"
+            style={{ maxHeight: '500px' }}>
             {getCustomerOwnerData.length === 0 ? (
               <>
                 <div className="text-center mt-40">
@@ -489,14 +481,21 @@ const CustomerOwner = () => {
                   />
                   <p className="text-gray-500">No data available</p>
                 </div>
-
-                <div className="card">
+                <div className="card mt-8">
                   <Paginator
-                    first={pageNumber}
+                    first={pageNumber1}
                     rows={pageSize}
                     totalRecords={120}
-                    rowsPerPageOptions={[10, 20, 30]}
+                    rowsPerPageOptions={[5, 10, 20, 30]}
                     onPageChange={onPageChange}
+                    style={{
+                      position: 'sticky',
+                      bottom: 0,
+                      zIndex: 1,
+                      backgroundColor: 'white',
+                      borderTop: '1px solid #D5E1EA',
+                      padding: '0.5rem',
+                    }}
                   />
                 </div>
               </>
@@ -508,12 +507,9 @@ const CustomerOwner = () => {
                     fontSize: '12px',
                     color: '#000000',
                     fontWeight: 600,
-                    backgroundColor: '#D9D9D9',
+                    backgroundColor: '#F9FAFB',
                     cursor: 'pointer',
-                    marginLeft: '20px',
-                    marginRight: '20px',
-                    width: '30vw',
-                    minWidth: '30vw',
+                    width: '100%',
                   }}
                   scrollable={true}
                   selectionMode="single"
@@ -522,23 +518,31 @@ const CustomerOwner = () => {
                   }}
                   selection={selectedProduct}
                   dataKey="id"
-                  rowStyle={(rowData: any) => rowData}
+                  rowStyle={(rowData) => rowData}
                   columns={customerOwnerTableColumn}
                   onRowClick={(e) => {
                     setSelectedId(e.data.id)
-                    dispatch(setCustomerName(e?.data?.name))
-                    dispatch(setCustomerId(e?.data?.id))
+                    dispatch(setCustomerName(e.data.name))
+                    dispatch(setCustomerId(e.data.id))
                   }}
                   style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
                   actionButtons={ActionButtonColumn}
                 />
-                <div className="card">
+                <div className="card mt-8">
                   <Paginator
-                    first={pageNumber}
+                    first={pageNumber1}
                     rows={pageSize}
                     totalRecords={120}
-                    rowsPerPageOptions={[10, 20, 30]}
+                    rowsPerPageOptions={[5, 10, 20, 30]}
                     onPageChange={onPageChange}
+                    style={{
+                      position: 'sticky',
+                      bottom: 0,
+                      zIndex: 1,
+                      backgroundColor: 'white',
+                      borderTop: '1px solid #D5E1EA',
+                      padding: '0.5rem',
+                    }}
                   />
                 </div>
               </>
@@ -547,15 +551,8 @@ const CustomerOwner = () => {
         </div>
 
         <div
-          className={`${isLoading ? 'blur-screen' : ''}`}
-          style={{
-            flexGrow: 1,
-            borderRadius: '15px',
-            border: '1px solid #D5E1EA',
-            backgroundColor: '#FFFFFF',
-            marginRight: '50px',
-          }}>
-          <div className="text-md font-semibold rounded-t-md bg-[#00426F]">
+          className={`flex-1 ${isLoading ? 'blur-screen' : ''} border border-gray-300 bg-white rounded-lg md:mr-10 overflow-hidden`}>
+          <div className="text-md font-semibold rounded-t-lg bg-[#00426F]">
             <h1 className="p-4 text-white">{properties.CustomerOwnerUsers}</h1>
           </div>
           <InputTextWithHeader
@@ -563,14 +560,13 @@ const CustomerOwner = () => {
             onChange={handleUsersSearch}
             placeholder="Search by name, ID, Email, Role, phone no..."
             inputTextStyle={{
-              flexGrow: 1,
+              width: '100%',
               height: '44px',
               border: '1px solid #C5D9E0',
               padding: '0 2rem 0 2.5rem',
               fontSize: '14px',
               color: '#000000',
               borderRadius: '4px',
-              minHeight: '44px',
               fontWeight: 400,
               backgroundColor: '#FFFFFF',
             }}
@@ -589,6 +585,7 @@ const CustomerOwner = () => {
               style={{
                 position: 'absolute',
                 top: '50%',
+                left: '50%',
                 transform: 'translate(-50%, -50%)',
                 width: '50px',
                 height: '50px',
@@ -597,13 +594,9 @@ const CustomerOwner = () => {
             />
           )}
           <div
-            style={{
-              height: '600px',
-              minHeight: 'calc(40vw - 600px)',
-              overflow: 'auto',
-              padding: '0 20px',
-            }}
-            data-testid="customer-admin-users-table">
+            className="overflow-y-auto p-4"
+            data-testid="customer-admin-users-table"
+            style={{ maxHeight: '500px' }}>
             {getCustomerOwnerUserData.length > 0 ? (
               <>
                 <DataTableComponent
@@ -611,8 +604,9 @@ const CustomerOwner = () => {
                     fontSize: '12px',
                     color: '#000000',
                     fontWeight: 600,
-                    backgroundColor: '#D9D9D9',
+                    backgroundColor: '#F9FAFB',
                     cursor: 'pointer',
+                    width: '100%',
                   }}
                   scrollable={true}
                   data={getCustomerOwnerUserData}
@@ -620,15 +614,6 @@ const CustomerOwner = () => {
                   actionButtons={ActionButtonUsersColumn}
                   style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
                 />
-                {/* <div className="card">
-                  <Paginator
-                    first={first}
-                    rows={rows}
-                    totalRecords={120}
-                    rowsPerPageOptions={[10, 20, 30]}
-                    onPageChange={onPageChange}
-                  />
-                </div> */}
               </>
             ) : (
               <div className="text-center mt-40">
