@@ -36,7 +36,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   const [zipCode, setZipCode] = useState('')
 
   const [mainContact, setMainContact] = useState('')
-  const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<string>()
+  const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<any>()
   const [countriesData, setCountriesData] = useState<Country[]>()
   const [statesData, setStatesData] = useState<State[]>()
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
@@ -168,6 +168,8 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
         closeModal()
         boatYardData()
         setIsLoading(false)
+        setGpsCoordinatesValue('')
+        setCenter([])
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
@@ -230,6 +232,8 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
         setIsLoading(false)
         closeModal()
         boatYardData()
+        setGpsCoordinatesValue('')
+        setCenter([])
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
@@ -267,6 +271,8 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
 
   const handleBack = () => {
     setModalVisible(false)
+    setGpsCoordinatesValue('')
+    setCenter([])
   }
 
   const fetchDataAndUpdate = useCallback(async () => {

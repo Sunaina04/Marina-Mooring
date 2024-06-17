@@ -414,7 +414,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     }
 
     if (!validatePassword(password)) {
-      setErrorMessage('Password is required')
+      setErrorMessage('Password is Incorrect')
       return
     }
     setIsLoading(true)

@@ -138,10 +138,12 @@ const Moorings = () => {
           toast.current?.show({
             severity: 'success',
             summary: 'Success',
-            detail: 'User deleted successfully',
+            detail: message,
             life: 3000,
           })
-          setMooringData([])
+          getMooringsData()
+          setCustomerMooringData([])
+          setCustomerRecordData('')
         } else {
           toast.current?.show({
             severity: 'error',
@@ -150,7 +152,6 @@ const Moorings = () => {
             life: 3000,
           })
         }
-        setCustomerRecordData('')
       } catch (error) {
         const { message } = error as ErrorResponse
         toast.current?.show({
