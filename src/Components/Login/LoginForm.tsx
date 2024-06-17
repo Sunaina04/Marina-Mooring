@@ -140,7 +140,7 @@ export default function LoginForm() {
     <>
       <Toast ref={toast} />
       <div
-        className="w-full h-screen flex justify-center items-center"
+        className="w-full h-screen flex justify-center items-center]"
         id="header"
         style={{
           backgroundImage: "url('/assets/images/loginBackgroundImage.png')",
@@ -158,7 +158,7 @@ export default function LoginForm() {
               id="logo"
             />
           </div>
-          <div className="flex flex-col justify-center text-center mt-[5rem]">
+          <div className="flex flex-col justify-center text-center mt-[5rem] min-[320px]:w[270px]">
             <div className="text-red-500 mb-2 text-sm">{errors.email && <p>{errors.email}</p>}</div>
             <div className="flex flex-col items-center">
               <div className="p-input-icon-left" id="input-field">
