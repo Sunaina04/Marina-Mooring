@@ -143,6 +143,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({
 
   const validateFields = () => {
     const numberRegex = /^\d+$/
+    const harborRegex = /^[a-zA-Z ]+$/
+    const alphanumericRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$/
+    const nameRegex = /^[a-zA-Z ]+$/
     const errors: { [key: string]: string } = {}
     let firstError = ''
 
@@ -150,16 +153,27 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       errors.customerName = 'Customer Name is required'
       if (!firstError) firstError = 'customerName'
     }
+
     if (!formData?.mooringNumber) {
       errors.mooringNumber = 'Mooring ID is required'
       if (!firstError) firstError = 'mooringNumber'
+    } else if (!alphanumericRegex.test(formData.mooringNumber)) {
+      errors.mooringNumber = 'Mooring ID must be alphanumeric'
+      if (!firstError) firstError = 'mooringNumber'
     }
-    if (!formData?.harbor) {
+
+    if (!formData.harbor) {
       errors.harbor = 'Harbor is required'
       if (!firstError) firstError = 'harbor'
+    } else if (!harborRegex.test(formData.harbor)) {
+      errors.harbor = 'Harbor must only contain letters'
+      if (!firstError) firstError = 'harbor'
     }
+
     if (!formData?.waterDepth) {
       errors.waterDepth = 'Water Depth is required'
+    } else if (!numberRegex.test(String(formData.waterDepth))) {
+      errors.waterDepth = 'Water Depth must be a number'
       if (!firstError) firstError = 'waterDepth'
     }
 
@@ -169,11 +183,18 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     }
 
     if (!formData?.boatName) {
-      errors.boatName = 'Boat Name is required'
+      errors.boatName = 'BoatName is required'
+      if (!firstError) firstError = 'boatName'
+    } else if (!nameRegex.test(String(formData.boatName))) {
+      errors.boatName = 'BoatName must be a string'
       if (!firstError) firstError = 'boatName'
     }
+
     if (!formData?.boatSize) {
-      errors.boatSize = 'Boat Size is required'
+      errors.boatSize = 'BoatSize is required'
+      if (!firstError) firstError = 'boatSize'
+    } else if (!numberRegex.test(String(formData.boatSize))) {
+      errors.boatSize = 'BoatSize must be a number'
       if (!firstError) firstError = 'boatSize'
     }
 
@@ -182,10 +203,14 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       if (!firstError) firstError = 'boatYardName'
     }
 
-    if (!formData?.boatWeight) {
-      errors.boatWeight = 'Weight is required'
+    if (!formData.boatWeight) {
+      errors.boatWeight = 'BoatWeight  is required'
+      if (!firstError) firstError = 'boatWeight'
+    } else if (!numberRegex.test(String(formData.boatWeight))) {
+      errors.boatWeight = 'Weight   must be a number'
       if (!firstError) firstError = 'boatWeight'
     }
+
     if (!formData?.sizeOfWeight) {
       errors.sizeOfWeight = 'Size of Weight is required'
       if (!firstError) firstError = 'sizeOfWeight'
@@ -555,7 +580,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
           <div>
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
-                Water Depth
+                Water Depth (meter)
                 <p className="text-red-600">*</p>
               </div>
             </span>
@@ -740,7 +765,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
           <div>
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
-                Weight
+                Weight (kg)
                 <p className="text-red-600">*</p>
               </div>
             </span>
