@@ -20,33 +20,7 @@ import { useGetTechnicianDataMutation } from '../../../Services/MoorManage/Moorm
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import { Toast } from 'primereact/toast'
-// const useFetchTechnicians = () => {
-
-//   const getTechniciansData = useCallback(async () => {
-//     try {
-
-//       let params:Params={}
-//       if (searchText) {
-//         params.searchText = searchText
-//       }
-//       const response = await getTechnicians({}).unwrap()
-//       const { status, content ,message} = response as TechnicianResponse
-//       if (status === 200 && Array.isArray(content)) {
-//         setTechnicianData(content)
-//         setFilteredTechnicianData(content)
-//       }
-//     } catch (error) {
-//       const { message } = error as ErrorResponse
-//       console.error('Error fetching technician data:', error)
-//     }
-//   }, [getTechnicians,searchText])
-
-//   useEffect(() => {
-//     getTechniciansData()
-//   }, [getTechniciansData,selectedCustomerId])
-
-//   return { technicianData, filteredTechnicianData,selectedCustomerId }
-// }
+import { Paginator } from 'primereact/paginator'
 
 const Technicians = () => {
   const [date, setDate] = useState<NullableDateArray>(null)
@@ -66,14 +40,24 @@ const Technicians = () => {
   const toast = useRef<Toast>(null)
   const selectedCustomerId = useSelector(selectCustomerId)
 
-  const [workOrderData, setWorkOrderData] = useState<BillsData[]>([
-    {
-      id: 0,
-      technician: 'Suncatcher',
-      techniciansName: 'John Smith',
-      dueDate: '3-12-2024',
-    },
-  ])
+  const [pageNumber, setPageNumber] = useState(0)
+  const [pageNumber1, setPageNumber1] = useState(0)
+  const [pageSize, setPageSize] = useState(10)
+
+  const onPageChange = (event: any) => {
+    setPageNumber(event.page)
+    setPageNumber1(event.first)
+    setPageSize(event.rows)
+  }
+
+  // const [workOrderData, setWorkOrderData] = useState<BillsData[]>([
+  //   {
+  //     id: 0,
+  //     technician: 'Suncatcher',
+  //     techniciansName: 'John Smith',
+  //     dueDate: '3-12-2024',
+  //   },
+  // ])
 
   const TechnicianTableColumnStyle = {
     fontSize: '10px',
@@ -155,6 +139,13 @@ const Technicians = () => {
       if (searchText) {
         params.searchText = searchText
       }
+      if (pageNumber) {
+        params.pageNumber = pageNumber
+      }
+      if (pageSize) {
+        params.pageSize = pageSize
+      }
+
       const response = await getTechnicians({}).unwrap()
       const { status, content, message } = response as TechnicianResponse
       if (status === 200 && Array.isArray(content)) {
@@ -174,14 +165,14 @@ const Technicians = () => {
       const { message: msg } = error as ErrorResponse
       console.error('Error occurred while fetching customer data:', msg)
     }
-  }, [])
+  }, [searchText, getTechnicians, pageSize, pageNumber])
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       getTechniciansData()
     }, 600)
     return () => clearTimeout(timeoutId)
-  }, [searchText, selectedCustomerId])
+  }, [searchText, selectedCustomerId, pageSize, pageNumber])
 
   return (
     <>
@@ -282,6 +273,24 @@ const Technicians = () => {
                 </div>
               }
             />
+
+            <div className="card mt-8">
+              <Paginator
+                first={pageNumber1}
+                rows={pageSize}
+                totalRecords={120}
+                rowsPerPageOptions={[5, 10, 20, 30]}
+                onPageChange={onPageChange}
+                style={{
+                  position: 'sticky',
+                  bottom: 0,
+                  zIndex: 1,
+                  backgroundColor: 'white',
+                  borderTop: '1px solid #D5E1EA',
+                  padding: '0.5rem',
+                }}
+              />
+            </div>
           </div>
 
           <div
@@ -353,6 +362,24 @@ const Technicians = () => {
                   </div>
                 }
               />
+
+              <div className="card mt-32">
+                <Paginator
+                  first={pageNumber1}
+                  rows={pageSize}
+                  totalRecords={120}
+                  rowsPerPageOptions={[5, 10, 20, 30]}
+                  onPageChange={onPageChange}
+                  style={{
+                    position: 'sticky',
+                    bottom: 0,
+                    zIndex: 1,
+                    backgroundColor: 'white',
+                    borderTop: '1px solid #D5E1EA',
+                    padding: '0.5rem',
+                  }}
+                />
+              </div>
             </div>
           </div>
         </div>
