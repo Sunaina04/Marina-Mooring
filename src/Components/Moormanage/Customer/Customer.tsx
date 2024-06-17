@@ -56,6 +56,7 @@ const Customer = () => {
   const [searchText, setSearchText] = useState('')
   const [customerId, setCustomerId] = useState()
   const [isLoading, setIsLoading] = useState(true)
+  const [isLoader, setIsLoader] = useState(false)
   const [coordinatesArray, setCoordinatesArray] = useState<any[]>([])
   const [getCustomer] = useGetCustomerMutation()
   const [deleteCustomer] = useDeleteCustomerMutation()
@@ -67,7 +68,7 @@ const Customer = () => {
   const [pageSize, setPageSize] = useState(10)
 
   const [pageNumberTwo, setPageNumberTwo] = useState(0)
-  const [pageNumberOne, setPageNumberOne] = useState(0)
+  const [pageNumber2, setPageNumber2] = useState(0)
   const [pageSizeTwo, setPageSizeTwo] = useState(10)
 
   const onPageChange = (event: any) => {
@@ -78,7 +79,7 @@ const Customer = () => {
 
   const onPageChangeTwo = (event: any) => {
     setPageNumberTwo(event.page)
-    setPageNumberOne(event.first)
+    setPageNumber2(event.first)
     setPageSizeTwo(event.rows)
   }
 
@@ -274,12 +275,13 @@ const Customer = () => {
     return isNaN(latitude) || isNaN(longitude) ? null : [latitude, longitude]
   }
 
-  console.log('mooringData[0]?.gpsCoordinates', mooringData[0]?.gpsCoordinates)
+  // console.log('mooringData[0]?.gpsCoordinates', mooringData[0]?.gpsCoordinates)
 
   const [latitude, longitude] = parseCoordinates(mooringData[0]?.gpsCoordinates) || [34.089, 76.157]
 
   const getCustomersWithMooring = async (id: number) => {
     setIsLoading(true)
+    setIsLoader(true)
     try {
       let params: Params = {}
       if (pageNumberTwo) {
@@ -288,7 +290,11 @@ const Customer = () => {
       if (pageSizeTwo) {
         params.pageSize = pageSizeTwo
       }
-      const response = await getCustomerWithMooring({ id: id, params }).unwrap()
+      const response = await getCustomerWithMooring({
+        id: id,
+        pageNumber: pageNumberTwo,
+        pageSize: pageSizeTwo,
+      }).unwrap()
       const { status, content, message } = response as CustomersWithMooringResponse
       if (
         status === 200 &&
@@ -296,6 +302,7 @@ const Customer = () => {
         Array.isArray(content.boatyardNames)
       ) {
         setIsLoading(false)
+        setIsLoader(false)
         setCustomerRecordData(content?.customerResponseDto)
         setMooringData(content?.customerResponseDto?.mooringResponseDtoList)
         setBoatYardData(content?.boatyardNames)
@@ -330,6 +337,7 @@ const Customer = () => {
         setCoordinatesArray(gpsCoordinates.filter((coord) => coord !== null)) // Filter out null values
       } else {
         setIsLoading(false)
+        setIsLoader(false)
         setCustomerRecord(false)
         setCustomerRecordData('')
         setMooringData([])
@@ -343,6 +351,7 @@ const Customer = () => {
       }
     } catch (error) {
       setIsLoading(false)
+      setIsLoader(false)
       const { message: msg } = error as ErrorResponse
       console.error('Error fetching moorings data:', msg)
     }
@@ -378,6 +387,7 @@ const Customer = () => {
     <div className={modalVisible ? 'backdrop-blur-lg' : ''}>
       <Header header="MOORMANAGE/Customer" />
       <Toast ref={toast} />
+
       <div className="flex justify-end mr-12 ">
         <div className="flex mt-6 ">
           <CustomModal
@@ -473,62 +483,53 @@ const Customer = () => {
           />
 
           <div
-            className={`bg-#00426F overflow-x-hidden h-[500px] mt-[3px] ml-[15px] mr-[15px] table-container ${isLoading ? 'blur-screen' : ''}`}>
-            {customerData.length === 0 ? (
-              <>
-                <div className="text-center mt-40">
-                  <img
-                    src="/assets/images/empty.png"
-                    alt="Empty Data"
-                    className="w-28 mx-auto mb-4"
-                  />
-                  <p className="text-gray-500">No data available</p>
-                </div>
-              </>
-            ) : (
-              <>
-                <DataTableComponent
-                  data={customerData}
-                  tableStyle={{
-                    fontSize: '12px',
-                    color: '#000000',
-                    fontWeight: 600,
-                    backgroundColor: '#D9D9D9',
-                    cursor: 'pointer',
-                  }}
-                  scrollable={false}
-                  columns={CustomerTableColumns}
-                  style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
-                  onRowClick={(rowData) => handleCustomerTableRowClick(rowData)}
-                  selectionMode="single"
-                  onSelectionChange={(e) => {
-                    setSelectedProduct(e.value)
-                  }}
-                  selection={selectedProduct}
-                  dataKey="id"
-                  rowStyle={(rowData: any) => rowData}
-                />
-                <div className="card mt-8">
-                  <Paginator
-                    first={pageNumber1}
-                    rows={pageSize}
-                    totalRecords={120}
-                    rowsPerPageOptions={[5, 10, 20, 30]}
-                    onPageChange={onPageChange}
-                    style={{
-                      position: 'sticky',
-                      bottom: 0,
-                      zIndex: 1,
-                      backgroundColor: 'white',
-                      borderTop: '1px solid #D5E1EA',
-                      padding: '0.5rem',
-                    }}
-                  />
-                </div>
-              </>
-            )}
+            className={`bg-#00426F overflow-x-hidden h-[590px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col ${isLoading ? 'blur-screen' : ''}`}>
+            <div className="flex-grow overflow-auto">
+              <DataTableComponent
+                data={customerData}
+                tableStyle={{
+                  fontSize: '12px',
+                  color: '#000000',
+                  fontWeight: 600,
+                  backgroundColor: '#D9D9D9',
+                  cursor: 'pointer',
+                }}
+                scrollable={false}
+                columns={CustomerTableColumns}
+                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+                onRowClick={(rowData) => handleCustomerTableRowClick(rowData)}
+                selectionMode="single"
+                onSelectionChange={(e) => {
+                  setSelectedProduct(e.value)
+                }}
+                selection={selectedProduct}
+                dataKey="id"
+                rowStyle={(rowData) => rowData}
+                emptyMessage={
+                  <div className="flex flex-col justify-center items-center h-full">
+                    <img src="/assets/images/empty.png" alt="Empty Data" className="w-28 mb-4" />
+                    <p className="text-gray-500">No data available</p>
+                  </div>
+                }
+              />
+            </div>
+            <div className="mt-auto">
+              <Paginator
+                first={pageNumber1}
+                rows={pageSize}
+                totalRecords={120}
+                rowsPerPageOptions={[5, 10, 20, 30]}
+                onPageChange={onPageChange}
+                style={{
+                  backgroundColor: 'white',
+                  borderTop: '1px solid #D5E1EA',
+                  padding: '0.5rem',
+                }}
+              />
+            </div>
           </div>
         </div>
+
         {isLoading && (
           <ProgressSpinner
             style={{
@@ -545,37 +546,20 @@ const Customer = () => {
 
         {/* middle container */}
 
-        {/* <div
-          className={`h-[150px] mt-[30px] mb-6 sticky ${isLoader || modalVisible ? 'blur-screen' : ''}`}
-          style={{
-            flexGrow: 1,
-            border: '1px solid #D5E1EA',
-            borderRadius: '10px',
-            padding: '0px',
-            marginLeft: '10px',
-            marginRight: '10px',
-          }}>
-          <CustomDisplayPositionMap position={[latitude, longitude]} zoomLevel={10} />
-        </div> */}
-
-        {/* <div className="min-w-[20vw] min-h[50vw]"> */}
         <div
-          className={`min-w-[20vw] min-h[50vw] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
-          {/* <CustomDisplayPositionMap position={[latitude, longitude]} zoomLevel={10} /> */}
-
+          className={`min-w-[21vw] min-h[50vw] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
           <CustomMooringPositionMap
             position={[latitude, longitude]}
             zoomLevel={10}
-            style={{ height: '732px' }}
+            style={{ height: '730px' }}
             iconsByStatus={iconsByStatus}
             moorings={mooringData}
           />
         </div>
-        {/* </div> */}
 
         {/* last container */}
 
-        <div className="lg:flex-row ml-5 mr-6">
+        <div className="lg:flex-row ml-5 mr-6 w-[500px]">
           {/* Left Panel - Customer Record */}
           <div className="flex-grow rounded-md border bg-white">
             <div className="bg-[#10293A] rounded-t-[10px] flex justify-between pb-2">
@@ -689,6 +673,20 @@ const Customer = () => {
             )}
           </div>
 
+          {isLoader && (
+            <ProgressSpinner
+              style={{
+                position: 'absolute',
+                top: '40%',
+                left: '85%',
+                transform: 'translate(-50%, -50%)',
+                width: '50px',
+                height: '50px',
+              }}
+              strokeWidth="4"
+            />
+          )}
+
           <div className="flex-grow bg-white rounded-md border">
             <div
               style={{
@@ -701,43 +699,54 @@ const Customer = () => {
               Moorings
             </div>
 
-            <div className="p-4">
-              {mooringData.length === 0 ? (
-                <div className="text-center mt-40">
-                  <img
-                    src="/assets/images/empty.png"
-                    alt="Empty Data"
-                    className="w-20 mx-auto mb-4"
-                  />
-                  <p className="text-gray-500">No data available</p>
-                </div>
-              ) : (
-                <div className="overflow-auto">
-                  <DataTableComponent
-                    style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
-                    scrollable
-                    tableStyle={{
-                      fontSize: '12px',
-                      color: '#000000',
-                      fontWeight: 600,
-                      backgroundColor: '#D9D9D9',
-                      cursor: 'pointer',
-                    }}
-                    onRowClick={(rowData) => {
-                      handleMooringTableRowClick(rowData)
-                    }}
-                    columns={MooringTableColumn}
-                    data={mooringData}
-                    selectionMode="single"
-                    onSelectionChange={(e) => {
-                      setSelectedMooring(e.value)
-                    }}
-                    selection={selectedMooring}
-                    dataKey="id"
-                    rowStyle={(rowData: any) => rowData}
-                  />
-                </div>
-              )}
+            <div
+              className={`bg-#00426F overflow-x-hidden h-[450px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col ${isLoading ? 'blur-screen' : ''}`}>
+              <div className="flex-grow overflow-auto">
+                <DataTableComponent
+                  style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+                  scrollable
+                  tableStyle={{
+                    fontSize: '12px',
+                    color: '#000000',
+                    fontWeight: 600,
+                    backgroundColor: '#D9D9D9',
+                    cursor: 'pointer',
+                  }}
+                  onRowClick={(rowData) => {
+                    handleMooringTableRowClick(rowData)
+                  }}
+                  columns={MooringTableColumn}
+                  data={mooringData}
+                  selectionMode="single"
+                  onSelectionChange={(e) => {
+                    setSelectedMooring(e.value)
+                  }}
+                  selection={selectedMooring}
+                  dataKey="id"
+                  rowStyle={(rowData) => rowData}
+                  emptyMessage={
+                    <div className="flex-grow flex flex-col justify-center items-center">
+                      <img src="/assets/images/empty.png" alt="Empty Data" className="w-20 mb-4" />
+                      <p className="text-gray-500">No data available</p>
+                    </div>
+                  }
+                />
+              </div>
+              <Paginator
+                first={pageNumber2}
+                rows={pageSizeTwo}
+                totalRecords={120}
+                rowsPerPageOptions={[5, 10, 20, 30]}
+                onPageChange={onPageChangeTwo}
+                style={{
+                  position: 'sticky',
+                  bottom: 0,
+                  zIndex: 1,
+                  backgroundColor: 'white',
+                  borderTop: '1px solid #D5E1EA',
+                  padding: '0.5rem',
+                }}
+              />
             </div>
           </div>
         </div>

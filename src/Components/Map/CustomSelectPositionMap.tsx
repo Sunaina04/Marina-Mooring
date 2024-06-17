@@ -15,13 +15,6 @@ const CustomSelectPositionMap: React.FC<CustomSelectPositionMapProps> = ({
   const [map, setMap] = useState<any>()
   const markerRef = useRef(null)
 
-  useEffect(() => {
-    if (map) {
-      // Now you have access to the map instance
-      console.log(map.getCenter()) // Example: log the current center of the map
-    }
-  }, [map])
-
   const displayMap = useMemo(
     () => (
       <MapContainer center={center} zoom={zoomLevel} attributionControl={false} ref={setMap}>

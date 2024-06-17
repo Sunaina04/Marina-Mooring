@@ -486,46 +486,44 @@ const CustomerOwner = () => {
           />
           <div
             data-testid="customer-admin-data"
-            className="overflow-y-auto p-4"
-            style={{ maxHeight: '500px' }}>
-            <DataTableComponent
-              data={getCustomerOwnerData}
-              tableStyle={{
-                fontSize: '12px',
-                color: '#000000',
-                fontWeight: 600,
-                backgroundColor: '#F9FAFB',
-                cursor: 'pointer',
-                width: '100%',
-              }}
-              scrollable={true}
-              selectionMode="single"
-              onSelectionChange={(e) => {
-                setSelectedProduct(e.value)
-              }}
-              selection={selectedProduct}
-              dataKey="id"
-              rowStyle={(rowData) => rowData}
-              columns={customerOwnerTableColumn}
-              onRowClick={(e) => {
-                setSelectedId(e.data.id)
-                dispatch(setCustomerName(e.data.name))
-                dispatch(setCustomerId(e.data.id))
-              }}
-              style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
-              actionButtons={ActionButtonColumn}
-              emptyMessage={
-                <div className="text-center mt-40">
-                  <img
-                    src="/assets/images/empty.png"
-                    alt="Empty Data"
-                    className="w-32 mx-auto mb-4"
-                  />
-                  <p className="text-gray-500">No data available</p>
-                </div>
-              }
-            />
-            <div className="card mt-8">
+            className="flex flex-col overflow-hidden p-4"
+            style={{ height: '500px' }}>
+            <div className="flex-grow overflow-auto">
+              <DataTableComponent
+                data={getCustomerOwnerData}
+                tableStyle={{
+                  fontSize: '12px',
+                  color: '#000000',
+                  fontWeight: 600,
+                  backgroundColor: '#F9FAFB',
+                  cursor: 'pointer',
+                  width: '100%',
+                }}
+                scrollable={true}
+                selectionMode="single"
+                onSelectionChange={(e) => {
+                  setSelectedProduct(e.value)
+                }}
+                selection={selectedProduct}
+                dataKey="id"
+                rowStyle={(rowData) => rowData}
+                columns={customerOwnerTableColumn}
+                onRowClick={(e) => {
+                  setSelectedId(e.data.id)
+                  dispatch(setCustomerName(e.data.name))
+                  dispatch(setCustomerId(e.data.id))
+                }}
+                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
+                actionButtons={ActionButtonColumn}
+                emptyMessage={
+                  <div className="flex flex-col justify-center items-center h-full">
+                    <img src="/assets/images/empty.png" alt="Empty Data" className="w-32 mb-4" />
+                    <p className="text-gray-500">No data available</p>
+                  </div>
+                }
+              />
+            </div>
+            <div className="mt-auto">
               <Paginator
                 first={pageNumber1}
                 rows={pageSize}
@@ -533,9 +531,6 @@ const CustomerOwner = () => {
                 rowsPerPageOptions={[5, 10, 20, 30]}
                 onPageChange={onPageChange}
                 style={{
-                  position: 'sticky',
-                  bottom: 0,
-                  zIndex: 1,
                   backgroundColor: 'white',
                   borderTop: '1px solid #D5E1EA',
                   padding: '0.5rem',

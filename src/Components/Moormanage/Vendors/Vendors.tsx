@@ -65,7 +65,6 @@ const Vendors = () => {
         params.pageSize = pageSize
       }
 
-
       await getVendors(params)
         .unwrap()
         .then(async (response: any) => {
@@ -88,7 +87,7 @@ const Vendors = () => {
       setIsLoading(false)
       console.error('Error fetching getBoatyardsdata:', error)
     }
-  }, [getVendors, searchText, selectedCustomerId,pageSize, pageNumber])
+  }, [getVendors, searchText, selectedCustomerId, pageSize, pageNumber])
 
   const handleEdit = (rowData: any) => {
     setModalVisible(true)
@@ -148,7 +147,12 @@ const Vendors = () => {
       {
         id: 'companyName',
         label: 'Company Name',
-        style: { width: '16vw', backgroundColor: '#00426F', color: '#FFFFFF', borderTopLeftRadius: '10px', },
+        style: {
+          width: '16vw',
+          backgroundColor: '#00426F',
+          color: '#FFFFFF',
+          borderTopLeftRadius: '10px',
+        },
       },
       {
         id: 'companyPhoneNumber',
@@ -222,7 +226,7 @@ const Vendors = () => {
       getVendorData()
     }, 600)
     return () => clearTimeout(timeoutId)
-  }, [searchText, selectedCustomerId,pageSize, pageNumber])
+  }, [searchText, selectedCustomerId, pageSize, pageNumber])
 
   return (
     <>
@@ -289,66 +293,70 @@ const Vendors = () => {
             />
           </div>
         </div>
+
         <div
           style={{
-            height: '720px',
+            height: '590px', // Adjust the overall height as needed
             borderRadius: '10px',
             border: '1px solid #D5E1EA',
-            opacity: '0px',
             backgroundColor: '#FFFFFF',
+            position: 'relative', // Ensure the container is relatively positioned
           }}
           className={`ml-[3rem] mr-[2.30rem] mt-8 ${isLoading ? 'blur-screen' : ''}`}>
-          <DataTableComponent
-            tableStyle={{
-              fontSize: '12px',
-              color: '#000000',
-              fontWeight: '400',
-              padding: '2rem',
-            }}
-            data={vendorData}
-            columns={VendorColumns}
-            actionButtons={ActionButtonColumn}
-            style={{ backgroundColor: '#FFFFFF', borderBottom: '1px solid #D5E1EA ' }}
-            emptyMessage={
-              <div className="text-center mt-40">
-                <img
-                  src="/assets/images/empty.png"
-                  alt="Empty Data"
-                  className="w-32 mx-auto mb-4"
-                />
-                <p className="text-gray-500">No data available</p>
-                {isLoading && (
-                  <ProgressSpinner
-                    style={{
-                      position: 'absolute',
-                      top: '60%',
-                      left: '50%',
-                      transform: 'translate(-50%, -50%)',
-                      width: '50px',
-                      height: '50px',
-                    }}
-                    strokeWidth="4"
+          <div className="overflow-auto" style={{ maxHeight: 'calc(100% - 3.5rem - 3rem)' }}>
+            <DataTableComponent
+              tableStyle={{
+                fontSize: '12px',
+                color: '#000000',
+                fontWeight: '400',
+                padding: '1rem',
+              }}
+              data={vendorData}
+              columns={VendorColumns}
+              actionButtons={ActionButtonColumn}
+              style={{ backgroundColor: '#FFFFFF', borderBottom: '1px solid #D5E1EA' }}
+              emptyMessage={
+                <div className="text-center mt-40">
+                  <img
+                    src="/assets/images/empty.png"
+                    alt="Empty Data"
+                    className="w-32 mx-auto mb-4"
                   />
-                )}
-              </div>
-            }
-          />
+                  <p className="text-gray-500">No data available</p>
+                  {isLoading && (
+                    <ProgressSpinner
+                      style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: '50px',
+                        height: '50px',
+                      }}
+                      strokeWidth="4"
+                    />
+                  )}
+                </div>
+              }
+            />
+          </div>
 
-          <div className="card mt-8">
+          {/* Paginator */}
+          <div
+            style={{
+              position: 'sticky',
+              bottom: 0,
+              zIndex: 1,
+              backgroundColor: 'white',
+              borderTop: '1px solid #D5E1EA',
+              padding: '0.5rem',
+            }}>
             <Paginator
               first={pageNumber1}
               rows={pageSize}
               totalRecords={120}
               rowsPerPageOptions={[5, 10, 20, 30]}
               onPageChange={onPageChange}
-              style={{
-                position: 'sticky',
-                bottom: 0,
-                zIndex: 1,
-                backgroundColor: 'white',
-                borderTop: '1px solid #D5E1EA',
-                padding: '0.5rem',
-              }}
             />
           </div>
         </div>

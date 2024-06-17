@@ -159,7 +159,6 @@ const Technicians = () => {
           detail: message,
           life: 3000,
         })
-        console.log('error')
       }
     } catch (error) {
       const { message: msg } = error as ErrorResponse
