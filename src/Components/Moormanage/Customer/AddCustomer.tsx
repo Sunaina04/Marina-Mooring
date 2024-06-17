@@ -117,6 +117,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     const nameRegex = /^[a-zA-Z ]+$/
     const zipCodeRegex = /^\d+$/
     const numberRegex = /^\d+$/
+    const harborRegex = /^[a-zA-Z ]+$/
+    const alphanumericRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$/
     const errors: { [key: string]: string } = {}
     let firstError = ''
 
@@ -191,20 +193,58 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     if (!formData.harbor) {
       errors.harbor = 'Harbor is required'
       if (!firstError) firstError = 'harbor'
+    } else if (!harborRegex.test(formData.harbor)) {
+      errors.harbor = 'Harbor must only contain letters'
+      if (!firstError) firstError = 'harbor'
     }
-
     if (!gpsCoordinatesValue) {
       errors.gpsCoordinatesValue = 'GPS Coordinates is required'
     }
-    if (!formData.mooringId) errors.mooringId = 'Mooring ID is required'
-    if (!formData.harbor) errors.harbor = 'Harbor is required'
-    if (!formData.waterDepth) errors.waterDepth = 'Water Depth is required'
+
+    if (!formData.mooringId) {
+      errors.mooringId = 'Mooring ID is required'
+      if (!firstError) firstError = 'mooringId'
+    } else if (!alphanumericRegex.test(formData.mooringId)) {
+      errors.mooringId = 'Mooring ID must be alphanumeric'
+      if (!firstError) firstError = 'mooringId'
+    }
+
+    if (!formData.waterDepth) {
+      errors.waterDepth = 'Water Depth is required'
+    } else if (!numberRegex.test(String(formData.waterDepth))) {
+      errors.waterDepth = 'Water Depth must be a number'
+      if (!firstError) firstError = 'waterDepth'
+    }
+
     if (!formData.boatyardName) errors.boatyardName = 'Boatyard Name is required'
-    if (!formData.boatName) errors.boatName = 'Boat Name is required'
-    if (!formData.boatSize) errors.boatSize = 'Boat Size is required'
+
+    if (!formData.boatName) {
+      errors.boatName = 'BoatName is required'
+      if (!firstError) firstError = 'boatName'
+    } else if (!nameRegex.test(String(formData.boatName))) {
+      errors.boatName = 'BoatName must be a string'
+      if (!firstError) firstError = 'boatName'
+    }
+
+    if (!formData.boatSize) {
+      errors.boatSize = 'BoatSize is required'
+      if (!firstError) firstError = 'boatSize'
+    } else if (!numberRegex.test(String(formData.boatSize))) {
+      errors.boatSize = 'BoatSize must be a number'
+      if (!firstError) firstError = 'boatSize'
+    }
+
     if (!formData.boatType) errors.boatType = 'Type is required'
-    if (!formData.boatWeight) errors.boatWeight = 'Weight is required'
+
+    if (!formData.boatWeight) {
+      errors.boatWeight = 'BoatWeight  is required'
+      if (!firstError) firstError = 'boatWeight'
+    } else if (!numberRegex.test(String(formData.boatWeight))) {
+      errors.boatWeight = 'Weight   must be a number'
+      if (!firstError) firstError = 'boatWeight'
+    }
     if (!formData.sizeOfWeight) errors.sizeOfWeight = 'Size of Weight is required'
+
     if (!formData.typeOfWeight) errors.typeOfWeight = 'Type of Weight is required'
     if (!formData.topChainCondition) errors.topChainCondition = 'Top Chain Condition is required'
     if (!formData.conditionOfEye) errors.conditionOfEye = 'Condition of Eye is required'
@@ -298,6 +338,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     if (!formData.mooringId) errors.mooringId = 'Mooring ID is required'
     if (!formData.harbor) errors.harbor = 'Harbor is required'
     if (!formData.waterDepth) errors.waterDepth = 'Water Depth is required'
+
     if (!formData.boatyardName) errors.boatyardName = 'Boatyard Name is required'
     if (!formData.boatName) errors.boatName = 'Boat Name is required'
     if (!formData.boatSize) errors.boatSize = 'Boat Size is required'
@@ -1046,7 +1087,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               <div>
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
-                    Water Depth
+                    Water Depth (meter)
                     <p className="text-red-600">*</p>
                   </div>
                 </span>
@@ -1227,7 +1268,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               <div>
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
-                    Weight
+                    Weight (kg)
                     <p className="text-red-600">*</p>
                   </div>
                 </span>
