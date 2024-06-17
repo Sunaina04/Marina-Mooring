@@ -37,7 +37,6 @@ const AddInventory: React.FC<AddInventoryProps> = ({
   const [addInventory] = useAddInventoryMutation()
   const [UpdateInventory] = useUpdateInventoryMutation()
 
-  
 
   const handleInputChange = (field: string, value: any) => {
 
@@ -395,6 +394,7 @@ const AddInventory: React.FC<AddInventoryProps> = ({
           />
           <Button
             label={'Back'}
+            onClick={closeModal}
             style={{
               backgroundColor: 'white',
               color: '#000000',
