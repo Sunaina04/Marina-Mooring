@@ -264,11 +264,11 @@ const moormanageApi = userApi.injectEndpoints({
         pageSize?: number
         sortBy?: string
         sortDir?: string
-        customerOwnerId?:number
+        customerOwnerId?: number
       }) => ({
         url: `api/v1/customer/fetchCustomerWithMoorings/${id}`,
         method: 'GET',
-        params: { pageNumber, pageSize, sortBy, sortDir ,customerOwnerId},
+        params: { pageNumber, pageSize, sortBy, sortDir, customerOwnerId },
       }),
     }),
 
@@ -364,6 +364,55 @@ const moormanageApi = userApi.injectEndpoints({
         params: { pageNumber, pageSize, sortBy, sortDir, searchText },
       }),
     }),
+
+    getOpenWorkOrders: builder.mutation({
+      query: ({
+        technicianId,
+        pageNumber,
+        pageSize,
+        sortBy,
+        sortDir,
+        searchText,
+      }: {
+        technicianId?: number
+        pageNumber?: number
+        pageSize?: number
+        sortBy?: string
+        sortDir?: string
+        searchText?: string
+      }) => ({
+        url: `api/v1/workOrder/fetchOpenWorkOrders/${technicianId}`,
+        method: 'GET',
+        params: { pageNumber, pageSize, sortBy, sortDir, searchText },
+      }),
+    }),
+
+    getClosedWorkOrders: builder.mutation({
+      query: ({
+        technicianId,
+        pageNumber,
+        pageSize,
+        sortBy,
+        sortDir,
+        searchText,
+      }: {
+        technicianId?: number
+        pageNumber?: number
+        pageSize?: number
+        sortBy?: string
+        sortDir?: string
+        searchText?: string
+      }) => ({
+        url: `api/v1/workOrder/fetchCloseWorkOrders/${technicianId}`,
+        method: 'GET',
+        params: { pageNumber, pageSize, sortBy, sortDir, searchText },
+      }),
+    }),
+
+
+
+
+
   }),
 })
 
@@ -397,4 +446,6 @@ export const {
   useAddInventoryMutation,
   useUpdateInventoryMutation,
   useGetTechnicianDataMutation,
+  useGetOpenWorkOrdersMutation,
+  useGetClosedWorkOrdersMutation
 } = moormanageApi

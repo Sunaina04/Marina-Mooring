@@ -3,7 +3,13 @@ import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import { SelectButton, SelectButtonChangeEvent } from 'primereact/selectbutton'
 import { Calendar } from 'primereact/calendar'
-import { ErrorResponse, TechnicianPayload, TechnicianResponse } from '../../../Type/ApiTypes'
+import {
+  CustomerPayload,
+  ErrorResponse,
+  GetUserResponse,
+  TechnicianPayload,
+  TechnicianResponse,
+} from '../../../Type/ApiTypes'
 import { useGetTechnicianMutation } from '../../../Services/MoorManage/MoormanageApi'
 import { BillsData, NullableDateArray, Params } from '../../../Type/CommonType'
 import { Button } from 'primereact/button'
@@ -16,7 +22,11 @@ import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader
 import { properties } from '../../Utils/MeassageProperties'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
-import { useGetTechnicianDataMutation } from '../../../Services/MoorManage/MoormanageApi'
+import {
+  useGetTechnicianDataMutation,
+  useGetOpenWorkOrdersMutation,
+  useGetClosedWorkOrdersMutation,
+} from '../../../Services/MoorManage/MoormanageApi'
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import { Toast } from 'primereact/toast'
@@ -36,7 +46,13 @@ const Technicians = () => {
   const [technicianData, setTechnicianData] = useState<TechnicianPayload[]>([])
   const [filteredTechnicianData, setFilteredTechnicianData] = useState<TechnicianPayload[]>([])
   const [getTechnicians] = useGetTechnicianDataMutation()
+  const [getOpenWork] = useGetOpenWorkOrdersMutation()
+  const [getWorkedClosed] = useGetClosedWorkOrdersMutation()
+  const [getOpenWorkOrderData, setOpenWorkOrderData] = useState<CustomerPayload[]>([])
+  const [selectedId, setSelectedId] = useState<any>('')
   const [searchText, setSearchText] = useState('')
+  const [selectedProduct, setSelectedProduct] = useState()
+  const [technicianId, setTechnicianId] = useState()
   const toast = useRef<Toast>(null)
   const selectedCustomerId = useSelector(selectCustomerId)
 
@@ -49,15 +65,6 @@ const Technicians = () => {
     setPageNumber1(event.first)
     setPageSize(event.rows)
   }
-
-  // const [workOrderData, setWorkOrderData] = useState<BillsData[]>([
-  //   {
-  //     id: 0,
-  //     technician: 'Suncatcher',
-  //     techniciansName: 'John Smith',
-  //     dueDate: '3-12-2024',
-  //   },
-  // ])
 
   const TechnicianTableColumnStyle = {
     fontSize: '10px',
@@ -133,6 +140,17 @@ const Technicians = () => {
     setSearchText(e.target.value)
   }
 
+  const handleWorkOrder = (rowData: any) => {
+    setTechnicianId(rowData?.id)
+    // setSelectedProduct(rowData)
+
+    if (value === 'Open') {
+      getOpenWorkOrder(rowData?.id)
+    } else {
+      getClosedWorkOrder(rowData?.id)
+    }
+  }
+
   const getTechniciansData = useCallback(async () => {
     try {
       let params: Params = {}
@@ -146,7 +164,7 @@ const Technicians = () => {
         params.pageSize = pageSize
       }
 
-      const response = await getTechnicians({}).unwrap()
+      const response = await getTechnicians(params).unwrap()
       const { status, content, message } = response as TechnicianResponse
       if (status === 200 && Array.isArray(content)) {
         setTechnicianData(content)
@@ -165,6 +183,65 @@ const Technicians = () => {
       console.error('Error occurred while fetching customer data:', msg)
     }
   }, [searchText, getTechnicians, pageSize, pageNumber])
+
+  const getOpenWorkOrder = useCallback(async (id: any) => {
+    // setIsLoading(true)
+    try {
+      let params: Params = {}
+
+      // if (pageNumberTwo) {
+      //   params.pageNumber = pageNumberTwo
+      // }
+      // if (pageSizeTwo) {
+      //   params.pageSize = pageSizeTwo
+      // }
+
+      const response = await getOpenWork({ technicianId: id }).unwrap()
+      const { status, message, content } = response as GetUserResponse
+      if (status === 200 && Array.isArray(content)) {
+        // setIsLoading(false)
+        // console.log('content', content)
+      } else {
+        setIsLoading(false)
+      }
+    } catch (error) {
+      console.error('Error occurred while fetching customer data:', error)
+    }
+  }, [])
+
+  const getClosedWorkOrder = useCallback(async (id: any) => {
+    // setIsLoading(true)
+    try {
+      let params: Params = {}
+
+      // if (pageNumberTwo) {
+      //   params.pageNumber = pageNumberTwo
+      // }
+      // if (pageSizeTwo) {
+      //   params.pageSize = pageSizeTwo
+      // }
+
+      const response = await getWorkedClosed({ technicianId: id }).unwrap()
+      const { status, message, content } = response as GetUserResponse
+      if (status === 200 && Array.isArray(content)) {
+        // setIsLoading(false)
+        // console.log('content', content)
+      } else {
+        setIsLoading(false)
+      }
+    } catch (error) {
+      console.error('Error occurred while fetching customer data:', error)
+    }
+  }, [])
+
+  // useEffect(() => {
+  //   const timeoutId = setTimeout(() => {
+  //     if (technicianId) {
+  //       getOpenWorkOrder(technicianId)
+  //     }
+  //   }, 600)
+  //   return () => clearTimeout(timeoutId)
+  // }, [selectedCustomerId])
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -260,6 +337,12 @@ const Technicians = () => {
                 backgroundColor: '#FFFFFF',
                 cursor: 'pointer',
               }}
+              onRowClick={(row) => {
+                handleWorkOrder(row.data)
+              }}
+              onSelectionChange={(e) => {
+                setSelectedProduct(e.value)
+              }}
               data={technicianData}
               emptyMessage={
                 <div className="text-center mt-40 mb-10">
@@ -272,8 +355,7 @@ const Technicians = () => {
                 </div>
               }
             />
-
-            <div className="card mt-8">
+            <div className="card  mt-32 ">
               <Paginator
                 first={pageNumber1}
                 rows={pageSize}
@@ -311,9 +393,11 @@ const Technicians = () => {
               <div className="mr-10">
                 <div className="card flex justify-content-center ">
                   <SelectButton
-                    invalid
                     value={value}
-                    onChange={(e: SelectButtonChangeEvent) => setValue(e.value)}
+                    onChange={(e: SelectButtonChangeEvent) => {
+                      console.info(e.value)
+                      setValue(e.value)
+                    }}
                     options={options}
                   />
                 </div>
@@ -361,7 +445,6 @@ const Technicians = () => {
                   </div>
                 }
               />
-
               <div className="card mt-32">
                 <Paginator
                   first={pageNumber1}
