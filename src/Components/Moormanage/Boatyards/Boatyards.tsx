@@ -57,11 +57,11 @@ const Boatyards = () => {
   const [dialogVisible, setDialogVisible] = useState(false)
   const [mooringRowData, setMooringRowData] = useState<any>([])
   const [boatYardRecord, setBoatyardRecord] = useState(false)
+  const toast = useRef<Toast>(null)
 
   const [getBoatyards] = useGetBoatyardsMutation()
   const [deleteBoatyard] = useDeleteBoatyardsMutation()
   const [getMooringsWithBoatyard] = useGetMooringWithBoatyardMutation()
-
 
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
@@ -70,8 +70,6 @@ const Boatyards = () => {
   const [pageNumberTwo, setPageNumberTwo] = useState(0)
   const [pageNumberOne, setPageNumberOne] = useState(0)
   const [pageSizeTwo, setPageSizeTwo] = useState(10)
-
-
 
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
@@ -85,9 +83,6 @@ const Boatyards = () => {
     setPageSizeTwo(event.rows)
   }
 
-
-  const toast = useRef<Toast>(null)
-
   const handleMooringTableRowClick = (rowData: any) => {
     setDialogVisible(true)
     setMooringRowData(rowData)
@@ -98,6 +93,8 @@ const Boatyards = () => {
     setSearchText(e.target.value)
     setSelectedBoatYard('')
     setMooringRowData('')
+    setPageNumber(0)
+    setPageNumber1(0)
   }
 
   const handleSearchField = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -343,7 +340,6 @@ const Boatyards = () => {
         params.pageSize = pageSize
       }
 
-
       await getBoatyards(params)
         .unwrap()
         .then(async (response) => {
@@ -377,19 +373,23 @@ const Boatyards = () => {
       const { message } = error as ErrorResponse
       console.error('Error fetching getBoatyardsdata:', message)
     }
-  }, [getBoatyards, searchText, searchFieldText, selectedCustomerId, selectedBoatYard, pageSize, pageNumber])
+  }, [
+    getBoatyards,
+    searchText,
+    searchFieldText,
+    selectedCustomerId,
+    selectedBoatYard,
+    pageSize,
+    pageNumber,
+  ])
 
   const getMooringsWithBoatyardData = async () => {
     try {
-
-      let params: Params = {}
-      if (pageNumberTwo) {
-        params.pageNumber = pageNumberTwo
-      }
-      if (pageSizeTwo) {
-        params.pageSize = pageSizeTwo
-      }
-      await getMooringsWithBoatyard({ id: selectedBoatYard?.id })
+      await getMooringsWithBoatyard({
+        id: selectedBoatYard?.id,
+        pageNumber: pageNumberTwo,
+        pageSize: pageSizeTwo,
+      })
         .unwrap()
         .then(async (response) => {
           const { status, content } = response as MooringWithBoatYardResponse
@@ -418,7 +418,7 @@ const Boatyards = () => {
       if (selectedBoatYard) getMooringsWithBoatyardData()
     }, 600)
     return () => clearTimeout(timeoutId)
-  }, [selectedBoatYard,pageSizeTwo,pageNumberTwo])
+  }, [selectedBoatYard, pageSizeTwo, pageNumberTwo])
 
   useEffect(() => {
     setIsLoader(true)
@@ -482,57 +482,57 @@ const Boatyards = () => {
             strokeWidth="4"
           />
         )}
-        <div className="bg-#00426F overflow-x-hidden  mt-[13px] h-[250px] table-container  ">
-          <DataTableComponent
-            tableStyle={{
-              fontSize: '12px',
-              color: '#000000',
-            }}
-            data={mooringWithBoatyardsData ? mooringWithBoatyardsData : undefined}
-            columns={tableColumnsBoatyards}
-            actionButtons={ActionButtonColumn}
-            selectionMode="single"
-            dataKey="id"
-            onSelectionChange={(e) => {
-              setSelectedProduct(e.value)
-            }}
-            selection={selectedProduct}
-            rowStyle={(rowData: any) => rowData}
-            style={{
-              borderBottom: '1px solid #D5E1EA',
-              marginLeft: '5px',
-              fontWeight: '400',
-              color: '#000000',
-            }}
-            emptyMessage={
-              <div className="text-center mt-14">
-                <img
-                  src="/assets/images/empty.png"
-                  alt="Empty Data"
-                  className="w-20 mx-auto mb-4"
-                />
-                <p className="text-gray-500">No data available</p>
-              </div>
-            }
-
-          />
-          <div className="card mt-10">
-            <Paginator
-              first={pageNumberOne}
-              rows={pageSizeTwo}
-              totalRecords={120}
-              rowsPerPageOptions={[10, 20, 30]}
-              onPageChange={onPageChangeTwo}
-              style={{
-                position: 'sticky',
-                bottom: 0,
-                zIndex: 1,
-                backgroundColor: 'white',
-                borderTop: '1px solid #D5E1EA',
-                padding: '0.5rem',
+        <div
+          className={`bg-#00426F overflow-x-hidden h-[360px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col ${isLoading ? 'blur-screen' : ''}`}>
+          <div className="flex-grow overflow-auto">
+            <DataTableComponent
+              tableStyle={{
+                fontSize: '12px',
+                color: '#000000',
               }}
+              data={mooringWithBoatyardsData ? mooringWithBoatyardsData : undefined}
+              columns={tableColumnsBoatyards}
+              actionButtons={ActionButtonColumn}
+              selectionMode="single"
+              dataKey="id"
+              onSelectionChange={(e) => {
+                setSelectedProduct(e.value)
+              }}
+              selection={selectedProduct}
+              rowStyle={(rowData: any) => rowData}
+              style={{
+                borderBottom: '1px solid #D5E1EA',
+                marginLeft: '5px',
+                fontWeight: '400',
+                color: '#000000',
+              }}
+              emptyMessage={
+                <div className="text-center mt-14">
+                  <img
+                    src="/assets/images/empty.png"
+                    alt="Empty Data"
+                    className="w-20 mx-auto mb-4"
+                  />
+                  <p className="text-gray-500">No data available</p>
+                </div>
+              }
             />
           </div>
+          <Paginator
+            first={pageNumberOne}
+            rows={pageSizeTwo}
+            totalRecords={120}
+            rowsPerPageOptions={[10, 20, 30]}
+            onPageChange={onPageChangeTwo}
+            style={{
+              position: 'sticky',
+              bottom: 0,
+              zIndex: 1,
+              backgroundColor: 'white',
+              borderTop: '1px solid #D5E1EA',
+              padding: '0.5rem',
+            }}
+          />
         </div>
       </>
     )
@@ -590,7 +590,14 @@ const Boatyards = () => {
         </div>
       </div>
 
-      <div
+      <div className="flex flex-col md:flex-row mt-3">
+        {/* Left Panel */}
+        <div className="flex-grow bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-6 md:mb-0">
+          {/* Header */}
+          <div className="bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px] text-white">
+            <h1 className="p-4 text-xl font-extrabold">{properties.boatyardDetail}</h1>
+          </div>
+          {/* <div
         className="ml-[50px] gap-[19px] mt-5"
         style={{ display: 'flex', justifyContent: 'space-evenly' }}>
         <div
@@ -602,7 +609,7 @@ const Boatyards = () => {
               style={{ color: '#FFFFFF' }}>
               <h1 className="p-4">{properties.boatyardDetail}</h1>
             </div>
-          </div>
+          </div> */}
           <InputTextWithHeader
             value={searchText}
             onChange={handleSearch}
@@ -630,67 +637,65 @@ const Boatyards = () => {
               backgroundColor: '#FFFFFF',
             }}
           />
-          <div className="bg-#00426F overflow-x-hidden  h-[500px] mt-[3px] ml-[15px] mr-[15px] table-container  ">
-            <DataTableComponent
-              tableStyle={{
-                fontSize: '12px',
-                color: '#000000',
-                fontWeight: 600,
-                backgroundColor: '#D9D9D9',
-                cursor: 'pointer',
-              }}
-              data={boatyardsData}
-              // rowExpansionTemplate={rowExpansionTemplate}
-              // onRowToggle={(e: any) => {
-              //   setExpandedRows(e.data)
-              // }}
-              // expandedRows={expandedRows}
-              selectionMode="single"
-              onSelectionChange={(e: any) => {
-                setSelectedMooring(e.value)
-              }}
-              selection={selectedMooring}
-              rowStyle={(rowData: any) => rowData}
-              dataKey="id"
-              columns={boatYardColumns}
-              onRowClick={(e: any) => handleRowClickBoatYardDetail(e)}
-              emptyMessage={
-                <div className="text-center mt-14">
-                  <img
-                    src="/assets/images/empty.png"
-                    alt="Empty Data"
-                    className="w-20 mx-auto mb-4"
-                  />
-                  <p className="text-gray-500">No data available</p>
-                </div>
-              }
-            />
-
-            <div className="card mt-10">
-              <Paginator
-                first={pageNumber1}
-                rows={pageSize}
-                totalRecords={120}
-                rowsPerPageOptions={[10, 20, 30]}
-                onPageChange={onPageChange}
-                style={{
-                  position: 'sticky',
-                  bottom: 0,
-                  zIndex: 1,
-                  backgroundColor: 'white',
-                  borderTop: '1px solid #D5E1EA',
-                  padding: '0.5rem',
+          <div
+            className={`bg-#00426F overflow-x-hidden h-[590px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col ${isLoading ? 'blur-screen' : ''}`}>
+            <div className="flex-grow overflow-auto">
+              <DataTableComponent
+                tableStyle={{
+                  fontSize: '12px',
+                  color: '#000000',
+                  fontWeight: 600,
+                  backgroundColor: '#D9D9D9',
+                  cursor: 'pointer',
                 }}
+                data={boatyardsData}
+                // rowExpansionTemplate={rowExpansionTemplate}
+                // onRowToggle={(e: any) => {
+                //   setExpandedRows(e.data)
+                // }}
+                // expandedRows={expandedRows}
+                selectionMode="single"
+                onSelectionChange={(e: any) => {
+                  setSelectedMooring(e.value)
+                }}
+                selection={selectedMooring}
+                rowStyle={(rowData: any) => rowData}
+                dataKey="id"
+                columns={boatYardColumns}
+                onRowClick={(e: any) => handleRowClickBoatYardDetail(e)}
+                emptyMessage={
+                  <div className="text-center mt-14">
+                    <img
+                      src="/assets/images/empty.png"
+                      alt="Empty Data"
+                      className="w-20 mx-auto mb-4"
+                    />
+                    <p className="text-gray-500">No data available</p>
+                  </div>
+                }
               />
             </div>
-
+            <Paginator
+              first={pageNumber1}
+              rows={pageSize}
+              totalRecords={120}
+              rowsPerPageOptions={[10, 20, 30]}
+              onPageChange={onPageChange}
+              style={{
+                position: 'sticky',
+                bottom: 0,
+                zIndex: 1,
+                backgroundColor: 'white',
+                borderTop: '1px solid #D5E1EA',
+                padding: '0.5rem',
+              }}
+            />
           </div>
         </div>
 
         <div
-          // style={{border:"1px solid red"}}
           data-testid="customer-admin-users-table"
-          className=" flex-grow bg-[#FFFFFF] rounded-xl border-[1px] border-gray-300 w-[515px] h-[732px] mr-[50px]  mb-0 ">
+          className=" flex-grow bg-[#FFFFFF] rounded-xl border-[1px] border-gray-300 w-[515px] h-[732px] mr-[50px] ml-[30px]  mb-0 ">
           <div className="">
             <div className="text-sm font-extrabold rounded-sm w-full bg-[#D9D9D9]">
               <div

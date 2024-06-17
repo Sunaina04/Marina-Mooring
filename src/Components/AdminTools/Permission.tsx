@@ -220,6 +220,8 @@ const Permission = () => {
             value={searchInput}
             onChange={(e) => {
               setSearchInput(e.target.value)
+              setPageNumber(0)
+              setPageNumber1(0)
             }}
             placeholder="Search by name, ID, Role, phone no..."
             style={{

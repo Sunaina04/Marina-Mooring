@@ -73,10 +73,14 @@ const CustomerOwner = () => {
   }
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPageNumber(0)
+    setPageNumber1(0)
     setSearchText(e.target.value)
   }
 
   const handleUsersSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPageNumberTwo(0)
+    setPageNumberOne(0)
     setSearchUsersText(e.target.value)
   }
 
@@ -531,6 +535,9 @@ const CustomerOwner = () => {
                 rowsPerPageOptions={[5, 10, 20, 30]}
                 onPageChange={onPageChange}
                 style={{
+                  position: 'sticky',
+                  bottom: 0,
+                  zIndex: 1,
                   backgroundColor: 'white',
                   borderTop: '1px solid #D5E1EA',
                   padding: '0.5rem',
@@ -584,35 +591,37 @@ const CustomerOwner = () => {
             />
           )}
           <div
-            className="overflow-y-auto p-4"
-            data-testid="customer-admin-users-table"
-            style={{ maxHeight: '500px' }}>
-            <DataTableComponent
-              tableStyle={{
-                fontSize: '12px',
-                color: '#000000',
-                fontWeight: 600,
-                backgroundColor: '#F9FAFB',
-                cursor: 'pointer',
-                width: '100%',
-              }}
-              scrollable={true}
-              data={getCustomerOwnerUserData}
-              columns={customerOwnerUserTableColumn}
-              actionButtons={ActionButtonUsersColumn}
-              style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
-              emptyMessage={
-                <div className="text-center mt-40">
-                  <img
-                    src="/assets/images/empty.png"
-                    alt="Empty Data"
-                    className="w-32 mx-auto mb-4"
-                  />
-                  <p className="text-gray-500">No data available</p>
-                </div>
-              }
-            />
-            <div className="card mt-8">
+            data-testid="customer-admin-data"
+            className="flex flex-col overflow-hidden p-4"
+            style={{ height: '500px' }}>
+            <div className="flex-grow overflow-auto">
+              <DataTableComponent
+                tableStyle={{
+                  fontSize: '12px',
+                  color: '#000000',
+                  fontWeight: 600,
+                  backgroundColor: '#F9FAFB',
+                  cursor: 'pointer',
+                  width: '100%',
+                }}
+                scrollable={true}
+                data={getCustomerOwnerUserData}
+                columns={customerOwnerUserTableColumn}
+                actionButtons={ActionButtonUsersColumn}
+                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
+                emptyMessage={
+                  <div className="text-center mt-40">
+                    <img
+                      src="/assets/images/empty.png"
+                      alt="Empty Data"
+                      className="w-32 mx-auto mb-4"
+                    />
+                    <p className="text-gray-500">No data available</p>
+                  </div>
+                }
+              />
+            </div>
+            <div className="mt-auto">
               <Paginator
                 first={pageNumberOne}
                 rows={pageSizeTwo}

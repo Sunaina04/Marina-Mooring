@@ -37,13 +37,11 @@ const AddInventory: React.FC<AddInventoryProps> = ({
   const [addInventory] = useAddInventoryMutation()
   const [UpdateInventory] = useUpdateInventoryMutation()
 
-
   const handleInputChange = (field: string, value: any) => {
-
     if (field === 'cost' && value !== '' && !/^\d*\.?\d*$/.test(value)) {
       return
     }
-    
+
     setFormData({
       ...formData,
       [field]: value,
@@ -74,7 +72,7 @@ const AddInventory: React.FC<AddInventoryProps> = ({
       cost: selectedInventory?.cost || '',
       salePrice: selectedInventory?.salePrice,
     }))
-    if (selectedInventory?.taxable === true) {
+    if (selectedInventory?.taxable === 'yes') {
       setChecked(true)
     } else {
       setUnChecked(true)
@@ -87,7 +85,7 @@ const AddInventory: React.FC<AddInventoryProps> = ({
       return
     }
 
-    setIsLoading(true);
+    setIsLoading(true)
     try {
       const savePayload = {
         inventoryTypeId: formData?.type?.id,
@@ -264,7 +262,6 @@ const AddInventory: React.FC<AddInventoryProps> = ({
               strokeWidth="4"
             />
           )}
-
 
           <div>
             <div className="font-medium text-sm text-[#000000]">

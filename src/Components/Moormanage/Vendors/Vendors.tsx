@@ -44,6 +44,8 @@ const Vendors = () => {
   }
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPageNumber(0)
+    setPageNumber1(0)
     setSearchText(e.target.value)
   }
 

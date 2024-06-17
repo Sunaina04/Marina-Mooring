@@ -96,6 +96,8 @@ const Moorings = () => {
     setCustomerMooringData([])
     setBoatYardData([])
     setMooringResponseData('')
+    setPageNumber(0)
+    setPageNumber1(0)
   }
 
   const handleButtonClick = () => {
