@@ -404,18 +404,12 @@ const Customer = () => {
         </div>
       </div>
 
-      <div
-        className="ml-[50px] gap-[19px] mt-5 "
-        style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-        <div
-          data-testid="dataTable"
-          className="flex-grow  bg-[#FFFFFF] rounded-xl border-[1px] border-[#D5E1EA] w-[515px] h-[732px] mb-0 ">
-          <div className="text-sm font-extrabold rounded-sm w-full bg-[#D9D9D9]">
-            <div
-              className="flex  align-items-center justify-between bg-[#10293A] rounded-tl-[10px] rounded-tr-[10px]"
-              style={{ color: '#FFFFFF' }}>
-              <h1 className="p-4">{properties.customerHeader}</h1>
-            </div>
+      <div className="flex flex-col md:flex-row mt-3">
+        {/* Left Panel */}
+        <div className="flex-grow bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-6 md:mb-0">
+          {/* Header */}
+          <div className="bg-[#10293A] rounded-tl-[10px] rounded-tr-[10px] text-white">
+            <h1 className="p-4 text-xl font-extrabold">{properties.customerHeader}</h1>
           </div>
 
           <InputTextWithHeader
@@ -534,37 +528,26 @@ const Customer = () => {
           <CustomDisplayPositionMap position={[latitude, longitude]} zoomLevel={10} />
         </div> */}
 
-        <div className="min-w-[20vw] min-h[50vw]">
-          <div
-            className={`max-w-[413px] max-h-[732px] rounded-md border-[1px] ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
-            {/* <CustomDisplayPositionMap position={[latitude, longitude]} zoomLevel={10} /> */}
+        {/* <div className="min-w-[20vw] min-h[50vw]"> */}
+        <div
+          className={`min-w-[20vw] min-h[50vw] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
+          {/* <CustomDisplayPositionMap position={[latitude, longitude]} zoomLevel={10} /> */}
 
-            <CustomMooringPositionMap
-              position={[latitude, longitude]}
-              zoomLevel={10}
-              style={{ height: '732px' }}
-              iconsByStatus={iconsByStatus}
-              moorings={mooringData}
-            />
-          </div>
+          <CustomMooringPositionMap
+            position={[latitude, longitude]}
+            zoomLevel={10}
+            style={{ height: '732px' }}
+            iconsByStatus={iconsByStatus}
+            moorings={mooringData}
+          />
         </div>
+        {/* </div> */}
 
         {/* last container */}
 
-        <div
-          style={{
-            top: '277px',
-            left: '107px',
-            gap: '0px',
-            width: '413px',
-            borderRadius: '10px',
-            border: '1px solid #D5E1EA',
-            opacity: '0px',
-            backgroundColor: 'white',
-            flexGrow: 1,
-            marginRight: '40px',
-          }}>
-          <div className="rounded-md border">
+        <div className="lg:flex-row ml-5 mr-6">
+          {/* Left Panel - Customer Record */}
+          <div className="flex-grow rounded-md border bg-white">
             <div className="bg-[#10293A] rounded-t-[10px] flex justify-between pb-2">
               <div className="text-sm font-semibold rounded-t-md bg-[]">
                 <h1 className="p-4 text-white">{'Customers Record'}</h1>
@@ -676,8 +659,8 @@ const Customer = () => {
             )}
           </div>
 
-          <div>
-            <p
+          <div className="flex-grow bg-white rounded-md border">
+            <div
               style={{
                 backgroundColor: '#10293A',
                 fontWeight: '700',
@@ -686,156 +669,152 @@ const Customer = () => {
                 fontSize: '15px',
               }}>
               Moorings
-            </p>
-          </div>
+            </div>
 
-          <div className=" ">
-            {mooringData.length === 0 ? (
-              <div className="text-center mt-40">
-                <img
-                  src="/assets/images/empty.png"
-                  alt="Empty Data"
-                  className="w-20 mx-auto mb-4"
-                />
-                <p className="text-gray-500">No data available</p>
-              </div>
-            ) : (
-              <div style={{ overflow: 'auto' }}>
-                <DataTableComponent
-                  style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
-                  scrollable
-                  tableStyle={{
-                    fontSize: '12px',
-                    color: '#000000',
-                    fontWeight: 600,
-                    backgroundColor: '#D9D9D9',
-                    cursor: 'pointer',
-                  }}
-                  onRowClick={(rowData) => {
-                    handleMooringTableRowClick(rowData)
-                  }}
-                  columns={MooringTableColumn}
-                  data={mooringData}
-                  selectionMode="single"
-                  onSelectionChange={(e) => {
-                    setSelectedMooring(e.value)
-                  }}
-                  selection={selectedMooring}
-                  dataKey="id"
-                  rowStyle={(rowData: any) => rowData}
-                />
-              </div>
-            )}
-
-            {/* Dialog BOX */}
-            <Dialog
-              position="center"
-              style={{
-                width: '740px',
-                minWidth: '300px',
-                height: '503px',
-                minHeight: '200px',
-                borderRadius: '1rem',
-                fontWeight: '400',
-                maxHeight: '50% !important',
-              }}
-              draggable={false}
-              visible={dialogVisible}
-              onHide={() => setDialogVisible(false)}
-              header={
-                <div className="flex gap-4">
-                  <div className="font-bolder text-[black]">Mooring Information</div>
-                  <div className="font-bold mt-1">
-                    <FaEdit
-                      onClick={handleMooringEdit}
-                      color="#0098FF"
-                      style={{ cursor: 'pointer' }}
-                    />
-                  </div>
+            <div className="p-4">
+              {mooringData.length === 0 ? (
+                <div className="text-center mt-40">
+                  <img
+                    src="/assets/images/empty.png"
+                    alt="Empty Data"
+                    className="w-20 mx-auto mb-4"
+                  />
+                  <p className="text-gray-500">No data available</p>
                 </div>
-              }>
-              <hr className="border border-[#000000] my-0 mx-0"></hr>
-
-              <div
-                style={{
-                  fontSize: '14px',
-                  fontWeight: '300',
-                  color: '#000000',
-                }}
-                className="flex leading-[3.50rem] gap-32 p-4">
-                <div>
-                  <p>
-                    <span>ID: </span> {mooringRowData?.id}
-                  </p>
-                  <p>
-                    <span>Mooring ID: </span>
-                    {mooringRowData?.mooringId}
-                  </p>
-                  <p>
-                    <span>Boat Name: </span>
-                    {mooringRowData?.boatName}
-                  </p>
-                  <p>
-                    <span>Type: </span> {mooringRowData?.boatType?.boatType}
-                  </p>
-                  <p>
-                    <span>Size of Weight: </span>
-                    {mooringRowData?.sizeOfWeight?.weight}
-                  </p>
-                  <p>
-                    <span>Top Chain Condition: </span>
-                    {mooringRowData?.topChainCondition?.condition}
-                  </p>
-                  <p className="tracking-tighter">
-                    <span>Bottom Chain Condition: </span>
-                    {mooringRowData?.bottomChainCondition?.condition}
-                  </p>
-                  <p>
-                    <span>Pennant Condition: </span>
-                    {mooringRowData?.pennantCondition?.condition}
-                  </p>
-                  <p>
-                    <span>Water Depth: </span>
-                    {mooringRowData?.waterDepth}
-                  </p>
+              ) : (
+                <div className="overflow-auto">
+                  <DataTableComponent
+                    style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+                    scrollable
+                    tableStyle={{
+                      fontSize: '12px',
+                      color: '#000000',
+                      fontWeight: 600,
+                      backgroundColor: '#D9D9D9',
+                      cursor: 'pointer',
+                    }}
+                    onRowClick={(rowData) => {
+                      handleMooringTableRowClick(rowData)
+                    }}
+                    columns={MooringTableColumn}
+                    data={mooringData}
+                    selectionMode="single"
+                    onSelectionChange={(e) => {
+                      setSelectedMooring(e.value)
+                    }}
+                    selection={selectedMooring}
+                    dataKey="id"
+                    rowStyle={(rowData: any) => rowData}
+                  />
                 </div>
-                <div>
-                  <p>
-                    <span>Harbor: </span> {mooringRowData?.harbor}
-                  </p>
-                  <p>
-                    <span>G.P.S Coordinates: </span>
-                    {mooringRowData?.gpsCoordinates}
-                  </p>
-                  <p>
-                    <span>Boat Size: </span>
-                    {mooringRowData?.boatSize}
-                  </p>
-                  <p>
-                    <span>Weight: </span> {mooringRowData?.boatWeight}
-                  </p>
-                  <p>
-                    <span>Type of Weight: </span>
-                    {mooringRowData?.typeOfWeight?.type}
-                  </p>
-                  <p>
-                    <span>Condition of Eye: </span>
-                    {mooringRowData?.eyeCondition?.condition}
-                  </p>
-                  <p>
-                    <span>Shackle, Swivel Condition: </span>
-                    {mooringRowData?.shackleSwivelCondition?.condition}
-                  </p>
-                  <p>
-                    <span>Depth at Mean High Water: </span>
-                    {mooringRowData?.depthAtMeanHighWater}
-                  </p>
-                </div>
-              </div>
-            </Dialog>
+              )}
+            </div>
           </div>
         </div>
       </div>
+
+      {/* Dialog BOX */}
+      <Dialog
+        position="center"
+        style={{
+          width: '740px',
+          minWidth: '300px',
+          height: '503px',
+          minHeight: '200px',
+          borderRadius: '1rem',
+          fontWeight: '400',
+          maxHeight: '50% !important',
+        }}
+        draggable={false}
+        visible={dialogVisible}
+        onHide={() => setDialogVisible(false)}
+        header={
+          <div className="flex gap-4">
+            <div className="font-bolder text-[black]">Mooring Information</div>
+            <div className="font-bold mt-1">
+              <FaEdit onClick={handleMooringEdit} color="#0098FF" style={{ cursor: 'pointer' }} />
+            </div>
+          </div>
+        }>
+        <hr className="border border-[#000000] my-0 mx-0"></hr>
+
+        <div
+          style={{
+            fontSize: '14px',
+            fontWeight: '300',
+            color: '#000000',
+          }}
+          className="flex leading-[3.50rem] gap-32 p-4">
+          <div>
+            <p>
+              <span>ID: </span> {mooringRowData?.id}
+            </p>
+            <p>
+              <span>Mooring ID: </span>
+              {mooringRowData?.mooringId}
+            </p>
+            <p>
+              <span>Boat Name: </span>
+              {mooringRowData?.boatName}
+            </p>
+            <p>
+              <span>Type: </span> {mooringRowData?.boatType?.boatType}
+            </p>
+            <p>
+              <span>Size of Weight: </span>
+              {mooringRowData?.sizeOfWeight?.weight}
+            </p>
+            <p>
+              <span>Top Chain Condition: </span>
+              {mooringRowData?.topChainCondition?.condition}
+            </p>
+            <p className="tracking-tighter">
+              <span>Bottom Chain Condition: </span>
+              {mooringRowData?.bottomChainCondition?.condition}
+            </p>
+            <p>
+              <span>Pennant Condition: </span>
+              {mooringRowData?.pennantCondition?.condition}
+            </p>
+            <p>
+              <span>Water Depth: </span>
+              {mooringRowData?.waterDepth}
+            </p>
+          </div>
+          <div>
+            <p>
+              <span>Harbor: </span> {mooringRowData?.harbor}
+            </p>
+            <p>
+              <span>G.P.S Coordinates: </span>
+              {mooringRowData?.gpsCoordinates}
+            </p>
+            <p>
+              <span>Boat Size: </span>
+              {mooringRowData?.boatSize}
+            </p>
+            <p>
+              <span>Weight: </span> {mooringRowData?.boatWeight}
+            </p>
+            <p>
+              <span>Type of Weight: </span>
+              {mooringRowData?.typeOfWeight?.type}
+            </p>
+            <p>
+              <span>Condition of Eye: </span>
+              {mooringRowData?.eyeCondition?.condition}
+            </p>
+            <p>
+              <span>Shackle, Swivel Condition: </span>
+              {mooringRowData?.shackleSwivelCondition?.condition}
+            </p>
+            <p>
+              <span>Depth at Mean High Water: </span>
+              {mooringRowData?.depthAtMeanHighWater}
+            </p>
+          </div>
+        </div>
+      </Dialog>
     </div>
   )
 }

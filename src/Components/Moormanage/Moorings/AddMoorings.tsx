@@ -287,7 +287,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     try {
       setIsLoading(true)
       const payload = {
-        customerId: formData?.customerName?.id,
+        customerId: formData?.customerName,
         mooringId: formData?.mooringNumber,
         harbor: formData?.harbor,
         waterDepth: formData?.waterDepth,
