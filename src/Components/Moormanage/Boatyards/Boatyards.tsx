@@ -33,6 +33,7 @@ import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import { FaEdit } from 'react-icons/fa'
 import { RiDeleteBin5Fill } from 'react-icons/ri'
+import { Paginator } from 'primereact/paginator'
 
 const Boatyards = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -60,6 +61,30 @@ const Boatyards = () => {
   const [getBoatyards] = useGetBoatyardsMutation()
   const [deleteBoatyard] = useDeleteBoatyardsMutation()
   const [getMooringsWithBoatyard] = useGetMooringWithBoatyardMutation()
+
+
+  const [pageNumber, setPageNumber] = useState(0)
+  const [pageNumber1, setPageNumber1] = useState(0)
+  const [pageSize, setPageSize] = useState(10)
+
+  const [pageNumberTwo, setPageNumberTwo] = useState(0)
+  const [pageNumberOne, setPageNumberOne] = useState(0)
+  const [pageSizeTwo, setPageSizeTwo] = useState(10)
+
+
+
+  const onPageChange = (event: any) => {
+    setPageNumber(event.page)
+    setPageNumber1(event.first)
+    setPageSize(event.rows)
+  }
+
+  const onPageChangeTwo = (event: any) => {
+    setPageNumberTwo(event.page)
+    setPageNumberOne(event.first)
+    setPageSizeTwo(event.rows)
+  }
+
 
   const toast = useRef<Toast>(null)
 
@@ -311,6 +336,14 @@ const Boatyards = () => {
       if (searchFieldText) {
         params.searchText = searchFieldText
       }
+      if (pageNumber) {
+        params.pageNumber = pageNumber
+      }
+      if (pageSize) {
+        params.pageSize = pageSize
+      }
+
+
       await getBoatyards(params)
         .unwrap()
         .then(async (response) => {
@@ -344,10 +377,18 @@ const Boatyards = () => {
       const { message } = error as ErrorResponse
       console.error('Error fetching getBoatyardsdata:', message)
     }
-  }, [getBoatyards, searchText, searchFieldText, selectedCustomerId, selectedBoatYard])
+  }, [getBoatyards, searchText, searchFieldText, selectedCustomerId, selectedBoatYard, pageSize, pageNumber])
 
   const getMooringsWithBoatyardData = async () => {
     try {
+
+      let params: Params = {}
+      if (pageNumberTwo) {
+        params.pageNumber = pageNumberTwo
+      }
+      if (pageSizeTwo) {
+        params.pageSize = pageSizeTwo
+      }
       await getMooringsWithBoatyard({ id: selectedBoatYard?.id })
         .unwrap()
         .then(async (response) => {
@@ -370,14 +411,14 @@ const Boatyards = () => {
       getBoatyardsData()
     }, 2000)
     return () => clearTimeout(timeoutId)
-  }, [searchText, selectedCustomerId, searchFieldText])
+  }, [searchText, selectedCustomerId, searchFieldText, pageSize, pageNumber])
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       if (selectedBoatYard) getMooringsWithBoatyardData()
     }, 600)
     return () => clearTimeout(timeoutId)
-  }, [selectedBoatYard])
+  }, [selectedBoatYard,pageSizeTwo,pageNumberTwo])
 
   useEffect(() => {
     setIsLoader(true)
@@ -473,7 +514,25 @@ const Boatyards = () => {
                 <p className="text-gray-500">No data available</p>
               </div>
             }
+
           />
+          <div className="card mt-10">
+            <Paginator
+              first={pageNumberOne}
+              rows={pageSizeTwo}
+              totalRecords={120}
+              rowsPerPageOptions={[10, 20, 30]}
+              onPageChange={onPageChangeTwo}
+              style={{
+                position: 'sticky',
+                bottom: 0,
+                zIndex: 1,
+                backgroundColor: 'white',
+                borderTop: '1px solid #D5E1EA',
+                padding: '0.5rem',
+              }}
+            />
+          </div>
         </div>
       </>
     )
@@ -606,6 +665,25 @@ const Boatyards = () => {
                 </div>
               }
             />
+
+            <div className="card mt-10">
+              <Paginator
+                first={pageNumber1}
+                rows={pageSize}
+                totalRecords={120}
+                rowsPerPageOptions={[10, 20, 30]}
+                onPageChange={onPageChange}
+                style={{
+                  position: 'sticky',
+                  bottom: 0,
+                  zIndex: 1,
+                  backgroundColor: 'white',
+                  borderTop: '1px solid #D5E1EA',
+                  padding: '0.5rem',
+                }}
+              />
+            </div>
+
           </div>
         </div>
 

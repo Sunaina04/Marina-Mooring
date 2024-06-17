@@ -18,6 +18,7 @@ import { Params } from '../../../Type/CommonType'
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
+import { Paginator } from 'primereact/paginator'
 
 const Vendors = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -32,6 +33,15 @@ const Vendors = () => {
   const [getVendors] = useGetVendorsMutation()
   const [deleteVendor] = useDeleteVendorMutation()
   const navigate = useNavigate()
+  const [pageNumber, setPageNumber] = useState(0)
+  const [pageNumber1, setPageNumber1] = useState(0)
+  const [pageSize, setPageSize] = useState(10)
+
+  const onPageChange = (event: any) => {
+    setPageNumber(event.page)
+    setPageNumber1(event.first)
+    setPageSize(event.rows)
+  }
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value)
@@ -48,6 +58,14 @@ const Vendors = () => {
       if (searchText) {
         params.searchText = searchText
       }
+      if (pageNumber) {
+        params.pageNumber = pageNumber
+      }
+      if (pageSize) {
+        params.pageSize = pageSize
+      }
+
+
       await getVendors(params)
         .unwrap()
         .then(async (response: any) => {
@@ -70,7 +88,7 @@ const Vendors = () => {
       setIsLoading(false)
       console.error('Error fetching getBoatyardsdata:', error)
     }
-  }, [getVendors, searchText, selectedCustomerId])
+  }, [getVendors, searchText, selectedCustomerId,pageSize, pageNumber])
 
   const handleEdit = (rowData: any) => {
     setModalVisible(true)
@@ -125,12 +143,12 @@ const Vendors = () => {
       //     fontWeight: '700',
       //     borderTopLeftRadius: '10px',
       //   },
-        
+
       // },
       {
         id: 'companyName',
         label: 'Company Name',
-        style: { width: '16vw', backgroundColor: '#00426F', color: '#FFFFFF',  borderTopLeftRadius: '10px', },
+        style: { width: '16vw', backgroundColor: '#00426F', color: '#FFFFFF', borderTopLeftRadius: '10px', },
       },
       {
         id: 'companyPhoneNumber',
@@ -204,7 +222,7 @@ const Vendors = () => {
       getVendorData()
     }, 600)
     return () => clearTimeout(timeoutId)
-  }, [searchText, selectedCustomerId])
+  }, [searchText, selectedCustomerId,pageSize, pageNumber])
 
   return (
     <>
@@ -315,6 +333,24 @@ const Vendors = () => {
               </div>
             }
           />
+
+          <div className="card mt-8">
+            <Paginator
+              first={pageNumber1}
+              rows={pageSize}
+              totalRecords={120}
+              rowsPerPageOptions={[5, 10, 20, 30]}
+              onPageChange={onPageChange}
+              style={{
+                position: 'sticky',
+                bottom: 0,
+                zIndex: 1,
+                backgroundColor: 'white',
+                borderTop: '1px solid #D5E1EA',
+                padding: '0.5rem',
+              }}
+            />
+          </div>
         </div>
       </div>
     </>

@@ -63,11 +63,27 @@ const Customer = () => {
   const toast = useRef<Toast>(null)
 
   const [pageNumber, setPageNumber] = useState(0)
+  const [pageNumber1, setPageNumber1] = useState(0)
   const [pageSize, setPageSize] = useState(10)
+
+
+  const [pageNumberTwo, setPageNumberTwo] = useState(0)
+  const [pageNumberOne, setPageNumberOne] = useState(0)
+  const [pageSizeTwo, setPageSizeTwo] = useState(10)
+  
+
+
 
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
+    setPageNumber1(event.first)
     setPageSize(event.rows)
+  }
+
+  const onPageChangeTwo = (event: any) => {
+    setPageNumberTwo(event.page)
+    setPageNumberOne(event.first)
+    setPageSizeTwo(event.rows)
   }
 
   const handleButtonClick = () => {
@@ -227,6 +243,13 @@ const Customer = () => {
       if (searchText) {
         params.searchText = searchText
       }
+      if (pageNumber) {
+        params.pageNumber = pageNumber
+      }
+      if (pageSize) {
+        params.pageSize = pageSize
+      }
+
       const response = await getCustomer(params).unwrap()
       const { status, content, message } = response as CustomerResponse
       if (status === 200 && Array.isArray(content)) {
@@ -247,7 +270,7 @@ const Customer = () => {
       const { message: msg } = error as ErrorResponse
       console.error('Error occurred while fetching customer data:', msg)
     }
-  }, [getCustomer, searchText, selectedCustomerId])
+  }, [getCustomer, searchText, selectedCustomerId, pageSize, pageNumber])
 
   const parseCoordinates = (coordinates: any) => {
     if (!coordinates) return null
@@ -258,10 +281,20 @@ const Customer = () => {
   console.log('mooringData[0]?.gpsCoordinates', mooringData[0]?.gpsCoordinates)
 
   const [latitude, longitude] = parseCoordinates(mooringData[0]?.gpsCoordinates) || [34.089, 76.157]
+
+
   const getCustomersWithMooring = async (id: number) => {
     setIsLoading(true)
     try {
-      const response = await getCustomerWithMooring({ id: id }).unwrap()
+
+      let params: Params = {}
+      if (pageNumberTwo) {
+        params.pageNumber = pageNumberTwo
+      }
+      if (pageSizeTwo) {
+        params.pageSize = pageSizeTwo
+      }
+      const response = await getCustomerWithMooring({ id: id ,params }).unwrap()
       const { status, content, message } = response as CustomersWithMooringResponse
       if (
         status === 200 &&
@@ -326,7 +359,17 @@ const Customer = () => {
       getCustomerData()
     }, 600)
     return () => clearTimeout(timeoutId)
-  }, [searchText, selectedCustomerId])
+  }, [searchText, selectedCustomerId, pageSize, pageNumber])
+
+
+
+  useEffect(() => {
+    if (customerId ) {
+      getCustomersWithMooring(customerId);
+    }
+  }, [pageNumberTwo, pageSizeTwo]);
+
+  
 
   const moorings = [
     { position: [30.698, 76.657], status: 'mooringStatus' },
@@ -458,15 +501,6 @@ const Customer = () => {
                   <p className="text-gray-500">No data available</p>
                 </div>
 
-                <div className="card">
-                  <Paginator
-                    first={pageNumber}
-                    rows={pageSize}
-                    totalRecords={120}
-                    rowsPerPageOptions={[10, 20, 30]}
-                    onPageChange={onPageChange}
-                  />
-                </div>
               </>
             ) : (
               <>
@@ -491,14 +525,22 @@ const Customer = () => {
                   dataKey="id"
                   rowStyle={(rowData: any) => rowData}
                 />
-                <div className="card">
+                <div className="card mt-8">
                   <Paginator
-                    first={pageNumber}
+                    first={pageNumber1}
                     rows={pageSize}
                     totalRecords={120}
-                    rowsPerPageOptions={[10, 20, 30]}
+                    rowsPerPageOptions={[5, 10, 20, 30]}
                     onPageChange={onPageChange}
-                    // style={{marginTop:'15rem'}}
+                    style={{
+                      position: 'sticky',
+                      bottom: 0,
+                      zIndex: 1,
+                      backgroundColor: 'white',
+                      borderTop: '1px solid #D5E1EA',
+                      padding: '0.5rem',
+                    }}
+
                   />
                 </div>
               </>
@@ -724,6 +766,31 @@ const Customer = () => {
                   dataKey="id"
                   rowStyle={(rowData: any) => rowData}
                 />
+
+               <div className="card mt-8">
+                  <Paginator
+                    first={pageNumberOne}
+                    rows={pageSizeTwo}
+                    totalRecords={120}
+                    rowsPerPageOptions={[5, 10, 20, 30]}
+                    onPageChange={onPageChangeTwo}
+                    style={{
+                      position: 'sticky',
+                      bottom: 0,
+                      zIndex: 1,
+                      backgroundColor: 'white',
+                      borderTop: '1px solid #D5E1EA',
+                      padding: '0.5rem',
+                    }}
+
+                  />
+                </div>
+
+
+
+
+
+
               </div>
             )}
 

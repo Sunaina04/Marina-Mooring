@@ -22,15 +22,15 @@ const moormanageApi = userApi.injectEndpoints({
 
     getCustomer: builder.mutation({
       query: ({
-        page,
-        size,
+        pageNumber,
+        pageSize,
         sortBy,
         sortDir,
         searchText,
         customerOwnerId,
       }: {
-        page?: number
-        size?: number
+        pageNumber?: number
+        pageSize?: number
         sortBy?: string
         sortDir?: string
         searchText?: string
@@ -38,7 +38,7 @@ const moormanageApi = userApi.injectEndpoints({
       }) => ({
         url: 'api/v1/customer/',
         method: 'GET',
-        params: { page, size, sortBy, sortDir, searchText, customerOwnerId },
+        params: { pageNumber, pageSize, sortBy, sortDir, searchText, customerOwnerId },
       }),
     }),
 
@@ -68,15 +68,15 @@ const moormanageApi = userApi.injectEndpoints({
 
     getMoorings: builder.mutation({
       query: ({
-        page,
-        size,
+        pageNumber,
+        pageSize,
         sortBy,
         sortDir,
         searchText,
         customerOwnerId,
       }: {
-        page?: number
-        size?: number
+        pageNumber?: number
+        pageSize?: number
         sortBy?: string
         sortDir?: string
         searchText?: string
@@ -84,7 +84,7 @@ const moormanageApi = userApi.injectEndpoints({
       }) => ({
         url: 'api/v1/mooring/',
         method: 'GET',
-        params: { page, size, sortBy, sortDir, searchText, customerOwnerId },
+        params: { pageNumber, pageSize, sortBy, sortDir, searchText, customerOwnerId },
       }),
     }),
 
@@ -114,21 +114,21 @@ const moormanageApi = userApi.injectEndpoints({
 
     getVendors: builder.mutation({
       query: ({
-        page,
-        size,
+        pageNumber,
+        pageSize,
         sortBy,
         sortDir,
         searchText,
       }: {
-        page?: number
-        size?: number
+        pageNumber?: number
+        pageSize?: number
         sortBy?: string
         sortDir?: string
         searchText?: string
       }) => ({
         url: 'api/v1/vendor/',
         method: 'GET',
-        params: { page, size, sortBy, sortDir, searchText },
+        params: { pageNumber, pageSize, sortBy, sortDir, searchText },
       }),
     }),
 
@@ -227,7 +227,6 @@ const moormanageApi = userApi.injectEndpoints({
       }),
     }),
 
-
     getTechnicianById: builder.mutation({
       query: ({ id }: { id?: number }) => ({
         url: `api/v1/technician/${id}`,
@@ -252,16 +251,40 @@ const moormanageApi = userApi.injectEndpoints({
 
     //FetchCustomersWithMooring
     getCustomersWithMooring: builder.mutation({
-      query: ({ id }: { id?: number }) => ({
+      query: ({
+        id,
+        pageNumber,
+        pageSize,
+        sortBy,
+        sortDir,
+        customerOwnerId,
+      }: {
+        id?: number
+        pageNumber?: number
+        pageSize?: number
+        sortBy?: string
+        sortDir?: string
+        customerOwnerId?:number
+      }) => ({
         url: `api/v1/customer/fetchCustomerWithMoorings/${id}`,
         method: 'GET',
+        params: { pageNumber, pageSize, sortBy, sortDir ,customerOwnerId},
       }),
     }),
 
     getMooringWithBoatyard: builder.mutation({
-      query: ({ id }: { id?: number }) => ({
+      query: ({
+        id,
+        pageNumber,
+        pageSize,
+      }: {
+        id?: number
+        pageNumber?: number
+        pageSize?: number
+      }) => ({
         url: `api/v1/boatyard/fetchMooringsWithBoatyard/${id}`,
         method: 'GET',
+        params: { pageNumber, pageSize },
       }),
     }),
 
@@ -322,7 +345,6 @@ const moormanageApi = userApi.injectEndpoints({
       }),
     }),
 
-
     getTechnicianData: builder.mutation({
       query: ({
         pageNumber,
@@ -335,16 +357,13 @@ const moormanageApi = userApi.injectEndpoints({
         pageSize?: number
         sortBy?: string
         sortDir?: string
-        searchText?:string
+        searchText?: string
       }) => ({
         url: '/api/v1/user/fetchTechnicians',
         method: 'GET',
-        params: { pageNumber, pageSize, sortBy, sortDir,searchText},
+        params: { pageNumber, pageSize, sortBy, sortDir, searchText },
       }),
     }),
-
-
-
   }),
 })
 
@@ -377,5 +396,5 @@ export const {
   useDeleteInventoryMutation,
   useAddInventoryMutation,
   useUpdateInventoryMutation,
-  useGetTechnicianDataMutation
+  useGetTechnicianDataMutation,
 } = moormanageApi

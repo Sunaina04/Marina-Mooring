@@ -64,10 +64,12 @@ const Moorings = () => {
   const [getCustomerWithMooring] = useGetCustomersWithMooringMutation()
 
   const [pageNumber, setPageNumber] = useState(0)
+  const [pageNumber1, setPageNumber1] = useState(0)
   const [pageSize, setPageSize] = useState(10)
 
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
+    setPageNumber1(event.first)
     setPageSize(event.rows)
   }
 
@@ -243,6 +245,13 @@ const Moorings = () => {
       if (searchText) {
         params.searchText = searchText
       }
+
+      if (pageNumber) {
+        params.pageNumber = pageNumber
+      }
+      if (pageSize) {
+        params.pageSize = pageSize
+      }
       const response = await getMoorings(params).unwrap()
       const { status, content, message } = response as MooringResponse
       if (status === 200 && Array.isArray(content)) {
@@ -263,7 +272,7 @@ const Moorings = () => {
       const { message } = error as ErrorResponse
       console.error('Error fetching moorings data:', error)
     }
-  }, [searchText, getMoorings, selectedCustomerId])
+  }, [searchText, getMoorings, selectedCustomerId, pageSize, pageNumber])
 
   const getCustomersWithMooring = async (id: number) => {
     setIsLoading(true)
@@ -299,7 +308,7 @@ const Moorings = () => {
       getMooringsData()
     }, 2000)
     return () => clearTimeout(timeoutId)
-  }, [searchText, selectedCustomerId])
+  }, [searchText, selectedCustomerId, pageSize, pageNumber])
 
   return (
     <div className={modalVisible ? 'backdrop-blur-lg' : ''}>
@@ -411,15 +420,6 @@ const Moorings = () => {
                   />
                   <p className="text-gray-500">No data available</p>
                 </div>
-                <div className="card">
-                  <Paginator
-                    first={pageNumber}
-                    rows={pageSize}
-                    totalRecords={120}
-                    rowsPerPageOptions={[10, 20, 30]}
-                    onPageChange={onPageChange}
-                  />
-                </div>
               </>
             ) : (
               <>
@@ -446,14 +446,21 @@ const Moorings = () => {
                   dataKey="id"
                   rowStyle={(rowData: any) => rowData}
                 />
-                <div className="card">
+                <div className="card mt-10">
                   <Paginator
-                    first={pageNumber}
+                    first={pageNumber1}
                     rows={pageSize}
                     totalRecords={120}
                     rowsPerPageOptions={[10, 20, 30]}
                     onPageChange={onPageChange}
-                    // style={{marginTop:'15rem'}}
+                    style={{
+                      position: 'sticky',
+                      bottom: 0,
+                      zIndex: 1,
+                      backgroundColor: 'white',
+                      borderTop: '1px solid #D5E1EA',
+                      padding: '0.5rem',
+                    }}
                   />
                 </div>
               </>
@@ -664,6 +671,24 @@ const Moorings = () => {
                   </div>
                 }
               />
+
+              <div className="card ">
+                <Paginator
+                  first={pageNumber}
+                  rows={pageSize}
+                  totalRecords={120}
+                  rowsPerPageOptions={[10, 20, 30]}
+                  onPageChange={onPageChange}
+                  style={{
+                    position: 'sticky',
+                    bottom: 0,
+                    zIndex: 1,
+                    backgroundColor: 'white',
+                    borderTop: '1px solid #D5E1EA',
+                    padding: '0.5rem',
+                  }}
+                />
+              </div>
             </div>
 
             {/* Dialog BOX */}

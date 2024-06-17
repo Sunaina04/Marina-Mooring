@@ -45,11 +45,22 @@ const CustomerOwner = () => {
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
   const [pageSize, setPageSize] = useState(10)
+  
+  const [pageNumberTwo, setPageNumberTwo] = useState(0)
+  const [pageNumberOne, setPageNumberOne] = useState(0)
+  const [pageSizeTwo, setPageSizeTwo] = useState(10)
+
 
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
     setPageNumber1(event.first)
     setPageSize(event.rows)
+  }
+
+  const onPageChangeTwo = (event: any) => {
+    setPageNumberTwo(event.page)
+    setPageNumberOne(event.first)
+    setPageSizeTwo(event.rows)
   }
 
   const handleModalClose = () => {
@@ -226,6 +237,13 @@ const CustomerOwner = () => {
         if (searchUsersText) {
           params.searchText = searchUsersText
         }
+        if (pageNumberTwo) {
+          params.pageNumber = pageNumberTwo
+        }
+        if (pageSizeTwo) {
+          params.pageSize = pageSizeTwo
+        }
+        
         const response = await getUser(params).unwrap()
         const { status, message, content } = response as GetUserResponse
         if (status === 200 && Array.isArray(content)) {
@@ -246,7 +264,7 @@ const CustomerOwner = () => {
         console.error('Error occurred while fetching customer data:', error)
       }
     },
-    [getUser, searchUsersText],
+    [getUser, searchUsersText,pageSizeTwo,pageNumberTwo],
   )
 
   const handleDeleteCustomerOwner = async (rowData: any) => {
@@ -332,7 +350,7 @@ const CustomerOwner = () => {
       }
     }, 600)
     return () => clearTimeout(timeoutId)
-  }, [searchUsersText, selectedCustomerId])
+  }, [searchUsersText, selectedCustomerId,pageNumberTwo,pageSizeTwo])
 
   return (
     <div className={modalVisible ? 'backdrop-blur-lg' : ''}>
@@ -413,7 +431,7 @@ const CustomerOwner = () => {
                 }}
                 setModalVisible={setModalVisible}
                 setEditCustomer={setEditCustomer}
-                setIsVisible={() => {}}
+                setIsVisible={() => { }}
                 passWordDisplay={passWordDisplay}
                 customerUsers={getCustomerOwnerData}
                 toastRef={toast}
@@ -471,8 +489,33 @@ const CustomerOwner = () => {
             data-testid="customer-admin-data"
             className="overflow-y-auto p-4"
             style={{ maxHeight: '500px' }}>
-            {getCustomerOwnerData.length === 0 ? (
-              <>
+            <DataTableComponent
+              data={getCustomerOwnerData}
+              tableStyle={{
+                fontSize: '12px',
+                color: '#000000',
+                fontWeight: 600,
+                backgroundColor: '#F9FAFB',
+                cursor: 'pointer',
+                width: '100%',
+              }}
+              scrollable={true}
+              selectionMode="single"
+              onSelectionChange={(e) => {
+                setSelectedProduct(e.value)
+              }}
+              selection={selectedProduct}
+              dataKey="id"
+              rowStyle={(rowData) => rowData}
+              columns={customerOwnerTableColumn}
+              onRowClick={(e) => {
+                setSelectedId(e.data.id)
+                dispatch(setCustomerName(e.data.name))
+                dispatch(setCustomerId(e.data.id))
+              }}
+              style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
+              actionButtons={ActionButtonColumn}
+              emptyMessage={
                 <div className="text-center mt-40">
                   <img
                     src="/assets/images/empty.png"
@@ -481,72 +524,26 @@ const CustomerOwner = () => {
                   />
                   <p className="text-gray-500">No data available</p>
                 </div>
-                <div className="card mt-8">
-                  <Paginator
-                    first={pageNumber1}
-                    rows={pageSize}
-                    totalRecords={120}
-                    rowsPerPageOptions={[5, 10, 20, 30]}
-                    onPageChange={onPageChange}
-                    style={{
-                      position: 'sticky',
-                      bottom: 0,
-                      zIndex: 1,
-                      backgroundColor: 'white',
-                      borderTop: '1px solid #D5E1EA',
-                      padding: '0.5rem',
-                    }}
-                  />
-                </div>
-              </>
-            ) : (
-              <>
-                <DataTableComponent
-                  data={getCustomerOwnerData}
-                  tableStyle={{
-                    fontSize: '12px',
-                    color: '#000000',
-                    fontWeight: 600,
-                    backgroundColor: '#F9FAFB',
-                    cursor: 'pointer',
-                    width: '100%',
-                  }}
-                  scrollable={true}
-                  selectionMode="single"
-                  onSelectionChange={(e) => {
-                    setSelectedProduct(e.value)
-                  }}
-                  selection={selectedProduct}
-                  dataKey="id"
-                  rowStyle={(rowData) => rowData}
-                  columns={customerOwnerTableColumn}
-                  onRowClick={(e) => {
-                    setSelectedId(e.data.id)
-                    dispatch(setCustomerName(e.data.name))
-                    dispatch(setCustomerId(e.data.id))
-                  }}
-                  style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
-                  actionButtons={ActionButtonColumn}
-                />
-                <div className="card mt-8">
-                  <Paginator
-                    first={pageNumber1}
-                    rows={pageSize}
-                    totalRecords={120}
-                    rowsPerPageOptions={[5, 10, 20, 30]}
-                    onPageChange={onPageChange}
-                    style={{
-                      position: 'sticky',
-                      bottom: 0,
-                      zIndex: 1,
-                      backgroundColor: 'white',
-                      borderTop: '1px solid #D5E1EA',
-                      padding: '0.5rem',
-                    }}
-                  />
-                </div>
-              </>
-            )}
+              }
+            />
+            <div className="card mt-8">
+              <Paginator
+                first={pageNumber1}
+                rows={pageSize}
+                totalRecords={120}
+                rowsPerPageOptions={[5, 10, 20, 30]}
+                onPageChange={onPageChange}
+                style={{
+                  position: 'sticky',
+                  bottom: 0,
+                  zIndex: 1,
+                  backgroundColor: 'white',
+                  borderTop: '1px solid #D5E1EA',
+                  padding: '0.5rem',
+                }}
+              />
+            </div>
+
           </div>
         </div>
 
@@ -597,34 +594,51 @@ const CustomerOwner = () => {
             className="overflow-y-auto p-4"
             data-testid="customer-admin-users-table"
             style={{ maxHeight: '500px' }}>
-            {getCustomerOwnerUserData.length > 0 ? (
-              <>
-                <DataTableComponent
-                  tableStyle={{
-                    fontSize: '12px',
-                    color: '#000000',
-                    fontWeight: 600,
-                    backgroundColor: '#F9FAFB',
-                    cursor: 'pointer',
-                    width: '100%',
-                  }}
-                  scrollable={true}
-                  data={getCustomerOwnerUserData}
-                  columns={customerOwnerUserTableColumn}
-                  actionButtons={ActionButtonUsersColumn}
-                  style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
-                />
-              </>
-            ) : (
-              <div className="text-center mt-40">
-                <img
-                  src="/assets/images/empty.png"
-                  alt="Empty Data"
-                  className="w-32 mx-auto mb-4"
-                />
-                <p className="text-gray-500">No data available</p>
-              </div>
-            )}
+            <DataTableComponent
+              tableStyle={{
+                fontSize: '12px',
+                color: '#000000',
+                fontWeight: 600,
+                backgroundColor: '#F9FAFB',
+                cursor: 'pointer',
+                width: '100%',
+              }}
+              scrollable={true}
+              data={getCustomerOwnerUserData}
+              columns={customerOwnerUserTableColumn}
+              actionButtons={ActionButtonUsersColumn}
+              style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
+
+              emptyMessage={
+                <div className="text-center mt-40">
+                  <img
+                    src="/assets/images/empty.png"
+                    alt="Empty Data"
+                    className="w-32 mx-auto mb-4"
+                  />
+                  <p className="text-gray-500">No data available</p>
+                </div>
+
+              }
+            />
+            <div className="card mt-8">
+              <Paginator
+                first={pageNumberOne}
+                rows={pageSizeTwo}
+                totalRecords={120}
+                rowsPerPageOptions={[5, 10, 20, 30]}
+                onPageChange={onPageChangeTwo}
+                style={{
+                  position: 'sticky',
+                  bottom: 0,
+                  zIndex: 1,
+                  backgroundColor: 'white',
+                  borderTop: '1px solid #D5E1EA',
+                  padding: '0.5rem',
+                }}
+              />
+            </div>
+
           </div>
         </div>
       </div>
