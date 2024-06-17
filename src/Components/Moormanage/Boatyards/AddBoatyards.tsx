@@ -168,8 +168,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
         closeModal()
         boatYardData()
         setIsLoading(false)
-        setGpsCoordinatesValue('')
-        setCenter([])
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
@@ -232,8 +230,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
         setIsLoading(false)
         closeModal()
         boatYardData()
-        setGpsCoordinatesValue('')
-        setCenter([])
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
@@ -271,8 +267,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
 
   const handleBack = () => {
     setModalVisible(false)
-    setGpsCoordinatesValue('')
-    setCenter([])
   }
 
   const fetchDataAndUpdate = useCallback(async () => {
