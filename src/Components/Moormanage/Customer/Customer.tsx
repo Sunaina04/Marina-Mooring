@@ -271,16 +271,6 @@ const Customer = () => {
     }
   }, [getCustomer, searchText, selectedCustomerId, pageSize, pageNumber])
 
-  const parseCoordinates = (coordinates: any) => {
-    if (!coordinates) return null
-    const [latitude, longitude] = coordinates.split(' ').map(parseFloat)
-    return isNaN(latitude) || isNaN(longitude) ? null : [latitude, longitude]
-  }
-
-  // console.log('mooringData[0]?.gpsCoordinates', mooringData[0]?.gpsCoordinates)
-
-  const [latitude, longitude] = parseCoordinates(mooringData[0]?.gpsCoordinates) || [34.089, 76.157]
-
   const getCustomersWithMooring = async (id: number) => {
     setIsLoading(true)
     setIsLoader(true)
@@ -372,11 +362,17 @@ const Customer = () => {
     }
   }, [pageNumberTwo, pageSizeTwo])
 
-  const moorings = [
-    { position: [30.698, 76.657], status: 'mooringStatus' },
-    { position: [30.701, 76.66], status: 'NotInUse' },
-    // Add more moorings as needed
-  ]
+  const parseCoordinates = (coordinates: any) => {
+    if (!coordinates) return null
+    const [latitude, longitude] = coordinates.split(' ').map(parseFloat)
+    return isNaN(latitude) || isNaN(longitude) ? null : [latitude, longitude]
+  }
+
+  const gpsCoordinatesArray = mooringData.map(
+    (mooring) => parseCoordinates(mooring.gpsCoordinates) || [34.089, 76.157],
+  )
+
+  const initialPosition = gpsCoordinatesArray.length > 0 ? gpsCoordinatesArray[0] : [34.089, 76.157]
 
   const iconsByStatus = {
     GearOn: GearOnIcon,
@@ -551,7 +547,7 @@ const Customer = () => {
         <div
           className={`min-w-[21vw] min-h[50vw] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
           <CustomMooringPositionMap
-            position={[latitude, longitude]}
+            position={initialPosition}
             zoomLevel={10}
             style={{ height: '730px' }}
             iconsByStatus={iconsByStatus}

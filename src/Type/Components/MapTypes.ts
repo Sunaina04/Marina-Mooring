@@ -26,7 +26,7 @@ export interface DisplayMapProps {
 
 export interface CustomDisplayPositionMapProps {
   style?: React.CSSProperties
-  position: LatLngExpression
+  position: LatLngExpression | any
   markerPostion?: LatLngExpression
   zoomLevel?: number
   popUpMessage?: string
