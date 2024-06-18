@@ -353,6 +353,8 @@ const Boatyards = () => {
               }
             }
             setFilteredboatyardsData(content)
+            // setCustomerId(content[0]?.id)
+            // setSelectedProduct(content[0])
             const timeoutId = setTimeout(() => {
               setIsLoading(false)
             }, 400)

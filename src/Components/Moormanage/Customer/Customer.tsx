@@ -54,7 +54,7 @@ const Customer = () => {
   const [selectedProduct, setSelectedProduct] = useState()
   const [selectedMooring, setSelectedMooring] = useState()
   const [searchText, setSearchText] = useState('')
-  const [customerId, setCustomerId] = useState()
+  const [customerId, setCustomerId] = useState<any>()
   const [isLoading, setIsLoading] = useState(true)
   const [isLoader, setIsLoader] = useState(false)
   const [coordinatesArray, setCoordinatesArray] = useState<any[]>([])
@@ -62,11 +62,9 @@ const Customer = () => {
   const [deleteCustomer] = useDeleteCustomerMutation()
   const [getCustomerWithMooring] = useGetCustomersWithMooringMutation()
   const toast = useRef<Toast>(null)
-
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
   const [pageSize, setPageSize] = useState(10)
-
   const [pageNumberTwo, setPageNumberTwo] = useState(0)
   const [pageNumber2, setPageNumber2] = useState(0)
   const [pageSizeTwo, setPageSizeTwo] = useState(10)
@@ -276,6 +274,8 @@ const Customer = () => {
         setIsLoading(false)
         setCustomerData(content)
         setFilteredCustomerData(content)
+        setCustomerId(content[0]?.id)
+        setSelectedProduct(content[0])
       } else {
         setIsLoading(false)
         toast?.current?.show({
@@ -290,7 +290,15 @@ const Customer = () => {
       const { message: msg } = error as ErrorResponse
       console.error('Error occurred while fetching customer data:', msg)
     }
-  }, [getCustomer, searchText, selectedCustomerId, pageSize, pageNumber])
+  }, [
+    getCustomer,
+    searchText,
+    selectedCustomerId,
+    pageSize,
+    pageNumber,
+    customerId,
+    selectedProduct,
+  ])
 
   const getCustomersWithMooring = async (id: number) => {
     setIsLoading(true)
