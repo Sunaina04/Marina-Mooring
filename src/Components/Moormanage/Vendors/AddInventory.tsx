@@ -92,7 +92,7 @@ const AddInventory: React.FC<AddInventoryProps> = ({
         cost: formData?.cost,
         salePrice: formData?.salePrice,
         itemName: formData?.itemName,
-        taxable: checked,
+        taxable: checked === true ? 'yes' : 'no',
       }
       const response = await addInventory({ vendorId: id, payload: savePayload }).unwrap()
       const { status, message } = response as VendorResponse
@@ -145,7 +145,7 @@ const AddInventory: React.FC<AddInventoryProps> = ({
         cost: formData?.cost,
         salePrice: formData?.salePrice,
         itemName: formData?.itemName,
-        taxable: checked,
+        taxable: checked === true ? 'yes' : 'no',
       }
       const response = await UpdateInventory({
         vendorId: id,

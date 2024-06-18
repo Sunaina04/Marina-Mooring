@@ -67,10 +67,10 @@ const Technicians = () => {
   }
 
   const TechnicianTableColumnStyle = {
-    fontSize: '10px',
-    height: '12px',
-    color: '#000000',
     backgroundColor: '#FFFFFF',
+    fontWeight: '500',
+    fontSize: '12px',
+    color: '#000000',
   }
   const WorkOrdersColumnStyle = {
     fontSize: '10px',
@@ -144,11 +144,11 @@ const Technicians = () => {
     setTechnicianId(rowData?.id)
     // setSelectedProduct(rowData)
 
-    if (value === 'Open') {
-      getOpenWorkOrder(rowData?.id)
-    } else {
-      getClosedWorkOrder(rowData?.id)
-    }
+    // if (value === 'Open') {
+    //   getOpenWorkOrder(rowData?.id)
+    // } else {
+    //   getClosedWorkOrder(rowData?.id)
+    // }
   }
 
   const getTechniciansData = useCallback(async () => {
@@ -207,7 +207,7 @@ const Technicians = () => {
     } catch (error) {
       console.error('Error occurred while fetching customer data:', error)
     }
-  }, [])
+  }, [technicianId, value])
 
   const getClosedWorkOrder = useCallback(async (id: any) => {
     // setIsLoading(true)
@@ -232,16 +232,20 @@ const Technicians = () => {
     } catch (error) {
       console.error('Error occurred while fetching customer data:', error)
     }
-  }, [])
+  }, [technicianId, value])
 
-  // useEffect(() => {
-  //   const timeoutId = setTimeout(() => {
-  //     if (technicianId) {
-  //       getOpenWorkOrder(technicianId)
-  //     }
-  //   }, 600)
-  //   return () => clearTimeout(timeoutId)
-  // }, [selectedCustomerId])
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (technicianId) {
+        if (value === 'Open') {
+          getOpenWorkOrder(technicianId)
+        } else {
+          getClosedWorkOrder(technicianId)
+        }
+      }
+    }, 600)
+    return () => clearTimeout(timeoutId)
+  }, [selectedCustomerId, technicianId, value])
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -293,7 +297,9 @@ const Technicians = () => {
           </div>
         </div>
 
-        <div className="flex justify-around gap-10 mt-6 ">
+        <div 
+        
+        className="flex justify-around gap-10 mt-6">
           <div
             style={{
               width: '700px',
@@ -327,35 +333,45 @@ const Technicians = () => {
               }}
             />
 
+            <div
+            data-testid="customer-admin-data"
+            className="flex flex-col  "
+            style={{ height: '630px' }}
+            >
+            <div className="flex-grow overflow-auto">
             <DataTableComponent
-              columns={TechnicianTableColumn}
-              scrollable={true}
-              tableStyle={{
-                fontSize: '12px',
-                color: '#000000',
-                fontWeight: 600,
-                backgroundColor: '#FFFFFF',
-                cursor: 'pointer',
-              }}
-              onRowClick={(row) => {
-                handleWorkOrder(row.data)
-              }}
-              onSelectionChange={(e) => {
-                setSelectedProduct(e.value)
-              }}
-              data={technicianData}
-              emptyMessage={
-                <div className="text-center mt-40 mb-10">
-                  <img
-                    src="/assets/images/empty.png"
-                    alt="Empty Data"
-                    className="w-20 mx-auto mb-4"
-                  />
-                  <p className="text-gray-500">No data available</p>
-                </div>
-              }
-            />
-            <div className="card  mt-32 ">
+                columns={TechnicianTableColumn}
+                scrollable={true}
+                tableStyle={{
+                  fontSize: '12px',
+                  color: '#000000',
+                  fontWeight: 600,
+                  backgroundColor: '#FFFFFF',
+                  cursor: 'pointer',
+                }}
+                onRowClick={(row) => {
+                  handleWorkOrder(row.data)
+                }}
+                onSelectionChange={(e) => {
+                  setSelectedProduct(e.value)
+                }}
+                data={technicianData}
+                emptyMessage={
+                  <div className="text-center mt-40 mb-10">
+                    <img
+                      src="/assets/images/empty.png"
+                      alt="Empty Data"
+                      className="w-20 mx-auto mb-4"
+                    />
+                    <p className="text-gray-500">No data available</p>
+                  </div>
+                }
+                style={{borderBottom:"1px solid #D5E1EA" , fontWeight: '500'}}
+              />
+
+
+            </div>
+            <div className="mt-auto">
               <Paginator
                 first={pageNumber1}
                 rows={pageSize}
@@ -372,6 +388,8 @@ const Technicians = () => {
                 }}
               />
             </div>
+          </div>
+
           </div>
 
           <div
@@ -445,7 +463,7 @@ const Technicians = () => {
                   </div>
                 }
               />
-              <div className="card mt-32">
+              <div className="card mt-[11.50rem]">
                 <Paginator
                   first={pageNumber1}
                   rows={pageSize}
