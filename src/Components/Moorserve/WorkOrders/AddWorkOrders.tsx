@@ -9,6 +9,11 @@ import {
   useAddWorkOrderMutation,
   useUpdateWorkOrderMutation,
 } from '../../../Services/MoorServe/MoorserveApi'
+import {
+  useAddEstimateMutation,
+  useUpdateEstimateMutation,
+} from '../../../Services/MoorServe/MoorserveApi'
+
 import { Button } from 'primereact/button'
 import { WorkOrderProps } from '../../../Type/ComponentBasedType'
 import InputComponent from '../../CommonComponent/InputComponent'
@@ -63,6 +68,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   const [boatyardsName, setBoatYardsName] = useState<MetaData[]>([])
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
   const [isLoading, setIsLoading] = useState(false)
+  const [currentPage, setCurrentPage] = useState()
 
   const { getMooringBasedOnCustomerIdAndBoatyardIdData } = GetMooringBasedOnCustomerIdAndBoatyardId(
     workOrder?.customerName?.id && workOrder?.customerName?.id,
@@ -87,6 +93,8 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   const { getWorkOrderStatusData } = GetWorkOrderStatus()
   const [saveWorkOrder] = useAddWorkOrderMutation()
   const [updateWorkOrder] = useUpdateWorkOrderMutation()
+  const [saveEstimation] = useAddEstimateMutation()
+  const [updateEstimate] = useUpdateEstimateMutation()
 
   const boatyardsNameOptions = workOrder?.mooringId ? boatyardBasedOnMooringId : boatyardsName
   const CustomerNameOptions = workOrder?.mooringId ? customerBasedOnMooringId : customerNameValue
@@ -156,6 +164,10 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       })
     }
   }
+
+
+
+ 
 
   const handleEditMode = () => {
     setWorkOrder((prevState: any) => ({
@@ -318,6 +330,119 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       })
     }
   }
+
+  const SaveEstimate = async () => {
+    const errors = validateFields()
+    if (Object.keys(errors).length > 0) {
+      setErrorMessage(errors)
+      return
+    }
+    const payload = {
+      mooringId: workOrder?.mooringId?.id,
+      customerId: workOrder?.customerName?.id,
+      boatyardId: workOrder?.boatyards?.id,
+      technicianId: workOrder?.assignedTo?.id,
+      dueDate: workOrder?.dueDate,
+      scheduledDate: workOrder?.scheduleDate,
+      workOrderStatusId: workOrder?.workOrderStatus?.id,
+      time: '00:' + formatTime(time.minutes, time.seconds),
+      problem: workOrder?.value,
+    }
+
+    try {
+      const response = await saveEstimation(payload).unwrap()
+      const { status, message } = response as WorkOrderResponse
+      if (status === 200 || status === 201) {
+        closeModal()
+        toastRef?.current?.show({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Customer Saved successfully',
+          life: 3000,
+        })
+        setIsLoading(false)
+      } else {
+        toastRef?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+      }
+    } catch (error) {
+      const { message } = error as ErrorResponse
+      setIsLoading(true)
+      toastRef?.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: message,
+        life: 3000,
+      })
+    }
+  }
+
+  const UpdateEstimate = async () => {
+    const errors = validateFields()
+    if (Object.keys(errors).length > 0) {
+      return
+    }
+
+    try {
+      setIsLoading(true)
+      const editCustomerPayload = {
+        mooringId: workOrder?.mooringId?.id || workOrderData?.mooringResponseDto?.id,
+        customerId: workOrder?.customerName?.id || workOrderData?.customerResponseDto?.id,
+        boatyardId: workOrder?.boatyards?.id || workOrderData?.boatyardResponseDto?.id,
+        technicianId: workOrder?.assignedTo?.id || workOrderData?.technicianUserResponseDto?.id,
+        dueDate: workOrder?.dueDate || workOrderData?.dueDate,
+        scheduledDate: workOrder?.scheduleDate || workOrderData?.scheduledDate,
+        workOrderStatusId: workOrder?.workOrderStatus?.id || workOrderData?.workOrderStatusDto?.id,
+        time: '00:' + formatTime(time.minutes, time.seconds) || workOrderData?.time,
+        problem: workOrder?.value || workOrderData?.problem,
+      }
+      const response = await updateEstimate({
+        payload: editCustomerPayload,
+        id: workOrderData?.id,
+      }).unwrap()
+      const { status, message } = response as WorkOrderResponse
+      if (status === 200 || status === 201) {
+        setIsLoading(false)
+        closeModal()
+        toastRef?.current?.show({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Customer Updated successfully',
+          life: 3000,
+        })
+      } else {
+        setIsLoading(false)
+        toastRef?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+      }
+    } catch (error) {
+      setIsLoading(true)
+      const { message } = error as ErrorResponse
+      toastRef?.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: message,
+        life: 3000,
+      })
+    }
+  }
+
+
+  const handleSave = () => {
+    if (currentPage === 'workOrder') {
+      SaveWorkOrder();
+    } else if (currentPage === 'estimate') {
+      SaveEstimate();
+    }
+  };
 
   const fetchDataAndUpdate = useCallback(async () => {
     const { getTechnicians } = await getTechniciansData()
@@ -754,13 +879,14 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
             bottom: '0px',
           }}>
           <Button
-            onClick={() => {
-              if (editMode) {
-                UpdateWorkOrder()
-              } else {
-                SaveWorkOrder()
-              }
-            }}
+            // onClick={() => {
+            //   if (editMode) {
+            //     UpdateWorkOrder()
+            //   } else {
+            //     SaveWorkOrder()
+            //   }
+            // }}
+            onClick={handleSave}
             label={'Save'}
             style={{
               width: '89px',
