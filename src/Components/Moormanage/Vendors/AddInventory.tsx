@@ -23,7 +23,9 @@ const AddInventory: React.FC<AddInventoryProps> = ({
 }) => {
   const { getTypeOfInventoryTypeData } = TypeOfInventoryType()
   const [checked, setChecked] = useState<boolean>(false)
+  console.log(checked,'checked value')
   const [unChecked, setUnChecked] = useState<boolean>(false)
+  //console.log(unChecked, 'unchecked value')
   const [inventoryType, setInventoryType] = useState<MetaData[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState<any>({
@@ -74,7 +76,9 @@ const AddInventory: React.FC<AddInventoryProps> = ({
     }))
     if (selectedInventory?.taxable === 'yes') {
       setChecked(true)
+      setUnChecked(false)
     } else {
+      setChecked(false)
       setUnChecked(true)
     }
   }
@@ -327,6 +331,7 @@ const AddInventory: React.FC<AddInventoryProps> = ({
                       setChecked(e.checked ?? false)
                       setUnChecked(!e.checked)
                       setErrors((prevErrors) => ({ ...prevErrors, taxable: '' }))
+                      console.log(e.value, 'event')
                     }}
                     checked={checked}
                     style={{
@@ -345,8 +350,8 @@ const AddInventory: React.FC<AddInventoryProps> = ({
                 <div>
                   <Checkbox
                     onChange={(e) => {
-                      setUnChecked(e.checked ?? false)
                       setChecked(!e.checked)
+                      setUnChecked(e.checked ?? false)
                       setErrors((prevErrors) => ({ ...prevErrors, taxable: '' }))
                     }}
                     checked={unChecked}
@@ -398,6 +403,7 @@ const AddInventory: React.FC<AddInventoryProps> = ({
               border: 'none',
               width: '89px',
               height: '42px',
+              boxShadow: 'none',
             }}
           />
         </div>
