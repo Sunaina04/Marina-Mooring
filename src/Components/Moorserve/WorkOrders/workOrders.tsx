@@ -159,7 +159,7 @@ const WorkOrders = () => {
               children={
                 <AddWorkOrders
                   workOrderData={selectedCustomer}
-                  editMode={editMode}
+                  editModeWorkOrder={editMode}
                   setVisible={setVisible}
                   toastRef={toast}
                   closeModal={handleModalClose}

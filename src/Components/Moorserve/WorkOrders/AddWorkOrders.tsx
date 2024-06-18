@@ -38,7 +38,9 @@ import { Calendar } from 'primereact/calendar'
 
 const AddWorkOrders: React.FC<WorkOrderProps> = ({
   workOrderData,
-  editMode,
+  editModeEstimate,
+  editModeWorkOrder,
+  estimate,
   setVisible,
   toastRef,
   closeModal,
@@ -165,10 +167,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     }
   }
 
-
-
- 
-
   const handleEditMode = () => {
     setWorkOrder((prevState: any) => ({
       ...prevState,
@@ -227,6 +225,11 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     return `${formattedMinutes}:${formattedSeconds}`
   }
 
+  const formatDate = (isoString: any) => {
+    const date = new Date(isoString)
+    return date.toLocaleDateString('en-US')
+  }
+
   const SaveWorkOrder = async () => {
     const errors = validateFields()
     if (Object.keys(errors).length > 0) {
@@ -238,8 +241,8 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       customerId: workOrder?.customerName?.id,
       boatyardId: workOrder?.boatyards?.id,
       technicianId: workOrder?.assignedTo?.id,
-      dueDate: workOrder?.dueDate,
-      scheduledDate: workOrder?.scheduleDate,
+      dueDate: formatDate(workOrder?.dueDate),
+      scheduledDate:  formatDate(workOrder?.scheduleDate),
       workOrderStatusId: workOrder?.workOrderStatus?.id,
       time: '00:' + formatTime(time.minutes, time.seconds),
       problem: workOrder?.value,
@@ -342,8 +345,8 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       customerId: workOrder?.customerName?.id,
       boatyardId: workOrder?.boatyards?.id,
       technicianId: workOrder?.assignedTo?.id,
-      dueDate: workOrder?.dueDate,
-      scheduledDate: workOrder?.scheduleDate,
+      dueDate: formatDate(workOrder?.dueDate),
+      scheduledDate:  formatDate(workOrder?.scheduleDate),
       workOrderStatusId: workOrder?.workOrderStatus?.id,
       time: '00:' + formatTime(time.minutes, time.seconds),
       problem: workOrder?.value,
@@ -435,14 +438,21 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     }
   }
 
-
   const handleSave = () => {
-    if (currentPage === 'workOrder') {
-      SaveWorkOrder();
-    } else if (currentPage === 'estimate') {
-      SaveEstimate();
+    if (estimate) {
+      if (editModeEstimate) {
+        UpdateEstimate()
+      } else {
+        SaveEstimate()
+      }
+    } else {
+      if (editModeWorkOrder) {
+        UpdateWorkOrder()
+      } else {
+        SaveWorkOrder()
+      }
     }
-  };
+  }
 
   const fetchDataAndUpdate = useCallback(async () => {
     const { getTechnicians } = await getTechniciansData()
@@ -539,10 +549,10 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   }, [workOrder?.customerName?.id, workOrder?.boatyards?.id])
 
   useEffect(() => {
-    if (editMode) {
+    if (editModeWorkOrder || editModeEstimate) {
       handleEditMode()
     }
-  }, [editMode])
+  }, [editModeWorkOrder, editModeEstimate])
 
   return (
     <div>
@@ -879,14 +889,9 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
             bottom: '0px',
           }}>
           <Button
-            // onClick={() => {
-            //   if (editMode) {
-            //     UpdateWorkOrder()
-            //   } else {
-            //     SaveWorkOrder()
-            //   }
-            // }}
-            onClick={handleSave}
+            onClick={() => {
+              handleSave()
+            }}
             label={'Save'}
             style={{
               width: '89px',

@@ -120,7 +120,9 @@ export interface TimeCardsProps {
 
 export interface WorkOrderProps {
   workOrderData: any
-  editMode: boolean
+  editModeWorkOrder?: boolean
+  editModeEstimate?: boolean
+  estimate?: boolean
   setVisible: React.Dispatch<React.SetStateAction<boolean>>
   toastRef?: any
   closeModal: () => void
