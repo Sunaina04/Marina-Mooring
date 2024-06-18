@@ -45,10 +45,12 @@ const CustomerOwner = () => {
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
   const [pageSize, setPageSize] = useState(10)
+  const [totalRecords, setTotalRecords] = useState<number>()
 
   const [pageNumberTwo, setPageNumberTwo] = useState(0)
   const [pageNumberOne, setPageNumberOne] = useState(0)
   const [pageSizeTwo, setPageSizeTwo] = useState(10)
+  const [totalRecordsTwo, setTotalRecordsTwo] = useState<number>()
 
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
@@ -216,11 +218,12 @@ const CustomerOwner = () => {
       dispatch(setCustomerId(''))
       dispatch(setCustomerName(''))
       const response = await getUser(params).unwrap()
-      const { status, message, content } = response as GetUserResponse
+      const { status, message, content, totalSize } = response as GetUserResponse
       if (status === 200 && Array.isArray(content)) {
         setIsLoading(false)
         if (content.length > 0) {
           setgetCustomerOwnerData(content)
+          setTotalRecords(totalSize)
         } else {
           setgetCustomerOwnerData([])
         }
@@ -248,13 +251,14 @@ const CustomerOwner = () => {
         }
 
         const response = await getUser(params).unwrap()
-        const { status, message, content } = response as GetUserResponse
+        const { status, message, content, totalSize } = response as GetUserResponse
         if (status === 200 && Array.isArray(content)) {
           setIsLoading(false)
           if (content.length > 0) {
             setgetCustomerOwnerUserData(content)
             setSelectedRow(id)
             setCustomerAdminId(id)
+            setTotalRecordsTwo(totalSize)
           } else {
             setgetCustomerOwnerUserData([])
             setCustomerAdminId(id)
@@ -531,7 +535,7 @@ const CustomerOwner = () => {
               <Paginator
                 first={pageNumber1}
                 rows={pageSize}
-                totalRecords={120}
+                totalRecords={totalRecords}
                 rowsPerPageOptions={[5, 10, 20, 30]}
                 onPageChange={onPageChange}
                 style={{
@@ -625,7 +629,7 @@ const CustomerOwner = () => {
               <Paginator
                 first={pageNumberOne}
                 rows={pageSizeTwo}
-                totalRecords={120}
+                totalRecords={totalRecordsTwo}
                 rowsPerPageOptions={[5, 10, 20, 30]}
                 onPageChange={onPageChangeTwo}
                 style={{

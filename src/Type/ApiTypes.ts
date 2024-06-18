@@ -32,6 +32,8 @@ export interface GetUserResponse {
   errorList: [string]
   time: string
   content: UserResponse
+  currentSize: number
+  totalSize: number
 }
 
 export interface DeleteUserResponse {
