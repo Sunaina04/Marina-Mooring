@@ -30,6 +30,8 @@ import { ProgressSpinner } from 'primereact/progressspinner'
 import AddCustomer from '../Customer/AddCustomer'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import { Paginator } from 'primereact/paginator'
+import { PositionType } from '../../../Type/Components/MapTypes'
+import { GearOffIcon, GearOnIcon, NeedInspectionIcon, NotInUseIcon } from '../../Map/DefaultIcon'
 
 const Moorings = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -82,6 +84,29 @@ const Moorings = () => {
     setPageNumberTwo(event.page)
     setPageNumber2(event.first)
     setPageSizeTwo(event.rows)
+  }
+
+  const position: PositionType = [41.56725, -70.94045]
+
+  const parseCoordinates = (coordinates: any) => {
+    if (!coordinates) return null
+    const [latitude, longitude] = coordinates.split(' ').map(parseFloat)
+    return isNaN(latitude) || isNaN(longitude) ? null : [latitude, longitude]
+  }
+
+  const gpsCoordinatesArray =
+    mooringResponseData &&
+    mooringResponseData?.map(
+      (mooring: any) => parseCoordinates(mooring.gpsCoordinates) || [41.56725, -70.94045],
+    )
+
+  const initialPosition = gpsCoordinatesArray?.length > 0 ? gpsCoordinatesArray[0] : position
+
+  const iconsByStatus = {
+    GearOn: GearOnIcon,
+    GearOff: GearOffIcon,
+    NeedInspection: NeedInspectionIcon,
+    NotInUse: NotInUseIcon,
   }
 
   const handleInputChange = (e: InputSwitchChangeEvent) => {
@@ -337,6 +362,7 @@ const Moorings = () => {
       getCustomersWithMooring(customerId)
     }
   }, [pageNumberTwo, pageSizeTwo])
+  console.log('mooringResponseData', mooringResponseData)
 
   return (
     <div className={modalVisible ? 'backdrop-blur-lg' : ''}>
@@ -506,10 +532,11 @@ const Moorings = () => {
         <div
           className={`min-w-[21vw] min-h[50vw] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
           <CustomMooringPositionMap
-            position={[30.698, 76.657]}
-            zoomLevel={10}
+            position={initialPosition}
+            zoomLevel={4}
             style={{ height: '730px' }}
-            moorings={mooringData}
+            iconsByStatus={iconsByStatus}
+            moorings={mooringResponseData}
           />
         </div>
 

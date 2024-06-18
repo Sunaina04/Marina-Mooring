@@ -40,7 +40,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   toastRef,
 }) => {
   const selectedCustomerId = useSelector(selectCustomerId)
-  const [value, setValue] = useState<string>('')
   const [selectedCountry, setSelectedCountry] = useState<Country>()
   const [selectedState, setSelectedState] = useState<State>()
   const [firstName, setFirstName] = useState<string>('')
@@ -63,7 +62,33 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [boatyardName, setBoatyardName] = useState<MetaData[]>([])
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
   const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<string>()
-  const [center, setCenter] = useState<LatLngExpression | undefined>([30.6983149, 76.656095])
+  const getFomattedCoordinate = (gpsCoordinatesValue: any) => {
+    try {
+      let [lat, long]: any = gpsCoordinatesValue.split(' ')
+      if (lat.split('.').length > 2) {
+        const [degree, minute, second]: any = lat.split('.').map((num: any) => parseInt(num))
+        lat = degree + minute / 60 + second / 3600
+      }
+      if (long.split('.').length > 2) {
+        const [degree, minute, second]: any = long.split('.').map((num: any) => parseInt(num))
+        long = degree + minute / 60 + second / 3600
+      }
+      if (!(isNaN(lat) || isNaN(long))) {
+        return [+lat, +long]
+      }
+    } catch (error) {
+      console.log('Error In Setting Center', error)
+      return [41.56725, -70.94045]
+    }
+    // return [41.56725, -70.94045]
+  }
+
+  const [center, setCenter] = useState<any>(
+    mooringRowData?.gpsCoordinates || gpsCoordinatesValue
+      ? getFomattedCoordinate(mooringRowData?.gpsCoordinates || gpsCoordinatesValue)
+      : [41.56725, -70.94045],
+  )
+  // const [center, setCenter] = useState<LatLngExpression | undefined>([30.6983149, 76.656095])
   const [firstErrorField, setFirstErrorField] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState<any>({
@@ -172,10 +197,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       if (!firstError) firstError = 'pinCode'
     }
 
-    if (!formData.depthAtMeanHighWater) {
+    if (!formData?.depthAtMeanHighWater) {
       errors.depthAtMeanHighWater = 'Depth at Mean High Water is required'
       if (!firstError) firstError = 'depthAtMeanHighWater'
-    } else if (!numberRegex.test(String(formData.depthAtMeanHighWater))) {
+    } else if (!numberRegex.test(String(formData?.depthAtMeanHighWater))) {
       errors.depthAtMeanHighWater = 'Depth at Mean High Water must be a number'
       if (!firstError) firstError = 'depthAtMeanHighWater'
     }
@@ -190,10 +215,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       if (!firstError) firstError = 'country'
     }
 
-    if (!formData.harbor) {
+    if (!formData?.harbor) {
       errors.harbor = 'Harbor is required'
       if (!firstError) firstError = 'harbor'
-    } else if (!harborRegex.test(formData.harbor)) {
+    } else if (!harborRegex.test(formData?.harbor)) {
       errors.harbor = 'Harbor must only contain letters'
       if (!firstError) firstError = 'harbor'
     }
@@ -201,58 +226,58 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       errors.gpsCoordinatesValue = 'GPS Coordinates is required'
     }
 
-    if (!formData.mooringId) {
+    if (!formData?.mooringId) {
       errors.mooringId = 'Mooring ID is required'
       if (!firstError) firstError = 'mooringId'
-    } else if (!alphanumericRegex.test(formData.mooringId)) {
+    } else if (!alphanumericRegex.test(formData?.mooringId)) {
       errors.mooringId = 'Mooring ID must be alphanumeric'
       if (!firstError) firstError = 'mooringId'
     }
 
-    if (!formData.waterDepth) {
+    if (!formData?.waterDepth) {
       errors.waterDepth = 'Water Depth is required'
-    } else if (!numberRegex.test(String(formData.waterDepth))) {
+    } else if (!numberRegex.test(String(formData?.waterDepth))) {
       errors.waterDepth = 'Water Depth must be a number'
       if (!firstError) firstError = 'waterDepth'
     }
 
-    if (!formData.boatyardName) errors.boatyardName = 'Boatyard Name is required'
+    if (!formData?.boatyardName) errors.boatyardName = 'Boatyard Name is required'
 
-    if (!formData.boatName) {
+    if (!formData?.boatName) {
       errors.boatName = 'BoatName is required'
       if (!firstError) firstError = 'boatName'
-    } else if (!nameRegex.test(String(formData.boatName))) {
+    } else if (!nameRegex.test(String(formData?.boatName))) {
       errors.boatName = 'BoatName must be a string'
       if (!firstError) firstError = 'boatName'
     }
 
-    if (!formData.boatSize) {
+    if (!formData?.boatSize) {
       errors.boatSize = 'BoatSize is required'
       if (!firstError) firstError = 'boatSize'
-    } else if (!numberRegex.test(String(formData.boatSize))) {
+    } else if (!numberRegex.test(String(formData?.boatSize))) {
       errors.boatSize = 'BoatSize must be a number'
       if (!firstError) firstError = 'boatSize'
     }
 
-    if (!formData.boatType) errors.boatType = 'Type is required'
+    if (!formData?.boatType) errors.boatType = 'Type is required'
 
-    if (!formData.boatWeight) {
+    if (!formData?.boatWeight) {
       errors.boatWeight = 'BoatWeight  is required'
       if (!firstError) firstError = 'boatWeight'
-    } else if (!numberRegex.test(String(formData.boatWeight))) {
+    } else if (!numberRegex.test(String(formData?.boatWeight))) {
       errors.boatWeight = 'Weight   must be a number'
       if (!firstError) firstError = 'boatWeight'
     }
-    if (!formData.sizeOfWeight) errors.sizeOfWeight = 'Size of Weight is required'
+    if (!formData?.sizeOfWeight) errors.sizeOfWeight = 'Size of Weight is required'
 
-    if (!formData.typeOfWeight) errors.typeOfWeight = 'Type of Weight is required'
-    if (!formData.topChainCondition) errors.topChainCondition = 'Top Chain Condition is required'
-    if (!formData.conditionOfEye) errors.conditionOfEye = 'Condition of Eye is required'
-    if (!formData.shackleSwivelCondition)
+    if (!formData?.typeOfWeight) errors.typeOfWeight = 'Type of Weight is required'
+    if (!formData?.topChainCondition) errors.topChainCondition = 'Top Chain Condition is required'
+    if (!formData?.conditionOfEye) errors.conditionOfEye = 'Condition of Eye is required'
+    if (!formData?.shackleSwivelCondition)
       errors.shackleSwivelCondition = 'Shackle, Swivel Condition is required'
-    if (!formData.bottomChainCondition)
+    if (!formData?.bottomChainCondition)
       errors.bottomChainCondition = 'Bottom Chain Condition is required'
-    if (!formData.pennantCondition) errors.pennantCondition = 'Pennant Condition is required'
+    if (!formData?.pennantCondition) errors.pennantCondition = 'Pennant Condition is required'
 
     setFirstErrorField(firstError)
     setFieldErrors(errors)
@@ -334,27 +359,27 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     if (!gpsCoordinatesValue) {
       errors.gpsCoordinatesValue = 'GPS Coordinates is required'
     }
-    if (!formData.harbor) errors.harbor = 'Harbor is required'
-    if (!formData.mooringId) errors.mooringId = 'Mooring ID is required'
-    if (!formData.harbor) errors.harbor = 'Harbor is required'
-    if (!formData.waterDepth) errors.waterDepth = 'Water Depth is required'
+    if (!formData?.harbor) errors.harbor = 'Harbor is required'
+    if (!formData?.mooringId) errors.mooringId = 'Mooring ID is required'
+    if (!formData?.harbor) errors.harbor = 'Harbor is required'
+    if (!formData?.waterDepth) errors.waterDepth = 'Water Depth is required'
 
-    if (!formData.boatyardName) errors.boatyardName = 'Boatyard Name is required'
-    if (!formData.boatName) errors.boatName = 'Boat Name is required'
-    if (!formData.boatSize) errors.boatSize = 'Boat Size is required'
-    if (!formData.boatType) errors.boatType = 'Type is required'
-    if (!formData.boatWeight) errors.boatWeight = 'Weight is required'
-    if (!formData.sizeOfWeight) errors.sizeOfWeight = 'Size of Weight is required'
-    if (!formData.typeOfWeight) errors.typeOfWeight = 'Type of Weight is required'
-    if (!formData.topChainCondition) errors.topChainCondition = 'Top Chain Condition is required'
-    if (!formData.conditionOfEye) errors.conditionOfEye = 'Condition of Eye is required'
-    if (!formData.shackleSwivelCondition)
+    if (!formData?.boatyardName) errors.boatyardName = 'Boatyard Name is required'
+    if (!formData?.boatName) errors.boatName = 'Boat Name is required'
+    if (!formData?.boatSize) errors.boatSize = 'Boat Size is required'
+    if (!formData?.boatType) errors.boatType = 'Type is required'
+    if (!formData?.boatWeight) errors.boatWeight = 'Weight is required'
+    if (!formData?.sizeOfWeight) errors.sizeOfWeight = 'Size of Weight is required'
+    if (!formData?.typeOfWeight) errors.typeOfWeight = 'Type of Weight is required'
+    if (!formData?.topChainCondition) errors.topChainCondition = 'Top Chain Condition is required'
+    if (!formData?.conditionOfEye) errors.conditionOfEye = 'Condition of Eye is required'
+    if (!formData?.shackleSwivelCondition)
       errors.shackleSwivelCondition = 'Shackle, Swivel Condition is required'
-    if (!formData.depthAtMeanHighWater)
+    if (!formData?.depthAtMeanHighWater)
       errors.depthAtMeanHighWater = 'Depth at Mean High Water is required'
-    if (!formData.bottomChainCondition)
+    if (!formData?.bottomChainCondition)
       errors.bottomChainCondition = 'Bottom Chain Condition is required'
-    if (!formData.pennantCondition) errors.pennantCondition = 'Pennant Condition is required'
+    if (!formData?.pennantCondition) errors.pennantCondition = 'Pennant Condition is required'
 
     setFieldErrors(errors)
     return errors
@@ -428,7 +453,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       customerName: '',
       harbor: mooringRowData?.harbor || '',
       waterDepth: mooringRowData?.waterDepth || '',
-      gpsCoordinates: mooringRowData?.gpsCoordinates || '',
+      // gpsCoordinates: mooringRowData?.gpsCoordinates || '',
       boatyardName: mooringRowData?.boatyardResponseDto?.boatyardName || '',
       boatName: mooringRowData?.boatName || '',
       boatSize: mooringRowData?.boatSize || '',
@@ -466,24 +491,24 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       customerOwnerId: selectedCustomerId,
       mooringRequestDtoList: [
         {
-          mooringId: formData.mooringId,
+          mooringId: formData?.mooringId,
           lastName: lastName,
-          harbor: formData.harbor,
-          waterDepth: formData.waterDepth,
+          harbor: formData?.harbor,
+          waterDepth: formData?.waterDepth,
           gpsCoordinates: gpsCoordinatesValue,
-          boatyardId: formData.boatyardName.id,
-          boatName: formData.boatName,
-          boatSize: formData.boatSize,
-          boatTypeId: formData.boatType.id,
-          boatWeight: formData.boatWeight,
-          sizeOfWeightId: formData.sizeOfWeight.id,
-          typeOfWeightId: formData.typeOfWeight.id,
-          eyeConditionId: formData.conditionOfEye.id,
-          topChainConditionId: formData.topChainCondition.id,
-          bottomChainConditionId: formData.bottomChainCondition.id,
-          shackleSwivelConditionId: formData.shackleSwivelCondition.id,
-          pennantConditionId: formData.pennantCondition.id,
-          depthAtMeanHighWater: formData.depthAtMeanHighWater,
+          boatyardId: formData?.boatyardName.id,
+          boatName: formData?.boatName,
+          boatSize: formData?.boatSize,
+          boatTypeId: formData?.boatType.id,
+          boatWeight: formData?.boatWeight,
+          sizeOfWeightId: formData?.sizeOfWeight.id,
+          typeOfWeightId: formData?.typeOfWeight.id,
+          eyeConditionId: formData?.conditionOfEye.id,
+          topChainConditionId: formData?.topChainCondition.id,
+          bottomChainConditionId: formData?.bottomChainCondition.id,
+          shackleSwivelConditionId: formData?.shackleSwivelCondition.id,
+          pennantConditionId: formData?.pennantCondition.id,
+          depthAtMeanHighWater: formData?.depthAtMeanHighWater,
           customerOwnerId: selectedCustomerId,
           // statusId: 1,
         },
@@ -604,41 +629,41 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         mooringRequestDtoList: [
           {
             id: mooringRowData?.id,
-            mooringId: formData.mooringId ? formData.mooringId : mooringRowData?.mooringId,
+            mooringId: formData?.mooringId ? formData?.mooringId : mooringRowData?.mooringId,
             lastName: lastName,
-            harbor: formData.harbor ? formData.harbor : mooringRowData?.harbor,
-            waterDepth: formData.waterDepth ? formData.waterDepth : mooringRowData?.waterDepth,
+            harbor: formData?.harbor ? formData?.harbor : mooringRowData?.harbor,
+            waterDepth: formData?.waterDepth ? formData?.waterDepth : mooringRowData?.waterDepth,
             gpsCoordinates: gpsCoordinatesValue,
-            boatyardId: formData.boatyardName.id
-              ? formData.boatyardName.id
+            boatyardId: formData?.boatyardName.id
+              ? formData?.boatyardName.id
               : mooringRowData?.boatyardResponseDto?.id,
-            boatName: formData.boatName ? formData.boatName : mooringRowData?.boatName,
-            boatSize: formData.boatSize ? formData.boatSize : mooringRowData?.boatSize,
-            boatTypeId: formData.boatType.id ? formData.boatType.id : mooringRowData?.boatType.id,
-            boatWeight: formData.boatWeight ? formData.boatWeight : mooringRowData?.boatWeight,
-            sizeOfWeightId: formData.sizeOfWeight.id
-              ? formData.sizeOfWeight.id
+            boatName: formData?.boatName ? formData?.boatName : mooringRowData?.boatName,
+            boatSize: formData?.boatSize ? formData?.boatSize : mooringRowData?.boatSize,
+            boatTypeId: formData?.boatType.id ? formData?.boatType.id : mooringRowData?.boatType.id,
+            boatWeight: formData?.boatWeight ? formData?.boatWeight : mooringRowData?.boatWeight,
+            sizeOfWeightId: formData?.sizeOfWeight.id
+              ? formData?.sizeOfWeight.id
               : mooringRowData?.sizeOfWeight.id,
-            typeOfWeightId: formData.typeOfWeight.id
-              ? formData.typeOfWeight.id
+            typeOfWeightId: formData?.typeOfWeight.id
+              ? formData?.typeOfWeight.id
               : mooringRowData?.typeOfWeight.id,
-            eyeConditionId: formData.conditionOfEye.id
-              ? formData.conditionOfEye.id
+            eyeConditionId: formData?.conditionOfEye.id
+              ? formData?.conditionOfEye.id
               : mooringRowData?.eyeCondition.id,
-            topChainConditionId: formData.topChainCondition.id
-              ? formData.topChainCondition.id
+            topChainConditionId: formData?.topChainCondition.id
+              ? formData?.topChainCondition.id
               : mooringRowData?.topChainCondition.id,
-            bottomChainConditionId: formData.bottomChainCondition.id
-              ? formData.bottomChainCondition.id
+            bottomChainConditionId: formData?.bottomChainCondition.id
+              ? formData?.bottomChainCondition.id
               : mooringRowData?.bottomChainCondition.id,
-            shackleSwivelConditionId: formData.shackleSwivelCondition.id
-              ? formData.shackleSwivelCondition.id
+            shackleSwivelConditionId: formData?.shackleSwivelCondition.id
+              ? formData?.shackleSwivelCondition.id
               : mooringRowData?.shackleSwivelCondition.id,
-            pennantConditionId: formData.pennantCondition.id
-              ? formData.pennantCondition.id
+            pennantConditionId: formData?.pennantCondition.id
+              ? formData?.pennantCondition.id
               : mooringRowData?.pennantCondition.id,
-            depthAtMeanHighWater: formData.depthAtMeanHighWater
-              ? formData.depthAtMeanHighWater
+            depthAtMeanHighWater: formData?.depthAtMeanHighWater
+              ? formData?.depthAtMeanHighWater
               : mooringRowData?.depthAtMeanHighWater,
             customerOwnerId: selectedCustomerId,
             // statusId: 1,
@@ -761,6 +786,14 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       handleEditMode()
     }
   }, [editMode, customer])
+
+  useEffect(() => {
+    if (gpsCoordinatesValue) {
+      const coordinates = getFomattedCoordinate(gpsCoordinatesValue)
+      setCenter(coordinates)
+      // handlePositionChange(coordinates[0], coordinates[1])
+    }
+  }, [gpsCoordinatesValue])
 
   return (
     <div className="">
@@ -1045,7 +1078,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 </span>
                 <div className="mt-2">
                   <InputComponent
-                    value={formData.mooringId}
+                    value={formData?.mooringId}
                     onChange={(e) => handleInputChange('mooringId', e.target.value)}
                     style={{
                       width: '230px',
@@ -1070,7 +1103,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 </span>
                 <div className="mt-2">
                   <InputComponent
-                    value={formData.harbor}
+                    value={formData?.harbor}
                     onChange={(e) => handleInputChange('harbor', e.target.value)}
                     style={{
                       width: '230px',
@@ -1093,7 +1126,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 </span>
                 <div className="mt-2">
                   <InputComponent
-                    value={formData.waterDepth}
+                    value={formData?.waterDepth}
                     onChange={(e) => handleInputChange('waterDepth', e.target.value)}
                     style={{
                       width: '230px',
@@ -1150,7 +1183,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 </span>
                 <div className="mt-2">
                   <Dropdown
-                    value={formData.boatyardName}
+                    value={formData?.boatyardName}
                     onChange={(e) => handleInputChange('boatyardName', e.target.value)}
                     options={boatyardName}
                     optionLabel="boatyardName"
@@ -1177,7 +1210,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 </span>
                 <div className="mt-2">
                   <InputComponent
-                    value={formData.boatName}
+                    value={formData?.boatName}
                     onChange={(e) => handleInputChange('boatName', e.target.value)}
                     style={{
                       width: '230px',
@@ -1204,7 +1237,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 </span>
                 <div className="mt-2">
                   <InputComponent
-                    value={formData.boatSize}
+                    value={formData?.boatSize}
                     onChange={(e) => handleInputChange('boatSize', e.target.value)}
                     style={{
                       width: '230px',
@@ -1246,7 +1279,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
                 <div className="mt-2">
                   <Dropdown
-                    value={formData.boatType}
+                    value={formData?.boatType}
                     onChange={(e) => handleInputChange('boatType', e.value)}
                     options={type}
                     optionLabel="boatType"
@@ -1274,7 +1307,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 </span>
                 <div className="mt-2">
                   <InputComponent
-                    value={formData.boatWeight}
+                    value={formData?.boatWeight}
                     onChange={(e) => handleInputChange('boatWeight', e.target.value)}
                     style={{
                       width: '230px',
@@ -1304,7 +1337,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
                 <div className="mt-2">
                   <Dropdown
-                    value={formData.sizeOfWeight}
+                    value={formData?.sizeOfWeight}
                     onChange={(e) => handleInputChange('sizeOfWeight', e.value)}
                     options={sizeOfWeight}
                     optionLabel="weight"
@@ -1336,7 +1369,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
                 <div className="mt-2">
                   <Dropdown
-                    value={formData.typeOfWeight}
+                    value={formData?.typeOfWeight}
                     onChange={(e) => handleInputChange('typeOfWeight', e.value)}
                     options={weightData}
                     optionLabel="type"
@@ -1367,7 +1400,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
                 <div className="mt-2">
                   <Dropdown
-                    value={formData.topChainCondition}
+                    value={formData?.topChainCondition}
                     onChange={(e) => handleInputChange('topChainCondition', e.value)}
                     options={chainData}
                     optionLabel="condition"
@@ -1401,7 +1434,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   </div>
                   <div className="mt-2">
                     <Dropdown
-                      value={formData.conditionOfEye}
+                      value={formData?.conditionOfEye}
                       onChange={(e) => handleInputChange('conditionOfEye', e.value)}
                       options={conditionOfEye}
                       optionLabel="condition"
@@ -1434,7 +1467,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
                   <div className="mt-2">
                     <Dropdown
-                      value={formData.shackleSwivelCondition}
+                      value={formData?.shackleSwivelCondition}
                       onChange={(e) => handleInputChange('shackleSwivelCondition', e.value)}
                       options={shackleSwivelData}
                       optionLabel="condition"
@@ -1468,7 +1501,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   </div>
                   <div className="mt-2">
                     <InputComponent
-                      value={formData.depthAtMeanHighWater}
+                      value={formData?.depthAtMeanHighWater}
                       onChange={(e) => handleInputChange('depthAtMeanHighWater', e.target.value)}
                       style={{
                         width: '230px',
@@ -1499,7 +1532,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
                   <div className="mt-2">
                     <Dropdown
-                      value={formData.bottomChainCondition}
+                      value={formData?.bottomChainCondition}
                       onChange={(e) => handleInputChange('bottomChainCondition', e.value)}
                       options={bottomChainCondition}
                       optionLabel="condition"
@@ -1535,7 +1568,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
                   <div className="mt-2">
                     <Dropdown
-                      value={formData.pennantCondition}
+                      value={formData?.pennantCondition}
                       onChange={(e) => handleInputChange('pennantCondition', e.value)}
                       options={pennantData}
                       optionLabel="condition"
@@ -1571,7 +1604,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   }}>
                   <CustomSelectPositionMap
                     onPositionChange={handlePositionChange}
-                    zoomLevel={50}
+                    zoomLevel={10}
                     center={center}
                     setCenter={setCenter}
                   />

@@ -26,7 +26,7 @@ export interface DisplayMapProps {
 
 export interface CustomDisplayPositionMapProps {
   style?: React.CSSProperties
-  position: LatLngExpression | any
+  position: LatLngExpression | any | []
   markerPostion?: LatLngExpression
   zoomLevel?: number
   popUpMessage?: string
@@ -46,3 +46,5 @@ export interface CustomMooringPositionMapProps extends CustomDisplayPositionMapP
   iconsByStatus?: { [key: string]: L.Icon }
   moorings?: any
 }
+
+export type PositionType = LatLngExpression

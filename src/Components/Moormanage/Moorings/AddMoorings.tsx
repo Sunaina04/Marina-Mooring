@@ -62,7 +62,33 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   const [boatyardsName, setBoatYardsName] = useState<MetaData[]>([])
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
   const [firstErrorField, setFirstErrorField] = useState('')
-  const [center, setCenter] = useState<LatLngExpression | undefined>([30.6983149, 76.656095])
+  const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<string>()
+  const getFomattedCoordinate = (gpsCoordinatesValue: any) => {
+    try {
+      let [lat, long]: any = gpsCoordinatesValue.split(' ')
+      if (lat.split('.').length > 2) {
+        const [degree, minute, second]: any = lat.split('.').map((num: any) => parseInt(num))
+        lat = degree + minute / 60 + second / 3600
+      }
+      if (long.split('.').length > 2) {
+        const [degree, minute, second]: any = long.split('.').map((num: any) => parseInt(num))
+        long = degree + minute / 60 + second / 3600
+      }
+      if (!(isNaN(lat) || isNaN(long))) {
+        return [+lat, +long]
+      }
+    } catch (error) {
+      console.log('Error In Setting Center', error)
+      return [41.56725, -70.94045]
+    }
+    // return [41.56725, -70.94045]
+  }
+
+  const [center, setCenter] = useState<any>(
+    mooringRowData?.gpsCoordinates || gpsCoordinatesValue
+      ? getFomattedCoordinate(mooringRowData?.gpsCoordinates || gpsCoordinatesValue)
+      : [41.56725, -70.94045],
+  )
   const [saveMoorings] = useAddMooringsMutation()
   const [updateMooring] = useUpdateMooringsMutation()
   const [isLoading, setIsLoading] = useState(false)
@@ -157,35 +183,34 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     if (!formData?.mooringNumber) {
       errors.mooringNumber = 'Mooring ID is required'
       if (!firstError) firstError = 'mooringNumber'
-    } else if (!alphanumericRegex.test(formData.mooringNumber)) {
+    } else if (!alphanumericRegex.test(formData?.mooringNumber)) {
       errors.mooringNumber = 'Mooring ID must be alphanumeric'
       if (!firstError) firstError = 'mooringNumber'
     }
 
-    if (!formData.harbor) {
+    if (!formData?.harbor) {
       errors.harbor = 'Harbor is required'
       if (!firstError) firstError = 'harbor'
-    } else if (!harborRegex.test(formData.harbor)) {
+    } else if (!harborRegex.test(formData?.harbor)) {
       errors.harbor = 'Harbor must only contain letters'
       if (!firstError) firstError = 'harbor'
     }
 
     if (!formData?.waterDepth) {
       errors.waterDepth = 'Water Depth is required'
-    } else if (!numberRegex.test(String(formData.waterDepth))) {
+    } else if (!numberRegex.test(String(formData?.waterDepth))) {
       errors.waterDepth = 'Water Depth must be a number'
       if (!firstError) firstError = 'waterDepth'
     }
 
-    if (!formData?.gpsCoordinates) {
-      errors.gpsCoordinates = 'GPS Coordinates are required'
-      if (!firstError) firstError = 'gpsCoordinates'
+    if (!gpsCoordinatesValue) {
+      errors.gpsCoordinatesValue = 'GPS Coordinates is required'
     }
 
     if (!formData?.boatName) {
       errors.boatName = 'BoatName is required'
       if (!firstError) firstError = 'boatName'
-    } else if (!nameRegex.test(String(formData.boatName))) {
+    } else if (!nameRegex.test(String(formData?.boatName))) {
       errors.boatName = 'BoatName must be a string'
       if (!firstError) firstError = 'boatName'
     }
@@ -193,7 +218,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     if (!formData?.boatSize) {
       errors.boatSize = 'BoatSize is required'
       if (!firstError) firstError = 'boatSize'
-    } else if (!numberRegex.test(String(formData.boatSize))) {
+    } else if (!numberRegex.test(String(formData?.boatSize))) {
       errors.boatSize = 'BoatSize must be a number'
       if (!firstError) firstError = 'boatSize'
     }
@@ -203,10 +228,10 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       if (!firstError) firstError = 'boatYardName'
     }
 
-    if (!formData.boatWeight) {
+    if (!formData?.boatWeight) {
       errors.boatWeight = 'BoatWeight  is required'
       if (!firstError) firstError = 'boatWeight'
-    } else if (!numberRegex.test(String(formData.boatWeight))) {
+    } else if (!numberRegex.test(String(formData?.boatWeight))) {
       errors.boatWeight = 'Weight   must be a number'
       if (!firstError) firstError = 'boatWeight'
     }
@@ -238,11 +263,11 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       errors.conditionOfEye = 'Condition of Eye is required'
       if (!firstError) firstError = 'conditionOfEye'
     }
-    if (!formData.bottomChainCondition) {
+    if (!formData?.bottomChainCondition) {
       errors.bottomChainCondition = 'Bottom Chain Condition is required'
       if (!firstError) firstError = 'bottomChainCondition'
     }
-    if (!formData.shackleSwivelCondition) {
+    if (!formData?.shackleSwivelCondition) {
       errors.shackleSwivelCondition = 'Shackle, Swivel Condition is required'
       if (!firstError) firstError = 'shackleSwivelCondition'
     }
@@ -251,10 +276,10 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       if (!firstError) firstError = 'pennantCondition'
     }
 
-    if (!formData.depthAtMeanHighWater) {
+    if (!formData?.depthAtMeanHighWater) {
       errors.depthAtMeanHighWater = 'Depth at Mean High Water is required'
       if (!firstError) firstError = 'depthAtMeanHighWater'
-    } else if (!numberRegex.test(String(formData.depthAtMeanHighWater))) {
+    } else if (!numberRegex.test(String(formData?.depthAtMeanHighWater))) {
       errors.depthAtMeanHighWater = 'Depth at Mean High Water must be a number'
       if (!firstError) firstError = 'depthAtMeanHighWater'
     }
@@ -279,6 +304,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   }
 
   const handleEditMode = () => {
+    setGpsCoordinatesValue(mooringRowData?.gpsCoordinates || '')
     setFormData((prevState: any) => ({
       ...prevState,
       mooringNumber: mooringRowData?.mooringId || '',
@@ -286,7 +312,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       customerName: moorings?.firstName + ' ' + moorings.lastName || '',
       harbor: mooringRowData?.harbor || '',
       waterDepth: mooringRowData?.waterDepth || '',
-      gpsCoordinates: mooringRowData?.gpsCoordinates || '',
+      // gpsCoordinates: mooringRowData?.gpsCoordinates || '',
       boatYardName: mooringRowData?.boatyardResponseDto?.boatyardName || '',
       boatName: mooringRowData?.boatName || '',
       boatSize: mooringRowData?.boatSize || '',
@@ -300,7 +326,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       pennantCondition: mooringRowData?.pennantCondition?.condition || '',
       depthAtMeanHighWater: mooringRowData?.depthAtMeanHighWater || '',
       bottomChainCondition: mooringRowData?.bottomChainCondition?.condition || '',
-      status: 1,
+      // status: 1,
     }))
   }
 
@@ -316,7 +342,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
         mooringId: formData?.mooringNumber,
         harbor: formData?.harbor,
         waterDepth: formData?.waterDepth,
-        gpsCoordinates: formData?.gpsCoordinates,
+        gpsCoordinates: gpsCoordinatesValue,
         boatyardId: formData?.boatYardName?.id,
         boatName: formData?.boatName,
         boatSize: formData?.boatSize,
@@ -384,7 +410,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
           : mooringRowData?.customerId,
         harbor: formData?.harbor ? formData?.harbor : mooringRowData?.harbor,
         waterDepth: formData?.waterDepth ? formData?.waterDepth : mooringRowData?.waterDepth,
-        gpsCoordinates: formData?.gpsCoordinates,
+        gpsCoordinates: gpsCoordinatesValue,
         boatyardId: formData?.boatyardName
           ? formData?.boatyardName
           : mooringRowData?.boatyardResponseDto?.id,
@@ -461,11 +487,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     const formattedLat = lat.toFixed(3)
     const formattedLng = lng.toFixed(3)
     const concatenatedValue = `${formattedLat} ${formattedLng}`
-
-    setFormData((prevFormData: any) => ({
-      ...prevFormData,
-      gpsCoordinates: concatenatedValue,
-    }))
+    setGpsCoordinatesValue(concatenatedValue)
   }
 
   const handleClick = () => {
@@ -485,6 +507,14 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       handleEditMode()
     }
   }, [editMode, moorings])
+
+  useEffect(() => {
+    if (gpsCoordinatesValue) {
+      const coordinates = getFomattedCoordinate(gpsCoordinatesValue)
+      setCenter(coordinates)
+      // handlePositionChange(coordinates[0], coordinates[1])
+    }
+  }, [gpsCoordinatesValue])
 
   return (
     <>
@@ -613,19 +643,22 @@ const AddMoorings: React.FC<AddMooringProps> = ({
             </span>
             <div className="mt-2">
               <InputComponent
-                value={formData?.gpsCoordinates}
-                onChange={(e) => handleInputChange('gpsCoordinates', e.target.value)}
+                value={gpsCoordinatesValue}
+                onChange={(e) => {
+                  setGpsCoordinatesValue(e.target.value)
+                  setFieldErrors((prevErrors) => ({ ...prevErrors, gpsCoordinatesValue: '' }))
+                }}
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: fieldErrors.gpsCoordinates ? '1px solid red' : '1px solid #D5E1EA',
+                  border: fieldErrors.gpsCoordinatesValue ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
               <p id="waterDepth">
-                {fieldErrors.gpsCoordinates && (
-                  <small className="p-error">{fieldErrors.gpsCoordinates}</small>
+                {fieldErrors.gpsCoordinatesValue && (
+                  <small className="p-error">{fieldErrors.gpsCoordinatesValue}</small>
                 )}
               </p>
             </div>
@@ -1075,7 +1108,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 }}>
                 <CustomSelectPositionMap
                   onPositionChange={handlePositionChange}
-                  zoomLevel={50}
+                  zoomLevel={10}
                   center={center}
                   setCenter={setCenter}
                 />

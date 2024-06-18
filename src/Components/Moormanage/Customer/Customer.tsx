@@ -32,7 +32,7 @@ import CustomMooringPositionMap from '../../Map/CustomMooringPositionMap'
 import { GearOffIcon, GearOnIcon, NeedInspectionIcon, NotInUseIcon } from '../../Map/DefaultIcon'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { LatLngExpression } from 'leaflet'
-import { LatLngExpressionValue } from '../../../Type/Components/MapTypes'
+import { LatLngExpressionValue, PositionType } from '../../../Type/Components/MapTypes'
 import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
 import { Paginator } from 'primereact/paginator'
 
@@ -81,6 +81,27 @@ const Customer = () => {
     setPageNumberTwo(event.page)
     setPageNumber2(event.first)
     setPageSizeTwo(event.rows)
+  }
+
+  const position: PositionType = [41.56725, -70.94045]
+
+  const parseCoordinates = (coordinates: any) => {
+    if (!coordinates) return null
+    const [latitude, longitude] = coordinates.split(' ').map(parseFloat)
+    return isNaN(latitude) || isNaN(longitude) ? null : [latitude, longitude]
+  }
+
+  const gpsCoordinatesArray = mooringData.map(
+    (mooring) => parseCoordinates(mooring.gpsCoordinates) || [41.56725, -70.94045],
+  )
+
+  const initialPosition = gpsCoordinatesArray.length > 0 ? gpsCoordinatesArray[0] : position
+
+  const iconsByStatus = {
+    GearOn: GearOnIcon,
+    GearOff: GearOffIcon,
+    NeedInspection: NeedInspectionIcon,
+    NotInUse: NotInUseIcon,
   }
 
   const handleButtonClick = () => {
@@ -362,25 +383,6 @@ const Customer = () => {
     }
   }, [pageNumberTwo, pageSizeTwo])
 
-  const parseCoordinates = (coordinates: any) => {
-    if (!coordinates) return null
-    const [latitude, longitude] = coordinates.split(' ').map(parseFloat)
-    return isNaN(latitude) || isNaN(longitude) ? null : [latitude, longitude]
-  }
-
-  const gpsCoordinatesArray = mooringData.map(
-    (mooring) => parseCoordinates(mooring.gpsCoordinates) || [34.089, 76.157],
-  )
-
-  const initialPosition = gpsCoordinatesArray.length > 0 ? gpsCoordinatesArray[0] : [34.089, 76.157]
-
-  const iconsByStatus = {
-    GearOn: GearOnIcon,
-    GearOff: GearOffIcon,
-    NeedInspection: NeedInspectionIcon,
-    NotInUse: NotInUseIcon,
-  }
-
   return (
     <div className={modalVisible ? 'backdrop-blur-lg' : ''}>
       <Header header="MOORMANAGE/Customer" />
@@ -548,7 +550,7 @@ const Customer = () => {
           className={`min-w-[21vw] min-h[50vw] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
           <CustomMooringPositionMap
             position={initialPosition}
-            zoomLevel={10}
+            zoomLevel={4}
             style={{ height: '730px' }}
             iconsByStatus={iconsByStatus}
             moorings={mooringData}

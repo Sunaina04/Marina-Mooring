@@ -291,6 +291,7 @@ export interface MooringPayload {
   sizeOfWeight: MooringMetaDataTypes
   typeOfWeight: MooringMetaDataTypes
   depthAtMeanHighWater: number
+  mooringStatus: MooringStatus
 }
 
 export interface MooringStatus {

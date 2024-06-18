@@ -26,9 +26,7 @@ const CustomDisplayPositionMap: React.FC<CustomDisplayPositionMapProps> = ({
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
-      <Marker position={position} ref={markerRef}>
-        {/* <Popup>{popUpMessage}</Popup> */}
-      </Marker>
+      <Marker position={position} ref={markerRef}></Marker>
     </MapContainer>
   )
 }

@@ -40,6 +40,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   const [countriesData, setCountriesData] = useState<Country[]>()
   const [statesData, setStatesData] = useState<State[]>()
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
+
   const getFomattedCoordinate = (gpsCoordinatesValue: any) => {
     try {
       let [lat, long]: any = gpsCoordinatesValue.split(' ')
@@ -56,14 +57,15 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
       }
     } catch (error) {
       console.log('Error In Setting Center', error)
-      return [30.6983149, 76.656095]
+      return [41.56725, -70.94045]
     }
-    return [30.6983149, 76.656095]
+    // return [41.56725, -70.94045]
   }
+
   const [center, setCenter] = useState<any>(
     customerData?.gpsCoordinates || gpsCoordinatesValue
       ? getFomattedCoordinate(customerData?.gpsCoordinates || gpsCoordinatesValue)
-      : [30.6983149, 76.656095],
+      : [41.56725, -70.94045],
   )
   const [isLoading, setIsLoading] = useState(false)
   const [addBoatyard] = useAddBoatyardsMutation()
@@ -296,7 +298,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
     if (gpsCoordinatesValue) {
       const coordinates = getFomattedCoordinate(gpsCoordinatesValue)
       setCenter(coordinates)
-      handlePositionChange(coordinates[0], coordinates[1])
+      // handlePositionChange(coordinates[0], coordinates[1])
     }
   }, [gpsCoordinatesValue])
 

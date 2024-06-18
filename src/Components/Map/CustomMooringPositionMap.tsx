@@ -1,19 +1,40 @@
+import React, { useEffect, useRef } from 'react'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
-import L, { LatLngExpression } from 'leaflet'
+import L, { LatLngExpression, LatLngBounds } from 'leaflet'
 import './CustomMap.css'
 import { CustomMooringPositionMapProps } from '../../Type/Components/MapTypes'
-import { useRef } from 'react'
-import { DefaultIcon, GearOffIcon } from './DefaultIcon'
+import {
+  DefaultIcon,
+  GearOffIcon,
+  GearOnIcon,
+  NeedInspectionIcon,
+  NotInUseIcon,
+} from './DefaultIcon'
+import { MooringPayload } from '../../Type/ApiTypes'
 
 const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
   position,
   zoomLevel,
   popUpMessage,
   style,
-  iconsByStatus,
   moorings,
 }) => {
-  const markerRef = useRef(null)
+  const mapRef = useRef<any>(null)
+
+  // useEffect(() => {
+  //   if (mapRef.current && moorings && moorings.length > 0) {
+  //     // let bounds = new LatLngBounds()
+
+  //     moorings.forEach((mooring: MooringPayload) => {
+  //       const coordinates = parseCoordinates(mooring.gpsCoordinates)
+  //       if (coordinates) {
+  //         bounds.extend(coordinates)
+  //       }
+  //     })
+
+  //     mapRef.current.leafletElement.fitBounds(bounds, { padding: [50, 50] })
+  //   }
+  // }, [moorings])
 
   const parseCoordinates = (coordinates: string): [number, number] | null => {
     if (!coordinates) return null
@@ -21,18 +42,19 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
     return isNaN(latitude) || isNaN(longitude) ? null : [latitude, longitude]
   }
 
-  console.log(
-    'iconsByStatus ? iconsByStatus[mooring.mooringStatus.id]',
-    iconsByStatus,
-    // iconsByStatus?.[moorings.mooringStatus.id],
-  )
-  // console.log('moorings', moorings[0].mooringStatus, moorings[0].mooringStatus.id)
+  const iconsByStatusId = {
+    1: GearOnIcon,
+    2: GearOffIcon,
+    3: NeedInspectionIcon,
+    4: NotInUseIcon,
+  }
 
   return (
     <MapContainer
+      ref={mapRef}
       style={style}
-      center={position as LatLngExpression}
-      zoom={zoomLevel}
+      center={position}
+      zoom={position ? zoomLevel : 4}
       scrollWheelZoom={false}
       attributionControl={false}>
       <TileLayer
@@ -40,17 +62,18 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
       {moorings &&
-        moorings.map((mooring: any, index: any) => {
-          const coordinates = parseCoordinates(mooring.gpsCoordinates) || [34.089, 76.157]
+        moorings.map((mooring: MooringPayload, index: number) => {
+          const coordinates = parseCoordinates(mooring.gpsCoordinates) || [41.56725, -70.94045]
           const position: LatLngExpression = coordinates
+          const iconKey = mooring?.mooringStatus?.id as keyof typeof iconsByStatusId
+          const icon = iconsByStatusId[iconKey] || DefaultIcon
+
+          console.log('Mooring ID:', mooring.mooringId)
+          console.log('Coordinates:', position)
+          // console.log('Icon:', icon)
 
           return (
-            <Marker
-              key={index}
-              position={position}
-              icon={GearOffIcon}
-              // icon={iconsByStatus ? iconsByStatus[mooring.mooringStatus.id] : DefaultIcon}
-              ref={markerRef}>
+            <Marker key={index} position={position} icon={icon} ref={mapRef}>
               <Popup>
                 <span>{popUpMessage || `Mooring ID: ${mooring.mooringId}`}</span>
               </Popup>
@@ -61,6 +84,6 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
   )
 }
 
-// L.Marker.prototype.options.icon = DefaultIcon
+L.Marker.prototype.options.icon = DefaultIcon
 
 export default CustomMooringPositionMap
