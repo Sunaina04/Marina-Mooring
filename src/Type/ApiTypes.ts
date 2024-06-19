@@ -603,6 +603,11 @@ export interface UploadPayload {
 }
 
 export interface WorkOrderPayload {
+  customerResponseDto: any
+  mooringResponseDto: any
+  boatyardResponseDto: any
+  technicianUserResponseDto: any
+  workOrderStatusDto: any
   customerId: number
   mooringId: number
   boatyardId: number
