@@ -73,7 +73,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   const [currentPage, setCurrentPage] = useState()
 
   const { getMooringBasedOnCustomerIdAndBoatyardIdData } = GetMooringBasedOnCustomerIdAndBoatyardId(
-    workOrder?.customerName?.id && workOrder?.customerName?.id,
+    workOrder?.customerName && workOrder?.customerName,
     workOrder?.boatyards?.id && workOrder?.boatyards?.id,
   )
   const { getMooringsBasedOnCustomerIdData } = GetMooringsBasedOnCustomerId(
@@ -104,9 +104,9 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     : customerNameValue
 
   const MooringNameOptions = (() => {
-    if (workOrder?.customerName?.id && workOrder?.boatyards?.id) {
+    if (workOrder?.customerName && workOrder?.boatyards?.id) {
       return basedOnCustomerIdAndBoatyardId
-    } else if (workOrder?.customerName) {
+    } else if (workOrder?.customerName?.id) {
       return mooringBasedOnCustomerId
     } else if (workOrder?.boatyards?.id) {
       return mooringsBasedOnBoatyardIdData
@@ -515,7 +515,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     if (mooringsBasedOnCustomerId !== null) {
       setMooringBasedOnCustomerId(mooringsBasedOnCustomerId)
     }
-  }, [workOrder?.customerName])
+  }, [workOrder?.customerName?.id])
 
   const fetchDataAndUpdateBasedOnMooringId = useCallback(async () => {
     const { boatyardBasedOnMooringId } = await getBoatyardBasedOnMooringIdData()
@@ -545,7 +545,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     if (mooringbasedOnCustomerIdAndBoatyardId !== null) {
       setbasedOnCustomerIdAndBoatyardId(mooringbasedOnCustomerIdAndBoatyardId)
     }
-  }, [workOrder?.boatyards?.id, workOrder?.customerName?.id])
+  }, [workOrder?.boatyards?.id, workOrder?.customerName])
 
   useEffect(() => {
     fetchDataAndUpdate()
@@ -563,19 +563,17 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     }
   }, [workOrder?.mooringId?.id])
 
-  console.log('workOrder', workOrder)
-
   useEffect(() => {
-    if (workOrder?.customerName) {
+    if (workOrder?.customerName?.id) {
       fetchDataAndUpdateBasedOnCustomerId()
     }
   }, [workOrder?.customerName])
 
   useEffect(() => {
-    if (workOrder?.customerName?.id && workOrder?.boatyards?.id) {
+    if (workOrder?.customerName && workOrder?.boatyards?.id) {
       fetchDataAndUpdateBasedOnCuatomerIdAndBoatyardId()
     }
-  }, [workOrder?.customerName?.id, workOrder?.boatyards?.id])
+  }, [workOrder?.customerName, workOrder?.boatyards?.id])
 
   useEffect(() => {
     if (editModeWorkOrder || editModeEstimate) {
