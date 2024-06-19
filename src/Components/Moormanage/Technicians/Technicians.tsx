@@ -59,7 +59,7 @@ const Technicians = () => {
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
   const [pageSize, setPageSize] = useState(10)
-
+  const [totalRecords, setTotalRecords] = useState<number>()
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
     setPageNumber1(event.first)
@@ -165,10 +165,13 @@ const Technicians = () => {
       }
 
       const response = await getTechnicians(params).unwrap()
-      const { status, content, message } = response as TechnicianResponse
+      const { status, content, message, totalSize } = response as TechnicianResponse
       if (status === 200 && Array.isArray(content)) {
         setTechnicianData(content)
         setFilteredTechnicianData(content)
+        setTechnicianId(content[0]?.id)
+        setSelectedProduct(content[0])
+        setTotalRecords(totalSize)
       } else {
         setIsLoading(false)
         toast?.current?.show({
@@ -184,55 +187,61 @@ const Technicians = () => {
     }
   }, [searchText, getTechnicians, pageSize, pageNumber])
 
-  const getOpenWorkOrder = useCallback(async (id: any) => {
-    // setIsLoading(true)
-    try {
-      let params: Params = {}
+  const getOpenWorkOrder = useCallback(
+    async (id: any) => {
+      // setIsLoading(true)
+      try {
+        let params: Params = {}
 
-      // if (pageNumberTwo) {
-      //   params.pageNumber = pageNumberTwo
-      // }
-      // if (pageSizeTwo) {
-      //   params.pageSize = pageSizeTwo
-      // }
+        // if (pageNumberTwo) {
+        //   params.pageNumber = pageNumberTwo
+        // }
+        // if (pageSizeTwo) {
+        //   params.pageSize = pageSizeTwo
+        // }
 
-      const response = await getOpenWork({ technicianId: id }).unwrap()
-      const { status, message, content } = response as GetUserResponse
-      if (status === 200 && Array.isArray(content)) {
-        // setIsLoading(false)
-        // console.log('content', content)
-      } else {
-        setIsLoading(false)
+        const response = await getOpenWork({ technicianId: id }).unwrap()
+        const { status, message, content } = response as GetUserResponse
+        if (status === 200 && Array.isArray(content)) {
+          // setIsLoading(false)
+          // console.log('content', content)
+        } else {
+          setIsLoading(false)
+        }
+      } catch (error) {
+        console.error('Error occurred while fetching customer data:', error)
       }
-    } catch (error) {
-      console.error('Error occurred while fetching customer data:', error)
-    }
-  }, [technicianId, value])
+    },
+    [technicianId, value],
+  )
 
-  const getClosedWorkOrder = useCallback(async (id: any) => {
-    // setIsLoading(true)
-    try {
-      let params: Params = {}
+  const getClosedWorkOrder = useCallback(
+    async (id: any) => {
+      // setIsLoading(true)
+      try {
+        let params: Params = {}
 
-      // if (pageNumberTwo) {
-      //   params.pageNumber = pageNumberTwo
-      // }
-      // if (pageSizeTwo) {
-      //   params.pageSize = pageSizeTwo
-      // }
+        // if (pageNumberTwo) {
+        //   params.pageNumber = pageNumberTwo
+        // }
+        // if (pageSizeTwo) {
+        //   params.pageSize = pageSizeTwo
+        // }
 
-      const response = await getWorkedClosed({ technicianId: id }).unwrap()
-      const { status, message, content } = response as GetUserResponse
-      if (status === 200 && Array.isArray(content)) {
-        // setIsLoading(false)
-        // console.log('content', content)
-      } else {
-        setIsLoading(false)
+        const response = await getWorkedClosed({ technicianId: id }).unwrap()
+        const { status, message, content } = response as GetUserResponse
+        if (status === 200 && Array.isArray(content)) {
+          // setIsLoading(false)
+          // console.log('content', content)
+        } else {
+          setIsLoading(false)
+        }
+      } catch (error) {
+        console.error('Error occurred while fetching customer data:', error)
       }
-    } catch (error) {
-      console.error('Error occurred while fetching customer data:', error)
-    }
-  }, [technicianId, value])
+    },
+    [technicianId, value],
+  )
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -297,9 +306,7 @@ const Technicians = () => {
           </div>
         </div>
 
-        <div 
-        
-        className="flex justify-around gap-10 mt-6">
+        <div className="flex justify-around gap-10 mt-6">
           <div
             style={{
               width: '700px',
@@ -314,14 +321,17 @@ const Technicians = () => {
               onChange={handleSearch}
               placeholder="Search by name, ID..."
               inputTextStyle={{
-                height: '44px',
                 width: '100%',
-                cursor: 'pointer',
-                fontSize: '',
-                color: '#D5E1EA',
+                height: '44px',
+                padding: '0 4rem 0 3rem',
                 border: '1px solid #D5E1EA',
-                paddingLeft: '40px',
+                fontSize: '16px',
+                color: '#000000',
                 borderRadius: '5px',
+                minHeight: '44px',
+                fontWeight: 400,
+                cursor: 'pointer',
+                backgroundColor: 'rgb(242 242 242 / 0%)',
               }}
               iconStyle={{
                 position: 'absolute',
@@ -334,62 +344,62 @@ const Technicians = () => {
             />
 
             <div
-            data-testid="customer-admin-data"
-            className="flex flex-col  "
-            style={{ height: '630px' }}
-            >
-            <div className="flex-grow overflow-auto">
-            <DataTableComponent
-                columns={TechnicianTableColumn}
-                scrollable={true}
-                tableStyle={{
-                  fontSize: '12px',
-                  color: '#000000',
-                  fontWeight: 600,
-                  backgroundColor: '#FFFFFF',
-                  cursor: 'pointer',
-                }}
-                onRowClick={(row) => {
-                  handleWorkOrder(row.data)
-                }}
-                onSelectionChange={(e) => {
-                  setSelectedProduct(e.value)
-                }}
-                data={technicianData}
-                emptyMessage={
-                  <div className="text-center mt-40 mb-10">
-                    <img
-                      src="/assets/images/empty.png"
-                      alt="Empty Data"
-                      className="w-20 mx-auto mb-4"
-                    />
-                    <p className="text-gray-500">No data available</p>
-                  </div>
-                }
-                style={{borderBottom:"1px solid #D5E1EA" , fontWeight: '500'}}
-              />
-
-
+              data-testid="customer-admin-data"
+              className="flex flex-col  "
+              style={{ height: '630px' }}>
+              <div className="flex-grow overflow-auto">
+                <DataTableComponent
+                  columns={TechnicianTableColumn}
+                  scrollable={true}
+                  tableStyle={{
+                    fontSize: '12px',
+                    color: '#000000',
+                    fontWeight: 600,
+                    backgroundColor: '#FFFFFF',
+                    cursor: 'pointer',
+                  }}
+                  selectionMode="single"
+                  dataKey="id"
+                  onRowClick={(row) => {
+                    handleWorkOrder(row.data)
+                  }}
+                  onSelectionChange={(e) => {
+                    setSelectedProduct(e.value)
+                  }}
+                  selection={selectedProduct}
+                  rowStyle={(rowData) => rowData}
+                  data={technicianData}
+                  emptyMessage={
+                    <div className="text-center mt-40 mb-10">
+                      <img
+                        src="/assets/images/empty.png"
+                        alt="Empty Data"
+                        className="w-20 mx-auto mb-4"
+                      />
+                      <p className="text-gray-500">No data available</p>
+                    </div>
+                  }
+                  style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
+                />
+              </div>
+              <div className="mt-auto">
+                <Paginator
+                  first={pageNumber1}
+                  rows={pageSize}
+                  totalRecords={totalRecords}
+                  rowsPerPageOptions={[5, 10, 20, 30]}
+                  onPageChange={onPageChange}
+                  style={{
+                    position: 'sticky',
+                    bottom: 0,
+                    zIndex: 1,
+                    backgroundColor: 'white',
+                    borderTop: '1px solid #D5E1EA',
+                    padding: '0.5rem',
+                  }}
+                />
+              </div>
             </div>
-            <div className="mt-auto">
-              <Paginator
-                first={pageNumber1}
-                rows={pageSize}
-                totalRecords={120}
-                rowsPerPageOptions={[5, 10, 20, 30]}
-                onPageChange={onPageChange}
-                style={{
-                  position: 'sticky',
-                  bottom: 0,
-                  zIndex: 1,
-                  backgroundColor: 'white',
-                  borderTop: '1px solid #D5E1EA',
-                  padding: '0.5rem',
-                }}
-              />
-            </div>
-          </div>
-
           </div>
 
           <div

@@ -47,3 +47,9 @@ export interface CustomMooringPositionMapProps extends CustomDisplayPositionMapP
 }
 
 export type PositionType = LatLngExpression
+
+export interface TimeLineProps {
+  gpsValue: any
+  mooringId: any
+  viewEditClick?: any
+}

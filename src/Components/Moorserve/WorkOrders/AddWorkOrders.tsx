@@ -51,8 +51,8 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     mooringId: '',
     boatyards: '',
     assignedTo: '',
-    dueDate: null,
-    scheduleDate: null,
+    dueDate: '',
+    scheduleDate: '',
     workOrderStatus: '',
     value: '',
   })
@@ -98,14 +98,17 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   const [saveEstimation] = useAddEstimateMutation()
   const [updateEstimate] = useUpdateEstimateMutation()
 
-  const boatyardsNameOptions = workOrder?.mooringId ? boatyardBasedOnMooringId : boatyardsName
-  const CustomerNameOptions = workOrder?.mooringId ? customerBasedOnMooringId : customerNameValue
+  const boatyardsNameOptions = workOrder?.mooringId?.id ? boatyardBasedOnMooringId : boatyardsName
+  const CustomerNameOptions = workOrder?.mooringId?.id
+    ? customerBasedOnMooringId
+    : customerNameValue
+
   const MooringNameOptions = (() => {
-    if (workOrder?.customerName && workOrder?.boatyards) {
+    if (workOrder?.customerName?.id && workOrder?.boatyards?.id) {
       return basedOnCustomerIdAndBoatyardId
-    } else if (workOrder?.customerName) {
+    } else if (workOrder?.customerName?.id) {
       return mooringBasedOnCustomerId
-    } else if (workOrder?.boatyards) {
+    } else if (workOrder?.boatyards?.id) {
       return mooringsBasedOnBoatyardIdData
     } else {
       return moorings
@@ -158,7 +161,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       ...workOrder,
       [field]: value,
     })
-
     if (errorMessage[field]) {
       setErrorMessage({
         ...errorMessage,
@@ -225,20 +227,20 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     return `${formattedMinutes}:${formattedSeconds}`
   }
 
-  const formatDate = (date:any) => {
-    if (!date) return null;
-    const d = new Date(date);
-    const month = ('0' + (d.getMonth() + 1)).slice(-2);
-    const day = ('0' + d.getDate()).slice(-2);
-    const year = d.getFullYear();
-    return `${month}/${day}/${year}`;
-  };
+  const formatDate = (date: any) => {
+    if (!date) return null
+    const d = new Date(date)
+    const month = ('0' + (d.getMonth() + 1)).slice(-2)
+    const day = ('0' + d.getDate()).slice(-2)
+    const year = d.getFullYear()
+    return `${month}/${day}/${year}`
+  }
 
-  const parseDate = (dateString:any) => {
-    if (!dateString) return null;
-    const [month, day, year] = dateString.split('/');
-    return new Date(year, month - 1, day);
-  };
+  const parseDate = (dateString: any) => {
+    if (!dateString) return null
+    const [month, day, year] = dateString.split('/')
+    return new Date(year, month - 1, day)
+  }
 
   const SaveWorkOrder = async () => {
     const errors = validateFields()
@@ -252,7 +254,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       boatyardId: workOrder?.boatyards?.id,
       technicianId: workOrder?.assignedTo?.id,
       dueDate: formatDate(workOrder?.dueDate),
-      scheduledDate:  formatDate(workOrder?.scheduleDate),
+      scheduledDate: formatDate(workOrder?.scheduleDate),
       workOrderStatusId: workOrder?.workOrderStatus?.id,
       time: '00:' + formatTime(time.minutes, time.seconds),
       problem: workOrder?.value,
@@ -356,7 +358,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       boatyardId: workOrder?.boatyards?.id,
       technicianId: workOrder?.assignedTo?.id,
       dueDate: formatDate(workOrder?.dueDate),
-      scheduledDate:  formatDate(workOrder?.scheduleDate),
+      scheduledDate: formatDate(workOrder?.scheduleDate),
       workOrderStatusId: workOrder?.workOrderStatus?.id,
       time: '00:' + formatTime(time.minutes, time.seconds),
       problem: workOrder?.value,
@@ -547,7 +549,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   }, [workOrder?.mooringId?.id])
 
   useEffect(() => {
-    if (workOrder?.customerName?.id) {
+    if (workOrder?.customerName?.id && !workOrder?.mooringId?.id) {
       fetchDataAndUpdateBasedOnCustomerId()
     }
   }, [workOrder?.customerName?.id])

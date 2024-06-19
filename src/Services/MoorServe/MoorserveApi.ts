@@ -23,21 +23,21 @@ const MoorserveApi = userApi.injectEndpoints({
     //Get WorkOrders
     getWorkOrders: builder.mutation({
       query: ({
-        page,
-        size,
+        pageNumber,
+        pageSize,
         sortBy,
         sortDir,
         searchText,
       }: {
-        page?: number
-        size?: number
+        pageNumber?: number
+        pageSize?: number
         sortBy?: string
         sortDir?: string
         searchText?: string
       }) => ({
         url: 'api/v1/workOrder/',
         method: 'GET',
-        params: { page, size, sortBy, sortDir, searchText },
+        params: { pageNumber, pageSize, sortBy, sortDir, searchText },
       }),
     }),
 

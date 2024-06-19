@@ -30,10 +30,11 @@ const Permission = () => {
   const [getCustomerOwnerUserData, setgetCustomerOwnerUserData] = useState<CustomerPayload[]>([])
   const toast = useRef<Toast>(null)
   const [isLoading, setIsLoading] = useState(true)
-  const [totalRecords, setTotalRecords] = useState(0)
+  const [totalRecords, setTotalRecords] = useState<number>()
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
   const [pageSize, setPageSize] = useState(10)
+  
 
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
@@ -190,10 +191,11 @@ const Permission = () => {
         params.pageSize = pageSize
       }
       const response = await getUser(params).unwrap()
-      const { status, content } = response as GetUserResponse
+      const { status, content ,totalSize} = response as GetUserResponse
       if (status === 200 && Array.isArray(content)) {
         setIsLoading(false)
         setgetCustomerOwnerUserData(content)
+        setTotalRecords(totalSize)
       }
     } catch (error) {
       const { message } = error as ErrorResponse
@@ -364,7 +366,7 @@ const Permission = () => {
               <Paginator
                 first={pageNumber1}
                 rows={pageSize}
-                totalRecords={120}
+                totalRecords={totalRecords}
                 rowsPerPageOptions={[5, 10, 20, 30]}
                 onPageChange={onPageChange}
                 style={{

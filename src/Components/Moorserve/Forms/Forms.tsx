@@ -17,6 +17,9 @@ import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import { FormDataa } from '../../Utils/CustomData'
 import { InputText } from 'primereact/inputtext'
 import AddForm from './AddForm'
+import { Paginator } from 'primereact/paginator'
+import { Params } from '../../../Type/CommonType'
+import { ProgressSpinner } from 'primereact/progressspinner'
 
 const Forms = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -24,11 +27,21 @@ const Forms = () => {
   const [customerName, setCustomerName] = useState('')
   const [customerID, setCustomerID] = useState('')
   const [formName, setFormName] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
   const [file, setFile] = useState<File | undefined>(undefined)
   const [getForms] = useGetFormsMutation()
   const [downloadForms] = useDownloadFormMutation()
   const { error, response, handleSubmit } = useSubmit()
+  const [searchText, setSearchText] = useState('')
+  const [pageNumber, setPageNumber] = useState(0)
+  const [pageNumber1, setPageNumber1] = useState(0)
+  const [pageSize, setPageSize] = useState(10)
 
+  const onPageChange = (event: any) => {
+    setPageNumber(event.page)
+    setPageNumber1(event.first)
+    setPageSize(event.rows)
+  }
   const handleButtonClick = () => {
     setIsModalOpen(true)
   }
@@ -51,7 +64,18 @@ const Forms = () => {
 
   const getFormsData = async () => {
     try {
-      const response = await getForms({}).unwrap()
+
+      let params: Params = {}
+      if (searchText) {
+        params.searchText = searchText
+      }
+      if (pageNumber) {
+        params.pageNumber = pageNumber
+      }
+      if (pageSize) {
+        params.pageSize = pageSize
+      }
+      const response = await getForms(params).unwrap()
       const { status, content } = response as FormsResponse
       if (status === 200 && Array.isArray(content)) {
         setFormsData(content)
@@ -62,20 +86,20 @@ const Forms = () => {
     }
   }
 
-  const handleSave = async () => {
-    const formData = new FormData()
-    if (file) {
-      const blob = new Blob([file], { type: 'application/octet-stream' })
-      const fileBlob = new File([blob], 'filename.txt')
-      formData.append('file', fileBlob)
-    }
-    formData.append('customerName', customerName)
-    formData.append('customerId', customerID)
-    handleSubmit(formData)
-    if (response?.status === 200) {
-      setIsModalOpen(false)
-    }
-  }
+  // const handleSave = async () => {
+  //   const formData = new FormData()
+  //   if (file) {
+  //     const blob = new Blob([file], { type: 'application/octet-stream' })
+  //     const fileBlob = new File([blob], 'filename.txt')
+  //     formData.append('file', fileBlob)
+  //   }
+  //   formData.append('customerName', customerName)
+  //   formData.append('customerId', customerID)
+  //   handleSubmit(formData)
+  //   if (response?.status === 200) {
+  //     setIsModalOpen(false)
+  //   }
+  // }
 
   useEffect(() => {
     getFormsData()
@@ -135,7 +159,7 @@ const Forms = () => {
     <>
       <Header header="MOORSERVE/Forms" />
 
-     <div className="flex justify-end">
+      <div className="flex justify-end">
         <div className=" mr-16 mt-10">
           <CustomModal
             buttonText={'Upload New'}
@@ -153,7 +177,7 @@ const Forms = () => {
               boxShadow: 'none',
             }}
             children={
-              <AddForm/>
+              <AddForm />
             }
             headerText={<h1 className="text-xl font-extrabold text-black ml-4">Form Details</h1>}
             visible={isModalOpen}
@@ -214,26 +238,73 @@ const Forms = () => {
           </div>
         </div>
 
-        <DataTableComponent
-          tableStyle={{
-            fontSize: '12px',
-            color: '#000000',
-            fontWeight: 600,
-            backgroundColor: '#D9D9D9',
-            cursor: 'pointer',
-          }}
-          data={undefined}
-          columns={FormsColumns}
-          actionButtons={ActionButtonColumn}
-          style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
-          emptyMessage={
-            <div className="text-center mt-40">
-              <img src="/assets/images/empty.png" alt="Empty Data" className="w-28 mx-auto mb-4" />
-              <p className="text-gray-500">No data available</p>
-            </div>
-          }
-        />
-      </div> 
+
+
+        <div
+          data-testid="customer-admin-data"
+          className="flex flex-col  "
+          style={{ height: '630px' }}
+        >
+          <div className="flex-grow overflow-auto">
+
+            <DataTableComponent
+              tableStyle={{
+                fontSize: '12px',
+                color: '#000000',
+                fontWeight: 600,
+                backgroundColor: '#D9D9D9',
+                cursor: 'pointer',
+              }}
+              data={undefined}
+              columns={FormsColumns}
+              actionButtons={ActionButtonColumn}
+              style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+              emptyMessage={
+                <div className="text-center mt-40">
+                  <img src="/assets/images/empty.png" alt="Empty Data" className="w-28 mx-auto mb-4" />
+                  <p className="text-gray-500">No data available</p>
+                </div>
+              }
+            />
+
+
+            {isLoading && (
+              <ProgressSpinner
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  width: '50px',
+                  height: '50px',
+                }}
+                strokeWidth="4"
+              />
+            )}
+          </div>
+          <div className="mt-auto">
+            <Paginator
+              first={pageNumber1}
+              rows={pageSize}
+              totalRecords={120}
+              rowsPerPageOptions={[5, 10, 20, 30]}
+              onPageChange={onPageChange}
+              style={{
+                position: 'sticky',
+                bottom: 0,
+                zIndex: 1,
+                backgroundColor: 'white',
+                borderTop: '1px solid #D5E1EA',
+                padding: '0.5rem',
+              }}
+            />
+          </div>
+        </div>
+
+
+
+
+      </div>
     </>
   )
 }

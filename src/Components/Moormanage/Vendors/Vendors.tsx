@@ -36,6 +36,7 @@ const Vendors = () => {
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
   const [pageSize, setPageSize] = useState(10)
+  const [totalRecords, setTotalRecords] = useState<number>()
 
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
@@ -70,11 +71,12 @@ const Vendors = () => {
       await getVendors(params)
         .unwrap()
         .then(async (response: any) => {
-          const { status, content, message } = response as VendorResponse
+          const { status, content, message,totalSize } = response as VendorResponse
           if (status === 200 && Array.isArray(content)) {
             setIsLoading(false)
             setVendorData(content)
             setFilteredboatyardsData(content)
+            setTotalRecords(totalSize)
           } else {
             setIsLoading(false)
             toast?.current?.show({
@@ -350,7 +352,7 @@ const Vendors = () => {
               <Paginator
                 first={pageNumber1}
                 rows={pageSize}
-                totalRecords={120}
+                totalRecords={totalRecords}
                 rowsPerPageOptions={[5, 10, 20, 30]}
                 onPageChange={onPageChange}
                 style={{

@@ -23,7 +23,6 @@ const AddInventory: React.FC<AddInventoryProps> = ({
 }) => {
   const { getTypeOfInventoryTypeData } = TypeOfInventoryType()
   const [checked, setChecked] = useState<boolean>(false)
-  console.log(checked,'checked value')
   const [unChecked, setUnChecked] = useState<boolean>(false)
   //console.log(unChecked, 'unchecked value')
   const [inventoryType, setInventoryType] = useState<MetaData[]>([])
@@ -43,7 +42,6 @@ const AddInventory: React.FC<AddInventoryProps> = ({
     if (field === 'cost' && value !== '' && !/^\d*\.?\d*$/.test(value)) {
       return
     }
-
     setFormData({
       ...formData,
       [field]: value,
@@ -61,7 +59,6 @@ const AddInventory: React.FC<AddInventoryProps> = ({
     if (!formData.cost) newErrors.cost = 'Cost is required'
     if (!formData.salePrice) newErrors.salePrice = 'Sale Price is required'
     if (!checked && !unChecked) newErrors.taxable = 'Please select Taxable Yes or No'
-
     setErrors(newErrors)
     return newErrors
   }
@@ -135,7 +132,6 @@ const AddInventory: React.FC<AddInventoryProps> = ({
     if (Object.keys(errors).length > 0) {
       return
     }
-
     if (selectedInventory?.taxable === true) {
       setChecked(true)
     } else {
@@ -331,7 +327,6 @@ const AddInventory: React.FC<AddInventoryProps> = ({
                       setChecked(e.checked ?? false)
                       setUnChecked(!e.checked)
                       setErrors((prevErrors) => ({ ...prevErrors, taxable: '' }))
-                      console.log(e.value, 'event')
                     }}
                     checked={checked}
                     style={{
