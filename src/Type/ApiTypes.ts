@@ -221,6 +221,8 @@ export interface AddCustomerPayload {
 export interface CustomerResponse {
   message: string
   status: number
+  currentSize: number
+  totalSize: number
   errorList: []
   time: string
   content: { CustomerPayload: CustomerPayload }
@@ -253,6 +255,8 @@ export interface customerResponseDto {
 export interface CustomersWithMooringResponse {
   message: string
   status: number
+  currentSize: number
+  totalSize: number
   errorList: []
   time: number
   content: customerResponseDto
@@ -334,6 +338,8 @@ export interface MooringResponseDtoList {
 export interface MooringResponse {
   message: string
   status: number
+  currentSize: number
+  totalSize: number
   errorList: []
   time: string
   content: {
@@ -372,6 +378,8 @@ export interface VendorPayload {
 export interface VendorResponse {
   message: string
   status: number
+  currentSize: number
+  totalSize: number
   errorList: []
   time: string
   content: {
@@ -500,6 +508,8 @@ export interface RowExpansionBoatYardData {
 export interface BoatYardResponse {
   status: number
   message: string
+  currentSize: number
+  totalSize: number
   errorList: []
   time: string
   content: BoatYardPayload
@@ -535,6 +545,8 @@ export interface MooringWithBoatYardContent {
 export interface MooringWithBoatYardResponse {
   message: string
   status: number
+  currentSize: number
+  totalSize: number
   errorList: []
   time: number
   content: MooringWithBoatYardContent
@@ -557,6 +569,8 @@ export interface TechnicianPayload {
 export interface TechnicianResponse {
   status: number
   message: string
+  currentSize: number
+  totalSize: number
   errorList: []
   time: string
   content: {
@@ -676,6 +690,8 @@ export interface WorkOrderStatusDto {
 export interface WorkOrderResponse {
   message: string
   status: number
+  currentSize: number
+  totalSize: number
   errorList: []
   time: string
   content: {

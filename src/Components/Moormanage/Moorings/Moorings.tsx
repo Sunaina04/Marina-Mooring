@@ -69,10 +69,11 @@ const Moorings = () => {
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
   const [pageSize, setPageSize] = useState(10)
-
+  const [totalRecords, setTotalRecords] = useState<number>()
   const [pageNumberTwo, setPageNumberTwo] = useState(0)
   const [pageNumber2, setPageNumber2] = useState(0)
   const [pageSizeTwo, setPageSizeTwo] = useState(10)
+  const [totalRecordsTwo, setTotalRecordsTwo] = useState<number>()
 
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
@@ -291,13 +292,14 @@ const Moorings = () => {
         params.pageSize = pageSize
       }
       const response = await getMoorings(params).unwrap()
-      const { status, content, message } = response as MooringResponse
+      const { status, content, message,totalSize } = response as MooringResponse
       if (status === 200 && Array.isArray(content)) {
         setIsLoading(false)
         setMooringData(content)
         setFilteredMooringData(content)
-        setCustomerId(content[0]?.id)
+        setCustomerId(content[0]?.customerId)
         setSelectedProduct(content[0])
+        setTotalRecords(totalSize)
       } else {
         setIsLoading(false)
         toast?.current?.show({
@@ -323,7 +325,7 @@ const Moorings = () => {
         pageNumber: pageNumberTwo,
         pageSize: pageSizeTwo,
       }).unwrap()
-      const { status, content } = response as CustomersWithMooringResponse
+      const { status, content,totalSize } = response as CustomersWithMooringResponse
       if (
         status === 200 &&
         Array.isArray(content?.customerResponseDto?.mooringResponseDtoList) &&
@@ -338,6 +340,7 @@ const Moorings = () => {
         const coordinatesString = customerRecordData?.mooringResponseDtoList[0]?.gpsCoordinates
         const coordinateArray = coordinatesString?.split(' ').map(parseFloat)
         setCoordinatesArray(coordinateArray)
+        setTotalRecordsTwo(totalSize)
       } else {
         setIsLoader(false)
         setIsLoading(false)
@@ -363,7 +366,7 @@ const Moorings = () => {
     if (customerId) {
       getCustomersWithMooring(customerId)
     }
-  }, [pageNumberTwo, pageSizeTwo])
+  }, [pageNumberTwo, pageSizeTwo,customerId])
   
 
   return (
@@ -499,7 +502,7 @@ const Moorings = () => {
               <Paginator
                 first={pageNumber1}
                 rows={pageSize}
-                totalRecords={120}
+                totalRecords={totalRecords}
                 rowsPerPageOptions={[10, 20, 30]}
                 onPageChange={onPageChange}
                 style={{
@@ -725,7 +728,7 @@ const Moorings = () => {
               <Paginator
                 first={pageNumber2}
                 rows={pageSizeTwo}
-                totalRecords={120}
+                totalRecords={totalRecordsTwo}
                 rowsPerPageOptions={[5, 10, 20, 30]}
                 onPageChange={onPageChangeTwo}
                 style={{

@@ -1231,7 +1231,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               <div>
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
-                    Boat Size
+                    Boat Size (feet)
                     <p className="text-red-600">*</p>
                   </div>
                 </span>

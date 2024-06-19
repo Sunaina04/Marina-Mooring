@@ -66,10 +66,11 @@ const Boatyards = () => {
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
   const [pageSize, setPageSize] = useState(10)
-
+  const [totalRecords, setTotalRecords] = useState<number>()
   const [pageNumberTwo, setPageNumberTwo] = useState(0)
   const [pageNumberOne, setPageNumberOne] = useState(0)
   const [pageSizeTwo, setPageSizeTwo] = useState(10)
+  const [totalRecordsTwo, setTotalRecordsTwo] = useState<number>()
 
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
@@ -262,6 +263,7 @@ const Boatyards = () => {
   )
 
   const handleRowClickBoatYardDetail = (rowData: any) => {
+    // console.log("rowData",rowData);
     setIsLoader(true)
     setSelectedBoatYard('')
     setMooringWithBoatyardsData([])
@@ -343,9 +345,12 @@ const Boatyards = () => {
       await getBoatyards(params)
         .unwrap()
         .then(async (response) => {
-          const { status, content, message } = response as BoatYardResponse
+          const { status, content, message,totalSize } = response as BoatYardResponse
           if (status === 200 && Array.isArray(content)) {
             setboatyardsData(content)
+            setSelectedBoatYard(content[0])
+            setSelectedMooring(content[0])
+            setTotalRecords(totalSize)
             if (selectedBoatYard) {
               const data = content.find((data) => data.id === selectedBoatYard.id)
               if (data) {
@@ -353,8 +358,7 @@ const Boatyards = () => {
               }
             }
             setFilteredboatyardsData(content)
-            // setCustomerId(content[0]?.id)
-            // setSelectedProduct(content[0])
+           
             const timeoutId = setTimeout(() => {
               setIsLoading(false)
             }, 400)
@@ -394,10 +398,11 @@ const Boatyards = () => {
       })
         .unwrap()
         .then(async (response) => {
-          const { status, content } = response as MooringWithBoatYardResponse
+          const { status, content,totalSize } = response as MooringWithBoatYardResponse
           if (status === 200 && Array.isArray(content) && content.length > 0) {
             setIsLoading(false)
             setMooringWithBoatyardsData(content)
+            setTotalRecordsTwo(totalSize)
           } else {
             setIsLoading(false)
           }
@@ -525,7 +530,7 @@ const Boatyards = () => {
           <Paginator
             first={pageNumberOne}
             rows={pageSizeTwo}
-            totalRecords={120}
+            totalRecords={totalRecordsTwo}
             rowsPerPageOptions={[10, 20, 30]}
             onPageChange={onPageChangeTwo}
             style={{
@@ -682,7 +687,7 @@ const Boatyards = () => {
             <Paginator
               first={pageNumber1}
               rows={pageSize}
-              totalRecords={120}
+              totalRecords={totalRecords}
               rowsPerPageOptions={[10, 20, 30]}
               onPageChange={onPageChange}
               style={{
