@@ -63,7 +63,7 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
       />
       {moorings &&
         moorings.map((mooring: MooringPayload, index: number) => {
-          const coordinates = parseCoordinates(mooring.gpsCoordinates) || [41.56725, -70.94045]
+          const coordinates = parseCoordinates(mooring.gpsCoordinates) || [41.56725, 70.94045]
           const position: LatLngExpression = coordinates
           const iconKey = mooring?.mooringStatus?.id as keyof typeof iconsByStatusId
           const icon = iconsByStatusId[iconKey] || DefaultIcon

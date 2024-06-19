@@ -86,7 +86,7 @@ const Moorings = () => {
     setPageSizeTwo(event.rows)
   }
 
-  const position: PositionType = [41.56725, -70.94045]
+  const position: PositionType = [41.56725, 70.94045]
 
   const parseCoordinates = (coordinates: any) => {
     if (!coordinates) return null
@@ -97,7 +97,7 @@ const Moorings = () => {
   const gpsCoordinatesArray =
     mooringResponseData &&
     mooringResponseData?.map(
-      (mooring: any) => parseCoordinates(mooring.gpsCoordinates) || [41.56725, -70.94045],
+      (mooring: any) => parseCoordinates(mooring.gpsCoordinates) || [41.56725, 70.94045],
     )
 
   const initialPosition = gpsCoordinatesArray?.length > 0 ? gpsCoordinatesArray[0] : position
@@ -312,7 +312,15 @@ const Moorings = () => {
       const { message } = error as ErrorResponse
       console.error('Error fetching moorings data:', error)
     }
-  }, [searchText, getMoorings, selectedCustomerId, pageSize, pageNumber,customerId,selectedProduct])
+  }, [
+    searchText,
+    getMoorings,
+    selectedCustomerId,
+    pageSize,
+    pageNumber,
+    customerId,
+    selectedProduct,
+  ])
 
   const getCustomersWithMooring = async (id: number) => {
     setIsLoading(true)
@@ -364,7 +372,6 @@ const Moorings = () => {
       getCustomersWithMooring(customerId)
     }
   }, [pageNumberTwo, pageSizeTwo])
-  
 
   return (
     <div className={modalVisible ? 'backdrop-blur-lg' : ''}>

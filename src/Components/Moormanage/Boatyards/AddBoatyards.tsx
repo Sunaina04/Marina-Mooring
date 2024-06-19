@@ -41,31 +41,56 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   const [statesData, setStatesData] = useState<State[]>()
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
 
-  const getFomattedCoordinate = (gpsCoordinatesValue: any) => {
+  // const getFomattedCoordinate = (gpsCoordinatesValue: any) => {
+  //   try {
+  //     let [lat, long]: any = gpsCoordinatesValue.split(' ')
+  //     if (lat.split('.').length > 2) {
+  //       const [degree, minute, second]: any = lat.split('.').map((num: any) => parseInt(num))
+  //       lat = degree + minute / 60 + second / 3600
+  //     }
+  //     if (long.split('.').length > 2) {
+  //       const [degree, minute, second]: any = long.split('.').map((num: any) => parseInt(num))
+  //       long = degree + minute / 60 + second / 3600
+  //     }
+  //     if (!(isNaN(lat) || isNaN(long))) {
+  //       return [+lat, +long]
+  //     }
+  //   } catch (error) {
+  //     console.log('Error In Setting Center', error)
+  //     return [41.56725, 70.94045]
+  //   }
+  // }
+
+  const getFormattedCoordinate = (coordinates: any) => {
     try {
-      let [lat, long]: any = gpsCoordinatesValue.split(' ')
-      if (lat.split('.').length > 2) {
-        const [degree, minute, second]: any = lat.split('.').map((num: any) => parseInt(num))
-        lat = degree + minute / 60 + second / 3600
+      let [lat, long] = coordinates.split(/[ ,]+/)
+
+      const convertToDecimal = (coordinate: any) => {
+        if (coordinate.split('.').length > 2) {
+          const [degree, minute, second] = coordinate.split('.').map((num: any) => parseFloat(num))
+          return degree + minute / 60 + second / 3600
+        }
+        return parseFloat(coordinate)
       }
-      if (long.split('.').length > 2) {
-        const [degree, minute, second]: any = long.split('.').map((num: any) => parseInt(num))
-        long = degree + minute / 60 + second / 3600
-      }
-      if (!(isNaN(lat) || isNaN(long))) {
-        return [+lat, +long]
+
+      lat = convertToDecimal(lat)
+      long = convertToDecimal(long)
+
+      if (!isNaN(lat) && !isNaN(long)) {
+        return [lat, long]
+      } else {
+        throw new Error('Parsed coordinates are NaN')
       }
     } catch (error) {
-      console.log('Error In Setting Center', error)
-      return [41.56725, -70.94045]
+      console.error('Error In Setting Center:', error)
+      return [41.56725, 70.94045]
     }
-    // return [41.56725, -70.94045]
   }
 
   const [center, setCenter] = useState<any>(
     customerData?.gpsCoordinates || gpsCoordinatesValue
-      ? getFomattedCoordinate(customerData?.gpsCoordinates || gpsCoordinatesValue)
-      : [41.56725, -70.94045],
+      ? getFormattedCoordinate(customerData?.gpsCoordinates || gpsCoordinatesValue)
+      : [41.56725, 70.94045],
   )
   const [isLoading, setIsLoading] = useState(false)
   const [addBoatyard] = useAddBoatyardsMutation()
@@ -300,12 +325,12 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
     }
   }, [editMode, customerData])
 
-  // useEffect(() => {
-  //   if (gpsCoordinatesValue) {
-  //     const coordinates = getFomattedCoordinate(gpsCoordinatesValue)
-  //     setCenter(coordinates)
-  //   }
-  // }, [gpsCoordinatesValue])
+  useEffect(() => {
+    if (gpsCoordinatesValue) {
+      const coordinates = getFormattedCoordinate(gpsCoordinatesValue)
+      setCenter(coordinates)
+    }
+  }, [gpsCoordinatesValue])
 
   return (
     <>
@@ -568,6 +593,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
               <InputComponent
                 value={gpsCoordinatesValue}
                 onChange={handleGpsCoordinatesChange}
+                // onBlur={handleGpsCoordinatesBlur}
                 placeholder="GPS Coordinates"
                 style={{
                   width: '230px',

@@ -78,15 +78,15 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       }
     } catch (error) {
       console.log('Error In Setting Center', error)
-      return [41.56725, -70.94045]
+      return [41.56725, 70.94045]
     }
-    // return [41.56725, -70.94045]
+    // return [41.56725, 70.94045]
   }
 
   const [center, setCenter] = useState<any>(
     mooringRowData?.gpsCoordinates || gpsCoordinatesValue
       ? getFomattedCoordinate(mooringRowData?.gpsCoordinates || gpsCoordinatesValue)
-      : [41.56725, -70.94045],
+      : [41.56725, 70.94045],
   )
   // const [center, setCenter] = useState<LatLngExpression | undefined>([30.6983149, 76.656095])
   const [firstErrorField, setFirstErrorField] = useState('')
