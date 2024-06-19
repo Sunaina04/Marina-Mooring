@@ -51,8 +51,8 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     mooringId: '',
     boatyards: '',
     assignedTo: '',
-    dueDate: '',
-    scheduleDate: '',
+    dueDate: null,
+    scheduleDate: null,
     workOrderStatus: '',
     value: '',
   })
@@ -225,10 +225,20 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     return `${formattedMinutes}:${formattedSeconds}`
   }
 
-  const formatDate = (isoString: any) => {
-    const date = new Date(isoString)
-    return date.toLocaleDateString('en-US')
-  }
+  const formatDate = (date:any) => {
+    if (!date) return null;
+    const d = new Date(date);
+    const month = ('0' + (d.getMonth() + 1)).slice(-2);
+    const day = ('0' + d.getDate()).slice(-2);
+    const year = d.getFullYear();
+    return `${month}/${day}/${year}`;
+  };
+
+  const parseDate = (dateString:any) => {
+    if (!dateString) return null;
+    const [month, day, year] = dateString.split('/');
+    return new Date(year, month - 1, day);
+  };
 
   const SaveWorkOrder = async () => {
     const errors = validateFields()
@@ -720,9 +730,10 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
             </span>
             <div className="mt-1">
               <Calendar
-                value={workOrder.dueDate}
-                onChange={(e) => handleInputChange('dueDate', e.target.value)}
+                value={parseDate(workOrder.dueDate)}
+                onChange={(e) => handleInputChange('dueDate', formatDate(e.target.value))}
                 // type="text"
+                dateFormat="mm/dd/yy"
                 style={{
                   width: '230px',
                   height: '32px',
@@ -751,8 +762,9 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
             </span>
             <div className="mt-1">
               <Calendar
-                value={workOrder.scheduleDate}
-                onChange={(e) => handleInputChange('scheduleDate', e.target.value)}
+                value={parseDate(workOrder.scheduleDate)}
+                onChange={(e) => handleInputChange('scheduleDate', formatDate(e.target.value))}
+                dateFormat="mm/dd/yy"
                 style={{
                   width: '230px',
                   height: '32px',
