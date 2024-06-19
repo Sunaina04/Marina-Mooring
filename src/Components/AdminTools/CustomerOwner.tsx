@@ -221,8 +221,9 @@ const CustomerOwner = () => {
       const { status, message, content, totalSize } = response as GetUserResponse
       if (status === 200 && Array.isArray(content)) {
         setIsLoading(false)
-        setCustomerId(content[0]?.id)
+        // setCustomerId(content[0]?.id)
         setSelectedProduct(content[0])
+        dispatch(setCustomerId(content[0]?.id))
         if (content.length > 0) {
           setgetCustomerOwnerData(content)
           setTotalRecords(totalSize)
@@ -251,7 +252,6 @@ const CustomerOwner = () => {
         if (pageSizeTwo) {
           params.pageSize = pageSizeTwo
         }
-
         const response = await getUser(params).unwrap()
         const { status, message, content, totalSize } = response as GetUserResponse
         if (status === 200 && Array.isArray(content)) {
