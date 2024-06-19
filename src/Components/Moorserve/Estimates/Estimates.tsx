@@ -17,6 +17,7 @@ import { Toast } from 'primereact/toast'
 import { Params } from '../../../Type/CommonType'
 import { Paginator } from 'primereact/paginator'
 import { ProgressSpinner } from 'primereact/progressspinner'
+import { utils, writeFile } from 'xlsx'
 
 const Estimates = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -27,6 +28,7 @@ const Estimates = () => {
   const [selectedCustomer, setSelectedCustomer] = useState<any>(undefined)
   const [editMode, setEditMode] = useState(false)
   const [getEstimate] = useGetEstimateMutation()
+
   const toast = useRef<Toast>(null)
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
@@ -154,6 +156,22 @@ const Estimates = () => {
     }
   }, [searchText, selectedCustomerId])
 
+  const dataToXlsx = (data: WorkOrderPayload[], fileName = 'EstimateData.xlsx') => {
+  const formattedData = data.map(item => ({
+    CustomerName: `${item.customerResponseDto.firstName} ${item.customerResponseDto.lastName}`,
+    MooringID: item.mooringResponseDto.mooringId,
+    Boatyard: item.boatyardResponseDto.boatyardId,
+    AssignedTo: item.technicianUserResponseDto.name,
+    DueDate: item.dueDate,
+    Status: item.workOrderStatusDto.status,
+  }));
+
+  const worksheet = utils.json_to_sheet(formattedData);
+  const workbook = utils.book_new();
+  utils.book_append_sheet(workbook, worksheet, 'Estimates');
+  writeFile(workbook, fileName);
+};
+
   const handleEdit = (rowData: any) => {
     setSelectedCustomer(rowData)
     setEditMode(true)
@@ -178,13 +196,18 @@ const Estimates = () => {
 
   return (
     <div className={visible ? 'backdrop-blur-lg' : ''}>
-      <Header header="MOORSERVE/Work Orders" />
+      <Header header="MOORSERVE/Estimate" />
       <Toast ref={toast} />
       <div className="">
         <div className="flex justify-end gap-6 mt-10 mr-16">
           <div className="flex text-gray-600 mt-3 font-extrabold">
             <div className="">
-              <img src="/assets/images/Group.png" alt="" className="w-24 font-bold" />
+              <img
+                src="/assets/images/Group.png"
+                alt=""
+                className="w-24 font-bold cursor-pointer"
+                onClick={() => dataToXlsx(estimateData)}
+              />
             </div>
           </div>
           <div className="items-center">
