@@ -66,7 +66,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   const [technicians, setTechnicians] = useState<MetaDataTechnician[]>()
   const [moorings, setMoorings] = useState<MetaData[]>()
   const [workOrderStatusValue, setWorkOrderStatusValue] = useState<MetaData[]>()
-  const [customerNameValue, setcustomerNameValue] = useState<any>([])
+  const [customerNameValue, setcustomerNameValue] = useState<any[]>()
   const [boatyardsName, setBoatYardsName] = useState<MetaData[]>([])
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
   const [isLoading, setIsLoading] = useState(false)
@@ -77,7 +77,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     workOrder?.boatyards?.id && workOrder?.boatyards?.id,
   )
   const { getMooringsBasedOnCustomerIdData } = GetMooringsBasedOnCustomerId(
-    workOrder?.customerName?.id && workOrder?.customerName?.id,
+    workOrder?.customerName && workOrder?.customerName,
   )
   const { getMooringsBasedOnBoatyardIdData } = GetMooringsBasedOnBoatyardId(
     workOrder?.boatyards?.id && workOrder?.boatyards?.id,
@@ -106,7 +106,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   const MooringNameOptions = (() => {
     if (workOrder?.customerName?.id && workOrder?.boatyards?.id) {
       return basedOnCustomerIdAndBoatyardId
-    } else if (workOrder?.customerName?.id) {
+    } else if (workOrder?.customerName) {
       return mooringBasedOnCustomerId
     } else if (workOrder?.boatyards?.id) {
       return mooringsBasedOnBoatyardIdData
@@ -161,6 +161,17 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       ...workOrder,
       [field]: value,
     })
+    if (editModeWorkOrder || editModeEstimate) {
+      if (workOrder?.customerName) {
+        // mooringId empty
+      } else if (workOrder?.mooringId?.id) {
+        // customer empty
+        // boatyard empty
+      } else if (workOrder?.boatyards?.id) {
+        // mooring empty
+        // customer empty
+      }
+    }
     if (errorMessage[field]) {
       setErrorMessage({
         ...errorMessage,
@@ -250,7 +261,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     }
     const payload = {
       mooringId: workOrder?.mooringId?.id,
-      customerId: workOrder?.customerName?.id,
+      customerId: workOrder?.customerName,
       boatyardId: workOrder?.boatyards?.id,
       technicianId: workOrder?.assignedTo?.id,
       dueDate: formatDate(workOrder?.dueDate),
@@ -302,7 +313,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       setIsLoading(true)
       const editCustomerPayload = {
         mooringId: workOrder?.mooringId?.id || workOrderData?.mooringResponseDto?.id,
-        customerId: workOrder?.customerName?.id || workOrderData?.customerResponseDto?.id,
+        customerId: workOrder?.customerName || workOrderData?.customerResponseDto?.id,
         boatyardId: workOrder?.boatyards?.id || workOrderData?.boatyardResponseDto?.id,
         technicianId: workOrder?.assignedTo?.id || workOrderData?.technicianUserResponseDto?.id,
         dueDate: workOrder?.dueDate || workOrderData?.dueDate,
@@ -354,7 +365,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     }
     const payload = {
       mooringId: workOrder?.mooringId?.id,
-      customerId: workOrder?.customerName?.id,
+      customerId: workOrder?.customerName,
       boatyardId: workOrder?.boatyards?.id,
       technicianId: workOrder?.assignedTo?.id,
       dueDate: formatDate(workOrder?.dueDate),
@@ -406,7 +417,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       setIsLoading(true)
       const editCustomerPayload = {
         mooringId: workOrder?.mooringId?.id || workOrderData?.mooringResponseDto?.id,
-        customerId: workOrder?.customerName?.id || workOrderData?.customerResponseDto?.id,
+        customerId: workOrder?.customerName || workOrderData?.customerResponseDto?.id,
         boatyardId: workOrder?.boatyards?.id || workOrderData?.boatyardResponseDto?.id,
         technicianId: workOrder?.assignedTo?.id || workOrderData?.technicianUserResponseDto?.id,
         dueDate: workOrder?.dueDate || workOrderData?.dueDate,
@@ -485,17 +496,13 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       setWorkOrderStatusValue(WorkOrderStatus)
     }
 
-    // if (customersData !== null) {
-    //   setcustomerNameValue(customersData)
-    // }
     if (customersData !== null) {
       const firstLastName = customersData.map((item) => ({
-        label: item.firstName + ' ' + item.lastName,
-        value: item.id,
+        firstName: item.firstName + ' ' + item.lastName,
+        id: item.id,
       }))
       setcustomerNameValue(firstLastName)
     }
-
 
     if (boatYardName !== null) {
       setBoatYardsName(boatYardName)
@@ -508,7 +515,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     if (mooringsBasedOnCustomerId !== null) {
       setMooringBasedOnCustomerId(mooringsBasedOnCustomerId)
     }
-  }, [workOrder?.customerName?.id])
+  }, [workOrder?.customerName])
 
   const fetchDataAndUpdateBasedOnMooringId = useCallback(async () => {
     const { boatyardBasedOnMooringId } = await getBoatyardBasedOnMooringIdData()
@@ -556,11 +563,13 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     }
   }, [workOrder?.mooringId?.id])
 
+  console.log('workOrder', workOrder)
+
   useEffect(() => {
-    if (workOrder?.customerName?.id && !workOrder?.mooringId?.id) {
+    if (workOrder?.customerName) {
       fetchDataAndUpdateBasedOnCustomerId()
     }
-  }, [workOrder?.customerName?.id])
+  }, [workOrder?.customerName])
 
   useEffect(() => {
     if (workOrder?.customerName?.id && workOrder?.boatyards?.id) {
@@ -592,8 +601,8 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 onChange={(e) => handleInputChange('customerName', e.target.value)}
                 options={CustomerNameOptions}
                 // optionLabel="firstName"
-                optionLabel="label"
-                optionValue="value"
+                optionLabel="firstName"
+                optionValue="id"
                 editable
                 style={{
                   width: '230px',
@@ -611,30 +620,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
               )}
             </p>
           </div>
-
-          {/* Customer ID */}
-          {/* <div>
-            <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
-                Customer ID
-                <p className="text-red-600">*</p>
-              </div>
-            </span>
-            <div className="mt-1">
-              <InputComponent
-                value={customerId}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCustomerId(e.target.value)}
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                  paddingLeft: '0.5rem',
-                }}
-              />
-            </div>
-          </div> */}
 
           {/* Mooring ID */}
           <div>
