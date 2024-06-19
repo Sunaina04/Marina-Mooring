@@ -1,6 +1,6 @@
-import { LegacyRef, MutableRefObject, useEffect, useMemo, useRef, useState } from 'react'
-import { MapContainer, Marker, TileLayer, useMapEvents } from 'react-leaflet'
-import L, { Map } from 'leaflet'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { MapContainer, Marker, TileLayer } from 'react-leaflet'
+import L from 'leaflet'
 import './CustomMap.css'
 import DisplayPosition from './DisplayPosition'
 import { CustomSelectPositionMapProps } from '../../Type/Components/MapTypes'
@@ -10,10 +10,15 @@ const CustomSelectPositionMap: React.FC<CustomSelectPositionMapProps> = ({
   onPositionChange,
   center,
   zoomLevel,
-  setCenter,
 }) => {
   const [map, setMap] = useState<any>()
   const markerRef = useRef(null)
+
+  useEffect(() => {
+    if (map && center) {
+      map.setView(center)
+    }
+  }, [center, map])
 
   const displayMap = useMemo(
     () => (
@@ -22,14 +27,13 @@ const CustomSelectPositionMap: React.FC<CustomSelectPositionMapProps> = ({
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
-        {/* {console.log('resetting center', center)} */}
         <Marker
-          // draggable={false}
           ref={markerRef}
-          position={center ? center : [30.6983149, 76.656095]}></Marker>
+          position={center || [30.6983149, 76.656095]}
+          icon={DefaultIcon}></Marker>
       </MapContainer>
     ),
-    [center],
+    [center, zoomLevel],
   )
 
   return (

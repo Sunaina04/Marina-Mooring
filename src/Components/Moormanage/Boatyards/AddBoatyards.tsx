@@ -37,6 +37,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
 
   const [mainContact, setMainContact] = useState('')
   const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<any>()
+  const [debouncedGpsCoordinatesValue, setDebouncedGpsCoordinatesValue] = useState('')
   const [countriesData, setCountriesData] = useState<Country[]>()
   const [statesData, setStatesData] = useState<State[]>()
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
@@ -301,6 +302,25 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
       // handlePositionChange(coordinates[0], coordinates[1])
     }
   }, [gpsCoordinatesValue])
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedGpsCoordinatesValue(gpsCoordinatesValue)
+    }, 500) // Adjust the delay as needed
+
+    return () => {
+      clearTimeout(handler)
+    }
+  }, [gpsCoordinatesValue])
+
+  useEffect(() => {
+    // Handle the change in debounced value
+    if (debouncedGpsCoordinatesValue) {
+      // Update the map center or perform other actions with the debounced value
+      console.log('Debounced GPS Coordinates:', debouncedGpsCoordinatesValue)
+      // Example: setCenter(debouncedGpsCoordinatesValue);
+    }
+  }, [debouncedGpsCoordinatesValue])
 
   return (
     <>
@@ -628,7 +648,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
               onPositionChange={handlePositionChange}
               zoomLevel={10}
               center={center}
-              setCenter={setCenter}
             />
           </div>
         </div>

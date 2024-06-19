@@ -1110,7 +1110,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   onPositionChange={handlePositionChange}
                   zoomLevel={10}
                   center={center}
-                  setCenter={setCenter}
                 />
               </div>
             </div>

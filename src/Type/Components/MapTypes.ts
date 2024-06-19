@@ -10,7 +10,6 @@ export interface MarkerData {
 export interface CustomSelectPositionMapProps {
   onPositionChange: (lat: number, lng: number) => void
   center: LatLngExpression | undefined
-  setCenter: React.Dispatch<React.SetStateAction<LatLngExpression | undefined>>
   zoomLevel: number
 }
 

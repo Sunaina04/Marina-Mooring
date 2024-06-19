@@ -1606,7 +1606,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     onPositionChange={handlePositionChange}
                     zoomLevel={10}
                     center={center}
-                    setCenter={setCenter}
                   />
                 </div>
               </div>
