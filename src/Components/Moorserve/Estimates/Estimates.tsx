@@ -176,7 +176,8 @@ const Estimates = () => {
               children={
                 <AddWorkOrders
                   workOrderData={selectedCustomer}
-                  editMode={editMode}
+                  editModeEstimate={editMode}
+                  estimate={true}
                   setVisible={setVisible}
                   toastRef={toast}
                   closeModal={handleModalClose}

@@ -94,9 +94,6 @@ const MoorserveApi = userApi.injectEndpoints({
       }),
     }),
 
-
-
-
     addEstimate: builder.mutation({
       query: (payload: WorkOrderPayload) => ({
         url: 'api/v1/estimate/',
@@ -104,8 +101,6 @@ const MoorserveApi = userApi.injectEndpoints({
         body: payload,
       }),
     }),
-
-
 
     getEstimate: builder.mutation({
       query: ({
@@ -127,7 +122,6 @@ const MoorserveApi = userApi.injectEndpoints({
       }),
     }),
 
-  
     updateEstimate: builder.mutation({
       query: ({ payload, id }: { payload: WorkOrderPayload; id: number }) => ({
         url: `api/v1/estimate/${id}`,
@@ -136,22 +130,13 @@ const MoorserveApi = userApi.injectEndpoints({
       }),
     }),
 
-
-
     DeleteEstimate: builder.mutation({
       query: ({ id }: { id?: string }) => ({
         url: `api/v1/estimate/${id}`,
         method: 'DELETE',
       }),
     }),
-
   }),
-
-
-  
-
-
-
 })
 
 export const {
@@ -163,10 +148,8 @@ export const {
   useUploadFormMutation,
   useGetFormsMutation,
   useDownloadFormMutation,
-
   useAddEstimateMutation,
   useUpdateEstimateMutation,
   useDeleteEstimateMutation,
   useGetEstimateMutation,
-
 } = MoorserveApi

@@ -294,8 +294,8 @@ const Permission = () => {
               permission={true}
               passWordDisplay={editMode}
               toastRef={toast}
-              setSelectedCustomerUser={() => {}}
-              setSelectedCustomer={() => {}}
+              setSelectedCustomerUser={() => { }}
+              setSelectedCustomer={() => { }}
             />
           </CustomModal>
         </div>
@@ -312,64 +312,75 @@ const Permission = () => {
           style={{
             flexGrow: 1,
             borderRadius: '10px',
-            height: '550px',
+            // height: '550px',
             minHeight: 'calc(40vw - 550px)',
-            overflow: 'auto',
+            // overflow: 'auto',
           }}>
-          <div data-testid="permission-users-table">
-            <DataTableComponent
-              tableStyle={{
-                fontSize: '12px',
-                color: '#000000',
-                fontWeight: 600,
-                backgroundColor: '#D9D9D9',
-                borderRadius: '0 0 10px 10px',
-                overflow: 'auto',
-              }}
-              scrollable={true}
-              data={getCustomerOwnerUserData}
-              columns={tableColumnsPermission}
-              actionButtons={ActionButtonColumn}
-              style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
-              emptyMessage={
-                <div className="text-center mt-14">
-                  <img
-                    src="/assets/images/empty.png"
-                    alt="Empty Data"
-                    className="w-20 mx-auto mb-4"
-                  />
-                  <p className="text-gray-500">No data available</p>
-                  {isLoading && (
-                    <ProgressSpinner
-                      style={{
-                        position: 'absolute',
-                        top: '80%',
-                        left: '50%',
-                        transform: 'translate(-50%, -50%)',
-                        width: '50px',
-                        height: '50px',
-                      }}
-                      strokeWidth="4"
+          <div
+            data-testid="customer-admin-data"
+            className="flex flex-col  "
+            style={{ height: '550px' }}
+          >
+            <div className="flex-grow overflow-auto">
+              <DataTableComponent
+                tableStyle={{
+                  fontSize: '12px',
+                  color: '#000000',
+                  fontWeight: 600,
+                  backgroundColor: '#D9D9D9',
+                  borderRadius: '0 0 10px 10px',
+                  overflow: 'auto',
+                }}
+                scrollable={true}
+                data={getCustomerOwnerUserData}
+                columns={tableColumnsPermission}
+                actionButtons={ActionButtonColumn}
+                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
+                emptyMessage={
+                  <div className="text-center mt-14">
+                    <img
+                      src="/assets/images/empty.png"
+                      alt="Empty Data"
+                      className="w-20 mx-auto mb-4"
                     />
-                  )}
-                </div>
-              }></DataTableComponent>
-            <Paginator
-              first={pageNumber1}
-              rows={pageSize}
-              totalRecords={120} // Set this dynamically based on your actual total records
-              rowsPerPageOptions={[5, 10, 20, 30]}
-              onPageChange={onPageChange}
-              style={{
-                position: 'sticky',
-                bottom: 0,
-                zIndex: 1,
-                backgroundColor: 'white',
-                borderTop: '1px solid #D5E1EA',
-                padding: '0.5rem',
-              }}
-            />
+                    <p className="text-gray-500">No data available</p>
+                    {isLoading && (
+                      <ProgressSpinner
+                        style={{
+                          position: 'absolute',
+                          top: '80%',
+                          left: '50%',
+                          transform: 'translate(-50%, -50%)',
+                          width: '50px',
+                          height: '50px',
+                        }}
+                        strokeWidth="4"
+                      />
+                    )}
+                  </div>
+                } />
+            </div>
+            <div className="mt-auto">
+              <Paginator
+                first={pageNumber1}
+                rows={pageSize}
+                totalRecords={120}
+                rowsPerPageOptions={[5, 10, 20, 30]}
+                onPageChange={onPageChange}
+                style={{
+                  position: 'sticky',
+                  bottom: 0,
+                  zIndex: 1,
+                  backgroundColor: 'white',
+                  borderTop: '1px solid #D5E1EA',
+                  padding: '0.5rem',
+                }}
+              />
+            </div>
           </div>
+
+
+
         </div>
       </div>
     </div>

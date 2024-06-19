@@ -296,6 +296,8 @@ const Moorings = () => {
         setIsLoading(false)
         setMooringData(content)
         setFilteredMooringData(content)
+        setCustomerId(content[0]?.id)
+        setSelectedProduct(content[0])
       } else {
         setIsLoading(false)
         toast?.current?.show({
@@ -310,7 +312,7 @@ const Moorings = () => {
       const { message } = error as ErrorResponse
       console.error('Error fetching moorings data:', error)
     }
-  }, [searchText, getMoorings, selectedCustomerId, pageSize, pageNumber])
+  }, [searchText, getMoorings, selectedCustomerId, pageSize, pageNumber,customerId,selectedProduct])
 
   const getCustomersWithMooring = async (id: number) => {
     setIsLoading(true)
@@ -362,7 +364,7 @@ const Moorings = () => {
       getCustomersWithMooring(customerId)
     }
   }, [pageNumberTwo, pageSizeTwo])
-  console.log('mooringResponseData', mooringResponseData)
+  
 
   return (
     <div className={modalVisible ? 'backdrop-blur-lg' : ''}>

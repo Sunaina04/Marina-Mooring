@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { MapContainer, Marker, TileLayer } from 'react-leaflet'
-import L from 'leaflet'
+import { LegacyRef, MutableRefObject, useEffect, useMemo, useRef, useState } from 'react'
+import { MapContainer, Marker, TileLayer, useMap, useMapEvent, useMapEvents } from 'react-leaflet'
+import L, { LatLngExpression } from 'leaflet'
 import './CustomMap.css'
 import DisplayPosition from './DisplayPosition'
 import { CustomSelectPositionMapProps } from '../../Type/Components/MapTypes'
@@ -20,8 +20,8 @@ const CustomSelectPositionMap: React.FC<CustomSelectPositionMapProps> = ({
     }
   }, [center, map])
 
-  const displayMap = useMemo(
-    () => (
+  const displayMap = useMemo(() => {
+    return (
       <MapContainer center={center} zoom={zoomLevel} attributionControl={false} ref={setMap}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -29,12 +29,11 @@ const CustomSelectPositionMap: React.FC<CustomSelectPositionMapProps> = ({
         />
         <Marker
           ref={markerRef}
-          position={center || [30.6983149, 76.656095]}
+          position={center ? center : [30.6983149, 76.656095]}
           icon={DefaultIcon}></Marker>
       </MapContainer>
-    ),
-    [center, zoomLevel],
-  )
+    )
+  }, [center, zoomLevel])
 
   return (
     <div>

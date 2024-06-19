@@ -2,7 +2,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import L, { Map } from 'leaflet'
 import './CustomMap.css'
 import { CustomDisplayPositionMapProps } from '../../Type/Components/MapTypes'
-import { LegacyRef, useRef, useState } from 'react'
+import { LegacyRef, useEffect, useRef, useState } from 'react'
 import { DefaultIcon } from './DefaultIcon'
 
 const CustomDisplayPositionMap: React.FC<CustomDisplayPositionMapProps> = ({
@@ -11,8 +11,15 @@ const CustomDisplayPositionMap: React.FC<CustomDisplayPositionMapProps> = ({
   popUpMessage,
   style,
 }) => {
-  const [map, setMap] = useState<LegacyRef<Map> | undefined>()
+  const [map, setMap] = useState<any>()
   const markerRef = useRef(null)
+
+  useEffect(() => {
+    if (map && position) {
+      map.setView(position)
+    }
+  }, [position, map])
+
   return (
     <MapContainer
       style={style}
@@ -20,8 +27,7 @@ const CustomDisplayPositionMap: React.FC<CustomDisplayPositionMapProps> = ({
       zoom={zoomLevel}
       scrollWheelZoom={false}
       attributionControl={false}
-      // zoomControl={false}
-    >
+      ref={setMap}>
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

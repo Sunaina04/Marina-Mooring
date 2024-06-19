@@ -353,6 +353,8 @@ const Boatyards = () => {
               }
             }
             setFilteredboatyardsData(content)
+            // setCustomerId(content[0]?.id)
+            // setSelectedProduct(content[0])
             const timeoutId = setTimeout(() => {
               setIsLoading(false)
             }, 400)
@@ -444,6 +446,8 @@ const Boatyards = () => {
   }, [selectedBoatYard, getBoatyardsData, editMode, toast, setModalVisible, handleModalClose])
 
   const BoatyardMoorings = useMemo(() => {
+    console.log('[latitude, longitude]', [latitude, longitude])
+
     return (
       <>
         <div

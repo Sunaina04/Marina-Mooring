@@ -37,7 +37,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
 
   const [mainContact, setMainContact] = useState('')
   const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<any>()
-  const [debouncedGpsCoordinatesValue, setDebouncedGpsCoordinatesValue] = useState('')
   const [countriesData, setCountriesData] = useState<Country[]>()
   const [statesData, setStatesData] = useState<State[]>()
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
@@ -113,6 +112,12 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
     if (!state) errors.state = 'State  is required'
     if (!aptSuite) errors.aptSuite = 'Apt/Suite is required'
     return errors
+  }
+
+  const handleGpsCoordinatesChange = (e: any) => {
+    const value = e.target.value
+    setGpsCoordinatesValue(value)
+    setErrorMessage((prev) => ({ ...prev, gpsCoordinatesValue: '' }))
   }
 
   const handlePositionChange = (lat: number, lng: number) => {
@@ -295,32 +300,12 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
     }
   }, [editMode, customerData])
 
-  useEffect(() => {
-    if (gpsCoordinatesValue) {
-      const coordinates = getFomattedCoordinate(gpsCoordinatesValue)
-      setCenter(coordinates)
-      // handlePositionChange(coordinates[0], coordinates[1])
-    }
-  }, [gpsCoordinatesValue])
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedGpsCoordinatesValue(gpsCoordinatesValue)
-    }, 500) // Adjust the delay as needed
-
-    return () => {
-      clearTimeout(handler)
-    }
-  }, [gpsCoordinatesValue])
-
-  useEffect(() => {
-    // Handle the change in debounced value
-    if (debouncedGpsCoordinatesValue) {
-      // Update the map center or perform other actions with the debounced value
-      console.log('Debounced GPS Coordinates:', debouncedGpsCoordinatesValue)
-      // Example: setCenter(debouncedGpsCoordinatesValue);
-    }
-  }, [debouncedGpsCoordinatesValue])
+  // useEffect(() => {
+  //   if (gpsCoordinatesValue) {
+  //     const coordinates = getFomattedCoordinate(gpsCoordinatesValue)
+  //     setCenter(coordinates)
+  //   }
+  // }, [gpsCoordinatesValue])
 
   return (
     <>
@@ -582,10 +567,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
             <div className="">
               <InputComponent
                 value={gpsCoordinatesValue}
-                onChange={(e) => {
-                  setGpsCoordinatesValue(e.target.value)
-                  setErrorMessage((prev) => ({ ...prev, gpsCoordinatesValue: '' }))
-                }}
+                onChange={handleGpsCoordinatesChange}
                 placeholder="GPS Coordinates"
                 style={{
                   width: '230px',

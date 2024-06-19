@@ -221,6 +221,8 @@ const CustomerOwner = () => {
       const { status, message, content, totalSize } = response as GetUserResponse
       if (status === 200 && Array.isArray(content)) {
         setIsLoading(false)
+        setCustomerId(content[0]?.id)
+        setSelectedProduct(content[0])
         if (content.length > 0) {
           setgetCustomerOwnerData(content)
           setTotalRecords(totalSize)
@@ -233,7 +235,7 @@ const CustomerOwner = () => {
     } catch (error) {
       console.error('Error occurred while fetching customer data:', error)
     }
-  }, [getUser, searchText, pageSize, pageNumber])
+  }, [getUser, searchText, pageSize, pageNumber, selectedProduct])
 
   const getCustomerAdminsUsers = useCallback(
     async (id: any) => {

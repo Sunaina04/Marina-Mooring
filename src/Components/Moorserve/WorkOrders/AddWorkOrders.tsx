@@ -38,7 +38,9 @@ import { Calendar } from 'primereact/calendar'
 
 const AddWorkOrders: React.FC<WorkOrderProps> = ({
   workOrderData,
-  editMode,
+  editModeEstimate,
+  editModeWorkOrder,
+  estimate,
   setVisible,
   toastRef,
   closeModal,
@@ -49,8 +51,8 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     mooringId: '',
     boatyards: '',
     assignedTo: '',
-    dueDate: '',
-    scheduleDate: '',
+    dueDate: null,
+    scheduleDate: null,
     workOrderStatus: '',
     value: '',
   })
@@ -165,10 +167,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     }
   }
 
-
-
- 
-
   const handleEditMode = () => {
     setWorkOrder((prevState: any) => ({
       ...prevState,
@@ -227,6 +225,21 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     return `${formattedMinutes}:${formattedSeconds}`
   }
 
+  const formatDate = (date:any) => {
+    if (!date) return null;
+    const d = new Date(date);
+    const month = ('0' + (d.getMonth() + 1)).slice(-2);
+    const day = ('0' + d.getDate()).slice(-2);
+    const year = d.getFullYear();
+    return `${month}/${day}/${year}`;
+  };
+
+  const parseDate = (dateString:any) => {
+    if (!dateString) return null;
+    const [month, day, year] = dateString.split('/');
+    return new Date(year, month - 1, day);
+  };
+
   const SaveWorkOrder = async () => {
     const errors = validateFields()
     if (Object.keys(errors).length > 0) {
@@ -238,8 +251,8 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       customerId: workOrder?.customerName?.id,
       boatyardId: workOrder?.boatyards?.id,
       technicianId: workOrder?.assignedTo?.id,
-      dueDate: workOrder?.dueDate,
-      scheduledDate: workOrder?.scheduleDate,
+      dueDate: formatDate(workOrder?.dueDate),
+      scheduledDate:  formatDate(workOrder?.scheduleDate),
       workOrderStatusId: workOrder?.workOrderStatus?.id,
       time: '00:' + formatTime(time.minutes, time.seconds),
       problem: workOrder?.value,
@@ -342,8 +355,8 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       customerId: workOrder?.customerName?.id,
       boatyardId: workOrder?.boatyards?.id,
       technicianId: workOrder?.assignedTo?.id,
-      dueDate: workOrder?.dueDate,
-      scheduledDate: workOrder?.scheduleDate,
+      dueDate: formatDate(workOrder?.dueDate),
+      scheduledDate:  formatDate(workOrder?.scheduleDate),
       workOrderStatusId: workOrder?.workOrderStatus?.id,
       time: '00:' + formatTime(time.minutes, time.seconds),
       problem: workOrder?.value,
@@ -435,14 +448,21 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     }
   }
 
-
   const handleSave = () => {
-    if (currentPage === 'workOrder') {
-      SaveWorkOrder();
-    } else if (currentPage === 'estimate') {
-      SaveEstimate();
+    if (estimate) {
+      if (editModeEstimate) {
+        UpdateEstimate()
+      } else {
+        SaveEstimate()
+      }
+    } else {
+      if (editModeWorkOrder) {
+        UpdateWorkOrder()
+      } else {
+        SaveWorkOrder()
+      }
     }
-  };
+  }
 
   const fetchDataAndUpdate = useCallback(async () => {
     const { getTechnicians } = await getTechniciansData()
@@ -539,10 +559,10 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   }, [workOrder?.customerName?.id, workOrder?.boatyards?.id])
 
   useEffect(() => {
-    if (editMode) {
+    if (editModeWorkOrder || editModeEstimate) {
       handleEditMode()
     }
-  }, [editMode])
+  }, [editModeWorkOrder, editModeEstimate])
 
   return (
     <div>
@@ -710,9 +730,10 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
             </span>
             <div className="mt-1">
               <Calendar
-                value={workOrder.dueDate}
-                onChange={(e) => handleInputChange('dueDate', e.target.value)}
+                value={parseDate(workOrder.dueDate)}
+                onChange={(e) => handleInputChange('dueDate', formatDate(e.target.value))}
                 // type="text"
+                dateFormat="mm/dd/yy"
                 style={{
                   width: '230px',
                   height: '32px',
@@ -741,8 +762,9 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
             </span>
             <div className="mt-1">
               <Calendar
-                value={workOrder.scheduleDate}
-                onChange={(e) => handleInputChange('scheduleDate', e.target.value)}
+                value={parseDate(workOrder.scheduleDate)}
+                onChange={(e) => handleInputChange('scheduleDate', formatDate(e.target.value))}
+                dateFormat="mm/dd/yy"
                 style={{
                   width: '230px',
                   height: '32px',
@@ -879,14 +901,9 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
             bottom: '0px',
           }}>
           <Button
-            // onClick={() => {
-            //   if (editMode) {
-            //     UpdateWorkOrder()
-            //   } else {
-            //     SaveWorkOrder()
-            //   }
-            // }}
-            onClick={handleSave}
+            onClick={() => {
+              handleSave()
+            }}
             label={'Save'}
             style={{
               width: '89px',
