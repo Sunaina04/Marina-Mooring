@@ -62,15 +62,12 @@ const Customer = () => {
   const [deleteCustomer] = useDeleteCustomerMutation()
   const [getCustomerWithMooring] = useGetCustomersWithMooringMutation()
   const toast = useRef<Toast>(null)
-  const [totalRecords, setTotalRecords] = useState<number>()
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
   const [pageSize, setPageSize] = useState(10)
   const [pageNumberTwo, setPageNumberTwo] = useState(0)
   const [pageNumber2, setPageNumber2] = useState(0)
   const [pageSizeTwo, setPageSizeTwo] = useState(10)
-  const [totalRecordsTwo, setTotalRecordsTwo] = useState<number>()
-
 
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
@@ -272,14 +269,13 @@ const Customer = () => {
       }
 
       const response = await getCustomer(params).unwrap()
-      const { status, content, message,totalSize } = response as CustomerResponse
+      const { status, content, message } = response as CustomerResponse
       if (status === 200 && Array.isArray(content)) {
         setIsLoading(false)
         setCustomerData(content)
         setFilteredCustomerData(content)
         setCustomerId(content[0]?.id)
         setSelectedProduct(content[0])
-        setTotalRecords(totalSize)
       } else {
         setIsLoading(false)
         toast?.current?.show({
@@ -320,7 +316,7 @@ const Customer = () => {
         pageNumber: pageNumberTwo,
         pageSize: pageSizeTwo,
       }).unwrap()
-      const { status, content, message,totalSize } = response as CustomersWithMooringResponse
+      const { status, content, message } = response as CustomersWithMooringResponse
       if (
         status === 200 &&
         Array.isArray(content?.customerResponseDto?.mooringResponseDtoList) &&
@@ -331,7 +327,6 @@ const Customer = () => {
         setCustomerRecordData(content?.customerResponseDto)
         setMooringData(content?.customerResponseDto?.mooringResponseDtoList)
         setBoatYardData(content?.boatyardNames)
-        setTotalRecordsTwo(totalSize)
         // const coordinatesString = customerRecordData?.mooringResponseDtoList[0]?.gpsCoordinates
         // const coordinateArray = coordinatesString?.split(' ').map(parseFloat)
         interface LatLngExpressionValue {
@@ -342,6 +337,7 @@ const Customer = () => {
         const gpsCoordinates = mooringData.map((item) => {
           const coordinatesString = item?.gpsCoordinates
           // console.log('coordinatesString', coordinatesString)
+
           if (coordinatesString) {
             const coordinatesArray: number[] = coordinatesString.split(' ').map(parseFloat)
 
@@ -357,6 +353,7 @@ const Customer = () => {
             return null // or handle missing coordinates as needed
           }
         })
+
         // console.log('gpsCoordinates', gpsCoordinates)
         setCoordinatesArray(gpsCoordinates.filter((coord) => coord !== null)) // Filter out null values
       } else {
@@ -392,8 +389,7 @@ const Customer = () => {
     if (customerId) {
       getCustomersWithMooring(customerId)
     }
-  }, [pageNumberTwo, pageSizeTwo,customerId])
-  
+  }, [pageNumberTwo, pageSizeTwo])
 
   return (
     <div className={modalVisible ? 'backdrop-blur-lg' : ''}>
@@ -529,7 +525,7 @@ const Customer = () => {
               <Paginator
                 first={pageNumber1}
                 rows={pageSize}
-                totalRecords={totalRecords}
+                totalRecords={120}
                 rowsPerPageOptions={[5, 10, 20, 30]}
                 onPageChange={onPageChange}
                 style={{
@@ -747,7 +743,7 @@ const Customer = () => {
               <Paginator
                 first={pageNumber2}
                 rows={pageSizeTwo}
-                totalRecords={totalRecordsTwo}
+                totalRecords={120}
                 rowsPerPageOptions={[5, 10, 20, 30]}
                 onPageChange={onPageChangeTwo}
                 style={{
@@ -760,7 +756,9 @@ const Customer = () => {
                 }}
               />
             </div>
+
           </div>
+          
         </div>
       </div>
 

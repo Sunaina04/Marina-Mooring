@@ -66,7 +66,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   const [technicians, setTechnicians] = useState<MetaDataTechnician[]>()
   const [moorings, setMoorings] = useState<MetaData[]>()
   const [workOrderStatusValue, setWorkOrderStatusValue] = useState<MetaData[]>()
-  const [customerNameValue, setcustomerNameValue] = useState<MetaDataCustomer[]>([])
+  const [customerNameValue, setcustomerNameValue] = useState<any>([])
   const [boatyardsName, setBoatYardsName] = useState<MetaData[]>([])
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
   const [isLoading, setIsLoading] = useState(false)
@@ -483,9 +483,17 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       setWorkOrderStatusValue(WorkOrderStatus)
     }
 
+    // if (customersData !== null) {
+    //   setcustomerNameValue(customersData)
+    // }
     if (customersData !== null) {
-      setcustomerNameValue(customersData)
+      const firstLastName = customersData.map((item) => ({
+        label: item.firstName + ' ' + item.lastName,
+        value: item.id,
+      }))
+      setcustomerNameValue(firstLastName)
     }
+
 
     if (boatYardName !== null) {
       setBoatYardsName(boatYardName)
@@ -581,7 +589,9 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 value={workOrder.customerName}
                 onChange={(e) => handleInputChange('customerName', e.target.value)}
                 options={CustomerNameOptions}
-                optionLabel="firstName"
+                // optionLabel="firstName"
+                optionLabel="label"
+                optionValue="value"
                 editable
                 style={{
                   width: '230px',

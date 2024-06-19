@@ -1120,7 +1120,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               <div>
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
-                    Water Depth (meter)
+                    Water Depth (in meter)
                     <p className="text-red-600">*</p>
                   </div>
                 </span>
@@ -1231,7 +1231,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               <div>
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
-                    Boat Size (feet)
+                    Boat Size (in feet)
                     <p className="text-red-600">*</p>
                   </div>
                 </span>
@@ -1301,7 +1301,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               <div>
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
-                    Weight (kg)
+                    Weight (in Kg)
                     <p className="text-red-600">*</p>
                   </div>
                 </span>
