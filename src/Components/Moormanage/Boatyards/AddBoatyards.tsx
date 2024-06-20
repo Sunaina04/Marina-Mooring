@@ -359,7 +359,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
             </div>
             <p>{errorMessage.id && <small className="p-error">{errorMessage.id}</small>}</p>
           </div>
-
           <div>
             <span className="font-medium text-sm text-[#000000]">
               Boatyard Name <span className="text-red-500">*</span>
@@ -384,64 +383,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
             <p>{errorMessage.name && <small className="p-error">{errorMessage.name}</small>}</p>
           </div>
         </div>
-
-        <div className="flex  gap-6 mt-4">
-          <div>
-            <div>
-              <span className="font-medium text-sm text-[#000000]">
-                Email Address <span className="text-red-500">*</span>
-              </span>
-            </div>
-
-            <div className="mt-1">
-              <InputComponent
-                value={emailAddress}
-                onChange={(e) => {
-                  setEmailAddress(e.target.value)
-                  setErrorMessage((prev) => ({ ...prev, email: '' }))
-                }}
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: errorMessage.email ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                  padding: '1.2em',
-                }}
-              />
-            </div>
-            <p>{errorMessage.email && <small className="p-error">{errorMessage.email}</small>}</p>
-          </div>
-
-          <div>
-            <div>
-              <div>
-                <span className="font-medium text-sm text-[#000000]">
-                  Phone <span className="text-red-500">*</span>
-                </span>
-              </div>
-              <div className="mt-1">
-                <InputComponent
-                  value={phone}
-                  onChange={(e) => {
-                    setPhone(e.target.value)
-                    setErrorMessage((prev) => ({ ...prev, phone: '' }))
-                  }}
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: errorMessage.phone ? '1px solid red' : '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                    padding: '1.2em',
-                  }}
-                />
-              </div>
-            </div>
-            <p>{errorMessage.phone && <small className="p-error">{errorMessage.phone}</small>}</p>
-          </div>
-        </div>
-
         {isLoading && (
           <ProgressSpinner
             style={{
@@ -455,7 +396,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
             strokeWidth="4"
           />
         )}
-
         <div className="mt-3">
           <span className="font-medium text-sm text-[#000000]">
             Address <span className="text-red-500">*</span>

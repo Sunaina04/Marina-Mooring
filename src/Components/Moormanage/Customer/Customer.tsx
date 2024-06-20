@@ -476,8 +476,8 @@ const Customer = () => {
             dialogStyle={{
               width: '800px',
               minWidth: '800px',
-              height: editCustomerMode ? '500px' : '630px',
-              minHeight: editCustomerMode ? '500px' : '630px',
+              height: "550px",
+              minHeight: "550px",
               borderRadius: '1rem',
               maxHeight: '95% !important',
             }}
@@ -492,7 +492,7 @@ const Customer = () => {
           <div className="bg-[#10293A] rounded-tl-[10px] rounded-tr-[10px] text-white">
             <h1 className="p-4 text-xl font-extrabold">{properties.customerHeader}</h1>
           </div>
-
+          
           <InputTextWithHeader
             value={searchText}
             onChange={handleSearch}
