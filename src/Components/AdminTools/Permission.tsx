@@ -17,6 +17,7 @@ import { Toast } from 'primereact/toast'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { Paginator } from 'primereact/paginator'
 import { Params } from '../../Type/CommonType'
+import { properties } from '../Utils/MeassageProperties'
 
 const Permission = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -34,7 +35,6 @@ const Permission = () => {
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
   const [pageSize, setPageSize] = useState(10)
-  
 
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
@@ -48,61 +48,42 @@ const Permission = () => {
     setSelectedCustomer(rowData)
   }
 
+  const columnStyle = {
+    borderBottom: '1px solid #D5E1EA',
+    backgroundColor: '#FFFFFF',
+    color: '#000000',
+    fontWeight: 500,
+  }
+
   const tableColumnsPermission = useMemo(
     () => [
       {
         id: 'id',
         label: 'ID',
-        style: {
-          borderBottom: '1px solid #C0C0C0',
-          backgroundColor: '#00426F',
-          color: '#FFFFFF',
-          fontWeight: 500,
-          borderTopLeftRadius: '10px',
-        },
+        style: columnStyle,
       },
       {
         id: 'name',
         label: 'Name',
-        style: {
-          borderBottom: '1px solid #C0C0C0',
-          backgroundColor: '#00426F',
-          color: '#FFFFFF',
-          fontWeight: 500,
-        },
+        style: columnStyle,
       },
 
       {
         id: 'email',
         label: 'Email',
-        style: {
-          borderBottom: '1px solid #C0C0C0',
-          backgroundColor: '#00426F',
-          color: '#FFFFFF',
-          fontWeight: 500,
-        },
+        style: columnStyle,
       },
 
       {
         id: 'phoneNumber',
         label: 'Phone',
-        style: {
-          borderBottom: '1px solid #C0C0C0',
-          backgroundColor: '#00426F',
-          color: '#FFFFFF',
-          fontWeight: 500,
-        },
+        style: columnStyle,
       },
 
       {
         id: 'roleResponseDto.name',
         label: 'Role',
-        style: {
-          borderBottom: '1px solid #C0C0C0',
-          backgroundColor: '#00426F',
-          color: '#FFFFFF',
-          fontWeight: 500,
-        },
+        style: columnStyle,
       },
     ],
 
@@ -131,13 +112,7 @@ const Permission = () => {
         onClick: (rowData) => handleDeleteButtonClick(rowData),
       },
     ],
-    headerStyle: {
-      backgroundColor: '#00426F',
-      borderBottom: '1px solid #C0C0C0',
-      color: '#FFFFFF',
-      fontWeight: 500,
-      borderTopRightRadius: '10px',
-    },
+    headerStyle: columnStyle,
   }
 
   const handleButtonClick = () => {
@@ -191,7 +166,7 @@ const Permission = () => {
         params.pageSize = pageSize
       }
       const response = await getUser(params).unwrap()
-      const { status, content ,totalSize} = response as GetUserResponse
+      const { status, content, totalSize } = response as GetUserResponse
       if (status === 200 && Array.isArray(content)) {
         setIsLoading(false)
         setgetCustomerOwnerUserData(content)
@@ -296,8 +271,8 @@ const Permission = () => {
               permission={true}
               passWordDisplay={editMode}
               toastRef={toast}
-              setSelectedCustomerUser={() => { }}
-              setSelectedCustomer={() => { }}
+              setSelectedCustomerUser={() => {}}
+              setSelectedCustomer={() => {}}
             />
           </CustomModal>
         </div>
@@ -314,15 +289,15 @@ const Permission = () => {
           style={{
             flexGrow: 1,
             borderRadius: '10px',
-            // height: '550px',
             minHeight: 'calc(40vw - 550px)',
-            // overflow: 'auto',
           }}>
+          <div className="text-md font-semibold rounded-t-lg bg-[#00426F]">
+            <h1 className="p-4 text-white">{properties.Users}</h1>
+          </div>
           <div
             data-testid="customer-admin-data"
             className="flex flex-col  "
-            style={{ height: '550px' }}
-          >
+            style={{ height: '550px' }}>
             <div className="flex-grow overflow-auto">
               <DataTableComponent
                 tableStyle={{
@@ -360,7 +335,8 @@ const Permission = () => {
                       />
                     )}
                   </div>
-                } />
+                }
+              />
             </div>
             <div className="mt-auto">
               <Paginator
@@ -380,9 +356,6 @@ const Permission = () => {
               />
             </div>
           </div>
-
-
-
         </div>
       </div>
     </div>

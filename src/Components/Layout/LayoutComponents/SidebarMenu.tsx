@@ -12,7 +12,7 @@ const SidebarMenu = () => {
       adminSubcategories = [
         {
           icon: '/assets/images/permission.svg',
-          name: 'Permission',
+          name: 'Users',
           link: '/permission',
         },
         {
@@ -28,7 +28,7 @@ const SidebarMenu = () => {
       adminSubcategories = [
         {
           icon: '/assets/images/customerOwner.svg',
-          name: 'Customer Owner',
+          name: 'Companies',
           link: '/customerAdmin',
         },
         {
