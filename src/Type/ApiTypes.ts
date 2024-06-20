@@ -180,6 +180,7 @@ export interface CustomerPayload {
   state: string
   country: string
   zipCode: string
+  customerTypeDto: MetaDataResponse
 }
 
 export interface UpdateMooringPayload {
@@ -732,6 +733,13 @@ export interface MetaDataResponse {
   errorList: []
   time: number
   content: Content
+  id: number
+  creationDate: string
+  createdBy: string
+  lastModifiedDate: string
+  lastModifiedBy: string
+  type: string
+  description: string
 }
 
 export interface MetaDataCustomerResponse {

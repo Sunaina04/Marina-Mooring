@@ -60,7 +60,7 @@ const DataTableComponent: React.FC<DataTableProps> = ({
         emptyMessage={emptyMessage}
         onRowClick={onRowClick}
         rowClassName={getRowClassName}>
-        {columns?.map((d) => (
+        {columns?.map((d: any) => (
           <Column
             key={d.id}
             headerStyle={d.style}
@@ -68,7 +68,7 @@ const DataTableComponent: React.FC<DataTableProps> = ({
             header={d.label}
             body={d.body}
             style={style}
-            sortable={sortable}
+            sortable={d.sortable}
           />
         ))}
         {actionButtons && (

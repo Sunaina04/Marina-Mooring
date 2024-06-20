@@ -232,23 +232,33 @@ const Customer = () => {
         id: 'customerId',
         label: 'Customer Id:',
         style: customerTableColumnStyle,
+        sortable: false,
+      },
+      {
+        id: 'customerTypeDto.type',
+        label: 'Customer Type:',
+        style: customerTableColumnStyle,
+        sortable: true,
       },
       {
         id: 'firstName',
         label: 'Name:',
         body: firstLastName,
         style: customerTableColumnStyle,
+        sortable: false,
       },
 
       {
         id: 'emailAddress',
         label: 'Email:',
         style: customerTableColumnStyle,
+        sortable: false,
       },
       {
         id: 'phone',
         label: 'Phone:',
         style: customerTableColumnStyle,
+        sortable: false,
       },
     ],
     [],
@@ -476,8 +486,8 @@ const Customer = () => {
             dialogStyle={{
               width: '800px',
               minWidth: '800px',
-              height: "550px",
-              minHeight: "550px",
+              height: '550px',
+              minHeight: '550px',
               borderRadius: '1rem',
               maxHeight: '95% !important',
             }}
@@ -492,7 +502,7 @@ const Customer = () => {
           <div className="bg-[#10293A] rounded-tl-[10px] rounded-tr-[10px] text-white">
             <h1 className="p-4 text-xl font-extrabold">{properties.customerHeader}</h1>
           </div>
-          
+
           <InputTextWithHeader
             value={searchText}
             onChange={handleSearch}
@@ -558,7 +568,7 @@ const Customer = () => {
                   header="Customer Id:"
                   style={customerTableColumnStyle}></Column>
                 <Column
-                  field="customerType"
+                  field="customerTypeDto.type"
                   header="Customer Type:"
                   sortable
                   style={customerTableColumnStyle}></Column>
@@ -587,7 +597,7 @@ const Customer = () => {
                 style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
                 onRowClick={(rowData) => handleCustomerTableRowClick(rowData)}
                 selectionMode="single"
-                sortable={true}
+                // sortable={true}
                 onSelectionChange={(e) => {
                   setSelectedProduct(e.value)
                 }}
