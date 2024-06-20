@@ -67,7 +67,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [boatyardName, setBoatyardName] = useState<MetaData[]>([])
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
   const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<string>()
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(false)
   const getFomattedCoordinate = (gpsCoordinatesValue: any) => {
     try {
       let [lat, long]: any = gpsCoordinatesValue.split(' ')
@@ -118,6 +118,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     pennantCondition: '',
     depthAtMeanHighWater: '',
     status: 0,
+    note: '',
   })
 
   const { getStatesData } = StatesData()
@@ -153,7 +154,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
   useEffect(() => {
     handleFocus()
-
   }, [checked])
 
   const validateFields = () => {
@@ -307,12 +307,11 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const validateCustomerFields = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     // const phoneRegex = /^\d{10}$/
-    const phoneRegex = /^\d{3}-\d{3}-\d{4}$/;
+    const phoneRegex = /^\d{3}-\d{3}-\d{4}$/
     const nameRegex = /^[a-zA-Z ]+$/
 
     const errors: { [key: string]: string } = {}
     let firstError = ''
-
     if (!firstName) {
       errors.firstName = 'firstName is required'
       firstError = 'firstName'
@@ -888,6 +887,29 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   </div>
                 </div>
               </div>
+
+              <div className="flex mt-3 gap-5">
+                <div className="flex gap-2">
+                  <div className="font-medium text-sm text-[#000000]">
+                    <p>Yes</p>
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <div>
+                    <Checkbox
+                      onChange={(e) => {
+                        setChecked(!e.checked)
+                      }}
+                      checked={checked}
+                      style={{
+                        border: '1px solid #D5E1EA',
+                        height: '22px',
+                        width: '22px',
+                        borderRadius: '5px',
+                      }}></Checkbox>
+                  </div>
+                </div>
+              </div>
             </div>
             <div>
               <div>
@@ -918,6 +940,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   </p>
                 </div>
               </div>
+
               <div className="mt-4">
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
@@ -1111,6 +1134,34 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               </div>
             </div>
           </div>
+
+          <div className="mt-2">
+            <div className="">
+              <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
+                <div className="flex gap-1">
+                  Note
+                  {/* <p className="text-red-600">*</p> */}
+                </div>
+              </span>
+            </div>
+            <div className="mt-1">
+              <InputComponent
+                value={formData.note}
+                onChange={(e) => handleInputChange('note', e.target.value)}
+                style={{
+                  width: '487.77px',
+                  height: '50px',
+                  border: fieldErrors.note ? '1px solid red' : '1px solid #D5E1EA',
+                  borderRadius: '0.50rem',
+                  fontSize: '0.70rem',
+                  // backgroundColor: '#F5F5F5',
+                  boxShadow: 'none',
+                  padding: '10px',
+                }}
+              />
+              <p>{fieldErrors.note && <small className="p-error">{fieldErrors.note}</small>}</p>
+            </div>
+          </div>
         </>
       )}
 
@@ -1120,12 +1171,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         <>
           {!editMooringMode && (
             <div className="mt-8 flex gap-3 text-xl text-black font-bold">
-
               <span>
                 <Checkbox
                   onChange={(e) => {
                     setChecked(e.checked ?? false)
-
                   }}
                   checked={checked}
                   style={{
@@ -1136,16 +1185,12 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   }}
                 />
               </span>
-              <h3 className='mt-1'>Add Mooring</h3>
-
+              <h3 className="mt-1">Add Mooring</h3>
             </div>
           )}
 
-          {
-            checked === true && <div
-              id="mooring"
-
-              className="mt-6">
+          {checked === true && (
+            <div id="mooring" className="mt-6">
               <div className="flex gap-6 ">
                 <div>
                   <span className="font-medium text-sm text-[#000000]">
@@ -1174,9 +1219,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
                 <div>
                   <span className="font-medium text-sm text-[#000000]">
-                    <div className="flex gap-1">
-                      Harbor
-                    </div>
+                    <div className="flex gap-1">Harbor</div>
                   </span>
                   <div className="mt-2">
                     <InputComponent
@@ -1222,9 +1265,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               <div className="flex gap-6 mt-3">
                 <div>
                   <span className="font-medium text-sm text-[#000000]">
-                    <div className="flex gap-1">
-                      G.P.S Coordinates
-                    </div>
+                    <div className="flex gap-1">G.P.S Coordinates</div>
                   </span>
                   <div className="mt-2">
                     <InputComponent
@@ -1251,9 +1292,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
                 <div>
                   <span className="font-medium text-sm text-[#000000]">
-                    <div className="flex gap-1">
-                      Boatyard Name
-                    </div>
+                    <div className="flex gap-1">Boatyard Name</div>
                   </span>
                   <div className="mt-2">
                     <Dropdown
@@ -1277,9 +1316,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 </div>
                 <div>
                   <span className="font-medium text-sm text-[#000000]">
-                    <div className="flex gap-1">
-                      Boat Name
-                    </div>
+                    <div className="flex gap-1">Boat Name</div>
                   </span>
                   <div className="mt-2">
                     <InputComponent
@@ -1303,9 +1340,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               <div className="flex gap-6 mt-3">
                 <div>
                   <span className="font-medium text-sm text-[#000000]">
-                    <div className="flex gap-1">
-                      Boat Size (in feet)
-                    </div>
+                    <div className="flex gap-1">Boat Size (in feet)</div>
                   </span>
                   <div className="mt-2">
                     <InputComponent
@@ -1342,9 +1377,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 <div>
                   <div>
                     <span className="font-medium text-sm text-[#000000]">
-                      <div className="flex gap-1">
-                        Type
-                      </div>
+                      <div className="flex gap-1">Type</div>
                     </span>
                   </div>
 
@@ -1371,9 +1404,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 </div>
                 <div>
                   <span className="font-medium text-sm text-[#000000]">
-                    <div className="flex gap-1">
-                      Weight (in Kg)
-                    </div>
+                    <div className="flex gap-1">Weight (in Kg)</div>
                   </span>
                   <div className="mt-2">
                     <InputComponent
@@ -1398,9 +1429,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 <div>
                   <div>
                     <span className="font-medium text-sm text-[#000000]">
-                      <div className="flex gap-1">
-                        Size of Weight
-                      </div>
+                      <div className="flex gap-1">Size of Weight</div>
                     </span>
                   </div>
 
@@ -1429,9 +1458,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 <div>
                   <div>
                     <span className="font-medium text-sm text-[#000000]">
-                      <div className="flex gap-1">
-                        Type of Weight
-                      </div>
+                      <div className="flex gap-1">Type of Weight</div>
                     </span>
                   </div>
 
@@ -1459,9 +1486,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 <div>
                   <div>
                     <span className="font-medium text-sm text-[#000000]">
-                      <div className="flex gap-1">
-                        Top Chain Condition
-                      </div>
+                      <div className="flex gap-1">Top Chain Condition</div>
                     </span>
                   </div>
 
@@ -1476,7 +1501,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       style={{
                         width: '230px',
                         height: '32px',
-                        border: fieldErrors.topChainCondition ? '1px solid red' : '1px solid #D5E1EA',
+                        border: fieldErrors.topChainCondition
+                          ? '1px solid red'
+                          : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.8rem',
                       }}
@@ -1493,9 +1520,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   <div>
                     <div>
                       <span className="font-medium text-sm text-[#000000]">
-                        <div className="flex gap-1">
-                          Condition of Eye
-                        </div>
+                        <div className="flex gap-1">Condition of Eye</div>
                       </span>
                     </div>
                     <div className="mt-2">
@@ -1509,7 +1534,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         style={{
                           width: '230px',
                           height: '32px',
-                          border: fieldErrors.conditionOfEye ? '1px solid red' : '1px solid #D5E1EA',
+                          border: fieldErrors.conditionOfEye
+                            ? '1px solid red'
+                            : '1px solid #D5E1EA',
                           borderRadius: '0.50rem',
                           fontSize: '0.8rem',
                         }}
@@ -1524,9 +1551,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   <div className="mt-3">
                     <div>
                       <span className="font-medium text-sm text-[#000000]">
-                        <div className="flex gap-1">
-                          Shackle, Swivel Condition
-                        </div>
+                        <div className="flex gap-1">Shackle, Swivel Condition</div>
                       </span>
                     </div>
 
@@ -1558,9 +1583,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   <div className="mt-3">
                     <div>
                       <span className="font-medium text-sm text-[#000000]">
-                        <div className="flex gap-1">
-                          Depth at Mean High Water
-                        </div>
+                        <div className="flex gap-1">Depth at Mean High Water</div>
                       </span>
                     </div>
                     <div className="mt-2">
@@ -1587,9 +1610,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   <div className="mt-3">
                     <div>
                       <span className="font-medium text-sm text-[#000000]">
-                        <div className="flex gap-1">
-                          Bottom Chain Condition
-                        </div>
+                        <div className="flex gap-1">Bottom Chain Condition</div>
                       </span>
                     </div>
 
@@ -1621,9 +1642,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   <div className="mt-3">
                     <div>
                       <span className="font-medium text-sm text-[#000000]">
-                        <div className="flex gap-1">
-                          Pennant Condition
-                        </div>
+                        <div className="flex gap-1">Pennant Condition</div>
                       </span>
                     </div>
 
@@ -1649,7 +1668,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       <div className="mt-2">
                         <InputComponent
                           value={formData?.depthAtMeanHighWater}
-                          onChange={(e) => handleInputChange('depthAtMeanHighWater', e.target.value)}
+                          onChange={(e) =>
+                            handleInputChange('depthAtMeanHighWater', e.target.value)
+                          }
                           style={{
                             width: '230px',
                             height: '32px',
@@ -1691,12 +1712,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 </div>
               </div>
             </div>
-          }
-
-
-
-
-
+          )}
         </>
       )}
 
