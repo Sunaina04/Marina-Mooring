@@ -16,8 +16,6 @@ import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import { Toast } from 'primereact/toast'
 import { Params } from '../../../Type/CommonType'
-import { Paginator } from 'primereact/paginator'
-import { ProgressSpinner } from 'primereact/progressspinner'
 
 const WorkOrders = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -29,20 +27,6 @@ const WorkOrders = () => {
   const [editMode, setEditMode] = useState(false)
   const [getWorkOrder] = useGetWorkOrdersMutation()
   const toast = useRef<Toast>(null)
-  const [pageNumber, setPageNumber] = useState(0)
-  const [pageNumber1, setPageNumber1] = useState(0)
-  const [pageSize, setPageSize] = useState(10)
-  const [totalRecords, setTotalRecords] = useState<number>()
-
-
-
-
-  const onPageChange = (event: any) => {
-    setPageNumber(event.page)
-    setPageNumber1(event.first)
-    setPageSize(event.rows)
-  }
-
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value)
@@ -121,18 +105,10 @@ const WorkOrders = () => {
       if (searchText) {
         params.searchText = searchText
       }
-      if (pageNumber) {
-        params.pageNumber = pageNumber
-      }
-      if (pageSize) {
-        params.pageSize = pageSize
-      }
       const response = await getWorkOrder(params).unwrap()
-      const { status, content, message, totalSize } = response as WorkOrderResponse
+      const { status, content, message } = response as WorkOrderResponse
       if (status === 200 && Array.isArray(content)) {
         setWorkOrderData(content)
-        setTotalRecords(totalSize)
-        setIsLoading(false)
       } else {
         setIsLoading(false)
         toast?.current?.show({
@@ -256,75 +232,29 @@ const WorkOrders = () => {
               </div>
             </div>
           </div>
-
-          <div
-            data-testid="customer-admin-data"
-            className="flex flex-col  "
-            style={{ height: '630px' }}
-          >
-            <div className="flex-grow overflow-auto">
-              <DataTableComponent
-                tableStyle={{
-                  fontSize: '12px',
-                  color: '#000000',
-                  fontWeight: 600,
-                  backgroundColor: '#D9D9D9',
-                  cursor: 'pointer',
-                }}
-                data={workOrderData}
-                columns={workOrderColumns}
-                actionButtons={ActionButtonColumn}
-                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
-                emptyMessage={
-                  <div className="text-center mt-40">
-                    <img
-                      src="/assets/images/empty.png"
-                      alt="Empty Data"
-                      className="w-28 mx-auto mb-4"
-                    />
-                    <p className="text-gray-500">No data available</p>
-                  </div>
-                }
-              />
-
-              {isLoading && (
-                <ProgressSpinner
-                  style={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    width: '50px',
-                    height: '50px',
-                  }}
-                  strokeWidth="4"
+          <DataTableComponent
+            tableStyle={{
+              fontSize: '12px',
+              color: '#000000',
+              fontWeight: 600,
+              backgroundColor: '#D9D9D9',
+              cursor: 'pointer',
+            }}
+            data={workOrderData}
+            columns={workOrderColumns}
+            actionButtons={ActionButtonColumn}
+            style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+            emptyMessage={
+              <div className="text-center mt-40">
+                <img
+                  src="/assets/images/empty.png"
+                  alt="Empty Data"
+                  className="w-28 mx-auto mb-4"
                 />
-              )}
-
-            </div>
-            <div className="mt-auto">
-              <Paginator
-                first={pageNumber1}
-                rows={pageSize}
-                totalRecords={totalRecords}
-                rowsPerPageOptions={[5, 10, 20, 30]}
-                onPageChange={onPageChange}
-                style={{
-                  position: 'sticky',
-                  bottom: 0,
-                  zIndex: 1,
-                  backgroundColor: 'white',
-                  borderTop: '1px solid #D5E1EA',
-                  padding: '0.5rem',
-                }}
-              />
-            </div>
-          </div>
-
-
-
-
-
+                <p className="text-gray-500">No data available</p>
+              </div>
+            }
+          />
         </div>
       </div>
     </div>
