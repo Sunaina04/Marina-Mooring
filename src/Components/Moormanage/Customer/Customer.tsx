@@ -66,6 +66,8 @@ const Customer = () => {
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
   const [pageSize, setPageSize] = useState(10)
+  const [totalRecordsOne, setTotalRecordsOne] = useState<number>()
+
   const [pageNumberTwo, setPageNumberTwo] = useState(0)
   const [pageNumber2, setPageNumber2] = useState(0)
   const [pageSizeTwo, setPageSizeTwo] = useState(10)
@@ -300,6 +302,7 @@ const Customer = () => {
         setFilteredCustomerData(content)
         setCustomerId(content[0]?.id)
         setSelectedProduct(content[0])
+        setTotalRecordsOne(totalSize)
       } else {
         setIsLoading(false)
         toast?.current?.show({
@@ -348,6 +351,7 @@ const Customer = () => {
       ) {
         setIsLoading(false)
         setIsLoader(false)
+        setTotalRecordsTwo(totalSize)
         setCustomerRecordData(content?.customerResponseDto)
         setMooringData(content?.customerResponseDto?.mooringResponseDtoList)
         setBoatYardData(content?.boatyardNames)
@@ -549,7 +553,7 @@ const Customer = () => {
               <Paginator
                 first={pageNumber1}
                 rows={pageSize}
-                totalRecords={120}
+                totalRecords={totalRecordsOne}
                 rowsPerPageOptions={[5, 10, 20, 30]}
                 onPageChange={onPageChange}
                 style={{
@@ -771,7 +775,7 @@ const Customer = () => {
               <Paginator
                 first={pageNumber2}
                 rows={pageSizeTwo}
-                totalRecords={120}
+                totalRecords={totalRecordsTwo}
                 rowsPerPageOptions={[5, 10, 20, 30]}
                 onPageChange={onPageChangeTwo}
                 style={{
