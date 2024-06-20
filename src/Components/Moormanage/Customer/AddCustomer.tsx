@@ -22,6 +22,7 @@ import {
   TypeOfPennant,
   TypeOfSizeOfWeight,
   BoatyardNameData,
+  CustomersType,
 } from '../../CommonComponent/MetaDataComponent/MetaDataApi'
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
@@ -56,6 +57,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [chainData, setChainData] = useState<MetaData[]>([])
   const [sizeOfWeight, setSizeOfWeight] = useState<MetaData[]>([])
   const [conditionOfEye, setConditionOfEye] = useState<MetaData[]>([])
+  const [customerType, setCustomerType] = useState<MetaData[]>([])
   const [bottomChainCondition, setBottomChainCondition] = useState<MetaData[]>([])
   const [shackleSwivelData, setShackleSwivelData] = useState<MetaData[]>([])
   const [pennantData, setPennantData] = useState<MetaData[]>([])
@@ -125,6 +127,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const { getTypeOfSizeOfWeightData } = TypeOfSizeOfWeight()
   const { getBoatYardNameData } = BoatyardNameData(selectedCustomerId)
   const { getCountriesData } = CountriesData()
+  const { getCustomersType } = CustomersType()
   const [addCustomer] = useAddCustomerMutation()
   const [updateCustomer] = useUpdateCustomerMutation()
 
@@ -713,12 +716,16 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     if (editCustomerMode || !editMode) {
       const { statesData } = await getStatesData()
       const { countriesData } = await getCountriesData()
+      const { customersType } = await getCustomersType()
 
       if (countriesData !== null) {
         setCountriesData(countriesData)
       }
       if (statesData !== null) {
         setStatesData(statesData)
+      }
+      if (customersType !== null) {
+        setCustomerType(customersType)
       }
     }
 

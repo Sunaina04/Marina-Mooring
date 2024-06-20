@@ -35,6 +35,7 @@ import { LatLngExpression } from 'leaflet'
 import { LatLngExpressionValue, PositionType } from '../../../Type/Components/MapTypes'
 import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
 import { Paginator } from 'primereact/paginator'
+import { Avatar } from 'primereact/avatar'
 
 const Customer = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -43,7 +44,7 @@ const Customer = () => {
   const [editMode, setEditMode] = useState(false)
   const [editCustomerMode, setEditCustomerMode] = useState(false)
   const [editMooringMode, setEditMooringMode] = useState(false)
-  const [customerRecord, setCustomerRecord] = useState(false)
+  const [customerRecord, setCustomerRecord] = useState(true)
   const [selectedCustomer, setSelectedCustomer] = useState<any>()
   const [filteredCustomerData, setFilteredCustomerData] = useState<CustomerPayload[]>([])
   const [customerRecordData, setCustomerRecordData] = useState<any>()
@@ -594,9 +595,13 @@ const Customer = () => {
           {/* Left Panel - Customer Record */}
           <div className="flex-grow rounded-md border bg-white">
             <div className="bg-[#10293A] rounded-t-[10px] flex justify-between pb-2">
-              <div className="text-sm font-semibold rounded-t-md bg-[]">
+              {/* <div className="flex items-center ml-3">
+                <Avatar image={'/assets/images/user.png'} /> */}
+              <div className="text-sm font-semibold rounded-t-md bg-gray-800">
                 <h1 className="p-4 text-white">{'Customers Record'}</h1>
               </div>
+              {/* </div> */}
+
               <div className="flex">
                 <FaEdit
                   onClick={handleEdit}
@@ -660,12 +665,12 @@ const Customer = () => {
                   }}>
                   <p className="ml-4">
                     <span className="address-label ">Address: </span>
-                    {customerRecordData?.aptSuite +
-                      ' ' +
-                      customerRecordData?.streetHouse +
-                      ' ' +
+                    {customerRecordData?.streetHouse +
+                      ', ' +
+                      customerRecordData?.aptSuite +
+                      ', ' +
                       customerRecordData?.stateResponseDto?.name +
-                      ' ' +
+                      ', ' +
                       customerRecordData?.countryResponseDto?.name}
                   </p>
 
