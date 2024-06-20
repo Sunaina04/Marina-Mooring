@@ -43,6 +43,7 @@ export interface DataTableProps {
   emptyMessage?: string | React.ReactNode | ((frozen: boolean) => React.ReactNode) | undefined
   rows?: number
   rowsPerPageOptions?: any[]
+  sortable?: boolean
 }
 
 export interface ButtonProps {

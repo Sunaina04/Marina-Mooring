@@ -739,7 +739,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
           <div>
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
-              Boat Size (in feet)
+                Boat Size (in feet)
                 <p className="text-red-600">*</p>
               </div>
             </span>
@@ -926,6 +926,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 </p>
               </div>
             </div>
+
             <div className="mt-3">
               <div>
                 <span className="font-medium text-sm text-[#000000]">
@@ -961,6 +962,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 </p>
               </div>
             </div>
+
             <div className="mt-3">
               <div>
                 <span className="font-medium text-sm text-[#000000]">

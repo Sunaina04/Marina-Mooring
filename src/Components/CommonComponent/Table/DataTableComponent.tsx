@@ -19,6 +19,7 @@ const DataTableComponent: React.FC<DataTableProps> = ({
   onSelectionChange,
   selection,
   dataKey,
+  sortable,
 }) => {
   const buttonBody = (rowData: any) => {
     return (
@@ -50,13 +51,12 @@ const DataTableComponent: React.FC<DataTableProps> = ({
         selectionMode={selectionMode}
         selection={selection}
         onSelectionChange={onSelectionChange}
+        metaKeySelection={true}
         dataKey={dataKey}
         tableStyle={tableStyle}
         scrollable={scrollable}
         header={header}
-        // paginator
-        // rows={5}
-        // rowsPerPageOptions={[5, 10, 25, 50]}
+        // sortMode="multiple"
         emptyMessage={emptyMessage}
         onRowClick={onRowClick}
         rowClassName={getRowClassName}>
@@ -68,6 +68,7 @@ const DataTableComponent: React.FC<DataTableProps> = ({
             header={d.label}
             body={d.body}
             style={style}
+            sortable={sortable}
           />
         ))}
         {actionButtons && (

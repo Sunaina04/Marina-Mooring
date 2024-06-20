@@ -36,6 +36,8 @@ import { LatLngExpressionValue, PositionType } from '../../../Type/Components/Ma
 import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
 import { Paginator } from 'primereact/paginator'
 import { Avatar } from 'primereact/avatar'
+import { DataTable } from 'primereact/datatable'
+import { Column } from 'primereact/column'
 
 const Customer = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -52,7 +54,7 @@ const Customer = () => {
   const [boatYardData, setBoatYardData] = useState<any[]>([])
   const [mooringRowData, setMooringRowData] = useState<MooringPayload>()
   const [dialogVisible, setDialogVisible] = useState(false)
-  const [selectedProduct, setSelectedProduct] = useState()
+  const [selectedProduct, setSelectedProduct] = useState(null)
   const [selectedMooring, setSelectedMooring] = useState()
   const [searchText, setSearchText] = useState('')
   const [customerId, setCustomerId] = useState<any>()
@@ -521,6 +523,56 @@ const Customer = () => {
           <div
             className={`bg-#00426F overflow-x-hidden h-[590px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col ${isLoading ? 'blur-screen' : ''}`}>
             <div className="flex-grow overflow-auto">
+              {/* <DataTable
+                value={customerData}
+                tableStyle={{
+                  fontSize: '12px',
+                  color: '#000000',
+                  fontWeight: 600,
+                  backgroundColor: '#D9D9D9',
+                  cursor: 'pointer',
+                }}
+                scrollable={false}
+                sortMode="multiple"
+                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+                onRowClick={(rowData) => {
+                  handleCustomerTableRowClick(rowData)
+                }}
+                selectionMode="single"
+                selection={selectedProduct}
+                onSelectionChange={(e) => {
+                  console.log('value', e)
+
+                  // setSelectedProduct(e.value)
+                }}
+                dataKey="id"
+                rowClassName={(rowData) => rowData}
+                emptyMessage={
+                  <div className="flex flex-col justify-center items-center h-full">
+                    <img src="/assets/images/empty.png" alt="Empty Data" className="w-28 mb-4" />
+                    <p className="text-gray-500">No data available</p>
+                  </div>
+                }>
+                <Column
+                  field="customerId"
+                  header="Customer Id:"
+                  style={customerTableColumnStyle}></Column>
+                <Column
+                  field="customerType"
+                  header="Customer Type:"
+                  sortable
+                  style={customerTableColumnStyle}></Column>
+                <Column
+                  field="firstName"
+                  header="Name:"
+                  body={firstLastName}
+                  style={customerTableColumnStyle}></Column>
+                <Column
+                  field="emailAddress"
+                  header="Email:"
+                  style={customerTableColumnStyle}></Column>
+                <Column field="phone" header="Phone:" style={customerTableColumnStyle}></Column>
+              </DataTable> */}
               <DataTableComponent
                 data={customerData}
                 tableStyle={{
@@ -535,6 +587,7 @@ const Customer = () => {
                 style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
                 onRowClick={(rowData) => handleCustomerTableRowClick(rowData)}
                 selectionMode="single"
+                sortable={true}
                 onSelectionChange={(e) => {
                   setSelectedProduct(e.value)
                 }}
