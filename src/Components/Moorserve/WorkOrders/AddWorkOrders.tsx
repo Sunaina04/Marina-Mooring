@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { InputTextarea } from 'primereact/inputtextarea'
 import { InputText } from 'primereact/inputtext'
 import { Dropdown } from 'primereact/dropdown'
@@ -35,6 +35,7 @@ import {
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import { Calendar } from 'primereact/calendar'
+import { Toast } from 'primereact/toast'
 
 const AddWorkOrders: React.FC<WorkOrderProps> = ({
   workOrderData,
@@ -62,7 +63,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   const [mooringsBasedOnBoatyardIdData, setMooringsBasedOnBoatyardIdData] = useState<MetaData[]>()
   const [mooringBasedOnCustomerId, setMooringBasedOnCustomerId] = useState<MetaData[]>()
   const [boatyardBasedOnMooringId, setBoatyardBasedOnMooringId] = useState<MetaData[]>()
-  const [customerBasedOnMooringId, setCustomerBasedOnMooringId] = useState<MetaData[]>()
+  const [customerBasedOnMooringId, setCustomerBasedOnMooringId] = useState<any[]>()
   const [technicians, setTechnicians] = useState<MetaDataTechnician[]>()
   const [moorings, setMoorings] = useState<MetaData[]>()
   const [workOrderStatusValue, setWorkOrderStatusValue] = useState<MetaData[]>()
@@ -71,13 +72,14 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
   const [isLoading, setIsLoading] = useState(false)
   const [currentPage, setCurrentPage] = useState()
+  const toast = useRef<Toast>(null)
 
   const { getMooringBasedOnCustomerIdAndBoatyardIdData } = GetMooringBasedOnCustomerIdAndBoatyardId(
-    workOrder?.customerName && workOrder?.customerName,
+    workOrder?.customerName?.id && workOrder?.customerName?.id,
     workOrder?.boatyards?.id && workOrder?.boatyards?.id,
   )
   const { getMooringsBasedOnCustomerIdData } = GetMooringsBasedOnCustomerId(
-    workOrder?.customerName && workOrder?.customerName,
+    workOrder?.customerName?.id && workOrder?.customerName?.id,
   )
   const { getMooringsBasedOnBoatyardIdData } = GetMooringsBasedOnBoatyardId(
     workOrder?.boatyards?.id && workOrder?.boatyards?.id,
@@ -104,7 +106,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     : customerNameValue
 
   const MooringNameOptions = (() => {
-    if (workOrder?.customerName && workOrder?.boatyards?.id) {
+    if (workOrder?.customerName?.id && workOrder?.boatyards?.id) {
       return basedOnCustomerIdAndBoatyardId
     } else if (workOrder?.customerName?.id) {
       return mooringBasedOnCustomerId
@@ -161,17 +163,26 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       ...workOrder,
       [field]: value,
     })
-    if (editModeWorkOrder || editModeEstimate) {
-      if (workOrder?.customerName) {
-        // mooringId empty
-      } else if (workOrder?.mooringId?.id) {
-        // customer empty
-        // boatyard empty
-      } else if (workOrder?.boatyards?.id) {
-        // mooring empty
-        // customer empty
-      }
-    }
+    // let updatedWorkOrder = {
+    //   ...workOrder,
+    //   [field]: value,
+    // }
+    // console.log('updatedWorkOrder', updatedWorkOrder)
+
+    // if (editModeWorkOrder || editModeEstimate) {
+    //   if (field === 'customerName' && value?.id) {
+    //     updatedWorkOrder.mooringId = ''
+    //   } else if (field === 'mooringId' && value?.id) {
+    //     updatedWorkOrder.customerName = ''
+    //     updatedWorkOrder.boatyards = ''
+    //   } else if (field === 'boatyards' && value?.id) {
+    //     updatedWorkOrder.mooringId = ''
+    //     updatedWorkOrder.customerName = ''
+    //   }
+    // }
+
+    // setWorkOrder(updatedWorkOrder)
+
     if (errorMessage[field]) {
       setErrorMessage({
         ...errorMessage,
@@ -184,7 +195,10 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     setWorkOrder((prevState: any) => ({
       ...prevState,
       mooringId: workOrderData?.mooringResponseDto?.mooringId,
-      customerName: workOrderData?.customerResponseDto?.firstName,
+      customerName:
+        workOrderData?.customerResponseDto?.firstName +
+        ' ' +
+        workOrderData?.customerResponseDto?.lastName,
       boatyards: workOrderData?.boatyardResponseDto?.boatyardName,
       assignedTo: workOrderData?.technicianUserResponseDto?.name,
       dueDate: workOrderData?.dueDate,
@@ -261,7 +275,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     }
     const payload = {
       mooringId: workOrder?.mooringId?.id,
-      customerId: workOrder?.customerName,
+      customerId: workOrder?.customerName?.id,
       boatyardId: workOrder?.boatyards?.id,
       technicianId: workOrder?.assignedTo?.id,
       dueDate: formatDate(workOrder?.dueDate),
@@ -313,7 +327,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       setIsLoading(true)
       const editCustomerPayload = {
         mooringId: workOrder?.mooringId?.id || workOrderData?.mooringResponseDto?.id,
-        customerId: workOrder?.customerName || workOrderData?.customerResponseDto?.id,
+        customerId: workOrder?.customerName?.id || workOrderData?.customerResponseDto?.id,
         boatyardId: workOrder?.boatyards?.id || workOrderData?.boatyardResponseDto?.id,
         technicianId: workOrder?.assignedTo?.id || workOrderData?.technicianUserResponseDto?.id,
         dueDate: workOrder?.dueDate || workOrderData?.dueDate,
@@ -365,7 +379,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     }
     const payload = {
       mooringId: workOrder?.mooringId?.id,
-      customerId: workOrder?.customerName,
+      customerId: workOrder?.customerName?.id,
       boatyardId: workOrder?.boatyards?.id,
       technicianId: workOrder?.assignedTo?.id,
       dueDate: formatDate(workOrder?.dueDate),
@@ -417,7 +431,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       setIsLoading(true)
       const editCustomerPayload = {
         mooringId: workOrder?.mooringId?.id || workOrderData?.mooringResponseDto?.id,
-        customerId: workOrder?.customerName || workOrderData?.customerResponseDto?.id,
+        customerId: workOrder?.customerName?.id || workOrderData?.customerResponseDto?.id,
         boatyardId: workOrder?.boatyards?.id || workOrderData?.boatyardResponseDto?.id,
         technicianId: workOrder?.assignedTo?.id || workOrderData?.technicianUserResponseDto?.id,
         dueDate: workOrder?.dueDate || workOrderData?.dueDate,
@@ -514,6 +528,14 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
 
     if (mooringsBasedOnCustomerId !== null) {
       setMooringBasedOnCustomerId(mooringsBasedOnCustomerId)
+      if (mooringsBasedOnCustomerId?.length === 0) {
+        toast.current?.show({
+          severity: 'info',
+          summary: 'Info',
+          detail: 'No Mooring Associated with Selected Customer',
+          life: 3000,
+        })
+      }
     }
   }, [workOrder?.customerName?.id])
 
@@ -523,10 +545,30 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
 
     if (boatyardBasedOnMooringId !== null) {
       setBoatyardBasedOnMooringId(boatyardBasedOnMooringId)
+      if (boatyardBasedOnMooringId?.length === 0) {
+        toast.current?.show({
+          severity: 'info',
+          summary: 'Info',
+          detail: 'No Boatyard Associated with Selected Mooring',
+          life: 3000,
+        })
+      }
     }
 
     if (customerBasedOnMooringId !== null) {
-      setCustomerBasedOnMooringId(customerBasedOnMooringId)
+      const firstLastName = customerBasedOnMooringId.map((item: any) => ({
+        firstName: item.firstName + ' ' + item.lastName,
+        id: item.id,
+      }))
+      setCustomerBasedOnMooringId(firstLastName)
+      if (customerBasedOnMooringId?.length === 0) {
+        toast.current?.show({
+          severity: 'info',
+          summary: 'Info',
+          detail: 'No Customer Associated with Selected Mooring',
+          life: 3000,
+        })
+      }
     }
   }, [workOrder?.mooringId?.id])
 
@@ -535,6 +577,14 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
 
     if (mooringBasedOnBoatyardId !== null) {
       setMooringsBasedOnBoatyardIdData(mooringBasedOnBoatyardId)
+      if (mooringBasedOnBoatyardId?.length === 0) {
+        toast.current?.show({
+          severity: 'info',
+          summary: 'Info',
+          detail: 'No Mooring Associated with Selected Boatyard',
+          life: 3000,
+        })
+      }
     }
   }, [workOrder?.boatyards?.id])
 
@@ -544,8 +594,16 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
 
     if (mooringbasedOnCustomerIdAndBoatyardId !== null) {
       setbasedOnCustomerIdAndBoatyardId(mooringbasedOnCustomerIdAndBoatyardId)
+      if (mooringbasedOnCustomerIdAndBoatyardId?.length === 0) {
+        toast.current?.show({
+          severity: 'info',
+          summary: 'Info',
+          detail: 'No Mooring Associated with Selected Customer and Boatyard',
+          life: 3000,
+        })
+      }
     }
-  }, [workOrder?.boatyards?.id, workOrder?.customerName])
+  }, [workOrder?.boatyards?.id, workOrder?.customerName?.id])
 
   useEffect(() => {
     fetchDataAndUpdate()
@@ -567,13 +625,13 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     if (workOrder?.customerName?.id) {
       fetchDataAndUpdateBasedOnCustomerId()
     }
-  }, [workOrder?.customerName])
+  }, [workOrder?.customerName?.id])
 
   useEffect(() => {
-    if (workOrder?.customerName && workOrder?.boatyards?.id) {
+    if (workOrder?.customerName?.id && workOrder?.boatyards?.id) {
       fetchDataAndUpdateBasedOnCuatomerIdAndBoatyardId()
     }
-  }, [workOrder?.customerName, workOrder?.boatyards?.id])
+  }, [workOrder?.customerName?.id, workOrder?.boatyards?.id])
 
   useEffect(() => {
     if (editModeWorkOrder || editModeEstimate) {
@@ -584,6 +642,8 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   return (
     <div>
       <div className="w-full h-full ml-4">
+        <Toast ref={toast} />
+
         {/* Customer Name */}
         <div className="flex gap-6">
           <div>
@@ -595,12 +655,10 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
             </span>
             <div className="mt-1">
               <Dropdown
-                value={workOrder.customerName}
+                value={workOrder.customerName?.firstName || workOrder.customerName}
                 onChange={(e) => handleInputChange('customerName', e.target.value)}
                 options={CustomerNameOptions}
-                // optionLabel="firstName"
                 optionLabel="firstName"
-                optionValue="id"
                 editable
                 style={{
                   width: '230px',
@@ -629,7 +687,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
             </span>
             <div className="mt-1">
               <Dropdown
-                value={workOrder.mooringId}
+                value={workOrder.mooringId?.mooringId || workOrder.mooringId}
                 onChange={(e) => handleInputChange('mooringId', e.target.value)}
                 options={MooringNameOptions}
                 optionLabel="mooringId"
@@ -662,7 +720,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
             </span>
             <div className="mt-1">
               <Dropdown
-                value={workOrder.boatyards}
+                value={workOrder.boatyards?.boatyardName || workOrder.boatyards}
                 onChange={(e) => handleInputChange('boatyards', e.target.value)}
                 options={boatyardsNameOptions}
                 optionLabel="boatyardName"

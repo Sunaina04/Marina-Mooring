@@ -345,7 +345,7 @@ const Boatyards = () => {
       await getBoatyards(params)
         .unwrap()
         .then(async (response) => {
-          const { status, content, message,totalSize } = response as BoatYardResponse
+          const { status, content, message, totalSize } = response as BoatYardResponse
           if (status === 200 && Array.isArray(content)) {
             setboatyardsData(content)
             setSelectedBoatYard(content[0])
@@ -358,7 +358,7 @@ const Boatyards = () => {
               }
             }
             setFilteredboatyardsData(content)
-           
+
             const timeoutId = setTimeout(() => {
               setIsLoading(false)
             }, 400)
@@ -398,7 +398,7 @@ const Boatyards = () => {
       })
         .unwrap()
         .then(async (response) => {
-          const { status, content,totalSize } = response as MooringWithBoatYardResponse
+          const { status, content, totalSize } = response as MooringWithBoatYardResponse
           if (status === 200 && Array.isArray(content) && content.length > 0) {
             setIsLoading(false)
             setMooringWithBoatyardsData(content)
@@ -451,8 +451,6 @@ const Boatyards = () => {
   }, [selectedBoatYard, getBoatyardsData, editMode, toast, setModalVisible, handleModalClose])
 
   const BoatyardMoorings = useMemo(() => {
-    console.log('[latitude, longitude]', [latitude, longitude])
-
     return (
       <>
         <div
