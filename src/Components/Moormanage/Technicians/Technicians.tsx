@@ -184,55 +184,61 @@ const Technicians = () => {
     }
   }, [searchText, getTechnicians, pageSize, pageNumber])
 
-  const getOpenWorkOrder = useCallback(async (id: any) => {
-    // setIsLoading(true)
-    try {
-      let params: Params = {}
+  const getOpenWorkOrder = useCallback(
+    async (id: any) => {
+      // setIsLoading(true)
+      try {
+        let params: Params = {}
 
-      // if (pageNumberTwo) {
-      //   params.pageNumber = pageNumberTwo
-      // }
-      // if (pageSizeTwo) {
-      //   params.pageSize = pageSizeTwo
-      // }
+        // if (pageNumberTwo) {
+        //   params.pageNumber = pageNumberTwo
+        // }
+        // if (pageSizeTwo) {
+        //   params.pageSize = pageSizeTwo
+        // }
 
-      const response = await getOpenWork({ technicianId: id }).unwrap()
-      const { status, message, content } = response as GetUserResponse
-      if (status === 200 && Array.isArray(content)) {
-        // setIsLoading(false)
-        // console.log('content', content)
-      } else {
-        setIsLoading(false)
+        const response = await getOpenWork({ technicianId: id }).unwrap()
+        const { status, message, content } = response as GetUserResponse
+        if (status === 200 && Array.isArray(content)) {
+          // setIsLoading(false)
+          // console.log('content', content)
+        } else {
+          setIsLoading(false)
+        }
+      } catch (error) {
+        console.error('Error occurred while fetching customer data:', error)
       }
-    } catch (error) {
-      console.error('Error occurred while fetching customer data:', error)
-    }
-  }, [technicianId, value])
+    },
+    [technicianId, value],
+  )
 
-  const getClosedWorkOrder = useCallback(async (id: any) => {
-    // setIsLoading(true)
-    try {
-      let params: Params = {}
+  const getClosedWorkOrder = useCallback(
+    async (id: any) => {
+      // setIsLoading(true)
+      try {
+        let params: Params = {}
 
-      // if (pageNumberTwo) {
-      //   params.pageNumber = pageNumberTwo
-      // }
-      // if (pageSizeTwo) {
-      //   params.pageSize = pageSizeTwo
-      // }
+        // if (pageNumberTwo) {
+        //   params.pageNumber = pageNumberTwo
+        // }
+        // if (pageSizeTwo) {
+        //   params.pageSize = pageSizeTwo
+        // }
 
-      const response = await getWorkedClosed({ technicianId: id }).unwrap()
-      const { status, message, content } = response as GetUserResponse
-      if (status === 200 && Array.isArray(content)) {
-        // setIsLoading(false)
-        // console.log('content', content)
-      } else {
-        setIsLoading(false)
+        const response = await getWorkedClosed({ technicianId: id }).unwrap()
+        const { status, message, content } = response as GetUserResponse
+        if (status === 200 && Array.isArray(content)) {
+          // setIsLoading(false)
+          // console.log('content', content)
+        } else {
+          setIsLoading(false)
+        }
+      } catch (error) {
+        console.error('Error occurred while fetching customer data:', error)
       }
-    } catch (error) {
-      console.error('Error occurred while fetching customer data:', error)
-    }
-  }, [technicianId, value])
+    },
+    [technicianId, value],
+  )
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -297,9 +303,8 @@ const Technicians = () => {
           </div>
         </div>
 
-        <div 
-        
-        className="flex justify-around gap-10 mt-6">
+        <div
+          className="flex lg:flex-row justify-around md:flex-col  mt-6">
           <div
             style={{
               width: '700px',
@@ -334,66 +339,62 @@ const Technicians = () => {
             />
 
             <div
-            data-testid="customer-admin-data"
-            className="flex flex-col  "
-            style={{ height: '630px' }}
-            >
-            <div className="flex-grow overflow-auto">
-            <DataTableComponent
-                columns={TechnicianTableColumn}
-                scrollable={true}
-                tableStyle={{
-                  fontSize: '12px',
-                  color: '#000000',
-                  fontWeight: 600,
-                  backgroundColor: '#FFFFFF',
-                  cursor: 'pointer',
-                }}
-                onRowClick={(row) => {
-                  handleWorkOrder(row.data)
-                }}
-                onSelectionChange={(e) => {
-                  setSelectedProduct(e.value)
-                }}
-                data={technicianData}
-                emptyMessage={
-                  <div className="text-center mt-40 mb-10">
-                    <img
-                      src="/assets/images/empty.png"
-                      alt="Empty Data"
-                      className="w-20 mx-auto mb-4"
-                    />
-                    <p className="text-gray-500">No data available</p>
-                  </div>
-                }
-                style={{borderBottom:"1px solid #D5E1EA" , fontWeight: '500'}}
-              />
-
-
+              data-testid="customer-admin-data"
+              className="flex flex-col  "
+              style={{ height: '630px' }}>
+              <div className="flex-grow overflow-auto">
+                <DataTableComponent
+                  columns={TechnicianTableColumn}
+                  scrollable={true}
+                  tableStyle={{
+                    fontSize: '12px',
+                    color: '#000000',
+                    fontWeight: 600,
+                    backgroundColor: '#FFFFFF',
+                    cursor: 'pointer',
+                  }}
+                  onRowClick={(row) => {
+                    handleWorkOrder(row.data)
+                  }}
+                  onSelectionChange={(e) => {
+                    setSelectedProduct(e.value)
+                  }}
+                  data={technicianData}
+                  emptyMessage={
+                    <div className="text-center mt-40 mb-10">
+                      <img
+                        src="/assets/images/empty.png"
+                        alt="Empty Data"
+                        className="w-20 mx-auto mb-4"
+                      />
+                      <p className="text-gray-500">No data available</p>
+                    </div>
+                  }
+                  style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
+                />
+              </div>
+              <div className="mt-auto">
+                <Paginator
+                  first={pageNumber1}
+                  rows={pageSize}
+                  totalRecords={120}
+                  rowsPerPageOptions={[5, 10, 20, 30]}
+                  onPageChange={onPageChange}
+                  style={{
+                    position: 'sticky',
+                    bottom: 0,
+                    zIndex: 1,
+                    backgroundColor: 'white',
+                    borderTop: '1px solid #D5E1EA',
+                    padding: '0.5rem',
+                  }}
+                />
+              </div>
             </div>
-            <div className="mt-auto">
-              <Paginator
-                first={pageNumber1}
-                rows={pageSize}
-                totalRecords={120}
-                rowsPerPageOptions={[5, 10, 20, 30]}
-                onPageChange={onPageChange}
-                style={{
-                  position: 'sticky',
-                  bottom: 0,
-                  zIndex: 1,
-                  backgroundColor: 'white',
-                  borderTop: '1px solid #D5E1EA',
-                  padding: '0.5rem',
-                }}
-              />
-            </div>
-          </div>
-
           </div>
 
           <div
-            className={`${isLoading ? 'blur-screen' : ''}`}
+            className={`${isLoading ? 'blur-screen' : ''} md:ml-12 md:mt-3 lg:mt-0`}
             style={{
               flexGrow: 1,
               borderRadius: '5px',
@@ -404,9 +405,9 @@ const Technicians = () => {
               height: '720px',
               // border:"1px solid red"
             }}>
-            <div 
-            // style={{border:"1px solid red"}}
-            className="flex justify-between mt-6  mb-3 ">
+            <div
+              // style={{border:"1px solid red"}}
+              className="flex justify-between mt-6  mb-3 ">
               <div className="font-bold ml-5">
                 <p style={{ color: '#000000', fontSize: '18px' }}>{properties.workOrderHeader}</p>
               </div>
@@ -435,45 +436,43 @@ const Technicians = () => {
                 strokeWidth="4"
               />
             )}
-            
+
             <div
-              style={{
-                // overflow: 'auto',
-                // width:"100%"
-                // height:"575px",
-                // border:"1px solid red",
-                // position:"relative"
-              }}
-              data-testid="customer-admin-users-table">
-              <DataTableComponent
-                tableStyle={{
-                  fontSize: '12px',
-                  color: '#000000',
-                  fontWeight: 600,
-                  backgroundColor: '#D9D9D9',
-                  cursor: 'pointer',
-                }}
-                scrollable={true}
-                columns={WorkOrdersColumn}
-                data={[]}
-                actionButtons={ActionButtonColumn}
-                emptyMessage={
-                  <div className="text-center mt-40 mb-10">
-                    <img
-                      src="/assets/images/empty.png"
-                      alt="Empty Data"
-                      className="w-20 mx-auto mb-4"
-                    />
-                    <p className="text-gray-500">No data available</p>
-                  </div>
-                }
-              />
-             
-            </div>
-          
-            <div 
-            style={{marginTop:"180px"}}
-            className="card">
+              data-testid="customer-admin-data"
+              className="flex flex-col  "
+              style={{ height: '630px'}}>
+              <div className="flex-grow overflow-auto">
+                <DataTableComponent
+                  columns={WorkOrdersColumn}
+                  scrollable={true}
+                  tableStyle={{
+                    fontSize: '12px',
+                    color: '#000000',
+                    fontWeight: 600,
+                    backgroundColor: '#FFFFFF',
+                    cursor: 'pointer',
+                  }}
+                  onRowClick={(row) => {
+                    handleWorkOrder(row.data)
+                  }}
+                  onSelectionChange={(e) => {
+                    setSelectedProduct(e.value)
+                  }}
+                  data={[]}
+                  emptyMessage={
+                    <div className="text-center mt-40 mb-10">
+                      <img
+                        src="/assets/images/empty.png"
+                        alt="Empty Data"
+                        className="w-20 mx-auto mb-4"
+                      />
+                      <p className="text-gray-500">No data available</p>
+                    </div>
+                  }
+                  style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
+                />
+              </div>
+              <div className="mt-auto">
                 <Paginator
                   first={pageNumber1}
                   rows={pageSize}
@@ -490,10 +489,11 @@ const Technicians = () => {
                   }}
                 />
               </div>
+            </div>
+
           </div>
 
 
-          
         </div>
       </div>
     </>

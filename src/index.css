@@ -89,3 +89,23 @@
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
 }
+.leaflet-popup-content-wrapper, .leaflet-popup-tip {
+background-color: #10293A !important;
+/* width: 18rem !important; */
+
+
+}
+
+.leaflet-container a.leaflet-popup-close-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: none;
+  text-align: center;
+  width: 40px !important;
+  height: 24px;
+  font: 20px/24px Tahoma, Verdana, sans-serif !important;
+  color:white !important;
+  text-decoration: none;
+  background: transparent;
+}

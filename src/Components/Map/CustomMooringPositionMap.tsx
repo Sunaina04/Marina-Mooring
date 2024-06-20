@@ -12,7 +12,8 @@ import {
 } from './DefaultIcon'
 import { MooringPayload } from '../../Type/ApiTypes'
 import { FaCircle } from 'react-icons/fa'
-import Timeline from '../CustomComponent/Timeline'
+import Timeline from '../CustomComponent/MooringMapModal'
+import MooringMapModal from '../CustomComponent/MooringMapModal'
 
 const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
   position,
@@ -66,8 +67,8 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
             return (
               <>
                 <Marker key={index} position={position} icon={icon} ref={mapRef}>
-                  <Popup className="bg-black">
-                    <Timeline gpsValue={position} mooringId={mooring?.mooringId} />
+                  <Popup >
+                    <MooringMapModal  gpsValue={position} mooringId={mooring?.mooringId}  />
                     {/* <span>{popUpMessage || `Mooring ID: ${mooring.mooringId}`}</span> */}
                   </Popup>
                 </Marker>
@@ -76,7 +77,7 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
           })}
       </MapContainer>
 
-      <div className="rounded-md border-[1px] p-1 border-gray-300 w-[17vw] h-[13vh] bg-white">
+      {/* <div className="rounded-md border-[1px] p-1 border-gray-300 w-[17vw] h-[13vh] bg-white">
         <p className="text-[0.7rem] ml-1  text-black">Status</p>
         <hr className="m-1 border-black" />
         <div className="flex">
@@ -101,7 +102,7 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
             <p className="text-[0.6rem] text-black tracking-tighter mt-[0.9rem]">Not in Use</p>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   )
 }

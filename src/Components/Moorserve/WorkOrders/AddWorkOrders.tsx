@@ -163,26 +163,39 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       ...workOrder,
       [field]: value,
     })
-    // let updatedWorkOrder = {
-    //   ...workOrder,
-    //   [field]: value,
-    // }
-    // console.log('updatedWorkOrder', updatedWorkOrder)
+    if (editModeWorkOrder || editModeEstimate) {
+      if (workOrder?.customerName) {
+        // mooringId empty
+        // setWorkOrder((prevWorkOrder: any) => ({
+        //   ...prevWorkOrder,
+        //   mooringId: '',
+        // }));
+        
+      } else if (workOrder?.mooringId?.id) {
+        // customer empty
+        // boatyard empty
 
-    // if (editModeWorkOrder || editModeEstimate) {
-    //   if (field === 'customerName' && value?.id) {
-    //     updatedWorkOrder.mooringId = ''
-    //   } else if (field === 'mooringId' && value?.id) {
-    //     updatedWorkOrder.customerName = ''
-    //     updatedWorkOrder.boatyards = ''
-    //   } else if (field === 'boatyards' && value?.id) {
-    //     updatedWorkOrder.mooringId = ''
-    //     updatedWorkOrder.customerName = ''
-    //   }
-    // }
+        // setWorkOrder((prevWorkOrder: any) => ({
+        //   ...prevWorkOrder,
+        //   customerName: '',
+        //   mooringId: '',
+        //   boatyards: '',
+        // }));
 
-    // setWorkOrder(updatedWorkOrder)
 
+
+      } else if (workOrder?.boatyards?.id) {
+        // mooring empty
+        // customer empty
+        // setWorkOrder((prevWorkOrder: any) => ({
+        //   ...prevWorkOrder,
+        //   customerName: '',
+        //   mooringId: '',
+        //   boatyards: '',
+        // }));
+
+      }
+    }
     if (errorMessage[field]) {
       setErrorMessage({
         ...errorMessage,
@@ -501,15 +514,12 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     if (getTechnicians !== null) {
       setTechnicians(getTechnicians)
     }
-
     if (mooringIds !== null) {
       setMoorings(mooringIds)
     }
-
     if (WorkOrderStatus !== null) {
       setWorkOrderStatusValue(WorkOrderStatus)
     }
-
     if (customersData !== null) {
       const firstLastName = customersData.map((item) => ({
         firstName: item.firstName + ' ' + item.lastName,
@@ -517,7 +527,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       }))
       setcustomerNameValue(firstLastName)
     }
-
     if (boatYardName !== null) {
       setBoatYardsName(boatYardName)
     }
