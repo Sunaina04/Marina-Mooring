@@ -28,6 +28,7 @@ import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import { CustomerResponse, ErrorResponse } from '../../../Type/ApiTypes'
 import { ProgressSpinner } from 'primereact/progressspinner'
+import { Calendar } from 'primereact/calendar'
 const AddMoorings: React.FC<AddMooringProps> = ({
   moorings,
   editMode,
@@ -610,33 +611,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
           <div>
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
-                Water Depth (in meter)
-                <p className="text-red-600">*</p>
-              </div>
-            </span>
-            <div className="mt-2">
-              <InputComponent
-                value={formData?.waterDepth}
-                onChange={(e) => handleInputChange('waterDepth', e.target.value)}
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: fieldErrors.waterDepth ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                }}
-              />
-              <p id="waterDepth">
-                {fieldErrors.waterDepth && (
-                  <small className="p-error">{fieldErrors.waterDepth}</small>
-                )}
-              </p>
-            </div>
-          </div>
-
-          <div>
-            <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
                 G.P.S Coordinates
                 <p className="text-red-600">*</p>
               </div>
@@ -694,9 +668,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               </p>
             </div>
           </div>
-        </div>
 
-        <div className="flex gap-6 mt-3">
           <div>
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
@@ -721,7 +693,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               </p>
             </div>
           </div>
+        </div>
 
+        <div className="flex gap-6 mt-3">
           {isLoading && (
             <ProgressSpinner
               style={{
@@ -760,68 +734,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               </p>
             </div>
           </div>
-
-          <div>
-            <div>
-              <span className="font-medium text-sm text-[#000000]">
-                <div className="flex gap-1">
-                  Type
-                  <p className="text-red-600">*</p>
-                </div>
-              </span>
-            </div>
-
-            <div className="mt-2">
-              <Dropdown
-                value={formData?.type}
-                onChange={(e) => handleInputChange('type', e.value)}
-                options={type}
-                optionLabel="boatType"
-                editable
-                placeholder="Select"
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: fieldErrors.type ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                }}
-              />
-              <p id="type">
-                {fieldErrors.type && <small className="p-error">{fieldErrors.type}</small>}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex gap-6 mt-3">
-          <div>
-            <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
-                Weight (in kg)
-                <p className="text-red-600">*</p>
-              </div>
-            </span>
-            <div className="mt-2">
-              <InputComponent
-                value={formData?.boatWeight}
-                onChange={(e) => handleInputChange('boatWeight', e.target.value)}
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: fieldErrors.boatWeight ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                }}
-              />
-              <p id="boatWeight">
-                {fieldErrors.boatWeight && (
-                  <small className="p-error">{fieldErrors.boatWeight}</small>
-                )}
-              </p>
-            </div>
-          </div>
-
           <div>
             <div>
               <span className="font-medium text-sm text-[#000000]">
@@ -833,13 +745,13 @@ const AddMoorings: React.FC<AddMooringProps> = ({
             </div>
 
             <div className="mt-2">
-              <Dropdown
+              <InputComponent
                 value={formData?.sizeOfWeight}
-                onChange={(e) => handleInputChange('sizeOfWeight', e.value)}
-                options={sizeOfWeight}
-                optionLabel="weight"
-                editable
-                placeholder="Select"
+                onChange={(e) => handleInputChange('sizeOfWeight', e.target.value)}
+                // options={sizeOfWeight}
+                // optionLabel="weight"
+                // editable
+                // placeholder="Select"
                 style={{
                   width: '230px',
                   height: '32px',
@@ -891,42 +803,141 @@ const AddMoorings: React.FC<AddMooringProps> = ({
           </div>
         </div>
 
-        <div className="flex gap-6 mt-3 mb-20">
+        <div className="flex gap-6 mt-3">
           <div>
             <div>
-              <div>
-                <span className="font-medium text-sm text-[#000000]">
-                  <div className="flex gap-1">
-                    Top Chain Condition
-                    <p className="text-red-600">*</p>
-                  </div>
-                </span>
-              </div>
-
-              <div className="mt-2">
-                <Dropdown
-                  value={formData?.topChainCondition}
-                  onChange={(e) => handleInputChange('topChainCondition', e.value)}
-                  options={chainData}
-                  optionLabel="condition"
-                  editable
-                  placeholder="Select"
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: fieldErrors.topChainCondition ? '1px solid red' : '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                  }}
-                />
-                <p id="typeOfWeight">
-                  {fieldErrors.topChainCondition && (
-                    <small className="p-error">{fieldErrors.topChainCondition}</small>
-                  )}
-                </p>
-              </div>
+              <span className="font-medium text-sm text-[#000000]">
+                <div className="flex gap-1">
+                  Top Chain Condition
+                  <p className="text-red-600">*</p>
+                </div>
+              </span>
             </div>
 
+            <div className="mt-2">
+              <Dropdown
+                value={formData?.topChainCondition}
+                onChange={(e) => handleInputChange('topChainCondition', e.value)}
+                options={chainData}
+                optionLabel="condition"
+                editable
+                placeholder="Select"
+                style={{
+                  width: '230px',
+                  height: '32px',
+                  border: fieldErrors.topChainCondition ? '1px solid red' : '1px solid #D5E1EA',
+                  borderRadius: '0.50rem',
+                  fontSize: '0.8rem',
+                }}
+              />
+              <p id="typeOfWeight">
+                {fieldErrors.topChainCondition && (
+                  <small className="p-error">{fieldErrors.topChainCondition}</small>
+                )}
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <div>
+              <span className="font-medium text-sm text-[#000000]">
+                <div className="flex gap-1">
+                  Top Chain Condition <span style={{ fontSize: '0.7rem' }}> (install date)</span>
+                  <p className="text-red-600">*</p>
+                </div>
+              </span>
+            </div>
+
+            <div className="mt-2">
+              <Calendar
+                value={formData?.topChainCondition}
+                onChange={(e) => handleInputChange('topChainCondition', e.value)}
+                // options={chainData}
+                // optionLabel="condition"
+                // editable
+                // placeholder="Select"
+                style={{
+                  width: '230px',
+                  height: '32px',
+                  border: fieldErrors.topChainCondition ? '1px solid red' : '1px solid #D5E1EA',
+                  borderRadius: '0.50rem',
+                  fontSize: '0.8rem',
+                  padding: '0.5rem',
+                }}
+              />
+              <p id="typeOfWeight">
+                {fieldErrors.topChainCondition && (
+                  <small className="p-error">{fieldErrors.topChainCondition}</small>
+                )}
+              </p>
+            </div>
+          </div>
+
+          <div className="">
+            <div>
+              <span className="font-medium text-sm text-[#000000]">
+                <div className="flex gap-1">
+                  Depth at Mean High Water
+                  <p className="text-red-600">*</p>
+                </div>
+              </span>
+            </div>
+
+            <div className="mt-2">
+              <InputText
+                value={formData?.depthAtMeanHighWater}
+                onChange={(e) => handleInputChange('depthAtMeanHighWater', e.target.value)}
+                style={{
+                  width: '230px',
+                  height: '32px',
+                  border: fieldErrors.depthAtMeanHighWater ? '1px solid red' : '1px solid #D5E1EA',
+                  borderRadius: '0.50rem',
+                  fontSize: '0.8rem',
+                }}
+              />
+              <p id="depthAtMeanHighWater">
+                {fieldErrors.depthAtMeanHighWater && (
+                  <small className="p-error">{fieldErrors.depthAtMeanHighWater}</small>
+                )}
+              </p>
+            </div>
+          </div>
+          {/* <div>
+            <div>
+              <span className="font-medium text-sm text-[#000000]">
+                <div className="flex gap-1">
+                  Condition of Eye
+                  <p className="text-red-600">*</p>
+                </div>
+              </span>
+            </div>
+            <div className="mt-2">
+              <Dropdown
+                value={formData?.conditionOfEye}
+                onChange={(e) => handleInputChange('conditionOfEye', e.value)}
+                options={conditionOfEye}
+                optionLabel="condition"
+                editable
+                placeholder="Select"
+                style={{
+                  width: '230px',
+                  height: '32px',
+                  border: fieldErrors.conditionOfEye ? '1px solid red' : '1px solid #D5E1EA',
+                  borderRadius: '0.50rem',
+                  fontSize: '0.8rem',
+                }}
+              />
+              <p id="conditionOfEye">
+                {fieldErrors.conditionOfEye && (
+                  <small className="p-error">{fieldErrors.conditionOfEye}</small>
+                )}
+              </p>
+            </div>
+          </div> */}
+        </div>
+
+        <div className="flex gap-6 mt-3 mb-20">
+          <div>
             <div className="mt-3">
               <div>
                 <span className="font-medium text-sm text-[#000000]">
@@ -967,42 +978,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               <div>
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
-                    Pennant Condition
-                    <p className="text-red-600">*</p>
-                  </div>
-                </span>
-              </div>
-
-              <div className="mt-2">
-                <Dropdown
-                  value={formData?.pennantCondition}
-                  onChange={(e) => handleInputChange('pennantCondition', e.value)}
-                  options={pennantData}
-                  optionLabel="condition"
-                  editable
-                  placeholder="Select"
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: fieldErrors.pennantCondition ? '1px solid red' : '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                  }}
-                />
-                <p id="conditionOfEye">
-                  {fieldErrors.pennantCondition && (
-                    <small className="p-error">{fieldErrors.pennantCondition}</small>
-                  )}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <div>
-              <div>
-                <span className="font-medium text-sm text-[#000000]">
-                  <div className="flex gap-1">
                     Condition of Eye
                     <p className="text-red-600">*</p>
                   </div>
@@ -1035,38 +1010,70 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               <div>
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
-                    Shackle, Swivel Condition
+                    Pendant Condition
                     <p className="text-red-600">*</p>
                   </div>
                 </span>
               </div>
 
               <div className="mt-2">
-                <Dropdown
-                  value={formData?.shackleSwivelCondition}
-                  onChange={(e) => handleInputChange('shackleSwivelCondition', e.value)}
-                  options={shackleSwivelData}
-                  optionLabel="condition"
-                  editable
-                  placeholder="Select"
+                <InputComponent
+                  value={formData?.pennantCondition}
+                  onChange={(e) => handleInputChange('pennantCondition', e.target.value)}
+                  // options={pennantData}
+                  // optionLabel="condition"
+                  // editable
+                  // placeholder="Select"
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: fieldErrors.shackleSwivelCondition
-                      ? '1px solid red'
-                      : '1px solid #D5E1EA',
+                    border: fieldErrors.pennantCondition ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                   }}
                 />
-                <p id="shackleSwivelCondition">
-                  {fieldErrors.shackleSwivelCondition && (
-                    <small className="p-error">{fieldErrors.shackleSwivelCondition}</small>
+                <p id="conditionOfEye">
+                  {fieldErrors.pennantCondition && (
+                    <small className="p-error">{fieldErrors.pennantCondition}</small>
                   )}
                 </p>
               </div>
             </div>
             <div className="mt-3">
+              <div>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">
+                    Type
+                    {/* <p className="text-red-600">*</p> */}
+                  </div>
+                </span>
+              </div>
+
+              <div className="mt-2">
+                <InputComponent
+                  value={formData?.type}
+                  onChange={(e) => handleInputChange('type', e.target.value)}
+                  // options={type}
+                  // optionLabel="boatType"
+                  // editable
+                  // placeholder="Select"
+                  style={{
+                    width: '230px',
+                    height: '32px',
+                    border: '1px solid #D5E1EA',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
+                  }}
+                />
+                {/* <p id="type">
+                  {fieldErrors.type && <small className="p-error">{fieldErrors.type}</small>}
+                </p> */}
+              </div>
+            </div>
+          </div>
+
+          <div>
+            {/* <div className="mt-3">
               <div>
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
@@ -1095,6 +1102,138 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                     <small className="p-error">{fieldErrors.depthAtMeanHighWater}</small>
                   )}
                 </p>
+              </div>
+            </div> */}
+
+            <div className="mt-3">
+              <div>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">
+                    Bottom Chain Condition <span style={{ fontSize: '0.6rem' }}> (install date)</span>
+                    <p className="text-red-600">*</p>
+                  </div>
+                </span>
+              </div>
+
+              <div className="mt-2">
+                <Calendar
+                  // value={formData?.bottomChainCondition}
+                  // onChange={(e) => handleInputChange('bottomChainCondition', e.value)}
+                  // options={bottomChainCondition}
+                  // optionLabel="condition"
+                  // editable
+                  // placeholder="Select"
+                  style={{
+                    width: '230px',
+                    height: '32px',
+                    border: fieldErrors.bottomChainCondition
+                      ? '1px solid red'
+                      : '1px solid #D5E1EA',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
+                    padding:'0.5rem'
+                  }}
+                />
+                <p id="bottomChainCondition">
+                  {fieldErrors.bottomChainCondition && (
+                    <small className="p-error">{fieldErrors.bottomChainCondition}</small>
+                  )}
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-3">
+              <div>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">
+                    Condition of Eye <span style={{ fontSize: '0.7rem' }}> (install date)</span>
+                    <p className="text-red-600">*</p>
+                  </div>
+                </span>
+              </div>
+              <div className="mt-2">
+                <Calendar
+                  // value={formData?.conditionOfEye}
+                  // onChange={(e) => handleInputChange('conditionOfEye', e.value)}
+                  // options={conditionOfEye}
+                  // optionLabel="condition"
+                  // editable
+                  // placeholder="Select"
+                  style={{
+                    width: '230px',
+                    height: '32px',
+                    border: fieldErrors.conditionOfEye ? '1px solid red' : '1px solid #D5E1EA',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
+                    padding:'0.5rem'
+                  }}
+                />
+                <p id="conditionOfEye">
+                  {fieldErrors.conditionOfEye && (
+                    <small className="p-error">{fieldErrors.conditionOfEye}</small>
+                  )}
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-3">
+              <div>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">
+                    Shackle, Swivel Condition
+                    {/* <p className="text-red-600">*</p> */}
+                  </div>
+                </span>
+              </div>
+
+              <div className="mt-2">
+                <Dropdown
+                  value={formData?.shackleSwivelCondition}
+                  onChange={(e) => handleInputChange('shackleSwivelCondition', e.value)}
+                  options={shackleSwivelData}
+                  optionLabel="condition"
+                  editable
+                  placeholder="Select"
+                  style={{
+                    width: '230px',
+                    height: '32px',
+                    border: '1px solid #D5E1EA',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
+                  }}
+                />
+                {/* <p id="shackleSwivelCondition">
+                  {fieldErrors.shackleSwivelCondition && (
+                    <small className="p-error">{fieldErrors.shackleSwivelCondition}</small>
+                  )}
+                </p> */}
+              </div>
+            </div>
+
+            <div className="mt-3">
+              <span className="font-medium text-sm text-[#000000]">
+                <div className="flex gap-1">
+                  Weight (in kg)
+                  {/* <p className="text-red-600">*</p> */}
+                </div>
+              </span>
+              <div className="mt-2">
+                <InputComponent
+                  value={formData?.boatWeight}
+                  onChange={(e) => handleInputChange('boatWeight', e.target.value)}
+                  style={{
+                    width: '230px',
+                    height: '32px',
+                    border: '1px solid #D5E1EA',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
+                  }}
+                />
+                {/* <p id="boatWeight">
+                  {fieldErrors.boatWeight && (
+                    <small className="p-error">{fieldErrors.boatWeight}</small>
+                  )}
+                </p> */}
               </div>
             </div>
           </div>

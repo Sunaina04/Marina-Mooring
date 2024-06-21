@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import InputComponent from '../../CommonComponent/InputComponent'
 import { Button } from 'primereact/button'
 import { Dropdown } from 'primereact/dropdown'
@@ -11,6 +11,8 @@ const AddForm = () => {
   const [uploadFile, setUploadFile] = useState<any>('')
   const [visible, setVisible] = useState<boolean>(false)
   const [fieldsError, setFieldsError] = useState<{ [key: string]: string }>({})
+
+  const fileUploadRef = useRef<any>(null);
 
   const [formData, setFormData] = useState<any>({
     customerName: '',
@@ -61,6 +63,22 @@ const AddForm = () => {
       setFieldsError(errors)
       return
     }
+  }
+ 
+  const handleClickUploadText = () => {
+    if (fileUploadRef.current) {
+      fileUploadRef.current.chooseFile(); // Trigger file selection dialog
+    }
+  };
+
+
+  const addContent = () => {
+    return (
+      <div style={{ textAlign: 'center', marginTop: '50px', cursor:'pointer' }} onClick={handleClickUploadText}>
+        Drag and drop choose file to upload your files.<br/>
+        All pdf, doc,csv, xlsx are supported.
+      </div>
+    )
   }
 
   return (
@@ -157,16 +175,28 @@ const AddForm = () => {
           </span>
           <div className="mt-1">
             <FileUpload
-            //   value={formData.uploadFile}
-            //   onChange={(e) => handleInputChange('uploadFile', e.target.value)}
-            mode='basic'
+              //   value={formData.uploadFile}
+              //   onChange={(e) => handleInputChange('uploadFile', e.target.value)}
+              // mode='basic'
+              ref={fileUploadRef}
+              accept=".pdf,.doc,.csv,.xlsx"
+              customUpload
+              url="/api/upload"
+              uploadHandler={(event) => {
+                const file = event.files[0];
+                setUploadFile(file);
+                setFormData({ ...formData, uploadFile: file });
+              }}
               style={{
                 width: '700px',
                 height: '174px',
                 border: fieldsError.uploadFile ? '1px solid red' : '1px solid #D5E1EA',
                 borderRadius: '0.50rem',
                 fontSize: '0.8rem',
+                paddingTop: '1rem',
               }}
+              headerTemplate={() => null}
+              emptyTemplate={addContent}
             />
           </div>
           <p>
