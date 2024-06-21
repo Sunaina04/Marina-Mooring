@@ -147,9 +147,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       setbottomChainCondition(typeOfBottomChainData)
     }
 
-    if (typeOfShackleSwivelData !== null) {
-      setShackleSwivelData(typeOfShackleSwivelData)
-    }
+    // if (typeOfShackleSwivelData !== null) {
+    //   setShackleSwivelData(typeOfShackleSwivelData)
+    // }
 
     if (typeOfPennantData !== null) {
       setPennantData(typeOfPennantData)
@@ -240,10 +240,27 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     //   if (!firstError) firstError = 'boatWeight'
     // }
 
+    // if (!formData?.sizeOfWeight) {
+    //   errors.sizeOfWeight = 'Size of Weight is required'
+    //   if (!firstError) firstError = 'sizeOfWeight'
+    // }
+
+
+
+
     if (!formData?.sizeOfWeight) {
       errors.sizeOfWeight = 'Size of Weight is required'
       if (!firstError) firstError = 'sizeOfWeight'
+    } else if (!numberRegex.test(String(formData?.sizeOfWeight))) {
+      errors.sizeOfWeight = 'Size of Weight must be a number'
+      if (!firstError) firstError = 'sizeOfWeight'
     }
+
+
+
+
+
+
     if (!formData?.typeOfWeight) {
       errors.typeOfWeight = 'Type of Weight is required'
       if (!firstError) firstError = 'typeOfWeight'
@@ -569,14 +586,14 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 options={customerName}
                 optionLabel="label"
                 optionValue="value"
-                editable
                 placeholder="Select"
+                editable
                 style={{
                   width: '230px',
                   height: '32px',
                   border: fieldErrors.customerName ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
+                  // fontSize: '0.5rem',
                 }}
               />
 
@@ -685,8 +702,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 onChange={(e) => handleInputChange('boatYardName', e.target.value)}
                 options={boatyardsName}
                 optionLabel="boatyardName"
-                editable
                 placeholder="Select"
+                editable
                 style={{
                   width: '230px',
                   height: '32px',
@@ -818,8 +835,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 onChange={(e) => handleInputChange('typeOfWeight', e.value)}
                 options={weightData}
                 optionLabel="type"
-                editable
                 placeholder="Select"
+                editable
                 style={{
                   width: '230px',
                   height: '32px',
@@ -854,8 +871,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 onChange={(e) => handleInputChange('topChainCondition', e.value)}
                 options={chainData}
                 optionLabel="condition"
-                editable
                 placeholder="Select"
+                editable
                 style={{
                   width: '230px',
                   height: '32px',
@@ -933,38 +950,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               </p>
             </div>
           </div>
-          {/* <div>
-            <div>
-              <span className="font-medium text-sm text-[#000000]">
-                <div className="flex gap-1">
-                  Condition of Eye
-                  <p className="text-red-600">*</p>
-                </div>
-              </span>
-            </div>
-            <div className="mt-2">
-              <Dropdown
-                value={formData?.conditionOfEye}
-                onChange={(e) => handleInputChange('conditionOfEye', e.value)}
-                options={conditionOfEye}
-                optionLabel="condition"
-                editable
-                placeholder="Select"
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: fieldErrors.conditionOfEye ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                }}
-              />
-              <p id="conditionOfEye">
-                {fieldErrors.conditionOfEye && (
-                  <small className="p-error">{fieldErrors.conditionOfEye}</small>
-                )}
-              </p>
-            </div>
-          </div> */}
         </div>
 
         <div className="flex gap-6 mt-3 mb-20">
@@ -985,8 +970,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   onChange={(e) => handleInputChange('bottomChainCondition', e.value)}
                   options={bottomChainCondition}
                   optionLabel="condition"
-                  editable
                   placeholder="Select"
+                  editable
                   style={{
                     width: '230px',
                     height: '32px',
@@ -1020,8 +1005,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   onChange={(e) => handleInputChange('conditionOfEye', e.value)}
                   options={conditionOfEye}
                   optionLabel="condition"
-                  editable
                   placeholder="Select"
+                  editable
                   style={{
                     width: '230px',
                     height: '32px',
@@ -1049,10 +1034,10 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               </div>
 
               <div className="mt-2">
-                <InputComponent
+                <Dropdown
                   value={formData?.type}
                   onChange={(e) => handleInputChange('type', e.target.value)}
-                  // options={type}
+                   options={[]}
                   // optionLabel="boatType"
                   // editable
                   // placeholder="Select"
@@ -1180,8 +1165,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   onChange={(e) => handleInputChange('shackleSwivelCondition', e.value)}
                   options={shackleSwivelData}
                   optionLabel="condition"
-                  editable
                   placeholder="Select"
+                  editable
                   style={{
                     width: '230px',
                     height: '32px',

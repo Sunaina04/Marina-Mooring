@@ -846,7 +846,7 @@ const Customer = () => {
               <span>ID: </span> {mooringRowData?.id}
             </p>
             <p>
-              <span>Mooring ID: </span>
+              <span>Mooring Number: </span>
               {mooringRowData?.mooringId}
             </p>
             <p>
@@ -869,17 +869,14 @@ const Customer = () => {
               {mooringRowData?.bottomChainCondition?.condition}
             </p>
             <p>
-              <span>Pennant Condition: </span>
-              {mooringRowData?.pendantCondition?.condition}
+              <span>Pendant Condition: </span>
+              {mooringRowData?.pennantCondition?.condition}
             </p>
-            <p>
-              <span>Water Depth: </span>
-              {mooringRowData?.waterDepth}
-            </p>
+           
           </div>
           <div>
             <p>
-              <span>Harbor: </span> {mooringRowData?.harbor}
+              <span>Harbor Area: </span> {mooringRowData?.harbor}
             </p>
             <p>
               <span>G.P.S Coordinates: </span>

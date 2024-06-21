@@ -793,7 +793,7 @@ const Moorings = () => {
               <span>ID: </span> {mooringRowData?.id}
             </p>
             <p>
-              <span>Mooring ID: </span>
+              <span>Mooring Number: </span>
               {mooringRowData?.mooringNumber}
             </p>
             <p>
@@ -816,17 +816,14 @@ const Moorings = () => {
               {mooringRowData?.bottomChainCondition?.condition}
             </p>
             <p>
-              <span>Pennant Condition: </span>
-              {mooringRowData?.pendantCondition?.condition}
-            </p>
-            <p>
-              <span>Water Depth: </span>
-              {mooringRowData?.waterDepth}
+              <span>Pendant Condition: </span>
+              {mooringRowData?.pennantCondition?.condition}
+
             </p>
           </div>
           <div>
             <p>
-              <span>Harbor: </span> {mooringRowData?.harbor}
+              <span>Harbor Area: </span> {mooringRowData?.harbor}
             </p>
             <p>
               <span>G.P.S Coordinates: </span>
