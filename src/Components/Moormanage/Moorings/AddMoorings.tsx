@@ -100,16 +100,16 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     waterDepth: '',
     gpsCoordinates: '',
     boatName: '',
-    boatSize: '',
+    boatSize: Number,
     boatWeight: '',
-    sizeOfWeight: '',
+    sizeOfWeight: Number,
     typeOfWeight: '',
     type: '',
     topChainCondition: '',
     conditionOfEye: '',
     bottomChainCondition: '',
     shackleSwivelCondition: '',
-    pennantCondition: '',
+    pendantCondition: '',
     depthAtMeanHighWater: '',
     boatYardName: '',
     note: '',
@@ -268,9 +268,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       if (!firstError) firstError = 'bottomChainCondition'
     }
 
-    if (!formData?.pennantCondition) {
-      errors.pennantCondition = 'Pendant Condition is required'
-      if (!firstError) firstError = 'pennantCondition'
+    if (!formData?.pendantCondition) {
+      errors.pendantCondition = 'Pendant Condition is required'
+      if (!firstError) firstError = 'pendantCondition'
     }
 
     if (!formData?.depthAtMeanHighWater) {
@@ -332,26 +332,29 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     setGpsCoordinatesValue(mooringRowData?.gpsCoordinates || '')
     setFormData((prevState: any) => ({
       ...prevState,
-      mooringNumber: mooringRowData?.mooringId || '',
+      mooringNumber: mooringRowData?.mooringNumber || '',
       mooringName: mooringRowData?.mooringName || '',
       customerName: moorings?.firstName + ' ' + moorings.lastName || '',
-      harbor: mooringRowData?.harbor || '',
-      waterDepth: mooringRowData?.waterDepth || '',
+      harbor: mooringRowData?.harborOrArea || '',
+      // waterDepth: mooringRowData?.waterDepth || '',
       // gpsCoordinates: mooringRowData?.gpsCoordinates || '',
       boatYardName: mooringRowData?.boatyardResponseDto?.boatyardName || '',
       boatName: mooringRowData?.boatName || '',
       boatSize: mooringRowData?.boatSize || '',
       type: mooringRowData?.boatType?.boatType || '',
       boatWeight: mooringRowData?.boatWeight || '',
-      sizeOfWeight: mooringRowData?.sizeOfWeight?.weight || '',
+      sizeOfWeight: mooringRowData?.sizeOfWeight || '',
       typeOfWeight: mooringRowData?.typeOfWeight?.type || '',
       conditionOfEye: mooringRowData?.eyeCondition?.condition || '',
       topChainCondition: mooringRowData?.topChainCondition?.condition || '',
       shackleSwivelCondition: mooringRowData?.shackleSwivelCondition?.condition || '',
-      pennantCondition: mooringRowData?.pennantCondition?.condition || '',
+      pendantCondition: mooringRowData?.pendantCondition || '',
       depthAtMeanHighWater: mooringRowData?.depthAtMeanHighWater || '',
       bottomChainCondition: mooringRowData?.bottomChainCondition?.condition || '',
-      // status: 1,
+      bottomChainDate: mooringRowData?.installBottomChainDate || '',
+      topChainDate: mooringRowData?.installTopChainDate || '',
+      conditionEyeDate: mooringRowData?.installConditionOfEyeDate || '',
+      status: 3,
     }))
   }
 
@@ -373,15 +376,15 @@ const AddMoorings: React.FC<AddMooringProps> = ({
         boatyardId: formData?.boatYardName?.id,
         boatName: formData?.boatName,
         boatSize: formData?.boatSize,
-        boatTypeId: formData?.type?.id,
+        boatTypeId: formData?.type,
         boatWeight: formData?.boatWeight,
-        sizeOfWeight: formData?.sizeOfWeight?.id,
+        sizeOfWeight: formData?.sizeOfWeight,
         typeOfWeightId: formData?.typeOfWeight?.id,
         eyeConditionId: formData?.conditionOfEye?.id,
         topChainConditionId: formData?.topChainCondition?.id,
         bottomChainConditionId: formData?.bottomChainCondition?.id,
         shackleSwivelConditionId: formData?.shackleSwivelCondition?.id,
-        pennantConditionId: formData?.pennantCondition?.id,
+        pendantConditionId: formData?.pendantCondition,
         depthAtMeanHighWater: formData?.depthAtMeanHighWater,
         statusId: 2,
       }
@@ -424,6 +427,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({
 
   const UpdateMooring = async () => {
     const errors = validateFields()
+    console.log('errors here', errors)
+
     if (Object.keys(errors).length > 0) {
       return
     }
@@ -431,23 +436,24 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       setIsLoading(true)
       const editMooringPayload = {
         id: mooringRowData?.id,
-        mooringId: formData?.mooringNumber ? formData?.mooringNumber : mooringRowData?.mooringId,
+        mooringNumber: formData?.mooringNumber
+          ? formData?.mooringNumber
+          : mooringRowData?.mooringNumber,
         customerId: formData?.customerName?.id
           ? formData?.customerName?.id
           : mooringRowData?.customerId,
-        harbor: formData?.harbor ? formData?.harbor : mooringRowData?.harbor,
-        waterDepth: formData?.waterDepth ? formData?.waterDepth : mooringRowData?.waterDepth,
+        harborOrArea: formData?.harbor ? formData?.harbor : mooringRowData?.harborOrArea,
         gpsCoordinates: gpsCoordinatesValue,
         boatyardId: formData?.boatyardName
           ? formData?.boatyardName
           : mooringRowData?.boatyardResponseDto?.id,
         boatName: formData?.boatName ? formData?.boatName : mooringRowData?.boatName,
         boatSize: formData?.boatSize ? formData?.boatSize : mooringRowData?.boatSize,
-        boatTypeId: formData?.type.id ? formData?.type.id : mooringRowData?.boatType.id,
+        boatTypeId: formData?.type ? formData?.type : mooringRowData?.boatType,
         boatWeight: formData?.boatWeight ? formData?.boatWeight : mooringRowData?.boatWeight,
-        sizeOfWeightId: formData?.sizeOfWeight.id
-          ? formData?.sizeOfWeight.id
-          : mooringRowData?.sizeOfWeight.id,
+        sizeOfWeight: formData?.sizeOfWeight
+          ? formData?.sizeOfWeight
+          : mooringRowData?.sizeOfWeight,
         typeOfWeightId: formData?.typeOfWeight.id
           ? formData?.typeOfWeight.id
           : mooringRowData?.typeOfWeight.id,
@@ -463,9 +469,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({
         shackleSwivelConditionId: formData?.shackleSwivelCondition?.id
           ? formData?.shackleSwivelCondition?.id
           : mooringRowData?.shackleSwivelCondition?.id,
-        pennantConditionId: formData?.pennantCondition?.id
-          ? formData?.pennantCondition?.id
-          : mooringRowData?.pennantCondition?.id,
+        pendantCondition: formData?.pendantCondition
+          ? formData?.pendantCondition
+          : mooringRowData?.pendantCondition,
         depthAtMeanHighWater: formData?.depthAtMeanHighWater
           ? formData?.depthAtMeanHighWater
           : mooringRowData?.depthAtMeanHighWater,
@@ -499,6 +505,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       }
     } catch (error) {
       const { message, data } = error as ErrorResponse
+      console.log('errors here is', error)
+
       setIsLoading(false)
       toastRef?.current?.show({
         severity: 'error',
@@ -1203,8 +1211,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({
 
               <div className="mt-2">
                 <InputComponent
-                  value={formData?.pennantCondition}
-                  onChange={(e) => handleInputChange('pennantCondition', e.target.value)}
+                  value={formData?.pendantCondition}
+                  onChange={(e) => handleInputChange('pendantCondition', e.target.value)}
                   // options={pennantData}
                   // optionLabel="condition"
                   // editable
@@ -1212,14 +1220,14 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: fieldErrors.pennantCondition ? '1px solid red' : '1px solid #D5E1EA',
+                    border: fieldErrors.pendantCondition ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                   }}
                 />
                 <p id="conditionOfEye">
-                  {fieldErrors.pennantCondition && (
-                    <small className="p-error">{fieldErrors.pennantCondition}</small>
+                  {fieldErrors.pendantCondition && (
+                    <small className="p-error">{fieldErrors.pendantCondition}</small>
                   )}
                 </p>
               </div>

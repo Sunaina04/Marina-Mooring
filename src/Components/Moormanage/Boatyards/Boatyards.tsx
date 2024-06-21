@@ -830,7 +830,7 @@ const Boatyards = () => {
                   {mooringRowData?.bottomChainCondition?.condition}
                 </p>
                 <p>
-                  <span>Pennant Condition : </span> {mooringRowData?.pennantCondition?.condition}
+                  <span>Pennant Condition : </span> {mooringRowData?.pendantCondition?.condition}
                 </p>
                 <p>
                   <span>Water Depth : </span> {mooringRowData?.waterDepth}

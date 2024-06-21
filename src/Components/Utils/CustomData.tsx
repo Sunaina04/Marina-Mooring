@@ -526,7 +526,7 @@ export const bottomChainConditionOptions = [
   { id: 2, name: 'Fair', code: 'Fair' },
   { id: 3, name: 'Poor', code: 'Poor' },
 ]
-export const pennantConditionOptions = [
+export const pendantConditionOptions = [
   { id: 1, name: 'Good', code: 'Good' },
   { id: 2, name: 'Fair', code: 'Fair' },
   { id: 3, name: 'Poor', code: 'Poor' },

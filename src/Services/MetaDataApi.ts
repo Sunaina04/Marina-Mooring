@@ -99,7 +99,7 @@ const metaDataApi = userApi.injectEndpoints({
 
     getPennantConditions: builder.mutation({
       query: ({ pageNumber, pageSize }: { pageNumber?: number; pageSize?: number }) => ({
-        url: 'api/v1/metadata/pennantConditions',
+        url: 'api/v1/metadata/pendantConditions',
         method: 'GET',
         params: { pageNumber, pageSize },
       }),
@@ -160,15 +160,7 @@ const metaDataApi = userApi.injectEndpoints({
         params: { pageNumber, pageSize },
       }),
     }),
-
-
-
-
-
   }),
-
-  
-
 })
 
 export const {

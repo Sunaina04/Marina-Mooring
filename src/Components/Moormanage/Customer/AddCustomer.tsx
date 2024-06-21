@@ -117,7 +117,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     topChainCondition: '',
     bottomChainCondition: '',
     shackleSwivelCondition: '',
-    pennantCondition: '',
+    pendantCondition: '',
     depthAtMeanHighWater: '',
     status: 0,
     note: '',
@@ -277,7 +277,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       conditionOfEye: mooringRowData?.eyeCondition?.condition || '',
       topChainCondition: mooringRowData?.topChainCondition?.condition || '',
       shackleSwivelCondition: mooringRowData?.shackleSwivelCondition?.condition || '',
-      pennantCondition: mooringRowData?.pennantCondition?.condition || '',
+      pendantCondition: mooringRowData?.pendantCondition?.condition || '',
       depthAtMeanHighWater: mooringRowData?.depthAtMeanHighWater || '',
       bottomChainCondition: mooringRowData?.bottomChainCondition?.condition || '',
       status: 0,
@@ -309,7 +309,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           harbor: formData?.harbor,
           waterDepth: formData?.waterDepth,
           gpsCoordinates: gpsCoordinatesValue,
-          isDock: true, ///will chne with state
+          addDock: checkedDock,
           boatyardId: formData?.boatyardName.id,
           boatName: formData?.boatName,
           boatSize: formData?.boatSize,
@@ -321,7 +321,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           topChainConditionId: formData?.topChainCondition.id,
           bottomChainConditionId: formData?.bottomChainCondition.id,
           shackleSwivelConditionId: formData?.shackleSwivelCondition.id,
-          pennantCondition: formData?.pennantCondition,
+          pendantCondition: formData?.pendantCondition,
           depthAtMeanHighWater: formData?.depthAtMeanHighWater,
           statusId: 1,
         },
@@ -469,9 +469,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             shackleSwivelConditionId: formData?.shackleSwivelCondition.id
               ? formData?.shackleSwivelCondition.id
               : mooringRowData?.shackleSwivelCondition.id,
-            pennantConditionId: formData?.pennantCondition.id
-              ? formData?.pennantCondition.id
-              : mooringRowData?.pennantCondition.id,
+            pendantConditionId: formData?.pendantCondition.id
+              ? formData?.pendantCondition.id
+              : mooringRowData?.pendantCondition.id,
             depthAtMeanHighWater: formData?.depthAtMeanHighWater
               ? formData?.depthAtMeanHighWater
               : mooringRowData?.depthAtMeanHighWater,
@@ -1453,8 +1453,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
             //         <div className="mt-2">
             //           {/* <Dropdown
-            //             value={formData?.pennantCondition}
-            //             onChange={(e) => handleInputChange('pennantCondition', e.value)}
+            //             value={formData?.pendantCondition}
+            //             onChange={(e) => handleInputChange('pendantCondition', e.value)}
             //             options={pennantData}
             //             optionLabel="condition"
             //             editable
@@ -1462,7 +1462,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             //             style={{
             //               width: '230px',
             //               height: '32px',
-            //               border: fieldErrors.pennantCondition
+            //               border: fieldErrors.pendantCondition
             //                 ? '1px solid red'
             //                 : '1px solid #D5E1EA',
             //               borderRadius: '0.50rem',
@@ -1492,8 +1492,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             //           </div>
 
             //           <p>
-            //             {fieldErrors.pennantCondition && (
-            //               <small className="p-error">{fieldErrors.pennantCondition}</small>
+            //             {fieldErrors.pendantCondition && (
+            //               <small className="p-error">{fieldErrors.pendantCondition}</small>
             //             )}
             //           </p>
             //         </div>
@@ -2030,8 +2030,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
                     <div className="mt-2">
                       <InputComponent
-                        value={formData?.pennantCondition}
-                        onChange={(e) => handleInputChange('pennantCondition', e.target.value)}
+                        value={formData?.pendantCondition}
+                        onChange={(e) => handleInputChange('pendantCondition', e.target.value)}
                         // options={pennantData}
                         // optionLabel="condition"
                         // editable
@@ -2039,7 +2039,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         style={{
                           width: '230px',
                           height: '32px',
-                          border: fieldErrors.pennantCondition
+                          border: fieldErrors.pendantCondition
                             ? '1px solid red'
                             : '1px solid #D5E1EA',
                           borderRadius: '0.50rem',
@@ -2047,8 +2047,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         }}
                       />
                       <p id="conditionOfEye">
-                        {fieldErrors.pennantCondition && (
-                          <small className="p-error">{fieldErrors.pennantCondition}</small>
+                        {fieldErrors.pendantCondition && (
+                          <small className="p-error">{fieldErrors.pendantCondition}</small>
                         )}
                       </p>
                     </div>

@@ -201,7 +201,7 @@ export interface UpdateMooringPayload {
   topChainConditionId: number
   bottomChainConditionId: number
   shackleSwivelConditionId: number
-  pennantConditionId: number
+  pendantConditionId: number
   depthAtMeanHighWater: number
   statusId: number
 }
@@ -293,7 +293,7 @@ export interface MooringPayload {
   bottomChainCondition: MooringMetaDataTypes
   topChainCondition: MooringMetaDataTypes
   shackleSwivelCondition: MooringMetaDataTypes
-  pennantCondition: MooringMetaDataTypes
+  pendantCondition: MooringMetaDataTypes
   sizeOfWeight: MooringMetaDataTypes
   typeOfWeight: MooringMetaDataTypes
   depthAtMeanHighWater: number
@@ -327,7 +327,7 @@ export interface MooringResponseDtoList {
   bottomChainCondition: MooringMetaDataTypes
   topChainCondition: MooringMetaDataTypes
   shackleSwivelCondition: MooringMetaDataTypes
-  pennantCondition: MooringMetaDataTypes
+  pendantCondition: MooringMetaDataTypes
   sizeOfWeight: MooringMetaDataTypes
   typeOfWeight: MooringMetaDataTypes
   depthAtMeanHighWater: number
@@ -535,7 +535,7 @@ export interface MooringWithBoatYardContent {
   bottomChainCondition: MooringMetaDataTypes
   topChainCondition: MooringMetaDataTypes
   shackleSwivelCondition: MooringMetaDataTypes
-  pennantCondition: MooringMetaDataTypes
+  pendantCondition: MooringMetaDataTypes
   sizeOfWeight: MooringMetaDataTypes
   typeOfWeight: MooringMetaDataTypes
   depthAtMeanHighWater: number

@@ -870,7 +870,7 @@ const Customer = () => {
             </p>
             <p>
               <span>Pennant Condition: </span>
-              {mooringRowData?.pennantCondition?.condition}
+              {mooringRowData?.pendantCondition?.condition}
             </p>
             <p>
               <span>Water Depth: </span>
