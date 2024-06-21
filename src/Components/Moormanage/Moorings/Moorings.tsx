@@ -815,11 +815,11 @@ const Moorings = () => {
               <span>Bottom Chain Condition: </span>
               {mooringRowData?.bottomChainCondition?.condition}
             </p>
-            <p>
+            {/* <p>
               <span>Pendant Condition: </span>
               {mooringRowData?.pennantCondition?.condition}
 
-            </p>
+            </p> */}
           </div>
           <div>
             <p>

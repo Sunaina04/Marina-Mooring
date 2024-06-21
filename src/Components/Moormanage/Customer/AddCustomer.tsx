@@ -160,7 +160,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     const nameRegex = /^[a-zA-Z ]+$/
     const errors: { [key: string]: string } = {}
     let firstError = ''
-
     if (!firstName) {
       errors.firstName = 'First name is required'
       firstError = 'firstName'
