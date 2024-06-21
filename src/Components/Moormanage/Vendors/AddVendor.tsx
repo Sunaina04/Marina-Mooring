@@ -55,7 +55,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
   const validateAddVendorFields = () => {
     const errors: { [key: string]: string } = {}
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    const phoneRegex = /^\d{3}-\d{3}-\d{4}$/
+    const phoneRegex = /^.{10}$|^.{12}$/
     const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/
     const zipCodeRegex = /^\d+$/
     if (!formData.phone) {

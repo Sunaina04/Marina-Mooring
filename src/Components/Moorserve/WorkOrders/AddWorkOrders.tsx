@@ -697,7 +697,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 value={workOrder.mooringId?.mooringId || workOrder.mooringId}
                 onChange={(e) => handleInputChange('mooringId', e.target.value)}
                 options={MooringNameOptions}
-                optionLabel="mooringId"
+                optionLabel="mooringNumber"
                 editable
                 style={{
                   width: '230px',

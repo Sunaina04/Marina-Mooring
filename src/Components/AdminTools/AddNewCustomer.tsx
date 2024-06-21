@@ -94,7 +94,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
   const validateFields = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    const phoneRegex = /^\d{3}-\d{3}-\d{4}$/
+    const phoneRegex = /^.{10}$|^.{12}$/
     const nameRegex = /^[a-zA-Z ]+$/
     const zipCodeRegex = /^\d+$/
     const errors: { [key: string]: string } = {}
@@ -114,6 +114,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     } else if (!phoneRegex.test(phone)) {
       errors.phone = 'Phone must be a 10-digit number'
     }
+
     if (errors.phone && !firstError) {
       firstError = 'phone'
     }
