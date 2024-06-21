@@ -486,8 +486,8 @@ const Customer = () => {
             dialogStyle={{
               width: '800px',
               minWidth: '800px',
-              height: '600px',
-              minHeight: '600px',
+              height: '650px',
+              minHeight: '650px',
               borderRadius: '1rem',
               maxHeight: '95% !important',
             }}

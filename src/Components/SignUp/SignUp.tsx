@@ -41,7 +41,7 @@ const SignUp = () => {
 
     // Validation for phone number
     if (name === 'phoneNumber') {
-      const phoneRegex = /^\d{10}$/
+      const phoneRegex = /^\d{3}-\d{3}-\d{4}$/
       if (!phoneRegex.test(value)) {
         toast.current?.show({
           severity: 'error',

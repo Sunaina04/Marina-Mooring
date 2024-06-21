@@ -55,7 +55,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
   const validateAddVendorFields = () => {
     const errors: { [key: string]: string } = {}
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    const phoneRegex = /^\d{10}$/
+    const phoneRegex = /^\d{3}-\d{3}-\d{4}$/
     const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/
     const zipCodeRegex = /^\d+$/
     if (!formData.phone) {
@@ -97,7 +97,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
       errors.streetBuildingForAddress = 'street/Building is required'
     if (!formData.aptSuiteForAddress) errors.aptSuiteForAddress = 'aptSuite is required'
     if (!formData.countryForAddress) errors.countryForAddress = 'country is required'
-    if (!formData.stateForAddress) errors.stateForAddress = 'state is required' 
+    if (!formData.stateForAddress) errors.stateForAddress = 'state is required'
     if (!formData.zipCodeForAddress) {
       errors.zipCodeForAddress = 'Zip Code is required'
     } else if (!zipCodeRegex.test(formData.zipCodeForAddress)) {
@@ -963,7 +963,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
                   fontSize: '0.70rem',
                   backgroundColor: '#F5F5F5',
                   boxShadow: 'none',
-                  padding:"10px"
+                  padding: '10px',
                 }}
               />
               <p>{fieldErrors.note && <small className="p-error">{fieldErrors.note}</small>}</p>

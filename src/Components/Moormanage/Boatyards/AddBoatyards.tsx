@@ -100,7 +100,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
 
   const validateFields = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    const phoneRegex = /^\d{10}$/
+    const phoneRegex = /^\d{3}-\d{3}-\d{4}$/
     const nameRegex = /^[a-zA-Z ]+$/
     const zipCodeRegex = /^\d+$/
     const errors: { [key: string]: string } = {}
