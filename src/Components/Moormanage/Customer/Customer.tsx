@@ -152,12 +152,10 @@ const Customer = () => {
   }
 
   const handleEdit = () => {
-    if (customerRecord == true) {
-      setSelectedCustomer(customerRecordData)
-      setEditCustomerMode(true)
-      setModalVisible(true)
-      setEditMode(true)
-    }
+    setSelectedCustomer(customerRecordData)
+    setEditCustomerMode(true)
+    setModalVisible(true)
+    setEditMode(true)
   }
 
   const handleMooringEdit = () => {
@@ -168,44 +166,39 @@ const Customer = () => {
   }
 
   const handleDelete = async (rowData: any) => {
-    if (customerRecord == true) {
-      try {
-        const response = await deleteCustomer({ id: customerRecordData?.id }).unwrap()
-        const { status, message } = response as DeleteCustomerResponse
-        if (status === 200) {
-          toast.current?.show({
-            severity: 'success',
-            summary: 'Success',
-            detail: 'User deleted successfully',
-            life: 3000,
-          })
-          getCustomerData()
-          setMooringData([])
-        } else {
-          toast.current?.show({
-            severity: 'error',
-            summary: 'Error',
-            detail: message,
-            life: 3000,
-          })
-        }
-        setCustomerRecordData('')
-      } catch (error) {
-        const { message: msg } = error as ErrorResponse
+    try {
+      const response = await deleteCustomer({ id: customerRecordData?.id }).unwrap()
+      const { status, message } = response as DeleteCustomerResponse
+      if (status === 200) {
+        toast.current?.show({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'User deleted successfully',
+          life: 3000,
+        })
+        getCustomerData()
+        setMooringData([])
+      } else {
         toast.current?.show({
           severity: 'error',
           summary: 'Error',
-          detail: msg,
+          detail: message,
           life: 3000,
         })
       }
+      setCustomerRecordData('')
+    } catch (error) {
+      const { message: msg } = error as ErrorResponse
+      toast.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: msg,
+        life: 3000,
+      })
     }
-
-    setCustomerRecord(false)
   }
 
   const handleCustomerTableRowClick = (rowData: any) => {
-    setCustomerRecord(true)
     setCustomerId(rowData.data.id)
     getCustomersWithMooring(rowData.data.id)
   }
@@ -279,7 +272,7 @@ const Customer = () => {
         style: MooringTableColumnStyle,
       },
       {
-        id: 'mooringId',
+        id: 'mooringNumber',
         label: 'Mooring Name',
         style: MooringTableColumnStyle,
       },
@@ -399,7 +392,6 @@ const Customer = () => {
       } else {
         setIsLoading(false)
         setIsLoader(false)
-        setCustomerRecord(false)
         setCustomerRecordData('')
         setMooringData([])
         setBoatYardData([])
@@ -624,13 +616,13 @@ const Customer = () => {
                   onClick={handleEdit}
                   className="mr-3 mt-[19px] text-[white]"
                   data-testid="FaEdit"
-                  style={{ cursor: customerRecord ? 'pointer' : 'not-allowed' }}
+                  style={{ cursor: 'pointer' }}
                 />
                 <RiDeleteBin5Fill
                   onClick={handleDelete}
                   className="text-white mr-2 mt-[19px] "
                   data-testid="RiDeleteBin5Fill"
-                  style={{ cursor: customerRecord ? 'pointer' : 'not-allowed' }}
+                  style={{ cursor: 'pointer' }}
                 />
               </div>
             </div>
@@ -847,7 +839,7 @@ const Customer = () => {
             </p>
             <p>
               <span>Mooring Number: </span>
-              {mooringRowData?.mooringId}
+              {mooringRowData?.mooringNumber}
             </p>
             <p>
               <span>Boat Name: </span>
@@ -858,7 +850,7 @@ const Customer = () => {
             </p>
             <p>
               <span>Size of Weight: </span>
-              {mooringRowData?.sizeOfWeight?.weight}
+              {mooringRowData?.sizeOfWeight}
             </p>
             <p>
               <span>Top Chain Condition: </span>
@@ -870,12 +862,12 @@ const Customer = () => {
             </p>
             <p>
               <span>Pendant Condition: </span>
-              {mooringRowData?.pendantCondition?.condition}
+              {mooringRowData?.pendantCondition}
             </p>
           </div>
           <div>
             <p>
-              <span>Harbor Area: </span> {mooringRowData?.harbor}
+              <span>Harbor Area: </span> {mooringRowData?.harborOrArea}
             </p>
             <p>
               <span>G.P.S Coordinates: </span>

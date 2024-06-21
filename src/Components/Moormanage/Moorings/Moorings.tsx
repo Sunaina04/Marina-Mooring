@@ -147,39 +147,27 @@ const Moorings = () => {
   }
 
   const handleEdit = (rowData: any) => {
-    if (mooringRecord == true) {
-      setCustomerModalVisible(true)
-      setSelectedCustomer(rowData)
-      setEditCustomerMode(true)
-      setEditMode(true)
-    }
+    setCustomerModalVisible(true)
+    setSelectedCustomer(rowData)
+    setEditCustomerMode(true)
+    setEditMode(true)
   }
 
   const handleDelete = async () => {
-    if (mooringRecord == true) {
-      try {
-        const response = await deleteMooring({ id: mooringId }).unwrap()
-        const { status, message } = response as DeleteCustomerResponse
-        if (status === 200) {
-          toast.current?.show({
-            severity: 'success',
-            summary: 'Success',
-            detail: message,
-            life: 3000,
-          })
-          getMooringsData()
-          setCustomerMooringData([])
-          setCustomerRecordData('')
-        } else {
-          toast.current?.show({
-            severity: 'error',
-            summary: 'Error',
-            detail: message,
-            life: 3000,
-          })
-        }
-      } catch (error) {
-        const { message } = error as ErrorResponse
+    try {
+      const response = await deleteMooring({ id: mooringId }).unwrap()
+      const { status, message } = response as DeleteCustomerResponse
+      if (status === 200) {
+        toast.current?.show({
+          severity: 'success',
+          summary: 'Success',
+          detail: message,
+          life: 3000,
+        })
+        getMooringsData()
+        setCustomerMooringData([])
+        setCustomerRecordData('')
+      } else {
         toast.current?.show({
           severity: 'error',
           summary: 'Error',
@@ -187,6 +175,14 @@ const Moorings = () => {
           life: 3000,
         })
       }
+    } catch (error) {
+      const { message } = error as ErrorResponse
+      toast.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: message,
+        life: 3000,
+      })
     }
     setMooringRecord(false)
   }
@@ -566,13 +562,13 @@ const Moorings = () => {
                   onClick={handleEdit}
                   className="mr-3 mt-[19px] text-[white]"
                   data-testid="FaEdit"
-                  style={{ cursor: mooringRecord ? 'pointer' : 'not-allowed' }}
+                  style={{ cursor: 'pointer' }}
                 />
                 <RiDeleteBin5Fill
                   onClick={handleDelete}
                   className="text-white mr-2 mt-[19px] "
                   data-testid="RiDeleteBin5Fill"
-                  style={{ cursor: mooringRecord ? 'pointer' : 'not-allowed' }}
+                  style={{ cursor: 'pointer' }}
                 />
               </div>
             </div>
@@ -805,7 +801,7 @@ const Moorings = () => {
             </p>
             <p>
               <span>Size of Weight: </span>
-              {mooringRowData?.sizeOfWeight?.weight}
+              {mooringRowData?.sizeOfWeight}
             </p>
             <p>
               <span>Top Chain Condition: </span>
@@ -817,12 +813,12 @@ const Moorings = () => {
             </p>
             <p>
               <span>Pendant Condition: </span>
-              {mooringRowData?.pendantCondition?.condition}
+              {mooringRowData?.pendantCondition}
             </p>
           </div>
           <div>
             <p>
-              <span>Harbor Area: </span> {mooringRowData?.harbor}
+              <span>Harbor Area: </span> {mooringRowData?.harborOrArea}
             </p>
             <p>
               <span>G.P.S Coordinates: </span>

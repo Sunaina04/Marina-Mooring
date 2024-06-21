@@ -147,10 +147,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       setbottomChainCondition(typeOfBottomChainData)
     }
 
-    // if (typeOfShackleSwivelData !== null) {
-    //   setShackleSwivelData(typeOfShackleSwivelData)
-    // }
-
     if (typeOfPennantData !== null) {
       setPennantData(typeOfPennantData)
     }
@@ -245,9 +241,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     //   if (!firstError) firstError = 'sizeOfWeight'
     // }
 
-
-
-
     if (!formData?.sizeOfWeight) {
       errors.sizeOfWeight = 'Size of Weight is required'
       if (!firstError) firstError = 'sizeOfWeight'
@@ -255,11 +248,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       errors.sizeOfWeight = 'Size of Weight must be a number'
       if (!firstError) firstError = 'sizeOfWeight'
     }
-
-
-
-
-
 
     if (!formData?.typeOfWeight) {
       errors.typeOfWeight = 'Type of Weight is required'
@@ -393,7 +381,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
         boatyardId: formData?.boatYardName?.id,
         boatName: formData?.boatName,
         boatSize: formData?.boatSize,
-        boatTypeId: formData?.type,
+        boatTypeId: formData?.type?.id,
         boatWeight: formData?.boatWeight,
         sizeOfWeight: formData?.sizeOfWeight,
         typeOfWeightId: formData?.typeOfWeight?.id,
@@ -466,8 +454,17 @@ const AddMoorings: React.FC<AddMooringProps> = ({
           : mooringRowData?.boatyardResponseDto?.id,
         boatName: formData?.boatName ? formData?.boatName : mooringRowData?.boatName,
         boatSize: formData?.boatSize ? formData?.boatSize : mooringRowData?.boatSize,
-        boatTypeId: formData?.type ? formData?.type : mooringRowData?.boatType,
+        boatTypeId: formData?.type?.id ? formData?.type?.id : mooringRowData?.boatType?.id,
         boatWeight: formData?.boatWeight ? formData?.boatWeight : mooringRowData?.boatWeight,
+        installBottomChainDate: formData?.bottomChainDate
+          ? formData?.bottomChainDate
+          : mooringRowData?.installBottomChainDate,
+        installTopChainDate: formData?.topChainDate
+          ? formData?.topChainDate
+          : mooringRowData?.installTopChainDate,
+        installConditionOfEyeDate: formData?.conditionEyeDate
+          ? formData?.conditionEyeDate
+          : mooringRowData?.installConditionOfEyeDate,
         sizeOfWeight: formData?.sizeOfWeight
           ? formData?.sizeOfWeight
           : mooringRowData?.sizeOfWeight,
@@ -492,7 +489,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
         depthAtMeanHighWater: formData?.depthAtMeanHighWater
           ? formData?.depthAtMeanHighWater
           : mooringRowData?.depthAtMeanHighWater,
-        customerOwnerId: selectedCustomerId,
       }
       const response = await updateMooring({
         payload: editMooringPayload,
@@ -1037,7 +1033,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 <Dropdown
                   value={formData?.type}
                   onChange={(e) => handleInputChange('type', e.target.value)}
-                   options={[]}
+                  options={[]}
                   // optionLabel="boatType"
                   // editable
                   // placeholder="Select"

@@ -160,7 +160,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     const nameRegex = /^[a-zA-Z ]+$/
     const errors: { [key: string]: string } = {}
     let firstError = ''
-
     if (!firstName) {
       errors.firstName = 'First name is required'
       firstError = 'firstName'
@@ -267,38 +266,37 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     setStreetHouse(customer?.streetHouse || '')
     setSectorBlock(customer?.aptSuite || '')
     setPinCode(customer?.zipCode || '')
+    setSelectedCustomerType(customer?.customerTypeDto?.type)
     setSelectedState(customer?.stateResponseDto?.name || undefined)
     setSelectedCountry(customer?.countryResponseDto?.name || undefined)
     setGpsCoordinatesValue(mooringRowData?.gpsCoordinates || '')
-    setSelectedCustomerType(customer?.customerTypeDto?.type || '')
-    console.log(
-      'customer?.customerTypeDto?.type',
-      customer?.customerTypeDto?.type,
-      selectedCustomerType,
-    )
+    console.log('mooringRowData', mooringRowData)
 
     setFormData((prevState: any) => ({
       ...prevState,
-      mooringId: mooringRowData?.mooringId || '',
+      mooringNumber: mooringRowData?.mooringNumber || '',
       mooringName: mooringRowData?.mooringName || '',
-      customerName: '',
-      harbor: mooringRowData?.harbor || '',
-      waterDepth: mooringRowData?.waterDepth || '',
+      harbor: mooringRowData?.harborOrArea || '',
+      // waterDepth: mooringRowData?.waterDepth || '',
       // gpsCoordinates: mooringRowData?.gpsCoordinates || '',
-      boatyardName: mooringRowData?.boatyardResponseDto?.boatyardName || '',
+      boatYardName: mooringRowData?.boatyardResponseDto?.boatyardName || '',
       boatName: mooringRowData?.boatName || '',
       boatSize: mooringRowData?.boatSize || '',
-      boatType: mooringRowData?.boatType?.boatType || '',
+      type: mooringRowData?.boatType?.boatType || '',
       boatWeight: mooringRowData?.boatWeight || '',
-      sizeOfWeight: mooringRowData?.sizeOfWeight?.weight || '',
+      sizeOfWeight: mooringRowData?.sizeOfWeight || '',
       typeOfWeight: mooringRowData?.typeOfWeight?.type || '',
       conditionOfEye: mooringRowData?.eyeCondition?.condition || '',
       topChainCondition: mooringRowData?.topChainCondition?.condition || '',
       shackleSwivelCondition: mooringRowData?.shackleSwivelCondition?.condition || '',
-      pendantCondition: mooringRowData?.pendantCondition?.condition || '',
+      pendantCondition: mooringRowData?.pendantCondition || '',
       depthAtMeanHighWater: mooringRowData?.depthAtMeanHighWater || '',
       bottomChainCondition: mooringRowData?.bottomChainCondition?.condition || '',
-      status: 0,
+      bottomChainDate: mooringRowData?.installBottomChainDate || '',
+      topChainDate: mooringRowData?.installTopChainDate || '',
+      conditionEyeDate: mooringRowData?.installConditionOfEyeDate || '',
+      note: customer?.note || '',
+      status: 1,
     }))
   }
 
@@ -422,7 +420,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         country: selectedCountry?.id,
         zipCode: pinCode,
         customerOwnerId: selectedCustomerId,
-        customerTypeId: selectedCustomerType?.id,
+        customerTypeId: selectedCustomerType === 'Dock' ? 5 : selectedCustomerType?.id,
+        note: formData?.note,
       }
       const response = await updateCustomer({
         payload: editCustomerPayload,
@@ -477,47 +476,60 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         country: selectedCountry?.id ? selectedCountry?.id : customer?.stateResponseDto?.id,
         zipCode: pinCode,
         customerOwnerId: selectedCustomerId,
+        customerTypeId: selectedCustomerType === 'Dock' ? 5 : selectedCustomerType?.id,
+        note: formData?.note,
         mooringRequestDtoList: [
           {
             id: mooringRowData?.id,
-            mooringId: formData?.mooringId ? formData?.mooringId : mooringRowData?.mooringId,
-            lastName: lastName,
-            harbor: formData?.harbor ? formData?.harbor : mooringRowData?.harbor,
-            waterDepth: formData?.waterDepth ? formData?.waterDepth : mooringRowData?.waterDepth,
+            mooringNumber: formData?.mooringNumber
+              ? formData?.mooringNumber
+              : mooringRowData?.mooringNumber,
+            customerId: formData?.customerName?.id
+              ? formData?.customerName?.id
+              : mooringRowData?.customerId,
+            harborOrArea: formData?.harbor ? formData?.harbor : mooringRowData?.harborOrArea,
             gpsCoordinates: gpsCoordinatesValue,
-            boatyardId: formData?.boatyardName.id
-              ? formData?.boatyardName.id
+            boatyardId: formData?.boatyardName
+              ? formData?.boatyardName
               : mooringRowData?.boatyardResponseDto?.id,
             boatName: formData?.boatName ? formData?.boatName : mooringRowData?.boatName,
             boatSize: formData?.boatSize ? formData?.boatSize : mooringRowData?.boatSize,
-            boatTypeId: formData?.boatType.id ? formData?.boatType.id : mooringRowData?.boatType.id,
+            boatTypeId: formData?.type?.id ? formData?.type?.id : mooringRowData?.boatType?.id,
             boatWeight: formData?.boatWeight ? formData?.boatWeight : mooringRowData?.boatWeight,
-            sizeOfWeightId: formData?.sizeOfWeight.id
-              ? formData?.sizeOfWeight.id
-              : mooringRowData?.sizeOfWeight.id,
+            installBottomChainDate: formData?.bottomChainDate
+              ? formData?.bottomChainDate
+              : mooringRowData?.installBottomChainDate,
+            installTopChainDate: formData?.topChainDate
+              ? formData?.topChainDate
+              : mooringRowData?.installTopChainDate,
+            installConditionOfEyeDate: formData?.conditionEyeDate
+              ? formData?.conditionEyeDate
+              : mooringRowData?.installConditionOfEyeDate,
+            sizeOfWeight: formData?.sizeOfWeight
+              ? formData?.sizeOfWeight
+              : mooringRowData?.sizeOfWeight,
             typeOfWeightId: formData?.typeOfWeight.id
               ? formData?.typeOfWeight.id
               : mooringRowData?.typeOfWeight.id,
             eyeConditionId: formData?.conditionOfEye.id
               ? formData?.conditionOfEye.id
-              : mooringRowData?.eyeCondition.id,
-            topChainConditionId: formData?.topChainCondition.id
-              ? formData?.topChainCondition.id
-              : mooringRowData?.topChainCondition.id,
-            bottomChainConditionId: formData?.bottomChainCondition.id
-              ? formData?.bottomChainCondition.id
-              : mooringRowData?.bottomChainCondition.id,
-            shackleSwivelConditionId: formData?.shackleSwivelCondition.id
-              ? formData?.shackleSwivelCondition.id
-              : mooringRowData?.shackleSwivelCondition.id,
-            pendantConditionId: formData?.pendantCondition.id
-              ? formData?.pendantCondition.id
-              : mooringRowData?.pendantCondition.id,
+              : mooringRowData?.eyeCondition?.id,
+            topChainConditionId: formData?.topChainCondition?.id
+              ? formData?.topChainCondition?.id
+              : mooringRowData?.topChainCondition?.id,
+            bottomChainConditionId: formData?.bottomChainCondition?.id
+              ? formData?.bottomChainCondition?.id
+              : mooringRowData?.bottomChainCondition?.id,
+            shackleSwivelConditionId: formData?.shackleSwivelCondition?.id
+              ? formData?.shackleSwivelCondition?.id
+              : mooringRowData?.shackleSwivelCondition?.id,
+            pendantCondition: formData?.pendantCondition
+              ? formData?.pendantCondition
+              : mooringRowData?.pendantCondition,
             depthAtMeanHighWater: formData?.depthAtMeanHighWater
               ? formData?.depthAtMeanHighWater
               : mooringRowData?.depthAtMeanHighWater,
-            customerOwnerId: selectedCustomerId,
-            // statusId: 1,
+            statusId: 4,
           },
         ],
       }
@@ -648,7 +660,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   useEffect(() => {
     if (checkedDock === true) {
       setSelectedCustomerType(customerType.find((item: any) => item.id === 5)?.type)
-    } else if (checkedDock === false) {
+    } else if (checkedDock === false && !editCustomerMode) {
       setSelectedCustomerType(undefined)
     }
   }, [])
@@ -657,6 +669,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     if (selectedCustomerType && selectedCustomerType?.id === 5) {
       setChecked(true)
       setCheckedDock(true)
+      console.log('here in id', checked, checkedDock)
+      console.log(editCustomerMode, editMooringMode)
     }
   }, [selectedCustomerType])
 

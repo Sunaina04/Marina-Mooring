@@ -282,7 +282,7 @@ export interface MooringPayload {
   customerName: string
   firstName: string
   lastName: string
-  harbor: string
+  harborOrArea: string
   waterDepth: string
   gpsCoordinates: string
   boatName: string
@@ -293,8 +293,8 @@ export interface MooringPayload {
   bottomChainCondition: MooringMetaDataTypes
   topChainCondition: MooringMetaDataTypes
   shackleSwivelCondition: MooringMetaDataTypes
-  pendantCondition: MooringMetaDataTypes
-  sizeOfWeight: MooringMetaDataTypes
+  pendantCondition: string
+  sizeOfWeight: string
   typeOfWeight: MooringMetaDataTypes
   depthAtMeanHighWater: number
   mooringStatus: MooringStatus
