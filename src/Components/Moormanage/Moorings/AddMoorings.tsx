@@ -1034,39 +1034,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 </p>
               </div>
             </div>
-            <div className="mt-3">
-              <div>
-                <span className="font-medium text-sm text-[#000000]">
-                  <div className="flex gap-1">
-                    Pendant Condition
-                    <p className="text-red-600">*</p>
-                  </div>
-                </span>
-              </div>
-
-              <div className="mt-2">
-                <InputComponent
-                  value={formData?.pennantCondition}
-                  onChange={(e) => handleInputChange('pennantCondition', e.target.value)}
-                  // options={pennantData}
-                  // optionLabel="condition"
-                  // editable
-                  // placeholder="Select"
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: fieldErrors.pennantCondition ? '1px solid red' : '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                  }}
-                />
-                <p id="conditionOfEye">
-                  {fieldErrors.pennantCondition && (
-                    <small className="p-error">{fieldErrors.pennantCondition}</small>
-                  )}
-                </p>
-              </div>
-            </div>
+           
             <div className="mt-3">
               <div>
                 <span className="font-medium text-sm text-[#000000]">
@@ -1095,6 +1063,32 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 />
                 {/* <p id="type">
                   {fieldErrors.type && <small className="p-error">{fieldErrors.type}</small>}
+                </p> */}
+              </div>
+            </div>
+            <div className="mt-3">
+              <span className="font-medium text-sm text-[#000000]">
+                <div className="flex gap-1">
+                  Weight (in kg)
+                  {/* <p className="text-red-600">*</p> */}
+                </div>
+              </span>
+              <div className="mt-2">
+                <InputComponent
+                  value={formData?.boatWeight}
+                  onChange={(e) => handleInputChange('boatWeight', e.target.value)}
+                  style={{
+                    width: '230px',
+                    height: '32px',
+                    border: '1px solid #D5E1EA',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
+                  }}
+                />
+                {/* <p id="boatWeight">
+                  {fieldErrors.boatWeight && (
+                    <small className="p-error">{fieldErrors.boatWeight}</small>
+                  )}
                 </p> */}
               </div>
             </div>
@@ -1207,34 +1201,43 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               </div>
             </div>
 
-            <div className="mt-3">
-              <span className="font-medium text-sm text-[#000000]">
-                <div className="flex gap-1">
-                  Weight (in kg)
-                  {/* <p className="text-red-600">*</p> */}
-                </div>
-              </span>
+           
+          </div>
+          <div>
+
+          <div className="mt-3">
+              <div>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">
+                    Pendant Condition
+                    <p className="text-red-600">*</p>
+                  </div>
+                </span>
+              </div>
+
               <div className="mt-2">
                 <InputComponent
-                  value={formData?.boatWeight}
-                  onChange={(e) => handleInputChange('boatWeight', e.target.value)}
+                  value={formData?.pennantCondition}
+                  onChange={(e) => handleInputChange('pennantCondition', e.target.value)}
+                  // options={pennantData}
+                  // optionLabel="condition"
+                  // editable
+                  // placeholder="Select"
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: '1px solid #D5E1EA',
+                    border: fieldErrors.pennantCondition ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                   }}
                 />
-                {/* <p id="boatWeight">
-                  {fieldErrors.boatWeight && (
-                    <small className="p-error">{fieldErrors.boatWeight}</small>
+                <p id="conditionOfEye">
+                  {fieldErrors.pennantCondition && (
+                    <small className="p-error">{fieldErrors.pennantCondition}</small>
                   )}
-                </p> */}
+                </p>
               </div>
             </div>
-          </div>
-          <div>
             <div className="mt-3">
               <div>
                 <span className="font-medium text-sm text-[#000000]">Pin on Map</span>
