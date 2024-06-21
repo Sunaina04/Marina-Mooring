@@ -270,7 +270,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     setSelectedState(customer?.stateResponseDto?.name || undefined)
     setSelectedCountry(customer?.countryResponseDto?.name || undefined)
     setGpsCoordinatesValue(mooringRowData?.gpsCoordinates || '')
-    console.log('mooringRowData', mooringRowData)
 
     setFormData((prevState: any) => ({
       ...prevState,
@@ -378,8 +377,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         setIsLoading(false)
       } else {
         setIsLoading(false)
-        console.log('here', message)
-
         toastRef?.current?.show({
           severity: 'error',
           summary: 'Error',
@@ -389,8 +386,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       }
     } catch (error) {
       const { data, message } = error as ErrorResponse
-      console.log('error', error)
-
       setIsLoading(false)
       toastRef?.current?.show({
         severity: 'error',
@@ -669,8 +664,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     if (selectedCustomerType && selectedCustomerType?.id === 5) {
       setChecked(true)
       setCheckedDock(true)
-      console.log('here in id', checked, checkedDock)
-      console.log(editCustomerMode, editMooringMode)
     }
   }, [selectedCustomerType])
 
