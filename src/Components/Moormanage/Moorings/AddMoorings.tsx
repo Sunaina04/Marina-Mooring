@@ -240,10 +240,27 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     //   if (!firstError) firstError = 'boatWeight'
     // }
 
+    // if (!formData?.sizeOfWeight) {
+    //   errors.sizeOfWeight = 'Size of Weight is required'
+    //   if (!firstError) firstError = 'sizeOfWeight'
+    // }
+
+
+
+
     if (!formData?.sizeOfWeight) {
       errors.sizeOfWeight = 'Size of Weight is required'
       if (!firstError) firstError = 'sizeOfWeight'
+    } else if (!numberRegex.test(String(formData?.sizeOfWeight))) {
+      errors.sizeOfWeight = 'Size of Weight must be a number'
+      if (!firstError) firstError = 'sizeOfWeight'
     }
+
+
+
+
+
+
     if (!formData?.typeOfWeight) {
       errors.typeOfWeight = 'Type of Weight is required'
       if (!firstError) firstError = 'typeOfWeight'
