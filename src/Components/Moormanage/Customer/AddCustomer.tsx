@@ -1516,10 +1516,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     </div>
 
                     <div className="mt-2">
-                      <InputComponent
+                      <Dropdown
                         value={formData?.type}
                         onChange={(e) => handleInputChange('type', e.target.value)}
-                        // options={type}
+                        options={[]}
                         // optionLabel="boatType"
                         // editable
                         // placeholder="Select"
