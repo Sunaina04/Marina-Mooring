@@ -42,7 +42,7 @@ const Moorings = () => {
   const [boatYardData, setBoatYardData] = useState<any[]>([])
   const [selectedCustomer, setSelectedCustomer] = useState<any>()
   const [mooringRowData, setMooringRowData] = useState<MooringPayload>()
-  const [mooringRecord, setMooringRecord] = useState(false)
+  const [mooringRecord, setMooringRecord] = useState(true)
   const [editMode, setEditMode] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState()
   const [selectedMooring, setSelectedMooring] = useState()

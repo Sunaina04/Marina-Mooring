@@ -56,7 +56,7 @@ const Boatyards = () => {
   const [isLoader, setIsLoader] = useState(false)
   const [dialogVisible, setDialogVisible] = useState(false)
   const [mooringRowData, setMooringRowData] = useState<any>([])
-  const [boatYardRecord, setBoatyardRecord] = useState(false)
+  const [boatYardRecord, setBoatyardRecord] = useState(true)
   const toast = useRef<Toast>(null)
 
   const [getBoatyards] = useGetBoatyardsMutation()
@@ -456,8 +456,13 @@ const Boatyards = () => {
         <div
           className={`flex justify-between mt-4 p-3 ml-5 font-normal text-[12px] ${isLoader ? 'blur-screen' : ''}`}>
           <p className="">
-            {selectedBoatYard?.street} {selectedBoatYard?.apt} ,
-            {selectedBoatYard?.stateResponseDto?.name} ,{selectedBoatYard?.countryResponseDto?.name}
+            {selectedBoatYard?.street +
+              ', ' +
+              selectedBoatYard?.apt +
+              ', ' +
+              selectedBoatYard?.stateResponseDto?.name +
+              ', ' +
+              selectedBoatYard?.countryResponseDto?.name}
           </p>
           <p className="mr-[10rem]">{selectedBoatYard?.mooringInventoried}</p>
           <p className="underline mr-[4rem]">{selectedBoatYard?.gpsCoordinates}</p>
@@ -588,8 +593,8 @@ const Boatyards = () => {
             dialogStyle={{
               width: '820px',
               minWidth: '800px',
-              height: '600px',
-              minHeight: '610px',
+              height: '550px',
+              minHeight: '550px',
               borderRadius: '1rem',
               maxHeight: '60% !important',
             }}
