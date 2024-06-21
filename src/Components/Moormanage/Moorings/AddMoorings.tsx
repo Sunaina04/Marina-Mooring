@@ -113,6 +113,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     depthAtMeanHighWater: '',
     boatYardName: '',
     note: '',
+    bottomChainDate: '',
+    topChainDate: '',
+    conditionEyeDate: '',
   })
 
   const fetchMetaData = useCallback(async () => {
@@ -197,12 +200,12 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       if (!firstError) firstError = 'harbor'
     }
 
-    if (!formData?.waterDepth) {
-      errors.waterDepth = 'Water Depth is required'
-    } else if (!numberRegex.test(String(formData?.waterDepth))) {
-      errors.waterDepth = 'Water Depth must be a number'
-      if (!firstError) firstError = 'waterDepth'
-    }
+    // if (!formData?.waterDepth) {
+    //   errors.waterDepth = 'Water Depth is required'
+    // } else if (!numberRegex.test(String(formData?.waterDepth))) {
+    //   errors.waterDepth = 'Water Depth must be a number'
+    //   if (!firstError) firstError = 'waterDepth'
+    // }
 
     if (!gpsCoordinatesValue) {
       errors.gpsCoordinatesValue = 'GPS Coordinates is required'
@@ -229,13 +232,13 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       if (!firstError) firstError = 'boatYardName'
     }
 
-    if (!formData?.boatWeight) {
-      errors.boatWeight = 'BoatWeight  is required'
-      if (!firstError) firstError = 'boatWeight'
-    } else if (!numberRegex.test(String(formData?.boatWeight))) {
-      errors.boatWeight = 'Weight   must be a number'
-      if (!firstError) firstError = 'boatWeight'
-    }
+    // if (!formData?.boatWeight) {
+    //   errors.boatWeight = 'BoatWeight  is required'
+    //   if (!firstError) firstError = 'boatWeight'
+    // } else if (!numberRegex.test(String(formData?.boatWeight))) {
+    //   errors.boatWeight = 'Weight   must be a number'
+    //   if (!firstError) firstError = 'boatWeight'
+    // }
 
     if (!formData?.sizeOfWeight) {
       errors.sizeOfWeight = 'Size of Weight is required'
@@ -245,10 +248,10 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       errors.typeOfWeight = 'Type of Weight is required'
       if (!firstError) firstError = 'typeOfWeight'
     }
-    if (!formData?.type) {
-      errors.type = 'Type  is required'
-      if (!firstError) firstError = 'type'
-    }
+    // if (!formData?.type) {
+    //   errors.type = 'Type  is required'
+    //   if (!firstError) firstError = 'type'
+    // }
 
     if (!formData?.topChainCondition) {
       errors.topChainCondition = 'Top Chain Condition is required'
@@ -268,10 +271,10 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       errors.bottomChainCondition = 'Bottom Chain Condition is required'
       if (!firstError) firstError = 'bottomChainCondition'
     }
-    if (!formData?.shackleSwivelCondition) {
-      errors.shackleSwivelCondition = 'Shackle, Swivel Condition is required'
-      if (!firstError) firstError = 'shackleSwivelCondition'
-    }
+    // if (!formData?.shackleSwivelCondition) {
+    //   errors.shackleSwivelCondition = 'Shackle, Swivel Condition is required'
+    //   if (!firstError) firstError = 'shackleSwivelCondition'
+    // }
     if (!formData?.pennantCondition) {
       errors.pennantCondition = 'Pendant Condition is required'
       if (!firstError) firstError = 'pennantCondition'
@@ -285,9 +288,37 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       if (!firstError) firstError = 'depthAtMeanHighWater'
     }
 
+    if (!formData?.bottomChainDate) {
+      errors.bottomChainDate = 'Install Date is required'
+      if (!firstError) firstError = 'bottomChainDate'
+    }
+    if (!formData?.topChainDate) {
+      errors.topChainDate = 'Install Date is required'
+      if (!firstError) firstError = 'topChainDate'
+    }
+    if (!formData?.conditionEyeDate) {
+      errors.conditionEyeDate = 'Install Date is required'
+      if (!firstError) firstError = 'conditionEyeDate'
+    }
+
     setFirstErrorField(firstError)
     setFieldErrors(errors)
     return errors
+  }
+
+  const formatDate = (date: any) => {
+    if (!date) return null
+    const d = new Date(date)
+    const month = ('0' + (d.getMonth() + 1)).slice(-2)
+    const day = ('0' + d.getDate()).slice(-2)
+    const year = d.getFullYear()
+    return `${month}/${day}/${year}`
+  }
+
+  const parseDate = (dateString: any) => {
+    if (!dateString) return null
+    const [month, day, year] = dateString.split('/')
+    return new Date(year, month - 1, day)
   }
 
   const handleInputChange = (field: string, value: any) => {
@@ -842,7 +873,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
             <div>
               <span className="font-medium text-sm text-[#000000]">
                 <div className="flex gap-1">
-                  Top Chain Condition <span style={{ fontSize: '0.7rem' }}> (install date)</span>
+                  Top Chain Condition <span style={{ fontSize: '0.6rem' }}> (install date)</span>
                   <p className="text-red-600">*</p>
                 </div>
               </span>
@@ -850,24 +881,21 @@ const AddMoorings: React.FC<AddMooringProps> = ({
 
             <div className="mt-2">
               <Calendar
-                value={formData?.topChainCondition}
-                onChange={(e) => handleInputChange('topChainCondition', e.value)}
-                // options={chainData}
-                // optionLabel="condition"
-                // editable
-                // placeholder="Select"
+                value={parseDate(formData?.topChainDate)}
+                onChange={(e) => handleInputChange('topChainDate', formatDate(e.target.value))}
+                dateFormat="mm/dd/yy"
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: fieldErrors.topChainCondition ? '1px solid red' : '1px solid #D5E1EA',
+                  border: fieldErrors.topChainDate ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   padding: '0.5rem',
                 }}
               />
-              <p id="typeOfWeight">
-                {fieldErrors.topChainCondition && (
-                  <small className="p-error">{fieldErrors.topChainCondition}</small>
+              <p>
+                {fieldErrors.topChainDate && (
+                  <small className="p-error">{fieldErrors.topChainDate}</small>
                 )}
               </p>
             </div>
@@ -1073,43 +1101,11 @@ const AddMoorings: React.FC<AddMooringProps> = ({
           </div>
 
           <div>
-            {/* <div className="mt-3">
-              <div>
-                <span className="font-medium text-sm text-[#000000]">
-                  <div className="flex gap-1">
-                    Depth at Mean High Water
-                    <p className="text-red-600">*</p>
-                  </div>
-                </span>
-              </div>
-
-              <div className="mt-2">
-                <InputText
-                  value={formData?.depthAtMeanHighWater}
-                  onChange={(e) => handleInputChange('depthAtMeanHighWater', e.target.value)}
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: fieldErrors.depthAtMeanHighWater
-                      ? '1px solid red'
-                      : '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                  }}
-                />
-                <p id="depthAtMeanHighWater">
-                  {fieldErrors.depthAtMeanHighWater && (
-                    <small className="p-error">{fieldErrors.depthAtMeanHighWater}</small>
-                  )}
-                </p>
-              </div>
-            </div> */}
-
             <div className="mt-3">
               <div>
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
-                    Bottom Chain Condition{' '}
+                    Bottom Chain Condition
                     <span style={{ fontSize: '0.6rem' }}> (install date)</span>
                     <p className="text-red-600">*</p>
                   </div>
@@ -1118,8 +1114,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({
 
               <div className="mt-2">
                 <Calendar
-                  // value={formData?.bottomChainCondition}
-                  // onChange={(e) => handleInputChange('bottomChainCondition', e.value)}
+                  value={parseDate(formData.bottomChainDate)}
+                  onChange={(e) => handleInputChange('bottomChainDate', formatDate(e.target.value))}
+                  dateFormat="mm/dd/yy"
                   // options={bottomChainCondition}
                   // optionLabel="condition"
                   // editable
@@ -1127,17 +1124,15 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: fieldErrors.bottomChainCondition
-                      ? '1px solid red'
-                      : '1px solid #D5E1EA',
+                    border: fieldErrors.bottomChainDate ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                     padding: '0.5rem',
                   }}
                 />
-                <p id="bottomChainCondition">
-                  {fieldErrors.bottomChainCondition && (
-                    <small className="p-error">{fieldErrors.bottomChainCondition}</small>
+                <p>
+                  {fieldErrors.bottomChainDate && (
+                    <small className="p-error">{fieldErrors.bottomChainDate}</small>
                   )}
                 </p>
               </div>
@@ -1147,15 +1142,16 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               <div>
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
-                    Condition of Eye <span style={{ fontSize: '0.7rem' }}> (install date)</span>
+                    Condition of Eye <span style={{ fontSize: '0.6rem' }}> (install date)</span>
                     <p className="text-red-600">*</p>
                   </div>
                 </span>
               </div>
               <div className="mt-2">
                 <Calendar
-                  // value={formData?.conditionOfEye}
-                  // onChange={(e) => handleInputChange('conditionOfEye', e.value)}
+                  value={formData?.conditionEyeDate}
+                  onChange={(e) => handleInputChange('conditionEyeDate', e.value)}
+                  dateFormat="mm/dd/yy"
                   // options={conditionOfEye}
                   // optionLabel="condition"
                   // editable
@@ -1163,15 +1159,15 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: fieldErrors.conditionOfEye ? '1px solid red' : '1px solid #D5E1EA',
+                    border: fieldErrors.conditionEyeDate ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                     padding: '0.5rem',
                   }}
                 />
                 <p id="conditionOfEye">
-                  {fieldErrors.conditionOfEye && (
-                    <small className="p-error">{fieldErrors.conditionOfEye}</small>
+                  {fieldErrors.conditionEyeDate && (
+                    <small className="p-error">{fieldErrors.conditionEyeDate}</small>
                   )}
                 </p>
               </div>
