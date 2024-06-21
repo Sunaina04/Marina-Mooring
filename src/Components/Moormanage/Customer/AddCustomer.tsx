@@ -156,7 +156,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   }, [checked])
 
   const validateFields = () => {
-    const phoneRegex =/^.{10}$|^.{12}$/
+    const phoneRegex = /^.{10}$|^.{12}$/
     const nameRegex = /^[a-zA-Z ]+$/
     const errors: { [key: string]: string } = {}
     let firstError = ''
@@ -307,67 +307,62 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     if (Object.keys(errors).length > 0) {
       return
     }
-    console.log('selectedCustomerType', selectedCustomerType)
-
+    let payload
     setIsLoading(true)
-    const payload = {
-      firstName: firstName,
-      lastName: lastName,
-      emailAddress: email,
-      phone: phone,
-      streetHouse: streetHouse,
-      note: formData.note,
-      aptSuite: sectorBlock,
-      stateId: selectedState?.id,
-      countryId: selectedCountry?.id,
-      zipCode: pinCode,
-      customerTypeId: selectedCustomerType?.id,
-      mooringRequestDtoList: [
-        {
-          // mooringId: formData?.mooringId,
-          // lastName: lastName,
-          // harbor: formData?.harbor,
-          // waterDepth: formData?.waterDepth,
-          // gpsCoordinates: gpsCoordinatesValue,
-          // addDock: checkedDock,
-          // boatyardId: formData?.boatyardName.id,
-          // boatName: formData?.boatName,
-          // boatSize: formData?.boatSize,
-          // boatTypeId: formData?.boatType.id,
-          // boatWeight: formData?.boatWeight,
-          // sizeOfWeight: formData?.sizeOfWeight,
-          // typeOfWeightId: formData?.typeOfWeight.id,
-          // eyeConditionId: formData?.conditionOfEye.id,
-          // topChainConditionId: formData?.topChainCondition.id,
-          // bottomChainConditionId: formData?.bottomChainCondition.id,
-          // shackleSwivelConditionId: formData?.shackleSwivelCondition.id,
-          // pendantCondition: formData?.pendantCondition,
-          // depthAtMeanHighWater: formData?.depthAtMeanHighWater,
-          // statusId: 1,
-          customerId: formData?.customerName,
-          addDock: checkedDock,
-          mooringNumber: formData?.mooringId,
-          harborOrArea: formData?.harbor,
-          gpsCoordinates: gpsCoordinatesValue,
-          installBottomChainDate: formData?.bottomChainDate,
-          installTopChainDate: formData?.topChainDate,
-          installConditionOfEyeDate: formData?.conditionEyeDate,
-          boatyardId: formData?.boatYardName?.id,
-          boatName: formData?.boatName,
-          boatSize: formData?.boatSize,
-          boatTypeId: formData?.type,
-          boatWeight: formData?.boatWeight,
-          sizeOfWeight: formData?.sizeOfWeight,
-          typeOfWeightId: formData?.typeOfWeight?.id,
-          eyeConditionId: formData?.conditionOfEye?.id,
-          topChainConditionId: formData?.topChainCondition?.id,
-          bottomChainConditionId: formData?.bottomChainCondition?.id,
-          shackleSwivelConditionId: formData?.shackleSwivelCondition?.id,
-          pendantConditionId: formData?.pendantCondition,
-          depthAtMeanHighWater: formData?.depthAtMeanHighWater,
-          statusId: 1,
-        },
-      ],
+    if (checked) {
+      payload = {
+        firstName: firstName,
+        lastName: lastName,
+        emailAddress: email,
+        phone: phone,
+        streetHouse: streetHouse,
+        note: formData.note,
+        aptSuite: sectorBlock,
+        stateId: selectedState?.id,
+        countryId: selectedCountry?.id,
+        zipCode: pinCode,
+        customerTypeId: selectedCustomerType === 'Dock' ? 5 : selectedCustomerType?.id,
+        mooringRequestDtoList: [
+          {
+            customerId: formData?.customerName,
+            addDock: checkedDock,
+            mooringNumber: formData?.mooringId,
+            harborOrArea: formData?.harbor,
+            gpsCoordinates: gpsCoordinatesValue,
+            installBottomChainDate: formData?.bottomChainDate,
+            installTopChainDate: formData?.topChainDate,
+            installConditionOfEyeDate: formData?.conditionEyeDate,
+            boatyardId: formData?.boatYardName?.id,
+            boatName: formData?.boatName,
+            boatSize: formData?.boatSize,
+            boatTypeId: formData?.type,
+            boatWeight: formData?.boatWeight,
+            sizeOfWeight: formData?.sizeOfWeight,
+            typeOfWeightId: formData?.typeOfWeight?.id,
+            eyeConditionId: formData?.conditionOfEye?.id,
+            topChainConditionId: formData?.topChainCondition?.id,
+            bottomChainConditionId: formData?.bottomChainCondition?.id,
+            shackleSwivelConditionId: formData?.shackleSwivelCondition?.id,
+            pendantConditionId: formData?.pendantCondition,
+            depthAtMeanHighWater: formData?.depthAtMeanHighWater,
+            statusId: 1,
+          },
+        ],
+      }
+    } else {
+      payload = {
+        firstName: firstName,
+        lastName: lastName,
+        emailAddress: email,
+        phone: phone,
+        streetHouse: streetHouse,
+        note: formData.note,
+        aptSuite: sectorBlock,
+        stateId: selectedState?.id,
+        countryId: selectedCountry?.id,
+        zipCode: pinCode,
+        customerTypeId: selectedCustomerType?.id,
+      }
     }
 
     try {
@@ -385,6 +380,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         setIsLoading(false)
       } else {
         setIsLoading(false)
+        console.log('here', message)
+
         toastRef?.current?.show({
           severity: 'error',
           summary: 'Error',
@@ -393,12 +390,14 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         })
       }
     } catch (error) {
-      const { message } = error as ErrorResponse
+      const { data, message } = error as ErrorResponse
+      console.log('error', error)
+
       setIsLoading(false)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: message,
+        detail: data?.message,
         life: 3000,
       })
     }
@@ -786,9 +785,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
             <div className="">
               <span className="font-medium text-sm text-[#000000]">
-                <div className="flex gap-1">
-                  Customer Type
-                </div>
+                <div className="flex gap-1">Customer Type</div>
               </span>
               <div className="mt-2">
                 <Dropdown
@@ -1059,9 +1056,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
                 <div className="ml-6">
                   <span className="font-medium text-sm text-[#000000]">
-                    <div className="flex gap-1">
-                      Harbor/Area
-                    </div>
+                    <div className="flex gap-1">Harbor/Area</div>
                   </span>
                   <div className="mt-2">
                     <InputComponent
@@ -1087,9 +1082,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               <div className="flex gap-6 mt-3">
                 <div>
                   <span className="font-medium text-sm text-[#000000]">
-                    <div className="flex gap-1">
-                      G.P.S Coordinates
-                    </div>
+                    <div className="flex gap-1">G.P.S Coordinates</div>
                   </span>
                   <div className="mt-2">
                     <InputComponent
@@ -1118,9 +1111,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
                 <div>
                   <span className="font-medium text-sm text-[#000000]">
-                    <div className="flex gap-1">
-                      Boatyard Name
-                    </div>
+                    <div className="flex gap-1">Boatyard Name</div>
                   </span>
                   <div className="mt-2">
                     <Dropdown
@@ -1148,9 +1139,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
                 <div>
                   <span className="font-medium text-sm text-[#000000]">
-                    <div className="flex gap-1">
-                      Boat Name
-                    </div>
+                    <div className="flex gap-1">Boat Name</div>
                   </span>
                   <div className="mt-2">
                     <InputComponent
@@ -1190,9 +1179,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
                 <div>
                   <span className="font-medium text-sm text-[#000000]">
-                    <div className="flex gap-1">
-                      Boat Size (in feet)
-                    </div>
+                    <div className="flex gap-1">Boat Size (in feet)</div>
                   </span>
                   <div className="mt-2">
                     <InputComponent
@@ -1216,9 +1203,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 <div>
                   <div>
                     <span className="font-medium text-sm text-[#000000]">
-                      <div className="flex gap-1">
-                        Size of Weight
-                      </div>
+                      <div className="flex gap-1">Size of Weight</div>
                     </span>
                   </div>
 
@@ -1249,9 +1234,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 <div>
                   <div>
                     <span className="font-medium text-sm text-[#000000]">
-                      <div className="flex gap-1">
-                        Type of Weight
-                      </div>
+                      <div className="flex gap-1">Type of Weight</div>
                     </span>
                   </div>
 
@@ -1284,9 +1267,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 <div>
                   <div>
                     <span className="font-medium text-sm text-[#000000]">
-                      <div className="flex gap-1">
-                        Top Chain Condition
-                      </div>
+                      <div className="flex gap-1">Top Chain Condition</div>
                     </span>
                   </div>
 
@@ -1353,9 +1334,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 <div className="">
                   <div>
                     <span className="font-medium text-sm text-[#000000]">
-                      <div className="flex gap-1">
-                        Depth at Mean High Water
-                      </div>
+                      <div className="flex gap-1">Depth at Mean High Water</div>
                     </span>
                   </div>
 
@@ -1419,9 +1398,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   <div className="mt-3">
                     <div>
                       <span className="font-medium text-sm text-[#000000]">
-                        <div className="flex gap-1">
-                          Bottom Chain Condition
-                        </div>
+                        <div className="flex gap-1">Bottom Chain Condition</div>
                       </span>
                     </div>
 
@@ -1454,9 +1431,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   <div className="mt-3">
                     <div>
                       <span className="font-medium text-sm text-[#000000]">
-                        <div className="flex gap-1">
-                          Condition of Eye
-                        </div>
+                        <div className="flex gap-1">Condition of Eye</div>
                       </span>
                     </div>
                     <div className="mt-2">
@@ -1487,9 +1462,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   <div className="mt-3">
                     <div>
                       <span className="font-medium text-sm text-[#000000]">
-                        <div className="flex gap-1">
-                          Pendant Condition
-                        </div>
+                        <div className="flex gap-1">Pendant Condition</div>
                       </span>
                     </div>
 

@@ -817,8 +817,7 @@ const Moorings = () => {
             </p>
             <p>
               <span>Pendant Condition: </span>
-              {mooringRowData?.pennantCondition?.condition}
-
+              {mooringRowData?.pendantCondition?.condition}
             </p>
           </div>
           <div>
