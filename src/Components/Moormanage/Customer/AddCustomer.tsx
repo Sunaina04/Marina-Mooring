@@ -45,9 +45,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [selectedCountry, setSelectedCountry] = useState<Country>()
   const [selectedState, setSelectedState] = useState<State>()
   const [selectedCustomerType, setSelectedCustomerType] = useState<MetaData>()
-
-  console.log('selectedCustomerType', selectedCustomerType?.id)
-
   const [firstName, setFirstName] = useState<string>('')
   const [lastName, setLastName] = useState<string>('')
   const [phone, setPhone] = useState<string>('')
@@ -304,6 +301,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     if (Object.keys(errors).length > 0) {
       return
     }
+    console.log('selectedCustomerType', selectedCustomerType)
 
     setIsLoading(true)
     const payload = {
@@ -312,6 +310,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       emailAddress: email,
       phone: phone,
       streetHouse: streetHouse,
+      note: formData.note,
       aptSuite: sectorBlock,
       stateId: selectedState?.id,
       countryId: selectedCountry?.id,
@@ -319,24 +318,46 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       customerTypeId: selectedCustomerType?.id,
       mooringRequestDtoList: [
         {
-          mooringId: formData?.mooringId,
-          lastName: lastName,
-          harbor: formData?.harbor,
-          waterDepth: formData?.waterDepth,
-          gpsCoordinates: gpsCoordinatesValue,
+          // mooringId: formData?.mooringId,
+          // lastName: lastName,
+          // harbor: formData?.harbor,
+          // waterDepth: formData?.waterDepth,
+          // gpsCoordinates: gpsCoordinatesValue,
+          // addDock: checkedDock,
+          // boatyardId: formData?.boatyardName.id,
+          // boatName: formData?.boatName,
+          // boatSize: formData?.boatSize,
+          // boatTypeId: formData?.boatType.id,
+          // boatWeight: formData?.boatWeight,
+          // sizeOfWeight: formData?.sizeOfWeight,
+          // typeOfWeightId: formData?.typeOfWeight.id,
+          // eyeConditionId: formData?.conditionOfEye.id,
+          // topChainConditionId: formData?.topChainCondition.id,
+          // bottomChainConditionId: formData?.bottomChainCondition.id,
+          // shackleSwivelConditionId: formData?.shackleSwivelCondition.id,
+          // pendantCondition: formData?.pendantCondition,
+          // depthAtMeanHighWater: formData?.depthAtMeanHighWater,
+          // statusId: 1,
+          customerId: formData?.customerName,
           addDock: checkedDock,
-          boatyardId: formData?.boatyardName.id,
+          mooringNumber: formData?.mooringId,
+          harborOrArea: formData?.harbor,
+          gpsCoordinates: gpsCoordinatesValue,
+          installBottomChainDate: formData?.bottomChainDate,
+          installTopChainDate: formData?.topChainDate,
+          installConditionOfEyeDate: formData?.conditionEyeDate,
+          boatyardId: formData?.boatYardName?.id,
           boatName: formData?.boatName,
           boatSize: formData?.boatSize,
-          boatTypeId: formData?.boatType.id,
+          boatTypeId: formData?.type,
           boatWeight: formData?.boatWeight,
           sizeOfWeight: formData?.sizeOfWeight,
-          typeOfWeightId: formData?.typeOfWeight.id,
-          eyeConditionId: formData?.conditionOfEye.id,
-          topChainConditionId: formData?.topChainCondition.id,
-          bottomChainConditionId: formData?.bottomChainCondition.id,
-          shackleSwivelConditionId: formData?.shackleSwivelCondition.id,
-          pendantCondition: formData?.pendantCondition,
+          typeOfWeightId: formData?.typeOfWeight?.id,
+          eyeConditionId: formData?.conditionOfEye?.id,
+          topChainConditionId: formData?.topChainCondition?.id,
+          bottomChainConditionId: formData?.bottomChainCondition?.id,
+          shackleSwivelConditionId: formData?.shackleSwivelCondition?.id,
+          pendantConditionId: formData?.pendantCondition,
           depthAtMeanHighWater: formData?.depthAtMeanHighWater,
           statusId: 1,
         },
@@ -1592,8 +1613,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     </div>
                     <div className="mt-2">
                       <Calendar
-                        value={formData?.conditionEyeDate}
-                        onChange={(e) => handleInputChange('conditionEyeDate', e.value)}
+                        value={parseDate(formData.conditionEyeDate)}
+                        onChange={(e) =>
+                          handleInputChange('conditionEyeDate', formatDate(e.target.value))
+                        }
                         dateFormat="mm/dd/yy"
                         // options={conditionOfEye}
                         // optionLabel="condition"
