@@ -239,6 +239,7 @@ export interface DeleteCustomerResponse {
 export interface customerResponseDto {
   customerResponseDto: {
     id: number
+    mooringNumber: string
     customerName: string
     customerId: string
     phone: string
@@ -311,7 +312,7 @@ export interface MooringStatus {
 
 export interface MooringResponseDtoList {
   id: number
-  mooringId: string
+  mooringNumber: string
   mooringName: string
   customerName: string
   harbor: string
