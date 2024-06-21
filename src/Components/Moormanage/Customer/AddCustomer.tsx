@@ -44,7 +44,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const selectedCustomerId = useSelector(selectCustomerId)
   const [selectedCountry, setSelectedCountry] = useState<Country>()
   const [selectedState, setSelectedState] = useState<State>()
-  const [selectedCustomerType, setSelectedCustomerType] = useState<MetaData>()
+  const [selectedCustomerType, setSelectedCustomerType] = useState<any>()
   const [firstName, setFirstName] = useState<string>('')
   const [lastName, setLastName] = useState<string>('')
   const [phone, setPhone] = useState<string>('')
@@ -270,7 +270,13 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     setSelectedState(customer?.stateResponseDto?.name || undefined)
     setSelectedCountry(customer?.countryResponseDto?.name || undefined)
     setGpsCoordinatesValue(mooringRowData?.gpsCoordinates || '')
-    setSelectedCustomerType(customer?.customerTypeDto?.type || undefined)
+    setSelectedCustomerType(customer?.customerTypeDto?.type || '')
+    console.log(
+      'customer?.customerTypeDto?.type',
+      customer?.customerTypeDto?.type,
+      selectedCustomerType,
+    )
+
     setFormData((prevState: any) => ({
       ...prevState,
       mooringId: mooringRowData?.mooringId || '',

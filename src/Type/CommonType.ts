@@ -83,6 +83,13 @@ export interface MetaData {
   firstName: string
   lastName: string
   boatyardName: string
+  customer: {
+    customerTypeDto: {
+      id: number
+      type: string
+      description: string
+    }
+  }
 }
 
 export interface MetaDataTechnician {
