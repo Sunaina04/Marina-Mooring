@@ -684,7 +684,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   <div>
                     <Checkbox
                       onChange={(e) => {
-                        setCheckedDock(!e.checked)
+                        setCheckedDock(e.checked ?? false)
                       }}
                       checked={checkedDock}
                       style={{
@@ -692,7 +692,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         height: '22px',
                         width: '22px',
                         borderRadius: '5px',
-                      }}></Checkbox>
+                      }}
+                    />
                   </div>
                 </div>
               </div>

@@ -588,10 +588,10 @@ const Moorings = () => {
                       color: '#000000',
                     }}>
                     <p>
-                      <span className="">ID: </span>
+                      <span className="">Customer Id: </span>
                       {customerRecordData?.customerId}
                     </p>
-                    <p className="mt-6">
+                    <p className="mt-4">
                       <span className="">Phone: </span>
                       {customerRecordData?.phone}
                     </p>
@@ -603,13 +603,13 @@ const Moorings = () => {
                       fontWeight: '400',
                       lineHeight: '16.41px',
                       color: '#000000',
-                      marginLeft: '100px',
+                      marginLeft: '40px',
                     }}>
                     <p>
                       <span className="">Name: </span>
                       {customerRecordData?.firstName + ' ' + customerRecordData?.lastName}
                     </p>
-                    <p className="mt-6">
+                    <p className="mt-4">
                       <span className="">Email: </span>
                       {customerRecordData?.emailAddress}
                     </p>
@@ -624,16 +624,20 @@ const Moorings = () => {
                   }}>
                   <p className="ml-4">
                     <span className="address-label ">Address: </span>
-                    {customerRecordData?.aptSuite +
-                      ' ' +
-                      customerRecordData?.streetHouse +
-                      ' ' +
+                    {customerRecordData?.streetHouse +
+                      ', ' +
+                      customerRecordData?.aptSuite +
+                      ', ' +
                       customerRecordData?.stateResponseDto?.name +
-                      ' ' +
+                      ', ' +
                       customerRecordData?.countryResponseDto?.name}
                   </p>
+                  <p className="ml-4 mt-3">
+                    <span className="address-label ">Notes: </span>
+                    {customerRecordData?.notes}
+                  </p>
 
-                  <div className="flex mt-5 ml-4 mb-3 overflow-x-auto">
+                  <div className="flex mt-2 ml-4 mb-3 overflow-x-auto">
                     <div className="mt-1">
                       <h1 className="">Boatyard: </h1>
                     </div>
@@ -663,7 +667,7 @@ const Moorings = () => {
                   alt="Empty Data"
                   className="w-10 mx-auto mt-10 mb-3"
                 />
-                <p className="text-gray-500 font-bold text-lg mb-10">No data available</p>
+                <p className="text-gray-500 mb-10">No data available</p>
               </div>
             )}
           </div>

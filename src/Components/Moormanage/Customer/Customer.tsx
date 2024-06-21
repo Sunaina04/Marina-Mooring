@@ -531,58 +531,8 @@ const Customer = () => {
           />
 
           <div
-            className={`bg-#00426F overflow-x-hidden h-[590px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col ${isLoading ? 'blur-screen' : ''}`}>
+            className={`bg-#00426F h-[590px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col`}>
             <div className="flex-grow overflow-auto">
-              {/* <DataTable
-                value={customerData}
-                tableStyle={{
-                  fontSize: '12px',
-                  color: '#000000',
-                  fontWeight: 600,
-                  backgroundColor: '#D9D9D9',
-                  cursor: 'pointer',
-                }}
-                scrollable={false}
-                sortMode="multiple"
-                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
-                onRowClick={(rowData) => {
-                  handleCustomerTableRowClick(rowData)
-                }}
-                selectionMode="single"
-                selection={selectedProduct}
-                onSelectionChange={(e) => {
-                  console.log('value', e)
-
-                  // setSelectedProduct(e.value)
-                }}
-                dataKey="id"
-                rowClassName={(rowData) => rowData}
-                emptyMessage={
-                  <div className="flex flex-col justify-center items-center h-full">
-                    <img src="/assets/images/empty.png" alt="Empty Data" className="w-28 mb-4" />
-                    <p className="text-gray-500">No data available</p>
-                  </div>
-                }>
-                <Column
-                  field="customerId"
-                  header="Customer Id:"
-                  style={customerTableColumnStyle}></Column>
-                <Column
-                  field="customerTypeDto.type"
-                  header="Customer Type:"
-                  sortable
-                  style={customerTableColumnStyle}></Column>
-                <Column
-                  field="firstName"
-                  header="Name:"
-                  body={firstLastName}
-                  style={customerTableColumnStyle}></Column>
-                <Column
-                  field="emailAddress"
-                  header="Email:"
-                  style={customerTableColumnStyle}></Column>
-                <Column field="phone" header="Phone:" style={customerTableColumnStyle}></Column>
-              </DataTable> */}
               <DataTableComponent
                 data={customerData}
                 tableStyle={{
@@ -699,7 +649,7 @@ const Customer = () => {
                       <span className="">Customer Id: </span>
                       {customerRecordData?.customerId}
                     </p>
-                    <p className="mt-6">
+                    <p className="mt-4">
                       <span className="">Phone: </span>
                       {customerRecordData?.phone}
                     </p>
@@ -711,13 +661,13 @@ const Customer = () => {
                       fontWeight: '400',
                       lineHeight: '16.41px',
                       color: '#000000',
-                      marginLeft: '100px',
+                      marginLeft: '40px',
                     }}>
                     <p>
                       <span className="">Name: </span>
                       {customerRecordData?.firstName + ' ' + customerRecordData?.lastName}
                     </p>
-                    <p className="mt-6">
+                    <p className="mt-4">
                       <span className="">Email: </span>
                       {customerRecordData?.emailAddress}
                     </p>
@@ -740,8 +690,12 @@ const Customer = () => {
                       ', ' +
                       customerRecordData?.countryResponseDto?.name}
                   </p>
+                  <p className="ml-4 mt-3">
+                    <span className="address-label ">Notes: </span>
+                    {customerRecordData?.notes}
+                  </p>
 
-                  <div className="flex mt-5 ml-4 mb-3 overflow-x-auto">
+                  <div className="flex mt-2 ml-4 mb-3 overflow-x-auto">
                     <div className="mt-1">
                       <h1 className="">Boatyard: </h1>
                     </div>
