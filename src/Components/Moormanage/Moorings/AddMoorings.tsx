@@ -248,10 +248,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       errors.typeOfWeight = 'Type of Weight is required'
       if (!firstError) firstError = 'typeOfWeight'
     }
-    // if (!formData?.type) {
-    //   errors.type = 'Type  is required'
-    //   if (!firstError) firstError = 'type'
-    // }
 
     if (!formData?.topChainCondition) {
       errors.topChainCondition = 'Top Chain Condition is required'
@@ -271,10 +267,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       errors.bottomChainCondition = 'Bottom Chain Condition is required'
       if (!firstError) firstError = 'bottomChainCondition'
     }
-    // if (!formData?.shackleSwivelCondition) {
-    //   errors.shackleSwivelCondition = 'Shackle, Swivel Condition is required'
-    //   if (!firstError) firstError = 'shackleSwivelCondition'
-    // }
+
     if (!formData?.pennantCondition) {
       errors.pennantCondition = 'Pendant Condition is required'
       if (!firstError) firstError = 'pennantCondition'
@@ -371,16 +364,18 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       setIsLoading(true)
       const payload = {
         customerId: formData?.customerName,
-        mooringId: formData?.mooringNumber,
-        harbor: formData?.harbor,
-        waterDepth: formData?.waterDepth,
+        mooringNumber: formData?.mooringNumber,
+        harborOrArea: formData?.harbor,
         gpsCoordinates: gpsCoordinatesValue,
+        installBottomChainDate: formData?.bottomChainDate,
+        installTopChainDate: formData?.topChainDate,
+        installConditionOfEyeDate: formData?.conditionEyeDate,
         boatyardId: formData?.boatYardName?.id,
         boatName: formData?.boatName,
         boatSize: formData?.boatSize,
         boatTypeId: formData?.type?.id,
         boatWeight: formData?.boatWeight,
-        sizeOfWeightId: formData?.sizeOfWeight?.id,
+        sizeOfWeight: formData?.sizeOfWeight?.id,
         typeOfWeightId: formData?.typeOfWeight?.id,
         eyeConditionId: formData?.conditionOfEye?.id,
         topChainConditionId: formData?.topChainCondition?.id,
@@ -388,7 +383,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
         shackleSwivelConditionId: formData?.shackleSwivelCondition?.id,
         pennantConditionId: formData?.pennantCondition?.id,
         depthAtMeanHighWater: formData?.depthAtMeanHighWater,
-        customerOwnerId: selectedCustomerId,
+        statusId: 2,
       }
 
       const response = await saveMoorings(payload).unwrap()
@@ -1034,7 +1029,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 </p>
               </div>
             </div>
-           
+
             <div className="mt-3">
               <div>
                 <span className="font-medium text-sm text-[#000000]">
@@ -1111,10 +1106,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   value={parseDate(formData.bottomChainDate)}
                   onChange={(e) => handleInputChange('bottomChainDate', formatDate(e.target.value))}
                   dateFormat="mm/dd/yy"
-                  // options={bottomChainCondition}
-                  // optionLabel="condition"
-                  // editable
-                  // placeholder="Select"
                   style={{
                     width: '230px',
                     height: '32px',
@@ -1143,13 +1134,11 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               </div>
               <div className="mt-2">
                 <Calendar
-                  value={formData?.conditionEyeDate}
-                  onChange={(e) => handleInputChange('conditionEyeDate', e.value)}
+                  value={parseDate(formData.conditionEyeDate)}
+                  onChange={(e) =>
+                    handleInputChange('conditionEyeDate', formatDate(e.target.value))
+                  }
                   dateFormat="mm/dd/yy"
-                  // options={conditionOfEye}
-                  // optionLabel="condition"
-                  // editable
-                  // placeholder="Select"
                   style={{
                     width: '230px',
                     height: '32px',
@@ -1200,12 +1189,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 </p> */}
               </div>
             </div>
-
-           
           </div>
           <div>
-
-          <div className="mt-3">
+            <div className="mt-3">
               <div>
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">

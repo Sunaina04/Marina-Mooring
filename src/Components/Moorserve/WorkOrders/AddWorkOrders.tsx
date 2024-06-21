@@ -163,39 +163,37 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       ...workOrder,
       [field]: value,
     })
-    if (editModeWorkOrder || editModeEstimate) {
-      if (workOrder?.customerName) {
-        // mooringId empty
-        // setWorkOrder((prevWorkOrder: any) => ({
-        //   ...prevWorkOrder,
-        //   mooringId: '',
-        // }));
-        
-      } else if (workOrder?.mooringId?.id) {
-        // customer empty
-        // boatyard empty
+    // if (editModeWorkOrder || editModeEstimate) {
+    //   if (workOrder?.customerName) {
+    //     // mooringId empty
+    //     // setWorkOrder((prevWorkOrder: any) => ({
+    //     //   ...prevWorkOrder,
+    //     //   mooringId: '',
+    //     // }));
 
-        // setWorkOrder((prevWorkOrder: any) => ({
-        //   ...prevWorkOrder,
-        //   customerName: '',
-        //   mooringId: '',
-        //   boatyards: '',
-        // }));
+    //   } else if (workOrder?.mooringId?.id) {
+    //     // customer empty
+    //     // boatyard empty
 
+    //     // setWorkOrder((prevWorkOrder: any) => ({
+    //     //   ...prevWorkOrder,
+    //     //   customerName: '',
+    //     //   mooringId: '',
+    //     //   boatyards: '',
+    //     // }));
 
+    //   } else if (workOrder?.boatyards?.id) {
+    //     // mooring empty
+    //     // customer empty
+    //     // setWorkOrder((prevWorkOrder: any) => ({
+    //     //   ...prevWorkOrder,
+    //     //   customerName: '',
+    //     //   mooringId: '',
+    //     //   boatyards: '',
+    //     // }));
 
-      } else if (workOrder?.boatyards?.id) {
-        // mooring empty
-        // customer empty
-        // setWorkOrder((prevWorkOrder: any) => ({
-        //   ...prevWorkOrder,
-        //   customerName: '',
-        //   mooringId: '',
-        //   boatyards: '',
-        // }));
-
-      }
-    }
+    //   }
+    // }
     if (errorMessage[field]) {
       setErrorMessage({
         ...errorMessage,
