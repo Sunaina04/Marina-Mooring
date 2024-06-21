@@ -161,7 +161,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
 
   const saveBoatyards = async () => {
     const errors = validateFields()
-    console.log('here', errors)
 
     if (Object.keys(errors).length > 0) {
       setErrorMessage(errors)
