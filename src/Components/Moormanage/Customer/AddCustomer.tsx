@@ -159,7 +159,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   }, [checked])
 
   const validateFields = () => {
-    const phoneRegex = /^\d{3}-\d{3}-\d{4}$/
+    const phoneRegex =/^.{10}$|^.{12}$/
     const nameRegex = /^[a-zA-Z ]+$/
     const errors: { [key: string]: string } = {}
     let firstError = ''
@@ -761,7 +761,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               <span className="font-medium text-sm text-[#000000]">
                 <div className="flex gap-1">
                   Customer Type
-                  {/* <p className="text-red-600">*</p> */}
                 </div>
               </span>
               <div className="mt-2">
@@ -1035,7 +1034,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   <span className="font-medium text-sm text-[#000000]">
                     <div className="flex gap-1">
                       Harbor/Area
-                      <p className="text-red-600">*</p>
                     </div>
                   </span>
                   <div className="mt-2">
@@ -1064,7 +1062,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   <span className="font-medium text-sm text-[#000000]">
                     <div className="flex gap-1">
                       G.P.S Coordinates
-                      <p className="text-red-600">*</p>
                     </div>
                   </span>
                   <div className="mt-2">
@@ -1096,7 +1093,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   <span className="font-medium text-sm text-[#000000]">
                     <div className="flex gap-1">
                       Boatyard Name
-                      <p className="text-red-600">*</p>
                     </div>
                   </span>
                   <div className="mt-2">
@@ -1127,7 +1123,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   <span className="font-medium text-sm text-[#000000]">
                     <div className="flex gap-1">
                       Boat Name
-                      <p className="text-red-600">*</p>
                     </div>
                   </span>
                   <div className="mt-2">
@@ -1170,7 +1165,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   <span className="font-medium text-sm text-[#000000]">
                     <div className="flex gap-1">
                       Boat Size (in feet)
-                      <p className="text-red-600">*</p>
                     </div>
                   </span>
                   <div className="mt-2">
@@ -1197,7 +1191,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     <span className="font-medium text-sm text-[#000000]">
                       <div className="flex gap-1">
                         Size of Weight
-                        <p className="text-red-600">*</p>
                       </div>
                     </span>
                   </div>
@@ -1231,7 +1224,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     <span className="font-medium text-sm text-[#000000]">
                       <div className="flex gap-1">
                         Type of Weight
-                        <p className="text-red-600">*</p>
                       </div>
                     </span>
                   </div>
@@ -1267,7 +1259,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     <span className="font-medium text-sm text-[#000000]">
                       <div className="flex gap-1">
                         Top Chain Condition
-                        <p className="text-red-600">*</p>
                       </div>
                     </span>
                   </div>
@@ -1304,7 +1295,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       <div className="flex gap-1">
                         Top Chain Condition{' '}
                         <span style={{ fontSize: '0.6rem' }}> (install date)</span>
-                        <p className="text-red-600">*</p>
                       </div>
                     </span>
                   </div>
@@ -1338,7 +1328,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     <span className="font-medium text-sm text-[#000000]">
                       <div className="flex gap-1">
                         Depth at Mean High Water
-                        <p className="text-red-600">*</p>
                       </div>
                     </span>
                   </div>
@@ -1405,7 +1394,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       <span className="font-medium text-sm text-[#000000]">
                         <div className="flex gap-1">
                           Bottom Chain Condition
-                          <p className="text-red-600">*</p>
                         </div>
                       </span>
                     </div>
@@ -1441,7 +1429,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       <span className="font-medium text-sm text-[#000000]">
                         <div className="flex gap-1">
                           Condition of Eye
-                          <p className="text-red-600">*</p>
                         </div>
                       </span>
                     </div>
@@ -1475,7 +1462,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       <span className="font-medium text-sm text-[#000000]">
                         <div className="flex gap-1">
                           Pendant Condition
-                          <p className="text-red-600">*</p>
                         </div>
                       </span>
                     </div>
@@ -1545,7 +1531,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         <div className="flex gap-1">
                           Bottom Chain Condition
                           <span style={{ fontSize: '0.6rem' }}> (install date)</span>
-                          <p className="text-red-600">*</p>
                         </div>
                       </span>
                     </div>
@@ -1586,7 +1571,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         <div className="flex gap-1">
                           Condition of Eye{' '}
                           <span style={{ fontSize: '0.6rem' }}> (install date)</span>
-                          <p className="text-red-600">*</p>
                         </div>
                       </span>
                     </div>
