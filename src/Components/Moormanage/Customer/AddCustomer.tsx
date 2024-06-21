@@ -311,15 +311,15 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       payload = {
         firstName: firstName,
         lastName: lastName,
-        emailAddress: email,
         phone: phone,
         streetHouse: streetHouse,
         note: formData.note,
         aptSuite: sectorBlock,
         stateId: selectedState?.id,
         countryId: selectedCountry?.id,
-        zipCode: pinCode,
         customerTypeId: selectedCustomerType === 'Dock' ? 5 : selectedCustomerType?.id,
+        ...(email && { emailAddress: email }),
+        ...(pinCode && { zipCode: pinCode }),
         mooringRequestDtoList: [
           {
             customerId: formData?.customerName,
@@ -351,15 +351,15 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       payload = {
         firstName: firstName,
         lastName: lastName,
-        emailAddress: email,
         phone: phone,
         streetHouse: streetHouse,
         note: formData.note,
         aptSuite: sectorBlock,
         stateId: selectedState?.id,
         countryId: selectedCountry?.id,
-        zipCode: pinCode,
-        customerTypeId: selectedCustomerType?.id,
+        customerTypeId: selectedCustomerType === 'Dock' ? 5 : selectedCustomerType?.id,
+        ...(email && { emailAddress: email }),
+        ...(pinCode && { zipCode: pinCode }),
       }
     }
 
