@@ -111,17 +111,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
       errors.name = 'Name must only contain letters'
     }
     if (!boatyardId) errors.id = 'Boatyard ID is required'
-    if (!phone) {
-      errors.phone = 'Phone is required'
-    } else if (!phoneRegex.test(phone)) {
-      errors.phone = 'Phone must be a 10-digit number'
-    }
-
-    if (!emailAddress) {
-      errors.email = 'Email is required'
-    } else if (!emailRegex.test(emailAddress)) {
-      errors.email = 'Please enter a valid email format'
-    }
 
     if (!gpsCoordinatesValue) {
       errors.gpsCoordinatesValue = 'GPS Coordinates is required'
@@ -172,6 +161,8 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
 
   const saveBoatyards = async () => {
     const errors = validateFields()
+    console.log('here', errors)
+
     if (Object.keys(errors).length > 0) {
       setErrorMessage(errors)
       return
