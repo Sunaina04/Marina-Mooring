@@ -44,11 +44,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const selectedCustomerId = useSelector(selectCustomerId)
   const [selectedCountry, setSelectedCountry] = useState<Country>()
   const [selectedState, setSelectedState] = useState<State>()
-  const [selectedCustomerType, setSelectedCustomerType] = useState<State>()
-
-  console.log("selectedCustomerType", selectedCustomerType);
-
-
+  const [selectedCustomerType, setSelectedCustomerType] = useState<MetaData>()
   const [firstName, setFirstName] = useState<string>('')
   const [lastName, setLastName] = useState<string>('')
   const [phone, setPhone] = useState<string>('')
@@ -64,8 +60,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [sizeOfWeight, setSizeOfWeight] = useState<MetaData[]>([])
   const [conditionOfEye, setConditionOfEye] = useState<MetaData[]>([])
   const [customerType, setCustomerType] = useState<MetaData[]>([])
-  console.log("customerType", customerType);
-
   const [bottomChainCondition, setBottomChainCondition] = useState<MetaData[]>([])
   const [shackleSwivelData, setShackleSwivelData] = useState<MetaData[]>([])
   const [pennantData, setPennantData] = useState<MetaData[]>([])
@@ -74,8 +68,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<string>()
   const [checked, setChecked] = useState(false)
   const [checkedDock, setCheckedDock] = useState(false)
-  console.log("checkedDock", checkedDock);
-
 
   const getFomattedCoordinate = (gpsCoordinatesValue: any) => {
     try {
@@ -244,9 +236,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         setSelectedCountry(value)
         break
       case 'CustomerType':
-
-
-
         setSelectedCustomerType(value)
         break
 
@@ -542,12 +531,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         setStatesData(statesData)
       }
       if (customersType !== null) {
-        if (checkedDock == true) {
-
-          const selectedType = customerType[5] || null;
-          setSelectedCustomerType(selectedType);
-        }
-
         setCustomerType(customersType)
       }
     }
@@ -625,6 +608,21 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     }
   }, [gpsCoordinatesValue])
 
+  useEffect(() => {
+    if (checkedDock === true) {
+      setSelectedCustomerType(customerType.find((item: any) => item.id === 5)?.type)
+    } else if (checkedDock === false) {
+      setSelectedCustomerType(undefined)
+    }
+  }, [checkedDock])
+
+  useEffect(() => {
+    if (selectedCustomerType && selectedCustomerType?.id === 5) {
+      setChecked(true)
+      setCheckedDock(true)
+    }
+  }, [selectedCustomerType])
+
   return (
     <div className="">
       {/* Add Customer */}
@@ -689,14 +687,13 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   </div>
                 </div>
               </div>
-              <div>
-                <div className="font-medium text-sm text-[#000000]">
-                  <div className="flex gap-1 mt-2">
-                    Dock
-                    {/* <p className="text-red-600">*</p> */}
+
+              <div className="flex mt-3 gap-5">
+                <div className="flex gap-2">
+                  <div className="font-medium text-sm text-[#000000]">
+                    <p>Yes</p>
                   </div>
                 </div>
-<<<<<<< HEAD
                 <div className="flex gap-2">
                   <div>
                     <Checkbox
@@ -711,27 +708,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         borderRadius: '5px',
                       }}
                     />
-=======
-                <div className="flex mt-3 gap-5">
-                  <div className="flex gap-2">
-                    <div>
-                      <Checkbox
-                        onChange={(e) => {
-                          setCheckedDock(e.checked ?? false)
-                        }}
-                        checked={checkedDock}
-                        style={{
-                          border: '1px solid #D5E1EA',
-                          height: '22px',
-                          width: '22px',
-                          borderRadius: '5px',
-                        }}
-                      />
-                    </div>
-                    <div className="font-medium text-sm text-[#000000]">
-                      <p>Yes</p>
-                    </div>
->>>>>>> cb6e99f84a1f202c9e99f6f92d60473d90deec90
                   </div>
                 </div>
               </div>
