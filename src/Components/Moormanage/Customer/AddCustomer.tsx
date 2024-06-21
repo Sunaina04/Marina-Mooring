@@ -46,6 +46,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [selectedState, setSelectedState] = useState<State>()
   const [selectedCustomerType, setSelectedCustomerType] = useState<State>()
 
+  console.log("selectedCustomerType", selectedCustomerType);
+
+
   const [firstName, setFirstName] = useState<string>('')
   const [lastName, setLastName] = useState<string>('')
   const [phone, setPhone] = useState<string>('')
@@ -61,6 +64,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [sizeOfWeight, setSizeOfWeight] = useState<MetaData[]>([])
   const [conditionOfEye, setConditionOfEye] = useState<MetaData[]>([])
   const [customerType, setCustomerType] = useState<MetaData[]>([])
+  console.log("customerType", customerType);
+
   const [bottomChainCondition, setBottomChainCondition] = useState<MetaData[]>([])
   const [shackleSwivelData, setShackleSwivelData] = useState<MetaData[]>([])
   const [pennantData, setPennantData] = useState<MetaData[]>([])
@@ -69,6 +74,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<string>()
   const [checked, setChecked] = useState(false)
   const [checkedDock, setCheckedDock] = useState(false)
+  console.log("checkedDock", checkedDock);
+
 
   const getFomattedCoordinate = (gpsCoordinatesValue: any) => {
     try {
@@ -237,6 +244,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         setSelectedCountry(value)
         break
       case 'CustomerType':
+
+
+
         setSelectedCustomerType(value)
         break
 
@@ -532,6 +542,12 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         setStatesData(statesData)
       }
       if (customersType !== null) {
+        if (checkedDock == true) {
+
+          const selectedType = customerType[5] || null;
+          setSelectedCustomerType(selectedType);
+        }
+
         setCustomerType(customersType)
       }
     }
@@ -673,26 +689,32 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   </div>
                 </div>
               </div>
-
-              <div className="flex mt-3 gap-5">
-                <div className="flex gap-2">
-                  <div className="font-medium text-sm text-[#000000]">
-                    <p>Yes</p>
+              <div>
+                <div className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1 mt-2">
+                    Dock
+                    {/* <p className="text-red-600">*</p> */}
                   </div>
                 </div>
-                <div className="flex gap-2">
-                  <div>
-                    <Checkbox
-                      onChange={(e) => {
-                        setCheckedDock(!e.checked)
-                      }}
-                      checked={checkedDock}
-                      style={{
-                        border: '1px solid #D5E1EA',
-                        height: '22px',
-                        width: '22px',
-                        borderRadius: '5px',
-                      }}></Checkbox>
+                <div className="flex mt-3 gap-5">
+                  <div className="flex gap-2">
+                    <div>
+                      <Checkbox
+                        onChange={(e) => {
+                          setCheckedDock(e.checked ?? false)
+                        }}
+                        checked={checkedDock}
+                        style={{
+                          border: '1px solid #D5E1EA',
+                          height: '22px',
+                          width: '22px',
+                          borderRadius: '5px',
+                        }}
+                      />
+                    </div>
+                    <div className="font-medium text-sm text-[#000000]">
+                      <p>Yes</p>
+                    </div>
                   </div>
                 </div>
               </div>
