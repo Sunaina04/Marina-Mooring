@@ -72,6 +72,7 @@ export interface State {
 }
 
 export interface MetaData {
+  type: any
   id: number
   name: string
   label: string
