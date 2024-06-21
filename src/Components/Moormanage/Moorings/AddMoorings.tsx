@@ -182,18 +182,18 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     }
 
     if (!formData?.mooringNumber) {
-      errors.mooringNumber = 'Mooring ID is required'
+      errors.mooringNumber = 'Mooring Number is required'
       if (!firstError) firstError = 'mooringNumber'
     } else if (!alphanumericRegex.test(formData?.mooringNumber)) {
-      errors.mooringNumber = 'Mooring ID must be alphanumeric'
+      errors.mooringNumber = 'Mooring Number must be alphanumeric'
       if (!firstError) firstError = 'mooringNumber'
     }
 
     if (!formData?.harbor) {
-      errors.harbor = 'Harbor is required'
+      errors.harbor = 'Harbor/Area is required'
       if (!firstError) firstError = 'harbor'
     } else if (!harborRegex.test(formData?.harbor)) {
-      errors.harbor = 'Harbor must only contain letters'
+      errors.harbor = 'Harbor/Area must only contain letters'
       if (!firstError) firstError = 'harbor'
     }
 
@@ -273,7 +273,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       if (!firstError) firstError = 'shackleSwivelCondition'
     }
     if (!formData?.pennantCondition) {
-      errors.pennantCondition = 'Pennant Condition is required'
+      errors.pennantCondition = 'Pendant Condition is required'
       if (!firstError) firstError = 'pennantCondition'
     }
 
@@ -557,7 +557,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
           <div>
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
-                Mooring ID
+                Mooring Number
                 <p className="text-red-600">*</p>
               </div>
             </span>
@@ -584,7 +584,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
           <div>
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
-                Harbor
+                Harbor/Area  
                 <p className="text-red-600">*</p>
               </div>
             </span>
@@ -1109,7 +1109,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               <div>
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
-                    Bottom Chain Condition <span style={{ fontSize: '0.6rem' }}> (install date)</span>
+                    Bottom Chain Condition{' '}
+                    <span style={{ fontSize: '0.6rem' }}> (install date)</span>
                     <p className="text-red-600">*</p>
                   </div>
                 </span>
@@ -1131,7 +1132,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                       : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
-                    padding:'0.5rem'
+                    padding: '0.5rem',
                   }}
                 />
                 <p id="bottomChainCondition">
@@ -1165,7 +1166,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                     border: fieldErrors.conditionOfEye ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
-                    padding:'0.5rem'
+                    padding: '0.5rem',
                   }}
                 />
                 <p id="conditionOfEye">
