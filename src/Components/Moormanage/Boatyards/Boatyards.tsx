@@ -145,15 +145,14 @@ const Boatyards = () => {
         label: 'ID',
         style: boatyardTableStyle,
       },
-
       {
         id: 'mainContact',
         label: 'Main Contact',
         style: boatyardTableStyle,
       },
       {
-        id: 'mooringId',
-        label: 'Mooring ID',
+        id: 'mooringNumber',
+        label: 'Mooring Number',
         style: boatyardTableStyle,
       },
       {
@@ -191,7 +190,7 @@ const Boatyards = () => {
       },
       {
         id: 'gpsCoordinates',
-        label: 'Mooring ID',
+        label: 'Mooring Number',
         style: rowExpansionStyle,
       },
     ],
@@ -241,11 +240,11 @@ const Boatyards = () => {
         label: 'Name',
         style: columnStyle,
       },
-      {
-        id: 'emailAddress',
-        label: 'Email Address',
-        style: columnStyle,
-      },
+      // {
+      //   id: 'emailAddress',
+      //   label: 'Email Address',
+      //   style: columnStyle,
+      // },
       {
         id: 'mooringInventoried',
         label: 'Total Mooring Inventoried',
@@ -456,16 +455,10 @@ const Boatyards = () => {
         <div
           className={`flex justify-between mt-4 p-3 ml-5 font-normal text-[12px] ${isLoader ? 'blur-screen' : ''}`}>
           <p className="">
-            {selectedBoatYard?.street +
-              ', ' +
-              selectedBoatYard?.apt +
-              ', ' +
-              selectedBoatYard?.stateResponseDto?.name +
-              ', ' +
-              selectedBoatYard?.countryResponseDto?.name}
+            {`${selectedBoatYard?.street || '-'}, ${selectedBoatYard?.apt || '-'}, ${selectedBoatYard?.stateResponseDto?.name || '-'}, ${selectedBoatYard?.countryResponseDto?.name || '-'}`}
           </p>
-          <p className="mr-[10rem]">{selectedBoatYard?.mooringInventoried}</p>
-          <p className="underline mr-[4rem]">{selectedBoatYard?.gpsCoordinates}</p>
+          <p className="mr-[10rem]">{selectedBoatYard?.mooringInventoried || '-'}</p>
+          <p className="underline mr-[4rem]">{selectedBoatYard?.gpsCoordinates || '-'}</p>
         </div>
 
         <div
@@ -494,6 +487,7 @@ const Boatyards = () => {
             strokeWidth="4"
           />
         )}
+
         <div
           className={`bg-#00426F overflow-x-hidden h-[360px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col ${isLoading ? 'blur-screen' : ''}`}>
           <div className="flex-grow overflow-auto">
@@ -502,7 +496,7 @@ const Boatyards = () => {
                 fontSize: '12px',
                 color: '#000000',
               }}
-              data={mooringWithBoatyardsData ? mooringWithBoatyardsData : undefined}
+              data={mooringWithBoatyardsData || []}
               columns={tableColumnsBoatyards}
               actionButtons={ActionButtonColumn}
               selectionMode="single"
@@ -511,7 +505,7 @@ const Boatyards = () => {
                 setSelectedProduct(e.value)
               }}
               selection={selectedProduct}
-              rowStyle={(rowData: any) => rowData}
+              rowStyle={(rowData) => rowData}
               style={{
                 borderBottom: '1px solid #D5E1EA',
                 marginLeft: '5px',
@@ -530,6 +524,7 @@ const Boatyards = () => {
               }
             />
           </div>
+
           <Paginator
             first={pageNumberOne}
             rows={pageSizeTwo}
@@ -808,7 +803,7 @@ const Boatyards = () => {
                   <span>ID : </span> {mooringRowData?.id}
                 </p>
                 <p>
-                  <span>Mooring ID : </span> {mooringRowData?.mooringId}
+                  <span>Mooring Number : </span> {mooringRowData?.mooringId}
                 </p>
                 <p>
                   <span>Boat Name : </span> {mooringRowData?.boatName}

@@ -71,8 +71,8 @@ const WorkOrders = () => {
         body: firstLastName,
       },
       {
-        id: 'mooringResponseDto.mooringId',
-        label: 'Mooring ID',
+        id: 'mooringResponseDto.mooringNumber',
+        label: 'Mooring Number',
         style: columnStyle,
       },
       {

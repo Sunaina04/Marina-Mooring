@@ -39,7 +39,7 @@ const Dashboard = () => {
       },
       {
         id: 'mooringId',
-        label: 'Mooring ID',
+        label: 'Mooring Number',
         style: {
           fontSize: '10px',
           width: '18vw',
@@ -153,25 +153,23 @@ const Dashboard = () => {
               backgroundColor: '#FFFFFF',
               marginTop: '20px',
             }}>
-            
-              <DataTableComponent
-                columns={columns}
-                actionButtons={ActionButtonColumn}
-                header={Boatsheader}
-                tableStyle={{ backgroundColor: '#FFFFFF' }}
-                data={serviceData}
-                emptyMessage={
-                  <div className="text-center mt-14">
-                    <img
-                      src="/assets/images/empty.png"
-                      alt="Empty Data"
-                      className="w-20 mx-auto mb-4"
-                    />
-                    <p className="text-gray-500">No data available</p>
-                  </div>
-                }
-              />
-           
+            <DataTableComponent
+              columns={columns}
+              actionButtons={ActionButtonColumn}
+              header={Boatsheader}
+              tableStyle={{ backgroundColor: '#FFFFFF' }}
+              data={serviceData}
+              emptyMessage={
+                <div className="text-center mt-14">
+                  <img
+                    src="/assets/images/empty.png"
+                    alt="Empty Data"
+                    className="w-20 mx-auto mb-4"
+                  />
+                  <p className="text-gray-500">No data available</p>
+                </div>
+              }
+            />
           </div>
         </div>
         <div style={{ flexGrow: 1 }}>

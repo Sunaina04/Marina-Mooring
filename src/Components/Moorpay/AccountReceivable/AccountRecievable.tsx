@@ -41,7 +41,7 @@ const AccountRecievable = () => {
       },
       {
         id: 'mooringId',
-        label: 'Mooring ID',
+        label: 'Mooring Number',
         style: columnStyle,
       },
       {

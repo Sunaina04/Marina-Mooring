@@ -359,6 +359,108 @@ const Moorings = () => {
     }
   }
 
+  const CustomerDetails = useMemo(() => {
+    return (
+      <div className="">
+        <div className="flex gap-10 p-4">
+          <div
+            style={{
+              fontSize: '14px',
+              fontWeight: '400',
+              lineHeight: '16.41px',
+              color: '#000000',
+            }}>
+            <p>
+              <span className="">Customer Id: </span>
+              {customerRecordData?.customerId || '-'}
+            </p>
+            <p className="mt-4">
+              <span className="">Phone: </span>
+              {customerRecordData?.phone || '-'}
+            </p>
+          </div>
+
+          <div
+            style={{
+              fontSize: '14px',
+              fontWeight: '400',
+              lineHeight: '16.41px',
+              color: '#000000',
+              marginLeft: '40px',
+            }}>
+            <p>
+              <span className="">Name: </span>
+              {customerRecordData?.firstName && customerRecordData?.lastName
+                ? `${customerRecordData.firstName} ${customerRecordData.lastName}`
+                : '-'}
+            </p>
+            <p className="mt-4">
+              <span className="">Email: </span>
+              {customerRecordData?.emailAddress || '-'}
+            </p>
+          </div>
+        </div>
+
+        <div
+          style={{
+            fontSize: '14px',
+            fontWeight: '400',
+            lineHeight: '16.41px',
+            color: '#000000',
+          }}>
+          <p className="ml-4">
+            <span className="address-label">Address: </span>
+            {(customerRecordData?.streetHouse || '-') +
+              ', ' +
+              (customerRecordData?.aptSuite || '-') +
+              ', ' +
+              (customerRecordData?.stateResponseDto?.name || '-') +
+              ', ' +
+              (customerRecordData?.countryResponseDto?.name || '-')}
+          </p>
+          <p className="ml-4 mt-3">
+            <span className="address-label">Notes: </span>
+            {customerRecordData?.note || '-'}
+          </p>
+
+          <div className="flex mt-2 ml-4 mb-3 overflow-x-auto">
+            <div className="mt-1">
+              <h1 className="">Boatyard: </h1>
+            </div>
+            <div className="flex gap-4 ml-2">
+              {boatYardData.length > 0 ? (
+                boatYardData.map((boatyard, index) => (
+                  <p
+                    key={index}
+                    style={{
+                      borderRadius: '5px',
+                      fontWeight: '400',
+                      fontSize: '12px',
+                      color: '#10293A',
+                      backgroundColor: '#D5E1EA',
+                      padding: '4px',
+                    }}>
+                    {boatyard}
+                  </p>
+                ))
+              ) : (
+                <p
+                  style={{
+                    fontWeight: '400',
+                    fontSize: '12px',
+                    color: '#10293A',
+                    padding: '4px',
+                  }}>
+                  -
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }, [customerRecordData, boatYardData, selectedCustomer])
+
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       getMooringsData()
@@ -541,7 +643,7 @@ const Moorings = () => {
           className={`min-w-[21vw] min-h[50vw] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
           <CustomMooringPositionMap
             position={initialPosition}
-            zoomLevel={4}
+            zoomLevel={10}
             style={{ height: '730px' }}
             iconsByStatus={iconsByStatus}
             moorings={mooringResponseData}
@@ -574,88 +676,7 @@ const Moorings = () => {
             </div>
 
             {customerRecordData ? (
-              <div className="">
-                <div className="flex gap-10 p-4 ">
-                  <div
-                    style={{
-                      fontSize: '14px',
-                      fontWeight: '400',
-                      lineHeight: '16.41px',
-                      color: '#000000',
-                    }}>
-                    <p>
-                      <span className="">Customer Id: </span>
-                      {customerRecordData?.customerId}
-                    </p>
-                    <p className="mt-4">
-                      <span className="">Phone: </span>
-                      {customerRecordData?.phone}
-                    </p>
-                  </div>
-
-                  <div
-                    style={{
-                      fontSize: '14px',
-                      fontWeight: '400',
-                      lineHeight: '16.41px',
-                      color: '#000000',
-                      marginLeft: '40px',
-                    }}>
-                    <p>
-                      <span className="">Name: </span>
-                      {customerRecordData?.firstName + ' ' + customerRecordData?.lastName}
-                    </p>
-                    <p className="mt-4">
-                      <span className="">Email: </span>
-                      {customerRecordData?.emailAddress}
-                    </p>
-                  </div>
-                </div>
-                <div
-                  style={{
-                    fontSize: '14px',
-                    fontWeight: '400',
-                    lineHeight: '16.41px',
-                    color: '#000000',
-                  }}>
-                  <p className="ml-4">
-                    <span className="address-label ">Address: </span>
-                    {customerRecordData?.streetHouse +
-                      ', ' +
-                      customerRecordData?.aptSuite +
-                      ', ' +
-                      customerRecordData?.stateResponseDto?.name +
-                      ', ' +
-                      customerRecordData?.countryResponseDto?.name}
-                  </p>
-                  <p className="ml-4 mt-3">
-                    <span className="address-label ">Notes: </span>
-                    {customerRecordData?.note}
-                  </p>
-
-                  <div className="flex mt-2 ml-4 mb-3 overflow-x-auto">
-                    <div className="mt-1">
-                      <h1 className="">Boatyard: </h1>
-                    </div>
-                    <div className="flex gap-4 ml-2">
-                      {boatYardData.map((boatyard, index) => (
-                        <p
-                          key={index}
-                          style={{
-                            borderRadius: '5px',
-                            fontWeight: '400',
-                            fontSize: '12px',
-                            color: '#10293A',
-                            backgroundColor: '#D5E1EA',
-                            padding: '4px',
-                          }}>
-                          {boatyard}
-                        </p>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
+              CustomerDetails
             ) : (
               <div className="text-center ">
                 <img

@@ -1497,9 +1497,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   <div className="mt-3">
                     <div>
                       <span className="font-medium text-sm text-[#000000]">
-                        <div className="flex gap-1">
-                          Type
-                        </div>
+                        <div className="flex gap-1">Type</div>
                       </span>
                     </div>
 

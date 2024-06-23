@@ -37,7 +37,7 @@ const AccountPayable = () => {
       },
       {
         id: 'mooringId',
-        label: 'Mooring ID',
+        label: 'Mooring Number',
         style: columnStyle,
       },
       {

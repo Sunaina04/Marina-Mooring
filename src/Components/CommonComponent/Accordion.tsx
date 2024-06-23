@@ -38,8 +38,8 @@ const Accordion = () => {
         style: { fontSize: '10px', width: '27vw', backgroundColor: '#FFFFFF', color: '#000000' },
       },
       {
-        id: 'mooringId',
-        label: 'Mooring ID',
+        id: 'mooringNumber',
+        label: 'Mooring Number',
         style: { fontSize: '10px', width: '22vw', backgroundColor: '#FFFFFF', color: '#000000' },
       },
       {
@@ -77,7 +77,7 @@ const Accordion = () => {
     <div className="flex  flex-col wrapper ">
       <div
         className=" px-5 relative mb-4 rounded-xl bg-white border-[1px] border-[#D5E1EA] mr-8"
-        style={{ width: '492.03px', maxWidth:'492.03px' }}>
+        style={{ width: '492.03px', maxWidth: '492.03px' }}>
         <label
           htmlFor="faq1"
           className="cursor-pointer flex items-center justify-between h-14"
@@ -107,8 +107,9 @@ const Accordion = () => {
           </div>
         </div>
       </div>
-      <div className="tab px-5 relative mb-4 rounded-xl bg-[#FFFFFF] border-[1px] border-[#D5E1EA] mr-8"
-      style={{ width: '492.03px', maxWidth:'492.03px' }}>
+      <div
+        className="tab px-5 relative mb-4 rounded-xl bg-[#FFFFFF] border-[1px] border-[#D5E1EA] mr-8"
+        style={{ width: '492.03px', maxWidth: '492.03px' }}>
         <label
           htmlFor="faq2"
           className="cursor-pointer flex items-center justify-between h-14"
@@ -137,13 +138,12 @@ const Accordion = () => {
         <label
           htmlFor="faq3"
           className={`content mt-5 transition-all ease-in-out duration-500 ${accordion === 'faq2' ? '' : 'hidden'}`}>
-           
           <DataTableComponent
-           // data={AccorditionDataTable}
+            // data={AccorditionDataTable}
             columns={columns}
             actionButtons={ActionButtonColumn}
             scrollable
-            tableStyle={{ fontSize: '10px', width:'450px' }}
+            tableStyle={{ fontSize: '10px', width: '450px' }}
             emptyMessage={
               <div className="text-center mt-14">
                 <img
@@ -155,12 +155,12 @@ const Accordion = () => {
               </div>
             }
           />
-      
         </label>
       </div>
 
-      <div className="tab px-5 py-3 bg-white border-[1px] border-[#D5E1EA] relative mb-2 rounded-xl mr-8"
-       style={{ width: '492.03px', maxWidth:'492.03px' }}>
+      <div
+        className="tab px-5 py-3 bg-white border-[1px] border-[#D5E1EA] relative mb-2 rounded-xl mr-8"
+        style={{ width: '492.03px', maxWidth: '492.03px' }}>
         <label
           htmlFor="faq3"
           className="cursor-pointer flex items-center justify-between h-8"

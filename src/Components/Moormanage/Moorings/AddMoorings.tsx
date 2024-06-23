@@ -1231,7 +1231,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               </div>
             </div>
           </div>
-          <div className='flex gap-6'>
+          <div className="flex gap-6">
             <div>
               <div className="mt-3">
                 <div>
@@ -1284,7 +1284,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 style={{
                   height: '200px',
                   width: '450px',
-                  overflow:'hidden'
+                  overflow: 'hidden',
                 }}>
                 <CustomSelectPositionMap
                   onPositionChange={handlePositionChange}

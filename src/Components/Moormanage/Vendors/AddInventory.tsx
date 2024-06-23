@@ -41,6 +41,9 @@ const AddInventory: React.FC<AddInventoryProps> = ({
     if (field === 'cost' && value !== '' && !/^\d*\.?\d*$/.test(value)) {
       return
     }
+    if (field === 'salePrice' && value !== '' && !/^\d*\.?\d*$/.test(value)) {
+      return
+    }
     setFormData({
       ...formData,
       [field]: value,

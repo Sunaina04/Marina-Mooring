@@ -96,7 +96,7 @@ const Estimates = () => {
       },
       {
         id: 'mooringResponseDto.mooringId',
-        label: 'Mooring ID',
+        label: 'Mooring Number',
         style: columnStyle,
       },
       {
@@ -157,20 +157,20 @@ const Estimates = () => {
   }, [searchText, selectedCustomerId])
 
   const dataToXlsx = (data: WorkOrderPayload[], fileName = 'EstimateData.xlsx') => {
-  const formattedData = data.map(item => ({
-    CustomerName: `${item.customerResponseDto.firstName} ${item.customerResponseDto.lastName}`,
-    MooringID: item.mooringResponseDto.mooringId,
-    Boatyard: item.boatyardResponseDto.boatyardId,
-    AssignedTo: item.technicianUserResponseDto.name,
-    DueDate: item.dueDate,
-    Status: item.workOrderStatusDto.status,
-  }));
+    const formattedData = data.map((item) => ({
+      CustomerName: `${item.customerResponseDto.firstName} ${item.customerResponseDto.lastName}`,
+      MooringID: item.mooringResponseDto.mooringId,
+      Boatyard: item.boatyardResponseDto.boatyardId,
+      AssignedTo: item.technicianUserResponseDto.name,
+      DueDate: item.dueDate,
+      Status: item.workOrderStatusDto.status,
+    }))
 
-  const worksheet = utils.json_to_sheet(formattedData);
-  const workbook = utils.book_new();
-  utils.book_append_sheet(workbook, worksheet, 'Estimates');
-  writeFile(workbook, fileName);
-};
+    const worksheet = utils.json_to_sheet(formattedData)
+    const workbook = utils.book_new()
+    utils.book_append_sheet(workbook, worksheet, 'Estimates')
+    writeFile(workbook, fileName)
+  }
 
   const handleEdit = (rowData: any) => {
     setSelectedCustomer(rowData)
@@ -336,7 +336,6 @@ const Estimates = () => {
                   strokeWidth="4"
                 />
               )}
-
             </div>
             <div className="mt-auto">
               <Paginator

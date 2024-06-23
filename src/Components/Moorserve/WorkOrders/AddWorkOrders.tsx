@@ -125,7 +125,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     }
 
     if (!workOrder.mooringId) {
-      errors.mooringId = 'Mooring Id is required'
+      errors.mooringId = 'Mooring Number is required'
     }
 
     if (!workOrder.boatyards) {
@@ -163,6 +163,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       ...workOrder,
       [field]: value,
     })
+
     // if (editModeWorkOrder || editModeEstimate) {
     //   if (workOrder?.customerName) {
     //     // mooringId empty
@@ -684,17 +685,17 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
             </p>
           </div>
 
-          {/* Mooring ID */}
+          {/* Mooring Number */}
           <div>
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
-                Mooring ID
+                Mooring Number
                 <p className="text-red-600">*</p>
               </div>
             </span>
             <div className="mt-1">
               <Dropdown
-                value={workOrder.mooringId?.mooringId || workOrder.mooringId}
+                value={workOrder.mooringId?.mooringNumber || workOrder.mooringId}
                 onChange={(e) => handleInputChange('mooringId', e.target.value)}
                 options={MooringNameOptions}
                 optionLabel="mooringNumber"
