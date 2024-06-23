@@ -1477,10 +1477,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       <InputComponent
                         value={formData?.pendantCondition}
                         onChange={(e) => handleInputChange('pendantCondition', e.target.value)}
-                        // options={pennantData}
-                        // optionLabel="condition"
-                        // editable
-                        // placeholder="Select"
                         style={{
                           width: '230px',
                           height: '32px',
@@ -1503,7 +1499,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       <span className="font-medium text-sm text-[#000000]">
                         <div className="flex gap-1">
                           Type
-                          {/* <p className="text-red-600">*</p> */}
                         </div>
                       </span>
                     </div>
@@ -1524,9 +1519,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                           fontSize: '0.8rem',
                         }}
                       />
-                      {/* <p id="type">
-                      {fieldErrors.type && <small className="p-error">{fieldErrors.type}</small>}
-                    </p> */}
                     </div>
                   </div>
                 </div>
