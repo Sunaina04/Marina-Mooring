@@ -432,8 +432,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
 
   const UpdateMooring = async () => {
     const errors = validateFields()
-    console.log('errors here', errors)
-
     if (Object.keys(errors).length > 0) {
       return
     }
@@ -518,8 +516,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       }
     } catch (error) {
       const { message, data } = error as ErrorResponse
-      console.log('errors here is', error)
-
       setIsLoading(false)
       toastRef?.current?.show({
         severity: 'error',

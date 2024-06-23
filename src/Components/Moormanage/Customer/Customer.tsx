@@ -369,7 +369,6 @@ const Customer = () => {
 
         const gpsCoordinates = mooringData.map((item) => {
           const coordinatesString = item?.gpsCoordinates
-          // console.log('coordinatesString', coordinatesString)
 
           if (coordinatesString) {
             const coordinatesArray: number[] = coordinatesString.split(' ').map(parseFloat)
@@ -387,7 +386,6 @@ const Customer = () => {
           }
         })
 
-        // console.log('gpsCoordinates', gpsCoordinates)
         setCoordinatesArray(gpsCoordinates.filter((coord) => coord !== null)) // Filter out null values
       } else {
         setIsLoading(false)

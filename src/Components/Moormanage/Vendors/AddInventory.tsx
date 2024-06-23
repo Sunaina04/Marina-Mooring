@@ -24,7 +24,6 @@ const AddInventory: React.FC<AddInventoryProps> = ({
   const { getTypeOfInventoryTypeData } = TypeOfInventoryType()
   const [checked, setChecked] = useState<boolean>(false)
   const [unChecked, setUnChecked] = useState<boolean>(false)
-  //console.log(unChecked, 'unchecked value')
   const [inventoryType, setInventoryType] = useState<MetaData[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState<any>({
