@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react'
-import { InputTextarea } from 'primereact/inputtextarea'
 import InputComponent from '../../CommonComponent/InputComponent'
 import { InputText } from 'primereact/inputtext'
 import { Dropdown } from 'primereact/dropdown'
@@ -14,12 +13,8 @@ import { ErrorResponse, VendorResponse } from '../../../Type/ApiTypes'
 import { CountriesData, StatesData } from '../../CommonComponent/MetaDataComponent/MetaDataApi'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { Toast } from 'primereact/toast'
-const AddVendor: React.FC<AddVendorProps> = ({
-  vendors,
-  editMode,
-  closeModal,
-  getVendor,
-}) => {
+
+const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, getVendor }) => {
   const [addVendor] = useAddVendorsMutation()
   const [editVendor] = useUpdateVendorMutation()
   const { getStatesData } = StatesData()
@@ -268,8 +263,9 @@ const AddVendor: React.FC<AddVendorProps> = ({
       return
     }
 
+    setIsLoading(true)
+
     try {
-      setIsLoading(true)
       const payload = {
         companyName: formData?.companyName || vendors?.companyName,
         companyPhoneNumber: formData?.phone || vendors?.companyPhoneNumber,
@@ -342,7 +338,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
   return (
     <>
       <div className="main">
-      <Toast ref={toastRef} />
+        <Toast ref={toastRef} />
         <div className="flex">
           <div className="flex gap-8">
             <div>
@@ -381,7 +377,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
                 <InputComponent
                   onChange={(e) => handleInputChange('phone', e.target.value)}
                   value={formData.phone}
-                  type='number'
+                  type="number"
                   style={{
                     width: '230px',
                     height: '32px',
