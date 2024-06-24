@@ -325,8 +325,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       mooringNumber: mooringRowData?.mooringNumber || '',
       mooringName: mooringRowData?.mooringName || '',
       harbor: mooringRowData?.harborOrArea || '',
-      // waterDepth: mooringRowData?.waterDepth || '',
-      // gpsCoordinates: mooringRowData?.gpsCoordinates || '',
       boatYardName: mooringRowData?.boatyardResponseDto?.boatyardName || '',
       boatName: mooringRowData?.boatName || '',
       boatSize: mooringRowData?.boatSize || '',
@@ -796,13 +794,11 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             </div>
 
             <div className="flex gap-6">
-            <div className="mt-3">
+              <div className="mt-3">
                 <div>
                   <div>
                     <span className="font-medium text-sm text-[#000000]">
-                      <div className="flex gap-1">
-                        Email Address
-                      </div>
+                      <div className="flex gap-1">Email Address</div>
                     </span>
                   </div>
                   <div className="mt-2">
@@ -822,8 +818,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     </p>
                   </div>
                 </div>
-              </div> 
-              <div className='mt-3'>
+              </div>
+              <div className="mt-3">
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="gap-1">Customer Type</div>
                 </span>
@@ -863,7 +859,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       border: '1px solid #D5E1EA',
                       borderRadius: '0.50rem',
                       fontSize: '0.8rem',
-                      padding:'3px',
+                      padding: '3px',
                     }}
                   />
                   {customerImage && (
@@ -1044,7 +1040,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   // backgroundColor: '#F5F5F5',
                   boxShadow: 'none',
                   paddingLeft: '0.5rem',
-                  resize:'none'
+                  resize: 'none',
                 }}
               />
               <p>{fieldErrors.note && <small className="p-error">{fieldErrors.note}</small>}</p>

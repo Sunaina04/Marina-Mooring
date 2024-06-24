@@ -31,7 +31,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   const [phone, setPhone] = useState('')
   const [address, setAddress] = useState('')
   const [aptSuite, setAptSuite] = useState('')
-  const [state, setState] = useState<State>()
+  const [selectedState, setSelectedState] = useState<any>()
   const [country, setCountry] = useState<Country>()
   const [zipCode, setZipCode] = useState('')
 
@@ -80,8 +80,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   const { getCountriesData } = CountriesData()
 
   const validateFields = () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    const phoneRegex = /^\d{3}-\d{3}-\d{4}$/
     const nameRegex = /^[a-zA-Z ]+$/
     const zipCodeRegex = /^\d+$/
     const errors: { [key: string]: string } = {}
@@ -104,7 +102,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
     }
     if (!mainContact) errors.mainContact = 'Main contact is required'
     if (!country) errors.country = 'Country  is required'
-    if (!state) errors.state = 'State  is required'
+    if (!selectedState) errors.state = 'State  is required'
     if (!aptSuite) errors.aptSuite = 'Apt/Suite is required'
     return errors
   }
@@ -124,20 +122,17 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   }
 
   const handleEditMode = () => {
-    if (editMode && customerData) {
-      setBoatyardId(customerData?.boatyardId || '')
-      setBoatyardName(customerData?.boatyardName || '')
-      setPhone(customerData?.phone || '')
-      setEmailAddress(customerData?.emailAddress || '')
-      setAddress(customerData?.street || '')
-      setAptSuite(customerData?.apt || '')
-      setZipCode(customerData?.zipCode || '')
-      setState(customerData?.stateResponseDto?.name || undefined)
-      setMainContact(customerData?.mainContact || '')
-      setCountry(customerData?.countryResponseDto?.name || undefined)
-      setGpsCoordinatesValue(customerData?.gpsCoordinates || '')
-      setState(customerData?.stateResponseDto?.name || undefined)
-    }
+    setBoatyardId(customerData?.boatyardId || '')
+    setBoatyardName(customerData?.boatyardName || '')
+    setPhone(customerData?.phone || '')
+    setEmailAddress(customerData?.emailAddress || '')
+    setAddress(customerData?.street || '')
+    setAptSuite(customerData?.apt || '')
+    setZipCode(customerData?.zipCode || '')
+    setSelectedState(customerData?.stateResponseDto?.name || '')
+    setMainContact(customerData?.mainContact || '')
+    setCountry(customerData?.countryResponseDto?.name || '')
+    setGpsCoordinatesValue(customerData?.gpsCoordinates || '')
   }
 
   const saveBoatyards = async () => {
@@ -153,13 +148,11 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
       const payload = {
         boatyardId: boatyardId,
         boatyardName: boatyardName,
-        phone: phone,
-        emailAddress: emailAddress,
         street: address,
         apt: aptSuite,
         zipCode: zipCode,
         contact: mainContact,
-        stateId: state?.id,
+        stateId: selectedState?.id,
         countryId: country?.id,
         mainContact: mainContact,
         gpsCoordinates: gpsCoordinatesValue,
@@ -212,14 +205,12 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
       const editBoatYardPayload = {
         boatyardId: boatyardId,
         boatyardName: boatyardName,
-        phone: phone,
-        emailAddress: emailAddress,
         street: address,
         apt: aptSuite,
         zipCode: zipCode,
         contact: mainContact,
-        stateId: state?.id ? state?.id : customerData?.stateResponseDto?.id,
-        countryId: country?.id ? country?.id : customerData?.countryResponseDto?.id,
+        stateId: selectedState?.id || customerData?.stateResponseDto?.id,
+        countryId: country?.id || customerData?.countryResponseDto?.id,
         mainContact: mainContact,
         gpsCoordinates: gpsCoordinatesValue,
         customerOwnerId: selectedCustomerId,
@@ -426,9 +417,10 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
             <Dropdown
               id="stateDropdown"
               placeholder="State"
-              value={state}
+              editable
+              value={selectedState}
               onChange={(e) => {
-                setState(e.value)
+                setSelectedState(e.target.value)
                 setErrorMessage((prev) => ({ ...prev, state: '' }))
               }}
               options={statesData}
@@ -458,6 +450,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
                   setCountry(e.value)
                   setErrorMessage((prev) => ({ ...prev, country: '' }))
                 }}
+                editable
                 placeholder="Country"
                 options={countriesData}
                 optionLabel="name"
