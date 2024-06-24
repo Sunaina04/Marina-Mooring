@@ -350,7 +350,6 @@ const AddVendor: React.FC<AddVendorProps> = ({
                   <p className="text-red-600">*</p>
                 </div>
               </span>
-
               <div className="mt-2">
                 <InputComponent
                   onChange={(e) => handleInputChange('companyName', e.target.value)}
@@ -380,6 +379,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
                 <InputComponent
                   onChange={(e) => handleInputChange('phone', e.target.value)}
                   value={formData.phone}
+                  type='number'
                   style={{
                     width: '230px',
                     height: '32px',

@@ -162,9 +162,12 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       reader.onload = () => {
         const result = reader.result
         if (typeof result === 'string') {
-          const base64String = result.split(',')[1]
-          setCustomerImage(`data:image/png;base64,${base64String}`)
-          setEncodedImages([base64String])
+          const base64String = result.split(',')[1] // Get the base64 string part
+
+          console.log(base64String, 'encoded')
+
+          setCustomerImage(`data:image/png;base64,${base64String}`) // Set the image for preview
+          setEncodedImages([base64String]) // Set the base64 string for payload
         } else {
           console.error('FileReader result is not a string.')
         }
@@ -225,35 +228,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   }
 
   const handleInputChange = (field: string, value: any) => {
-    const phoneRegex = /^.{10}$|^.{12}$/
-    const numberRegex = /^\d+$/
-
-    if (field === 'phone') {
-      if (value !== '' && phoneRegex.test(value)) {
-        return
-      }
-    }
-
-    if (field === 'boatSize') {
-      if (value !== '' && !numberRegex.test(value)) {
-        return
-      }
-    }
-    if (field === 'sizeOfWeight') {
-      if (value !== '' && !numberRegex.test(value)) {
-        return
-      }
-    }
-    if (field === 'boatWeight') {
-      if (value !== '' && !numberRegex.test(value)) {
-        return
-      }
-    }
-    if (field === 'depthAtMeanHighWater') {
-      if (value !== '' && !numberRegex.test(value)) {
-        return
-      }
-    }
     setFormData({
       ...formData,
       [field]: value,
@@ -397,6 +371,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         ],
       }
     } else {
+
       payload = {
         firstName: firstName,
         lastName: lastName,
@@ -712,8 +687,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
       {!editMooringMode && (
         <>
-          <div className="">
-            <div className="flex gap-6">
+          <div
+            className="flex gap-6">
+            <div>
               <div>
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
@@ -740,6 +716,55 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   </p>
                 </div>
               </div>
+
+
+              <div className="mt-2">
+                <div>
+                  <div>
+                    <span className="font-medium text-sm text-[#000000]">
+                      <div className="flex gap-1">
+                        Email Address
+                      </div>
+                    </span>
+                  </div>
+                  <div className="mt-2">
+                    <InputComponent
+                      value={email}
+                      onChange={(e) => handleInputChangeCustomer('email', e.target.value)}
+                      style={{
+                        width: '230px',
+                        height: '32px',
+                        border: fieldErrors.email ? '1px solid red' : '1px solid #D5E1EA',
+                        borderRadius: '0.50rem',
+                        fontSize: '0.8rem',
+                      }}
+                    />
+                    <p className="" id="email">
+                      {fieldErrors.email && <small className="p-error">{fieldErrors.email}</small>}
+                    </p>
+                  </div>
+
+
+
+                </div>
+              </div>
+
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+            
+            <div
+            >
               <div>
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
@@ -769,7 +794,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 </div>
               </div>
 
-              <div className="">
+              <div className="mt-2">
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
                     Phone
@@ -779,6 +804,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 <div className="mt-2">
                   <InputComponent
                     value={phone}
+                  
+                    type='number'
                     onChange={(e) => handleInputChangeCustomer('phone', e.target.value)}
                     style={{
                       width: '230px',
@@ -795,38 +822,15 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               </div>
             </div>
 
-            <div className="flex gap-6">
-            <div className="mt-3">
-                <div>
-                  <div>
-                    <span className="font-medium text-sm text-[#000000]">
-                      <div className="flex gap-1">
-                        Email Address
-                      </div>
-                    </span>
-                  </div>
-                  <div className="mt-2">
-                    <InputComponent
-                      value={email}
-                      onChange={(e) => handleInputChangeCustomer('email', e.target.value)}
-                      style={{
-                        width: '230px',
-                        height: '32px',
-                        border: fieldErrors.email ? '1px solid red' : '1px solid #D5E1EA',
-                        borderRadius: '0.50rem',
-                        fontSize: '0.8rem',
-                      }}
-                    />
-                    <p className="" id="email">
-                      {fieldErrors.email && <small className="p-error">{fieldErrors.email}</small>}
-                    </p>
-                  </div>
-                </div>
-              </div> 
-              <div className='mt-3'>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }} className="">
+
+              <div>
                 <span className="font-medium text-sm text-[#000000]">
-                  <div className="gap-1">Customer Type</div>
+                  <div className="flex gap-1">Customer Type</div>
                 </span>
+
+
                 <div className="mt-2">
                   <Dropdown
                     id="CustomerType"
@@ -846,13 +850,19 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     }}
                   />
                 </div>
+
+
+
               </div>
 
-              <div className="mt-3">
+
+              <div className="">
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">Customer Image</div>
                 </span>
-                <div className="mt-2">
+                <div
+
+                  className="mt-2">
                   <input
                     type="file"
                     accept="image/*"
@@ -863,7 +873,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       border: '1px solid #D5E1EA',
                       borderRadius: '0.50rem',
                       fontSize: '0.8rem',
-                      padding:'3px',
+                      textAlign: "center",
+                      padding: "2px"
                     }}
                   />
                   {customerImage && (
@@ -882,6 +893,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   )}
                 </div>
               </div>
+
             </div>
           </div>
           {isLoading && (
@@ -898,7 +910,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             />
           )}
 
-          <div className="mt-3">
+          <div className="mt-2">
             <div>
               <h1 className="font-medium text-sm text-[#000000]">
                 <div className="flex gap-1">
@@ -978,7 +990,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 </p>
               </div>
             </div>
-            <div className="flex mt-5 gap-6">
+            <div className="flex mt-2 gap-6">
               <div>
                 <Dropdown
                   id="country"
@@ -1022,7 +1034,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             </div>
           </div>
 
-          <div className="mt-3">
+          <div className="mt-2">
             <div className="">
               <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
                 <div className="flex gap-1 font-medium text-sm text-[#000000]">
@@ -1154,9 +1166,12 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     </p>
                   </div>
                 </div>
+                
               </div>
 
-              <div className="flex gap-6 mt-3">
+              <div
+
+                className="flex gap-6 mt-3">
                 <div>
                   <span className="font-medium text-sm text-[#000000]">
                     <div className="flex gap-1">G.P.S Coordinates</div>
@@ -1261,6 +1276,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   <div className="mt-2">
                     <InputComponent
                       value={formData?.boatSize}
+                      type='number'
                       onChange={(e) => handleInputChange('boatSize', e.target.value)}
                       style={{
                         width: '230px',
@@ -1292,6 +1308,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       // optionLabel="weight"
                       // editable
                       // placeholder="Select"
+                      type='number'
                       style={{
                         width: '230px',
                         height: '32px',
@@ -1373,7 +1390,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     </p>
                   </div>
                 </div>
-
                 <div>
                   <div>
                     <span className="font-medium text-sm text-[#000000]">
@@ -1387,7 +1403,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   <div className="mt-2">
                     <Calendar
                       value={parseDate(formData?.topChainDate)}
-                      placeholder="mm/dd/yy"
+                      placeholder='mm/dd/yy'
                       onChange={(e) =>
                         handleInputChange('topChainDate', formatDate(e.target.value))
                       }
@@ -1419,6 +1435,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   <div className="mt-2">
                     <InputText
                       value={formData?.depthAtMeanHighWater}
+                      type='number'
                       onChange={(e) => handleInputChange('depthAtMeanHighWater', e.target.value)}
                       style={{
                         width: '230px',
@@ -1539,7 +1556,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         <div className="flex gap-1">Type</div>
                       </span>
                     </div>
-
                     <div className="mt-2">
                       <Dropdown
                         value={formData?.type}
@@ -1578,7 +1594,11 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                           handleInputChange('bottomChainDate', formatDate(e.target.value))
                         }
                         dateFormat="mm/dd/yy"
-                        placeholder="mm/dd/yy"
+                        // options={bottomChainCondition}
+                        // optionLabel="condition"
+                        // editable
+                        // placeholder="Select"
+                        placeholder='mm/dd/yy'
                         style={{
                           width: '230px',
                           height: '32px',
@@ -1640,7 +1660,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         <div className="flex gap-1">Shackle, Swivel Condition</div>
                       </span>
                     </div>
-
                     <div className="mt-2">
                       <Dropdown
                         value={formData?.shackleSwivelCondition}
@@ -1666,6 +1685,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     </span>
                     <div className="mt-2">
                       <InputComponent
+                      type='number'
                         value={formData?.boatWeight}
                         onChange={(e) => handleInputChange('boatWeight', e.target.value)}
                         style={{

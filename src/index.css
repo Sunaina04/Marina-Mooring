@@ -109,3 +109,15 @@ background-color: #10293A !important;
   text-decoration: none;
   background: transparent;
 }
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+}
+
+.p-dropdown-label.p-inputtext{
+  color: #797575 !important;
+  font-weight: 500;
+
+
+}

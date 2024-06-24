@@ -509,8 +509,9 @@ const Customer = () => {
     <div style={{ height: '100vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
       <Header header="MOORMANAGE/Customer" />
       <Toast ref={toast} />
-
-      <div className="flex justify-end mr-12 ">
+      <div
+      
+      className="flex justify-end mr-12 ">
         <div className="flex mt-6 ">
           <CustomModal
             buttonText={'ADD NEW'}
@@ -570,7 +571,9 @@ const Customer = () => {
       </div>
       <div className="flex flex-col md:flex-row mt-3">
         {/* Left Panel */}
-        <div className="flex-grow bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-6 md:mb-0">
+        <div 
+                // style={{border:"1px solid red"}}
+        className="flex-grow bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-6 md:mb-0">
           {/* Header */}
           <div className="bg-[#10293A] rounded-tl-[10px] rounded-tr-[10px] text-white">
             <h1 className="p-4 text-xl font-extrabold">{properties.customerHeader}</h1>
