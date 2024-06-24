@@ -461,6 +461,7 @@ const Boatyards = () => {
         </div>
 
         <div
+
           className={`h-[150px] mt-[30px] mb-6 sticky ${isLoader || modalVisible ? 'blur-screen' : ''}`}
           style={{
             flexGrow: 1,
@@ -475,7 +476,7 @@ const Boatyards = () => {
 
         <div
           className={`bg-#00426F overflow-x-hidden h-[360px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col ${isLoading ? 'blur-screen' : ''}`}>
-          <div className="flex-grow overflow-auto">
+          <div className="flex-grow overflow-y-auto">
             <DataTableComponent
               tableStyle={{
                 fontSize: '12px',
@@ -508,23 +509,6 @@ const Boatyards = () => {
                 </div>
               }
             />
-            <div className="">
-              <Paginator
-                first={pageNumberOne}
-                rows={pageSizeTwo}
-                totalRecords={totalRecordsTwo}
-                rowsPerPageOptions={[10, 20, 30]}
-                onPageChange={onPageChangeTwo}
-                style={{
-                  position: 'sticky',
-                  bottom: 0,
-                  zIndex: 1,
-                  backgroundColor: 'white',
-                  borderTop: '1px solid #D5E1EA',
-                  padding: '0.5rem',
-                }}
-              />
-            </div>
 
             {isLoader && (
               <ProgressSpinner
@@ -540,6 +524,25 @@ const Boatyards = () => {
               />
             )}
           </div>
+          <div className='mt-auto'>
+            <Paginator
+              first={pageNumberOne}
+              rows={pageSizeTwo}
+              totalRecords={totalRecordsTwo}
+              rowsPerPageOptions={[10, 20, 30]}
+              onPageChange={onPageChangeTwo}
+              style={{
+                position: 'sticky',
+                bottom: 0,
+                zIndex: 1,
+                backgroundColor: 'white',
+                borderTop: '1px solid #D5E1EA',
+                padding: '0.5rem',
+              }}
+            />
+
+          </div>
+
         </div>
       </>
     )
@@ -715,7 +718,6 @@ const Boatyards = () => {
             </div>
           </div>
         </div>
-
         <div
           data-testid="customer-admin-users-table"
           className=" flex-grow overflow-auto bg-[#FFFFFF] rounded-xl border-[1px] border-gray-300 w-[515px] h-[732px] mr-[50px] ml-[30px]  mb-0 ">
@@ -772,7 +774,6 @@ const Boatyards = () => {
               strokeWidth="4"
             />
           )}
-
           {selectedBoatYard ? (
             BoatyardMoorings
           ) : (

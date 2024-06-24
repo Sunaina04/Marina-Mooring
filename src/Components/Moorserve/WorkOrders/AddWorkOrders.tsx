@@ -43,7 +43,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   editModeWorkOrder,
   estimate,
   setVisible,
-  toastRef,
   closeModal,
 }) => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -102,6 +101,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   const [updateWorkOrder] = useUpdateWorkOrderMutation()
   const [saveEstimation] = useAddEstimateMutation()
   const [updateEstimate] = useUpdateEstimateMutation()
+  const toastRef = useRef<Toast>(null)
 
   const boatyardsNameOptions = workOrder?.mooringId?.id ? boatyardBasedOnMooringId : boatyardsName
   const CustomerNameOptions = workOrder?.mooringId?.id
@@ -303,7 +303,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
-          detail: 'Customer Saved successfully',
+          detail: message,
           life: 3000,
         })
         setIsLoading(false)
@@ -357,7 +357,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
-          detail: 'Customer Updated successfully',
+          detail: message,
           life: 3000,
         })
       } else {
@@ -407,7 +407,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
-          detail: 'Customer Saved successfully',
+          detail: message,
           life: 3000,
         })
         setIsLoading(false)
@@ -461,7 +461,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
-          detail: 'Customer Updated successfully',
+          detail: message,
           life: 3000,
         })
       } else {
@@ -656,7 +656,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   return (
     <div>
       <div className="w-full h-full ml-4">
-        <Toast ref={toast} />
+        <Toast ref={toastRef} />
 
         {/* Customer Name */}
         <div className="flex gap-6">

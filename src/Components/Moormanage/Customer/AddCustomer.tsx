@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import InputComponent from '../../CommonComponent/InputComponent'
 import { InputText } from 'primereact/inputtext'
 import { Dropdown } from 'primereact/dropdown'
@@ -32,6 +32,7 @@ import { ProgressSpinner } from 'primereact/progressspinner'
 import { Checkbox } from 'primereact/checkbox'
 import { Calendar } from 'primereact/calendar'
 import { InputTextarea } from 'primereact/inputtextarea'
+import { Toast } from 'primereact/toast'
 const AddCustomer: React.FC<CustomerDataProps> = ({
   customer,
   mooringRowData,
@@ -41,7 +42,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   closeModal,
   getCustomer,
   getCustomerRecord,
-  toastRef,
 }) => {
   const selectedCustomerId = useSelector(selectCustomerId)
   const [selectedCountry, setSelectedCountry] = useState<Country>()
@@ -69,6 +69,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<string>()
   const [checked, setChecked] = useState(false)
   const [checkedDock, setCheckedDock] = useState(false)
+  const toastRef = useRef<Toast>(null)
 
   const getFomattedCoordinate = (gpsCoordinatesValue: any) => {
     try {
@@ -325,6 +326,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       mooringNumber: mooringRowData?.mooringNumber || '',
       mooringName: mooringRowData?.mooringName || '',
       harbor: mooringRowData?.harborOrArea || '',
+      // waterDepth: mooringRowData?.waterDepth || '',
+      // gpsCoordinates: mooringRowData?.gpsCoordinates || '',
       boatYardName: mooringRowData?.boatyardResponseDto?.boatyardName || '',
       boatName: mooringRowData?.boatName || '',
       boatSize: mooringRowData?.boatSize || '',
@@ -707,6 +710,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   return (
     <div className="">
       {/* Add Customer */}
+      <Toast ref={toastRef} />
 
       {!editMooringMode && (
         <>

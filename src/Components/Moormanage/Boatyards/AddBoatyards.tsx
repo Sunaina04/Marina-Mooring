@@ -533,6 +533,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
               <div>
                 <div className=" mt-1">
                   <InputComponent
+                   type='number'
                     value={mainContact}
                     onChange={(e) => {
                       setMainContact(e.target.value)
@@ -556,7 +557,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
               </div>
             </div>
           </div>
-
           <div className="w-full h-[150px] p-2 rounded-lg mt-[22px]">
             <CustomSelectPositionMap
               onPositionChange={handlePositionChange}
@@ -565,7 +565,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
             />
           </div>
         </div>
-
         <div className="flex gap-4 ml-4 bottom-5 absolute left-6">
           <Button
             label={'Save'}

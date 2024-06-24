@@ -786,6 +786,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
             </span>
             <div className="mt-2">
               <InputComponent
+               type='number'
                 value={formData?.boatSize}
                 onChange={(e) => handleInputChange('boatSize', e.target.value)}
                 style={{
@@ -819,6 +820,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 // optionLabel="weight"
                 // editable
                 // placeholder="Select"
+                type='number'
                 style={{
                   width: '230px',
                   height: '32px',
@@ -950,6 +952,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
             <div className="mt-2">
               <InputText
                 value={formData?.depthAtMeanHighWater}
+                type='number'
                 onChange={(e) => handleInputChange('depthAtMeanHighWater', e.target.value)}
                 style={{
                   width: '230px',
@@ -1209,6 +1212,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 <div className="mt-2">
                   <InputComponent
                     value={formData?.boatWeight}
+                    type='number'
                     onChange={(e) => handleInputChange('boatWeight', e.target.value)}
                     style={{
                       width: '230px',

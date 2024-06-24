@@ -624,6 +624,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
             <div className="mt-1">
               <InputText
                 value={phone}
+                type='number'
                 onChange={(e) => handleInputChange('phone', e.target.value)}
                 style={{
                   width: '230px',
