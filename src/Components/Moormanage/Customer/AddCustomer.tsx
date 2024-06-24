@@ -161,12 +161,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       reader.onload = () => {
         const result = reader.result
         if (typeof result === 'string') {
-          const base64String = result.split(',')[1] // Get the base64 string part
-
-          console.log(base64String, 'encoded')
-
-          setCustomerImage(`data:image/png;base64,${base64String}`) // Set the image for preview
-          setEncodedImages([base64String]) // Set the base64 string for payload
+          const base64String = result.split(',')[1]
+          setCustomerImage(`data:image/png;base64,${base64String}`)
+          setEncodedImages([base64String])
         } else {
           console.error('FileReader result is not a string.')
         }
@@ -373,7 +370,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         ],
       }
     } else {
-
       payload = {
         firstName: firstName,
         lastName: lastName,
@@ -1380,7 +1376,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   <div className="mt-2">
                     <Calendar
                       value={parseDate(formData?.topChainDate)}
-                      placeholder='mm/dd/yy'
+                      placeholder="mm/dd/yy"
                       onChange={(e) =>
                         handleInputChange('topChainDate', formatDate(e.target.value))
                       }
@@ -1607,7 +1603,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         // optionLabel="condition"
                         // editable
                         // placeholder="Select"
-                        placeholder='mm/dd/yy'
+                        placeholder="mm/dd/yy"
                         style={{
                           width: '230px',
                           height: '32px',

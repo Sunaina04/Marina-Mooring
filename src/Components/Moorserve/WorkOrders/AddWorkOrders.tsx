@@ -200,37 +200,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     }
   }
 
-  // const handleInputChange = useCallback(
-  //   (field: any, value: any) => {
-  //     let updatedWorkOrder = { ...workOrder, [field]: value }
-
-  //     if (field === 'mooringId') {
-  //       const selectedMooring = MooringNameOptions?.find(
-  //         (option) => option.mooringNumber === value.mooringNumber,
-  //       )
-  //       if (selectedMooring) {
-  //         console.log('hre in', selectedMooring, customerBasedOnMooringId)
-
-  //         updatedWorkOrder = {
-  //           ...updatedWorkOrder,
-  //           customerName: customerBasedOnMooringId ? customerBasedOnMooringId?.[0]?.firstName : '',
-  //           boatyards: boatyardBasedOnMooringId ? boatyardBasedOnMooringId?.[0]?.boatyardName : '',
-  //         }
-  //       }
-  //     }
-
-  //     setWorkOrder(updatedWorkOrder)
-
-  //     if (errorMessage[field]) {
-  //       setErrorMessage({
-  //         ...errorMessage,
-  //         [field]: '',
-  //       })
-  //     }
-  //   },
-  //   [workOrder, errorMessage, customerBasedOnMooringId, boatyardBasedOnMooringId],
-  // )
-
   const handleEditMode = () => {
     setWorkOrder((prevState: any) => ({
       ...prevState,
@@ -252,9 +221,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     }
     const parsedTime = parseTime(workOrderData.time)
     setTime(parsedTime)
-
-    console.log('workOrder', workOrder)
-    console.log('data', workOrderData)
   }
 
   const handleIncrement = () => {

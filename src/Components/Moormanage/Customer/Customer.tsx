@@ -302,7 +302,6 @@ const Customer = () => {
       if (pageSize) {
         params.pageSize = pageSize
       }
-      console.log('sort', sortable)
 
       if (sortable) {
         params.sortBy = 'customerType'

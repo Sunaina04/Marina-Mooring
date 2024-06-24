@@ -262,7 +262,6 @@ const Boatyards = () => {
   )
 
   const handleRowClickBoatYardDetail = (rowData: any) => {
-    // console.log("rowData",rowData);
     setIsLoader(true)
     setSelectedBoatYard('')
     setMooringWithBoatyardsData([])
@@ -453,8 +452,6 @@ const Boatyards = () => {
     return (
       <>
         <div
-
-
           className={`flex justify-between mt-4 p-3 ml-5 font-normal text-[12px] ${isLoader ? 'blur-screen' : ''}`}>
           <p className="">
             {`${selectedBoatYard?.street || '-'}, ${selectedBoatYard?.apt || '-'}, ${selectedBoatYard?.stateResponseDto?.name || '-'}, ${selectedBoatYard?.countryResponseDto?.name || '-'}`}
@@ -475,8 +472,6 @@ const Boatyards = () => {
           }}>
           <CustomDisplayPositionMap position={[latitude, longitude]} zoomLevel={10} />
         </div>
-
-
 
         <div
           className={`bg-#00426F overflow-x-hidden h-[360px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col ${isLoading ? 'blur-screen' : ''}`}>
@@ -513,7 +508,7 @@ const Boatyards = () => {
                 </div>
               }
             />
-            <div className=''>
+            <div className="">
               <Paginator
                 first={pageNumberOne}
                 rows={pageSizeTwo}
@@ -529,7 +524,6 @@ const Boatyards = () => {
                   padding: '0.5rem',
                 }}
               />
-
             </div>
 
             {isLoader && (
@@ -546,8 +540,6 @@ const Boatyards = () => {
               />
             )}
           </div>
-
-
         </div>
       </>
     )
@@ -702,7 +694,6 @@ const Boatyards = () => {
                   strokeWidth="4"
                 />
               )}
-
             </div>
 
             <div>

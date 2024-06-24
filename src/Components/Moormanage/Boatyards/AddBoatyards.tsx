@@ -41,26 +41,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   const [statesData, setStatesData] = useState<State[]>()
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
 
-  // const getFomattedCoordinate = (gpsCoordinatesValue: any) => {
-  //   try {
-  //     let [lat, long]: any = gpsCoordinatesValue.split(' ')
-  //     if (lat.split('.').length > 2) {
-  //       const [degree, minute, second]: any = lat.split('.').map((num: any) => parseInt(num))
-  //       lat = degree + minute / 60 + second / 3600
-  //     }
-  //     if (long.split('.').length > 2) {
-  //       const [degree, minute, second]: any = long.split('.').map((num: any) => parseInt(num))
-  //       long = degree + minute / 60 + second / 3600
-  //     }
-  //     if (!(isNaN(lat) || isNaN(long))) {
-  //       return [+lat, +long]
-  //     }
-  //   } catch (error) {
-  //     console.log('Error In Setting Center', error)
-  //     return [41.56725, 70.94045]
-  //   }
-  // }
-
   const getFormattedCoordinate = (coordinates: any) => {
     try {
       let [lat, long] = coordinates.split(/[ ,]+/)

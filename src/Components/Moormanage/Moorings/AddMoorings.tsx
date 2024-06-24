@@ -57,9 +57,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   const [conditionOfEye, setConditionOfEye] = useState<MetaData[]>([])
   const [bottomChainCondition, setbottomChainCondition] = useState<MetaData[]>([])
   const [shackleSwivelData, setShackleSwivelData] = useState<MetaData[]>([])
-
-  console.log("shackleSwivelData",shackleSwivelData);
-  
   const [pennantData, setPennantData] = useState<MetaData[]>([])
   const [customerName, setcustomerName] = useState<any[]>([])
   const [customerId, setCustomerId] = useState<string>('')
