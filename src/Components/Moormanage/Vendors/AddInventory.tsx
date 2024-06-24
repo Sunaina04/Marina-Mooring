@@ -175,7 +175,7 @@ const AddInventory: React.FC<AddInventoryProps> = ({
       }
     } catch (error) {
       const { message } = error as ErrorResponse
-      setIsLoading(true)
+      setIsLoading(false)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',

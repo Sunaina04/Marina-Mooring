@@ -303,7 +303,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
       }
     } catch (error) {
       const { message, data } = error as ErrorResponse
-      setIsLoading(true)
+      setIsLoading(false)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',

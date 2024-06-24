@@ -309,7 +309,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       }
     } catch (error) {
       const { message } = error as ErrorResponse
-      setIsLoading(true)
+      setIsLoading(false)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
@@ -466,7 +466,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           detail: message || 'An error occurred while saving the customer.',
           life: 3000,
         })
-       
       }
     } catch (error) {
       const { message } = error as ErrorResponse
@@ -711,7 +710,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   minHeight: '32px',
                   border: fieldErrors.role ? '1px solid red' : '1px solid #D5E1EA',
                   fontSize: '0.8rem',
-                  color:"gray,",
+                  color: 'gray,',
                   borderRadius: '0.50rem',
                   cursor: editCustomerMode || editMode ? 'not-allowed' : 'auto',
                 }}
@@ -900,7 +899,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   border: fieldErrors.state ? '1px solid red' : '1px solid #D5E1EA',
                   fontSize: '0.8rem',
                   borderRadius: '0.50rem',
-                  color:"gray"
+                  color: 'gray',
                 }}
               />
               <p className="" id="state">
