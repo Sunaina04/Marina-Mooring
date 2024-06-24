@@ -152,6 +152,7 @@ const Technicians = () => {
   }
 
   const getTechniciansData = useCallback(async () => {
+    setIsLoading(true)
     try {
       let params: Params = {}
       if (searchText) {
@@ -167,10 +168,10 @@ const Technicians = () => {
       const response = await getTechnicians(params).unwrap()
       const { status, content, message } = response as TechnicianResponse
       if (status === 200 && Array.isArray(content)) {
+        setIsLoading(false)
         setTechnicianData(content)
         setFilteredTechnicianData(content)
       } else {
-        setIsLoading(false)
         toast?.current?.show({
           severity: 'error',
           summary: 'Error',
@@ -214,7 +215,7 @@ const Technicians = () => {
 
   const getClosedWorkOrder = useCallback(
     async (id: any) => {
-      // setIsLoading(true)
+      setIsLoading(true)
       try {
         let params: Params = {}
 
@@ -372,6 +373,19 @@ const Technicians = () => {
                   }
                   style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
                 />
+                {isLoading && (
+                  <ProgressSpinner
+                    style={{
+                      position: 'absolute',
+                      top: '50%',
+                      left: '40%',
+                      transform: 'translate(-50%, -50%)',
+                      width: '50px',
+                      height: '50px',
+                    }}
+                    strokeWidth="4"
+                  />
+                )}
               </div>
               <div className="mt-auto">
                 <Paginator
@@ -424,23 +438,11 @@ const Technicians = () => {
                 </div>
               </div>
             </div>
-            {isLoading && (
-              <ProgressSpinner
-                style={{
-                  position: 'absolute',
-                  top: '50%',
-                  transform: 'translate(-50%, -50%)',
-                  width: '50px',
-                  height: '50px',
-                }}
-                strokeWidth="4"
-              />
-            )}
-
+          
             <div
               data-testid="customer-admin-data"
               className="flex flex-col  "
-              style={{ height: '630px'}}>
+              style={{ height: '630px' }}>
               <div className="flex-grow overflow-auto">
                 <DataTableComponent
                   columns={WorkOrdersColumn}
@@ -471,6 +473,19 @@ const Technicians = () => {
                   }
                   style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
                 />
+                {isLoading && (
+                  <ProgressSpinner
+                    style={{
+                      position: 'absolute',
+                      top: '50%',
+                      left: '40%',
+                      transform: 'translate(-50%, -50%)',
+                      width: '50px',
+                      height: '50px',
+                    }}
+                    strokeWidth="4"
+                  />
+                )}
               </div>
               <div className="mt-auto">
                 <Paginator

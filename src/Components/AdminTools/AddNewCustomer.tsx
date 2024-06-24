@@ -418,7 +418,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       setErrorMessage('Password is Incorrect')
       return
     }
-    setIsLoading(true)
     dispatch(setCustomerId(permission ? customerAdminId : selectedCustomerAdminId))
     try {
       // Encode the password using base64
@@ -444,6 +443,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       }).unwrap()
       const { status, message } = response as SaveUserResponse
       if (status === 200 || status === 201) {
+        setIsLoading(false)
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
@@ -466,7 +466,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           detail: message || 'An error occurred while saving the customer.',
           life: 3000,
         })
-        setIsLoading(false)
+       
       }
     } catch (error) {
       const { message } = error as ErrorResponse
@@ -711,6 +711,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   minHeight: '32px',
                   border: fieldErrors.role ? '1px solid red' : '1px solid #D5E1EA',
                   fontSize: '0.8rem',
+                  color:"gray,",
                   borderRadius: '0.50rem',
                   cursor: editCustomerMode || editMode ? 'not-allowed' : 'auto',
                 }}
@@ -899,6 +900,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   border: fieldErrors.state ? '1px solid red' : '1px solid #D5E1EA',
                   fontSize: '0.8rem',
                   borderRadius: '0.50rem',
+                  color:"gray"
                 }}
               />
               <p className="" id="state">

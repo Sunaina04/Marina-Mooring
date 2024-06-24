@@ -16,6 +16,7 @@ import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import { Toast } from 'primereact/toast'
 import { Params } from '../../../Type/CommonType'
+import { ProgressSpinner } from 'primereact/progressspinner'
 
 const WorkOrders = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -100,6 +101,7 @@ const WorkOrders = () => {
   )
 
   const getWorkOrderData = useCallback(async () => {
+    setIsLoading(true)
     try {
       let params: Params = {}
       if (searchText) {
@@ -109,6 +111,7 @@ const WorkOrders = () => {
       const { status, content, message } = response as WorkOrderResponse
       if (status === 200 && Array.isArray(content)) {
         setWorkOrderData(content)
+        setIsLoading(false)
       } else {
         setIsLoading(false)
         toast?.current?.show({
@@ -147,10 +150,11 @@ const WorkOrders = () => {
   }, [searchText, selectedCustomerId])
 
   return (
-    <div className={visible ? 'backdrop-blur-lg' : ''}>
+    <div 
+    
+    className={visible ? 'backdrop-blur-lg' : ''}>
       <Header header="MOORSERVE/Work Orders" />
       <Toast ref={toast} />
-
       <div className="">
         <div className="flex justify-end mr-16 mt-10">
           <div>
@@ -190,6 +194,8 @@ const WorkOrders = () => {
             />
           </div>
         </div>
+
+
 
         <div
           style={{
@@ -255,6 +261,20 @@ const WorkOrders = () => {
               </div>
             }
           />
+
+          {isLoading && (
+            <ProgressSpinner
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '60%',
+                transform: 'translate(-50%, -50%)',
+                width: '50px',
+                height: '50px',
+              }}
+              strokeWidth="4"
+            />
+          )}
         </div>
       </div>
     </div>
