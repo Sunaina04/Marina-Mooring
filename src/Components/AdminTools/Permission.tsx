@@ -171,7 +171,7 @@ const Permission = () => {
         setTotalRecords(totalSize)
       }
     } catch (error) {
-      const { message:msg } = error as ErrorResponse
+      const { message: msg } = error as ErrorResponse
       setIsLoading(false)
       console.error('Error occurred while fetching customer data:', msg)
     }
@@ -185,9 +185,7 @@ const Permission = () => {
   }, [searchInput, pageNumber, pageSize])
 
   return (
-    <div 
-    style={{height:"100vh"}}
-    className={modalVisible ? 'backdrop-blur-lg' : ''}>
+    <div style={{ height: '100vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
       <Header header="MOORMANAGE/Permission" />
       <div className="flex mr-12 justify-end">
         <Toast ref={toast} />
@@ -270,8 +268,8 @@ const Permission = () => {
               permission={true}
               passWordDisplay={editMode}
               toastRef={toast}
-              setSelectedCustomerUser={() => { }}
-              setSelectedCustomer={() => { }}
+              setSelectedCustomerUser={() => {}}
+              setSelectedCustomer={() => {}}
             />
           </CustomModal>
         </div>

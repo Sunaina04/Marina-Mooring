@@ -71,7 +71,7 @@ const Vendors = () => {
       await getVendors(params)
         .unwrap()
         .then(async (response: any) => {
-          const { status, content, message,totalSize } = response as VendorResponse
+          const { status, content, message, totalSize } = response as VendorResponse
           if (status === 200 && Array.isArray(content)) {
             setIsLoading(false)
             setVendorData(content)
@@ -234,7 +234,7 @@ const Vendors = () => {
 
   return (
     <>
-      <div className={modalVisible ? 'backdrop-blur-lg' : ''}>
+      <div style={{ height: '100vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
         <Header header="MOORMANAGE/Vendor" />
         <Toast ref={toast} />
         <div className="flex justify-end">

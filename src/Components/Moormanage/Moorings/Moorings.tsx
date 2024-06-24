@@ -475,7 +475,7 @@ const Moorings = () => {
   }, [pageNumberTwo, pageSizeTwo, customerId])
 
   return (
-    <div className={modalVisible ? 'backdrop-blur-lg' : ''}>
+    <div style={{ height: '100vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
       <Header header={properties.MoormanageMoorings} />
       <Toast ref={toast} />
 

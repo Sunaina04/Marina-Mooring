@@ -362,7 +362,7 @@ const CustomerOwner = () => {
   }, [searchUsersText, selectedCustomerId, pageNumberTwo, pageSizeTwo])
 
   return (
-    <div className={modalVisible ? 'backdrop-blur-lg' : ''}>
+    <div style={{ height: '100vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
       <Toast ref={toast} />
       <Header header="MOORMANAGE/Permission" customer={customerUpdated} />
 

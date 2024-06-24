@@ -377,6 +377,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       }
     } catch (error) {
       const { message } = error as ErrorResponse
+      setIsLoading(false)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
@@ -419,6 +420,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       return
     }
     dispatch(setCustomerId(permission ? customerAdminId : selectedCustomerAdminId))
+    setIsLoading(true)
     try {
       // Encode the password using base64
       const encodedPassword = btoa(password)
@@ -460,6 +462,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         setIsLoading(false)
         setModalVisible(false)
       } else {
+        setIsLoading(false)
         toastRef?.current?.show({
           severity: 'error',
           summary: 'Error',
@@ -469,6 +472,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       }
     } catch (error) {
       const { message } = error as ErrorResponse
+      setIsLoading(false)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
@@ -580,11 +584,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
   return (
     <>
-      <div
-        style={{
-          // height: 'calc(600px - 150px)',
-          paddingBottom: '50px',
-        }}>
+      <div style={{ paddingBottom: '50px' }}>
         <div className="flex gap-8 mt-5 ml-4">
           <div>
             <span className="font-medium text-sm text-[#000000]">

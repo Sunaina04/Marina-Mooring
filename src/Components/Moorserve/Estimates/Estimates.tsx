@@ -196,7 +196,7 @@ const Estimates = () => {
   }, [searchText, selectedCustomerId, pageNumber, pageSize])
 
   return (
-    <div className={visible ? 'backdrop-blur-lg' : ''}>
+    <div style={{ height: '100vh' }} className={visible ? 'backdrop-blur-lg' : ''}>
       <Header header="MOORSERVE/Estimate" />
       <Toast ref={toast} />
       <div className="">
