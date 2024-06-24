@@ -752,6 +752,20 @@ const Moorings = () => {
                     </div>
                   }
                 />
+
+                {isLoader && (
+                  <ProgressSpinner
+                    style={{
+                      position: 'absolute',
+                      top: '40%',
+                      left: '50%',
+                      transform: 'translate(-50%, -50%)',
+                      width: '50px',
+                      height: '50px',
+                    }}
+                    strokeWidth="4"
+                  />
+                )}
               </div>
               <Paginator
                 first={pageNumber2}

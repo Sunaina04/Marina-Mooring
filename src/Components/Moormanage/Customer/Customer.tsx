@@ -569,7 +569,6 @@ const Customer = () => {
           />
         </div>
       </div>
-
       <div className="flex flex-col md:flex-row mt-3">
         {/* Left Panel */}
         <div className="flex-grow bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-6 md:mb-0">
@@ -607,7 +606,7 @@ const Customer = () => {
 
           <div
             className={`bg-#00426F h-[590px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col`}>
-            <div className="flex-grow overflow-auto">
+            <div className="flex-grow overflow-x-auto overflow-y-auto">
               <DataTableComponent
                 data={customerData}
                 tableStyle={{
@@ -782,6 +781,19 @@ const Customer = () => {
                     </div>
                   }
                 />
+                {isLoading && (
+                  <ProgressSpinner
+                    style={{
+                      position: 'absolute',
+                      top: '50%',
+                      left: '40%',
+                      transform: 'translate(-50%, -50%)',
+                      width: '50px',
+                      height: '50px',
+                    }}
+                    strokeWidth="4"
+                  />
+                )}
               </div>
               <Paginator
                 first={pageNumber2}

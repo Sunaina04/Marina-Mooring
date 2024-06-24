@@ -453,6 +453,8 @@ const Boatyards = () => {
     return (
       <>
         <div
+
+
           className={`flex justify-between mt-4 p-3 ml-5 font-normal text-[12px] ${isLoader ? 'blur-screen' : ''}`}>
           <p className="">
             {`${selectedBoatYard?.street || '-'}, ${selectedBoatYard?.apt || '-'}, ${selectedBoatYard?.stateResponseDto?.name || '-'}, ${selectedBoatYard?.countryResponseDto?.name || '-'}`}
@@ -474,19 +476,7 @@ const Boatyards = () => {
           <CustomDisplayPositionMap position={[latitude, longitude]} zoomLevel={10} />
         </div>
 
-        {isLoader && (
-          <ProgressSpinner
-            style={{
-              position: 'absolute',
-              top: '50%',
-              left: '73%',
-              transform: 'translate(-50%, -50%)',
-              width: '50px',
-              height: '50px',
-            }}
-            strokeWidth="4"
-          />
-        )}
+
 
         <div
           className={`bg-#00426F overflow-x-hidden h-[360px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col ${isLoading ? 'blur-screen' : ''}`}>
@@ -523,23 +513,41 @@ const Boatyards = () => {
                 </div>
               }
             />
+            <div className=''>
+              <Paginator
+                first={pageNumberOne}
+                rows={pageSizeTwo}
+                totalRecords={totalRecordsTwo}
+                rowsPerPageOptions={[10, 20, 30]}
+                onPageChange={onPageChangeTwo}
+                style={{
+                  position: 'sticky',
+                  bottom: 0,
+                  zIndex: 1,
+                  backgroundColor: 'white',
+                  borderTop: '1px solid #D5E1EA',
+                  padding: '0.5rem',
+                }}
+              />
+
+            </div>
+
+            {isLoader && (
+              <ProgressSpinner
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  width: '50px',
+                  height: '50px',
+                }}
+                strokeWidth="4"
+              />
+            )}
           </div>
 
-          <Paginator
-            first={pageNumberOne}
-            rows={pageSizeTwo}
-            totalRecords={totalRecordsTwo}
-            rowsPerPageOptions={[10, 20, 30]}
-            onPageChange={onPageChangeTwo}
-            style={{
-              position: 'sticky',
-              bottom: 0,
-              zIndex: 1,
-              backgroundColor: 'white',
-              borderTop: '1px solid #D5E1EA',
-              padding: '0.5rem',
-            }}
-          />
+
         </div>
       </>
     )
@@ -681,28 +689,45 @@ const Boatyards = () => {
                   </div>
                 }
               />
+              {isLoader && (
+                <ProgressSpinner
+                  style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: '50px',
+                    height: '50px',
+                  }}
+                  strokeWidth="4"
+                />
+              )}
+
             </div>
-            <Paginator
-              first={pageNumber1}
-              rows={pageSize}
-              totalRecords={totalRecords}
-              rowsPerPageOptions={[10, 20, 30]}
-              onPageChange={onPageChange}
-              style={{
-                position: 'sticky',
-                bottom: 0,
-                zIndex: 1,
-                backgroundColor: 'white',
-                borderTop: '1px solid #D5E1EA',
-                padding: '0.5rem',
-              }}
-            />
+
+            <div>
+              <Paginator
+                first={pageNumber1}
+                rows={pageSize}
+                totalRecords={totalRecords}
+                rowsPerPageOptions={[5, 10, 20, 30]}
+                onPageChange={onPageChange}
+                style={{
+                  position: 'sticky',
+                  bottom: 0,
+                  zIndex: 1,
+                  backgroundColor: 'white',
+                  borderTop: '1px solid #D5E1EA',
+                  padding: '0.5rem',
+                }}
+              />
+            </div>
           </div>
         </div>
 
         <div
           data-testid="customer-admin-users-table"
-          className=" flex-grow bg-[#FFFFFF] rounded-xl border-[1px] border-gray-300 w-[515px] h-[732px] mr-[50px] ml-[30px]  mb-0 ">
+          className=" flex-grow overflow-auto bg-[#FFFFFF] rounded-xl border-[1px] border-gray-300 w-[515px] h-[732px] mr-[50px] ml-[30px]  mb-0 ">
           <div className="">
             <div className="text-sm font-extrabold rounded-sm w-full bg-[#D9D9D9]">
               <div

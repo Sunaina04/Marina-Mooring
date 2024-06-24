@@ -373,6 +373,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         ],
       }
     } else {
+
       payload = {
         firstName: firstName,
         lastName: lastName,
@@ -891,7 +892,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             />
           )}
 
-          <div className="mt-2">
+          <div className="mt-3">
             <div>
               <h1 className="font-medium text-sm text-[#000000]">
                 <div className="flex gap-1">
@@ -1379,6 +1380,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   <div className="mt-2">
                     <Calendar
                       value={parseDate(formData?.topChainDate)}
+                      placeholder='mm/dd/yy'
                       onChange={(e) =>
                         handleInputChange('topChainDate', formatDate(e.target.value))
                       }
@@ -1567,10 +1569,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       <Dropdown
                         value={formData?.type}
                         onChange={(e) => handleInputChange('type', e.target.value)}
-                        options={[]}
-                        // optionLabel="boatType"
-                        // editable
-                        // placeholder="Select"
+                        options={type}
+                        optionLabel="boatType"
+                        editable
+                        placeholder="Select"
                         style={{
                           width: '230px',
                           height: '32px',
@@ -1605,6 +1607,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         // optionLabel="condition"
                         // editable
                         // placeholder="Select"
+                        placeholder='mm/dd/yy'
                         style={{
                           width: '230px',
                           height: '32px',
@@ -1640,6 +1643,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                           handleInputChange('conditionEyeDate', formatDate(e.target.value))
                         }
                         dateFormat="mm/dd/yy"
+                        placeholder='mm/dd/yy"'
                         // options={conditionOfEye}
                         // optionLabel="condition"
                         // editable
