@@ -1,5 +1,5 @@
 import { render, fireEvent, screen } from '@testing-library/react'
-import Permission from './CustomerOwner'
+import Permission from './Companies'
 describe('Permission component', () => {
   test('renders header text', () => {
     render(<Permission />)
