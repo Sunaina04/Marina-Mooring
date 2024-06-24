@@ -3,6 +3,7 @@ import InputComponent from '../../CommonComponent/InputComponent'
 import { Button } from 'primereact/button'
 import { Dropdown } from 'primereact/dropdown'
 import { FileUpload } from 'primereact/fileupload'
+import { Toast } from 'primereact/toast'
 
 const AddForm = () => {
   const [customerName, setCustomerName] = useState<string>('')
@@ -11,6 +12,7 @@ const AddForm = () => {
   const [uploadFile, setUploadFile] = useState<any>('')
   const [visible, setVisible] = useState<boolean>(false)
   const [fieldsError, setFieldsError] = useState<{ [key: string]: string }>({})
+  const toastRef = useRef<Toast>(null)
 
   const fileUploadRef = useRef<any>(null);
 
@@ -84,6 +86,7 @@ const AddForm = () => {
   return (
     <>
       <div className="ml-4">
+      <Toast ref={toastRef} />
         <div className="flex gap-6">
           <div>
             <span className="font-medium text-sm text-[#000000]">

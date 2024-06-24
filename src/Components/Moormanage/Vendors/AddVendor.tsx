@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { InputTextarea } from 'primereact/inputtextarea'
 import InputComponent from '../../CommonComponent/InputComponent'
 import { InputText } from 'primereact/inputtext'
@@ -13,12 +13,12 @@ import { AddVendorProps } from '../../../Type/ComponentBasedType'
 import { ErrorResponse, VendorResponse } from '../../../Type/ApiTypes'
 import { CountriesData, StatesData } from '../../CommonComponent/MetaDataComponent/MetaDataApi'
 import { ProgressSpinner } from 'primereact/progressspinner'
+import { Toast } from 'primereact/toast'
 const AddVendor: React.FC<AddVendorProps> = ({
   vendors,
   editMode,
   closeModal,
   getVendor,
-  toastRef,
 }) => {
   const [addVendor] = useAddVendorsMutation()
   const [editVendor] = useUpdateVendorMutation()
@@ -28,6 +28,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
   const [statesData, setStatesData] = useState<State[]>()
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
   const [isLoading, setIsLoading] = useState(false)
+  const toastRef = useRef<Toast>(null)
   const [formData, setFormData] = useState<any>({
     companyName: '',
     phone: '',
@@ -341,6 +342,7 @@ const AddVendor: React.FC<AddVendorProps> = ({
   return (
     <>
       <div className="main">
+      <Toast ref={toastRef} />
         <div className="flex">
           <div className="flex gap-8">
             <div>
