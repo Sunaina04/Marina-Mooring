@@ -226,9 +226,33 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
   const handleInputChange = (field: string, value: any) => {
     const phoneRegex = /^.{10}$|^.{12}$/
+    const numberRegex = /^\d+$/;
+    
     if (field === 'phone') {
       if (value !== '' && phoneRegex.test(value)) {
         return
+      }
+    }
+
+
+    if (field === 'boatSize') {
+      if (value !== '' && !numberRegex.test(value)) {
+        return; 
+      }
+    }
+    if (field === 'sizeOfWeight') {
+      if (value !== '' && !numberRegex.test(value)) {
+        return; 
+      }
+    }
+    if (field === 'boatWeight') {
+      if (value !== '' && !numberRegex.test(value)) {
+        return; 
+      }
+    }
+    if (field === 'depthAtMeanHighWater') {
+      if (value !== '' && !numberRegex.test(value)) {
+        return; 
       }
     }
     setFormData({
