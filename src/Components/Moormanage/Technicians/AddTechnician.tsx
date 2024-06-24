@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import ButtonComponent from '../../CommonComponent/ButtonComponent'
 import { InputTextarea } from 'primereact/inputtextarea'
 import InputComponent from '../../CommonComponent/InputComponent'
@@ -6,10 +6,12 @@ import { InputText } from 'primereact/inputtext'
 import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown'
 import { Button } from 'primereact/button'
 import { CityProps } from '../../../Type/CommonType'
+import { Toast } from 'primereact/toast'
 
 const AddTechnication = () => {
   const [value, setValue] = useState<string>('')
   const [selectedCity, setSelectedCity] = useState<CityProps | undefined>(undefined)
+  const toastRef = useRef<Toast>(null)
   const cities: CityProps[] = [
     { name: 'New York', code: 'NY' },
     { name: 'Rome', code: 'RM' },
@@ -21,6 +23,7 @@ const AddTechnication = () => {
   return (
     <>
       <div className="main">
+      <Toast ref={toastRef} />
         <h1 className=" text-lg font-bold">Add Technician</h1>
 
         <div className="flex">

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { InputTextarea } from 'primereact/inputtextarea'
 import { InputText } from 'primereact/inputtext'
 import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown'
@@ -29,10 +29,10 @@ import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import { CustomerResponse, ErrorResponse } from '../../../Type/ApiTypes'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { Calendar } from 'primereact/calendar'
+import { Toast } from 'primereact/toast'
 const AddMoorings: React.FC<AddMooringProps> = ({
   moorings,
   editMode,
-  toastRef,
   mooringRowData,
   closeModal,
   getCustomer,
@@ -64,6 +64,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
   const [firstErrorField, setFirstErrorField] = useState('')
   const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<string>()
+  const toastRef = useRef<Toast>(null)
   const getFomattedCoordinate = (gpsCoordinatesValue: any) => {
     try {
       let [lat, long]: any = gpsCoordinatesValue.split(' ')
@@ -587,6 +588,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   return (
     <>
       <div className="">
+      <Toast ref={toastRef} />
         <div className="flex gap-6 ">
           <div>
             <span className="font-medium text-sm text-[#000000]">

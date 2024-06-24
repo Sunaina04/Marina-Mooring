@@ -24,6 +24,7 @@ import {
 } from '../CommonComponent/MetaDataComponent/MetaDataApi'
 import { useDispatch, useSelector } from 'react-redux'
 import { setCustomerId, setCustomerName } from '../../Store/Slice/userSlice'
+import { Toast } from 'primereact/toast'
 
 const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   customerData,
@@ -36,7 +37,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   setModalVisible,
   customerUsers,
   permission,
-  toastRef,
   setSelectedCustomerUsers,
   setSelectedCustomerUser,
   setSelectedCustomer,
@@ -75,6 +75,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const { getRolesData } = RolesData()
   const { getStatesData } = StatesData()
   const { getCountriesData } = CountriesData()
+  const toastRef = useRef<Toast>(null)
 
   const [passwordCriteria, setPasswordCriteria] = useState({
     uppercase: false,
@@ -585,6 +586,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   return (
     <>
       <div style={{ paddingBottom: '50px' }}>
+        <Toast ref={toastRef} />
         <div className="flex gap-8 mt-5 ml-4">
           <div>
             <span className="font-medium text-sm text-[#000000]">
