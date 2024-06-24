@@ -31,6 +31,7 @@ import { LatLngExpression } from 'leaflet'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { Checkbox } from 'primereact/checkbox'
 import { Calendar } from 'primereact/calendar'
+import { InputTextarea } from 'primereact/inputtextarea'
 const AddCustomer: React.FC<CustomerDataProps> = ({
   customer,
   mooringRowData,
@@ -225,8 +226,31 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
   const handleInputChange = (field: string, value: any) => {
     const phoneRegex = /^.{10}$|^.{12}$/
+    const numberRegex = /^\d+$/
+
     if (field === 'phone') {
       if (value !== '' && phoneRegex.test(value)) {
+        return
+      }
+    }
+
+    if (field === 'boatSize') {
+      if (value !== '' && !numberRegex.test(value)) {
+        return
+      }
+    }
+    if (field === 'sizeOfWeight') {
+      if (value !== '' && !numberRegex.test(value)) {
+        return
+      }
+    }
+    if (field === 'boatWeight') {
+      if (value !== '' && !numberRegex.test(value)) {
+        return
+      }
+    }
+    if (field === 'depthAtMeanHighWater') {
+      if (value !== '' && !numberRegex.test(value)) {
         return
       }
     }
@@ -688,8 +712,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
       {!editMooringMode && (
         <>
-          <div className="flex gap-6">
-            <div>
+          <div className="">
+            <div className="flex gap-6">
               <div>
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
@@ -716,36 +740,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   </p>
                 </div>
               </div>
-              <div className="mt-4">
-                <div>
-                  <div>
-                    <span className="font-medium text-sm text-[#000000]">
-                      <div className="flex gap-1">
-                        Email Address
-                        {/* <p className="text-red-600">*</p> */}
-                      </div>
-                    </span>
-                  </div>
-                  <div className="mt-2">
-                    <InputComponent
-                      value={email}
-                      onChange={(e) => handleInputChangeCustomer('email', e.target.value)}
-                      style={{
-                        width: '230px',
-                        height: '32px',
-                        border: fieldErrors.email ? '1px solid red' : '1px solid #D5E1EA',
-                        borderRadius: '0.50rem',
-                        fontSize: '0.8rem',
-                      }}
-                    />
-                    <p className="" id="email">
-                      {fieldErrors.email && <small className="p-error">{fieldErrors.email}</small>}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div>
               <div>
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
@@ -775,7 +769,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 </div>
               </div>
 
-              <div className="mt-4">
+              <div className="">
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
                     Phone
@@ -801,31 +795,60 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               </div>
             </div>
 
-            <div className="">
-              <span className="font-medium text-sm text-[#000000]">
-                <div className="flex gap-1">Customer Type</div>
-              </span>
-              <div className="mt-2">
-                <Dropdown
-                  id="CustomerType"
-                  value={selectedCustomerType}
-                  options={customerType}
-                  onChange={(e) => handleInputChangeCustomer('CustomerType', e.target.value)}
-                  optionLabel="type"
-                  editable
-                  placeholder="Customer Type"
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: fieldErrors.state ? '1px solid red' : '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    color: 'black',
-                    fontSize: '0.8rem',
-                  }}
-                />
+            <div className="flex gap-6">
+            <div className="mt-3">
+                <div>
+                  <div>
+                    <span className="font-medium text-sm text-[#000000]">
+                      <div className="flex gap-1">
+                        Email Address
+                      </div>
+                    </span>
+                  </div>
+                  <div className="mt-2">
+                    <InputComponent
+                      value={email}
+                      onChange={(e) => handleInputChangeCustomer('email', e.target.value)}
+                      style={{
+                        width: '230px',
+                        height: '32px',
+                        border: fieldErrors.email ? '1px solid red' : '1px solid #D5E1EA',
+                        borderRadius: '0.50rem',
+                        fontSize: '0.8rem',
+                      }}
+                    />
+                    <p className="" id="email">
+                      {fieldErrors.email && <small className="p-error">{fieldErrors.email}</small>}
+                    </p>
+                  </div>
+                </div>
+              </div> 
+              <div className='mt-3'>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="gap-1">Customer Type</div>
+                </span>
+                <div className="mt-2">
+                  <Dropdown
+                    id="CustomerType"
+                    value={selectedCustomerType}
+                    options={customerType}
+                    onChange={(e) => handleInputChangeCustomer('CustomerType', e.target.value)}
+                    optionLabel="type"
+                    editable
+                    placeholder="Customer Type"
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: fieldErrors.state ? '1px solid red' : '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      color: 'black',
+                      fontSize: '0.8rem',
+                    }}
+                  />
+                </div>
               </div>
 
-              <div className="mt-4">
+              <div className="mt-3">
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">Customer Image</div>
                 </span>
@@ -840,6 +863,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       border: '1px solid #D5E1EA',
                       borderRadius: '0.50rem',
                       fontSize: '0.8rem',
+                      padding:'3px',
                     }}
                   />
                   {customerImage && (
@@ -1008,18 +1032,19 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               </span>
             </div>
             <div className="mt-2">
-              <InputComponent
+              <InputTextarea
                 value={formData.note}
                 onChange={(e) => handleInputChange('note', e.target.value)}
                 style={{
-                  width: '487.77px',
+                  width: '98%',
                   height: '50px',
                   border: fieldErrors.note ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.70rem',
                   // backgroundColor: '#F5F5F5',
                   boxShadow: 'none',
-                  padding: '10px',
+                  paddingLeft: '0.5rem',
+                  resize:'none'
                 }}
               />
               <p>{fieldErrors.note && <small className="p-error">{fieldErrors.note}</small>}</p>
