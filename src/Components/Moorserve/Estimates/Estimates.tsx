@@ -95,7 +95,7 @@ const Estimates = () => {
         body: firstLastName,
       },
       {
-        id: 'mooringResponseDto.mooringId',
+        id: 'mooringResponseDto.mooringNumber',
         label: 'Mooring Number',
         style: columnStyle,
       },

@@ -226,6 +226,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   }
 
   const handleInputChange = (field: string, value: any) => {
+    if (field === 'boatSize' && value !== '' && !/^\d*\.?\d*$/.test(value)) {
+      return
+    }
+
     setFormData({
       ...formData,
       [field]: value,
