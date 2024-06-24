@@ -15,6 +15,7 @@ import { ProgressSpinner } from 'primereact/progressspinner'
 import { LatLngExpression } from 'leaflet'
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
+import { Toast } from 'primereact/toast'
 
 const AddBoatyards: React.FC<BoatYardProps> = ({
   closeModal,
@@ -22,7 +23,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   setModalVisible,
   customerData,
   editMode,
-  toastRef,
 }) => {
   const selectedCustomerId = useSelector(selectCustomerId)
   const [boatyardId, setBoatyardId] = useState('')
@@ -40,6 +40,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   const [countriesData, setCountriesData] = useState<Country[]>()
   const [statesData, setStatesData] = useState<State[]>()
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
+  const toastRef = useRef<Toast>(null)
 
   const getFormattedCoordinate = (coordinates: any) => {
     try {
@@ -305,6 +306,8 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   return (
     <>
       <div className=" ml-4">
+        <Toast ref={toastRef} />
+
         <div className="flex gap-6  ">
           <div>
             <span className="font-medium text-sm text-[#000000]">

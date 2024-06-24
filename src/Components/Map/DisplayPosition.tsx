@@ -5,11 +5,10 @@ import { DisplayPositionProps } from '../../Type/Components/MapTypes'
 import { DefaultIcon } from './DefaultIcon'
 
 const DisplayPosition: React.FC<DisplayPositionProps> = ({ map, onPositionChange }) => {
-  const [position, setPosition] = useState(() => map.getCenter())
-
   const onMove = useCallback(() => {
     const newPosition = map.getCenter()
-    setPosition(newPosition)
+    console.log('newPosition', newPosition)
+
     if (onPositionChange) {
       onPositionChange(newPosition.lat, newPosition.lng)
     }
@@ -22,7 +21,7 @@ const DisplayPosition: React.FC<DisplayPositionProps> = ({ map, onPositionChange
     }
   }, [map, onMove])
 
-  return <></>
+  return null
 }
 
 L.Marker.prototype.options.icon = DefaultIcon

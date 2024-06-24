@@ -37,7 +37,7 @@ const CustomSelectPositionMap: React.FC<CustomSelectPositionMapProps> = ({
 
   return (
     <div>
-      {map ? <DisplayPosition map={map} onPositionChange={onPositionChange} /> : null}
+      {map && <DisplayPosition map={map} onPositionChange={onPositionChange} />}
       {displayMap}
     </div>
   )

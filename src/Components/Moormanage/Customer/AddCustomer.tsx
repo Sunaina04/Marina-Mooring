@@ -5,6 +5,7 @@ import { Dropdown } from 'primereact/dropdown'
 import {
   useAddCustomerMutation,
   useUpdateCustomerMutation,
+  useUpdateMooringsMutation,
 } from '../../../Services/MoorManage/MoormanageApi'
 import { Button } from 'primereact/button'
 import { CustomerDataProps } from '../../../Type/ComponentBasedType'
@@ -86,7 +87,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       console.log('Error In Setting Center', error)
       return [41.56725, 70.94045]
     }
-    // return [41.56725, 70.94045]
   }
 
   const [center, setCenter] = useState<any>(
@@ -94,7 +94,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       ? getFomattedCoordinate(mooringRowData?.gpsCoordinates || gpsCoordinatesValue)
       : [41.56725, 70.94045],
   )
-  // const [center, setCenter] = useState<LatLngExpression | undefined>([30.6983149, 76.656095])
   const [firstErrorField, setFirstErrorField] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [customerImage, setCustomerImage] = useState<string | null>(null)
@@ -136,6 +135,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const { getCustomersType } = CustomersType()
   const [addCustomer] = useAddCustomerMutation()
   const [updateCustomer] = useUpdateCustomerMutation()
+  const [updateMooring] = useUpdateMooringsMutation()
 
   const handlePositionChange = (lat: number, lng: number) => {
     setCenter([lat, lng])
@@ -176,7 +176,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const validateFields = () => {
     const phoneRegex = /^.{10}$|^.{12}$/
     const nameRegex = /^[a-zA-Z ]+$/
-
 
     const errors: { [key: string]: string } = {}
     let firstError = ''
@@ -490,76 +489,60 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     try {
       setIsLoading(true)
       const editMooringPayload = {
-        firstName: firstName,
-        lastName: lastName,
-        emailAddress: email,
-        phone: phone,
-        streetHouse: streetHouse,
-        aptSuite: sectorBlock,
-        state: selectedState?.id ? selectedState?.id : customer?.stateResponseDto?.id,
-        country: selectedCountry?.id ? selectedCountry?.id : customer?.stateResponseDto?.id,
-        zipCode: pinCode,
-        customerOwnerId: selectedCustomerId,
-        customerTypeId: selectedCustomerType === 'Dock' ? 5 : selectedCustomerType?.id,
-        note: formData?.note,
-        mooringRequestDtoList: [
-          {
-            id: mooringRowData?.id,
-            mooringNumber: formData?.mooringNumber
-              ? formData?.mooringNumber
-              : mooringRowData?.mooringNumber,
-            customerId: formData?.customerName?.id
-              ? formData?.customerName?.id
-              : mooringRowData?.customerId,
-            harborOrArea: formData?.harbor ? formData?.harbor : mooringRowData?.harborOrArea,
-            gpsCoordinates: gpsCoordinatesValue,
-            boatyardId: formData?.boatyardName
-              ? formData?.boatyardName
-              : mooringRowData?.boatyardResponseDto?.id,
-            boatName: formData?.boatName ? formData?.boatName : mooringRowData?.boatName,
-            boatSize: formData?.boatSize ? formData?.boatSize : mooringRowData?.boatSize,
-            boatTypeId: formData?.type?.id ? formData?.type?.id : mooringRowData?.boatType?.id,
-            boatWeight: formData?.boatWeight ? formData?.boatWeight : mooringRowData?.boatWeight,
-            installBottomChainDate: formData?.bottomChainDate
-              ? formData?.bottomChainDate
-              : mooringRowData?.installBottomChainDate,
-            installTopChainDate: formData?.topChainDate
-              ? formData?.topChainDate
-              : mooringRowData?.installTopChainDate,
-            installConditionOfEyeDate: formData?.conditionEyeDate
-              ? formData?.conditionEyeDate
-              : mooringRowData?.installConditionOfEyeDate,
-            sizeOfWeight: formData?.sizeOfWeight
-              ? formData?.sizeOfWeight
-              : mooringRowData?.sizeOfWeight,
-            typeOfWeightId: formData?.typeOfWeight.id
-              ? formData?.typeOfWeight.id
-              : mooringRowData?.typeOfWeight.id,
-            eyeConditionId: formData?.conditionOfEye.id
-              ? formData?.conditionOfEye.id
-              : mooringRowData?.eyeCondition?.id,
-            topChainConditionId: formData?.topChainCondition?.id
-              ? formData?.topChainCondition?.id
-              : mooringRowData?.topChainCondition?.id,
-            bottomChainConditionId: formData?.bottomChainCondition?.id
-              ? formData?.bottomChainCondition?.id
-              : mooringRowData?.bottomChainCondition?.id,
-            shackleSwivelConditionId: formData?.shackleSwivelCondition?.id
-              ? formData?.shackleSwivelCondition?.id
-              : mooringRowData?.shackleSwivelCondition?.id,
-            pendantCondition: formData?.pendantCondition
-              ? formData?.pendantCondition
-              : mooringRowData?.pendantCondition,
-            depthAtMeanHighWater: formData?.depthAtMeanHighWater
-              ? formData?.depthAtMeanHighWater
-              : mooringRowData?.depthAtMeanHighWater,
-            statusId: 4,
-          },
-        ],
+        id: mooringRowData?.id,
+        mooringNumber: formData?.mooringNumber
+          ? formData?.mooringNumber
+          : mooringRowData?.mooringNumber,
+        customerId: formData?.customerName?.id
+          ? formData?.customerName?.id
+          : mooringRowData?.customerId,
+        harborOrArea: formData?.harbor ? formData?.harbor : mooringRowData?.harborOrArea,
+        gpsCoordinates: gpsCoordinatesValue,
+        boatyardId: formData?.boatyardName
+          ? formData?.boatyardName
+          : mooringRowData?.boatyardResponseDto?.id,
+        boatName: formData?.boatName ? formData?.boatName : mooringRowData?.boatName,
+        boatSize: formData?.boatSize ? formData?.boatSize : mooringRowData?.boatSize,
+        boatTypeId: formData?.type?.id ? formData?.type?.id : mooringRowData?.boatType?.id,
+        boatWeight: formData?.boatWeight ? formData?.boatWeight : mooringRowData?.boatWeight,
+        installBottomChainDate: formData?.bottomChainDate
+          ? formData?.bottomChainDate
+          : mooringRowData?.installBottomChainDate,
+        installTopChainDate: formData?.topChainDate
+          ? formData?.topChainDate
+          : mooringRowData?.installTopChainDate,
+        installConditionOfEyeDate: formData?.conditionEyeDate
+          ? formData?.conditionEyeDate
+          : mooringRowData?.installConditionOfEyeDate,
+        sizeOfWeight: formData?.sizeOfWeight
+          ? formData?.sizeOfWeight
+          : mooringRowData?.sizeOfWeight,
+        typeOfWeightId: formData?.typeOfWeight.id
+          ? formData?.typeOfWeight.id
+          : mooringRowData?.typeOfWeight.id,
+        eyeConditionId: formData?.conditionOfEye.id
+          ? formData?.conditionOfEye.id
+          : mooringRowData?.eyeCondition?.id,
+        topChainConditionId: formData?.topChainCondition?.id
+          ? formData?.topChainCondition?.id
+          : mooringRowData?.topChainCondition?.id,
+        bottomChainConditionId: formData?.bottomChainCondition?.id
+          ? formData?.bottomChainCondition?.id
+          : mooringRowData?.bottomChainCondition?.id,
+        shackleSwivelConditionId: formData?.shackleSwivelCondition?.id
+          ? formData?.shackleSwivelCondition?.id
+          : mooringRowData?.shackleSwivelCondition?.id,
+        pendantCondition: formData?.pendantCondition
+          ? formData?.pendantCondition
+          : mooringRowData?.pendantCondition,
+        depthAtMeanHighWater: formData?.depthAtMeanHighWater
+          ? formData?.depthAtMeanHighWater
+          : mooringRowData?.depthAtMeanHighWater,
+        statusId: 4,
       }
-      const response = await updateCustomer({
+      const response = await updateMooring({
         payload: editMooringPayload,
-        id: customer?.id,
+        id: mooringRowData?.id,
       }).unwrap()
       const { status, message } = response as CustomerResponse
       if (status === 200 || status === 201) {
@@ -681,7 +664,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     if (gpsCoordinatesValue) {
       const coordinates = getFomattedCoordinate(gpsCoordinatesValue)
       setCenter(coordinates)
-      // handlePositionChange(coordinates[0], coordinates[1])
     }
   }, [gpsCoordinatesValue])
 
@@ -1430,38 +1412,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     </p>
                   </div>
                 </div>
-                {/* <div>
-                <div>
-                  <span className="font-medium text-sm text-[#000000]">
-                    <div className="flex gap-1">
-                      Condition of Eye
-                      <p className="text-red-600">*</p>
-                    </div>
-                  </span>
-                </div>
-                <div className="mt-2">
-                  <Dropdown
-                    value={formData?.conditionOfEye}
-                    onChange={(e) => handleInputChange('conditionOfEye', e.value)}
-                    options={conditionOfEye}
-                    optionLabel="condition"
-                    editable
-                    placeholder="Select"
-                    style={{
-                      width: '230px',
-                      height: '32px',
-                      border: fieldErrors.conditionOfEye ? '1px solid red' : '1px solid #D5E1EA',
-                      borderRadius: '0.50rem',
-                      fontSize: '0.8rem',
-                    }}
-                  />
-                  <p id="conditionOfEye">
-                    {fieldErrors.conditionOfEye && (
-                      <small className="p-error">{fieldErrors.conditionOfEye}</small>
-                    )}
-                  </p>
-                </div>
-              </div> */}
               </div>
 
               <div className="flex gap-6 mt-3 mb-20">
@@ -1603,10 +1553,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                           handleInputChange('bottomChainDate', formatDate(e.target.value))
                         }
                         dateFormat="mm/dd/yy"
-                        // options={bottomChainCondition}
-                        // optionLabel="condition"
-                        // editable
-                        // placeholder="Select"
                         placeholder="mm/dd/yy"
                         style={{
                           width: '230px',
@@ -1644,10 +1590,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         }
                         dateFormat="mm/dd/yy"
                         placeholder='mm/dd/yy"'
-                        // options={conditionOfEye}
-                        // optionLabel="condition"
-                        // editable
-                        // placeholder="Select"
                         style={{
                           width: '230px',
                           height: '32px',
@@ -1670,10 +1612,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   <div className="mt-3">
                     <div>
                       <span className="font-medium text-sm text-[#000000]">
-                        <div className="flex gap-1">
-                          Shackle, Swivel Condition
-                          {/* <p className="text-red-600">*</p> */}
-                        </div>
+                        <div className="flex gap-1">Shackle, Swivel Condition</div>
                       </span>
                     </div>
 
@@ -1693,20 +1632,12 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                           fontSize: '0.8rem',
                         }}
                       />
-                      {/* <p id="shackleSwivelCondition">
-                      {fieldErrors.shackleSwivelCondition && (
-                        <small className="p-error">{fieldErrors.shackleSwivelCondition}</small>
-                      )}
-                    </p> */}
                     </div>
                   </div>
 
                   <div className="mt-3">
                     <span className="font-medium text-sm text-[#000000]">
-                      <div className="flex gap-1">
-                        Weight (in kg)
-                        {/* <p className="text-red-600">*</p> */}
-                      </div>
+                      <div className="flex gap-1">Weight (in kg)</div>
                     </span>
                     <div className="mt-2">
                       <InputComponent
@@ -1720,11 +1651,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                           fontSize: '0.8rem',
                         }}
                       />
-                      {/* <p id="boatWeight">
-                      {fieldErrors.boatWeight && (
-                        <small className="p-error">{fieldErrors.boatWeight}</small>
-                      )}
-                    </p> */}
                     </div>
                   </div>
                 </div>
