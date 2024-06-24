@@ -69,9 +69,12 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   const [workOrderStatusValue, setWorkOrderStatusValue] = useState<MetaData[]>()
   const [customerNameValue, setcustomerNameValue] = useState<any[]>()
   const [boatyardsName, setBoatYardsName] = useState<MetaData[]>([])
+  const [editMode, setEditMode] = useState<boolean>(
+    editModeWorkOrder ? editModeWorkOrder : false || editModeEstimate ? editModeEstimate : false,
+  )
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
+  const [lastChangedField, setLastChangedField] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
-  const [currentPage, setCurrentPage] = useState()
   const toast = useRef<Toast>(null)
 
   const { getMooringBasedOnCustomerIdAndBoatyardIdData } = GetMooringBasedOnCustomerIdAndBoatyardId(
@@ -158,36 +161,35 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     return errors
   }
 
-  const [lastChangedField, setLastChangedField] = useState<string | null>(null)
-
   const handleInputChange = (field: string, value: any) => {
     let updatedWorkOrder = { ...workOrder, [field]: value }
 
-    // if (editModeWorkOrder || editModeEstimate) {
-    //   if (field === 'mooringId') {
-    //     updatedWorkOrder = {
-    //       ...updatedWorkOrder,
-    //       mooringId: value,
-    //       customerName: lastChangedField === 'customerName' ? updatedWorkOrder.customerName : '',
-    //       boatyards: lastChangedField === 'boatyards' ? updatedWorkOrder.boatyards : '',
-    //     }
-    //   } else if (field === 'customerName') {
-    //     updatedWorkOrder = {
-    //       ...updatedWorkOrder,
-    //       customerName: value,
-    //       mooringId: lastChangedField === 'mooringId' ? updatedWorkOrder.mooringId : '',
-    //       boatyards: lastChangedField === 'boatyards' ? updatedWorkOrder.boatyards : '',
-    //     }
-    //   } else if (field === 'boatyards') {
-    //     updatedWorkOrder = {
-    //       ...updatedWorkOrder,
-    //       boatyards: value,
-    //       customerName: lastChangedField === 'customerName' ? updatedWorkOrder.customerName : '',
-    //       mooringId: lastChangedField === 'mooringId' ? updatedWorkOrder.mooringId : '',
-    //     }
-    //   }
-    //   setLastChangedField(field)
-    // }
+    if (editMode) {
+      if (field === 'mooringId') {
+        updatedWorkOrder = {
+          ...updatedWorkOrder,
+          mooringId: value,
+          customerName: lastChangedField === 'customerName' ? updatedWorkOrder.customerName : '',
+          boatyards: lastChangedField === 'boatyards' ? updatedWorkOrder.boatyards : '',
+        }
+      } else if (field === 'customerName') {
+        updatedWorkOrder = {
+          ...updatedWorkOrder,
+          customerName: value,
+          mooringId: lastChangedField === 'mooringId' ? updatedWorkOrder.mooringId : '',
+          boatyards: lastChangedField === 'boatyards' ? updatedWorkOrder.boatyards : '',
+        }
+      } else if (field === 'boatyards') {
+        updatedWorkOrder = {
+          ...updatedWorkOrder,
+          boatyards: value,
+          customerName: lastChangedField === 'customerName' ? updatedWorkOrder.customerName : '',
+          mooringId: lastChangedField === 'mooringId' ? updatedWorkOrder.mooringId : '',
+        }
+      }
+      setLastChangedField(field)
+      setEditMode(false)
+    }
 
     setWorkOrder(updatedWorkOrder)
     if (errorMessage[field]) {
