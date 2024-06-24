@@ -124,6 +124,20 @@ const AddVendor: React.FC<AddVendorProps> = ({
   }
 
   const handleInputChange = (field: string, value: any) => {
+    const numberRegex = /^\d+$/
+
+    if (field === 'phone' || field === 'phoneForRepresentative' || field === 'phoneForSalesRep') {
+      if (!/^\d*$/.test(value)) {
+        return
+      }
+    }
+
+    if (field === 'accountNumber') {
+      if (value !== '' && !numberRegex.test(value)) {
+        return
+      }
+    }
+
     setFormData({
       ...formData,
       [field]: value,

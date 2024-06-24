@@ -168,7 +168,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   }, [])
 
   const validateFields = () => {
-    const numberRegex = /^\d+$/
+    const numberRegex = /^[0-9]+$/;
     const harborRegex = /^[a-zA-Z ]+$/
     const alphanumericRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$/
     const nameRegex = /^[a-zA-Z ]+$/
@@ -218,7 +218,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     if (!formData?.boatSize) {
       errors.boatSize = 'BoatSize is required'
       if (!firstError) firstError = 'boatSize'
-    } else if (!numberRegex.test(String(formData?.boatSize))) {
+    } else if (!numberRegex.test((formData?.boatSize))) {
       errors.boatSize = 'BoatSize must be a number'
       if (!firstError) firstError = 'boatSize'
     }
@@ -303,6 +303,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     setFieldErrors(errors)
     return errors
   }
+  
 
   const formatDate = (date: any) => {
     if (!date) return null
@@ -320,6 +321,28 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   }
 
   const handleInputChange = (field: string, value: any) => {
+    const numberRegex = /^\d+$/;
+
+    if (field === 'boatSize') {
+      if (value !== '' && !numberRegex.test(value)) {
+        return; 
+      }
+    }
+    if (field === 'sizeOfWeight') {
+      if (value !== '' && !numberRegex.test(value)) {
+        return; 
+      }
+    }
+    if (field === 'boatWeight') {
+      if (value !== '' && !numberRegex.test(value)) {
+        return; 
+      }
+    }
+    if (field === 'depthAtMeanHighWater') {
+      if (value !== '' && !numberRegex.test(value)) {
+        return; 
+      }
+    }
     setFormData({
       ...formData,
       [field]: value,
@@ -332,6 +355,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       })
     }
   }
+ 
 
   const handleEditMode = () => {
     setGpsCoordinatesValue(mooringRowData?.gpsCoordinates || '')
@@ -1042,84 +1066,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 </p>
               </div>
             </div>
-
-            {/* <div className="mt-3">
-              <div>
-                <span className="font-medium text-sm text-[#000000]">
-                  <div className="flex gap-1">
-                    Condition of Eye
-                    <p className="text-red-600">*</p>
-                  </div>
-                </span>
-              </div>
-              <div className="mt-2">
-                <Dropdown
-                  value={formData?.conditionOfEye}
-                  onChange={(e) => handleInputChange('conditionOfEye', e.value)}
-                  options={conditionOfEye}
-                  optionLabel="condition"
-                  placeholder="Select"
-                  editable
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: fieldErrors.conditionOfEye ? '1px solid red' : '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                  }}
-                />
-                <p id="conditionOfEye">
-                  {fieldErrors.conditionOfEye && (
-                    <small className="p-error">{fieldErrors.conditionOfEye}</small>
-                  )}
-                </p>
-              </div>
-            </div> */}
-
-            {/* <div className="mt-3">
-              <div>
-                <span className="font-medium text-sm text-[#000000]">
-                  <div className="flex gap-1">
-                    Type
-                  </div>
-                </span>
-              </div>
-
-              <div className="mt-2">
-                <Dropdown
-                  value={formData?.type}
-                  onChange={(e) => handleInputChange('type', e.target.value)}
-                   options={[]}
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                  }}
-                />
-              </div>
-            </div> */}
-            {/* <div className="mt-3">
-              <span className="font-medium text-sm text-[#000000]">
-                <div className="flex gap-1">
-                  Weight (in kg)
-                </div>
-              </span>
-              <div className="mt-2">
-                <InputComponent
-                  value={formData?.boatWeight}
-                  onChange={(e) => handleInputChange('boatWeight', e.target.value)}
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                  }}
-                />
-              </div>
-            </div> */}
           </div>
 
           <div className="flex gap-6">

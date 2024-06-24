@@ -176,6 +176,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const validateFields = () => {
     const phoneRegex = /^.{10}$|^.{12}$/
     const nameRegex = /^[a-zA-Z ]+$/
+
+
     const errors: { [key: string]: string } = {}
     let firstError = ''
     if (!firstName) {
@@ -223,10 +225,12 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   }
 
   const handleInputChange = (field: string, value: any) => {
-    if (field === 'boatSize' && value !== '' && !/^\d*\.?\d*$/.test(value)) {
-      return
+    const phoneRegex = /^.{10}$|^.{12}$/
+    if (field === 'phone') {
+      if (value !== '' && phoneRegex.test(value)) {
+        return
+      }
     }
-
     setFormData({
       ...formData,
       [field]: value,
