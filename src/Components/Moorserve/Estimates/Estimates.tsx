@@ -152,9 +152,10 @@ const Estimates = () => {
       }
     } catch (error) {
       const { message: msg } = error as ErrorResponse
+      setIsLoading(false)
       console.error('Error occurred while fetching customer data:', msg)
     }
-  }, [searchText, selectedCustomerId])
+  }, [searchText, selectedCustomerId, pageNumber, pageSize])
 
   const dataToXlsx = (data: WorkOrderPayload[], fileName = 'EstimateData.xlsx') => {
     const formattedData = data.map((item) => ({
@@ -192,7 +193,7 @@ const Estimates = () => {
       getEstimateData()
     }, 600)
     return () => clearTimeout(timeoutId)
-  }, [searchText, selectedCustomerId])
+  }, [searchText, selectedCustomerId, pageNumber, pageSize])
 
   return (
     <div className={visible ? 'backdrop-blur-lg' : ''}>

@@ -166,7 +166,7 @@ const Technicians = () => {
       }
 
       const response = await getTechnicians(params).unwrap()
-      const { status, content, message } = response as TechnicianResponse
+      const { status, content, message, totalSize } = response as TechnicianResponse
       if (status === 200 && Array.isArray(content)) {
         setIsLoading(false)
         setTechnicianData(content)
@@ -199,7 +199,7 @@ const Technicians = () => {
         // }
 
         const response = await getOpenWork({ technicianId: id }).unwrap()
-        const { status, message, content } = response as GetUserResponse
+        const { status, message, content, totalSize } = response as GetUserResponse
         if (status === 200 && Array.isArray(content)) {
           // setIsLoading(false)
           // console.log('content', content)
@@ -227,7 +227,7 @@ const Technicians = () => {
         // }
 
         const response = await getWorkedClosed({ technicianId: id }).unwrap()
-        const { status, message, content } = response as GetUserResponse
+        const { status, message, content, totalSize } = response as GetUserResponse
         if (status === 200 && Array.isArray(content)) {
           // setIsLoading(false)
           // console.log('content', content)
@@ -304,8 +304,7 @@ const Technicians = () => {
           </div>
         </div>
 
-        <div
-          className="flex lg:flex-row justify-around md:flex-col  mt-6">
+        <div className="flex lg:flex-row justify-around md:flex-col  mt-6">
           <div
             style={{
               width: '700px',
@@ -438,7 +437,7 @@ const Technicians = () => {
                 </div>
               </div>
             </div>
-          
+
             <div
               data-testid="customer-admin-data"
               className="flex flex-col  "
@@ -505,10 +504,7 @@ const Technicians = () => {
                 />
               </div>
             </div>
-
           </div>
-
-
         </div>
       </div>
     </>

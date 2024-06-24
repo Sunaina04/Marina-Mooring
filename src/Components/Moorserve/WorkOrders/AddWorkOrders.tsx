@@ -158,43 +158,38 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     return errors
   }
 
+  const [lastChangedField, setLastChangedField] = useState<string | null>(null)
+
   const handleInputChange = (field: string, value: any) => {
-    setWorkOrder({
-      ...workOrder,
-      [field]: value,
-    })
+    let updatedWorkOrder = { ...workOrder, [field]: value }
 
     // if (editModeWorkOrder || editModeEstimate) {
-    //   if (workOrder?.customerName) {
-    //     // mooringId empty
-    //     // setWorkOrder((prevWorkOrder: any) => ({
-    //     //   ...prevWorkOrder,
-    //     //   mooringId: '',
-    //     // }));
-
-    //   } else if (workOrder?.mooringId?.id) {
-    //     // customer empty
-    //     // boatyard empty
-
-    //     // setWorkOrder((prevWorkOrder: any) => ({
-    //     //   ...prevWorkOrder,
-    //     //   customerName: '',
-    //     //   mooringId: '',
-    //     //   boatyards: '',
-    //     // }));
-
-    //   } else if (workOrder?.boatyards?.id) {
-    //     // mooring empty
-    //     // customer empty
-    //     // setWorkOrder((prevWorkOrder: any) => ({
-    //     //   ...prevWorkOrder,
-    //     //   customerName: '',
-    //     //   mooringId: '',
-    //     //   boatyards: '',
-    //     // }));
-
+    //   if (field === 'mooringId') {
+    //     updatedWorkOrder = {
+    //       ...updatedWorkOrder,
+    //       mooringId: value,
+    //       customerName: lastChangedField === 'customerName' ? updatedWorkOrder.customerName : '',
+    //       boatyards: lastChangedField === 'boatyards' ? updatedWorkOrder.boatyards : '',
+    //     }
+    //   } else if (field === 'customerName') {
+    //     updatedWorkOrder = {
+    //       ...updatedWorkOrder,
+    //       customerName: value,
+    //       mooringId: lastChangedField === 'mooringId' ? updatedWorkOrder.mooringId : '',
+    //       boatyards: lastChangedField === 'boatyards' ? updatedWorkOrder.boatyards : '',
+    //     }
+    //   } else if (field === 'boatyards') {
+    //     updatedWorkOrder = {
+    //       ...updatedWorkOrder,
+    //       boatyards: value,
+    //       customerName: lastChangedField === 'customerName' ? updatedWorkOrder.customerName : '',
+    //       mooringId: lastChangedField === 'mooringId' ? updatedWorkOrder.mooringId : '',
+    //     }
     //   }
+    //   setLastChangedField(field)
     // }
+
+    setWorkOrder(updatedWorkOrder)
     if (errorMessage[field]) {
       setErrorMessage({
         ...errorMessage,
@@ -203,10 +198,41 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     }
   }
 
+  // const handleInputChange = useCallback(
+  //   (field: any, value: any) => {
+  //     let updatedWorkOrder = { ...workOrder, [field]: value }
+
+  //     if (field === 'mooringId') {
+  //       const selectedMooring = MooringNameOptions?.find(
+  //         (option) => option.mooringNumber === value.mooringNumber,
+  //       )
+  //       if (selectedMooring) {
+  //         console.log('hre in', selectedMooring, customerBasedOnMooringId)
+
+  //         updatedWorkOrder = {
+  //           ...updatedWorkOrder,
+  //           customerName: customerBasedOnMooringId ? customerBasedOnMooringId?.[0]?.firstName : '',
+  //           boatyards: boatyardBasedOnMooringId ? boatyardBasedOnMooringId?.[0]?.boatyardName : '',
+  //         }
+  //       }
+  //     }
+
+  //     setWorkOrder(updatedWorkOrder)
+
+  //     if (errorMessage[field]) {
+  //       setErrorMessage({
+  //         ...errorMessage,
+  //         [field]: '',
+  //       })
+  //     }
+  //   },
+  //   [workOrder, errorMessage, customerBasedOnMooringId, boatyardBasedOnMooringId],
+  // )
+
   const handleEditMode = () => {
     setWorkOrder((prevState: any) => ({
       ...prevState,
-      mooringId: workOrderData?.mooringResponseDto?.mooringId,
+      mooringId: workOrderData?.mooringResponseDto?.mooringNumber,
       customerName:
         workOrderData?.customerResponseDto?.firstName +
         ' ' +
@@ -224,6 +250,9 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     }
     const parsedTime = parseTime(workOrderData.time)
     setTime(parsedTime)
+
+    console.log('workOrder', workOrder)
+    console.log('data', workOrderData)
   }
 
   const handleIncrement = () => {
@@ -285,6 +314,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       setErrorMessage(errors)
       return
     }
+
     const payload = {
       mooringId: workOrder?.mooringId?.id,
       customerId: workOrder?.customerName?.id,
@@ -337,7 +367,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
 
     try {
       setIsLoading(true)
-      const editCustomerPayload = {
+      const editPayload = {
         mooringId: workOrder?.mooringId?.id || workOrderData?.mooringResponseDto?.id,
         customerId: workOrder?.customerName?.id || workOrderData?.customerResponseDto?.id,
         boatyardId: workOrder?.boatyards?.id || workOrderData?.boatyardResponseDto?.id,
@@ -349,7 +379,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         problem: workOrder?.value || workOrderData?.problem,
       }
       const response = await updateWorkOrder({
-        payload: editCustomerPayload,
+        payload: editPayload,
         id: workOrderData?.id,
       }).unwrap()
       const { status, message } = response as WorkOrderResponse
@@ -564,11 +594,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     }
 
     if (customerBasedOnMooringId !== null) {
-      const firstLastName = customerBasedOnMooringId.map((item: any) => ({
-        firstName: item.firstName + ' ' + item.lastName,
-        id: item.id,
-      }))
-      setCustomerBasedOnMooringId(firstLastName)
       if (customerBasedOnMooringId?.length === 0) {
         toast.current?.show({
           severity: 'info',
@@ -576,7 +601,20 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
           detail: 'No Customer Associated with Selected Mooring',
           life: 3000,
         })
+      } else {
+        const firstLastName = customerBasedOnMooringId.map((item: any) => ({
+          firstName: item.firstName + ' ' + item.lastName,
+          id: item.id,
+        }))
+        setCustomerBasedOnMooringId(firstLastName)
       }
+    } else {
+      toast.current?.show({
+        severity: 'info',
+        summary: 'Info',
+        detail: 'No Customer Associated with Selected Mooring',
+        life: 3000,
+      })
     }
   }, [workOrder?.mooringId?.id])
 
