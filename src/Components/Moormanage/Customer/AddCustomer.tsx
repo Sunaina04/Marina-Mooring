@@ -97,6 +97,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   // const [center, setCenter] = useState<LatLngExpression | undefined>([30.6983149, 76.656095])
   const [firstErrorField, setFirstErrorField] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [customerImage, setCustomerImage] = useState<string | null>(null)
+  const [encodedImages, setEncodedImages] = useState<string[]>([])
   const [formData, setFormData] = useState<any>({
     mooringId: '',
     mooringName: '',
@@ -151,9 +153,28 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     }
   }
 
-  useEffect(() => {
-    handleFocus()
-  }, [checked])
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (file) {
+      const reader = new FileReader()
+
+      reader.onload = () => {
+        const result = reader.result
+        if (typeof result === 'string') {
+          const base64String = result.split(',')[1] // Get the base64 string part
+
+          console.log(base64String, 'encoded')
+
+          setCustomerImage(`data:image/png;base64,${base64String}`) // Set the image for preview
+          setEncodedImages([base64String]) // Set the base64 string for payload
+        } else {
+          console.error('FileReader result is not a string.')
+        }
+      }
+
+      reader.readAsDataURL(file)
+    }
+  }
 
   const validateFields = () => {
     const phoneRegex = /^.{10}$|^.{12}$/
@@ -316,6 +337,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         aptSuite: sectorBlock,
         stateId: selectedState?.id,
         countryId: selectedCountry?.id,
+        encodedImages: encodedImages,
         customerTypeId: selectedCustomerType === 'Dock' ? 5 : selectedCustomerType?.id,
         ...(email && { emailAddress: email }),
         ...(pinCode && { zipCode: pinCode }),
@@ -356,6 +378,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         aptSuite: sectorBlock,
         stateId: selectedState?.id,
         countryId: selectedCountry?.id,
+        encodedImages: encodedImages,
         customerTypeId: selectedCustomerType === 'Dock' ? 5 : selectedCustomerType?.id,
         ...(email && { emailAddress: email }),
         ...(pinCode && { zipCode: pinCode }),
@@ -414,6 +437,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         state: selectedState?.id,
         country: selectedCountry?.id,
         zipCode: pinCode,
+        encodedImages: encodedImages,
         customerOwnerId: selectedCustomerId,
         customerTypeId: selectedCustomerType === 'Dock' ? 5 : selectedCustomerType?.id,
         note: formData?.note,
@@ -635,6 +659,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   }
 
   useEffect(() => {
+    handleFocus()
+  }, [checked])
+
+  useEffect(() => {
     fetchDataAndUpdate()
   }, [fetchDataAndUpdate])
 
@@ -712,11 +740,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     </span>
                   </div>
                   <div className="mt-2">
-                    <InputText
+                    <InputComponent
                       value={email}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        handleInputChangeCustomer('email', e.target.value)
-                      }
+                      onChange={(e) => handleInputChangeCustomer('email', e.target.value)}
                       style={{
                         width: '230px',
                         height: '32px',
@@ -772,9 +798,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 <div className="mt-2">
                   <InputComponent
                     value={phone}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      handleInputChangeCustomer('phone', e.target.value)
-                    }
+                    onChange={(e) => handleInputChangeCustomer('phone', e.target.value)}
                     style={{
                       width: '230px',
                       height: '32px',
@@ -812,6 +836,40 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     fontSize: '0.8rem',
                   }}
                 />
+              </div>
+
+              <div className="mt-4">
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">Customer Image</div>
+                </span>
+                <div className="mt-2">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.8rem',
+                    }}
+                  />
+                  {customerImage && (
+                    <div className="mt-2">
+                      <img
+                        src={customerImage}
+                        alt="Customer"
+                        style={{
+                          width: '100px',
+                          height: '100px',
+                          objectFit: 'cover',
+                          borderRadius: '0.50rem',
+                        }}
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>

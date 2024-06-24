@@ -8,7 +8,6 @@ const DataTableComponent: React.FC<DataTableProps> = ({
   data = [],
   scrollable = true,
   columns,
-  rowStyle,
   tableStyle = undefined,
   header,
   actionButtons,
@@ -19,7 +18,6 @@ const DataTableComponent: React.FC<DataTableProps> = ({
   onSelectionChange,
   selection,
   dataKey,
-  sortable,
 }) => {
   const buttonBody = (rowData: any) => {
     return (
@@ -56,7 +54,6 @@ const DataTableComponent: React.FC<DataTableProps> = ({
         tableStyle={tableStyle}
         scrollable={scrollable}
         header={header}
-        // sortMode="multiple"
         emptyMessage={emptyMessage}
         onRowClick={onRowClick}
         rowClassName={getRowClassName}>
@@ -65,7 +62,7 @@ const DataTableComponent: React.FC<DataTableProps> = ({
             key={d.id}
             headerStyle={d.style}
             field={d.id}
-            header={d.label}
+            header={<span onClick={d?.onHeaderClick}>{d.label}</span>}
             body={d.body}
             style={style}
             sortable={d.sortable}

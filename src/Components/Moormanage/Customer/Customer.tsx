@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import CustomModal from '../../CustomComponent/CustomModal'
 import AddCustomer from './AddCustomer'
-import { FaEdit } from 'react-icons/fa'
+import { FaEdit, FaSort, FaSortDown, FaSortUp } from 'react-icons/fa'
 import { RiDeleteBin5Fill } from 'react-icons/ri'
 import { Dialog } from 'primereact/dialog'
 
@@ -60,6 +60,7 @@ const Customer = () => {
   const [customerId, setCustomerId] = useState<any>()
   const [isLoading, setIsLoading] = useState(true)
   const [isLoader, setIsLoader] = useState(false)
+  const [sortable, setSortable] = useState(false)
   const [coordinatesArray, setCoordinatesArray] = useState<any[]>([])
   const [getCustomer] = useGetCustomerMutation()
   const [deleteCustomer] = useDeleteCustomerMutation()
@@ -117,8 +118,6 @@ const Customer = () => {
 
     return [avgLat, avgLong]
   }
-
-  const center = calculateCenter(gpsCoordinatesArray)
 
   const initialPosition =
     gpsCoordinatesArray.length > 0 ? calculateCenter(gpsCoordinatesArray) : position
@@ -219,6 +218,10 @@ const Customer = () => {
     return data.firstName + ' ' + data.lastName
   }
 
+  const handleHeaderClick = (columnId: any) => {
+    setSortable(!sortable)
+  }
+
   const CustomerTableColumns = useMemo(
     () => [
       {
@@ -231,7 +234,8 @@ const Customer = () => {
         id: 'customerTypeDto.type',
         label: 'Customer Type:',
         style: customerTableColumnStyle,
-        sortable: true,
+        onHeaderClick: () => handleHeaderClick('customerType'),
+        // sortable: true,
       },
       {
         id: 'firstName',
@@ -298,6 +302,11 @@ const Customer = () => {
       if (pageSize) {
         params.pageSize = pageSize
       }
+      console.log('sort', sortable)
+
+      if (sortable) {
+        params.sortBy = 'customerType'
+      }
 
       const response = await getCustomer(params).unwrap()
       const { status, content, message, totalSize } = response as CustomerResponse
@@ -330,6 +339,7 @@ const Customer = () => {
     pageNumber,
     customerId,
     selectedProduct,
+    sortable,
   ])
 
   const getCustomersWithMooring = async (id: number) => {
@@ -360,33 +370,6 @@ const Customer = () => {
         setCustomerRecordData(content?.customerResponseDto)
         setMooringData(content?.customerResponseDto?.mooringResponseDtoList)
         setBoatYardData(content?.boatyardNames)
-        // const coordinatesString = customerRecordData?.mooringResponseDtoList[0]?.gpsCoordinates
-        // const coordinateArray = coordinatesString?.split(' ').map(parseFloat)
-        interface LatLngExpressionValue {
-          lat: number
-          lng: number
-        }
-
-        const gpsCoordinates = mooringData.map((item) => {
-          const coordinatesString = item?.gpsCoordinates
-
-          if (coordinatesString) {
-            const coordinatesArray: number[] = coordinatesString.split(' ').map(parseFloat)
-
-            if (coordinatesArray) {
-              return {
-                lat: coordinatesArray[0],
-                lng: coordinatesArray[1],
-              }
-            } else {
-              return null
-            }
-          } else {
-            return null // or handle missing coordinates as needed
-          }
-        })
-
-        setCoordinatesArray(gpsCoordinates.filter((coord) => coord !== null)) // Filter out null values
       } else {
         setIsLoading(false)
         setIsLoader(false)
@@ -515,7 +498,7 @@ const Customer = () => {
       getCustomerData()
     }, 600)
     return () => clearTimeout(timeoutId)
-  }, [searchText, selectedCustomerId, pageSize, pageNumber])
+  }, [searchText, selectedCustomerId, pageSize, pageNumber, sortable])
 
   useEffect(() => {
     if (customerId) {

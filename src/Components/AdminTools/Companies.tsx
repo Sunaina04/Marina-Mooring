@@ -273,7 +273,7 @@ const CustomerOwner = () => {
         console.error('Error occurred while fetching customer data:', error)
       }
     },
-    [getUser, searchUsersText, pageSizeTwo, pageNumberTwo],
+    [searchUsersText, pageSizeTwo, pageNumberTwo],
   )
 
   const handleDeleteCustomerOwner = async (rowData: any) => {
