@@ -784,11 +784,13 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   padding: '3px',
-                  display: 'inline-block',
+                  display: 'flex',
+                  gap: '0.5rem',
                   textAlign: 'center',
                   lineHeight: '25px',
                   cursor: 'pointer',
                 }}>
+                <FaFileUpload style={{ fontSize: '25px', color: 'blue' }} />
                 Upload Image
               </label>
               {customerImage && (
@@ -819,7 +821,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                       borderRadius: '0.50rem',
                     }}
                   />
-                 
+
                   <label
                     htmlFor="file-input"
                     style={{
@@ -830,12 +832,12 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                       fontSize: '0.8rem',
                       padding: '3px',
                       display: 'flex',
-                      gap:'0.5rem',
+                      gap: '0.5rem',
                       textAlign: 'center',
                       lineHeight: '25px',
                       cursor: 'pointer',
                     }}>
-                  <FaFileUpload style={{fontSize:'25px', color:'blue'}}/>
+                    <FaFileUpload style={{ fontSize: '25px', color: 'blue' }} />
                     Upload Image
                   </label>
                   {customerImage && (
