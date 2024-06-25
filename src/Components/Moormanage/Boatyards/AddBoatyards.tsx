@@ -16,7 +16,7 @@ import { LatLngExpression } from 'leaflet'
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import { Toast } from 'primereact/toast'
-
+import { IoMdAdd, IoMdClose } from "react-icons/io";
 const AddBoatyards: React.FC<BoatYardProps> = ({
   closeModal,
   boatYardData,
@@ -41,7 +41,8 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   const [statesData, setStatesData] = useState<State[]>()
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
   const toastRef = useRef<Toast>(null)
-
+  const [storage, setStorage] = useState('')
+  const [storageList, setStorageList] = useState<string[]>([])
   const getFormattedCoordinate = (coordinates: any) => {
     try {
       let [lat, long] = coordinates.split(/[ ,]+/)
@@ -157,6 +158,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
         mainContact: mainContact,
         gpsCoordinates: gpsCoordinatesValue,
         customerOwnerId: selectedCustomerId,
+        storageAreas:storageList
       }
       const response = await addBoatyard(payload).unwrap()
       const { status, message } = response as BoatYardResponse
@@ -263,6 +265,19 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   const handleBack = () => {
     setModalVisible(false)
   }
+  const handleAddStorage = () => {
+    setStorageList([...storageList, storage])
+    setStorage('')
+  }
+
+
+
+  const handleDeleteStorage = (index: number) => {
+    const newList = storageList.filter((_, i) => i !== index)
+    setStorageList(newList)
+  }
+
+
 
   const fetchDataAndUpdate = useCallback(async () => {
     const { statesData } = await getStatesData()
@@ -346,6 +361,56 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
             </div>
             <p>{errorMessage.name && <small className="p-error">{errorMessage.name}</small>}</p>
           </div>
+
+
+
+          <div>
+            <span className="font-medium text-sm text-[#000000]">
+              Storage Area
+              {/* <span className="text-red-500">*</span> */}
+            </span>
+            <div className="mt-1 flex gap-1">
+              <InputComponent
+                value={storage}
+                onChange={(e) => {
+                  setStorage(e.target.value)
+
+                }}
+                style={{
+                  width: '230px',
+                  height: '32px',
+                  border: errorMessage.name ? '1px solid red' : '1px solid #D5E1EA',
+                  borderRadius: '0.50rem',
+                  fontSize: '0.8rem',
+                  padding: '1.2em',
+                }}
+              />
+
+              <div className='mt- cursor-pointer'>
+                <IoMdAdd  style={{fontSize:"2rem",color:"#0098FF"}}
+                
+                onClick={handleAddStorage}
+                />
+              </div>
+            </div>
+
+            <ul className='mt-1'>
+              {storageList.map((item, index) => (
+                <li key={index} className="flex items-center m-1">
+                  {item}
+                  <IoMdClose 
+                    style={{marginLeft: '0.5rem', cursor: 'pointer',color:"red",}} 
+                    onClick={() => handleDeleteStorage(index)} 
+                  />
+                </li>
+              ))}
+            </ul>
+            <p>{errorMessage.name && <small className="p-error">{errorMessage.name}</small>}</p>
+          </div>
+
+
+
+
         </div>
         {isLoading && (
           <ProgressSpinner
@@ -528,12 +593,10 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
                 Main Contact <span className="text-red-500">*</span>
               </span>
             </div>
-
             <div>
               <div>
                 <div className=" mt-1">
                   <InputComponent
-                   type='number'
                     value={mainContact}
                     onChange={(e) => {
                       setMainContact(e.target.value)
