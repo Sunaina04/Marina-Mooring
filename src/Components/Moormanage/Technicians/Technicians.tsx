@@ -91,7 +91,7 @@ const Technicians = () => {
     () => [
       { id: 'id', label: 'ID', style: TechnicianTableColumnStyle },
       { id: 'name', label: 'Technicians Name', style: TechnicianTableColumnStyle },
-      { id: 'email', label: 'Open Work Orders', style: TechnicianTableColumnStyle },
+      { id: 'openWorkOrder', label: 'Open Work Orders', style: TechnicianTableColumnStyle },
       { id: 'closeWorkOrder', label: 'Completed Jobs', style: TechnicianTableColumnStyle },
     ],
 
@@ -126,12 +126,9 @@ const Technicians = () => {
   }
 
   const handleDate = (date: any) => {
-    console.log('date', date)
-
     if (date) {
       setFilterDateFrom(formatDate(date?.[0]))
       setFilterDateTo(formatDate(date?.[1]))
-      console.log('here', filterDateFrom, filterDateTo)
     }
   }
 

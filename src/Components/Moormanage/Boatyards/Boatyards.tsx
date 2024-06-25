@@ -461,7 +461,6 @@ const Boatyards = () => {
         </div>
 
         <div
-
           className={`h-[150px] mt-[30px] mb-6 sticky ${isLoader || modalVisible ? 'blur-screen' : ''}`}
           style={{
             flexGrow: 1,
@@ -524,7 +523,7 @@ const Boatyards = () => {
               />
             )}
           </div>
-          <div className='mt-auto'>
+          <div className="mt-auto">
             <Paginator
               first={pageNumberOne}
               rows={pageSizeTwo}
@@ -540,9 +539,7 @@ const Boatyards = () => {
                 padding: '0.5rem',
               }}
             />
-
           </div>
-
         </div>
       </>
     )
@@ -726,17 +723,17 @@ const Boatyards = () => {
               <div
                 className="flex align-items-center justify-between bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px]"
                 style={{ color: '#FFFFFF' }}>
-                <h1 className="p-4">{properties.boatyardMooringHeader}</h1>
+                <h1 className="p-4 text-xl font-extrabold">{properties.boatyardMooringHeader}</h1>
                 <div className="flex">
                   <FaEdit
                     onClick={handleEdit}
-                    className="mr-4 mt-3  text-[white]"
+                    className="mr-4 mt-4 text-[white]"
                     data-testid="FaEdit"
                     style={{ cursor: boatYardRecord ? 'pointer' : 'not-allowed' }}
                   />
                   <RiDeleteBin5Fill
                     onClick={handleDelete}
-                    className="text-white mr-4 mt-3"
+                    className="text-white mr-4 mt-4"
                     data-testid="RiDeleteBin5Fill"
                     style={{ cursor: boatYardRecord ? 'pointer' : 'not-allowed' }}
                   />
