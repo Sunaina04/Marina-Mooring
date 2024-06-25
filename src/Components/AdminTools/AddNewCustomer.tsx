@@ -394,19 +394,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       setFieldErrors(errors)
       return
     }
-    const selectedCustomer = customerUsers?.find(
-      (customer: any) => customer?.name === selectedCustomerId?.name,
-    )
 
-    if (!selectedCustomer && (role?.id === 3 || role?.id === 4) && !permission) {
-      setFieldErrors((prevErrors) => ({
-        ...prevErrors,
-        selectedCustomerId: 'Invalid customer admin',
-      }))
-      return
-    }
-
-    const selectedCustomerAdminId = selectedCustomer?.id
+    const selectedCustomerAdminId = selectedCustomerId?.id
 
     if (password !== confirmPassword) {
       setFieldErrors((prevErrors) => ({
@@ -626,7 +615,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
             <div className="mt-1">
               <InputText
                 value={phone}
-                type='number'
+                type="number"
                 onChange={(e) => handleInputChange('phone', e.target.value)}
                 style={{
                   width: '230px',
