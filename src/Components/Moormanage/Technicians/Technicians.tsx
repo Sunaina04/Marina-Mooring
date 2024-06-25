@@ -44,11 +44,9 @@ const Technicians = () => {
   const [getOpenWork] = useGetOpenWorkOrdersMutation()
   const [getWorkedClosed] = useGetClosedWorkOrdersMutation()
   const [getOpenWorkOrderData, setGetOpenWorkOrderData] = useState<CustomerPayload[]>([])
-  // console.log("getOpenWorkOrderData", getOpenWorkOrderData);
   const [searchText, setSearchText] = useState('')
   const [selectedProduct, setSelectedProduct] = useState()
   const [technicianId, setTechnicianId] = useState()
-  // console.log("technician id", technicianId);
   const toast = useRef<Toast>(null)
   const selectedCustomerId = useSelector(selectCustomerId)
   const [pageNumber, setPageNumber] = useState(0)
@@ -162,7 +160,7 @@ const Technicians = () => {
     setOpenWorkOrder(rowData?.openWorkOrder)
     setCompletedOrder(rowData?.closeWorkOrder)
 
-    if (value === 'Open') {
+    if (value === `Open (${openWorkOrder})`) {
       getOpenWorkOrder(rowData?.id)
     } else {
       getClosedWorkOrder(rowData?.id)
@@ -193,7 +191,6 @@ const Technicians = () => {
           setTechnicianId(content[0]?.id)
           setFilteredTechnicianData(content)
           setTotalRecords(totalSize)
-
           setOpenWorkOrder(content[0]?.openWorkOrder)
           setCompletedOrder(content[0]?.closeWorkOrder)
         } else {
@@ -283,7 +280,7 @@ const Technicians = () => {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       if (technicianId) {
-        if (value === 'Open') {
+        if (value === `Open (${openWorkOrder})`) {
           getOpenWorkOrder(technicianId)
         } else {
           getClosedWorkOrder(technicianId)
@@ -307,6 +304,7 @@ const Technicians = () => {
       setFilterDateTo(formatDate(date?.[1]))
     }
   }, [date])
+
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       getTechniciansData()
