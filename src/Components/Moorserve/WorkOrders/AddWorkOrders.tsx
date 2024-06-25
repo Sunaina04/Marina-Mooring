@@ -764,7 +764,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
           </div>
           <div className="">
             <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">Customer Image</div>
+              <div className="flex gap-1">Work Order Image</div>
             </span>
             <div className="mt-1">
               <input
