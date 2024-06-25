@@ -895,22 +895,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   </label>
                   {customerImage && (
                     <div className="mt-2">
-                      <img
-                        src={customerImage}
-                        alt="Customer"
-                        style={{
-                          width: '100px',
-                          height: '100px',
-                          objectFit: 'cover',
-                          borderRadius: '0.50rem',
-                        }}
-                      />
                       <button
                         onClick={handleRemoveImage}
                         style={{
-                          position: 'absolute',
-                          top: '13rem',
-                          right: '10rem',
                           background: 'red',
                           color: 'white',
                           border: 'none',
@@ -924,6 +911,16 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         }}>
                         &times;
                       </button>
+                      <img
+                        src={customerImage}
+                        alt="Customer"
+                        style={{
+                          width: '100px',
+                          height: '100px',
+                          objectFit: 'cover',
+                          borderRadius: '0.50rem',
+                        }}
+                      />
                     </div>
                   )}
                 </div>
