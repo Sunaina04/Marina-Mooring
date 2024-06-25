@@ -65,8 +65,6 @@ const Technicians = () => {
   const [value, setValue] = useState<string>(options[0])
   const [visible, setVisible] = useState(false)
 
-  console.log('value', value)
-
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
     setPageNumber1(event.first)
@@ -555,7 +553,7 @@ const Technicians = () => {
                   onSelectionChange={(e) => {
                     setSelectedProduct(e.value)
                   }}
-                  actionButtons={ActionButtonColumn}
+                  // actionButtons={ActionButtonColumn}
                   data={getOpenWorkOrderData}
                   emptyMessage={
                     <div className="text-center mt-40 mb-10">

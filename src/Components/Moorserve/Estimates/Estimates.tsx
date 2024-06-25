@@ -52,7 +52,8 @@ const Estimates = () => {
         color: 'black',
         label: 'Convert',
         underline: true,
-        onClick: (row) => handleEdit(row),
+        style: { cursor: 'disable' },
+        // onClick: (row) => handleEdit(row),
       },
       {
         color: 'black',
@@ -160,7 +161,7 @@ const Estimates = () => {
   const dataToXlsx = (data: WorkOrderPayload[], fileName = 'EstimateData.xlsx') => {
     const formattedData = data.map((item) => ({
       CustomerName: `${item.customerResponseDto.firstName} ${item.customerResponseDto.lastName}`,
-      MooringID: item.mooringResponseDto.mooringId,
+      MooringNumber: item.mooringResponseDto.mooringNumber,
       Boatyard: item.boatyardResponseDto.boatyardId,
       AssignedTo: item.technicianUserResponseDto.name,
       DueDate: item.dueDate,
