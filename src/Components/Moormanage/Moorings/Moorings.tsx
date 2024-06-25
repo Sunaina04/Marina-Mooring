@@ -70,6 +70,7 @@ const Moorings = () => {
   const [pageNumber1, setPageNumber1] = useState(0)
   const [pageSize, setPageSize] = useState(10)
   const [totalRecords, setTotalRecords] = useState<number>()
+
   const [pageNumberTwo, setPageNumberTwo] = useState(0)
   const [pageNumber2, setPageNumber2] = useState(0)
   const [pageSizeTwo, setPageSizeTwo] = useState(10)
@@ -289,23 +290,33 @@ const Moorings = () => {
       }
       const response = await getMoorings(params).unwrap()
       const { status, content, message, totalSize } = response as MooringResponse
-      if (status === 200 && Array.isArray(content) && content?.length > 0) {
-        setIsLoading(false)
-        setMooringData(content)
-        setFilteredMooringData(content)
-        setCustomerId(content[0]?.customerId)
-        setSelectedProduct(content[0])
-        setTotalRecords(totalSize)
+      if (status === 200 && Array.isArray(content)) {
+        if (content?.length > 0) {
+          setIsLoading(false)
+          setMooringData(content)
+          setFilteredMooringData(content)
+          setCustomerId(content[0]?.customerId)
+          setSelectedProduct(content[0])
+          setTotalRecords(totalSize)
+        } else {
+          setIsLoading(false)
+          setCustomerRecordData('')
+          setSelectedProduct('')
+          setSelectedMooring('')
+          setMooringData([])
+          setBoatYardData([])
+          setCustomerId('')
+          setTotalRecords(totalSize)
+          setMooringResponseData('')
+        }
       } else {
         setIsLoading(false)
-        setCustomerRecordData('')
-        setSelectedProduct('')
-        setSelectedMooring('')
-        setMooringData([])
-        setBoatYardData([])
-        setCustomerId('')
-        setTotalRecords(totalSize)
-        setMooringResponseData('')
+        toast?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
       }
     } catch (error) {
       setIsLoading(false)

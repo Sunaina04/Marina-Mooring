@@ -48,7 +48,7 @@ const Technicians = () => {
   const [getTechnicians] = useGetTechnicianDataMutation()
   const [getOpenWork] = useGetOpenWorkOrdersMutation()
   const [getWorkedClosed] = useGetClosedWorkOrdersMutation()
-  const [getOpenWorkOrderData, setOpenWorkOrderData] = useState<CustomerPayload[]>([])
+  const [getOpenWorkOrderData, setGetOpenWorkOrderData] = useState<CustomerPayload[]>([])
   const [selectedId, setSelectedId] = useState<any>('')
   const [searchText, setSearchText] = useState('')
   const [selectedProduct, setSelectedProduct] = useState()
@@ -59,11 +59,23 @@ const Technicians = () => {
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
   const [pageSize, setPageSize] = useState(10)
+  const [totalRecords, setTotalRecords] = useState<number>()
+
+  const [pageNumberTwo, setPageNumberTwo] = useState(0)
+  const [pageNumber2, setPageNumber2] = useState(0)
+  const [pageSizeTwo, setPageSizeTwo] = useState(10)
+  const [totalRecordsTwo, setTotalRecordsTwo] = useState<number>()
 
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
     setPageNumber1(event.first)
     setPageSize(event.rows)
+  }
+
+  const onPageChangeTwo = (event: any) => {
+    setPageNumberTwo(event.page)
+    setPageNumber2(event.first)
+    setPageSizeTwo(event.rows)
   }
 
   const TechnicianTableColumnStyle = {
@@ -91,12 +103,22 @@ const Technicians = () => {
 
     [],
   )
+
+  const firstLastName = (data: any) => {
+    return data?.customerResponseDto?.firstName + ' ' + data?.customerResponseDto?.lastName
+  }
+
   const WorkOrdersColumn = useMemo(
     () => [
       { id: 'id', label: 'ID', style: WorkOrdersColumnStyle },
-      { id: 'name', label: 'Mooring', style: WorkOrdersColumnStyle },
-      { id: 'email', label: 'Customer Name', style: WorkOrdersColumnStyle },
-      { id: 'phoneNumber', label: 'Due Date', style: WorkOrdersColumnStyle },
+      { id: 'mooringResponseDto.mooringNumber', label: 'Mooring', style: WorkOrdersColumnStyle },
+      {
+        id: 'firstName',
+        label: 'Customer Name',
+        body: firstLastName,
+        style: WorkOrdersColumnStyle,
+      },
+      { id: 'dueDate', label: 'Due Date', style: WorkOrdersColumnStyle },
     ],
     [],
   )
@@ -142,13 +164,13 @@ const Technicians = () => {
 
   const handleWorkOrder = (rowData: any) => {
     setTechnicianId(rowData?.id)
-    // setSelectedProduct(rowData)
+    setSelectedProduct(rowData)
 
-    // if (value === 'Open') {
-    //   getOpenWorkOrder(rowData?.id)
-    // } else {
-    //   getClosedWorkOrder(rowData?.id)
-    // }
+    if (value === 'Open') {
+      getOpenWorkOrder(rowData?.id)
+    } else {
+      getClosedWorkOrder(rowData?.id)
+    }
   }
 
   const getTechniciansData = useCallback(async () => {
@@ -168,10 +190,19 @@ const Technicians = () => {
       const response = await getTechnicians(params).unwrap()
       const { status, content, message, totalSize } = response as TechnicianResponse
       if (status === 200 && Array.isArray(content)) {
-        setIsLoading(false)
-        setTechnicianData(content)
-        setFilteredTechnicianData(content)
+        if (content.length > 0) {
+          setIsLoading(false)
+          setTechnicianData(content)
+          setFilteredTechnicianData(content)
+          setTotalRecords(totalSize)
+        } else {
+          setIsLoading(false)
+          setGetOpenWorkOrderData([])
+          setTechnicianData([])
+        }
       } else {
+        setIsLoading(false)
+        setGetOpenWorkOrderData([])
         toast?.current?.show({
           severity: 'error',
           summary: 'Error',
@@ -180,6 +211,7 @@ const Technicians = () => {
         })
       }
     } catch (error) {
+      setIsLoading(false)
       const { message: msg } = error as ErrorResponse
       console.error('Error occurred while fetching customer data:', msg)
     }
@@ -187,22 +219,18 @@ const Technicians = () => {
 
   const getOpenWorkOrder = useCallback(
     async (id: any) => {
-      // setIsLoading(true)
+      setIsLoading(true)
       try {
-        let params: Params = {}
-
-        // if (pageNumberTwo) {
-        //   params.pageNumber = pageNumberTwo
-        // }
-        // if (pageSizeTwo) {
-        //   params.pageSize = pageSizeTwo
-        // }
-
-        const response = await getOpenWork({ technicianId: id }).unwrap()
+        const response = await getOpenWork({
+          technicianId: id,
+          pageNumber: pageNumberTwo,
+          pageSize: pageSizeTwo,
+        }).unwrap()
         const { status, message, content, totalSize } = response as GetUserResponse
         if (status === 200 && Array.isArray(content)) {
-          // setIsLoading(false)
-          // console.log('content', content)
+          setIsLoading(false)
+          setGetOpenWorkOrderData(content)
+          setTotalRecordsTwo(totalSize)
         } else {
           setIsLoading(false)
         }
@@ -210,27 +238,23 @@ const Technicians = () => {
         console.error('Error occurred while fetching customer data:', error)
       }
     },
-    [technicianId, value],
+    [technicianId, value, pageSizeTwo, pageNumberTwo],
   )
 
   const getClosedWorkOrder = useCallback(
     async (id: any) => {
       setIsLoading(true)
       try {
-        let params: Params = {}
-
-        // if (pageNumberTwo) {
-        //   params.pageNumber = pageNumberTwo
-        // }
-        // if (pageSizeTwo) {
-        //   params.pageSize = pageSizeTwo
-        // }
-
-        const response = await getWorkedClosed({ technicianId: id }).unwrap()
+        const response = await getWorkedClosed({
+          technicianId: id,
+          pageNumber: pageNumberTwo,
+          pageSize: pageSizeTwo,
+        }).unwrap()
         const { status, message, content, totalSize } = response as GetUserResponse
         if (status === 200 && Array.isArray(content)) {
-          // setIsLoading(false)
-          // console.log('content', content)
+          setIsLoading(false)
+          setGetOpenWorkOrderData(content)
+          setTotalRecordsTwo(totalSize)
         } else {
           setIsLoading(false)
         }
@@ -238,7 +262,7 @@ const Technicians = () => {
         console.error('Error occurred while fetching customer data:', error)
       }
     },
-    [technicianId, value],
+    [technicianId, value, pageSizeTwo, pageNumberTwo],
   )
 
   useEffect(() => {
@@ -252,7 +276,7 @@ const Technicians = () => {
       }
     }, 600)
     return () => clearTimeout(timeoutId)
-  }, [selectedCustomerId, technicianId, value])
+  }, [selectedCustomerId, technicianId, value, pageSizeTwo, pageNumberTwo])
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -264,6 +288,7 @@ const Technicians = () => {
   return (
     <>
       <Header header="MOORMANAGE/Technicians" />
+      <Toast ref={toast} />
 
       <div className="mt-10">
         <div className="flex justify-end mr-[54px]">
@@ -323,7 +348,7 @@ const Technicians = () => {
                 width: '100%',
                 cursor: 'pointer',
                 fontSize: '',
-                color: '#D5E1EA',
+                color: '#000000',
                 border: '1px solid #D5E1EA',
                 paddingLeft: '40px',
                 borderRadius: '5px',
@@ -390,7 +415,7 @@ const Technicians = () => {
                 <Paginator
                   first={pageNumber1}
                   rows={pageSize}
-                  totalRecords={120}
+                  totalRecords={totalRecords}
                   rowsPerPageOptions={[5, 10, 20, 30]}
                   onPageChange={onPageChange}
                   style={{
@@ -416,11 +441,8 @@ const Technicians = () => {
               marginRight: '50px',
               width: '700px',
               height: '720px',
-              // border:"1px solid red"
             }}>
-            <div
-              // style={{border:"1px solid red"}}
-              className="flex justify-between mt-6  mb-3 ">
+            <div className="flex justify-between mt-6  mb-3 ">
               <div className="font-bold ml-5">
                 <p style={{ color: '#000000', fontSize: '18px' }}>{properties.workOrderHeader}</p>
               </div>
@@ -459,7 +481,7 @@ const Technicians = () => {
                   onSelectionChange={(e) => {
                     setSelectedProduct(e.value)
                   }}
-                  data={[]}
+                  data={getOpenWorkOrderData}
                   emptyMessage={
                     <div className="text-center mt-40 mb-10">
                       <img
@@ -488,11 +510,11 @@ const Technicians = () => {
               </div>
               <div className="mt-auto">
                 <Paginator
-                  first={pageNumber1}
-                  rows={pageSize}
-                  totalRecords={120}
+                  first={pageNumber2}
+                  rows={pageSizeTwo}
+                  totalRecords={totalRecordsTwo}
                   rowsPerPageOptions={[5, 10, 20, 30]}
-                  onPageChange={onPageChange}
+                  onPageChange={onPageChangeTwo}
                   style={{
                     position: 'sticky',
                     bottom: 0,

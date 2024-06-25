@@ -159,7 +159,7 @@ const Forms = () => {
       <div style={{ height: '100vh' }} className={isModalOpen ? 'backdrop-blur-lg' : ''}>
         <Header header="MOORSERVE/Forms Library" />
 
-        <div className="flex justify-end">
+        {/* <div className="flex justify-end">
           <div className=" mr-16 mt-10">
             <CustomModal
               buttonText={'Upload New'}
@@ -297,7 +297,7 @@ const Forms = () => {
               />
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   )

@@ -306,21 +306,31 @@ const Customer = () => {
 
       const response = await getCustomer(params).unwrap()
       const { status, content, message, totalSize } = response as CustomerResponse
-      if (status === 200 && Array.isArray(content) && content?.length > 0) {
-        setIsLoading(false)
-        setCustomerData(content)
-        setCustomerId(content[0]?.id)
-        setSelectedProduct(content[0])
-        setTotalRecordsOne(totalSize)
+      if (status === 200 && Array.isArray(content)) {
+        if (content?.length > 0) {
+          setIsLoading(false)
+          setCustomerData(content)
+          setCustomerId(content[0]?.id)
+          setSelectedProduct(content[0])
+          setTotalRecordsOne(totalSize)
+        } else {
+          setIsLoading(false)
+          setCustomerRecordData('')
+          setMooringData([])
+          setBoatYardData([])
+          setSelectedMooring('')
+          setCustomerData([])
+          setCustomerId('')
+          setTotalRecordsOne(totalSize)
+        }
       } else {
         setIsLoading(false)
-        setCustomerRecordData('')
-        setMooringData([])
-        setBoatYardData([])
-        setSelectedMooring('')
-        setCustomerData([])
-        setCustomerId('')
-        setTotalRecordsOne(totalSize)
+        toast?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
       }
     } catch (error) {
       setIsLoading(false)
