@@ -509,9 +509,6 @@ const Technicians = () => {
                     backgroundColor: '#FFFFFF',
                     cursor: 'pointer',
                   }}
-                  onRowClick={(row) => {
-                    handleWorkOrder(row.data)
-                  }}
                   onSelectionChange={(e) => {
                     setSelectedProduct(e.value)
                   }}
