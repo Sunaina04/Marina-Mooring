@@ -99,7 +99,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   )
   const [firstErrorField, setFirstErrorField] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const [customerImage, setCustomerImage] = useState<string | null>(null)
+  const [customerImage, setCustomerImage] = useState<any>()
   const [encodedImages, setEncodedImages] = useState<string[]>([])
   const [formData, setFormData] = useState<any>({
     mooringId: '',
@@ -156,9 +156,21 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     }
   }
 
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = (event: any) => {
     const file = event.target.files?.[0]
     if (file) {
+      if (!file.type.startsWith('image/')) {
+        setCustomerImage('')
+        setEncodedImages([])
+        toastRef?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Only image files are allowed',
+          life: 3000,
+        })
+        return
+      }
+
       const reader = new FileReader()
 
       reader.onload = () => {
@@ -331,8 +343,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       mooringNumber: mooringRowData?.mooringNumber || '',
       mooringName: mooringRowData?.mooringName || '',
       harbor: mooringRowData?.harborOrArea || '',
-      // waterDepth: mooringRowData?.waterDepth || '',
-      // gpsCoordinates: mooringRowData?.gpsCoordinates || '',
       boatYardName: mooringRowData?.boatyardResponseDto?.boatyardName || '',
       boatName: mooringRowData?.boatName || '',
       boatSize: mooringRowData?.boatSize || '',
@@ -859,9 +869,16 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 </span>
                 <div className="mt-2">
                   <input
+                    id="file-input"
                     type="file"
                     accept="image/*"
                     onChange={handleImageChange}
+                    style={{
+                      display: 'none',
+                    }}
+                  />
+                  <label
+                    htmlFor="file-input"
                     style={{
                       width: '230px',
                       height: '32px',
@@ -869,8 +886,13 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       borderRadius: '0.50rem',
                       fontSize: '0.8rem',
                       padding: '3px',
-                    }}
-                  />
+                      display: 'inline-block',
+                      textAlign: 'center',
+                      lineHeight: '25px',
+                      cursor: 'pointer',
+                    }}>
+                    Upload Image
+                  </label>
                   {customerImage && (
                     <div className="mt-2">
                       <img

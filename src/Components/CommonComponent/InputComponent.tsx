@@ -14,7 +14,8 @@ interface InputStyle {
 
 interface InputComponentProps {
   placeholder?: string
-  type?: 'text' | 'password' | 'number' | 'email' | 'date'
+  type?: 'text' | 'password' | 'number' | 'email' | 'date' | 'file'
+  accept?: 'image/*'
   value?: any
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
   disabled?: boolean
