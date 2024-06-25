@@ -611,7 +611,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   height: '32px',
                   border: fieldErrors.customerName ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
-                  // fontSize: '0.5rem',
+                  fontSize: '0.8rem'
                 }}
               />
 

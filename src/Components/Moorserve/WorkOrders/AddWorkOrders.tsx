@@ -4,6 +4,7 @@ import { InputText } from 'primereact/inputtext'
 import { Dropdown } from 'primereact/dropdown'
 import { IoIosAdd } from 'react-icons/io'
 import { GrFormSubtract } from 'react-icons/gr'
+import { FaFileUpload } from "react-icons/fa";
 import { ErrorResponse, WorkOrderResponse } from '../../../Type/ApiTypes'
 import {
   useAddWorkOrderMutation,
@@ -74,6 +75,8 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
   const [lastChangedField, setLastChangedField] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [customerImage, setCustomerImage] = useState<any>()
+  const [encodedImages, setEncodedImages] = useState<string[]>([])
   const toast = useRef<Toast>(null)
 
   const { getMooringBasedOnCustomerIdAndBoatyardIdData } = GetMooringBasedOnCustomerIdAndBoatyardId(
@@ -276,6 +279,42 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     return new Date(year, month - 1, day)
   }
 
+  const handleRemoveImage = () => {
+    setCustomerImage(null)
+    setEncodedImages([])
+  }
+
+  const handleImageChange = (event: any) => {
+    const file = event.target.files?.[0]
+    if (file) {
+      if (!file.type.startsWith('image/')) {
+        setCustomerImage('')
+        setEncodedImages([])
+        toastRef?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Only image files are allowed',
+          life: 3000,
+        })
+        return
+      }
+
+      const reader = new FileReader()
+
+      reader.onload = () => {
+        const result = reader.result
+        if (typeof result === 'string') {
+          const base64String = result.split(',')[1]
+          setCustomerImage(`data:image/png;base64,${base64String}`)
+          setEncodedImages([base64String])
+        } else {
+          console.error('FileReader result is not a string.')
+        }
+      }
+      reader.readAsDataURL(file)
+    }
+  }
+
   const SaveWorkOrder = async () => {
     const errors = validateFields()
     if (Object.keys(errors).length > 0) {
@@ -293,6 +332,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       workOrderStatusId: workOrder?.workOrderStatus?.id,
       time: '00:' + formatTime(time.minutes, time.seconds),
       problem: workOrder?.value,
+      encodedImages: encodedImages,
     }
 
     try {
@@ -721,6 +761,72 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
               )}
             </p>
           </div>
+
+          <div className="">
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">Customer Image</div>
+                </span>
+                <div className="mt-1">
+                  <input
+                    id="file-input"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    style={{
+                      display: 'none',
+                    }}
+                  />
+                  <label
+                    htmlFor="file-input"
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.8rem',
+                      padding: '3px',
+                      display: 'inline-block',
+                      textAlign: 'center',
+                      lineHeight: '25px',
+                      cursor: 'pointer',
+                    }}>
+                    Upload Image
+                  </label>
+                  {customerImage && (
+                    <div className="mt-2">
+                      <img
+                        src={customerImage}
+                        alt="Customer"
+                        style={{
+                          width: '100px',
+                          height: '100px',
+                          objectFit: 'cover',
+                          borderRadius: '0.50rem',
+                        }}
+                      />
+                      <button
+                        onClick={handleRemoveImage}
+                        style={{
+                          position: 'absolute',
+                          top: '13rem',
+                          right: '10rem',
+                          background: 'red',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: '50%',
+                          width: '20px',
+                          height: '20px',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}>
+                        &times;
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
         </div>
 
         {/* Boatyards */}
