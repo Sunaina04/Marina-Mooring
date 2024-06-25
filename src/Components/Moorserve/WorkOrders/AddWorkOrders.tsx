@@ -761,7 +761,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
               )}
             </p>
           </div>
-
           <div className="">
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">Customer Image</div>
@@ -820,6 +819,58 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                       borderRadius: '0.50rem',
                     }}
                   />
+                 
+                  <label
+                    htmlFor="file-input"
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.8rem',
+                      padding: '3px',
+                      display: 'flex',
+                      gap:'0.5rem',
+                      textAlign: 'center',
+                      lineHeight: '25px',
+                      cursor: 'pointer',
+                    }}>
+                  <FaFileUpload style={{fontSize:'25px', color:'blue'}}/>
+                    Upload Image
+                  </label>
+                  {customerImage && (
+                    <div className="mt-2">
+                      <img
+                        src={customerImage}
+                        alt="Customer"
+                        style={{
+                          width: '100px',
+                          height: '100px',
+                          objectFit: 'cover',
+                          borderRadius: '0.50rem',
+                        }}
+                      />
+                      <button
+                        onClick={handleRemoveImage}
+                        style={{
+                          position: 'absolute',
+                          top: '13rem',
+                          right: '10rem',
+                          background: 'red',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: '50%',
+                          width: '20px',
+                          height: '20px',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}>
+                        &times;
+                      </button>
+                    </div>
+                  )}
                 </div>
               )}
             </div>

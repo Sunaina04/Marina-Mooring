@@ -34,6 +34,7 @@ import { Calendar } from 'primereact/calendar'
 import { InputTextarea } from 'primereact/inputtextarea'
 import { Toast } from 'primereact/toast'
 import { FileUpload } from 'primereact/fileupload'
+import { FaFileUpload } from 'react-icons/fa'
 const AddCustomer: React.FC<CustomerDataProps> = ({
   customer,
   mooringRowData,
@@ -886,11 +887,13 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       borderRadius: '0.50rem',
                       fontSize: '0.8rem',
                       padding: '3px',
-                      display: 'inline-block',
+                      display: 'flex',
+                      gap:'0.5rem',
                       textAlign: 'center',
                       lineHeight: '25px',
                       cursor: 'pointer',
                     }}>
+                    <FaFileUpload style={{ fontSize: '25px', color: 'blue' }} />
                     Upload Image
                   </label>
                   {customerImage && (
