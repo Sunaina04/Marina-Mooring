@@ -373,6 +373,8 @@ const moormanageApi = userApi.injectEndpoints({
         sortBy,
         sortDir,
         searchText,
+        filterDateFrom,
+        filterDateTo,
       }: {
         technicianId?: number
         pageNumber?: number
@@ -380,10 +382,12 @@ const moormanageApi = userApi.injectEndpoints({
         sortBy?: string
         sortDir?: string
         searchText?: string
+        filterDateTo?: string
+        filterDateFrom?: string
       }) => ({
         url: `api/v1/workOrder/fetchOpenWorkOrders/${technicianId}`,
         method: 'GET',
-        params: { pageNumber, pageSize, sortBy, sortDir, searchText },
+        params: { pageNumber, pageSize, sortBy, sortDir, searchText, filterDateFrom, filterDateTo },
       }),
     }),
 
@@ -395,6 +399,8 @@ const moormanageApi = userApi.injectEndpoints({
         sortBy,
         sortDir,
         searchText,
+        filterDateFrom,
+        filterDateTo,
       }: {
         technicianId?: number
         pageNumber?: number
@@ -402,17 +408,14 @@ const moormanageApi = userApi.injectEndpoints({
         sortBy?: string
         sortDir?: string
         searchText?: string
+        filterDateTo?: string
+        filterDateFrom?: string
       }) => ({
         url: `api/v1/workOrder/fetchCloseWorkOrders/${technicianId}`,
         method: 'GET',
-        params: { pageNumber, pageSize, sortBy, sortDir, searchText },
+        params: { pageNumber, pageSize, sortBy, sortDir, searchText, filterDateFrom, filterDateTo },
       }),
     }),
-
-
-
-
-
   }),
 })
 
@@ -447,5 +450,5 @@ export const {
   useUpdateInventoryMutation,
   useGetTechnicianDataMutation,
   useGetOpenWorkOrdersMutation,
-  useGetClosedWorkOrdersMutation
+  useGetClosedWorkOrdersMutation,
 } = moormanageApi

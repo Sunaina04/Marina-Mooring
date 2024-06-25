@@ -37,10 +37,8 @@ const Technicians = () => {
   const options: string[] = ['Open', 'Completed']
   const [value, setValue] = useState<string>(options[0])
   const [dataVisible, setDataVisible] = useState(false)
-  const [technicianRecord, setTechnicianRecord] = useState()
-  const [globalFilter, setGlobalFilter] = useState<string | undefined>(undefined)
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date())
-  // const { technicianData, filteredTechnicianData } = useFetchTechnicians()
+  const [filterDateFrom, setFilterDateFrom] = useState<any>()
+  const [filterDateTo, setFilterDateTo] = useState<any>()
   const [isLoading, setIsLoading] = useState(false)
   const [technicianData, setTechnicianData] = useState<TechnicianPayload[]>([])
   const [filteredTechnicianData, setFilteredTechnicianData] = useState<TechnicianPayload[]>([])
@@ -48,7 +46,6 @@ const Technicians = () => {
   const [getOpenWork] = useGetOpenWorkOrdersMutation()
   const [getWorkedClosed] = useGetClosedWorkOrdersMutation()
   const [getOpenWorkOrderData, setGetOpenWorkOrderData] = useState<CustomerPayload[]>([])
-  const [selectedId, setSelectedId] = useState<any>('')
   const [searchText, setSearchText] = useState('')
   const [selectedProduct, setSelectedProduct] = useState()
   const [technicianId, setTechnicianId] = useState()
@@ -120,17 +117,12 @@ const Technicians = () => {
     [],
   )
 
-  const handleDateSelect = (date: Date) => {
-    setSelectedDate(date)
-  }
-
-  const handleDateUnselect = () => {
-    setSelectedDate(undefined)
-  }
-
-  const handleRowSelection = (e: any) => {
-    setTechnicianRecord(e.data)
-    setDataVisible(true)
+  const formatDate = (dateString: any) => {
+    const date = new Date(dateString)
+    const month = String(date.getMonth() + 1).padStart(2, '0') // Months are zero-based
+    const day = String(date.getDate()).padStart(2, '0')
+    const year = date.getFullYear()
+    return `${month}/${day}/${year}`
   }
 
   const ActionButtonColumn: ActionButtonColumnProps = {
@@ -216,6 +208,9 @@ const Technicians = () => {
     }
   }, [searchText, getTechnicians, pageSize, pageNumber])
 
+  console.log('filterDateFrom', filterDateFrom)
+  console.log('filterDateto', filterDateTo)
+
   const getOpenWorkOrder = useCallback(
     async (id: any) => {
       setIsLoading(true)
@@ -224,6 +219,8 @@ const Technicians = () => {
           technicianId: id,
           pageNumber: pageNumberTwo,
           pageSize: pageSizeTwo,
+          filterDateFrom: filterDateFrom,
+          filterDateTo: filterDateTo,
         }).unwrap()
         const { status, message, content, totalSize } = response as GetUserResponse
         if (status === 200 && Array.isArray(content)) {
@@ -237,7 +234,7 @@ const Technicians = () => {
         console.error('Error occurred while fetching customer data:', error)
       }
     },
-    [technicianId, value, pageSizeTwo, pageNumberTwo],
+    [technicianId, value, pageSizeTwo, pageNumberTwo, filterDateFrom, filterDateTo],
   )
 
   const getClosedWorkOrder = useCallback(
@@ -248,6 +245,8 @@ const Technicians = () => {
           technicianId: id,
           pageNumber: pageNumberTwo,
           pageSize: pageSizeTwo,
+          filterDateFrom: filterDateFrom,
+          filterDateTo: filterDateTo,
         }).unwrap()
         const { status, message, content, totalSize } = response as GetUserResponse
         if (status === 200 && Array.isArray(content)) {
@@ -261,7 +260,7 @@ const Technicians = () => {
         console.error('Error occurred while fetching customer data:', error)
       }
     },
-    [technicianId, value, pageSizeTwo, pageNumberTwo],
+    [technicianId, value, pageSizeTwo, pageNumberTwo, filterDateFrom, filterDateTo],
   )
 
   useEffect(() => {
@@ -275,7 +274,15 @@ const Technicians = () => {
       }
     }, 600)
     return () => clearTimeout(timeoutId)
-  }, [selectedCustomerId, technicianId, value, pageSizeTwo, pageNumberTwo])
+  }, [
+    selectedCustomerId,
+    technicianId,
+    value,
+    pageSizeTwo,
+    pageNumberTwo,
+    filterDateFrom,
+    filterDateTo,
+  ])
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -304,10 +311,14 @@ const Technicians = () => {
               }}>
               <Calendar
                 value={date}
-                onChange={(e) => setDate(e.value || null)}
+                onChange={(e) => {
+                  setDate(e.value || null)
+                  setFilterDateFrom(formatDate(date?.[0]))
+                  setFilterDateTo(formatDate(date?.[1]))
+                }}
                 selectionMode="range"
                 readOnlyInput
-                // placeholder="from: 15, March 2024   to: 21, March 2024"
+                placeholder="from: mm/dd/yyyy   to: mm/dd/yyyy"
                 className="h-8"
                 id="clander"
               />
