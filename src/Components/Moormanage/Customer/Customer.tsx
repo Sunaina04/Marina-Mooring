@@ -46,22 +46,19 @@ const Customer = () => {
   const [editMode, setEditMode] = useState(false)
   const [editCustomerMode, setEditCustomerMode] = useState(false)
   const [editMooringMode, setEditMooringMode] = useState(false)
-  const [customerRecord, setCustomerRecord] = useState(true)
   const [selectedCustomer, setSelectedCustomer] = useState<any>()
-  const [filteredCustomerData, setFilteredCustomerData] = useState<CustomerPayload[]>([])
   const [customerRecordData, setCustomerRecordData] = useState<any>()
   const [mooringData, setMooringData] = useState<MooringResponseDtoList[]>([])
   const [boatYardData, setBoatYardData] = useState<any[]>([])
   const [mooringRowData, setMooringRowData] = useState<MooringPayload>()
   const [dialogVisible, setDialogVisible] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState(null)
-  const [selectedMooring, setSelectedMooring] = useState()
+  const [selectedMooring, setSelectedMooring] = useState<any>()
   const [searchText, setSearchText] = useState('')
   const [customerId, setCustomerId] = useState<any>()
   const [isLoading, setIsLoading] = useState(true)
   const [isLoader, setIsLoader] = useState(false)
   const [sortable, setSortable] = useState(false)
-  const [coordinatesArray, setCoordinatesArray] = useState<any[]>([])
   const [getCustomer] = useGetCustomerMutation()
   const [deleteCustomer] = useDeleteCustomerMutation()
   const [getCustomerWithMooring] = useGetCustomersWithMooringMutation()
@@ -309,21 +306,21 @@ const Customer = () => {
 
       const response = await getCustomer(params).unwrap()
       const { status, content, message, totalSize } = response as CustomerResponse
-      if (status === 200 && Array.isArray(content)) {
+      if (status === 200 && Array.isArray(content) && content?.length > 0) {
         setIsLoading(false)
         setCustomerData(content)
-        setFilteredCustomerData(content)
         setCustomerId(content[0]?.id)
         setSelectedProduct(content[0])
         setTotalRecordsOne(totalSize)
       } else {
         setIsLoading(false)
-        toast?.current?.show({
-          severity: 'error',
-          summary: 'Error',
-          detail: message,
-          life: 3000,
-        })
+        setCustomerRecordData('')
+        setMooringData([])
+        setBoatYardData([])
+        setSelectedMooring('')
+        setCustomerData([])
+        setCustomerId('')
+        setTotalRecordsOne(totalSize)
       }
     } catch (error) {
       setIsLoading(false)
@@ -509,9 +506,7 @@ const Customer = () => {
     <div style={{ height: '100vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
       <Header header="MOORMANAGE/Customer" />
       <Toast ref={toast} />
-      <div
-      
-      className="flex justify-end mr-12 ">
+      <div className="flex justify-end mr-12 ">
         <div className="flex mt-6 ">
           <CustomModal
             buttonText={'ADD NEW'}
@@ -571,9 +566,9 @@ const Customer = () => {
       </div>
       <div className="flex flex-col md:flex-row mt-3">
         {/* Left Panel */}
-        <div 
-                // style={{border:"1px solid red"}}
-        className="flex-grow bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-6 md:mb-0">
+        <div
+          // style={{border:"1px solid red"}}
+          className="flex-grow bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-6 md:mb-0">
           {/* Header */}
           <div className="bg-[#10293A] rounded-tl-[10px] rounded-tr-[10px] text-white">
             <h1 className="p-4 text-xl font-extrabold">{properties.customerHeader}</h1>

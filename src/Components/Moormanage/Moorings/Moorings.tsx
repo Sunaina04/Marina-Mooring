@@ -44,10 +44,10 @@ const Moorings = () => {
   const [mooringRowData, setMooringRowData] = useState<MooringPayload>()
   const [mooringRecord, setMooringRecord] = useState(true)
   const [editMode, setEditMode] = useState(false)
-  const [selectedProduct, setSelectedProduct] = useState()
-  const [selectedMooring, setSelectedMooring] = useState()
+  const [selectedProduct, setSelectedProduct] = useState<any>()
+  const [selectedMooring, setSelectedMooring] = useState<any>()
   const [searchText, setSearchText] = useState('')
-  const [customerId, setCustomerId] = useState()
+  const [customerId, setCustomerId] = useState<any>()
   const [mooringId, setMooringId] = useState()
   const [rowClick, setRowClick] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
@@ -289,7 +289,7 @@ const Moorings = () => {
       }
       const response = await getMoorings(params).unwrap()
       const { status, content, message, totalSize } = response as MooringResponse
-      if (status === 200 && Array.isArray(content)) {
+      if (status === 200 && Array.isArray(content) && content?.length > 0) {
         setIsLoading(false)
         setMooringData(content)
         setFilteredMooringData(content)
@@ -298,12 +298,14 @@ const Moorings = () => {
         setTotalRecords(totalSize)
       } else {
         setIsLoading(false)
-        toast?.current?.show({
-          severity: 'error',
-          summary: 'Error',
-          detail: message,
-          life: 3000,
-        })
+        setCustomerRecordData('')
+        setSelectedProduct('')
+        setSelectedMooring('')
+        setMooringData([])
+        setBoatYardData([])
+        setCustomerId('')
+        setTotalRecords(totalSize)
+        setMooringResponseData('')
       }
     } catch (error) {
       setIsLoading(false)
@@ -906,13 +908,7 @@ const Moorings = () => {
               toastRef={toast}
             />
           }
-          headerText={
-            editMooringMode ? (
-              <h1 className="text-xxl font-bold text-black ">Add Mooring</h1>
-            ) : (
-              <h1 className="text-xxl font-bold text-black ">Add Customer</h1>
-            )
-          }
+          headerText={<h1 className="text-xxl font-bold text-black ">Add Mooring</h1>}
           visible={customerModalVisible}
           onHide={handleModalClose}
           dialogStyle={{
