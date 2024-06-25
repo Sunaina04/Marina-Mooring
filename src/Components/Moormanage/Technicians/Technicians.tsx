@@ -33,7 +33,7 @@ import { Toast } from 'primereact/toast'
 import { Paginator } from 'primereact/paginator'
 
 const Technicians = () => {
-  const [date, setDate] = useState<NullableDateArray>(null)
+  const [date, setDate] = useState<any>()
   const options: string[] = ['Open', 'Completed']
   const [value, setValue] = useState<string>(options[0])
   const [dataVisible, setDataVisible] = useState(false)
@@ -125,6 +125,16 @@ const Technicians = () => {
     return `${month}/${day}/${year}`
   }
 
+  const handleDate = (date: any) => {
+    console.log('date', date)
+
+    if (date) {
+      setFilterDateFrom(formatDate(date?.[0]))
+      setFilterDateTo(formatDate(date?.[1]))
+      console.log('here', filterDateFrom, filterDateTo)
+    }
+  }
+
   const ActionButtonColumn: ActionButtonColumnProps = {
     header: '',
     buttons: [
@@ -207,9 +217,6 @@ const Technicians = () => {
       console.error('Error occurred while fetching customer data:', msg)
     }
   }, [searchText, getTechnicians, pageSize, pageNumber])
-
-  console.log('filterDateFrom', filterDateFrom)
-  console.log('filterDateto', filterDateTo)
 
   const getOpenWorkOrder = useCallback(
     async (id: any) => {
@@ -312,15 +319,13 @@ const Technicians = () => {
               <Calendar
                 value={date}
                 onChange={(e) => {
-                  setDate(e.value || null)
-                  setFilterDateFrom(formatDate(date?.[0]))
-                  setFilterDateTo(formatDate(date?.[1]))
+                  setDate(e.value)
+                  handleDate(date)
                 }}
                 selectionMode="range"
-                readOnlyInput
-                placeholder="from: mm/dd/yyyy   to: mm/dd/yyyy"
+                placeholder="from: mm/dd/yyyy to: mm/dd/yyyy"
                 className="h-8"
-                id="clander"
+                id="calender"
               />
               <img
                 src="/assets/images/Calendar.svg"
@@ -462,7 +467,6 @@ const Technicians = () => {
                   <SelectButton
                     value={value}
                     onChange={(e: SelectButtonChangeEvent) => {
-                      console.info(e.value)
                       setValue(e.value)
                     }}
                     options={options}

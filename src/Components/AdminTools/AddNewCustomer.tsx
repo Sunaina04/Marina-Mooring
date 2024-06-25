@@ -518,7 +518,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       dispatch(setCustomerName(selectedCustomerAdminName))
       dispatch(setCustomerId(selectedCustomerAdmin ? selectedCustomerAdmin.id : ''))
     }
-    console.log('customerData', customerData?.phoneNumber, phone)
   }
 
   const getUserHandler = async () => {
