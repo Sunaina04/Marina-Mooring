@@ -33,7 +33,7 @@ import { Toast } from 'primereact/toast'
 import { Paginator } from 'primereact/paginator'
 
 const Technicians = () => {
-  const [date, setDate] = useState<any>()
+  const [date, setDate] = useState<NullableDateArray>(null)
   const options: string[] = ['Open', 'Completed']
   const [value, setValue] = useState<string>(options[0])
   const [dataVisible, setDataVisible] = useState(false)
@@ -125,13 +125,6 @@ const Technicians = () => {
     return `${month}/${day}/${year}`
   }
 
-  const handleDate = (date: any) => {
-    if (date) {
-      setFilterDateFrom(formatDate(date?.[0]))
-      setFilterDateTo(formatDate(date?.[1]))
-    }
-  }
-
   const ActionButtonColumn: ActionButtonColumnProps = {
     header: '',
     buttons: [
@@ -190,7 +183,7 @@ const Technicians = () => {
           setIsLoading(false)
           setTechnicianData(content)
           setSelectedProduct(content[0])
-          setTechnicianId(content[10]?.id)
+          setTechnicianId(content[0]?.id)
           setFilteredTechnicianData(content)
           setTotalRecords(totalSize)
         } else {
@@ -218,6 +211,7 @@ const Technicians = () => {
   const getOpenWorkOrder = useCallback(
     async (id: any) => {
       setIsLoading(true)
+
       try {
         const response = await getOpenWork({
           technicianId: id,
@@ -244,6 +238,7 @@ const Technicians = () => {
   const getClosedWorkOrder = useCallback(
     async (id: any) => {
       setIsLoading(true)
+
       try {
         const response = await getWorkedClosed({
           technicianId: id,
@@ -289,6 +284,12 @@ const Technicians = () => {
   ])
 
   useEffect(() => {
+    if (date && date?.[0] && date?.[1]) {
+      setFilterDateFrom(formatDate(date?.[0]))
+      setFilterDateTo(formatDate(date?.[1]))
+    }
+  }, [date])
+  useEffect(() => {
     const timeoutId = setTimeout(() => {
       getTechniciansData()
     }, 600)
@@ -307,6 +308,7 @@ const Technicians = () => {
               <p style={{ color: '#00426F' }}>Filter order by Date</p>
             </div>
             <div
+              className="flex-auto"
               style={{
                 position: 'relative',
                 border: '1px solid #D5E1EA',
@@ -316,11 +318,15 @@ const Technicians = () => {
               <Calendar
                 value={date}
                 onChange={(e) => {
-                  setDate(e.value)
-                  handleDate(date)
+                  setDate(e.value || null)
+
+                  // if (e.value?.[1]) {
+                  //   handleDate(date)
+                  // }
                 }}
                 selectionMode="range"
-                placeholder="from: mm/dd/yyyy to: mm/dd/yyyy"
+                readOnlyInput
+                placeholder="From: mm/dd/yyyy   To: mm/dd/yyyy"
                 className="h-8"
                 id="calender"
               />
