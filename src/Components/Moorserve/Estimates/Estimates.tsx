@@ -288,7 +288,7 @@ const Estimates = () => {
                   value={searchText}
                   onChange={handleSearch}
                   placeholder="Search"
-                  id="placeholder"
+                  id="placeholderText"
                   className="pl-10 w-[237px] bg-[#00426F] h-[35px] rounded-lg border text-[white] border-[#D5E1EA] placeholder:text-[#FFFFFF]  focus:outline-none"
                 />
               </div>

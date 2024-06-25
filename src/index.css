@@ -63,9 +63,14 @@
   color: #a4a4a4 !important;
 }
 
-#placeholder::placeholder {
+#placeholderText::placeholder {
   color: #ffffff !important;
 }
+
+#placeholderText{
+  color: #ffffff !important;
+}
+
 #clander::placeholder {
   color: black;
 }
@@ -116,7 +121,5 @@ input[type=number]::-webkit-outer-spin-button {
 
 .p-dropdown-label.p-inputtext{
   color: #000000 !important;
- 
-
 
 }
