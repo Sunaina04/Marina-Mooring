@@ -640,6 +640,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   border: fieldErrors.mooringNumber ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
+                  paddingLeft:'0.5rem'
                 }}
               />
               <p id="mooringNumber">
@@ -667,6 +668,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   border: fieldErrors.harbor ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
+                  paddingLeft:'0.5rem'
                 }}
               />
               <p id="harbor">
@@ -697,6 +699,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   border: fieldErrors.gpsCoordinatesValue ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
+                  paddingLeft:'0.5rem'
                 }}
               />
               <p id="waterDepth">
@@ -755,6 +758,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   border: fieldErrors.boatName ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
+                  paddingLeft:'0.5rem'
                 }}
               />
               <p id="boatName">
@@ -797,6 +801,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   border: fieldErrors.boatSize ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
+                  paddingLeft:'0.5rem'
                 }}
               />
               <p id="boatName">
@@ -829,6 +834,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   border: fieldErrors.sizeOfWeight ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
+                  paddingLeft:'0.5rem'
                 }}
               />
               <p id="sizeOfWeight">
@@ -962,6 +968,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   border: fieldErrors.depthAtMeanHighWater ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
+                  paddingLeft:'0.5rem'
                 }}
               />
               <p id="depthAtMeanHighWater">
@@ -1062,6 +1069,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                     border: fieldErrors.pendantCondition ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
+                    paddingLeft:'0.5rem'
                   }}
                 />
                 <p id="conditionOfEye">
@@ -1222,6 +1230,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                       border: '1px solid #D5E1EA',
                       borderRadius: '0.50rem',
                       fontSize: '0.8rem',
+                      paddingLeft:'0.5rem'
                     }}
                   />
                 </div>

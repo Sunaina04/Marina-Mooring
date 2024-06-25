@@ -329,7 +329,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
                   border: errorMessage.id ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
-                  padding: '1.2em',
+                  padding: '0.5rem',
                 }}
               />
             </div>
@@ -352,7 +352,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
                   border: errorMessage.name ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
-                  padding: '1.2em',
+                  padding: '0.5rem',
                 }}
               />
             </div>
@@ -379,7 +379,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
                       border: errorMessage.name ? '1px solid red' : '1px solid #D5E1EA',
                       borderRadius: '0.50rem',
                       fontSize: '0.8rem',
-                      padding: '1.2em',
+                      padding: '0.5rem',
                       paddingRight: '2.5rem', // Space for the icon
                     }}
                   />
@@ -466,7 +466,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
                   border: errorMessage.address ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
-                  padding: '1.2em',
+                  padding: '0.5rem',
                 }}
               />
             </div>
@@ -490,7 +490,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
                 border: errorMessage.aptSuite ? '1px solid red' : '1px solid #D5E1EA',
                 borderRadius: '0.50rem',
                 fontSize: '0.8rem',
-                padding: '1.2em',
+                padding: '0.5rem',
               }}
             />
             <p>
@@ -570,7 +570,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
                     border: errorMessage.zipCode ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
-                    padding: '1.2em',
+                    padding: '0.5rem',
                   }}
                 />
               </div>
@@ -592,7 +592,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
                   border: errorMessage.gpsCoordinatesValue ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
-                  padding: '1.2em',
+                  padding: '0.5rem',
                 }}
               />
             </div>
@@ -628,7 +628,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
                       border: errorMessage.mainContact ? '1px solid red' : '1px solid #D5E1EA',
                       borderRadius: '0.50rem',
                       fontSize: '0.8rem',
-                      padding: '1.2em',
+                      padding: '0.5rem',
                     }}
                   />
                 </div>
