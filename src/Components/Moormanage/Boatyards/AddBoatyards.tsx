@@ -16,7 +16,8 @@ import { LatLngExpression } from 'leaflet'
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import { Toast } from 'primereact/toast'
-import { IoMdAdd, IoMdClose } from "react-icons/io";
+import { IoMdAdd, IoMdClose } from 'react-icons/io'
+import { InputText } from 'primereact/inputtext'
 const AddBoatyards: React.FC<BoatYardProps> = ({
   closeModal,
   boatYardData,
@@ -158,7 +159,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
         mainContact: mainContact,
         gpsCoordinates: gpsCoordinatesValue,
         customerOwnerId: selectedCustomerId,
-        storageAreas:storageList
+        storageAreas: storageList,
       }
       const response = await addBoatyard(payload).unwrap()
       const { status, message } = response as BoatYardResponse
@@ -270,14 +271,10 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
     setStorage('')
   }
 
-
-
   const handleDeleteStorage = (index: number) => {
     const newList = storageList.filter((_, i) => i !== index)
     setStorageList(newList)
   }
-
-
 
   const fetchDataAndUpdate = useCallback(async () => {
     const { statesData } = await getStatesData()
@@ -361,56 +358,79 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
             </div>
             <p>{errorMessage.name && <small className="p-error">{errorMessage.name}</small>}</p>
           </div>
-
-
-
           <div>
             <span className="font-medium text-sm text-[#000000]">
               Storage Area
               {/* <span className="text-red-500">*</span> */}
             </span>
-            <div className="mt-1 flex gap-1">
-              <InputComponent
-                value={storage}
-                onChange={(e) => {
-                  setStorage(e.target.value)
+            <div className="mt-1 flex items-center gap-1 relative">
+              <div>
+                <div className="p-input-icon-left">
+                  {/* <IoSearchSharp className="ml-2 text-blue-900" /> */}
 
-                }}
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: errorMessage.name ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                  padding: '1.2em',
-                }}
-              />
-
-              <div className='mt- cursor-pointer'>
-                <IoMdAdd  style={{fontSize:"2rem",color:"#0098FF"}}
-                
-                onClick={handleAddStorage}
-                />
+                  <InputText
+                    value={storage}
+                    onChange={(e) => {
+                      setStorage(e.target.value)
+                    }}
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: errorMessage.name ? '1px solid red' : '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.8rem',
+                      padding: '1.2em',
+                      paddingRight: '2.5rem', // Space for the icon
+                    }}
+                  />
+                  <IoMdAdd
+                    style={{
+                      position: 'absolute',
+                      right: '10px',
+                      top: '72%',
+                      transform: 'translateY(-50%)',
+                      cursor: 'pointer',
+                      fontSize: '1.5rem',
+                      color: 'black',
+                      backgroundColor: '#D5E1EA',
+                      borderRadius: '5px',
+                      padding: '3px',
+                    }}
+                    onClick={() => storage && handleAddStorage()}
+                  />
+                </div>
               </div>
             </div>
-
-            <ul className='mt-1'>
+            <ul className="mt-1 flex w-[230px] overflow-y-auto ">
               {storageList.map((item, index) => (
-                <li key={index} className="flex items-center m-1">
+                <li
+                  key={index}
+                  style={{
+                    borderRadius: '5px',
+                    fontWeight: '400',
+                    fontSize: '12px',
+                    color: '#10293A',
+                    backgroundColor: '#D5E1EA',
+                    padding: '4px',
+                  }}
+                  className="flex items-center m-1">
                   {item}
-                  <IoMdClose 
-                    style={{marginLeft: '0.5rem', cursor: 'pointer',color:"red",}} 
-                    onClick={() => handleDeleteStorage(index)} 
+                  <IoMdClose
+                    style={{
+                      marginLeft: '0.5rem',
+                      marginBottom: '12px',
+                      cursor: 'pointer',
+                      color: 'red',
+                    }}
+                    onClick={() => handleDeleteStorage(index)}
                   />
+
+                  <button></button>
                 </li>
               ))}
             </ul>
             <p>{errorMessage.name && <small className="p-error">{errorMessage.name}</small>}</p>
           </div>
-
-
-
-
         </div>
         {isLoading && (
           <ProgressSpinner
