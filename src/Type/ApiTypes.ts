@@ -555,6 +555,7 @@ export interface MooringWithBoatYardResponse {
 }
 
 export interface TechnicianPayload {
+  openWorkOrder: any
   id: number
   technicianName: string
   technicianId: string

@@ -33,9 +33,7 @@ import { Toast } from 'primereact/toast'
 import { Paginator } from 'primereact/paginator'
 
 const Technicians = () => {
-  const [date, setDate] = useState<NullableDateArray>(null)
-  const options: string[] = ['Open', 'Completed']
-  const [value, setValue] = useState<string>(options[0])
+  const [date, setDate] = useState<any>()
   const [dataVisible, setDataVisible] = useState(false)
   const [filterDateFrom, setFilterDateFrom] = useState<any>()
   const [filterDateTo, setFilterDateTo] = useState<any>()
@@ -46,9 +44,11 @@ const Technicians = () => {
   const [getOpenWork] = useGetOpenWorkOrdersMutation()
   const [getWorkedClosed] = useGetClosedWorkOrdersMutation()
   const [getOpenWorkOrderData, setGetOpenWorkOrderData] = useState<CustomerPayload[]>([])
+  // console.log("getOpenWorkOrderData", getOpenWorkOrderData);
   const [searchText, setSearchText] = useState('')
   const [selectedProduct, setSelectedProduct] = useState()
   const [technicianId, setTechnicianId] = useState()
+  // console.log("technician id", technicianId);
   const toast = useRef<Toast>(null)
   const selectedCustomerId = useSelector(selectCustomerId)
   const [pageNumber, setPageNumber] = useState(0)
@@ -59,6 +59,10 @@ const Technicians = () => {
   const [pageNumber2, setPageNumber2] = useState(0)
   const [pageSizeTwo, setPageSizeTwo] = useState(10)
   const [totalRecordsTwo, setTotalRecordsTwo] = useState<number>()
+  const [openWorkOrder, setOpenWorkOrder] = useState<number>(0)
+  const [completedWorkOrder, setCompletedOrder] = useState<number>(0)
+  const options: string[] = [`Open (${openWorkOrder})`, `Completed (${completedWorkOrder})`]
+  const [value, setValue] = useState<string>(options[0])
 
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
@@ -79,7 +83,7 @@ const Technicians = () => {
     color: '#000000',
   }
   const WorkOrdersColumnStyle = {
-    fontSize: '10px',
+    fontSize: '12px',
     height: '12px',
     color: 'white',
     backgroundColor: '#00426F',
@@ -155,6 +159,9 @@ const Technicians = () => {
     setTechnicianId(rowData?.id)
     setSelectedProduct(rowData)
 
+    setOpenWorkOrder(rowData?.openWorkOrder)
+    setCompletedOrder(rowData?.closeWorkOrder)
+
     if (value === 'Open') {
       getOpenWorkOrder(rowData?.id)
     } else {
@@ -186,6 +193,9 @@ const Technicians = () => {
           setTechnicianId(content[0]?.id)
           setFilteredTechnicianData(content)
           setTotalRecords(totalSize)
+
+          setOpenWorkOrder(content[0]?.openWorkOrder)
+          setCompletedOrder(content[0]?.closeWorkOrder)
         } else {
           setIsLoading(false)
           setGetOpenWorkOrderData([])
@@ -206,7 +216,7 @@ const Technicians = () => {
       const { message: msg } = error as ErrorResponse
       console.error('Error occurred while fetching customer data:', msg)
     }
-  }, [searchText, getTechnicians, pageSize, pageNumber])
+  }, [searchText, getTechnicians, pageSize, pageNumber, openWorkOrder, completedWorkOrder])
 
   const getOpenWorkOrder = useCallback(
     async (id: any) => {
@@ -232,7 +242,15 @@ const Technicians = () => {
         console.error('Error occurred while fetching customer data:', error)
       }
     },
-    [technicianId, value, pageSizeTwo, pageNumberTwo, filterDateFrom, filterDateTo],
+    [
+      technicianId,
+      value,
+      pageSizeTwo,
+      pageNumberTwo,
+      filterDateFrom,
+      filterDateTo,
+      getOpenWorkOrderData,
+    ],
   )
 
   const getClosedWorkOrder = useCallback(
@@ -305,7 +323,7 @@ const Technicians = () => {
         <div className="flex justify-end mr-[54px]">
           <div className="flex gap-4 items-center">
             <div className="">
-              <p style={{ color: '#00426F' }}>Filter order by Date</p>
+              <p style={{ color: '#00426F', fontWeight: '500' }}>Filter order by Date</p>
             </div>
             <div
               className="flex-auto"
