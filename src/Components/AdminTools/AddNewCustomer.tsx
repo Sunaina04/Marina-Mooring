@@ -587,7 +587,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   border: fieldErrors.name ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
-                  padding: '1.2em',
+                  padding: '0.5rem',
                 }}
               />
             </div>
@@ -614,7 +614,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   border: fieldErrors.phone ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
-                  padding: '1.2em',
+                  padding: '0.5rem',
                 }}
               />
             </div>
@@ -645,7 +645,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                       : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
-                  padding: '1.2em',
+                  padding: '0.5rem',
                 }}
               />
             </div>
@@ -965,7 +965,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                           : '1px solid #D5E1EA',
                       borderRadius: '0.50rem',
                       fontSize: '0.8rem',
-                      padding: '1.2em',
+                      padding: '0.5rem',
                     }}
                   />
                   {/* <img
@@ -1083,7 +1083,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                       border: fieldErrors.confirmPassword ? '1px solid red' : '1px solid #D5E1EA',
                       borderRadius: '0.50rem',
                       fontSize: '0.8rem',
-                      padding: '1.2em',
+                      padding: '0.5rem',
                     }}
                   />
                   {/* <img

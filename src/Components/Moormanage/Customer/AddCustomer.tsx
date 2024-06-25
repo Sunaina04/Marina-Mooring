@@ -749,6 +749,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       border: fieldErrors.firstName ? '1px solid red' : '1px solid #D5E1EA',
                       borderRadius: '0.50rem',
                       fontSize: '0.8rem',
+                      paddingLeft:'0.5rem'
                     }}
                   />
                   <p className="" id="firstName">
@@ -775,6 +776,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       border: fieldErrors.lastName ? '1px solid red' : '1px solid #D5E1EA',
                       borderRadius: '0.50rem',
                       fontSize: '0.8rem',
+                      paddingLeft:'0.5rem'
                     }}
                   />
                   <p>
@@ -804,6 +806,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       border: fieldErrors.phone ? '1px solid red' : '1px solid #D5E1EA',
                       borderRadius: '0.50rem',
                       fontSize: '0.8rem',
+                      paddingLeft:'0.5rem'
                     }}
                   />
                   <p className="" id="phone">
@@ -831,6 +834,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         border: fieldErrors.email ? '1px solid red' : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.8rem',
+                        paddingLeft:'0.5rem'
                       }}
                     />
                     <p className="" id="email">
@@ -967,6 +971,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       borderRadius: '0.50rem',
                       color: 'black',
                       fontSize: '0.8rem',
+                      paddingLeft:'0.5rem'
                     }}
                   />
                   <p className="" id="streetHouse">
@@ -991,6 +996,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       borderRadius: '0.50rem',
                       color: 'black',
                       fontSize: '0.8rem',
+                      paddingLeft:'0.5rem'
                     }}
                   />
                   <p className="" id="sectorBlock">
@@ -1059,6 +1065,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     border: fieldErrors.pinCode ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
+                    paddingLeft:'0.5rem'
                   }}
                 />
                 <p className="" id="pinCode">
@@ -1159,6 +1166,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         border: fieldErrors.mooringNumber ? '1px solid red' : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.8rem',
+                        paddingLeft:'0.5rem'
                       }}
                     />
                     <p id="mooringNumber">
@@ -1183,6 +1191,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         border: fieldErrors.harbor ? '1px solid red' : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.8rem',
+                        paddingLeft:'0.5rem'
                       }}
                     />
                     <p id="harbor">
@@ -1214,6 +1223,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                           : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.8rem',
+                        paddingLeft:'0.5rem'
                       }}
                     />
                     <p id="waterDepth">
@@ -1266,6 +1276,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         border: fieldErrors.boatName ? '1px solid red' : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.8rem',
+                        paddingLeft:'0.5rem'
                       }}
                     />
                     <p id="boatName">
@@ -1306,6 +1317,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         border: fieldErrors.boatSize ? '1px solid red' : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.8rem',
+                        paddingLeft:'0.5rem'
                       }}
                     />
                     <p id="boatName">
@@ -1336,6 +1348,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         border: fieldErrors.sizeOfWeight ? '1px solid red' : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.8rem',
+                        paddingLeft:'0.5rem'
                       }}
                     />
                     <p id="sizeOfWeight">
@@ -1466,6 +1479,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                           : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.8rem',
+                        paddingLeft:'0.5rem'
                       }}
                     />
                     <p id="depthAtMeanHighWater">
@@ -1562,6 +1576,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                             : '1px solid #D5E1EA',
                           borderRadius: '0.50rem',
                           fontSize: '0.8rem',
+                          paddingLeft:'0.5rem'
                         }}
                       />
                       <p id="conditionOfEye">
@@ -1712,6 +1727,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                           border: '1px solid #D5E1EA',
                           borderRadius: '0.50rem',
                           fontSize: '0.8rem',
+                          paddingLeft:'0.5rem'
                         }}
                       />
                     </div>
