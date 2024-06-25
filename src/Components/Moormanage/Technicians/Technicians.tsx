@@ -31,6 +31,8 @@ import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import { Toast } from 'primereact/toast'
 import { Paginator } from 'primereact/paginator'
+import CustomModal from '../../CustomComponent/CustomModal'
+import AddWorkOrders from '../../Moorserve/WorkOrders/AddWorkOrders'
 
 const Technicians = () => {
   const [date, setDate] = useState<any>()
@@ -61,6 +63,9 @@ const Technicians = () => {
   const [completedWorkOrder, setCompletedOrder] = useState<number>(0)
   const options: string[] = [`Open (${openWorkOrder})`, `Completed (${completedWorkOrder})`]
   const [value, setValue] = useState<string>(options[0])
+  const [visible, setVisible] = useState(false)
+
+  console.log('value', value)
 
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
@@ -127,6 +132,15 @@ const Technicians = () => {
     return `${month}/${day}/${year}`
   }
 
+  const handleEditButtonClick = () => {
+    setVisible(true)
+  }
+  const handleModalClose = () => {
+    setVisible(false)
+    // setEditMode(false)
+    // getWorkOrderData()
+  }
+
   const ActionButtonColumn: ActionButtonColumnProps = {
     header: '',
     buttons: [
@@ -135,7 +149,7 @@ const Technicians = () => {
         label: 'View',
         underline: true,
         fontWeight: 500,
-        // onClick: (rowData) => handleEditButtonClick(rowData),
+        onClick: handleEditButtonClick,
       },
     ],
     headerStyle: {
@@ -160,10 +174,12 @@ const Technicians = () => {
     setOpenWorkOrder(rowData?.openWorkOrder)
     setCompletedOrder(rowData?.closeWorkOrder)
 
-    if (value === `Open (${openWorkOrder})`) {
-      getOpenWorkOrder(rowData?.id)
-    } else {
-      getClosedWorkOrder(rowData?.id)
+    if (technicianId) {
+      if (value.includes('Open')) {
+        getOpenWorkOrder(technicianId)
+      } else {
+        getClosedWorkOrder(technicianId)
+      }
     }
   }
 
@@ -280,7 +296,7 @@ const Technicians = () => {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       if (technicianId) {
-        if (value === `Open (${openWorkOrder})`) {
+        if (value.includes('Open')) {
           getOpenWorkOrder(technicianId)
         } else {
           getClosedWorkOrder(technicianId)
@@ -296,6 +312,8 @@ const Technicians = () => {
     pageNumberTwo,
     filterDateFrom,
     filterDateTo,
+    openWorkOrder,
+    completedWorkOrder,
   ])
 
   useEffect(() => {
@@ -323,6 +341,7 @@ const Technicians = () => {
             <div className="">
               <p style={{ color: '#00426F', fontWeight: '500' }}>Filter order by Date</p>
             </div>
+
             <div
               className="flex-auto"
               style={{
@@ -363,6 +382,30 @@ const Technicians = () => {
           </div>
         </div>
 
+        <div className="items-center">
+          <CustomModal
+            // buttonText={'ADD NEW'}
+            children={
+              <AddWorkOrders
+                // workOrderData={selectedCustomer}
+                // editModeWorkOrder={editMode}
+                setVisible={setVisible}
+                toastRef={toast}
+                closeModal={handleModalClose}
+                workOrderData={undefined}
+              />
+            }
+            headerText={<h1 className="text-xl font-extrabold text-black ml-4">Work Order</h1>}
+            visible={visible}
+            onClick={() => {}}
+            onHide={handleModalClose}
+            dialogStyle={{
+              width: '851px',
+              height: '526px',
+              borderRadius: '1rem',
+            }}
+          />
+        </div>
         <div className="flex lg:flex-row justify-around md:flex-col  mt-6">
           <div
             style={{
@@ -512,6 +555,7 @@ const Technicians = () => {
                   onSelectionChange={(e) => {
                     setSelectedProduct(e.value)
                   }}
+                  actionButtons={ActionButtonColumn}
                   data={getOpenWorkOrderData}
                   emptyMessage={
                     <div className="text-center mt-40 mb-10">
