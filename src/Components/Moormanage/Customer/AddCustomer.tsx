@@ -33,6 +33,7 @@ import { Checkbox } from 'primereact/checkbox'
 import { Calendar } from 'primereact/calendar'
 import { InputTextarea } from 'primereact/inputtextarea'
 import { Toast } from 'primereact/toast'
+import { FileUpload } from 'primereact/fileupload'
 const AddCustomer: React.FC<CustomerDataProps> = ({
   customer,
   mooringRowData,
@@ -170,9 +171,13 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           console.error('FileReader result is not a string.')
         }
       }
-
       reader.readAsDataURL(file)
     }
+  }
+
+  const handleRemoveImage = () => {
+    setCustomerImage(null)
+    setEncodedImages([])
   }
 
   const validateFields = () => {
@@ -878,6 +883,25 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                           borderRadius: '0.50rem',
                         }}
                       />
+                      <button
+                        onClick={handleRemoveImage}
+                        style={{
+                          position: 'absolute',
+                          top: '13rem',
+                          right: '10rem',
+                          background: 'red',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: '50%',
+                          width: '20px',
+                          height: '20px',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}>
+                        &times;
+                      </button>
                     </div>
                   )}
                 </div>
@@ -1099,14 +1123,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           {(checked === true || editMooringMode) && (
             <div id="mooring" className="mt-4">
               <div className="flex ">
-                <div>
-                  <div className="font-medium text-sm text-[#000000]">
-                    {/* <div className="flex gap-1 ">
-                      Dock
-                    </div> */}
-                  </div>
-                </div>
-
                 <div>
                   <span className="font-medium text-sm text-[#000000]">
                     <div className="flex gap-1">Mooring Number</div>
