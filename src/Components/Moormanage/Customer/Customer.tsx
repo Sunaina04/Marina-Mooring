@@ -274,7 +274,7 @@ const Customer = () => {
       },
       {
         id: 'mooringNumber',
-        label: 'Mooring Name',
+        label: 'Mooring Number',
         style: MooringTableColumnStyle,
       },
       {
@@ -566,8 +566,8 @@ const Customer = () => {
             dialogStyle={{
               width: '800px',
               minWidth: '800px',
-              height: editCustomerMode ? '550px' : '700px',
-              minHeight: editCustomerMode ? '550px' : '700px',
+              height: editCustomerMode ? '600px' : '700px',
+              minHeight: editCustomerMode ? '600px' : '700px',
               borderRadius: '1rem',
               maxHeight: '95% !important',
             }}
@@ -612,7 +612,7 @@ const Customer = () => {
           />
 
           <div
-          // style={{border:"1px solid red"}}
+            // style={{border:"1px solid red"}}
             className={`bg-#00426F h-[590px] w-auto mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col`}>
             <div className="flex-grow overflow-x-auto overflow-y-auto">
               <DataTableComponent

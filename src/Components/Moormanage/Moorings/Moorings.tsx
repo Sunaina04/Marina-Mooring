@@ -209,7 +209,7 @@ const Moorings = () => {
       },
       {
         id: 'mooringNumber',
-        label: 'Mooring Name:',
+        label: 'Mooring Number:',
         style: {
           width: '6vw',
           borderBottom: '1px solid #C0C0C0',
@@ -249,7 +249,7 @@ const Moorings = () => {
       },
       {
         id: 'mooringNumber',
-        label: 'Mooring Name:',
+        label: 'Mooring Number:',
         style: {
           width: '6vw',
           borderBottom: '1px solid #C0C0C0',

@@ -71,6 +71,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<string>()
   const [checked, setChecked] = useState(false)
   const [checkedDock, setCheckedDock] = useState(false)
+  const [customerTypeId, setCustomerTypeId] = useState<any>(customer?.customerTypeDto?.id)
   const toastRef = useRef<Toast>(null)
 
   const getFomattedCoordinate = (gpsCoordinatesValue: any) => {
@@ -338,6 +339,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     setSelectedState(customer?.stateResponseDto?.name || undefined)
     setSelectedCountry(customer?.countryResponseDto?.name || undefined)
     setGpsCoordinatesValue(mooringRowData?.gpsCoordinates || '')
+    setCheckedDock(customerTypeId === 5)
 
     setFormData((prevState: any) => ({
       ...prevState,
@@ -720,6 +722,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     if (selectedCustomerType && selectedCustomerType?.id === 5) {
       setChecked(true)
       setCheckedDock(true)
+    } else {
+      setCustomerTypeId(selectedCustomerType?.id)
     }
   }, [selectedCustomerType])
 
@@ -749,7 +753,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       border: fieldErrors.firstName ? '1px solid red' : '1px solid #D5E1EA',
                       borderRadius: '0.50rem',
                       fontSize: '0.8rem',
-                      paddingLeft:'0.5rem'
+                      paddingLeft: '0.5rem',
                     }}
                   />
                   <p className="" id="firstName">
@@ -776,7 +780,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       border: fieldErrors.lastName ? '1px solid red' : '1px solid #D5E1EA',
                       borderRadius: '0.50rem',
                       fontSize: '0.8rem',
-                      paddingLeft:'0.5rem'
+                      paddingLeft: '0.5rem',
                     }}
                   />
                   <p>
@@ -806,7 +810,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       border: fieldErrors.phone ? '1px solid red' : '1px solid #D5E1EA',
                       borderRadius: '0.50rem',
                       fontSize: '0.8rem',
-                      paddingLeft:'0.5rem'
+                      paddingLeft: '0.5rem',
                     }}
                   />
                   <p className="" id="phone">
@@ -834,7 +838,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         border: fieldErrors.email ? '1px solid red' : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.8rem',
-                        paddingLeft:'0.5rem'
+                        paddingLeft: '0.5rem',
                       }}
                     />
                     <p className="" id="email">
@@ -892,7 +896,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       fontSize: '0.8rem',
                       padding: '3px',
                       display: 'flex',
-                      gap:'0.5rem',
+                      gap: '0.5rem',
                       textAlign: 'center',
                       lineHeight: '25px',
                       cursor: 'pointer',
@@ -971,7 +975,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       borderRadius: '0.50rem',
                       color: 'black',
                       fontSize: '0.8rem',
-                      paddingLeft:'0.5rem'
+                      paddingLeft: '0.5rem',
                     }}
                   />
                   <p className="" id="streetHouse">
@@ -996,7 +1000,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       borderRadius: '0.50rem',
                       color: 'black',
                       fontSize: '0.8rem',
-                      paddingLeft:'0.5rem'
+                      paddingLeft: '0.5rem',
                     }}
                   />
                   <p className="" id="sectorBlock">
@@ -1065,7 +1069,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     border: fieldErrors.pinCode ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
-                    paddingLeft:'0.5rem'
+                    paddingLeft: '0.5rem',
                   }}
                 />
                 <p className="" id="pinCode">
@@ -1107,6 +1111,26 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       )}
 
       {/* Add Mooring */}
+      {((editCustomerMode && customerTypeId === 5) ||
+        (editCustomerMode && selectedCustomerType?.id === 5)) && (
+        <div className="flex gap-4">
+          <span>
+            <Checkbox
+              onChange={(e: any) => {
+                setCheckedDock(e.checked ?? false)
+              }}
+              checked={checkedDock}
+              style={{
+                border: '1px solid #D5E1EA',
+                height: '22px',
+                width: '22px',
+                borderRadius: '5px',
+              }}
+            />
+          </span>
+          <p className="font-medium text-lg text-[#000000] mt-1">Add Dock</p>
+        </div>
+      )}
 
       {!editCustomerMode && (
         <>
@@ -1166,7 +1190,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         border: fieldErrors.mooringNumber ? '1px solid red' : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.8rem',
-                        paddingLeft:'0.5rem'
+                        paddingLeft: '0.5rem',
                       }}
                     />
                     <p id="mooringNumber">
@@ -1191,7 +1215,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         border: fieldErrors.harbor ? '1px solid red' : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.8rem',
-                        paddingLeft:'0.5rem'
+                        paddingLeft: '0.5rem',
                       }}
                     />
                     <p id="harbor">
@@ -1223,7 +1247,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                           : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.8rem',
-                        paddingLeft:'0.5rem'
+                        paddingLeft: '0.5rem',
                       }}
                     />
                     <p id="waterDepth">
@@ -1276,7 +1300,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         border: fieldErrors.boatName ? '1px solid red' : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.8rem',
-                        paddingLeft:'0.5rem'
+                        paddingLeft: '0.5rem',
                       }}
                     />
                     <p id="boatName">
@@ -1317,7 +1341,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         border: fieldErrors.boatSize ? '1px solid red' : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.8rem',
-                        paddingLeft:'0.5rem'
+                        paddingLeft: '0.5rem',
                       }}
                     />
                     <p id="boatName">
@@ -1348,7 +1372,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         border: fieldErrors.sizeOfWeight ? '1px solid red' : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.8rem',
-                        paddingLeft:'0.5rem'
+                        paddingLeft: '0.5rem',
                       }}
                     />
                     <p id="sizeOfWeight">
@@ -1479,7 +1503,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                           : '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.8rem',
-                        paddingLeft:'0.5rem'
+                        paddingLeft: '0.5rem',
                       }}
                     />
                     <p id="depthAtMeanHighWater">
@@ -1576,7 +1600,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                             : '1px solid #D5E1EA',
                           borderRadius: '0.50rem',
                           fontSize: '0.8rem',
-                          paddingLeft:'0.5rem'
+                          paddingLeft: '0.5rem',
                         }}
                       />
                       <p id="conditionOfEye">
@@ -1727,7 +1751,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                           border: '1px solid #D5E1EA',
                           borderRadius: '0.50rem',
                           fontSize: '0.8rem',
-                          paddingLeft:'0.5rem'
+                          paddingLeft: '0.5rem',
                         }}
                       />
                     </div>
