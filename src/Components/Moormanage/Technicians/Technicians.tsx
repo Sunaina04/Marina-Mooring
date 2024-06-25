@@ -42,7 +42,6 @@ const Technicians = () => {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date())
   // const { technicianData, filteredTechnicianData } = useFetchTechnicians()
   const [isLoading, setIsLoading] = useState(false)
-
   const [technicianData, setTechnicianData] = useState<TechnicianPayload[]>([])
   const [filteredTechnicianData, setFilteredTechnicianData] = useState<TechnicianPayload[]>([])
   const [getTechnicians] = useGetTechnicianDataMutation()
@@ -55,12 +54,10 @@ const Technicians = () => {
   const [technicianId, setTechnicianId] = useState()
   const toast = useRef<Toast>(null)
   const selectedCustomerId = useSelector(selectCustomerId)
-
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
   const [pageSize, setPageSize] = useState(10)
   const [totalRecords, setTotalRecords] = useState<number>()
-
   const [pageNumberTwo, setPageNumberTwo] = useState(0)
   const [pageNumber2, setPageNumber2] = useState(0)
   const [pageSizeTwo, setPageSizeTwo] = useState(10)
@@ -193,6 +190,8 @@ const Technicians = () => {
         if (content.length > 0) {
           setIsLoading(false)
           setTechnicianData(content)
+          setSelectedProduct(content[0])
+          setTechnicianId(content[10]?.id)
           setFilteredTechnicianData(content)
           setTotalRecords(totalSize)
         } else {
@@ -384,6 +383,7 @@ const Technicians = () => {
                   onSelectionChange={(e) => {
                     setSelectedProduct(e.value)
                   }}
+                  selection={selectedProduct}
                   data={technicianData}
                   emptyMessage={
                     <div className="text-center mt-40 mb-10">
