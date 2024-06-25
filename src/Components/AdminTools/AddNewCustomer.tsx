@@ -85,14 +85,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     length: false,
   })
 
-  const handleShowPassword = () => {
-    setShowPassword(!showPassword)
-  }
-
-  const handleShowConfirmPassword = () => {
-    setShowConfirmPassword(!showConfirmPassword)
-  }
-
   const validateFields = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const phoneRegex = /^.{10}$|^.{12}$/
@@ -526,6 +518,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       dispatch(setCustomerName(selectedCustomerAdminName))
       dispatch(setCustomerId(selectedCustomerAdmin ? selectedCustomerAdmin.id : ''))
     }
+    console.log('customerData', customerData?.phoneNumber, phone)
   }
 
   const getUserHandler = async () => {
@@ -615,7 +608,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
             <div className="mt-1">
               <InputText
                 value={phone}
-                type="number"
                 onChange={(e) => handleInputChange('phone', e.target.value)}
                 style={{
                   width: '230px',

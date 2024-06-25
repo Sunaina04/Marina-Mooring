@@ -95,7 +95,7 @@ const Technicians = () => {
       { id: 'id', label: 'ID', style: TechnicianTableColumnStyle },
       { id: 'name', label: 'Technicians Name', style: TechnicianTableColumnStyle },
       { id: 'email', label: 'Open Work Orders', style: TechnicianTableColumnStyle },
-      { id: 'phoneNumber', label: 'Completed Jobs', style: TechnicianTableColumnStyle },
+      { id: 'closeWorkOrder', label: 'Completed Jobs', style: TechnicianTableColumnStyle },
     ],
 
     [],
