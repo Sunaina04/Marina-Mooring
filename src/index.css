@@ -126,3 +126,52 @@ input[type='number']::-webkit-outer-spin-button {
 .p-calendar .p-inputtext {
   border: none;
 }
+
+.custom-checkbox-container {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  font-size: 22px;
+  user-select: none;
+}
+
+.custom-checkbox-input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.custom-checkbox {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 22px;
+  width: 22px;
+  background-color: #fff;
+  border: 1px solid #d5e1ea;
+  border-radius: 5px;
+}
+
+.custom-checkbox-container input:checked ~ .custom-checkbox {
+  background-color: #2196f3; /* Change to the color you prefer */
+}
+
+.custom-checkbox:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+
+.custom-checkbox-container input:checked ~ .custom-checkbox:after {
+  display: block;
+}
+
+.custom-checkbox-container .custom-checkbox:after {
+  left: 8px;
+  top: 4px;
+  width: 6px;
+  height: 12px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}

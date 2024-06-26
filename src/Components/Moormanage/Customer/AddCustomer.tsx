@@ -35,6 +35,7 @@ import { InputTextarea } from 'primereact/inputtextarea'
 import { Toast } from 'primereact/toast'
 import { FileUpload } from 'primereact/fileupload'
 import { FaFileUpload } from 'react-icons/fa'
+
 const AddCustomer: React.FC<CustomerDataProps> = ({
   customer,
   mooringRowData,
@@ -69,7 +70,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [boatyardName, setBoatyardName] = useState<MetaData[]>([])
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
   const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<string>()
-  const [checked, setChecked] = useState(false)
+  const [checkedMooring, setCheckedMooring] = useState(false)
   const [checkedDock, setCheckedDock] = useState(false)
   const toastRef = useRef<Toast>(null)
 
@@ -380,7 +381,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     }
     let payload
     setIsLoading(true)
-    if (checked) {
+    if (checkedMooring) {
       payload = {
         firstName: firstName,
         lastName: lastName,
@@ -700,17 +701,52 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       <>
         <div className="flex gap-4 mt-4">
           <span>
-            <Checkbox
-              onChange={(e: any) => {
-                setCheckedDock(e.checked ?? false)
-              }}
-              checked={checkedDock}
-              style={{
-                border: '1px solid #D5E1EA',
-                height: '22px',
-                width: '22px',
-                borderRadius: '5px',
-              }}></Checkbox>
+            <label className="custom-checkbox-container">
+              <input
+                type="checkbox"
+                onChange={(e: any) => {
+                  setCheckedDock(e.checked ?? false)
+                }}
+                checked={checkedDock}
+                style={{
+                  border: '1px solid #D5E1EA',
+                  height: '22px',
+                  width: '22px',
+                  borderRadius: '5px',
+                }}
+                className="custom-checkbox-input"
+              />
+              <span className="custom-checkbox"></span>
+            </label>
+          </span>
+          <p className="font-medium text-lg text-[#000000] mt-1">Add Dock</p>
+        </div>
+      </>
+    )
+  }
+
+  const AddMooring = () => {
+    return (
+      <>
+        <div className="flex gap-4 mt-4">
+          <span>
+            <label className="custom-checkbox-container">
+              <input
+                type="checkbox"
+                onChange={(e: any) => {
+                  setCheckedMooring(e.checked ?? false)
+                }}
+                checked={checkedMooring}
+                style={{
+                  border: '1px solid #D5E1EA',
+                  height: '22px',
+                  width: '22px',
+                  borderRadius: '5px',
+                }}
+                className="custom-checkbox-input"
+              />
+              <span className="custom-checkbox"></span>
+            </label>
           </span>
           <p className="font-medium text-lg text-[#000000] mt-1">Add Dock</p>
         </div>
@@ -720,7 +756,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
   useEffect(() => {
     handleFocus()
-  }, [checked])
+  }, [checkedMooring])
 
   useEffect(() => {
     fetchDataAndUpdate()
@@ -752,7 +788,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       selectedCustomerType &&
       (selectedCustomerType?.id === 5 || selectedCustomerType === 'Dock')
     ) {
-      setChecked(true)
+      setCheckedMooring(true)
       setCheckedDock(true)
     }
   }, [selectedCustomerType])
@@ -1161,28 +1197,12 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         <>
           {!editMooringMode && (
             <div className="mt-3 flex gap-[7rem] text-xl text-black font-bold">
-              <div className="flex gap-4 mt-4">
-                <span>
-                  <Checkbox
-                    onChange={(e) => {
-                      setChecked(e.checked ?? false)
-                    }}
-                    checked={checked}
-                    style={{
-                      border: '1px solid #D5E1EA',
-                      height: '22px',
-                      width: '22px',
-                      borderRadius: '5px',
-                    }}
-                  />
-                </span>
-                <p className="font-medium text-lg text-[#000000] mt-1">Add Mooring</p>
-              </div>
+              {AddMooring()}
               {selectedCustomerType?.id === 5 && AddDock()}
             </div>
           )}
 
-          {(checked === true || editMooringMode) && (
+          {(checkedMooring === true || editMooringMode) && (
             <div id="mooring" className="mt-4">
               <div className="flex ">
                 <div>
