@@ -221,9 +221,9 @@ const CustomerOwner = () => {
       const { status, message, content, totalSize, currentSize } = response as GetUserResponse
       if (status === 200 && Array.isArray(content)) {
         setIsLoading(false)
-        // setCustomerId(content[0]?.id)
         setSelectedProduct(content[0])
         dispatch(setCustomerId(content[0]?.id))
+        dispatch(setCustomerName(content[0]?.name))
         if (content.length > 0) {
           setgetCustomerOwnerData(content)
           setTotalRecords(totalSize)
@@ -367,34 +367,6 @@ const CustomerOwner = () => {
       <Header header="MOORMANAGE/Permission" customer={customerUpdated} />
 
       <div className="flex mr-12 justify-end ">
-        {/* Commenting for now, will use later */}
-        {/* <div className="mt-8 mr-5 relative">
-          <Dropdown
-            value={selectRole}
-            onChange={(e) => setSelectRole(e.value)}
-            options={rolesData}
-            optionLabel="name"
-            editable
-            placeholder="Select Role"
-            style={{
-              width: '172px',
-              height: '44px',
-              minHeight: '44px',
-              paddingLeft: '2rem',
-              border: '1px solid #D5E1EA',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              fontSize: '14px',
-            }}
-          />
-          <img
-            src="/assets/images/filter.svg"
-            alt="filter Icon"
-            className="absolute top-1/2 left-2 transform -translate-y-1/2 h-4 w-4"
-            style={{ cursor: 'pointer' }}
-          />
-        </div> */}
-
         <div className="mt-6">
           <CustomModal
             buttonText={'ADD NEW'}

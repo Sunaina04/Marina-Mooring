@@ -20,6 +20,7 @@ const Header: React.FC<HeaderProps> = ({ header, customer }) => {
   const handleMenu = () => {
     setExpanded(!expanded)
   }
+  console.log('selectedCustomerName', selectedCustomerName)
 
   const handleCustomerIdSelection = (customerId: any) => {
     dispatch(setCustomerName(customerId?.name))
