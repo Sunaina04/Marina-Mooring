@@ -1133,10 +1133,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   height: '50px',
                   border: fieldErrors.note ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
-                  fontSize: '0.70rem',
-                  // backgroundColor: '#F5F5F5',
+                  fontSize: '0.8rem',
                   boxShadow: 'none',
                   paddingLeft: '0.5rem',
+                  color: 'black',
                   resize: 'none',
                 }}
               />

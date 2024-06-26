@@ -500,7 +500,7 @@ const CustomerOwner = () => {
                 style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
                 actionButtons={ActionButtonColumn}
                 emptyMessage={
-                  <div className="flex flex-col justify-center items-center h-full">
+                  <div className="flex flex-col justify-center items-center h-full mt-40">
                     <img src="/assets/images/empty.png" alt="Empty Data" className="w-32 mb-4" />
                     <p className="text-gray-500">No data available</p>
                   </div>

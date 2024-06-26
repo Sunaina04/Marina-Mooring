@@ -297,7 +297,13 @@ const Customer = () => {
       {
         id: 'id',
         label: 'ID',
-        style: MooringTableColumnStyle,
+        style: {
+          backgroundColor: '#FFFFFF',
+          fontSize: '12px',
+          color: '#000000',
+          fontweight: '700',
+          width: '3vw',
+        },
       },
       {
         id: 'mooringNumber',

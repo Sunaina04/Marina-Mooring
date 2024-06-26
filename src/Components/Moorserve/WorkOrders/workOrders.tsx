@@ -270,7 +270,7 @@ const WorkOrders = () => {
                   backgroundColor: '#D9D9D9',
                   cursor: 'pointer',
                 }}
-                data={workOrderData}
+                data={[]}
                 columns={workOrderColumns}
                 actionButtons={ActionButtonColumn}
                 style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
@@ -290,8 +290,8 @@ const WorkOrders = () => {
                 <ProgressSpinner
                   style={{
                     position: 'absolute',
-                    top: '50%',
-                    left: '50%',
+                    top: '70%',
+                    left: '63%',
                     transform: 'translate(-50%, -50%)',
                     width: '50px',
                     height: '50px',
