@@ -339,7 +339,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     setSelectedState(customer?.stateResponseDto?.name || undefined)
     setSelectedCountry(customer?.countryResponseDto?.name || undefined)
     setGpsCoordinatesValue(mooringRowData?.gpsCoordinates || '')
-    setCheckedDock(customerTypeId === 5)
+    setCheckedDock(selectedCustomerType === 'Dock')
+    setCustomerTypeId(customer?.customerTypeDto?.id)
 
     setFormData((prevState: any) => ({
       ...prevState,
@@ -689,6 +690,30 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     }
   }
 
+  const AddDock = () => {
+    return (
+      <>
+        <div className="flex gap-4 mt-4">
+          <span>
+            <Checkbox
+              onChange={(e: any) => {
+                setCheckedDock(e.checked ?? false)
+              }}
+              checked={checkedDock}
+              style={{
+                border: '1px solid #D5E1EA',
+                height: '22px',
+                width: '22px',
+                borderRadius: '5px',
+              }}
+            />
+          </span>
+          <p className="font-medium text-lg text-[#000000] mt-1">Add Dock</p>
+        </div>
+      </>
+    )
+  }
+
   useEffect(() => {
     handleFocus()
   }, [checked])
@@ -719,7 +744,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   }, [])
 
   useEffect(() => {
-    if (selectedCustomerType && selectedCustomerType?.id === 5) {
+    if (
+      selectedCustomerType &&
+      (selectedCustomerType?.id === 5 || selectedCustomerType === 'Dock')
+    ) {
       setChecked(true)
       setCheckedDock(true)
     } else {
@@ -727,11 +755,19 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     }
   }, [selectedCustomerType])
 
+  useEffect(() => {
+    if (
+      checkedDock === false &&
+      (selectedCustomerType?.id === 5 || selectedCustomerType === 'Dock')
+    ) {
+      setSelectedCustomerType(undefined)
+    }
+  }, [checkedDock])
+
   return (
     <div className="">
       {/* Add Customer */}
       <Toast ref={toastRef} />
-
       {!editMooringMode && (
         <>
           <div className="">
@@ -1111,32 +1147,19 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       )}
 
       {/* Add Mooring */}
-      {((editCustomerMode && customerTypeId === 5) ||
-        (editCustomerMode && selectedCustomerType?.id === 5)) && (
-        <div className="flex gap-4">
-          <span>
-            <Checkbox
-              onChange={(e: any) => {
-                setCheckedDock(e.checked ?? false)
-              }}
-              checked={checkedDock}
-              style={{
-                border: '1px solid #D5E1EA',
-                height: '22px',
-                width: '22px',
-                borderRadius: '5px',
-              }}
-            />
-          </span>
-          <p className="font-medium text-lg text-[#000000] mt-1">Add Dock</p>
-        </div>
+
+      {(editCustomerMode && selectedCustomerType === 'Dock') ||
+      (editCustomerMode && selectedCustomerType?.id === 5) ? (
+        AddDock()
+      ) : (
+        <></>
       )}
 
       {!editCustomerMode && (
         <>
           {!editMooringMode && (
             <div className="mt-3 flex gap-[7rem] text-xl text-black font-bold">
-              <div className="flex gap-4">
+              <div className="flex gap-4 mt-4">
                 <span>
                   <Checkbox
                     onChange={(e) => {
@@ -1153,23 +1176,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 </span>
                 <p className="font-medium text-lg text-[#000000] mt-1">Add Mooring</p>
               </div>
-              {selectedCustomerType?.id === 5 && (
-                <div className="flex gap-4">
-                  <span>
-                    <Checkbox
-                      onChange={(e) => setCheckedDock(e.checked ?? false)}
-                      checked={checkedDock}
-                      style={{
-                        border: '1px solid #D5E1EA',
-                        height: '22px',
-                        width: '22px',
-                        borderRadius: '5px',
-                      }}
-                    />
-                  </span>
-                  <p className="font-medium text-lg text-[#000000] mt-1">Add Dock</p>
-                </div>
-              )}
+              {selectedCustomerType?.id === 5 && AddDock()}
             </div>
           )}
 
@@ -1780,7 +1787,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           )}
         </>
       )}
-
       <div
         className="flex gap-6 bottom-2 absolute left-6"
         style={{
