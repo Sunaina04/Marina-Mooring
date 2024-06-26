@@ -605,7 +605,7 @@ const Boatyards = () => {
 
       <div className="flex flex-col md:flex-row mt-3">
         {/* Left Panel */}
-        <div className="bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-6 md:mb-0 w-[400px]">
+        <div className="bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-6 md:mb-0 w-[700px]">
           {/* Header */}
           <div className="bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px] text-white">
             <h1 className="p-4 text-xl font-extrabold">{properties.boatyardDetail}</h1>

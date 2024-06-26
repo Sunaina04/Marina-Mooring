@@ -386,7 +386,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
                   <IoMdAdd
                     style={{
                       position: 'absolute',
-                      right: '10px',
+                      left: '12.5rem',
                       top: '72%',
                       transform: 'translateY(-50%)',
                       cursor: 'pointer',
