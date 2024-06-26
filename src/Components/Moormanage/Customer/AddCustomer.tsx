@@ -100,7 +100,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       : [41.56725, 70.94045],
   )
   const [firstErrorField, setFirstErrorField] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [customerImage, setCustomerImage] = useState<any>()
   const [encodedImages, setEncodedImages] = useState<string[]>([])
   const [formData, setFormData] = useState<any>({
@@ -636,12 +636,15 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       const { customersType } = await getCustomersType()
 
       if (countriesData !== null) {
+        setIsLoading(false)
         setCountriesData(countriesData)
       }
       if (statesData !== null) {
+        setIsLoading(false)
         setStatesData(statesData)
       }
       if (customersType !== null) {
+        setIsLoading(false)
         setCustomerType(customersType)
       }
     }
@@ -705,7 +708,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               <input
                 type="checkbox"
                 onChange={(e: any) => {
-                  setCheckedDock(e.checked ?? false)
+                  setCheckedDock(e.target.checked ?? false)
                 }}
                 checked={checkedDock}
                 style={{
@@ -734,7 +737,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               <input
                 type="checkbox"
                 onChange={(e: any) => {
-                  setCheckedMooring(e.checked ?? false)
+                  setCheckedMooring(e.target.checked ?? false)
                 }}
                 checked={checkedMooring}
                 style={{
@@ -748,7 +751,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               <span className="custom-checkbox"></span>
             </label>
           </span>
-          <p className="font-medium text-lg text-[#000000] mt-1">Add Dock</p>
+          <p className="font-medium text-lg text-[#000000] mt-1">Add Mooring</p>
         </div>
       </>
     )

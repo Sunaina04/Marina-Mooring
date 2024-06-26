@@ -22,7 +22,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
   const [countriesData, setCountriesData] = useState<Country[]>()
   const [statesData, setStatesData] = useState<State[]>()
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const toastRef = useRef<Toast>(null)
   const [formData, setFormData] = useState<any>({
     companyName: '',
@@ -152,9 +152,11 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
     const { countriesData } = await getCountriesData()
 
     if (countriesData !== null) {
+      setIsLoading(false)
       setCountriesData(countriesData)
     }
     if (statesData !== null) {
+      setIsLoading(false)
       setStatesData(statesData)
     }
   }, [])

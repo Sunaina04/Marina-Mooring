@@ -1,17 +1,15 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { InputTextarea } from 'primereact/inputtextarea'
 import { InputText } from 'primereact/inputtext'
-import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown'
+import { Dropdown } from 'primereact/dropdown'
 import InputComponent from '../../CommonComponent/InputComponent'
 import {
   useAddMooringsMutation,
   useUpdateMooringsMutation,
 } from '../../../Services/MoorManage/MoormanageApi'
 import { Button } from 'primereact/button'
-import { CityProps, MetaData, MetaDataCustomer } from '../../../Type/CommonType'
+import { MetaData } from '../../../Type/CommonType'
 import { AddMooringProps } from '../../../Type/ComponentBasedType'
 import CustomSelectPositionMap from '../../Map/CustomSelectPositionMap'
-import { LatLngExpression } from 'leaflet'
 import {
   BoatyardNameData,
   CustomersData,
@@ -19,7 +17,6 @@ import {
   TypeOfBottomChain,
   TypeOfChainCondition,
   TypeOfEye,
-  TypeOfPennant,
   TypeOfShackleSwivel,
   TypeOfSizeOfWeight,
   TypeOfWeightData,
@@ -31,6 +28,7 @@ import { ProgressSpinner } from 'primereact/progressspinner'
 import { Calendar } from 'primereact/calendar'
 import { Toast } from 'primereact/toast'
 import { Checkbox } from 'primereact/checkbox'
+
 const AddMoorings: React.FC<AddMooringProps> = ({
   moorings,
   editMode,
@@ -46,7 +44,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   const { getTypeOfEyeData } = TypeOfEye()
   const { getTypeOfBottomChainData } = TypeOfBottomChain()
   const { getTypeOfShackleSwivelData } = TypeOfShackleSwivel()
-  const { getTypeOfPennantData } = TypeOfPennant()
   const { getTypeOfSizeOfWeightData } = TypeOfSizeOfWeight()
   const { getCustomersData } = CustomersData(selectedCustomerId)
   const { getBoatYardNameData } = BoatyardNameData(selectedCustomerId)
@@ -58,15 +55,14 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   const [conditionOfEye, setConditionOfEye] = useState<MetaData[]>([])
   const [bottomChainCondition, setbottomChainCondition] = useState<MetaData[]>([])
   const [shackleSwivelData, setShackleSwivelData] = useState<MetaData[]>([])
-  const [pennantData, setPennantData] = useState<MetaData[]>([])
   const [customerName, setcustomerName] = useState<any[]>([])
-  const [customerId, setCustomerId] = useState<string>('')
   const [boatyardsName, setBoatYardsName] = useState<MetaData[]>([])
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
   const [firstErrorField, setFirstErrorField] = useState('')
   const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<string>()
   const [checkedDock, setCheckedDock] = useState(false)
   const toastRef = useRef<Toast>(null)
+
   const getFomattedCoordinate = (gpsCoordinatesValue: any) => {
     try {
       let [lat, long]: any = gpsCoordinatesValue.split(' ')
@@ -95,7 +91,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   )
   const [saveMoorings] = useAddMooringsMutation()
   const [updateMooring] = useUpdateMooringsMutation()
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [formData, setFormData] = useState<any>({
     customerName: '',
     mooringNumber: '',
@@ -129,35 +125,38 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     const { typeOfEyeData } = await getTypeOfEyeData()
     const { typeOfBottomChainData } = await getTypeOfBottomChainData()
     const { typeOfShackleSwivelData } = await getTypeOfShackleSwivelData()
-    const { typeOfPennantData } = await getTypeOfPennantData()
     const { customersData } = await getCustomersData()
     const { boatYardName } = await getBoatYardNameData()
 
     if (typeOfWeightData !== null) {
+      setIsLoading(false)
       setWeightData(typeOfWeightData)
     }
     if (typeOfChainData !== null) {
+      setIsLoading(false)
       setChainData(typeOfChainData)
     }
     if (TypeOfSizeOfWeightData !== null) {
+      setIsLoading(false)
       setSizeOfWeight(TypeOfSizeOfWeightData)
     }
     if (typeOfEyeData !== null) {
+      setIsLoading(false)
       setConditionOfEye(typeOfEyeData)
     }
 
     if (typeOfBottomChainData !== null) {
+      setIsLoading(false)
       setbottomChainCondition(typeOfBottomChainData)
     }
 
-    if (typeOfPennantData !== null) {
-      setPennantData(typeOfPennantData)
-    }
     if (typeOfBoatTypeData !== null) {
+      setIsLoading(false)
       setType(typeOfBoatTypeData)
     }
 
     if (customersData !== null) {
+      setIsLoading(false)
       const firstLastName = customersData.map((item) => ({
         label: item.firstName + ' ' + item.lastName,
         value: item.id,
@@ -166,6 +165,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     }
 
     if (boatYardName !== null) {
+      setIsLoading(false)
       setBoatYardsName(boatYardName)
     }
   }, [])

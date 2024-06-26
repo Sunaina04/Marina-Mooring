@@ -37,6 +37,7 @@ import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import { Calendar } from 'primereact/calendar'
 import { Toast } from 'primereact/toast'
+import { ProgressSpinner } from 'primereact/progressspinner'
 
 const AddWorkOrders: React.FC<WorkOrderProps> = ({
   workOrderData,
@@ -74,7 +75,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   )
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
   const [lastChangedField, setLastChangedField] = useState<string | null>(null)
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [customerImage, setCustomerImage] = useState<any>()
   const [encodedImages, setEncodedImages] = useState<string[]>([])
   const toast = useRef<Toast>(null)
@@ -559,12 +560,15 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     const { boatYardName } = await getBoatYardNameData()
 
     if (getTechnicians !== null) {
+      setIsLoading(false)
       setTechnicians(getTechnicians)
     }
     if (mooringIds !== null) {
+      setIsLoading(false)
       setMoorings(mooringIds)
     }
     if (WorkOrderStatus !== null) {
+      setIsLoading(false)
       setWorkOrderStatusValue(WorkOrderStatus)
     }
     if (customersData !== null) {
@@ -572,9 +576,11 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         firstName: item.firstName + ' ' + item.lastName,
         id: item.id,
       }))
+      setIsLoading(false)
       setcustomerNameValue(firstLastName)
     }
     if (boatYardName !== null) {
+      setIsLoading(false)
       setBoatYardsName(boatYardName)
     }
   }, [])
@@ -583,6 +589,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     const { mooringsBasedOnCustomerId } = await getMooringsBasedOnCustomerIdData()
 
     if (mooringsBasedOnCustomerId !== null) {
+      setIsLoading(false)
       setMooringBasedOnCustomerId(mooringsBasedOnCustomerId)
       if (mooringsBasedOnCustomerId?.length === 0) {
         toast.current?.show({
@@ -600,6 +607,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     const { customerBasedOnMooringId } = await getCustomerBasedOnMooringIdData()
 
     if (boatyardBasedOnMooringId !== null) {
+      setIsLoading(false)
       setBoatyardBasedOnMooringId(boatyardBasedOnMooringId)
       if (boatyardBasedOnMooringId?.length === 0) {
         toast.current?.show({
@@ -624,6 +632,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
           firstName: item.firstName + ' ' + item.lastName,
           id: item.id,
         }))
+        setIsLoading(false)
         setCustomerBasedOnMooringId(firstLastName)
       }
     } else {
@@ -900,6 +909,20 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
               )}
             </p>
           </div>
+
+          {isLoading && (
+            <ProgressSpinner
+              style={{
+                position: 'absolute',
+                top: '45%',
+                left: '45%',
+                transform: 'translate(-50%, -50%)',
+                width: '50px',
+                height: '50px',
+              }}
+              strokeWidth="4"
+            />
+          )}
 
           {/* Due Date */}
           <div className="">

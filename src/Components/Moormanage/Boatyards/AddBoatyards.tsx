@@ -75,7 +75,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
       ? getFormattedCoordinate(customerData?.gpsCoordinates || gpsCoordinatesValue)
       : [41.56725, 70.94045],
   )
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [addBoatyard] = useAddBoatyardsMutation()
   const [updateBoatyard] = useUpdateBoatyardsMutation()
   const { getStatesData } = StatesData()
@@ -281,10 +281,12 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
     const { countriesData } = await getCountriesData()
 
     if (countriesData !== null) {
+      setIsLoading(false)
       setCountriesData(countriesData)
     }
 
     if (statesData !== null) {
+      setIsLoading(false)
       setStatesData(statesData)
     }
   }, [])
