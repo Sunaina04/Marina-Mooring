@@ -37,7 +37,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   setModalVisible,
   customerUsers,
   permission,
-  setSelectedCustomerUsers,
   setSelectedCustomerUser,
   setSelectedCustomer,
   setEditCustomer,
@@ -66,9 +65,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const [firstErrorField, setFirstErrorField] = useState('')
   const [customerAdminDropdownEnabled, setCustomerAdminDropdownEnabled] = useState(false)
   const [getCustomerOwnerData, setgetCustomerOwnerData] = useState<CustomerPayload[]>([])
-  const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [addCustomer] = useAddUserMutation()
   const [editCustomer] = useUpdateUserMutation()
   const [getUsersData] = useGetUsersMutation()
@@ -484,13 +481,17 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     const { statesData } = await getStatesData()
     const { rolesData } = await getRolesData()
     const { countriesData } = await getCountriesData()
+
     if (rolesData !== null) {
+      setIsLoading(false)
       setRolesData(rolesData)
     }
     if (countriesData !== null) {
+      setIsLoading(false)
       setCountriesData(countriesData)
     }
     if (statesData !== null) {
+      setIsLoading(false)
       setStatesData(statesData)
     }
   }, [])
@@ -955,7 +956,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   <InputComponent
                     value={password}
                     onChange={(e) => handleInputChange('password', e.target.value)}
-                    type={showPassword ? 'text' : 'password'}
                     onBlur={handleBlur}
                     style={{
                       width: '230px',
@@ -969,22 +969,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                       padding: '0.5rem',
                     }}
                   />
-                  {/* <img
-                    src={showPassword ? '/assets/images/eye.png' : '/assets/images/eye-slash.png'}
-                    alt="Toggle Password Visibility"
-                    onClick={handleShowPassword}
-                    className="p-clickable"
-                    style={{
-                      position: 'absolute',
-                      right: '10px',
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                      width: '20px',
-                      height: '20px',
-                      cursor: 'pointer',
-                      zIndex: '1',
-                    }}
-                  /> */}
+
                   <p className=" w-48" id="password">
                     {fieldErrors.password || errorMessage ? (
                       <small className="p-error">
@@ -1077,7 +1062,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   <InputComponent
                     value={confirmPassword}
                     onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
-                    type={showConfirmPassword ? 'text' : 'password'}
                     style={{
                       width: '230px',
                       height: '32px',
@@ -1087,26 +1071,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                       padding: '0.5rem',
                     }}
                   />
-                  {/* <img
-                    src={
-                      showConfirmPassword
-                        ? '/assets/images/eye.png'
-                        : '/assets/images/eye-slash.png'
-                    }
-                    alt="Toggle Password Visibility"
-                    onClick={handleShowConfirmPassword}
-                    className="p-clickable"
-                    style={{
-                      position: 'absolute',
-                      right: '10px',
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                      width: '20px',
-                      height: '20px',
-                      cursor: 'pointer',
-                      zIndex: '1',
-                    }}
-                  /> */}
+
                   {fieldErrors.confirmPassword && (
                     <small className="p-error" id="confirmPassword">
                       {fieldErrors.confirmPassword}
@@ -1117,9 +1082,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
             </div>
           </div>
         )}
-
-        {/* Save and Back buttons */}
-        {/* <div style={{ width: '100%', backgroundColor: 'white', padding: '0 12px' }}> */}
       </div>
       <div
         className="flex gap-4 ml-4 bottom-2 absolute left-6"
