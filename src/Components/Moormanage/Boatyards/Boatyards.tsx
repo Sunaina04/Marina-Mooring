@@ -605,24 +605,12 @@ const Boatyards = () => {
 
       <div className="flex flex-col md:flex-row mt-3">
         {/* Left Panel */}
-        <div className="flex-grow bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-6 md:mb-0">
+        <div className="bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-6 md:mb-0 w-[400px]">
           {/* Header */}
           <div className="bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px] text-white">
             <h1 className="p-4 text-xl font-extrabold">{properties.boatyardDetail}</h1>
           </div>
-          {/* <div
-        className="ml-[50px] gap-[19px] mt-5"
-        style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-        <div
-          data-testid="dataTable"
-          className="flex-grow  bg-[#FFFFFF] rounded-xl border-[1px] border-[#D5E1EA] w-[515px] h-[732px] mb-0 ">
-          <div className="text-sm font-extrabold rounded-sm w-full bg-[#D9D9D9]">
-            <div
-              className="flex  align-items-center justify-between bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px]"
-              style={{ color: '#FFFFFF' }}>
-              <h1 className="p-4">{properties.boatyardDetail}</h1>
-            </div>
-          </div> */}
+
           <InputTextWithHeader
             value={searchText}
             onChange={handleSearch}
@@ -723,7 +711,7 @@ const Boatyards = () => {
         </div>
         <div
           data-testid="customer-admin-users-table"
-          className=" flex-grow overflow-auto bg-[#FFFFFF] rounded-xl border-[1px] border-gray-300 w-[515px] h-[732px] mr-[50px] ml-[30px]  mb-0 ">
+          className="flex-grow overflow-auto bg-[#FFFFFF] rounded-xl border-[1px] border-gray-300 w-[515px] h-[732px] mr-[50px] ml-[30px]  mb-0 ">
           <div className="">
             <div className="text-sm font-extrabold rounded-sm w-full bg-[#D9D9D9]">
               <div

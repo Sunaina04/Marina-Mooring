@@ -603,7 +603,7 @@ const Customer = () => {
       </div>
       <div className="flex flex-col md:flex-row mt-3 ">
         {/* Left Panel */}
-        <div className="bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-6 md:mb-0">
+        <div className="bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-6 md:mb-0 w-[750px]">
           {/* Header */}
           <div className="bg-[#10293A] rounded-tl-[10px] rounded-tr-[10px] text-white">
             <h1 className="p-4 text-xl font-extrabold">{properties.customerHeader}</h1>
@@ -614,7 +614,7 @@ const Customer = () => {
             onChange={handleSearch}
             placeholder="Search by name, ID, phone no.... "
             inputTextStyle={{
-              width: '100%',
+              flexGrow: 1,
               height: '44px',
               padding: '0 4rem 0 3rem',
               border: '1px solid #C5D9E0',
@@ -637,8 +637,8 @@ const Customer = () => {
           />
 
           <div
-            className={`bg-#00426F h-[700px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col`}>
-            <div className="flex-grow overflow-x-auto overflow-y-auto">
+            className={`bg-#00426F min-h[50vw] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col`}>
+            <div className="overflow-x-auto overflow-y-auto">
               <DataTableComponent
                 data={customerData}
                 tableStyle={{
@@ -668,36 +668,37 @@ const Customer = () => {
                 }
               />
             </div>
-            <div>
-              <Paginator
-                first={pageNumber1}
-                rows={pageSize}
-                totalRecords={totalRecordsOne}
-                rowsPerPageOptions={[5, 10, 20, 30]}
-                onPageChange={onPageChange}
-                style={{
-                  backgroundColor: 'white',
-                  borderTop: '1px solid #D5E1EA',
-                  padding: '0.5rem',
-                }}
-              />
-            </div>
           </div>
-        </div>
 
-        {isLoading && (
-          <ProgressSpinner
+          {isLoading && (
+            <ProgressSpinner
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '40%',
+                transform: 'translate(-50%, -50%)',
+                width: '50px',
+                height: '50px',
+              }}
+              strokeWidth="4"
+            />
+          )}
+          <Paginator
+            first={pageNumber1}
+            rows={pageSize}
+            totalRecords={totalRecordsOne}
+            rowsPerPageOptions={[5, 10, 20, 30]}
+            onPageChange={onPageChange}
             style={{
-              position: 'absolute',
-              top: '50%',
-              left: '40%',
-              transform: 'translate(-50%, -50%)',
-              width: '50px',
-              height: '50px',
+              position: 'sticky',
+              bottom: 0,
+              zIndex: 1,
+              backgroundColor: 'white',
+              borderTop: '1px solid #D5E1EA',
+              padding: '0.5rem',
             }}
-            strokeWidth="4"
           />
-        )}
+        </div>
 
         {/* middle container */}
 
@@ -714,7 +715,7 @@ const Customer = () => {
 
         {/* last container */}
 
-        <div className="lg:flex-row ml-5 mr-6 w-[700px]">
+        <div className="lg:flex-row ml-5 min-h[50vw] mr-6 w-[700px]">
           {/* Left Panel - Customer Record */}
           <div className="flex-grow rounded-md border bg-white">
             <div className="bg-[#10293A] rounded-t-[10px] flex justify-between pb-2">
