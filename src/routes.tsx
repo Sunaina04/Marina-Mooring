@@ -27,6 +27,7 @@ import LoginForm from './Components/Login/LoginForm'
 import CustomerAdmin from './Components/AdminTools/Companies'
 import InventoryDetails from './Components/Moormanage/Vendors/InventoryDetails'
 
+
 const routes = [
   {
     path: '',
@@ -134,6 +135,7 @@ const routes = [
           },
         ],
       },
+    
       {
         path: 'customerAdmin',
         element: <CustomerAdmin />,
