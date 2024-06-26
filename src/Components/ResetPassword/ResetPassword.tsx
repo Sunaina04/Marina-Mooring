@@ -127,7 +127,9 @@ const ResetPassword = () => {
               <div>
                 <div
                   className="card flex justify-content-center"
-                  style={{ position: 'relative', width: '100%' }}>
+                  style={{ position: 'relative', width: '100%'}}
+                  
+                  >
                   <Password
                     placeholder="New Password"
                     name="newPassword"

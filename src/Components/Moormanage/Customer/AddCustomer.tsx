@@ -72,6 +72,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<string>()
   const [checkedMooring, setCheckedMooring] = useState(false)
   const [checkedDock, setCheckedDock] = useState(false)
+  const [customerTypeId, setCustomerTypeId] = useState<any>(customer?.customerTypeDto?.id)
   const toastRef = useRef<Toast>(null)
 
   const getFomattedCoordinate = (gpsCoordinatesValue: any) => {
@@ -256,7 +257,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     const numberRegex = /^\d+$/
 
     if (field === 'phone') {
-      if (value !== '' && phoneRegex.test(value)) {
+      if (value !== '' && numberRegex.test(value)) {
         return
       }
     }
@@ -722,7 +723,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               <span className="custom-checkbox"></span>
             </label>
           </span>
-          <p className="font-medium text-lg text-[#000000] mt-1">Add Dock</p>
+          <p className="font-medium text-lg text-[#000000]  mt-5 ml-[14px]">Add Dock</p>
         </div>
       </>
     )
@@ -751,7 +752,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               <span className="custom-checkbox"></span>
             </label>
           </span>
-          <p className="font-medium text-lg text-[#000000] mt-1">Add Mooring</p>
+          <p className="font-medium text-lg text-[#000000] mt-5 ml-4">Add Mooring</p>
         </div>
       </>
     )
@@ -1858,3 +1859,5 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 }
 
 export default AddCustomer
+
+
