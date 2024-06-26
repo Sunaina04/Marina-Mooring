@@ -159,7 +159,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   }
 
   const handleImageChange = (event: any) => {
-    const file = event.target.files?.[0]
+    const fileInput = event.target
+    const file = fileInput.files?.[0]
+
     if (file) {
       if (!file.type.startsWith('image/')) {
         setCustomerImage('')
@@ -170,6 +172,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           detail: 'Only image files are allowed',
           life: 3000,
         })
+        fileInput.value = '' // Reset input value
         return
       }
 
@@ -192,6 +195,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const handleRemoveImage = () => {
     setCustomerImage(null)
     setEncodedImages([])
+    const fileInput = document.getElementById('file-input') as HTMLInputElement
+    if (fileInput) {
+      fileInput.value = '' // Reset input value
+    }
   }
 
   const validateFields = () => {

@@ -12,20 +12,8 @@
   border: none;
 }
 
-/* .p-selectbutton .p-component {
-  width: 80px;
-  font-size: 12px;
-  font-weight: 400;
-  text-align: center;
-  border-radius: 5px;
-  background-color: #0098ff;
-  color: white;
-  padding: 10px;
-} */
-
 .p-highlight {
   background-color: #ffffff !important;
-  /* border: 1px solid #ffffff !important; */
   color: black !important;
   border: none;
 }
@@ -41,8 +29,6 @@
   background-color: black;
 }
 
-/* searchDataTable */
-
 .p-datatable .p-datatable-tbody > tr {
   background: #ffffff;
 }
@@ -54,10 +40,6 @@
 .p-datatable-emptymessage {
   background: #ffffff;
 }
-/* 
-.p-inputswitch-slider{
-  background-color: green;
-} */
 
 .p-inputtext::placeholder {
   color: #a4a4a4 !important;
@@ -74,13 +56,10 @@
 #calender::placeholder {
   color: black;
 }
-#stateDropdown span {
-  font-size: 13px !important;
-}
 
-/* .p-datatable .p-datatable-tbody > tr :first-child{
-  padding-top: 0;
-} */
+#stateDropdown span {
+  font-size: 12px !important;
+}
 
 .custom-dropdown-disabled {
   cursor: not-allowed !important;
@@ -91,10 +70,10 @@
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
 }
+
 .leaflet-popup-content-wrapper,
 .leaflet-popup-tip {
   background-color: #10293a !important;
-  /* width: 18rem !important; */
 }
 
 .leaflet-container a.leaflet-popup-close-button {
@@ -123,16 +102,10 @@ input[type='number']::-webkit-outer-spin-button {
   color: #000000 !important;
 }
 
-
 input::-ms-reveal {
   display: none;
 }
 
-/* .p-inputtext{
-  border: none !important;
-} */
-
-.p-password-input.p-inputtext.p-component{
-
+.p-password-input.p-inputtext.p-component {
   border: none !important;
 }

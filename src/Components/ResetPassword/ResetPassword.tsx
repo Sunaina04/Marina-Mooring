@@ -11,17 +11,12 @@ import { Divider } from 'primereact/divider'
 import { Password } from 'primereact/password'
 
 const ResetPassword = () => {
-  const urlParams = new URLSearchParams(window.location.search)
   const [searchParams] = useSearchParams()
   const tokenFromUrl = searchParams.get('token')
   const [resetPassword] = useResetPasswordMutation()
   const [message, setMessage] = useState<string>('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [showPassword, setShowPassword] = useState({
-    newPassword: false,
-    confirmPassword: false,
-  })
   const navigateToLoginPage = useNavigate()
   const [passwordCriteria, setPasswordCriteria] = useState({
     uppercase: false,
@@ -30,7 +25,6 @@ const ResetPassword = () => {
     specialChar: false,
     length: false,
   })
-  const [isTyping, setIsTyping] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
   const handleChange = (e: { target: { name: any; value: any } }) => {
@@ -48,22 +42,9 @@ const ResetPassword = () => {
 
       // Check if all criteria are met
       const allCriteriaMet = Object.values(passwordCriteria).every((criteria) => criteria)
-      if (allCriteriaMet) {
-        setIsTyping(false) // Hide validation message
-      } else {
-        setIsTyping(true) // Show validation message
-      }
     } else if (name === 'confirmPassword') {
       setConfirmPassword(value)
     }
-  }
-
-  const toggleShowPassword = (field: 'newPassword' | 'confirmPassword') => {
-    setShowPassword((prevShowPassword) => ({
-      ...prevShowPassword,
-      [field]: !prevShowPassword[field],
-    }))
-    console.log('here', field, showPassword)
   }
 
   const handleResetPassword = async () => {
@@ -94,9 +75,11 @@ const ResetPassword = () => {
         navigateToLoginPage('/Login')
         setIsLoading(false)
       } else {
+        setIsLoading(false)
         setMessage(message || 'Password reset failed.')
       }
     } catch (error: any) {
+      setIsLoading(false)
       console.error('Error occurred during password reset:', error)
     }
   }
@@ -104,12 +87,12 @@ const ResetPassword = () => {
   const footer = (
     <>
       <Divider />
-      <p className="mt-2">Suggestions</p>
+      <span className="mt-2">Suggestions</span>
       <ul className="pl-2 ml-2 mt-0 line-height-3">
-        <li>At least one lowercase</li>
-        <li>At least one uppercase</li>
-        <li>At least one numeric</li>
-        <li>Minimum 8 characters</li>
+        <li>* At least one lowercase</li>
+        <li>* At least one uppercase</li>
+        <li>* At least one numeric</li>
+        <li>* Minimum 8 characters</li>
       </ul>
     </>
   )
@@ -153,16 +136,6 @@ const ResetPassword = () => {
                     value={password}
                     footer={footer}
                     toggleMask
-                    // style={{
-                    //   padding: '0 1rem 0 3rem', // Adjusted padding to make space for the icon
-                    //   border: '1px solid #C5D9E0',
-                    //   fontSize: '16px',
-                    //   color: '#00426F',
-                    //   borderRadius: '10px',
-                    //   width: '100%',
-                    //   height: '50px',
-                    //   boxSizing: 'border-box', // Ensures padding is included in the element's total width and height
-                    // }}
                     style={{
                       padding: '0 4rem 0 3rem',
                       border: '1px solid #C5D9E0',
@@ -172,7 +145,6 @@ const ResetPassword = () => {
                       width: '500px',
                       height: '60px',
                     }}
-
                   />
                   <img
                     src="/assets/images/key.png"
@@ -185,12 +157,10 @@ const ResetPassword = () => {
                       transform: 'translateY(-50%)',
                       width: '20px',
                       height: '20px',
-                      pointerEvents: 'none', // Ensures the icon doesn't block clicks to the input field
+                      pointerEvents: 'none',
                     }}
                   />
                 </div>
-
-
               </div>
 
               {isLoading && (
@@ -212,7 +182,6 @@ const ResetPassword = () => {
                     <Password
                       placeholder="Confirm Password"
                       name="confirmPassword"
-                      type={showPassword.confirmPassword ? 'text' : 'password'}
                       onChange={handleChange}
                       value={confirmPassword}
                       footer={footer}

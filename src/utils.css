@@ -115,10 +115,3 @@ body {
 .p-highlight {
   background-color: #d5e1ea !important;
 }
-
-.custom-password .p-password-input + .p-password-panel .p-password-icon {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-}
