@@ -584,7 +584,7 @@ const Boatyards = () => {
               boxShadow: 'none',
             }}
             icon={
-              <img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8 ml-4 mb-0.5" />
+              <img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8  mb-0.5" />
             }
             children={random}
             headerText={<h1 className="text-xl font-extrabold text-black ml-4">Add Boatyard</h1>}

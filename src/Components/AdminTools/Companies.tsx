@@ -395,7 +395,7 @@ const CustomerOwner = () => {
               maxHeight: '60% !important',
             }}
             icon={
-              <img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8 ml-4 mb-0.5" />
+              <img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8 " />
             }
             children={
               <AddNewCustomer

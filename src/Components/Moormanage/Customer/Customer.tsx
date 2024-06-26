@@ -567,7 +567,7 @@ const Customer = () => {
               boxShadow: 'none',
             }}
             icon={
-              <img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8 ml-4 mb-0.5" />
+              <img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8 " />
             }
             children={
               <AddCustomer
@@ -724,11 +724,13 @@ const Customer = () => {
         <div className="lg:flex-row ml-5 min-h[50vw] mr-6 w-[700px]">
           {/* Left Panel - Customer Record */}
           <div className="flex-grow rounded-md border bg-white">
-            <div className="bg-[#10293A] rounded-t-[10px] flex justify-between pb-2">
+            <div 
+  
+            className="bg-[#10293A] rounded-t-[10px] flex justify-between pb-2">
               {/* <div className="flex items-center ml-3">
                 <Avatar image={'/assets/images/user.png'} /> */}
-              <div className="text-sm font-semibold rounded-t-md bg-gray-800">
-                <h1 className="p-4 text-white">{'Customers Record'}</h1>
+              <div className="text-sm font-semibold rounded-t-md bg-gray-800 ">
+                <h1 className="p-3  text-white  text-xl font-extrabold">{'Customers Record'}</h1>
               </div>
               {/* </div> */}
 
@@ -778,6 +780,7 @@ const Customer = () => {
 
           <div className="flex-grow bg-white rounded-md border">
             <div
+          
               style={{
                 backgroundColor: '#10293A',
                 fontWeight: '700',
@@ -785,7 +788,8 @@ const Customer = () => {
                 padding: '14px',
                 fontSize: '15px',
               }}>
-              Moorings
+                <h1 className='text-xl font-extrabold'>Moorings</h1>
+             
             </div>
 
             <div

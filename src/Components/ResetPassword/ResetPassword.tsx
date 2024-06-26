@@ -141,7 +141,7 @@ const ResetPassword = () => {
                   </span>
                 </div>
               )}
-              <div className="relative" style={{ width: '400px' }}>
+              <div>
                 <div
                   className="card flex justify-content-center"
                   style={{ position: 'relative', width: '100%' }}>
@@ -153,16 +153,26 @@ const ResetPassword = () => {
                     value={password}
                     footer={footer}
                     toggleMask
+                    // style={{
+                    //   padding: '0 1rem 0 3rem', // Adjusted padding to make space for the icon
+                    //   border: '1px solid #C5D9E0',
+                    //   fontSize: '16px',
+                    //   color: '#00426F',
+                    //   borderRadius: '10px',
+                    //   width: '100%',
+                    //   height: '50px',
+                    //   boxSizing: 'border-box', // Ensures padding is included in the element's total width and height
+                    // }}
                     style={{
-                      padding: '0 1rem 0 3rem', // Adjusted padding to make space for the icon
+                      padding: '0 4rem 0 3rem',
                       border: '1px solid #C5D9E0',
                       fontSize: '16px',
                       color: '#00426F',
                       borderRadius: '10px',
-                      width: '100%',
-                      height: '50px',
-                      boxSizing: 'border-box', // Ensures padding is included in the element's total width and height
+                      width: '500px',
+                      height: '60px',
                     }}
+
                   />
                   <img
                     src="/assets/images/key.png"
@@ -179,6 +189,8 @@ const ResetPassword = () => {
                     }}
                   />
                 </div>
+
+
               </div>
 
               {isLoading && (

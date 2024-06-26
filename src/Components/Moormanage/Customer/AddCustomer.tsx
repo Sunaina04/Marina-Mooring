@@ -771,7 +771,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       {!editMooringMode && (
         <>
           <div className="">
-            <div className="flex gap-6">
+            <div className="flex gap-6 overflow-auto">
               <div>
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
