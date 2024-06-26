@@ -180,6 +180,7 @@ const CustomerOwner = () => {
       borderBottom: '1px solid #D5E1EA',
       color: '#000000',
       fontWeight: 500,
+      width: '5vw',
     },
     style: { borderBottom: '1px solid #D5E1EA' },
   }
@@ -193,11 +194,61 @@ const CustomerOwner = () => {
 
   const customerOwnerUserTableColumn = useMemo(
     () => [
-      { id: 'id', label: 'ID', style: customerOwnerUserTableColumnStyle },
-      { id: 'name', label: 'Name', style: customerOwnerUserTableColumnStyle },
-      { id: 'email', label: 'Email', style: customerOwnerUserTableColumnStyle },
-      { id: 'phoneNumber', label: 'Phone', style: customerOwnerUserTableColumnStyle },
-      { id: 'roleResponseDto.name', label: 'Role', style: customerOwnerUserTableColumnStyle },
+      {
+        id: 'id',
+        label: 'ID',
+        style: {
+          borderBottom: '1px solid #D5E1EA',
+          backgroundColor: '#FFFFFF',
+          color: '#000000',
+          fontWeight: 500,
+          width: '3vw',
+        },
+      },
+      {
+        id: 'name',
+        label: 'Name',
+        style: {
+          borderBottom: '1px solid #D5E1EA',
+          backgroundColor: '#FFFFFF',
+          color: '#000000',
+          fontWeight: 500,
+          width: '8vw',
+        },
+      },
+      {
+        id: 'email',
+        label: 'Email',
+        style: {
+          borderBottom: '1px solid #D5E1EA',
+          backgroundColor: '#FFFFFF',
+          color: '#000000',
+          fontWeight: 500,
+          width: '8vw',
+        },
+      },
+      {
+        id: 'phoneNumber',
+        label: 'Phone',
+        style: {
+          borderBottom: '1px solid #D5E1EA',
+          backgroundColor: '#FFFFFF',
+          color: '#000000',
+          fontWeight: 500,
+          width: '7vw',
+        },
+      },
+      {
+        id: 'roleResponseDto.name',
+        label: 'Role',
+        style: {
+          borderBottom: '1px solid #D5E1EA',
+          backgroundColor: '#FFFFFF',
+          color: '#000000',
+          fontWeight: 500,
+          width: '5vw',
+        },
+      },
     ],
     [],
   )
@@ -394,9 +445,7 @@ const CustomerOwner = () => {
               borderRadius: '1rem',
               maxHeight: '60% !important',
             }}
-            icon={
-              <img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8 " />
-            }
+            icon={<img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8 " />}
             children={
               <AddNewCustomer
                 customerAdminId={customerAdminId ? customerAdminId : ''}

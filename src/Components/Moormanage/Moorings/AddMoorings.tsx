@@ -30,6 +30,7 @@ import { CustomerResponse, ErrorResponse } from '../../../Type/ApiTypes'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { Calendar } from 'primereact/calendar'
 import { Toast } from 'primereact/toast'
+import { Checkbox } from 'primereact/checkbox'
 const AddMoorings: React.FC<AddMooringProps> = ({
   moorings,
   editMode,
@@ -64,6 +65,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
   const [firstErrorField, setFirstErrorField] = useState('')
   const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<string>()
+  const [checkedDock, setCheckedDock] = useState(false)
   const toastRef = useRef<Toast>(null)
   const getFomattedCoordinate = (gpsCoordinatesValue: any) => {
     try {
@@ -364,8 +366,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       mooringName: mooringRowData?.mooringName || '',
       customerName: moorings?.firstName + ' ' + moorings.lastName || '',
       harbor: mooringRowData?.harborOrArea || '',
-      // waterDepth: mooringRowData?.waterDepth || '',
-      // gpsCoordinates: mooringRowData?.gpsCoordinates || '',
       boatYardName: mooringRowData?.boatyardResponseDto?.boatyardName || '',
       boatName: mooringRowData?.boatName || '',
       boatSize: mooringRowData?.boatSize || '',
@@ -564,6 +564,29 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     } else {
       SaveMoorings()
     }
+  }
+
+  const AddDock = () => {
+    return (
+      <>
+        <div className="flex gap-4 mt-4">
+          <span>
+            <Checkbox
+              onChange={(e: any) => {
+                setCheckedDock(e.checked ?? false)
+              }}
+              checked={checkedDock}
+              style={{
+                border: '1px solid #D5E1EA',
+                height: '22px',
+                width: '22px',
+                borderRadius: '5px',
+              }}></Checkbox>
+          </span>
+          <p className="font-medium text-lg text-[#000000] mt-1">Add Dock</p>
+        </div>
+      </>
+    )
   }
 
   useEffect(() => {

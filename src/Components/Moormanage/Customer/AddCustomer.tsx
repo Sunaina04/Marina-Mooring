@@ -71,7 +71,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<string>()
   const [checked, setChecked] = useState(false)
   const [checkedDock, setCheckedDock] = useState(false)
-  const [customerTypeId, setCustomerTypeId] = useState<any>(customer?.customerTypeDto?.id)
   const toastRef = useRef<Toast>(null)
 
   const getFomattedCoordinate = (gpsCoordinatesValue: any) => {
@@ -347,7 +346,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     setSelectedCountry(customer?.countryResponseDto?.name || undefined)
     setGpsCoordinatesValue(mooringRowData?.gpsCoordinates || '')
     setCheckedDock(selectedCustomerType === 'Dock')
-    setCustomerTypeId(customer?.customerTypeDto?.id)
 
     setFormData((prevState: any) => ({
       ...prevState,
@@ -712,8 +710,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 height: '22px',
                 width: '22px',
                 borderRadius: '5px',
-              }}
-            />
+              }}></Checkbox>
           </span>
           <p className="font-medium text-lg text-[#000000] mt-1">Add Dock</p>
         </div>
@@ -757,8 +754,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     ) {
       setChecked(true)
       setCheckedDock(true)
-    } else {
-      setCustomerTypeId(selectedCustomerType?.id)
     }
   }, [selectedCustomerType])
 
@@ -906,10 +901,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     style={{
                       width: '230px',
                       height: '32px',
-                      border: fieldErrors.state ? '1px solid red' : '1px solid #D5E1EA',
+                      border: '1px solid #D5E1EA',
                       borderRadius: '0.50rem',
                       color: 'black',
-                      fontSize: '0.8rem',
+                      fontSize: '0.3rem',
                     }}
                   />
                 </div>

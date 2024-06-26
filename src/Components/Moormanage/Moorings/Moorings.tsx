@@ -931,6 +931,7 @@ const Moorings = () => {
             minHeight: editCustomerMode ? '500px' : '630px',
             borderRadius: '1rem',
             maxHeight: '95% !important',
+            overflowY: 'auto',
           }}
         />
       )}

@@ -279,13 +279,10 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     return new Date(year, month - 1, day)
   }
 
-  const handleRemoveImage = () => {
-    setCustomerImage(null)
-    setEncodedImages([])
-  }
-
   const handleImageChange = (event: any) => {
-    const file = event.target.files?.[0]
+    const fileInput = event.target
+    const file = fileInput.files?.[0]
+
     if (file) {
       if (!file.type.startsWith('image/')) {
         setCustomerImage('')
@@ -296,6 +293,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
           detail: 'Only image files are allowed',
           life: 3000,
         })
+        fileInput.value = '' // Reset input value
         return
       }
 
@@ -312,6 +310,15 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         }
       }
       reader.readAsDataURL(file)
+    }
+  }
+
+  const handleRemoveImage = () => {
+    setCustomerImage(null)
+    setEncodedImages([])
+    const fileInput = document.getElementById('file-input') as HTMLInputElement
+    if (fileInput) {
+      fileInput.value = '' // Reset input value
     }
   }
 
