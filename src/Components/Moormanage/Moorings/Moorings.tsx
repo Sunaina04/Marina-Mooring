@@ -497,7 +497,7 @@ const Moorings = () => {
       <Toast ref={toast} />
 
       <div className="flex justify-end mr-12 ">
-        <div className="flex mt-8">
+        <div className="flex mt-6">
           <CustomModal
             buttonText={'ADD NEW'}
             buttonStyle={{
@@ -513,9 +513,7 @@ const Moorings = () => {
               marginLeft: '8px',
               boxShadow: 'none',
             }}
-            icon={
-              <img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8 ml-4 mb-0.5" />
-            }
+            icon={<img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8" />}
             children={
               <AddMoorings
                 moorings={selectedCustomer}
@@ -550,7 +548,7 @@ const Moorings = () => {
 
       <div className="flex flex-col md:flex-row mt-3">
         {/* Left Panel */}
-        <div className="flex-grow bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-6 md:mb-0">
+        <div className="flex-grow bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-6 md:mb-0 w-[600px]">
           {/* Header */}
           <div className="bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px] text-white">
             <h1 className="p-4 text-xl font-extrabold">{properties.customerMooringHeader}</h1>
@@ -615,7 +613,7 @@ const Moorings = () => {
                       alt="Empty Data"
                       className="w-28 mx-auto mb-4"
                     />
-                    <p className="text-gray-500">No data available</p>
+                    <p className="text-gray-500 text-lg">No data available</p>
                   </div>
                 }
               />
@@ -625,7 +623,7 @@ const Moorings = () => {
                 first={pageNumber1}
                 rows={pageSize}
                 totalRecords={totalRecords}
-                rowsPerPageOptions={[10, 20, 30]}
+                rowsPerPageOptions={[5, 10, 20, 30]}
                 onPageChange={onPageChange}
                 style={{
                   position: 'sticky',
@@ -661,7 +659,7 @@ const Moorings = () => {
           <CustomMooringPositionMap
             position={initialPosition}
             zoomLevel={10}
-            style={{ height: '730px' }}
+            style={{ height: '800px' }}
             iconsByStatus={iconsByStatus}
             moorings={mooringResponseData}
           />
@@ -674,7 +672,7 @@ const Moorings = () => {
           <div className="flex-grow rounded-md border bg-white">
             <div className="bg-[#00426F] rounded-t-[10px] flex justify-between pb-2">
               <div className="text-sm font-semibold rounded-t-md bg-[]">
-                <h1 className="p-4 text-white">{'Customers Record'}</h1>
+                <h1 className="p-4 text-lg text-white">{'Customers Record'}</h1>
               </div>
               <div className="flex">
                 <FaEdit
@@ -701,7 +699,7 @@ const Moorings = () => {
                   alt="Empty Data"
                   className="w-10 mx-auto mt-10 mb-3"
                 />
-                <p className="text-gray-500 mb-10">No data available</p>
+                <p className="text-gray-500 font-extrabold mb-10">No data available</p>
               </div>
             )}
           </div>
@@ -729,11 +727,11 @@ const Moorings = () => {
                 padding: '14px',
                 fontSize: '15px',
               }}>
-              Moorings
+              <h1 className="text-lg font-extrabold">Moorings</h1>
             </div>
 
             <div
-              className={`bg-#00426F overflow-x-hidden h-[450px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col ${isLoading ? 'blur-screen' : ''}`}>
+              className={`bg-#00426F overflow-x-hidden h-[500px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col ${isLoading ? 'blur-screen' : ''}`}>
               <div className="flex-grow overflow-auto">
                 <DataTableComponent
                   style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}

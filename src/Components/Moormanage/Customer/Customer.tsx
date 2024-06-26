@@ -566,9 +566,7 @@ const Customer = () => {
               marginLeft: '8px',
               boxShadow: 'none',
             }}
-            icon={
-              <img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8 " />
-            }
+            icon={<img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8" />}
             children={
               <AddCustomer
                 customer={selectedCustomer}
@@ -599,8 +597,8 @@ const Customer = () => {
             dialogStyle={{
               width: '800px',
               minWidth: '800px',
-              height: editCustomerMode ? '600px' : '700px',
-              minHeight: editCustomerMode ? '600px' : '700px',
+              height: '700px',
+              minHeight: '700px',
               borderRadius: '1rem',
               maxHeight: '95% !important',
             }}
@@ -609,7 +607,7 @@ const Customer = () => {
       </div>
       <div className="flex flex-col md:flex-row mt-3 ">
         {/* Left Panel */}
-        <div className="bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-6 md:mb-0 w-[750px]">
+        <div className="flex-grow bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-6 md:mb-0 w-[600px]">
           {/* Header */}
           <div className="bg-[#10293A] rounded-tl-[10px] rounded-tr-[10px] text-white">
             <h1 className="p-4 text-xl font-extrabold">{properties.customerHeader}</h1>
@@ -620,7 +618,7 @@ const Customer = () => {
             onChange={handleSearch}
             placeholder="Search by name, ID, phone no.... "
             inputTextStyle={{
-              flexGrow: 1,
+              width: '100%',
               height: '44px',
               padding: '0 4rem 0 3rem',
               border: '1px solid #C5D9E0',
@@ -643,8 +641,8 @@ const Customer = () => {
           />
 
           <div
-            className={`bg-#00426F min-h[50vw] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col`}>
-            <div className="overflow-x-auto overflow-y-auto">
+            className={`bg-#00426F overflow-x-hidden h-[590px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col ${isLoading ? 'blur-screen' : ''}`}>
+            <div className="flex-grow overflow-auto">
               <DataTableComponent
                 data={customerData}
                 tableStyle={{
@@ -654,56 +652,49 @@ const Customer = () => {
                   backgroundColor: '#D9D9D9',
                   cursor: 'pointer',
                 }}
-                scrollable={false}
+                scrollable={true}
                 columns={CustomerTableColumns}
                 style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
-                onRowClick={(rowData) => handleCustomerTableRowClick(rowData)}
+                onRowClick={(row) => {
+                  handleCustomerTableRowClick(row)
+                }}
                 selectionMode="single"
-                // sortable={true}
                 onSelectionChange={(e) => {
                   setSelectedProduct(e.value)
                 }}
                 selection={selectedProduct}
                 dataKey="id"
-                rowStyle={(rowData) => rowData}
+                rowStyle={(rowData: any) => rowData}
                 emptyMessage={
-                  <div className="flex flex-col justify-center items-center h-full">
-                    <img src="/assets/images/empty.png" alt="Empty Data" className="w-28 mb-4" />
-                    <p className="text-gray-500">No data available</p>
+                  <div className="text-center mt-40">
+                    <img
+                      src="/assets/images/empty.png"
+                      alt="Empty Data"
+                      className="w-28 mx-auto mb-4"
+                    />
+                    <p className="text-gray-500 text-lg">No data available</p>
                   </div>
                 }
               />
             </div>
+            <div className="mt-auto">
+              <Paginator
+                first={pageNumber1}
+                rows={pageSize}
+                totalRecords={totalRecordsOne}
+                rowsPerPageOptions={[5, 10, 20, 30]}
+                onPageChange={onPageChange}
+                style={{
+                  position: 'sticky',
+                  bottom: 0,
+                  zIndex: 1,
+                  backgroundColor: 'white',
+                  borderTop: '1px solid #D5E1EA',
+                  padding: '0.5rem',
+                }}
+              />
+            </div>
           </div>
-
-          {isLoading && (
-            <ProgressSpinner
-              style={{
-                position: 'absolute',
-                top: '50%',
-                left: '40%',
-                transform: 'translate(-50%, -50%)',
-                width: '50px',
-                height: '50px',
-              }}
-              strokeWidth="4"
-            />
-          )}
-          <Paginator
-            first={pageNumber1}
-            rows={pageSize}
-            totalRecords={totalRecordsOne}
-            rowsPerPageOptions={[5, 10, 20, 30]}
-            onPageChange={onPageChange}
-            style={{
-              position: 'sticky',
-              bottom: 0,
-              zIndex: 1,
-              backgroundColor: 'white',
-              borderTop: '1px solid #D5E1EA',
-              padding: '0.5rem',
-            }}
-          />
         </div>
 
         {/* middle container */}
@@ -724,13 +715,11 @@ const Customer = () => {
         <div className="lg:flex-row ml-5 min-h[50vw] mr-6 w-[700px]">
           {/* Left Panel - Customer Record */}
           <div className="flex-grow rounded-md border bg-white">
-            <div 
-  
-            className="bg-[#10293A] rounded-t-[10px] flex justify-between pb-2">
+            <div className="bg-[#10293A] rounded-t-[10px] flex justify-between pb-2">
               {/* <div className="flex items-center ml-3">
                 <Avatar image={'/assets/images/user.png'} /> */}
               <div className="text-sm font-semibold rounded-t-md bg-gray-800 ">
-                <h1 className="p-3  text-white  text-xl font-extrabold">{'Customers Record'}</h1>
+                <h1 className="p-3 text-white text-lg font-extrabold">{'Customers Record'}</h1>
               </div>
               {/* </div> */}
 
@@ -780,7 +769,6 @@ const Customer = () => {
 
           <div className="flex-grow bg-white rounded-md border">
             <div
-          
               style={{
                 backgroundColor: '#10293A',
                 fontWeight: '700',
@@ -788,8 +776,7 @@ const Customer = () => {
                 padding: '14px',
                 fontSize: '15px',
               }}>
-                <h1 className='text-xl font-extrabold'>Moorings</h1>
-             
+              <h1 className="text-lg font-extrabold">Moorings</h1>
             </div>
 
             <div

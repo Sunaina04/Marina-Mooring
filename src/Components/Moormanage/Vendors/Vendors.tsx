@@ -266,9 +266,7 @@ const Vendors = () => {
                 marginLeft: '8px',
                 boxShadow: 'none',
               }}
-              icon={
-                <img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8  mb-0.5" />
-              }
+              icon={<img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8" />}
               children={
                 <AddVendor
                   vendors={selectedCustomer}

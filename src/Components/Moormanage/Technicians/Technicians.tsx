@@ -339,7 +339,7 @@ const Technicians = () => {
         <div className="flex justify-end mr-[54px]">
           <div className="flex gap-4 items-center">
             <div className="">
-              <p style={{ color: '#00426F', fontWeight: '500' }}>Filter order by Date</p>
+              <p style={{ color: '#00426F', fontWeight: '600' }}>Filter order by Date</p>
             </div>
 
             <div
@@ -354,35 +354,19 @@ const Technicians = () => {
                 value={date}
                 onChange={(e) => {
                   setDate(e.value || null)
-
-                  // if (e.value?.[1]) {
-                  //   handleDate(date)
-                  // }
                 }}
                 selectionMode="range"
                 readOnlyInput
-                placeholder="From: mm/dd/yyyy   To: mm/dd/yyyy"
-                className="h-8"
+                placeholder="From:mm/dd/yyyy  To:mm/dd/yyyy"
+                className="h-10"
                 id="calender"
-              />
-              <img
-                src="/assets/images/Calendar.svg"
-                alt="Envelope Icon"
-                className="p-clickable"
-                style={{
-                  position: 'absolute',
-                  right: '10px',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  width: '20px',
-                  height: '15px',
-                }}
+                showIcon
               />
             </div>
           </div>
         </div>
 
-        <div className="items-center">
+        {/* <div className="items-center">
           <CustomModal
             // buttonText={'ADD NEW'}
             children={
@@ -405,7 +389,7 @@ const Technicians = () => {
               borderRadius: '1rem',
             }}
           />
-        </div>
+        </div> */}
         <div className="flex lg:flex-row justify-around md:flex-col  mt-6">
           <div
             style={{
