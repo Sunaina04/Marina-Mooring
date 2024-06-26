@@ -122,3 +122,10 @@ input[type='number']::-webkit-outer-spin-button {
 .p-dropdown-label.p-inputtext {
   color: #000000 !important;
 }
+
+.custom-password .p-password-input + .p-password-panel .p-password-icon {
+  position: absolute;
+  left: 50px;
+  top: 50%;
+  transform: translateY(-50%);
+}

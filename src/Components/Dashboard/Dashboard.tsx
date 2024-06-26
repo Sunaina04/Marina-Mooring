@@ -20,7 +20,7 @@ const Dashboard = () => {
         label: 'ID',
         style: {
           fontSize: '10px',
-          width: '12vw',
+          width: '2vw',
           backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: '700',
@@ -31,7 +31,7 @@ const Dashboard = () => {
         label: 'Customer Name',
         style: {
           fontSize: '10px',
-          width: '18vw',
+          width: '8vw',
           backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: '700',
@@ -42,7 +42,7 @@ const Dashboard = () => {
         label: 'Mooring Number',
         style: {
           fontSize: '10px',
-          width: '18vw',
+          width: '8vw',
           backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: '700',
@@ -54,7 +54,7 @@ const Dashboard = () => {
         label: 'Mooring service Date',
         style: {
           fontSize: '10px',
-          width: '23vw',
+          width: '8vw',
           backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: '700',
@@ -65,7 +65,7 @@ const Dashboard = () => {
         label: 'Mooring Location ',
         style: {
           fontSize: '10px',
-          width: '20vw',
+          width: '10vw',
           backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: '700',
@@ -76,7 +76,7 @@ const Dashboard = () => {
         label: 'Status',
         style: {
           fontSize: '10px',
-          width: '24vw',
+          width: '10vw',
           backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: '700',

@@ -63,6 +63,7 @@ const ResetPassword = () => {
       ...prevShowPassword,
       [field]: !prevShowPassword[field],
     }))
+    console.log('here', field, showPassword)
   }
 
   const handleResetPassword = async () => {
@@ -140,61 +141,46 @@ const ResetPassword = () => {
                   </span>
                 </div>
               )}
-              <div className="relative">
-                <div>
-                  <div className="card flex justify-content-center">
-                    <Password
-                      placeholder="New Password"
-                      name="newPassword"
-                      type={showPassword.newPassword ? 'text' : 'password'}
-                      onChange={handleChange}
-                      value={password}
-                      footer={footer}
-                      style={{
-                        padding: '0 4rem 0 3rem',
-                        border: '1px solid #C5D9E0',
-                        fontSize: '16px',
-                        color: '#00426F',
-                        borderRadius: '10px',
-                        width: '500px',
-                        height: '60px',
-                      }}
-                    />
-                  </div>
+              <div className="relative" style={{ width: '400px' }}>
+                <div
+                  className="card flex justify-content-center"
+                  style={{ position: 'relative', width: '100%' }}>
+                  <Password
+                    placeholder="New Password"
+                    name="newPassword"
+                    type={'text'}
+                    onChange={handleChange}
+                    value={password}
+                    footer={footer}
+                    toggleMask
+                    style={{
+                      padding: '0 1rem 0 3rem', // Adjusted padding to make space for the icon
+                      border: '1px solid #C5D9E0',
+                      fontSize: '16px',
+                      color: '#00426F',
+                      borderRadius: '10px',
+                      width: '100%',
+                      height: '50px',
+                      boxSizing: 'border-box', // Ensures padding is included in the element's total width and height
+                    }}
+                  />
+                  <img
+                    src="/assets/images/key.png"
+                    alt="Key Icon"
+                    className="p-clickable"
+                    style={{
+                      position: 'absolute',
+                      left: '10px',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      width: '20px',
+                      height: '20px',
+                      pointerEvents: 'none', // Ensures the icon doesn't block clicks to the input field
+                    }}
+                  />
                 </div>
-                <img
-                  src="/assets/images/key.png"
-                  alt="Key Icon"
-                  className="p-clickable"
-                  style={{
-                    position: 'absolute',
-                    left: '10px',
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    width: '20px',
-                    height: '20px',
-                  }}
-                />
-                <img
-                  src={
-                    showPassword.confirmPassword
-                      ? '/assets/images/eye.png'
-                      : '/assets/images/eye-slash.png'
-                  }
-                  alt="Toggle Password Visibility"
-                  onClick={() => toggleShowPassword('newPassword')}
-                  className="p-clickable"
-                  style={{
-                    position: 'absolute',
-                    right: '10px',
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    width: '20px',
-                    height: '20px',
-                    cursor: 'pointer',
-                  }}
-                />
               </div>
+
               {isLoading && (
                 <ProgressSpinner
                   style={{
@@ -218,6 +204,7 @@ const ResetPassword = () => {
                       onChange={handleChange}
                       value={confirmPassword}
                       footer={footer}
+                      toggleMask
                       style={{
                         padding: '0 4rem 0 3rem',
                         border: '1px solid #C5D9E0',
@@ -241,26 +228,6 @@ const ResetPassword = () => {
                     transform: 'translateY(-50%)',
                     width: '20px',
                     height: '20px',
-                  }}
-                />
-                {/* Password Visibility */}
-                <img
-                  src={
-                    showPassword.confirmPassword
-                      ? '/assets/images/eye.png'
-                      : '/assets/images/eye-slash.png'
-                  }
-                  alt="Toggle Password Visibility"
-                  onClick={() => toggleShowPassword('confirmPassword')}
-                  className="p-clickable"
-                  style={{
-                    position: 'absolute',
-                    right: '10px',
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    width: '20px',
-                    height: '20px',
-                    cursor: 'pointer',
                   }}
                 />
               </div>

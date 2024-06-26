@@ -208,13 +208,6 @@ const Customer = () => {
     setMooringRowData(rowData.data)
   }
 
-  const customerTableColumnStyle = {
-    backgroundColor: '#FFFFFF',
-    fontWeight: '500',
-    fontSize: '12px',
-    color: '#000000',
-  }
-
   const firstLastName = (data: any) => {
     return data.firstName + ' ' + data.lastName
   }
@@ -228,13 +221,25 @@ const Customer = () => {
       {
         id: 'customerId',
         label: 'Customer Id:',
-        style: customerTableColumnStyle,
+        style: {
+          backgroundColor: '#FFFFFF',
+          fontWeight: '500',
+          fontSize: '12px',
+          color: '#000000',
+          width: '5.5vw',
+        },
         sortable: false,
       },
       {
         id: 'customerTypeDto.type',
         label: 'Customer Type:',
-        style: customerTableColumnStyle,
+        style: {
+          backgroundColor: '#FFFFFF',
+          fontWeight: '500',
+          fontSize: '12px',
+          color: '#000000',
+          width: '6.5vw',
+        },
         onHeaderClick: () => handleHeaderClick('customerType'),
         // sortable: true,
       },
@@ -242,20 +247,38 @@ const Customer = () => {
         id: 'firstName',
         label: 'Name:',
         body: firstLastName,
-        style: customerTableColumnStyle,
+        style: {
+          backgroundColor: '#FFFFFF',
+          fontWeight: '500',
+          fontSize: '12px',
+          color: '#000000',
+          width: '6vw',
+        },
         sortable: false,
       },
 
       {
         id: 'emailAddress',
         label: 'Email:',
-        style: customerTableColumnStyle,
+        style: {
+          backgroundColor: '#FFFFFF',
+          fontWeight: '500',
+          fontSize: '12px',
+          color: '#000000',
+          width: '8vw',
+        },
         sortable: false,
       },
       {
         id: 'phone',
         label: 'Phone:',
-        style: customerTableColumnStyle,
+        style: {
+          backgroundColor: '#FFFFFF',
+          fontWeight: '500',
+          fontSize: '12px',
+          color: '#000000',
+          width: '6vw',
+        },
         sortable: false,
       },
     ],
@@ -578,11 +601,9 @@ const Customer = () => {
           />
         </div>
       </div>
-      <div className="flex flex-col md:flex-row mt-3">
+      <div className="flex flex-col md:flex-row mt-3 ">
         {/* Left Panel */}
-        <div
-          // style={{border:"1px solid red"}}
-          className="flex-grow bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-6 md:mb-0">
+        <div className="bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-6 md:mb-0">
           {/* Header */}
           <div className="bg-[#10293A] rounded-tl-[10px] rounded-tr-[10px] text-white">
             <h1 className="p-4 text-xl font-extrabold">{properties.customerHeader}</h1>
@@ -616,8 +637,7 @@ const Customer = () => {
           />
 
           <div
-            // style={{border:"1px solid red"}}
-            className={`bg-#00426F h-[590px] w-auto mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col`}>
+            className={`bg-#00426F h-[700px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col`}>
             <div className="flex-grow overflow-x-auto overflow-y-auto">
               <DataTableComponent
                 data={customerData}
@@ -648,7 +668,7 @@ const Customer = () => {
                 }
               />
             </div>
-            <div className="mt-auto">
+            <div>
               <Paginator
                 first={pageNumber1}
                 rows={pageSize}
@@ -694,7 +714,7 @@ const Customer = () => {
 
         {/* last container */}
 
-        <div className="lg:flex-row ml-5 mr-6 w-[500px]">
+        <div className="lg:flex-row ml-5 mr-6 w-[700px]">
           {/* Left Panel - Customer Record */}
           <div className="flex-grow rounded-md border bg-white">
             <div className="bg-[#10293A] rounded-t-[10px] flex justify-between pb-2">
