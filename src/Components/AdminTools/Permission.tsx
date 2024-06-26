@@ -146,6 +146,7 @@ const Permission = () => {
       }
     } catch (error) {
       const { message: msg } = error as ErrorResponse
+      setIsLoading(false)
       console.error('Error occurred while fetching customer data:', msg)
     }
   }

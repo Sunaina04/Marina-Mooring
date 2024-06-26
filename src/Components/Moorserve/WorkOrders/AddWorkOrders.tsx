@@ -348,6 +348,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         })
         setIsLoading(false)
       } else {
+        setIsLoading(false)
         toastRef?.current?.show({
           severity: 'error',
           summary: 'Error',
@@ -411,7 +412,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         })
       }
     } catch (error) {
-      setIsLoading(true)
+      setIsLoading(false)
       const { message } = error as ErrorResponse
       toastRef?.current?.show({
         severity: 'error',
@@ -453,6 +454,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         })
         setIsLoading(false)
       } else {
+        setIsLoading(false)
         toastRef?.current?.show({
           severity: 'error',
           summary: 'Error',
@@ -515,7 +517,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         })
       }
     } catch (error) {
-      setIsLoading(true)
+      setIsLoading(false)
       const { message } = error as ErrorResponse
       toastRef?.current?.show({
         severity: 'error',

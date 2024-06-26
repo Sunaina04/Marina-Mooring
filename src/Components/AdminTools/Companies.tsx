@@ -234,6 +234,7 @@ const CustomerOwner = () => {
         setIsLoading(false)
       }
     } catch (error) {
+      setIsLoading(false)
       console.error('Error occurred while fetching customer data:', error)
     }
   }, [getUser, searchText, pageSize, pageNumber, selectedProduct])
@@ -270,6 +271,7 @@ const CustomerOwner = () => {
           setgetCustomerOwnerUserData([])
         }
       } catch (error) {
+        setIsLoading(false)
         console.error('Error occurred while fetching customer data:', error)
       }
     },

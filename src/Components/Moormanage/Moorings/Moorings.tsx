@@ -156,6 +156,7 @@ const Moorings = () => {
 
   const handleDelete = async () => {
     try {
+      setIsLoading(true)
       const response = await deleteMooring({ id: mooringId }).unwrap()
       const { status, message } = response as DeleteCustomerResponse
       if (status === 200) {
@@ -168,7 +169,9 @@ const Moorings = () => {
         getMooringsData()
         setCustomerMooringData([])
         setCustomerRecordData('')
+        setIsLoading(false)
       } else {
+        setIsLoading(false)
         toast.current?.show({
           severity: 'error',
           summary: 'Error',
@@ -178,6 +181,7 @@ const Moorings = () => {
       }
     } catch (error) {
       const { message } = error as ErrorResponse
+      setIsLoading(false)
       toast.current?.show({
         severity: 'error',
         summary: 'Error',

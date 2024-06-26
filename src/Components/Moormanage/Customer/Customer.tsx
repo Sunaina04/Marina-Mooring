@@ -163,6 +163,7 @@ const Customer = () => {
 
   const handleDelete = async (rowData: any) => {
     try {
+      setIsLoading(true)
       const response = await deleteCustomer({ id: customerRecordData?.id }).unwrap()
       const { status, message } = response as DeleteCustomerResponse
       if (status === 200) {
@@ -174,6 +175,7 @@ const Customer = () => {
         })
         getCustomerData()
         setMooringData([])
+        setIsLoading(false)
       } else {
         toast.current?.show({
           severity: 'error',
@@ -181,10 +183,12 @@ const Customer = () => {
           detail: message,
           life: 3000,
         })
+        setIsLoading(false)
       }
       setCustomerRecordData('')
     } catch (error) {
       const { message: msg } = error as ErrorResponse
+      setIsLoading(false)
       toast.current?.show({
         severity: 'error',
         summary: 'Error',

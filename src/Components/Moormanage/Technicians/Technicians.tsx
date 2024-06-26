@@ -250,6 +250,7 @@ const Technicians = () => {
           setIsLoading(false)
         }
       } catch (error) {
+        setIsLoading(false)
         console.error('Error occurred while fetching customer data:', error)
       }
     },
@@ -285,6 +286,7 @@ const Technicians = () => {
           setIsLoading(false)
         }
       } catch (error) {
+        setIsLoading(false)
         console.error('Error occurred while fetching customer data:', error)
       }
     },

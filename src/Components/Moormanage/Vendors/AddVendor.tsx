@@ -238,7 +238,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
         getVendor()
         setIsLoading(false)
       } else {
-        setIsLoading(true)
+        setIsLoading(false)
         toastRef?.current?.show({
           severity: 'error',
           summary: 'Error',
@@ -248,6 +248,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
       }
     } catch (error) {
       const { message, data } = error as ErrorResponse
+      setIsLoading(false)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
@@ -305,6 +306,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
         closeModal()
         getVendor()
       } else {
+        setIsLoading(false)
         toastRef?.current?.show({
           severity: 'error',
           summary: 'Error',

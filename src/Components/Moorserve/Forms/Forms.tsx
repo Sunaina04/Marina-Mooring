@@ -57,7 +57,7 @@ const Forms = () => {
       }).unwrap()
     } catch (error) {
       const { message } = error as ErrorResponse
-
+      setIsLoading(false)
       console.error('Error fetching forms:', error)
     }
   }
@@ -81,6 +81,7 @@ const Forms = () => {
       }
     } catch (error) {
       const { message } = error as ErrorResponse
+      setIsLoading(false)
       console.error('Error fetching forms:', error)
     }
   }

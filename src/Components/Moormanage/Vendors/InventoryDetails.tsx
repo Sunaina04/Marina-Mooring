@@ -163,6 +163,7 @@ const InventoryDetails: React.FC = () => {
 
   const handleDelete = async (rowData: any) => {
     try {
+      setIsLoading(true)
       const response = await deleteInventory({ id: rowData?.id, vendorId: vendorId }).unwrap()
       const { status, message } = response as DeleteCustomerResponse
       if (status === 200) {
@@ -174,6 +175,7 @@ const InventoryDetails: React.FC = () => {
           life: 3000,
         })
       } else {
+        setIsLoading(false)
         toast.current?.show({
           severity: 'error',
           summary: 'Error',
@@ -183,6 +185,7 @@ const InventoryDetails: React.FC = () => {
       }
       getInventoryHandler()
     } catch (error) {
+      setIsLoading(false)
       console.error('Error deleting customer:', error)
     }
   }
@@ -211,6 +214,7 @@ const InventoryDetails: React.FC = () => {
         })
       }
     } catch (error) {
+      setIsLoading(false)
       console.error('Error occurred while fetching customer data:', error)
     }
   }, [getInventory, searchText, selectedCustomerId])
@@ -223,6 +227,7 @@ const InventoryDetails: React.FC = () => {
         setVendorData(content)
       }
     } catch (error) {
+      setIsLoading(false)
       console.error('Error occurred while fetching customer data:', error)
     }
   }, [getVendorById, selectedCustomerId])

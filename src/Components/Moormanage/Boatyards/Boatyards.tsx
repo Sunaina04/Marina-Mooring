@@ -281,6 +281,7 @@ const Boatyards = () => {
 
   const handleDelete = async () => {
     if (boatYardRecord == true) {
+      setIsLoading(true)
       try {
         const response = await deleteBoatyard({ id: selectedBoatYard?.id }).unwrap()
         const { status, message } = response as DeleteCustomerResponse
@@ -293,7 +294,9 @@ const Boatyards = () => {
           })
           setSelectedBoatYard('')
           getBoatyardsData()
+          setIsLoading(false)
         } else {
+          setIsLoading(false)
           toast.current?.show({
             severity: 'error',
             summary: 'Error',
@@ -303,6 +306,7 @@ const Boatyards = () => {
         }
       } catch (error) {
         const { message } = error as ErrorResponse
+        setIsLoading(false)
         toast.current?.show({
           severity: 'error',
           summary: 'Error',
@@ -375,6 +379,7 @@ const Boatyards = () => {
         })
     } catch (error) {
       const { message } = error as ErrorResponse
+      setIsLoading(false)
       console.error('Error fetching getBoatyardsdata:', message)
     }
   }, [
@@ -407,6 +412,7 @@ const Boatyards = () => {
         })
     } catch (error) {
       const { message } = error as ErrorResponse
+      setIsLoading(false)
       console.error('Error fetching getMooringsWithBoatyardData:', error)
     }
   }

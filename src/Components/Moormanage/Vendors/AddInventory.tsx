@@ -110,7 +110,7 @@ const AddInventory: React.FC<AddInventoryProps> = ({
         })
         closeModal()
       } else {
-        setIsLoading(true)
+        setIsLoading(false)
         toastRef?.current?.show({
           severity: 'error',
           summary: 'Error',
@@ -120,6 +120,7 @@ const AddInventory: React.FC<AddInventoryProps> = ({
       }
     } catch (error) {
       const { message, data } = error as ErrorResponse
+      setIsLoading(false)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
@@ -166,6 +167,7 @@ const AddInventory: React.FC<AddInventoryProps> = ({
           life: 3000,
         })
       } else {
+        setIsLoading(false)
         toastRef?.current?.show({
           severity: 'error',
           summary: 'Error',

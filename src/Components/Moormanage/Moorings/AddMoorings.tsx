@@ -169,7 +169,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   }, [])
 
   const validateFields = () => {
-    const numberRegex = /^[0-9]+$/;
+    const numberRegex = /^[0-9]+$/
     const harborRegex = /^[a-zA-Z ]+$/
     const alphanumericRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$/
     const nameRegex = /^[a-zA-Z ]+$/
@@ -219,7 +219,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     if (!formData?.boatSize) {
       errors.boatSize = 'BoatSize is required'
       if (!firstError) firstError = 'boatSize'
-    } else if (!numberRegex.test((formData?.boatSize))) {
+    } else if (!numberRegex.test(formData?.boatSize)) {
       errors.boatSize = 'BoatSize must be a number'
       if (!firstError) firstError = 'boatSize'
     }
@@ -304,7 +304,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     setFieldErrors(errors)
     return errors
   }
-  
 
   const formatDate = (date: any) => {
     if (!date) return null
@@ -322,26 +321,26 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   }
 
   const handleInputChange = (field: string, value: any) => {
-    const numberRegex = /^\d+$/;
+    const numberRegex = /^\d+$/
 
     if (field === 'boatSize') {
       if (value !== '' && !numberRegex.test(value)) {
-        return; 
+        return
       }
     }
     if (field === 'sizeOfWeight') {
       if (value !== '' && !numberRegex.test(value)) {
-        return; 
+        return
       }
     }
     if (field === 'boatWeight') {
       if (value !== '' && !numberRegex.test(value)) {
-        return; 
+        return
       }
     }
     if (field === 'depthAtMeanHighWater') {
       if (value !== '' && !numberRegex.test(value)) {
-        return; 
+        return
       }
     }
     setFormData({
@@ -356,7 +355,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       })
     }
   }
- 
 
   const handleEditMode = () => {
     setGpsCoordinatesValue(mooringRowData?.gpsCoordinates || '')
@@ -532,6 +530,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
           getCustomerRecord()
         }
       } else {
+        setIsLoading(false)
         toastRef?.current?.show({
           severity: 'error',
           summary: 'Error',
@@ -588,7 +587,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   return (
     <>
       <div className="">
-      <Toast ref={toastRef} />
+        <Toast ref={toastRef} />
         <div className="flex gap-6 ">
           <div>
             <span className="font-medium text-sm text-[#000000]">
@@ -611,7 +610,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   height: '32px',
                   border: fieldErrors.customerName ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
-                  fontSize: '0.8rem'
+                  fontSize: '0.8rem',
                 }}
               />
 
@@ -640,7 +639,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   border: fieldErrors.mooringNumber ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
-                  paddingLeft:'0.5rem'
+                  paddingLeft: '0.5rem',
                 }}
               />
               <p id="mooringNumber">
@@ -668,7 +667,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   border: fieldErrors.harbor ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
-                  paddingLeft:'0.5rem'
+                  paddingLeft: '0.5rem',
                 }}
               />
               <p id="harbor">
@@ -699,7 +698,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   border: fieldErrors.gpsCoordinatesValue ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
-                  paddingLeft:'0.5rem'
+                  paddingLeft: '0.5rem',
                 }}
               />
               <p id="waterDepth">
@@ -758,7 +757,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   border: fieldErrors.boatName ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
-                  paddingLeft:'0.5rem'
+                  paddingLeft: '0.5rem',
                 }}
               />
               <p id="boatName">
@@ -792,7 +791,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
             </span>
             <div className="mt-2">
               <InputComponent
-               type='number'
+                type="number"
                 value={formData?.boatSize}
                 onChange={(e) => handleInputChange('boatSize', e.target.value)}
                 style={{
@@ -801,7 +800,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   border: fieldErrors.boatSize ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
-                  paddingLeft:'0.5rem'
+                  paddingLeft: '0.5rem',
                 }}
               />
               <p id="boatName">
@@ -827,14 +826,14 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 // optionLabel="weight"
                 // editable
                 // placeholder="Select"
-                type='number'
+                type="number"
                 style={{
                   width: '230px',
                   height: '32px',
                   border: fieldErrors.sizeOfWeight ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
-                  paddingLeft:'0.5rem'
+                  paddingLeft: '0.5rem',
                 }}
               />
               <p id="sizeOfWeight">
@@ -960,7 +959,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
             <div className="mt-2">
               <InputText
                 value={formData?.depthAtMeanHighWater}
-                type='number'
+                type="number"
                 onChange={(e) => handleInputChange('depthAtMeanHighWater', e.target.value)}
                 style={{
                   width: '230px',
@@ -968,7 +967,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   border: fieldErrors.depthAtMeanHighWater ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
-                  paddingLeft:'0.5rem'
+                  paddingLeft: '0.5rem',
                 }}
               />
               <p id="depthAtMeanHighWater">
@@ -1069,7 +1068,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                     border: fieldErrors.pendantCondition ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
-                    paddingLeft:'0.5rem'
+                    paddingLeft: '0.5rem',
                   }}
                 />
                 <p id="conditionOfEye">
@@ -1222,7 +1221,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 <div className="mt-2">
                   <InputComponent
                     value={formData?.boatWeight}
-                    type='number'
+                    type="number"
                     onChange={(e) => handleInputChange('boatWeight', e.target.value)}
                     style={{
                       width: '230px',
@@ -1230,7 +1229,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                       border: '1px solid #D5E1EA',
                       borderRadius: '0.50rem',
                       fontSize: '0.8rem',
-                      paddingLeft:'0.5rem'
+                      paddingLeft: '0.5rem',
                     }}
                   />
                 </div>
