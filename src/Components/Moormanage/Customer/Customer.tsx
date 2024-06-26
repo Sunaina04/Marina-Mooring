@@ -597,10 +597,11 @@ const Customer = () => {
             dialogStyle={{
               width: '800px',
               minWidth: '800px',
-              height: '600px',
-              minHeight: '600px',
+              height: '580px',
+              minHeight: '580px',
               borderRadius: '1rem',
               maxHeight: '95% !important',
+              overflowY: 'auto',
             }}
           />
         </div>
@@ -719,7 +720,7 @@ const Customer = () => {
               {/* <div className="flex items-center ml-3">
                 <Avatar image={'/assets/images/user.png'} /> */}
               <div className="text-sm font-semibold rounded-t-md bg-gray-800 ">
-                <h1 className="p-3 text-white text-lg font-extrabold">{'Customers Record'}</h1>
+                <h1 className="p-3 text-white text-lg font-extrabold">Customers Record</h1>
               </div>
               {/* </div> */}
 
