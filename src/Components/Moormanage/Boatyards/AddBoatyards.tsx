@@ -518,7 +518,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
                 border: errorMessage.state ? '1px solid red' : '1px solid #D5E1EA',
                 borderRadius: '0.50rem',
                 fontSize: '0.8rem',
-                padding: '4px',
+                paddingLeft: '0.5rem',
                 color: 'black',
               }}
             />
@@ -547,7 +547,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
                   border: errorMessage.country ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
-                  padding: '4px',
+                  paddingLeft: '0.5rem',
                 }}
               />
             </div>
