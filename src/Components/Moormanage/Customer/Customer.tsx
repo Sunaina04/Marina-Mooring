@@ -640,8 +640,8 @@ const Customer = () => {
               height: '18px',
             }}
           />
-
           <div
+        
             className={`bg-#00426F overflow-x-hidden h-[590px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col ${isLoading ? 'blur-screen' : ''}`}>
             <div className="flex-grow overflow-auto">
               <DataTableComponent
@@ -743,17 +743,18 @@ const Customer = () => {
             {customerRecordData ? (
               CustomerDetails
             ) : (
-              <div className="text-center ">
-                <img
-                  src="/assets/images/empty.png"
-                  alt="Empty Data"
-                  className="w-10 mx-auto mt-10 mb-3"
-                />
-                <p className="text-gray-500 mb-10">No data available</p>
-              </div>
+              <div className="text-center mt-28">
+              <img
+                src="/assets/images/empty.png"
+                alt="Empty Data"
+                className="w-28 mx-auto mb-4"
+              />
+              <p className="text-gray-500 font-[600] text-lg">No data available</p>
+            </div>
             )}
           </div>
 
+        
           {isLoader && (
             <ProgressSpinner
               style={{
@@ -781,6 +782,7 @@ const Customer = () => {
             </div>
 
             <div
+         
               className={`bg-#00426F overflow-x-hidden h-[450px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col ${isLoading ? 'blur-screen' : ''}`}>
               <div className="flex-grow overflow-auto">
                 <DataTableComponent
@@ -806,10 +808,14 @@ const Customer = () => {
                   dataKey="id"
                   rowStyle={(rowData) => rowData}
                   emptyMessage={
-                    <div className="flex-grow flex flex-col justify-center items-center">
-                      <img src="/assets/images/empty.png" alt="Empty Data" className="w-20 mb-4" />
-                      <p className="text-gray-500">No data available</p>
-                    </div>
+                    <div className="text-center mt-28">
+                    <img
+                      src="/assets/images/empty.png"
+                      alt="Empty Data"
+                      className="w-28 mx-auto mb-4"
+                    />
+                    <p className="text-gray-500 text-lg">No data available</p>
+                  </div>
                   }
                 />
                 {isLoading && (

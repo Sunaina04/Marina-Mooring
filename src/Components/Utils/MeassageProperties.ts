@@ -15,4 +15,5 @@ export const properties = {
   workOrderHeader: 'Work Orders',
   customerHeader: 'Customers',
   Users: 'User Management',
+  Technician:"Technician"
 }

@@ -414,16 +414,21 @@ const Technicians = () => {
             }}
           />
         </div> */}
-        <div className="flex lg:flex-row justify-around md:flex-col  mt-6">
+        <div
+
+          className="flex lg:flex-row justify-around md:flex-col  mt-6">
           <div
             style={{
               width: '700px',
-              height: '720px',
+              height: '700px',
               backgroundColor: '#FFFFFF',
               border: '1px solid #D5E1EA',
               borderRadius: '5px',
               marginLeft: '3rem',
             }}>
+            <div className="bg-[#10293A] rounded-tl-[10px] rounded-tr-[10px] text-white">
+              <h1 className="p-4 text-xl font-extrabold">{properties.Technician}</h1>
+            </div>
             <InputTextWithHeader
               value={searchText}
               onChange={handleSearch}
@@ -449,10 +454,14 @@ const Technicians = () => {
             />
 
             <div
+
               data-testid="customer-admin-data"
               className="flex flex-col  "
-              style={{ height: '630px' }}>
-              <div className="flex-grow overflow-auto">
+              style={{ height: '548px' }}>
+              <div
+
+
+                className="flex-grow overflow-auto">
                 <DataTableComponent
                   columns={TechnicianTableColumn}
                   scrollable={true}
@@ -478,7 +487,8 @@ const Technicians = () => {
                         alt="Empty Data"
                         className="w-20 mx-auto mb-4"
                       />
-                      <p className="text-gray-500">No data available</p>
+                      <p className="text-gray-500 text-lg font-bold">No data available</p>
+
                     </div>
                   }
                   style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
@@ -526,7 +536,7 @@ const Technicians = () => {
               backgroundColor: '#FFFFFF',
               marginRight: '50px',
               width: '700px',
-              height: '720px',
+              height: '700px',
             }}>
             <div className="flex justify-between mt-6  mb-3 ">
               <div className="font-bold ml-5">
@@ -548,7 +558,7 @@ const Technicians = () => {
             <div
               data-testid="customer-admin-data"
               className="flex flex-col  "
-              style={{ height: '630px' }}>
+              style={{ height: '600px' }}>
               <div className="flex-grow overflow-auto">
                 <DataTableComponent
                   columns={WorkOrdersColumn}
@@ -572,7 +582,8 @@ const Technicians = () => {
                         alt="Empty Data"
                         className="w-20 mx-auto mb-4"
                       />
-                      <p className="text-gray-500">No data available</p>
+                      <p className="text-gray-500 text-lg font-bold">No data available</p>
+
                     </div>
                   }
                   style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}

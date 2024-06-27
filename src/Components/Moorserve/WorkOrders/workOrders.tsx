@@ -276,12 +276,12 @@ const WorkOrders = () => {
                 style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
                 emptyMessage={
                   <div className="text-center mt-40">
-                    <img
+                       <img
                       src="/assets/images/empty.png"
                       alt="Empty Data"
                       className="w-28 mx-auto mb-4"
                     />
-                    <p className="text-gray-500">No data available</p>
+                    <p className="text-gray-500 text-lg">No data available</p>
                   </div>
                 }
               />
