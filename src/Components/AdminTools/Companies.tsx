@@ -32,7 +32,7 @@ const CustomerOwner = () => {
   const [customerAdminId, setCustomerAdminId] = useState('')
   const [searchText, setSearchText] = useState('')
   const [searchUsersText, setSearchUsersText] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [getCustomerOwnerData, setgetCustomerOwnerData] = useState<CustomerPayload[]>([])
   const [getCustomerOwnerUserData, setgetCustomerOwnerUserData] = useState<CustomerPayload[]>([])
   const [selectedId, setSelectedId] = useState<any>('')
@@ -183,13 +183,6 @@ const CustomerOwner = () => {
       width: '5vw',
     },
     style: { borderBottom: '1px solid #D5E1EA' },
-  }
-
-  const customerOwnerUserTableColumnStyle = {
-    borderBottom: '1px solid #D5E1EA',
-    backgroundColor: '#FFFFFF',
-    color: '#000000',
-    fontWeight: 500,
   }
 
   const customerOwnerUserTableColumn = useMemo(
@@ -486,8 +479,7 @@ const CustomerOwner = () => {
         </div>
       </div>
 
-      <div
-        className={`flex flex-col md:flex-row gap-10 ml-8 mt-5 ${isLoading ? 'blur-screen' : ''}`}>
+      <div className={`flex flex-col md:flex-row gap-10 ml-8 mt-5`}>
         <div className="flex-1 border border-gray-300 bg-white rounded-lg md:ml-10 overflow-hidden">
           <div className="text-md font-semibold rounded-t-lg bg-[#00426F]">
             <h1 className="p-4 text-white">{properties.CustomersOwner}</h1>
@@ -577,7 +569,7 @@ const CustomerOwner = () => {
         </div>
 
         <div
-          className={`flex-1 ${isLoading ? 'blur-screen' : ''} border border-gray-300 bg-white rounded-lg md:mr-10 overflow-hidden`}>
+          className={`flex-1 border border-gray-300 bg-white rounded-lg md:mr-10 overflow-hidden`}>
           <div className="text-md font-semibold rounded-t-lg bg-[#00426F]">
             <h1 className="p-4 text-white">{properties.CustomerOwnerUsers}</h1>
           </div>

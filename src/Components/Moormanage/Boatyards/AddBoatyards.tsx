@@ -98,9 +98,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
     }
     if (!address) errors.address = 'Street/house is required'
     if (!zipCode) {
-      errors.zipCode = 'Zipcode is required'
-    } else if (!zipCodeRegex.test(zipCode)) {
-      errors.zipCode = 'Zipcode contain only numbers'
+      errors.zipCode = 'Zip Code is required'
     }
     if (!mainContact) errors.mainContact = 'Main contact is required'
     if (!country) errors.country = 'Country  is required'

@@ -48,15 +48,13 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
     note: '',
   })
 
-  
-  
   const validateAddVendorFields = () => {
     const errors: { [key: string]: string } = {}
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const phoneRegex = /^.{10}$|^.{12}$/
     const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/
     const zipCodeRegex = /^\d+$/
-    
+
     if (!formData.phone) {
       errors.phone = 'Phone is required'
     } else if (!phoneRegex.test(formData.phone)) {
@@ -99,8 +97,6 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
     if (!formData.stateForAddress) errors.stateForAddress = 'state is required'
     if (!formData.zipCodeForAddress) {
       errors.zipCodeForAddress = 'Zip Code is required'
-    } else if (!zipCodeRegex.test(formData.zipCodeForAddress)) {
-      errors.zipCodeForAddress = 'Zip Code contain only numbers'
     }
     if (!formData.streetBuildingForRemit)
       errors.streetBuildingForRemit = 'Street/Building is required'
@@ -109,8 +105,6 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
     if (!formData.stateForRemit) errors.stateForRemit = 'State is required'
     if (!formData.zipCodeForRemit) {
       errors.zipCodeForRemit = 'Zip Code is required'
-    } else if (!zipCodeRegex.test(formData.zipCodeForRemit)) {
-      errors.zipCodeForRemit = 'Zip Code contain only numbers'
     }
     if (!formData.accountNumber) errors.accountNumber = 'accountNumber is required'
     if (!formData.firstName) errors.firstName = 'firstName is required'
@@ -124,7 +118,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
 
   const handleInputChange = (field: string, value: any) => {
     const numberRegex = /^\d+$/
-  
+
     if (field === 'accountNumber') {
       if (value !== '' && !numberRegex.test(value)) {
         return

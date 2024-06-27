@@ -368,7 +368,7 @@ const Technicians = () => {
                   onChange={(e) => {
                     setDateFrom(e.value || null)
                   }}
-                  placeholder="From:  mm/dd/yyyy"
+                  placeholder="   From:  mm/dd/yyyy"
                   className="h-10"
                   id="calender"
                   showIcon
@@ -380,7 +380,7 @@ const Technicians = () => {
                   onChange={(e) => {
                     setDateTo(e.value || null)
                   }}
-                  placeholder="To:  mm/dd/yyyy"
+                  placeholder="   To:  mm/dd/yyyy"
                   className="h-10"
                   id="calender"
                   showIcon

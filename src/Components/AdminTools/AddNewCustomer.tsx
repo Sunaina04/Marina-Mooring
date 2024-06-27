@@ -126,9 +126,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     }
 
     if (!zipCode) {
-      errors.zipCode = 'ZipCode is required'
-    } else if (!zipCodeRegex.test(zipCode)) {
-      errors.zipCode = 'ZipCode only contains numbers'
+      errors.zipCode = 'Zip Code is required'
     }
 
     if (!role) errors.role = 'Role is required'
@@ -450,12 +448,12 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         })
       }
     } catch (error) {
-      const { message } = error as ErrorResponse
+      const { message, data } = error as ErrorResponse
       setIsLoading(false)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: message,
+        detail: data?.message,
         life: 3000,
       })
     }
