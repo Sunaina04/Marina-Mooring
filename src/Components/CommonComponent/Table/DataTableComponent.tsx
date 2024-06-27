@@ -13,7 +13,7 @@ const DataTableComponent: React.FC<DataTableProps> = ({
   actionButtons,
   onRowClick,
   style,
-  emptyMessage,
+  emptyMessage = " ",
   selectionMode,
   onSelectionChange,
   selection,
