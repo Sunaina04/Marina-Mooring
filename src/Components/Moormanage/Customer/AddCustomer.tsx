@@ -952,7 +952,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       border: '1px solid #D5E1EA',
                       borderRadius: '0.50rem',
                       color: 'black',
-                     
                     }}
                   />
                 </div>

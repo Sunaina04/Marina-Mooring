@@ -284,12 +284,14 @@ const InventoryDetails: React.FC = () => {
               minHeight: '44px',
               backgroundColor: '#0098FF',
               cursor: 'pointer',
-              fontSize: '16px',
-              fontWeight: 700,
+              fontSize: '14px',
+              fontWeight: 600,
               color: 'white',
               borderRadius: '0.50rem',
               marginLeft: '8px',
+              boxShadow: 'none',
             }}
+            icon={<img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8" />}
             dialogStyle={{
               width: '851px',
               minWidth: '851px',
