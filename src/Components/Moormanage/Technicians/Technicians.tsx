@@ -244,6 +244,12 @@ const Technicians = () => {
           setTotalRecordsTwo(totalSize)
         } else {
           setIsLoading(false)
+          toast?.current?.show({
+            severity: 'error',
+            summary: 'Error',
+            detail: message,
+            life: 3000,
+          })
         }
       } catch (error) {
         setIsLoading(false)
@@ -280,6 +286,12 @@ const Technicians = () => {
           setTotalRecordsTwo(totalSize)
         } else {
           setIsLoading(false)
+          toast?.current?.show({
+            severity: 'error',
+            summary: 'Error',
+            detail: message,
+            life: 3000,
+          })
         }
       } catch (error) {
         setIsLoading(false)
