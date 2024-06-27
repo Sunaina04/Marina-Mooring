@@ -711,7 +711,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const AddDock = () => {
     return (
       <>
-        <div className="flex gap-4 mb-20 ">
+        <div className="flex gap-4 mb-20 mt-5 ">
           <span>
             <label className="custom-checkbox-container">
               <input
@@ -821,7 +821,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       {!editMooringMode && (
         <>
           <div className="">
-            <div className="flex gap-6 overflow-auto">
+            <div className="flex gap-6">
               <div>
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
@@ -1165,15 +1165,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             </div>
           </div>
 
-          <div
-            className="mt-3"
-            style={{
-              marginBottom:
-                selectedCustomerType &&
-                (selectedCustomerType?.id === 5 || selectedCustomerType === 'Dock')
-                  ? '1rem'
-                  : '5rem',
-            }}>
+          <div className="mt-3" style={{marginBottom: (selectedCustomerType &&
+      (selectedCustomerType?.id === 5 || selectedCustomerType === 'Dock')) ? '1rem' : '1rem'}}>
             <div className="">
               <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
                 <div className="flex gap-1 font-medium text-sm text-[#000000]">
@@ -1216,7 +1209,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       {!editCustomerMode && (
         <>
           {!editMooringMode && (
-            <div className="mt-3 flex gap-[7rem] text-xl text-black font-bold !mb-20">
+            <div className="mt-3 flex gap-[7rem] text-xl text-black font-bold mb-14">
               {AddMooring()}
               {selectedCustomerType?.id === 5 && AddDock()}
             </div>
