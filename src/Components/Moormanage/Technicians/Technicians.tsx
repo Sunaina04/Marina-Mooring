@@ -35,7 +35,8 @@ import CustomModal from '../../CustomComponent/CustomModal'
 import AddWorkOrders from '../../Moorserve/WorkOrders/AddWorkOrders'
 
 const Technicians = () => {
-  const [date, setDate] = useState<any>()
+  const [dateFrom, setDateFrom] = useState<any>()
+  const [dateTo, setDateTo] = useState<any>()
   const [dataVisible, setDataVisible] = useState(false)
   const [filterDateFrom, setFilterDateFrom] = useState<any>()
   const [filterDateTo, setFilterDateTo] = useState<any>()
@@ -124,7 +125,7 @@ const Technicians = () => {
 
   const formatDate = (dateString: any) => {
     const date = new Date(dateString)
-    const month = String(date.getMonth() + 1).padStart(2, '0') // Months are zero-based
+    const month = String(date.getMonth() + 1).padStart(2, '0')
     const day = String(date.getDate()).padStart(2, '0')
     const year = date.getFullYear()
     return `${month}/${day}/${year}`
@@ -132,11 +133,6 @@ const Technicians = () => {
 
   const handleEditButtonClick = () => {
     setVisible(true)
-  }
-  const handleModalClose = () => {
-    setVisible(false)
-    // setEditMode(false)
-    // getWorkOrderData()
   }
 
   const ActionButtonColumn: ActionButtonColumnProps = {
@@ -317,11 +313,13 @@ const Technicians = () => {
   ])
 
   useEffect(() => {
-    if (date && date?.[0] && date?.[1]) {
-      setFilterDateFrom(formatDate(date?.[0]))
-      setFilterDateTo(formatDate(date?.[1]))
+    if (dateFrom && dateTo) {
+      setFilterDateFrom(formatDate(dateFrom))
+      setFilterDateTo(formatDate(dateTo))
+      console.log('dates', dateFrom, dateTo)
+      console.log('fornat date', filterDateFrom, filterDateTo)
     }
-  }, [date])
+  }, [dateFrom, dateTo])
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -348,20 +346,34 @@ const Technicians = () => {
                 position: 'relative',
                 border: '1px solid #D5E1EA',
                 borderRadius: '5px',
-                display: 'inline-block',
+                display: 'flex',
+                gap: '8px',
+                padding: '8px',
               }}>
-              <Calendar
-                value={date}
-                onChange={(e) => {
-                  setDate(e.value || null)
-                }}
-                selectionMode="range"
-                readOnlyInput
-                placeholder="From:mm/dd/yyyy  To:mm/dd/yyyy"
-                className="h-10"
-                id="calender"
-                showIcon
-              />
+              <div style={{ flex: '1', display: 'flex', justifyContent: 'center' }}>
+                <Calendar
+                  value={dateFrom}
+                  onChange={(e) => {
+                    setDateFrom(e.value || null)
+                  }}
+                  placeholder="From:  mm/dd/yyyy"
+                  className="h-10"
+                  id="calender"
+                  showIcon
+                />
+              </div>
+              <div style={{ flex: '1', display: 'flex', justifyContent: 'center' }}>
+                <Calendar
+                  value={dateTo}
+                  onChange={(e) => {
+                    setDateTo(e.value || null)
+                  }}
+                  placeholder="To:  mm/dd/yyyy"
+                  className="h-10"
+                  id="calender"
+                  showIcon
+                />
+              </div>
             </div>
           </div>
         </div>

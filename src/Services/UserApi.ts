@@ -34,12 +34,16 @@ const baseQuery = fetchBaseQuery({
       sessionStorage.getItem('token') ||
       sessionStorage.getItem('getRefreshToken')
     ) {
+      console.log('token', sessionStorage.getItem('getRefreshToken'))
+
       const token =
         (getState() as RootState).user.token ||
         sessionStorage.getItem('token') ||
         sessionStorage.getItem('getRefreshToken')
       const noAuthEndpoints = ['login', 'resetPassword', 'forgotPassword']
       if (token && !noAuthEndpoints.includes(endpoint)) {
+        console.log('token in if', token)
+
         headers.set('Authorization', `Bearer ${token}`)
         const noAuthEndpoints = ['getCustomersOwners']
         if (userRole === 1 && selectedCustomerId && !noAuthEndpoints.includes(endpoint)) {
@@ -59,7 +63,7 @@ const baseQuery = fetchBaseQuery({
 })
 
 // Create API client
-export const userApi = createApi({
+export const userApi: any = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithInterceptor,
   endpoints: (builder) => ({}),

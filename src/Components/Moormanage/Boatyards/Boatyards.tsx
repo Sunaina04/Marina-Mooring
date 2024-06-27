@@ -346,7 +346,7 @@ const Boatyards = () => {
 
       await getBoatyards(params)
         .unwrap()
-        .then(async (response) => {
+        .then(async (response: any) => {
           const { status, content, message, totalSize } = response as BoatYardResponse
           if (status === 200 && Array.isArray(content)) {
             setboatyardsData(content)
@@ -400,7 +400,7 @@ const Boatyards = () => {
         pageSize: pageSizeTwo,
       })
         .unwrap()
-        .then(async (response) => {
+        .then(async (response: any) => {
           const { status, content, totalSize } = response as MooringWithBoatYardResponse
           if (status === 200 && Array.isArray(content) && content.length > 0) {
             setIsLoading(false)
@@ -583,9 +583,7 @@ const Boatyards = () => {
               marginLeft: '8px',
               boxShadow: 'none',
             }}
-            icon={
-              <img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8  mb-0.5" />
-            }
+            icon={<img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8  mb-0.5" />}
             children={random}
             headerText={<h1 className="text-xl font-extrabold text-black ml-4">Add Boatyard</h1>}
             visible={modalVisible}

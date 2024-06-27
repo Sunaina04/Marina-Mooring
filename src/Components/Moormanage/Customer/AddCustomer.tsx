@@ -661,30 +661,38 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       const { boatYardName } = await getBoatYardNameData()
 
       if (typeOfBoatTypeData !== null) {
+        setIsLoading(false)
         setType(typeOfBoatTypeData)
       }
       if (typeOfWeightData !== null) {
+        setIsLoading(false)
         setWeightData(typeOfWeightData)
       }
       if (typeOfChainData !== null) {
+        setIsLoading(false)
         setChainData(typeOfChainData)
       }
       if (TypeOfSizeOfWeightData !== null) {
+        setIsLoading(false)
         setSizeOfWeight(TypeOfSizeOfWeightData)
       }
       if (typeOfEyeData !== null) {
+        setIsLoading(false)
         setConditionOfEye(typeOfEyeData)
       }
 
       if (typeOfBottomChainData !== null) {
+        setIsLoading(false)
         setBottomChainCondition(typeOfBottomChainData)
       }
 
       if (typeOfShackleSwivelData !== null) {
+        setIsLoading(false)
         setShackleSwivelData(typeOfShackleSwivelData)
       }
 
       if (boatYardName !== null) {
+        setIsLoading(false)
         setBoatyardName(boatYardName)
       }
     }
@@ -1157,8 +1165,15 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             </div>
           </div>
 
-          <div className="mt-3" style={{marginBottom: (selectedCustomerType &&
-      (selectedCustomerType?.id === 5 || selectedCustomerType === 'Dock')) ? '1rem' : '5rem'}}>
+          <div
+            className="mt-3"
+            style={{
+              marginBottom:
+                selectedCustomerType &&
+                (selectedCustomerType?.id === 5 || selectedCustomerType === 'Dock')
+                  ? '1rem'
+                  : '5rem',
+            }}>
             <div className="">
               <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
                 <div className="flex gap-1 font-medium text-sm text-[#000000]">
@@ -1860,5 +1875,3 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 }
 
 export default AddCustomer
-
-

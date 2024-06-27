@@ -40,7 +40,7 @@ import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 
 const Customer = () => {
-  const selectedCustomerId = useSelector(selectCustomerId)
+  const selectedCustomerId: any = useSelector(selectCustomerId)
   const [modalVisible, setModalVisible] = useState(false)
   const [customerData, setCustomerData] = useState<CustomerPayload[]>([])
   const [editMode, setEditMode] = useState(false)
