@@ -328,8 +328,6 @@ const Technicians = () => {
     if (dateFrom && dateTo) {
       setFilterDateFrom(formatDate(dateFrom))
       setFilterDateTo(formatDate(dateTo))
-      console.log('dates', dateFrom, dateTo)
-      console.log('fornat date', filterDateFrom, filterDateTo)
     }
   }, [dateFrom, dateTo])
 
@@ -414,9 +412,7 @@ const Technicians = () => {
             }}
           />
         </div> */}
-        <div
-
-          className="flex lg:flex-row justify-around md:flex-col  mt-6">
+        <div className="flex lg:flex-row justify-around md:flex-col  mt-6">
           <div
             style={{
               width: '700px',
@@ -454,14 +450,10 @@ const Technicians = () => {
             />
 
             <div
-
               data-testid="customer-admin-data"
               className="flex flex-col  "
               style={{ height: '548px' }}>
-              <div
-
-
-                className="flex-grow overflow-auto">
+              <div className="flex-grow overflow-auto">
                 <DataTableComponent
                   columns={TechnicianTableColumn}
                   scrollable={true}
@@ -488,7 +480,6 @@ const Technicians = () => {
                         className="w-20 mx-auto mb-4"
                       />
                       <p className="text-gray-500 text-lg font-bold">No data available</p>
-
                     </div>
                   }
                   style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
@@ -583,7 +574,6 @@ const Technicians = () => {
                         className="w-20 mx-auto mb-4"
                       />
                       <p className="text-gray-500 text-lg font-bold">No data available</p>
-
                     </div>
                   }
                   style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
