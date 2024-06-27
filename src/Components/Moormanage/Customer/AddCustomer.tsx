@@ -731,7 +731,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               <span className="custom-checkbox"></span>
             </label>
           </span>
-          <p className="font-medium text-lg text-[#000000]  mt-5 ml-[14px]">Add Dock</p>
+          <p className="font-medium text-lg text-[#000000] mt-5 ml-[14px]">Add Dock</p>
         </div>
       </>
     )
@@ -952,7 +952,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       border: '1px solid #D5E1EA',
                       borderRadius: '0.50rem',
                       color: 'black',
-                     
                     }}
                   />
                 </div>

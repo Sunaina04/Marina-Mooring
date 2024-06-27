@@ -332,24 +332,23 @@ const AddInventory: React.FC<AddInventoryProps> = ({
                 <p className="text-red-600">*</p>
               </div>
             </div>
-            <div className="flex mt-3 gap-5 items-center">
-              <div className="flex gap-2 items-center">
-                <div className="flex gap-4 items-center">
-                  <span>
-                    <label className="custom-checkbox-container">
-                      <input
-                        type="checkbox"
-                        onChange={handleYesChange}
-                        checked={checked}
-                        className="custom-checkbox-input"
-                      />
-                      <span className="custom-checkbox"></span>
-                    </label>
-                  </span>
-                  <p className="font-medium text-lg text-[#000000] ml-[14px]">Yes</p>
-                </div>
+            <div className="flex gap-5 items-center">
+              <div className="flex gap-4 items-center mt-[-20px]">
+                <span>
+                  <label className="custom-checkbox-container">
+                    <input
+                      type="checkbox"
+                      onChange={handleYesChange}
+                      checked={checked}
+                      className="custom-checkbox-input"
+                    />
+                    <span className="custom-checkbox"></span>
+                  </label>
+                </span>
+                <p className="font-medium text-lg text-[#000000] mt-8 ml-[14px]">Yes</p>
               </div>
-              <div className="flex gap-4 items-center">
+
+              <div className="flex gap-4 items-center mt-[-20px]">
                 <span>
                   <label className="custom-checkbox-container">
                     <input
@@ -361,7 +360,7 @@ const AddInventory: React.FC<AddInventoryProps> = ({
                     <span className="custom-checkbox"></span>
                   </label>
                 </span>
-                <p className="font-medium text-lg text-[#000000] ml-[14px]">No</p>
+                <p className="font-medium text-lg text-[#000000] mt-8 ml-[14px]">No</p>
               </div>
 
               {errors.taxable && <small className="p-error">{errors.taxable}</small>}
