@@ -189,7 +189,7 @@ export default function LoginForm() {
                     height: '60px',
                     padding: '0 4rem 0 3rem',
                     border: '1px solid #C5D9E0',
-                    fontSize: '16px',
+                    fontSize: '14px',
                     color: '#00426F',
                     borderRadius: '10px',
                     minHeight: '6vh',
@@ -224,9 +224,9 @@ export default function LoginForm() {
                     feedback={false}
                     toggleMask
                     style={{
-                      padding: '0 4rem 0 3rem',
+                      padding: '0 2rem 0 3rem',
                       border: '1px solid #C5D9E0',
-                      fontSize: '16px',
+                      fontSize: '18px',
                       color: '#00426F',
                       borderRadius: '10px',
                       width: '500px',
@@ -248,7 +248,6 @@ export default function LoginForm() {
                     }}
                   />
                 </div>
-
               </div>
 
               {isLoading && (
@@ -294,7 +293,6 @@ export default function LoginForm() {
                   display: 'flex',
                   fontWeight: '500',
                   justifyContent: 'center',
-                  // filter: isLoading ? 'blur(1px)' : 'none',
                 }}
                 onClick={signInHandler}
                 disabled={isLoading}>

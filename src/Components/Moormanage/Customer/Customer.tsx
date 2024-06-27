@@ -265,7 +265,7 @@ const Customer = () => {
           fontWeight: '500',
           fontSize: '12px',
           color: '#000000',
-          width: '8vw',
+          width: '12vw',
         },
         sortable: false,
       },
@@ -277,7 +277,7 @@ const Customer = () => {
           fontWeight: '500',
           fontSize: '12px',
           color: '#000000',
-          width: '6vw',
+          width: '10vw',
         },
         sortable: false,
       },
@@ -641,7 +641,6 @@ const Customer = () => {
             }}
           />
           <div
-        
             className={`bg-#00426F overflow-x-hidden h-[590px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col ${isLoading ? 'blur-screen' : ''}`}>
             <div className="flex-grow overflow-auto">
               <DataTableComponent
@@ -744,17 +743,16 @@ const Customer = () => {
               CustomerDetails
             ) : (
               <div className="text-center mt-28">
-              <img
-                src="/assets/images/empty.png"
-                alt="Empty Data"
-                className="w-28 mx-auto mb-4"
-              />
-              <p className="text-gray-500 font-[600] text-lg">No data available</p>
-            </div>
+                <img
+                  src="/assets/images/empty.png"
+                  alt="Empty Data"
+                  className="w-28 mx-auto mb-4"
+                />
+                <p className="text-gray-500 font-[600] text-lg">No data available</p>
+              </div>
             )}
           </div>
 
-        
           {isLoader && (
             <ProgressSpinner
               style={{
@@ -782,7 +780,6 @@ const Customer = () => {
             </div>
 
             <div
-         
               className={`bg-#00426F overflow-x-hidden h-[450px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col ${isLoading ? 'blur-screen' : ''}`}>
               <div className="flex-grow overflow-auto">
                 <DataTableComponent
@@ -809,13 +806,13 @@ const Customer = () => {
                   rowStyle={(rowData) => rowData}
                   emptyMessage={
                     <div className="text-center mt-28">
-                    <img
-                      src="/assets/images/empty.png"
-                      alt="Empty Data"
-                      className="w-28 mx-auto mb-4"
-                    />
-                    <p className="text-gray-500 text-lg">No data available</p>
-                  </div>
+                      <img
+                        src="/assets/images/empty.png"
+                        alt="Empty Data"
+                        className="w-28 mx-auto mb-4"
+                      />
+                      <p className="text-gray-500 text-lg">No data available</p>
+                    </div>
                   }
                 />
                 {isLoading && (
