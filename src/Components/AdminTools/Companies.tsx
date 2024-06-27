@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectCustomerId, setCustomerId, setCustomerName } from '../../Store/Slice/userSlice'
 import { Paginator } from 'primereact/paginator'
 
-const CustomerOwner = () => {
+const Companies = () => {
   const dispatch = useDispatch()
   const selectedCustomerId = useSelector(selectCustomerId)
   const [modalVisible, setModalVisible] = useState(false)
@@ -666,4 +666,4 @@ const CustomerOwner = () => {
   )
 }
 
-export default CustomerOwner
+export default Companies
