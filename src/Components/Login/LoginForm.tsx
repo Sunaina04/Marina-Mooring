@@ -9,6 +9,8 @@ import { Button } from 'primereact/button'
 import './Login.css'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { Toast } from 'primereact/toast'
+import { Password } from 'primereact/password'
+import { Divider } from 'primereact/divider'
 
 export default function LoginForm() {
   const dispatch = useDispatch()
@@ -136,6 +138,19 @@ export default function LoginForm() {
     }
   }
 
+  const footer = (
+    <>
+      <Divider />
+      <span className="mt-2">Suggestions</span>
+      <ul className="pl-2 ml-2 mt-0 line-height-3">
+        <li>* At least one lowercase</li>
+        <li>* At least one uppercase</li>
+        <li>* At least one numeric</li>
+        <li>* Minimum 8 characters</li>
+      </ul>
+    </>
+  )
+
   return (
     <>
       <Toast ref={toast} />
@@ -196,53 +211,44 @@ export default function LoginForm() {
               </div>
               <div className="text-red-500 mb-5 mt-3 text-sm">{<p>{errors.password}</p>}</div>
               <div className="p-input-icon-left">
-                <InputText
-                  style={{
-                    width: '500px',
-                    height: '60px',
-                    padding: '0 4rem 0 3rem',
-                    border: '1px solid #C5D9E0',
-                    fontSize: '16px',
-                    color: '#00426F',
-                    borderRadius: '10px',
-                  }}
-                  placeholder="Enter Your Password"
-                  name="password"
-                  value={password}
-                  type={showPassword ? 'text' : 'password'}
-                  onChange={handleChange}
-                  onKeyUp={handleKeyUp}
-                />
-                <img
-                  src="/assets/images/key.png"
-                  alt="Key Icon"
-                  className="p-clickable"
-                  style={{
-                    position: 'absolute',
-                    left: '10px',
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    width: '20px',
-                    height: '20px',
-                  }}
-                />
+                <div
+                  className="card flex justify-content-center"
+                  style={{ position: 'relative', width: '100%' }}>
+                  <Password
+                    placeholder="Enter Your Password"
+                    type={'text'}
+                    name="password"
+                    value={password}
+                    onChange={handleChange}
+                    onKeyUp={handleKeyUp}
+                    feedback={false}
+                    toggleMask
+                    style={{
+                      padding: '0 4rem 0 3rem',
+                      border: '1px solid #C5D9E0',
+                      fontSize: '16px',
+                      color: '#00426F',
+                      borderRadius: '10px',
+                      width: '500px',
+                      height: '60px',
+                    }}
+                  />
+                  <img
+                    src="/assets/images/key.png"
+                    alt="Key Icon"
+                    className="p-clickable"
+                    style={{
+                      position: 'absolute',
+                      left: '10px',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      width: '20px',
+                      height: '20px',
+                      pointerEvents: 'none',
+                    }}
+                  />
+                </div>
 
-                {/* Password Visibility */}
-                <img
-                  src={showPassword ? '/assets/images/eye.png' : '/assets/images/eye-slash.png'}
-                  alt="Toggle Password Visibility"
-                  onClick={toggleShowPassword}
-                  className="p-clickable"
-                  style={{
-                    position: 'absolute',
-                    right: '10px',
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    width: '20px',
-                    height: '20px',
-                    cursor: 'pointer',
-                  }}
-                />
               </div>
 
               {isLoading && (
