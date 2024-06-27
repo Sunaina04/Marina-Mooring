@@ -105,7 +105,7 @@ const Dashboard = () => {
           style={{
             fontWeight: '700',
             fontSize: '16px',
-            lineHeight: '18.75px',
+            // lineHeight: '18.75px',
             // letterSpacing: '0.46px',
             color: '#000000',
           }}>

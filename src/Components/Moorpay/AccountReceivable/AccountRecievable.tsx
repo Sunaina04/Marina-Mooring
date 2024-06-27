@@ -6,13 +6,26 @@ import AddCustomer from '../../Moormanage/Customer/AddCustomer'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import Header from '../../Layout/LayoutComponents/Header'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
+import { Paginator } from 'primereact/paginator'
+import { ProgressSpinner } from 'primereact/progressspinner'
+
 
 const AccountRecievable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [accountRecievableData, setAccountRecievableData] = useState<MoorPayProps[]>([])
+  const [pageNumber1, setPageNumber1] = useState(0)
+  const [pageSize, setPageSize] = useState(10)
+  const [isLoading, setIsLoading] = useState(false)
+
 
   const handleButtonClick = () => {
     // setIsModalOpen(true)
+  }
+
+  const onPageChange = (event: any) => {
+    // setPageNumber(event.page)
+    setPageNumber1(event.first)
+    setPageSize(event.rows)
   }
 
   const handleModalClose = () => {
@@ -26,10 +39,10 @@ const AccountRecievable = () => {
   )
 
   const columnStyle = {
-    borderBottom: '1px solid #C0C0C0',
     backgroundColor: '#FFFFFF',
     color: '#000000',
-    fontWeight: 'bold',
+    fontWeight: '500',
+    fontSize: '12px',
   }
 
   const accountRecievableTableColumn = useMemo(
@@ -40,7 +53,7 @@ const AccountRecievable = () => {
         style: columnStyle,
       },
       {
-        id: 'mooringId',
+        id: 'mooringNumber',
         label: 'Mooring Number',
         style: columnStyle,
       },
@@ -80,6 +93,11 @@ const AccountRecievable = () => {
         color: 'green',
         label: 'Approve',
         filled: true,
+        fontWeight: 400,
+        style: {
+          width: '46px',
+          height: '17px',
+        },
       },
       {
         color: 'red',
@@ -94,7 +112,7 @@ const AccountRecievable = () => {
       color: 'black',
       borderBottom: '1px solid #C0C0C0',
     },
-    style: { borderBottom: '1px solid #D5E1EA' },
+    style: { borderBottom: '1px solid #D5E1EA' , fontWeight: '400' },
   }
 
   return (
@@ -103,15 +121,24 @@ const AccountRecievable = () => {
 
       {/* <div className="flex justify-end mr-16">
         <div className="flex gap-4 ml-[18rem] text-[gray] font-extrabold mt-14">
-          <div style={{ marginTop: '0.8rem' }}>
+          <div style={{ marginTop: '0rem' }}>
             <img src="/assets/images/downloadIcon.png" alt="" className="w-5 " />
           </div>
 
-          <div style={{ marginTop: '0.6rem', color: '#00426F', marginRight: '1.5rem' }}>
+          <div style={{ marginTop: '0rem', color: '#00426F', marginRight: '1.5rem' }}>
+            <h1>Download Excel</h1>
+          </div>
+        </div> */}
+        <div className="flex justify-end mr-16">
+        <div className="flex gap-2 ml-[18rem] text-[gray] font-extrabold mt-10">
+          <div style={{ marginTop: '0.1rem' }}>
+            <img src="/assets/images/downloadIcon.png" alt="" className="w-5 " />
+          </div>
+          <div style={{ marginTop: '0 rem', color: '#00426F', marginRight: '1.5rem' }}>
             <h1>Download Excel</h1>
           </div>
         </div>
-        <div className="mt-14 ">
+        <div className="mt-8 ">
           <CustomModal
             buttonText={'ADD NEW'}
             children={
@@ -159,7 +186,7 @@ const AccountRecievable = () => {
           opacity: '0px',
           backgroundColor: '#FFFFFF',
         }}
-        className="bg-[F2F2F2]  ml-12  mt-10 mr-14">
+        className="bg-[F2F2F2]  ml-12  mt-6 mr-14">
         <div className="flex flex-wrap align-items-center justify-between  bg-[#00426F] p-2   rounded-tl-[10px] rounded-tr-[10px]">
           <span
             style={{
@@ -173,11 +200,16 @@ const AccountRecievable = () => {
             Account Receivable
           </span>
         </div>
-
-        <div className="text-center mt-40">
+        {/* <div
+          data-testid="customer-admin-data"
+          className="flex flex-col  "
+          style={{ height: '630px' }}
+        >
+          <div className="flex-grow overflow-auto"> */}
+        {/* <div className="text-center mt-40">
           <img src="/assets/images/empty.png" alt="Empty Data" className="w-32 mx-auto mb-4" />
           <p className="text-gray-500">No data available</p>
-        </div>
+        </div> */}
         <DataTableComponent
           tableStyle={{
             fontSize: '12px',
@@ -187,9 +219,61 @@ const AccountRecievable = () => {
           data={undefined}
           columns={accountRecievableTableColumn}
           actionButtons={ActionButtonColumn}
-          style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
+          style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
         />
-      </div> */}
+        {/* <div className="text-center ">
+                <img
+                  src="/assets/images/empty.png"
+                  alt="Empty Data"
+                  className="w-10 mx-auto mt-10 mb-3"
+                />
+                <p className="text-gray-500">No data available</p>
+              </div> */}
+              <div className="text-center mt-40">
+                   <img
+                  src="/assets/images/empty.png"
+                  alt="Empty Data"
+                  className="w-20 mx-auto mb-4"
+                />
+                <p className="text-gray-500">No data available</p>
+                {isLoading && (
+                      <ProgressSpinner
+                        style={{
+                          position: 'absolute',
+                          top: '50%',
+                          left: '60%',
+                          transform: 'translate(-50%, -50%)',
+                          width: '50px',
+                          height: '50px',
+                  }}
+                        strokeWidth="4"
+                      />
+                    )}
+                </div>
+
+              <div className="mt-40">
+            <Paginator
+              first={pageNumber1}
+              rows={pageSize}
+              totalRecords={120}
+              rowsPerPageOptions={[5, 10, 20, 30]}
+              onPageChange={onPageChange}
+              style={{
+                position: 'sticky',
+                bottom: 0,
+                zIndex: 1,
+                backgroundColor: 'white',
+                borderTop: '1px solid #D5E1EA',
+                padding: '0.5rem',
+              }}
+            />
+          </div>
+      </div>
+      {/* <div className="text-center mt-40">
+          <img src="/assets/images/empty.png" alt="Empty Data" className="w-32 mx-auto mb-4" />
+          <p className="text-gray-500">No data available</p>
+        </div> */}
+
     </>
   )
 }
