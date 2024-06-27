@@ -643,7 +643,7 @@ const Boatyards = () => {
                 tableStyle={{
                   fontSize: '12px',
                   color: '#000000',
-                  fontWeight: 600,
+                  fontWeight: 500,
                   backgroundColor: '#D9D9D9',
                   cursor: 'pointer',
                 }}
@@ -669,7 +669,8 @@ const Boatyards = () => {
                       alt="Empty Data"
                       className="w-20 mx-auto mb-4"
                     />
-                    <p className="text-gray-500">No data available</p>
+                    <p className="text-gray-500 text-lg font-bold">No data available</p>
+
                   </div>
                 }
               />
@@ -767,8 +768,13 @@ const Boatyards = () => {
             BoatyardMoorings
           ) : (
             <div className="text-center mt-40 mb-10">
-              <img src="/assets/images/empty.png" alt="Empty Data" className="w-20 mx-auto mb-4" />
-              <p className="text-gray-500">No data available</p>
+              <img
+                src="/assets/images/empty.png"
+                alt="Empty Data"
+                className="w-20 mx-auto mb-4"
+              />
+              <p className="text-gray-500 text-lg font-bold">No data available</p>
+
             </div>
           )}
         </div>

@@ -46,6 +46,11 @@
 .p-datatable .p-datatable-tbody > tr {
   background: #ffffff;
 }
+.p-datatable .p-datatable-tbody > tr > td{
+  border: none ;
+  border-width: none ;
+}
+
 
 .p-datatable-thead > th {
   background: #f2f2f2;
@@ -181,9 +186,8 @@ input[type='number']::-webkit-outer-spin-button {
   width: 500px, */
   height: 50px;
   width: 440px;
-
 }
+
 .p-inputtext {
   font-size: 0.8rem;
-  padding: 0;
 }

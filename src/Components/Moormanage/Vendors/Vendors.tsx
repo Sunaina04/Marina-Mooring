@@ -323,12 +323,13 @@ const Vendors = () => {
                 style={{ backgroundColor: '#FFFFFF', borderBottom: '1px solid #D5E1EA' }}
                 emptyMessage={
                   <div className="text-center mt-40">
-                    <img
+                           <img
                       src="/assets/images/empty.png"
                       alt="Empty Data"
-                      className="w-32 mx-auto mb-4"
+                      className="w-28 mx-auto mb-4"
                     />
-                    <p className="text-gray-500">No data available</p>
+                    <p className="text-gray-500 font-[600] text-lg">No data available</p>
+
                     {isLoading && (
                       <ProgressSpinner
                         style={{

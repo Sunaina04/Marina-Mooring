@@ -548,9 +548,9 @@ const Moorings = () => {
 
       <div className="flex flex-col md:flex-row mt-3">
         {/* Left Panel */}
-        <div 
-        // style={{border:"1px solid red"}}
-        className="flex-grow bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-6 md:mb-0 w-[600px]">
+        <div
+          // style={{border:"1px solid red"}}
+          className="flex-grow bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-6 md:mb-0 w-[600px] h-[730px]">
           {/* Header */}
           <div className="bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px] text-white">
             <h1 className="p-4 text-xl font-extrabold">{properties.customerMooringHeader}</h1>
@@ -610,13 +610,13 @@ const Moorings = () => {
                 rowStyle={(rowData: any) => rowData}
                 emptyMessage={
                   <div className="text-center mt-40">
-                    <img
-                      src="/assets/images/empty.png"
-                      alt="Empty Data"
-                      className="w-28 mx-auto mb-4"
-                    />
-                    <p className="text-gray-500 text-lg">No data available</p>
-                  </div>
+                      <img
+                        src="/assets/images/empty.png"
+                        alt="Empty Data"
+                        className="w-20 mx-auto mb-4"
+                      />
+                      <p className="text-gray-500 text-lg">No data available</p>
+                    </div>
                 }
               />
             </div>
@@ -629,7 +629,7 @@ const Moorings = () => {
                 onPageChange={onPageChange}
                 style={{
                   position: 'sticky',
-                  bottom: 0,
+                  bottom: '50px',
                   zIndex: 1,
                   backgroundColor: 'white',
                   borderTop: '1px solid #D5E1EA',
@@ -661,7 +661,7 @@ const Moorings = () => {
           <CustomMooringPositionMap
             position={initialPosition}
             zoomLevel={10}
-            style={{ height: '800px' }}
+            style={{ height: '728px' }}
             iconsByStatus={iconsByStatus}
             moorings={mooringResponseData}
           />
@@ -669,9 +669,11 @@ const Moorings = () => {
 
         {/* last container */}
 
-        <div className="lg:flex-row ml-5 mr-6 w-[500px]">
+        <div className="lg:flex-row ml-5 mr-6 w-[500px] ">
           {/* Left Panel - Customer Record */}
-          <div className="flex-grow rounded-md border bg-white">
+          <div
+            // style={{border:"1px solid red"}}
+            className="rounded-md border bg-white">
             <div className="bg-[#00426F] rounded-t-[10px] flex justify-between pb-2">
               <div className="text-sm font-semibold rounded-t-md bg-[]">
                 <h1 className="p-4 text-lg text-white">{'Customers Record'}</h1>
@@ -695,14 +697,14 @@ const Moorings = () => {
             {customerRecordData ? (
               CustomerDetails
             ) : (
-              <div className="text-center ">
-                <img
-                  src="/assets/images/empty.png"
-                  alt="Empty Data"
-                  className="w-10 mx-auto mt-10 mb-3"
-                />
-                <p className="text-gray-500 font-extrabold mb-10">No data available</p>
-              </div>
+              <div className="text-center mt-40">
+              <img
+                src="/assets/images/empty.png"
+                alt="Empty Data"
+                className="w-20 mx-auto mb-4"
+              />
+              <p className="text-gray-500 font-[600] text-lg">No data available</p>
+            </div>
             )}
           </div>
 
@@ -720,7 +722,7 @@ const Moorings = () => {
             />
           )}
 
-          <div className="flex-grow bg-white rounded-md border">
+          <div className="flex-grow  bg-white rounded-md border">
             <div
               style={{
                 backgroundColor: '#00426F',
@@ -733,7 +735,8 @@ const Moorings = () => {
             </div>
 
             <div
-              className={`bg-#00426F overflow-x-hidden h-[500px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col ${isLoading ? 'blur-screen' : ''}`}>
+              // style={{border:"1px solid red"}}
+              className={`bg-#00426F  h-[439px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col ${isLoading ? 'blur-screen' : ''}`}>
               <div className="flex-grow overflow-auto">
                 <DataTableComponent
                   style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
@@ -759,7 +762,7 @@ const Moorings = () => {
                   dataKey="id"
                   rowStyle={(rowData: any) => rowData}
                   emptyMessage={
-                    <div className="text-center mt-40">
+                    <div className="text-center mt-28">
                       <img
                         src="/assets/images/empty.png"
                         alt="Empty Data"
@@ -784,21 +787,23 @@ const Moorings = () => {
                   />
                 )}
               </div>
-              <Paginator
-                first={pageNumber2}
-                rows={pageSizeTwo}
-                totalRecords={totalRecordsTwo}
-                rowsPerPageOptions={[5, 10, 20, 30]}
-                onPageChange={onPageChangeTwo}
-                style={{
-                  position: 'sticky',
-                  bottom: 0,
-                  zIndex: 1,
-                  backgroundColor: 'white',
-                  borderTop: '1px solid #D5E1EA',
-                  padding: '0.5rem',
-                }}
-              />
+              <div className="mt-auto">
+                <Paginator
+                  first={pageNumber2}
+                  rows={pageSizeTwo}
+                  totalRecords={totalRecordsTwo}
+                  rowsPerPageOptions={[5, 10, 20, 30]}
+                  onPageChange={onPageChangeTwo}
+                  style={{
+                    position: 'sticky',
+                    bottom: 0,
+                    zIndex: 1,
+                    backgroundColor: 'white',
+                    borderTop: '1px solid #D5E1EA',
+                    padding: '0.5rem',
+                  }}
+                />
+              </div>
             </div>
           </div>
         </div>
