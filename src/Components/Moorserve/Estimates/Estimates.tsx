@@ -205,9 +205,9 @@ const Estimates = () => {
           <div className="flex text-gray-600 mt-3 font-extrabold">
             <div className="">
               <img
-                src="/assets/images/Group.png"
-                alt=""
-                className="w-24 font-bold cursor-pointer"
+                src="/assets/images/Download.png"
+                alt="DownLoad"
+                className="w-30 h-6 cursor-pointer"
                 onClick={() => dataToXlsx(estimateData)}
               />
             </div>
@@ -315,7 +315,7 @@ const Estimates = () => {
                 style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
                 emptyMessage={
                   <div className="text-center mt-40">
-                 <img
+                    <img
                       src="/assets/images/empty.png"
                       alt="Empty Data"
                       className="w-28 mx-auto mb-4"
@@ -364,5 +364,3 @@ const Estimates = () => {
 }
 
 export default Estimates
-
-      

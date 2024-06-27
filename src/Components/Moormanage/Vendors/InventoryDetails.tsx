@@ -252,7 +252,7 @@ const InventoryDetails: React.FC = () => {
         <div className="flex gap-4 mr-12 mt-8">
           <div>
             <div className="p-input-icon-left">
-              <IoSearchSharp className="ml-2 text-blue-900" />
+              <IoSearchSharp className="text-blue-900" />
               <InputText
                 value={searchText}
                 onChange={handleSearch}

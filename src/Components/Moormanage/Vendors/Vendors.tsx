@@ -241,7 +241,7 @@ const Vendors = () => {
           <div className="flex gap-4 mr-12 mt-6">
             <div>
               <div className="p-input-icon-left">
-                <IoSearchSharp className="ml-2 text-blue-900" />
+                <IoSearchSharp className="text-blue-900" />
                 <InputText
                   value={searchText}
                   onChange={handleSearch}
@@ -323,7 +323,7 @@ const Vendors = () => {
                 style={{ backgroundColor: '#FFFFFF', borderBottom: '1px solid #D5E1EA' }}
                 emptyMessage={
                   <div className="text-center mt-40">
-                           <img
+                    <img
                       src="/assets/images/empty.png"
                       alt="Empty Data"
                       className="w-28 mx-auto mb-4"

@@ -457,8 +457,7 @@ const Boatyards = () => {
   const BoatyardMoorings = useMemo(() => {
     return (
       <>
-        <div
-          className={`flex justify-between mt-4 p-3 ml-5 font-normal text-[12px] ${isLoader ? 'blur-screen' : ''}`}>
+        <div className={`flex justify-between mt-4 p-3 ml-5 font-normal text-[12px]`}>
           <p className="">
             {`${selectedBoatYard?.street || '-'}, ${selectedBoatYard?.apt || '-'}, ${selectedBoatYard?.stateResponseDto?.name || '-'}, ${selectedBoatYard?.countryResponseDto?.name || '-'}`}
           </p>
@@ -467,7 +466,7 @@ const Boatyards = () => {
         </div>
 
         <div
-          className={`h-[150px] mt-[30px] mb-6 sticky ${isLoader || modalVisible ? 'blur-screen' : ''}`}
+          className={`h-[150px] mt-[30px] mb-6 sticky`}
           style={{
             flexGrow: 1,
             border: '1px solid #D5E1EA',
@@ -480,7 +479,7 @@ const Boatyards = () => {
         </div>
 
         <div
-          className={`bg-#00426F overflow-x-hidden h-[360px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col ${isLoading ? 'blur-screen' : ''}`}>
+          className={`bg-#00426F overflow-x-hidden h-[360px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col`}>
           <div className="flex-grow overflow-y-auto">
             <DataTableComponent
               tableStyle={{
@@ -559,7 +558,7 @@ const Boatyards = () => {
         <div className="flex gap-6 ">
           <div>
             <div className="p-input-icon-left">
-              <IoSearchSharp className="ml-2 text-blue-900" />
+              <IoSearchSharp className="text-blue-900" />
               <InputText
                 value={searchFieldText}
                 onChange={handleSearchField}
@@ -637,7 +636,7 @@ const Boatyards = () => {
             }}
           />
           <div
-            className={`bg-#00426F overflow-x-hidden h-[590px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col ${isLoading ? 'blur-screen' : ''}`}>
+            className={`bg-#00426F overflow-x-hidden h-[590px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col`}>
             <div className="flex-grow overflow-auto">
               <DataTableComponent
                 tableStyle={{
@@ -670,7 +669,6 @@ const Boatyards = () => {
                       className="w-20 mx-auto mb-4"
                     />
                     <p className="text-gray-500 text-lg font-bold">No data available</p>
-
                   </div>
                 }
               />
@@ -733,7 +731,7 @@ const Boatyards = () => {
                 </div>
               </div>
             </div>
-            <div className={`bg-[] mt-2 ml-5 ${isLoader ? 'blur-screen' : ''}`}>
+            <div className={`bg-[] mt-2 ml-5`}>
               <div
                 className="flex justify-between p-2 mr-10 "
                 style={{
@@ -768,13 +766,8 @@ const Boatyards = () => {
             BoatyardMoorings
           ) : (
             <div className="text-center mt-40 mb-10">
-              <img
-                src="/assets/images/empty.png"
-                alt="Empty Data"
-                className="w-20 mx-auto mb-4"
-              />
+              <img src="/assets/images/empty.png" alt="Empty Data" className="w-20 mx-auto mb-4" />
               <p className="text-gray-500 text-lg font-bold">No data available</p>
-
             </div>
           )}
         </div>

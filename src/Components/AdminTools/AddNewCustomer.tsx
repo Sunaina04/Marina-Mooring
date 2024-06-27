@@ -953,6 +953,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 <div style={{ position: 'relative', width: '230px', marginBottom: '10px' }}>
                   <InputComponent
                     value={password}
+                    type="password"
                     onChange={(e) => handleInputChange('password', e.target.value)}
                     onBlur={handleBlur}
                     style={{
@@ -1059,6 +1060,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 <div style={{ position: 'relative', marginBottom: '10px' }}>
                   <InputComponent
                     value={confirmPassword}
+                    type="password"
                     onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
                     style={{
                       width: '230px',
