@@ -65,6 +65,20 @@ const AddInventory: React.FC<AddInventoryProps> = ({
     return newErrors
   }
 
+  const handleYesChange = (e: any) => {
+    const isChecked = e.target.checked
+    setChecked(isChecked)
+    setUnChecked(false)
+    setErrors((prevErrors) => ({ ...prevErrors, taxable: '' }))
+  }
+
+  const handleNoChange = (e: any) => {
+    const isChecked = e.target.checked
+    setChecked(false)
+    setUnChecked(isChecked)
+    setErrors((prevErrors) => ({ ...prevErrors, taxable: '' }))
+  }
+
   const handleEditMode = () => {
     setFormData((prevState: any) => ({
       ...prevState,
@@ -134,11 +148,6 @@ const AddInventory: React.FC<AddInventoryProps> = ({
     const errors = validateFields()
     if (Object.keys(errors).length > 0) {
       return
-    }
-    if (selectedInventory?.taxable === true) {
-      setChecked(true)
-    } else {
-      setUnChecked(true)
     }
 
     try {
@@ -323,47 +332,36 @@ const AddInventory: React.FC<AddInventoryProps> = ({
                 <p className="text-red-600">*</p>
               </div>
             </div>
-            <div className="flex mt-3 gap-5">
-              <div className="flex gap-2">
-                <div>
-                  <Checkbox
-                    onChange={(e) => {
-                      setChecked(e.checked ?? false)
-                      setUnChecked(!e.checked)
-                      setErrors((prevErrors) => ({ ...prevErrors, taxable: '' }))
-                    }}
-                    checked={checked}
-                    style={{
-                      border: '1px solid #D5E1EA',
-                      height: '22px',
-                      width: '22px',
-                      borderRadius: '5px',
-                    }}
-                  />
-                </div>
-                <div className="font-medium text-sm text-[#000000]">
-                  <p>Yes</p>
+            <div className="flex mt-3 gap-5 items-center">
+              <div className="flex gap-2 items-center">
+                <div className="flex gap-4 items-center">
+                  <span>
+                    <label className="custom-checkbox-container">
+                      <input
+                        type="checkbox"
+                        onChange={handleYesChange}
+                        checked={checked}
+                        className="custom-checkbox-input"
+                      />
+                      <span className="custom-checkbox"></span>
+                    </label>
+                  </span>
+                  <p className="font-medium text-lg text-[#000000] ml-[14px]">Yes</p>
                 </div>
               </div>
-              <div className="flex gap-2">
-                <div>
-                  <Checkbox
-                    onChange={(e) => {
-                      setChecked(!e.checked)
-                      setUnChecked(e.checked ?? false)
-                      setErrors((prevErrors) => ({ ...prevErrors, taxable: '' }))
-                    }}
-                    checked={unChecked}
-                    style={{
-                      border: '1px solid #D5E1EA',
-                      height: '22px',
-                      width: '22px',
-                      borderRadius: '5px',
-                    }}></Checkbox>
-                </div>
-                <div className="font-medium text-sm text-[#000000]">
-                  <p>No</p>
-                </div>
+              <div className="flex gap-4 items-center">
+                <span>
+                  <label className="custom-checkbox-container">
+                    <input
+                      type="checkbox"
+                      onChange={handleNoChange}
+                      checked={unChecked}
+                      className="custom-checkbox-input"
+                    />
+                    <span className="custom-checkbox"></span>
+                  </label>
+                </span>
+                <p className="font-medium text-lg text-[#000000] ml-[14px]">No</p>
               </div>
 
               {errors.taxable && <small className="p-error">{errors.taxable}</small>}
