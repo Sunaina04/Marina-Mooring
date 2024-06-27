@@ -270,7 +270,7 @@ const WorkOrders = () => {
                   backgroundColor: '#D9D9D9',
                   cursor: 'pointer',
                 }}
-                data={[]}
+                data={workOrderData}
                 columns={workOrderColumns}
                 actionButtons={ActionButtonColumn}
                 style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}

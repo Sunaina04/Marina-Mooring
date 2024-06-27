@@ -53,7 +53,6 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const phoneRegex = /^.{10}$|^.{12}$/
     const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/
-    const zipCodeRegex = /^\d+$/
 
     if (!formData.phone) {
       errors.phone = 'Phone is required'
@@ -109,7 +108,6 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
     if (!formData.accountNumber) errors.accountNumber = 'accountNumber is required'
     if (!formData.firstName) errors.firstName = 'firstName is required'
     if (!formData.lastName) errors.lastName = 'lastName is required'
-    // if (!formData.phoneForRepresentative) errors.phoneForRepresentative = 'phone is required'
     if (!formData.note) errors.note = 'note is required'
 
     setFieldErrors(errors)
