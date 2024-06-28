@@ -32,7 +32,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
       )}
       <Dialog
         header={headerText}
-        headerStyle={{ cursor: 'alias' }}
+        headerStyle={{ cursor: 'context-menu' }}
         {...dialogProps}
         visible={visible}
         modal={false}
