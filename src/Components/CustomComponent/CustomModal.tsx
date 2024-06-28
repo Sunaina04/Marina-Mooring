@@ -26,13 +26,13 @@ const CustomModal: React.FC<CustomModalProps> = ({
             // <img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8 ml-4 mb-0.5" />
             icon
           }
-
           onClick={onClick}
           style={buttonStyle}
         />
       )}
       <Dialog
         header={headerText}
+        headerStyle={{ cursor: 'alias' }}
         {...dialogProps}
         visible={visible}
         modal={false}
