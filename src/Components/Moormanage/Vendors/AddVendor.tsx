@@ -330,6 +330,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
 
   return (
     <>
+    <div className={isLoading ? 'blurred' : ''}>
       <div className="main">
         <Toast ref={toastRef} />
         <div className="flex">
@@ -460,6 +461,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                       optionLabel="name"
                       editable
                       placeholder="Country"
+                      disabled={isLoading}
                       className=""
                       style={{
                         width: '178.39px',
@@ -536,6 +538,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                       optionLabel="name"
                       editable
                       placeholder="State"
+                      disabled={isLoading}
                       className=""
                       style={{
                         width: '178.39px',
@@ -627,6 +630,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                       optionLabel="name"
                       editable
                       placeholder="Country"
+                      disabled={isLoading}
                       className=""
                       style={{
                         width: '178.39px',
@@ -705,6 +709,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                         optionLabel="name"
                         editable
                         placeholder="State"
+                        disabled={isLoading}
                         className=""
                         style={{
                           width: '178.39px',
@@ -976,47 +981,47 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
           </div>
         </div>
       </div>
-
-      <div
-        className="flex gap-6 bottom-2 absolute left-6"
-        style={{
-          width: '100%',
-          height: '80px',
-          backgroundColor: 'white',
-          padding: '0 12px',
-          bottom: '0px',
-        }}>
-        <Button
-          onClick={handleClick}
-          label={'Save'}
-          style={{
-            width: '89px',
-            height: '42px',
-            backgroundColor: '#0098FF',
-            cursor: 'pointer',
-            fontWeight: 'bolder',
-            fontSize: '1rem',
-            boxShadow: 'none',
-            color: 'white',
-            borderRadius: '0.50rem',
-            marginTop: '10px',
-          }}
-        />
-        <Button
-          onClick={closeModal}
-          label={'Back'}
-          text={true}
-          style={{
-            backgroundColor: 'white',
-            color: '#000000',
-            border: 'none',
-            width: '89px',
-            height: '42px',
-            marginTop: '10px',
-          }}
-        />
-      </div>
-    </>
+    </div>
+     <div
+     className={`"flex gap-6 bottom-2 absolute left-6" ${isLoading ? "blurred" : ""}`}
+     style={{
+       width: '100%',
+       height: '80px',
+       backgroundColor: 'white',
+       padding: '0 12px',
+       bottom: '0px',
+     }}>
+     <Button
+       onClick={handleClick}
+       label={'Save'}
+       style={{
+         width: '89px',
+         height: '42px',
+         backgroundColor: '#0098FF',
+         cursor: 'pointer',
+         fontWeight: 'bolder',
+         fontSize: '1rem',
+         boxShadow: 'none',
+         color: 'white',
+         borderRadius: '0.50rem',
+         marginTop: '10px',
+       }}
+     />
+     <Button
+       onClick={closeModal}
+       label={'Back'}
+       text={true}
+       style={{
+         backgroundColor: 'white',
+         color: '#000000',
+         border: 'none',
+         width: '89px',
+         height: '42px',
+         marginTop: '10px',
+       }}
+     />
+   </div>
+   </>
   )
 }
 

@@ -713,8 +713,8 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   }, [editModeWorkOrder, editModeEstimate])
 
   return (
-    <div>
-      <div className="w-full h-full ml-4">
+    <>
+      <div className={`"w-full h-full ml-4" ${isLoading ? "blurred" : ""}`}>
         <Toast ref={toastRef} />
 
         {/* Customer Name */}
@@ -733,6 +733,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 options={CustomerNameOptions}
                 optionLabel="firstName"
                 editable
+                disabled={isLoading}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -765,6 +766,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 options={MooringNameOptions}
                 optionLabel="mooringNumber"
                 editable
+                disabled={isLoading}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -862,6 +864,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 options={boatyardsNameOptions}
                 optionLabel="boatyardName"
                 editable
+                disabled={isLoading}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -894,6 +897,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 options={technicians}
                 optionLabel="name"
                 editable
+                disabled={isLoading}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -1001,6 +1005,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 options={workOrderStatusValue}
                 optionLabel="status"
                 editable
+                disabled={isLoading}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -1092,10 +1097,10 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
           </div>
           <p>{errorMessage.value && <small className="p-error">{errorMessage.value}</small>}</p>
         </div>
-
-        {/* Save and Back buttons */}
-        <div
-          className="flex gap-6 bottom-2 absolute left-7"
+      </div>
+       {/* Save and Back buttons */}
+       <div
+          className={`"flex gap-6 bottom-2 absolute left-7" ${isLoading ? "blurred" : ""}`}
           style={{
             width: '100%',
             height: '80px',
@@ -1137,8 +1142,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
             }}
           />
         </div>
-      </div>
-    </div>
+    </>
   )
 }
 
