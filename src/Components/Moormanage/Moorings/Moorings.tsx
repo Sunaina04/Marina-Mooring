@@ -549,76 +549,78 @@ const Moorings = () => {
       <div className="flex flex-col md:flex-row mt-3">
         {/* Left Panel */}
         <div
-          // style={{border:"1px solid red"}}
-          className="flex-grow bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-12 md:mb-0 w-[600px]">
-          {/* Header */}
-          <div className="bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px] text-white">
-            <h1 className="p-4 text-xl font-extrabold">{properties.customerMooringHeader}</h1>
-          </div>
-
-          <InputTextWithHeader
-            value={searchText}
-            onChange={handleSearch}
-            placeholder="Search by name, ID, phone no.... "
-            inputTextStyle={{
-              width: '100%',
-              height: '44px',
-              padding: '0 4rem 0 3rem',
-              border: '1px solid #C5D9E0',
-              fontSize: '16px',
-              color: '#000000',
-              borderRadius: '4px',
-              minHeight: '44px',
-              fontWeight: 400,
-              backgroundColor: 'rgb(242 242 242 / 0%)',
-            }}
-            borderBottom={{ border: '1px solid #D5E1EA' }}
-            iconStyle={{
-              position: 'absolute',
-              left: '15px',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              width: '18px',
-              height: '18px',
-            }}
-          />
-
-          <div
-            className={`bg-#00426F overflow-x-hidden h-[590px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col ${isLoading ? 'blur-screen' : ''}`}>
-            <div className="flex-grow overflow-auto">
-              <DataTableComponent
-                data={mooringData}
-                tableStyle={{
-                  fontSize: '12px',
-                  color: '#000000',
-                  fontWeight: 600,
-                  backgroundColor: '#D9D9D9',
-                }}
-                scrollable={true}
-                columns={tableColumns}
-                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
-                onRowClick={(row) => {
-                  handleMooringRowClick(row.data)
-                }}
-                selectionMode="single"
-                onSelectionChange={(e) => {
-                  setSelectedProduct(e.value)
-                }}
-                selection={selectedProduct}
-                dataKey="id"
-                rowStyle={(rowData: any) => rowData}
-                emptyMessage={
-                  <div className="text-center mt-40">
-                    <img
-                      src="/assets/images/empty.png"
-                      alt="Empty Data"
-                      className="w-28 mx-auto mb-4"
-                    />
-                    <p className="text-gray-500 text-lg">No data available</p>
-                  </div>
-                }
-              />
+          style={{
+            height: '700px',
+            minHeight: '700px',
+            width: '500px',
+            minWidth: '500px',
+            backgroundColor: '#FFFFFF',
+            position: 'relative',
+          }}
+          className="flex-1 ml-[45px] w-[550px]">
+          <div data-testid="customer-data" className="flex flex-col h-full">
+            <div className="bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px] text-white">
+              <h1 className="p-4 text-xl font-extrabold">{properties.mooringHeader}</h1>
             </div>
+
+            <InputTextWithHeader
+              value={searchText}
+              onChange={handleSearch}
+              placeholder="Search by name, ID, phone no.... "
+              inputTextStyle={{
+                width: '100%',
+                height: '44px',
+                padding: '0 4rem 0 3rem',
+                border: '1px solid #C5D9E0',
+                fontSize: '16px',
+                color: '#000000',
+                borderRadius: '4px',
+                minHeight: '44px',
+                fontWeight: 400,
+                backgroundColor: 'rgb(242 242 242 / 0%)',
+              }}
+              borderBottom={{ border: '1px solid #D5E1EA' }}
+              iconStyle={{
+                position: 'absolute',
+                left: '15px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                width: '18px',
+                height: '18px',
+              }}
+            />
+            <DataTableComponent
+              data={mooringData}
+              tableStyle={{
+                fontSize: '12px',
+                color: '#000000',
+                fontWeight: 600,
+                backgroundColor: '#D9D9D9',
+              }}
+              scrollable={true}
+              columns={tableColumns}
+              style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+              onRowClick={(row) => {
+                handleMooringRowClick(row)
+              }}
+              selectionMode="single"
+              onSelectionChange={(e) => {
+                setSelectedProduct(e.value)
+              }}
+              selection={selectedProduct}
+              dataKey="id"
+              rowStyle={(rowData: any) => rowData}
+              emptyMessage={
+                <div className="text-center mt-40">
+                  <img
+                    src="/assets/images/empty.png"
+                    alt="Empty Data"
+                    className="w-28 mx-auto mb-4"
+                  />
+                  <p className="text-gray-500 text-lg">No data available</p>
+                </div>
+              }
+            />
             <div className="mt-auto">
               <Paginator
                 first={pageNumber1}
@@ -656,11 +658,11 @@ const Moorings = () => {
         {/* middle container */}
 
         <div
-          className={`min-w-[21vw] min-h[50vw] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
+          className={`min-w-[21vw] min-h[700px] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
           <CustomMooringPositionMap
             position={initialPosition}
             zoomLevel={10}
-            style={{ height: '800px' }}
+            style={{ height: '700px' }}
             iconsByStatus={iconsByStatus}
             moorings={mooringResponseData}
           />
@@ -735,7 +737,7 @@ const Moorings = () => {
             </div>
 
             <div
-              className={`bg-#00426F overflow-x-hidden h-[500px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col ${isLoading ? 'blur-screen' : ''}`}>
+              className={`bg-#00426F overflow-x-hidden h-[400px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col`}>
               <div className="flex-grow overflow-auto">
                 <DataTableComponent
                   style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
@@ -943,6 +945,94 @@ const Moorings = () => {
 }
 
 export default Moorings
+
+//   className="flex-grow bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-12 md:mb-0 w-[600px]">
+//   <div className="bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px] text-white">
+//     <h1 className="p-4 text-xl font-extrabold">{properties.customerMooringHeader}</h1>
+//   </div>
+
+//   <InputTextWithHeader
+//     value={searchText}
+//     onChange={handleSearch}
+//     placeholder="Search by name, ID, phone no.... "
+//     inputTextStyle={{
+//       width: '100%',
+//       height: '44px',
+//       padding: '0 4rem 0 3rem',
+//       border: '1px solid #C5D9E0',
+//       fontSize: '16px',
+//       color: '#000000',
+//       borderRadius: '4px',
+//       minHeight: '44px',
+//       fontWeight: 400,
+//       backgroundColor: 'rgb(242 242 242 / 0%)',
+//     }}
+//     borderBottom={{ border: '1px solid #D5E1EA' }}
+//     iconStyle={{
+//       position: 'absolute',
+//       left: '15px',
+//       top: '50%',
+//       transform: 'translateY(-50%)',
+//       width: '18px',
+//       height: '18px',
+//     }}
+//   />
+
+//   <div
+//     className={`bg-#00426F overflow-x-hidden h-[590px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col ${isLoading ? 'blur-screen' : ''}`}>
+//     <div className="flex-grow overflow-auto">
+//       <DataTableComponent
+//         data={mooringData}
+//         tableStyle={{
+//           fontSize: '12px',
+//           color: '#000000',
+//           fontWeight: 600,
+//           backgroundColor: '#D9D9D9',
+//         }}
+//         scrollable={true}
+//         columns={tableColumns}
+//         style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+//         onRowClick={(row) => {
+//           handleMooringRowClick(row.data)
+//         }}
+//         selectionMode="single"
+//         onSelectionChange={(e) => {
+//           setSelectedProduct(e.value)
+//         }}
+//         selection={selectedProduct}
+//         dataKey="id"
+//         rowStyle={(rowData: any) => rowData}
+//         emptyMessage={
+//           <div className="text-center mt-40">
+//             <img
+//               src="/assets/images/empty.png"
+//               alt="Empty Data"
+//               className="w-28 mx-auto mb-4"
+//             />
+//             <p className="text-gray-500 text-lg">No data available</p>
+//           </div>
+//         }
+//       />
+//     </div>
+//     <div className="mt-auto">
+//       <Paginator
+//         first={pageNumber1}
+//         rows={pageSize}
+//         totalRecords={totalRecords}
+//         rowsPerPageOptions={[5, 10, 20, 30]}
+//         onPageChange={onPageChange}
+//         style={{
+//           position: 'sticky',
+//           bottom: 0,
+//           zIndex: 1,
+//           backgroundColor: 'white',
+//           borderTop: '1px solid #D5E1EA',
+//           padding: '0.5rem',
+//         }}
+//       />
+//     </div>
+//   </div>
+// </div>
 
 // import CustomModal from '../../CustomComponent/CustomModal'
 // import AddMoorings from './AddMoorings'

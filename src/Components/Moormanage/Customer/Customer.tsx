@@ -709,13 +709,9 @@ const Customer = () => {
 
         {/* last container */}
 
-        <div 
-        // style={{border:"1px solid red"}}
-        className="ml-5 mr-12 min-h[400px]">
+        <div className="ml-5 mr-12">
           {/* Left Panel - Customer Record */}
-          <div 
-            //  style={{border:"1px solid red"}}
-          className="flex-grow border bg-white h-[220px]">
+          <div className="flex-grow border bg-white">
             <div className="bg-[#10293A] rounded-t-[10px] flex justify-between">
               <div className="text-sm font-semibold rounded-t-md">
                 <h1 className="p-3 text-white text-lg font-extrabold">
