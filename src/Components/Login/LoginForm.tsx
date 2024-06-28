@@ -239,10 +239,10 @@ export default function LoginForm() {
                     className="p-clickable"
                     style={{
                       position: 'absolute',
-                      left: '10px',
-                      top: '50%',
+                      left: '13px',
+                      top: '55%',
                       transform: 'translateY(-50%)',
-                      width: '20px',
+                      width: '22px',
                       height: '20px',
                       pointerEvents: 'none',
                     }}
