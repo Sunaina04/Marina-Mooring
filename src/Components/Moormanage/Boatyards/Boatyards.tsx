@@ -513,21 +513,20 @@ const Boatyards = () => {
                 </div>
               }
             />
-
-            {isLoader && (
-              <ProgressSpinner
-                style={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  transform: 'translate(-50%, -50%)',
-                  width: '50px',
-                  height: '50px',
-                }}
-                strokeWidth="4"
-              />
-            )}
           </div>
+          {isLoader && (
+            <ProgressSpinner
+              style={{
+                position: 'absolute',
+                top: '80%',
+                left: '60%',
+                transform: 'translate(-50%, -50%)',
+                width: '50px',
+                height: '50px',
+              }}
+              strokeWidth="4"
+            />
+          )}
           <div className="mt-auto">
             <Paginator
               first={pageNumberOne}
@@ -644,7 +643,6 @@ const Boatyards = () => {
                   color: '#000000',
                   fontWeight: 500,
                   backgroundColor: '#D9D9D9',
-                  cursor: 'pointer',
                 }}
                 data={boatyardsData}
                 // rowExpansionTemplate={rowExpansionTemplate}
@@ -672,19 +670,6 @@ const Boatyards = () => {
                   </div>
                 }
               />
-              {isLoader && (
-                <ProgressSpinner
-                  style={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    width: '50px',
-                    height: '50px',
-                  }}
-                  strokeWidth="4"
-                />
-              )}
             </div>
 
             <div>
@@ -706,6 +691,19 @@ const Boatyards = () => {
             </div>
           </div>
         </div>
+        {isLoading && (
+          <ProgressSpinner
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '45%',
+              transform: 'translate(-50%, -50%)',
+              width: '50px',
+              height: '50px',
+            }}
+            strokeWidth="4"
+          />
+        )}
         <div
           data-testid="customer-admin-users-table"
           className="flex-grow overflow-auto bg-[#FFFFFF] rounded-xl border-[1px] border-gray-300 w-[515px] h-[732px] mr-[50px] ml-[30px]  mb-0 ">
@@ -750,18 +748,6 @@ const Boatyards = () => {
             </div>
           </div>
 
-          {isLoading && (
-            <ProgressSpinner
-              style={{
-                position: 'absolute',
-                top: '50%',
-                transform: 'translate(-50%, -50%)',
-                width: '50px',
-                height: '50px',
-              }}
-              strokeWidth="4"
-            />
-          )}
           {selectedBoatYard ? (
             BoatyardMoorings
           ) : (

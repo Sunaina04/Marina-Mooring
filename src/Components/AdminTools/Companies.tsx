@@ -15,6 +15,7 @@ import { Toast } from 'primereact/toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCustomerId, setCustomerId, setCustomerName } from '../../Store/Slice/userSlice'
 import { Paginator } from 'primereact/paginator'
+import { VirtualScroller } from 'primereact/virtualscroller'
 
 const CustomerOwner = () => {
   const dispatch = useDispatch()
@@ -124,7 +125,7 @@ const CustomerOwner = () => {
       backgroundColor: '#FFFFFF',
       borderBottom: '1px solid #D5E1EA',
       color: '#000000',
-      fontWeight: 500,
+      fontWeight: 700,
     },
     style: { borderBottom: '1px solid #D5E1EA' },
   }
@@ -133,7 +134,7 @@ const CustomerOwner = () => {
     borderBottom: '1px solid #D5E1EA',
     backgroundColor: '#FFFFFF',
     color: '#000000',
-    fontWeight: 500,
+    fontWeight: 700,
   }
 
   const customerOwnerTableColumn = useMemo(
@@ -141,17 +142,17 @@ const CustomerOwner = () => {
       {
         id: 'id',
         label: 'ID',
-        style: columnStyle,
+        style: { ...columnStyle, width: '4vw' },
       },
       {
         id: 'name',
         label: 'Name',
-        style: columnStyle,
+        style: { ...columnStyle, width: '10vw' },
       },
       {
         id: 'phoneNumber',
         label: 'Phone',
-        style: columnStyle,
+        style: { ...columnStyle, width: '10vw' },
       },
     ],
     [],
@@ -164,14 +165,14 @@ const CustomerOwner = () => {
         color: 'black',
         label: 'Edit',
         underline: true,
-        fontWeight: 500,
+        fontWeight: 700,
         onClick: (rowData) => handleEditButtonUsersClick(rowData),
       },
       {
         color: 'black',
         label: 'Disable',
         underline: true,
-        fontWeight: 500,
+        fontWeight: 700,
         onClick: (rowData) => handleDeleteCustomerOwnerUser(rowData),
       },
     ],
@@ -179,7 +180,7 @@ const CustomerOwner = () => {
       backgroundColor: '#FFFFFF',
       borderBottom: '1px solid #D5E1EA',
       color: '#000000',
-      fontWeight: 500,
+      fontWeight: 700,
       width: '5vw',
     },
     style: { borderBottom: '1px solid #D5E1EA' },
@@ -194,7 +195,7 @@ const CustomerOwner = () => {
           borderBottom: '1px solid #D5E1EA',
           backgroundColor: '#FFFFFF',
           color: '#000000',
-          fontWeight: 500,
+          fontWeight: 700,
           width: '3vw',
         },
       },
@@ -205,7 +206,7 @@ const CustomerOwner = () => {
           borderBottom: '1px solid #D5E1EA',
           backgroundColor: '#FFFFFF',
           color: '#000000',
-          fontWeight: 500,
+          fontWeight: 700,
           width: '8vw',
         },
       },
@@ -216,7 +217,7 @@ const CustomerOwner = () => {
           borderBottom: '1px solid #D5E1EA',
           backgroundColor: '#FFFFFF',
           color: '#000000',
-          fontWeight: 500,
+          fontWeight: 700,
           width: '8vw',
         },
       },
@@ -227,7 +228,7 @@ const CustomerOwner = () => {
           borderBottom: '1px solid #D5E1EA',
           backgroundColor: '#FFFFFF',
           color: '#000000',
-          fontWeight: 500,
+          fontWeight: 700,
           width: '7vw',
         },
       },
@@ -238,8 +239,8 @@ const CustomerOwner = () => {
           borderBottom: '1px solid #D5E1EA',
           backgroundColor: '#FFFFFF',
           color: '#000000',
-          fontWeight: 500,
-          width: '5vw',
+          fontWeight: 700,
+          width: '7vw',
         },
       },
     ],
@@ -521,10 +522,8 @@ const CustomerOwner = () => {
                   color: '#000000',
                   fontWeight: 600,
                   backgroundColor: '#F9FAFB',
-                  cursor: 'pointer',
-                  width: '100%',
                 }}
-                scrollable={true}
+                // scrollable={true}
                 selectionMode="single"
                 onSelectionChange={(e) => {
                   setSelectedProduct(e.value)
@@ -622,8 +621,6 @@ const CustomerOwner = () => {
                   color: '#000000',
                   fontWeight: 600,
                   backgroundColor: '#F9FAFB',
-                  cursor: 'pointer',
-                  width: '100%',
                 }}
                 scrollable={true}
                 data={getCustomerOwnerUserData}

@@ -80,7 +80,7 @@ const Technicians = () => {
 
   const TechnicianTableColumnStyle = {
     backgroundColor: '#FFFFFF',
-    fontWeight: '500',
+    fontWeight: '700',
     fontSize: '12px',
     color: '#000000',
   }
@@ -92,6 +92,7 @@ const Technicians = () => {
     backgroundColor: '#00426F',
     marginTop: '1rem',
     border: '1px solid #00426F',
+    fontWeight: '700',
   }
 
   const TechnicianTableColumn = useMemo(
@@ -168,6 +169,11 @@ const Technicians = () => {
 
     setOpenWorkOrder(rowData?.openWorkOrder)
     setCompletedOrder(rowData?.closeWorkOrder)
+
+    if (!dateFrom || !dateTo) {
+      setFilterDateFrom(undefined)
+      setFilterDateTo(undefined)
+    }
 
     if (technicianId) {
       if (value.includes('Open')) {
@@ -304,6 +310,12 @@ const Technicians = () => {
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
+      if (!dateFrom) {
+        setFilterDateFrom(undefined)
+      } else if (!dateTo) {
+        setFilterDateTo(undefined)
+      }
+
       if (technicianId) {
         if (value.includes('Open')) {
           getOpenWorkOrder(technicianId)
@@ -323,6 +335,8 @@ const Technicians = () => {
     filterDateTo,
     openWorkOrder,
     completedWorkOrder,
+    !dateFrom,
+    !dateTo,
   ])
 
   useEffect(() => {
@@ -389,30 +403,6 @@ const Technicians = () => {
           </div>
         </div>
 
-        {/* <div className="items-center">
-          <CustomModal
-            // buttonText={'ADD NEW'}
-            children={
-              <AddWorkOrders
-                // workOrderData={selectedCustomer}
-                // editModeWorkOrder={editMode}
-                setVisible={setVisible}
-                toastRef={toast}
-                closeModal={handleModalClose}
-                workOrderData={undefined}
-              />
-            }
-            headerText={<h1 className="text-xl font-extrabold text-black ml-4">Work Order</h1>}
-            visible={visible}
-            onClick={() => {}}
-            onHide={handleModalClose}
-            dialogStyle={{
-              width: '851px',
-              height: '526px',
-              borderRadius: '1rem',
-            }}
-          />
-        </div> */}
         <div className="flex lg:flex-row justify-around md:flex-col  mt-6">
           <div
             style={{
@@ -463,7 +453,6 @@ const Technicians = () => {
                     color: '#000000',
                     fontWeight: 600,
                     backgroundColor: '#FFFFFF',
-                    cursor: 'pointer',
                   }}
                   onRowClick={(row) => {
                     handleWorkOrder(row.data)
@@ -560,12 +549,10 @@ const Technicians = () => {
                     color: '#000000',
                     fontWeight: 600,
                     backgroundColor: '#FFFFFF',
-                    cursor: 'pointer',
                   }}
                   onSelectionChange={(e) => {
                     setSelectedProduct(e.value)
                   }}
-                  // actionButtons={ActionButtonColumn}
                   data={getOpenWorkOrderData}
                   emptyMessage={
                     <div className="text-center mt-40 mb-10">

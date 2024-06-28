@@ -9,14 +9,12 @@ import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 import { Paginator } from 'primereact/paginator'
 import { ProgressSpinner } from 'primereact/progressspinner'
 
-
 const AccountRecievable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [accountRecievableData, setAccountRecievableData] = useState<MoorPayProps[]>([])
   const [pageNumber1, setPageNumber1] = useState(0)
   const [pageSize, setPageSize] = useState(10)
   const [isLoading, setIsLoading] = useState(false)
-
 
   const handleButtonClick = () => {
     // setIsModalOpen(true)
@@ -41,7 +39,7 @@ const AccountRecievable = () => {
   const columnStyle = {
     backgroundColor: '#FFFFFF',
     color: '#000000',
-    fontWeight: '500',
+    fontWeight: '700',
     fontSize: '12px',
   }
 
@@ -112,7 +110,7 @@ const AccountRecievable = () => {
       color: 'black',
       borderBottom: '1px solid #C0C0C0',
     },
-    style: { borderBottom: '1px solid #D5E1EA' , fontWeight: '400' },
+    style: { borderBottom: '1px solid #D5E1EA', fontWeight: '400' },
   }
 
   return (
@@ -129,7 +127,7 @@ const AccountRecievable = () => {
             <h1>Download Excel</h1>
           </div>
         </div> */}
-        <div className="flex justify-end mr-16">
+      <div className="flex justify-end mr-16">
         <div className="flex gap-2 ml-[18rem] text-[gray] font-extrabold mt-10">
           <div style={{ marginTop: '0.1rem' }}>
             <img src="/assets/images/downloadIcon.png" alt="" className="w-5 " />
@@ -214,7 +212,7 @@ const AccountRecievable = () => {
           tableStyle={{
             fontSize: '12px',
             color: '#000000',
-            fontWeight: 600,
+            fontWeight: 700,
           }}
           data={undefined}
           columns={accountRecievableTableColumn}
@@ -229,51 +227,46 @@ const AccountRecievable = () => {
                 />
                 <p className="text-gray-500">No data available</p>
               </div> */}
-              <div className="text-center mt-40">
-                   <img
-                  src="/assets/images/empty.png"
-                  alt="Empty Data"
-                  className="w-20 mx-auto mb-4"
-                />
-                <p className="text-gray-500">No data available</p>
-                {isLoading && (
-                      <ProgressSpinner
-                        style={{
-                          position: 'absolute',
-                          top: '50%',
-                          left: '60%',
-                          transform: 'translate(-50%, -50%)',
-                          width: '50px',
-                          height: '50px',
-                  }}
-                        strokeWidth="4"
-                      />
-                    )}
-                </div>
-
-              <div className="mt-40">
-            <Paginator
-              first={pageNumber1}
-              rows={pageSize}
-              totalRecords={120}
-              rowsPerPageOptions={[5, 10, 20, 30]}
-              onPageChange={onPageChange}
+        <div className="text-center mt-40">
+          <img src="/assets/images/empty.png" alt="Empty Data" className="w-20 mx-auto mb-4" />
+          <p className="text-gray-500">No data available</p>
+          {isLoading && (
+            <ProgressSpinner
               style={{
-                position: 'sticky',
-                bottom: 0,
-                zIndex: 1,
-                backgroundColor: 'white',
-                borderTop: '1px solid #D5E1EA',
-                padding: '0.5rem',
+                position: 'absolute',
+                top: '50%',
+                left: '60%',
+                transform: 'translate(-50%, -50%)',
+                width: '50px',
+                height: '50px',
               }}
+              strokeWidth="4"
             />
-          </div>
+          )}
+        </div>
+
+        <div className="mt-40">
+          <Paginator
+            first={pageNumber1}
+            rows={pageSize}
+            totalRecords={120}
+            rowsPerPageOptions={[5, 10, 20, 30]}
+            onPageChange={onPageChange}
+            style={{
+              position: 'sticky',
+              bottom: 0,
+              zIndex: 1,
+              backgroundColor: 'white',
+              borderTop: '1px solid #D5E1EA',
+              padding: '0.5rem',
+            }}
+          />
+        </div>
       </div>
       {/* <div className="text-center mt-40">
           <img src="/assets/images/empty.png" alt="Empty Data" className="w-32 mx-auto mb-4" />
           <p className="text-gray-500">No data available</p>
         </div> */}
-
     </>
   )
 }

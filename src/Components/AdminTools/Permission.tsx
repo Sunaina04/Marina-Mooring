@@ -52,7 +52,7 @@ const Permission = () => {
     borderBottom: '1px solid #D5E1EA',
     backgroundColor: '#FFFFFF',
     color: '#000000',
-    fontWeight: 500,
+    fontWeight: 700,
   }
 
   const tableColumnsPermission = useMemo(
@@ -94,7 +94,7 @@ const Permission = () => {
     header: 'Action',
     style: {
       fontSize: '12px',
-      fontWeight: 600,
+      fontWeight: 700,
       borderBottom: '1px solid #D5E1EA',
     },
     buttons: [
@@ -231,9 +231,7 @@ const Permission = () => {
           <CustomModal
             buttonText={'ADD NEW'}
             onClick={handleButtonClick}
-            icon={
-              <img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8 mb-0.5" />
-            }
+            icon={<img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8 mb-0.5" />}
             buttonStyle={{
               width: '121px',
               height: '44px',

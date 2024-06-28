@@ -247,7 +247,7 @@ const Moorings = () => {
           borderBottom: '1px solid #C0C0C0',
           fontWeight: '700',
           color: '#000000',
-          fontSize: '10px',
+          fontSize: '12px',
           backgroundColor: '#FFFFFF',
         },
       },
@@ -258,7 +258,7 @@ const Moorings = () => {
           width: '6vw',
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#FFFFFF',
-          fontSize: '10px',
+          fontSize: '12px',
           fontWeight: '700',
           color: '#000000',
         },
@@ -270,7 +270,7 @@ const Moorings = () => {
           width: '6vw',
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#FFFFFF',
-          fontSize: '10px',
+          fontSize: '12px',
           fontWeight: '700',
           color: '#000000',
         },
@@ -593,7 +593,6 @@ const Moorings = () => {
                   color: '#000000',
                   fontWeight: 600,
                   backgroundColor: '#D9D9D9',
-                  cursor: 'pointer',
                 }}
                 scrollable={true}
                 columns={tableColumns}
@@ -746,7 +745,6 @@ const Moorings = () => {
                     color: '#000000',
                     fontWeight: 600,
                     backgroundColor: '#D9D9D9',
-                    cursor: 'pointer',
                   }}
                   data={mooringResponseData}
                   columns={tableColumnsMoorings}

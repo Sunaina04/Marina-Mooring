@@ -57,7 +57,7 @@ const WorkOrders = () => {
     headerStyle: {
       backgroundColor: '#FFFFFF',
       color: '#000000',
-      fontWeight: '500',
+      fontWeight: '700',
       fontSize: '12px',
     },
     style: { borderBottom: '1px solid #D5E1EA', backgroundColor: '#FFFFFF', fontWeight: '400' },
@@ -66,7 +66,7 @@ const WorkOrders = () => {
   const columnStyle = {
     backgroundColor: '#FFFFFF',
     color: '#000000',
-    fontWeight: '500',
+    fontWeight: '700',
     fontSize: '12px',
   }
 
@@ -272,8 +272,7 @@ const WorkOrders = () => {
                   fontSize: '12px',
                   color: '#000000',
                   fontWeight: 600,
-                  backgroundColor: '#D9D9D9',
-                  cursor: 'pointer',
+                  backgroundColor: '#F9FAFB',
                 }}
                 data={workOrderData}
                 columns={workOrderColumns}

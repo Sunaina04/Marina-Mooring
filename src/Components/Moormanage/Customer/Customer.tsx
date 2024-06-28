@@ -223,7 +223,7 @@ const Customer = () => {
         label: 'Customer Id:',
         style: {
           backgroundColor: '#FFFFFF',
-          fontWeight: '500',
+          fontWeight: '700',
           fontSize: '12px',
           color: '#000000',
         },
@@ -234,7 +234,7 @@ const Customer = () => {
         label: 'Customer Type:',
         style: {
           backgroundColor: '#FFFFFF',
-          fontWeight: '500',
+          fontWeight: '700',
           fontSize: '12px',
           color: '#000000',
         },
@@ -247,7 +247,7 @@ const Customer = () => {
         body: firstLastName,
         style: {
           backgroundColor: '#FFFFFF',
-          fontWeight: '500',
+          fontWeight: '700',
           fontSize: '12px',
           color: '#000000',
         },
@@ -258,7 +258,7 @@ const Customer = () => {
         label: 'Email:',
         style: {
           backgroundColor: '#FFFFFF',
-          fontWeight: '500',
+          fontWeight: '700',
           fontSize: '12px',
           color: '#000000',
         },
@@ -269,7 +269,7 @@ const Customer = () => {
         label: 'Phone:',
         style: {
           backgroundColor: '#FFFFFF',
-          fontWeight: '500',
+          fontWeight: '700',
           fontSize: '12px',
           color: '#000000',
         },
@@ -283,7 +283,7 @@ const Customer = () => {
     backgroundColor: '#FFFFFF',
     fontSize: '12px',
     color: '#000000',
-    fontweight: '700',
+    fontWeight: '700',
   }
 
   const MooringTableColumn = useMemo(
@@ -295,7 +295,7 @@ const Customer = () => {
           backgroundColor: '#FFFFFF',
           fontSize: '12px',
           color: '#000000',
-          fontweight: '700',
+          fontWeight: '700',
           width: '3vw',
         },
       },
@@ -649,7 +649,6 @@ const Customer = () => {
                 color: '#000000',
                 fontWeight: 600,
                 backgroundColor: '#D9D9D9',
-                cursor: 'pointer',
               }}
               scrollable={true}
               columns={CustomerTableColumns}
@@ -784,7 +783,6 @@ const Customer = () => {
                   color: '#000000',
                   fontWeight: 600,
                   backgroundColor: '#D9D9D9',
-                  cursor: 'pointer',
                 }}
                 onRowClick={(rowData) => {
                   handleMooringTableRowClick(rowData)

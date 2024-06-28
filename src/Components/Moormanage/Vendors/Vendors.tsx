@@ -133,7 +133,7 @@ const Vendors = () => {
   const columnStyle = {
     backgroundColor: '#00426F',
     color: '#FFFFFF',
-    fontWeight: '500',
+    fontWeight: '700',
     fontSize: '12px',
   }
 
@@ -208,7 +208,7 @@ const Vendors = () => {
       style: {
         borderBottom: '1px solid #D5E1EA ',
         width: '14rem',
-        fontWeight: 500,
+        fontWeight: 700,
       },
     }),
     [],
@@ -301,8 +301,8 @@ const Vendors = () => {
                 tableStyle={{
                   fontSize: '12px',
                   color: '#000000',
-                  fontWeight: '400',
-                  padding: '1rem',
+                  fontWeight: 600,
+                  backgroundColor: '#F9FAFB',
                 }}
                 data={vendorData}
                 columns={VendorColumns}

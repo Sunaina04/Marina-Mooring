@@ -43,7 +43,7 @@ const DataTableComponent: React.FC<DataTableProps> = ({
   }
 
   return (
-    <div className="dataTable">
+    <div>
       <DataTable
         value={data}
         selectionMode={selectionMode}

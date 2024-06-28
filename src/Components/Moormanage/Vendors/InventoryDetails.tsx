@@ -333,7 +333,6 @@ const InventoryDetails: React.FC = () => {
             color: '#000000',
             fontWeight: 600,
             backgroundColor: '#D9D9D9',
-            cursor: 'pointer',
           }}
           columns={VendorInventoryColumns}
           actionButtons={ActionButtonColumn}
