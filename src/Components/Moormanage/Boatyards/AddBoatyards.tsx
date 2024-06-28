@@ -307,8 +307,9 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   }, [gpsCoordinatesValue])
 
   return (
+    
     <>
-      <div className=" ml-4">
+      <div className={`" ml-4" ${isLoading ? "blurred" : ""}`}>
         <Toast ref={toastRef} />
 
         <div className="flex gap-6  ">
@@ -510,6 +511,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
               }}
               options={statesData}
               optionLabel="name"
+              disabled={isLoading}
               style={{
                 width: '230px',
                 height: '32px',
@@ -539,6 +541,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
                 placeholder="Country"
                 options={countriesData}
                 optionLabel="name"
+                disabled={isLoading}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -648,7 +651,8 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
             />
           </div>
         </div>
-        <div className="flex gap-4 ml-4 bottom-5 absolute left-6">
+      </div>
+      <div className={`"flex gap-4 ml-4 bottom-5 absolute left-6" ${isLoading ? "blurred" : ""}`}>
           <Button
             label={'Save'}
             onClick={handleSave}
@@ -680,8 +684,8 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
             }}
           />
         </div>
-      </div>
     </>
+    
   )
 }
 

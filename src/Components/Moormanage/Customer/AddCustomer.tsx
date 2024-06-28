@@ -815,7 +815,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   }, [checkedDock])
 
   return (
-    <div className="">
+    <>
+    <div className={isLoading ? "blurred" : ""}>
       {/* Add Customer */}
       <Toast ref={toastRef} />
       {!editMooringMode && (
@@ -946,6 +947,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     optionLabel="type"
                     editable
                     placeholder="Customer Type"
+                    disabled={isLoading}
                     style={{
                       width: '230px',
                       height: '32px',
@@ -1104,6 +1106,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   optionLabel="name"
                   editable
                   placeholder="State"
+                  disabled={isLoading}
                   style={{
                     width: '230px',
                     height: '32px',
@@ -1129,6 +1132,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   optionLabel="name"
                   editable
                   placeholder="Country"
+                  disabled={isLoading}
                   className=""
                   style={{
                     width: '230px',
@@ -1828,8 +1832,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           )}
         </>
       )}
-      <div
-        className="flex gap-6 bottom-2 absolute left-6"
+    </div>
+    <div
+        className={`"flex gap-6 bottom-2 absolute left-6"  ${isLoading ? "blurred" : ""}`}
         style={{
           width: '100%',
           height: '80px',
@@ -1865,11 +1870,11 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             fontSize: '14px',
             height: '42px',
             fontWeight: '500',
-            top: '20px',
+            //top: '20px',
           }}
         />
       </div>
-    </div>
+    </>
   )
 }
 

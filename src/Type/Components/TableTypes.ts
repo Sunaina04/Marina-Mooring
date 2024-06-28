@@ -10,6 +10,7 @@ import {
   DataTableSelectionSingleChangeEvent,
   DataTableValueArray,
 } from 'primereact/datatable'
+import { PaginatorTemplate } from 'primereact/paginator'
 
 export type TableBodyType =
   | React.ReactNode
@@ -25,6 +26,8 @@ export interface TableColumnProps {
 
 export interface DataTableProps {
   data?: any[]
+  paginatorTemplate?: PaginatorTemplate | undefined;
+  first?: number | undefined;
   scrollable?: boolean
   columns?: TableColumnProps[]
   tableStyle?: React.CSSProperties | undefined

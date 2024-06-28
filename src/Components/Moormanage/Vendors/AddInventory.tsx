@@ -215,7 +215,7 @@ const AddInventory: React.FC<AddInventoryProps> = ({
 
   return (
     <>
-      <div className="ml-4">
+      <div className={`"ml-4" ${isLoading ? 'blurred' : ''}`}>
         <div>
           <Dropdown
             value={formData.type}
@@ -367,8 +367,8 @@ const AddInventory: React.FC<AddInventoryProps> = ({
             </div>
           </div>
         </div>
-
-        <div className="mt-10">
+      </div>
+      <div className={`"mt-10"  ${isLoading ? "blurred" : ""}`}>
           <Button
             label={'Save'}
             onClick={() => {
@@ -403,7 +403,6 @@ const AddInventory: React.FC<AddInventoryProps> = ({
             }}
           />
         </div>
-      </div>
     </>
   )
 }
