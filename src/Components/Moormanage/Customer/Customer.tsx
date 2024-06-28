@@ -608,7 +608,8 @@ const Customer = () => {
       </div>
       <div className="flex flex-col md:flex-row mt-3 ">
         {/* Left Panel */}
-        <div className="flex-grow bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-6 md:mb-0 w-[600px]">
+        <div
+         className="flex-grow bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-[45px] md:mb-0 w-[600px]">
           {/* Header */}
           <div className="bg-[#10293A] rounded-tl-[10px] rounded-tr-[10px] text-white">
             <h1 className="p-4 text-xl font-extrabold">{properties.customerHeader}</h1>
@@ -712,7 +713,7 @@ const Customer = () => {
 
         {/* last container */}
 
-        <div className="lg:flex-row ml-5 min-h[50vw] mr-8 w-[700px]">
+        <div className="lg:flex-row ml-5 min-h[50vw] mr-12 w-[700px]">
           {/* Left Panel - Customer Record */}
           <div className="flex-grow rounded-md border bg-white">
             <div className="bg-[#10293A] rounded-t-[10px] flex justify-between pb-2">
