@@ -31,6 +31,7 @@ import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import { Paginator } from 'primereact/paginator'
 import { PositionType } from '../../../Type/Components/MapTypes'
 import { GearOffIcon, GearOnIcon, NeedInspectionIcon, NotInUseIcon } from '../../Map/DefaultIcon'
+import AddMoorings from './AddMoorings'
 
 const Moorings = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -513,7 +514,22 @@ const Moorings = () => {
               boxShadow: 'none',
             }}
             icon={<img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8" />}
-            children={<></>}
+            children={
+              <AddMoorings
+                moorings={selectedCustomer}
+                mooringRowData={mooringRowData}
+                editMode={editMode}
+                editCustomerMode={editCustomerMode}
+                toastRef={toast}
+                closeModal={handleModalClose}
+                getCustomer={getMooringsData}
+                getCustomerRecord={() => {
+                  if (customerId) {
+                    getCustomersWithMooring(customerId)
+                  }
+                }}
+              />
+            }
             headerText={<h1 className="text-xxl font-bold text-black ">Add Mooring</h1>}
             visible={modalVisible}
             onClick={handleButtonClick}
@@ -532,7 +548,9 @@ const Moorings = () => {
 
       <div className="flex flex-col md:flex-row mt-3">
         {/* Left Panel */}
-        <div className="flex-grow bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-12 md:mb-0 w-[600px]">
+        <div
+          // style={{border:"1px solid red"}}
+          className="flex-grow bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-12 md:mb-0 w-[600px]">
           {/* Header */}
           <div className="bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px] text-white">
             <h1 className="p-4 text-xl font-extrabold">{properties.customerMooringHeader}</h1>
