@@ -715,7 +715,7 @@ const Customer = () => {
 
         <div className="ml-5 mr-12 min-h[700px]">
           {/* Left Panel - Customer Record */}
-          <div className="flex-grow bg-white">
+          <div className="flex-grow border bg-white">
             <div className="bg-[#10293A] rounded-t-[10px] flex justify-between">
               <div className="text-sm font-semibold rounded-t-md">
                 <h1 className="p-3 text-white text-lg font-extrabold">
