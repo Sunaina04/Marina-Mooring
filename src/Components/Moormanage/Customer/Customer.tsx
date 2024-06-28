@@ -226,7 +226,6 @@ const Customer = () => {
           fontWeight: '500',
           fontSize: '12px',
           color: '#000000',
-          width: '6vw',
         },
         sortable: false,
       },
@@ -238,7 +237,6 @@ const Customer = () => {
           fontWeight: '500',
           fontSize: '12px',
           color: '#000000',
-          width: '6.5vw',
         },
         onHeaderClick: () => handleHeaderClick('customerType'),
         // sortable: true,
@@ -252,7 +250,6 @@ const Customer = () => {
           fontWeight: '500',
           fontSize: '12px',
           color: '#000000',
-          width: '6vw',
         },
         sortable: false,
       },
@@ -264,7 +261,6 @@ const Customer = () => {
           fontWeight: '500',
           fontSize: '12px',
           color: '#000000',
-          width: '12vw',
         },
         sortable: false,
       },
@@ -276,7 +272,6 @@ const Customer = () => {
           fontWeight: '500',
           fontSize: '12px',
           color: '#000000',
-          width: '10vw',
         },
         sortable: false,
       },
@@ -610,6 +605,8 @@ const Customer = () => {
           style={{
             height: '700px',
             minHeight: '700px',
+            width: '500px',
+            minWidth: '500px',
             backgroundColor: '#FFFFFF',
             position: 'relative',
           }}
@@ -701,7 +698,7 @@ const Customer = () => {
         {/* middle container */}
 
         <div
-          className={`min-w-[21vw] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
+          className={`min-w-[21vw] min-h[700px] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
           <CustomMooringPositionMap
             position={initialPosition}
             zoomLevel={10}
@@ -771,7 +768,14 @@ const Customer = () => {
               <h1 className="p-4 text-xl font-extrabold">{properties.mooringHeader}</h1>
             </div>
 
-            <div data-testid="mooring-data" className="flex flex-col h-full">
+            <div
+              style={{
+                height: '400px',
+                minHeight: '400px',
+                backgroundColor: '#FFFFFF',
+              }}
+              data-testid="mooring-data"
+              className="flex flex-col h-full">
               <DataTableComponent
                 style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
                 scrollable
