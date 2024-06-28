@@ -44,6 +44,11 @@ body {
   z-index: 2;
   pointer-events: none;
 }
+.blurred {
+  filter: blur(2px);
+  pointer-events: none;
+  user-select: none;
+}
 
 .modal {
   position: relative;
@@ -115,3 +120,5 @@ body {
 .p-highlight {
   background-color: #d5e1ea !important;
 }
+
+

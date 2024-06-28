@@ -609,7 +609,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
 
   return (
     <>
-      <div className="">
+      <div className={isLoading ? 'blurred' : ''}>
         <Toast ref={toastRef} />
         <div className="flex gap-6 ">
           <div>
@@ -628,6 +628,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 optionValue="value"
                 placeholder="Select"
                 editable
+                disabled={isLoading}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -747,6 +748,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 optionLabel="boatyardName"
                 placeholder="Select"
                 editable
+                disabled={isLoading}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -800,6 +802,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 transform: 'translate(-50%, -50%)',
                 width: '50px',
                 height: '50px',
+                zIndex:4
               }}
               strokeWidth="4"
             />
@@ -885,6 +888,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 optionLabel="type"
                 placeholder="Select"
                 editable
+                disabled={isLoading}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -921,6 +925,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 optionLabel="condition"
                 placeholder="Select"
                 editable
+                disabled={isLoading}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -1022,6 +1027,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   optionLabel="condition"
                   placeholder="Select"
                   editable
+                  disabled={isLoading}
                   style={{
                     width: '230px',
                     height: '32px',
@@ -1121,6 +1127,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   optionLabel="condition"
                   placeholder="Select"
                   editable
+                  disabled={isLoading}
                   style={{
                     width: '230px',
                     height: '32px',
@@ -1201,6 +1208,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   optionLabel="condition"
                   placeholder="Select"
                   editable
+                  disabled={isLoading}
                   style={{
                     width: '230px',
                     height: '32px',
@@ -1226,6 +1234,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                     value={formData?.type}
                     onChange={(e) => handleInputChange('type', e.target.value)}
                     options={[]}
+                    disabled={isLoading}
                     style={{
                       width: '230px',
                       height: '32px',
