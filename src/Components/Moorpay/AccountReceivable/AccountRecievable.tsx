@@ -118,16 +118,6 @@ const AccountRecievable = () => {
       <Header header="MOORPAY/Account Receivable" />
 
       {/* <div className="flex justify-end mr-16">
-        <div className="flex gap-4 ml-[18rem] text-[gray] font-extrabold mt-14">
-          <div style={{ marginTop: '0rem' }}>
-            <img src="/assets/images/downloadIcon.png" alt="" className="w-5 " />
-          </div>
-
-          <div style={{ marginTop: '0rem', color: '#00426F', marginRight: '1.5rem' }}>
-            <h1>Download Excel</h1>
-          </div>
-        </div> */}
-      <div className="flex justify-end mr-16">
         <div className="flex gap-2 ml-[18rem] text-[gray] font-extrabold mt-10">
           <div style={{ marginTop: '0.1rem' }}>
             <img src="/assets/images/downloadIcon.png" alt="" className="w-5 " />
@@ -198,16 +188,7 @@ const AccountRecievable = () => {
             Account Receivable
           </span>
         </div>
-        {/* <div
-          data-testid="customer-admin-data"
-          className="flex flex-col  "
-          style={{ height: '630px' }}
-        >
-          <div className="flex-grow overflow-auto"> */}
-        {/* <div className="text-center mt-40">
-          <img src="/assets/images/empty.png" alt="Empty Data" className="w-32 mx-auto mb-4" />
-          <p className="text-gray-500">No data available</p>
-        </div> */}
+
         <DataTableComponent
           tableStyle={{
             fontSize: '12px',
@@ -219,14 +200,7 @@ const AccountRecievable = () => {
           actionButtons={ActionButtonColumn}
           style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
         />
-        {/* <div className="text-center ">
-                <img
-                  src="/assets/images/empty.png"
-                  alt="Empty Data"
-                  className="w-10 mx-auto mt-10 mb-3"
-                />
-                <p className="text-gray-500">No data available</p>
-              </div> */}
+
         <div className="text-center mt-40">
           <img src="/assets/images/empty.png" alt="Empty Data" className="w-20 mx-auto mb-4" />
           <p className="text-gray-500">No data available</p>
@@ -262,11 +236,7 @@ const AccountRecievable = () => {
             }}
           />
         </div>
-      </div>
-      {/* <div className="text-center mt-40">
-          <img src="/assets/images/empty.png" alt="Empty Data" className="w-32 mx-auto mb-4" />
-          <p className="text-gray-500">No data available</p>
-        </div> */}
+      </div> */}
     </>
   )
 }

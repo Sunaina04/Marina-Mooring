@@ -108,7 +108,7 @@ const AccountPayable = () => {
   return (
     <>
       <Header header="MOORPAY/Account Payable" />
-
+      {/* 
       <div className="flex justify-end mr-16">
         <div className="flex gap-2 ml-[18rem] text-[gray] font-extrabold mt-10">
           <div style={{ marginTop: '0.1rem' }}>
@@ -181,10 +181,7 @@ const AccountPayable = () => {
             Account Payable
           </span>
         </div>
-        {/* <div className="text-center mt-40">
-          <img src="/assets/images/empty.png" alt="Empty Data" className="w-32 mx-auto mb-4" />
-          <p className="text-gray-500">No data available</p>
-        </div> */}
+
         <DataTableComponent
           tableStyle={{
             fontSize: '12px',
@@ -197,9 +194,6 @@ const AccountPayable = () => {
           style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
         />
 
-        {/* <div className="text-center mt-40">
-                  <img src="/assets/images/empty.png" alt="Empty Data" className="w-28 mx-auto mb-4" />
-                  <p className="text-gray-500">No data available</p> */}
         <div className="text-center mt-40">
           <img src="/assets/images/empty.png" alt="Empty Data" className="w-20 mx-auto mb-4" />
           <p className="text-gray-500">No data available</p>
@@ -235,19 +229,7 @@ const AccountPayable = () => {
             }}
           />
         </div>
-        {/* <div className="text-center ">
-                <img
-                  src="/assets/images/empty.png"
-                  alt="Empty Data"
-                  className="w-10 mx-auto mt-10 mb-3"
-                />
-                <p className="text-gray-500">No data available</p>
-              </div> */}
-      </div>
-      {/* <div className="text-center mt-40">
-          <img src="/assets/images/empty.png" alt="Empty Data" className="w-32 mx-auto mb-4" />
-          <p className="text-gray-500">No data available</p>
-        </div> */}
+      </div> */}
     </>
   )
 }
