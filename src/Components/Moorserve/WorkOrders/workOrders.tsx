@@ -45,7 +45,7 @@ const WorkOrders = () => {
   }
 
   const ActionButtonColumn: ActionButtonColumnProps = {
-    header: '',
+    header: 'Action',
     buttons: [
       {
         color: 'black',
@@ -54,7 +54,12 @@ const WorkOrders = () => {
         onClick: (row) => handleEdit(row),
       },
     ],
-    headerStyle: { backgroundColor: '#FFFFFF' },
+    headerStyle: {
+      backgroundColor: '#FFFFFF',
+      color: '#000000',
+      fontWeight: '500',
+      fontSize: '12px',
+    },
     style: { borderBottom: '1px solid #D5E1EA', backgroundColor: '#FFFFFF', fontWeight: '400' },
   }
 
@@ -275,8 +280,8 @@ const WorkOrders = () => {
                 actionButtons={ActionButtonColumn}
                 style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
                 emptyMessage={
-                  <div className="text-center mt-40">
-                       <img
+                  <div className="text-center mt-28">
+                    <img
                       src="/assets/images/empty.png"
                       alt="Empty Data"
                       className="w-28 mx-auto mb-4"
@@ -290,8 +295,8 @@ const WorkOrders = () => {
                 <ProgressSpinner
                   style={{
                     position: 'absolute',
-                    top: '70%',
-                    left: '63%',
+                    top: '50%',
+                    left: '50%',
                     transform: 'translate(-50%, -50%)',
                     width: '50px',
                     height: '50px',

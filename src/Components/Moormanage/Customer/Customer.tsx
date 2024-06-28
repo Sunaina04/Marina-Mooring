@@ -712,17 +712,13 @@ const Customer = () => {
 
         {/* last container */}
 
-        <div className="lg:flex-row ml-5 min-h[50vw] mr-6 w-[700px]">
+        <div className="lg:flex-row ml-5 min-h[50vw] mr-8 w-[700px]">
           {/* Left Panel - Customer Record */}
           <div className="flex-grow rounded-md border bg-white">
             <div className="bg-[#10293A] rounded-t-[10px] flex justify-between pb-2">
-              {/* <div className="flex items-center ml-3">
-                <Avatar image={'/assets/images/user.png'} /> */}
               <div className="text-sm font-semibold rounded-t-md bg-gray-800 ">
                 <h1 className="p-3 text-white text-lg font-extrabold">Customers Record</h1>
               </div>
-              {/* </div> */}
-
               <div className="flex">
                 <FaEdit
                   onClick={handleEdit}

@@ -314,7 +314,7 @@ const Estimates = () => {
                 actionButtons={ActionButtonColumn}
                 style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
                 emptyMessage={
-                  <div className="text-center mt-40">
+                  <div className="text-center mt-28">
                     <img
                       src="/assets/images/empty.png"
                       alt="Empty Data"
