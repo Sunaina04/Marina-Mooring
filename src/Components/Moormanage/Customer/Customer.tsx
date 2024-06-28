@@ -226,7 +226,7 @@ const Customer = () => {
           fontWeight: '500',
           fontSize: '12px',
           color: '#000000',
-          width: '5.5vw',
+          width: '6vw',
         },
         sortable: false,
       },
@@ -470,7 +470,6 @@ const Customer = () => {
             </p>
           </div>
         </div>
-
         <div
           style={{
             fontSize: '14px',
@@ -605,100 +604,96 @@ const Customer = () => {
           />
         </div>
       </div>
-      <div className="flex flex-col md:flex-row mt-3 ">
+      <div className="flex flex-col md:flex-row mt-3">
         {/* Left Panel */}
-        <div className="flex-grow bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-[45px] md:mb-0 w-[600px]">
-          {/* Header */}
-          <div className="bg-[#10293A] rounded-tl-[10px] rounded-tr-[10px] text-white">
-            <h1 className="p-4 text-xl font-extrabold">{properties.customerHeader}</h1>
-          </div>
+        <div
+          style={{
+            height: '700px',
+            minHeight: '700px',
+            backgroundColor: '#FFFFFF',
+            position: 'relative',
+          }}
+          className="flex-1 ml-[45px] w-[550px]">
+          <div data-testid="customer-data" className="flex flex-col h-full">
+            <div className="bg-[#10293A] rounded-tl-[10px] rounded-tr-[10px] text-white">
+              <h1 className="p-4 text-xl font-extrabold">{properties.customerHeader}</h1>
+            </div>
 
-          <InputTextWithHeader
-            value={searchText}
-            onChange={handleSearch}
-            placeholder="Search by name, ID, phone no.... "
-            inputTextStyle={{
-              width: '100%',
-              height: '44px',
-              padding: '0 4rem 0 3rem',
-              border: '1px solid #C5D9E0',
-              fontSize: '16px',
-              color: '#000000',
-              borderRadius: '4px',
-              minHeight: '44px',
-              fontWeight: 400,
-              backgroundColor: 'rgb(242 242 242 / 0%)',
-            }}
-            borderBottom={{ border: '1px solid #D5E1EA' }}
-            iconStyle={{
-              position: 'absolute',
-              left: '15px',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              width: '18px',
-              height: '18px',
-            }}
-          />
-          <div
-            style={{
-              height: '700px',
-              backgroundColor: '#FFFFFF',
-              position: 'relative',
-            }}
-            className={`bg-#00426F mt-[3px] ml-[15px] mr-[15px]`}>
-            <div data-testid="customer-data" className="flex flex-col h-full">
-              <div className="flex-grow overflow-auto">
-                <DataTableComponent
-                  data={customerData}
-                  tableStyle={{
-                    fontSize: '12px',
-                    color: '#000000',
-                    fontWeight: 600,
-                    backgroundColor: '#D9D9D9',
-                    cursor: 'pointer',
-                  }}
-                  scrollable={true}
-                  columns={CustomerTableColumns}
-                  style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
-                  onRowClick={(row) => {
-                    handleCustomerTableRowClick(row)
-                  }}
-                  selectionMode="single"
-                  onSelectionChange={(e) => {
-                    setSelectedProduct(e.value)
-                  }}
-                  selection={selectedProduct}
-                  dataKey="id"
-                  rowStyle={(rowData: any) => rowData}
-                  emptyMessage={
-                    <div className="text-center mt-40">
-                      <img
-                        src="/assets/images/empty.png"
-                        alt="Empty Data"
-                        className="w-28 mx-auto mb-4"
-                      />
-                      <p className="text-gray-500 text-lg">No data available</p>
-                    </div>
-                  }
-                />
-              </div>
-              <div className="mt-auto">
-                <Paginator
-                  first={pageNumber1}
-                  rows={pageSize}
-                  totalRecords={totalRecordsOne}
-                  rowsPerPageOptions={[5, 10, 20, 30]}
-                  onPageChange={onPageChange}
-                  style={{
-                    position: 'sticky',
-                    bottom: 0,
-                    zIndex: 1,
-                    backgroundColor: 'white',
-                    borderTop: '1px solid #D5E1EA',
-                    padding: '0.5rem',
-                  }}
-                />
-              </div>
+            <InputTextWithHeader
+              value={searchText}
+              onChange={handleSearch}
+              placeholder="Search by name, ID, phone no.... "
+              inputTextStyle={{
+                width: '100%',
+                height: '44px',
+                padding: '0 4rem 0 3rem',
+                border: '1px solid #C5D9E0',
+                fontSize: '16px',
+                color: '#000000',
+                borderRadius: '4px',
+                minHeight: '44px',
+                fontWeight: 400,
+                backgroundColor: 'rgb(242 242 242 / 0%)',
+              }}
+              borderBottom={{ border: '1px solid #D5E1EA' }}
+              iconStyle={{
+                position: 'absolute',
+                left: '15px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                width: '18px',
+                height: '18px',
+              }}
+            />
+            <DataTableComponent
+              data={customerData}
+              tableStyle={{
+                fontSize: '12px',
+                color: '#000000',
+                fontWeight: 600,
+                backgroundColor: '#D9D9D9',
+                cursor: 'pointer',
+              }}
+              scrollable={true}
+              columns={CustomerTableColumns}
+              style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+              onRowClick={(row) => {
+                handleCustomerTableRowClick(row)
+              }}
+              selectionMode="single"
+              onSelectionChange={(e) => {
+                setSelectedProduct(e.value)
+              }}
+              selection={selectedProduct}
+              dataKey="id"
+              rowStyle={(rowData: any) => rowData}
+              emptyMessage={
+                <div className="text-center mt-40">
+                  <img
+                    src="/assets/images/empty.png"
+                    alt="Empty Data"
+                    className="w-28 mx-auto mb-4"
+                  />
+                  <p className="text-gray-500 text-lg">No data available</p>
+                </div>
+              }
+            />
+            <div className="mt-auto">
+              <Paginator
+                first={pageNumber1}
+                rows={pageSize}
+                totalRecords={totalRecordsOne}
+                rowsPerPageOptions={[5, 10, 20, 30]}
+                onPageChange={onPageChange}
+                style={{
+                  position: 'sticky',
+                  bottom: 0,
+                  zIndex: 1,
+                  backgroundColor: 'white',
+                  borderTop: '1px solid #D5E1EA',
+                  padding: '0.5rem',
+                }}
+              />
             </div>
           </div>
         </div>
@@ -706,11 +701,11 @@ const Customer = () => {
         {/* middle container */}
 
         <div
-          className={`min-w-[21vw] min-h[55vw] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
+          className={`min-w-[21vw] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
           <CustomMooringPositionMap
             position={initialPosition}
             zoomLevel={10}
-            style={{ height: '730px' }}
+            style={{ height: '700px' }}
             iconsByStatus={iconsByStatus}
             moorings={mooringData}
           />
@@ -718,12 +713,14 @@ const Customer = () => {
 
         {/* last container */}
 
-        <div className="lg:flex-row ml-5 min-h[50vw] mr-12 w-[700px]">
+        <div className="ml-5 mr-12 min-h[700px]">
           {/* Left Panel - Customer Record */}
-          <div className="flex-grow rounded-md border bg-white">
-            <div className="bg-[#10293A] rounded-t-[10px] flex justify-between pb-2">
-              <div className="text-sm font-semibold rounded-t-md bg-gray-800 ">
-                <h1 className="p-3 text-white text-lg font-extrabold">Customers Record</h1>
+          <div className="flex-grow bg-white">
+            <div className="bg-[#10293A] rounded-t-[10px] flex justify-between">
+              <div className="text-sm font-semibold rounded-t-md">
+                <h1 className="p-3 text-white text-lg font-extrabold">
+                  {properties.customerRecord}
+                </h1>
               </div>
               <div className="flex">
                 <FaEdit
@@ -744,13 +741,13 @@ const Customer = () => {
             {customerRecordData ? (
               CustomerDetails
             ) : (
-              <div className="text-center mt-28">
+              <div className="text-center mt-6">
                 <img
                   src="/assets/images/empty.png"
                   alt="Empty Data"
-                  className="w-28 mx-auto mb-4"
+                  className="w-10 mx-auto mb-2"
                 />
-                <p className="text-gray-500 font-[600] text-lg">No data available</p>
+                <p className="text-gray-500 font-[600] text-sm">No data available</p>
               </div>
             )}
           </div>
@@ -770,82 +767,74 @@ const Customer = () => {
           )}
 
           <div className="flex-grow bg-white rounded-md border">
-            <div
-              style={{
-                backgroundColor: '#10293A',
-                fontWeight: '700',
-                color: 'white',
-                padding: '14px',
-                fontSize: '15px',
-              }}>
-              <h1 className="text-lg font-extrabold">Moorings</h1>
+            <div className="bg-[#10293A] text-white">
+              <h1 className="p-4 text-xl font-extrabold">{properties.mooringHeader}</h1>
             </div>
 
-            <div
-              className={`bg-#00426F overflow-x-hidden h-[450px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col ${isLoading ? 'blur-screen' : ''}`}>
-              <div className="flex-grow overflow-auto">
-                <DataTableComponent
-                  style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
-                  scrollable
-                  tableStyle={{
-                    fontSize: '12px',
-                    color: '#000000',
-                    fontWeight: 600,
-                    backgroundColor: '#D9D9D9',
-                    cursor: 'pointer',
-                  }}
-                  onRowClick={(rowData) => {
-                    handleMooringTableRowClick(rowData)
-                  }}
-                  columns={MooringTableColumn}
-                  data={mooringData}
-                  selectionMode="single"
-                  onSelectionChange={(e) => {
-                    setSelectedMooring(e.value)
-                  }}
-                  selection={selectedMooring}
-                  dataKey="id"
-                  rowStyle={(rowData) => rowData}
-                  emptyMessage={
-                    <div className="text-center mt-28">
-                      <img
-                        src="/assets/images/empty.png"
-                        alt="Empty Data"
-                        className="w-28 mx-auto mb-4"
-                      />
-                      <p className="text-gray-500 text-lg">No data available</p>
-                    </div>
-                  }
-                />
-                {isLoading && (
-                  <ProgressSpinner
-                    style={{
-                      position: 'absolute',
-                      top: '50%',
-                      left: '40%',
-                      transform: 'translate(-50%, -50%)',
-                      width: '50px',
-                      height: '50px',
-                    }}
-                    strokeWidth="4"
-                  />
-                )}
-              </div>
-              <Paginator
-                first={pageNumber2}
-                rows={pageSizeTwo}
-                totalRecords={totalRecordsTwo}
-                rowsPerPageOptions={[5, 10, 20, 30]}
-                onPageChange={onPageChangeTwo}
-                style={{
-                  position: 'sticky',
-                  bottom: 0,
-                  zIndex: 1,
-                  backgroundColor: 'white',
-                  borderTop: '1px solid #D5E1EA',
-                  padding: '0.5rem',
+            <div data-testid="mooring-data" className="flex flex-col h-full">
+              <DataTableComponent
+                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+                scrollable
+                tableStyle={{
+                  fontSize: '12px',
+                  color: '#000000',
+                  fontWeight: 600,
+                  backgroundColor: '#D9D9D9',
+                  cursor: 'pointer',
                 }}
+                onRowClick={(rowData) => {
+                  handleMooringTableRowClick(rowData)
+                }}
+                columns={MooringTableColumn}
+                data={mooringData}
+                selectionMode="single"
+                onSelectionChange={(e) => {
+                  setSelectedMooring(e.value)
+                }}
+                selection={selectedMooring}
+                dataKey="id"
+                rowStyle={(rowData) => rowData}
+                emptyMessage={
+                  <div className="text-center mt-28">
+                    <img
+                      src="/assets/images/empty.png"
+                      alt="Empty Data"
+                      className="w-28 mx-auto mb-4"
+                    />
+                    <p className="text-gray-500 text-lg">No data available</p>
+                  </div>
+                }
               />
+              {isLoading && (
+                <ProgressSpinner
+                  style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '40%',
+                    transform: 'translate(-50%, -50%)',
+                    width: '50px',
+                    height: '50px',
+                  }}
+                  strokeWidth="4"
+                />
+              )}
+              <div className="mt-auto">
+                <Paginator
+                  first={pageNumber2}
+                  rows={pageSizeTwo}
+                  totalRecords={totalRecordsTwo}
+                  rowsPerPageOptions={[5, 10, 20, 30]}
+                  onPageChange={onPageChangeTwo}
+                  style={{
+                    position: 'sticky',
+                    bottom: 0,
+                    zIndex: 1,
+                    backgroundColor: 'white',
+                    borderTop: '1px solid #D5E1EA',
+                    padding: '0.5rem',
+                  }}
+                />
+              </div>
             </div>
           </div>
         </div>

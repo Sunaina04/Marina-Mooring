@@ -802,7 +802,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 transform: 'translate(-50%, -50%)',
                 width: '50px',
                 height: '50px',
-                zIndex:4
+                zIndex: 4,
               }}
               strokeWidth="4"
             />

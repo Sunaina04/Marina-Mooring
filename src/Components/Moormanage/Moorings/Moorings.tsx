@@ -1,5 +1,4 @@
 import CustomModal from '../../CustomComponent/CustomModal'
-import AddMoorings from './AddMoorings'
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import {
   useDeleteMooringsMutation,
@@ -514,22 +513,7 @@ const Moorings = () => {
               boxShadow: 'none',
             }}
             icon={<img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8" />}
-            children={
-              <AddMoorings
-                moorings={selectedCustomer}
-                mooringRowData={mooringRowData}
-                editMode={editMode}
-                editCustomerMode={editCustomerMode}
-                toastRef={toast}
-                closeModal={handleModalClose}
-                getCustomer={getMooringsData}
-                getCustomerRecord={() => {
-                  if (customerId) {
-                    getCustomersWithMooring(customerId)
-                  }
-                }}
-              />
-            }
+            children={<></>}
             headerText={<h1 className="text-xxl font-bold text-black ">Add Mooring</h1>}
             visible={modalVisible}
             onClick={handleButtonClick}
@@ -548,9 +532,7 @@ const Moorings = () => {
 
       <div className="flex flex-col md:flex-row mt-3">
         {/* Left Panel */}
-        <div 
-        // style={{border:"1px solid red"}}
-        className="flex-grow bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-12 md:mb-0 w-[600px]">
+        <div className="flex-grow bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-12 md:mb-0 w-[600px]">
           {/* Header */}
           <div className="bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px] text-white">
             <h1 className="p-4 text-xl font-extrabold">{properties.customerMooringHeader}</h1>
@@ -657,7 +639,6 @@ const Moorings = () => {
         {/* middle container */}
 
         <div
-
           className={`min-w-[21vw] min-h[50vw] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
           <CustomMooringPositionMap
             position={initialPosition}
@@ -670,10 +651,10 @@ const Moorings = () => {
 
         {/* last container */}
 
-        <div 
-        //  style={{border:"1px solid red"}}
+        <div
+          //  style={{border:"1px solid red"}}
 
-        className="lg:flex-row ml-5 mr-12 w-[500px]">
+          className="lg:flex-row ml-5 mr-12 w-[500px]">
           {/* Left Panel - Customer Record */}
           <div className="flex-grow rounded-md border bg-white">
             <div className="bg-[#00426F] rounded-t-[10px] flex justify-between pb-2">
@@ -981,9 +962,6 @@ export default Moorings
 // import { Paginator } from 'primereact/paginator'
 // import { PositionType } from '../../../Type/Components/MapTypes'
 // import { GearOffIcon, GearOnIcon, NeedInspectionIcon, NotInUseIcon } from '../../Map/DefaultIcon'
-
-
-
 
 // const Moorings = () => {
 
@@ -1444,9 +1422,6 @@ export default Moorings
 //     }
 //   }, [pageNumberTwo, pageSizeTwo, customerId])
 
-
-
-
 //   return (
 //     <div style={{ height: '100vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
 //       <Header header="MOORMANAGE/Customer" />
@@ -1484,7 +1459,6 @@ export default Moorings
 //                   }
 //                 }}
 //               />
-
 
 //             }
 //             headerText={

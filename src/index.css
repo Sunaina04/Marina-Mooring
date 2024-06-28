@@ -229,3 +229,9 @@ input[type='number']::-webkit-outer-spin-button {
 ::-webkit-scrollbar-thumb:hover {
   background: #00426f;
 }
+
+.p-component,
+.p-component * {
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+}
