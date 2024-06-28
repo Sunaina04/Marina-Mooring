@@ -256,7 +256,6 @@ const Customer = () => {
         },
         sortable: false,
       },
-
       {
         id: 'emailAddress',
         label: 'Email:',
@@ -608,8 +607,7 @@ const Customer = () => {
       </div>
       <div className="flex flex-col md:flex-row mt-3 ">
         {/* Left Panel */}
-        <div
-         className="flex-grow bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-[45px] md:mb-0 w-[600px]">
+        <div className="flex-grow bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-[45px] md:mb-0 w-[600px]">
           {/* Header */}
           <div className="bg-[#10293A] rounded-tl-[10px] rounded-tr-[10px] text-white">
             <h1 className="p-4 text-xl font-extrabold">{properties.customerHeader}</h1>
@@ -642,58 +640,65 @@ const Customer = () => {
             }}
           />
           <div
-            className={`bg-#00426F overflow-x-hidden h-[590px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col ${isLoading ? 'blur-screen' : ''}`}>
-            <div className="flex-grow overflow-auto">
-              <DataTableComponent
-                data={customerData}
-                tableStyle={{
-                  fontSize: '12px',
-                  color: '#000000',
-                  fontWeight: 600,
-                  backgroundColor: '#D9D9D9',
-                  cursor: 'pointer',
-                }}
-                scrollable={true}
-                columns={CustomerTableColumns}
-                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
-                onRowClick={(row) => {
-                  handleCustomerTableRowClick(row)
-                }}
-                selectionMode="single"
-                onSelectionChange={(e) => {
-                  setSelectedProduct(e.value)
-                }}
-                selection={selectedProduct}
-                dataKey="id"
-                rowStyle={(rowData: any) => rowData}
-                emptyMessage={
-                  <div className="text-center mt-40">
-                    <img
-                      src="/assets/images/empty.png"
-                      alt="Empty Data"
-                      className="w-28 mx-auto mb-4"
-                    />
-                    <p className="text-gray-500 text-lg">No data available</p>
-                  </div>
-                }
-              />
-            </div>
-            <div className="mt-auto">
-              <Paginator
-                first={pageNumber1}
-                rows={pageSize}
-                totalRecords={totalRecordsOne}
-                rowsPerPageOptions={[5, 10, 20, 30]}
-                onPageChange={onPageChange}
-                style={{
-                  position: 'sticky',
-                  bottom: 0,
-                  zIndex: 1,
-                  backgroundColor: 'white',
-                  borderTop: '1px solid #D5E1EA',
-                  padding: '0.5rem',
-                }}
-              />
+            style={{
+              height: '700px',
+              backgroundColor: '#FFFFFF',
+              position: 'relative',
+            }}
+            className={`bg-#00426F mt-[3px] ml-[15px] mr-[15px]`}>
+            <div data-testid="customer-data" className="flex flex-col h-full">
+              <div className="flex-grow overflow-auto">
+                <DataTableComponent
+                  data={customerData}
+                  tableStyle={{
+                    fontSize: '12px',
+                    color: '#000000',
+                    fontWeight: 600,
+                    backgroundColor: '#D9D9D9',
+                    cursor: 'pointer',
+                  }}
+                  scrollable={true}
+                  columns={CustomerTableColumns}
+                  style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+                  onRowClick={(row) => {
+                    handleCustomerTableRowClick(row)
+                  }}
+                  selectionMode="single"
+                  onSelectionChange={(e) => {
+                    setSelectedProduct(e.value)
+                  }}
+                  selection={selectedProduct}
+                  dataKey="id"
+                  rowStyle={(rowData: any) => rowData}
+                  emptyMessage={
+                    <div className="text-center mt-40">
+                      <img
+                        src="/assets/images/empty.png"
+                        alt="Empty Data"
+                        className="w-28 mx-auto mb-4"
+                      />
+                      <p className="text-gray-500 text-lg">No data available</p>
+                    </div>
+                  }
+                />
+              </div>
+              <div className="mt-auto">
+                <Paginator
+                  first={pageNumber1}
+                  rows={pageSize}
+                  totalRecords={totalRecordsOne}
+                  rowsPerPageOptions={[5, 10, 20, 30]}
+                  onPageChange={onPageChange}
+                  style={{
+                    position: 'sticky',
+                    bottom: 0,
+                    zIndex: 1,
+                    backgroundColor: 'white',
+                    borderTop: '1px solid #D5E1EA',
+                    padding: '0.5rem',
+                  }}
+                />
+              </div>
             </div>
           </div>
         </div>

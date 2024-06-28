@@ -46,11 +46,10 @@
 .p-datatable .p-datatable-tbody > tr {
   background: #ffffff;
 }
-.p-datatable .p-datatable-tbody > tr > td{
-  border: none ;
-  border-width: none ;
+.p-datatable .p-datatable-tbody > tr > td {
+  border: none;
+  border-width: none;
 }
-
 
 .p-datatable-thead > th {
   background: #f2f2f2;
@@ -191,4 +190,42 @@ input[type='number']::-webkit-outer-spin-button {
 
 .p-inputtext {
   font-size: 0.8rem;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
+.overflow-auto {
+  overflow: auto;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.mt-auto {
+  margin-top: auto;
+}
+
+.blur-screen {
+  filter: blur(5px);
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #00426f;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00426f;
 }

@@ -8,7 +8,6 @@ import {
   useGetVendorsMutation,
 } from '../../../Services/MoorManage/MoormanageApi'
 import { DeleteCustomerResponse, VendorPayload, VendorResponse } from '../../../Type/ApiTypes'
-import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import Header from '../../Layout/LayoutComponents/Header'
 import { IoSearchSharp } from 'react-icons/io5'
@@ -24,7 +23,6 @@ const Vendors = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
   const [modalVisible, setModalVisible] = useState(false)
   const [vendorData, setVendorData] = useState<VendorPayload[]>([])
-  const [filteredboatyardsData, setFilteredboatyardsData] = useState<VendorPayload[]>([])
   const [selectedCustomer, setSelectedCustomer] = useState<any>()
   const [editMode, setEditMode] = useState(false)
   const [searchText, setSearchText] = useState('')
@@ -75,7 +73,6 @@ const Vendors = () => {
           if (status === 200 && Array.isArray(content)) {
             setIsLoading(false)
             setVendorData(content)
-            setFilteredboatyardsData(content)
             setTotalRecords(totalSize)
           } else {
             setIsLoading(false)
@@ -133,45 +130,39 @@ const Vendors = () => {
     setEditMode(false)
   }
 
+  const columnStyle = {
+    backgroundColor: '#00426F',
+    color: '#FFFFFF',
+    fontWeight: '500',
+    fontSize: '12px',
+  }
+
   const VendorColumns = useMemo(
     () => [
-      // {
-      //  id:'',
-      //   label: 'ID',
-      //   style: {
-      //     width: '9vw',
-      //     backgroundColor: '#00426F',
-      //     color: '#FFFFFF',
-      //     fontSize: '11.18px',
-      //     fontWeight: '700',
-      //     borderTopLeftRadius: '10px',
-      //   },
-
-      // },
       {
         id: 'companyName',
         label: 'Company Name',
         style: {
-          width: '16vw',
-          backgroundColor: '#00426F',
-          color: '#FFFFFF',
+          ...columnStyle,
           borderTopLeftRadius: '10px',
         },
       },
       {
         id: 'companyPhoneNumber',
         label: 'Phone Number',
-        style: { width: '15vw', backgroundColor: '#00426F', color: '#FFFFFF' },
+        style: columnStyle,
+        className: 'phone',
       },
       {
         id: 'companyEmail',
         label: 'Email Address',
-        style: { width: '16vw', backgroundColor: '#00426F', color: '#FFFFFF' },
+        style: columnStyle,
+        className: 'email',
       },
       {
         id: 'inventoryItems',
         label: 'Inventory Items',
-        style: { width: '13vw', backgroundColor: '#00426F', color: '#FFFFFF' },
+        style: columnStyle,
       },
     ],
     [],
@@ -190,7 +181,6 @@ const Vendors = () => {
           underline: true,
           style: {
             margin: 0,
-            // cursor: rowData.inventoryItems > 0 ? 'pointer' : 'not-allowed'
           },
         },
         {
@@ -298,17 +288,14 @@ const Vendors = () => {
 
         <div
           style={{
-            height: '720px', // Adjust the overall height as needed
+            height: '700px',
             borderRadius: '10px',
             border: '1px solid #D5E1EA',
             backgroundColor: '#FFFFFF',
-            position: 'relative', // Ensure the container is relatively positioned
+            position: 'relative',
           }}
-          className={`ml-[3rem] mr-[2.30rem] mt-8 ${isLoading ? 'blur-screen' : ''}`}>
-          <div
-            data-testid="customer-admin-data"
-            className="flex flex-col  "
-            style={{ height: '700px' }}>
+          className={`ml-[3rem] mr-[2.30rem] mt-8 `}>
+          <div data-testid="customer-admin-data" className="flex flex-col h-full">
             <div className="flex-grow overflow-auto">
               <DataTableComponent
                 tableStyle={{

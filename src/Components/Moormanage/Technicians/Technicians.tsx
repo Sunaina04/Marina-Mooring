@@ -84,6 +84,7 @@ const Technicians = () => {
     fontSize: '12px',
     color: '#000000',
   }
+
   const WorkOrdersColumnStyle = {
     fontSize: '12px',
     height: '12px',
@@ -422,7 +423,7 @@ const Technicians = () => {
               borderRadius: '5px',
               marginLeft: '3rem',
             }}>
-            <div className="bg-[#10293A] rounded-tl-[10px] rounded-tr-[10px] text-white">
+            <div className="bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px] text-white">
               <h1 className="p-4 text-xl font-extrabold">{properties.Technician}</h1>
             </div>
             <InputTextWithHeader
@@ -519,7 +520,7 @@ const Technicians = () => {
           </div>
 
           <div
-            className={`${isLoading ? 'blur-screen' : ''} md:ml-12 md:mt-3 lg:mt-0`}
+            className={`md:ml-12 md:mt-3 lg:mt-0`}
             style={{
               flexGrow: 1,
               borderRadius: '5px',
