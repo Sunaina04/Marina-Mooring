@@ -357,7 +357,7 @@ const Technicians = () => {
       <Header header="MOORMANAGE/Technicians" />
       <Toast ref={toast} />
 
-      <div className="mt-10">
+      <div className="mt-6">
         <div className="flex justify-end mr-[54px]">
           <div className="flex gap-4 items-center">
             <div className="">
@@ -402,7 +402,7 @@ const Technicians = () => {
           </div>
         </div>
 
-        <div className="flex lg:flex-row justify-around md:flex-col  mt-6">
+        <div className="flex lg:flex-row justify-around md:flex-col mt-4">
           <div
             style={{
               width: '700px',
@@ -440,7 +440,7 @@ const Technicians = () => {
             />
 
             <div
-              data-testid="customer-admin-data"
+              data-testid="technician-data"
               className="flex flex-col mt-[3px] ml-[15px] mr-[15px] table-container "
               style={{ height: '548px' }}>
               <div className="flex-grow overflow-auto">
@@ -527,7 +527,9 @@ const Technicians = () => {
                   <SelectButton
                     value={value}
                     onChange={(e: SelectButtonChangeEvent) => {
-                      setValue(e.value)
+                      if (e.value) {
+                        setValue(e.value)
+                      }
                     }}
                     options={options}
                   />
@@ -536,7 +538,7 @@ const Technicians = () => {
             </div>
 
             <div
-              data-testid="customer-admin-data"
+              data-testid="work-order-data"
               className="flex flex-col mt-[3px] ml-[15px] mr-[15px] table-container "
               style={{ height: '600px' }}>
               <div className="flex-grow overflow-auto">
@@ -565,6 +567,7 @@ const Technicians = () => {
                   }
                   style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
                 />
+
                 {isLoading && (
                   <ProgressSpinner
                     style={{
