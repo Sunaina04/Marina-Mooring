@@ -38,6 +38,8 @@ import { Paginator } from 'primereact/paginator'
 import { Avatar } from 'primereact/avatar'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
+import { FiMinus } from 'react-icons/fi'
+import { IoAddOutline } from 'react-icons/io5'
 
 const Customer = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -72,6 +74,13 @@ const Customer = () => {
   const [pageNumber2, setPageNumber2] = useState(0)
   const [pageSizeTwo, setPageSizeTwo] = useState(10)
   const [totalRecordsTwo, setTotalRecordsTwo] = useState<number>()
+  const [accordion, setAccordion] = useState('faq1')
+  const [workOrderData, setWorkOrderData] = useState('')
+
+
+  const handleToggle = (id: string) => {
+    setAccordion((prevState) => (prevState === id ? '' : id))
+  }
 
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
@@ -680,11 +689,11 @@ const Customer = () => {
                     <p className="text-gray-500 text-lg">No data available</p>
                   </div>
                 }
-                // rows={pageSize}
-                // first={pageNumber1}
-                // totalRecords={totalRecordsOne}
-                // rowsPerPageOptions={[5, 10, 20, 30]}
-                // onPage={onPageChange}
+              // rows={pageSize}
+              // first={pageNumber1}
+              // totalRecords={totalRecordsOne}
+              // rowsPerPageOptions={[5, 10, 20, 30]}
+              // onPage={onPageChange}
               />
             </div>
             <div className="mt-auto">
@@ -776,84 +785,171 @@ const Customer = () => {
             />
           )}
 
-          <div className="flex-grow bg-white rounded-md border">
-            <div className="bg-[#10293A] text-white">
-              <h1 className="p-4 text-xl font-extrabold">{properties.mooringHeader}</h1>
-            </div>
-
+          <div 
+          className="flex flex-col wrapper">
             <div
-              style={{
-                height: '400px',
-                // minHeight: '400px',
-                backgroundColor: '#FFFFFF',
-                overflowY: 'scroll',
-              }}
-              data-testid="mooring-data"
-              className="flex flex-col h-full ml-[15px] mr-[15px] table-container">
-              <DataTableComponent
-                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
-                scrollable
-                tableStyle={{
-                  fontSize: '12px',
-                  color: '#000000',
-                  fontWeight: 600,
-                  backgroundColor: '#D9D9D9',
-                }}
-                onRowClick={(rowData) => {
-                  handleMooringTableRowClick(rowData)
-                }}
-                columns={MooringTableColumn}
-                data={mooringData}
-                selectionMode="single"
-                onSelectionChange={(e) => {
-                  setSelectedMooring(e.value)
-                }}
-                selection={selectedMooring}
-                dataKey="id"
-                rowStyle={(rowData) => rowData}
-                emptyMessage={
-                  <div className="text-center mt-28">
-                    <img
-                      src="/assets/images/empty.png"
-                      alt="Empty Data"
-                      className="w-28 mx-auto mb-4"
-                    />
-                    <p className="text-gray-500 text-lg">No data available</p>
+              className="px-5 relative  bg-white border-[1px] border-[#D5E1EA] mr-8"
+              style={{ width: '500px', maxWidth: '500px', marginBottom: '0px' }}>
+              <label
+                htmlFor="faq1"
+                className="cursor-pointer flex items-center justify-between h-14"
+                onClick={() => handleToggle('faq1')}>
+                <div className="flex items-center gap-4">
+                  <div>
+                    <h1 className="text-[16px] font-[500] text-[#10293A] leading-[18.75px]">Moorings</h1>
                   </div>
-                }
-              />
-              {isLoading && (
-                <ProgressSpinner
-                  style={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '40%',
-                    transform: 'translate(-50%, -50%)',
-                    width: '50px',
-                    height: '50px',
-                  }}
-                  strokeWidth="4"
-                />
-              )}
-              <div className="mt-auto">
-                <Paginator
-                  first={pageNumber2}
-                  rows={pageSizeTwo}
-                  totalRecords={totalRecordsTwo}
-                  rowsPerPageOptions={[5, 10, 20, 30]}
-                  onPageChange={onPageChangeTwo}
-                  style={{
-                    position: 'sticky',
-                    bottom: 0,
-                    zIndex: 1,
-                    backgroundColor: 'white',
-                    borderTop: '1px solid #D5E1EA',
-                    padding: '0.5rem',
-                  }}
-                />
+                </div>
+                <div>
+                  <div>
+                    {accordion === 'faq1' ? (
+                      <FiMinus style={{ color: '#10293A' }} />
+                    ) : (
+                      <IoAddOutline style={{ color: '#10293A' }} />
+                    )}
+                  </div>
+                </div>
+              </label>
+              <div className={`content  transition-all ease-in-out duration-500 ${accordion === 'faq1' ? '' : 'hidden'}`}>
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                  <div className="flex-grow bg-white rounded-md border">
+                    <div
+                      style={{
+                        fontWeight: '700',
+                        color: 'white',
+                        padding: '14px',
+                        fontSize: '15px',
+                      }}>
+                    </div>
+                    <div className={`bg-#00426F overflow-x-hidden h-[310px]  table-container flex flex-col`}>
+                      <div className="flex-grow">
+                        <DataTableComponent
+                          style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+                          scrollable
+                          tableStyle={{
+                            fontSize: '12px',
+                            color: '#000000',
+                            fontWeight: 600,
+                            backgroundColor: '#D9D9D9',
+                          }}
+                          data={mooringData}
+                          columns={MooringTableColumn}
+                          onRowClick={(rowData) => {
+                            handleMooringTableRowClick(rowData)
+                          }}
+                          selectionMode="single"
+                          onSelectionChange={(e) => {
+                            setSelectedMooring(e.value)
+                          }}
+                          selection={selectedMooring}
+                          dataKey="id"
+                          rowStyle={(rowData: any) => rowData}
+                          emptyMessage={
+                            <div className="text-center mt-40">
+                              <img src="/assets/images/empty.png" alt="Empty Data" className="w-20 mx-auto mb-4" />
+                              <p className="text-gray-500 text-lg">No data available</p>
+                            </div>
+                          }
+                        />
+                      </div>
+                      <Paginator
+                        first={pageNumber2}
+                        rows={pageSizeTwo}
+                        totalRecords={totalRecordsTwo}
+                        rowsPerPageOptions={[5, 10, 20, 30]}
+                        onPageChange={onPageChangeTwo}
+                        style={{
+                          position: 'sticky',
+                          bottom: 0,
+                          zIndex: 1,
+                          backgroundColor: 'white',
+                          borderTop: '1px solid #D5E1EA',
+                          padding: '0.5rem',
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              className="tab px-5 relative  bg-[#FFFFFF] border-[1px] border-[#D5E1EA] mr-8"
+              style={{ width: '500px', maxWidth: '500px', marginTop: '0px' }}>
+              <label
+                htmlFor="faq2"
+                className="cursor-pointer flex items-center justify-between h-14"
+                onClick={() => handleToggle('faq2')}>
+                <div
+
+                  className="flex items-center">
+                  {/* <div>
+                    <img alt="icon" src="/assets/images/file.svg" style={{ width: '23px' }} />
+                  </div> */}
+                  <div style={{ flexShrink: 1 }}>
+                    <h1 className="text-[16px] font-[500] text-[#10293A] leading-[18.75px]">Customer's Images </h1>
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    {accordion === 'faq2' ? (
+                      <FiMinus style={{ color: '#10293A' }} />
+                    ) : (
+                      <IoAddOutline style={{ color: '#10293A' }} />
+                    )}
+                  </div>
+                </div>
+              </label>
+              <div className={`content mt-5 transition-all ease-in-out duration-500 ${accordion === 'faq2' ? '' : 'hidden'}`}>
+                <div className={`bg-#00426F overflow-x-hidden h-[310px]  table-container flex flex-col`}>
+                  <div className="flex-grow">
+                    <DataTableComponent
+                      style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+                      scrollable
+                      tableStyle={{
+                        fontSize: '12px',
+                        color: '#000000',
+                        fontWeight: 600,
+                        backgroundColor: '#D9D9D9',
+                      }}
+                      data={mooringData}
+                      columns={MooringTableColumn}
+                      onRowClick={(rowData) => {
+                        handleMooringTableRowClick(rowData)
+                      }}
+                      selectionMode="single"
+                      onSelectionChange={(e) => {
+                        setSelectedMooring(e.value)
+                      }}
+                      selection={selectedMooring}
+                      dataKey="id"
+                      rowStyle={(rowData: any) => rowData}
+                      emptyMessage={
+                        <div className="text-center mt-40">
+                          <img src="/assets/images/empty.png" alt="Empty Data" className="w-20 mx-auto mb-4" />
+                          <p className="text-gray-500 text-lg">No data available</p>
+                        </div>
+                      }
+                    />
+                  </div>
+                  <Paginator
+                    first={pageNumber2}
+                    rows={pageSizeTwo}
+                    totalRecords={totalRecordsTwo}
+                    rowsPerPageOptions={[5, 10, 20, 30]}
+                    onPageChange={onPageChangeTwo}
+                    style={{
+                      position: 'sticky',
+                      bottom: 0,
+                      zIndex: 1,
+                      backgroundColor: 'white',
+                      borderTop: '1px solid #D5E1EA',
+                      padding: '0.5rem',
+                    }}
+                  />
+                </div>
               </div>
             </div>
           </div>
+
         </div>
       </div>
 
