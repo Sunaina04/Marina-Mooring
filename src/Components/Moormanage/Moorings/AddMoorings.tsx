@@ -1187,7 +1187,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 }}>
                 <CustomSelectPositionMap
                   onPositionChange={handlePositionChange}
-                  zoomLevel={10}
+                  zoomLevel={15}
                   center={center}
                 />
               </div>
@@ -1280,7 +1280,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 }}>
                 <CustomSelectPositionMap
                   onPositionChange={handlePositionChange}
-                  zoomLevel={10}
+                  zoomLevel={15}
                   center={center}
                 />
               </div>

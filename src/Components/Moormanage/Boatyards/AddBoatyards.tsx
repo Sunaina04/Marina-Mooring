@@ -307,9 +307,8 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   }, [gpsCoordinatesValue])
 
   return (
-    
     <>
-      <div className={`" ml-4" ${isLoading ? "blurred" : ""}`}>
+      <div className={`" ml-4" ${isLoading ? 'blurred' : ''}`}>
         <Toast ref={toastRef} />
 
         <div className="flex gap-6  ">
@@ -646,46 +645,45 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
           <div className="w-full h-[150px] p-2 rounded-lg mt-[22px]">
             <CustomSelectPositionMap
               onPositionChange={handlePositionChange}
-              zoomLevel={10}
+              zoomLevel={15}
               center={center}
             />
           </div>
         </div>
       </div>
-      <div className={`"flex gap-4 ml-4 bottom-5 absolute left-6" ${isLoading ? "blurred" : ""}`}>
-          <Button
-            label={'Save'}
-            onClick={handleSave}
-            style={{
-              width: '89px',
-              height: '42px',
-              backgroundColor: '#0098FF',
-              cursor: 'pointer',
-              fontWeight: 'bolder',
-              fontSize: '1rem',
-              boxShadow: 'none',
-              color: 'white',
-              borderRadius: '0.50rem',
-            }}
-          />
+      <div className={`"flex gap-4 ml-4 bottom-5 absolute left-6" ${isLoading ? 'blurred' : ''}`}>
+        <Button
+          label={'Save'}
+          onClick={handleSave}
+          style={{
+            width: '89px',
+            height: '42px',
+            backgroundColor: '#0098FF',
+            cursor: 'pointer',
+            fontWeight: 'bolder',
+            fontSize: '1rem',
+            boxShadow: 'none',
+            color: 'white',
+            borderRadius: '0.50rem',
+          }}
+        />
 
-          <Button
-            label={'Back'}
-            onClick={handleBack}
-            text={true}
-            style={{
-              backgroundColor: 'white',
-              color: '#000000',
-              border: 'none',
-              width: '89px',
-              fontSize: '14px',
-              height: '42px',
-              fontWeight: '500',
-            }}
-          />
-        </div>
+        <Button
+          label={'Back'}
+          onClick={handleBack}
+          text={true}
+          style={{
+            backgroundColor: 'white',
+            color: '#000000',
+            border: 'none',
+            width: '89px',
+            fontSize: '14px',
+            height: '42px',
+            fontWeight: '500',
+          }}
+        />
+      </div>
     </>
-    
   )
 }
 

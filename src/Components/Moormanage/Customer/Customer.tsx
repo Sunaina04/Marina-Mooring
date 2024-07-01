@@ -700,7 +700,7 @@ const Customer = () => {
           className={`min-w-[21vw] min-h[700px] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
           <CustomMooringPositionMap
             position={initialPosition}
-            zoomLevel={10}
+            zoomLevel={15}
             style={{ height: '700px' }}
             iconsByStatus={iconsByStatus}
             moorings={mooringData}

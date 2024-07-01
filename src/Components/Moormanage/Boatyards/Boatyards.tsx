@@ -475,7 +475,7 @@ const Boatyards = () => {
             marginLeft: '10px',
             marginRight: '10px',
           }}>
-          <CustomDisplayPositionMap position={[latitude, longitude]} zoomLevel={10} />
+          <CustomDisplayPositionMap position={[latitude, longitude]} zoomLevel={15} />
         </div>
 
         <div

@@ -144,7 +144,8 @@ const Moorings = () => {
     setMooringRecord(true)
     setCustomerId(rowData?.customerId)
     setMooringId(rowData?.id)
-    getCustomersWithMooring(rowData?.customerId)
+    getCustomersWithMooring(rowData?.id)
+    console.log('data', rowData)
   }
 
   const handleEdit = (rowData: any) => {
@@ -338,6 +339,8 @@ const Moorings = () => {
   ])
 
   const getCustomersWithMooring = async (id: number) => {
+    console.log('id', id)
+
     setIsLoading(true)
     setIsLoader(true)
     try {
@@ -489,7 +492,7 @@ const Moorings = () => {
     if (customerId) {
       getCustomersWithMooring(customerId)
     }
-  }, [pageNumberTwo, pageSizeTwo, customerId])
+  }, [pageNumberTwo, pageSizeTwo, selectedCustomerId])
 
   return (
     <div style={{ height: '100vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
@@ -601,7 +604,7 @@ const Moorings = () => {
               columns={tableColumns}
               style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
               onRowClick={(row) => {
-                handleMooringRowClick(row)
+                handleMooringRowClick(row.data)
               }}
               selectionMode="single"
               onSelectionChange={(e) => {
@@ -661,7 +664,7 @@ const Moorings = () => {
           className={`min-w-[21vw] min-h[700px] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
           <CustomMooringPositionMap
             position={initialPosition}
-            zoomLevel={10}
+            zoomLevel={15}
             style={{ height: '700px' }}
             iconsByStatus={iconsByStatus}
             moorings={mooringResponseData}
@@ -1687,7 +1690,7 @@ export default Moorings
 //           className={`min-w-[21vw] min-h[55vw] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
 //           <CustomMooringPositionMap
 //             position={initialPosition}
-//             zoomLevel={10}
+//             zoomLevel={15}
 //             style={{ height: '730px' }}
 //             iconsByStatus={iconsByStatus}
 //             moorings={mooringData}

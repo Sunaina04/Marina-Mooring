@@ -137,7 +137,7 @@ const Dashboard = () => {
           <div style={{ height: '500px', width: '50vw' }}>
             <CustomMooringPositionMap
               position={[30.698, 76.657]}
-              zoomLevel={10}
+              zoomLevel={15}
               style={{ height: '100%', width: '100%' }}
             />
           </div>
