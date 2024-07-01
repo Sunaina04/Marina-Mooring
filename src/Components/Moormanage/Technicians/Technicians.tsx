@@ -326,7 +326,6 @@ const Technicians = () => {
     }, 600)
     return () => clearTimeout(timeoutId)
   }, [
-    selectedCustomerId,
     technicianId,
     value,
     pageSizeTwo,
