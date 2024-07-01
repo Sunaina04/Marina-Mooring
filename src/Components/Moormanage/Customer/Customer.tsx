@@ -647,44 +647,46 @@ const Customer = () => {
                 height: '18px',
               }}
             />
-            <DataTableComponent
-              data={customerData}
-              tableStyle={{
-                fontSize: '12px',
-                color: '#000000',
-                fontWeight: 600,
-                backgroundColor: '#D9D9D9',
-              }}
-              scrollable={true}
-              columns={CustomerTableColumns}
-              style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
-              onRowClick={(row) => {
-                handleCustomerTableRowClick(row)
-              }}
-              selectionMode="single"
-              onSelectionChange={(e) => {
-                setSelectedProduct(e.value)
-              }}
-              selection={selectedProduct}
-              dataKey="id"
-              paginator={true}
-              rowStyle={(rowData: any) => rowData}
-              emptyMessage={
-                <div className="text-center mt-40">
-                  <img
-                    src="/assets/images/empty.png"
-                    alt="Empty Data"
-                    className="w-28 mx-auto mb-4"
-                  />
-                  <p className="text-gray-500 text-lg">No data available</p>
-                </div>
-              }
-              // rows={pageSize}
-              // first={pageNumber1}
-              // totalRecords={totalRecordsOne}
-              // rowsPerPageOptions={[5, 10, 20, 30]}
-              // onPage={onPageChange}
-            />
+            <div className="ml-[15px] mr-[15px] table-container">
+              <DataTableComponent
+                data={customerData}
+                tableStyle={{
+                  fontSize: '12px',
+                  color: '#000000',
+                  fontWeight: 600,
+                  backgroundColor: '#D9D9D9',
+                }}
+                scrollable={true}
+                columns={CustomerTableColumns}
+                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+                onRowClick={(row) => {
+                  handleCustomerTableRowClick(row)
+                }}
+                selectionMode="single"
+                onSelectionChange={(e) => {
+                  setSelectedProduct(e.value)
+                }}
+                selection={selectedProduct}
+                dataKey="id"
+                paginator={true}
+                rowStyle={(rowData: any) => rowData}
+                emptyMessage={
+                  <div className="text-center mt-40">
+                    <img
+                      src="/assets/images/empty.png"
+                      alt="Empty Data"
+                      className="w-28 mx-auto mb-4"
+                    />
+                    <p className="text-gray-500 text-lg">No data available</p>
+                  </div>
+                }
+                // rows={pageSize}
+                // first={pageNumber1}
+                // totalRecords={totalRecordsOne}
+                // rowsPerPageOptions={[5, 10, 20, 30]}
+                // onPage={onPageChange}
+              />
+            </div>
             <div className="mt-auto">
               <Paginator
                 first={pageNumber1}
@@ -744,7 +746,7 @@ const Customer = () => {
                 />
               </div>
             </div>
-            <div style={{border:"1px solid white" ,height: '180px',overflowY:"scroll" }}>
+            <div style={{ border: '1px solid white', height: '180px', overflowY: 'scroll' }}>
               {customerRecordData ? (
                 CustomerDetails
               ) : (
@@ -787,7 +789,7 @@ const Customer = () => {
                 overflowY: 'scroll',
               }}
               data-testid="mooring-data"
-              className="flex flex-col h-full">
+              className="flex flex-col h-full ml-[15px] mr-[15px] table-container">
               <DataTableComponent
                 style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
                 scrollable
