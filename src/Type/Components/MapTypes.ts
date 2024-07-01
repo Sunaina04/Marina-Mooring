@@ -52,4 +52,5 @@ export interface TimeLineProps {
   gpsValue: any
   mooringId: any
   viewEditClick?: any
+  mooringData?: any
 }

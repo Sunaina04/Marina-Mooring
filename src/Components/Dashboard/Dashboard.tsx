@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Accordition from '../CommonComponent/Accordion'
 import { NullableDateArray } from '../../Type/CommonType'
 import DataTableComponent from '../CommonComponent/Table/DataTableComponent'
@@ -8,12 +8,51 @@ import { dasboardTable } from '../Utils/CustomData'
 import CustomDisplayPositionMap from '../Map/CustomDisplayPositionMap'
 import CustomMooringPositionMap from '../Map/CustomMooringPositionMap'
 import Accordion from '../CommonComponent/Accordion'
+import { ErrorResponse, MooringPayload, MooringResponse } from '../../Type/ApiTypes'
+import { useGetMooringsMutation } from '../../Services/MoorManage/MoormanageApi'
+import { useSelector } from 'react-redux'
+import { selectCustomerId } from '../../Store/Slice/userSlice'
+import { Toast } from 'primereact/toast'
+import { PositionType } from '../../Type/Components/MapTypes'
+import { GearOffIcon, GearOnIcon, NeedInspectionIcon, NotInUseIcon } from '../Map/DefaultIcon'
 
 const Dashboard = () => {
-  const [date, setDate] = useState<NullableDateArray>(null)
-  const options: string[] = ['Pending', 'Cleared']
-  const [value, setValue] = useState<string>(options[0])
-  const [serviceData, setServiceData] = useState<any>('')
+  const selectedCustomerId = useSelector(selectCustomerId)
+  const [isLoading, setIsLoading] = useState(true)
+  const [mooringData, setMooringData] = useState<MooringPayload[]>([])
+  const [mooringResponseData, setMooringResponseData] = useState<any>()
+  const [getMoorings] = useGetMooringsMutation()
+  const toast = useRef<Toast>(null)
+
+  const position: PositionType = [41.56725, 70.94045]
+
+  const parseCoordinates = (coordinates: any) => {
+    if (!coordinates) return null
+    const [latitude, longitude] = coordinates.split(' ').map(parseFloat)
+    return isNaN(latitude) || isNaN(longitude) ? null : [latitude, longitude]
+  }
+
+  const gpsCoordinatesArray =
+    mooringData &&
+    mooringData?.map(
+      (mooring: any) => parseCoordinates(mooring.gpsCoordinates) || [41.56725, 70.94045],
+    )
+
+  const initialPosition = gpsCoordinatesArray?.length > 0 ? gpsCoordinatesArray[0] : position
+
+  const convertStringToArray = (str: any) => {
+    return str?.split(' ').map(Number)
+  }
+
+  const coordinatesArray = convertStringToArray(mooringResponseData)
+
+  const iconsByStatus = {
+    GearOn: GearOnIcon,
+    GearOff: GearOffIcon,
+    NeedInspection: NeedInspectionIcon,
+    NotInUse: NotInUseIcon,
+  }
+
   const columns: TableColumnProps[] = useMemo(
     () => [
       {
@@ -39,7 +78,7 @@ const Dashboard = () => {
         },
       },
       {
-        id: 'mooringId',
+        id: 'mooringNumber',
         label: 'Mooring Number',
         style: {
           fontSize: '10px',
@@ -51,7 +90,7 @@ const Dashboard = () => {
       },
 
       {
-        id: 'mooringServiceDate',
+        id: 'installBottomChainDate',
         label: 'Mooring service Date',
         style: {
           fontSize: '10px',
@@ -62,7 +101,7 @@ const Dashboard = () => {
         },
       },
       {
-        id: 'mooringLocation ',
+        id: 'gpsCoordinates',
         label: 'Mooring Location ',
         style: {
           fontSize: '10px',
@@ -73,7 +112,7 @@ const Dashboard = () => {
         },
       },
       {
-        id: 'status',
+        id: 'mooringStatus.status',
         label: 'Status',
         style: {
           fontSize: '10px',
@@ -99,7 +138,7 @@ const Dashboard = () => {
     headerStyle: { backgroundColor: '#FFFFFF' },
   }
 
-  const Boatsheader = (
+  const MooringHeader = (
     <div>
       <div className="flex justify-between gap-2 p-4 bg-white">
         <div
@@ -130,16 +169,55 @@ const Dashboard = () => {
     </div>
   )
 
+  const getMooringsData = useCallback(async () => {
+    setIsLoading(true)
+    try {
+      const response = await getMoorings({}).unwrap()
+      const { status, content, message, totalSize } = response as MooringResponse
+      if (status === 200 && Array.isArray(content)) {
+        if (content?.length > 0) {
+          setIsLoading(false)
+          setMooringData(content)
+        } else {
+          setIsLoading(false)
+          setMooringData([])
+        }
+      } else {
+        setIsLoading(false)
+        toast?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+      }
+    } catch (error) {
+      setIsLoading(false)
+      const { message } = error as ErrorResponse
+      console.error('Error fetching moorings data:', error)
+    }
+  }, [getMoorings, selectedCustomerId])
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      getMooringsData()
+    }, 2000)
+    return () => clearTimeout(timeoutId)
+  }, [selectedCustomerId])
+
   return (
     <>
       <Header header="DASHBOARD" />
+      <Toast ref={toast} />
       <div className="flex ml-12 gap-6 mt-10">
         <div className=" flex flex-col ">
           <div style={{ height: '500px', width: '50vw' }}>
             <CustomMooringPositionMap
-              position={[30.698, 76.657]}
+              position={coordinatesArray ? coordinatesArray : initialPosition}
               zoomLevel={15}
               style={{ height: '60%', width: '100%' }}
+              iconsByStatus={iconsByStatus}
+              moorings={mooringData}
             />
           </div>
 
@@ -156,9 +234,12 @@ const Dashboard = () => {
             <DataTableComponent
               columns={columns}
               actionButtons={ActionButtonColumn}
-              header={Boatsheader}
+              header={MooringHeader}
               tableStyle={{ backgroundColor: '#FFFFFF' }}
-              data={serviceData}
+              onRowClick={(rowData) => {
+                setMooringResponseData(rowData?.data?.gpsCoordinates)
+              }}
+              data={mooringData}
               emptyMessage={
                 <div className="text-center mt-14">
                   <img

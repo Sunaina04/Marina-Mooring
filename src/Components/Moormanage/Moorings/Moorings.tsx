@@ -42,24 +42,17 @@ const Moorings = () => {
   const [boatYardData, setBoatYardData] = useState<any[]>([])
   const [selectedCustomer, setSelectedCustomer] = useState<any>()
   const [mooringRowData, setMooringRowData] = useState<MooringPayload>()
-  const [mooringRecord, setMooringRecord] = useState(true)
   const [editMode, setEditMode] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState<any>()
   const [selectedMooring, setSelectedMooring] = useState<any>()
   const [searchText, setSearchText] = useState('')
   const [customerId, setCustomerId] = useState<any>()
   const [mooringId, setMooringId] = useState()
-  const [rowClick, setRowClick] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [isLoader, setIsLoader] = useState(false)
-  const [coordinatesArray, setCoordinatesArray] = useState()
-  const [filteredMooringData, setFilteredMooringData] = useState<MooringPayload[]>([])
-  const [isChecked, setIsChecked] = useState(false)
   const [dialogVisible, setDialogVisible] = useState(false)
   const [editCustomerMode, setEditCustomerMode] = useState(false)
-  const [editMooringMode, setEditMooringMode] = useState(false)
   const [customerModalVisible, setCustomerModalVisible] = useState(false)
-  const [customerMooringData, setCustomerMooringData] = useState<MooringResponseDtoList[]>([])
 
   const toast = useRef<Toast>(null)
   const [getMoorings] = useGetMooringsMutation()
@@ -75,8 +68,6 @@ const Moorings = () => {
   const [pageNumber2, setPageNumber2] = useState(0)
   const [pageSizeTwo, setPageSizeTwo] = useState(10)
   const [totalRecordsTwo, setTotalRecordsTwo] = useState<number>()
-
-  const dispatch = useDispatch()
 
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
@@ -113,16 +104,9 @@ const Moorings = () => {
     NotInUse: NotInUseIcon,
   }
 
-  const handleInputChange = (e: InputSwitchChangeEvent) => {
-    if (rowClick) {
-      setIsChecked(e.value)
-    }
-  }
-
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value)
     setCustomerRecordData('')
-    setCustomerMooringData([])
     setBoatYardData([])
     setMooringResponseData('')
     setPageNumber(0)
@@ -142,8 +126,6 @@ const Moorings = () => {
   }
 
   const handleMooringRowClick = (rowData: any) => {
-    setRowClick(true)
-    setMooringRecord(true)
     setCustomerId(rowData?.customerId)
     setMooringId(rowData?.id)
   }
@@ -168,7 +150,6 @@ const Moorings = () => {
           life: 3000,
         })
         getMooringsData()
-        setCustomerMooringData([])
         setCustomerRecordData('')
         setIsLoading(false)
       } else {
@@ -190,7 +171,6 @@ const Moorings = () => {
         life: 3000,
       })
     }
-    setMooringRecord(false)
   }
 
   const handleMooringEdit = () => {
@@ -299,7 +279,6 @@ const Moorings = () => {
         if (content?.length > 0) {
           setIsLoading(false)
           setMooringData(content)
-          setFilteredMooringData(content)
           setCustomerId(content[0]?.customerId)
           setSelectedProduct(content[0])
           setTotalRecords(totalSize)
@@ -355,7 +334,6 @@ const Moorings = () => {
         setIsLoading(false)
         setIsLoader(false)
         setCustomerRecordData(content?.customerResponseDto)
-        setCustomerMooringData(content?.customerResponseDto?.mooringResponseDtoList)
         setBoatYardData(content?.boatyardNames)
         setMooringResponseData(content?.customerResponseDto?.mooringResponseDtoList)
         setTotalRecordsTwo(totalSize)
@@ -755,7 +733,6 @@ const Moorings = () => {
                     setDialogVisible(true)
                     setMooringRowData(rowData.data)
                     // dispatch(setMooringRowData(rowData.data))
-                    
                   }}
                   selectionMode="single"
                   onSelectionChange={(e) => {
@@ -930,7 +907,6 @@ const Moorings = () => {
           }}
         />
       )}
-
     </div>
   )
 }
