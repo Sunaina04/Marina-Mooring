@@ -22,7 +22,7 @@ import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader
 import { properties } from '../../Utils/MeassageProperties'
 import Header from '../../Layout/LayoutComponents/Header'
 import { Toast } from 'primereact/toast'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import CustomMooringPositionMap from '../../Map/CustomMooringPositionMap'
 import { RiDeleteBin5Fill } from 'react-icons/ri'
 import { ProgressSpinner } from 'primereact/progressspinner'
@@ -75,6 +75,8 @@ const Moorings = () => {
   const [pageNumber2, setPageNumber2] = useState(0)
   const [pageSizeTwo, setPageSizeTwo] = useState(10)
   const [totalRecordsTwo, setTotalRecordsTwo] = useState<number>()
+
+  const dispatch = useDispatch()
 
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
@@ -752,6 +754,8 @@ const Moorings = () => {
                   onRowClick={(rowData: any) => {
                     setDialogVisible(true)
                     setMooringRowData(rowData.data)
+                    // dispatch(setMooringRowData(rowData.data))
+                    
                   }}
                   selectionMode="single"
                   onSelectionChange={(e) => {
@@ -926,6 +930,7 @@ const Moorings = () => {
           }}
         />
       )}
+
     </div>
   )
 }
