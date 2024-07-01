@@ -378,7 +378,9 @@ const Moorings = () => {
 
   const CustomerDetails = useMemo(() => {
     return (
-      <div className="">
+      <div
+        // style={{border:"1px solid red"}}
+        className="">
         <div className="flex gap-10 p-4">
           <div
             style={{
@@ -696,18 +698,20 @@ const Moorings = () => {
               </div>
             </div>
 
-            {customerRecordData ? (
-              CustomerDetails
-            ) : (
-              <div className="text-center ">
-                <img
-                  src="/assets/images/empty.png"
-                  alt="Empty Data"
-                  className="w-10 mx-auto mt-10 mb-3"
-                />
-                <p className="text-gray-500 font-extrabold mb-10">No data available</p>
-              </div>
-            )}
+            <div style={{ border: '1px solid white', height: '170px', overflow: 'scroll' }}>
+              {customerRecordData ? (
+                CustomerDetails
+              ) : (
+                <div className="text-center ">
+                  <img
+                    src="/assets/images/empty.png"
+                    alt="Empty Data"
+                    className="w-10 mx-auto mt-10 mb-3"
+                  />
+                  <p className="text-gray-500 font-extrabold mb-10">No data available</p>
+                </div>
+              )}
+            </div>
           </div>
 
           {isLoader && (
@@ -738,7 +742,7 @@ const Moorings = () => {
 
             <div
               className={`bg-#00426F overflow-x-hidden h-[400px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col`}>
-              <div className="flex-grow overflow-auto">
+              <div className="flex-grow ">
                 <DataTableComponent
                   style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
                   scrollable

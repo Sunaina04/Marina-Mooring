@@ -538,6 +538,11 @@ const Customer = () => {
     }
   }, [pageNumberTwo, pageSizeTwo, customerId])
 
+  //   const onPageChange = (event: { first: React.SetStateAction<number>; rows: React.SetStateAction<number>; }) => {
+  //     setFirst(event.first);
+  //     setRows(event.rows);
+  // };
+
   return (
     <div style={{ height: '100vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
       <Header header="MOORMANAGE/Customer" />
@@ -662,6 +667,7 @@ const Customer = () => {
               }}
               selection={selectedProduct}
               dataKey="id"
+              paginator={true}
               rowStyle={(rowData: any) => rowData}
               emptyMessage={
                 <div className="text-center mt-40">
@@ -673,6 +679,11 @@ const Customer = () => {
                   <p className="text-gray-500 text-lg">No data available</p>
                 </div>
               }
+              // rows={pageSize}
+              // first={pageNumber1}
+              // totalRecords={totalRecordsOne}
+              // rowsPerPageOptions={[5, 10, 20, 30]}
+              // onPage={onPageChange}
             />
             <div className="mt-auto">
               <Paginator
@@ -733,19 +744,20 @@ const Customer = () => {
                 />
               </div>
             </div>
-
-            {customerRecordData ? (
-              CustomerDetails
-            ) : (
-              <div className="text-center mt-6">
-                <img
-                  src="/assets/images/empty.png"
-                  alt="Empty Data"
-                  className="w-10 mx-auto mb-2"
-                />
-                <p className="text-gray-500 font-[600] text-sm">No data available</p>
-              </div>
-            )}
+            <div style={{border:"1px solid white" ,height: '180px',overflowY:"scroll" }}>
+              {customerRecordData ? (
+                CustomerDetails
+              ) : (
+                <div className="text-center mt-6">
+                  <img
+                    src="/assets/images/empty.png"
+                    alt="Empty Data"
+                    className="w-10 mx-auto mb-2"
+                  />
+                  <p className="text-gray-500 font-[600] text-sm">No data available</p>
+                </div>
+              )}
+            </div>
           </div>
 
           {isLoader && (
@@ -770,8 +782,9 @@ const Customer = () => {
             <div
               style={{
                 height: '400px',
-                minHeight: '400px',
+                // minHeight: '400px',
                 backgroundColor: '#FFFFFF',
+                overflowY: 'scroll',
               }}
               data-testid="mooring-data"
               className="flex flex-col h-full">
