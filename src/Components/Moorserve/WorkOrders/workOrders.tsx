@@ -264,7 +264,7 @@ const WorkOrders = () => {
 
           <div
             data-testid="customer-admin-data"
-            className="flex flex-col  "
+            className="flex flex-col ml-[15px] mr-[15px] table-container "
             style={{ height: '630px' }}>
             <div className="flex-grow overflow-auto">
               <DataTableComponent

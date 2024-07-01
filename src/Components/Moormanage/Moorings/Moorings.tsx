@@ -563,7 +563,7 @@ const Moorings = () => {
             position: 'relative',
           }}
           className="flex-1 ml-[45px] w-[550px]">
-          <div data-testid="customer-data" className="flex flex-col h-full">
+          <div data-testid="customer-data" className="flex flex-col h-full ">
             <div className="bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px] text-white">
               <h1 className="p-4 text-xl font-extrabold">{properties.mooringHeader}</h1>
             </div>
@@ -594,6 +594,7 @@ const Moorings = () => {
                 height: '18px',
               }}
             />
+<<<<<<< Updated upstream
             <DataTableComponent
               data={mooringData}
               tableStyle={{
@@ -626,6 +627,42 @@ const Moorings = () => {
                 </div>
               }
             />
+=======
+            <div className='ml-[15px] mr-[15px] table-container'>
+              <DataTableComponent
+                data={mooringData}
+                tableStyle={{
+                  fontSize: '12px',
+                  color: '#000000',
+                  fontWeight: 600,
+                  backgroundColor: '#D9D9D9',
+                }}
+                scrollable={true}
+                columns={tableColumns}
+                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+                onRowClick={(row) => {
+                  handleMooringRowClick(row)
+                }}
+                selectionMode="single"
+                onSelectionChange={(e) => {
+                  setSelectedProduct(e.value)
+                }}
+                selection={selectedProduct}
+                dataKey="id"
+                rowStyle={(rowData: any) => rowData}
+                emptyMessage={
+                  <div className="text-center mt-40">
+                    <img
+                      src="/assets/images/empty.png"
+                      alt="Empty Data"
+                      className="w-28 mx-auto mb-4"
+                    />
+                    <p className="text-gray-500 text-lg">No data available</p>
+                  </div>
+                }
+              />
+            </div>
+>>>>>>> Stashed changes
             <div className="mt-auto">
               <Paginator
                 first={pageNumber1}

@@ -295,7 +295,7 @@ const Vendors = () => {
             position: 'relative',
           }}
           className={`ml-[3rem] mr-[2.30rem] mt-8 `}>
-          <div data-testid="customer-admin-data" className="flex flex-col h-full">
+          <div data-testid="customer-admin-data" className="flex flex-col h-full ">
             <div className="flex-grow overflow-auto">
               <DataTableComponent
                 tableStyle={{
