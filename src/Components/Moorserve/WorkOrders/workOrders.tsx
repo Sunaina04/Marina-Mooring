@@ -318,6 +318,7 @@ const WorkOrders = () => {
                   backgroundColor: 'white',
                   borderTop: '1px solid #D5E1EA',
                   padding: '0.5rem',
+                  marginBottom:'-25px'
                 }}
               />
             </div>
