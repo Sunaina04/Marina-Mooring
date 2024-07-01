@@ -221,10 +221,14 @@ const InventoryDetails: React.FC = () => {
 
   const getVendorByIdHandler = useCallback(async () => {
     try {
+      setIsLoading(true)
       const response = await getVendorById({ id: vendorId }).unwrap()
       const { status, message, content } = response as GetVendorResponse
       if (status === 200) {
+        setIsLoading(false)
         setVendorData(content)
+      } else {
+        setIsLoading(false)
       }
     } catch (error) {
       setIsLoading(false)

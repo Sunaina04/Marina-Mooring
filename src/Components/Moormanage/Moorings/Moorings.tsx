@@ -803,6 +803,7 @@ const Moorings = () => {
           borderRadius: '1rem',
           fontWeight: '400',
           maxHeight: '50% !important',
+          cursor: 'alias',
         }}
         draggable={false}
         visible={dialogVisible}

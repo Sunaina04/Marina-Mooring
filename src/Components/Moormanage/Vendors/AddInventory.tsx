@@ -25,7 +25,7 @@ const AddInventory: React.FC<AddInventoryProps> = ({
   const [checked, setChecked] = useState<boolean>(false)
   const [unChecked, setUnChecked] = useState<boolean>(false)
   const [inventoryType, setInventoryType] = useState<MetaData[]>([])
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [formData, setFormData] = useState<any>({
     itemName: '',
     cost: '',
@@ -199,6 +199,7 @@ const AddInventory: React.FC<AddInventoryProps> = ({
   const fetchDataInventoryType = useCallback(async () => {
     const { typeOfBoatTypeData } = await getTypeOfInventoryTypeData()
     if (typeOfBoatTypeData !== null) {
+      setIsLoading(false)
       setInventoryType(typeOfBoatTypeData)
     }
   }, [])
@@ -368,41 +369,49 @@ const AddInventory: React.FC<AddInventoryProps> = ({
           </div>
         </div>
       </div>
-      <div className={`"mt-10"  ${isLoading ? "blurred" : ""}`}>
-          <Button
-            label={'Save'}
-            onClick={() => {
-              if (editMode) {
-                handleUpdate()
-              } else {
-                handleSave()
-              }
-            }}
-            style={{
-              width: '89px',
-              height: '42px',
-              backgroundColor: '#0098FF',
-              cursor: 'pointer',
-              fontWeight: 'bolder',
-              fontSize: '1rem',
-              boxShadow: 'none',
-              color: 'white',
-              borderRadius: '0.50rem',
-            }}
-          />
-          <Button
-            label={'Back'}
-            onClick={closeModal}
-            style={{
-              backgroundColor: 'white',
-              color: '#000000',
-              border: 'none',
-              width: '89px',
-              height: '42px',
-              boxShadow: 'none',
-            }}
-          />
-        </div>
+      <div
+        className={`"flex gap-6 bottom-2 absolute left-6" ${isLoading ? 'blurred' : ''}`}
+        style={{
+          width: '100%',
+          height: '80px',
+          backgroundColor: 'white',
+          padding: '0 12px',
+          bottom: '0px',
+        }}>
+        <Button
+          label={'Save'}
+          onClick={() => {
+            if (editMode) {
+              handleUpdate()
+            } else {
+              handleSave()
+            }
+          }}
+          style={{
+            width: '89px',
+            height: '42px',
+            backgroundColor: '#0098FF',
+            cursor: 'pointer',
+            fontWeight: 'bolder',
+            fontSize: '1rem',
+            boxShadow: 'none',
+            color: 'white',
+            borderRadius: '0.50rem',
+          }}
+        />
+        <Button
+          label={'Back'}
+          onClick={closeModal}
+          style={{
+            backgroundColor: 'white',
+            color: '#000000',
+            border: 'none',
+            width: '89px',
+            height: '42px',
+            boxShadow: 'none',
+          }}
+        />
+      </div>
     </>
   )
 }
