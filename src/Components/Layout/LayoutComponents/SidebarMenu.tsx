@@ -1,12 +1,14 @@
 import { useSelector } from 'react-redux'
+import { selectUserRole } from '../../../Store/Slice/userSlice'
 
 const SidebarMenu = () => {
-  const userData = useSelector((state: any) => state.user?.userData)
+  const role = useSelector(selectUserRole)
+  console.log('userData?.role', role)
 
   let link
   let adminSubcategories
 
-  switch (userData?.role?.id) {
+  switch (role) {
     case 2:
       link = '/permission'
       adminSubcategories = [
@@ -65,92 +67,92 @@ const SidebarMenu = () => {
 
   let menu = []
 
-  if (userData?.role?.id === 4) {
-    // If role is TECHNICIAN, only show MOORSERVE and LOGOUT
-    menu = [moorServeMenu]
-  } else {
-    menu = [
-      {
-        icon: '/assets/images/dashboard.svg',
-        name: 'DASHBOARD',
-        link: '/dashboard',
-      },
-      {
-        icon: '/assets/images/ship.svg',
-        name: 'MOORMANAGE',
-        link: 'moormanage/customer',
-        subcategories: [
-          {
-            icon: '/assets/images/customer.svg',
-            name: 'Customer',
-            link: 'moormanage/customer',
-          },
-          {
-            icon: '/assets/images/moorings.svg',
-            name: 'Moorings',
-            link: 'moormanage/mooring',
-          },
-          {
-            icon: '/assets/images/vendor.svg',
-            name: 'Vendors',
-            link: 'moormanage/vendors',
-          },
-          {
-            icon: '/assets/images/technician.svg',
-            name: 'Technicians',
-            link: 'moormanage/technicians',
-          },
-          {
-            icon: '/assets/images/boatYard.svg',
-            name: 'Boatyards',
-            link: 'moormanage/boatyards',
-          },
-        ],
-      },
-      {
-        icon: '/assets/images/moorpay.svg',
-        name: 'MOORPAY',
-        link: 'moorpay/accountReceivable',
-        subcategories: [
-          {
-            icon: '/assets/images/accReceivable.svg',
-            name: 'Account Receivable',
-            link: 'moorpay/accountReceivable',
-          },
-          {
-            icon: '/assets/images/accPayable.svg',
-            name: 'Account Payable',
-            link: 'moorpay/accountPayable',
-          },
-        ],
-      },
-      {
-        icon: '/assets/images/moorserve.svg',
-        name: 'MOORSERVE',
-        link: 'moorserve/workOrders',
-        subcategories: [
-          {
-            icon: '/assets/images/forms.svg',
-            name: 'Work Orders',
-            link: 'moorserve/workOrders',
-          },
-          {
-            icon: '/assets/images/estimates.svg',
-            name: 'Estimates',
-            link: 'moorserve/estimates',
-          },
-          {
-            icon: '/assets/images/forms.svg',
-            name: 'Forms',
-            link: 'moorserve/forms',
-          },
-        ],
-      },
-    ]
-  }
+  // if (role === 4) {
+  //   // If role is TECHNICIAN, only show MOORSERVE and LOGOUT
+  //   menu = [moorServeMenu]
+  // } else {
+  menu = [
+    {
+      icon: '/assets/images/dashboard.svg',
+      name: 'DASHBOARD',
+      link: '/dashboard',
+    },
+    {
+      icon: '/assets/images/ship.svg',
+      name: 'MOORMANAGE',
+      link: 'moormanage/customer',
+      subcategories: [
+        {
+          icon: '/assets/images/customer.svg',
+          name: 'Customer',
+          link: 'moormanage/customer',
+        },
+        {
+          icon: '/assets/images/moorings.svg',
+          name: 'Moorings',
+          link: 'moormanage/mooring',
+        },
+        {
+          icon: '/assets/images/vendor.svg',
+          name: 'Vendors',
+          link: 'moormanage/vendors',
+        },
+        {
+          icon: '/assets/images/technician.svg',
+          name: 'Technicians',
+          link: 'moormanage/technicians',
+        },
+        {
+          icon: '/assets/images/boatYard.svg',
+          name: 'Boatyards',
+          link: 'moormanage/boatyards',
+        },
+      ],
+    },
+    {
+      icon: '/assets/images/moorpay.svg',
+      name: 'MOORPAY',
+      link: 'moorpay/accountReceivable',
+      subcategories: [
+        {
+          icon: '/assets/images/accReceivable.svg',
+          name: 'Account Receivable',
+          link: 'moorpay/accountReceivable',
+        },
+        {
+          icon: '/assets/images/accPayable.svg',
+          name: 'Account Payable',
+          link: 'moorpay/accountPayable',
+        },
+      ],
+    },
+    {
+      icon: '/assets/images/moorserve.svg',
+      name: 'MOORSERVE',
+      link: 'moorserve/workOrders',
+      subcategories: [
+        {
+          icon: '/assets/images/forms.svg',
+          name: 'Work Orders',
+          link: 'moorserve/workOrders',
+        },
+        {
+          icon: '/assets/images/estimates.svg',
+          name: 'Estimates',
+          link: 'moorserve/estimates',
+        },
+        {
+          icon: '/assets/images/forms.svg',
+          name: 'Forms',
+          link: 'moorserve/forms',
+        },
+      ],
+    },
+  ]
+  // }
 
   // Only add ADMIN TOOLS section if user is not FINANCE or TECHNICIAN
-  if (userData?.role?.id !== 3 && userData?.role?.id !== 4) {
+  if (role !== 3 && role !== 4) {
     menu.push({
       icon: '/assets/images/tools.svg',
       name: 'ADMIN TOOLS',

@@ -7,6 +7,7 @@ import { ActionButtonColumnProps, TableColumnProps } from '../../Type/Components
 import { dasboardTable } from '../Utils/CustomData'
 import CustomDisplayPositionMap from '../Map/CustomDisplayPositionMap'
 import CustomMooringPositionMap from '../Map/CustomMooringPositionMap'
+import Accordion from '../CommonComponent/Accordion'
 
 const Dashboard = () => {
   const [date, setDate] = useState<NullableDateArray>(null)
@@ -138,20 +139,19 @@ const Dashboard = () => {
             <CustomMooringPositionMap
               position={[30.698, 76.657]}
               zoomLevel={15}
-              style={{ height: '100%', width: '100%' }}
+              style={{ height: '60%', width: '100%' }}
             />
           </div>
 
           <div
             style={{
-              height: '300.2px',
               maxWidth: '50vw',
               gap: '0px',
               borderRadius: '10px',
               opacity: '0px',
               border: '1px solid #D5E1EA',
               backgroundColor: '#FFFFFF',
-              marginTop: '20px',
+              marginTop: '-180px',
             }}>
             <DataTableComponent
               columns={columns}
@@ -174,7 +174,7 @@ const Dashboard = () => {
         </div>
         <div style={{ flexGrow: 1 }}>
           <div style={{ height: '100%', overflow: 'hidden' }}>
-            <Accordition />
+            <Accordion />
           </div>
         </div>
       </div>

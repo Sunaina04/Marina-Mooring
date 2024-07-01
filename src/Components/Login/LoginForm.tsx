@@ -2,7 +2,13 @@ import { useState, useRef } from 'react'
 import { useLoginMutation } from '../../Services/Authentication/AuthApi'
 import { ErrorResponse, LoginResponse, ResetPasswordResponse } from '../../Type/ApiTypes'
 import { useDispatch, useSelector } from 'react-redux'
-import { setCustomerId, setCustomerName, setToken, setUserData } from '../../Store/Slice/userSlice'
+import {
+  selectUserRole,
+  setCustomerId,
+  setCustomerName,
+  setToken,
+  setUserData,
+} from '../../Store/Slice/userSlice'
 import { Link, useNavigate } from 'react-router-dom'
 import { InputText } from 'primereact/inputtext'
 import { Button } from 'primereact/button'
@@ -14,6 +20,7 @@ import { Divider } from 'primereact/divider'
 
 export default function LoginForm() {
   const userData = useSelector((state: any) => state.user?.userData)
+  const role = useSelector(selectUserRole)
   const dispatch = useDispatch()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -113,18 +120,18 @@ export default function LoginForm() {
       if (status === 200) {
         sessionStorage.setItem('token', token)
         sessionStorage.setItem('refreshToken', refreshToken)
-        dispatch(setUserData({ ...user }))
+        dispatch(setUserData(user))
         dispatch(setToken(token))
         dispatch(setCustomerId(''))
         dispatch(setCustomerName(''))
         setUsername('')
         setPassword('')
         setIsLoading(false)
-        if (userData?.role?.id === 4) {
-          navigate('/moorserve/workOrders')
-        } else {
-          navigate('/dashboard')
-        }
+        // if (role === 4) {
+        //   navigate('/moorserve/workOrders')
+        // } else {
+        navigate('/dashboard')
+        // }
       }
     } catch (error: any) {
       console.error('Error occurred during login:', error)

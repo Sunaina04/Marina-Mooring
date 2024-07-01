@@ -15,9 +15,6 @@ export const userSlice = createSlice({
       const data = action.payload
       state.token = data
     },
-    setLogout: () => {
-      return {} as InitialState
-    },
     setOpen: (state, action: PayloadAction<boolean>) => {
       state.isOpen = action.payload
     },
@@ -29,6 +26,9 @@ export const userSlice = createSlice({
     },
     setCustomerName: (state, action: PayloadAction<string>) => {
       state.customerName = action.payload
+    },
+    setLogout: () => {
+      return {} as InitialState
     },
   },
 })
