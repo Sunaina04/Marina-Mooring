@@ -35,27 +35,27 @@ const Accordion = () => {
       {
         id: 'orderNo',
         label: 'Order No.',
-        style: { fontSize: '10px', width: '27vw', backgroundColor: '#FFFFFF', color: '#000000' },
+        style: { fontSize: '10px', width: '6vw', backgroundColor: '#FFFFFF', color: '#000000' },
       },
       {
         id: 'mooringNumber',
         label: 'Mooring Number',
-        style: { fontSize: '10px', width: '22vw', backgroundColor: '#FFFFFF', color: '#000000' },
+        style: { fontSize: '10px', width: '6vw', backgroundColor: '#FFFFFF', color: '#000000' },
       },
       {
         id: 'customerName',
         label: 'Customer Name',
-        style: { fontSize: '10px', width: '44vw', backgroundColor: '#FFFFFF', color: '#000000' },
+        style: { fontSize: '10px', width: '6vw', backgroundColor: '#FFFFFF', color: '#000000' },
       },
       {
         id: 'assignedTo',
         label: 'Assigned To',
-        style: { fontSize: '10px', width: '22vw', backgroundColor: '#FFFFFF', color: '#000000' },
+        style: { fontSize: '10px', width: '6vw', backgroundColor: '#FFFFFF', color: '#000000' },
       },
       {
         id: 'date',
         label: 'Date',
-        style: { fontSize: '10px', width: '10vw', backgroundColor: '#FFFFFF', color: 'black' },
+        style: { fontSize: '10px', width: '5vw', backgroundColor: '#FFFFFF', color: 'black' },
       },
     ],
     [],
