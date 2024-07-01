@@ -527,7 +527,10 @@ const Technicians = () => {
                   <SelectButton
                     value={value}
                     onChange={(e: SelectButtonChangeEvent) => {
-                      setValue(e.value)
+                      if(e.value){
+                        setValue(e.value)
+                      }
+                      
                     }}
                     options={options}
                   />
