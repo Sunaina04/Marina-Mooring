@@ -8,6 +8,7 @@ import {
   DataTableRowExpansionTemplate,
   DataTableRowToggleEvent,
   DataTableSelectionSingleChangeEvent,
+  DataTableStateEvent,
   DataTableValueArray,
 } from 'primereact/datatable'
 import { PaginatorTemplate } from 'primereact/paginator'
@@ -26,8 +27,13 @@ export interface TableColumnProps {
 
 export interface DataTableProps {
   data?: any[]
-  paginatorTemplate?: PaginatorTemplate | undefined;
+  rows?: number | undefined;
   first?: number | undefined;
+  totalRecords?: number | undefined;
+  paginator?: boolean;
+  onPage?(event: DataTableStateEvent): void;
+  onPage?(event: DataTableStateEvent): void;
+  paginatorTemplate?: PaginatorTemplate | undefined;
   scrollable?: boolean
   columns?: TableColumnProps[]
   tableStyle?: React.CSSProperties | undefined
@@ -45,7 +51,6 @@ export interface DataTableProps {
   dataKey?: string
   multiple?: boolean
   emptyMessage?: string | React.ReactNode | ((frozen: boolean) => React.ReactNode) | undefined
-  rows?: number
   rowsPerPageOptions?: any[]
   sortable?: boolean
 }
