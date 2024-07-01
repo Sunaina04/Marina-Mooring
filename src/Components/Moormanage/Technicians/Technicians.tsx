@@ -532,6 +532,7 @@ const Technicians = () => {
                       }
                     }}
                     options={options}
+                    className='selectButton'
                   />
                 </div>
               </div>

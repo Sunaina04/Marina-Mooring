@@ -29,6 +29,11 @@
   color: black !important;
   border: none;
 }
+.selectButton .p-highlight  {
+  background-color: #0098FF !important;
+  box-shadow: none;
+  color:white !important
+}
 
 * input {
   box-shadow: none !important;
