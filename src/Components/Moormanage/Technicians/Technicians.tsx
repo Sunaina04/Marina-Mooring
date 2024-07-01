@@ -441,7 +441,7 @@ const Technicians = () => {
 
             <div
               data-testid="customer-admin-data"
-              className="flex flex-col  "
+              className="flex flex-col mt-[3px] ml-[15px] mr-[15px] table-container "
               style={{ height: '548px' }}>
               <div className="flex-grow overflow-auto">
                 <DataTableComponent
@@ -537,7 +537,7 @@ const Technicians = () => {
 
             <div
               data-testid="customer-admin-data"
-              className="flex flex-col  "
+              className="flex flex-col mt-[3px] ml-[15px] mr-[15px] table-container "
               style={{ height: '600px' }}>
               <div className="flex-grow overflow-auto">
                 <DataTableComponent
