@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 import SidebarMenu from '../LayoutComponents/SidebarMenu'
 import { useDispatch, useSelector } from 'react-redux'
@@ -8,17 +8,27 @@ import { useLogoutMutation } from '../../../Services/Authentication/AuthApi'
 import { ErrorResponse } from '../../../Type/ApiTypes'
 
 const AdminLayout = () => {
-  const [openSubMenus, setOpenSubMenus] = useState(new Array(SidebarMenu.length).fill(false))
-  const [selectedCategory, setSelectedCategory] = useState<any>()
-  const [selectedSubcategory, setSelectedSubcategory] = useState<any>()
-  const open = useSelector((state: RootState) => state.user.isOpen)
-  const [getLogout] = useLogoutMutation()
   const dispatch = useDispatch()
+  const open = useSelector((state: RootState) => state.user.isOpen)
+  const userData = useSelector((state: any) => state.user?.userData)
+  const role = userData?.role?.id
+  const [getLogout] = useLogoutMutation()
   const menuItems = SidebarMenu()
+
+  const initialOpenSubMenus =
+    role === 4
+      ? [true, ...new Array(menuItems.length - 1).fill(false)]
+      : new Array(menuItems.length).fill(false)
+  const initialSelectedCategory = role === 4 ? 3 : null // Assuming MOORSERVE is at index 3
+  const initialSelectedSubcategory = role === 4 ? 0 : null
+
+  const [openSubMenus, setOpenSubMenus] = useState(initialOpenSubMenus)
+  const [selectedCategory, setSelectedCategory] = useState(initialSelectedCategory)
+  const [selectedSubcategory, setSelectedSubcategory] = useState(initialSelectedSubcategory)
 
   const handleExpand = (index: number) => {
     setOpenSubMenus((prev) => {
-      const updatedSubMenus = new Array(SidebarMenu.length).fill(false)
+      const updatedSubMenus = new Array(menuItems.length).fill(false)
       updatedSubMenus[index] = !prev[index]
       return updatedSubMenus
     })
@@ -42,7 +52,7 @@ const AdminLayout = () => {
   const handleLogout = async () => {
     try {
       const response = await getLogout({}).unwrap()
-      // const { status, message, content } = response
+      // const { status, message, content } = response;
       // if (status === 200 && Array.isArray(content)) {
       // }
     } catch (error) {
@@ -117,7 +127,7 @@ const AdminLayout = () => {
                       minWidth: open ? '16rem' : '3rem',
                       marginLeft: open ? '20px' : '10px',
                       marginRight: open ? '20px' : '10px',
-                      background: selectedCategory === 0 && index === 0 ? '#0098FF' : '#00426F',
+                      background: selectedCategory === index ? '#0098FF' : '#00426F',
                       borderRadius: '4px',
                       flexDirection: 'row',
                       alignItems: 'center',
@@ -248,8 +258,7 @@ const AdminLayout = () => {
                 alignItems: 'center',
                 position: 'relative',
               }}
-              // onClick={handleLogout}
-            >
+              onClick={handleLogout}>
               <img
                 src="/assets/images/logout.svg"
                 alt="Logout"

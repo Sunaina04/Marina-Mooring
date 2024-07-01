@@ -13,6 +13,7 @@ import { Password } from 'primereact/password'
 import { Divider } from 'primereact/divider'
 
 export default function LoginForm() {
+  const userData = useSelector((state: any) => state.user?.userData)
   const dispatch = useDispatch()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -44,10 +45,6 @@ export default function LoginForm() {
     if (e.key === 'Enter') {
       signInHandler()
     }
-  }
-
-  const toggleShowPassword = () => {
-    setShowPassword((prevShowPassword) => !prevShowPassword)
   }
 
   const signInHandler = async () => {
@@ -123,7 +120,11 @@ export default function LoginForm() {
         setUsername('')
         setPassword('')
         setIsLoading(false)
-        navigate('/dashboard')
+        if (userData?.role?.id === 4) {
+          navigate('/moorserve/workOrders')
+        } else {
+          navigate('/dashboard')
+        }
       }
     } catch (error: any) {
       console.error('Error occurred during login:', error)
