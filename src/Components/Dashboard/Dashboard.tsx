@@ -208,7 +208,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <Header header="MOORMANAGE/Technicians" />
+      <Header header="MOORMANAGE/DASHBOARD" />
       <Toast ref={toast} />
       <div className="mt-6">
         <div className="flex lg:flex-row justify-around md:flex-col mt-4">
