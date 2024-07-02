@@ -1,4 +1,4 @@
-import { SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { JSXElementConstructor, ReactElement, ReactNode, ReactPortal, SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import CustomModal from '../../CustomComponent/CustomModal'
 import AddCustomer from './AddCustomer'
 import { FaEdit, FaSort, FaSortDown, FaSortUp } from 'react-icons/fa'
@@ -334,6 +334,23 @@ const Customer = () => {
     { id: 4, customerImage: 'https://via.placeholder.com/150' },
     { id: 5, customerImage: 'https://via.placeholder.com/150' },
   ]
+  const countryBodyTemplate = (rowData: { country: { code: any; name: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined } }) => {
+    return (
+      <div className="flex align-items-center gap-2">
+        <img alt="flag" src="https://primefaces.org/cdn/primereact/images/flag/flag_placeholder.png" className={`flag flag-${rowData.country.code}`} style={{ width: '24px' }} />
+        <span>{rowData.country.name}</span>
+      </div>
+    );
+  };
+
+  const first = (data: any) => {
+    // console.log("itemsss",data?.imageDtoList[0]?.imageData);
+   
+    return <div className="">
+      <img alt="flag" src={data?.imageDtoList?.imageData} style={{ width: '50px' }} />
+
+    </div>
+  }
 
   const columnStyle = {
     backgroundColor: '#FFFFFF',
@@ -350,8 +367,9 @@ const Customer = () => {
       },
 
       {
-        id: 'customerImage',
+        id: 'imageDtoList',
         label: 'Customer Image',
+        body: first,
         style: columnStyle,
       },
     ],
@@ -757,11 +775,11 @@ const Customer = () => {
                     <p className="text-gray-500 text-lg">No data available</p>
                   </div>
                 }
-                // rows={pageSize}
-                // first={pageNumber1}
-                // totalRecords={totalRecordsOne}
-                // rowsPerPageOptions={[5, 10, 20, 30]}
-                // onPage={onPageChange}
+              // rows={pageSize}
+              // first={pageNumber1}
+              // totalRecords={totalRecordsOne}
+              // rowsPerPageOptions={[5, 10, 20, 30]}
+              // onPage={onPageChange}
               />
             </div>
             <div className="mt-auto">
@@ -1016,7 +1034,7 @@ const Customer = () => {
                         fontWeight: 600,
                         backgroundColor: '#D9D9D9',
                       }}
-                      data={dummyData}
+                      data={customerData}
                       columns={customerImagesColumns}
                       // onRowClick={(rowData) => {
                       //   handleMooringTableRowClick(rowData)

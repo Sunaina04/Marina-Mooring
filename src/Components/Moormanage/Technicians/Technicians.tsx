@@ -110,6 +110,7 @@ const Technicians = () => {
     return data?.customerResponseDto?.firstName + ' ' + data?.customerResponseDto?.lastName
   }
 
+  
   const WorkOrdersColumn = useMemo(
     () => [
       { id: 'id', label: 'ID', style: WorkOrdersColumnStyle },
@@ -249,6 +250,7 @@ const Technicians = () => {
           setIsLoading(false)
           setGetOpenWorkOrderData(content)
           setTotalRecordsTwo(totalSize)
+          setOpenWorkOrder(totalSize)
         } else {
           setIsLoading(false)
           toast?.current?.show({
@@ -271,6 +273,7 @@ const Technicians = () => {
       filterDateFrom,
       filterDateTo,
       getOpenWorkOrderData,
+      openWorkOrder,
     ],
   )
 
@@ -291,6 +294,7 @@ const Technicians = () => {
           setIsLoading(false)
           setGetOpenWorkOrderData(content)
           setTotalRecordsTwo(totalSize)
+          setOpenWorkOrder(totalSize)
         } else {
           setIsLoading(false)
           toast?.current?.show({
@@ -305,7 +309,7 @@ const Technicians = () => {
         console.error('Error occurred while fetching customer data:', error)
       }
     },
-    [technicianId, value, pageSizeTwo, pageNumberTwo, filterDateFrom, filterDateTo],
+    [technicianId, value, pageSizeTwo, pageNumberTwo, filterDateFrom, filterDateTo, openWorkOrder],
   )
 
   useEffect(() => {
@@ -501,6 +505,7 @@ const Technicians = () => {
                     backgroundColor: 'white',
                     borderTop: '1px solid #D5E1EA',
                     padding: '0.5rem',
+                    marginBottom: '-14px',
                   }}
                 />
               </div>
@@ -532,7 +537,7 @@ const Technicians = () => {
                       }
                     }}
                     options={options}
-                    className='selectButton'
+                    className="selectButton"
                   />
                 </div>
               </div>
@@ -597,6 +602,7 @@ const Technicians = () => {
                     backgroundColor: 'white',
                     borderTop: '1px solid #D5E1EA',
                     padding: '0.5rem',
+                    marginBottom: '-22px',
                   }}
                 />
               </div>
