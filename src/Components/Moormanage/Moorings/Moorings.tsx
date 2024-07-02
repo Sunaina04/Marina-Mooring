@@ -893,7 +893,13 @@ const Moorings = () => {
               toastRef={toast}
             />
           }
-          headerText={<h1 className="text-xxl font-bold text-black ">Add Mooring</h1>}
+          headerText={
+            customerModalVisible ? (
+              <h1 className="text-xxl font-bold text-black ">Edit Customer</h1>
+            ) : (
+              <h1 className="text-xxl font-bold text-black ">Add Mooring</h1>
+            )
+          }
           visible={customerModalVisible}
           onHide={handleModalClose}
           dialogStyle={{
