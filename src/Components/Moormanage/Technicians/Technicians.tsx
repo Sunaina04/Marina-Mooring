@@ -501,7 +501,6 @@ const Technicians = () => {
                     backgroundColor: 'white',
                     borderTop: '1px solid #D5E1EA',
                     padding: '0.5rem',
-                    marginBottom:'-14px'
                   }}
                 />
               </div>
@@ -598,7 +597,6 @@ const Technicians = () => {
                     backgroundColor: 'white',
                     borderTop: '1px solid #D5E1EA',
                     padding: '0.5rem',
-                    marginBottom:'-22px'
                   }}
                 />
               </div>

@@ -106,7 +106,7 @@ const Dashboard = () => {
         label: 'Mooring Location ',
         style: {
           fontSize: '10px',
-          width: '8vw',
+          width: '10vw',
           backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: '700',
@@ -117,7 +117,7 @@ const Dashboard = () => {
         label: 'Status',
         style: {
           fontSize: '10px',
-          width: '7vw',
+          width: '10vw',
           backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: '700',
@@ -208,7 +208,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <Header header="MOORMANAGE/Dashboard" />
+      <Header header="MOORMANAGE/Technicians" />
       <Toast ref={toast} />
       <div className="mt-6">
         <div className="flex lg:flex-row justify-around md:flex-col mt-4">
@@ -238,7 +238,9 @@ const Dashboard = () => {
                   columns={columns}
                   actionButtons={ActionButtonColumn}
                   header={MooringHeader}
-                  tableStyle={{ backgroundColor: '#FFFFFF' }}
+                  tableStyle={{ backgroundColor: '#FFFFFF', fontSize: '12px',
+                    color: '#000000',
+                    fontWeight: 600, }}
                   onRowClick={(rowData) => {
                     setMooringResponseData(rowData?.data?.gpsCoordinates)
                   }}
