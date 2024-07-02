@@ -106,7 +106,7 @@ const Dashboard = () => {
         label: 'Mooring Location ',
         style: {
           fontSize: '10px',
-          width: '10vw',
+          width: '8vw',
           backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: '700',
@@ -117,7 +117,7 @@ const Dashboard = () => {
         label: 'Status',
         style: {
           fontSize: '10px',
-          width: '10vw',
+          width: '7vw',
           backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: '700',
@@ -208,7 +208,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <Header header="MOORMANAGE/Technicians" />
+      <Header header="MOORMANAGE/Dashboard" />
       <Toast ref={toast} />
       <div className="mt-6">
         <div className="flex lg:flex-row justify-around md:flex-col mt-4">
