@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import CustomModal from '../../CustomComponent/CustomModal'
 import AddCustomer from './AddCustomer'
 import { FaEdit, FaSort, FaSortDown, FaSortUp } from 'react-icons/fa'
@@ -40,6 +40,7 @@ import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import { FiMinus } from 'react-icons/fi'
 import { IoAddOutline } from 'react-icons/io5'
+import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 
 const Customer = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -54,6 +55,7 @@ const Customer = () => {
   const [boatYardData, setBoatYardData] = useState<any[]>([])
   const [mooringRowData, setMooringRowData] = useState<MooringPayload>()
   const [dialogVisible, setDialogVisible] = useState(false)
+  const [imageVisible, setImageVisible] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [selectedMooring, setSelectedMooring] = useState<any>()
   const [searchText, setSearchText] = useState('')
@@ -77,11 +79,14 @@ const Customer = () => {
   const [accordion, setAccordion] = useState('faq1')
   const [workOrderData, setWorkOrderData] = useState('')
 
-
-  const handleToggle = (id: string) => {
-    setAccordion((prevState) => (prevState === id ? '' : id))
+  // const handleToggle = (id: string) => {
+  //   setAccordion((prevState) => (prevState === id ? '' : id))
+  // }
+  const handleToggle = (section: SetStateAction<string>) => {
+    if (accordion !== section) {
+      setAccordion(section)
+    }
   }
-
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
     setPageNumber1(event.first)
@@ -322,6 +327,69 @@ const Customer = () => {
     [],
   )
 
+  const dummyData = [
+    { id: 1, customerImage: 'https://via.placeholder.com/150' },
+    { id: 2, customerImage: 'https://via.placeholder.com/150' },
+    { id: 3, customerImage: 'https://via.placeholder.com/150' },
+    { id: 4, customerImage: 'https://via.placeholder.com/150' },
+    { id: 5, customerImage: 'https://via.placeholder.com/150' },
+  ]
+
+  const columnStyle = {
+    backgroundColor: '#FFFFFF',
+    fontWeight: '700',
+    fontSize: '12px',
+  }
+
+  const customerImagesColumns = useMemo(
+    () => [
+      {
+        id: 'id',
+        label: 'id',
+        style: { width: '100px', backgroundColor: '#FFFFFF', fontWeight: '700', fontSize: '12px' },
+      },
+
+      {
+        id: 'customerImage',
+        label: 'Customer Image',
+        style: columnStyle,
+      },
+    ],
+    [],
+  )
+
+  const ActionButtonColumn: ActionButtonColumnProps = useMemo(
+    () => ({
+      header: 'Action',
+      buttons: [
+        {
+          color: 'black',
+          label: 'View Image',
+          onClick: () => {
+            setImageVisible(true)
+          },
+          underline: true,
+          style: {
+            margin: 0,
+          },
+        },
+      ],
+      headerStyle: {
+        backgroundColor: '#FFFFFF',
+        // color: '#FFFFFF',
+        height: '3.50rem',
+        //  fontWeight: 800,
+        // borderTopRightRadius: '10px',
+        // borderBottom: '1px solid #C0C0C0',
+      },
+      style: {
+        borderBottom: '1px solid #D5E1EA ',
+        width: '150px',
+        fontWeight: 700,
+      },
+    }),
+    [],
+  )
   const getCustomerData = useCallback(async () => {
     setIsLoading(true)
     try {
@@ -689,11 +757,11 @@ const Customer = () => {
                     <p className="text-gray-500 text-lg">No data available</p>
                   </div>
                 }
-              // rows={pageSize}
-              // first={pageNumber1}
-              // totalRecords={totalRecordsOne}
-              // rowsPerPageOptions={[5, 10, 20, 30]}
-              // onPage={onPageChange}
+                // rows={pageSize}
+                // first={pageNumber1}
+                // totalRecords={totalRecordsOne}
+                // rowsPerPageOptions={[5, 10, 20, 30]}
+                // onPage={onPageChange}
               />
             </div>
             <div className="mt-auto">
@@ -731,9 +799,9 @@ const Customer = () => {
 
         {/* last container */}
 
-        <div className="ml-5 mr-12">
+        <div className="ml-5 mr-4">
           {/* Left Panel - Customer Record */}
-          <div className="flex-grow border bg-white">
+          <div style={{ maxWidth: '500px', width: '500px' }} className="flex-grow border bg-white">
             <div className="bg-[#10293A] rounded-t-[10px] flex justify-between">
               <div className="text-sm font-semibold rounded-t-md">
                 <h1 className="p-3 text-white text-lg font-extrabold">
@@ -785,31 +853,49 @@ const Customer = () => {
             />
           )}
 
-          <div 
-          className="flex flex-col wrapper">
+          <div
+            // style={{border:"1px solid red",}}
+            className="flex flex-col wrapper">
             <div
-              className="px-5 relative  bg-white border-[1px] border-[#D5E1EA] mr-8"
+              className=" relative  bg-white border-[1px] border-[#D5E1EA] mr-8"
               style={{ width: '500px', maxWidth: '500px', marginBottom: '0px' }}>
               <label
+                style={{ backgroundColor: '#10293A' }}
                 htmlFor="faq1"
                 className="cursor-pointer flex items-center justify-between h-14"
                 onClick={() => handleToggle('faq1')}>
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 ">
                   <div>
-                    <h1 className="text-[16px] font-[500] text-[#10293A] leading-[18.75px]">Moorings</h1>
+                    <h1 className="p-3 text-white text-lg font-extrabold">Moorings</h1>
                   </div>
                 </div>
                 <div>
-                  <div>
+                  <div className="mr-2">
                     {accordion === 'faq1' ? (
-                      <FiMinus style={{ color: '#10293A' }} />
+                      <svg
+                        width="24"
+                        height="4"
+                        viewBox="0 0 11 3"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M10.125 1.5C10.125 1.92188 9.77344 2.25 9.375 2.25H1.125C0.703125 2.25 0.375 1.92188 0.375 1.5C0.375 1.10156 0.703125 0.75 1.125 0.75H9.375C9.77344 0.75 10.125 1.10156 10.125 1.5Z"
+                          fill="white"
+                        />
+                      </svg>
                     ) : (
-                      <IoAddOutline style={{ color: '#10293A' }} />
+                      <img
+                        src="/assets/images/plus.png"
+                        alt="Key Icon"
+                        className="p-clickable"
+                        style={{}}
+                      />
                     )}
                   </div>
                 </div>
               </label>
-              <div className={`content  transition-all ease-in-out duration-500 ${accordion === 'faq1' ? '' : 'hidden'}`}>
+              <div
+                className={`content  transition-all ease-in-out duration-500 ${accordion === 'faq1' ? '' : 'hidden'}`}>
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                   <div className="flex-grow bg-white rounded-md border">
                     <div
@@ -818,9 +904,9 @@ const Customer = () => {
                         color: 'white',
                         padding: '14px',
                         fontSize: '15px',
-                      }}>
-                    </div>
-                    <div className={`bg-#00426F overflow-x-hidden h-[310px]  table-container flex flex-col`}>
+                      }}></div>
+                    <div
+                      className={`bg-#00426F overflow-x-hidden h-[320px]  table-container flex flex-col`}>
                       <div className="flex-grow">
                         <DataTableComponent
                           style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
@@ -845,7 +931,11 @@ const Customer = () => {
                           rowStyle={(rowData: any) => rowData}
                           emptyMessage={
                             <div className="text-center mt-40">
-                              <img src="/assets/images/empty.png" alt="Empty Data" className="w-20 mx-auto mb-4" />
+                              <img
+                                src="/assets/images/empty.png"
+                                alt="Empty Data"
+                                className="w-20 mx-auto mb-4"
+                              />
                               <p className="text-gray-500 text-lg">No data available</p>
                             </div>
                           }
@@ -872,34 +962,50 @@ const Customer = () => {
               </div>
             </div>
             <div
-              className="tab px-5 relative  bg-[#FFFFFF] border-[1px] border-[#D5E1EA] mr-8"
+              className="tab  relative  bg-[#FFFFFF] border-[1px] border-[#D5E1EA] mr-8"
               style={{ width: '500px', maxWidth: '500px', marginTop: '0px' }}>
               <label
                 htmlFor="faq2"
+                style={{ backgroundColor: '#10293A' }}
                 className="cursor-pointer flex items-center justify-between h-14"
                 onClick={() => handleToggle('faq2')}>
-                <div
-
-                  className="flex items-center">
+                <div className="flex items-center">
                   {/* <div>
                     <img alt="icon" src="/assets/images/file.svg" style={{ width: '23px' }} />
                   </div> */}
                   <div style={{ flexShrink: 1 }}>
-                    <h1 className="text-[16px] font-[500] text-[#10293A] leading-[18.75px]">Customer's Images </h1>
+                    <h1 className="p-3 text-white text-lg font-extrabold">Customers Images</h1>
                   </div>
                 </div>
                 <div>
-                  <div>
+                  <div className="p-2">
                     {accordion === 'faq2' ? (
-                      <FiMinus style={{ color: '#10293A' }} />
+                      <svg
+                        width="24"
+                        height="4"
+                        viewBox="0 0 11 3"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M10.125 1.5C10.125 1.92188 9.77344 2.25 9.375 2.25H1.125C0.703125 2.25 0.375 1.92188 0.375 1.5C0.375 1.10156 0.703125 0.75 1.125 0.75H9.375C9.77344 0.75 10.125 1.10156 10.125 1.5Z"
+                          fill="white"
+                        />
+                      </svg>
                     ) : (
-                      <IoAddOutline style={{ color: '#10293A' }} />
+                      <img
+                        src="/assets/images/plus.png"
+                        alt="Key Icon"
+                        className="p-clickable"
+                        style={{}}
+                      />
                     )}
                   </div>
                 </div>
               </label>
-              <div className={`content mt-5 transition-all ease-in-out duration-500 ${accordion === 'faq2' ? '' : 'hidden'}`}>
-                <div className={`bg-#00426F overflow-x-hidden h-[310px]  table-container flex flex-col`}>
+              <div
+                className={`content mt-5 transition-all ease-in-out duration-500 ${accordion === 'faq2' ? '' : 'hidden'}`}>
+                <div
+                  className={`bg-#00426F overflow-x-hidden h-[330px]  table-container flex flex-col`}>
                   <div className="flex-grow">
                     <DataTableComponent
                       style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
@@ -910,21 +1016,26 @@ const Customer = () => {
                         fontWeight: 600,
                         backgroundColor: '#D9D9D9',
                       }}
-                      data={mooringData}
-                      columns={MooringTableColumn}
-                      onRowClick={(rowData) => {
-                        handleMooringTableRowClick(rowData)
-                      }}
+                      data={dummyData}
+                      columns={customerImagesColumns}
+                      // onRowClick={(rowData) => {
+                      //   handleMooringTableRowClick(rowData)
+                      // }}
                       selectionMode="single"
-                      onSelectionChange={(e) => {
-                        setSelectedMooring(e.value)
-                      }}
+                      // onSelectionChange={(e) => {
+                      //   setSelectedMooring(e.value)
+                      // }}
+                      actionButtons={ActionButtonColumn}
                       selection={selectedMooring}
                       dataKey="id"
                       rowStyle={(rowData: any) => rowData}
                       emptyMessage={
                         <div className="text-center mt-40">
-                          <img src="/assets/images/empty.png" alt="Empty Data" className="w-20 mx-auto mb-4" />
+                          <img
+                            src="/assets/images/empty.png"
+                            alt="Empty Data"
+                            className="w-20 mx-auto mb-4"
+                          />
                           <p className="text-gray-500 text-lg">No data available</p>
                         </div>
                       }
@@ -949,7 +1060,6 @@ const Customer = () => {
               </div>
             </div>
           </div>
-
         </div>
       </div>
 
@@ -1049,6 +1159,29 @@ const Customer = () => {
               {mooringRowData?.depthAtMeanHighWater}
             </p>
           </div>
+        </div>
+      </Dialog>
+
+      {/* Dialog BOX  for images*/}
+      <Dialog
+        position="center"
+        style={{
+          width: '740px',
+          minWidth: '300px',
+          height: '503px',
+          minHeight: '200px',
+          borderRadius: '1rem',
+          fontWeight: '400',
+          maxHeight: '50% !important',
+        }}
+        draggable={false}
+        visible={imageVisible}
+        onHide={() => setImageVisible(false)}
+        header={'Customers Images'}>
+        <hr className="border border-[#000000] my-0 mx-0"></hr>
+
+        <div>
+          <img src="image" alt="image" />
         </div>
       </Dialog>
     </div>
