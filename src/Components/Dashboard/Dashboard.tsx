@@ -9,7 +9,10 @@ import CustomDisplayPositionMap from '../Map/CustomDisplayPositionMap'
 import CustomMooringPositionMap from '../Map/CustomMooringPositionMap'
 import Accordion from '../CommonComponent/Accordion'
 import { ErrorResponse, MooringPayload, MooringResponse } from '../../Type/ApiTypes'
-import { useGetMooringsMutation } from '../../Services/MoorManage/MoormanageApi'
+import {
+  useGetMooringsDueForServiceMutation,
+  useGetMooringsMutation,
+} from '../../Services/MoorManage/MoormanageApi'
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../Store/Slice/userSlice'
 import { Toast } from 'primereact/toast'
@@ -22,7 +25,7 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [mooringData, setMooringData] = useState<MooringPayload[]>([])
   const [mooringResponseData, setMooringResponseData] = useState<any>()
-  const [getMoorings] = useGetMooringsMutation()
+  const [getMoorings] = useGetMooringsDueForServiceMutation()
   const toast = useRef<Toast>(null)
 
   const position: PositionType = [41.56725, 70.94045]
@@ -220,11 +223,6 @@ const Dashboard = () => {
         <div className="flex lg:flex-row justify-around md:flex-col mt-4">
           <div
             style={{
-              // width: '700px',
-              // height: '800px',
-              // backgroundColor: '#FFFFFF',
-              // border: '1px solid red',
-              // borderRadius: '5px',
               marginLeft: '3rem',
             }}>
             <div
@@ -291,12 +289,7 @@ const Dashboard = () => {
             className={`md:ml-12 md:mt-3 lg:mt-0`}
             style={{
               flexGrow: 1,
-              // borderRadius: '5px',
-              // border: '1px solid red',
-              // backgroundColor: '#FFFFFF',
               marginRight: '50px',
-              // width: '700px',
-              // height: '700px',
             }}>
             <div
               data-testid="work-order-data"

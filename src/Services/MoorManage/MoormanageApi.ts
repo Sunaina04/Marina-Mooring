@@ -416,6 +416,38 @@ const moormanageApi = userApi.injectEndpoints({
         params: { pageNumber, pageSize, sortBy, sortDir, searchText, filterDateFrom, filterDateTo },
       }),
     }),
+
+    getAllOpenWorkOrders: builder.mutation({
+      query: ({
+        pageNumber,
+        pageSize,
+        sortBy,
+        sortDir,
+        searchText,
+        filterDateFrom,
+        filterDateTo,
+      }: {
+        pageNumber?: number
+        pageSize?: number
+        sortBy?: string
+        sortDir?: string
+        searchText?: string
+        filterDateTo?: string
+        filterDateFrom?: string
+      }) => ({
+        url: `api/v1/workOrder/fetchAllOpenWorkOrders`,
+        method: 'GET',
+        params: { pageNumber, pageSize, sortBy, sortDir, searchText, filterDateFrom, filterDateTo },
+      }),
+    }),
+
+    getMooringsDueForService: builder.mutation({
+      query: ({}: {}) => ({
+        url: 'api/v1/mooring/fetchMooringDueForService',
+        method: 'GET',
+        params: {},
+      }),
+    }),
   }),
 })
 
@@ -451,4 +483,6 @@ export const {
   useGetTechnicianDataMutation,
   useGetOpenWorkOrdersMutation,
   useGetClosedWorkOrdersMutation,
+  useGetMooringsDueForServiceMutation,
+  useGetAllOpenWorkOrdersMutation,
 } = moormanageApi

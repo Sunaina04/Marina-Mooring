@@ -1,6 +1,4 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { DataTable } from 'primereact/datatable'
-import { Column } from 'primereact/column'
 import { SelectButton, SelectButtonChangeEvent } from 'primereact/selectbutton'
 import { Calendar } from 'primereact/calendar'
 import {
@@ -10,12 +8,7 @@ import {
   TechnicianPayload,
   TechnicianResponse,
 } from '../../../Type/ApiTypes'
-import { useGetTechnicianMutation } from '../../../Services/MoorManage/MoormanageApi'
-import { BillsData, NullableDateArray, Params } from '../../../Type/CommonType'
-import { Button } from 'primereact/button'
-import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
-import { IoSearch } from 'react-icons/io5'
-import { InputText } from 'primereact/inputtext'
+import { Params } from '../../../Type/CommonType'
 import Header from '../../Layout/LayoutComponents/Header'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader'
@@ -31,13 +24,10 @@ import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import { Toast } from 'primereact/toast'
 import { Paginator } from 'primereact/paginator'
-import CustomModal from '../../CustomComponent/CustomModal'
-import AddWorkOrders from '../../Moorserve/WorkOrders/AddWorkOrders'
 
 const Technicians = () => {
   const [dateFrom, setDateFrom] = useState<any>()
   const [dateTo, setDateTo] = useState<any>()
-  const [dataVisible, setDataVisible] = useState(false)
   const [filterDateFrom, setFilterDateFrom] = useState<any>()
   const [filterDateTo, setFilterDateTo] = useState<any>()
   const [isLoading, setIsLoading] = useState(false)
@@ -110,7 +100,6 @@ const Technicians = () => {
     return data?.customerResponseDto?.firstName + ' ' + data?.customerResponseDto?.lastName
   }
 
-  
   const WorkOrdersColumn = useMemo(
     () => [
       { id: 'id', label: 'ID', style: WorkOrdersColumnStyle },
