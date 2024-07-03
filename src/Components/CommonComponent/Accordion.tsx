@@ -15,6 +15,8 @@ import { useGetAllOpenWorkOrdersMutation } from '../../Services/MoorManage/Moorm
 import { Toast } from 'primereact/toast'
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../Store/Slice/userSlice'
+import { Paginator } from 'primereact/paginator'
+import { Params } from '../../Type/CommonType'
 
 const Accordion = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -45,30 +47,42 @@ const Accordion = () => {
     setAccordion((prevState) => (prevState === id ? '' : id))
   }
 
+  const firstLastName = (data: any) => {
+    console.log('data', data)
+
+    return data.customerResponseDto.firstName + ' ' + data.customerResponseDto.lastName
+  }
+
+  const onPageChange = (event: any) => {
+    setPageNumber(event.page)
+    setPageNumber(event.first)
+    setPageSize(event.rows)
+  }
   const columns: TableColumnProps[] = useMemo(
     () => [
       {
-        id: 'orderNo',
+        id: 'id',
         label: 'Order No.',
         style: { fontSize: '10px', width: '6vw', backgroundColor: '#FFFFFF', color: '#000000' },
       },
       {
-        id: 'mooringNumber',
+        id: 'mooringResponseDto.mooringNumber',
         label: 'Mooring Number',
         style: { fontSize: '10px', width: '6vw', backgroundColor: '#FFFFFF', color: '#000000' },
       },
       {
-        id: 'customerName',
+        id: 'firstName',
         label: 'Customer Name',
+        body: firstLastName,
         style: { fontSize: '10px', width: '6vw', backgroundColor: '#FFFFFF', color: '#000000' },
       },
       {
-        id: 'assignedTo',
+        id: 'technicianUserResponseDto.name',
         label: 'Assigned To',
         style: { fontSize: '10px', width: '6vw', backgroundColor: '#FFFFFF', color: '#000000' },
       },
       {
-        id: 'date',
+        id: 'dueDate',
         label: 'Date',
         style: { fontSize: '10px', width: '5vw', backgroundColor: '#FFFFFF', color: 'black' },
       },
@@ -120,7 +134,7 @@ const Accordion = () => {
 
   useEffect(() => {
     getAllOpenWorkOrder()
-  }, [selectedCustomerId])
+  }, [selectedCustomerId, pageSize, pageNumber])
 
   return (
     <>
@@ -209,6 +223,24 @@ const Accordion = () => {
                 </div>
               }
             />
+
+            <div className="mt-auto">
+              <Paginator
+                first={pageNumber}
+                rows={pageSize}
+                totalRecords={totalRecords}
+                rowsPerPageOptions={[5, 10, 20, 30]}
+                onPageChange={onPageChange}
+                style={{
+                  position: 'sticky',
+                  bottom: 0,
+                  zIndex: 1,
+                  backgroundColor: 'white',
+                  borderTop: '1px solid #D5E1EA',
+                  padding: '0.5rem',
+                }}
+              />
+            </div>
           </label>
         </div>
 

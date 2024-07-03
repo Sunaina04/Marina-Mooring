@@ -90,9 +90,8 @@ const Customer = () => {
   const [totalRecordsTwo, setTotalRecordsTwo] = useState<number>()
   const [accordion, setAccordion] = useState('faq1')
   const [workOrderData, setWorkOrderData] = useState('')
-  const [showImage, setShowImage] = useState({ id: "", imageData: "" })
- 
-  
+  const [showImage, setShowImage] = useState({ id: '', imageData: '' })
+
   const handleToggle = (id: string) => {
     setAccordion((prevState) => (prevState === id ? '' : id))
   }
@@ -102,13 +101,6 @@ const Customer = () => {
   //     setAccordion(section)
   //   }
   // }{
-
-
-
-
-
-
-
 
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
@@ -358,8 +350,6 @@ const Customer = () => {
     { id: 5, customerImage: 'https://via.placeholder.com/150' },
   ]
 
-
-
   const columnStyle = {
     backgroundColor: '#FFFFFF',
     fontWeight: '700',
@@ -418,7 +408,6 @@ const Customer = () => {
     }),
     [],
   )
- 
 
   const getCustomerData = useCallback(async () => {
     setIsLoading(true)
@@ -650,7 +639,6 @@ const Customer = () => {
   //     setRows(event.rows);
   // };
 
-
   return (
     <div style={{ height: '100vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
       <Header header="MOORMANAGE/Customer" />
@@ -722,7 +710,6 @@ const Customer = () => {
             minWidth: '500px',
             backgroundColor: '#FFFFFF',
             position: 'relative',
-
           }}
           className="flex-1 ml-[45px] w-[550px]">
           <div data-testid="customer-data" className="flex flex-col h-full">
@@ -789,11 +776,11 @@ const Customer = () => {
                     <p className="text-gray-500 text-lg">No data available</p>
                   </div>
                 }
-              // rows={pageSize}
-              // first={pageNumber1}
-              // totalRecords={totalRecordsOne}
-              // rowsPerPageOptions={[5, 10, 20, 30]}
-              // onPage={onPageChange}
+                // rows={pageSize}
+                // first={pageNumber1}
+                // totalRecords={totalRecordsOne}
+                // rowsPerPageOptions={[5, 10, 20, 30]}
+                // onPage={onPageChange}
               />
             </div>
             <div className="mt-auto">
@@ -885,9 +872,7 @@ const Customer = () => {
             />
           )}
 
-          <div
-            style={{ width: "500px" }}
-            className="flex  flex-col wrapper">
+          <div style={{ width: '500px' }} className="flex  flex-col wrapper">
             <div
               className=" relative  bg-white border-[1px] border-[#D5E1EA] mr-8"
               style={{ width: '500px', maxWidth: '500px', marginBottom: '0px' }}>
@@ -936,9 +921,7 @@ const Customer = () => {
                         color: 'white',
                         padding: '14px',
                         fontSize: '15px',
-
                       }}>
-
                       <div
                         className={`bg-#00426F overflow-x-hidden h-[320px]  table-container flex flex-col`}>
                         <div className="flex-grow">
@@ -991,16 +974,12 @@ const Customer = () => {
                           }}
                         />
                       </div>
-
-
                     </div>
-
                   </div>
                 </div>
               </div>
             </div>
             <div
-
               className="tab  relative  bg-[#FFFFFF] border-[1px] border-[#D5E1EA] mr-8"
               style={{ width: '500px', maxWidth: '500px', marginTop: '0px' }}>
               <label
@@ -1009,7 +988,6 @@ const Customer = () => {
                 className="cursor-pointer flex items-center justify-between h-14"
                 onClick={() => handleToggle('faq2')}>
                 <div className="flex items-center">
-
                   <div style={{ flexShrink: 1 }}>
                     <h1 className="p-3 text-white text-lg font-extrabold">Customers Images</h1>
                   </div>
@@ -1040,13 +1018,10 @@ const Customer = () => {
                 </div>
               </label>
               <div
-
                 className={`content mt-5 transition-all ease-in-out duration-500 ${accordion === 'faq2' ? '' : 'hidden'}`}>
                 <div
-
                   className={`bg-#00426F overflow-x-hidden h-[330px]  table-container flex flex-col`}>
                   <div className="flex-grow">
-
                     <DataTableComponent
                       style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
                       scrollable
@@ -1094,8 +1069,6 @@ const Customer = () => {
               </div>
             </div>
           </div>
-
-
         </div>
       </div>
 
@@ -1218,12 +1191,15 @@ const Customer = () => {
         header={'Customers Image'}>
         <hr className="border border-[#000000] my-0 mx-0"></hr>
 
-        <div style={{width:"100%", display:"flex", justifyContent:"center",  textAlign:"center"}}>
-        <div>
-          <img className='w-full h-36 mt-24'  src={`data:image/jpeg;base64,${showImage.imageData}`} />
+        <div
+          style={{ width: '100%', display: 'flex', justifyContent: 'center', textAlign: 'center' }}>
+          <div>
+            <img
+              className="w-full h-36 mt-24"
+              src={`data:image/jpeg;base64,${showImage.imageData}`}
+            />
+          </div>
         </div>
-        </div>
-        
       </Dialog>
     </div>
   )
