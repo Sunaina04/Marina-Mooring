@@ -91,6 +91,12 @@
   padding-top: 0;
 } */
 
+.p-component, .p-component * {
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+}
+
+
 .custom-dropdown-disabled {
   cursor: not-allowed !important;
 }
@@ -136,7 +142,25 @@ input[type='number']::-webkit-outer-spin-button {
   border: none;
 }
 
-.custom-checkbox-container {
+.p-datepicker{
+  /* background-color:#D5E1EA; */
+  background-color: #F7FAFC;
+  /* #0098ff   fcf7fa*/
+  border-radius: 11px;
+}
+
+/* .p-datepicker {
+  padding: 0.5rem;
+  background: #ffffff;
+  color: #495057;
+  border: 1px solid #ced4da;
+  border-radius: 11px;
+  background-color: #f7fafc; */
+
+
+  
+
+  .custom-checkbox-container {
   display: inline-block;
   position: relative;
   cursor: pointer;
@@ -209,6 +233,10 @@ input[type='number']::-webkit-outer-spin-button {
   height: 100%;
 }
 
+.items-center {
+  align-items: baseline;
+}
+
 .mt-auto {
   margin-top: auto;
 }
@@ -236,8 +264,9 @@ input[type='number']::-webkit-outer-spin-button {
   background: #00426f;
 }
 
-.p-component,
-.p-component * {
+.p-component.p-component * {
   box-sizing: border-box;
   overflow-wrap: break-word;
 }
+
+
