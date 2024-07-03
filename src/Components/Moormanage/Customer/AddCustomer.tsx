@@ -35,6 +35,7 @@ import { InputTextarea } from 'primereact/inputtextarea'
 import { Toast } from 'primereact/toast'
 import { FileUpload } from 'primereact/fileupload'
 import { FaFileUpload } from 'react-icons/fa'
+import { Dialog } from 'primereact/dialog'
 
 const AddCustomer: React.FC<CustomerDataProps> = ({
   customer,
@@ -74,7 +75,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [checkedDock, setCheckedDock] = useState(false)
   const [customerTypeId, setCustomerTypeId] = useState<any>(customer?.customerTypeDto?.id)
   const toastRef = useRef<Toast>(null)
-
+  const [imageVisible, setImageVisible] = useState(false)
   const getFomattedCoordinate = (gpsCoordinatesValue: any) => {
     try {
       let [lat, long]: any = gpsCoordinatesValue.split(' ')
@@ -766,6 +767,11 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     )
   }
 
+ const  uploadImages=()=>{
+  alert("hi")
+
+ }
+
   useEffect(() => {
     handleFocus()
   }, [checkedMooring])
@@ -967,16 +973,16 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   </span>
                   <div className="mt-2">
                     <input
-                      id="file-input"
-                      type="file"
-                      accept="image/*"
-                      onChange={handleImageChange}
+                      // id="file-input"
+                      type="text"
+                      // accept="image/*"
+                      onChange={uploadImages}
                       style={{
                         display: 'none',
                       }}
                     />
                     <label
-                      htmlFor="file-input"
+                      // htmlFor="file-input"
                       style={{
                         width: '230px',
                         height: '32px',
@@ -990,7 +996,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         lineHeight: '25px',
                         cursor: 'pointer',
                       }}>
-                      <FaFileUpload style={{ fontSize: '25px', color: 'blue' }} />
+
                       Upload Image
                     </label>
                     {customerImage && (
@@ -1216,7 +1222,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         {/* Add Mooring */}
 
         {(editCustomerMode && selectedCustomerType === 'Dock') ||
-        (editCustomerMode && selectedCustomerType?.id === 5) ? (
+          (editCustomerMode && selectedCustomerType?.id === 5) ? (
           AddDock()
         ) : (
           <></>
@@ -1882,6 +1888,99 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             //top: '20px',
           }}
         />
+
+        <Dialog
+          position="center"
+          style={{
+            width: '740px',
+            minWidth: '300px',
+            height: '503px',
+            // minHeight: '200px',
+            borderRadius: '1rem',
+            fontWeight: '400',
+            // maxHeight: '50% !important',
+            cursor: 'alias',
+          }}
+          draggable={false}
+          visible={imageVisible}
+          onHide={() => setImageVisible(false)}
+          header={'Customers Image'}>
+          <hr className="border border-[#000000] my-0 mx-0"></hr>
+
+          <div style={{ width: "100%", display: "flex", justifyContent: "center", textAlign: "center" }}>
+            <div>
+
+              <div className="mt-2">
+                <input
+                  id="file-input"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  style={{
+                    display: 'none',
+                  }}
+                />
+                <label
+                  htmlFor="file-input"
+                  style={{
+                    width: '230px',
+                    height: '32px',
+                    border: '1px solid #D5E1EA',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
+                    padding: '3px',
+                    display: 'flex',
+                    gap: '0.5rem',
+                    textAlign: 'center',
+                    lineHeight: '25px',
+                    cursor: 'pointer',
+                  }}>
+
+                  <FaFileUpload
+
+
+                    style={{ fontSize: '25px', color: 'blue' }} />
+                </label>
+                {customerImage && (
+                  <div className="mt-2">
+                    <button
+                      onClick={handleRemoveImage}
+                      style={{
+                        background: 'red',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '50%',
+                        width: '20px',
+                        height: '20px',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                      &times;
+                    </button>
+                    <img
+                      src={customerImage}
+                      alt="Customer"
+                      style={{
+                        width: '100px',
+                        height: '100px',
+                        objectFit: 'cover',
+                        borderRadius: '0.50rem',
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
+
+
+              {/* <img className='w-full h-36 mt-24'  src={`data:image/jpeg;base64,${showImage.imageData}`} /> */}
+            </div>
+          </div>
+
+        </Dialog>
+
+
       </div>
     </>
   )

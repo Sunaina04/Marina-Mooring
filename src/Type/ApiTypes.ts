@@ -312,6 +312,11 @@ export interface MooringPayload {
   mooringStatus: MooringStatus
 }
 
+
+export interface ImageData {
+  id: string;
+  imageData: string;
+}
 export interface MooringStatus {
   id: number
   creationDate: string
