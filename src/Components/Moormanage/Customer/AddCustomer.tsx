@@ -760,7 +760,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               <span className="custom-checkbox"></span>
             </label>
           </span>
-          <p className="font-medium text-lg text-[#000000] mt-5 ml-4">Add Mooring</p>
+          <p className="font-medium text-lg text-[#000000] mt-5 ml-4">Add Mooringg</p>
         </div>
       </>
     )

@@ -1,9 +1,28 @@
 import { useState } from 'react'
-import { Calendar } from 'primereact/calendar'
+// import { Calendar } from 'primereact/calendar'
+import { Calendar } from 'primereact/calendar';
 import { Nullable } from 'primereact/ts-helpers'
+import 'primereact/resources/themes/saga-blue/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
 
 const DatePickerComponent = () => {
-  const [date, setDate] = useState<Nullable<Date>>(null)
+  const [dates, setDates] = useState<Nullable<(Date | null)[]>>(null);
+  const [startDate, setStartDate] = useState(new Date());
+  
+  const [endDate, setEndDate] = useState(new Date());
+
+  const handleDateChange = (e: { target: { value: any } }) => {
+    const { value } = e.target;
+   
+   // endDate.setDate(endDate.getDate() + 1);
+    if (value && value.length === 2 && value[0] && value[1]) {
+      setStartDate(value[0]);
+     
+      setEndDate(value[1]);
+      
+    }
+  };
 
   return (
     <>
@@ -23,7 +42,10 @@ const DatePickerComponent = () => {
         
         
         }}>
-        <Calendar value={date} onChange={(e) => setDate(e.value)} inline showWeek />
+           <Calendar value={dates} onChange={(e) => setDates(e.value)} selectionMode="range" 
+            hideOnRangeSelection inline/>
+
+        
       </div>
     </>
   )

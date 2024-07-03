@@ -734,19 +734,75 @@ const Customer = () => {
       </div>
       <div className="flex flex-col md:flex-row mt-3">
         {/* Left Panel */}
-        <div
-          style={{
-            height: '700px',
-            minHeight: '700px',
-            width: '500px',
-            minWidth: '500px',
-            backgroundColor: '#FFFFFF',
-            position: 'relative',
-          }}
-          className="flex-1 ml-[45px] w-[550px]">
-          <div data-testid="customer-data" className="flex flex-col h-full">
-            <div className="bg-[#10293A] rounded-tl-[10px] rounded-tr-[10px] text-white">
-              <h1 className="p-4 text-xl font-extrabold">{properties.customerHeader}</h1>
+        <div className="flex-grow bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-6 md:mb-0 w-[600px]">
+          {/* Header */}
+          <div className="bg-[#10293A] rounded-tl-[10px] rounded-tr-[10px] text-white">
+            <h1 className="p-4 text-xl font-extrabold">{properties.customerHeader}</h1>
+          </div>
+
+          <InputTextWithHeader
+            value={searchText}
+            onChange={handleSearch}
+            placeholder="Search by name, ID, phone no.... "
+            inputTextStyle={{
+              width: '100%',
+              height: '44px',
+              padding: '0 4rem 0 3rem',
+              border: '1px solid #C5D9E0',
+              fontSize: '16px',
+              color: '#000000',
+              borderRadius: '4px',
+              minHeight: '44px',
+              fontWeight: 400,
+              backgroundColor: 'rgb(242 242 242 / 0%)',
+            }}
+            borderBottom={{ border: '1px solid #D5E1EA' }}
+            iconStyle={{
+              position: 'absolute',
+              left: '15px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              width: '18px',
+              height: '18px',
+            }}
+          />
+          <div
+        
+            className={`bg-#00426F overflow-x-hidden h-[400px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col ${isLoading ? 'blur-screen' : ''}`}>
+            <div className="flex-grow overflow-auto">
+              <DataTableComponent
+                data={customerData}
+                tableStyle={{
+                  fontSize: '12px',
+                  color: '#000000',
+                  fontWeight: 600,
+                  backgroundColor: '#D9D9D9',
+                  cursor: 'pointer',
+                }}
+                scrollable={true}
+                columns={CustomerTableColumns}
+                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+                onRowClick={(row) => {
+                  handleCustomerTableRowClick(row)
+                }}
+                selectionMode="single"
+                onSelectionChange={(e) => {
+                  setSelectedProduct(e.value)
+                }}
+                selection={selectedProduct}
+                dataKey="id"
+                rowStyle={(rowData: any) => rowData}
+                emptyMessage={
+                  <div className="text-center mt-40">
+                    <img
+                      src="/assets/images/empty.png"
+                      alt="Empty Data"
+                      className="w-28 mx-auto mb-4"
+                    />
+                    <p className="text-gray-500" >No data available</p>
+                  </div>
+                }
+              />
             </div>
 
             <InputTextWithHeader
