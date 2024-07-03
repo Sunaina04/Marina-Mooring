@@ -181,6 +181,12 @@ export interface CustomerPayload {
   country: string
   zipCode: string
   customerTypeDto: MetaDataResponse
+  imageDtoList: [
+    {
+      id: number
+      imageData: string
+    },
+  ]
 }
 
 export interface UpdateMooringPayload {
@@ -250,6 +256,12 @@ export interface customerResponseDto {
     country: string
     zipCode: string
     mooringResponseDtoList: MooringResponseDtoList
+    imageDtoList: [
+      {
+        id: number
+        imageData: string
+      },
+    ]
   }
   boatyardNames: []
 }

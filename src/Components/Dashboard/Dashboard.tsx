@@ -61,7 +61,7 @@ const Dashboard = () => {
         label: 'ID',
         style: {
           fontSize: '10px',
-          width: '2vw',
+          // width: '2vw',
           backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: '700',
@@ -72,7 +72,7 @@ const Dashboard = () => {
         label: 'Customer Name',
         style: {
           fontSize: '10px',
-          width: '8vw',
+          // width: '8vw',
           backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: '700',
@@ -83,7 +83,7 @@ const Dashboard = () => {
         label: 'Mooring Number',
         style: {
           fontSize: '10px',
-          width: '8vw',
+          // width: '8vw',
           backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: '700',
@@ -95,7 +95,7 @@ const Dashboard = () => {
         label: 'Mooring service Date',
         style: {
           fontSize: '10px',
-          width: '9vw',
+          // width: '9vw',
           backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: '700',
@@ -106,7 +106,7 @@ const Dashboard = () => {
         label: 'Mooring Location ',
         style: {
           fontSize: '10px',
-          width: '10vw',
+          // width: '10vw',
           backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: '700',
@@ -117,7 +117,7 @@ const Dashboard = () => {
         label: 'Status',
         style: {
           fontSize: '10px',
-          width: '10vw',
+          // width: '10vw',
           backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: '700',
@@ -137,6 +137,12 @@ const Dashboard = () => {
       },
     ],
     headerStyle: { backgroundColor: '#FFFFFF' },
+    style: {
+      fontSize: '10px',
+      backgroundColor: '#FFFFFF',
+      color: '#000000',
+      fontWeight: '700',
+    },
   }
 
   const MooringHeader = (
@@ -238,9 +244,12 @@ const Dashboard = () => {
                   columns={columns}
                   actionButtons={ActionButtonColumn}
                   header={MooringHeader}
-                  tableStyle={{ backgroundColor: '#FFFFFF', fontSize: '12px',
+                  tableStyle={{
+                    backgroundColor: '#FFFFFF',
+                    fontSize: '12px',
                     color: '#000000',
-                    fontWeight: 600, }}
+                    fontWeight: 600,
+                  }}
                   onRowClick={(rowData) => {
                     setMooringResponseData(rowData?.data?.gpsCoordinates)
                   }}

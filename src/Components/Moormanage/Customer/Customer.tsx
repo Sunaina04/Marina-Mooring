@@ -1,4 +1,15 @@
-import { JSXElementConstructor, ReactElement, ReactNode, ReactPortal, SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import {
+  JSXElementConstructor,
+  ReactElement,
+  ReactNode,
+  ReactPortal,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import CustomModal from '../../CustomComponent/CustomModal'
 import AddCustomer from './AddCustomer'
 import { FaEdit, FaSort, FaSortDown, FaSortUp } from 'react-icons/fa'
@@ -46,6 +57,7 @@ const Customer = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
   const [modalVisible, setModalVisible] = useState(false)
   const [customerData, setCustomerData] = useState<CustomerPayload[]>([])
+  const [customerImage, setCustomerImage] = useState<any>()
   const [editMode, setEditMode] = useState(false)
   const [editCustomerMode, setEditCustomerMode] = useState(false)
   const [editMooringMode, setEditMooringMode] = useState(false)
@@ -334,22 +346,41 @@ const Customer = () => {
     { id: 4, customerImage: 'https://via.placeholder.com/150' },
     { id: 5, customerImage: 'https://via.placeholder.com/150' },
   ]
-  const countryBodyTemplate = (rowData: { country: { code: any; name: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined } }) => {
+  const countryBodyTemplate = (rowData: {
+    country: {
+      code: any
+      name:
+        | string
+        | number
+        | boolean
+        | ReactElement<any, string | JSXElementConstructor<any>>
+        | Iterable<ReactNode>
+        | ReactPortal
+        | null
+        | undefined
+    }
+  }) => {
     return (
       <div className="flex align-items-center gap-2">
-        <img alt="flag" src="https://primefaces.org/cdn/primereact/images/flag/flag_placeholder.png" className={`flag flag-${rowData.country.code}`} style={{ width: '24px' }} />
+        <img
+          alt="flag"
+          src="https://primefaces.org/cdn/primereact/images/flag/flag_placeholder.png"
+          className={`flag flag-${rowData.country.code}`}
+          style={{ width: '24px' }}
+        />
         <span>{rowData.country.name}</span>
       </div>
-    );
-  };
+    )
+  }
 
   const first = (data: any) => {
-    // console.log("itemsss",data?.imageDtoList[0]?.imageData);
-   
-    return <div className="">
-      <img alt="flag" src={data?.imageDtoList?.imageData} style={{ width: '50px' }} />
+    console.log(data)
 
-    </div>
+    return (
+      <div className="">
+        <img alt="flag" src={data?.imageData} style={{ width: '50px' }} />
+      </div>
+    )
   }
 
   const columnStyle = {
@@ -367,9 +398,9 @@ const Customer = () => {
       },
 
       {
-        id: 'imageDtoList',
-        label: 'Customer Image',
-        body: first,
+        id: 'imageName',
+        label: 'Image Name',
+        // body: first,
         style: columnStyle,
       },
     ],
@@ -383,7 +414,8 @@ const Customer = () => {
         {
           color: 'black',
           label: 'View Image',
-          onClick: () => {
+          onClick: (rowData) => {
+            console.log('data', rowData)
             setImageVisible(true)
           },
           underline: true,
@@ -496,6 +528,7 @@ const Customer = () => {
         setIsLoader(false)
         setTotalRecordsTwo(totalSize)
         setCustomerRecordData(content?.customerResponseDto)
+        setCustomerImage(content?.customerResponseDto?.imageDtoList)
         setMooringData(content?.customerResponseDto?.mooringResponseDtoList)
         setBoatYardData(content?.boatyardNames)
       } else {
@@ -775,11 +808,11 @@ const Customer = () => {
                     <p className="text-gray-500 text-lg">No data available</p>
                   </div>
                 }
-              // rows={pageSize}
-              // first={pageNumber1}
-              // totalRecords={totalRecordsOne}
-              // rowsPerPageOptions={[5, 10, 20, 30]}
-              // onPage={onPageChange}
+                // rows={pageSize}
+                // first={pageNumber1}
+                // totalRecords={totalRecordsOne}
+                // rowsPerPageOptions={[5, 10, 20, 30]}
+                // onPage={onPageChange}
               />
             </div>
             <div className="mt-auto">
@@ -1034,7 +1067,7 @@ const Customer = () => {
                         fontWeight: 600,
                         backgroundColor: '#D9D9D9',
                       }}
-                      data={customerData}
+                      data={customerImage}
                       columns={customerImagesColumns}
                       // onRowClick={(rowData) => {
                       //   handleMooringTableRowClick(rowData)
@@ -1092,6 +1125,7 @@ const Customer = () => {
           borderRadius: '1rem',
           fontWeight: '400',
           maxHeight: '50% !important',
+          cursor: 'alias',
         }}
         draggable={false}
         visible={dialogVisible}
@@ -1191,13 +1225,13 @@ const Customer = () => {
           borderRadius: '1rem',
           fontWeight: '400',
           maxHeight: '50% !important',
+          cursor: 'alias',
         }}
         draggable={false}
         visible={imageVisible}
         onHide={() => setImageVisible(false)}
-        header={'Customers Images'}>
+        header={'Customers Image'}>
         <hr className="border border-[#000000] my-0 mx-0"></hr>
-
         <div>
           <img src="image" alt="image" />
         </div>
