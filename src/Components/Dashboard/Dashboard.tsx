@@ -187,6 +187,7 @@ const Dashboard = () => {
   const getMooringsData = useCallback(async () => {
     setIsLoading(true)
     try {
+      
       const response = await getMoorings({}).unwrap()
       const { status, content, message, totalSize } = response as MooringResponse
       if (status === 200 && Array.isArray(content)) {
@@ -271,7 +272,7 @@ const Dashboard = () => {
               </div>
 
               <div className="mt-auto">
-                <Paginator
+                {/* <Paginator
                   first={0}
                   rows={5}
                   totalRecords={10}
@@ -285,7 +286,7 @@ const Dashboard = () => {
                     borderTop: '1px solid #D5E1EA',
                     padding: '0.5rem',
                   }}
-                />
+                /> */}
               </div>
             </div>
           </div>

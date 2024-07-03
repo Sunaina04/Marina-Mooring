@@ -15,6 +15,8 @@ import { useGetAllOpenWorkOrdersMutation } from '../../Services/MoorManage/Moorm
 import { Toast } from 'primereact/toast'
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../Store/Slice/userSlice'
+import { Paginator } from 'primereact/paginator'
+import { Params } from '../../Type/CommonType'
 
 const Accordion = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -46,9 +48,15 @@ const Accordion = () => {
   }
 
   const firstLastName = (data: any) => {
-    console.log("data",data);
-    
+    console.log('data', data)
+
     return data.customerResponseDto.firstName + ' ' + data.customerResponseDto.lastName
+  }
+
+  const onPageChange = (event: any) => {
+    setPageNumber(event.page)
+    setPageNumber(event.first)
+    setPageSize(event.rows)
   }
   const columns: TableColumnProps[] = useMemo(
     () => [
@@ -126,7 +134,7 @@ const Accordion = () => {
 
   useEffect(() => {
     getAllOpenWorkOrder()
-  }, [selectedCustomerId])
+  }, [selectedCustomerId, pageSize, pageNumber])
 
   return (
     <>
@@ -215,6 +223,24 @@ const Accordion = () => {
                 </div>
               }
             />
+
+            <div className="mt-auto">
+              <Paginator
+                first={pageNumber}
+                rows={pageSize}
+                totalRecords={totalRecords}
+                rowsPerPageOptions={[5, 10, 20, 30]}
+                onPageChange={onPageChange}
+                style={{
+                  position: 'sticky',
+                  bottom: 0,
+                  zIndex: 1,
+                  backgroundColor: 'white',
+                  borderTop: '1px solid #D5E1EA',
+                  padding: '0.5rem',
+                }}
+              />
+            </div>
           </label>
         </div>
 
