@@ -164,6 +164,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     const fileInput = event.target
     const file = fileInput.files?.[0]
 
+    console.log("file",file);
+    
+
     if (file) {
       if (!file.type.startsWith('image/')) {
         setCustomerImage('')
@@ -767,10 +770,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     )
   }
 
- const  uploadImages=()=>{
-  alert("hi")
-
- }
+  const uploadImages = () => {
+    setImageVisible(true)
+  }
 
   useEffect(() => {
     handleFocus()
@@ -971,8 +973,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   <span className="font-medium text-sm text-[#000000]">
                     <div className="flex gap-1">Customer Image</div>
                   </span>
-                  <div className="mt-2">
+                  {/* <div className="mt-2">
                     <input
+                    
                       // id="file-input"
                       type="text"
                       // accept="image/*"
@@ -996,40 +999,28 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         lineHeight: '25px',
                         cursor: 'pointer',
                       }}>
-
                       Upload Image
                     </label>
-                    {customerImage && (
-                      <div className="mt-2">
-                        <button
-                          onClick={handleRemoveImage}
-                          style={{
-                            background: 'red',
-                            color: 'white',
-                            border: 'none',
-                            borderRadius: '50%',
-                            width: '20px',
-                            height: '20px',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                          }}>
-                          &times;
-                        </button>
-                        <img
-                          src={customerImage}
-                          alt="Customer"
-                          style={{
-                            width: '100px',
-                            height: '100px',
-                            objectFit: 'cover',
-                            borderRadius: '0.50rem',
-                          }}
-                        />
+                  </div> */}
+                  <div className="mt-2">
+                    <div />
+                    <div
+                      style={{
+                        width: '230px',
+                        height: '32px',
+                        border: fieldErrors.email ? '1px solid red' : '1px solid #D5E1EA',
+                        borderRadius: '0.50rem',
+                        fontSize: '0.8rem',
+                        paddingLeft: '0.5rem',
+                      }}>
+                      <div onClick={uploadImages} className="flex gap-3 text-center mt-1 ">
+                        <FaFileUpload style={{ fontSize: '25px', color: 'blue' }} />
+                        Upload Image
                       </div>
-                    )}
+                    </div>
                   </div>
+
+                  {/* <input type="text" onChange={uploadImages}/>p */}
                 </div>
               </div>
             </div>
@@ -1905,11 +1896,136 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           visible={imageVisible}
           onHide={() => setImageVisible(false)}
           header={'Customers Image'}>
-          <hr className="border border-[#000000] my-0 mx-0"></hr>
+          {/* <hr className="border border-[#000000] my-0 mx-0"></hr> */}
+          {/* 
+          <div
+           
+            >
+            <div
+              style={{
+                width: '100%',
+                justifyContent: 'center',
+                textAlign: 'center',
+              
+              }}>
+              <div>
+                <div className="mt-2">
+                  <input
+                    id="file-input"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    style={{
+                      display: 'none',
+                    }}
+                  />
+                  <label
+                    htmlFor="file-input"
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.8rem',
+                      padding: '3px',
+                      display: 'flex',
+                      gap: '0.5rem',
+                      textAlign: 'center',
+                      lineHeight: '25px',
+                      cursor: 'pointer',
+                    }}>
+                    <FaFileUpload style={{ fontSize: '25px', color: 'blue' }} />
+                  </label>
+                  {customerImage && (
+                    <div className="mt-2">
+                      <button
+                        onClick={handleRemoveImage}
+                        style={{
+                          background: 'red',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: '50%',
+                          width: '20px',
+                          height: '20px',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}>
+                        &times;
+                      </button>
+                      <img
+                        src={customerImage}
+                        alt="Customer"
+                        style={{
+                          width: '100px',
+                          height: '100px',
+                          objectFit: 'cover',
+                          borderRadius: '0.50rem',
+                        }}
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
 
-          <div style={{ width: "100%", display: "flex", justifyContent: "center", textAlign: "center" }}>
-            <div>
+            <div className="flex mt-[18rem]">
+              <div>
+                <Button
+                  onClick={() => setImageVisible(false)}
+                  label={'Done'}
+                  style={{
+                    width: '89px',
+                    height: '42px',
+                    backgroundColor: '#0098FF',
+                    cursor: 'pointer',
+                    fontWeight: 'bolder',
+                    fontSize: '14px',
+                    boxShadow: 'none',
+                    color: 'white',
+                    borderRadius: '0.50rem',
+                    marginTop: '1rem',
+                  }}
+                />
+              </div>
+            </div>
+          </div> */}
 
+          <div className={`" ml-4" ${isLoading ? 'blurred' : ''}`}>
+            <Toast ref={toastRef} />
+
+            <div className="flex  justify-center  ">
+              {/* <div>
+               
+           
+                  <div
+               />
+                  <div    style={{
+                    width: '230px',
+                    height: '40px',
+                    border: "1px solid blue",
+                    // borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
+                    padding: '0.5rem',
+                    display:"flex",
+             
+                  }}
+                  
+                  >
+                    <div style={{borderRight:"2px solid blue",height:"25px"}}>
+                    <FaFileUpload style={{ fontSize: '25px', color: 'blue' }} />
+                    </div>
+                  <h1
+                  onClick={handleImageChange}
+                  >UPLOAD FILES</h1>
+
+                  
+                  </div>
+               
+             
+              
+              </div> */}
               <div className="mt-2">
                 <input
                   id="file-input"
@@ -1919,14 +2035,15 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   style={{
                     display: 'none',
                   }}
+
                 />
                 <label
                   htmlFor="file-input"
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
+                    border: '1px solid blue',
+                    borderRadius: '0.5rem',
                     fontSize: '0.8rem',
                     padding: '3px',
                     display: 'flex',
@@ -1936,10 +2053,12 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     cursor: 'pointer',
                   }}>
 
-                  <FaFileUpload
+                  <FaFileUpload style={{ fontSize: '25px', color: 'blue' }} />
+                  <div>
+                    Uploads File
 
+                  </div>
 
-                    style={{ fontSize: '25px', color: 'blue' }} />
                 </label>
                 {customerImage && (
                   <div className="mt-2">
@@ -1973,14 +2092,44 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 )}
               </div>
 
-
-              {/* <img className='w-full h-36 mt-24'  src={`data:image/jpeg;base64,${showImage.imageData}`} /> */}
             </div>
+
+
+
+
+
+            {/* </div> */}
+
+
+          </div>
+          <div className={`"flex gap-4 ml-4 bottom-5 absolute left-6" ${isLoading ? 'blurred' : ''}`}>
+            <Button
+              label={'Close'}
+              onClick={()=>setImageVisible(false)}
+              style={{
+                width: '89px',
+                height: '42px',
+                backgroundColor: '#0098FF',
+                cursor: 'pointer',
+                fontWeight: 'bolder',
+                fontSize: '1rem',
+                boxShadow: 'none',
+                color: 'white',
+                borderRadius: '0.50rem',
+              }}
+            />
+
           </div>
 
+
+
+
+
+
+
+
+
         </Dialog>
-
-
       </div>
     </>
   )

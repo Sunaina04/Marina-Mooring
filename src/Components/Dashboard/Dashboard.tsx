@@ -56,7 +56,11 @@ const Dashboard = () => {
     NeedInspection: NeedInspectionIcon,
     NotInUse: NotInUseIcon,
   }
-
+  const firstLastName = (data: any) => {
+    console.log("data",data);
+    
+    return data.customerResponseDto.firstName + ' ' + data.customerResponseDto.lastName
+  }
   const columns: TableColumnProps[] = useMemo(
     () => [
       {
@@ -71,8 +75,9 @@ const Dashboard = () => {
         },
       },
       {
-        id: 'customerName',
+        id: 'firstName',
         label: 'Customer Name',
+        body: firstLastName,
         style: {
           fontSize: '10px',
           // width: '8vw',

@@ -45,30 +45,36 @@ const Accordion = () => {
     setAccordion((prevState) => (prevState === id ? '' : id))
   }
 
+  const firstLastName = (data: any) => {
+    console.log("data",data);
+    
+    return data.customerResponseDto.firstName + ' ' + data.customerResponseDto.lastName
+  }
   const columns: TableColumnProps[] = useMemo(
     () => [
       {
-        id: 'orderNo',
+        id: 'id',
         label: 'Order No.',
         style: { fontSize: '10px', width: '6vw', backgroundColor: '#FFFFFF', color: '#000000' },
       },
       {
-        id: 'mooringNumber',
+        id: 'mooringResponseDto.mooringNumber',
         label: 'Mooring Number',
         style: { fontSize: '10px', width: '6vw', backgroundColor: '#FFFFFF', color: '#000000' },
       },
       {
-        id: 'customerName',
+        id: 'firstName',
         label: 'Customer Name',
+        body: firstLastName,
         style: { fontSize: '10px', width: '6vw', backgroundColor: '#FFFFFF', color: '#000000' },
       },
       {
-        id: 'assignedTo',
+        id: 'technicianUserResponseDto.name',
         label: 'Assigned To',
         style: { fontSize: '10px', width: '6vw', backgroundColor: '#FFFFFF', color: '#000000' },
       },
       {
-        id: 'date',
+        id: 'dueDate',
         label: 'Date',
         style: { fontSize: '10px', width: '5vw', backgroundColor: '#FFFFFF', color: 'black' },
       },
