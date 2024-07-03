@@ -90,15 +90,26 @@ const Customer = () => {
   const [totalRecordsTwo, setTotalRecordsTwo] = useState<number>()
   const [accordion, setAccordion] = useState('faq1')
   const [workOrderData, setWorkOrderData] = useState('')
-
-  // const handleToggle = (id: string) => {
-  //   setAccordion((prevState) => (prevState === id ? '' : id))
-  // }
-  const handleToggle = (section: SetStateAction<string>) => {
-    if (accordion !== section) {
-      setAccordion(section)
-    }
+  const [showImage, setShowImage] = useState({ id: "", imageData: "" })
+ 
+  
+  const handleToggle = (id: string) => {
+    setAccordion((prevState) => (prevState === id ? '' : id))
   }
+
+  // const handleToggle = (section: SetStateAction<string>) => {
+  //   if (accordion !== section) {
+  //     setAccordion(section)
+  //   }
+  // }{
+
+
+
+
+
+
+
+
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
     setPageNumber1(event.first)
@@ -346,42 +357,8 @@ const Customer = () => {
     { id: 4, customerImage: 'https://via.placeholder.com/150' },
     { id: 5, customerImage: 'https://via.placeholder.com/150' },
   ]
-  const countryBodyTemplate = (rowData: {
-    country: {
-      code: any
-      name:
-        | string
-        | number
-        | boolean
-        | ReactElement<any, string | JSXElementConstructor<any>>
-        | Iterable<ReactNode>
-        | ReactPortal
-        | null
-        | undefined
-    }
-  }) => {
-    return (
-      <div className="flex align-items-center gap-2">
-        <img
-          alt="flag"
-          src="https://primefaces.org/cdn/primereact/images/flag/flag_placeholder.png"
-          className={`flag flag-${rowData.country.code}`}
-          style={{ width: '24px' }}
-        />
-        <span>{rowData.country.name}</span>
-      </div>
-    )
-  }
 
-  const first = (data: any) => {
-    console.log(data)
 
-    return (
-      <div className="">
-        <img alt="flag" src={data?.imageData} style={{ width: '50px' }} />
-      </div>
-    )
-  }
 
   const columnStyle = {
     backgroundColor: '#FFFFFF',
@@ -414,9 +391,10 @@ const Customer = () => {
         {
           color: 'black',
           label: 'View Image',
-          onClick: (rowData) => {
-            console.log('data', rowData)
+          onClick: (data) => {
+            setShowImage((prev) => ({ ...prev, id: data.id, imageData: data.imageData }))
             setImageVisible(true)
+            // console.log("data",data);
           },
           underline: true,
           style: {
@@ -440,6 +418,8 @@ const Customer = () => {
     }),
     [],
   )
+ 
+
   const getCustomerData = useCallback(async () => {
     setIsLoading(true)
     try {
@@ -453,7 +433,6 @@ const Customer = () => {
       if (pageSize) {
         params.pageSize = pageSize
       }
-
       if (sortable) {
         params.sortBy = 'customerType'
       }
@@ -671,6 +650,7 @@ const Customer = () => {
   //     setRows(event.rows);
   // };
 
+
   return (
     <div style={{ height: '100vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
       <Header header="MOORMANAGE/Customer" />
@@ -734,75 +714,20 @@ const Customer = () => {
       </div>
       <div className="flex flex-col md:flex-row mt-3">
         {/* Left Panel */}
-        <div className="flex-grow bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-6 md:mb-0 w-[600px]">
-          {/* Header */}
-          <div className="bg-[#10293A] rounded-tl-[10px] rounded-tr-[10px] text-white">
-            <h1 className="p-4 text-xl font-extrabold">{properties.customerHeader}</h1>
-          </div>
+        <div
+          style={{
+            height: '700px',
+            minHeight: '700px',
+            width: '500px',
+            minWidth: '500px',
+            backgroundColor: '#FFFFFF',
+            position: 'relative',
 
-          <InputTextWithHeader
-            value={searchText}
-            onChange={handleSearch}
-            placeholder="Search by name, ID, phone no.... "
-            inputTextStyle={{
-              width: '100%',
-              height: '44px',
-              padding: '0 4rem 0 3rem',
-              border: '1px solid #C5D9E0',
-              fontSize: '16px',
-              color: '#000000',
-              borderRadius: '4px',
-              minHeight: '44px',
-              fontWeight: 400,
-              backgroundColor: 'rgb(242 242 242 / 0%)',
-            }}
-            borderBottom={{ border: '1px solid #D5E1EA' }}
-            iconStyle={{
-              position: 'absolute',
-              left: '15px',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              width: '18px',
-              height: '18px',
-            }}
-          />
-          <div
-        
-            className={`bg-#00426F overflow-x-hidden h-[400px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col ${isLoading ? 'blur-screen' : ''}`}>
-            <div className="flex-grow overflow-auto">
-              <DataTableComponent
-                data={customerData}
-                tableStyle={{
-                  fontSize: '12px',
-                  color: '#000000',
-                  fontWeight: 600,
-                  backgroundColor: '#D9D9D9',
-                  cursor: 'pointer',
-                }}
-                scrollable={true}
-                columns={CustomerTableColumns}
-                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
-                onRowClick={(row) => {
-                  handleCustomerTableRowClick(row)
-                }}
-                selectionMode="single"
-                onSelectionChange={(e) => {
-                  setSelectedProduct(e.value)
-                }}
-                selection={selectedProduct}
-                dataKey="id"
-                rowStyle={(rowData: any) => rowData}
-                emptyMessage={
-                  <div className="text-center mt-40">
-                    <img
-                      src="/assets/images/empty.png"
-                      alt="Empty Data"
-                      className="w-28 mx-auto mb-4"
-                    />
-                    <p className="text-gray-500" >No data available</p>
-                  </div>
-                }
-              />
+          }}
+          className="flex-1 ml-[45px] w-[550px]">
+          <div data-testid="customer-data" className="flex flex-col h-full">
+            <div className="bg-[#10293A] rounded-tl-[10px] rounded-tr-[10px] text-white">
+              <h1 className="p-4 text-xl font-extrabold">{properties.customerHeader}</h1>
             </div>
 
             <InputTextWithHeader
@@ -864,11 +789,11 @@ const Customer = () => {
                     <p className="text-gray-500 text-lg">No data available</p>
                   </div>
                 }
-                // rows={pageSize}
-                // first={pageNumber1}
-                // totalRecords={totalRecordsOne}
-                // rowsPerPageOptions={[5, 10, 20, 30]}
-                // onPage={onPageChange}
+              // rows={pageSize}
+              // first={pageNumber1}
+              // totalRecords={totalRecordsOne}
+              // rowsPerPageOptions={[5, 10, 20, 30]}
+              // onPage={onPageChange}
               />
             </div>
             <div className="mt-auto">
@@ -961,8 +886,8 @@ const Customer = () => {
           )}
 
           <div
-            // style={{border:"1px solid red",}}
-            className="flex flex-col wrapper">
+            style={{ width: "500px" }}
+            className="flex  flex-col wrapper">
             <div
               className=" relative  bg-white border-[1px] border-[#D5E1EA] mr-8"
               style={{ width: '500px', maxWidth: '500px', marginBottom: '0px' }}>
@@ -1011,64 +936,71 @@ const Customer = () => {
                         color: 'white',
                         padding: '14px',
                         fontSize: '15px',
-                      }}></div>
-                    <div
-                      className={`bg-#00426F overflow-x-hidden h-[320px]  table-container flex flex-col`}>
-                      <div className="flex-grow">
-                        <DataTableComponent
-                          style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
-                          scrollable
-                          tableStyle={{
-                            fontSize: '12px',
-                            color: '#000000',
-                            fontWeight: 600,
-                            backgroundColor: '#D9D9D9',
+
+                      }}>
+
+                      <div
+                        className={`bg-#00426F overflow-x-hidden h-[320px]  table-container flex flex-col`}>
+                        <div className="flex-grow">
+                          <DataTableComponent
+                            style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+                            scrollable
+                            tableStyle={{
+                              fontSize: '12px',
+                              color: '#000000',
+                              fontWeight: 600,
+                              backgroundColor: '#D9D9D9',
+                            }}
+                            data={mooringData}
+                            columns={MooringTableColumn}
+                            onRowClick={(rowData) => {
+                              handleMooringTableRowClick(rowData)
+                            }}
+                            selectionMode="single"
+                            onSelectionChange={(e) => {
+                              setSelectedMooring(e.value)
+                            }}
+                            selection={selectedMooring}
+                            dataKey="id"
+                            rowStyle={(rowData: any) => rowData}
+                            emptyMessage={
+                              <div className="text-center mt-40">
+                                <img
+                                  src="/assets/images/empty.png"
+                                  alt="Empty Data"
+                                  className="w-20 mx-auto mb-4"
+                                />
+                                <p className="text-gray-500 text-lg">No data available</p>
+                              </div>
+                            }
+                          />
+                        </div>
+                        <Paginator
+                          first={pageNumber2}
+                          rows={pageSizeTwo}
+                          totalRecords={totalRecordsTwo}
+                          rowsPerPageOptions={[5, 10, 20, 30]}
+                          onPageChange={onPageChangeTwo}
+                          style={{
+                            position: 'sticky',
+                            bottom: 0,
+                            zIndex: 1,
+                            backgroundColor: 'white',
+                            borderTop: '1px solid #D5E1EA',
+                            padding: '0.5rem',
                           }}
-                          data={mooringData}
-                          columns={MooringTableColumn}
-                          onRowClick={(rowData) => {
-                            handleMooringTableRowClick(rowData)
-                          }}
-                          selectionMode="single"
-                          onSelectionChange={(e) => {
-                            setSelectedMooring(e.value)
-                          }}
-                          selection={selectedMooring}
-                          dataKey="id"
-                          rowStyle={(rowData: any) => rowData}
-                          emptyMessage={
-                            <div className="text-center mt-40">
-                              <img
-                                src="/assets/images/empty.png"
-                                alt="Empty Data"
-                                className="w-20 mx-auto mb-4"
-                              />
-                              <p className="text-gray-500 text-lg">No data available</p>
-                            </div>
-                          }
                         />
                       </div>
-                      <Paginator
-                        first={pageNumber2}
-                        rows={pageSizeTwo}
-                        totalRecords={totalRecordsTwo}
-                        rowsPerPageOptions={[5, 10, 20, 30]}
-                        onPageChange={onPageChangeTwo}
-                        style={{
-                          position: 'sticky',
-                          bottom: 0,
-                          zIndex: 1,
-                          backgroundColor: 'white',
-                          borderTop: '1px solid #D5E1EA',
-                          padding: '0.5rem',
-                        }}
-                      />
+
+
                     </div>
+
                   </div>
                 </div>
               </div>
             </div>
             <div
+
               className="tab  relative  bg-[#FFFFFF] border-[1px] border-[#D5E1EA] mr-8"
               style={{ width: '500px', maxWidth: '500px', marginTop: '0px' }}>
               <label
@@ -1077,9 +1009,7 @@ const Customer = () => {
                 className="cursor-pointer flex items-center justify-between h-14"
                 onClick={() => handleToggle('faq2')}>
                 <div className="flex items-center">
-                  {/* <div>
-                    <img alt="icon" src="/assets/images/file.svg" style={{ width: '23px' }} />
-                  </div> */}
+
                   <div style={{ flexShrink: 1 }}>
                     <h1 className="p-3 text-white text-lg font-extrabold">Customers Images</h1>
                   </div>
@@ -1110,10 +1040,13 @@ const Customer = () => {
                 </div>
               </label>
               <div
+
                 className={`content mt-5 transition-all ease-in-out duration-500 ${accordion === 'faq2' ? '' : 'hidden'}`}>
                 <div
+
                   className={`bg-#00426F overflow-x-hidden h-[330px]  table-container flex flex-col`}>
                   <div className="flex-grow">
+
                     <DataTableComponent
                       style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
                       scrollable
@@ -1125,13 +1058,7 @@ const Customer = () => {
                       }}
                       data={customerImage}
                       columns={customerImagesColumns}
-                      // onRowClick={(rowData) => {
-                      //   handleMooringTableRowClick(rowData)
-                      // }}
                       selectionMode="single"
-                      // onSelectionChange={(e) => {
-                      //   setSelectedMooring(e.value)
-                      // }}
                       actionButtons={ActionButtonColumn}
                       selection={selectedMooring}
                       dataKey="id"
@@ -1167,6 +1094,8 @@ const Customer = () => {
               </div>
             </div>
           </div>
+
+
         </div>
       </div>
 
@@ -1277,10 +1206,10 @@ const Customer = () => {
           width: '740px',
           minWidth: '300px',
           height: '503px',
-          minHeight: '200px',
+          // minHeight: '200px',
           borderRadius: '1rem',
           fontWeight: '400',
-          maxHeight: '50% !important',
+          // maxHeight: '50% !important',
           cursor: 'alias',
         }}
         draggable={false}
@@ -1288,9 +1217,13 @@ const Customer = () => {
         onHide={() => setImageVisible(false)}
         header={'Customers Image'}>
         <hr className="border border-[#000000] my-0 mx-0"></hr>
+
+        <div style={{width:"100%", display:"flex", justifyContent:"center",  textAlign:"center"}}>
         <div>
-          <img src="image" alt="image" />
+          <img className='w-full h-36 mt-24'  src={`data:image/jpeg;base64,${showImage.imageData}`} />
         </div>
+        </div>
+        
       </Dialog>
     </div>
   )
