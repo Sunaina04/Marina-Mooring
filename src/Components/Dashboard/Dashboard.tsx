@@ -48,6 +48,7 @@ const Dashboard = () => {
   const [pageSize, setPageSize] = useState(10)
   const [totalRecords, setTotalRecords] = useState<number>()
   const [mooringData, setMooringData] = useState<any>()
+  const [selectedProduct, setSelectedProduct] = useState(null)
   const [mooringResponseData, setMooringResponseData] = useState<any>()
   const [startDate, setStartDate] = useState(new Date())
   const [endDate, setEndDate] = useState(new Date())
@@ -425,7 +426,14 @@ const Dashboard = () => {
                     fontSize: '12px',
                     color: '#000000',
                     fontWeight: 600,
+                    cursor: 'pointer',
                   }}
+                  selectionMode="single"
+                  onSelectionChange={(e) => {
+                    setSelectedProduct(e.value)
+                  }}
+                  selection={selectedProduct}
+                  dataKey="id"
                   onRowClick={(rowData) => {
                     setMooringResponseData(rowData?.data?.gpsCoordinates)
                   }}
@@ -460,7 +468,7 @@ const Dashboard = () => {
               <CustomMooringPositionMap
                 position={coordinatesArray ? coordinatesArray : initialPosition}
                 zoomLevel={10}
-                style={{ height: '50%', width: '100%' }}
+                style={{ height: '40%', width: '100%' }}
                 iconsByStatus={iconsByStatus}
                 moorings={mooringData}
               />
