@@ -17,12 +17,18 @@ import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../Store/Slice/userSlice'
 import { Paginator } from 'primereact/paginator'
 import { Params } from '../../Type/CommonType'
+import CustomModal from '../CustomComponent/CustomModal'
+import AddWorkOrders from '../Moorserve/WorkOrders/AddWorkOrders'
+import { Dialog } from 'primereact/dialog'
 
 const Accordion = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
   const [accordion, setAccordion] = useState('faq1')
   const [isLoading, setIsLoading] = useState(false)
   const [workOrderData, setWorkOrderData] = useState('')
+  const [selectedCustomer, setSelectedCustomer] = useState<any>(undefined)
+  const [visible, setVisible] = useState(false)
+  const [editMode, setEditMode] = useState(false)
   const [pageNumber, setPageNumber] = useState(0)
   const [pageSize, setPageSize] = useState(10)
   const [totalRecords, setTotalRecords] = useState<number>()
@@ -56,6 +62,19 @@ const Accordion = () => {
     setPageNumber(event.first)
     setPageSize(event.rows)
   }
+
+  const handleEdit = (rowData: any) => {
+    setSelectedCustomer(rowData)
+    setEditMode(true)
+    setVisible(true)
+  }
+
+  const handleModalClose = () => {
+    setVisible(false)
+    setEditMode(false)
+    getAllOpenWorkOrder()
+  }
+
   const columns: TableColumnProps[] = useMemo(
     () => [
       {
@@ -95,6 +114,7 @@ const Accordion = () => {
         underline: true,
         label: 'view',
         filled: true,
+        onClick: (row) => handleEdit(row),
       },
     ],
     headerStyle: { backgroundColor: '#FFFFFF' },
@@ -166,6 +186,28 @@ const Accordion = () => {
               </div>
             </div>
           </label>
+
+          <Dialog
+            position="center"
+            style={{
+              width: '851px',
+              height: '526px',
+              borderRadius: '1rem',
+            }}
+            draggable={false}
+            visible={visible}
+            onHide={handleModalClose}
+            header={<h1 className="text-xl font-extrabold text-black ml-4">Work Order</h1>}>
+            {/* <hr className="border border-[#000000] my-0 mx-0"></hr> */}
+
+            <AddWorkOrders
+              workOrderData={selectedCustomer}
+              editModeWorkOrder={editMode}
+              setVisible={setVisible}
+              toastRef={toast}
+              closeModal={handleModalClose}
+            />
+          </Dialog>
           <div
             className={`content mt-5 transition-all ease-in-out duration-500 ${accordion === 'faq1' ? '' : 'hidden'}`}>
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
