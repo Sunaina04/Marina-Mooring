@@ -108,7 +108,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [customerImages, setCustomerImages] = useState<string[]>([])
 
   const [encodedImages, setEncodedImages] = useState<string[]>([])
-  console.log('encodedImages', encodedImages)
 
   const [formData, setFormData] = useState<any>({
     mooringId: '',
@@ -228,6 +227,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     const newImages = [...customerImages]
     newImages.splice(index, 1)
     setCustomerImages(newImages)
+
+    // const newEncodedImages = [...encodedImages]
+    // newEncodedImages.splice(index, 1)
+    // setEncodedImages(newEncodedImages)
   }
 
   const validateFields = () => {
@@ -1922,8 +1925,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: '1px solid blue',
-                    borderRadius: '0.5rem',
+                    border: '2px dotted lightgray',
+                    // borderRadius: '0.5rem',
                     fontSize: '0.8rem',
                     padding: '3px',
                     display: 'flex',
@@ -1933,9 +1936,53 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     cursor: 'pointer',
                   }}>
                   <FaFileUpload style={{ fontSize: '25px', color: 'blue' }} />
-                  <div>Uploads File</div>
+                  <div>Upload Images</div>
                 </label>
               </div>
+
+              {/* <section
+                style={{
+                  position: 'relative',
+                  margin: '25px 0 15px',
+                  border: '2px dotted lightgray',
+                  padding: '35px 20px',
+                  borderRadius: '6px',
+                  display: 'flex',
+                  
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  backgroundColor: 'white'
+                }}
+
+              >
+               
+                <button type="button">
+                <FaFileUpload style={{ fontSize: '25px', color: 'blue' }} />
+                  <span> Upload</span>
+                </button>
+                <input
+                style={{
+                  fontSize: '18px',
+                  display: 'block',
+                  width: '100%',
+                  border: 'none',
+                  textTransform: 'none',
+                  position: 'absolute',
+                  top: '0',
+                  left: '0',
+                  right: '0',
+                  bottom: '0',
+                  opacity: '0',
+                  outline: 'none',
+                  
+                }}
+                  type="file"
+                  // ref={fileInputField}
+                  title=""
+                  value=""
+                // {...otherProps}
+                />
+              </section>  */}
             </div>
           </div>
 
