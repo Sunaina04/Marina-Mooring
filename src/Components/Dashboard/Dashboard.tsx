@@ -30,6 +30,7 @@ import AddWorkOrders from '../Moorserve/WorkOrders/AddWorkOrders'
 import { Calendar } from 'primereact/calendar'
 import { Nullable } from 'primereact/ts-helpers'
 import AddMoorings from '../Moormanage/Moorings/AddMoorings'
+import { ProgressSpinner } from 'primereact/progressspinner'
 
 const Dashboard = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -46,15 +47,14 @@ const Dashboard = () => {
   const [pageNumber, setPageNumber] = useState(0)
   const [pageSize, setPageSize] = useState(10)
   const [totalRecords, setTotalRecords] = useState<number>()
-  const [filterDateFrom, setFilterDateFrom] = useState<any>()
-  const [filterDateTo, setFilterDateTo] = useState<any>()
   const [mooringData, setMooringData] = useState<any>()
   const [mooringResponseData, setMooringResponseData] = useState<any>()
-  const [dates, setDates] = useState<Nullable<(Date | null)[]>>(null)
   const [startDate, setStartDate] = useState(new Date())
   const [endDate, setEndDate] = useState(new Date())
   const [getMoorings] = useGetMooringsMutation()
-
+  const today = new Date()
+  const dateAfter7Days = new Date(today)
+  dateAfter7Days.setDate(today.getDate() + 7)
   const formatDate = (dateString: any) => {
     const date = new Date(dateString)
     const month = String(date.getMonth() + 1).padStart(2, '0')
@@ -62,6 +62,9 @@ const Dashboard = () => {
     const year = date.getFullYear()
     return `${month}/${day}/${year}`
   }
+  const [dates, setDates] = useState<[Date, Date]>([today, dateAfter7Days])
+  const [filterDateFrom, setFilterDateFrom] = useState<any>(formatDate(today))
+  const [filterDateTo, setFilterDateTo] = useState<any>(formatDate(dateAfter7Days))
 
   const handleDateChange = (e: { target: { value: any } }) => {
     const { value } = e.target
@@ -428,7 +431,7 @@ const Dashboard = () => {
                   }}
                   data={mooringData}
                   emptyMessage={
-                    <div className="text-center mt-14">
+                    <div className="text-center mt-10">
                       <img
                         src="/assets/images/empty.png"
                         alt="Empty Data"
@@ -439,6 +442,21 @@ const Dashboard = () => {
                   }
                 />
               </div>
+
+              {isLoading && (
+                <ProgressSpinner
+                  style={{
+                    position: 'absolute',
+                    top: '30%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: '50px',
+                    height: '50px',
+                  }}
+                  strokeWidth="4"
+                />
+              )}
+
               <CustomMooringPositionMap
                 position={coordinatesArray ? coordinatesArray : initialPosition}
                 zoomLevel={10}
