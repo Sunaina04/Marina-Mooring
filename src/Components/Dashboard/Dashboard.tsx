@@ -1,31 +1,31 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import Accordition from '../CommonComponent/Accordion'
-import { NullableDateArray } from '../../Type/CommonType'
 import DataTableComponent from '../CommonComponent/Table/DataTableComponent'
 import Header from '../Layout/LayoutComponents/Header'
 import { ActionButtonColumnProps, TableColumnProps } from '../../Type/Components/TableTypes'
-import { dasboardTable } from '../Utils/CustomData'
-import CustomDisplayPositionMap from '../Map/CustomDisplayPositionMap'
 import CustomMooringPositionMap from '../Map/CustomMooringPositionMap'
 import Accordion from '../CommonComponent/Accordion'
 import { ErrorResponse, MooringPayload, MooringResponse } from '../../Type/ApiTypes'
 import {
+  useGetAllOpenWorkOrdersAndMooringDueForServiceMutation,
   useGetMooringsDueForServiceMutation,
-  useGetMooringsMutation,
 } from '../../Services/MoorManage/MoormanageApi'
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../Store/Slice/userSlice'
 import { Toast } from 'primereact/toast'
 import { PositionType } from '../../Type/Components/MapTypes'
 import { GearOffIcon, GearOnIcon, NeedInspectionIcon, NotInUseIcon } from '../Map/DefaultIcon'
-import { Paginator } from 'primereact/paginator'
 
 const Dashboard = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
   const [isLoading, setIsLoading] = useState(true)
+  const [pageNumber, setPageNumber] = useState(0)
+  const [pageSize, setPageSize] = useState(10)
+  const [totalRecords, setTotalRecords] = useState<number>()
+  const [filterDateFrom, setFilterDateFrom] = useState<any>()
+  const [filterDateTo, setFilterDateTo] = useState<any>()
   const [mooringData, setMooringData] = useState<MooringPayload[]>([])
   const [mooringResponseData, setMooringResponseData] = useState<any>()
-  const [getMoorings] = useGetMooringsDueForServiceMutation()
+  const [getOpenWorkOrderAndMoorings] = useGetAllOpenWorkOrdersAndMooringDueForServiceMutation()
   const toast = useRef<Toast>(null)
 
   const position: PositionType = [41.56725, 70.94045]
@@ -57,10 +57,9 @@ const Dashboard = () => {
     NotInUse: NotInUseIcon,
   }
   const firstLastName = (data: any) => {
-    console.log('data', data)
-
     return data.customerResponseDto.firstName + ' ' + data.customerResponseDto.lastName
   }
+
   const columns: TableColumnProps[] = useMemo(
     () => [
       {
@@ -181,7 +180,12 @@ const Dashboard = () => {
   const getMooringsData = useCallback(async () => {
     setIsLoading(true)
     try {
-      const response = await getMoorings({}).unwrap()
+      const response = await getOpenWorkOrderAndMoorings({
+        pageNumber: pageNumber,
+        pageSize: pageSize,
+        filterDateFrom: filterDateFrom,
+        filterDateTo: filterDateTo,
+      }).unwrap()
       const { status, content, message, totalSize } = response as MooringResponse
       if (status === 200 && Array.isArray(content)) {
         if (content?.length > 0) {
@@ -205,7 +209,14 @@ const Dashboard = () => {
       const { message } = error as ErrorResponse
       console.error('Error fetching moorings data:', error)
     }
-  }, [getMoorings, selectedCustomerId])
+  }, [
+    getOpenWorkOrderAndMoorings,
+    pageSize,
+    pageNumber,
+    filterDateFrom,
+    filterDateTo,
+    selectedCustomerId,
+  ])
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
