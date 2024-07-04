@@ -1169,38 +1169,44 @@ const Customer = () => {
           setScale(1)
         }}
         header={'Customers Images'}>
-        <hr className="border border-[#000000] my-0 mx-0"></hr>
-        <div style={{ textAlign: 'left', marginTop: '20px' }}>
-          <button onClick={handleZoomIn} style={buttonStyle}>
-            <img
-              src="/assets/images/plus.png"
-              alt="Zoom In"
-              className="p-clickable"
-              style={{ width: '20px', height: '20px' }}
-            />
-          </button>
-          <button onClick={handleZoomOut} style={buttonStyle}>
-            <svg
-              width="24"
-              height="4"
-              viewBox="0 0 11 3"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M10.125 1.5C10.125 1.92188 9.77344 2.25 9.375 2.25H1.125C0.703125 2.25 0.375 1.92188 0.375 1.5C0.375 1.10156 0.703125 0.75 1.125 0.75H9.375C9.77344 0.75 10.125 1.10156 10.125 1.5Z"
-                fill="white"
-              />
-            </svg>
-          </button>
+        <div>
+          <hr className="border border-[#000000] my-0 mx-0"></hr>
         </div>
         <div
-          style={{ width: '100%', display: 'flex', justifyContent: 'center', textAlign: 'center' }}>
-          <div>
-            <img
-              style={{ transform: `scale(${scale})`, transition: 'transform 0.2s' }}
-              className="w-full h-40 mt-10"
-              src={`data:image/jpeg;base64,${showImage.imageData}`}
-            />
+          className="flex flex-col
+        ">
+          <div style={{ textAlign: 'left', marginTop: '20px' }}>
+            <button onClick={handleZoomIn} style={buttonStyle}>
+              <img
+                src="/assets/images/plus.png"
+                alt="Zoom In"
+                className="p-clickable"
+                style={{ width: '20px', height: '20px' }}
+              />
+            </button>
+            <button onClick={handleZoomOut} style={buttonStyle}>
+              <svg
+                width="24"
+                height="4"
+                viewBox="0 0 11 3"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M10.125 1.5C10.125 1.92188 9.77344 2.25 9.375 2.25H1.125C0.703125 2.25 0.375 1.92188 0.375 1.5C0.375 1.10156 0.703125 0.75 1.125 0.75H9.375C9.77344 0.75 10.125 1.10156 10.125 1.5Z"
+                  fill="white"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <div style={{ width: '100%', height: 'auto', overflow: 'hidden' }}>
+            <div>
+              <img
+                style={{ transform: `scale(${scale})`, transition: 'transform 0.2s' }}
+                className="w-full h-40 mt-10"
+                src={`data:image/jpeg;base64,${showImage.imageData}`}
+              />
+            </div>
           </div>
         </div>
       </Dialog>

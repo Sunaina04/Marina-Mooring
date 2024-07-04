@@ -475,6 +475,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         aptSuite: sectorBlock,
         stateId: selectedState?.id,
         countryId: selectedCountry?.id,
+        // encodedImages: encodedImages,
         imageRequestDtoList: imageRequestDtoList,
         customerTypeId: selectedCustomerType === 'Dock' ? 5 : selectedCustomerType?.id,
         ...(email && { emailAddress: email }),
@@ -1925,12 +1926,18 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             </div>
           </div>
 
-          <div style={{ marginTop: '40px', marginLeft: '40px' }}>
+          <div
+          //  style={{border:"1px solid red"}}
+          
+          style={{ marginTop: '40px', marginLeft: '40px', }}>
             {customerImages.length > 0 && (
               <div className="mt-2">
-                <div className="flex gap-16 flex-wrap">
+                <div 
+               
+                className="flex gap-16 flex-wrap">
                   {customerImages.map((image, index) => (
                     <div
+                    
                       key={index}
                       style={{ position: 'relative', display: 'inline-block' }}
                       onMouseEnter={() => setHoveredIndex(index)}
@@ -1967,6 +1974,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                           cursor: 'pointer',
                           opacity: hoveredIndex === index ? 1 : 0,
                           transition: 'opacity 0.3s',
+                          
                         }}
                       />
                       <img
