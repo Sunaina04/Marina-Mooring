@@ -147,8 +147,34 @@ input[type='number']::-webkit-outer-spin-button {
   background-color: #f7fafc;
   /* #0098ff   fcf7fa*/
   border-radius: 11px;
+  .p-highlight {
+    background-color: #0098FF !important;
+    color:white !important
+}
 }
 
+.p-datepicker .p-datepicker-header {
+  padding: 0.5rem;
+  color: #495057;
+  background: #F7FAFC;
+  font-weight: 800;
+  margin: 0;
+  border-bottom: 0px solid #dee2e6;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+}
+
+.p-datepicker:not(.p-datepicker-inline) {
+  background: #F7FAFC;
+  
+}
+.p-datepicker .p-datepicker-header:not(.p-datepicker-inline) {
+  background: #F7FAFC;
+}
+
+/* .p-highlight {
+  color: #FFFFFF !important;
+} */
 /* .p-datepicker {
   padding: 0.5rem;
   background: #ffffff;
@@ -230,6 +256,13 @@ input[type='number']::-webkit-outer-spin-button {
   height: 100%;
 }
 
+<<<<<<< Updated upstream
+=======
+/* .items-center {
+  align-items: baseline;
+} */
+
+>>>>>>> Stashed changes
 .mt-auto {
   margin-top: auto;
 }
