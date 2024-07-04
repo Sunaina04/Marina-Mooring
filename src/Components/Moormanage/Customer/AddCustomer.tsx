@@ -464,7 +464,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         aptSuite: sectorBlock,
         stateId: selectedState?.id,
         countryId: selectedCountry?.id,
-        encodedImages: encodedImages,
+        imageRequestDtoList: imageRequestDtoList,
         customerTypeId: selectedCustomerType === 'Dock' ? 5 : selectedCustomerType?.id,
         ...(email && { emailAddress: email }),
         ...(pinCode && { zipCode: pinCode }),
@@ -516,17 +516,17 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       const editCustomerPayload = {
         firstName: firstName,
         lastName: lastName,
-        emailAddress: email,
         phone: phone,
         streetHouse: streetHouse,
         aptSuite: sectorBlock,
         state: selectedState?.id,
         country: selectedCountry?.id,
-        zipCode: pinCode,
         imageRequestDtoList: imageRequestDtoList,
         customerOwnerId: selectedCustomerId,
         customerTypeId: selectedCustomerType === 'Dock' ? 5 : selectedCustomerType?.id,
         note: formData?.note,
+        ...(email && { emailAddress: email }),
+        ...(pinCode && { zipCode: pinCode }),
       }
       const response = await updateCustomer({
         payload: editCustomerPayload,
@@ -1000,35 +1000,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   <span className="font-medium text-sm text-[#000000]">
                     <div className="flex gap-1">Customer Image</div>
                   </span>
-                  {/* <div className="mt-2">
-                    <input
-                    
-                      // id="file-input"
-                      type="text"
-                      // accept="image/*"
-                      onChange={uploadImages}
-                      style={{
-                        display: 'none',
-                      }}
-                    />
-                    <label
-                      // htmlFor="file-input"
-                      style={{
-                        width: '230px',
-                        height: '32px',
-                        border: '1px solid #D5E1EA',
-                        borderRadius: '0.50rem',
-                        fontSize: '0.8rem',
-                        padding: '3px',
-                        display: 'flex',
-                        gap: '0.5rem',
-                        textAlign: 'center',
-                        lineHeight: '25px',
-                        cursor: 'pointer',
-                      }}>
-                      Upload Image
-                    </label>
-                  </div> */}
+
                   <div className="mt-2">
                     <div />
                     <div
