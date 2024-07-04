@@ -79,33 +79,6 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
             )
           })}
       </MapContainer>
-
-      {/* <div className="rounded-md border-[1px] p-1 border-gray-300 w-[17vw] h-[13vh] bg-white">
-        <p className="text-[0.7rem] ml-1  text-black">Status</p>
-        <hr className="m-1 border-black" />
-        <div className="flex">
-          <div>
-            <FaCircle className="h-3 text-red-600 mt-1" />
-            <FaCircle className="h-3 text-green-600 mt-4" />
-          </div>
-          <div>
-            <p className="text-[0.6rem] text-black mt-1">Need inspection</p>
-            <p className="text-[0.6rem] text-black tracking-tighter mt-[0.9rem]">
-              Gear On (in the water)
-            </p>
-          </div>
-          <div className="ml-1">
-            <FaCircle className="h-3 text-violet-600 mt-1 " />
-            <FaCircle className="h-3 text-gray-500 mt-4" />
-          </div>
-          <div>
-            <p className="text-[0.6rem] text-black tracking-tighter mt-1">
-              Gear Off (out of the water)
-            </p>
-            <p className="text-[0.6rem] text-black tracking-tighter mt-[0.9rem]">Not in Use</p>
-          </div>
-        </div>
-      </div> */}
     </>
   )
 }

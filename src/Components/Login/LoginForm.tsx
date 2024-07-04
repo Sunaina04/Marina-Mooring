@@ -127,11 +127,13 @@ export default function LoginForm() {
         setUsername('')
         setPassword('')
         setIsLoading(false)
-        // if (role === 4) {
-        //   navigate('/moorserve/workOrders')
-        // } else {
-        navigate('/dashboard')
-        // }
+        if (role === 4) {
+          navigate('/moorserve/workOrders')
+        } else if (role === 3) {
+          navigate('/moorpay/accountReceivable')
+        } else {
+          navigate('/dashboard')
+        }
       }
     } catch (error: any) {
       console.error('Error occurred during login:', error)

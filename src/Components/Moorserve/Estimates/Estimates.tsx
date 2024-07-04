@@ -2,8 +2,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import AddWorkOrders from '../WorkOrders/AddWorkOrders'
 import { ErrorResponse, WorkOrderPayload, WorkOrderResponse } from '../../../Type/ApiTypes'
 import {
+  useGetConvertEstimateToWorkOrderMutation,
   useGetEstimateMutation,
-  useGetWorkOrdersMutation,
 } from '../../../Services/MoorServe/MoorserveApi'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import Header from '../../Layout/LayoutComponents/Header'
@@ -28,6 +28,7 @@ const Estimates = () => {
   const [selectedCustomer, setSelectedCustomer] = useState<any>(undefined)
   const [editMode, setEditMode] = useState(false)
   const [getEstimate] = useGetEstimateMutation()
+  const [convertToWorkOrder] = useGetConvertEstimateToWorkOrderMutation()
 
   const toast = useRef<Toast>(null)
   const [pageNumber, setPageNumber] = useState(0)
@@ -53,7 +54,7 @@ const Estimates = () => {
         label: 'Convert',
         underline: true,
         style: { cursor: 'disable' },
-        // onClick: (row) => handleEdit(row),
+        onClick: (row) => handleConvert(row),
       },
       {
         color: 'black',
@@ -158,6 +159,36 @@ const Estimates = () => {
     }
   }, [searchText, selectedCustomerId, pageNumber, pageSize])
 
+  const convertEstimateToWorkOrder = useCallback(async (id: any) => {
+    try {
+      setIsLoading(true)
+      const response = await convertToWorkOrder({ id: id }).unwrap()
+      const { status, message } = response as WorkOrderResponse
+      if (status === 200) {
+        setIsLoading(false)
+        toast?.current?.show({
+          severity: 'success',
+          summary: 'Success',
+          detail: message,
+          life: 3000,
+        })
+        getEstimate()
+      } else {
+        setIsLoading(false)
+        toast?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+      }
+    } catch (error) {
+      const { message: msg } = error as ErrorResponse
+      setIsLoading(false)
+      console.error('Error occurred while fetching customer data:', msg)
+    }
+  }, [])
+
   const dataToXlsx = (data: WorkOrderPayload[], fileName = 'EstimateData.xlsx') => {
     const formattedData = data.map((item) => ({
       CustomerName: `${item.customerResponseDto.firstName} ${item.customerResponseDto.lastName}`,
@@ -178,6 +209,10 @@ const Estimates = () => {
     setSelectedCustomer(rowData)
     setEditMode(true)
     setVisible(true)
+  }
+
+  const handleConvert = (rowData: any) => {
+    convertEstimateToWorkOrder(rowData?.id)
   }
 
   const handleModalClose = () => {
@@ -352,7 +387,7 @@ const Estimates = () => {
                   backgroundColor: 'white',
                   borderTop: '1px solid #D5E1EA',
                   padding: '0.5rem',
-                  marginBottom:'-25px'
+                  marginBottom: '-25px',
                 }}
               />
             </div>

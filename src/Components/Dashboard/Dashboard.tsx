@@ -45,6 +45,7 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [totalMoorings, setTotalMoorings] = useState<any>()
   const [pageNumber, setPageNumber] = useState(0)
+  const [pageNumber1, setPageNumber1] = useState(0)
   const [pageSize, setPageSize] = useState(10)
   const [totalRecords, setTotalRecords] = useState<number>()
   const [mooringData, setMooringData] = useState<any>()
@@ -125,7 +126,7 @@ const Dashboard = () => {
 
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
-    setPageNumber(event.first)
+    setPageNumber1(event.first)
     setPageSize(event.rows)
   }
 
@@ -301,7 +302,7 @@ const Dashboard = () => {
           }}>
           Moorings Due for Service
         </div>
-        <div
+        {/* <div
           style={{
             width: '80px',
             height: '16px',
@@ -310,7 +311,7 @@ const Dashboard = () => {
             fontWeight: '500',
           }}>
           View all
-        </div>
+        </div> */}
       </div>
     </div>
   )
@@ -412,13 +413,13 @@ const Dashboard = () => {
               marginLeft: '3rem',
             }}>
             <div
-              data-testid="technician-data"
+              data-testid="mooring-data"
               className="flex flex-col mt-[3px] ml-[15px] mr-[15px] table-container "
-              style={{ height: '780px' }}>
-              <div className="mb-4">
+              style={{ height: '700px' }}>
+              <div className="mb-4" style={{ overflow: 'auto' }}>
                 <DataTableComponent
                   columns={Mooringcolumns}
-                  actionButtons={MooringActionButtonColumn}
+                  // actionButtons={MooringActionButtonColumn}
                   header={MooringHeader}
                   scrollable={true}
                   tableStyle={{
@@ -439,11 +440,11 @@ const Dashboard = () => {
                   }}
                   data={mooringData}
                   emptyMessage={
-                    <div className="text-center mt-10">
+                    <div className="text-center mt-2">
                       <img
                         src="/assets/images/empty.png"
                         alt="Empty Data"
-                        className="w-20 mx-auto mb-4"
+                        className="w-20 mx-auto mb-2"
                       />
                       <p className="text-gray-500">No data available</p>
                     </div>
@@ -468,7 +469,7 @@ const Dashboard = () => {
               <CustomMooringPositionMap
                 position={coordinatesArray ? coordinatesArray : initialPosition}
                 zoomLevel={10}
-                style={{ height: '40%', width: '100%' }}
+                style={{ height: '60%', width: '100%' }}
                 iconsByStatus={iconsByStatus}
                 moorings={mooringData}
               />
@@ -554,7 +555,6 @@ const Dashboard = () => {
                       </h1>
                     </div>
                   </div>
-
                   <div>
                     <div className="">
                       {accordion === 'faq2' ? (
@@ -565,45 +565,46 @@ const Dashboard = () => {
                     </div>
                   </div>
                 </label>
-                <label
-                  htmlFor="faq3"
-                  className={`content mt-5 transition-all ease-in-out duration-500 ${accordion === 'faq2' ? '' : 'hidden'}`}>
-                  <DataTableComponent
-                    data={workOrderData}
-                    columns={WorkOrderColumns}
-                    actionButtons={WorkOrderActionButtonColumn}
-                    scrollable
-                    tableStyle={{ fontSize: '10px', width: '450px' }}
-                    emptyMessage={
-                      <div className="text-center mt-14">
-                        <img
-                          src="/assets/images/empty.png"
-                          alt="Empty Data"
-                          className="w-20 mx-auto mb-4"
-                        />
-                        <p className="text-gray-500">No data available</p>
-                      </div>
-                    }
-                  />
-
-                  <div className="mt-auto">
-                    <Paginator
-                      first={pageNumber}
-                      rows={pageSize}
-                      totalRecords={totalRecords}
-                      rowsPerPageOptions={[5, 10, 20, 30]}
-                      onPageChange={onPageChange}
-                      style={{
-                        position: 'sticky',
-                        bottom: 0,
-                        zIndex: 1,
-                        backgroundColor: 'white',
-                        borderTop: '1px solid #D5E1EA',
-                        padding: '0.5rem',
-                      }}
-                    />
+                <div
+                  className={`content transition-all ease-in-out duration-500 ${accordion === 'faq2' ? '' : 'hidden'}`}>
+                  <div
+                    className={`bg-#00426F overflow-x-hidden h-[320px] table-container flex flex-col`}>
+                    <div className="flex-grow" style={{ overflow: 'auto' }}>
+                      <DataTableComponent
+                        data={workOrderData}
+                        columns={WorkOrderColumns}
+                        actionButtons={WorkOrderActionButtonColumn}
+                        scrollable={true}
+                        tableStyle={{ fontSize: '10px', width: '450px' }}
+                        emptyMessage={
+                          <div className="text-center mt-14">
+                            <img
+                              src="/assets/images/empty.png"
+                              alt="Empty Data"
+                              className="w-20 mx-auto mb-4"
+                            />
+                            <p className="text-gray-500">No data available</p>
+                          </div>
+                        }
+                      />
+                      <Paginator
+                        first={pageNumber1}
+                        rows={pageSize}
+                        totalRecords={totalRecords}
+                        rowsPerPageOptions={[5, 10, 20, 30]}
+                        onPageChange={onPageChange}
+                        style={{
+                          position: 'sticky',
+                          bottom: 0,
+                          zIndex: 1,
+                          backgroundColor: 'white',
+                          borderTop: '1px solid #D5E1EA',
+                          padding: '0.5rem',
+                        }}
+                      />
+                    </div>
                   </div>
-                </label>
+                </div>
               </div>
 
               <div
@@ -661,7 +662,7 @@ const Dashboard = () => {
               />
             </Dialog>
 
-            <Dialog
+            {/* <Dialog
               position="center"
               style={{
                 width: '851px',
@@ -679,7 +680,7 @@ const Dashboard = () => {
                 closeModal={handleModalClose}
                 getCustomer={() => {}}
               />
-            </Dialog>
+            </Dialog> */}
           </div>
         </div>
       </div>

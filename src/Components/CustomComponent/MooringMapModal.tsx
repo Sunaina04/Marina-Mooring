@@ -54,7 +54,8 @@ const MooringMapModal: React.FC<TimeLineProps> = ({
           <p
             // style={{border:"1px solid red"}}
             className=" text-black cursor-pointer mt-[5rem] p-1 border rounded-sm  bg-[#B1E0FF]"
-            onClick={viewEdit}>
+            // onClick={viewEdit}
+          >
             View/edit
           </p>
           <p

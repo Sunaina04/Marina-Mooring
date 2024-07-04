@@ -999,7 +999,7 @@ const Customer = () => {
               <div
                 className={`content mt-5 transition-all ease-in-out duration-500 ${accordion === 'faq2' ? '' : 'hidden'}`}>
                 <div
-                  className={`bg-#00426F overflow-x-hidden h-[330px]  table-container flex flex-col`}>
+                  className={`bg-#00426F overflow-x-hidden h-[330px] table-container flex flex-col`}>
                   <div className="flex-grow" style={{ overflow: 'auto' }}>
                     <DataTableComponent
                       style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}

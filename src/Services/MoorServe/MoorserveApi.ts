@@ -130,6 +130,13 @@ const MoorserveApi = userApi.injectEndpoints({
       }),
     }),
 
+    getConvertEstimateToWorkOrder: builder.mutation({
+      query: ({ id }: { id?: number }) => ({
+        url: `api/v1/estimate/convertEstimateToWorkOrder/${id}`,
+        method: 'GET',
+      }),
+    }),
+
     DeleteEstimate: builder.mutation({
       query: ({ id }: { id?: string }) => ({
         url: `api/v1/estimate/${id}`,
@@ -152,4 +159,5 @@ export const {
   useUpdateEstimateMutation,
   useDeleteEstimateMutation,
   useGetEstimateMutation,
+  useGetConvertEstimateToWorkOrderMutation,
 } = MoorserveApi
