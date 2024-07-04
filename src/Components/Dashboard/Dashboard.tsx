@@ -4,10 +4,16 @@ import Header from '../Layout/LayoutComponents/Header'
 import { ActionButtonColumnProps, TableColumnProps } from '../../Type/Components/TableTypes'
 import CustomMooringPositionMap from '../Map/CustomMooringPositionMap'
 import Accordion from '../CommonComponent/Accordion'
-import { ErrorResponse, MooringPayload, MooringResponse } from '../../Type/ApiTypes'
+import {
+  ErrorResponse,
+  MooringAndWorkOrderResponse,
+  MooringPayload,
+  MooringResponse,
+} from '../../Type/ApiTypes'
 import {
   useGetAllOpenWorkOrdersAndMooringDueForServiceMutation,
   useGetMooringsDueForServiceMutation,
+  useGetMooringsMutation,
 } from '../../Services/MoorManage/MoormanageApi'
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../Store/Slice/userSlice'
@@ -23,25 +29,31 @@ import { Dialog } from 'primereact/dialog'
 import AddWorkOrders from '../Moorserve/WorkOrders/AddWorkOrders'
 import { Calendar } from 'primereact/calendar'
 import { Nullable } from 'primereact/ts-helpers'
+import AddMoorings from '../Moormanage/Moorings/AddMoorings'
 
 const Dashboard = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
   const [accordion, setAccordion] = useState('faq1')
-  const [workOrderData, setWorkOrderData] = useState('')
-  const [selectedCustomer, setSelectedCustomer] = useState<any>(undefined)
+  const [workOrderData, setWorkOrderData] = useState<any>()
+  const [selectedCustomer, setSelectedCustomer] = useState<any>()
   const [visible, setVisible] = useState(false)
   const [editMode, setEditMode] = useState(false)
+  const [selectedMooring, setSelectedMooring] = useState<any>()
+  const [visibleMooring, setVisibleMooring] = useState(false)
+  const [editModeMooring, setEditModeMooring] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
+  const [totalMoorings, setTotalMoorings] = useState<any>()
   const [pageNumber, setPageNumber] = useState(0)
   const [pageSize, setPageSize] = useState(10)
   const [totalRecords, setTotalRecords] = useState<number>()
   const [filterDateFrom, setFilterDateFrom] = useState<any>()
   const [filterDateTo, setFilterDateTo] = useState<any>()
-  const [mooringData, setMooringData] = useState<MooringPayload[]>([])
+  const [mooringData, setMooringData] = useState<any>()
   const [mooringResponseData, setMooringResponseData] = useState<any>()
   const [dates, setDates] = useState<Nullable<(Date | null)[]>>(null)
   const [startDate, setStartDate] = useState(new Date())
   const [endDate, setEndDate] = useState(new Date())
+  const [getMoorings] = useGetMooringsMutation()
 
   const formatDate = (dateString: any) => {
     const date = new Date(dateString)
@@ -94,8 +106,8 @@ const Dashboard = () => {
 
   const statCardsData = [
     [
-      { title: 'Total Moorings', percentage: 17, count: 42324 },
-      { title: 'Total Moorings', percentage: 17, count: 43324 },
+      { title: 'Total Moorings', percentage: 17, count: totalMoorings },
+      { title: 'Total Moorings', percentage: 17, count: totalMoorings },
       { title: 'Total Moorings', percentage: 17, count: 44324 },
       { title: 'Total Moorings', percentage: 17, count: 58765 },
       { title: 'Total Moorings', percentage: 17, count: 42324 },
@@ -116,6 +128,14 @@ const Dashboard = () => {
   const handleModalClose = () => {
     setVisible(false)
     setEditMode(false)
+    setVisibleMooring(false)
+    setEditModeMooring(false)
+  }
+
+  const handleEditMooring = (rowData: any) => {
+    setSelectedMooring(rowData)
+    setEditModeMooring(true)
+    setVisibleMooring(true)
   }
 
   const handleEdit = (rowData: any) => {
@@ -166,7 +186,7 @@ const Dashboard = () => {
       },
 
       {
-        id: 'installBottomChainDate',
+        id: 'mooringServiceDate',
         label: 'Mooring service Date',
         style: {
           fontSize: '10px',
@@ -188,7 +208,7 @@ const Dashboard = () => {
         },
       },
       {
-        id: 'mooringStatus.status',
+        id: 'mooringDueServiceStatusDto.status',
         label: 'Status',
         style: {
           fontSize: '10px',
@@ -209,6 +229,7 @@ const Dashboard = () => {
         underline: true,
         label: 'Edit',
         color: 'green',
+        onClick: (row) => handleEditMooring(row),
       },
     ],
     headerStyle: { backgroundColor: '#FFFFFF' },
@@ -290,7 +311,7 @@ const Dashboard = () => {
     </div>
   )
 
-  const getMooringsData = useCallback(async () => {
+  const getMooringsAndWorkOrderData = useCallback(async () => {
     setIsLoading(true)
     try {
       const response = await getOpenWorkOrderAndMoorings({
@@ -299,11 +320,19 @@ const Dashboard = () => {
         filterDateFrom: filterDateFrom,
         filterDateTo: filterDateTo,
       }).unwrap()
-      const { status, content, message, totalSize } = response as MooringResponse
-      if (status === 200 && Array.isArray(content)) {
-        if (content?.length > 0) {
+      const { status, content, message, totalSize } = response as MooringAndWorkOrderResponse
+      if (status === 200) {
+        if (content?.mooringDueServiceResponseDtoList) {
           setIsLoading(false)
-          setMooringData(content)
+          setMooringData(content?.mooringDueServiceResponseDtoList)
+        } else {
+          setIsLoading(false)
+          setMooringData([])
+        }
+        if (content?.workOrderResponseDtoList) {
+          setIsLoading(false)
+          setWorkOrderData(content?.workOrderResponseDtoList)
+          setTotalRecords(totalSize)
         } else {
           setIsLoading(false)
           setMooringData([])
@@ -331,6 +360,25 @@ const Dashboard = () => {
     selectedCustomerId,
   ])
 
+  const getMooringsData = useCallback(async () => {
+    setIsLoading(true)
+    try {
+      const response = await getMoorings({}).unwrap()
+      const { status, content, message, totalSize } = response as MooringResponse
+      if (status === 200 && Array.isArray(content)) {
+        if (content?.length > 0) {
+          setTotalMoorings(totalSize)
+        }
+      } else {
+        setIsLoading(false)
+      }
+    } catch (error) {
+      setIsLoading(false)
+      const { message } = error as ErrorResponse
+      console.error('Error fetching moorings data:', error)
+    }
+  }, [selectedCustomerId])
+
   useEffect(() => {
     if (startDate && endDate) {
       setFilterDateFrom(formatDate(startDate))
@@ -340,10 +388,14 @@ const Dashboard = () => {
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      getMooringsData()
+      getMooringsAndWorkOrderData()
     }, 2000)
     return () => clearTimeout(timeoutId)
   }, [pageSize, pageNumber, filterDateFrom, filterDateTo, selectedCustomerId])
+
+  useEffect(() => {
+    getMooringsData()
+  }, [selectedCustomerId])
 
   return (
     <>
@@ -359,15 +411,7 @@ const Dashboard = () => {
               data-testid="technician-data"
               className="flex flex-col mt-[3px] ml-[15px] mr-[15px] table-container "
               style={{ height: '780px' }}>
-              <CustomMooringPositionMap
-                position={coordinatesArray ? coordinatesArray : initialPosition}
-                zoomLevel={10}
-                style={{ height: '60%', width: '100%' }}
-                iconsByStatus={iconsByStatus}
-                moorings={mooringData}
-              />
-
-              <div className="mt-2 ">
+              <div className="mb-4">
                 <DataTableComponent
                   columns={Mooringcolumns}
                   actionButtons={MooringActionButtonColumn}
@@ -395,6 +439,13 @@ const Dashboard = () => {
                   }
                 />
               </div>
+              <CustomMooringPositionMap
+                position={coordinatesArray ? coordinatesArray : initialPosition}
+                zoomLevel={10}
+                style={{ height: '50%', width: '100%' }}
+                iconsByStatus={iconsByStatus}
+                moorings={mooringData}
+              />
             </div>
           </div>
 
@@ -492,7 +543,7 @@ const Dashboard = () => {
                   htmlFor="faq3"
                   className={`content mt-5 transition-all ease-in-out duration-500 ${accordion === 'faq2' ? '' : 'hidden'}`}>
                   <DataTableComponent
-                    data={[]}
+                    data={workOrderData}
                     columns={WorkOrderColumns}
                     actionButtons={WorkOrderActionButtonColumn}
                     scrollable
@@ -575,14 +626,32 @@ const Dashboard = () => {
               visible={visible}
               onHide={handleModalClose}
               header={<h1 className="text-xl font-extrabold text-black ml-4">Work Order</h1>}>
-              {/* <hr className="border border-[#000000] my-0 mx-0"></hr> */}
-
               <AddWorkOrders
                 workOrderData={selectedCustomer}
                 editModeWorkOrder={editMode}
                 setVisible={setVisible}
                 toastRef={toast}
                 closeModal={handleModalClose}
+              />
+            </Dialog>
+
+            <Dialog
+              position="center"
+              style={{
+                width: '851px',
+                height: '526px',
+                borderRadius: '1rem',
+              }}
+              draggable={false}
+              visible={visibleMooring}
+              onHide={handleModalClose}
+              header={<h1 className="text-xl font-extrabold text-black ml-4">Work Order</h1>}>
+              <AddMoorings
+                moorings={selectedMooring}
+                mooringRowData={selectedMooring}
+                editMode={editModeMooring}
+                closeModal={handleModalClose}
+                getCustomer={() => {}}
               />
             </Dialog>
           </div>

@@ -382,7 +382,6 @@ const Customer = () => {
           onClick: (data) => {
             setShowImage((prev) => ({ ...prev, id: data.id, imageData: data.imageData }))
             setImageVisible(true)
-            // console.log("data",data);
           },
           underline: true,
           style: {

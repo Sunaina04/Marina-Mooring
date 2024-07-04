@@ -310,12 +310,13 @@ export interface MooringPayload {
   typeOfWeight: MooringMetaDataTypes
   depthAtMeanHighWater: number
   mooringStatus: MooringStatus
+  mooringDueServiceStatusDto: MooringStatus
+  customerResponseDto: customerResponseDto
 }
 
-
 export interface ImageData {
-  id: string;
-  imageData: string;
+  id: string
+  imageData: string
 }
 export interface MooringStatus {
   id: number
@@ -363,6 +364,19 @@ export interface MooringResponse {
   time: string
   content: {
     MooringPayload: MooringPayload
+  }
+}
+
+export interface MooringAndWorkOrderResponse {
+  message: string
+  status: number
+  currentSize: number
+  totalSize: number
+  errorList: []
+  time: string
+  content: {
+    workOrderResponseDtoList: WorkOrderPayload
+    mooringDueServiceResponseDtoList: MooringPayload
   }
 }
 

@@ -199,13 +199,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       if (!firstError) firstError = 'harbor'
     }
 
-    // if (!formData?.waterDepth) {
-    //   errors.waterDepth = 'Water Depth is required'
-    // } else if (!numberRegex.test(String(formData?.waterDepth))) {
-    //   errors.waterDepth = 'Water Depth must be a number'
-    //   if (!firstError) firstError = 'waterDepth'
-    // }
-
     if (!gpsCoordinatesValue) {
       errors.gpsCoordinatesValue = 'GPS Coordinates is required'
     }
@@ -230,19 +223,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       errors.boatYardName = 'BoatYardName is required'
       if (!firstError) firstError = 'boatYardName'
     }
-
-    // if (!formData?.boatWeight) {
-    //   errors.boatWeight = 'BoatWeight  is required'
-    //   if (!firstError) firstError = 'boatWeight'
-    // } else if (!numberRegex.test(String(formData?.boatWeight))) {
-    //   errors.boatWeight = 'Weight   must be a number'
-    //   if (!firstError) firstError = 'boatWeight'
-    // }
-
-    // if (!formData?.sizeOfWeight) {
-    //   errors.sizeOfWeight = 'Size of Weight is required'
-    //   if (!firstError) firstError = 'sizeOfWeight'
-    // }
 
     if (!formData?.sizeOfWeight) {
       errors.sizeOfWeight = 'Size of Weight is required'
@@ -817,7 +797,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
             </span>
             <div className="mt-2">
               <InputComponent
-                type= "number" 
+                type="number"
                 value={formData?.boatSize}
                 onChange={(e) => handleInputChange('boatSize', e.target.value)}
                 style={{

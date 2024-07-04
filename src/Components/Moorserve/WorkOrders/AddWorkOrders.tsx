@@ -714,7 +714,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
 
   return (
     <>
-      <div className={`"w-full h-full mb-16 ml-4" ${isLoading ? "blurred" : ""}`}>
+      <div className={`"w-full h-full mb-16 ml-4" ${isLoading ? 'blurred' : ''}`}>
         <Toast ref={toastRef} />
 
         {/* Customer Name */}
@@ -1098,50 +1098,50 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
           <p>{errorMessage.value && <small className="p-error">{errorMessage.value}</small>}</p>
         </div>
       </div>
-       {/* Save and Back buttons */}
-       <div
-          className={`"flex gap-6 bottom-2 absolute left-7" ${isLoading ? "blurred" : ""}`}
+      {/* Save and Back buttons */}
+      <div
+        className={`"flex gap-6 bottom-2 absolute left-7" ${isLoading ? 'blurred' : ''}`}
+        style={{
+          width: '100%',
+          height: '80px',
+          backgroundColor: 'white',
+          padding: '0 12px',
+          bottom: '0px',
+        }}>
+        <Button
+          onClick={() => {
+            handleSave()
+          }}
+          label={'Save'}
           style={{
-            width: '100%',
-            height: '80px',
+            width: '89px',
+            height: '42px',
+            backgroundColor: '#0098FF',
+            cursor: 'pointer',
+            fontWeight: 'bolder',
+            fontSize: '1rem',
+            boxShadow: 'none',
+            color: 'white',
+            borderRadius: '0.50rem',
+            marginTop: '10px',
+          }}
+        />
+        <Button
+          onClick={() => {
+            setVisible(false)
+          }}
+          label={'Back'}
+          text={true}
+          style={{
             backgroundColor: 'white',
-            padding: '0 12px',
-            bottom: '0px',
-          }}>
-          <Button
-            onClick={() => {
-              handleSave()
-            }}
-            label={'Save'}
-            style={{
-              width: '89px',
-              height: '42px',
-              backgroundColor: '#0098FF',
-              cursor: 'pointer',
-              fontWeight: 'bolder',
-              fontSize: '1rem',
-              boxShadow: 'none',
-              color: 'white',
-              borderRadius: '0.50rem',
-              marginTop: '10px',
-            }}
-          />
-          <Button
-            onClick={() => {
-              setVisible(false)
-            }}
-            label={'Back'}
-            text={true}
-            style={{
-              backgroundColor: 'white',
-              color: '#000000',
-              border: 'none',
-              width: '89px',
-              height: '42px',
-              marginTop: '10px',
-            }}
-          />
-        </div>
+            color: '#000000',
+            border: 'none',
+            width: '89px',
+            height: '42px',
+            marginTop: '10px',
+          }}
+        />
+      </div>
     </>
   )
 }

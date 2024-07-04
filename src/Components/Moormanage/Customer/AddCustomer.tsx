@@ -76,6 +76,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [customerTypeId, setCustomerTypeId] = useState<any>(customer?.customerTypeDto?.id)
   const toastRef = useRef<Toast>(null)
   const [imageVisible, setImageVisible] = useState(false)
+  const [imageRequestDtoList, setimageRequestDtoList] = useState<any>()
   const getFomattedCoordinate = (gpsCoordinatesValue: any) => {
     try {
       let [lat, long]: any = gpsCoordinatesValue.split(' ')
@@ -169,7 +170,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     }
 
     const validImageFiles = files.filter((file) => file.type.startsWith('image/'))
-    console.log('validate', validImageFiles)
 
     if (validImageFiles.length !== files.length) {
       setCustomerImages([])
@@ -186,6 +186,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
     const newBase64Strings: string[] = []
     const newImageUrls: string[] = []
+    const imageRequestDtoList: { imageName: string; imageData: string }[] = []
 
     for (const file of validImageFiles) {
       try {
@@ -205,6 +206,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         })
         newBase64Strings.push(base64String)
         newImageUrls.push(`data:image/png;base64,${base64String}`)
+        imageRequestDtoList.push({
+          imageName: file.name,
+          imageData: base64String,
+        })
       } catch (error) {
         console.error('Error reading file:', error)
       }
@@ -212,8 +217,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
     setCustomerImages((prevImages) => [...prevImages, ...newImageUrls])
     setEncodedImages((prevEncoded) => [...prevEncoded, ...newBase64Strings])
+    setimageRequestDtoList(imageRequestDtoList)
   }
-  console.log('customerImages', customerImages)
 
   const handleRemoveImage = () => {
     setCustomerImages([])
@@ -414,7 +419,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         aptSuite: sectorBlock,
         stateId: selectedState?.id,
         countryId: selectedCountry?.id,
-        encodedImages: encodedImages,
+        imageRequestDtoList: imageRequestDtoList,
         customerTypeId: selectedCustomerType === 'Dock' ? 5 : selectedCustomerType?.id,
         ...(email && { emailAddress: email }),
         ...(pinCode && { zipCode: pinCode }),
@@ -514,7 +519,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         state: selectedState?.id,
         country: selectedCountry?.id,
         zipCode: pinCode,
-        encodedImages: encodedImages,
+        imageRequestDtoList: imageRequestDtoList,
         customerOwnerId: selectedCustomerId,
         customerTypeId: selectedCustomerType === 'Dock' ? 5 : selectedCustomerType?.id,
         note: formData?.note,
