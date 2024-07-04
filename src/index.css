@@ -256,13 +256,10 @@ input[type='number']::-webkit-outer-spin-button {
   height: 100%;
 }
 
-<<<<<<< Updated upstream
-=======
 /* .items-center {
   align-items: baseline;
 } */
 
->>>>>>> Stashed changes
 .mt-auto {
   margin-top: auto;
 }
