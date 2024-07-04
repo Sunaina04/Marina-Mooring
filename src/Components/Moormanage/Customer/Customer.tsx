@@ -1152,7 +1152,7 @@ const Customer = () => {
       </Dialog>
 
       {/* Dialog BOX  for images*/}
-      <Dialog
+      {/* <Dialog
         position="center"
         style={{
           width: '740px',
@@ -1207,6 +1207,130 @@ const Customer = () => {
                 src={`data:image/jpeg;base64,${showImage.imageData}`}
               />
             </div>
+          </div>
+        </div>
+      </Dialog> */}
+      {/* 
+      <Dialog
+        position="center"
+        style={{
+          width: '740px',
+          minWidth: '300px',
+          height: '503px',
+          borderRadius: '1rem',
+          fontWeight: '400',
+          cursor: 'alias',
+        }}
+        draggable={false}
+        visible={imageVisible}
+        onHide={() => {
+          setImageVisible(false);
+          setScale(1);
+        }}
+        header={'Customers Images'}>
+        <div>
+          <hr className="border border-[#000000] my-0 mx-0"></hr>
+        </div>
+        <div className="flex flex-col">
+          <div style={{ textAlign: 'left', marginTop: '20px', display: 'flex', gap: '10px' }}>
+            <button onClick={handleZoomIn} style={buttonStyle}>
+              <img
+                src="/assets/images/plus.png"
+                alt="Zoom In"
+                className="p-clickable"
+                style={{ width: '20px', height: '20px' }}
+              />
+            </button>
+            <button onClick={handleZoomOut} style={buttonStyle}>
+              <svg
+                width="24"
+                height="4"
+                viewBox="0 0 11 3"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M10.125 1.5C10.125 1.92188 9.77344 2.25 9.375 2.25H1.125C0.703125 2.25 0.375 1.92188 0.375 1.5C0.375 1.10156 0.703125 0.75 1.125 0.75H9.375C9.77344 0.75 10.125 1.10156 10.125 1.5Z"
+                  fill="white"
+                />
+              </svg>
+            </button>
+          </div>
+          <div style={{ width: '100%', height: '100%', overflow: 'hidden' }}>
+            <div>
+              <img
+                style={{ transform: `scale(${scale})`, transition: 'transform 0.2s',width:"40vw", height:"31vh" }}
+                className="w-full h-40 mt-8"
+                src={`data:image/jpeg;base64,${showImage.imageData}`}
+              />
+            </div>
+          </div>
+        </div>
+      </Dialog> */}
+
+      <Dialog
+        position="center"
+        style={{
+          width: '740px',
+          minWidth: '300px',
+          height: '500px',
+          borderRadius: '1rem',
+          fontWeight: '400',
+          cursor: 'alias',
+        }}
+        draggable={false}
+        visible={imageVisible}
+        onHide={() => {
+          setImageVisible(false)
+          setScale(1)
+        }}
+        header={'Customers Images'}>
+        <div>
+          <hr className="border border-[#000000] my-0 mx-0"></hr>
+        </div>
+        <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+          <div style={{ overflow: 'hidden' }}>
+            <img
+              style={{
+                transform: `scale(${scale})`,
+                transition: 'transform 0.2s',
+                width: '60%',
+                height: '60%',
+                objectFit: 'contain',
+                marginTop: '7rem',
+                marginLeft: '8rem',
+              }}
+              src={`data:image/jpeg;base64,${showImage.imageData}`}
+            />
+          </div>
+          <div
+            style={{
+              position: 'absolute',
+              top: '10px',
+              right: '10px',
+              display: 'flex',
+              gap: '10px',
+            }}>
+            <button onClick={handleZoomIn} style={buttonStyle}>
+              <img
+                src="/assets/images/plus.png"
+                alt="Zoom In"
+                className="p-clickable"
+                style={{ width: '20px', height: '20px' }}
+              />
+            </button>
+            <button onClick={handleZoomOut} style={buttonStyle}>
+              <svg
+                width="24"
+                height="4"
+                viewBox="0 0 11 3"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M10.125 1.5C10.125 1.92188 9.77344 2.25 9.375 2.25H1.125C0.703125 2.25 0.375 1.92188 0.375 1.5C0.375 1.10156 0.703125 0.75 1.125 0.75H9.375C9.77344 0.75 10.125 1.10156 10.125 1.5Z"
+                  fill="white"
+                />
+              </svg>
+            </button>
           </div>
         </div>
       </Dialog>
