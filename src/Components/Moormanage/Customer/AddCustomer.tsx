@@ -36,7 +36,7 @@ import { Toast } from 'primereact/toast'
 import { FileUpload } from 'primereact/fileupload'
 import { FaFileUpload } from 'react-icons/fa'
 import { Dialog } from 'primereact/dialog'
-import { AiOutlineDelete } from "react-icons/ai";
+import { AiOutlineDelete } from 'react-icons/ai'
 const AddCustomer: React.FC<CustomerDataProps> = ({
   customer,
   mooringRowData,
@@ -76,7 +76,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [customerTypeId, setCustomerTypeId] = useState<any>(customer?.customerTypeDto?.id)
   const toastRef = useRef<Toast>(null)
   const [imageVisible, setImageVisible] = useState(false)
-  const [hoveredIndex, setHoveredIndex] = useState<null | number>(null);
+  const [hoveredIndex, setHoveredIndex] = useState<null | number>(null)
   const [imageRequestDtoList, setimageRequestDtoList] = useState<any>()
   const getFomattedCoordinate = (gpsCoordinatesValue: any) => {
     try {
@@ -108,8 +108,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [customerImages, setCustomerImages] = useState<string[]>([])
 
   const [encodedImages, setEncodedImages] = useState<string[]>([])
-  console.log("encodedImages",encodedImages);
-  
+  console.log('encodedImages', encodedImages)
+
   const [formData, setFormData] = useState<any>({
     mooringId: '',
     mooringName: '',
@@ -224,25 +224,11 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     setimageRequestDtoList(imageRequestDtoList)
   }
 
-  // const handleRemoveImage = () => {
-  //   setCustomerImages([])
-  //   setEncodedImages([])
-  //   // const fileInput = document.getElementById('file-input') as HTMLInputElement
-  //   // if (fileInput) {
-  //   //   fileInput.value = '' // Reset input value
-  //   // }
-  // }
-
   const handleRemoveImage = (index: number) => {
-    const newImages = [...customerImages];
-    newImages.splice(index, 1);
-    setCustomerImages(newImages);
-    
-    // const newEncodedImages = [...encodedImages];
-    // newEncodedImages.splice(index, 1);
-    // setEncodedImages(newEncodedImages);
-  };
-  
+    const newImages = [...customerImages]
+    newImages.splice(index, 1)
+    setCustomerImages(newImages)
+  }
 
   const validateFields = () => {
     const phoneRegex = /^.{10}$|^.{12}$/
@@ -1241,7 +1227,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         {/* Add Mooring */}
 
         {(editCustomerMode && selectedCustomerType === 'Dock') ||
-          (editCustomerMode && selectedCustomerType?.id === 5) ? (
+        (editCustomerMode && selectedCustomerType?.id === 5) ? (
           AddDock()
         ) : (
           <></>
@@ -1949,98 +1935,37 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   <FaFileUpload style={{ fontSize: '25px', color: 'blue' }} />
                   <div>Uploads File</div>
                 </label>
-               
-
-
               </div>
-
-
-
-              {/* <section
-                style={{
-                  position: 'relative',
-                  margin: '25px 0 15px',
-                  border: '2px dotted lightgray',
-                  padding: '35px 20px',
-                  borderRadius: '6px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  backgroundColor: 'white'
-                }}
-
-              >
-                <label></label>
-                <p>Drag and drop your files anywhere or</p>
-                <button type="button">
-                  <i className="fas fa-file-upload" />
-                  <span> Upload</span>
-                </button>
-                <input
-                style={{
-                  fontSize: '18px',
-                  display: 'block',
-                  width: '100%',
-                  border: 'none',
-                  textTransform: 'none',
-                  position: 'absolute',
-                  top: '0',
-                  left: '0',
-                  right: '0',
-                  bottom: '0',
-                  opacity: '0',
-                  outline: 'none',
-                  
-                }}
-                  type="file"
-                  // ref={fileInputField}
-                  title=""
-                  value=""
-                // {...otherProps}
-                />
-              </section> */}
-
             </div>
-
           </div>
 
-          <div style={{ marginTop: "40px", marginLeft: "40px" }}>
+          <div style={{ marginTop: '40px', marginLeft: '40px' }}>
             {customerImages.length > 0 && (
-              <div
-
-                className="mt-2">
-                <div
-
-                  className="flex gap-16 flex-wrap">
+              <div className="mt-2">
+                <div className="flex gap-16 flex-wrap">
                   {customerImages.map((image, index) => (
                     <div
                       key={index}
                       style={{ position: 'relative', display: 'inline-block' }}
                       onMouseEnter={() => setHoveredIndex(index)}
-                      onMouseLeave={() => setHoveredIndex(null)}
-                    >
-
-                      <h1
+                      onMouseLeave={() => setHoveredIndex(null)}>
+                      {/* <h1
                         style={{
                           position: 'absolute',
                           top: '12px',
                           right: '0',
-                          left: "12px",
+                          left: '12px',
                           background: 'gray',
                           color: 'white',
-                          fontWeight: "bolder",
+                          fontWeight: 'bolder',
                           border: 'none',
-                          // borderRadius: '50%',
                           width: '80px',
-                          // height: '25px',
                           cursor: 'pointer',
-                          // display: 'flex',
-                          // alignItems: 'center',
-                          // justifyContent: 'center',
                           opacity: hoveredIndex === index ? 1 : 0,
                           transition: 'opacity 0.3s',
-                        }}
-                      >name</h1>
+                        }}>
+                        name
+                      </h1> */}
                       <AiOutlineDelete
                         onClick={() => handleRemoveImage(index)}
                         style={{
@@ -2054,15 +1979,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                           width: '28px',
                           height: '25px',
                           cursor: 'pointer',
-                          // display: 'flex',
-                          // alignItems: 'center',
-                          // justifyContent: 'center',
                           opacity: hoveredIndex === index ? 1 : 0,
                           transition: 'opacity 0.3s',
                         }}
                       />
-                      {/* &times; */}
-
                       <img
                         src={image}
                         alt={`Uploaded ${index}`}
@@ -2071,7 +1991,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                           height: '200px',
                           objectFit: 'cover',
                           borderRadius: '0.5rem',
-                          boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px"
+                          boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
                         }}
                       />
                     </div>

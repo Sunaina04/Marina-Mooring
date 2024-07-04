@@ -340,14 +340,6 @@ const Customer = () => {
     [],
   )
 
-  const dummyData = [
-    { id: 1, customerImage: 'https://via.placeholder.com/150' },
-    { id: 2, customerImage: 'https://via.placeholder.com/150' },
-    { id: 3, customerImage: 'https://via.placeholder.com/150' },
-    { id: 4, customerImage: 'https://via.placeholder.com/150' },
-    { id: 5, customerImage: 'https://via.placeholder.com/150' },
-  ]
-
   const columnStyle = {
     backgroundColor: '#FFFFFF',
     fontWeight: '700',
@@ -365,7 +357,6 @@ const Customer = () => {
       {
         id: 'imageName',
         label: 'Image Name',
-        // body: first,
         style: columnStyle,
       },
     ],
@@ -391,11 +382,7 @@ const Customer = () => {
       ],
       headerStyle: {
         backgroundColor: '#FFFFFF',
-        // color: '#FFFFFF',
         height: '3.50rem',
-        //  fontWeight: 800,
-        // borderTopRightRadius: '10px',
-        // borderBottom: '1px solid #C0C0C0',
       },
       style: {
         borderBottom: '1px solid #D5E1EA ',
@@ -1186,7 +1173,7 @@ const Customer = () => {
           setImageVisible(false)
           setScale(1)
         }}
-        header={'Customers Image'}>
+        header={'Customers Images'}>
         <hr className="border border-[#000000] my-0 mx-0"></hr>
         <div style={{ textAlign: 'left', marginTop: '20px' }}>
           <button onClick={handleZoomIn} style={buttonStyle}>
