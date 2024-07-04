@@ -176,7 +176,7 @@ export interface HeaderProps {
 export interface CustomModalProps {
   button?: boolean
   buttonText?: string
-  headerText: string | JSX.Element
+  headerText?: string | JSX.Element
   icon?: IconType<ButtonProps> | undefined
   children: React.ReactNode
   dialogProps?: {
