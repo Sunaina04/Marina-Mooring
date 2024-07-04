@@ -3,8 +3,6 @@ import { selectUserRole } from '../../../Store/Slice/userSlice'
 
 const SidebarMenu = () => {
   const role = useSelector(selectUserRole)
-  console.log('userData?.role', role)
-
   let link
   let adminSubcategories
 

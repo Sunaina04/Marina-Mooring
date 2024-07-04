@@ -57,8 +57,8 @@ const Dashboard = () => {
     NotInUse: NotInUseIcon,
   }
   const firstLastName = (data: any) => {
-    console.log("data",data);
-    
+    console.log('data', data)
+
     return data.customerResponseDto.firstName + ' ' + data.customerResponseDto.lastName
   }
   const columns: TableColumnProps[] = useMemo(
@@ -160,8 +160,6 @@ const Dashboard = () => {
           style={{
             fontWeight: '700',
             fontSize: '16px',
-            // lineHeight: '18.75px',
-            // letterSpacing: '0.46px',
             color: '#000000',
           }}>
           Moorings Due for Service
@@ -173,21 +171,16 @@ const Dashboard = () => {
             opacity: '50%',
             fontSize: '13.59px',
             fontWeight: '500',
-            // lineHeight: '15.92px',
-            // letterSpacing: '0.46px',
-            // textAlign: 'right',
           }}>
           View all
         </div>
       </div>
-      {/* <hr style={{ border: '1px solid #D5E1EA' }} /> */}
     </div>
   )
 
   const getMooringsData = useCallback(async () => {
     setIsLoading(true)
     try {
-      
       const response = await getMoorings({}).unwrap()
       const { status, content, message, totalSize } = response as MooringResponse
       if (status === 200 && Array.isArray(content)) {
@@ -248,6 +241,7 @@ const Dashboard = () => {
                   columns={columns}
                   actionButtons={ActionButtonColumn}
                   header={MooringHeader}
+                  scrollable={true}
                   tableStyle={{
                     backgroundColor: '#FFFFFF',
                     fontSize: '12px',
@@ -269,24 +263,6 @@ const Dashboard = () => {
                     </div>
                   }
                 />
-              </div>
-
-              <div className="mt-auto">
-                {/* <Paginator
-                  first={0}
-                  rows={5}
-                  totalRecords={10}
-                  rowsPerPageOptions={[5, 10, 20, 30]}
-                  // onPageChange={onPage}
-                  style={{
-                    position: 'sticky',
-                    bottom: 0,
-                    zIndex: 1,
-                    backgroundColor: 'white',
-                    borderTop: '1px solid #D5E1EA',
-                    padding: '0.5rem',
-                  }}
-                /> */}
               </div>
             </div>
           </div>

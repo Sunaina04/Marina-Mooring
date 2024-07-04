@@ -103,7 +103,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   )
   const [firstErrorField, setFirstErrorField] = useState('')
   const [isLoading, setIsLoading] = useState(true)
-  const [customerImage, setCustomerImage] = useState<any>()
+  const [customerImages, setCustomerImages] = useState<string[]>([])
   const [encodedImages, setEncodedImages] = useState<string[]>([])
   const [formData, setFormData] = useState<any>({
     mooringId: '',
@@ -160,50 +160,68 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     }
   }
 
-  const handleImageChange = (event: any) => {
+  const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const fileInput = event.target
-    const file = fileInput.files?.[0]
+    const files = Array.from(fileInput.files || [])
 
-    console.log("file",file);
-    
-
-    if (file) {
-      if (!file.type.startsWith('image/')) {
-        setCustomerImage('')
-        setEncodedImages([])
-        toastRef?.current?.show({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Only image files are allowed',
-          life: 3000,
-        })
-        fileInput.value = '' // Reset input value
-        return
-      }
-
-      const reader = new FileReader()
-
-      reader.onload = () => {
-        const result = reader.result
-        if (typeof result === 'string') {
-          const base64String = result.split(',')[1]
-          setCustomerImage(`data:image/png;base64,${base64String}`)
-          setEncodedImages([base64String])
-        } else {
-          console.error('FileReader result is not a string.')
-        }
-      }
-      reader.readAsDataURL(file)
+    if (files.length === 0) {
+      return
     }
+
+    const validImageFiles = files.filter((file) => file.type.startsWith('image/'))
+    console.log('validate', validImageFiles)
+
+    if (validImageFiles.length !== files.length) {
+      setCustomerImages([])
+      setEncodedImages([])
+      toastRef?.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Only image files are allowed',
+        life: 3000,
+      })
+      fileInput.value = '' // Reset input value
+      return
+    }
+
+    const newBase64Strings: string[] = []
+    const newImageUrls: string[] = []
+
+    for (const file of validImageFiles) {
+      try {
+        const base64String = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader()
+          reader.onload = () => {
+            if (typeof reader.result === 'string') {
+              resolve(reader.result.split(',')[1])
+            } else {
+              reject(new Error('FileReader result is not a string.'))
+            }
+          }
+          reader.onerror = () => {
+            reject(new Error('Error reading file.'))
+          }
+          reader.readAsDataURL(file)
+        })
+        newBase64Strings.push(base64String)
+        newImageUrls.push(`data:image/png;base64,${base64String}`)
+      } catch (error) {
+        console.error('Error reading file:', error)
+      }
+    }
+
+    setCustomerImages((prevImages) => [...prevImages, ...newImageUrls])
+    setEncodedImages((prevEncoded) => [...prevEncoded, ...newBase64Strings])
   }
+  console.log('customerImages', customerImages)
 
   const handleRemoveImage = () => {
-    setCustomerImage(null)
+    setCustomerImages([])
     setEncodedImages([])
-    const fileInput = document.getElementById('file-input') as HTMLInputElement
-    if (fileInput) {
-      fileInput.value = '' // Reset input value
-    }
+    // const fileInput = document.getElementById('file-input') as HTMLInputElement
+    // if (fileInput) {
+    //   fileInput.value = '' // Reset input value
+    // }
   }
 
   const validateFields = () => {
@@ -1170,22 +1188,12 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 </div>
               </div>
             </div>
-            {/* style={{
-              marginBottom:
-                selectedCustomerType &&
-                (selectedCustomerType?.id === 5 || selectedCustomerType === 'Dock')
-                  ? '1rem'
-                  : '1rem',
-            }} */}
             <div
               className={`mt-3 
     ${selectedCustomerType?.id === 5 || selectedCustomerType === 'Dock' ? 'mb-2' : editCustomerMode ? 'mb-20' : ''}`}>
               <div className="">
                 <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
-                  <div className="flex gap-1 font-medium text-sm text-[#000000]">
-                    Note
-                    {/* <p className="text-red-600">*</p> */}
-                  </div>
+                  <div className="flex gap-1 font-medium text-sm text-[#000000]">Note</div>
                 </span>
               </div>
               <div className="mt-2">
@@ -1213,7 +1221,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         {/* Add Mooring */}
 
         {(editCustomerMode && selectedCustomerType === 'Dock') ||
-          (editCustomerMode && selectedCustomerType?.id === 5) ? (
+        (editCustomerMode && selectedCustomerType?.id === 5) ? (
           AddDock()
         ) : (
           <></>
@@ -1420,10 +1428,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       <InputComponent
                         value={formData?.sizeOfWeight}
                         onChange={(e) => handleInputChange('sizeOfWeight', e.target.value)}
-                        // options={sizeOfWeight}
-                        // optionLabel="weight"
-                        // editable
-                        // placeholder="Select"
                         style={{
                           width: '230px',
                           height: '32px',
@@ -1749,7 +1753,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                             handleInputChange('conditionEyeDate', formatDate(e.target.value))
                           }
                           dateFormat="mm/dd/yy"
-                          placeholder='mm/dd/yy"'
+                          placeholder="mm/dd/yy"
                           style={{
                             width: '230px',
                             height: '32px',
@@ -1876,7 +1880,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             fontSize: '14px',
             height: '42px',
             fontWeight: '500',
-            //top: '20px',
           }}
         />
 
@@ -1886,156 +1889,26 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             width: '740px',
             minWidth: '300px',
             height: '503px',
-            // minHeight: '200px',
             borderRadius: '1rem',
             fontWeight: '400',
-            // maxHeight: '50% !important',
             cursor: 'alias',
           }}
           draggable={false}
           visible={imageVisible}
           onHide={() => setImageVisible(false)}
-          header={'Customers Image'}>
-          {/* <hr className="border border-[#000000] my-0 mx-0"></hr> */}
-          {/* 
-          <div
-           
-            >
-            <div
-              style={{
-                width: '100%',
-                justifyContent: 'center',
-                textAlign: 'center',
-              
-              }}>
-              <div>
-                <div className="mt-2">
-                  <input
-                    id="file-input"
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    style={{
-                      display: 'none',
-                    }}
-                  />
-                  <label
-                    htmlFor="file-input"
-                    style={{
-                      width: '230px',
-                      height: '32px',
-                      border: '1px solid #D5E1EA',
-                      borderRadius: '0.50rem',
-                      fontSize: '0.8rem',
-                      padding: '3px',
-                      display: 'flex',
-                      gap: '0.5rem',
-                      textAlign: 'center',
-                      lineHeight: '25px',
-                      cursor: 'pointer',
-                    }}>
-                    <FaFileUpload style={{ fontSize: '25px', color: 'blue' }} />
-                  </label>
-                  {customerImage && (
-                    <div className="mt-2">
-                      <button
-                        onClick={handleRemoveImage}
-                        style={{
-                          background: 'red',
-                          color: 'white',
-                          border: 'none',
-                          borderRadius: '50%',
-                          width: '20px',
-                          height: '20px',
-                          cursor: 'pointer',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                        }}>
-                        &times;
-                      </button>
-                      <img
-                        src={customerImage}
-                        alt="Customer"
-                        style={{
-                          width: '100px',
-                          height: '100px',
-                          objectFit: 'cover',
-                          borderRadius: '0.50rem',
-                        }}
-                      />
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            <div className="flex mt-[18rem]">
-              <div>
-                <Button
-                  onClick={() => setImageVisible(false)}
-                  label={'Done'}
-                  style={{
-                    width: '89px',
-                    height: '42px',
-                    backgroundColor: '#0098FF',
-                    cursor: 'pointer',
-                    fontWeight: 'bolder',
-                    fontSize: '14px',
-                    boxShadow: 'none',
-                    color: 'white',
-                    borderRadius: '0.50rem',
-                    marginTop: '1rem',
-                  }}
-                />
-              </div>
-            </div>
-          </div> */}
-
-          <div className={`" ml-4" ${isLoading ? 'blurred' : ''}`}>
-            <Toast ref={toastRef} />
-
-            <div className="flex  justify-center  ">
-              {/* <div>
-               
-           
-                  <div
-               />
-                  <div    style={{
-                    width: '230px',
-                    height: '40px',
-                    border: "1px solid blue",
-                    // borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                    padding: '0.5rem',
-                    display:"flex",
-             
-                  }}
-                  
-                  >
-                    <div style={{borderRight:"2px solid blue",height:"25px"}}>
-                    <FaFileUpload style={{ fontSize: '25px', color: 'blue' }} />
-                    </div>
-                  <h1
-                  onClick={handleImageChange}
-                  >UPLOAD FILES</h1>
-
-                  
-                  </div>
-               
-             
-              
-              </div> */}
+          header={'Customers Images'}>
+          <div className={`ml-4 ${isLoading ? 'blurred' : ''}`}>
+            <div className="flex justify-center">
               <div className="mt-2">
                 <input
                   id="file-input"
                   type="file"
                   accept="image/*"
+                  multiple
                   onChange={handleImageChange}
-                  style={{
-                    display: 'none',
-                  }}
-
+                  // style={{
+                  //   display: 'none',
+                  // }}
                 />
                 <label
                   htmlFor="file-input"
@@ -2052,15 +1925,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     lineHeight: '25px',
                     cursor: 'pointer',
                   }}>
-
                   <FaFileUpload style={{ fontSize: '25px', color: 'blue' }} />
-                  <div>
-                    Uploads File
-
-                  </div>
-
+                  <div>Uploads File</div>
                 </label>
-                {customerImage && (
+                {customerImages.length > 0 && (
                   <div className="mt-2">
                     <button
                       onClick={handleRemoveImage}
@@ -2078,34 +1946,30 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       }}>
                       &times;
                     </button>
-                    <img
-                      src={customerImage}
-                      alt="Customer"
-                      style={{
-                        width: '100px',
-                        height: '100px',
-                        objectFit: 'cover',
-                        borderRadius: '0.50rem',
-                      }}
-                    />
+                    <div className="flex gap-2 flex-wrap">
+                      {customerImages.map((image, index) => (
+                        <img
+                          key={index}
+                          src={image}
+                          alt={`Uploaded ${index}`}
+                          style={{
+                            width: '100px',
+                            height: '100px',
+                            objectFit: 'cover',
+                            borderRadius: '0.5rem',
+                          }}
+                        />
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>
-
             </div>
-
-
-
-
-
-            {/* </div> */}
-
-
           </div>
-          <div className={`"flex gap-4 ml-4 bottom-5 absolute left-6" ${isLoading ? 'blurred' : ''}`}>
+          <div className={`flex gap-4 ml-4 bottom-5 absolute left-6 ${isLoading ? 'blurred' : ''}`}>
             <Button
               label={'Close'}
-              onClick={()=>setImageVisible(false)}
+              onClick={() => setImageVisible(false)}
               style={{
                 width: '89px',
                 height: '42px',
@@ -2115,20 +1979,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 fontSize: '1rem',
                 boxShadow: 'none',
                 color: 'white',
-                borderRadius: '0.50rem',
+                borderRadius: '0.5rem',
               }}
             />
-
           </div>
-
-
-
-
-
-
-
-
-
         </Dialog>
       </div>
     </>

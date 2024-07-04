@@ -34,12 +34,12 @@ const Accordion = () => {
 
   const statCardsData = [
     [
-      { title: 'Total Customers', percentage: 17, count: 42324 },
-      { title: 'Total Customers', percentage: 17, count: 43324 },
-      { title: 'Total Customers', percentage: 17, count: 44324 },
-      { title: 'Total Customers', percentage: 17, count: 58765 },
-      { title: 'Total Customers', percentage: 17, count: 42324 },
-      { title: 'Total Customers', percentage: 17, count: 46789 },
+      { title: 'Total Moorings', percentage: 17, count: 42324 },
+      { title: 'Total Moorings', percentage: 17, count: 43324 },
+      { title: 'Total Moorings', percentage: 17, count: 44324 },
+      { title: 'Total Moorings', percentage: 17, count: 58765 },
+      { title: 'Total Moorings', percentage: 17, count: 42324 },
+      { title: 'Total Moorings', percentage: 17, count: 46789 },
     ],
   ]
 
@@ -48,8 +48,6 @@ const Accordion = () => {
   }
 
   const firstLastName = (data: any) => {
-    console.log('data', data)
-
     return data.customerResponseDto.firstName + ' ' + data.customerResponseDto.lastName
   }
 

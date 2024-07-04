@@ -1,15 +1,4 @@
-import {
-  JSXElementConstructor,
-  ReactElement,
-  ReactNode,
-  ReactPortal,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import CustomModal from '../../CustomComponent/CustomModal'
 import AddCustomer from './AddCustomer'
 import { FaEdit, FaSort, FaSortDown, FaSortUp } from 'react-icons/fa'
@@ -37,21 +26,14 @@ import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader
 import { properties } from '../../Utils/MeassageProperties'
 import { Params } from '../../../Type/CommonType'
 import { Toast } from 'primereact/toast'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import CustomMooringPositionMap from '../../Map/CustomMooringPositionMap'
 import { GearOffIcon, GearOnIcon, NeedInspectionIcon, NotInUseIcon } from '../../Map/DefaultIcon'
 import { ProgressSpinner } from 'primereact/progressspinner'
-import { LatLngExpression } from 'leaflet'
-import { LatLngExpressionValue, PositionType } from '../../../Type/Components/MapTypes'
-import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
 import { Paginator } from 'primereact/paginator'
-import { Avatar } from 'primereact/avatar'
-import { DataTable } from 'primereact/datatable'
-import { Column } from 'primereact/column'
-import { FiMinus } from 'react-icons/fi'
-import { IoAddOutline } from 'react-icons/io5'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
+import { PositionType } from '../../../Type/Components/MapTypes'
 
 const Customer = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -89,18 +71,34 @@ const Customer = () => {
   const [pageSizeTwo, setPageSizeTwo] = useState(10)
   const [totalRecordsTwo, setTotalRecordsTwo] = useState<number>()
   const [accordion, setAccordion] = useState('faq1')
-  const [workOrderData, setWorkOrderData] = useState('')
   const [showImage, setShowImage] = useState({ id: '', imageData: '' })
+  const [scale, setScale] = useState(1)
+
+  const buttonStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '40px',
+    height: '40px',
+    borderRadius: '50%',
+    border: 'none',
+    background: '#10293A',
+    color: 'white',
+    cursor: 'pointer',
+    margin: '5px',
+  }
+
+  const handleZoomIn = () => {
+    setScale((prevScale) => prevScale + 0.1)
+  }
+
+  const handleZoomOut = () => {
+    setScale((prevScale) => Math.max(prevScale - 0.1, 0.1))
+  }
 
   const handleToggle = (id: string) => {
     setAccordion((prevState) => (prevState === id ? '' : id))
   }
-
-  // const handleToggle = (section: SetStateAction<string>) => {
-  //   if (accordion !== section) {
-  //     setAccordion(section)
-  //   }
-  // }{
 
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
@@ -771,7 +769,7 @@ const Customer = () => {
                     <img
                       src="/assets/images/empty.png"
                       alt="Empty Data"
-                      className="w-28 mx-auto mb-4"
+                      className="w-28 mx-auto mb-2"
                     />
                     <p className="text-gray-500 text-lg">No data available</p>
                   </div>
@@ -846,13 +844,13 @@ const Customer = () => {
               {customerRecordData ? (
                 CustomerDetails
               ) : (
-                <div className="text-center mt-6">
+                <div className="text-center mt-10">
                   <img
                     src="/assets/images/empty.png"
                     alt="Empty Data"
-                    className="w-10 mx-auto mb-2"
+                    className="w-20 mx-auto mb-2"
                   />
-                  <p className="text-gray-500 font-[600] text-sm">No data available</p>
+                  <p className="text-gray-800 text-lg">No data available</p>
                 </div>
               )}
             </div>
@@ -947,11 +945,11 @@ const Customer = () => {
                             dataKey="id"
                             rowStyle={(rowData: any) => rowData}
                             emptyMessage={
-                              <div className="text-center mt-40">
+                              <div className="text-center mt-10">
                                 <img
                                   src="/assets/images/empty.png"
                                   alt="Empty Data"
-                                  className="w-20 mx-auto mb-4"
+                                  className="w-20 mx-auto mb-2"
                                 />
                                 <p className="text-gray-500 text-lg">No data available</p>
                               </div>
@@ -980,7 +978,7 @@ const Customer = () => {
               </div>
             </div>
             <div
-              className="tab  relative  bg-[#FFFFFF] border-[1px] border-[#D5E1EA] mr-8"
+              className="tab relative bg-[#FFFFFF] border-[1px] border-[#D5E1EA] mr-8"
               style={{ width: '500px', maxWidth: '500px', marginTop: '0px' }}>
               <label
                 htmlFor="faq2"
@@ -1039,11 +1037,11 @@ const Customer = () => {
                       dataKey="id"
                       rowStyle={(rowData: any) => rowData}
                       emptyMessage={
-                        <div className="text-center mt-40">
+                        <div className="text-center mt-10">
                           <img
                             src="/assets/images/empty.png"
                             alt="Empty Data"
-                            className="w-20 mx-auto mb-4"
+                            className="w-20 mx-auto mb-2"
                           />
                           <p className="text-gray-500 text-lg">No data available</p>
                         </div>
@@ -1179,23 +1177,47 @@ const Customer = () => {
           width: '740px',
           minWidth: '300px',
           height: '503px',
-          // minHeight: '200px',
           borderRadius: '1rem',
           fontWeight: '400',
-          // maxHeight: '50% !important',
           cursor: 'alias',
         }}
         draggable={false}
         visible={imageVisible}
-        onHide={() => setImageVisible(false)}
+        onHide={() => {
+          setImageVisible(false)
+          setScale(1)
+        }}
         header={'Customers Image'}>
         <hr className="border border-[#000000] my-0 mx-0"></hr>
-
+        <div style={{ textAlign: 'left', marginTop: '20px' }}>
+          <button onClick={handleZoomIn} style={buttonStyle}>
+            <img
+              src="/assets/images/plus.png"
+              alt="Zoom In"
+              className="p-clickable"
+              style={{ width: '20px', height: '20px' }}
+            />
+          </button>
+          <button onClick={handleZoomOut} style={buttonStyle}>
+            <svg
+              width="24"
+              height="4"
+              viewBox="0 0 11 3"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M10.125 1.5C10.125 1.92188 9.77344 2.25 9.375 2.25H1.125C0.703125 2.25 0.375 1.92188 0.375 1.5C0.375 1.10156 0.703125 0.75 1.125 0.75H9.375C9.77344 0.75 10.125 1.10156 10.125 1.5Z"
+                fill="white"
+              />
+            </svg>
+          </button>
+        </div>
         <div
           style={{ width: '100%', display: 'flex', justifyContent: 'center', textAlign: 'center' }}>
           <div>
             <img
-              className="w-full h-36 mt-24"
+              style={{ transform: `scale(${scale})`, transition: 'transform 0.2s' }}
+              className="w-full h-40 mt-10"
               src={`data:image/jpeg;base64,${showImage.imageData}`}
             />
           </div>

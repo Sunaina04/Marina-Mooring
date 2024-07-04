@@ -11,7 +11,7 @@ import {
   useGetInventoryDetailsMutation,
   useGetVendorByIdMutation,
 } from '../../../Services/MoorManage/MoormanageApi'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import {
   DeleteCustomerResponse,
   GetInventoryResponse,
@@ -39,6 +39,7 @@ const InventoryDetails: React.FC = () => {
   const [getVendorById] = useGetVendorByIdMutation()
   const [deleteInventory] = useDeleteInventoryMutation()
   const toast = useRef<Toast>(null)
+  const navigate = useNavigate()
 
   const handleEdit = (rowData: any) => {
     setEditMode(true)
@@ -206,12 +207,7 @@ const InventoryDetails: React.FC = () => {
       } else {
         setIsLoading(false)
         setInventoryData([])
-        toast?.current?.show({
-          severity: 'error',
-          summary: 'Error',
-          detail: message,
-          life: 3000,
-        })
+        navigate('/moormanage/vendors')
       }
     } catch (error) {
       setIsLoading(false)
