@@ -14,9 +14,23 @@ import { selectCustomerId } from '../../Store/Slice/userSlice'
 import { Toast } from 'primereact/toast'
 import { PositionType } from '../../Type/Components/MapTypes'
 import { GearOffIcon, GearOnIcon, NeedInspectionIcon, NotInUseIcon } from '../Map/DefaultIcon'
+import DatePickerComponent from '../CommonComponent/DatePickerComponent'
+import { FiMinus } from 'react-icons/fi'
+import { IoAddOutline } from 'react-icons/io5'
+import { Paginator } from 'primereact/paginator'
+import StatCard from '../StatCard/StatCard'
+import { Dialog } from 'primereact/dialog'
+import AddWorkOrders from '../Moorserve/WorkOrders/AddWorkOrders'
+import { Calendar } from 'primereact/calendar'
+import { Nullable } from 'primereact/ts-helpers'
 
 const Dashboard = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
+  const [accordion, setAccordion] = useState('faq1')
+  const [workOrderData, setWorkOrderData] = useState('')
+  const [selectedCustomer, setSelectedCustomer] = useState<any>(undefined)
+  const [visible, setVisible] = useState(false)
+  const [editMode, setEditMode] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [pageNumber, setPageNumber] = useState(0)
   const [pageSize, setPageSize] = useState(10)
@@ -25,6 +39,27 @@ const Dashboard = () => {
   const [filterDateTo, setFilterDateTo] = useState<any>()
   const [mooringData, setMooringData] = useState<MooringPayload[]>([])
   const [mooringResponseData, setMooringResponseData] = useState<any>()
+  const [dates, setDates] = useState<Nullable<(Date | null)[]>>(null)
+  const [startDate, setStartDate] = useState(new Date())
+  const [endDate, setEndDate] = useState(new Date())
+
+  const formatDate = (dateString: any) => {
+    const date = new Date(dateString)
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const day = String(date.getDate()).padStart(2, '0')
+    const year = date.getFullYear()
+    return `${month}/${day}/${year}`
+  }
+
+  const handleDateChange = (e: { target: { value: any } }) => {
+    const { value } = e.target
+    setDates(value)
+    if (value && value.length === 2 && value[0] && value[1]) {
+      setStartDate(value[0])
+      setEndDate(value[1])
+    }
+  }
+
   const [getOpenWorkOrderAndMoorings] = useGetAllOpenWorkOrdersAndMooringDueForServiceMutation()
   const toast = useRef<Toast>(null)
 
@@ -56,11 +91,44 @@ const Dashboard = () => {
     NeedInspection: NeedInspectionIcon,
     NotInUse: NotInUseIcon,
   }
+
+  const statCardsData = [
+    [
+      { title: 'Total Moorings', percentage: 17, count: 42324 },
+      { title: 'Total Moorings', percentage: 17, count: 43324 },
+      { title: 'Total Moorings', percentage: 17, count: 44324 },
+      { title: 'Total Moorings', percentage: 17, count: 58765 },
+      { title: 'Total Moorings', percentage: 17, count: 42324 },
+      { title: 'Total Moorings', percentage: 17, count: 46789 },
+    ],
+  ]
+
+  const handleToggle = (id: string) => {
+    setAccordion((prevState) => (prevState === id ? '' : id))
+  }
+
+  const onPageChange = (event: any) => {
+    setPageNumber(event.page)
+    setPageNumber(event.first)
+    setPageSize(event.rows)
+  }
+
+  const handleModalClose = () => {
+    setVisible(false)
+    setEditMode(false)
+  }
+
+  const handleEdit = (rowData: any) => {
+    setSelectedCustomer(rowData)
+    setEditMode(true)
+    setVisible(true)
+  }
+
   const firstLastName = (data: any) => {
     return data.customerResponseDto.firstName + ' ' + data.customerResponseDto.lastName
   }
 
-  const columns: TableColumnProps[] = useMemo(
+  const Mooringcolumns: TableColumnProps[] = useMemo(
     () => [
       {
         id: 'id',
@@ -134,7 +202,7 @@ const Dashboard = () => {
     [],
   )
 
-  const ActionButtonColumn: ActionButtonColumnProps = {
+  const MooringActionButtonColumn: ActionButtonColumnProps = {
     header: '',
     buttons: [
       {
@@ -150,6 +218,51 @@ const Dashboard = () => {
       color: '#000000',
       fontWeight: '700',
     },
+  }
+
+  const WorkOrderColumns: TableColumnProps[] = useMemo(
+    () => [
+      {
+        id: 'id',
+        label: 'Order No.',
+        style: { fontSize: '10px', width: '6vw', backgroundColor: '#FFFFFF', color: '#000000' },
+      },
+      {
+        id: 'mooringResponseDto.mooringNumber',
+        label: 'Mooring Number',
+        style: { fontSize: '10px', width: '6vw', backgroundColor: '#FFFFFF', color: '#000000' },
+      },
+      {
+        id: 'firstName',
+        label: 'Customer Name',
+        body: firstLastName,
+        style: { fontSize: '10px', width: '6vw', backgroundColor: '#FFFFFF', color: '#000000' },
+      },
+      {
+        id: 'technicianUserResponseDto.name',
+        label: 'Assigned To',
+        style: { fontSize: '10px', width: '6vw', backgroundColor: '#FFFFFF', color: '#000000' },
+      },
+      {
+        id: 'dueDate',
+        label: 'Date',
+        style: { fontSize: '10px', width: '5vw', backgroundColor: '#FFFFFF', color: 'black' },
+      },
+    ],
+    [],
+  )
+
+  const WorkOrderActionButtonColumn: ActionButtonColumnProps = {
+    header: '',
+    buttons: [
+      {
+        underline: true,
+        label: 'view',
+        filled: true,
+        onClick: (row) => handleEdit(row),
+      },
+    ],
+    headerStyle: { backgroundColor: '#FFFFFF' },
   }
 
   const MooringHeader = (
@@ -219,11 +332,18 @@ const Dashboard = () => {
   ])
 
   useEffect(() => {
+    if (startDate && endDate) {
+      setFilterDateFrom(formatDate(startDate))
+      setFilterDateTo(formatDate(endDate))
+    }
+  }, [startDate, endDate])
+
+  useEffect(() => {
     const timeoutId = setTimeout(() => {
       getMooringsData()
     }, 2000)
     return () => clearTimeout(timeoutId)
-  }, [selectedCustomerId])
+  }, [pageSize, pageNumber, filterDateFrom, filterDateTo, selectedCustomerId])
 
   return (
     <>
@@ -249,8 +369,8 @@ const Dashboard = () => {
 
               <div className="mt-2 ">
                 <DataTableComponent
-                  columns={columns}
-                  actionButtons={ActionButtonColumn}
+                  columns={Mooringcolumns}
+                  actionButtons={MooringActionButtonColumn}
                   header={MooringHeader}
                   scrollable={true}
                   tableStyle={{
@@ -284,12 +404,187 @@ const Dashboard = () => {
               flexGrow: 1,
               marginRight: '50px',
             }}>
-            <div
-              data-testid="work-order-data"
-              className="flex flex-col mt-[3px] ml-[15px] mr-[15px] table-container "
-              style={{ height: '600px' }}>
-              <Accordion />
+            <div className="flex  flex-col wrapper ">
+              <div
+                className=" px-5 relative mb-4 rounded-xl bg-white border-[1px] border-[#D5E1EA] mr-8"
+                style={{ width: '492.03px', maxWidth: '492.03px' }}>
+                <label
+                  htmlFor="faq1"
+                  className="cursor-pointer flex items-center justify-between h-14"
+                  onClick={() => handleToggle('faq1')}>
+                  <div className="flex items-center gap-4">
+                    <div>
+                      <img alt="icon" src="/assets/images/Calendar.svg" style={{ width: '23px' }} />
+                    </div>
+                    <div>
+                      <h1 className="text-[16px] font-[500] text-[#10293A] leading-[18.75px]">
+                        Calendar
+                      </h1>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="">
+                      {accordion === 'faq1' ? (
+                        <FiMinus style={{ color: '#10293A' }} />
+                      ) : (
+                        <IoAddOutline style={{ color: '#10293A' }} />
+                      )}
+                    </div>
+                  </div>
+                </label>
+
+                <div
+                  className={`content mt-5 transition-all ease-in-out duration-500 ${accordion === 'faq1' ? '' : 'hidden'}`}>
+                  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <div
+                      className="card flex  justify-items-center"
+                      style={{
+                        height: 'auto',
+                        gap: '0px',
+                        borderRadius: '10px',
+                        border: '1.13px solid #D5E1EA',
+                        backgroundColor: '#D5E1EA',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginBottom: '2rem',
+                      }}>
+                      <Calendar
+                        value={dates}
+                        onChange={(e) => handleDateChange(e)}
+                        selectionMode="range"
+                        hideOnRangeSelection
+                        inline
+                      />
+                    </div>{' '}
+                  </div>
+                </div>
+              </div>
+              <div
+                className="tab px-5 relative mb-4 rounded-xl bg-[#FFFFFF] border-[1px] border-[#D5E1EA] mr-8"
+                style={{ width: '492.03px', maxWidth: '492.03px' }}>
+                <label
+                  htmlFor="faq2"
+                  className="cursor-pointer flex items-center justify-between h-14"
+                  onClick={() => handleToggle('faq2')}>
+                  <div className="flex items-center gap-4">
+                    <div>
+                      <img alt="icon" src="/assets/images/file.svg" style={{ width: '23px' }} />
+                    </div>
+                    <div style={{ flexShrink: 1 }}>
+                      <h1 className="text-[16px] font-[500] text-[#10293A] leading-[18.75px]">
+                        Open Work Orders
+                      </h1>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="">
+                      {accordion === 'faq2' ? (
+                        <FiMinus style={{ color: '#10293A' }} />
+                      ) : (
+                        <IoAddOutline style={{ color: '#10293A' }} />
+                      )}
+                    </div>
+                  </div>
+                </label>
+                <label
+                  htmlFor="faq3"
+                  className={`content mt-5 transition-all ease-in-out duration-500 ${accordion === 'faq2' ? '' : 'hidden'}`}>
+                  <DataTableComponent
+                    data={[]}
+                    columns={WorkOrderColumns}
+                    actionButtons={WorkOrderActionButtonColumn}
+                    scrollable
+                    tableStyle={{ fontSize: '10px', width: '450px' }}
+                    emptyMessage={
+                      <div className="text-center mt-14">
+                        <img
+                          src="/assets/images/empty.png"
+                          alt="Empty Data"
+                          className="w-20 mx-auto mb-4"
+                        />
+                        <p className="text-gray-500">No data available</p>
+                      </div>
+                    }
+                  />
+
+                  <div className="mt-auto">
+                    <Paginator
+                      first={pageNumber}
+                      rows={pageSize}
+                      totalRecords={totalRecords}
+                      rowsPerPageOptions={[5, 10, 20, 30]}
+                      onPageChange={onPageChange}
+                      style={{
+                        position: 'sticky',
+                        bottom: 0,
+                        zIndex: 1,
+                        backgroundColor: 'white',
+                        borderTop: '1px solid #D5E1EA',
+                        padding: '0.5rem',
+                      }}
+                    />
+                  </div>
+                </label>
+              </div>
+
+              <div
+                className="tab px-5 py-3 bg-white border-[1px] border-[#D5E1EA] relative mb-2 rounded-xl mr-8"
+                style={{ width: '492.03px', maxWidth: '492.03px' }}>
+                <label
+                  htmlFor="faq3"
+                  className="cursor-pointer flex items-center justify-between h-8"
+                  onClick={() => handleToggle('faq3')}>
+                  <div className="flex items-center gap-2">
+                    <img alt="icon" src="/assets/images/Group.svg" style={{ width: '25px' }} />
+                    <div className="ml-2 " style={{ flexShrink: 1 }}>
+                      <h1 className="text-[#10293A] font-[500] leading-[18.75px]">
+                        Total Moorings
+                      </h1>
+                    </div>
+                  </div>
+
+                  <div className="">
+                    {accordion === 'faq3' ? (
+                      <FiMinus style={{ color: '#10293A' }} />
+                    ) : (
+                      <IoAddOutline style={{ color: '#10293A' }} />
+                    )}
+                  </div>
+                </label>
+                <div
+                  className={`content mt-5 transition-all ease-in-out duration-500 ${accordion === 'faq3' ? '' : 'hidden'}`}>
+                  <div>
+                    {statCardsData.map((items) => (
+                      <StatCard key={items[0].title} items={items} />
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
+
+            <Dialog
+              position="center"
+              style={{
+                width: '851px',
+                height: '526px',
+                borderRadius: '1rem',
+              }}
+              draggable={false}
+              visible={visible}
+              onHide={handleModalClose}
+              header={<h1 className="text-xl font-extrabold text-black ml-4">Work Order</h1>}>
+              {/* <hr className="border border-[#000000] my-0 mx-0"></hr> */}
+
+              <AddWorkOrders
+                workOrderData={selectedCustomer}
+                editModeWorkOrder={editMode}
+                setVisible={setVisible}
+                toastRef={toast}
+                closeModal={handleModalClose}
+              />
+            </Dialog>
           </div>
         </div>
       </div>

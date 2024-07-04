@@ -72,7 +72,6 @@ const Accordion = () => {
   const handleModalClose = () => {
     setVisible(false)
     setEditMode(false)
-    getAllOpenWorkOrder()
   }
 
   const columns: TableColumnProps[] = useMemo(
@@ -120,40 +119,6 @@ const Accordion = () => {
     headerStyle: { backgroundColor: '#FFFFFF' },
   }
 
-  const getAllOpenWorkOrder = useCallback(async () => {
-    setIsLoading(true)
-
-    try {
-      const response = await getAllOpenWork({
-        pageNumber: pageNumber,
-        pageSize: pageSize,
-        filterDateFrom: filterDateFrom,
-        filterDateTo: filterDateTo,
-      }).unwrap()
-      const { status, message, content, totalSize } = response as GetUserResponse
-      if (status === 200 && Array.isArray(content)) {
-        setIsLoading(false)
-        setGetOpenWorkOrderData(content)
-        setTotalRecords(totalSize)
-      } else {
-        setIsLoading(false)
-        toast?.current?.show({
-          severity: 'error',
-          summary: 'Error',
-          detail: message,
-          life: 3000,
-        })
-      }
-    } catch (error) {
-      setIsLoading(false)
-      console.error('Error occurred while fetching customer data:', error)
-    }
-  }, [pageSize, pageNumber, filterDateFrom, filterDateTo, getOpenWorkOrderData])
-
-  useEffect(() => {
-    getAllOpenWorkOrder()
-  }, [selectedCustomerId, pageSize, pageNumber])
-
   return (
     <>
       <Toast ref={toast} />
@@ -187,27 +152,6 @@ const Accordion = () => {
             </div>
           </label>
 
-          <Dialog
-            position="center"
-            style={{
-              width: '851px',
-              height: '526px',
-              borderRadius: '1rem',
-            }}
-            draggable={false}
-            visible={visible}
-            onHide={handleModalClose}
-            header={<h1 className="text-xl font-extrabold text-black ml-4">Work Order</h1>}>
-            {/* <hr className="border border-[#000000] my-0 mx-0"></hr> */}
-
-            <AddWorkOrders
-              workOrderData={selectedCustomer}
-              editModeWorkOrder={editMode}
-              setVisible={setVisible}
-              toastRef={toast}
-              closeModal={handleModalClose}
-            />
-          </Dialog>
           <div
             className={`content mt-5 transition-all ease-in-out duration-500 ${accordion === 'faq1' ? '' : 'hidden'}`}>
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -316,6 +260,28 @@ const Accordion = () => {
           </div>
         </div>
       </div>
+
+      <Dialog
+        position="center"
+        style={{
+          width: '851px',
+          height: '526px',
+          borderRadius: '1rem',
+        }}
+        draggable={false}
+        visible={visible}
+        onHide={handleModalClose}
+        header={<h1 className="text-xl font-extrabold text-black ml-4">Work Order</h1>}>
+        {/* <hr className="border border-[#000000] my-0 mx-0"></hr> */}
+
+        <AddWorkOrders
+          workOrderData={selectedCustomer}
+          editModeWorkOrder={editMode}
+          setVisible={setVisible}
+          toastRef={toast}
+          closeModal={handleModalClose}
+        />
+      </Dialog>
     </>
   )
 }

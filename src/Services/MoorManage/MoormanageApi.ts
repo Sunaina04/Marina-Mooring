@@ -455,7 +455,6 @@ const moormanageApi = userApi.injectEndpoints({
         pageSize,
         sortBy,
         sortDir,
-        searchText,
         filterDateFrom,
         filterDateTo,
       }: {
@@ -463,13 +462,12 @@ const moormanageApi = userApi.injectEndpoints({
         pageSize?: number
         sortBy?: string
         sortDir?: string
-        searchText?: string
-        filterDateTo?: string
-        filterDateFrom?: string
+        filterDateFrom: string
+        filterDateTo: string
       }) => ({
-        url: `api/v1/workOrder/fetchAllOpenWorkOrdersAndMooringDueForService`,
+        url: `/api/v1/workOrder/fetchAllOpenWorkOrdersAndMooringDueForService`,
         method: 'GET',
-        params: { pageNumber, pageSize, sortBy, sortDir, searchText, filterDateFrom, filterDateTo },
+        params: { pageNumber, pageSize, sortBy, sortDir, filterDateFrom, filterDateTo },
       }),
     }),
   }),
