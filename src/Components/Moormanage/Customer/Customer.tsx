@@ -727,7 +727,7 @@ const Customer = () => {
                 height: '18px',
               }}
             />
-            <div className="ml-[15px] mr-[15px] table-container">
+            <div className="ml-[15px] mr-[15px] table-container" style={{ overflow: 'auto' }}>
               <DataTableComponent
                 data={customerData}
                 tableStyle={{
@@ -760,11 +760,6 @@ const Customer = () => {
                     <p className="text-gray-500 text-lg">No data available</p>
                   </div>
                 }
-                // rows={pageSize}
-                // first={pageNumber1}
-                // totalRecords={totalRecordsOne}
-                // rowsPerPageOptions={[5, 10, 20, 30]}
-                // onPage={onPageChange}
               />
             </div>
             <div className="mt-auto">
@@ -908,7 +903,7 @@ const Customer = () => {
                       }}>
                       <div
                         className={`bg-#00426F overflow-x-hidden h-[320px]  table-container flex flex-col`}>
-                        <div className="flex-grow">
+                        <div className="flex-grow" style={{ overflow: 'auto' }}>
                           <DataTableComponent
                             style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
                             scrollable
@@ -1005,7 +1000,7 @@ const Customer = () => {
                 className={`content mt-5 transition-all ease-in-out duration-500 ${accordion === 'faq2' ? '' : 'hidden'}`}>
                 <div
                   className={`bg-#00426F overflow-x-hidden h-[330px]  table-container flex flex-col`}>
-                  <div className="flex-grow">
+                  <div className="flex-grow" style={{ overflow: 'auto' }}>
                     <DataTableComponent
                       style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
                       scrollable
@@ -1034,7 +1029,7 @@ const Customer = () => {
                       }
                     />
                   </div>
-                  <Paginator
+                  {/* <Paginator
                     first={pageNumber2}
                     rows={pageSizeTwo}
                     totalRecords={totalRecordsTwo}
@@ -1048,7 +1043,7 @@ const Customer = () => {
                       borderTop: '1px solid #D5E1EA',
                       padding: '0.5rem',
                     }}
-                  />
+                  /> */}
                 </div>
               </div>
             </div>

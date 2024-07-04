@@ -564,7 +564,7 @@ const Moorings = () => {
                 height: '18px',
               }}
             />
-            <div className="ml-[15px] mr-[15px] table-container">
+            <div className="ml-[15px] mr-[15px] table-container" style={{ overflow: 'auto' }}>
               <DataTableComponent
                 data={mooringData}
                 tableStyle={{
@@ -717,7 +717,7 @@ const Moorings = () => {
 
             <div
               className={`bg-#00426F overflow-x-hidden h-[400px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col`}>
-              <div className="flex-grow ">
+              <div className="flex-grow" style={{ overflow: 'auto' }}>
                 <DataTableComponent
                   style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
                   scrollable
@@ -742,7 +742,7 @@ const Moorings = () => {
                   dataKey="id"
                   rowStyle={(rowData: any) => rowData}
                   emptyMessage={
-                    <div className="text-center mt-40">
+                    <div className="text-center mt-10">
                       <img
                         src="/assets/images/empty.png"
                         alt="Empty Data"

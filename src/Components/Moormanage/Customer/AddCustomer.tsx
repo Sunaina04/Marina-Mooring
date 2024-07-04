@@ -172,15 +172,26 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       return
     }
 
-    const validImageFiles = files.filter((file) => file.type.startsWith('image/'))
+    const validImageFiles = files.filter(
+      (file) => file.type.startsWith('image/') && file.size >= 5120 && file.size <= 1048576,
+    )
 
-    if (validImageFiles.length !== files.length) {
+    const invalidTypeFiles = files.filter((file) => !file.type.startsWith('image/'))
+    const invalidSizeFiles = files.filter((file) => file.size < 5120 || file.size > 1048576)
+
+    if (invalidTypeFiles.length > 0 || invalidSizeFiles.length > 0) {
       setCustomerImages([])
       setEncodedImages([])
+      let detailMessage = 'Only image files are allowed'
+
+      if (invalidSizeFiles.length > 0) {
+        detailMessage += '. Images must be between 5 KB and 1 MB.'
+      }
+
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: 'Only image files are allowed',
+        detail: detailMessage,
         life: 3000,
       })
       fileInput.value = '' // Reset input value
@@ -1911,50 +1922,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   <div>Upload Images</div>
                 </label>
               </div>
-
-              {/* <section
-                style={{
-                  position: 'relative',
-                  margin: '25px 0 15px',
-                  border: '2px dotted lightgray',
-                  padding: '35px 20px',
-                  borderRadius: '6px',
-                  display: 'flex',
-                  
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  backgroundColor: 'white'
-                }}
-
-              >
-               
-                <button type="button">
-                <FaFileUpload style={{ fontSize: '25px', color: 'blue' }} />
-                  <span> Upload</span>
-                </button>
-                <input
-                style={{
-                  fontSize: '18px',
-                  display: 'block',
-                  width: '100%',
-                  border: 'none',
-                  textTransform: 'none',
-                  position: 'absolute',
-                  top: '0',
-                  left: '0',
-                  right: '0',
-                  bottom: '0',
-                  opacity: '0',
-                  outline: 'none',
-                  
-                }}
-                  type="file"
-                  // ref={fileInputField}
-                  title=""
-                  value=""
-                // {...otherProps}
-                />
-              </section>  */}
             </div>
           </div>
 
@@ -2037,6 +2004,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               }}
             />
           </div>
+          <Toast ref={toastRef} />
         </Dialog>
       </div>
     </>
