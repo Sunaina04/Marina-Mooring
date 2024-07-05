@@ -615,22 +615,22 @@ const Dashboard = () => {
                           </div>
                         }
                       />
-                      <Paginator
-                        first={pageNumber1}
-                        rows={pageSize}
-                        totalRecords={totalRecords}
-                        rowsPerPageOptions={[5, 10, 20, 30]}
-                        onPageChange={onPageChange}
-                        style={{
-                          position: 'sticky',
-                          bottom: 0,
-                          zIndex: 1,
-                          backgroundColor: 'white',
-                          borderTop: '1px solid #D5E1EA',
-                          padding: '0.5rem',
-                        }}
-                      />
                     </div>
+                    <Paginator
+                      first={pageNumber1}
+                      rows={pageSize}
+                      totalRecords={totalRecords}
+                      rowsPerPageOptions={[5, 10, 20, 30]}
+                      onPageChange={onPageChange}
+                      style={{
+                        position: 'sticky',
+                        bottom: 0,
+                        zIndex: 1,
+                        backgroundColor: 'white',
+                        borderTop: '1px solid #D5E1EA',
+                        padding: '0.5rem',
+                      }}
+                    />
                   </div>
                 </div>
               </div>
