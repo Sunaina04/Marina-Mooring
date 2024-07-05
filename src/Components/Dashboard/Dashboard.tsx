@@ -410,7 +410,7 @@ const Dashboard = () => {
         <div className="flex lg:flex-row justify-around md:flex-col mt-4">
           <div
             style={{
-              marginLeft: '3rem',
+              marginLeft: '2rem',
             }}>
             <div
               data-testid="mooring-data"
@@ -480,12 +480,12 @@ const Dashboard = () => {
             className={`md:ml-12 md:mt-3 lg:mt-0`}
             style={{
               flexGrow: 1,
-              marginRight: '50px',
+              // marginRight: '50px',
             }}>
             <div className="flex  flex-col wrapper ">
               <div
                 className=" px-5 relative mb-4 rounded-xl bg-white border-[1px] border-[#D5E1EA] mr-8"
-                style={{ width: '492.03px', maxWidth: '492.03px' }}>
+                style={{ width: '600px', maxWidth: '600px' }}>
                 <label
                   htmlFor="faq1"
                   className="cursor-pointer flex items-center justify-between h-14"
@@ -540,7 +540,7 @@ const Dashboard = () => {
               </div>
               <div
                 className="tab px-5 relative mb-4 rounded-xl bg-[#FFFFFF] border-[1px] border-[#D5E1EA] mr-8"
-                style={{ width: '492.03px', maxWidth: '492.03px' }}>
+                style={{ width: '600px', maxWidth: '600px' }}>
                 <label
                   htmlFor="faq2"
                   className="cursor-pointer flex items-center justify-between h-14"
@@ -609,7 +609,7 @@ const Dashboard = () => {
 
               <div
                 className="tab px-5 py-3 bg-white border-[1px] border-[#D5E1EA] relative mb-2 rounded-xl mr-8"
-                style={{ width: '492.03px', maxWidth: '492.03px' }}>
+                style={{ width: '600px', maxWidth: '600px' }}>
                 <label
                   htmlFor="faq3"
                   className="cursor-pointer flex items-center justify-between h-8"

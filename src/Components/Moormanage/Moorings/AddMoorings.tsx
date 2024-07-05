@@ -1132,22 +1132,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 </p>
               </div>
             </div>
-            {/* <div className="mt-3">
-              <div>
-                <span className="font-medium text-sm text-[#000000]">Pin on Map</span>
-              </div>
-              <div
-                style={{
-                  height: '200px',
-                  width: '230px',
-                }}>
-                <CustomSelectPositionMap
-                  onPositionChange={handlePositionChange}
-                  zoomLevel={15}
-                  center={center}
-                />
-              </div>
-            </div> */}
 
             <div className="mt-3">
               <div>
