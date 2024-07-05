@@ -1025,8 +1025,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         paddingLeft: '0.5rem',
                       }}>
                       <div onClick={uploadImages} className="flex gap-3 text-center mt-1 ">
-                        <FaFileUpload style={{ fontSize: '25px', color: 'blue' }} />
-                        Upload Image
+                        <FaFileUpload style={{ fontSize: '22px', color: '#0098FF' }} />
+                        <div className="border-r-2 border-blue-100  h-6"></div> 
+                       <span> Upload Image </span>
                       </div>
                     </div>
                   </div>
