@@ -3,7 +3,6 @@ import DataTableComponent from '../CommonComponent/Table/DataTableComponent'
 import Header from '../Layout/LayoutComponents/Header'
 import { ActionButtonColumnProps, TableColumnProps } from '../../Type/Components/TableTypes'
 import CustomMooringPositionMap from '../Map/CustomMooringPositionMap'
-import Accordion from '../CommonComponent/Accordion'
 import {
   ErrorResponse,
   MooringAndWorkOrderResponse,
@@ -121,14 +120,31 @@ const Dashboard = () => {
   ]
 
   const handleToggle = (faq: string) => {
-    if (faq === 'faq1') {
-      setAccordion(accordion === 'faq1' ? 'faq2' : 'faq1')
-    } else if (faq === 'faq2') {
-      setAccordion(accordion === 'faq2' ? 'faq3' : 'faq1')
-    } else if (faq === 'faq3') {
-      setAccordion(accordion === 'faq3' ? 'faq1' : 'faq1')
-    } else {
-      setAccordion(faq)
+    switch (faq) {
+      case 'faq1':
+        if (accordion === 'faq1') {
+          setAccordion('faq2')
+        } else {
+          setAccordion('faq1')
+        }
+        break
+      case 'faq2':
+        if (accordion === 'faq2') {
+          setAccordion('faq3')
+        } else {
+          setAccordion('faq2')
+        }
+        break
+      case 'faq3':
+        if (accordion === 'faq3') {
+          setAccordion('faq1')
+        } else {
+          setAccordion('faq3')
+        }
+        break
+      default:
+        setAccordion(faq)
+        break
     }
   }
 
@@ -168,7 +184,7 @@ const Dashboard = () => {
         label: 'ID',
         style: {
           fontSize: '10px',
-          // width: '2vw',
+          width: '3vw',
           backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: '700',
@@ -259,35 +275,35 @@ const Dashboard = () => {
       {
         id: 'id',
         label: 'Order No.',
-        style: { fontSize: '10px', width: '6vw', backgroundColor: '#FFFFFF', color: '#000000' },
+        style: { fontSize: '10px', width: '4.5vw', backgroundColor: '#FFFFFF', color: '#000000' },
       },
       {
         id: 'mooringResponseDto.mooringNumber',
         label: 'Mooring Number',
-        style: { fontSize: '10px', width: '6vw', backgroundColor: '#FFFFFF', color: '#000000' },
+        style: { fontSize: '10px', backgroundColor: '#FFFFFF', color: '#000000' },
       },
       {
         id: 'firstName',
         label: 'Customer Name',
         body: firstLastName,
-        style: { fontSize: '10px', width: '6vw', backgroundColor: '#FFFFFF', color: '#000000' },
+        style: { fontSize: '10px', backgroundColor: '#FFFFFF', color: '#000000' },
       },
       {
         id: 'technicianUserResponseDto.name',
         label: 'Assigned To',
-        style: { fontSize: '10px', width: '6vw', backgroundColor: '#FFFFFF', color: '#000000' },
+        style: { fontSize: '10px', backgroundColor: '#FFFFFF', color: '#000000' },
       },
       {
         id: 'dueDate',
         label: 'Date',
-        style: { fontSize: '10px', width: '5vw', backgroundColor: '#FFFFFF', color: 'black' },
+        style: { fontSize: '10px', backgroundColor: '#FFFFFF', color: 'black' },
       },
     ],
     [],
   )
 
   const WorkOrderActionButtonColumn: ActionButtonColumnProps = {
-    header: '',
+    header: 'Actions',
     buttons: [
       {
         underline: true,
@@ -296,6 +312,7 @@ const Dashboard = () => {
         onClick: (row) => handleEdit(row),
       },
     ],
+    style: { fontSize: '10px', width: '4vw', backgroundColor: '#FFFFFF', color: 'black' },
     headerStyle: { backgroundColor: '#FFFFFF' },
   }
 
@@ -586,7 +603,7 @@ const Dashboard = () => {
                         columns={WorkOrderColumns}
                         actionButtons={WorkOrderActionButtonColumn}
                         scrollable={true}
-                        tableStyle={{ fontSize: '10px', width: '450px' }}
+                        tableStyle={{ fontSize: '10px' }}
                         emptyMessage={
                           <div className="text-center mt-14">
                             <img
@@ -598,22 +615,22 @@ const Dashboard = () => {
                           </div>
                         }
                       />
-                      <Paginator
-                        first={pageNumber1}
-                        rows={pageSize}
-                        totalRecords={totalRecords}
-                        rowsPerPageOptions={[5, 10, 20, 30]}
-                        onPageChange={onPageChange}
-                        style={{
-                          position: 'sticky',
-                          bottom: 0,
-                          zIndex: 1,
-                          backgroundColor: 'white',
-                          borderTop: '1px solid #D5E1EA',
-                          padding: '0.5rem',
-                        }}
-                      />
                     </div>
+                    <Paginator
+                      first={pageNumber1}
+                      rows={pageSize}
+                      totalRecords={totalRecords}
+                      rowsPerPageOptions={[5, 10, 20, 30]}
+                      onPageChange={onPageChange}
+                      style={{
+                        position: 'sticky',
+                        bottom: 0,
+                        zIndex: 1,
+                        backgroundColor: 'white',
+                        borderTop: '1px solid #D5E1EA',
+                        padding: '0.5rem',
+                      }}
+                    />
                   </div>
                 </div>
               </div>

@@ -102,13 +102,13 @@ const Customer = () => {
 
   const handleToggle = (faq: SetStateAction<string>) => {
     if (faq === 'faq1' && accordion === 'faq1') {
-      setAccordion('faq2');
+      setAccordion('faq2')
     } else if (faq === 'faq2' && accordion === 'faq2') {
-      setAccordion('faq1');
+      setAccordion('faq1')
     } else {
-      setAccordion(faq);
+      setAccordion(faq)
     }
-  };
+  }
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
     setPageNumber1(event.first)
@@ -627,11 +627,6 @@ const Customer = () => {
     }
   }, [pageNumberTwo, pageSizeTwo, customerId])
 
-  //   const onPageChange = (event: { first: React.SetStateAction<number>; rows: React.SetStateAction<number>; }) => {
-  //     setFirst(event.first);
-  //     setRows(event.rows);
-  // };
-
   return (
     <div style={{ height: '100vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
       <Header header="MOORMANAGE/Customer" />
@@ -1038,15 +1033,10 @@ const Customer = () => {
                       }
                     />
                   </div>
-                
                 </div>
               </div>
             </div>
           </div>
-
-
-
-
         </div>
       </div>
 

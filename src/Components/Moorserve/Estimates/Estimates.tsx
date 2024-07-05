@@ -231,6 +231,10 @@ const Estimates = () => {
     return () => clearTimeout(timeoutId)
   }, [searchText, selectedCustomerId, pageNumber, pageSize])
 
+  useEffect(() => {
+    handleModalClose()
+  }, [selectedCustomerId])
+
   return (
     <div style={{ height: '100vh' }} className={visible ? 'backdrop-blur-lg' : ''}>
       <Header header="MOORSERVE/Estimate" />

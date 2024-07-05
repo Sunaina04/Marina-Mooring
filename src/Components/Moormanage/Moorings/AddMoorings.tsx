@@ -440,7 +440,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     if (Object.keys(errors).length > 0) {
       return
     }
-    console.log(formData)
 
     try {
       setIsLoading(true)
@@ -449,7 +448,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({
         mooringNumber: formData?.mooringNumber
           ? formData?.mooringNumber
           : mooringRowData?.mooringNumber,
-        customerId: formData?.customerName ? formData?.customerName : mooringRowData?.customerId,
+        customerId: mooringRowData?.customerOwnerUserResponseDto?.id
+          ? mooringRowData?.customerOwnerUserResponseDto?.id
+          : formData?.customerName,
         harborOrArea: formData?.harbor ? formData?.harbor : mooringRowData?.harborOrArea,
         gpsCoordinates: gpsCoordinatesValue,
         boatyardId: formData?.boatYardName?.id
