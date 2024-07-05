@@ -1026,8 +1026,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       }}>
                       <div onClick={uploadImages} className="flex gap-3 text-center mt-1 ">
                         <FaFileUpload style={{ fontSize: '22px', color: '#0098FF' }} />
-                        <div className="border-r-2 border-blue-100  h-6"></div> 
-                       <span> Upload Image </span>
+                        <div className="border-r-2 border-blue-100  h-6"></div>
+                        <span> Upload Image </span>
                       </div>
                     </div>
                   </div>
@@ -1908,37 +1908,37 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 <label
                   htmlFor="file-input"
                   style={{
-                    width: '230px',
-                    height: '32px',
-                    border: '2px dotted lightgray',
-                    // borderRadius: '0.5rem',
+                    width: '300px',
+                    height: '40px',
+                    border: '2px solid #0098FF',
+                    borderRadius: '0.50rem',
                     fontSize: '0.8rem',
-                    padding: '3px',
+                    paddingLeft: '0.5rem',
                     display: 'flex',
                     gap: '0.5rem',
                     textAlign: 'center',
                     lineHeight: '25px',
                     cursor: 'pointer',
                   }}>
-                  <FaFileUpload style={{ fontSize: '25px', color: 'blue' }} />
-                  <div>Upload Images</div>
+                  <div onClick={uploadImages} className="flex gap-3 text-center mt-1 ">
+                    <FaFileUpload style={{ fontSize: '29px', color: '#0098FF', marginLeft:'1rem' }} />
+                    <div className="border-r-2 border-sky-500  h-8 pl-3"></div>
+                    <span className='pl-10'> UPLOAD IMAGES </span>
+                  </div>
                 </label>
               </div>
             </div>
           </div>
 
           <div
-          //  style={{border:"1px solid red"}}
-          
-          style={{ marginTop: '40px', marginLeft: '40px', }}>
+            //  style={{border:"1px solid red"}}
+
+            style={{ marginTop: '40px', marginLeft: '40px' }}>
             {customerImages.length > 0 && (
               <div className="mt-2">
-                <div 
-               
-                className="flex gap-16 flex-wrap">
+                <div className="flex gap-16 flex-wrap">
                   {customerImages.map((image, index) => (
                     <div
-                    
                       key={index}
                       style={{ position: 'relative', display: 'inline-block' }}
                       onMouseEnter={() => setHoveredIndex(index)}
@@ -1975,7 +1975,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                           cursor: 'pointer',
                           opacity: hoveredIndex === index ? 1 : 0,
                           transition: 'opacity 0.3s',
-                          
                         }}
                       />
                       <img
