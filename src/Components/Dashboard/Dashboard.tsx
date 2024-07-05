@@ -533,6 +533,9 @@ const Dashboard = () => {
                         selectionMode="range"
                         hideOnRangeSelection
                         inline
+                        style={{
+                          width: '520px',
+                        }}
                       />
                     </div>{' '}
                   </div>
