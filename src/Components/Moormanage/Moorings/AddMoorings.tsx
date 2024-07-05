@@ -37,8 +37,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   getCustomer,
   getCustomerRecord,
 }) => {
-  console.log(mooringRowData)
-
   const selectedCustomerId = useSelector(selectCustomerId)
   const { getTypeOfBoatTypeData } = TypeOfBoatType()
   const { getTypeOfWeightData } = TypeOfWeightData()
@@ -436,6 +434,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   }
 
   const UpdateMooring = async () => {
+    console.log('mooringRowData', mooringRowData)
+    console.log('form', formData)
     const errors = validateFields()
     if (Object.keys(errors).length > 0) {
       return
@@ -448,9 +448,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
         mooringNumber: formData?.mooringNumber
           ? formData?.mooringNumber
           : mooringRowData?.mooringNumber,
-        customerId: mooringRowData?.customerOwnerUserResponseDto?.id
-          ? mooringRowData?.customerOwnerUserResponseDto?.id
-          : formData?.customerName,
+        customerId: mooringRowData?.customerResponseDto?.id || formData?.customerName,
         harborOrArea: formData?.harbor ? formData?.harbor : mooringRowData?.harborOrArea,
         gpsCoordinates: gpsCoordinatesValue,
         boatyardId: formData?.boatYardName?.id
