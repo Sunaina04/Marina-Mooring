@@ -434,8 +434,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   }
 
   const UpdateMooring = async () => {
-    console.log('mooringRowData', mooringRowData)
-    console.log('form', formData)
     const errors = validateFields()
     if (Object.keys(errors).length > 0) {
       return
