@@ -177,11 +177,12 @@ export default function LoginForm() {
             <div className="flex flex-col items-center">
               <div className="p-input-icon-left" id="input-field">
                 <InputText
-                  placeholder="Enter Your Email"
                   name="username"
                   value={username}
                   onChange={handleChange}
                   onKeyUp={handleKeyUp}
+                  disabled={isLoading}
+                  placeholder={isLoading ? 'Loading...' : 'Enter Your Email'}
                   id="input-field"
                   style={{
                     width: '500px',
@@ -214,7 +215,6 @@ export default function LoginForm() {
                   className="card flex justify-content-center"
                   style={{ position: 'relative', width: '100%' }}>
                   <Password
-                    placeholder="Enter Your Password"
                     type={'text'}
                     name="password"
                     value={password}
@@ -222,6 +222,8 @@ export default function LoginForm() {
                     onKeyUp={handleKeyUp}
                     feedback={false}
                     toggleMask
+                    disabled={isLoading}
+                    placeholder={isLoading ? 'Loading...' : 'Enter Your Password'}
                     style={{
                       padding: '0 2rem 0 3rem',
                       border: '1px solid #C5D9E0',
