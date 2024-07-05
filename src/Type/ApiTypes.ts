@@ -101,10 +101,10 @@ export interface UserData {
 
 export interface RoleData {
   id: number
-  creationDate: string
-  lastModifiedDate: string
+  creationDate?: string
+  lastModifiedDate?: string
   name: string
-  description: string
+  description?: string
 }
 
 export interface LoginResponse {

@@ -120,6 +120,7 @@ export default function LoginForm() {
       if (status === 200) {
         sessionStorage.setItem('token', token)
         sessionStorage.setItem('refreshToken', refreshToken)
+        sessionStorage.setItem('role', user?.role?.name)
         dispatch(setUserData(user))
         dispatch(setToken(token))
         dispatch(setCustomerId(''))
@@ -127,9 +128,10 @@ export default function LoginForm() {
         setUsername('')
         setPassword('')
         setIsLoading(false)
-        if (role === 4) {
+
+        if (sessionStorage.getItem('role') === 'TECHNICIAN') {
           navigate('/moorserve/workOrders')
-        } else if (role === 3) {
+        } else if (sessionStorage.getItem('role') === 'FINANCE') {
           navigate('/moorpay/accountReceivable')
         } else {
           navigate('/dashboard')
@@ -147,19 +149,6 @@ export default function LoginForm() {
       }
     }
   }
-
-  const footer = (
-    <>
-      <Divider />
-      <span className="mt-2">Suggestions</span>
-      <ul className="pl-2 ml-2 mt-0 line-height-3">
-        <li>* At least one lowercase</li>
-        <li>* At least one uppercase</li>
-        <li>* At least one numeric</li>
-        <li>* Minimum 8 characters</li>
-      </ul>
-    </>
-  )
 
   return (
     <>

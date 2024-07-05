@@ -2,7 +2,14 @@ import React, { useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 import SidebarMenu from '../LayoutComponents/SidebarMenu'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectUserRole, setOpen } from '../../../Store/Slice/userSlice'
+import {
+  selectUserRole,
+  setCustomerId,
+  setCustomerName,
+  setOpen,
+  setToken,
+  setUserData,
+} from '../../../Store/Slice/userSlice'
 import { RootState } from '../../../Store/Store'
 import { useLogoutMutation } from '../../../Services/Authentication/AuthApi'
 import { ErrorResponse } from '../../../Type/ApiTypes'
@@ -302,9 +309,22 @@ const AdminLayout = () => {
   const initialSelectedCategory = role === 4 ? 3 : null
   const initialSelectedSubcategory = role === 4 ? 0 : null
 
-  const [openSubMenus, setOpenSubMenus] = useState(initialOpenSubMenus)
-  const [selectedCategory, setSelectedCategory] = useState<any>(initialSelectedCategory)
-  const [selectedSubcategory, setSelectedSubcategory] = useState<any>(initialSelectedSubcategory)
+  const initialOpenSubMenusRole =
+    role === 3
+      ? [true, ...new Array(menuItems.length - 1).fill(false)]
+      : new Array(menuItems.length).fill(false)
+  const initialSelectedCategoryRole = role === 3 ? 4 : null
+  const initialSelectedSubcategoryRole = role === 3 ? 0 : null
+
+  const [openSubMenus, setOpenSubMenus] = useState(
+    role === 4 ? initialOpenSubMenus : initialOpenSubMenusRole,
+  )
+  const [selectedCategory, setSelectedCategory] = useState<any>(
+    role === 4 ? initialSelectedCategory : initialSelectedCategoryRole,
+  )
+  const [selectedSubcategory, setSelectedSubcategory] = useState<any>(
+    role === 4 ? initialSelectedSubcategory : initialSelectedSubcategoryRole,
+  )
 
   const handleExpand = (index: number) => {
     setOpenSubMenus((prev) => {
@@ -331,7 +351,26 @@ const AdminLayout = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await getLogout({}).unwrap()
+      dispatch(setToken(''))
+      dispatch(setCustomerId(''))
+      dispatch(setCustomerName(''))
+      dispatch(
+        setUserData({
+          id: '',
+          firstname: '',
+          lastname: '',
+          email: '',
+          password: '',
+          creationDate: '',
+          lastModifiedDate: '',
+          phoneNumber: '',
+          role: {
+            id: 0,
+            name: '',
+          },
+        }),
+      )
+      // const response = await getLogout({}).unwrap()
       // const { status, message, content } = response;
       // if (status === 200 && Array.isArray(content)) {
       // }

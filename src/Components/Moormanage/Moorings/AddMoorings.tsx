@@ -546,29 +546,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     }
   }
 
-  const AddDock = () => {
-    return (
-      <>
-        <div className="flex gap-4 mt-4">
-          <span>
-            <Checkbox
-              onChange={(e: any) => {
-                setCheckedDock(e.checked ?? false)
-              }}
-              checked={checkedDock}
-              style={{
-                border: '1px solid #D5E1EA',
-                height: '22px',
-                width: '22px',
-                borderRadius: '5px',
-              }}></Checkbox>
-          </span>
-          <p className="font-medium text-lg text-[#000000] mt-1">Add Dock</p>
-        </div>
-      </>
-    )
-  }
-
   useEffect(() => {
     fetchMetaData()
   }, [])
@@ -583,7 +560,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     if (gpsCoordinatesValue) {
       const coordinates = getFomattedCoordinate(gpsCoordinatesValue)
       setCenter(coordinates)
-      // handlePositionChange(coordinates[0], coordinates[1])
     }
   }, [gpsCoordinatesValue])
 

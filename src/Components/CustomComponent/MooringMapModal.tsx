@@ -27,14 +27,10 @@ const MooringMapModal: React.FC<TimeLineProps> = ({
 
   return (
     <>
-      <div
-        // style={{border:"1px solid red"}}
-        className="rounded-sm flex gap-20 ">
+      <div className="rounded-sm flex gap-20 ">
         <div>
           <div>
-            <p
-              // style={{ border: "1px solid red" }}
-              className="text-sm m-0 font-bold text-white">
+            <p className="text-sm m-0 font-bold text-white">
               B45
               <br />
               Suncatcher
@@ -48,22 +44,13 @@ const MooringMapModal: React.FC<TimeLineProps> = ({
             </p>
           </div>
         </div>
-        <div
-          // style={{border:"1px solid green"}}
-          className=" ">
+        <div className=" ">
           <p
-            // style={{border:"1px solid red"}}
             className=" text-black cursor-pointer mt-[5rem] p-1 border rounded-sm  bg-[#B1E0FF]"
-            // onClick={viewEdit}
-          >
+            onClick={viewEdit}>
             View/edit
           </p>
-          <p
-            // style={{border:"1px solid red"}}
-
-            className="text-xs   text-white">
-            ID:{mooringId}
-          </p>
+          <p className="text-xs   text-white">ID:{mooringId}</p>
         </div>
 
         {customerModalVisible && (
