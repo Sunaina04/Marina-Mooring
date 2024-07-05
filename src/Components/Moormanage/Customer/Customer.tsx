@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import CustomModal from '../../CustomComponent/CustomModal'
 import AddCustomer from './AddCustomer'
 import { FaEdit, FaSort, FaSortDown, FaSortUp } from 'react-icons/fa'
@@ -96,10 +96,19 @@ const Customer = () => {
     setScale((prevScale) => Math.max(prevScale - 0.1, 0.1))
   }
 
-  const handleToggle = (id: string) => {
-    setAccordion((prevState) => (prevState === id ? '' : id))
-  }
+  // const handleToggle = (id: string) => {
+  //   setAccordion((prevState) => (prevState === id ? '' : id))
+  // }
 
+  const handleToggle = (faq: SetStateAction<string>) => {
+    if (faq === 'faq1' && accordion === 'faq1') {
+      setAccordion('faq2');
+    } else if (faq === 'faq2' && accordion === 'faq2') {
+      setAccordion('faq1');
+    } else {
+      setAccordion(faq);
+    }
+  };
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
     setPageNumber1(event.first)
@@ -1029,25 +1038,15 @@ const Customer = () => {
                       }
                     />
                   </div>
-                  {/* <Paginator
-                    first={pageNumber2}
-                    rows={pageSizeTwo}
-                    totalRecords={totalRecordsTwo}
-                    rowsPerPageOptions={[5, 10, 20, 30]}
-                    onPageChange={onPageChangeTwo}
-                    style={{
-                      position: 'sticky',
-                      bottom: 0,
-                      zIndex: 1,
-                      backgroundColor: 'white',
-                      borderTop: '1px solid #D5E1EA',
-                      padding: '0.5rem',
-                    }}
-                  /> */}
+                
                 </div>
               </div>
             </div>
           </div>
+
+
+
+
         </div>
       </div>
 
