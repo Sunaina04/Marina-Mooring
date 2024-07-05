@@ -808,66 +808,66 @@ const Moorings = () => {
           className="flex leading-[3.50rem] gap-32 p-4">
           <div>
             <p>
-              <span>ID: </span> {mooringRowData?.id}
+              <span>ID: </span> {mooringRowData?.id || '-'}
             </p>
             <p>
               <span>Mooring Number: </span>
-              {mooringRowData?.mooringNumber}
+              {mooringRowData?.mooringNumber || '-'}
             </p>
             <p>
               <span>Boat Name: </span>
-              {mooringRowData?.boatName}
+              {mooringRowData?.boatName || '-'}
             </p>
             <p>
-              <span>Type: </span> {mooringRowData?.boatType?.boatType}
+              <span>Type: </span> {mooringRowData?.boatType?.boatType || '-'}
             </p>
             <p>
               <span>Size of Weight: </span>
-              {mooringRowData?.sizeOfWeight}
+              {mooringRowData?.sizeOfWeight || '-'}
             </p>
             <p>
               <span>Top Chain Condition: </span>
-              {mooringRowData?.topChainCondition?.condition}
+              {mooringRowData?.topChainCondition?.condition || '-'}
             </p>
             <p className="tracking-tighter">
               <span>Bottom Chain Condition: </span>
-              {mooringRowData?.bottomChainCondition?.condition}
+              {mooringRowData?.bottomChainCondition?.condition || '-'}
             </p>
             <p>
               <span>Pendant Condition: </span>
-              {mooringRowData?.pendantCondition}
+              {mooringRowData?.pendantCondition || '-'}
             </p>
           </div>
           <div>
             <p>
-              <span>Harbor Area: </span> {mooringRowData?.harborOrArea}
+              <span>Harbor Area: </span> {mooringRowData?.harborOrArea || '-'}
             </p>
             <p>
               <span>G.P.S Coordinates: </span>
-              {mooringRowData?.gpsCoordinates}
+              {mooringRowData?.gpsCoordinates || '-'}
             </p>
             <p>
               <span>Boat Size: </span>
-              {mooringRowData?.boatSize}
+              {mooringRowData?.boatSize || '-'}
             </p>
             <p>
-              <span>Weight: </span> {mooringRowData?.boatWeight}
+              <span>Weight: </span> {mooringRowData?.boatWeight || '-'}
             </p>
             <p>
               <span>Type of Weight: </span>
-              {mooringRowData?.typeOfWeight?.type}
+              {mooringRowData?.typeOfWeight?.type || '-'}
             </p>
             <p>
               <span>Condition of Eye: </span>
-              {mooringRowData?.eyeCondition?.condition}
+              {mooringRowData?.eyeCondition?.condition || '-'}
             </p>
             <p>
               <span>Shackle, Swivel Condition: </span>
-              {mooringRowData?.shackleSwivelCondition?.condition}
+              {mooringRowData?.shackleSwivelCondition?.condition || '-'}
             </p>
             <p>
               <span>Depth at Mean High Water: </span>
-              {mooringRowData?.depthAtMeanHighWater}
+              {mooringRowData?.depthAtMeanHighWater || '-'}
             </p>
           </div>
         </div>

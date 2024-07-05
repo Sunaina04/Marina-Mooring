@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import DataTableComponent from '../CommonComponent/Table/DataTableComponent'
 import Header from '../Layout/LayoutComponents/Header'
 import { ActionButtonColumnProps, TableColumnProps } from '../../Type/Components/TableTypes'
@@ -120,8 +120,16 @@ const Dashboard = () => {
     ],
   ]
 
-  const handleToggle = (id: string) => {
-    setAccordion((prevState) => (prevState === id ? '' : id))
+  const handleToggle = (faq: string) => {
+    if (faq === 'faq1') {
+      setAccordion(accordion === 'faq1' ? 'faq2' : 'faq1')
+    } else if (faq === 'faq2') {
+      setAccordion(accordion === 'faq2' ? 'faq3' : 'faq1')
+    } else if (faq === 'faq3') {
+      setAccordion(accordion === 'faq3' ? 'faq1' : 'faq1')
+    } else {
+      setAccordion(faq)
+    }
   }
 
   const onPageChange = (event: any) => {
@@ -533,6 +541,9 @@ const Dashboard = () => {
                         selectionMode="range"
                         hideOnRangeSelection
                         inline
+                        style={{
+                          width: '520px',
+                        }}
                       />
                     </div>{' '}
                   </div>

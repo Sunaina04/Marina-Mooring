@@ -37,6 +37,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   getCustomer,
   getCustomerRecord,
 }) => {
+  console.log(mooringRowData)
+
   const selectedCustomerId = useSelector(selectCustomerId)
   const { getTypeOfBoatTypeData } = TypeOfBoatType()
   const { getTypeOfWeightData } = TypeOfWeightData()
@@ -344,7 +346,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       ...prevState,
       mooringNumber: mooringRowData?.mooringNumber || '',
       mooringName: mooringRowData?.mooringName || '',
-      customerName: moorings?.firstName + ' ' + moorings.lastName || '',
+      customerName: mooringRowData?.customerName || '',
       harbor: mooringRowData?.harborOrArea || '',
       boatYardName: mooringRowData?.boatyardResponseDto?.boatyardName || '',
       boatName: mooringRowData?.boatName || '',
@@ -438,6 +440,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     if (Object.keys(errors).length > 0) {
       return
     }
+    console.log(formData)
+
     try {
       setIsLoading(true)
       const editMooringPayload = {
@@ -445,13 +449,11 @@ const AddMoorings: React.FC<AddMooringProps> = ({
         mooringNumber: formData?.mooringNumber
           ? formData?.mooringNumber
           : mooringRowData?.mooringNumber,
-        customerId: formData?.customerName?.id
-          ? formData?.customerName?.id
-          : mooringRowData?.customerId,
+        customerId: formData?.customerName ? formData?.customerName : mooringRowData?.customerId,
         harborOrArea: formData?.harbor ? formData?.harbor : mooringRowData?.harborOrArea,
         gpsCoordinates: gpsCoordinatesValue,
-        boatyardId: formData?.boatyardName
-          ? formData?.boatyardName
+        boatyardId: formData?.boatYardName?.id
+          ? formData?.boatYardName?.id
           : mooringRowData?.boatyardResponseDto?.id,
         boatName: formData?.boatName ? formData?.boatName : mooringRowData?.boatName,
         boatSize: formData?.boatSize ? formData?.boatSize : mooringRowData?.boatSize,
@@ -490,6 +492,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
         depthAtMeanHighWater: formData?.depthAtMeanHighWater
           ? formData?.depthAtMeanHighWater
           : mooringRowData?.depthAtMeanHighWater,
+        statusId: 3,
       }
       const response = await updateMooring({
         payload: editMooringPayload,
@@ -501,7 +504,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
-          detail: 'Mooring Updated successfully',
+          detail: message,
           life: 3000,
         })
         closeModal()
