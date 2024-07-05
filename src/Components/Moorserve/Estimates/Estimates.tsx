@@ -172,7 +172,7 @@ const Estimates = () => {
           detail: message,
           life: 3000,
         })
-        getEstimate()
+        getEstimateData()
       } else {
         setIsLoading(false)
         toast?.current?.show({

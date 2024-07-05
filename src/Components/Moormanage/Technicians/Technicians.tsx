@@ -27,10 +27,7 @@ import { Paginator } from 'primereact/paginator'
 
 const Technicians = () => {
   const [dateFrom, setDateFrom] = useState<any>()
-  console.log("dateFrom",dateFrom);
   const [dateTo, setDateTo] = useState<any>()
-  console.log("dateTo",dateTo);
-  
   const [filterDateFrom, setFilterDateFrom] = useState<any>()
   const [filterDateTo, setFilterDateTo] = useState<any>()
   const [isLoading, setIsLoading] = useState(false)
@@ -266,7 +263,6 @@ const Technicians = () => {
       filterDateTo,
       getOpenWorkOrderData,
       openWorkOrder,
-      
     ],
   )
 
@@ -302,7 +298,15 @@ const Technicians = () => {
         console.error('Error occurred while fetching customer data:', error)
       }
     },
-    [technicianId, value, pageSizeTwo, pageNumberTwo, filterDateFrom, filterDateTo, completedWorkOrder],
+    [
+      technicianId,
+      value,
+      pageSizeTwo,
+      pageNumberTwo,
+      filterDateFrom,
+      filterDateTo,
+      completedWorkOrder,
+    ],
   )
 
   useEffect(() => {
@@ -376,7 +380,6 @@ const Technicians = () => {
                   value={dateFrom}
                   onChange={(e) => {
                     setDateFrom(e.value || null)
-                   
                   }}
                   placeholder="   From:  mm/dd/yyyy"
                   className="h-10"
