@@ -168,7 +168,7 @@ const Dashboard = () => {
         label: 'ID',
         style: {
           fontSize: '10px',
-          // width: '2vw',
+          width: '3vw',
           backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: '700',
@@ -259,35 +259,35 @@ const Dashboard = () => {
       {
         id: 'id',
         label: 'Order No.',
-        style: { fontSize: '10px', width: '6vw', backgroundColor: '#FFFFFF', color: '#000000' },
+        style: { fontSize: '10px', width: '4.5vw', backgroundColor: '#FFFFFF', color: '#000000' },
       },
       {
         id: 'mooringResponseDto.mooringNumber',
         label: 'Mooring Number',
-        style: { fontSize: '10px', width: '6vw', backgroundColor: '#FFFFFF', color: '#000000' },
+        style: { fontSize: '10px', backgroundColor: '#FFFFFF', color: '#000000' },
       },
       {
         id: 'firstName',
         label: 'Customer Name',
         body: firstLastName,
-        style: { fontSize: '10px', width: '6vw', backgroundColor: '#FFFFFF', color: '#000000' },
+        style: { fontSize: '10px', backgroundColor: '#FFFFFF', color: '#000000' },
       },
       {
         id: 'technicianUserResponseDto.name',
         label: 'Assigned To',
-        style: { fontSize: '10px', width: '6vw', backgroundColor: '#FFFFFF', color: '#000000' },
+        style: { fontSize: '10px', backgroundColor: '#FFFFFF', color: '#000000' },
       },
       {
         id: 'dueDate',
         label: 'Date',
-        style: { fontSize: '10px', width: '5vw', backgroundColor: '#FFFFFF', color: 'black' },
+        style: { fontSize: '10px', backgroundColor: '#FFFFFF', color: 'black' },
       },
     ],
     [],
   )
 
   const WorkOrderActionButtonColumn: ActionButtonColumnProps = {
-    header: '',
+    header: 'Actions',
     buttons: [
       {
         underline: true,
@@ -296,6 +296,7 @@ const Dashboard = () => {
         onClick: (row) => handleEdit(row),
       },
     ],
+    style: { fontSize: '10px', width: '4vw', backgroundColor: '#FFFFFF', color: 'black' },
     headerStyle: { backgroundColor: '#FFFFFF' },
   }
 
@@ -586,7 +587,7 @@ const Dashboard = () => {
                         columns={WorkOrderColumns}
                         actionButtons={WorkOrderActionButtonColumn}
                         scrollable={true}
-                        tableStyle={{ fontSize: '10px', width: '450px' }}
+                        tableStyle={{ fontSize: '10px' }}
                         emptyMessage={
                           <div className="text-center mt-14">
                             <img
