@@ -441,11 +441,14 @@ const Dashboard = () => {
               data-testid="mooring-data"
               className="flex flex-col mt-[3px] ml-[15px] mr-[15px] table-container "
               style={{ height: '700px' }}>
-              <div className="mb-4" style={{ overflow: 'auto' }}>
+              <div className="bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px] text-white">
+                <h1 className="p-4 text-xl font-extrabold">Moorings Due for Service</h1>
+              </div>
+              <div className="mb-4" style={{ overflow: 'auto', borderRadius: '10px' }}>
                 <DataTableComponent
                   columns={Mooringcolumns}
                   // actionButtons={MooringActionButtonColumn}
-                  header={MooringHeader}
+
                   scrollable={true}
                   tableStyle={{
                     backgroundColor: '#FFFFFF',
