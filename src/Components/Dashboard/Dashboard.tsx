@@ -3,7 +3,6 @@ import DataTableComponent from '../CommonComponent/Table/DataTableComponent'
 import Header from '../Layout/LayoutComponents/Header'
 import { ActionButtonColumnProps, TableColumnProps } from '../../Type/Components/TableTypes'
 import CustomMooringPositionMap from '../Map/CustomMooringPositionMap'
-import Accordion from '../CommonComponent/Accordion'
 import {
   ErrorResponse,
   MooringAndWorkOrderResponse,
@@ -121,14 +120,31 @@ const Dashboard = () => {
   ]
 
   const handleToggle = (faq: string) => {
-    if (faq === 'faq1') {
-      setAccordion(accordion === 'faq1' ? 'faq2' : 'faq1')
-    } else if (faq === 'faq2') {
-      setAccordion(accordion === 'faq2' ? 'faq3' : 'faq1')
-    } else if (faq === 'faq3') {
-      setAccordion(accordion === 'faq3' ? 'faq1' : 'faq1')
-    } else {
-      setAccordion(faq)
+    switch (faq) {
+      case 'faq1':
+        if (accordion === 'faq1') {
+          setAccordion('faq2')
+        } else {
+          setAccordion('faq1')
+        }
+        break
+      case 'faq2':
+        if (accordion === 'faq2') {
+          setAccordion('faq3')
+        } else {
+          setAccordion('faq2')
+        }
+        break
+      case 'faq3':
+        if (accordion === 'faq3') {
+          setAccordion('faq1')
+        } else {
+          setAccordion('faq3')
+        }
+        break
+      default:
+        setAccordion(faq)
+        break
     }
   }
 
