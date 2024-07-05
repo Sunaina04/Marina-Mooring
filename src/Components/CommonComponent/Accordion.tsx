@@ -50,7 +50,9 @@ const Accordion = () => {
   ]
 
   const handleToggle = (id: string) => {
-    setAccordion((prevState) => (prevState === id ? '' : id))
+    if (accordion !== id) {
+      setAccordion(id);
+    }
   }
 
   const firstLastName = (data: any) => {
