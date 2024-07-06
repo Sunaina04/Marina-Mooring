@@ -5,6 +5,14 @@ import { Dropdown } from 'primereact/dropdown'
 import { IoIosAdd } from 'react-icons/io'
 import { GrFormSubtract } from 'react-icons/gr'
 import { FaFileUpload } from 'react-icons/fa'
+
+import { LatLngExpression } from 'leaflet'
+import { Checkbox } from 'primereact/checkbox'
+import { FileUpload } from 'primereact/fileupload'
+import { Dialog } from 'primereact/dialog'
+import { AiOutlineDelete } from 'react-icons/ai'
+
+
 import { ErrorResponse, WorkOrderResponse } from '../../../Type/ApiTypes'
 import {
   useAddWorkOrderMutation,
@@ -78,7 +86,9 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   const [isLoading, setIsLoading] = useState(true)
   const [customerImage, setCustomerImage] = useState<any>()
   const [encodedImages, setEncodedImages] = useState<string[]>([])
+  const [hoveredIndex, setHoveredIndex] = useState<null | number>(null)
   const toast = useRef<Toast>(null)
+  const [customerImages, setCustomerImages] = useState<string[]>([])
 
   const { getMooringBasedOnCustomerIdAndBoatyardIdData } = GetMooringBasedOnCustomerIdAndBoatyardId(
     workOrder?.customerName?.id && workOrder?.customerName?.id,
@@ -106,12 +116,17 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   const [saveEstimation] = useAddEstimateMutation()
   const [updateEstimate] = useUpdateEstimateMutation()
   const toastRef = useRef<Toast>(null)
-
+  const [imageVisible, setImageVisible] = useState(false)
+  const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
+  const [imageRequestDtoList, setimageRequestDtoList] = useState<any>()
   const boatyardsNameOptions = workOrder?.mooringId?.id ? boatyardBasedOnMooringId : boatyardsName
   const CustomerNameOptions = workOrder?.mooringId?.id
     ? customerBasedOnMooringId
     : customerNameValue
-
+   
+    const uploadImages = () => {
+      setImageVisible(true)
+    }
   const MooringNameOptions = (() => {
     if (workOrder?.customerName?.id && workOrder?.boatyards?.id) {
       return basedOnCustomerIdAndBoatyardId
@@ -280,47 +295,124 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     return new Date(year, month - 1, day)
   }
 
-  const handleImageChange = (event: any) => {
+  // const handleImageChange = (event: any) => {
+  //   const fileInput = event.target
+  //   const file = fileInput.files?.[0]
+
+  //   if (file) {
+  //     if (!file.type.startsWith('image/')) {
+  //       setCustomerImage('')
+  //       setEncodedImages([])
+  //       toastRef?.current?.show({
+  //         severity: 'error',
+  //         summary: 'Error',
+  //         detail: 'Only image files are allowed',
+  //         life: 3000,
+  //       })
+  //       fileInput.value = '' // Reset input value
+  //       return
+  //     }
+
+  //     const reader = new FileReader()
+
+  //     reader.onload = () => {
+  //       const result = reader.result
+  //       if (typeof result === 'string') {
+  //         const base64String = result.split(',')[1]
+  //         setCustomerImage(`data:image/png;base64,${base64String}`)
+  //         setEncodedImages([base64String])
+  //       } else {
+  //         console.error('FileReader result is not a string.')
+  //       }
+  //     }
+  //     reader.readAsDataURL(file)
+  //   }
+  // }
+  const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const fileInput = event.target
-    const file = fileInput.files?.[0]
+    const files = Array.from(fileInput.files || [])
 
-    if (file) {
-      if (!file.type.startsWith('image/')) {
-        setCustomerImage('')
-        setEncodedImages([])
-        toastRef?.current?.show({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Only image files are allowed',
-          life: 3000,
-        })
-        fileInput.value = '' // Reset input value
-        return
-      }
-
-      const reader = new FileReader()
-
-      reader.onload = () => {
-        const result = reader.result
-        if (typeof result === 'string') {
-          const base64String = result.split(',')[1]
-          setCustomerImage(`data:image/png;base64,${base64String}`)
-          setEncodedImages([base64String])
-        } else {
-          console.error('FileReader result is not a string.')
-        }
-      }
-      reader.readAsDataURL(file)
+    if (files.length === 0) {
+      return
     }
-  }
 
-  const handleRemoveImage = () => {
-    setCustomerImage(null)
-    setEncodedImages([])
-    const fileInput = document.getElementById('file-input') as HTMLInputElement
-    if (fileInput) {
+    const validImageFiles = files.filter(
+      (file) => file.type.startsWith('image/') && file.size >= 5120 && file.size <= 1048576,
+    )
+
+    const invalidTypeFiles = files.filter((file) => !file.type.startsWith('image/'))
+    const invalidSizeFiles = files.filter((file) => file.size < 5120 || file.size > 1048576)
+
+    if (invalidTypeFiles.length > 0 || invalidSizeFiles.length > 0) {
+      setCustomerImages([])
+      setEncodedImages([])
+      let detailMessage = 'Only image files are allowed'
+
+      if (invalidSizeFiles.length > 0) {
+        detailMessage += '. Images must be between 5 KB and 1 MB.'
+      }
+
+      toastRef?.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: detailMessage,
+        life: 3000,
+      })
       fileInput.value = '' // Reset input value
+      return
     }
+
+    const newBase64Strings: string[] = []
+    const newImageUrls: string[] = []
+    const imageRequestDtoList: { imageName: string; imageData: string }[] = []
+
+    for (const file of validImageFiles) {
+      try {
+        const base64String = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader()
+          reader.onload = () => {
+            if (typeof reader.result === 'string') {
+              resolve(reader.result.split(',')[1])
+            } else {
+              reject(new Error('FileReader result is not a string.'))
+            }
+          }
+          reader.onerror = () => {
+            reject(new Error('Error reading file.'))
+          }
+          reader.readAsDataURL(file)
+        })
+        newBase64Strings.push(base64String)
+        newImageUrls.push(`data:image/png;base64,${base64String}`)
+        imageRequestDtoList.push({
+          imageName: file.name,
+          imageData: base64String,
+        })
+      } catch (error) {
+        console.error('Error reading file:', error)
+      }
+    }
+
+    setCustomerImages((prevImages) => [...prevImages, ...newImageUrls])
+    setEncodedImages((prevEncoded) => [...prevEncoded, ...newBase64Strings])
+    setimageRequestDtoList(imageRequestDtoList)
+  }
+  // const handleRemoveImage = () => {
+  //   setCustomerImage(null)
+  //   setEncodedImages([])
+  //   const fileInput = document.getElementById('file-input') as HTMLInputElement
+  //   if (fileInput) {
+  //     fileInput.value = '' // Reset input value
+  //   }
+  // }
+  const handleRemoveImage = (index: number) => {
+    const newImages = [...customerImages]
+    newImages.splice(index, 1)
+    setCustomerImages(newImages)
+
+    // const newEncodedImages = [...encodedImages]
+    // newEncodedImages.splice(index, 1)
+    // setEncodedImages(newEncodedImages)
   }
 
   const SaveWorkOrder = async () => {
@@ -340,7 +432,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       workOrderStatusId: workOrder?.workOrderStatus?.id,
       time: '00:' + formatTime(time.minutes, time.seconds),
       problem: workOrder?.value,
-      encodedImages: encodedImages,
+      imageRequestDtoList: imageRequestDtoList,
     }
 
     try {
@@ -394,7 +486,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         workOrderStatusId: workOrder?.workOrderStatus?.id || workOrderData?.workOrderStatusDto?.id,
         time: '00:' + formatTime(time.minutes, time.seconds) || workOrderData?.time,
         problem: workOrder?.value || workOrderData?.problem,
-        encodedImages: encodedImages,
+        imageRequestDtoList:imageRequestDtoList,
       }
       const response = await updateWorkOrder({
         payload: editPayload,
@@ -786,65 +878,24 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">Work Order Image</div>
             </span>
-            <div className="mt-1">
-              <input
-                id="file-input"
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                style={{
-                  display: 'none',
-                }}
-              />
-              <label
-                htmlFor="file-input"
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                  padding: '3px',
-                  display: 'flex',
-                  gap: '0.5rem',
-                  textAlign: 'center',
-                  lineHeight: '25px',
-                  cursor: 'pointer',
-                }}>
-                <FaFileUpload style={{ fontSize: '25px', color: 'blue' }} />
-                Upload Image
-              </label>
-              {customerImage && (
-                <div className="mt-2">
-                  <button
-                    onClick={handleRemoveImage}
-                    style={{
-                      background: 'red',
-                      color: 'white',
-                      border: 'none',
-                      borderRadius: '50%',
-                      width: '20px',
-                      height: '20px',
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}>
-                    &times;
-                  </button>
-                  <img
-                    src={customerImage}
-                    alt="Customer"
-                    style={{
-                      width: '100px',
-                      height: '100px',
-                      objectFit: 'cover',
-                      borderRadius: '0.50rem',
-                    }}
-                  />
-                </div>
-              )}
-            </div>
+            <div className="mt-2">
+                    <div />
+                    <div
+                      style={{
+                        width: '230px',
+                        height: '32px',
+                        border: fieldErrors.email ? '1px solid red' : '1px solid #D5E1EA',
+                        borderRadius: '0.50rem',
+                        fontSize: '0.8rem',
+                        paddingLeft: '0.5rem',
+                      }}>
+                      <div onClick={uploadImages} className="flex gap-3 text-center mt-1 ">
+                        <FaFileUpload style={{ fontSize: '25px', color: 'blue' }} />
+                        Upload Image
+                      </div>
+                    </div>
+                  </div>
+
           </div>
         </div>
 
@@ -1141,6 +1192,149 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
             marginTop: '10px',
           }}
         />
+
+
+
+       
+        <Dialog
+          position="center"
+          style={{
+            width: '900px',
+            minWidth: '800px',
+            height: '580px',
+            minHeight: '580px',
+            borderRadius: '1rem',
+            fontWeight: '400',
+            cursor: 'alias',
+          }}
+          draggable={false}
+          visible={imageVisible}
+          onHide={() => setImageVisible(false)}
+          header={'Customers Images'}>
+          <div className={`ml-4 ${isLoading ? 'blurred' : ''}`}>
+            <div className="flex justify-center">
+              <div className="mt-2">
+                <input
+                  id="file-input"
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={handleImageChange}
+                  style={{
+                    display: 'none',
+                  }}
+                />
+                <label
+                  htmlFor="file-input"
+                  style={{
+                    width: '230px',
+                    height: '32px',
+                    border: '2px dotted lightgray',
+                    // borderRadius: '0.5rem',
+                    fontSize: '0.8rem',
+                    padding: '3px',
+                    display: 'flex',
+                    gap: '0.5rem',
+                    textAlign: 'center',
+                    lineHeight: '25px',
+                    cursor: 'pointer',
+                  }}>
+                  <FaFileUpload style={{ fontSize: '25px', color: 'blue' }} />
+                  <div>Upload Imagess</div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div
+          //  style={{border:"1px solid red"}}
+          
+          style={{ marginTop: '40px', marginLeft: '40px', }}>
+            {customerImages.length > 0 && (
+              <div className="mt-2">
+                <div 
+               
+                className="flex gap-16 flex-wrap">
+                  {customerImages.map((image, index) => (
+                    <div
+                    
+                      key={index}
+                      style={{ position: 'relative', display: 'inline-block' }}
+                      onMouseEnter={() => setHoveredIndex(index)}
+                      onMouseLeave={() => setHoveredIndex(null)}>
+                      {/* <h1
+                        style={{
+                          position: 'absolute',
+                          top: '12px',
+                          right: '0',
+                          left: '12px',
+                          background: 'gray',
+                          color: 'white',
+                          fontWeight: 'bolder',
+                          border: 'none',
+                          width: '80px',
+                          cursor: 'pointer',
+                          opacity: hoveredIndex === index ? 1 : 0,
+                          transition: 'opacity 0.3s',
+                        }}>
+                        name
+                      </h1> */}
+                      <AiOutlineDelete
+                        onClick={() => handleRemoveImage(index)}
+                        style={{
+                          position: 'absolute',
+                          top: '165px',
+                          right: '5px',
+                          background: 'red',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: '5px',
+                          width: '28px',
+                          height: '25px',
+                          cursor: 'pointer',
+                          opacity: hoveredIndex === index ? 1 : 0,
+                          transition: 'opacity 0.3s',
+                          
+                        }}
+                      />
+                      <img
+                        src={image}
+                        alt={`Uploaded ${index}`}
+                        style={{
+                          width: '300px',
+                          height: '200px',
+                          objectFit: 'cover',
+                          borderRadius: '0.5rem',
+                          boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className={`flex gap-4 ml-4 bottom-5 absolute left-6 ${isLoading ? 'blurred' : ''}`}>
+            <Button
+              label={'Close'}
+              onClick={() => setImageVisible(false)}
+              style={{
+                width: '89px',
+                height: '42px',
+                backgroundColor: '#0098FF',
+                cursor: 'pointer',
+                fontWeight: 'bolder',
+                fontSize: '1rem',
+                boxShadow: 'none',
+                color: 'white',
+                borderRadius: '0.5rem',
+              }}
+            />
+          </div>
+          <Toast ref={toastRef} />
+        </Dialog>
+ 
       </div>
     </>
   )
