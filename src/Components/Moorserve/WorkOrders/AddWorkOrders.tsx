@@ -1,14 +1,9 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { InputTextarea } from 'primereact/inputtextarea'
-import { InputText } from 'primereact/inputtext'
 import { Dropdown } from 'primereact/dropdown'
 import { IoIosAdd } from 'react-icons/io'
 import { GrFormSubtract } from 'react-icons/gr'
 import { FaFileUpload } from 'react-icons/fa'
-
-import { LatLngExpression } from 'leaflet'
-import { Checkbox } from 'primereact/checkbox'
-import { FileUpload } from 'primereact/fileupload'
 import { Dialog } from 'primereact/dialog'
 import { AiOutlineDelete } from 'react-icons/ai'
 
@@ -24,7 +19,6 @@ import {
 
 import { Button } from 'primereact/button'
 import { WorkOrderProps } from '../../../Type/ComponentBasedType'
-import InputComponent from '../../CommonComponent/InputComponent'
 import {
   GetBoatyardBasedOnMooringId,
   GetCustomerBasedOnMooringId,
@@ -35,7 +29,7 @@ import {
   GetTechnicians,
   GetWorkOrderStatus,
 } from '../../CommonComponent/MetaDataComponent/MoorserveMetaDataApi'
-import { MetaData, MetaDataCustomer, MetaDataTechnician } from '../../../Type/CommonType'
+import { MetaData, MetaDataTechnician } from '../../../Type/CommonType'
 import {
   BoatyardNameData,
   CustomersData,
