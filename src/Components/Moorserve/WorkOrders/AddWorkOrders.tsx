@@ -12,7 +12,6 @@ import { FileUpload } from 'primereact/fileupload'
 import { Dialog } from 'primereact/dialog'
 import { AiOutlineDelete } from 'react-icons/ai'
 
-
 import { ErrorResponse, WorkOrderResponse } from '../../../Type/ApiTypes'
 import {
   useAddWorkOrderMutation,
@@ -123,10 +122,10 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   const CustomerNameOptions = workOrder?.mooringId?.id
     ? customerBasedOnMooringId
     : customerNameValue
-   
-    const uploadImages = () => {
-      setImageVisible(true)
-    }
+
+  const uploadImages = () => {
+    setImageVisible(true)
+  }
   const MooringNameOptions = (() => {
     if (workOrder?.customerName?.id && workOrder?.boatyards?.id) {
       return basedOnCustomerIdAndBoatyardId
@@ -295,39 +294,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     return new Date(year, month - 1, day)
   }
 
-  // const handleImageChange = (event: any) => {
-  //   const fileInput = event.target
-  //   const file = fileInput.files?.[0]
-
-  //   if (file) {
-  //     if (!file.type.startsWith('image/')) {
-  //       setCustomerImage('')
-  //       setEncodedImages([])
-  //       toastRef?.current?.show({
-  //         severity: 'error',
-  //         summary: 'Error',
-  //         detail: 'Only image files are allowed',
-  //         life: 3000,
-  //       })
-  //       fileInput.value = '' // Reset input value
-  //       return
-  //     }
-
-  //     const reader = new FileReader()
-
-  //     reader.onload = () => {
-  //       const result = reader.result
-  //       if (typeof result === 'string') {
-  //         const base64String = result.split(',')[1]
-  //         setCustomerImage(`data:image/png;base64,${base64String}`)
-  //         setEncodedImages([base64String])
-  //       } else {
-  //         console.error('FileReader result is not a string.')
-  //       }
-  //     }
-  //     reader.readAsDataURL(file)
-  //   }
-  // }
   const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const fileInput = event.target
     const files = Array.from(fileInput.files || [])
@@ -358,7 +324,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         detail: detailMessage,
         life: 3000,
       })
-      fileInput.value = '' // Reset input value
+      fileInput.value = ''
       return
     }
 
@@ -397,14 +363,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     setEncodedImages((prevEncoded) => [...prevEncoded, ...newBase64Strings])
     setimageRequestDtoList(imageRequestDtoList)
   }
-  // const handleRemoveImage = () => {
-  //   setCustomerImage(null)
-  //   setEncodedImages([])
-  //   const fileInput = document.getElementById('file-input') as HTMLInputElement
-  //   if (fileInput) {
-  //     fileInput.value = '' // Reset input value
-  //   }
-  // }
+
   const handleRemoveImage = (index: number) => {
     const newImages = [...customerImages]
     newImages.splice(index, 1)
@@ -486,7 +445,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         workOrderStatusId: workOrder?.workOrderStatus?.id || workOrderData?.workOrderStatusDto?.id,
         time: '00:' + formatTime(time.minutes, time.seconds) || workOrderData?.time,
         problem: workOrder?.value || workOrderData?.problem,
-        imageRequestDtoList:imageRequestDtoList,
+        imageRequestDtoList: imageRequestDtoList,
       }
       const response = await updateWorkOrder({
         payload: editPayload,
@@ -879,23 +838,22 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
               <div className="flex gap-1">Work Order Image</div>
             </span>
             <div className="mt-2">
-                    <div />
-                    <div
-                      style={{
-                        width: '230px',
-                        height: '32px',
-                        border: fieldErrors.email ? '1px solid red' : '1px solid #D5E1EA',
-                        borderRadius: '0.50rem',
-                        fontSize: '0.8rem',
-                        paddingLeft: '0.5rem',
-                      }}>
-                      <div onClick={uploadImages} className="flex gap-3 text-center mt-1 ">
-                        <FaFileUpload style={{ fontSize: '25px', color: 'blue' }} />
-                        Upload Image
-                      </div>
-                    </div>
-                  </div>
-
+              <div />
+              <div
+                style={{
+                  width: '230px',
+                  height: '32px',
+                  border: fieldErrors.email ? '1px solid red' : '1px solid #D5E1EA',
+                  borderRadius: '0.50rem',
+                  fontSize: '0.8rem',
+                  paddingLeft: '0.5rem',
+                }}>
+                <div onClick={uploadImages} className="flex gap-3 text-center mt-1 ">
+                  <FaFileUpload style={{ fontSize: '25px', color: 'blue' }} />
+                  Upload Image
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -1193,9 +1151,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
           }}
         />
 
-
-
-       
         <Dialog
           position="center"
           style={{
@@ -1247,17 +1202,14 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
           </div>
 
           <div
-          //  style={{border:"1px solid red"}}
-          
-          style={{ marginTop: '40px', marginLeft: '40px', }}>
+            //  style={{border:"1px solid red"}}
+
+            style={{ marginTop: '40px', marginLeft: '40px' }}>
             {customerImages.length > 0 && (
               <div className="mt-2">
-                <div 
-               
-                className="flex gap-16 flex-wrap">
+                <div className="flex gap-16 flex-wrap">
                   {customerImages.map((image, index) => (
                     <div
-                    
                       key={index}
                       style={{ position: 'relative', display: 'inline-block' }}
                       onMouseEnter={() => setHoveredIndex(index)}
@@ -1294,7 +1246,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                           cursor: 'pointer',
                           opacity: hoveredIndex === index ? 1 : 0,
                           transition: 'opacity 0.3s',
-                          
                         }}
                       />
                       <img
@@ -1334,7 +1285,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
           </div>
           <Toast ref={toastRef} />
         </Dialog>
- 
       </div>
     </>
   )
