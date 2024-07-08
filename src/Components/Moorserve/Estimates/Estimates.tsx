@@ -18,6 +18,7 @@ import { Params } from '../../../Type/CommonType'
 import { Paginator } from 'primereact/paginator'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { utils, writeFile } from 'xlsx'
+import React from 'react'
 
 const Estimates = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -225,13 +226,17 @@ const Estimates = () => {
   }
 
   useEffect(() => {
+    getEstimateData()
+  }, [pageNumber, pageSize, selectedCustomerId])
+
+  useEffect(() => {
     const timeoutId = setTimeout(() => {
       if (searchText) {
         getEstimateData()
       }
     }, 600)
     return () => clearTimeout(timeoutId)
-  }, [searchText, selectedCustomerId, pageNumber, pageSize])
+  }, [searchText])
 
   useEffect(() => {
     handleModalClose()
