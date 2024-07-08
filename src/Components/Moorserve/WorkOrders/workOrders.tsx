@@ -167,13 +167,17 @@ const WorkOrders = () => {
   }
 
   useEffect(() => {
+    getWorkOrderData()
+  }, [pageNumber, pageSize, selectedCustomerId])
+
+  useEffect(() => {
     const timeoutId = setTimeout(() => {
       if (searchText) {
         getWorkOrderData()
       }
     }, 600)
     return () => clearTimeout(timeoutId)
-  }, [searchText, selectedCustomerId, pageNumber, pageSize])
+  }, [searchText])
 
   useEffect(() => {
     handleModalClose()
