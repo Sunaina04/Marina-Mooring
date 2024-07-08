@@ -789,6 +789,7 @@ const Moorings = () => {
         draggable={false}
         visible={dialogVisible}
         onHide={() => setDialogVisible(false)}
+        headerStyle={{ cursor: 'alias' }}
         header={
           <div className="flex gap-4">
             <div className="font-bolder text-[black]">Mooring Information</div>

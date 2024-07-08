@@ -51,7 +51,7 @@ const Accordion = () => {
 
   const handleToggle = (id: string) => {
     if (accordion !== id) {
-      setAccordion(id);
+      setAccordion(id)
     }
   }
 
@@ -273,6 +273,7 @@ const Accordion = () => {
         draggable={false}
         visible={visible}
         onHide={handleModalClose}
+        headerStyle={{ cursor: 'alias' }}
         header={<h1 className="text-xl font-extrabold text-black ml-4">Work Order</h1>}>
         {/* <hr className="border border-[#000000] my-0 mx-0"></hr> */}
 

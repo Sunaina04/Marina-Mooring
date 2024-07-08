@@ -1892,6 +1892,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           draggable={false}
           visible={imageVisible}
           onHide={() => setImageVisible(false)}
+          headerStyle={{ cursor: 'alias' }}
           header={'Customers Images'}>
           <div className={`ml-4 ${isLoading ? 'blurred' : ''}`}>
             <div className="flex justify-center">
