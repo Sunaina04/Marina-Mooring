@@ -28,6 +28,7 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
   useEffect(() => {
     if (map && position) {
       map.setView(position)
+      map.x
     }
   }, [position, map])
 
@@ -36,6 +37,23 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
     const [latitude, longitude] = coordinates.split(' ').map(parseFloat)
     return isNaN(latitude) || isNaN(longitude) ? null : [latitude, longitude]
   }
+
+  const boxStyle = {
+    backgroundColor: 'white',
+    borderRadius: '10px',
+    padding: '10px',
+    marginTop: '10px',
+    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+  }
+
+  const dotStyle = (color: any) => ({
+    display: 'inline-block',
+    width: '10px',
+    height: '10px',
+    borderRadius: '50%',
+    backgroundColor: color,
+    marginRight: '10px',
+  })
 
   const iconsByStatusId = {
     1: GearOnIcon,
@@ -79,6 +97,20 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
             )
           })}
       </MapContainer>
+      <div style={boxStyle}>
+        <div>
+          <span style={dotStyle('red')}></span> Need Inspection
+        </div>
+        <div>
+          <span style={dotStyle('blue')}></span> Gear Off
+        </div>
+        <div>
+          <span style={dotStyle('green')}></span> Gear On
+        </div>
+        <div>
+          <span style={dotStyle('white')}></span> Not in Use
+        </div>
+      </div>
     </>
   )
 }
