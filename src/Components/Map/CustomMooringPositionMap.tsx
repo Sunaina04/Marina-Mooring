@@ -25,7 +25,6 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
   useEffect(() => {
     if (map && position) {
       map.setView(position)
-      map.x
     }
   }, [position, map])
 
