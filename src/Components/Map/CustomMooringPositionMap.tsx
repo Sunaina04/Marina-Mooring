@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
-import L, { LatLngExpression, LatLngBounds } from 'leaflet'
+import L, { LatLngExpression } from 'leaflet'
 import './CustomMap.css'
 import { CustomMooringPositionMapProps } from '../../Type/Components/MapTypes'
 import {
@@ -11,16 +11,14 @@ import {
   NotInUseIcon,
 } from './DefaultIcon'
 import { MooringPayload } from '../../Type/ApiTypes'
-import { FaCircle } from 'react-icons/fa'
-import Timeline from '../CustomComponent/MooringMapModal'
 import MooringMapModal from '../CustomComponent/MooringMapModal'
 
 const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
   position,
   zoomLevel,
-  popUpMessage,
   style,
   moorings,
+  dashboard,
 }) => {
   const [map, setMap] = useState<any>()
   const mapRef = useRef<any>(null)
@@ -46,7 +44,7 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
     boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
   }
 
-  const dotStyle = (color: any) => ({
+  const dotStyle = (color: string) => ({
     display: 'inline-block',
     width: '10px',
     height: '10px',
@@ -54,6 +52,12 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
     backgroundColor: color,
     marginRight: '10px',
   })
+
+  const containerStyle = {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  }
 
   const iconsByStatusId = {
     1: GearOnIcon,
@@ -97,20 +101,6 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
             )
           })}
       </MapContainer>
-      <div style={boxStyle}>
-        <div>
-          <span style={dotStyle('red')}></span> Need Inspection
-        </div>
-        <div>
-          <span style={dotStyle('blue')}></span> Gear Off
-        </div>
-        <div>
-          <span style={dotStyle('green')}></span> Gear On
-        </div>
-        <div>
-          <span style={dotStyle('white')}></span> Not in Use
-        </div>
-      </div>
     </>
   )
 }

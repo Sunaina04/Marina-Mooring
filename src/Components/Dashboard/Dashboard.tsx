@@ -501,6 +501,7 @@ const Dashboard = () => {
                 style={{ height: '60%', width: '100%' }}
                 iconsByStatus={iconsByStatus}
                 moorings={mooringData}
+                dashboard={true}
               />
             </div>
           </div>
