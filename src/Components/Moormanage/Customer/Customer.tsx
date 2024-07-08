@@ -789,11 +789,11 @@ const Customer = () => {
         {/* middle container */}
 
         <div
-          className={`min-w-[21vw] min-h[600px] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
+          className={`min-w-[21vw] min-h[550px] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
           <CustomMooringPositionMap
             position={initialPosition}
             zoomLevel={15}
-            style={{ height: '600px' }}
+            style={{ height: '550px' }}
             iconsByStatus={iconsByStatus}
             moorings={mooringData}
           />
