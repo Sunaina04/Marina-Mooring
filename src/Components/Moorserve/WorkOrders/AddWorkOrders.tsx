@@ -842,11 +842,13 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                     paddingLeft: '0.5rem',
-                    cursor: 'pointer',
                   }}>
                   <div onClick={uploadImages} className="flex gap-3 text-center">
-                    <FaFileUpload style={{ fontSize: '25px', color: 'blue' }} />
-                    Upload Image
+                    <FaFileUpload
+                      style={{ fontSize: '22px', color: '#0098FF', marginTop: '3px' }}
+                    />
+                    <div className="border-r-2 border-blue-100  h-[30px]"></div>
+                    <span className="pl-4 mt-1"> Upload Image </span>
                   </div>
                 </div>
               </div>
@@ -1162,8 +1164,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
           draggable={false}
           visible={imageVisible}
           onHide={() => setImageVisible(false)}
-          headerStyle={{ cursor: 'alias' }}
-          header={'Customers Images'}>
+          header={'Work Order Images'}>
           <div className={`ml-4 ${isLoading ? 'blurred' : ''}`}>
             <div className="flex justify-center">
               <div className="mt-2">
@@ -1180,20 +1181,28 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 <label
                   htmlFor="file-input"
                   style={{
-                    width: '230px',
-                    height: '32px',
-                    border: '2px dotted lightgray',
-                    // borderRadius: '0.5rem',
+                    width: '300px',
+                    height: '40px',
+                    border: '2px solid #0098FF',
+                    borderRadius: '0.50rem',
                     fontSize: '0.8rem',
-                    padding: '3px',
+                    paddingLeft: '0.5rem',
                     display: 'flex',
                     gap: '0.5rem',
                     textAlign: 'center',
                     lineHeight: '25px',
                     cursor: 'pointer',
                   }}>
-                  <FaFileUpload style={{ fontSize: '25px', color: 'blue' }} />
-                  <div>Upload Imagess</div>
+                  <FaFileUpload
+                    style={{
+                      fontSize: '29px',
+                      color: '#0098FF',
+                      marginLeft: '1rem',
+                      marginTop: '3px',
+                    }}
+                  />
+                  <div className="border-r-2 border-sky-500  h-9 pl-3"></div>
+                  <span className="pl-10 mt-1"> UPLOAD IMAGES </span>
                 </label>
               </div>
             </div>
