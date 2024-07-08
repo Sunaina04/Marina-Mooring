@@ -502,6 +502,7 @@ const Dashboard = () => {
                 iconsByStatus={iconsByStatus}
                 moorings={mooringData}
               />
+              
             </div>
           </div>
 
@@ -665,7 +666,7 @@ const Dashboard = () => {
                 </label>
                 <div
                   className={`content mt-5 transition-all ease-in-out duration-500 ${accordion === 'faq3' ? '' : 'hidden'}`}>
-                  <div>
+                  <div className=''>
                     {statCardsData.map((items) => (
                       <StatCard key={items[0].title} items={items} />
                     ))}

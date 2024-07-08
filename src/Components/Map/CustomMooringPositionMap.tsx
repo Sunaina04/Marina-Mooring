@@ -44,6 +44,8 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
     padding: '10px',
     marginTop: '10px',
     boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+    display: "flex",
+    justifyContent: "space-between" ,
   }
 
   const dotStyle = (color: any) => ({
