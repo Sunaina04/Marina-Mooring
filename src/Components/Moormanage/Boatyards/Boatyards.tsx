@@ -12,12 +12,10 @@ import {
 } from '../../../Type/ApiTypes'
 import {
   useDeleteBoatyardsMutation,
-  useDeleteCustomerMutation,
   useGetBoatyardsMutation,
   useGetMooringWithBoatyardMutation,
 } from '../../../Services/MoorManage/MoormanageApi'
-import DataTableWithToogle from '../../CommonComponent/Table/DataTableWithToogle'
-import { ActionButtonColumnProps, Product } from '../../../Type/Components/TableTypes'
+import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 import { properties } from '../../Utils/MeassageProperties'
@@ -38,7 +36,6 @@ import { Paginator } from 'primereact/paginator'
 const Boatyards = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
   const userData = useSelector((state: any) => state.user?.userData)
-  const role = userData?.role?.id
   const [modalVisible, setModalVisible] = useState(false)
   const [boatyardsData, setboatyardsData] = useState<BoatYardPayload[]>([])
   const [mooringWithBoatyardsData, setMooringWithBoatyardsData] = useState<
