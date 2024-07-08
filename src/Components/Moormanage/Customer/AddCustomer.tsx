@@ -78,9 +78,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [imageVisible, setImageVisible] = useState(false)
   const [hoveredIndex, setHoveredIndex] = useState<null | number>(null)
   const [imageRequestDtoList, setimageRequestDtoList] = useState<any>()
-  const [emailError, setEmailError] = useState('')
-
-
   const getFomattedCoordinate = (gpsCoordinatesValue: any) => {
     try {
       let [lat, long]: any = gpsCoordinatesValue.split(' ')
@@ -353,7 +350,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         break
       case 'email':
         setEmail(value)
-        setEmailError('')
         break
       case 'streetHouse':
         setStreetHouse(value)
@@ -511,7 +507,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       }
     } catch (error) {
       const { data, message } = error as ErrorResponse
-      setEmailError(data.message)
       setIsLoading(false)
       toastRef?.current?.show({
         severity: 'error',
@@ -974,15 +969,16 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         style={{
                           width: '230px',
                           height: '32px',
-                          border: emailError ? '1px solid red' : '1px solid #D5E1EA',
+                          border: fieldErrors.email ? '1px solid red' : '1px solid #D5E1EA',
                           borderRadius: '0.50rem',
                           fontSize: '0.8rem',
                           paddingLeft: '0.5rem',
-                          
                         }}
                       />
                       <p className="" id="email">
-                        <small className="p-error">{emailError}</small>
+                        {fieldErrors.email && (
+                          <small className="p-error">{fieldErrors.email}</small>
+                        )}
                       </p>
                     </div>
                   </div>
@@ -1220,7 +1216,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         {/* Add Mooring */}
 
         {(editCustomerMode && selectedCustomerType === 'Dock') ||
-          (editCustomerMode && selectedCustomerType?.id === 5) ? (
+        (editCustomerMode && selectedCustomerType?.id === 5) ? (
           AddDock()
         ) : (
           <></>
@@ -1896,7 +1892,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           draggable={false}
           visible={imageVisible}
           onHide={() => setImageVisible(false)}
-          headerStyle={{ cursor: 'alias' }}
           header={'Customers Images'}>
           <div className={`ml-4 ${isLoading ? 'blurred' : ''}`}>
             <div className="flex justify-center">
@@ -1926,8 +1921,13 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     lineHeight: '25px',
                     cursor: 'pointer',
                   }}>
-                  <FaFileUpload style={{ fontSize: '25px', color: 'blue' }} />
-                  <div>Upload Imagess</div>
+                  <div onClick={uploadImages} className="flex gap-3 text-center mt-1 ">
+                    <FaFileUpload
+                      style={{ fontSize: '29px', color: '#0098FF', marginLeft: '1rem' }}
+                    />
+                    <div className="border-r-2 border-sky-500  h-8 pl-3"></div>
+                    <span className="pl-10"> UPLOAD IMAGES </span>
+                  </div>
                 </label>
               </div>
             </div>
