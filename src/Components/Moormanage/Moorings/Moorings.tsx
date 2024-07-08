@@ -647,10 +647,7 @@ const Moorings = () => {
 
         {/* last container */}
 
-        <div
-          //  style={{border:"1px solid red"}}
-
-          className="lg:flex-row ml-5 mr-12 w-[500px]">
+        <div className="lg:flex-row ml-5 mr-12 w-[500px]">
           {/* Left Panel - Customer Record */}
           <div className="flex-grow rounded-md border bg-white">
             <div className="bg-[#00426F] rounded-t-[10px] flex justify-between pb-2">
