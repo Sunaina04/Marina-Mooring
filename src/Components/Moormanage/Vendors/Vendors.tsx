@@ -308,7 +308,7 @@ const Vendors = () => {
             position: 'relative',
           }}
           className={`ml-[3rem] mr-[2.30rem] mt-8 `}>
-          <div data-testid="customer-admin-data" className="flex flex-col h-full ">
+          <div data-testid="customer" className="flex flex-col h-full ">
             <div className="flex-grow overflow-auto">
               <DataTableComponent
                 tableStyle={{
@@ -329,25 +329,28 @@ const Vendors = () => {
                       className="w-28 mx-auto mb-4"
                     />
                     <p className="text-gray-500 font-[600] text-lg">No data available</p>
-
-                    {isLoading && (
-                      <ProgressSpinner
-                        style={{
-                          position: 'absolute',
-                          top: '50%',
-                          left: '50%',
-                          transform: 'translate(-50%, -50%)',
-                          width: '50px',
-                          height: '50px',
-                        }}
-                        strokeWidth="4"
-                      />
-                    )}
+                    <div data-testid="progress">
+                      {isLoading && (
+                        <ProgressSpinner
+                          style={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            width: '50px',
+                            height: '50px',
+                          }}
+                          strokeWidth="4"
+                        />
+                      )}
+                    </div>
                   </div>
                 }
               />
             </div>
-            <div className="mt-auto">
+            <div 
+             data-testid="PaginatorOne"
+            className="mt-auto">
               <Paginator
                 first={pageNumber1}
                 rows={pageSize}
