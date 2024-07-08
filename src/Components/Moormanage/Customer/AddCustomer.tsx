@@ -1014,7 +1014,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   </span>
 
                   <div className="mt-2">
-                    <div />
                     <div
                       style={{
                         width: '230px',
@@ -1025,10 +1024,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         paddingLeft: '0.5rem',
                         cursor: 'pointer',
                       }}>
-                      <div onClick={uploadImages} className="flex gap-3 text-center mt-1 ">
-                        <FaFileUpload style={{ fontSize: '22px', color: '#0098FF' }} />
-                        <div className="border-r-2 border-blue-100  h-6"></div>
-                        <span> Upload Image </span>
+                      <div onClick={uploadImages} className="flex gap-3 text-center ">
+                        <FaFileUpload style={{ fontSize: '22px', color: '#0098FF', marginTop:'3px' }} />
+                        <div className="border-r-2 border-blue-100  h-[30px]"></div>
+                        <span className='pl-4 mt-1'> Upload Image </span>
                       </div>
                     </div>
                   </div>
@@ -1921,12 +1920,12 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     lineHeight: '25px',
                     cursor: 'pointer',
                   }}>
-                  <div onClick={uploadImages} className="flex gap-3 text-center mt-1 ">
+                  <div onClick={uploadImages} className="flex gap-3 text-center ">
                     <FaFileUpload
-                      style={{ fontSize: '29px', color: '#0098FF', marginLeft: '1rem' }}
+                      style={{ fontSize: '29px', color: '#0098FF', marginLeft: '1rem', marginTop:'3px' }}
                     />
-                    <div className="border-r-2 border-sky-500  h-8 pl-3"></div>
-                    <span className="pl-10"> UPLOAD IMAGES </span>
+                    <div className="border-r-2 border-sky-500  h-9 pl-3"></div>
+                    <span className="pl-10 mt-1"> UPLOAD IMAGES </span>
                   </div>
                 </label>
               </div>
