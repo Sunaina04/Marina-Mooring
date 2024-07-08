@@ -353,7 +353,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         break
       case 'email':
         setEmail(value)
-        setEmailError(' ')
+        setEmailError('')
         break
       case 'streetHouse':
         setStreetHouse(value)
@@ -974,10 +974,11 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         style={{
                           width: '230px',
                           height: '32px',
-                          border: fieldErrors ? '1px solid red' : '1px solid #D5E1EA',
+                          border: emailError ? '1px solid red' : '1px solid #D5E1EA',
                           borderRadius: '0.50rem',
                           fontSize: '0.8rem',
                           paddingLeft: '0.5rem',
+                          
                         }}
                       />
                       <p className="" id="email">
