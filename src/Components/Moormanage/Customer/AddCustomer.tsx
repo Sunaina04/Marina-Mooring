@@ -1925,7 +1925,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     lineHeight: '25px',
                     cursor: 'pointer',
                   }}>
-<<<<<<< HEAD
                   <div onClick={uploadImages} className="flex gap-3 text-center ">
                     <FaFileUpload
                       style={{ fontSize: '29px', color: '#0098FF', marginLeft: '1rem', marginTop:'3px' }}
@@ -1933,10 +1932,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     <div className="border-r-2 border-sky-500  h-9 pl-3"></div>
                     <span className="pl-10 mt-1"> UPLOAD IMAGES </span>
                   </div>
-=======
-                  <FaFileUpload style={{ fontSize: '25px', color: 'blue' }} />
-                  <div>Upload Imagess</div>
->>>>>>> a1ec8b546d2b719dd318a46a64ea8540b202ff5e
                 </label>
               </div>
             </div>
