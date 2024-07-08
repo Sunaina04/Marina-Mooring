@@ -226,7 +226,9 @@ const Estimates = () => {
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      getEstimateData()
+      if (searchText) {
+        getEstimateData()
+      }
     }, 600)
     return () => clearTimeout(timeoutId)
   }, [searchText, selectedCustomerId, pageNumber, pageSize])

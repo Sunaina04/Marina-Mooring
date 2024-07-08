@@ -168,7 +168,9 @@ const WorkOrders = () => {
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      getWorkOrderData()
+      if (searchText) {
+        getWorkOrderData()
+      }
     }, 600)
     return () => clearTimeout(timeoutId)
   }, [searchText, selectedCustomerId, pageNumber, pageSize])
