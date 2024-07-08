@@ -375,7 +375,9 @@ const Technicians = () => {
                 gap: '8px',
                 padding: '8px',
               }}>
-              <div style={{ flex: '1', display: 'flex', justifyContent: 'center' }}>
+              <div
+                data-testid="BiCalendarAlt"
+                style={{ flex: '1', display: 'flex', justifyContent: 'center' }}>
                 <Calendar
                   value={dateFrom}
                   onChange={(e) => {
@@ -387,7 +389,9 @@ const Technicians = () => {
                   showIcon
                 />
               </div>
-              <div style={{ flex: '1', display: 'flex', justifyContent: 'center' }}>
+              <div
+                data-testid="BiCalendarAltTwo"
+                style={{ flex: '1', display: 'flex', justifyContent: 'center' }}>
                 <Calendar
                   value={dateTo}
                   onChange={(e) => {
@@ -474,21 +478,27 @@ const Technicians = () => {
                   }
                   style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
                 />
-                {isLoading && (
-                  <ProgressSpinner
-                    style={{
-                      position: 'absolute',
-                      top: '50%',
-                      left: '40%',
-                      transform: 'translate(-50%, -50%)',
-                      width: '50px',
-                      height: '50px',
-                    }}
-                    strokeWidth="4"
-                  />
-                )}
+                <div data-testid="progress">
+                  {isLoading && (
+                    <ProgressSpinner
+                      style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '40%',
+                        transform: 'translate(-50%, -50%)',
+                        width: '50px',
+                        height: '50px',
+                      }}
+                      strokeWidth="4"
+                    />
+                  )}
+                </div>
+
               </div>
-              <div className="mt-auto">
+              <div
+              
+              data-testid="PaginatorOne"
+              className="mt-auto">
                 <Paginator
                   first={pageNumber1}
                   rows={pageSize}
@@ -527,6 +537,7 @@ const Technicians = () => {
               <div className="mr-10">
                 <div className="card flex justify-content-center ">
                   <SelectButton
+                    data-testid="selectButton"
                     value={value}
                     onChange={(e: SelectButtonChangeEvent) => {
                       if (e.value) {
@@ -541,10 +552,12 @@ const Technicians = () => {
             </div>
 
             <div
-              data-testid="work-order-data"
+              data-testid="workOrder"
               className="flex flex-col mt-[3px] ml-[15px] mr-[15px] table-container "
               style={{ height: '600px' }}>
-              <div className="flex-grow overflow-auto">
+              <div
+
+                className="flex-grow overflow-auto">
                 <DataTableComponent
                   columns={WorkOrdersColumn}
                   scrollable={true}
@@ -570,22 +583,28 @@ const Technicians = () => {
                   }
                   style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
                 />
+                <div data-testid="progressTwo">
+                  {isLoading && (
+                    <ProgressSpinner
+                      style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '40%',
+                        transform: 'translate(-50%, -50%)',
+                        width: '50px',
+                        height: '50px',
+                      }}
+                      strokeWidth="4"
+                    />
+                  )}
 
-                {isLoading && (
-                  <ProgressSpinner
-                    style={{
-                      position: 'absolute',
-                      top: '50%',
-                      left: '40%',
-                      transform: 'translate(-50%, -50%)',
-                      width: '50px',
-                      height: '50px',
-                    }}
-                    strokeWidth="4"
-                  />
-                )}
+                </div>
+
               </div>
-              <div className="mt-auto">
+              <div 
+              data-testid="Paginator"
+              
+              className="mt-auto">
                 <Paginator
                   first={pageNumber2}
                   rows={pageSizeTwo}
