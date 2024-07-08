@@ -842,6 +842,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                     paddingLeft: '0.5rem',
+                    cursor: 'pointer',
                   }}>
                   <div onClick={uploadImages} className="flex gap-3 text-center">
                     <FaFileUpload
