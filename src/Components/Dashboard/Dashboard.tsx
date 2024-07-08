@@ -50,8 +50,7 @@ const Dashboard = () => {
   const [mooringData, setMooringData] = useState<any>()
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [mooringResponseData, setMooringResponseData] = useState<any>()
-  const [startDate, setStartDate] = useState(new Date())
-  const [endDate, setEndDate] = useState(new Date())
+
   const [getMoorings] = useGetMooringsMutation()
   const today = new Date()
   const dateAfter7Days = new Date(today)
@@ -63,6 +62,8 @@ const Dashboard = () => {
     const year = date.getFullYear()
     return `${month}/${day}/${year}`
   }
+  const [startDate, setStartDate] = useState<any>(formatDate(today))
+  const [endDate, setEndDate] = useState<any>(formatDate(dateAfter7Days))
   const [dates, setDates] = useState<[Date, Date]>([today, dateAfter7Days])
   const [filterDateFrom, setFilterDateFrom] = useState<any>(formatDate(today))
   const [filterDateTo, setFilterDateTo] = useState<any>(formatDate(dateAfter7Days))

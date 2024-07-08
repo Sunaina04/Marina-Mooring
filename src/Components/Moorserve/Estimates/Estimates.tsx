@@ -226,8 +226,10 @@ const Estimates = () => {
   }
 
   useEffect(() => {
-    getEstimateData()
-  }, [pageNumber, pageSize, selectedCustomerId])
+    if (pageNumber && pageSize) {
+      getEstimateData()
+    }
+  }, [pageNumber, pageSize])
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
