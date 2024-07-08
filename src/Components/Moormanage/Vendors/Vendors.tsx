@@ -231,12 +231,25 @@ const Vendors = () => {
           <div className="flex gap-4 mr-12 mt-6">
             <div>
               <div className="p-input-icon-left">
-                <IoSearchSharp className="text-blue-900" />
                 <InputText
                   value={searchText}
                   onChange={handleSearch}
                   placeholder="Search"
                   className="h-[44px] w-[237px] cursor-pointer pl-8 rounded-lg text-bold  "
+                />
+                <img
+                  src="/assets/images/Search.svg"
+                  alt="Search Icon"
+                  className="p-clickable"
+                  style={{
+                    position: 'absolute',
+                    left: '10px',
+                    right: '-10px',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    width: '18px',
+                    height: '18px',
+                  }}
                 />
               </div>
             </div>
