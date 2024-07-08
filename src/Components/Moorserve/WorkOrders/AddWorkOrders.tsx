@@ -827,28 +827,31 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
               )}
             </p>
           </div>
-          <div className="">
-            <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">Work Order Image</div>
-            </span>
-            <div className="mt-2">
-              <div />
-              <div
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: fieldErrors.email ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                  paddingLeft: '0.5rem',
-                }}>
-                <div onClick={uploadImages} className="flex gap-3 text-center mt-1 ">
-                  <FaFileUpload style={{ fontSize: '25px', color: 'blue' }} />
-                  Upload Image
+          {!estimate && (
+            <div className="">
+              <span className="font-medium text-sm text-[#000000]">
+                <div className="flex gap-1">Work Order Image</div>
+              </span>
+              <div className="mt-2">
+                <div />
+                <div
+                  style={{
+                    width: '230px',
+                    height: '32px',
+                    border: fieldErrors.email ? '1px solid red' : '1px solid #D5E1EA',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
+                    paddingLeft: '0.5rem',
+                    cursor: 'pointer',
+                  }}>
+                  <div onClick={uploadImages} className="flex gap-3 text-center mt-1 ">
+                    <FaFileUpload style={{ fontSize: '25px', color: 'blue' }} />
+                    Upload Image
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Boatyards */}
