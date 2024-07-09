@@ -1925,6 +1925,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     lineHeight: '25px',
                     cursor: 'pointer',
                   }}>
+<<<<<<< Updated upstream
                   <div onClick={uploadImages} className="flex gap-3 text-center ">
                     <FaFileUpload
                       style={{
@@ -1937,6 +1938,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     <div className="border-r-2 border-sky-500  h-9 pl-3"></div>
                     <span className="pl-10 mt-1"> UPLOAD IMAGES </span>
                   </div>
+=======
+                  <FaFileUpload style={{ fontSize: '25px', color: 'blue' }} />
+                  <div>Upload Imagess</div>
+>>>>>>> Stashed changes
                 </label>
               </div>
             </div>

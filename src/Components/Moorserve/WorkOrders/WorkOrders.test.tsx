@@ -15,6 +15,29 @@ describe("WorkOrder Components", () => {
     expect(headerElement).toBeInTheDocument();
   });
 
+  it('renders "ADD NEW" button', () => {
+    render(<WorkOrders />)
+    const addButton = screen.getByText('ADD NEW')
+    expect(addButton).toBeInTheDocument()
+  })
+
+  it('renders modal with header text when "ADD NEW" button is clicked', () => {
+    render(<WorkOrders />)
+    const addButton = screen.getByText('ADD NEW')
+    fireEvent.click(addButton)
+    const modalHeader = screen.getByText('Work Order')
+    expect(modalHeader).toBeInTheDocument()
+  })
+
+  it('renders icon within the "ADD NEW" button', () => {
+    render(<WorkOrders />)
+    const iconImage = screen.getByAltText('icon')
+    expect(iconImage).toBeInTheDocument()
+    expect(iconImage).toHaveAttribute('src', '/assets/images/Plus.png')
+    expect(iconImage).toHaveClass('w-3.8 h-3.8 mb-0.5')
+  })
+
+
   it("should render the text in the workOrdersComponents", () => {
     render(<WorkOrders />);
     const headerElement = screen.getByText("MOORSERVE/Work Orders");
