@@ -34,12 +34,9 @@ const baseQuery = fetchBaseQuery({
       sessionStorage.getItem('token') ||
       sessionStorage.getItem('getRefreshToken')
     ) {
-      const token =
-        (getState() as RootState).user.token ||
-        sessionStorage.getItem('token') ||
-        sessionStorage.getItem('getRefreshToken')
+      const token = (getState() as RootState).user.token || sessionStorage.getItem('token')
       const noAuthEndpoints = ['login', 'resetPassword', 'forgotPassword']
-      if (token && !noAuthEndpoints.includes(endpoint)) {
+      if (!token && !noAuthEndpoints.includes(endpoint)) {
         headers.set('Authorization', `Bearer ${token}`)
         const noAuthEndpoints = ['getCustomersOwners']
         if (userRole === 1 && selectedCustomerId && !noAuthEndpoints.includes(endpoint)) {
@@ -50,6 +47,10 @@ const baseQuery = fetchBaseQuery({
         const noAuthEndpoints = ['login', 'resetPassword', 'forgotPassword']
         if (token && !noAuthEndpoints.includes(endpoint)) {
           headers.set('Authorization', `Bearer ${token}`)
+          const noAuthEndpoints = ['getCustomersOwners']
+          if (userRole === 1 && selectedCustomerId && !noAuthEndpoints.includes(endpoint)) {
+            headers.set('CUSTOMER_OWNER_ID', selectedCustomerId)
+          }
         }
       }
     }
