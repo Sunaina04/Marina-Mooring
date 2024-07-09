@@ -322,7 +322,7 @@ const WorkOrders = () => {
                 first={pageNumber1}
                 rows={pageSize}
                 totalRecords={totalRecords}
-                rowsPerPageOptions={[2, 5, 10, 20, 30]}
+                rowsPerPageOptions={[5, 10, 20, 30]}
                 onPageChange={onPageChange}
                 style={{
                   position: 'sticky',
