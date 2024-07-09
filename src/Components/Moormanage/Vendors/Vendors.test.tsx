@@ -12,7 +12,7 @@ const renderWithProvider = (
   return render(
     <Provider store={store}>
       <BrowserRouter>{ui}</BrowserRouter>
-    </Provider>
+    </Provider>,
   )
 }
 const columnStyle = {

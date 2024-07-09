@@ -618,9 +618,7 @@ const Customer = () => {
                     fontSize: '12px',
                     color: '#10293A',
                     padding: '4px',
-                  }}>
-                  -
-                </p>
+                  }}></p>
               )}
             </div>
           </div>
@@ -642,6 +640,7 @@ const Customer = () => {
     }
   }, [pageNumberTwo, pageSizeTwo, customerId])
 
+ 
   return (
     <div style={{ height: '100vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
       <Header header="MOORMANAGE/Customer" />
@@ -1258,6 +1257,8 @@ const Customer = () => {
           </div>
         </div>
       </Dialog>
+
+
     </div>
   )
 }
