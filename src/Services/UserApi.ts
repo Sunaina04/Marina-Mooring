@@ -11,7 +11,7 @@ const baseQueryWithInterceptor = async (
 ) => {
   try {
     const result = await baseQuery(args as FetchArgs | string, api, extraOptions)
-    if (result?.error?.status === 500 || result?.error?.status === 401) {
+    if (result?.error?.status === 500) {
       const token = sessionStorage.getItem('refreshToken')
       await refreshToken(token)
       return baseQuery(args as FetchArgs | string, api, extraOptions)
@@ -36,7 +36,7 @@ const baseQuery = fetchBaseQuery({
     ) {
       const token = (getState() as RootState).user.token || sessionStorage.getItem('token')
       const noAuthEndpoints = ['login', 'resetPassword', 'forgotPassword']
-      if (!token && !noAuthEndpoints.includes(endpoint)) {
+      if (token && !noAuthEndpoints.includes(endpoint)) {
         headers.set('Authorization', `Bearer ${token}`)
         const noAuthEndpoints = ['getCustomersOwners']
         if (userRole === 1 && selectedCustomerId && !noAuthEndpoints.includes(endpoint)) {
