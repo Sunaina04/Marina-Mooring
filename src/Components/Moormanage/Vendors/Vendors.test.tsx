@@ -49,8 +49,21 @@ describe("Vendors Component", () => {
     expect(addButton).toBeInTheDocument()
   })
 
+  it('renders modal with header text when "ADD NEW" button is clicked', () => {
+    renderWithProvider(<Vendors/>)
+    const addButton = screen.getByText('ADD NEW')
+    fireEvent.click(addButton)
+    const modalHeader = screen.getByText('Add Compony')
+    expect(modalHeader).toBeInTheDocument()
+  })
 
-
+  it('renders search icon', () => {
+    renderWithProvider(<Vendors/>)
+    const image = screen.getByAltText('Search Icon')
+    expect(image).toBeInTheDocument()
+    expect(image).toHaveAttribute('src', '/assets/images/Search.svg')
+    expect(image).toHaveClass('p-clickable')
+  })
 
 
 

@@ -1163,7 +1163,7 @@ const Customer = () => {
           <hr className="border border-[#000000] my-0 mx-0"></hr>
         </div>
         <div style={{ position: 'relative', width: '100%', height: '90%' }}>
-          <div style={{ overflow: 'hidden' }}>
+          <div style={{ overflow: 'hidden'}}>
             <img
               style={{
                 transform: `scale(${scale})`,
