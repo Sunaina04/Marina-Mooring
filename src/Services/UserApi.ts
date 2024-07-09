@@ -48,11 +48,7 @@ const baseQuery = fetchBaseQuery({
         if (token && !noAuthEndpoints.includes(endpoint)) {
           headers.set('Authorization', `Bearer ${token}`)
           const noAuthEndpoints = ['getCustomersOwners']
-          if (
-            sessionStorage.getItem('userRole') === 'ADMINISTRATOR' &&
-            selectedCustomerId &&
-            !noAuthEndpoints.includes(endpoint)
-          ) {
+          if (userRole === 1 && selectedCustomerId && !noAuthEndpoints.includes(endpoint)) {
             headers.set('CUSTOMER_OWNER_ID', selectedCustomerId)
           }
         }
@@ -88,7 +84,6 @@ const refreshToken = async (refreshToken: any) => {
     const data = await response.json()
     if (data?.status === 200) {
       sessionStorage.setItem('getRefreshToken', data.token)
-      sessionStorage.setItem('userRole', data?.user?.role?.name)
       return data.token
     }
   } catch (error) {
