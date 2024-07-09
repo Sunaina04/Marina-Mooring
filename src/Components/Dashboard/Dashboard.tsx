@@ -664,7 +664,7 @@ const Dashboard = () => {
                 </label>
                 <div
                   className={`content mt-5 transition-all ease-in-out duration-500 ${accordion === 'faq3' ? '' : 'hidden'}`}>
-                  <div className="">
+                  <div>
                     {statCardsData.map((items) => (
                       <StatCard key={items[0].title} items={items} />
                     ))}

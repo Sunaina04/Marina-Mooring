@@ -162,7 +162,8 @@ const AdminLayout = () => {
                       minWidth: open ? '16rem' : '3rem',
                       marginLeft: open ? '20px' : '10px',
                       marginRight: open ? '20px' : '10px',
-                      background: selectedCategory === 0 && index === 0 ? '#0098FF' : '#00426F',
+                      background:
+                        selectedCategory === 0 && item.name === 'DASHBOARD' ? '#0098FF' : '#00426F',
                       borderRadius: '4px',
                       flexDirection: 'row',
                       alignItems: 'center',
