@@ -1131,7 +1131,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       fontSize: '0.8rem',
                     }}
                   />
-
                   <p className="" id="selectedState">
                     {fieldErrors.state && <small className="p-error">{fieldErrors.state}</small>}
                   </p>
@@ -1925,18 +1924,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     lineHeight: '25px',
                     cursor: 'pointer',
                   }}>
-                  <div onClick={uploadImages} className="flex gap-3 text-center ">
-                    <FaFileUpload
-                      style={{
-                        fontSize: '29px',
-                        color: '#0098FF',
-                        marginLeft: '1rem',
-                        marginTop: '3px',
-                      }}
-                    />
-                    <div className="border-r-2 border-sky-500  h-9 pl-3"></div>
-                    <span className="pl-10 mt-1"> UPLOAD IMAGES </span>
-                  </div>
+                  <FaFileUpload style={{ fontSize: '25px', color: 'blue' }} />
+                  <div>Upload Imagess</div>
                 </label>
               </div>
             </div>
