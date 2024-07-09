@@ -180,7 +180,10 @@ const WorkOrders = () => {
   }, [searchText])
 
   useEffect(() => {
-    handleModalClose()
+    if (selectedCustomerId) {
+      setVisible(false)
+      setEditMode(false)
+    }
   }, [selectedCustomerId])
 
   return (
