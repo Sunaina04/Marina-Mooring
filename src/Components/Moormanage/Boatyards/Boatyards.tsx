@@ -238,22 +238,11 @@ const Boatyards = () => {
         label: 'Name',
         style: columnStyle,
       },
-      // {
-      //   id: 'emailAddress',
-      //   label: 'Email Address',
-      //   style: columnStyle,
-      // },
       {
         id: 'mooringInventoried',
         label: 'Total Mooring Inventoried',
         style: columnStyle,
       },
-      // {
-      //   field: '',
-      //   header: '',
-      //   expander: allowExpansion,
-      //   style: { backgroundColor: '#FFFFFF', borderBottom: '1px solid #D5E1EA ' },
-      // },
     ],
     // [allowExpansion],
     [],
@@ -317,13 +306,13 @@ const Boatyards = () => {
     setBoatyardRecord(false)
   }
 
-  // const parseCoordinates = (coordinates: any) => {
-  //   if (!coordinates) return null
-  //   const [latitude, longitude] = coordinates.split(' ').map(parseFloat)
-  //   return isNaN(latitude) || isNaN(longitude) ? null : [latitude, longitude]
-  // }
+  const parseCoordinates = (coordinates: any) => {
+    if (!coordinates) return null
+    const [latitude, longitude] = coordinates.split(' ').map(parseFloat)
+    return isNaN(latitude) || isNaN(longitude) ? null : [latitude, longitude]
+  }
 
-  // const [latitude, longitude] = parseCoordinates(selectedBoatYard?.gpsCoordinates) || []
+  const [latitude, longitude] = parseCoordinates(selectedBoatYard?.gpsCoordinates) || []
 
   const getBoatyardsData = useCallback(async () => {
     setIsLoading(true)
@@ -473,7 +462,7 @@ const Boatyards = () => {
             marginLeft: '10px',
             marginRight: '10px',
           }}>
-          {/* <CustomDisplayPositionMap position={[latitude, longitude]} zoomLevel={15} /> */}
+          <CustomDisplayPositionMap position={[latitude, longitude]} zoomLevel={15} />
         </div>
 
         <div

@@ -1163,7 +1163,7 @@ const Customer = () => {
           <hr className="border border-[#000000] my-0 mx-0"></hr>
         </div>
         <div style={{ position: 'relative', width: '100%', height: '90%' }}>
-          <div style={{ overflow: 'hidden' }}>
+          <div>
             <img
               style={{
                 transform: `scale(${scale})`,
@@ -1180,10 +1180,9 @@ const Customer = () => {
           <div
             style={{
               position: 'absolute',
-              top: '10px',
-              right: '10px',
+              top: '-100px',
+              right: '5px',
               display: 'flex',
-              gap: '10px',
             }}>
             <button onClick={handleZoomIn} style={buttonStyle}>
               <img
