@@ -8,6 +8,8 @@ import Header from '../../Layout/LayoutComponents/Header'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 import { Paginator } from 'primereact/paginator'
 import { ProgressSpinner } from 'primereact/progressspinner'
+import PaymentModal from './PaymentModal'
+import ContactModal from './ContactModal'
 
 const AccountRecievable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -15,10 +17,8 @@ const AccountRecievable = () => {
   const [pageNumber1, setPageNumber1] = useState(0)
   const [pageSize, setPageSize] = useState(10)
   const [isLoading, setIsLoading] = useState(false)
-
-  const handleButtonClick = () => {
-    // setIsModalOpen(true)
-  }
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false)
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false)
 
   const onPageChange = (event: any) => {
     // setPageNumber(event.page)
@@ -28,13 +28,29 @@ const AccountRecievable = () => {
 
   const handleModalClose = () => {
     setIsModalOpen(false)
+    setIsPaymentModalOpen(false)
+    setIsContactModalOpen(false)
   }
 
-  const header = (
-    <div className="flex flex-wrap align-items-center ">
-      <h1 className="text-xl font-bold text-white">Account Receivable</h1>
-    </div>
-  )
+  const handlePaymentSave = (paymentDetails: any) => {
+    console.log(paymentDetails) // Handle payment processing and sync to QuickBooks
+    setIsPaymentModalOpen(false)
+  }
+
+  const handleSendEmail = (emailDetails: any) => {
+    console.log(emailDetails) // Handle email sending
+    setIsContactModalOpen(false)
+  }
+
+  const handleActionClick = (action: string) => {
+    if (action === 'Payments') {
+      setIsPaymentModalOpen(true)
+    } else if (action === 'Contact') {
+      setIsContactModalOpen(true)
+    } else if (action === 'View') {
+      // Handle view action
+    }
+  }
 
   const columnStyle = {
     backgroundColor: '#FFFFFF',
@@ -73,7 +89,6 @@ const AccountRecievable = () => {
     header: 'Actions',
     buttons: [
       {
-        
         label: 'Approve',
         filled: true,
         style: {
@@ -83,7 +98,6 @@ const AccountRecievable = () => {
         },
       },
       {
-        
         label: 'Deny',
         filled: true,
       },
@@ -150,16 +164,19 @@ const AccountRecievable = () => {
           width: '46px',
           height: '17px',
         },
+        onClick: () => handleActionClick('Payments'),
       },
       {
         color: 'black',
         label: 'Contact',
         filled: true,
+        onClick: () => handleActionClick('Contact'),
       },
       {
         color: 'black',
         label: 'View',
         filled: true,
+        onClick: () => handleActionClick('View'),
       },
     ],
     headerStyle: {
@@ -173,87 +190,86 @@ const AccountRecievable = () => {
   }
 
   const outstandingData = [
-    { 
-      workOrderNumber: 'WO12345', 
-      customerName: 'John Doe', 
-      invoiceDate: '2023-07-10', 
-      invoiceAmount: '$500.00', 
-      contactTime: '2023-07-09 10:00 AM', 
-      status: 'Pending' 
+    {
+      workOrderNumber: 'WO12345',
+      customerName: 'John Doe',
+      invoiceDate: '2023-07-10',
+      invoiceAmount: '$500.00',
+      contactTime: '2023-07-09 10:00 AM',
+      status: 'Pending',
     },
-    { 
-      workOrderNumber: 'WO12346', 
-      customerName: 'Jane Smith', 
-      invoiceDate: '2023-07-09', 
-      invoiceAmount: '$750.00', 
-      contactTime: '2023-07-08 02:30 PM', 
-      status: 'Completed' 
+    {
+      workOrderNumber: 'WO12346',
+      customerName: 'Jane Smith',
+      invoiceDate: '2023-07-09',
+      invoiceAmount: '$750.00',
+      contactTime: '2023-07-08 02:30 PM',
+      status: 'Completed',
     },
-    { 
-      workOrderNumber: 'WO12347', 
-      customerName: 'Michael Johnson', 
-      invoiceDate: '2023-07-08', 
-      invoiceAmount: '$300.00', 
-      contactTime: '2023-07-07 11:15 AM', 
-      status: 'In Progress' 
+    {
+      workOrderNumber: 'WO12347',
+      customerName: 'Michael Johnson',
+      invoiceDate: '2023-07-08',
+      invoiceAmount: '$300.00',
+      contactTime: '2023-07-07 11:15 AM',
+      status: 'In Progress',
     },
-    { 
-      workOrderNumber: 'WO12346', 
-      customerName: 'Jane Smith', 
-      invoiceDate: '2023-07-09', 
-      invoiceAmount: '$750.00', 
-      contactTime: '2023-07-08 02:30 PM', 
-      status: 'Completed' 
+    {
+      workOrderNumber: 'WO12346',
+      customerName: 'Jane Smith',
+      invoiceDate: '2023-07-09',
+      invoiceAmount: '$750.00',
+      contactTime: '2023-07-08 02:30 PM',
+      status: 'Completed',
     },
-    { 
-      workOrderNumber: 'WO12347', 
-      customerName: 'Michael Johnson', 
-      invoiceDate: '2023-07-08', 
-      invoiceAmount: '$300.00', 
-      contactTime: '2023-07-07 11:15 AM', 
-      status: 'In Progress' 
+    {
+      workOrderNumber: 'WO12347',
+      customerName: 'Michael Johnson',
+      invoiceDate: '2023-07-08',
+      invoiceAmount: '$300.00',
+      contactTime: '2023-07-07 11:15 AM',
+      status: 'In Progress',
     },
-    { 
-      workOrderNumber: 'WO12347', 
-      customerName: 'Michael Johnson', 
-      invoiceDate: '2023-07-08', 
-      invoiceAmount: '$300.00', 
-      contactTime: '2023-07-07 11:15 AM', 
-      status: 'In Progress' 
+    {
+      workOrderNumber: 'WO12347',
+      customerName: 'Michael Johnson',
+      invoiceDate: '2023-07-08',
+      invoiceAmount: '$300.00',
+      contactTime: '2023-07-07 11:15 AM',
+      status: 'In Progress',
     },
-    { 
-      workOrderNumber: 'WO12347', 
-      customerName: 'Michael Johnson', 
-      invoiceDate: '2023-07-08', 
-      invoiceAmount: '$300.00', 
-      contactTime: '2023-07-07 11:15 AM', 
-      status: 'In Progress' 
+    {
+      workOrderNumber: 'WO12347',
+      customerName: 'Michael Johnson',
+      invoiceDate: '2023-07-08',
+      invoiceAmount: '$300.00',
+      contactTime: '2023-07-07 11:15 AM',
+      status: 'In Progress',
     },
-    { 
-      workOrderNumber: 'WO12347', 
-      customerName: 'Michael Johnson', 
-      invoiceDate: '2023-07-08', 
-      invoiceAmount: '$300.00', 
-      contactTime: '2023-07-07 11:15 AM', 
-      status: 'In Progress' 
+    {
+      workOrderNumber: 'WO12347',
+      customerName: 'Michael Johnson',
+      invoiceDate: '2023-07-08',
+      invoiceAmount: '$300.00',
+      contactTime: '2023-07-07 11:15 AM',
+      status: 'In Progress',
     },
-    { 
-      workOrderNumber: 'WO12347', 
-      customerName: 'Michael Johnson', 
-      invoiceDate: '2023-07-08', 
-      invoiceAmount: '$300.00', 
-      contactTime: '2023-07-07 11:15 AM', 
-      status: 'In Progress' 
+    {
+      workOrderNumber: 'WO12347',
+      customerName: 'Michael Johnson',
+      invoiceDate: '2023-07-08',
+      invoiceAmount: '$300.00',
+      contactTime: '2023-07-07 11:15 AM',
+      status: 'In Progress',
     },
-    { 
-      workOrderNumber: 'WO12347', 
-      customerName: 'Michael Johnson', 
-      invoiceDate: '2023-07-08', 
-      invoiceAmount: '$300.00', 
-      contactTime: '2023-07-07 11:15 AM', 
-      status: 'In Progress' 
+    {
+      workOrderNumber: 'WO12347',
+      customerName: 'Michael Johnson',
+      invoiceDate: '2023-07-08',
+      invoiceAmount: '$300.00',
+      contactTime: '2023-07-07 11:15 AM',
+      status: 'In Progress',
     },
-    
   ]
 
   const pendingApproval = [
@@ -317,54 +333,6 @@ const AccountRecievable = () => {
     <>
       <Header header="MOORPAY/Account Receivable" />
 
-      {/* <div className="flex justify-end mr-16">
-         <div className="flex gap-2 ml-[18rem] text-[gray] font-extrabold mt-10">
-          <div style={{ marginTop: '0.1rem' }}>
-            <img src="/assets/images/downloadIcon.png" alt="" className="w-5 " />
-          </div>
-          <div style={{ marginTop: '0 rem', color: '#00426F', marginRight: '1.5rem' }}>
-            <h1>Download Excel</h1>
-          </div>
-        </div>
-        <div className="mt-8 ">
-          <CustomModal
-            buttonText={'ADD NEW'}
-            children={
-              <AddCustomer
-                customer={undefined}
-                editMode={false}
-                closeModal={() => {}}
-                getCustomer={() => {}}
-              />
-            }
-            headerText={<h1 className="text-xl font-extrabold text-black ml-4">New User</h1>}
-            visible={isModalOpen}
-            onClick={handleButtonClick}
-            onHide={handleModalClose}
-            buttonStyle={{
-              width: '121px',
-              height: '44px',
-              minHeight: '44px',
-              backgroundColor: '#0098FF',
-              cursor: 'pointer',
-              fontSize: '16px',
-              fontWeight: 700,
-              color: 'white',
-              borderRadius: '0.50rem',
-              marginLeft: '8px',
-            }}
-            dialogStyle={{
-              width: '800px',
-              minWidth: '800px',
-              height: '630px',
-              minHeight: '630px',
-              borderRadius: '1rem',
-              maxHeight: '95% !important',
-            }}
-          /> 
-        </div>
-      </div> */}
-
       <div
         style={{
           height: '400px',
@@ -388,25 +356,29 @@ const AccountRecievable = () => {
             Work Orders Pending Approval
           </span>
         </div>
-        <div className='h-[293px] overflow-auto'>
-        <DataTableComponent
-          tableStyle={{
-            fontSize: '12px',
-            color: '#000000',
-            fontWeight: 700,
-          }}
-          data={pendingApproval}
-          columns={accountRecievableTableColumn}
-          actionButtons={ActionButtonColumn}
-          style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
-          scrollable
-          emptyMessage={
-            <div className="text-center mt-10">
-              <img src="/assets/images/empty.png" alt="Empty Data" className="w-20 mx-auto mb-2" />
-              <p className="text-gray-500 text-lg">No data available</p>
-            </div>
-          }
-        />
+        <div className="h-[293px] overflow-auto">
+          <DataTableComponent
+            tableStyle={{
+              fontSize: '12px',
+              color: '#000000',
+              fontWeight: 700,
+            }}
+            data={pendingApproval}
+            columns={accountRecievableTableColumn}
+            actionButtons={ActionButtonColumn}
+            style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+            scrollable
+            emptyMessage={
+              <div className="text-center mt-10">
+                <img
+                  src="/assets/images/empty.png"
+                  alt="Empty Data"
+                  className="w-20 mx-auto mb-2"
+                />
+                <p className="text-gray-500 text-lg">No data available</p>
+              </div>
+            }
+          />
         </div>
 
         <div className="text-center">
@@ -467,24 +439,28 @@ const AccountRecievable = () => {
             Outstanding Invoices
           </span>
         </div>
-        <div className='h-[293px] overflow-auto'>
-        <DataTableComponent
-          tableStyle={{
-            fontSize: '12px',
-            color: '#000000',
-            fontWeight: 700,
-          }}
-          data={ outstandingData}
-          columns={outstandingInvoiceTableColumn}
-          actionButtons={ActionButtonColumnInvoice}
-          style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
-          emptyMessage={
-            <div className="text-center mt-10">
-              <img src="/assets/images/empty.png" alt="Empty Data" className="w-20 mx-auto mb-2" />
-              <p className="text-gray-500 text-lg">No data available</p>
-            </div>
-          }
-        />
+        <div className="h-[293px] overflow-auto">
+          <DataTableComponent
+            tableStyle={{
+              fontSize: '12px',
+              color: '#000000',
+              fontWeight: 700,
+            }}
+            data={outstandingData}
+            columns={outstandingInvoiceTableColumn}
+            actionButtons={ActionButtonColumnInvoice}
+            style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+            emptyMessage={
+              <div className="text-center mt-10">
+                <img
+                  src="/assets/images/empty.png"
+                  alt="Empty Data"
+                  className="w-20 mx-auto mb-2"
+                />
+                <p className="text-gray-500 text-lg">No data available</p>
+              </div>
+            }
+          />
         </div>
 
         <div className="text-center">
@@ -521,6 +497,22 @@ const AccountRecievable = () => {
           />
         </div>
       </div>
+
+      <CustomModal
+        visible={isPaymentModalOpen}
+        onHide={handleModalClose}
+        headerText="Payment"
+        dialogStyle={{ width: '600px', height: 'auto' }}>
+        <PaymentModal onHide={handleModalClose} onSavePayment={handlePaymentSave} />
+      </CustomModal>
+
+      <CustomModal
+        visible={isContactModalOpen}
+        onHide={handleModalClose}
+        headerText="Contact Customer"
+        dialogStyle={{ width: '600px', height: 'auto' }}>
+        <ContactModal onHide={handleModalClose} onSendEmail={handleSendEmail} />
+      </CustomModal>
     </>
   )
 }
