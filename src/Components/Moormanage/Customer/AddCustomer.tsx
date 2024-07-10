@@ -78,8 +78,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [imageVisible, setImageVisible] = useState(false)
   const [hoveredIndex, setHoveredIndex] = useState<null | number>(null)
   const [imageRequestDtoList, setimageRequestDtoList] = useState<any>()
-  const [emailError, setEmailError] = useState('')
-
   const getFomattedCoordinate = (gpsCoordinatesValue: any) => {
     try {
       let [lat, long]: any = gpsCoordinatesValue.split(' ')
@@ -349,10 +347,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         break
       case 'phone':
         setPhone(value)
+
         break
       case 'email':
         setEmail(value)
-        setEmailError('')
         break
       case 'streetHouse':
         setStreetHouse(value)
@@ -510,7 +508,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       }
     } catch (error) {
       const { data, message } = error as ErrorResponse
-      setEmailError(data.message)
       setIsLoading(false)
       toastRef?.current?.show({
         severity: 'error',
@@ -973,15 +970,15 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         style={{
                           width: '230px',
                           height: '32px',
-                          border: emailError ? '1px solid red' : '1px solid #D5E1EA',
+                          border: fieldErrors ? '1px solid #D5E1EA' : '',
                           borderRadius: '0.50rem',
                           fontSize: '0.8rem',
                           paddingLeft: '0.5rem',
                         }}
                       />
-                      <p className="" id="email">
+                      {/* <p className="" id="email">
                         <small className="p-error">{emailError}</small>
-                      </p>
+                      </p> */}
                     </div>
                   </div>
                 </div>
@@ -1053,7 +1050,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 strokeWidth="4"
               />
             )}
-
             <div className="mt-3">
               <div>
                 <h1 className="font-medium text-sm text-[#000000]">

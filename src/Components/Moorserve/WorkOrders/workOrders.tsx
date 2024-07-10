@@ -2,7 +2,13 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Dialog } from 'primereact/dialog'
 import { Button } from 'primereact/button'
 import AddWorkOrders from './AddWorkOrders'
-import { ErrorResponse, WorkOrderPayload, WorkOrderResponse } from '../../../Type/ApiTypes'
+import {
+  CustomerPayload,
+  ErrorResponse,
+  GetUserResponse,
+  WorkOrderPayload,
+  WorkOrderResponse,
+} from '../../../Type/ApiTypes'
 import { useGetWorkOrdersMutation } from '../../../Services/MoorServe/MoorserveApi'
 import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
@@ -19,6 +25,10 @@ import { Params } from '../../../Type/CommonType'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { Paginator } from 'primereact/paginator'
 import { SelectButton, SelectButtonChangeEvent } from 'primereact/selectbutton'
+import {
+  useGetClosedWorkOrdersMutation,
+  useGetOpenWorkOrdersMutation,
+} from '../../../Services/MoorManage/MoormanageApi'
 
 const WorkOrders = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -29,11 +39,17 @@ const WorkOrders = () => {
   const [selectedCustomer, setSelectedCustomer] = useState<any>(undefined)
   const [editMode, setEditMode] = useState(false)
   const [getWorkOrder] = useGetWorkOrdersMutation()
+  const [getOpenWork] = useGetOpenWorkOrdersMutation()
+  const [getWorkedClosed] = useGetClosedWorkOrdersMutation()
+  const [technicianId, setTechnicianId] = useState(3)
   const toast = useRef<Toast>(null)
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
   const [pageSize, setPageSize] = useState(10)
   const [totalRecords, setTotalRecords] = useState<number>()
+  const [getOpenWorkOrderData, setGetOpenWorkOrderData] = useState<CustomerPayload[]>([])
+  const [openWorkOrder, setOpenWorkOrder] = useState<number>(0)
+  const [completedWorkOrder, setCompletedOrder] = useState<number>(0)
   const options: string[] = ['Open', 'Completed']
   const [value, setValue] = useState<string>(options[0])
   const onPageChange = (event: any) => {
@@ -118,6 +134,89 @@ const WorkOrders = () => {
     [],
   )
 
+  const getOpenWorkOrder = useCallback(
+    async (id: any) => {
+      setIsLoading(true)
+
+      try {
+        const response = await getOpenWork({
+          technicianId: id,
+        }).unwrap()
+        const { status, message, content, totalSize } = response as GetUserResponse
+        if (status === 200 && Array.isArray(content)) {
+          setIsLoading(false)
+          setGetOpenWorkOrderData(content)
+          // setTotalRecordsTwo(totalSize)
+          setOpenWorkOrder(totalSize)
+        } else {
+          setIsLoading(false)
+          toast?.current?.show({
+            severity: 'error',
+            summary: 'Error',
+            detail: message,
+            life: 3000,
+          })
+        }
+      } catch (error) {
+        setIsLoading(false)
+        console.error('Error occurred while fetching customer data:', error)
+      }
+    },
+    [
+      technicianId,
+      value,
+      // pageSizeTwo,
+      // pageNumberTwo,
+      // filterDateFrom,
+      // filterDateTo,
+      getOpenWorkOrderData,
+      openWorkOrder,
+    ],
+  )
+
+  const getClosedWorkOrder = useCallback(
+    async (id: any) => {
+      setIsLoading(true)
+
+      try {
+        const response = await getWorkedClosed({
+          technicianId: id,
+          // pageNumber: pageNumberTwo,
+          // pageSize: pageSizeTwo,
+          // filterDateFrom: filterDateFrom,
+          // filterDateTo: filterDateTo,
+        }).unwrap()
+        const { status, message, content, totalSize } = response as GetUserResponse
+        if (status === 200 && Array.isArray(content)) {
+          setIsLoading(false)
+          setGetOpenWorkOrderData(content)
+          // setTotalRecordsTwo(totalSize)
+          setCompletedOrder(totalSize)
+        } else {
+          setIsLoading(false)
+          toast?.current?.show({
+            severity: 'error',
+            summary: 'Error',
+            detail: message,
+            life: 3000,
+          })
+        }
+      } catch (error) {
+        setIsLoading(false)
+        console.error('Error occurred while fetching customer data:', error)
+      }
+    },
+    [
+      technicianId,
+      // value,
+      // pageSizeTwo,
+      // pageNumberTwo,
+      // filterDateFrom,
+      // filterDateTo,
+      completedWorkOrder,
+    ],
+  )
+
   const getWorkOrderData = useCallback(async () => {
     setIsLoading(true)
     try {
@@ -188,6 +287,19 @@ const WorkOrders = () => {
     }
   }, [selectedCustomerId])
 
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (technicianId) {
+        if (value.includes('Open')) {
+          getOpenWorkOrder(technicianId)
+        } else {
+          getClosedWorkOrder(technicianId)
+        }
+      }
+    }, 600)
+    return () => clearTimeout(timeoutId)
+  }, [technicianId, value, openWorkOrder, completedWorkOrder])
+
   return (
     <div style={{ height: '100vh' }} className={visible ? 'backdrop-blur-lg' : ''}>
       <Header header="MOORSERVE/Work Orders" />
@@ -244,8 +356,8 @@ const WorkOrders = () => {
             opacity: '0px',
             backgroundColor: '#FFFFFF',
           }}
-          className="bg-[F2F2F2]  ml-12  mt-6 mr-14">
-          <div className="flex  gap-[59rem] bg-[#00426F] p-2   rounded-tl-[10px] rounded-tr-[10px]">
+          className="bg-[F2F2F2]  ml-12 mt-6 mr-14">
+          <div className="flex flex-wrap align-items-center  justify-between  bg-[#00426F] p-2   rounded-tl-[10px] rounded-tr-[10px]">
             <span
               style={{
                 fontSize: '18px',
@@ -258,7 +370,7 @@ const WorkOrders = () => {
               Work Orders
             </span>
 
-            <div className="flex gap-2 text-center">
+            <div className="flex gap-2">
               <div className="relative inline-block">
                 <div className="relative mt-1">
                   <img
@@ -276,6 +388,7 @@ const WorkOrders = () => {
                   />
                 </div>
               </div>
+
               <div className="">
                 <SelectButton
                   data-testid="selectButton"

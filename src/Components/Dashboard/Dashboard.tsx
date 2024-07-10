@@ -44,16 +44,15 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [totalMoorings, setTotalMoorings] = useState<any>()
   // console.log(totalMoorings,"totalMoorings");
-  
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
   const [pageSize, setPageSize] = useState(10)
   const [totalRecords, setTotalRecords] = useState<number>()
   const [mooringData, setMooringData] = useState<any>()
-  const [selectedProduct, setSelectedProduct] = useState(null)
+  // console.log(mooringData,"mooringData");
+  const [selectedProduct, setSelectedProduct] = useState<any>()
+  // console.log(selectedProduct,"selectedProduct");
   const [mooringResponseData, setMooringResponseData] = useState<any>()
-// console.log(mooringResponseData,"mooringResponseData");
-
   const [getMoorings] = useGetMooringsMutation()
   const today = new Date()
   const dateAfter7Days = new Date(today)
@@ -359,10 +358,7 @@ const Dashboard = () => {
         if (content?.mooringDueServiceResponseDtoList) {
           setIsLoading(false)
           setMooringData(content?.mooringDueServiceResponseDtoList)
-          // setMooringResponseData(content?.mooringDueServiceResponseDtoList?.gpsCoordinates)
-
-          // console.log("gps",content?.mooringDueServiceResponseDtoList.gpsCoordinates);
-          
+          setSelectedProduct(content?.mooringDueServiceResponseDtoList)
         } else {
           setIsLoading(false)
           setMooringData([])
@@ -424,7 +420,7 @@ const Dashboard = () => {
       setFilterDateFrom(formatDate(startDate))
       setFilterDateTo(formatDate(endDate))
     }
-  }, [startDate, endDate,])
+  }, [startDate, endDate])
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -435,7 +431,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     getMooringsData()
-  }, [selectedCustomerId,totalMoorings])
+  }, [selectedCustomerId, totalMoorings])
 
   return (
     <>
