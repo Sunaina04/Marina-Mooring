@@ -34,7 +34,7 @@ const WorkOrders = () => {
   const [pageNumber1, setPageNumber1] = useState(0)
   const [pageSize, setPageSize] = useState(10)
   const [totalRecords, setTotalRecords] = useState<number>()
-  const options: string[] = ["Open", "Completed"]
+  const options: string[] = ['Open', 'Completed']
   const [value, setValue] = useState<string>(options[0])
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
@@ -170,7 +170,7 @@ const WorkOrders = () => {
 
   useEffect(() => {
     getWorkOrderData()
-  }, [pageNumber])
+  }, [pageNumber, selectedCustomerId])
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -244,8 +244,8 @@ const WorkOrders = () => {
             opacity: '0px',
             backgroundColor: '#FFFFFF',
           }}
-          className="bg-[F2F2F2]  ml-12  mt-6 mr-14">
-          <div className="flex  gap-[59rem] bg-[#00426F] p-2   rounded-tl-[10px] rounded-tr-[10px]">
+          className="bg-[F2F2F2] ml-12 mt-6 mr-14">
+          <div className="flex flex-wrap align-items-center justify-between  bg-[#00426F] p-2   rounded-tl-[10px] rounded-tr-[10px]">
             <span
               style={{
                 fontSize: '18px',
@@ -258,28 +258,25 @@ const WorkOrders = () => {
               Work Orders
             </span>
 
-            <div className='flex gap-2 text-center'>
-
-              <div className="relative inline-block">
-                <div className="relative mt-1" >
-                  <img
-                    src="/assets/images/Search.png"
-                    alt="search icon"
-                    className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5"
-                    data-testid="search-icon"
-                  />
-                  <InputText
-                    value={searchText}
-                    onChange={handleSearch}
-                    placeholder="Search"
-                    id="placeholderText"
-                    className="pl-10 w-[237px] bg-[#00426F] text-[white] h-[35px] rounded-lg border  border-[#D5E1EA] placeholder:text-[#FFFFFF]  focus:outline-none"
-                  />
-
-                </div>
-
+            {/* <div className="flex gap-2 text-center"> */}
+            <div className="relative inline-block">
+              <div className="relative ">
+                <img
+                  src="/assets/images/Search.png"
+                  alt="search icon"
+                  className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5"
+                  data-testid="search-icon"
+                />
+                <InputText
+                  value={searchText}
+                  onChange={handleSearch}
+                  placeholder="Search"
+                  id="placeholderText"
+                  className="pl-10 w-[237px] bg-[#00426F] text-[white] h-[35px] rounded-lg border  border-[#D5E1EA] placeholder:text-[#FFFFFF]  focus:outline-none"
+                />
               </div>
-              <div className="">
+            </div>
+            {/* <div className="">
                 <SelectButton
                   data-testid="selectButton"
                   value={value}
@@ -291,14 +288,9 @@ const WorkOrders = () => {
                   options={options}
                   className="selectButton"
                 />
-              </div>
-
-
-            </div>
-
-
-
+              </div> */}
           </div>
+          {/* </div> */}
 
           <div
             data-testid="customer-admin-data"

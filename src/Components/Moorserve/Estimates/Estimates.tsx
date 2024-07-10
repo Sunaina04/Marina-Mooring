@@ -227,7 +227,7 @@ const Estimates = () => {
 
   useEffect(() => {
     getEstimateData()
-  }, [pageNumber])
+  }, [pageNumber, selectedCustomerId])
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
