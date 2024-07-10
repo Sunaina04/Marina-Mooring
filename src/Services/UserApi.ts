@@ -29,18 +29,18 @@ const baseQuery = fetchBaseQuery({
     const state = getState() as RootState
     const selectedCustomerId = selectCustomerId(state)
     const userRole = selectUserRole(state)
-    const token = (getState() as RootState).user.token || sessionStorage.getItem('token')
+    const refreshToken = sessionStorage.getItem('getRefreshToken')
     const noAuthEndpoints = ['login', 'resetPassword', 'forgotPassword']
-    if (token && !noAuthEndpoints.includes(endpoint)) {
-      headers.set('Authorization', `Bearer ${token}`)
+    if (refreshToken && !noAuthEndpoints.includes(endpoint)) {
+      headers.set('Authorization', `Bearer ${refreshToken}`)
       const noAuthEndpoints = ['getCustomersOwners']
       if (userRole === 1 && selectedCustomerId && !noAuthEndpoints.includes(endpoint)) {
         headers.set('CUSTOMER_OWNER_ID', selectedCustomerId)
       }
     } else {
-      const refreshToken = sessionStorage.getItem('getRefreshToken')
-      if (refreshToken && !noAuthEndpoints.includes(endpoint)) {
-        headers.set('Authorization', `Bearer ${refreshToken}`)
+      const token = (getState() as RootState).user.token || sessionStorage.getItem('token')
+      if (token && !noAuthEndpoints.includes(endpoint)) {
+        headers.set('Authorization', `Bearer ${token}`)
         const noAuthEndpoints = ['getCustomersOwners']
         if (userRole === 1 && selectedCustomerId && !noAuthEndpoints.includes(endpoint)) {
           headers.set('CUSTOMER_OWNER_ID', selectedCustomerId)

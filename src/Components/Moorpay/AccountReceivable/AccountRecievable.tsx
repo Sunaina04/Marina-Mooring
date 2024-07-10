@@ -17,6 +17,8 @@ import { ErrorResponse, WorkOrderPayload, WorkOrderResponse } from '../../../Typ
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import { Toast } from 'primereact/toast'
 import { Params } from '../../../Type/CommonType'
+import { Dialog } from 'primereact/dialog'
+import { Button } from 'primereact/button'
 
 const AccountRecievable = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -308,7 +310,7 @@ const AccountRecievable = () => {
       height: '3.50rem',
       fontWeight: 'bold',
       color: 'black',
-      borderBottom: '1px solid #C0C0C0',
+      // borderBottom: '1px solid #C0C0C0',
     },
     style: { borderBottom: '1px solid #D5E1EA', fontWeight: '400' },
   }
@@ -684,21 +686,88 @@ const AccountRecievable = () => {
         </div>
       </div>
 
-      <CustomModal
+
+      <Dialog
+        position="center"
+        style={{
+          width: '800px',
+          minWidth: '800px',
+          height: '580px',
+          minHeight: '580px',
+          borderRadius: '1rem',
+          fontWeight: '400',
+          cursor: 'alias',
+        }}
+        draggable={false}
+        // visible={imageVisible}
+        // onHide={() => setImageVisible(false)}
+        headerStyle={{ cursor: 'alias' }}
+        // header={'Customers Images'}
         visible={isPaymentModalOpen}
         onHide={handleModalClose}
-        headerText="Payment"
-        dialogStyle={{ width: '600px', height: 'auto' }}>
+        header="Payment"
+      >
         <PaymentModal onHide={handleModalClose} onSavePayment={handlePaymentSave} />
-      </CustomModal>
 
-      <CustomModal
+        <div className={`flex gap-4 ml-4 bottom-5 absolute left-6 ${isLoading ? 'blurred' : ''}`}>
+          <Button
+            label={'Close'}
+            onClick={() => setIsPaymentModalOpen(false)}
+            style={{
+              width: '89px',
+              height: '42px',
+              backgroundColor: '#0098FF',
+              cursor: 'pointer',
+              fontWeight: 'bolder',
+              fontSize: '1rem',
+              boxShadow: 'none',
+              color: 'white',
+              borderRadius: '0.5rem',
+            }}
+          />
+        </div>
+      </Dialog>
+
+
+
+      <Dialog
+        position="center"
+        style={{
+          width: '800px',
+          minWidth: '800px',
+          height: '580px',
+          minHeight: '580px',
+          borderRadius: '1rem',
+          fontWeight: '400',
+          cursor: 'alias',
+        }}
+        draggable={false}
+        headerStyle={{ cursor: 'alias' }}
         visible={isContactModalOpen}
         onHide={handleModalClose}
-        headerText="Contact Customer"
-        dialogStyle={{ width: '600px', height: 'auto' }}>
+        header="Contact Customer"
+      >
         <ContactModal onHide={handleModalClose} onSendEmail={handleSendEmail} />
-      </CustomModal>
+        <div className={`flex gap-4 ml-4 bottom-5 absolute left-6 ${isLoading ? 'blurred' : ''}`}>
+          <Button
+            label={'Close'}
+            onClick={() => setIsContactModalOpen(false)}
+            style={{
+              width: '89px',
+              height: '42px',
+              backgroundColor: '#0098FF',
+              cursor: 'pointer',
+              fontWeight: 'bolder',
+              fontSize: '1rem',
+              boxShadow: 'none',
+              color: 'white',
+              borderRadius: '0.5rem',
+            }}
+          />
+        </div>
+      </Dialog>
+
+
     </>
   )
 }
