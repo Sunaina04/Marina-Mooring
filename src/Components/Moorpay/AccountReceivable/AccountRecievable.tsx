@@ -117,7 +117,7 @@ const AccountRecievable = () => {
     <>
       <Header header="MOORPAY/Account Receivable" />
 
-      {/* <div className="flex justify-end mr-16">
+      <div className="flex justify-end mr-16">
         <div className="flex gap-2 ml-[18rem] text-[gray] font-extrabold mt-10">
           <div style={{ marginTop: '0.1rem' }}>
             <img src="/assets/images/downloadIcon.png" alt="" className="w-5 " />
@@ -236,7 +236,7 @@ const AccountRecievable = () => {
             }}
           />
         </div>
-      </div> */}
+      </div>
     </>
   )
 }

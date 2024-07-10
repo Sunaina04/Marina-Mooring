@@ -399,6 +399,8 @@ const Dashboard = () => {
       if (status === 200 && Array.isArray(content)) {
         if (content?.length > 0) {
           setTotalMoorings(totalSize)
+        } else {
+          setTotalMoorings(0)
         }
       } else {
         setIsLoading(false)
