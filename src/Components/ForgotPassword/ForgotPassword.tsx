@@ -1,10 +1,6 @@
 import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import {
-  ErrorResponse,
-  ErrorResponseForgotPassword,
-  validateEmailResponse,
-} from '../../Type/ApiTypes'
+import { ErrorResponseForgotPassword, validateEmailResponse } from '../../Type/ApiTypes'
 import { Button } from 'primereact/button'
 import { useForgotPasswordMutation } from '../../Services/Authentication/AuthApi'
 import { InputText } from 'primereact/inputtext'
@@ -33,7 +29,7 @@ const ForgotPassword = () => {
 
       return
     }
-    
+
     // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     // if (!emailRegex.test(email.trim())) {
     //   toast.current?.show({
@@ -44,7 +40,7 @@ const ForgotPassword = () => {
     //   })
     //   return
     // }
-    
+
     setIsLoading(true)
     try {
       const data = await validateEmail({ email }).unwrap()

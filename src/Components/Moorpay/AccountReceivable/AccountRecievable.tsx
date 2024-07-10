@@ -46,13 +46,8 @@ const AccountRecievable = () => {
   const accountRecievableTableColumn = useMemo(
     () => [
       {
-        id: 'invoice',
-        label: 'Invoice',
-        style: columnStyle,
-      },
-      {
-        id: 'mooringNumber',
-        label: 'Mooring Number',
+        id: 'workOrderNumber',
+        label: 'Work Order Number',
         style: columnStyle,
       },
       {
@@ -61,23 +56,13 @@ const AccountRecievable = () => {
         style: columnStyle,
       },
       {
-        id: 'technicianName',
-        label: 'Technician Name',
+        id: 'completedDate',
+        label: 'Completed Date',
         style: columnStyle,
       },
       {
-        id: 'services',
-        label: 'Services',
-        style: columnStyle,
-      },
-      {
-        id: 'time',
-        label: 'Time',
-        style: columnStyle,
-      },
-      {
-        id: 'amount',
-        label: 'Amount',
+        id: 'status',
+        label: 'Status',
         style: columnStyle,
       },
     ],
@@ -117,7 +102,7 @@ const AccountRecievable = () => {
     <>
       <Header header="MOORPAY/Account Receivable" />
 
-      {/* <div className="flex justify-end mr-16">
+      <div className="flex justify-end mr-16">
         <div className="flex gap-2 ml-[18rem] text-[gray] font-extrabold mt-10">
           <div style={{ marginTop: '0.1rem' }}>
             <img src="/assets/images/downloadIcon.png" alt="" className="w-5 " />
@@ -236,7 +221,7 @@ const AccountRecievable = () => {
             }}
           />
         </div>
-      </div> */}
+      </div>
     </>
   )
 }

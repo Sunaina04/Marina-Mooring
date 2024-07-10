@@ -238,22 +238,11 @@ const Boatyards = () => {
         label: 'Name',
         style: columnStyle,
       },
-      // {
-      //   id: 'emailAddress',
-      //   label: 'Email Address',
-      //   style: columnStyle,
-      // },
       {
         id: 'mooringInventoried',
         label: 'Total Mooring Inventoried',
         style: columnStyle,
       },
-      // {
-      //   field: '',
-      //   header: '',
-      //   expander: allowExpansion,
-      //   style: { backgroundColor: '#FFFFFF', borderBottom: '1px solid #D5E1EA ' },
-      // },
     ],
     // [allowExpansion],
     [],

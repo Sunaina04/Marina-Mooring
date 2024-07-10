@@ -789,11 +789,11 @@ const Customer = () => {
         {/* middle container */}
 
         <div
-          className={`min-w-[21vw] min-h[700px] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
+          className={`min-w-[21vw] min-h[600px] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
           <CustomMooringPositionMap
             position={initialPosition}
             zoomLevel={15}
-            style={{ height: '700px' }}
+            style={{ height: '600px' }}
             iconsByStatus={iconsByStatus}
             moorings={mooringData}
           />
@@ -1180,10 +1180,9 @@ const Customer = () => {
           <div
             style={{
               position: 'absolute',
-              top: '10px',
-              right: '10px',
+              top: '-100px',
+              right: '5px',
               display: 'flex',
-              gap: '10px',
             }}>
             <button onClick={handleZoomIn} style={buttonStyle}>
               <img

@@ -50,8 +50,7 @@ const Dashboard = () => {
   const [mooringData, setMooringData] = useState<any>()
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [mooringResponseData, setMooringResponseData] = useState<any>()
-  const [startDate, setStartDate] = useState(new Date())
-  const [endDate, setEndDate] = useState(new Date())
+
   const [getMoorings] = useGetMooringsMutation()
   const today = new Date()
   const dateAfter7Days = new Date(today)
@@ -63,6 +62,8 @@ const Dashboard = () => {
     const year = date.getFullYear()
     return `${month}/${day}/${year}`
   }
+  const [startDate, setStartDate] = useState<any>(formatDate(today))
+  const [endDate, setEndDate] = useState<any>(formatDate(dateAfter7Days))
   const [dates, setDates] = useState<[Date, Date]>([today, dateAfter7Days])
   const [filterDateFrom, setFilterDateFrom] = useState<any>(formatDate(today))
   const [filterDateTo, setFilterDateTo] = useState<any>(formatDate(dateAfter7Days))
@@ -444,11 +445,10 @@ const Dashboard = () => {
               <div className="bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px] text-white">
                 <h1 className="p-4 text-xl font-extrabold">Moorings Due for Service</h1>
               </div>
-              <div className="mb-4" style={{ overflow: 'auto', borderRadius: '10px' }}>
+              <div style={{ overflow: 'auto', borderRadius: '10px', marginBottom: '10px' }}>
                 <DataTableComponent
                   columns={Mooringcolumns}
                   // actionButtons={MooringActionButtonColumn}
-
                   scrollable={true}
                   tableStyle={{
                     backgroundColor: '#FFFFFF',
@@ -468,7 +468,7 @@ const Dashboard = () => {
                   }}
                   data={mooringData}
                   emptyMessage={
-                    <div className="text-center mt-2">
+                    <div className="text-center">
                       <img
                         src="/assets/images/empty.png"
                         alt="Empty Data"
@@ -493,13 +493,13 @@ const Dashboard = () => {
                   strokeWidth="4"
                 />
               )}
-
               <CustomMooringPositionMap
                 position={coordinatesArray ? coordinatesArray : initialPosition}
                 zoomLevel={10}
-                style={{ height: '60%', width: '100%' }}
+                style={{ height: '300px', width: '100%' }}
                 iconsByStatus={iconsByStatus}
                 moorings={mooringData}
+                dashboard={true}
               />
             </div>
           </div>
@@ -664,7 +664,7 @@ const Dashboard = () => {
                 </label>
                 <div
                   className={`content mt-5 transition-all ease-in-out duration-500 ${accordion === 'faq3' ? '' : 'hidden'}`}>
-                  <div>
+                  <div className="">
                     {statCardsData.map((items) => (
                       <StatCard key={items[0].title} items={items} />
                     ))}

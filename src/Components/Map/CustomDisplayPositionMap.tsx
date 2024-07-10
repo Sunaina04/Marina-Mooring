@@ -20,19 +20,21 @@ const CustomDisplayPositionMap: React.FC<CustomDisplayPositionMapProps> = ({
   }, [position, map])
 
   return (
-    <MapContainer
-      style={style}
-      center={position}
-      zoom={zoomLevel}
-      scrollWheelZoom={false}
-      attributionControl={false}
-      ref={setMap}>
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      />
-      <Marker position={position} ref={markerRef}></Marker>
-    </MapContainer>
+    <>
+      <MapContainer
+        style={style}
+        center={position}
+        zoom={zoomLevel}
+        scrollWheelZoom={false}
+        attributionControl={false}
+        ref={setMap}>
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        />
+        <Marker position={position} ref={markerRef}></Marker>
+      </MapContainer>
+    </>
   )
 }
 

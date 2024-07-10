@@ -635,11 +635,11 @@ const Moorings = () => {
         {/* middle container */}
 
         <div
-          className={`min-w-[21vw] min-h[700px] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
+          className={`min-w-[21vw] min-h[600px] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
           <CustomMooringPositionMap
             position={initialPosition}
             zoomLevel={15}
-            style={{ height: '700px' }}
+            style={{ height: '600px' }}
             iconsByStatus={iconsByStatus}
             moorings={mooringResponseData}
           />
@@ -647,10 +647,7 @@ const Moorings = () => {
 
         {/* last container */}
 
-        <div
-          //  style={{border:"1px solid red"}}
-
-          className="lg:flex-row ml-5 mr-12 w-[500px]">
+        <div className="lg:flex-row ml-5 mr-12 w-[500px]">
           {/* Left Panel - Customer Record */}
           <div className="flex-grow rounded-md border bg-white">
             <div className="bg-[#00426F] rounded-t-[10px] flex justify-between pb-2">

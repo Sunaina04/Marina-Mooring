@@ -8,7 +8,7 @@ const StatCard: React.FC<StatCardProps> = ({ items }) => {
   const color2 = 'rgba(255, 255, 255, 0)'
 
   return (
-    <div className="">
+    <div className="flex">
       <div className="flex justify-between items-center mb-2">
         <div className="font-[400] text-[#10293A] text-[24px]">{items[0].title}</div>
         <div className="text-gray-600 text-lg flex gap-3">
