@@ -36,6 +36,8 @@ const WorkOrders = () => {
   const [totalRecords, setTotalRecords] = useState<number>()
   const options: string[] = ['Open', 'Completed']
   const [value, setValue] = useState<string>(options[0])
+
+  
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
     setPageNumber1(event.first)
@@ -121,7 +123,7 @@ const WorkOrders = () => {
   const getWorkOrderData = useCallback(async () => {
     setIsLoading(true)
     try {
-      let params: Params = {}
+      const params: Params = {}
       if (searchText) {
         params.searchText = searchText
       }

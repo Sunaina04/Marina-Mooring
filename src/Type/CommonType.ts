@@ -119,7 +119,11 @@ export interface Customer {
   customerName: string
 }
 
-export type Params = {
+export interface Params {
+  pageSizeTwo?: number
+  pageNumberTwo?: number
+  searchInvoice?: string
+  searchApproval?: string
   pageNumber?: number
   pageSize?: number
   sortBy?: string
@@ -127,3 +131,4 @@ export type Params = {
   searchText?: string
   customerOwnerId?: number
 }
+

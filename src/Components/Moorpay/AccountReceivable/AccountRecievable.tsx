@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import CustomModal from '../../CustomComponent/CustomModal'
 import { MoorPayProps } from '../../../Type/ComponentBasedType'
 import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
@@ -10,24 +10,53 @@ import { Paginator } from 'primereact/paginator'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import PaymentModal from './PaymentModal'
 import ContactModal from './ContactModal'
+import { InputText } from 'primereact/inputtext'
+import {useSelector } from 'react-redux'
+import { useGetWorkOrdersMutation } from '../../../Services/MoorServe/MoorserveApi'
+import { ErrorResponse, WorkOrderPayload, WorkOrderResponse } from '../../../Type/ApiTypes'
+import { selectCustomerId } from '../../../Store/Slice/userSlice'
+import { Toast } from 'primereact/toast'
+import { Params } from '../../../Type/CommonType'
 
 const AccountRecievable = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [accountRecievableData, setAccountRecievableData] = useState<MoorPayProps[]>([])
+  const selectedCustomerId = useSelector(selectCustomerId)
+  // const [isModalOpen, setIsModalOpen] = useState(false)
+  // const [accountRecievableData, setAccountRecievableData] = useState<MoorPayProps[]>([])
+  const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
   const [pageSize, setPageSize] = useState(10)
+  const [pageNumberTwo, setPageNumberTwo] = useState(0)
+  const [pageNumber2, setPageNumber2] = useState(0)
+  const [pageSizeTwo, setPageSizeTwo] = useState(10)
+  const [totalRecords, setTotalRecords] = useState<number>()
   const [isLoading, setIsLoading] = useState(false)
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false)
   const [isContactModalOpen, setIsContactModalOpen] = useState(false)
+  const [searchApproval, setSearchApproval] = useState('')
+  const [searchInvoice, setSearchInvoice] = useState('')
+  const [workOrderData, setWorkOrderData] = useState<WorkOrderPayload[]>([])
+  const [getWorkOrder] = useGetWorkOrdersMutation()
+  const toast = useRef<Toast>(null)
+
+  // const handleButtonClick = () => {
+  //   // setIsModalOpen(true)
+  // }
+
+  const handleSearchApproval = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchApproval(e.target.value)
+  }
+  const handleSearchInvoice = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchInvoice(e.target.value)
+  }
 
   const onPageChange = (event: any) => {
-    // setPageNumber(event.page)
+    setPageNumber(event.page)
     setPageNumber1(event.first)
     setPageSize(event.rows)
   }
 
   const handleModalClose = () => {
-    setIsModalOpen(false)
+    // setIsModalOpen(false)
     setIsPaymentModalOpen(false)
     setIsContactModalOpen(false)
   }
@@ -51,12 +80,104 @@ const AccountRecievable = () => {
       // Handle view action
     }
   }
+  const onPageChangeTwo = (event: any) => {
+    setPageNumberTwo(event.page)
+    setPageNumber2(event.first)
+    setPageSizeTwo(event.rows)
+  }
+
+  // const handleModalClose = () => {
+  //   setIsModalOpen(false)
+  // }
+
+  const getWorkOrderData = useCallback(async () => {
+    setIsLoading(true)
+    try {
+      const params: Params = {}
+      if (searchApproval) {
+        params.searchApproval = searchApproval
+      }
+      if (pageNumber) {
+        params.pageNumber = pageNumber
+      }
+      if (pageSize) {
+        params.pageSize = pageSize
+      }
+      const response = await getWorkOrder(params).unwrap()
+      const { status, content, message, totalSize } = response as WorkOrderResponse
+      if (status === 200 && Array.isArray(content)) {
+        setWorkOrderData(content)
+        setIsLoading(false)
+        setTotalRecords(totalSize)
+      } else {
+        setIsLoading(false)
+        toast?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+      }
+    } catch (error) {
+      const { message: msg } = error as ErrorResponse
+      setIsLoading(false)
+      console.error('Error occurred while fetching customer data:', msg)
+    }
+  }, [searchApproval, selectedCustomerId, pageNumber, pageSize])
+
+  // bottom table
+
+  const getOutStandingInvoice = useCallback(async () => {
+    setIsLoading(true)
+    try {
+      const params: Params = {}
+      if (searchInvoice) {
+        params.searchInvoice = searchInvoice
+      }
+      if (pageNumberTwo) {
+        params.pageNumberTwo = pageNumberTwo
+      }
+      if (pageSizeTwo) {
+        params.pageSizeTwo = pageSizeTwo
+      }
+      const response = await getWorkOrder(params).unwrap()
+      const { status, content, message, totalSize } = response as WorkOrderResponse
+      if (status === 200 && Array.isArray(content)) {
+        setWorkOrderData(content)
+        setIsLoading(false)
+        setTotalRecords(totalSize)
+      } else {
+        setIsLoading(false)
+        toast?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+      }
+    } catch (error) {
+      const { message: msg } = error as ErrorResponse
+      setIsLoading(false)
+      console.error('Error occurred while fetching customer data:', msg)
+    }
+  }, [searchApproval, selectedCustomerId, pageNumber, pageSize])
+
+
+
+  const header = (
+    <div className="flex flex-wrap align-items-center ">
+      <h1 className="text-xl font-bold text-white">Account Receivable</h1>
+    </div>
+  )
 
   const columnStyle = {
     backgroundColor: '#FFFFFF',
     color: '#000000',
     fontWeight: '700',
     fontSize: '12px',
+  }
+  const firstLastName = (data: any) => {
+    return data.customerResponseDto.firstName + ' ' + data.customerResponseDto.lastName
   }
 
   const accountRecievableTableColumn = useMemo(
@@ -69,6 +190,7 @@ const AccountRecievable = () => {
       {
         id: 'customerName',
         label: 'Customer Name',
+        body: firstLastName,
         style: columnStyle,
       },
       {
@@ -77,7 +199,7 @@ const AccountRecievable = () => {
         style: columnStyle,
       },
       {
-        id: 'status',
+        id: 'workOrderStatusDto.status',
         label: 'Status',
         style: columnStyle,
       },
@@ -112,6 +234,7 @@ const AccountRecievable = () => {
       fontWeight: 'bold',
       color: 'black',
       borderBottom: '1px solid #C0C0C0',
+       width:'12.7vw'
     },
     style: { borderBottom: '1px solid #D5E1EA', fontWeight: '400' },
   }
@@ -126,6 +249,7 @@ const AccountRecievable = () => {
       {
         id: 'customerName',
         label: 'Customer Name',
+        body: firstLastName,
         style: columnStyle,
       },
       {
@@ -144,7 +268,7 @@ const AccountRecievable = () => {
         style: columnStyle,
       },
       {
-        id: 'status',
+        id: 'workOrderStatusDto.status',
         label: 'Status',
         style: columnStyle,
       },
@@ -189,145 +313,167 @@ const AccountRecievable = () => {
     style: { borderBottom: '1px solid #D5E1EA', fontWeight: '400' },
   }
 
-  const outstandingData = [
-    {
-      workOrderNumber: 'WO12345',
-      customerName: 'John Doe',
-      invoiceDate: '2023-07-10',
-      invoiceAmount: '$500.00',
-      contactTime: '2023-07-09 10:00 AM',
-      status: 'Pending',
-    },
-    {
-      workOrderNumber: 'WO12346',
-      customerName: 'Jane Smith',
-      invoiceDate: '2023-07-09',
-      invoiceAmount: '$750.00',
-      contactTime: '2023-07-08 02:30 PM',
-      status: 'Completed',
-    },
-    {
-      workOrderNumber: 'WO12347',
-      customerName: 'Michael Johnson',
-      invoiceDate: '2023-07-08',
-      invoiceAmount: '$300.00',
-      contactTime: '2023-07-07 11:15 AM',
-      status: 'In Progress',
-    },
-    {
-      workOrderNumber: 'WO12346',
-      customerName: 'Jane Smith',
-      invoiceDate: '2023-07-09',
-      invoiceAmount: '$750.00',
-      contactTime: '2023-07-08 02:30 PM',
-      status: 'Completed',
-    },
-    {
-      workOrderNumber: 'WO12347',
-      customerName: 'Michael Johnson',
-      invoiceDate: '2023-07-08',
-      invoiceAmount: '$300.00',
-      contactTime: '2023-07-07 11:15 AM',
-      status: 'In Progress',
-    },
-    {
-      workOrderNumber: 'WO12347',
-      customerName: 'Michael Johnson',
-      invoiceDate: '2023-07-08',
-      invoiceAmount: '$300.00',
-      contactTime: '2023-07-07 11:15 AM',
-      status: 'In Progress',
-    },
-    {
-      workOrderNumber: 'WO12347',
-      customerName: 'Michael Johnson',
-      invoiceDate: '2023-07-08',
-      invoiceAmount: '$300.00',
-      contactTime: '2023-07-07 11:15 AM',
-      status: 'In Progress',
-    },
-    {
-      workOrderNumber: 'WO12347',
-      customerName: 'Michael Johnson',
-      invoiceDate: '2023-07-08',
-      invoiceAmount: '$300.00',
-      contactTime: '2023-07-07 11:15 AM',
-      status: 'In Progress',
-    },
-    {
-      workOrderNumber: 'WO12347',
-      customerName: 'Michael Johnson',
-      invoiceDate: '2023-07-08',
-      invoiceAmount: '$300.00',
-      contactTime: '2023-07-07 11:15 AM',
-      status: 'In Progress',
-    },
-    {
-      workOrderNumber: 'WO12347',
-      customerName: 'Michael Johnson',
-      invoiceDate: '2023-07-08',
-      invoiceAmount: '$300.00',
-      contactTime: '2023-07-07 11:15 AM',
-      status: 'In Progress',
-    },
-  ]
+  // const outstandingData = [
+  //   {
+  //     workOrderNumber: 'WO12345',
+  //     customerName: 'John Doe',
+  //     invoiceDate: '2023-07-10',
+  //     invoiceAmount: '$500.00',
+  //     contactTime: '2023-07-09 10:00 AM',
+  //     status: 'Pending',
+  //   },
+  //   {
+  //     workOrderNumber: 'WO12346',
+  //     customerName: 'Jane Smith',
+  //     invoiceDate: '2023-07-09',
+  //     invoiceAmount: '$750.00',
+  //     contactTime: '2023-07-08 02:30 PM',
+  //     status: 'Completed',
+  //   },
+  //   {
+  //     workOrderNumber: 'WO12347',
+  //     customerName: 'Michael Johnson',
+  //     invoiceDate: '2023-07-08',
+  //     invoiceAmount: '$300.00',
+  //     contactTime: '2023-07-07 11:15 AM',
+  //     status: 'In Progress',
+  //   },
+  //   {
+  //     workOrderNumber: 'WO12346',
+  //     customerName: 'Jane Smith',
+  //     invoiceDate: '2023-07-09',
+  //     invoiceAmount: '$750.00',
+  //     contactTime: '2023-07-08 02:30 PM',
+  //     status: 'Completed',
+  //   },
+  //   {
+  //     workOrderNumber: 'WO12347',
+  //     customerName: 'Michael Johnson',
+  //     invoiceDate: '2023-07-08',
+  //     invoiceAmount: '$300.00',
+  //     contactTime: '2023-07-07 11:15 AM',
+  //     status: 'In Progress',
+  //   },
+  //   {
+  //     workOrderNumber: 'WO12347',
+  //     customerName: 'Michael Johnson',
+  //     invoiceDate: '2023-07-08',
+  //     invoiceAmount: '$300.00',
+  //     contactTime: '2023-07-07 11:15 AM',
+  //     status: 'In Progress',
+  //   },
+  //   {
+  //     workOrderNumber: 'WO12347',
+  //     customerName: 'Michael Johnson',
+  //     invoiceDate: '2023-07-08',
+  //     invoiceAmount: '$300.00',
+  //     contactTime: '2023-07-07 11:15 AM',
+  //     status: 'In Progress',
+  //   },
+  //   {
+  //     workOrderNumber: 'WO12347',
+  //     customerName: 'Michael Johnson',
+  //     invoiceDate: '2023-07-08',
+  //     invoiceAmount: '$300.00',
+  //     contactTime: '2023-07-07 11:15 AM',
+  //     status: 'In Progress',
+  //   },
+  //   {
+  //     workOrderNumber: 'WO12347',
+  //     customerName: 'Michael Johnson',
+  //     invoiceDate: '2023-07-08',
+  //     invoiceAmount: '$300.00',
+  //     contactTime: '2023-07-07 11:15 AM',
+  //     status: 'In Progress',
+  //   },
+  //   {
+  //     workOrderNumber: 'WO12347',
+  //     customerName: 'Michael Johnson',
+  //     invoiceDate: '2023-07-08',
+  //     invoiceAmount: '$300.00',
+  //     contactTime: '2023-07-07 11:15 AM',
+  //     status: 'In Progress',
+  //   },
+  // ]
 
-  const pendingApproval = [
-    {
-      workOrderNumber: 'WO12345',
-      customerName: 'John Doe',
-      completedDate: '2023-07-10',
-      status: 'Pending',
-    },
-    {
-      workOrderNumber: 'WO12346',
-      customerName: 'Jane Smith',
-      completedDate: '2023-07-09',
-      status: 'Completed',
-    },
-    {
-      workOrderNumber: 'WO12347',
-      customerName: 'Michael Johnson',
-      completedDate: '2023-07-08',
-      status: 'In Progress',
-    },
-    {
-      workOrderNumber: 'WO12347',
-      customerName: 'Michael Johnson',
-      completedDate: '2023-07-08',
-      status: 'In Progress',
-    },
-    {
-      workOrderNumber: 'WO12347',
-      customerName: 'Michael Johnson',
-      completedDate: '2023-07-08',
-      status: 'In Progress',
-    },
-    {
-      workOrderNumber: 'WO12347',
-      customerName: 'Michael Johnson',
-      completedDate: '2023-07-08',
-      status: 'In Progress',
-    },
-    {
-      workOrderNumber: 'WO12347',
-      customerName: 'Michael Johnson',
-      completedDate: '2023-07-08',
-      status: 'In Progress',
-    },
-    {
-      workOrderNumber: 'WO12347',
-      customerName: 'Michael Johnson',
-      completedDate: '2023-07-08',
-      status: 'In Progress',
-    },
-    {
-      workOrderNumber: 'WO12347',
-      customerName: 'Michael Johnson',
-      completedDate: '2023-07-08',
-      status: 'In Progress',
-    },
-  ]
+  // const pendingApproval = [
+  //   {
+  //     workOrderNumber: 'WO12345',
+  //     customerName: 'John Doe',
+  //     completedDate: '2023-07-10',
+  //     status: 'Pending',
+  //   },
+  //   {
+  //     workOrderNumber: 'WO12346',
+  //     customerName: 'Jane Smith',
+  //     completedDate: '2023-07-09',
+  //     status: 'Completed',
+  //   },
+  //   {
+  //     workOrderNumber: 'WO12347',
+  //     customerName: 'Michael Johnson',
+  //     completedDate: '2023-07-08',
+  //     status: 'In Progress',
+  //   },
+  //   {
+  //     workOrderNumber: 'WO12347',
+  //     customerName: 'Michael Johnson',
+  //     completedDate: '2023-07-08',
+  //     status: 'In Progress',
+  //   },
+  //   {
+  //     workOrderNumber: 'WO12347',
+  //     customerName: 'Michael Johnson',
+  //     completedDate: '2023-07-08',
+  //     status: 'In Progress',
+  //   },
+  //   {
+  //     workOrderNumber: 'WO12347',
+  //     customerName: 'Michael Johnson',
+  //     completedDate: '2023-07-08',
+  //     status: 'In Progress',
+  //   },
+  //   {
+  //     workOrderNumber: 'WO12347',
+  //     customerName: 'Michael Johnson',
+  //     completedDate: '2023-07-08',
+  //     status: 'In Progress',
+  //   },
+  //   {
+  //     workOrderNumber: 'WO12347',
+  //     customerName: 'Michael Johnson',
+  //     completedDate: '2023-07-08',
+  //     status: 'In Progress',
+  //   },
+  //   {
+  //     workOrderNumber: 'WO12347',
+  //     customerName: 'Michael Johnson',
+  //     completedDate: '2023-07-08',
+  //     status: 'In Progress',
+  //   },
+  // ]
+
+  useEffect(() => {
+    getWorkOrderData()
+    getOutStandingInvoice()
+  }, [pageNumber,pageSize,pageNumberTwo, pageSizeTwo, selectedCustomerId])
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (searchApproval) {
+        getWorkOrderData()
+      }
+    }, 600)
+    return () => clearTimeout(timeoutId)
+  }, [searchApproval])
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (searchInvoice) {
+        getOutStandingInvoice()
+      }
+    }, 600)
+    return () => clearTimeout(timeoutId)
+  }, [searchInvoice])
 
   return (
     <>
@@ -355,6 +501,24 @@ const AccountRecievable = () => {
             }}>
             Work Orders Pending Approval
           </span>
+
+          <div className="relative inline-block">
+            <div className="relative">
+              <img
+                src="/assets/images/Search.png"
+                alt="search icon"
+                className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5"
+                data-testid="search-icon"
+              />
+              <InputText
+                value={searchApproval}
+                onChange={handleSearchApproval}
+                placeholder="Search"
+                id="placeholderText"
+                className="pl-10 w-[237px] bg-[#00426F] h-[35px] rounded-lg border text-[white] border-[#D5E1EA] placeholder:text-[#FFFFFF]  focus:outline-none"
+              />
+            </div>
+          </div>
         </div>
         <div className="h-[293px] overflow-auto">
           <DataTableComponent
@@ -363,7 +527,7 @@ const AccountRecievable = () => {
               color: '#000000',
               fontWeight: 700,
             }}
-            data={pendingApproval}
+            data={workOrderData}
             columns={accountRecievableTableColumn}
             actionButtons={ActionButtonColumn}
             style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
@@ -401,7 +565,7 @@ const AccountRecievable = () => {
           <Paginator
             first={pageNumber1}
             rows={pageSize}
-            totalRecords={120}
+            totalRecords={totalRecords}
             rowsPerPageOptions={[5, 10, 20, 30]}
             onPageChange={onPageChange}
             style={{
@@ -411,6 +575,8 @@ const AccountRecievable = () => {
               backgroundColor: 'white',
               borderTop: '1px solid #D5E1EA',
               padding: '0.5rem',
+              borderBottomRightRadius: '10px',
+              borderBottomLeftRadius: '10px',
             }}
           />
         </div>
@@ -438,6 +604,24 @@ const AccountRecievable = () => {
             }}>
             Outstanding Invoices
           </span>
+
+          <div className="relative inline-block">
+            <div className="relative">
+              <img
+                src="/assets/images/Search.png"
+                alt="search icon"
+                className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5"
+                data-testid="search-icon"
+              />
+              <InputText
+                value={searchInvoice}
+                onChange={handleSearchInvoice}
+                placeholder="Search"
+                id="placeholderText"
+                className="pl-10 w-[237px] bg-[#00426F] h-[35px] rounded-lg border text-[white] border-[#D5E1EA] placeholder:text-[#FFFFFF]  focus:outline-none"
+              />
+            </div>
+          </div>
         </div>
         <div className="h-[293px] overflow-auto">
           <DataTableComponent
@@ -446,7 +630,7 @@ const AccountRecievable = () => {
               color: '#000000',
               fontWeight: 700,
             }}
-            data={outstandingData}
+            data={workOrderData}
             columns={outstandingInvoiceTableColumn}
             actionButtons={ActionButtonColumnInvoice}
             style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
@@ -481,11 +665,11 @@ const AccountRecievable = () => {
 
         <div className="">
           <Paginator
-            first={pageNumber1}
-            rows={pageSize}
-            totalRecords={120}
+            first={pageNumber2}
+            rows={pageSizeTwo}
+            totalRecords={totalRecords}
             rowsPerPageOptions={[5, 10, 20, 30]}
-            onPageChange={onPageChange}
+            onPageChange={onPageChangeTwo}
             style={{
               position: 'sticky',
               bottom: 0,
@@ -493,6 +677,8 @@ const AccountRecievable = () => {
               backgroundColor: 'white',
               borderTop: '1px solid #D5E1EA',
               padding: '0.5rem',
+              borderBottomRightRadius: '10px',
+              borderBottomLeftRadius: '10px',
             }}
           />
         </div>
