@@ -21,11 +21,10 @@ export default tseslint.config(
     files: ['**/*.{ts,tsx,mts,cts,mjs}'],
     extends: [tseslint.configs.disableTypeChecked],
     ignores: [
+      'node_modules',
       './tailwind.config.js',
       './prettier.config.js',
-      './jest.config.js',
-      'react-leaflet',
-      'leaflet',
+      './jest.config.js'
     ],
     rules: {},
   },

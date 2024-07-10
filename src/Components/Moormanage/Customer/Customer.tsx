@@ -88,6 +88,21 @@ const Customer = () => {
     margin: '5px',
   }
 
+  const modernButtonStyle = {
+    width: '40px',
+    height: '40px',
+    backgroundColor: 'transparent',
+    border: 'none',
+    cursor: 'pointer',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: '0',
+    borderRadius: '50%',
+    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+    transition: 'transform 0.2s',
+  }
+
   const handleZoomIn = () => {
     setScale((prevScale) => prevScale + 0.1)
   }
@@ -603,9 +618,7 @@ const Customer = () => {
                     fontSize: '12px',
                     color: '#10293A',
                     padding: '4px',
-                  }}>
-                  -
-                </p>
+                  }}></p>
               )}
             </div>
           </div>
@@ -627,6 +640,7 @@ const Customer = () => {
     }
   }, [pageNumberTwo, pageSizeTwo, customerId])
 
+ 
   return (
     <div style={{ height: '100vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
       <Header header="MOORMANAGE/Customer" />
@@ -1162,52 +1176,89 @@ const Customer = () => {
         <div>
           <hr className="border border-[#000000] my-0 mx-0"></hr>
         </div>
-        <div style={{ position: 'relative', width: '100%', height: '90%' }}>
-          <div style={{ overflow: 'hidden'}}>
-            <img
+        <div
+          style={{
+            position: 'relative',
+            width: '100%',
+            height: '90%',
+            overflow: 'auto',
+          }}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: '100%',
+              height: '100%',
+            }}>
+            <div
               style={{
                 transform: `scale(${scale})`,
+                transformOrigin: 'top left',
                 transition: 'transform 0.2s',
-                width: '60%',
-                height: '60%',
-                objectFit: 'contain',
-                marginTop: '7rem',
-                marginLeft: '8rem',
-              }}
-              src={`data:image/jpeg;base64,${showImage.imageData}`}
-            />
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <img
+                style={{
+                  width: 'auto',
+                  height: 'auto',
+                  maxWidth: '100%',
+                  maxHeight: '100%',
+                  display: 'block',
+                }}
+                src={`data:image/jpeg;base64,${showImage.imageData}`}
+              />
+            </div>
           </div>
           <div
             style={{
               position: 'absolute',
-              top: '-100px',
-              right: '5px',
+              top: '10px',
+              right: '10px',
               display: 'flex',
+              gap: '10px',
             }}>
-            <button onClick={handleZoomIn} style={buttonStyle}>
-              <img
-                src="/assets/images/plus.png"
-                alt="Zoom In"
-                className="p-clickable"
-                style={{ width: '20px', height: '20px' }}
-              />
-            </button>
-            <button onClick={handleZoomOut} style={buttonStyle}>
+            <button onClick={handleZoomIn} style={modernButtonStyle}>
               <svg
                 width="24"
-                height="4"
-                viewBox="0 0 11 3"
+                height="24"
+                viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="12" fill="#007bff" />
                 <path
-                  d="M10.125 1.5C10.125 1.92188 9.77344 2.25 9.375 2.25H1.125C0.703125 2.25 0.375 1.92188 0.375 1.5C0.375 1.10156 0.703125 0.75 1.125 0.75H9.375C9.77344 0.75 10.125 1.10156 10.125 1.5Z"
-                  fill="white"
+                  d="M12 5v14M5 12h14"
+                  stroke="#fff"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+            <button onClick={handleZoomOut} style={modernButtonStyle}>
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="12" fill="#007bff" />
+                <path
+                  d="M5 12h14"
+                  stroke="#fff"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </svg>
             </button>
           </div>
         </div>
       </Dialog>
+
+
     </div>
   )
 }

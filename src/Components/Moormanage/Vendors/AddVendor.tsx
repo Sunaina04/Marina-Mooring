@@ -333,7 +333,8 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
     <div className={isLoading ? 'blurred' : ''}>
       <div className="main">
         <Toast ref={toastRef} />
-        <div className="flex">
+        <div 
+        className="flex">
           <div className="flex gap-8">
             <div>
               <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
@@ -342,8 +343,10 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                   <p className="text-red-600">*</p>
                 </div>
               </span>
-              <div className="mt-2">
+              <div 
+              className="mt-2">
                 <InputComponent
+                
                   onChange={(e) => handleInputChange('companyName', e.target.value)}
                   value={formData.companyName}
                   style={{
@@ -367,7 +370,8 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                   <p className="text-red-600">*</p>
                 </div>
               </span>
-              <div className="mt-2">
+              <div
+               className="mt-2">
                 <InputComponent
                   onChange={(e) => handleInputChange('phone', e.target.value)}
                   value={formData.phone}

@@ -519,7 +519,7 @@ const Boatyards = () => {
               first={pageNumberOne}
               rows={pageSizeTwo}
               totalRecords={totalRecordsTwo}
-              rowsPerPageOptions={[10, 20, 30]}
+              rowsPerPageOptions={[5, 10, 20, 30]}
               onPageChange={onPageChangeTwo}
               style={{
                 position: 'sticky',

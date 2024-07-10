@@ -143,21 +143,18 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 .p-datepicker {
-  /* background-color:#D5E1EA; */
   background-color: #f7fafc;
-  /* #0098ff   fcf7fa*/
   border-radius: 11px;
   .p-highlight {
-    /* background-color: #0098FF !important; */
-    background-color: #00426F !important;
-    color:white !important
-}
+    background-color: #0098ff !important;
+    color: white !important;
+  }
 }
 
 .p-datepicker .p-datepicker-header {
   padding: 0.5rem;
   color: #495057;
-  background: #F7FAFC;
+  background: #f7fafc;
   font-weight: 800;
   margin: 0;
   border-bottom: 1px solid #dee2e6;
@@ -166,11 +163,10 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 .p-datepicker:not(.p-datepicker-inline) {
-  background: #F7FAFC;
-  
+  background: #f7fafc;
 }
 .p-datepicker .p-datepicker-header:not(.p-datepicker-inline) {
-  background: #F7FAFC;
+  background: #f7fafc;
 }
 
 /* .p-highlight {
