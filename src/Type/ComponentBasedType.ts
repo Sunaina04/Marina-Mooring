@@ -128,6 +128,12 @@ export interface WorkOrderProps {
   closeModal: () => void
 }
 
+export interface ReasonModalProps {
+  selectedRowData: any
+  setVisible: React.Dispatch<React.SetStateAction<boolean>>
+  closeModal: () => void
+}
+
 export interface PermissionData {
   id: string
   email: string
