@@ -511,7 +511,7 @@ const CustomerOwner = () => {
             }}
           />
           <div
-            data-testid="customer-admin-data"
+            data-testid="customerData"
             className="flex flex-col overflow-hidden p-4"
             style={{ height: '500px' }}>
             <div className="flex-grow overflow-auto">
@@ -547,7 +547,7 @@ const CustomerOwner = () => {
                 }
               />
             </div>
-            <div className="mt-auto">
+            <div  data-testid="paginatorOne" className="mt-auto">
               <Paginator
                 first={pageNumber1}
                 rows={pageSize}
@@ -598,6 +598,7 @@ const CustomerOwner = () => {
               height: '18px',
             }}
           />
+          <div data-testid= 'progress'>
           {isLoading && (
             <ProgressSpinner
               style={{
@@ -611,8 +612,9 @@ const CustomerOwner = () => {
               strokeWidth="4"
             />
           )}
+          </div>
           <div
-            data-testid="customer-admin-data"
+            data-testid="customerDataAdmin"
             className="flex flex-col overflow-hidden p-4"
             style={{ height: '500px' }}>
             <div className="flex-grow overflow-auto">
@@ -640,7 +642,7 @@ const CustomerOwner = () => {
                 }
               />
             </div>
-            <div className="mt-auto">
+            <div  data-testid="paginatorTwo" className="mt-auto">
               <Paginator
                 first={pageNumberOne}
                 rows={pageSizeTwo}

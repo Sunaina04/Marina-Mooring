@@ -312,7 +312,10 @@ const InventoryDetails: React.FC = () => {
             </div>
             <div style={{ fontSize: '14px', color: '#000000', fontWeight: '500' }}>
               <p>Sales Representative:</p>
-              <p className="mt-1 text-lg">{vendorData?.firstName}</p>
+              <p className="mt-1 text-lg">
+                {vendorData?.firstName} {''}
+                {vendorData?.lastName}
+              </p>
             </div>
             <div style={{ fontSize: '14px', color: '#000000', fontWeight: '500' }}>
               <p>Phone Number:</p>

@@ -50,11 +50,11 @@ const SidebarMenu = () => {
         name: 'Account Receivable',
         link: 'moorpay/accountReceivable',
       },
-      {
-        icon: '/assets/images/accPayable.svg',
-        name: 'Account Payable',
-        link: 'moorpay/accountPayable',
-      },
+      // {
+      //   icon: '/assets/images/accPayable.svg',
+      //   name: 'Account Payable',
+      //   link: 'moorpay/accountPayable',
+      // },
     ],
   }
 
@@ -138,11 +138,11 @@ const SidebarMenu = () => {
             name: 'Account Receivable',
             link: 'moorpay/accountReceivable',
           },
-          {
-            icon: '/assets/images/accPayable.svg',
-            name: 'Account Payable',
-            link: 'moorpay/accountPayable',
-          },
+          // {
+          //   icon: '/assets/images/accPayable.svg',
+          //   name: 'Account Payable',
+          //   link: 'moorpay/accountPayable',
+          // },
         ],
       },
       {

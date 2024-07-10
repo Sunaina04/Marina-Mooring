@@ -226,10 +226,8 @@ const Estimates = () => {
   }
 
   useEffect(() => {
-    if (pageNumber && pageSize) {
-      getEstimateData()
-    }
-  }, [pageNumber, pageSize])
+    getEstimateData()
+  }, [pageNumber, pageSize, selectedCustomerId])
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -241,7 +239,10 @@ const Estimates = () => {
   }, [searchText])
 
   useEffect(() => {
-    handleModalClose()
+    if (selectedCustomerId) {
+      setVisible(false)
+      setEditMode(false)
+    }
   }, [selectedCustomerId])
 
   return (

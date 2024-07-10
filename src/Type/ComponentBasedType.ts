@@ -200,3 +200,14 @@ export interface inputHeader {
   value?: string | undefined
   borderBottom?: React.CSSProperties
 }
+
+export interface PaymentModalProps {
+  visible?: boolean
+  onHide?: any
+  onSavePayment: (paymentDetails: { amount: string; type: string }) => void
+}
+export interface ContactModalProps {
+  visible?: boolean
+  onHide?: any
+  onSendEmail: (emailDetails: { recipient: string; subject: string; message: string }) => void
+}

@@ -442,7 +442,7 @@ const moormanageApi = userApi.injectEndpoints({
     }),
 
     getMooringsDueForService: builder.mutation({
-      query: ({}: {}) => ({
+      query: () => ({
         url: 'api/v1/mooring/fetchMooringDueForService',
         method: 'GET',
         params: {},

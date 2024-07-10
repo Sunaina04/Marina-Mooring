@@ -11,7 +11,7 @@ const baseQueryWithInterceptor = async (
 ) => {
   try {
     const result = await baseQuery(args as FetchArgs | string, api, extraOptions)
-    if (result?.error?.status === 500 || result?.error?.status === 401) {
+    if (result?.error?.status === 500) {
       const token = sessionStorage.getItem('refreshToken')
       await refreshToken(token)
       return baseQuery(args as FetchArgs | string, api, extraOptions)
@@ -29,27 +29,21 @@ const baseQuery = fetchBaseQuery({
     const state = getState() as RootState
     const selectedCustomerId = selectCustomerId(state)
     const userRole = selectUserRole(state)
-    if (
-      (getState() as RootState).user.token ||
-      sessionStorage.getItem('token') ||
-      sessionStorage.getItem('getRefreshToken')
-    ) {
-      const token =
-        (getState() as RootState).user.token ||
-        sessionStorage.getItem('token') ||
-        sessionStorage.getItem('getRefreshToken')
-      const noAuthEndpoints = ['login', 'resetPassword', 'forgotPassword']
-      if (token && !noAuthEndpoints.includes(endpoint)) {
-        headers.set('Authorization', `Bearer ${token}`)
+    const token = (getState() as RootState).user.token || sessionStorage.getItem('token')
+    const noAuthEndpoints = ['login', 'resetPassword', 'forgotPassword']
+    if (token && !noAuthEndpoints.includes(endpoint)) {
+      headers.set('Authorization', `Bearer ${token}`)
+      const noAuthEndpoints = ['getCustomersOwners']
+      if (userRole === 1 && selectedCustomerId && !noAuthEndpoints.includes(endpoint)) {
+        headers.set('CUSTOMER_OWNER_ID', selectedCustomerId)
+      }
+    } else {
+      const refreshToken = sessionStorage.getItem('getRefreshToken')
+      if (refreshToken && !noAuthEndpoints.includes(endpoint)) {
+        headers.set('Authorization', `Bearer ${refreshToken}`)
         const noAuthEndpoints = ['getCustomersOwners']
         if (userRole === 1 && selectedCustomerId && !noAuthEndpoints.includes(endpoint)) {
           headers.set('CUSTOMER_OWNER_ID', selectedCustomerId)
-        }
-      } else {
-        const token = sessionStorage.getItem('getRefreshToken')
-        const noAuthEndpoints = ['login', 'resetPassword', 'forgotPassword']
-        if (token && !noAuthEndpoints.includes(endpoint)) {
-          headers.set('Authorization', `Bearer ${token}`)
         }
       }
     }
