@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import CustomModal from '../../CustomComponent/CustomModal'
 import { MoorPayProps } from '../../../Type/ComponentBasedType'
 import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
 import AddCustomer from '../../Moormanage/Customer/AddCustomer'
+import AddWorkOrders from '../../Moorserve/WorkOrders/AddWorkOrders'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import Header from '../../Layout/LayoutComponents/Header'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
@@ -11,7 +12,7 @@ import { ProgressSpinner } from 'primereact/progressspinner'
 import PaymentModal from './PaymentModal'
 import ContactModal from './ContactModal'
 import { InputText } from 'primereact/inputtext'
-import {useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useGetWorkOrdersMutation } from '../../../Services/MoorServe/MoorserveApi'
 import { ErrorResponse, WorkOrderPayload, WorkOrderResponse } from '../../../Type/ApiTypes'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
@@ -19,6 +20,7 @@ import { Toast } from 'primereact/toast'
 import { Params } from '../../../Type/CommonType'
 import { Dialog } from 'primereact/dialog'
 import { Button } from 'primereact/button'
+import ReasonModal from './ReasonModal'
 
 const AccountRecievable = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -31,18 +33,21 @@ const AccountRecievable = () => {
   const [pageNumber2, setPageNumber2] = useState(0)
   const [pageSizeTwo, setPageSizeTwo] = useState(10)
   const [totalRecords, setTotalRecords] = useState<number>()
+  const [totalRecordsInvoice, setTotalRecordsInvoice] = useState<number>()
   const [isLoading, setIsLoading] = useState(false)
+  const [denyModalOpen, setDenyModalOpen] = useState(false)
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false)
   const [isContactModalOpen, setIsContactModalOpen] = useState(false)
+  const [addWorkOrderModal, setAddWorkOrderModal] = useState(false)
   const [searchApproval, setSearchApproval] = useState('')
   const [searchInvoice, setSearchInvoice] = useState('')
   const [workOrderData, setWorkOrderData] = useState<WorkOrderPayload[]>([])
+  const [workOrderDataInvoice, setWorkOrderDataInvoice] = useState<WorkOrderPayload[]>([])
   const [getWorkOrder] = useGetWorkOrdersMutation()
+  const [getWorkOrderInvoice] = useGetWorkOrdersMutation()
+ 
   const toast = useRef<Toast>(null)
 
-  // const handleButtonClick = () => {
-  //   // setIsModalOpen(true)
-  // }
 
   const handleSearchApproval = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchApproval(e.target.value)
@@ -50,17 +55,27 @@ const AccountRecievable = () => {
   const handleSearchInvoice = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchInvoice(e.target.value)
   }
+ 
+
 
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
-    setPageNumber1(event.first)
+   // setPageNumber1(event.first)
     setPageSize(event.rows)
   }
 
+  const onPageChangeTwo = (event: any) => {
+    setPageNumberTwo(event.page)
+   // setPageNumber2(event.first)
+    setPageSizeTwo(event.rows)
+  }
+
   const handleModalClose = () => {
-    // setIsModalOpen(false)
+   // setIsModalOpen(false)
     setIsPaymentModalOpen(false)
     setIsContactModalOpen(false)
+    setDenyModalOpen(false)
+    setAddWorkOrderModal(false)
   }
 
   const handlePaymentSave = (paymentDetails: any) => {
@@ -82,21 +97,20 @@ const AccountRecievable = () => {
       // Handle view action
     }
   }
-  const onPageChangeTwo = (event: any) => {
-    setPageNumberTwo(event.page)
-    setPageNumber2(event.first)
-    setPageSizeTwo(event.rows)
+
+  const handleDeny = (rowData: any) => {
+    setDenyModalOpen(true)
+  }
+  const handleView = () => {
+    setAddWorkOrderModal(true)
   }
 
-  // const handleModalClose = () => {
-  //   setIsModalOpen(false)
-  // }
 
   const getWorkOrderData = useCallback(async () => {
     setIsLoading(true)
     try {
       const params: Params = {}
-      if (searchApproval) {
+     if (searchApproval) {
         params.searchApproval = searchApproval
       }
       if (pageNumber) {
@@ -137,17 +151,17 @@ const AccountRecievable = () => {
         params.searchInvoice = searchInvoice
       }
       if (pageNumberTwo) {
-        params.pageNumberTwo = pageNumberTwo
+        params.pageNumber = pageNumberTwo
       }
       if (pageSizeTwo) {
-        params.pageSizeTwo = pageSizeTwo
+        params.pageSize = pageSizeTwo
       }
-      const response = await getWorkOrder(params).unwrap()
+      const response = await getWorkOrderInvoice(params).unwrap()
       const { status, content, message, totalSize } = response as WorkOrderResponse
       if (status === 200 && Array.isArray(content)) {
-        setWorkOrderData(content)
+        setWorkOrderDataInvoice(content)
         setIsLoading(false)
-        setTotalRecords(totalSize)
+        setTotalRecordsInvoice(totalSize)
       } else {
         setIsLoading(false)
         toast?.current?.show({
@@ -162,15 +176,13 @@ const AccountRecievable = () => {
       setIsLoading(false)
       console.error('Error occurred while fetching customer data:', msg)
     }
-  }, [searchApproval, selectedCustomerId, pageNumber, pageSize])
+  }, [searchInvoice, selectedCustomerId, pageNumberTwo, pageSizeTwo])
 
-
-
-  const header = (
-    <div className="flex flex-wrap align-items-center ">
-      <h1 className="text-xl font-bold text-white">Account Receivable</h1>
-    </div>
-  )
+  // const header = (
+  //   <div className="flex flex-wrap align-items-center ">
+  //     <h1 className="text-xl font-bold text-white">Account Receivable</h1>
+  //   </div>
+  // )
 
   const columnStyle = {
     backgroundColor: '#FFFFFF',
@@ -224,10 +236,12 @@ const AccountRecievable = () => {
       {
         label: 'Deny',
         filled: true,
+        onClick: (row: any) => handleDeny(row),
       },
       {
         label: 'View',
         filled: true,
+        onClick: () => handleView()
       },
     ],
     headerStyle: {
@@ -236,7 +250,7 @@ const AccountRecievable = () => {
       fontWeight: 'bold',
       color: 'black',
       borderBottom: '1px solid #C0C0C0',
-       width:'12.7vw'
+      width: '12.7vw',
     },
     style: { borderBottom: '1px solid #D5E1EA', fontWeight: '400' },
   }
@@ -315,150 +329,14 @@ const AccountRecievable = () => {
     style: { borderBottom: '1px solid #D5E1EA', fontWeight: '400' },
   }
 
-  // const outstandingData = [
-  //   {
-  //     workOrderNumber: 'WO12345',
-  //     customerName: 'John Doe',
-  //     invoiceDate: '2023-07-10',
-  //     invoiceAmount: '$500.00',
-  //     contactTime: '2023-07-09 10:00 AM',
-  //     status: 'Pending',
-  //   },
-  //   {
-  //     workOrderNumber: 'WO12346',
-  //     customerName: 'Jane Smith',
-  //     invoiceDate: '2023-07-09',
-  //     invoiceAmount: '$750.00',
-  //     contactTime: '2023-07-08 02:30 PM',
-  //     status: 'Completed',
-  //   },
-  //   {
-  //     workOrderNumber: 'WO12347',
-  //     customerName: 'Michael Johnson',
-  //     invoiceDate: '2023-07-08',
-  //     invoiceAmount: '$300.00',
-  //     contactTime: '2023-07-07 11:15 AM',
-  //     status: 'In Progress',
-  //   },
-  //   {
-  //     workOrderNumber: 'WO12346',
-  //     customerName: 'Jane Smith',
-  //     invoiceDate: '2023-07-09',
-  //     invoiceAmount: '$750.00',
-  //     contactTime: '2023-07-08 02:30 PM',
-  //     status: 'Completed',
-  //   },
-  //   {
-  //     workOrderNumber: 'WO12347',
-  //     customerName: 'Michael Johnson',
-  //     invoiceDate: '2023-07-08',
-  //     invoiceAmount: '$300.00',
-  //     contactTime: '2023-07-07 11:15 AM',
-  //     status: 'In Progress',
-  //   },
-  //   {
-  //     workOrderNumber: 'WO12347',
-  //     customerName: 'Michael Johnson',
-  //     invoiceDate: '2023-07-08',
-  //     invoiceAmount: '$300.00',
-  //     contactTime: '2023-07-07 11:15 AM',
-  //     status: 'In Progress',
-  //   },
-  //   {
-  //     workOrderNumber: 'WO12347',
-  //     customerName: 'Michael Johnson',
-  //     invoiceDate: '2023-07-08',
-  //     invoiceAmount: '$300.00',
-  //     contactTime: '2023-07-07 11:15 AM',
-  //     status: 'In Progress',
-  //   },
-  //   {
-  //     workOrderNumber: 'WO12347',
-  //     customerName: 'Michael Johnson',
-  //     invoiceDate: '2023-07-08',
-  //     invoiceAmount: '$300.00',
-  //     contactTime: '2023-07-07 11:15 AM',
-  //     status: 'In Progress',
-  //   },
-  //   {
-  //     workOrderNumber: 'WO12347',
-  //     customerName: 'Michael Johnson',
-  //     invoiceDate: '2023-07-08',
-  //     invoiceAmount: '$300.00',
-  //     contactTime: '2023-07-07 11:15 AM',
-  //     status: 'In Progress',
-  //   },
-  //   {
-  //     workOrderNumber: 'WO12347',
-  //     customerName: 'Michael Johnson',
-  //     invoiceDate: '2023-07-08',
-  //     invoiceAmount: '$300.00',
-  //     contactTime: '2023-07-07 11:15 AM',
-  //     status: 'In Progress',
-  //   },
-  // ]
-
-  // const pendingApproval = [
-  //   {
-  //     workOrderNumber: 'WO12345',
-  //     customerName: 'John Doe',
-  //     completedDate: '2023-07-10',
-  //     status: 'Pending',
-  //   },
-  //   {
-  //     workOrderNumber: 'WO12346',
-  //     customerName: 'Jane Smith',
-  //     completedDate: '2023-07-09',
-  //     status: 'Completed',
-  //   },
-  //   {
-  //     workOrderNumber: 'WO12347',
-  //     customerName: 'Michael Johnson',
-  //     completedDate: '2023-07-08',
-  //     status: 'In Progress',
-  //   },
-  //   {
-  //     workOrderNumber: 'WO12347',
-  //     customerName: 'Michael Johnson',
-  //     completedDate: '2023-07-08',
-  //     status: 'In Progress',
-  //   },
-  //   {
-  //     workOrderNumber: 'WO12347',
-  //     customerName: 'Michael Johnson',
-  //     completedDate: '2023-07-08',
-  //     status: 'In Progress',
-  //   },
-  //   {
-  //     workOrderNumber: 'WO12347',
-  //     customerName: 'Michael Johnson',
-  //     completedDate: '2023-07-08',
-  //     status: 'In Progress',
-  //   },
-  //   {
-  //     workOrderNumber: 'WO12347',
-  //     customerName: 'Michael Johnson',
-  //     completedDate: '2023-07-08',
-  //     status: 'In Progress',
-  //   },
-  //   {
-  //     workOrderNumber: 'WO12347',
-  //     customerName: 'Michael Johnson',
-  //     completedDate: '2023-07-08',
-  //     status: 'In Progress',
-  //   },
-  //   {
-  //     workOrderNumber: 'WO12347',
-  //     customerName: 'Michael Johnson',
-  //     completedDate: '2023-07-08',
-  //     status: 'In Progress',
-  //   },
-  // ]
-
   useEffect(() => {
     getWorkOrderData()
     getOutStandingInvoice()
-  }, [pageNumber,pageSize,pageNumberTwo, pageSizeTwo, selectedCustomerId])
+  }, [pageNumber, pageSize, selectedCustomerId])
+
+  useEffect(() => {
+    getOutStandingInvoice()
+  }, [pageNumberTwo, pageSizeTwo, selectedCustomerId])
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -565,7 +443,7 @@ const AccountRecievable = () => {
 
         <div className="">
           <Paginator
-            first={pageNumber1}
+            first={pageNumber}
             rows={pageSize}
             totalRecords={totalRecords}
             rowsPerPageOptions={[5, 10, 20, 30]}
@@ -632,7 +510,7 @@ const AccountRecievable = () => {
               color: '#000000',
               fontWeight: 700,
             }}
-            data={workOrderData}
+            data={workOrderDataInvoice}
             columns={outstandingInvoiceTableColumn}
             actionButtons={ActionButtonColumnInvoice}
             style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
@@ -667,9 +545,9 @@ const AccountRecievable = () => {
 
         <div className="">
           <Paginator
-            first={pageNumber2}
+            first={pageNumberTwo}
             rows={pageSizeTwo}
-            totalRecords={totalRecords}
+            totalRecords={totalRecordsInvoice}
             rowsPerPageOptions={[5, 10, 20, 30]}
             onPageChange={onPageChangeTwo}
             style={{
@@ -685,7 +563,6 @@ const AccountRecievable = () => {
           />
         </div>
       </div>
-
 
       <Dialog
         position="center"
@@ -705,8 +582,7 @@ const AccountRecievable = () => {
         // header={'Customers Images'}
         visible={isPaymentModalOpen}
         onHide={handleModalClose}
-        header="Payment"
-      >
+        header="Payment">
         <PaymentModal onHide={handleModalClose} onSavePayment={handlePaymentSave} />
 
         <div className={`flex gap-4 ml-4 bottom-5 absolute left-6 ${isLoading ? 'blurred' : ''}`}>
@@ -728,8 +604,6 @@ const AccountRecievable = () => {
         </div>
       </Dialog>
 
-
-
       <Dialog
         position="center"
         style={{
@@ -745,8 +619,7 @@ const AccountRecievable = () => {
         headerStyle={{ cursor: 'alias' }}
         visible={isContactModalOpen}
         onHide={handleModalClose}
-        header="Contact Customer"
-      >
+        header="Contact Customer">
         <ContactModal onHide={handleModalClose} onSendEmail={handleSendEmail} />
         <div className={`flex gap-4 ml-4 bottom-5 absolute left-6 ${isLoading ? 'blurred' : ''}`}>
           <Button
@@ -767,7 +640,54 @@ const AccountRecievable = () => {
         </div>
       </Dialog>
 
+      <Dialog
+        position="center"
+        style={{
+          width: '800px',
+          minWidth: '800px',
+          height: '480px',
+          minHeight: '480px',
+          borderRadius: '1rem',
+          fontWeight: '400',
+          cursor: 'alias',
+        }}
+        draggable={false}
+        headerStyle={{ cursor: 'alias' }}
+        visible={denyModalOpen}
+        onHide={handleModalClose}
+        header="Reason"
+        >
+          <ReasonModal selectedRowData={undefined} setVisible={function (value: SetStateAction<boolean>): void {
+          throw new Error('Function not implemented.')
+        } } closeModal={function (): void {
+          throw new Error('Function not implemented.')
+        } }/>
+      </Dialog>
 
+      {/* for view button */}
+      <Dialog
+        position="center"
+        style={{
+          width: '851px',
+          minWidth: '851px',
+          height: '526px',
+          minHeight: '526px',
+          borderRadius: '1rem',
+          fontWeight: '400',
+          cursor: 'alias',
+        }}
+        draggable={false}
+        headerStyle={{ cursor: 'alias' }}
+        visible={addWorkOrderModal}
+        onHide={handleModalClose}
+        header='Work Order'
+        >
+          <AddWorkOrders workOrderData={undefined} setVisible={function (value: SetStateAction<boolean>): void {
+          throw new Error('Function not implemented.')
+        } } closeModal={function (): void {
+          throw new Error('Function not implemented.')
+        } }/>
+        </Dialog>
     </>
   )
 }

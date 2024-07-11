@@ -4,41 +4,33 @@ import { Button } from 'primereact/button'
 import { Toast } from 'primereact/toast'
 import { ReasonModalProps } from '../../../Type/ComponentBasedType'
 
-const ReasonModal:React.FC<ReasonModalProps> = ({
-  selectedRowData,
-  setVisible,
-  closeModal,
-}) => {
-//   const [workOrder, setWorkOrder] = useState<any>({
-//     Reason: ''
-//   })
-const [reasonDetails, setReasonDetails] = useState();
-//const toastRef = useRef<Toast>(null)
-const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
-// import { Dialog } from 'primereact/dialog'
-// import { AiOutlineDelete } from 'react-icons/ai'
+const ReasonModal: React.FC<ReasonModalProps> = ({ selectedRowData, setVisible, closeModal }) => {
+  
+  const [reasonDetails, setReasonDetails] = useState()
+  const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
   const validateFields = () => {
     const errors: { [key: string]: string } = {}
 
     if (!reasonDetails) {
       errors.Reason = 'Customer Name is required'
     }
-
+  }
+  const handleBack = () => {
+    setVisible(false)
   }
   return (
     <>
-      <div className={`"w-full h-full mb-16 ml-3" }`}>
+      <div>
         {/* <Toast ref={toastRef} /> */}
 
-    
-        <div className=" mt-4 mb-20">
+        <div className=" mt-4">
           <span className="font-medium text-sm text-[#000000]">
-            <div className="flex gap-2 ml-4">
+            <div className="flex gap-2 ml-2">
               Reason
               <p className="text-red-600">*</p>
             </div>
           </span>
-          <div className="mt-1 ml-3 text-[#000000]">
+          <div className="mt-1 ml-1 text-[#000000]">
             <div className="">
               <InputTextarea
                 value={reasonDetails}
@@ -71,7 +63,6 @@ const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
           bottom: '0px',
         }}>
         <Button
-          
           label={'Save'}
           style={{
             width: '89px',
@@ -87,9 +78,7 @@ const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
           }}
         />
         <Button
-          onClick={() => {
-            setVisible(false)
-          }}
+          onClick={handleBack}
           label={'Back'}
           text={true}
           style={{
@@ -101,8 +90,7 @@ const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
             marginTop: '10px',
           }}
         />
-
-             </div>
+      </div>
     </>
   )
 }
