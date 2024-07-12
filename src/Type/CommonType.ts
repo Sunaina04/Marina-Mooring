@@ -122,8 +122,6 @@ export interface Customer {
 export interface Params {
   pageSizeTwo?: number
   pageNumberTwo?: number
-  searchInvoice?: string
-  searchApproval?: string
   pageNumber?: number
   pageSize?: number
   sortBy?: string
@@ -131,4 +129,3 @@ export interface Params {
   searchText?: string
   customerOwnerId?: number
 }
-

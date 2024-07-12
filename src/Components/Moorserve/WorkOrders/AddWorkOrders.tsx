@@ -47,6 +47,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   estimate,
   setVisible,
   closeModal,
+  isAccountRecievable,
 }) => {
   const selectedCustomerId = useSelector(selectCustomerId)
   const [workOrder, setWorkOrder] = useState<any>({
@@ -1150,79 +1151,80 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
             marginTop: '10px',
           }}
         />
+      </div>
 
-        <Dialog
-          position="center"
-          style={{
-            width: '900px',
-            minWidth: '800px',
-            height: '580px',
-            minHeight: '580px',
-            borderRadius: '1rem',
-            fontWeight: '400',
-            cursor: 'alias',
-          }}
-          draggable={false}
-          visible={imageVisible}
-          onHide={() => setImageVisible(false)}
-          header={'Work Order Images'}>
-          <div className={`ml-4 ${isLoading ? 'blurred' : ''}`}>
-            <div className="flex justify-center">
-              <div className="mt-2">
-                <input
-                  id="file-input"
-                  type="file"
-                  accept="image/*"
-                  multiple
-                  onChange={handleImageChange}
+      <Dialog
+        position="center"
+        style={{
+          width: '900px',
+          minWidth: '800px',
+          height: '580px',
+          minHeight: '580px',
+          borderRadius: '1rem',
+          fontWeight: '400',
+          cursor: 'alias',
+        }}
+        draggable={false}
+        visible={imageVisible}
+        onHide={() => setImageVisible(false)}
+        header={'Work Order Images'}>
+        <div className={`ml-4 ${isLoading ? 'blurred' : ''}`}>
+          <div className="flex justify-center">
+            <div className="mt-2">
+              <input
+                id="file-input"
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={handleImageChange}
+                style={{
+                  display: 'none',
+                }}
+              />
+              <label
+                htmlFor="file-input"
+                style={{
+                  width: '300px',
+                  height: '40px',
+                  border: '2px solid #0098FF',
+                  borderRadius: '0.50rem',
+                  fontSize: '0.8rem',
+                  paddingLeft: '0.5rem',
+                  display: 'flex',
+                  gap: '0.5rem',
+                  textAlign: 'center',
+                  lineHeight: '25px',
+                  cursor: 'pointer',
+                }}>
+                <FaFileUpload
                   style={{
-                    display: 'none',
+                    fontSize: '29px',
+                    color: '#0098FF',
+                    marginLeft: '1rem',
+                    marginTop: '3px',
                   }}
                 />
-                <label
-                  htmlFor="file-input"
-                  style={{
-                    width: '300px',
-                    height: '40px',
-                    border: '2px solid #0098FF',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                    paddingLeft: '0.5rem',
-                    display: 'flex',
-                    gap: '0.5rem',
-                    textAlign: 'center',
-                    lineHeight: '25px',
-                    cursor: 'pointer',
-                  }}>
-                  <FaFileUpload
-                    style={{
-                      fontSize: '29px',
-                      color: '#0098FF',
-                      marginLeft: '1rem',
-                      marginTop: '3px',
-                    }}
-                  />
-                  <div className="border-r-2 border-sky-500  h-9 pl-3"></div>
-                  <span className="pl-10 mt-1"> UPLOAD IMAGES </span>
-                </label>
-              </div>
+                <div className="border-r-2 border-sky-500  h-9 pl-3"></div>
+                <span className="pl-10 mt-1"> UPLOAD IMAGES </span>
+              </label>
             </div>
           </div>
+        </div>
 
-          <div
-            //  style={{border:"1px solid red"}}
+        <div
+          //  style={{border:"1px solid red"}}
 
-            style={{ marginTop: '40px', marginLeft: '40px' }}>
-            {customerImages.length > 0 && (
-              <div className="mt-2">
-                <div className="flex gap-16 flex-wrap">
-                  {customerImages.map((image, index) => (
-                    <div
-                      key={index}
-                      style={{ position: 'relative', display: 'inline-block' }}
-                      onMouseEnter={() => setHoveredIndex(index)}
-                      onMouseLeave={() => setHoveredIndex(null)}>
-                      {/* <h1
+          style={{ marginTop: '40px', marginLeft: '40px' }}>
+          {customerImages.length > 0 && (
+            <div className="mt-2">
+              <div className="flex gap-16 flex-wrap">
+                {customerImages.map((image, index) => (
+                  <div
+                    key={index}
+                    style={{ position: 'relative', display: 'inline-block' }}
+                    onMouseEnter={() => setHoveredIndex(index)}
+                    onMouseLeave={() => setHoveredIndex(null)}>
+                    {/* <h1
                         style={{
                           position: 'absolute',
                           top: '12px',
@@ -1239,61 +1241,60 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                         }}>
                         name
                       </h1> */}
-                      <AiOutlineDelete
-                        onClick={() => handleRemoveImage(index)}
-                        style={{
-                          position: 'absolute',
-                          top: '165px',
-                          right: '5px',
-                          background: 'red',
-                          color: 'white',
-                          border: 'none',
-                          borderRadius: '5px',
-                          width: '28px',
-                          height: '25px',
-                          cursor: 'pointer',
-                          opacity: hoveredIndex === index ? 1 : 0,
-                          transition: 'opacity 0.3s',
-                        }}
-                      />
-                      <img
-                        src={image}
-                        alt={`Uploaded ${index}`}
-                        style={{
-                          width: '300px',
-                          height: '200px',
-                          objectFit: 'cover',
-                          borderRadius: '0.5rem',
-                          boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
-                        }}
-                      />
-                    </div>
-                  ))}
-                </div>
+                    <AiOutlineDelete
+                      onClick={() => handleRemoveImage(index)}
+                      style={{
+                        position: 'absolute',
+                        top: '165px',
+                        right: '5px',
+                        background: 'red',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '5px',
+                        width: '28px',
+                        height: '25px',
+                        cursor: 'pointer',
+                        opacity: hoveredIndex === index ? 1 : 0,
+                        transition: 'opacity 0.3s',
+                      }}
+                    />
+                    <img
+                      src={image}
+                      alt={`Uploaded ${index}`}
+                      style={{
+                        width: '300px',
+                        height: '200px',
+                        objectFit: 'cover',
+                        borderRadius: '0.5rem',
+                        boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+                      }}
+                    />
+                  </div>
+                ))}
               </div>
-            )}
-          </div>
+            </div>
+          )}
+        </div>
 
-          <div className={`flex gap-4 ml-4 bottom-5 absolute left-6 ${isLoading ? 'blurred' : ''}`}>
-            <Button
-              label={'Close'}
-              onClick={() => setImageVisible(false)}
-              style={{
-                width: '89px',
-                height: '42px',
-                backgroundColor: '#0098FF',
-                cursor: 'pointer',
-                fontWeight: 'bolder',
-                fontSize: '1rem',
-                boxShadow: 'none',
-                color: 'white',
-                borderRadius: '0.5rem',
-              }}
-            />
-          </div>
-          <Toast ref={toastRef} />
-        </Dialog>
-      </div>
+        <div className={`flex gap-4 ml-4 bottom-5 absolute left-6 ${isLoading ? 'blurred' : ''}`}>
+          <Button
+            label={'Close'}
+            onClick={() => setImageVisible(false)}
+            style={{
+              width: '89px',
+              height: '42px',
+              backgroundColor: '#0098FF',
+              cursor: 'pointer',
+              fontWeight: 'bolder',
+              fontSize: '1rem',
+              boxShadow: 'none',
+              color: 'white',
+              borderRadius: '0.5rem',
+            }}
+          />
+        </div>
+        <Toast ref={toastRef} />
+      </Dialog>
     </>
   )
 }

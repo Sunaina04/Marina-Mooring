@@ -5,7 +5,6 @@ import { Toast } from 'primereact/toast'
 import { ReasonModalProps } from '../../../Type/ComponentBasedType'
 
 const ReasonModal: React.FC<ReasonModalProps> = ({ selectedRowData, setVisible, closeModal }) => {
-  
   const [reasonDetails, setReasonDetails] = useState()
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
   const validateFields = () => {
@@ -18,6 +17,7 @@ const ReasonModal: React.FC<ReasonModalProps> = ({ selectedRowData, setVisible, 
   const handleBack = () => {
     setVisible(false)
   }
+
   return (
     <>
       <div>

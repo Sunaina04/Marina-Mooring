@@ -45,9 +45,8 @@ const AccountRecievable = () => {
   const [workOrderDataInvoice, setWorkOrderDataInvoice] = useState<WorkOrderPayload[]>([])
   const [getWorkOrder] = useGetWorkOrdersMutation()
   const [getWorkOrderInvoice] = useGetWorkOrdersMutation()
- 
-  const toast = useRef<Toast>(null)
 
+  const toast = useRef<Toast>(null)
 
   const handleSearchApproval = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchApproval(e.target.value)
@@ -55,23 +54,21 @@ const AccountRecievable = () => {
   const handleSearchInvoice = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchInvoice(e.target.value)
   }
- 
-
 
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
-   // setPageNumber1(event.first)
+    // setPageNumber1(event.first)
     setPageSize(event.rows)
   }
 
   const onPageChangeTwo = (event: any) => {
     setPageNumberTwo(event.page)
-   // setPageNumber2(event.first)
+    // setPageNumber2(event.first)
     setPageSizeTwo(event.rows)
   }
 
   const handleModalClose = () => {
-   // setIsModalOpen(false)
+    // setIsModalOpen(false)
     setIsPaymentModalOpen(false)
     setIsContactModalOpen(false)
     setDenyModalOpen(false)
@@ -105,13 +102,12 @@ const AccountRecievable = () => {
     setAddWorkOrderModal(true)
   }
 
-
   const getWorkOrderData = useCallback(async () => {
     setIsLoading(true)
     try {
       const params: Params = {}
-     if (searchApproval) {
-        params.searchApproval = searchApproval
+      if (searchApproval) {
+        params.searchText = searchApproval
       }
       if (pageNumber) {
         params.pageNumber = pageNumber
@@ -148,7 +144,7 @@ const AccountRecievable = () => {
     try {
       const params: Params = {}
       if (searchInvoice) {
-        params.searchInvoice = searchInvoice
+        params.searchText = searchInvoice
       }
       if (pageNumberTwo) {
         params.pageNumber = pageNumberTwo
@@ -177,12 +173,6 @@ const AccountRecievable = () => {
       console.error('Error occurred while fetching customer data:', msg)
     }
   }, [searchInvoice, selectedCustomerId, pageNumberTwo, pageSizeTwo])
-
-  // const header = (
-  //   <div className="flex flex-wrap align-items-center ">
-  //     <h1 className="text-xl font-bold text-white">Account Receivable</h1>
-  //   </div>
-  // )
 
   const columnStyle = {
     backgroundColor: '#FFFFFF',
@@ -241,7 +231,7 @@ const AccountRecievable = () => {
       {
         label: 'View',
         filled: true,
-        onClick: () => handleView()
+        onClick: () => handleView(),
       },
     ],
     headerStyle: {
@@ -346,6 +336,7 @@ const AccountRecievable = () => {
     }, 600)
     return () => clearTimeout(timeoutId)
   }, [searchApproval])
+
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       if (searchInvoice) {
@@ -655,13 +646,8 @@ const AccountRecievable = () => {
         headerStyle={{ cursor: 'alias' }}
         visible={denyModalOpen}
         onHide={handleModalClose}
-        header="Reason"
-        >
-          <ReasonModal selectedRowData={undefined} setVisible={function (value: SetStateAction<boolean>): void {
-          throw new Error('Function not implemented.')
-        } } closeModal={function (): void {
-          throw new Error('Function not implemented.')
-        } }/>
+        header="Reason">
+        <ReasonModal selectedRowData={undefined} setVisible={() => {}} closeModal={() => {}} />
       </Dialog>
 
       {/* for view button */}
@@ -680,14 +666,14 @@ const AccountRecievable = () => {
         headerStyle={{ cursor: 'alias' }}
         visible={addWorkOrderModal}
         onHide={handleModalClose}
-        header='Work Order'
-        >
-          <AddWorkOrders workOrderData={undefined} setVisible={function (value: SetStateAction<boolean>): void {
-          throw new Error('Function not implemented.')
-        } } closeModal={function (): void {
-          throw new Error('Function not implemented.')
-        } }/>
-        </Dialog>
+        header="Work Order">
+        <AddWorkOrders
+          workOrderData={undefined}
+          isAccountRecievable={true}
+          setVisible={() => {}}
+          closeModal={() => {}}
+        />
+      </Dialog>
     </>
   )
 }
