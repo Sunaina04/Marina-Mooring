@@ -53,7 +53,6 @@ const WorkOrders = () => {
   const options: string[] = ['Open', 'Completed']
   const [value, setValue] = useState<string>(options[0])
 
-  
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
     setPageNumber1(event.first)
@@ -136,89 +135,6 @@ const WorkOrders = () => {
     [],
   )
 
-  const getOpenWorkOrder = useCallback(
-    async (id: any) => {
-      setIsLoading(true)
-
-      try {
-        const response = await getOpenWork({
-          technicianId: id,
-        }).unwrap()
-        const { status, message, content, totalSize } = response as GetUserResponse
-        if (status === 200 && Array.isArray(content)) {
-          setIsLoading(false)
-          setGetOpenWorkOrderData(content)
-          // setTotalRecordsTwo(totalSize)
-          setOpenWorkOrder(totalSize)
-        } else {
-          setIsLoading(false)
-          toast?.current?.show({
-            severity: 'error',
-            summary: 'Error',
-            detail: message,
-            life: 3000,
-          })
-        }
-      } catch (error) {
-        setIsLoading(false)
-        console.error('Error occurred while fetching customer data:', error)
-      }
-    },
-    [
-      technicianId,
-      value,
-      // pageSizeTwo,
-      // pageNumberTwo,
-      // filterDateFrom,
-      // filterDateTo,
-      getOpenWorkOrderData,
-      openWorkOrder,
-    ],
-  )
-
-  const getClosedWorkOrder = useCallback(
-    async (id: any) => {
-      setIsLoading(true)
-
-      try {
-        const response = await getWorkedClosed({
-          technicianId: id,
-          // pageNumber: pageNumberTwo,
-          // pageSize: pageSizeTwo,
-          // filterDateFrom: filterDateFrom,
-          // filterDateTo: filterDateTo,
-        }).unwrap()
-        const { status, message, content, totalSize } = response as GetUserResponse
-        if (status === 200 && Array.isArray(content)) {
-          setIsLoading(false)
-          setGetOpenWorkOrderData(content)
-          // setTotalRecordsTwo(totalSize)
-          setCompletedOrder(totalSize)
-        } else {
-          setIsLoading(false)
-          toast?.current?.show({
-            severity: 'error',
-            summary: 'Error',
-            detail: message,
-            life: 3000,
-          })
-        }
-      } catch (error) {
-        setIsLoading(false)
-        console.error('Error occurred while fetching customer data:', error)
-      }
-    },
-    [
-      technicianId,
-      // value,
-      // pageSizeTwo,
-      // pageNumberTwo,
-      // filterDateFrom,
-      // filterDateTo,
-      completedWorkOrder,
-    ],
-  )
-
   const getWorkOrderData = useCallback(async () => {
     setIsLoading(true)
     try {
@@ -232,6 +148,7 @@ const WorkOrders = () => {
       if (pageSize) {
         params.pageSize = pageSize
       }
+
       const response = await getWorkOrder(params).unwrap()
       const { status, content, message, totalSize } = response as WorkOrderResponse
       if (status === 200 && Array.isArray(content)) {
@@ -288,19 +205,6 @@ const WorkOrders = () => {
       setEditMode(false)
     }
   }, [selectedCustomerId])
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      if (technicianId) {
-        if (value.includes('Open')) {
-          getOpenWorkOrder(technicianId)
-        } else {
-          getClosedWorkOrder(technicianId)
-        }
-      }
-    }, 600)
-    return () => clearTimeout(timeoutId)
-  }, [technicianId, value, openWorkOrder, completedWorkOrder])
 
   return (
     <div style={{ height: '100vh' }} className={visible ? 'backdrop-blur-lg' : ''}>
