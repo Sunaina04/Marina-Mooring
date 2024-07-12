@@ -37,8 +37,8 @@ const ReasonModal: React.FC<ReasonModalProps> = ({ selectedRowData, setVisible, 
                 rows={3}
                 cols={30}
                 style={{
-                  width: '740px',
-                  height: '250px',
+                  width: '450px',
+                  height: '150px',
                   border: errorMessage.value ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   boxShadow: 'none',

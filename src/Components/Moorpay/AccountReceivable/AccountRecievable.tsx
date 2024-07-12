@@ -1,8 +1,5 @@
-import { SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import CustomModal from '../../CustomComponent/CustomModal'
-import { MoorPayProps } from '../../../Type/ComponentBasedType'
-import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
-import AddCustomer from '../../Moormanage/Customer/AddCustomer'
 import AddWorkOrders from '../../Moorserve/WorkOrders/AddWorkOrders'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import Header from '../../Layout/LayoutComponents/Header'
@@ -38,7 +35,7 @@ const AccountRecievable = () => {
   const [totalRecords, setTotalRecords] = useState<number>()
   const [totalRecordsInvoice, setTotalRecordsInvoice] = useState<number>()
   const [isLoading, setIsLoading] = useState(false)
-  const [denyModalOpen, setDenyModalOpen] = useState(false)
+  const [denyModalOpen, setDenyModalOpen] = useState(true)
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false)
   const [isContactModalOpen, setIsContactModalOpen] = useState(false)
   const [addWorkOrderModal, setAddWorkOrderModal] = useState(false)
@@ -189,7 +186,7 @@ const AccountRecievable = () => {
     fontSize: '12px',
   }
   const firstLastName = (data: any) => {
-    return data.customerResponseDto.firstName + ' ' + data.customerResponseDto.lastName
+    return data?.customerResponseDto?.firstName + ' ' + data?.customerResponseDto?.lastName
   }
 
   const accountRecievableTableColumn = useMemo(
@@ -332,7 +329,7 @@ const AccountRecievable = () => {
       fontSize: '14px',
       color: 'black',
       // borderBottom: '1px solid #C0C0C0',
-      width:'13.5rem'
+      width: '13.5rem',
     },
     style: { borderBottom: '1px solid #D5E1EA', fontWeight: '400' },
   }
@@ -689,10 +686,10 @@ const AccountRecievable = () => {
       <Dialog
         position="center"
         style={{
-          width: '800px',
-          minWidth: '800px',
-          height: '480px',
-          minHeight: '480px',
+          width: '520px',
+          minWidth: '520px',
+          height: '420px',
+          minHeight: '420px',
           borderRadius: '1rem',
           fontWeight: '400',
           cursor: 'alias',
@@ -702,7 +699,7 @@ const AccountRecievable = () => {
         visible={denyModalOpen}
         onHide={handleModalClose}
         header="Deny">
-        <ReasonModal selectedRowData={undefined} setVisible={() => {}} closeModal={() => {}} />
+        <ReasonModal selectedRowData={undefined} setVisible={() => { }} closeModal={() => { }} />
       </Dialog>
 
       {/* for view button */}
@@ -725,8 +722,8 @@ const AccountRecievable = () => {
         <AddWorkOrders
           workOrderData={undefined}
           isAccountRecievable={true}
-          setVisible={() => {}}
-          closeModal={() => {}}
+          setVisible={() => { }}
+          closeModal={() => { }}
         />
       </Dialog>
     </>
