@@ -110,11 +110,7 @@ const AccountRecievable = () => {
     setAddWorkOrderModal(true)
   }
 
-<<<<<<< Updated upstream
   const getWorkOrderWithPendingPayApproval = useCallback(async () => {
-=======
-  const getWorkOrderData = useCallback(async () => {
->>>>>>> Stashed changes
     setIsLoading(true)
     try {
       const params: Params = {}

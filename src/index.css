@@ -154,21 +154,10 @@ input[type='number']::-webkit-outer-spin-button {
   background-color: #f7fafc;
   border-radius: 11px;
   .p-highlight {
-<<<<<<< Updated upstream
     background-color: #0098ff !important;
     color: white !important;
   }
 }
-=======
-
-    background-color: #0098FF !important;
-    color:white !important
-}
-
-    
-  }
-
->>>>>>> Stashed changes
 
 .p-datepicker .p-datepicker-header {
   padding: 0.5rem;
@@ -309,9 +298,9 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 input:hover {
-  border-color: #D5E1EA !important;
+  border-color: #d5e1ea !important;
 }
 
 input:focus {
-  border-color: #D5E1EA !important; /* Replace with your desired border color */
+  border-color: #d5e1ea !important; /* Replace with your desired border color */
 }
