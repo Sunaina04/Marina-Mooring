@@ -57,7 +57,7 @@ const MoorserveApi = userApi.injectEndpoints({
         sortDir?: string
         searchText?: string
       }) => ({
-        url: 'api/v1/workOrder/fetchCompletedWorkOrdersWithPendingPayApproval',
+        url: 'api/v1/workOrder/fetchCompletedWorkOrdersWithPayStatus',
         method: 'GET',
         params: { pageNumber, pageSize, sortBy, sortDir, searchText },
       }),
