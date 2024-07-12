@@ -1108,6 +1108,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         </div>
       </div>
       {/* Save and Back buttons */}
+
       <div
         className={`"flex gap-6 bottom-2 absolute left-7" ${isLoading ? 'blurred' : ''}`}
         style={{
@@ -1117,39 +1118,71 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
           padding: '0 12px',
           bottom: '0px',
         }}>
-        <Button
-          onClick={() => {
-            handleSave()
-          }}
-          label={'Save'}
-          style={{
-            width: '89px',
-            height: '42px',
-            backgroundColor: '#0098FF',
-            cursor: 'pointer',
-            fontWeight: 'bolder',
-            fontSize: '1rem',
-            boxShadow: 'none',
-            color: 'white',
-            borderRadius: '0.50rem',
-            marginTop: '10px',
-          }}
-        />
-        <Button
-          onClick={() => {
-            setVisible(false)
-          }}
-          label={'Back'}
-          text={true}
-          style={{
-            backgroundColor: 'white',
-            color: '#000000',
-            border: 'none',
-            width: '89px',
-            height: '42px',
-            marginTop: '10px',
-          }}
-        />
+        {isAccountRecievable ? (
+          <>
+            <Button
+              // onClick={handleApprove}
+              label="Approve"
+              style={{
+                width: '89px',
+                height: '42px',
+                backgroundColor: '#0098FF',
+                cursor: 'pointer',
+                fontWeight: 'bolder',
+                fontSize: '1rem',
+                boxShadow: 'none',
+                color: 'white',
+                borderRadius: '0.50rem',
+                marginTop: '10px',
+              }}
+            />
+            <Button
+              // onClick={handleDeny}
+              label="Deny"
+              text={true}
+              style={{
+                backgroundColor: 'white',
+                color: '#000000',
+                border: 'none',
+                width: '89px',
+                height: '42px',
+                marginTop: '10px',
+              }}
+            />
+          </>
+        ) : (
+          <>
+            <Button
+              onClick={handleSave}
+              label="Save"
+              style={{
+                width: '89px',
+                height: '42px',
+                backgroundColor: '#0098FF',
+                cursor: 'pointer',
+                fontWeight: 'bolder',
+                fontSize: '1rem',
+                boxShadow: 'none',
+                color: 'white',
+                borderRadius: '0.50rem',
+                marginTop: '10px',
+              }}
+            />
+            <Button
+              onClick={() => setVisible(false)}
+              label="Back"
+              text={true}
+              style={{
+                backgroundColor: 'white',
+                color: '#000000',
+                border: 'none',
+                width: '89px',
+                height: '42px',
+                marginTop: '10px',
+              }}
+            />
+          </>
+        )}
       </div>
 
       <Dialog
