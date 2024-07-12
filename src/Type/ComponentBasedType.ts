@@ -122,7 +122,6 @@ export interface WorkOrderProps {
   workOrderData: any
   editModeWorkOrder?: boolean
   editModeEstimate?: boolean
-  isAccountRecievable?: boolean
   estimate?: boolean
   setVisible: React.Dispatch<React.SetStateAction<boolean>>
   toastRef?: any
