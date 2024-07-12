@@ -1,4 +1,3 @@
-
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Dialog } from 'primereact/dialog'
 import { Button } from 'primereact/button'
@@ -50,7 +49,7 @@ const WorkOrders = () => {
   const [totalRecords, setTotalRecords] = useState<number>()
   const [getOpenWorkOrderData, setGetOpenWorkOrderData] = useState<CustomerPayload[]>([])
   const [openWorkOrder, setOpenWorkOrder] = useState<number>(0)
-  const [completedWorkOrder, setCompletedOrder] = useState<string>("No")
+  const [completedWorkOrder, setCompletedOrder] = useState<string>('No')
   const options: string[] = ['Open', 'Completed']
   const [value, setValue] = useState<string>(options[0])
 
@@ -65,8 +64,8 @@ const WorkOrders = () => {
   }
 
   const handleCompleted = () => {
-    setCompletedOrder((prev) => (prev === "Yes" ? "No" : "Yes"));
-  };
+    setCompletedOrder((prev) => (prev === 'Yes' ? 'No' : 'Yes'))
+  }
 
   const ActionButtonColumn: ActionButtonColumnProps = {
     header: 'Action',
@@ -155,7 +154,6 @@ const WorkOrders = () => {
       }
       if (completedWorkOrder) {
         params.showCompletedWorkOrders = completedWorkOrder
-
       }
 
       const response = await getWorkOrder(params).unwrap()
@@ -178,7 +176,7 @@ const WorkOrders = () => {
       setIsLoading(false)
       console.error('Error occurred while fetching customer data:', msg)
     }
-  }, [searchText, selectedCustomerId, pageNumber, pageSize,completedWorkOrder])
+  }, [searchText, selectedCustomerId, pageNumber, pageSize, completedWorkOrder])
 
   const handleEdit = (rowData: any) => {
     setSelectedCustomer(rowData)
@@ -197,7 +195,7 @@ const WorkOrders = () => {
 
   useEffect(() => {
     getWorkOrderData()
-  }, [pageNumber,completedWorkOrder,pageSize])
+  }, [pageNumber, completedWorkOrder, pageSize])
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
