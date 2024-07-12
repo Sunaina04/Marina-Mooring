@@ -189,7 +189,7 @@ const AccountRecievable = () => {
     fontSize: '12px',
   }
   const firstLastName = (data: any) => {
-    return data.customerResponseDto.firstName + ' ' + data.customerResponseDto.lastName
+    return data?.customerResponseDto?.firstName + ' ' + data?.customerResponseDto?.lastName
   }
 
   const accountRecievableTableColumn = useMemo(
@@ -332,13 +332,13 @@ const AccountRecievable = () => {
       fontSize: '14px',
       color: 'black',
       // borderBottom: '1px solid #C0C0C0',
-      width:'13.5rem'
+      width: '13.5rem',
     },
     style: { borderBottom: '1px solid #D5E1EA', fontWeight: '400' },
   }
 
   useEffect(() => {
-    getWorkOrderWithPendingPayApproval()
+    getCompletedWorkOrderWithPendingPayApproval()
     getOutStandingInvoice()
   }, [pageNumber, pageSize, selectedCustomerId])
 
@@ -349,7 +349,7 @@ const AccountRecievable = () => {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       if (searchApproval) {
-        getWorkOrderWithPendingPayApproval()
+        getCompletedWorkOrderWithPendingPayApproval()
       }
     }, 600)
     return () => clearTimeout(timeoutId)

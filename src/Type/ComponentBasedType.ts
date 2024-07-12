@@ -126,6 +126,8 @@ export interface WorkOrderProps {
   setVisible: React.Dispatch<React.SetStateAction<boolean>>
   toastRef?: any
   closeModal: () => void
+  isAccountRecievable?:boolean
+  
 }
 
 export interface ReasonModalProps {
