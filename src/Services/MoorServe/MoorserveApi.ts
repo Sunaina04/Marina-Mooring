@@ -28,16 +28,18 @@ const MoorserveApi = userApi.injectEndpoints({
         sortBy,
         sortDir,
         searchText,
+        showCompletedWorkOrders,
       }: {
         pageNumber?: number
         pageSize?: number
         sortBy?: string
         sortDir?: string
         searchText?: string
+        showCompletedWorkOrders?:string
       }) => ({
         url: 'api/v1/workOrder/',
         method: 'GET',
-        params: { pageNumber, pageSize, sortBy, sortDir, searchText },
+        params: { pageNumber, pageSize, sortBy, sortDir, searchText,showCompletedWorkOrders },
       }),
     }),
 

@@ -570,11 +570,11 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       }
     } catch (error) {
       setIsLoading(false)
-      const { message } = error as ErrorResponse
+      const {data} = error as ErrorResponse
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: message,
+        detail: data.message,
         life: 3000,
       })
     }
