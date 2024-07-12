@@ -102,7 +102,7 @@ const AccountRecievable = () => {
     } else if (action === 'Contact') {
       setIsContactModalOpen(true)
     } else if (action === 'View') {
-      // Handle view action
+      setAddWorkOrderModal(true)
     }
   }
 
@@ -110,11 +110,7 @@ const AccountRecievable = () => {
     setAddWorkOrderModal(true)
   }
 
-<<<<<<< Updated upstream
   const getWorkOrderWithPendingPayApproval = useCallback(async () => {
-=======
-  const getWorkOrderData = useCallback(async () => {
->>>>>>> Stashed changes
     setIsLoading(true)
     try {
       const params: Params = {}
@@ -336,6 +332,7 @@ const AccountRecievable = () => {
       fontSize: '14px',
       color: 'black',
       // borderBottom: '1px solid #C0C0C0',
+      width:'13.5rem'
     },
     style: { borderBottom: '1px solid #D5E1EA', fontWeight: '400' },
   }
@@ -704,7 +701,7 @@ const AccountRecievable = () => {
         headerStyle={{ cursor: 'alias' }}
         visible={denyModalOpen}
         onHide={handleModalClose}
-        header="Reason">
+        header="Deny">
         <ReasonModal selectedRowData={undefined} setVisible={() => {}} closeModal={() => {}} />
       </Dialog>
 

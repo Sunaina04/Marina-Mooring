@@ -313,13 +313,9 @@ const WorkOrders = () => {
                   }}
                   options={options}
                   className="selectButton"
-<<<<<<< Updated upstream
                 /> */}
 
                 <Button label='Completed' onClick={handleCompleted} />
-=======
-                />
->>>>>>> Stashed changes
               </div>
             </div>
           </div>
