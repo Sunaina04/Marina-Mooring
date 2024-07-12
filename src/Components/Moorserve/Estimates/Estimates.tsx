@@ -339,7 +339,8 @@ const Estimates = () => {
                   onChange={handleSearch}
                   placeholder="Search"
                   id="placeholderText"
-                  className="pl-10 w-[237px] bg-[#00426F] h-[35px] rounded-lg border text-[white] border-[#D5E1EA] placeholder:text-[#FFFFFF]  focus:outline-none"
+                  className="pl-10 w-[237px] bg-[#00426F] h-[35px] rounded-lg border text-[white] 
+                  border-[#D5E1EA] placeholder:text-[#FFFFFF]  focus:outline-none overflow-hidden"
                 />
               </div>
             </div>
@@ -347,7 +348,7 @@ const Estimates = () => {
 
           <div
             data-testid="customer-admin-data"
-            className="flex flex-col ml-[15px] mr-[15px] table-container "
+            className="flex flex-col h-full "
             style={{ height: '630px' }}>
             <div className="flex-grow overflow-auto">
               <DataTableComponent
