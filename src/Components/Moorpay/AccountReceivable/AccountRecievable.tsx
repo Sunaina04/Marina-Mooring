@@ -1,8 +1,5 @@
-import { SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import CustomModal from '../../CustomComponent/CustomModal'
-import { MoorPayProps } from '../../../Type/ComponentBasedType'
-import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
-import AddCustomer from '../../Moormanage/Customer/AddCustomer'
 import AddWorkOrders from '../../Moorserve/WorkOrders/AddWorkOrders'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import Header from '../../Layout/LayoutComponents/Header'
@@ -338,7 +335,7 @@ const AccountRecievable = () => {
   }
 
   useEffect(() => {
-    getCompletedWorkOrderWithPendingPayApproval()
+    getWorkOrderWithPendingPayApproval()
     getOutStandingInvoice()
   }, [pageNumber, pageSize, selectedCustomerId])
 
@@ -349,7 +346,7 @@ const AccountRecievable = () => {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       if (searchApproval) {
-        getCompletedWorkOrderWithPendingPayApproval()
+        getWorkOrderWithPendingPayApproval()
       }
     }, 600)
     return () => clearTimeout(timeoutId)
