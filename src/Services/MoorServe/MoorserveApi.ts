@@ -35,11 +35,31 @@ const MoorserveApi = userApi.injectEndpoints({
         sortBy?: string
         sortDir?: string
         searchText?: string
-        showCompletedWorkOrders?:string
+        showCompletedWorkOrders?: string
       }) => ({
         url: 'api/v1/workOrder/',
         method: 'GET',
-        params: { pageNumber, pageSize, sortBy, sortDir, searchText,showCompletedWorkOrders },
+        params: { pageNumber, pageSize, sortBy, sortDir, searchText, showCompletedWorkOrders },
+      }),
+    }),
+
+    getCompletedWorkOrderWithPendingPayApproval: builder.mutation({
+      query: ({
+        pageNumber,
+        pageSize,
+        sortBy,
+        sortDir,
+        searchText,
+      }: {
+        pageNumber?: number
+        pageSize?: number
+        sortBy?: string
+        sortDir?: string
+        searchText?: string
+      }) => ({
+        url: 'api/v1/workOrder/fetchCompletedWorkOrdersWithPendingPayApproval',
+        method: 'GET',
+        params: { pageNumber, pageSize, sortBy, sortDir, searchText },
       }),
     }),
 
@@ -151,6 +171,7 @@ const MoorserveApi = userApi.injectEndpoints({
 export const {
   useAddWorkOrderMutation,
   useGetWorkOrderByIdMutation,
+  useGetCompletedWorkOrderWithPendingPayApprovalMutation,
   useDeleteWorkOrderMutation,
   useGetWorkOrdersMutation,
   useUpdateWorkOrderMutation,

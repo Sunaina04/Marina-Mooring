@@ -1,4 +1,3 @@
-
 import { SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import CustomModal from '../../CustomComponent/CustomModal'
 import { MoorPayProps } from '../../../Type/ComponentBasedType'
@@ -14,7 +13,10 @@ import PaymentModal from './PaymentModal'
 import ContactModal from './ContactModal'
 import { InputText } from 'primereact/inputtext'
 import { useSelector } from 'react-redux'
-import { useGetWorkOrdersMutation } from '../../../Services/MoorServe/MoorserveApi'
+import {
+  useGetCompletedWorkOrderWithPendingPayApprovalMutation,
+  useGetWorkOrdersMutation,
+} from '../../../Services/MoorServe/MoorserveApi'
 import { ErrorResponse, WorkOrderPayload, WorkOrderResponse } from '../../../Type/ApiTypes'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import { Toast } from 'primereact/toast'
@@ -44,7 +46,8 @@ const AccountRecievable = () => {
   const [searchInvoice, setSearchInvoice] = useState('')
   const [workOrderData, setWorkOrderData] = useState<WorkOrderPayload[]>([])
   const [workOrderDataInvoice, setWorkOrderDataInvoice] = useState<WorkOrderPayload[]>([])
-  const [getWorkOrder] = useGetWorkOrdersMutation()
+  const [getCompletedWorkOrderWithPendingPayApproval] =
+    useGetCompletedWorkOrderWithPendingPayApprovalMutation()
   const [getWorkOrderInvoice] = useGetWorkOrdersMutation()
 
   const toast = useRef<Toast>(null)
@@ -107,7 +110,7 @@ const AccountRecievable = () => {
     setAddWorkOrderModal(true)
   }
 
-  const getWorkOrderData = useCallback(async () => {
+  const getWorkOrderWithPendingPayApproval = useCallback(async () => {
     setIsLoading(true)
     try {
       const params: Params = {}
@@ -120,7 +123,7 @@ const AccountRecievable = () => {
       if (pageSize) {
         params.pageSize = pageSize
       }
-      const response = await getWorkOrder(params).unwrap()
+      const response = await getCompletedWorkOrderWithPendingPayApproval(params).unwrap()
       const { status, content, message, totalSize } = response as WorkOrderResponse
       if (status === 200 && Array.isArray(content)) {
         setWorkOrderData(content)
@@ -334,7 +337,7 @@ const AccountRecievable = () => {
   }
 
   useEffect(() => {
-    getWorkOrderData()
+    getWorkOrderWithPendingPayApproval()
     getOutStandingInvoice()
   }, [pageNumber, pageSize, selectedCustomerId])
 
@@ -345,7 +348,7 @@ const AccountRecievable = () => {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       if (searchApproval) {
-        getWorkOrderData()
+        getWorkOrderWithPendingPayApproval()
       }
     }, 600)
     return () => clearTimeout(timeoutId)
