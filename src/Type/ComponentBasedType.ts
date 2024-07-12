@@ -121,6 +121,7 @@ export interface TimeCardsProps {
 export interface WorkOrderProps {
   workOrderData: any
   editModeWorkOrder?: boolean
+  isAccountRecievable?: boolean
   editModeEstimate?: boolean
   estimate?: boolean
   setVisible: React.Dispatch<React.SetStateAction<boolean>>
