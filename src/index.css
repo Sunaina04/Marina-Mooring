@@ -154,21 +154,10 @@ input[type='number']::-webkit-outer-spin-button {
   background-color: #f7fafc;
   border-radius: 11px;
   .p-highlight {
-<<<<<<< Updated upstream
-    background-color: #0098FF !important;
-    color:white !important
-}
-}
-=======
-
-    background-color: #0098FF !important;
-    color:white !important
-}
-
-    
+    background-color: #0098ff !important;
+    color: white !important;
   }
-
->>>>>>> Stashed changes
+}
 
 .p-datepicker .p-datepicker-header {
   padding: 0.5rem;
