@@ -375,8 +375,8 @@ export interface MooringAndWorkOrderResponse {
   errorList: []
   time: string
   content: {
-    workOrderResponseDtoList: WorkOrderPayload
-    mooringDueServiceResponseDtoList: MooringPayload
+    workOrderResponseDtoList: WorkOrderPayload[]
+    mooringDueServiceResponseDtoList: MooringPayload[]
   }
 }
 

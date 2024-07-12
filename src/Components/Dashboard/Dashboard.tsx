@@ -51,7 +51,7 @@ const Dashboard = () => {
   const [mooringData, setMooringData] = useState<any>()
   // console.log(mooringData,"mooringData");
   const [selectedProduct, setSelectedProduct] = useState<any>()
-  // console.log(selectedProduct,"selectedProduct");
+  console.log(selectedProduct,"selectedProduct");
   const [mooringResponseData, setMooringResponseData] = useState<any>()
   const [getMoorings] = useGetMooringsMutation()
   const today = new Date()
@@ -354,11 +354,14 @@ const Dashboard = () => {
         filterDateTo: filterDateTo,
       }).unwrap()
       const { status, content, message, totalSize } = response as MooringAndWorkOrderResponse
+     
+      
       if (status === 200) {
         if (content?.mooringDueServiceResponseDtoList) {
           setIsLoading(false)
           setMooringData(content?.mooringDueServiceResponseDtoList)
-          setSelectedProduct(content?.mooringDueServiceResponseDtoList)
+          // console.log("content",content?.mooringDueServiceResponseDtoList[0]);
+          setSelectedProduct(content?.mooringDueServiceResponseDtoList[0])
         } else {
           setIsLoading(false)
           setMooringData([])

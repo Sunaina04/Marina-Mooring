@@ -94,7 +94,7 @@ const WorkOrders = () => {
   }
 
   const firstLastName = (data: any) => {
-    return data.customerResponseDto.firstName + ' ' + data.customerResponseDto.lastName
+    return data?.customerResponseDto?.firstName + ' ' + data?.customerResponseDto?.lastName
   }
 
   const workOrderColumns = useMemo(
@@ -301,19 +301,16 @@ const WorkOrders = () => {
               </div>
 
               <div className="">
-                {/* <SelectButton
-                  data-testid="selectButton"
-                  value={value}
-                  onChange={(e: SelectButtonChangeEvent) => {
-                    if (e.value) {
-                      setValue(e.value)
-                    }
-                  }}
-                  options={options}
-                  className="selectButton"
-                /> */}
+                <Button
+                  label={completedWorkOrder === "Yes" ? "Pending" : "Completed"}
+                  onClick={handleCompleted}
+                  style={{
+                    backgroundColor: completedWorkOrder === "Yes" ? "white" : " ",
+                    color: completedWorkOrder === "Yes" ? "black" : " ",
 
-                <Button label='Completed' onClick={handleCompleted} />
+                  }}
+                  className='border-none w-28'
+                />
               </div>
             </div>
           </div>
