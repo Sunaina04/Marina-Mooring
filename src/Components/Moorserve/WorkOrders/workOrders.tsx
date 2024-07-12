@@ -94,7 +94,7 @@ const WorkOrders = () => {
   }
 
   const firstLastName = (data: any) => {
-    return data.customerResponseDto.firstName + ' ' + data.customerResponseDto.lastName
+    return data?.customerResponseDto?.firstName + ' ' + data?.customerResponseDto?.lastName
   }
 
   const workOrderColumns = useMemo(
@@ -300,21 +300,36 @@ const WorkOrders = () => {
                 </div>
               </div>
 
-              <div className="">
-                {/* <SelectButton
-                  data-testid="selectButton"
-                  value={value}
-                  onChange={(e: SelectButtonChangeEvent) => {
-                    if (e.value) {
-                      setValue(e.value)
-                    }
-                  }}
-                  options={options}
-                  className="selectButton"
-                /> */}
+              {/* <div className="">
+                <Button
+                  label={completedWorkOrder === "Yes" ? "Pending" : "Completed"}
+                  onClick={handleCompleted}
+                  style={{
+                    backgroundColor: completedWorkOrder === "Yes" ? "white" : " ",
+                    color: completedWorkOrder === "Yes" ? "black" : " ",
 
-                <Button label='Completed' onClick={handleCompleted} />
-              </div>
+                  }}
+                  className='border-none  w-28'
+                />
+              </div> */}
+
+              <Button
+                label={completedWorkOrder === "Yes" ? "Pending" : "Completed"}
+                onClick={handleCompleted}
+                style={{
+                  width: '120px',
+                  height: '42px',
+                  backgroundColor: completedWorkOrder === "Yes" ? "white" : " ",
+                  cursor: 'pointer',
+                  // fontWeight: 'bolder',
+                  fontSize: '1rem',
+                  boxShadow: 'none',
+                  color: completedWorkOrder === "Yes" ? "black" : " ",
+                  borderRadius: '0.2rem',
+                }}
+              />
+
+
             </div>
           </div>
 
