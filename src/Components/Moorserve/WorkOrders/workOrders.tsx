@@ -300,7 +300,7 @@ const WorkOrders = () => {
                 </div>
               </div>
 
-              <div className="">
+              {/* <div className="">
                 <Button
                   label={completedWorkOrder === "Yes" ? "Pending" : "Completed"}
                   onClick={handleCompleted}
@@ -309,9 +309,27 @@ const WorkOrders = () => {
                     color: completedWorkOrder === "Yes" ? "black" : " ",
 
                   }}
-                  className='border-none w-28'
+                  className='border-none  w-28'
                 />
-              </div>
+              </div> */}
+
+              <Button
+                label={completedWorkOrder === "Yes" ? "Pending" : "Completed"}
+                onClick={handleCompleted}
+                style={{
+                  width: '120px',
+                  height: '42px',
+                  backgroundColor: completedWorkOrder === "Yes" ? "white" : " ",
+                  cursor: 'pointer',
+                  // fontWeight: 'bolder',
+                  fontSize: '1rem',
+                  boxShadow: 'none',
+                  color: completedWorkOrder === "Yes" ? "black" : " ",
+                  borderRadius: '0.2rem',
+                }}
+              />
+
+
             </div>
           </div>
 
