@@ -24,14 +24,11 @@ import { Toast } from 'primereact/toast'
 import { Params } from '../../../Type/CommonType'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { Paginator } from 'primereact/paginator'
-<<<<<<< Updated upstream
 import { SelectButton, SelectButtonChangeEvent } from 'primereact/selectbutton'
 import {
   useGetClosedWorkOrdersMutation,
   useGetOpenWorkOrdersMutation,
 } from '../../../Services/MoorManage/MoormanageApi'
-=======
->>>>>>> Stashed changes
 
 const WorkOrders = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -50,14 +47,11 @@ const WorkOrders = () => {
   const [pageNumber1, setPageNumber1] = useState(0)
   const [pageSize, setPageSize] = useState(10)
   const [totalRecords, setTotalRecords] = useState<number>()
-<<<<<<< Updated upstream
   const [getOpenWorkOrderData, setGetOpenWorkOrderData] = useState<CustomerPayload[]>([])
   const [openWorkOrder, setOpenWorkOrder] = useState<number>(0)
   const [completedWorkOrder, setCompletedOrder] = useState<number>(0)
   const options: string[] = ['Open', 'Completed']
   const [value, setValue] = useState<string>(options[0])
-=======
->>>>>>> Stashed changes
 
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
@@ -266,13 +260,8 @@ const WorkOrders = () => {
             backgroundColor: '#FFFFFF',
             // overflow:"scroll"
           }}
-<<<<<<< Updated upstream
-          className="bg-[F2F2F2]  ml-12 mt-6 mr-14">
-          <div className="flex  align-items-center  justify-between  bg-[#00426F] p-2   rounded-tl-[10px] rounded-tr-[10px]">
-=======
           className="bg-[F2F2F2]  ml-12  mt-6 mr-14">
           <div className="flex flex-wrap align-items-center justify-between  bg-[#00426F] p-2   rounded-tl-[10px] rounded-tr-[10px]">
->>>>>>> Stashed changes
             <span
               style={{
                 fontSize: '18px',
@@ -285,7 +274,6 @@ const WorkOrders = () => {
               Work Orders
             </span>
 
-<<<<<<< Updated upstream
             <div className="flex gap-2">
               <div className="relative inline-block">
                 <div className="relative mt-1">
@@ -316,22 +304,6 @@ const WorkOrders = () => {
                   }}
                   options={options}
                   className="selectButton"
-=======
-            <div className="relative inline-block">
-              <div className="relative">
-                <img
-                  src="/assets/images/Search.png"
-                  alt="search icon"
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5"
-                  data-testid="search-icon"
-                />
-                <InputText
-                  value={searchText}
-                  onChange={handleSearch}
-                  placeholder="Search"
-                  id="placeholderText"
-                  className="pl-10 w-[237px] bg-[#00426F] text-[white] h-[35px] rounded-lg border  border-[#D5E1EA] placeholder:text-[#FFFFFF]  focus:outline-none"
->>>>>>> Stashed changes
                 />
               </div>
             </div>
@@ -339,7 +311,7 @@ const WorkOrders = () => {
 
           <div
             data-testid="customer-admin-data"
-           className="flex flex-col h-full "
+            className="flex flex-col h-full "
             style={{ height: '630px' }}>
             <div className="flex-grow overflow-auto">
               <DataTableComponent
@@ -400,7 +372,6 @@ const WorkOrders = () => {
           </div>
         </div>
       </div>
-      
     </div>
   )
 }

@@ -11,7 +11,6 @@ import { Paginator } from 'primereact/paginator'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import PaymentModal from './PaymentModal'
 import ContactModal from './ContactModal'
-<<<<<<< Updated upstream
 import { InputText } from 'primereact/inputtext'
 import { useSelector } from 'react-redux'
 import { useGetWorkOrdersMutation } from '../../../Services/MoorServe/MoorserveApi'
@@ -21,8 +20,6 @@ import { Toast } from 'primereact/toast'
 import { Params } from '../../../Type/CommonType'
 import { Dialog } from 'primereact/dialog'
 import { Button } from 'primereact/button'
-=======
->>>>>>> Stashed changes
 import ReasonModal from './ReasonModal'
 
 const AccountRecievable = () => {
@@ -41,7 +38,6 @@ const AccountRecievable = () => {
   const [denyModalOpen, setDenyModalOpen] = useState(false)
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false)
   const [isContactModalOpen, setIsContactModalOpen] = useState(false)
-<<<<<<< Updated upstream
   const [addWorkOrderModal, setAddWorkOrderModal] = useState(false)
   const [searchApproval, setSearchApproval] = useState('')
   const [searchInvoice, setSearchInvoice] = useState('')
@@ -59,15 +55,13 @@ const AccountRecievable = () => {
     setSearchInvoice(e.target.value)
   }
 
-=======
   const [visible, setVisible] = useState(false)
   const [editMode, setEditMode] = useState(false)
   const [selectedRowData, setSelectedRowData] = useState(false)
-  
+
   const handleButtonClick = () => {
-   // setIsModalOpen(true)
+    // setIsModalOpen(true)
   }
->>>>>>> Stashed changes
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
     // setPageNumber1(event.first)
@@ -108,9 +102,6 @@ const AccountRecievable = () => {
     }
   }
 
-  const handleDeny = (rowData: any) => {
-    setDenyModalOpen(true)
-  }
   const handleView = () => {
     setAddWorkOrderModal(true)
   }
@@ -228,12 +219,12 @@ const AccountRecievable = () => {
     setSelectedRowData(rowData)
     setEditMode(true)
     setVisible(true)
-   }
+  }
 
   const ActionButtonColumn: ActionButtonColumnProps = {
     header: 'Actions',
-    
-    buttons : [
+
+    buttons: [
       {
         label: 'Approve',
         filled: true,
@@ -241,17 +232,12 @@ const AccountRecievable = () => {
           width: '46px',
           height: '17px',
           fontWeight: 700,
-          
         },
       },
       {
         label: 'Deny',
         filled: true,
-<<<<<<< Updated upstream
         onClick: (row: any) => handleDeny(row),
-=======
-        onClick: (row) => handleDeny(row),
->>>>>>> Stashed changes
       },
       {
         label: 'View',
@@ -309,7 +295,6 @@ const AccountRecievable = () => {
   )
 
   const ActionButtonColumnInvoice: ActionButtonColumnProps = {
-    
     header: 'Actions',
     buttons: [
       {
@@ -378,42 +363,43 @@ const AccountRecievable = () => {
     <>
       <Header header="MOORPAY/Account Receivable" />
       <div className="flex justify-end gap-6 mt-10 mr-16">
-     <div className="items-center">
-      <CustomModal button={true}
-       children={
-        <ReasonModal
-         selectedRowData={selectedRowData}
-         setVisible={setVisible}
-         // toastRef={toast}
-         closeModal={handleModalClose}
-        />
-       }
-       headerText={<h1 className="text-xl font-extrabold text-black ml-4 mt-5">Reason</h1>}
-       visible={visible}
-       onClick={handleButtonClick}
-       onHide={handleModalClose}
-       buttonStyle={{
-        width: '121px',
-        height: '44px',
-        minHeight: '44px',
-        backgroundColor: '#0098FF',
-        cursor: 'pointer',
-        fontSize: '14px',
-        fontWeight: 600,
-        color: 'white',
-        borderRadius: '0.50rem',
-        marginLeft: '8px',
-        boxShadow: 'none',
-       }}
-       dialogStyle={{
-        width: '851px',
-        height: '526px',
-        borderRadius: '1rem',
-        backgroundColor:'yellow'
-       }}
-      />
-     </div>
-    </div>
+        <div className="items-center">
+          <CustomModal
+            button={true}
+            children={
+              <ReasonModal
+                selectedRowData={selectedRowData}
+                setVisible={setVisible}
+                // toastRef={toast}
+                closeModal={handleModalClose}
+              />
+            }
+            headerText={<h1 className="text-xl font-extrabold text-black ml-4 mt-5">Reason</h1>}
+            visible={visible}
+            onClick={handleButtonClick}
+            onHide={handleModalClose}
+            buttonStyle={{
+              width: '121px',
+              height: '44px',
+              minHeight: '44px',
+              backgroundColor: '#0098FF',
+              cursor: 'pointer',
+              fontSize: '14px',
+              fontWeight: 600,
+              color: 'white',
+              borderRadius: '0.50rem',
+              marginLeft: '8px',
+              boxShadow: 'none',
+            }}
+            dialogStyle={{
+              width: '851px',
+              height: '526px',
+              borderRadius: '1rem',
+              backgroundColor: 'yellow',
+            }}
+          />
+        </div>
+      </div>
 
       <div
         style={{
@@ -479,23 +465,22 @@ const AccountRecievable = () => {
               </div>
             }
           />
-           <div className="text-center">
-          {isLoading && (
-            <ProgressSpinner
-              style={{
-                position: 'absolute',
-                top: '50%',
-                left: '55%',
-                transform: 'translate(-50%, -50%)',
-                width: '50px',
-                height: '50px',
-              }}
-              strokeWidth="4"
-            />
-          )}
+          <div className="text-center">
+            {isLoading && (
+              <ProgressSpinner
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '55%',
+                  transform: 'translate(-50%, -50%)',
+                  width: '50px',
+                  height: '50px',
+                }}
+                strokeWidth="4"
+              />
+            )}
+          </div>
         </div>
-        </div>
-
 
         <div className="">
           <Paginator
@@ -582,24 +567,22 @@ const AccountRecievable = () => {
             }
           />
 
-<div className="text-center">
-          {isLoading && (
-            <ProgressSpinner
-              style={{
-                position: 'absolute',
-                top: '70%',
-                left: '55%',
-                transform: 'translate(-50%, -50%)',
-                width: '50px',
-                height: '50px',
-              }}
-              strokeWidth="4"
-            />
-          )}
+          <div className="text-center">
+            {isLoading && (
+              <ProgressSpinner
+                style={{
+                  position: 'absolute',
+                  top: '70%',
+                  left: '55%',
+                  transform: 'translate(-50%, -50%)',
+                  width: '50px',
+                  height: '50px',
+                }}
+                strokeWidth="4"
+              />
+            )}
+          </div>
         </div>
-        </div>
-
-        
 
         <div className="">
           <Paginator
