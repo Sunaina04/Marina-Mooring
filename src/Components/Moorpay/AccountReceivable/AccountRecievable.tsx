@@ -35,7 +35,7 @@ const AccountRecievable = () => {
   const [totalRecords, setTotalRecords] = useState<number>()
   const [totalRecordsInvoice, setTotalRecordsInvoice] = useState<number>()
   const [isLoading, setIsLoading] = useState(false)
-  const [denyModalOpen, setDenyModalOpen] = useState(true)
+  const [denyModalOpen, setDenyModalOpen] = useState(false)
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false)
   const [isContactModalOpen, setIsContactModalOpen] = useState(false)
   const [addWorkOrderModal, setAddWorkOrderModal] = useState(false)
@@ -249,7 +249,6 @@ const AccountRecievable = () => {
     headerStyle: {
       backgroundColor: '#FFFFFF',
       height: '3.50rem',
-      fontWeight: 'bolder',
       fontSize: '14px',
       color: 'black',
       borderBottom: '1px solid #C0C0C0',
@@ -325,7 +324,6 @@ const AccountRecievable = () => {
     headerStyle: {
       backgroundColor: '#FFFFFF',
       height: '3.50rem',
-      fontWeight: 'bolder',
       fontSize: '14px',
       color: 'black',
       // borderBottom: '1px solid #C0C0C0',
@@ -699,7 +697,7 @@ const AccountRecievable = () => {
         visible={denyModalOpen}
         onHide={handleModalClose}
         header="Deny">
-        <ReasonModal selectedRowData={undefined} setVisible={() => { }} closeModal={() => { }} />
+        <ReasonModal selectedRowData={undefined} setVisible={() => {}} closeModal={() => {}} />
       </Dialog>
 
       {/* for view button */}
@@ -722,8 +720,8 @@ const AccountRecievable = () => {
         <AddWorkOrders
           workOrderData={undefined}
           isAccountRecievable={true}
-          setVisible={() => { }}
-          closeModal={() => { }}
+          setVisible={() => {}}
+          closeModal={() => {}}
         />
       </Dialog>
     </>
