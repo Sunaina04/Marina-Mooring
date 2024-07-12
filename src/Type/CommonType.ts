@@ -120,6 +120,7 @@ export interface Customer {
 }
 
 export interface Params {
+  showCompletedWorkOrders?: string
   pageSizeTwo?: number
   pageNumberTwo?: number
   pageNumber?: number

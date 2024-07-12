@@ -50,7 +50,7 @@ const WorkOrders = () => {
   const [totalRecords, setTotalRecords] = useState<number>()
   const [getOpenWorkOrderData, setGetOpenWorkOrderData] = useState<CustomerPayload[]>([])
   const [openWorkOrder, setOpenWorkOrder] = useState<number>(0)
-  const [completedWorkOrder, setCompletedOrder] = useState<number>(0)
+  const [completedWorkOrder, setCompletedOrder] = useState<string>("No")
   const options: string[] = ['Open', 'Completed']
   const [value, setValue] = useState<string>(options[0])
 
@@ -63,6 +63,10 @@ const WorkOrders = () => {
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value)
   }
+
+  const handleCompleted = () => {
+    setCompletedOrder((prev) => (prev === "Yes" ? "No" : "Yes"));
+  };
 
   const ActionButtonColumn: ActionButtonColumnProps = {
     header: 'Action',
@@ -149,6 +153,10 @@ const WorkOrders = () => {
       if (pageSize) {
         params.pageSize = pageSize
       }
+      if (completedWorkOrder) {
+        params.showCompletedWorkOrders = completedWorkOrder
+
+      }
 
       const response = await getWorkOrder(params).unwrap()
       const { status, content, message, totalSize } = response as WorkOrderResponse
@@ -170,7 +178,7 @@ const WorkOrders = () => {
       setIsLoading(false)
       console.error('Error occurred while fetching customer data:', msg)
     }
-  }, [searchText, selectedCustomerId, pageNumber, pageSize])
+  }, [searchText, selectedCustomerId, pageNumber, pageSize,completedWorkOrder])
 
   const handleEdit = (rowData: any) => {
     setSelectedCustomer(rowData)
@@ -189,7 +197,7 @@ const WorkOrders = () => {
 
   useEffect(() => {
     getWorkOrderData()
-  }, [pageNumber])
+  }, [pageNumber,completedWorkOrder,pageSize])
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -295,7 +303,7 @@ const WorkOrders = () => {
               </div>
 
               <div className="">
-                <SelectButton
+                {/* <SelectButton
                   data-testid="selectButton"
                   value={value}
                   onChange={(e: SelectButtonChangeEvent) => {
@@ -305,7 +313,9 @@ const WorkOrders = () => {
                   }}
                   options={options}
                   className="selectButton"
-                />
+                /> */}
+
+                <Button label='Completed' onClick={handleCompleted} />
               </div>
             </div>
           </div>
