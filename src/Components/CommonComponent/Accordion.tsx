@@ -282,8 +282,7 @@ const Accordion = () => {
           editModeWorkOrder={editMode}
           setVisible={setVisible}
           toastRef={toast}
-          closeModal={handleModalClose}
-        />
+          closeModal={handleModalClose} isAccountRecievable={false}        />
       </Dialog>
     </>
   )

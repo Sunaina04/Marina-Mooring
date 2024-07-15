@@ -281,7 +281,7 @@ const Vendors = () => {
               }
               headerText={
                 <h1 style={{ fontWeight: '500', fontSize: '24px', color: '#000000' }}>
-                  Add Company
+                  Add Vendor
                 </h1>
               }
               visible={modalVisible}
@@ -348,9 +348,9 @@ const Vendors = () => {
                 }
               />
             </div>
-            <div 
-             data-testid="PaginatorOne"
-            className="mt-auto">
+            <div
+              data-testid="PaginatorOne"
+              className="mt-auto">
               <Paginator
                 first={pageNumber1}
                 rows={pageSize}

@@ -1,5 +1,5 @@
 import CustomModal from '../../CustomComponent/CustomModal'
-import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react'
+import React, { useState, useEffect, useMemo, useRef, useCallback, SetStateAction } from 'react'
 import {
   useDeleteMooringsMutation,
   useGetCustomersWithMooringMutation,
@@ -32,6 +32,7 @@ import { Paginator } from 'primereact/paginator'
 import { PositionType } from '../../../Type/Components/MapTypes'
 import { GearOffIcon, GearOnIcon, NeedInspectionIcon, NotInUseIcon } from '../../Map/DefaultIcon'
 import AddMoorings from './AddMoorings'
+import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 
 const Moorings = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -53,11 +54,14 @@ const Moorings = () => {
   const [dialogVisible, setDialogVisible] = useState(false)
   const [editCustomerMode, setEditCustomerMode] = useState(false)
   const [customerModalVisible, setCustomerModalVisible] = useState(false)
-
+  const [accordion, setAccordion] = useState('faq1')
   const toast = useRef<Toast>(null)
   const [getMoorings] = useGetMooringsMutation()
   const [deleteMooring] = useDeleteMooringsMutation()
   const [getCustomerWithMooring] = useGetCustomersWithMooringMutation()
+  const [showImage, setShowImage] = useState({ id: '', imageData: '' })
+  const [imageVisible, setImageVisible] = useState(false)
+  const [imageEditVisible,setImageEditVisible]=useState(false)
 
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
@@ -79,6 +83,16 @@ const Moorings = () => {
     setPageNumberTwo(event.page)
     setPageNumber2(event.first)
     setPageSizeTwo(event.rows)
+  }
+
+  const handleToggle = (faq: SetStateAction<string>) => {
+    if (faq === 'faq1' && accordion === 'faq1') {
+      setAccordion('faq2')
+    } else if (faq === 'faq2' && accordion === 'faq2') {
+      setAccordion('faq1')
+    } else {
+      setAccordion(faq)
+    }
   }
 
   const position: PositionType = [41.56725, 70.94045]
@@ -260,6 +274,70 @@ const Moorings = () => {
     [],
   )
 
+  const columnStyle = {
+    backgroundColor: '#FFFFFF',
+    fontWeight: '700',
+    fontSize: '12px',
+  }
+  const customerImagesColumns = useMemo(
+    () => [
+      {
+        id: 'id',
+        label: 'id',
+        style: { width: '100px', backgroundColor: '#FFFFFF', fontWeight: '700', fontSize: '12px' },
+      },
+
+      {
+        id: 'imageName',
+        label: 'Image Name',
+        style: columnStyle,
+      },
+    ],
+    [],
+  )
+
+  const ActionButtonColumn: ActionButtonColumnProps = useMemo(
+    () => ({
+      header: 'Action',
+      buttons: [
+        {
+          color: 'black',
+          label: 'View Image',
+          onClick: (data) => {
+            setShowImage((prev) => ({ ...prev, id: data.id, imageData: data.imageData }))
+            setImageVisible(true)
+          },
+          underline: true,
+          style: {
+            margin: 0,
+          },
+        },
+        {
+          color: 'black',
+          label: 'Edit',
+          onClick: (data) => {
+            // setShowImage((prev) => ({ ...prev, id: data.id, imageData: data.imageData }))
+            setImageEditVisible(true)
+          },
+          underline: true,
+          style: {
+            margin: 0,
+          },
+        },
+
+      ],
+      headerStyle: {
+        backgroundColor: '#FFFFFF',
+        height: '3.50rem',
+      },
+      style: {
+        borderBottom: '1px solid #D5E1EA ',
+        width: '150px',
+        fontWeight: 700,
+      },
+    }),
+    [],
+  )
   const getMooringsData = useCallback(async () => {
     setIsLoading(true)
     try {
@@ -505,7 +583,7 @@ const Moorings = () => {
                 }}
               />
             }
-            headerText={<h1 className="text-xxl font-bold text-black ">Add Mooring</h1>}
+            headerText={<h1 className="text-xxl font-bold text-black ">Mooring Information</h1>}
             visible={modalVisible}
             onClick={handleButtonClick}
             onHide={handleModalClose}
@@ -647,12 +725,12 @@ const Moorings = () => {
 
         {/* last container */}
 
-        <div className="lg:flex-row ml-5 mr-12 w-[500px]">
-          {/* Left Panel - Customer Record */}
+        {/* <div className="lg:flex-row ml-5 mr-12 w-[500px]">
+       
           <div className="flex-grow rounded-md border bg-white">
             <div className="bg-[#00426F] rounded-t-[10px] flex justify-between pb-2">
               <div className="text-sm font-semibold rounded-t-md bg-[]">
-                <h1 className="p-4 text-lg text-white">{'Customers Record'}</h1>
+                <h1 className="p-4 text-lg text-white">{'Customer Moorings'}</h1>
               </div>
               <div className="flex">
                 <FaEdit
@@ -767,7 +845,255 @@ const Moorings = () => {
               />
             </div>
           </div>
+        </div> */}
+
+
+        <div className="ml-5 mr-4">
+          {/* Left Panel - Customer Record */}
+          <div style={{ maxWidth: '500px', width: '500px' }} className="flex-grow border bg-white">
+            <div className="bg-[#00426F] rounded-t-[10px] flex justify-between">
+              <div className="text-sm font-semibold rounded-t-md">
+                <h1 className="p-3 text-white text-lg font-extrabold">
+                  {properties.customerRecord}
+                </h1>
+              </div>
+              <div className="flex">
+                <FaEdit
+                  onClick={handleEdit}
+                  className="mr-3 mt-[19px] text-[white]"
+                  data-testid="FaEdit"
+                  style={{ cursor: 'pointer' }}
+                />
+                <RiDeleteBin5Fill
+                  onClick={handleDelete}
+                  className="text-white mr-2 mt-[19px] "
+                  data-testid="RiDeleteBin5Fill"
+                  style={{ cursor: 'pointer' }}
+                />
+              </div>
+            </div>
+            <div style={{ border: '1px solid white', height: '180px', overflowY: 'scroll' }}>
+              {customerRecordData ? (
+                CustomerDetails
+              ) : (
+                <div className="text-center mt-10">
+                  <img
+                    src="/assets/images/empty.png"
+                    alt="Empty Data"
+                    className="w-20 mx-auto mb-2"
+                  />
+                  <p className="text-gray-800 text-lg">No data available</p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {isLoader && (
+            <ProgressSpinner
+              style={{
+                position: 'absolute',
+                top: '40%',
+                left: '85%',
+                transform: 'translate(-50%, -50%)',
+                width: '50px',
+                height: '50px',
+              }}
+              strokeWidth="4"
+            />
+          )}
+
+          <div style={{ width: '500px' }} className="flex  flex-col wrapper">
+            <div
+              className=" relative  bg-white border-[1px] border-[#D5E1EA] mr-8"
+              style={{ width: '500px', maxWidth: '500px', marginBottom: '0px' }}>
+              <label
+                style={{ backgroundColor: '#00426F' }}
+                htmlFor="faq1"
+                className="cursor-pointer flex items-center justify-between h-14"
+                onClick={() => handleToggle('faq1')}>
+                <div className="flex items-center gap-4 ">
+                  <div>
+                    <h1 className="p-3 text-white text-lg font-extrabold">Moorings</h1>
+                  </div>
+                </div>
+                <div>
+                  <div className="mr-2">
+                    {accordion === 'faq1' ? (
+                      <svg
+                        width="24"
+                        height="4"
+                        viewBox="0 0 11 3"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M10.125 1.5C10.125 1.92188 9.77344 2.25 9.375 2.25H1.125C0.703125 2.25 0.375 1.92188 0.375 1.5C0.375 1.10156 0.703125 0.75 1.125 0.75H9.375C9.77344 0.75 10.125 1.10156 10.125 1.5Z"
+                          fill="white"
+                        />
+                      </svg>
+                    ) : (
+                      <img
+                        src="/assets/images/plus.png"
+                        alt="Key Icon"
+                        className="p-clickable"
+                        style={{}}
+                      />
+                    )}
+                  </div>
+                </div>
+              </label>
+              <div
+                className={`content  transition-all ease-in-out duration-500 ${accordion === 'faq1' ? '' : 'hidden'}`}>
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                  <div className="flex-grow bg-white rounded-md border">
+                    <div
+                      style={{
+                        fontWeight: '700',
+                        color: 'white',
+                        padding: '14px',
+                        fontSize: '15px',
+                      }}>
+                      <div
+                        className={`bg-#00426F overflow-x-hidden h-[320px]  table-container flex flex-col`}>
+                        <div className="flex-grow" style={{ overflow: 'auto' }}>
+                          <DataTableComponent
+                            style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+                            scrollable
+                            tableStyle={{
+                              fontSize: '12px',
+                              color: '#000000',
+                              fontWeight: 600,
+                              backgroundColor: '#D9D9D9',
+                            }}
+                            data={mooringResponseData}
+
+                            columns={tableColumnsMoorings}
+                            onRowClick={(rowData: any) => {
+                              setDialogVisible(true)
+                              setMooringRowData(rowData.data)
+                              // dispatch(setMooringRowData(rowData.data))
+                            }}
+                            onSelectionChange={(e) => {
+                              setSelectedMooring(e.value)
+                            }}
+                            selection={selectedMooring}
+                            dataKey="id"
+                            rowStyle={(rowData: any) => rowData}
+                            emptyMessage={
+                              <div className="text-center mt-10">
+                                <img
+                                  src="/assets/images/empty.png"
+                                  alt="Empty Data"
+                                  className="w-20 mx-auto mb-2"
+                                />
+                                <p className="text-gray-500 text-lg">No data available</p>
+                              </div>
+                            }
+                          />
+                        </div>
+                        <Paginator
+                          first={pageNumber2}
+                          rows={pageSizeTwo}
+                          totalRecords={totalRecordsTwo}
+                          rowsPerPageOptions={[5, 10, 20, 30]}
+                          onPageChange={onPageChangeTwo}
+                          style={{
+                            position: 'sticky',
+                            bottom: 0,
+                            zIndex: 1,
+                            backgroundColor: 'white',
+                            borderTop: '1px solid #D5E1EA',
+                            padding: '0.5rem',
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              className="tab relative bg-[#FFFFFF] border-[1px] border-[#D5E1EA] mr-8"
+              style={{ width: '500px', maxWidth: '500px', marginTop: '0px' }}>
+              <label
+                htmlFor="faq2"
+                style={{ backgroundColor: '#00426F' }}
+                className="cursor-pointer flex items-center justify-between h-14"
+                onClick={() => handleToggle('faq2')}>
+                <div className="flex items-center">
+                  <div style={{ flexShrink: 1 }}>
+                    <h1 className="p-3 text-white text-lg font-extrabold">Images</h1>
+                  </div>
+                </div>
+                <div>
+                  <div className="p-2">
+                    {accordion === 'faq2' ? (
+                      <svg
+                        width="24"
+                        height="4"
+                        viewBox="0 0 11 3"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M10.125 1.5C10.125 1.92188 9.77344 2.25 9.375 2.25H1.125C0.703125 2.25 0.375 1.92188 0.375 1.5C0.375 1.10156 0.703125 0.75 1.125 0.75H9.375C9.77344 0.75 10.125 1.10156 10.125 1.5Z"
+                          fill="white"
+                        />
+                      </svg>
+                    ) : (
+                      <img
+                        src="/assets/images/plus.png"
+                        alt="Key Icon"
+                        className="p-clickable"
+                        style={{}}
+                      />
+                    )}
+                  </div>
+                </div>
+              </label>
+              <div
+                className={`content mt-5 transition-all ease-in-out duration-500 ${accordion === 'faq2' ? '' : 'hidden'}`}>
+                <div
+                  className={`bg-#00426F overflow-x-hidden h-[330px] table-container flex flex-col`}>
+                  <div className="flex-grow" style={{ overflow: 'auto' }}>
+                    <DataTableComponent
+                      style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+                      scrollable
+                      tableStyle={{
+                        fontSize: '12px',
+                        color: '#000000',
+                        fontWeight: 600,
+                        backgroundColor: '#D9D9D9',
+                      }}
+                      // data={customerImage}
+                      columns={customerImagesColumns}
+                      selectionMode="single"
+                      actionButtons={ActionButtonColumn}
+                      selection={selectedMooring}
+                      dataKey="id"
+                      rowStyle={(rowData: any) => rowData}
+                      emptyMessage={
+                        <div className="text-center mt-10">
+                          <img
+                            src="/assets/images/empty.png"
+                            alt="Empty Data"
+                            className="w-20 mx-auto mb-2"
+                          />
+                          <p className="text-gray-500 text-lg">No data available</p>
+                        </div>
+                      }
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+
+
+
+
+
+
+
       </div>
 
       {/* Dialog BOX */}

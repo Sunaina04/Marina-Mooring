@@ -219,7 +219,7 @@ const Dashboard = () => {
 
       {
         id: 'mooringServiceDate',
-        label: 'Mooring service Date',
+        label: 'Inspection Date',
         style: {
           fontSize: '10px',
           // width: '9vw',
@@ -277,7 +277,7 @@ const Dashboard = () => {
     () => [
       {
         id: 'id',
-        label: 'Order No.',
+        label: 'Work Order No.',
         style: { fontSize: '10px', width: '4.5vw', backgroundColor: '#FFFFFF', color: '#000000' },
       },
       {
@@ -697,8 +697,7 @@ const Dashboard = () => {
                 editModeWorkOrder={editMode}
                 setVisible={setVisible}
                 toastRef={toast}
-                closeModal={handleModalClose}
-              />
+                closeModal={handleModalClose} isAccountRecievable={false}              />
             </Dialog>
 
             {/* <Dialog
