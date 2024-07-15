@@ -770,7 +770,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 options={CustomerNameOptions}
                 optionLabel="firstName"
                 editable
-                disabled={isLoading}
+                disabled={isLoading || isAccountRecievable}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -800,7 +800,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 options={MooringNameOptions}
                 optionLabel="mooringNumber"
                 editable
-                disabled={isLoading}
+                disabled={isLoading || isAccountRecievable}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -826,9 +826,13 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                     paddingLeft: '0.5rem',
-                    cursor: 'pointer',
+                    cursor: isAccountRecievable ? 'disabled' : 'pointer',
                   }}>
-                  <div onClick={uploadImages} className="flex gap-3 text-center">
+                  <div
+                    onClick={() => {
+                      !isAccountRecievable && uploadImages()
+                    }}
+                    className="flex gap-3 text-center">
                     <FaFileUpload
                       style={{ fontSize: '22px', color: '#0098FF', marginTop: '3px' }}
                     />
@@ -854,7 +858,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 options={boatyardsNameOptions}
                 optionLabel="boatyardName"
                 editable
-                disabled={isLoading}
+                disabled={isLoading || isAccountRecievable}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -879,7 +883,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 options={technicians}
                 optionLabel="name"
                 editable
-                disabled={isLoading}
+                disabled={isLoading || isAccountRecievable}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -915,6 +919,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 value={parseDate(workOrder.dueDate)}
                 onChange={(e) => handleInputChange('dueDate', formatDate(e.target.value))}
                 dateFormat="mm/dd/yy"
+                disabled={isLoading || isAccountRecievable}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -940,6 +945,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 value={parseDate(workOrder.scheduleDate)}
                 onChange={(e) => handleInputChange('scheduleDate', formatDate(e.target.value))}
                 dateFormat="mm/dd/yy"
+                disabled={isLoading || isAccountRecievable}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -968,7 +974,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 options={workOrderStatusValue}
                 optionLabel="status"
                 editable
-                disabled={isLoading}
+                disabled={isLoading || isAccountRecievable}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -1005,13 +1011,16 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
               <div className="flex justify-around text-center">
                 <h1
                   className="mt-1 p-[0.1rem] bg-slate-300 rounded-md cursor-pointer"
-                  onClick={handleDecrement}>
+                  onClick={() => {
+                    !isAccountRecievable && handleDecrement()
+                  }}>
                   <GrFormSubtract />
                 </h1>
                 <input
                   type="text"
                   value={formatTime(time.minutes, time.seconds)}
                   onChange={handleTimeChange}
+                  disabled={isLoading || isAccountRecievable}
                   className="text-center w-16"
                   style={{
                     boxShadow: 'none',
@@ -1020,7 +1029,9 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 />
                 <h1
                   className="mt-1 p-[0.1rem] bg-slate-300 rounded-md cursor-pointer"
-                  onClick={handleIncrement}>
+                  onClick={() => {
+                    !isAccountRecievable && handleIncrement()
+                  }}>
                   <IoIosAdd />
                 </h1>
               </div>
@@ -1042,6 +1053,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 value={workOrder.value}
                 rows={3}
                 cols={30}
+                disabled={isLoading || isAccountRecievable}
                 onChange={(e) => handleInputChange('value', e.target.value)}
                 style={{
                   width: '740px',
@@ -1052,6 +1064,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                   paddingLeft: '0.5rem',
                   fontSize: '0.8rem',
                   resize: 'none',
+                  cursor: isAccountRecievable ? 'disabled' : 'pointer',
                 }}
               />
             </div>
@@ -1081,7 +1094,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 width: '89px',
                 height: '42px',
                 backgroundColor: 'green',
-                cursor: 'pointer',
+                cursor: isAccountRecievable ? 'disabled' : 'pointer',
                 fontWeight: 'bolder',
                 fontSize: '1rem',
                 boxShadow: 'none',
@@ -1100,7 +1113,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 width: '89px',
                 height: '42px',
                 backgroundColor: 'red',
-                cursor: 'pointer',
+                cursor: isAccountRecievable ? 'disabled' : 'pointer',
                 fontWeight: 'bolder',
                 fontSize: '1rem',
                 boxShadow: 'none',
@@ -1120,7 +1133,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 width: '89px',
                 height: '42px',
                 backgroundColor: '#0098FF',
-                cursor: 'pointer',
+                cursor: isAccountRecievable ? 'disabled' : 'pointer',
                 fontWeight: 'bolder',
                 fontSize: '1rem',
                 boxShadow: 'none',
@@ -1262,7 +1275,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                   gap: '0.5rem',
                   textAlign: 'center',
                   lineHeight: '25px',
-                  cursor: 'pointer',
+                  cursor: isAccountRecievable ? 'disabled' : 'pointer',
                 }}>
                 <FaFileUpload
                   style={{
@@ -1303,7 +1316,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                           fontWeight: 'bolder',
                           border: 'none',
                           width: '80px',
-                          cursor: 'pointer',
+                          cursor: isAccountRecievable ? 'disabled' : 'pointer' ,
                           opacity: hoveredIndex === index ? 1 : 0,
                           transition: 'opacity 0.3s',
                         }}>
@@ -1321,7 +1334,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                         borderRadius: '5px',
                         width: '28px',
                         height: '25px',
-                        cursor: 'pointer',
+                        cursor: isAccountRecievable ? 'disabled' : 'pointer',
                         opacity: hoveredIndex === index ? 1 : 0,
                         transition: 'opacity 0.3s',
                       }}
@@ -1352,7 +1365,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
               width: '89px',
               height: '42px',
               backgroundColor: '#0098FF',
-              cursor: 'pointer',
+              cursor: isAccountRecievable ? 'disabled' : 'pointer',
               fontWeight: 'bolder',
               fontSize: '1rem',
               boxShadow: 'none',
