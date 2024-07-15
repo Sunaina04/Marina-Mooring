@@ -405,18 +405,18 @@ const Customer = () => {
             margin: 0,
           },
         },
-        // {
-        //   color: 'black',
-        //   label: 'Edit',
-        //   onClick: (data) => {
-        //     // setShowImage((prev) => ({ ...prev, id: data.id, imageData: data.imageData }))
-        //     setImageEditVisible(true)
-        //   },
-        //   underline: true,
-        //   style: {
-        //     margin: 0,
-        //   },
-        // },
+        {
+          color: 'black',
+          label: 'Edit',
+          onClick: (data) => {
+            // setShowImage((prev) => ({ ...prev, id: data.id, imageData: data.imageData }))
+            setImageEditVisible(true)
+          },
+          underline: true,
+          style: {
+            margin: 0,
+          },
+        },
       ],
       headerStyle: {
         backgroundColor: '#FFFFFF',
@@ -1274,16 +1274,18 @@ const Customer = () => {
       <Dialog
         position="center"
         style={{
-          width: '851px',
-          height: '526px',
+          width: '700px',
+          height: '400px',
           borderRadius: '1rem',
         }}
+        
         draggable={false}
         visible={imageEditVisible}
         onHide={() => {
           setImageEditVisible(false)
         }}
         headerStyle={{ cursor: 'alias' }}
+        
         header={'Images'}>
         {/* <AddWorkOrders
                 workOrderData={selectedCustomer}
@@ -1293,7 +1295,11 @@ const Customer = () => {
                 closeModal={handleModalClose}
               /> */}
 
-        <AddImage />
+        <AddImage
+
+          // closeModal={handleModalClose}
+
+        />
       </Dialog>
     </div>
   )

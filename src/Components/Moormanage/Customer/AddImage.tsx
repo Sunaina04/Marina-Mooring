@@ -8,12 +8,15 @@ const AddImage = () => {
   return (
     <div>
       <div className={isLoading ? 'blurred' : ''}>
-        <div>
-          <div className="mt-5">
+        <div
+
+        // style={{border:"1px solid red"}}
+        >
+          <div className="mt-5 ml-3">
             <div className="ml-1 text-black font-semibold text-sm">
               <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
                 <div className="flex gap-1">
-                  Image
+                  Image Name
                   <p className="text-red-600">*</p>
                 </div>
               </span>
@@ -41,7 +44,7 @@ const AddImage = () => {
           </div>
         </div>
 
-        <div className="py-3 pl-3 mb-20 mt-4 rounded-lg" style={{ height: '150px' }}>
+        <div className="py-3 pl-3 mb-20 mt-4 rounded-lg" style={{ height: '90px' }}>
           <div className="flex ">
             <div className="mt-2 mr-12">
               <div className="">
@@ -73,16 +76,17 @@ const AddImage = () => {
         </div>
       </div>
       <div
-        //  className={`"flex gap-6 bottom-2 absolute left-6" ${isLoading ? "blurred" : ""}`}
+        className={`"flex gap-6  absolute left-6" ${isLoading ? 'blurred' : ''}`}
         style={{
           width: '100%',
           height: '80px',
+          // border: "1px solid red",
           backgroundColor: 'white',
           padding: '0 12px',
           bottom: '0px',
         }}>
         <Button
-          //    onClick={handleClick}
+          //  onClick={handleClick}
           label={'Save'}
           style={{
             width: '89px',
