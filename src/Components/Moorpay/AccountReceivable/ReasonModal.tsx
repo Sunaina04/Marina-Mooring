@@ -62,7 +62,7 @@ const ReasonModal: React.FC<ReasonModalProps> = ({ selectedRowData, setVisible, 
   return (
     <>
       <div>
-        {/* <Toast ref={toastRef} /> */}
+        <Toast ref={toast} />
 
         <div className=" mt-4">
           <span className="font-medium text-sm text-[#000000]">
