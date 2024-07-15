@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react'
-import { InputTextarea } from 'primereact/inputtextarea'
+import React, { useState, useRef } from 'react'
 import { Button } from 'primereact/button'
 import { Toast } from 'primereact/toast'
 import { ApproveModalProps } from '../../../Type/ComponentBasedType'
@@ -45,8 +44,8 @@ const ApproveModal: React.FC<ApproveModalProps> = ({
         getWorkOrderWithPendingPayApproval()
         getOutStandingInvoice()
         toast?.current?.show({
-          severity: 'error',
-          summary: 'Error',
+          severity: 'success',
+          summary: 'Success',
           detail: message,
           life: 3000,
         })

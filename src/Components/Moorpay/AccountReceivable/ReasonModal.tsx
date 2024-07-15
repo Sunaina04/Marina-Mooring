@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react'
-import { InputTextarea } from 'primereact/inputtextarea'
+import React, { useState, useRef } from 'react'
 import { Button } from 'primereact/button'
 import { Toast } from 'primereact/toast'
 import { ReasonModalProps } from '../../../Type/ComponentBasedType'

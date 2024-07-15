@@ -102,11 +102,11 @@ const AccountRecievable = () => {
 
   const handleActionClick = (action: string) => {
     if (action === 'Payments') {
-      setModalVisible(true)
-      setIsPaymentModalOpen(true)
+      // setModalVisible(true)
+      // setIsPaymentModalOpen(true)
     } else if (action === 'Contact') {
-      setModalVisible(true)
-      setIsContactModalOpen(true)
+      // setModalVisible(true)
+      // setIsContactModalOpen(true)
     } else if (action === 'View') {
       setModalVisible(true)
       setAddWorkOrderModal(true)
@@ -388,7 +388,7 @@ const AccountRecievable = () => {
 
   return (
     <>
-      <div style={{ height: '100vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
+      <div style={{ height: '180vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
         <Header header="MOORPAY/Account Receivable" />
 
         <div
