@@ -23,8 +23,16 @@ const ApproveModal: React.FC<ApproveModalProps> = ({
     const errors: { [key: string]: string } = {}
 
     if (!invoiceAmount) {
-      errors.Reason = 'Customer Name is required'
+      errors.invoiceAmount = 'Invoice Amount is required'
     }
+    setErrorMessage(errors)
+    return Object.keys(errors).length === 0
+  }
+
+  const handleInvoiceAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/[^0-9]/g, '')
+    setInvoiceAmount(value)
+    setErrorMessage({})
   }
 
   const handleBack = () => {
@@ -32,6 +40,9 @@ const ApproveModal: React.FC<ApproveModalProps> = ({
   }
 
   const ApproveWorkOrderMethod = async () => {
+    if (!validateFields()) {
+      return
+    }
     try {
       const params: Params = {}
       if (invoiceAmount) {
@@ -80,13 +91,14 @@ const ApproveModal: React.FC<ApproveModalProps> = ({
               <InputComponent
                 type="number"
                 value={invoiceAmount}
-                onChange={(e) => {
-                  setInvoiceAmount(e.target.value)
-                }}
+                // onChange={(e) => {
+                //   setInvoiceAmount(e.target.value)
+                // }}
+                onChange={handleInvoiceAmountChange}
                 style={{
                   width: '450px',
                   height: '40px',
-                  border: errorMessage.value ? '1px solid red' : '1px solid #D5E1EA',
+                  border: errorMessage.invoiceAmount ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   boxShadow: 'none',
                   paddingLeft: '0.5rem',
@@ -95,7 +107,11 @@ const ApproveModal: React.FC<ApproveModalProps> = ({
               />
             </div>
           </div>
-          <p>{errorMessage.value && <small className="p-error">{errorMessage.value}</small>}</p>
+          <p>
+            {errorMessage.invoiceAmount && (
+              <small className="p-error">{errorMessage.invoiceAmount}</small>
+            )}
+          </p>
         </div>
       </div>
       {/* Save and Back buttons */}
