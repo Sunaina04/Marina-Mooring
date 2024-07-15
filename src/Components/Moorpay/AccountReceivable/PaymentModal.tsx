@@ -103,30 +103,36 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ onHide, onSavePayment }) =>
       <div style={{ width: '500px', height: '400px', backgroundColor: '' }}>
         <div>
           <div className="flex gap-6">
-            <div>
+          <div className="mt-">
               <span className="font-medium text-sm text-[#000000]">
                 <div className="flex gap-1">
-                  Cardholder's name
+                  Type
                   <p className="text-red-600">*</p>
                 </div>
               </span>
               <div className="mt-2">
-                <InputComponent
-                  value={paymentDetails.cardholderName}
-                  placeholder="John Doe"
-                  onChange={(e) => handleInputChange('cardholderName', e.target.value)}
+                <Dropdown
+                  id="paymentOption"
+                  value={paymentDetails.paymentOption}
+                  options={[
+                    { label: 'Card', value: 'Card' },
+                    { label: 'Check', value: 'Check' },
+                    { label: 'Cash', value: 'Cash' },
+                  ]}
+                  onChange={(e) => handleInputChange('paymentOption', e.value)}
+                  optionLabel="label"
+                  placeholder="Select payment option"
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: fieldErrors.cardholderName ? '1px solid red' : '1px solid #D5E1EA',
+                    border: fieldErrors.paymentOption ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                    paddingLeft: '0.5rem',
+                    color: 'black',
                   }}
                 />
-                <p className="" id="cardholderName">
-                  {fieldErrors.cardholderName && (
-                    <small className="p-error">{fieldErrors.cardholderName}</small>
+                <p className="" id="paymentOption">
+                  {fieldErrors.paymentOption && (
+                    <small className="p-error">{fieldErrors.paymentOption}</small>
                   )}
                 </p>
               </div>
@@ -159,136 +165,11 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ onHide, onSavePayment }) =>
             </div>
           </div>
 
-          <div className="flex gap-6">
-            <div className="mt-4">
-              <span className="font-medium text-sm text-[#000000]">
-                <div className="flex gap-1">
-                  Payment Options
-                  <p className="text-red-600">*</p>
-                </div>
-              </span>
-              <div className="mt-2">
-                <Dropdown
-                  id="paymentOption"
-                  value={paymentDetails.paymentOption}
-                  options={[
-                    { label: 'Credit Card', value: 'Credit Card' },
-                    { label: 'Debit Card', value: 'Debit Card' },
-                    { label: 'PayPal', value: 'PayPal' },
-                  ]}
-                  onChange={(e) => handleInputChange('paymentOption', e.value)}
-                  optionLabel="label"
-                  placeholder="Select payment option"
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: fieldErrors.paymentOption ? '1px solid red' : '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    color: 'black',
-                  }}
-                />
-                <p className="" id="paymentOption">
-                  {fieldErrors.paymentOption && (
-                    <small className="p-error">{fieldErrors.paymentOption}</small>
-                  )}
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-3">
-              <span className="font-medium text-sm text-[#000000]">
-                <div className="flex gap-1">
-                  Card Number
-                  <p className="text-red-600">*</p>
-                </div>
-              </span>
-              <div className="mt-2">
-                <InputComponent
-                  value={paymentDetails.cardNumber}
-                  placeholder="Enter your Card Number"
-                  onChange={(e) => handleInputChange('cardNumber', e.target.value)}
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: fieldErrors.cardNumber ? '1px solid red' : '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                    paddingLeft: '0.5rem',
-                  }}
-                />
-                <p className="" id="cardNumber">
-                  {fieldErrors.cardNumber && (
-                    <small className="p-error">{fieldErrors.cardNumber}</small>
-                  )}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex gap-6">
-            <div className="mt-4">
-              <span className="font-medium text-sm text-[#000000]">
-                <div className="flex gap-1">
-                  Expiration Date
-                  <p className="text-red-600">*</p>
-                </div>
-              </span>
-              <div className="mt-2">
-                <Calendar
-                  value={paymentDetails.expirationDate}
-                  placeholder="mm/dd/yy"
-                  onChange={(e) => handleDateChange('expirationDate', e.value)}
-                  dateFormat="mm/dd/yy"
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: fieldErrors.expirationDate ? '1px solid red' : '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                    padding: '0.5rem',
-                    backgroundColor: 'white',
-                  }}
-                />
-                <p className="" id="expirationDate">
-                  {fieldErrors.expirationDate && (
-                    <small className="p-error">{fieldErrors.expirationDate}</small>
-                  )}
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-3">
-              <span className="font-medium text-sm text-[#000000]">
-                <div className="flex gap-1">
-                  CVV
-                  <p className="text-red-600">*</p>
-                </div>
-              </span>
-              <div className="mt-2">
-                <InputComponent
-                  value={paymentDetails.cvv}
-                  placeholder="CVV"
-                  onChange={(e) => handleInputChange('cvv', e.target.value)}
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: fieldErrors.cvv ? '1px solid red' : '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                    paddingLeft: '0.5rem',
-                  }}
-                />
-                <p className="" id="cvv">
-                  {fieldErrors.cvv && <small className="p-error">{fieldErrors.cvv}</small>}
-                </p>
-              </div>
-            </div>
-          </div>
-
+          
           <div className="flex gap-6 ml-1 mt-20">
             <Button
-              className="w-42 h-12 rounded-md text-sm"
-              label="CONFIRM AND PAY"
+              className="w-24 h-12 rounded-md text-lg"
+              label="Save"
               severity="success"
               onClick={handleSavePayment}
               raised
