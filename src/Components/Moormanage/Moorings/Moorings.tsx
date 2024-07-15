@@ -61,7 +61,7 @@ const Moorings = () => {
   const [getCustomerWithMooring] = useGetCustomersWithMooringMutation()
   const [showImage, setShowImage] = useState({ id: '', imageData: '' })
   const [imageVisible, setImageVisible] = useState(false)
-  const [imageEditVisible,setImageEditVisible]=useState(false)
+  const [imageEditVisible, setImageEditVisible] = useState(false)
 
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
@@ -324,7 +324,6 @@ const Moorings = () => {
             margin: 0,
           },
         },
-
       ],
       headerStyle: {
         backgroundColor: '#FFFFFF',
@@ -725,8 +724,7 @@ const Moorings = () => {
 
         {/* last container */}
 
-        {/* <div className="lg:flex-row ml-5 mr-12 w-[500px]">
-       
+        <div className="lg:flex-row ml-5 mr-12 w-[500px]">
           <div className="flex-grow rounded-md border bg-white">
             <div className="bg-[#00426F] rounded-t-[10px] flex justify-between pb-2">
               <div className="text-sm font-semibold rounded-t-md bg-[]">
@@ -845,11 +843,9 @@ const Moorings = () => {
               />
             </div>
           </div>
-        </div> */}
+        </div>
 
-
-        <div className="ml-5 mr-4">
-          {/* Left Panel - Customer Record */}
+        {/* <div className="ml-5 mr-4">
           <div style={{ maxWidth: '500px', width: '500px' }} className="flex-grow border bg-white">
             <div className="bg-[#00426F] rounded-t-[10px] flex justify-between">
               <div className="text-sm font-semibold rounded-t-md">
@@ -1086,14 +1082,7 @@ const Moorings = () => {
               </div>
             </div>
           </div>
-        </div>
-
-
-
-
-
-
-
+        </div> */}
       </div>
 
       {/* Dialog BOX */}

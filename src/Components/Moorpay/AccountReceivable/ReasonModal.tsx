@@ -39,9 +39,10 @@ const ReasonModal: React.FC<ReasonModalProps> = ({ selectedRowData, setVisible, 
       }).unwrap()
       const { status, content, message, totalSize } = response as WorkOrderResponse
       if (status === 200 && Array.isArray(content)) {
+        setVisible(false)
         toast?.current?.show({
-          severity: 'error',
-          summary: 'Error',
+          severity: 'success',
+          summary: 'Success',
           detail: message,
           life: 3000,
         })

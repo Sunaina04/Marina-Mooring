@@ -51,7 +51,7 @@ const Customer = () => {
   const [mooringRowData, setMooringRowData] = useState<MooringPayload>()
   const [dialogVisible, setDialogVisible] = useState(false)
   const [imageVisible, setImageVisible] = useState(false)
-  const [imageEditVisible,setImageEditVisible]=useState(false)
+  const [imageEditVisible, setImageEditVisible] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [selectedMooring, setSelectedMooring] = useState<any>()
   const [searchText, setSearchText] = useState('')
@@ -405,19 +405,18 @@ const Customer = () => {
             margin: 0,
           },
         },
-        {
-          color: 'black',
-          label: 'Edit',
-          onClick: (data) => {
-            // setShowImage((prev) => ({ ...prev, id: data.id, imageData: data.imageData }))
-            setImageEditVisible(true)
-          },
-          underline: true,
-          style: {
-            margin: 0,
-          },
-        },
-
+        // {
+        //   color: 'black',
+        //   label: 'Edit',
+        //   onClick: (data) => {
+        //     // setShowImage((prev) => ({ ...prev, id: data.id, imageData: data.imageData }))
+        //     setImageEditVisible(true)
+        //   },
+        //   underline: true,
+        //   style: {
+        //     margin: 0,
+        //   },
+        // },
       ],
       headerStyle: {
         backgroundColor: '#FFFFFF',
@@ -1272,7 +1271,6 @@ const Customer = () => {
         </div>
       </Dialog>
 
-
       <Dialog
         position="center"
         style={{
@@ -1284,11 +1282,9 @@ const Customer = () => {
         visible={imageEditVisible}
         onHide={() => {
           setImageEditVisible(false)
-  
         }}
         headerStyle={{ cursor: 'alias' }}
         header={'Customer Image'}>
-       
         {/* <AddWorkOrders
                 workOrderData={selectedCustomer}
                 editModeWorkOrder={editMode}
@@ -1297,23 +1293,8 @@ const Customer = () => {
                 closeModal={handleModalClose}
               /> */}
 
-              <AddImage/>
+        <AddImage />
       </Dialog>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     </div>
   )
 }

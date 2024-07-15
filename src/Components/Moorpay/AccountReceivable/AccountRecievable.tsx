@@ -69,10 +69,8 @@ const AccountRecievable = () => {
   const [editMode, setEditMode] = useState(false)
   const [selectedRowData, setSelectedRowData] = useState<any>()
   const [selectedWorkOrderRowData, setSelectedWorkOredrRowData] = useState<any>()
+  const [isAccountRecievable, setIsAccountRecievable] = useState(false)
 
-  const handleButtonClick = () => {
-    // setIsModalOpen(true)
-  }
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
     // setPageNumber1(event.first)
@@ -100,7 +98,6 @@ const AccountRecievable = () => {
   }
 
   const handleSendEmail = (emailDetails: any) => {
-    console.log(emailDetails) // Handle email sending
     setIsContactModalOpen(false)
   }
 
@@ -111,6 +108,7 @@ const AccountRecievable = () => {
       setIsContactModalOpen(true)
     } else if (action === 'View') {
       setAddWorkOrderModal(true)
+      setIsAccountRecievable(false)
     }
   }
 
@@ -152,8 +150,6 @@ const AccountRecievable = () => {
       console.error('Error occurred while fetching customer data:', msg)
     }
   }, [searchApproval, selectedCustomerId, pageNumber, pageSize])
-
-  // bottom table
 
   const getOutStandingInvoice = useCallback(async () => {
     setIsLoading(true)
@@ -240,6 +236,7 @@ const AccountRecievable = () => {
     } else if (action === 'View') {
       setSelectedWorkOredrRowData(row)
       setAddWorkOrderModal(true)
+      setIsAccountRecievable(true)
     }
   }
 
@@ -745,7 +742,7 @@ const AccountRecievable = () => {
         header="Work Order">
         <AddWorkOrders
           workOrderData={selectedWorkOrderRowData}
-          isAccountRecievable={true}
+          isAccountRecievable={isAccountRecievable}
           editModeWorkOrder={true}
           setVisible={() => {
             setAddWorkOrderModal(false)

@@ -10,8 +10,6 @@ import { AiOutlineDelete } from 'react-icons/ai'
 import { ErrorResponse, WorkOrderResponse } from '../../../Type/ApiTypes'
 import {
   useAddWorkOrderMutation,
-  useApproveWorkOrderMutation,
-  useDenyWorkOrderMutation,
   useUpdateWorkOrderMutation,
 } from '../../../Services/MoorServe/MoorserveApi'
 import {
@@ -41,6 +39,8 @@ import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import { Calendar } from 'primereact/calendar'
 import { Toast } from 'primereact/toast'
 import { ProgressSpinner } from 'primereact/progressspinner'
+import ReasonModal from '../../Moorpay/AccountReceivable/ReasonModal'
+import ApproveModal from '../../Moorpay/AccountReceivable/ApproveModal'
 
 const AddWorkOrders: React.FC<WorkOrderProps> = ({
   workOrderData,
@@ -82,6 +82,9 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   const [isLoading, setIsLoading] = useState(true)
   const [customerImage, setCustomerImage] = useState<any>()
   const [encodedImages, setEncodedImages] = useState<string[]>([])
+  const [approveModalOpen, setApproveModalOpen] = useState(false)
+  const [denyModalOpen, setDenyModalOpen] = useState(false)
+
   const [hoveredIndex, setHoveredIndex] = useState<null | number>(null)
   const toast = useRef<Toast>(null)
   const [customerImages, setCustomerImages] = useState<string[]>([])
@@ -106,8 +109,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   const { getBoatYardNameData } = BoatyardNameData(selectedCustomerId)
   const { getTechniciansData } = GetTechnicians()
   const { getMooringIdsData } = GetMooringIds()
-  const [approveWorkOrder] = useApproveWorkOrderMutation()
-  const [denyWorkOrder] = useDenyWorkOrderMutation()
 
   const { getWorkOrderStatusData } = GetWorkOrderStatus()
   const [saveWorkOrder] = useAddWorkOrderMutation()
@@ -566,69 +567,9 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     }
   }
 
-  const ApproveWorkOrderMethod = async () => {
-    try {
-      const params: Params = {}
-      // if (invoiceAmount) {
-      //   params.invoiceAmount = invoiceAmount
-      // }
-      const response = await approveWorkOrder({
-        id: workOrderData?.id,
-        //  invoiceAmount: invoiceAmount
-      }).unwrap()
-      const { status, content, message } = response as WorkOrderResponse
-      if (status === 200 && Array.isArray(content)) {
-        toast?.current?.show({
-          severity: 'error',
-          summary: 'Error',
-          detail: message,
-          life: 3000,
-        })
-      } else {
-        toast?.current?.show({
-          severity: 'error',
-          summary: 'Error',
-          detail: message,
-          life: 3000,
-        })
-      }
-    } catch (error) {
-      const { message: msg } = error as ErrorResponse
-      console.error('Error occurred while fetching customer data:', msg)
-    }
-  }
-
-  const DenyWorkOrderMethod = async () => {
-    try {
-      const params: Params = {}
-      // if (reasonDetails) {
-      //   params.reportProblem = reasonDetails
-      // }
-
-      const response = await denyWorkOrder({
-        id: workOrderData?.id,
-        // reportProblem: reasonDetails,
-      }).unwrap()
-      const { status, content, message } = response as WorkOrderResponse
-      if (status === 200 && Array.isArray(content)) {
-        toast?.current?.show({
-          severity: 'error',
-          summary: 'Error',
-          detail: message,
-          life: 3000,
-        })
-      } else {
-        toast?.current?.show({
-          severity: 'error',
-          summary: 'Error',
-          detail: message,
-          life: 3000,
-        })
-      }
-    } catch (error) {
-      const { message: msg } = error as ErrorResponse
-      console.error('Error occurred while fetching customer data:', msg)
-    }
+  const handleModalClose = () => {
+    setDenyModalOpen(false)
+    setApproveModalOpen(false)
   }
 
   const handleSave = () => {
@@ -1132,7 +1073,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
           <>
             <Button
               onClick={() => {
-                ApproveWorkOrderMethod()
+                setApproveModalOpen(true)
               }}
               label="Approve"
               style={{
@@ -1150,7 +1091,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
             />
             <Button
               onClick={() => {
-                DenyWorkOrderMethod()
+                setDenyModalOpen(true)
               }}
               label="Deny"
               text={true}
@@ -1199,6 +1140,59 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         )}
       </div>
 
+      <Dialog
+        position="center"
+        style={{
+          width: '520px',
+          minWidth: '520px',
+          height: '420px',
+          minHeight: '420px',
+          borderRadius: '1rem',
+          fontWeight: '400',
+          cursor: 'alias',
+        }}
+        draggable={false}
+        headerStyle={{ cursor: 'alias' }}
+        visible={approveModalOpen}
+        onHide={handleModalClose}
+        header="Approve">
+        <ApproveModal
+          id={workOrderData?.id}
+          setVisible={() => {
+            setApproveModalOpen(false)
+          }}
+          closeModal={() => {
+            handleModalClose()
+          }}
+        />
+      </Dialog>
+
+      <Dialog
+        position="center"
+        style={{
+          width: '520px',
+          minWidth: '520px',
+          height: '420px',
+          minHeight: '420px',
+          borderRadius: '1rem',
+          fontWeight: '400',
+          cursor: 'alias',
+        }}
+        draggable={false}
+        headerStyle={{ cursor: 'alias' }}
+        visible={denyModalOpen}
+        onHide={handleModalClose}
+        header="Deny">
+        <ReasonModal
+          selectedRowData={workOrderData?.id}
+          setVisible={() => {
+            setDenyModalOpen(false)
+          }}
+          closeModal={() => {
+            handleModalClose()
+          }}
+        />
+      </Dialog>
       <Dialog
         position="center"
         style={{
