@@ -59,6 +59,7 @@ export interface AddMooringProps {
   moorings: MooringPayload
   editMode: boolean
   editCustomerMode?: boolean
+  isEditMooring?: boolean
   mooringRowData: any
   toastRef?: React.RefObject<any>
   closeModal: () => void
