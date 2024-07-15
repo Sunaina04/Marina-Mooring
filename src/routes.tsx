@@ -76,6 +76,10 @@ const routes = [
             path: 'boatyards',
             element: <Boatyards />,
           },
+          {
+            path: 'serviceArea',
+            element: <Boatyards />,
+          },
         ],
       },
       {

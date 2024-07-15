@@ -334,88 +334,83 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
         <div className="main">
           <Toast ref={toastRef} />
           <div className="flex">
-            {editMode ? (
-              ' '
-            ) : (
-              <div className="flex gap-8">
-                <div>
-                  <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
-                    <div className="flex gap-1">
-                      Vendor Name
-                      <p className="text-red-600">*</p>
-                    </div>
-                  </span>
-                  <div className="mt-2">
-                    <InputComponent
-                      onChange={(e) => handleInputChange('companyName', e.target.value)}
-                      value={formData.companyName}
-                      style={{
-                        width: '230px',
-                        height: '32px',
-                        border: fieldErrors.companyName ? '1px solid red' : '1px solid #D5E1EA',
-                        borderRadius: '0.50rem',
-                        fontSize: '0.70rem',
-                        paddingLeft: '0.5rem',
-                      }}
-                    />
+            <div className="flex gap-8">
+              <div>
+                <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
+                  <div className="flex gap-1">
+                    Vendor Name
+                    <p className="text-red-600">*</p>
                   </div>
-                  {fieldErrors.companyName && (
-                    <small className="p-error">{fieldErrors.companyName}</small>
-                  )}
+                </span>
+                <div className="mt-2">
+                  <InputComponent
+                    onChange={(e) => handleInputChange('companyName', e.target.value)}
+                    value={formData.companyName}
+                    // disabled={editMode}
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: fieldErrors.companyName ? '1px solid red' : '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.70rem',
+                      paddingLeft: '0.5rem',
+                    }}
+                  />
                 </div>
-                <div>
-                  <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
-                    <div className="flex gap-1">
-                      Phone
-                      {/* <p className="text-red-600">*</p> */}
-                    </div>
-                  </span>
-                  <div className="mt-2">
-                    <InputComponent
-                      onChange={(e) => handleInputChange('phone', e.target.value)}
-                      value={formData.phone}
-                      type="text"
-                      style={{
-                        width: '230px',
-                        height: '32px',
-                        border: fieldErrors.phone ? '1px solid red' : '1px solid #D5E1EA',
-                        borderRadius: '0.50rem',
-                        fontSize: '0.70rem',
-                        paddingLeft: '0.5rem',
-                      }}
-                    />
-                  </div>
-                  {fieldErrors.phone && <small className="p-error">{fieldErrors.phone}</small>}
-                </div>
-                <div>
-                  <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
-                    <div className="flex gap-1">
-                      Website
-                      {/* <p className="text-red-600">*</p> */}
-                    </div>
-                  </span>
-                  <div className="mt-2">
-                    <InputComponent
-                      onChange={(e) => handleInputChange('website', e.target.value)}
-                      value={formData.website}
-                      style={{
-                        width: '230px',
-                        height: '32px',
-                        border: fieldErrors.website ? '1px solid red' : '1px solid #D5E1EA',
-                        borderRadius: '0.50rem',
-                        fontSize: '0.70rem',
-                        paddingLeft: '0.5rem',
-                      }}
-                    />
-                  </div>
-                  <p>
-                    {fieldErrors.website && (
-                      <small className="p-error">{fieldErrors.website}</small>
-                    )}
-                  </p>
-                </div>
+                {fieldErrors.companyName && (
+                  <small className="p-error">{fieldErrors.companyName}</small>
+                )}
               </div>
-            )}
+              <div>
+                <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
+                  <div className="flex gap-1">
+                    Phone
+                    {/* <p className="text-red-600">*</p> */}
+                  </div>
+                </span>
+                <div className="mt-2">
+                  <InputComponent
+                    onChange={(e) => handleInputChange('phone', e.target.value)}
+                    value={formData.phone}
+                    type="text"
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: fieldErrors.phone ? '1px solid red' : '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.70rem',
+                      paddingLeft: '0.5rem',
+                    }}
+                  />
+                </div>
+                {fieldErrors.phone && <small className="p-error">{fieldErrors.phone}</small>}
+              </div>
+              <div>
+                <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
+                  <div className="flex gap-1">
+                    Website
+                    {/* <p className="text-red-600">*</p> */}
+                  </div>
+                </span>
+                <div className="mt-2">
+                  <InputComponent
+                    onChange={(e) => handleInputChange('website', e.target.value)}
+                    value={formData.website}
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: fieldErrors.website ? '1px solid red' : '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.70rem',
+                      paddingLeft: '0.5rem',
+                    }}
+                  />
+                </div>
+                <p>
+                  {fieldErrors.website && <small className="p-error">{fieldErrors.website}</small>}
+                </p>
+              </div>
+            </div>
           </div>
           <div className="flex mt-3 gap-4">
             <div className="mt-5">

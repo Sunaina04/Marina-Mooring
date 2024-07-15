@@ -19,7 +19,7 @@ import { Toast } from 'primereact/toast'
 import { IoMdAdd, IoMdClose } from 'react-icons/io'
 import { InputText } from 'primereact/inputtext'
 
-const AddBoatyards: React.FC<BoatYardProps> = ({
+const AddServiceModal: React.FC<BoatYardProps> = ({
   closeModal,
   boatYardData,
   setModalVisible,
@@ -688,4 +688,4 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   )
 }
 
-export default AddBoatyards
+export default AddServiceModal
