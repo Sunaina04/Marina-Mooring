@@ -99,7 +99,7 @@ const ReasonModal: React.FC<ReasonModalProps> = ({ selectedRowData, setVisible, 
         className={`"flex gap-6 bottom-2 absolute left-7"`}
         style={{
           width: '100%',
-          height: '80px',
+          height: '65px',
           backgroundColor: 'white',
           padding: '0 12px',
           bottom: '0px',

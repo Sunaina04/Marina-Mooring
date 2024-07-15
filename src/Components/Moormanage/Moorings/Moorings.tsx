@@ -61,7 +61,7 @@ const Moorings = () => {
   const [getCustomerWithMooring] = useGetCustomersWithMooringMutation()
   const [showImage, setShowImage] = useState({ id: '', imageData: '' })
   const [imageVisible, setImageVisible] = useState(false)
-  const [imageEditVisible,setImageEditVisible]=useState(false)
+  const [imageEditVisible, setImageEditVisible] = useState(false)
 
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
@@ -324,7 +324,6 @@ const Moorings = () => {
             margin: 0,
           },
         },
-
       ],
       headerStyle: {
         backgroundColor: '#FFFFFF',
@@ -847,7 +846,6 @@ const Moorings = () => {
           </div>
         </div> */}
 
-
         <div className="ml-5 mr-4">
           {/* Left Panel - Customer Record */}
           <div style={{ maxWidth: '500px', width: '500px' }} className="flex-grow border bg-white">
@@ -965,7 +963,6 @@ const Moorings = () => {
                               backgroundColor: '#D9D9D9',
                             }}
                             data={mooringResponseData}
-
                             columns={tableColumnsMoorings}
                             onRowClick={(rowData: any) => {
                               setDialogVisible(true)
@@ -1087,13 +1084,6 @@ const Moorings = () => {
             </div>
           </div>
         </div>
-
-
-
-
-
-
-
       </div>
 
       {/* Dialog BOX */}
