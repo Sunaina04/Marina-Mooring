@@ -140,31 +140,9 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       errors.customerName = 'Customer Name is required'
     }
 
-    if (!workOrder.mooringId) {
-      errors.mooringId = 'Mooring Number is required'
-    }
-
-    if (!workOrder.boatyards) {
-      errors.boatyards = 'Boatyard is required'
-    }
-
-    if (!workOrder.assignedTo) {
-      errors.assignedTo = 'Assigned to is required'
-    }
-
-    if (!workOrder.dueDate) {
-      errors.dueDate = 'Due Date is required'
-    }
-
-    if (!workOrder.scheduleDate) {
-      errors.scheduleDate = 'Schedule Date is required'
-    }
-
     if (!workOrder.workOrderStatus) {
       errors.workOrderStatus = 'Work order Status is required'
     }
-
-    if (time.minutes === 0 && time.seconds === 0) errors.time = 'Time is required.'
 
     if (!workOrder.value) {
       errors.value = 'Problem description is required'
