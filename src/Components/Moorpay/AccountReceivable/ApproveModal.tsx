@@ -92,13 +92,16 @@ const ApproveModal: React.FC<ApproveModalProps> = ({ id, setVisible, closeModal 
       </div>
       {/* Save and Back buttons */}
       <div
-        className={`"flex gap-6 bottom-2 absolute left-7"`}
+        className={`"flex  absolute "`}
         style={{
           width: '100%',
-          height: '80px',
+          height: '65px',
           backgroundColor: 'white',
           padding: '0 12px',
           bottom: '0px',
+          
+
+          // border:"1px solid red"
         }}>
         <Button
           label={'Save'}

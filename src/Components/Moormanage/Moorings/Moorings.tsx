@@ -961,7 +961,6 @@ const Moorings = () => {
                               backgroundColor: '#D9D9D9',
                             }}
                             data={mooringResponseData}
-
                             columns={tableColumnsMoorings}
                             onRowClick={(rowData: any) => {
                               setDialogVisible(true)
