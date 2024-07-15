@@ -566,6 +566,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   return (
     <>
       <Toast ref={toastRef} />
+
       <div className={isLoading ? 'blurred' : ''}>
         <div className="flex gap-6 ">
           <div>
@@ -629,7 +630,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               </p>
             </div>
           </div>
+        </div>
 
+        <div className="flex gap-6 mt-3">
           <div>
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
@@ -655,9 +658,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               </p>
             </div>
           </div>
-        </div>
-
-        <div className="flex gap-6 mt-3">
           <div>
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
@@ -720,7 +720,23 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               </p>
             </div>
           </div>
+        </div>
 
+        <div className="flex gap-6 mt-3">
+          {isLoading && (
+            <ProgressSpinner
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '45%',
+                transform: 'translate(-50%, -50%)',
+                width: '50px',
+                height: '50px',
+                zIndex: 4,
+              }}
+              strokeWidth="4"
+            />
+          )}
           <div>
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
@@ -746,24 +762,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               </p>
             </div>
           </div>
-        </div>
-
-        <div className="flex gap-6 mt-3">
-          {isLoading && (
-            <ProgressSpinner
-              style={{
-                position: 'absolute',
-                top: '50%',
-                left: '45%',
-                transform: 'translate(-50%, -50%)',
-                width: '50px',
-                height: '50px',
-                zIndex: 4,
-              }}
-              strokeWidth="4"
-            />
-          )}
-
           <div>
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
@@ -825,7 +823,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               </p>
             </div>
           </div>
+        </div>
 
+        <div className="flex gap-6 mt-3">
           <div>
             <div>
               <span className="font-medium text-sm text-[#000000]">
@@ -860,9 +860,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               </p>
             </div>
           </div>
-        </div>
-
-        <div className="flex gap-6 mt-3">
           <div>
             <div>
               <span className="font-medium text-sm text-[#000000]">
@@ -929,42 +926,43 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               </p>
             </div>
           </div>
-
-          <div className="">
-            <div>
-              <span className="font-medium text-sm text-[#000000]">
-                <div className="flex gap-1">
-                  Depth at Mean High Water
-                  <p className="text-red-600">*</p>
-                </div>
-              </span>
-            </div>
-
-            <div className="mt-2">
-              <InputText
-                value={formData?.depthAtMeanHighWater}
-                type="text"
-                onChange={(e) => handleInputChange('depthAtMeanHighWater', e.target.value)}
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: fieldErrors.depthAtMeanHighWater ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                  paddingLeft: '0.5rem',
-                }}
-              />
-              <p id="depthAtMeanHighWater">
-                {fieldErrors.depthAtMeanHighWater && (
-                  <small className="p-error">{fieldErrors.depthAtMeanHighWater}</small>
-                )}
-              </p>
-            </div>
-          </div>
         </div>
 
         <div className=" gap-6 mt-3 mb-16">
           <div className="flex gap-6">
+            <div className="">
+              <div>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">
+                    Depth at Mean High Water
+                    <p className="text-red-600">*</p>
+                  </div>
+                </span>
+              </div>
+
+              <div className="mt-2">
+                <InputText
+                  value={formData?.depthAtMeanHighWater}
+                  type="text"
+                  onChange={(e) => handleInputChange('depthAtMeanHighWater', e.target.value)}
+                  style={{
+                    width: '230px',
+                    height: '32px',
+                    border: fieldErrors.depthAtMeanHighWater
+                      ? '1px solid red'
+                      : '1px solid #D5E1EA',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
+                    paddingLeft: '0.5rem',
+                  }}
+                />
+                <p id="depthAtMeanHighWater">
+                  {fieldErrors.depthAtMeanHighWater && (
+                    <small className="p-error">{fieldErrors.depthAtMeanHighWater}</small>
+                  )}
+                </p>
+              </div>
+            </div>
             <div>
               <div>
                 <span className="font-medium text-sm text-[#000000]">
@@ -1033,7 +1031,10 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 </p>
               </div>
             </div>
-            <div>
+          </div>
+
+          <div className="flex gap-6">
+            <div className="mt-3">
               <div>
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
@@ -1063,9 +1064,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 </p>
               </div>
             </div>
-          </div>
-
-          <div className="flex gap-6">
             <div className="mt-3">
               <div>
                 <span className="font-medium text-sm text-[#000000]">
@@ -1132,36 +1130,36 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 </p>
               </div>
             </div>
-
-            <div className="mt-3">
-              <div>
-                <span className="font-medium text-sm text-[#000000]">
-                  <div className="flex gap-1">Shackle, Swivel Condition</div>
-                </span>
-              </div>
-
-              <div className="mt-2">
-                <Dropdown
-                  value={formData?.shackleSwivelCondition}
-                  onChange={(e) => handleInputChange('shackleSwivelCondition', e.value)}
-                  options={shackleSwivelData}
-                  optionLabel="condition"
-                  placeholder="Select"
-                  editable
-                  disabled={isLoading}
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                  }}
-                />
-              </div>
-            </div>
           </div>
+
           <div className="flex gap-6">
             <div>
+              <div className="mt-3">
+                <div>
+                  <span className="font-medium text-sm text-[#000000]">
+                    <div className="flex gap-1">Shackle, Swivel Condition</div>
+                  </span>
+                </div>
+
+                <div className="mt-3">
+                  <Dropdown
+                    value={formData?.shackleSwivelCondition}
+                    onChange={(e) => handleInputChange('shackleSwivelCondition', e.value)}
+                    options={shackleSwivelData}
+                    optionLabel="condition"
+                    placeholder="Select"
+                    editable
+                    disabled={isLoading}
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.8rem',
+                    }}
+                  />
+                </div>
+              </div>
               <div className="mt-3">
                 <div>
                   <span className="font-medium text-sm text-[#000000]">
@@ -1213,9 +1211,10 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 <span className="font-medium text-sm text-[#000000]">Pin on Map</span>
               </div>
               <div
+                className="mt-2"
                 style={{
-                  height: '200px',
-                  width: '450px',
+                  height: '300px',
+                  width: '480px',
                   overflow: 'hidden',
                 }}>
                 <CustomSelectPositionMap
@@ -1228,6 +1227,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
           </div>
         </div>
       </div>
+
       <div
         className={`"flex gap-6 bottom-2 absolute left-6" ${isLoading ? 'blurred' : ''}`}
         style={{

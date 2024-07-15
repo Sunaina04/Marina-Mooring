@@ -47,6 +47,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   estimate,
   setVisible,
   closeModal,
+  isAccountRecievable,
 }) => {
   const selectedCustomerId = useSelector(selectCustomerId)
   const [workOrder, setWorkOrder] = useState<any>({
