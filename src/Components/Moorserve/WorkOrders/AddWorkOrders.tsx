@@ -814,7 +814,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
           {!estimate && (
             <div className="">
               <span className="font-medium text-sm text-[#000000]">
-                <div className="flex gap-1">Work Order Image</div>
+                <div className="flex gap-1">Image</div>
               </span>
               <div className="mt-1">
                 <div />
@@ -1235,7 +1235,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         draggable={false}
         visible={imageVisible}
         onHide={() => setImageVisible(false)}
-        header={'Work Order Images'}>
+        header={'Images'}>
         <div className={`ml-4 ${isLoading ? 'blurred' : ''}`}>
           <div className="flex justify-center">
             <div className="mt-2">

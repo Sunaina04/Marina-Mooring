@@ -102,11 +102,11 @@ const AccountRecievable = () => {
 
   const handleActionClick = (action: string, row: any) => {
     if (action === 'Payments') {
-      // setModalVisible(true)
-      // setIsPaymentModalOpen(true)
+      setModalVisible(true)
+      setIsPaymentModalOpen(true)
     } else if (action === 'Contact') {
-      // setModalVisible(true)
-      // setIsContactModalOpen(true)
+      setModalVisible(true)
+      setIsContactModalOpen(true)
     } else if (action === 'View') {
       // setSelectedWorkOredrRowData(row)
       // setModalVisible(true)

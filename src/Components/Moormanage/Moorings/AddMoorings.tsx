@@ -633,39 +633,35 @@ const AddMoorings: React.FC<AddMooringProps> = ({
           </div>
 
           <div className="">
-              <span className="font-medium text-sm text-[#000000]">
-                <div className="flex gap-1"> Images</div>
-              </span>
-              <div className="mt-2">
-                <div />
-                <div
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                    paddingLeft: '0.5rem',
-                    cursor: 'pointer',
-                  }}>
-                  <div onClick={uploadImages} className="flex gap-3 text-center">
-                    <FaFileUpload
-                      style={{ fontSize: '22px', color: '#0098FF', marginTop: '3px' }}
-                    />
-                    <div className="border-r-2 border-blue-100  h-[30px]"></div>
-                    <span className="pl-4 mt-1"> Upload Image </span>
-                  </div>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1"> Images</div>
+            </span>
+            <div className="mt-2">
+              <div />
+              <div
+                style={{
+                  width: '230px',
+                  height: '32px',
+                  border: '1px solid #D5E1EA',
+                  borderRadius: '0.50rem',
+                  fontSize: '0.8rem',
+                  paddingLeft: '0.5rem',
+                  cursor: 'pointer',
+                }}>
+                <div onClick={uploadImages} className="flex gap-3 text-center">
+                  <FaFileUpload style={{ fontSize: '22px', color: '#0098FF', marginTop: '3px' }} />
+                  <div className="border-r-2 border-blue-100  h-[30px]"></div>
+                  <span className="pl-4 mt-1"> Upload Image </span>
                 </div>
               </div>
             </div>
+          </div>
         </div>
 
         <div className="flex gap-6 mt-3">
           <div>
             <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
-                Harbor/Area&nbsp;&nbsp;
-              </div>
+              <div className="flex gap-1">Harbor/Area&nbsp;&nbsp;</div>
             </span>
             <div className="mt-2">
               <InputComponent
@@ -680,14 +676,11 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   paddingLeft: '0.5rem',
                 }}
               />
-             
             </div>
           </div>
           <div>
             <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
-                G.P.S Coordinates
-              </div>
+              <div className="flex gap-1">G.P.S Coordinates</div>
             </span>
             <div className="mt-2">
               <InputComponent
@@ -710,9 +703,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
 
           <div>
             <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
-                Boatyard Name
-              </div>
+              <div className="flex gap-1">Boatyard Name</div>
             </span>
             <div className="mt-2">
               <Dropdown
@@ -731,7 +722,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   fontSize: '0.8rem',
                 }}
               />
-            
             </div>
           </div>
         </div>
@@ -753,9 +743,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
           )}
           <div>
             <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
-                Boat Name
-              </div>
+              <div className="flex gap-1">Boat Name</div>
             </span>
             <div className="mt-2">
               <InputComponent
@@ -764,20 +752,17 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border:  '1px solid #D5E1EA',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   paddingLeft: '0.5rem',
                 }}
               />
-             
             </div>
           </div>
           <div>
             <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
-                Boat Size (in feet)
-              </div>
+              <div className="flex gap-1">Boat Size (in feet)</div>
             </span>
             <div className="mt-2">
               <InputComponent
@@ -787,21 +772,18 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border:  '1px solid #D5E1EA',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   paddingLeft: '0.5rem',
                 }}
               />
-            
             </div>
           </div>
           <div>
             <div>
               <span className="font-medium text-sm text-[#000000]">
-                <div className="flex gap-1">
-                  Size of Weight
-                </div>
+                <div className="flex gap-1">Size of Weight</div>
               </span>
             </div>
 
@@ -819,7 +801,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   paddingLeft: '0.5rem',
                 }}
               />
-             
             </div>
           </div>
         </div>
@@ -828,9 +809,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
           <div>
             <div>
               <span className="font-medium text-sm text-[#000000]">
-                <div className="flex gap-1">
-                  Type of Weight
-                </div>
+                <div className="flex gap-1">Type of Weight</div>
               </span>
             </div>
 
@@ -851,15 +830,12 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   fontSize: '0.8rem',
                 }}
               />
-            
             </div>
           </div>
           <div>
             <div>
               <span className="font-medium text-sm text-[#000000]">
-                <div className="flex gap-1">
-                  Top Chain Condition
-                </div>
+                <div className="flex gap-1">Top Chain Condition</div>
               </span>
             </div>
 
@@ -880,7 +856,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   fontSize: '0.8rem',
                 }}
               />
-           
             </div>
           </div>
 
@@ -901,13 +876,12 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border:  '1px solid #D5E1EA',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   padding: '0.5rem',
                 }}
               />
-             
             </div>
           </div>
         </div>
@@ -917,9 +891,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
             <div className="">
               <div>
                 <span className="font-medium text-sm text-[#000000]">
-                  <div className="flex gap-1">
-                    Depth at Mean High Water
-                  </div>
+                  <div className="flex gap-1">Depth at Mean High Water</div>
                 </span>
               </div>
 
@@ -931,21 +903,18 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   style={{
                     width: '230px',
                     height: '32px',
-                    border:  '1px solid #D5E1EA',
+                    border: '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                     paddingLeft: '0.5rem',
                   }}
                 />
-              
               </div>
             </div>
             <div>
               <div>
                 <span className="font-medium text-sm text-[#000000]">
-                  <div className="flex gap-1">
-                    Bottom Chain Condition
-                  </div>
+                  <div className="flex gap-1">Bottom Chain Condition</div>
                 </span>
               </div>
 
@@ -966,7 +935,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                     fontSize: '0.8rem',
                   }}
                 />
-              
               </div>
             </div>
             <div>
@@ -993,7 +961,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                     padding: '0.5rem',
                   }}
                 />
-                
               </div>
             </div>
           </div>
@@ -1002,9 +969,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
             <div className="mt-3">
               <div>
                 <span className="font-medium text-sm text-[#000000]">
-                  <div className="flex gap-1">
-                    Pendant Condition
-                  </div>
+                  <div className="flex gap-1">Pendant Condition</div>
                 </span>
               </div>
 
@@ -1021,15 +986,12 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                     paddingLeft: '0.5rem',
                   }}
                 />
-               
               </div>
             </div>
             <div className="mt-3">
               <div>
                 <span className="font-medium text-sm text-[#000000]">
-                  <div className="flex gap-1">
-                    Condition of Eye
-                  </div>
+                  <div className="flex gap-1">Condition of Eye</div>
                 </span>
               </div>
               <div className="mt-2">
@@ -1049,7 +1011,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                     fontSize: '0.8rem',
                   }}
                 />
-               
               </div>
             </div>
 
@@ -1077,7 +1038,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                     padding: '0.5rem',
                   }}
                 />
-               
               </div>
             </div>
           </div>
@@ -1232,7 +1192,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
         draggable={false}
         visible={imageVisible}
         onHide={() => setImageVisible(false)}
-        header={'Work Order Images'}>
+        header={'Images'}>
         <div className={`ml-4 ${isLoading ? 'blurred' : ''}`}>
           <div className="flex justify-center">
             <div className="mt-2">

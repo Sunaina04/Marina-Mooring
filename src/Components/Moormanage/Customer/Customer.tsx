@@ -1185,7 +1185,7 @@ const Customer = () => {
           setScale(1)
         }}
         headerStyle={{ cursor: 'alias' }}
-        header={'Customer Image'}>
+        header={'Images'}>
         <div>
           <hr className="border border-[#000000] my-0 mx-0"></hr>
         </div>
@@ -1284,7 +1284,7 @@ const Customer = () => {
           setImageEditVisible(false)
         }}
         headerStyle={{ cursor: 'alias' }}
-        header={'Customer Image'}>
+        header={'Images'}>
         {/* <AddWorkOrders
                 workOrderData={selectedCustomer}
                 editModeWorkOrder={editMode}
