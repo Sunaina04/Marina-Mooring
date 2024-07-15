@@ -127,13 +127,16 @@ export interface WorkOrderProps {
   setVisible: React.Dispatch<React.SetStateAction<boolean>>
   toastRef?: any
   closeModal: () => void
-  
+  getWorkOrderWithPendingPayApproval?: () => void
+  getOutStandingInvoice?: () => void
 }
 
 export interface ReasonModalProps {
   selectedRowData: any
   setVisible: React.Dispatch<React.SetStateAction<boolean>>
   closeModal: () => void
+  getWorkOrderWithPendingPayApproval: () => void
+  getOutStandingInvoice: () => void
 }
 
 export interface PermissionData {
@@ -224,4 +227,6 @@ export interface ApproveModalProps {
   id: number
   setVisible: React.Dispatch<React.SetStateAction<boolean>>
   closeModal: () => void
+  getWorkOrderWithPendingPayApproval: () => void
+  getOutStandingInvoice: () => void
 }

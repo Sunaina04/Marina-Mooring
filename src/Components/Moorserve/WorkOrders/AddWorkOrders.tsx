@@ -50,6 +50,8 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   setVisible,
   closeModal,
   isAccountRecievable,
+  getWorkOrderWithPendingPayApproval,
+  getOutStandingInvoice,
 }) => {
   const selectedCustomerId = useSelector(selectCustomerId)
   const [workOrder, setWorkOrder] = useState<any>({
@@ -1079,7 +1081,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
               style={{
                 width: '89px',
                 height: '42px',
-                backgroundColor: '#0098FF',
+                backgroundColor: 'green',
                 cursor: 'pointer',
                 fontWeight: 'bolder',
                 fontSize: '1rem',
@@ -1096,12 +1098,17 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
               label="Deny"
               text={true}
               style={{
-                backgroundColor: 'white',
-                color: '#000000',
-                border: 'none',
                 width: '89px',
                 height: '42px',
+                backgroundColor: 'red',
+                cursor: 'pointer',
+                fontWeight: 'bolder',
+                fontSize: '1rem',
+                boxShadow: 'none',
+                color: 'white',
+                borderRadius: '0.50rem',
                 marginTop: '10px',
+                marginLeft: '8px',
               }}
             />
           </>
@@ -1145,8 +1152,8 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         style={{
           width: '520px',
           minWidth: '520px',
-          height: '420px',
-          minHeight: '420px',
+          height: '260px',
+          minHeight: '260px',
           borderRadius: '1rem',
           fontWeight: '400',
           cursor: 'alias',
@@ -1161,7 +1168,18 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
           setVisible={() => {
             setApproveModalOpen(false)
           }}
+          getWorkOrderWithPendingPayApproval={() => {
+            if (getWorkOrderWithPendingPayApproval) {
+              getWorkOrderWithPendingPayApproval()
+            }
+          }}
+          getOutStandingInvoice={() => {
+            if (getOutStandingInvoice) {
+              getOutStandingInvoice()
+            }
+          }}
           closeModal={() => {
+            closeModal()
             handleModalClose()
           }}
         />
@@ -1172,8 +1190,8 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         style={{
           width: '520px',
           minWidth: '520px',
-          height: '420px',
-          minHeight: '420px',
+          height: '260px',
+          minHeight: '260px',
           borderRadius: '1rem',
           fontWeight: '400',
           cursor: 'alias',
@@ -1184,11 +1202,22 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         onHide={handleModalClose}
         header="Deny">
         <ReasonModal
+          getWorkOrderWithPendingPayApproval={() => {
+            if (getWorkOrderWithPendingPayApproval) {
+              getWorkOrderWithPendingPayApproval()
+            }
+          }}
+          getOutStandingInvoice={() => {
+            if (getOutStandingInvoice) {
+              getOutStandingInvoice()
+            }
+          }}
           selectedRowData={workOrderData?.id}
           setVisible={() => {
             setDenyModalOpen(false)
           }}
           closeModal={() => {
+            closeModal()
             handleModalClose()
           }}
         />

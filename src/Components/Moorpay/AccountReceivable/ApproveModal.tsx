@@ -35,6 +35,7 @@ const ApproveModal: React.FC<ApproveModalProps> = ({ id, setVisible, closeModal 
       const response = await approveWorkOrder({ id: id, invoiceAmount: invoiceAmount }).unwrap()
       const { status, content, message, totalSize } = response as WorkOrderResponse
       if (status === 200 && Array.isArray(content)) {
+        closeModal()
         toast?.current?.show({
           severity: 'error',
           summary: 'Error',
@@ -99,7 +100,6 @@ const ApproveModal: React.FC<ApproveModalProps> = ({ id, setVisible, closeModal 
           backgroundColor: 'white',
           padding: '0 12px',
           bottom: '0px',
-          
 
           // border:"1px solid red"
         }}>

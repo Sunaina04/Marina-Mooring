@@ -1,20 +1,11 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Dialog } from 'primereact/dialog'
 import { Button } from 'primereact/button'
 import AddWorkOrders from './AddWorkOrders'
-import {
-  CustomerPayload,
-  ErrorResponse,
-  GetUserResponse,
-  WorkOrderPayload,
-  WorkOrderResponse,
-} from '../../../Type/ApiTypes'
+import { ErrorResponse, WorkOrderPayload, WorkOrderResponse } from '../../../Type/ApiTypes'
 import { useGetWorkOrdersMutation } from '../../../Services/MoorServe/MoorserveApi'
-import DataTableSearchFieldComponent from '../../CommonComponent/Table/DataTableComponent'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import Header from '../../Layout/LayoutComponents/Header'
 import './WorkOrder.module.css'
-import { boatyardMooring, vendor } from '../../Utils/CustomData'
 import { InputText } from 'primereact/inputtext'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 import CustomModal from '../../CustomComponent/CustomModal'
@@ -24,11 +15,6 @@ import { Toast } from 'primereact/toast'
 import { Params } from '../../../Type/CommonType'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { Paginator } from 'primereact/paginator'
-import { SelectButton, SelectButtonChangeEvent } from 'primereact/selectbutton'
-import {
-  useGetClosedWorkOrdersMutation,
-  useGetOpenWorkOrdersMutation,
-} from '../../../Services/MoorManage/MoormanageApi'
 
 const WorkOrders = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -39,19 +25,12 @@ const WorkOrders = () => {
   const [selectedCustomer, setSelectedCustomer] = useState<any>(undefined)
   const [editMode, setEditMode] = useState(false)
   const [getWorkOrder] = useGetWorkOrdersMutation()
-  const [getOpenWork] = useGetOpenWorkOrdersMutation()
-  const [getWorkedClosed] = useGetClosedWorkOrdersMutation()
-  const [technicianId, setTechnicianId] = useState(3)
   const toast = useRef<Toast>(null)
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
   const [pageSize, setPageSize] = useState(10)
   const [totalRecords, setTotalRecords] = useState<number>()
-  const [getOpenWorkOrderData, setGetOpenWorkOrderData] = useState<CustomerPayload[]>([])
-  const [openWorkOrder, setOpenWorkOrder] = useState<number>(0)
   const [completedWorkOrder, setCompletedOrder] = useState<string>('No')
-  const options: string[] = ['Open', 'Completed']
-  const [value, setValue] = useState<string>(options[0])
 
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
