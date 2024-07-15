@@ -570,7 +570,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       }
     } catch (error) {
       setIsLoading(false)
-      const {data} = error as ErrorResponse
+      const { data } = error as ErrorResponse
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
@@ -1908,20 +1908,21 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 <label
                   htmlFor="file-input"
                   style={{
-                    width: '300px',
-                    height: '40px',
-                    border: '2px solid #0098FF',
+                    width: '230px',
+                    height: '32px',
+                    border: fieldErrors.email ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                     paddingLeft: '0.5rem',
-                    display: 'flex',
-                    gap: '0.5rem',
-                    textAlign: 'center',
-                    lineHeight: '25px',
                     cursor: 'pointer',
-                  }}>
-                  <FaFileUpload style={{ fontSize: '25px', color: 'blue' }} />
-                  <div>Upload Imagess</div>
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                  }}
+                  onClick={uploadImages}>
+                  <FaFileUpload style={{ fontSize: '22px', color: '#0098FF', marginTop: '3px' }} />
+                  <div className="border-r-2 border-blue-100 h-[30px]"></div>
+                  <span className="pl-4 mt-1"> Upload Images </span>
                 </label>
               </div>
             </div>
