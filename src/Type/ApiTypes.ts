@@ -748,6 +748,44 @@ export interface WorkOrderResponse {
   }
 }
 
+export interface WorkOrderResponseStatusDto {
+  id: number
+  dueDate: number
+  scheduledDate: string
+  time: string
+  problem: string
+  customerResponseDto: CustomerResponseDto
+  mooringResponseDto: MooringResponseDtoList
+  boatyardResponseDto: BoatYardResponseDto
+  technicianUserResponseDto: TechnicianUserResponseDto
+  customerOwnerUserResponseDto: CustomerOwnerUserResponseDto
+  workOrderStatusDto: WorkOrderStatusDto
+  // imageDtoList:
+}
+export interface WorkOrderInvoiceResponse {
+  message: string
+  status: number
+  currentSize: number
+  totalSize: number
+  errorList: []
+  time: string
+  content: {
+    id: number
+    invoiceDate: string
+    lastContactTime: string
+    workOrderInvoiceStatusDto: {
+      id: number
+      creationDate: string
+      createdBy: string
+      lastModifiedDate: string
+      lastModifiedBy: string
+      status: string
+      description: string
+    }
+    workOrderResponseStatusDto: WorkOrderResponseStatusDto
+  }
+}
+
 export interface ContentData {
   name: string
   customerName: string

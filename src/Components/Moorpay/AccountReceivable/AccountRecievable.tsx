@@ -15,7 +15,12 @@ import {
   useGetWorkOrderInvoicesMutation,
   useGetWorkOrdersMutation,
 } from '../../../Services/MoorServe/MoorserveApi'
-import { ErrorResponse, WorkOrderPayload, WorkOrderResponse } from '../../../Type/ApiTypes'
+import {
+  ErrorResponse,
+  WorkOrderInvoiceResponse,
+  WorkOrderPayload,
+  WorkOrderResponse,
+} from '../../../Type/ApiTypes'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import { Toast } from 'primereact/toast'
 import { Params } from '../../../Type/CommonType'
@@ -163,7 +168,7 @@ const AccountRecievable = () => {
         params.pageSize = pageSizeTwo
       }
       const response = await getWorkOrderInvoice(params).unwrap()
-      const { status, content, message, totalSize } = response as WorkOrderResponse
+      const { status, content, message, totalSize } = response as WorkOrderInvoiceResponse
       if (status === 200 && Array.isArray(content)) {
         setWorkOrderDataInvoice(content)
         setIsLoading(false)
@@ -191,7 +196,11 @@ const AccountRecievable = () => {
     fontSize: '12px',
   }
   const firstLastName = (data: any) => {
-    return data?.customerResponseDto?.firstName + ' ' + data?.customerResponseDto?.lastName
+    return (
+      data?.workOrderResponseDto?.customerResponseDto?.firstName +
+      ' ' +
+      data?.workOrderResponseDto?.customerResponseDto?.lastName
+    )
   }
 
   const accountRecievableTableColumn = useMemo(
@@ -274,12 +283,12 @@ const AccountRecievable = () => {
   const outstandingInvoiceTableColumn = useMemo(
     () => [
       {
-        id: 'workOrderNumber',
+        id: 'workOrderResponseDto.workOrderNumber',
         label: 'Work Order Number',
         style: columnStyle,
       },
       {
-        id: 'customerName',
+        id: 'customerResponseDto',
         label: 'Customer Name',
         body: firstLastName,
         style: columnStyle,
@@ -295,12 +304,12 @@ const AccountRecievable = () => {
         style: columnStyle,
       },
       {
-        id: 'contactTime',
+        id: 'workOrderInvoiceStatusDto.lastModifiedBy',
         label: 'Last Contact Time',
         style: columnStyle,
       },
       {
-        id: 'workOrderStatusDto.status',
+        id: 'workOrderInvoiceStatusDto.status',
         label: 'Status',
         style: columnStyle,
       },
