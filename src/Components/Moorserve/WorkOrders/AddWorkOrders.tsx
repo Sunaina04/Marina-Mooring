@@ -88,7 +88,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   const [denyModalOpen, setDenyModalOpen] = useState(false)
 
   const [hoveredIndex, setHoveredIndex] = useState<null | number>(null)
-  const toast = useRef<Toast>(null)
   const [customerImages, setCustomerImages] = useState<string[]>([])
 
   const { getMooringBasedOnCustomerIdAndBoatyardIdData } = GetMooringBasedOnCustomerIdAndBoatyardId(
@@ -630,7 +629,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       setIsLoading(false)
       setMooringBasedOnCustomerId(mooringsBasedOnCustomerId)
       if (mooringsBasedOnCustomerId?.length === 0) {
-        toast.current?.show({
+        toastRef.current?.show({
           severity: 'info',
           summary: 'Info',
           detail: 'No Mooring Associated with Selected Customer',
@@ -648,7 +647,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       setIsLoading(false)
       setBoatyardBasedOnMooringId(boatyardBasedOnMooringId)
       if (boatyardBasedOnMooringId?.length === 0) {
-        toast.current?.show({
+        toastRef.current?.show({
           severity: 'info',
           summary: 'Info',
           detail: 'No Boatyard Associated with Selected Mooring',
@@ -659,7 +658,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
 
     if (customerBasedOnMooringId !== null) {
       if (customerBasedOnMooringId?.length === 0) {
-        toast.current?.show({
+        toastRef.current?.show({
           severity: 'info',
           summary: 'Info',
           detail: 'No Customer Associated with Selected Mooring',
@@ -674,7 +673,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         setCustomerBasedOnMooringId(firstLastName)
       }
     } else {
-      toast.current?.show({
+      toastRef.current?.show({
         severity: 'info',
         summary: 'Info',
         detail: 'No Customer Associated with Selected Mooring',
@@ -689,7 +688,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     if (mooringBasedOnBoatyardId !== null) {
       setMooringsBasedOnBoatyardIdData(mooringBasedOnBoatyardId)
       if (mooringBasedOnBoatyardId?.length === 0) {
-        toast.current?.show({
+        toastRef.current?.show({
           severity: 'info',
           summary: 'Info',
           detail: 'No Mooring Associated with Selected Boatyard',
@@ -706,7 +705,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     if (mooringbasedOnCustomerIdAndBoatyardId !== null) {
       setbasedOnCustomerIdAndBoatyardId(mooringbasedOnCustomerIdAndBoatyardId)
       if (mooringbasedOnCustomerIdAndBoatyardId?.length === 0) {
-        toast.current?.show({
+        toastRef.current?.show({
           severity: 'info',
           summary: 'Info',
           detail: 'No Mooring Associated with Selected Customer and Boatyard',

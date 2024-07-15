@@ -8,7 +8,13 @@ import { ErrorResponse, WorkOrderResponse } from '../../../Type/ApiTypes'
 import { useDenyWorkOrderMutation } from '../../../Services/MoorServe/MoorserveApi'
 import InputComponent from '../../CommonComponent/InputComponent'
 
-const ReasonModal: React.FC<ReasonModalProps> = ({ selectedRowData, setVisible, closeModal }) => {
+const ReasonModal: React.FC<ReasonModalProps> = ({
+  selectedRowData,
+  setVisible,
+  closeModal,
+  getWorkOrderWithPendingPayApproval,
+  getOutStandingInvoice,
+}) => {
   const [reasonDetails, setReasonDetails] = useState<any>()
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
   const [denyWorkOrder] = useDenyWorkOrderMutation()
@@ -37,9 +43,11 @@ const ReasonModal: React.FC<ReasonModalProps> = ({ selectedRowData, setVisible, 
         id: selectedRowData,
         reportProblem: reasonDetails,
       }).unwrap()
-      const { status, content, message, totalSize } = response as WorkOrderResponse
-      if (status === 200 && Array.isArray(content)) {
-        setVisible(false)
+      const { status, message } = response as WorkOrderResponse
+      if (status === 200) {
+        closeModal()
+        getWorkOrderWithPendingPayApproval()
+        getOutStandingInvoice()
         toast?.current?.show({
           severity: 'success',
           summary: 'Success',

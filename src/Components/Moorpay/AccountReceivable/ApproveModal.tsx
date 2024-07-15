@@ -8,7 +8,13 @@ import { Params } from '../../../Type/CommonType'
 import { useApproveWorkOrderMutation } from '../../../Services/MoorServe/MoorserveApi'
 import { ErrorResponse, WorkOrderResponse } from '../../../Type/ApiTypes'
 
-const ApproveModal: React.FC<ApproveModalProps> = ({ id, setVisible, closeModal }) => {
+const ApproveModal: React.FC<ApproveModalProps> = ({
+  id,
+  setVisible,
+  closeModal,
+  getWorkOrderWithPendingPayApproval,
+  getOutStandingInvoice,
+}) => {
   const [invoiceAmount, setInvoiceAmount] = useState<any>()
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
   const [approveWorkOrder] = useApproveWorkOrderMutation()
@@ -33,9 +39,11 @@ const ApproveModal: React.FC<ApproveModalProps> = ({ id, setVisible, closeModal 
         params.invoiceAmount = invoiceAmount
       }
       const response = await approveWorkOrder({ id: id, invoiceAmount: invoiceAmount }).unwrap()
-      const { status, content, message, totalSize } = response as WorkOrderResponse
-      if (status === 200 && Array.isArray(content)) {
+      const { status, message } = response as WorkOrderResponse
+      if (status === 200) {
         closeModal()
+        getWorkOrderWithPendingPayApproval()
+        getOutStandingInvoice()
         toast?.current?.show({
           severity: 'error',
           summary: 'Error',
