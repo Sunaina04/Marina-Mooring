@@ -5,13 +5,12 @@
   line-height: 14.06px;
   margin-right: 12px;
 }
-.hello{
-
+.hello {
   background-color: red;
-  height: "50vh";
+  height: '50vh';
 }
 
-.custom-scrollbar::-webkit-scrollbar {
+/* .custom-scrollbar::-webkit-scrollbar {
   width: 12px;
 }
 
@@ -21,11 +20,8 @@
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background-color: #011030; 
-}
+} */
 
-
-.p-datatable .p-datatable-tbody > tr :first-child{
+.p-datatable .p-datatable-tbody > tr :first-child {
   padding-top: 0;
-
-
 }

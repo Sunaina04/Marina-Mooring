@@ -55,7 +55,7 @@ body {
   z-index: 3;
 }
 
-.custom-scrollbar::-webkit-scrollbar {
+/* .custom-scrollbar::-webkit-scrollbar {
   width: 5px;
   height: 5px;
   min-height: 5px;
@@ -74,7 +74,7 @@ body {
   background-color: #00426f;
   border-radius: 6px;
   width: 5px;
-}
+} */
 
 .blur-screen {
   filter: blur(1px); /* Apply blur filter */
@@ -92,7 +92,7 @@ body {
   align-items: center;
 }
 
-.NoScrollBar {
+/* .NoScrollBar {
   &::-webkit-scrollbar {
     height: 0;
     width: 0;
@@ -115,10 +115,8 @@ body {
     display: none;
     background: transparent;
   }
-}
+} */
 
 .p-highlight {
   background-color: #d5e1ea !important;
 }
-
-
