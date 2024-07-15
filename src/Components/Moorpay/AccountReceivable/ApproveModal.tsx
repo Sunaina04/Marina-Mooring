@@ -35,6 +35,13 @@ const ApproveModal: React.FC<ApproveModalProps> = ({
     setErrorMessage({})
   }
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const key = e.key
+    if (!/^[0-9]$/.test(key) && key !== 'Backspace' && key !== 'Tab') {
+      e.preventDefault()
+    }
+  }
+
   const handleBack = () => {
     setVisible(false)
   }
@@ -91,9 +98,7 @@ const ApproveModal: React.FC<ApproveModalProps> = ({
               <InputComponent
                 type="number"
                 value={invoiceAmount}
-                // onChange={(e) => {
-                //   setInvoiceAmount(e.target.value)
-                // }}
+                onKeyDown={handleKeyDown}
                 onChange={handleInvoiceAmountChange}
                 style={{
                   width: '450px',
@@ -123,8 +128,6 @@ const ApproveModal: React.FC<ApproveModalProps> = ({
           backgroundColor: 'white',
           padding: '0 12px',
           bottom: '0px',
-
-          // border:"1px solid red"
         }}>
         <Button
           label={'Save'}
@@ -139,7 +142,7 @@ const ApproveModal: React.FC<ApproveModalProps> = ({
             boxShadow: 'none',
             color: 'white',
             borderRadius: '0.50rem',
-            marginTop: '10px',
+            marginTop: '15px',
           }}
         />
         <Button
@@ -152,7 +155,7 @@ const ApproveModal: React.FC<ApproveModalProps> = ({
             border: 'none',
             width: '89px',
             height: '42px',
-            marginTop: '10px',
+            marginTop: '15px',
           }}
         />
       </div>
