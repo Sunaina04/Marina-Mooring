@@ -612,7 +612,7 @@ const AccountRecievable = () => {
         // visible={imageVisible}
         // onHide={() => setImageVisible(false)}
         headerStyle={{ cursor: 'alias' }}
-        // header={'Customers Images'}
+        // header={'Images'}
         visible={isPaymentModalOpen}
         onHide={handleModalClose}
         header="Payment">

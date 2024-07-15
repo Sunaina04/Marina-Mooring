@@ -59,6 +59,7 @@ const Moorings = () => {
   const [getMoorings] = useGetMooringsMutation()
   const [deleteMooring] = useDeleteMooringsMutation()
   const [getCustomerWithMooring] = useGetCustomersWithMooringMutation()
+  const [isEditMooring, setIsEditMooring] = useState(false)
   const [showImage, setShowImage] = useState({ id: '', imageData: '' })
   const [imageVisible, setImageVisible] = useState(false)
   const [imageEditVisible, setImageEditVisible] = useState(false)
@@ -191,6 +192,7 @@ const Moorings = () => {
     setEditMode(true)
     setModalVisible(true)
     setSelectedCustomer(customerRecordData)
+    setIsEditMooring(true)
   }
 
   const tableColumns = useMemo(
@@ -575,6 +577,7 @@ const Moorings = () => {
                 toastRef={toast}
                 closeModal={handleModalClose}
                 getCustomer={getMooringsData}
+                isEditMooring={isEditMooring}
                 getCustomerRecord={() => {
                   if (customerId) {
                     getCustomersWithMooring(customerId)
@@ -728,7 +731,7 @@ const Moorings = () => {
           <div className="flex-grow rounded-md border bg-white">
             <div className="bg-[#00426F] rounded-t-[10px] flex justify-between pb-2">
               <div className="text-sm font-semibold rounded-t-md bg-[]">
-                <h1 className="p-4 text-lg text-white">{'Customer Moorings'}</h1>
+                <h1 className="p-4 text-lg font-extrabold text-white">{'Customers Record'}</h1>
               </div>
               <div className="flex">
                 <FaEdit
@@ -785,7 +788,7 @@ const Moorings = () => {
                 padding: '14px',
                 fontSize: '15px',
               }}>
-              <h1 className="text-lg font-extrabold">Moorings</h1>
+              <h1 className="text-lg font-extrabold"> Customer Moorings</h1>
             </div>
 
             <div
@@ -909,7 +912,7 @@ const Moorings = () => {
                 onClick={() => handleToggle('faq1')}>
                 <div className="flex items-center gap-4 ">
                   <div>
-                    <h1 className="p-3 text-white text-lg font-extrabold">Moorings</h1>
+                    <h1 className="p-3 text-white text-lg font-extrabold"> Customer Moorings</h1>
                   </div>
                 </div>
                 <div>
