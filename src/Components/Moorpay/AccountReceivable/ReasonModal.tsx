@@ -25,14 +25,20 @@ const ReasonModal: React.FC<ReasonModalProps> = ({
     const errors: { [key: string]: string } = {}
 
     if (!reasonDetails) {
-      errors.Reason = 'Customer Name is required'
+      errors.reasonDetails = 'Reason is required'
     }
+
+    setErrorMessage(errors)
+    return Object.keys(errors).length === 0
   }
   const handleBack = () => {
     setVisible(false)
   }
 
   const DenyWorkOrderMethod = async () => {
+    if (!validateFields()) {
+      return
+    }
     try {
       const params: Params = {}
       if (reasonDetails) {
@@ -86,11 +92,12 @@ const ReasonModal: React.FC<ReasonModalProps> = ({
                 value={reasonDetails}
                 onChange={(e) => {
                   setReasonDetails(e.target.value)
+                  setErrorMessage({})
                 }}
                 style={{
                   width: '450px',
                   height: '50px',
-                  border: errorMessage.value ? '1px solid red' : '1px solid #D5E1EA',
+                  border: errorMessage.reasonDetails ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   boxShadow: 'none',
                   paddingLeft: '0.5rem',
@@ -100,7 +107,11 @@ const ReasonModal: React.FC<ReasonModalProps> = ({
               />
             </div>
           </div>
-          <p>{errorMessage.value && <small className="p-error">{errorMessage.value}</small>}</p>
+          <p>
+            {errorMessage.reasonDetails && (
+              <small className="p-error">{errorMessage.reasonDetails}</small>
+            )}
+          </p>
         </div>
       </div>
       {/* Save and Back buttons */}
