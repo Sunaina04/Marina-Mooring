@@ -67,7 +67,8 @@ const AccountRecievable = () => {
 
   const [visible, setVisible] = useState(false)
   const [editMode, setEditMode] = useState(false)
-  const [selectedRowData, setSelectedRowData] = useState(false)
+  const [selectedRowData, setSelectedRowData] = useState<any>()
+  const [selectedWorkOrderRowData, setSelectedWorkOredrRowData] = useState<any>()
 
   const handleButtonClick = () => {
     // setIsModalOpen(true)
@@ -195,12 +196,9 @@ const AccountRecievable = () => {
     fontWeight: '700',
     fontSize: '12px',
   }
+
   const firstLastName = (data: any) => {
-    return (
-      data?.workOrderResponseDto?.customerResponseDto?.firstName +
-      ' ' +
-      data?.workOrderResponseDto?.customerResponseDto?.lastName
-    )
+    return data?.customerResponseDto?.firstName + ' ' + data?.customerResponseDto?.lastName
   }
 
   const accountRecievableTableColumn = useMemo(
@@ -240,6 +238,7 @@ const AccountRecievable = () => {
       setEditMode(true)
       setVisible(true)
     } else if (action === 'View') {
+      setSelectedWorkOredrRowData(row)
       setAddWorkOrderModal(true)
     }
   }
@@ -280,6 +279,14 @@ const AccountRecievable = () => {
     style: { borderBottom: '1px solid #D5E1EA', fontWeight: '400' },
   }
 
+  const firstLastNameBottomSection = (data: any) => {
+    return (
+      data?.workOrderResponseDto?.customerResponseDto?.firstName +
+      ' ' +
+      data?.workOrderResponseDto?.customerResponseDto?.lastName
+    )
+  }
+
   const outstandingInvoiceTableColumn = useMemo(
     () => [
       {
@@ -290,7 +297,7 @@ const AccountRecievable = () => {
       {
         id: 'customerResponseDto',
         label: 'Customer Name',
-        body: firstLastName,
+        body: firstLastNameBottomSection,
         style: columnStyle,
       },
       {
