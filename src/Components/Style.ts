@@ -215,7 +215,6 @@ export const swipeIconStyle = {
 
 export const categoryWrapperStyle = {
   width: '80vw',
-  // width: "100%",
   overflowX: 'scroll',
   display: 'flex',
   justifyContent: 'space-between',
