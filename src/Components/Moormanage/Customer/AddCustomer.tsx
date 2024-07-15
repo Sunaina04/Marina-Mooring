@@ -1875,7 +1875,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             fontWeight: '500',
           }}
         />
-
         <Dialog
           position="center"
           style={{

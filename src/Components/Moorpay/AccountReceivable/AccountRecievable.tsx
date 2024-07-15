@@ -271,7 +271,7 @@ const AccountRecievable = () => {
       height: '3.50rem',
       fontSize: '14px',
       color: '#000000',
-      borderBottom: '1px solid #C0C0C0',
+      // borderBottom: '1px solid #C0C0C0',
       width: '12.7vw',
       fontWeight: 700,
     },
@@ -358,7 +358,7 @@ const AccountRecievable = () => {
       color: '#000000',
       width: '13.5rem',
     },
-    style: { borderBottom: '1px solid #D5E1EA', fontWeight: '400' },
+    style: { borderBottom: '1px solid #D5E1EA', fontWeight: '' },
   }
 
   useEffect(() => {
