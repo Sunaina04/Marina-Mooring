@@ -100,7 +100,7 @@ const AccountRecievable = () => {
     setIsContactModalOpen(false)
   }
 
-  const handleActionClick = (action: string) => {
+  const handleActionClick = (action: string, row: any) => {
     if (action === 'Payments') {
       // setModalVisible(true)
       // setIsPaymentModalOpen(true)
@@ -108,9 +108,10 @@ const AccountRecievable = () => {
       // setModalVisible(true)
       // setIsContactModalOpen(true)
     } else if (action === 'View') {
-      setModalVisible(true)
-      setAddWorkOrderModal(true)
-      setIsAccountRecievable(false)
+      // setSelectedWorkOredrRowData(row)
+      // setModalVisible(true)
+      // setAddWorkOrderModal(true)
+      // setIsAccountRecievable(false)
     }
   }
 
@@ -334,19 +335,19 @@ const AccountRecievable = () => {
           width: '46px',
           height: '17px',
         },
-        onClick: () => handleActionClick('Payments'),
+        onClick: (row) => handleActionClick('Payments', row),
       },
       {
         color: 'black',
         label: 'Contact',
         filled: true,
-        onClick: () => handleActionClick('Contact'),
+        onClick: (row) => handleActionClick('Contact', row),
       },
       {
         color: 'black',
         label: 'View',
         filled: true,
-        onClick: () => handleActionClick('View'),
+        onClick: (row) => handleActionClick('View', row),
       },
     ],
     headerStyle: {
@@ -390,6 +391,7 @@ const AccountRecievable = () => {
     <>
       <div style={{ height: '180vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
         <Header header="MOORPAY/Account Receivable" />
+        <Toast ref={toast} />
 
         <div
           style={{
