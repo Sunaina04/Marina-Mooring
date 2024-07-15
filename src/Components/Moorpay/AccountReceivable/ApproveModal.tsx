@@ -2,41 +2,37 @@ import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { InputTextarea } from 'primereact/inputtextarea'
 import { Button } from 'primereact/button'
 import { Toast } from 'primereact/toast'
-import { ReasonModalProps } from '../../../Type/ComponentBasedType'
-import { Params } from '../../../Type/CommonType'
-import { ErrorResponse, WorkOrderResponse } from '../../../Type/ApiTypes'
-import { useDenyWorkOrderMutation } from '../../../Services/MoorServe/MoorserveApi'
+import { ApproveModalProps } from '../../../Type/ComponentBasedType'
 import InputComponent from '../../CommonComponent/InputComponent'
+import { Params } from '../../../Type/CommonType'
+import { useApproveWorkOrderMutation } from '../../../Services/MoorServe/MoorserveApi'
+import { ErrorResponse, WorkOrderResponse } from '../../../Type/ApiTypes'
 
-const ReasonModal: React.FC<ReasonModalProps> = ({ selectedRowData, setVisible, closeModal }) => {
-  const [reasonDetails, setReasonDetails] = useState<any>()
+const ApproveModal: React.FC<ApproveModalProps> = ({ id, setVisible, closeModal }) => {
+  const [invoiceAmount, setInvoiceAmount] = useState<any>()
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
-  const [denyWorkOrder] = useDenyWorkOrderMutation()
-
+  const [approveWorkOrder] = useApproveWorkOrderMutation()
   const toast = useRef<Toast>(null)
 
   const validateFields = () => {
     const errors: { [key: string]: string } = {}
 
-    if (!reasonDetails) {
+    if (!invoiceAmount) {
       errors.Reason = 'Customer Name is required'
     }
   }
+
   const handleBack = () => {
     setVisible(false)
   }
 
-  const DenyWorkOrderMethod = async () => {
+  const ApproveWorkOrderMethod = async () => {
     try {
       const params: Params = {}
-      if (reasonDetails) {
-        params.reportProblem = reasonDetails
+      if (invoiceAmount) {
+        params.invoiceAmount = invoiceAmount
       }
-
-      const response = await denyWorkOrder({
-        id: selectedRowData,
-        reportProblem: reasonDetails,
-      }).unwrap()
+      const response = await approveWorkOrder({ id: id, invoiceAmount: invoiceAmount }).unwrap()
       const { status, content, message, totalSize } = response as WorkOrderResponse
       if (status === 200 && Array.isArray(content)) {
         toast?.current?.show({
@@ -67,26 +63,26 @@ const ReasonModal: React.FC<ReasonModalProps> = ({ selectedRowData, setVisible, 
         <div className=" mt-4">
           <span className="font-medium text-sm text-[#000000]">
             <div className="flex gap-2 ml-2">
-              Reason
+              Invoice Amount
               <p className="text-red-600">*</p>
             </div>
           </span>
           <div className="mt-1 ml-1 text-[#000000]">
             <div className="">
               <InputComponent
-                value={reasonDetails}
+                type="number"
+                value={invoiceAmount}
                 onChange={(e) => {
-                  setReasonDetails(e.target.value)
+                  setInvoiceAmount(e.target.value)
                 }}
                 style={{
                   width: '450px',
-                  height: '50px',
+                  height: '40px',
                   border: errorMessage.value ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   boxShadow: 'none',
                   paddingLeft: '0.5rem',
                   fontSize: '0.8rem',
-                  resize: 'none',
                 }}
               />
             </div>
@@ -106,7 +102,7 @@ const ReasonModal: React.FC<ReasonModalProps> = ({ selectedRowData, setVisible, 
         }}>
         <Button
           label={'Save'}
-          onClick={DenyWorkOrderMethod}
+          onClick={ApproveWorkOrderMethod}
           style={{
             width: '89px',
             height: '42px',
@@ -138,4 +134,4 @@ const ReasonModal: React.FC<ReasonModalProps> = ({ selectedRowData, setVisible, 
   )
 }
 
-export default ReasonModal
+export default ApproveModal

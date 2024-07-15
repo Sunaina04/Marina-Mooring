@@ -12,6 +12,7 @@ import { InputText } from 'primereact/inputtext'
 import { useSelector } from 'react-redux'
 import {
   useGetCompletedWorkOrderWithPendingPayApprovalMutation,
+  useGetWorkOrderInvoicesMutation,
   useGetWorkOrdersMutation,
 } from '../../../Services/MoorServe/MoorserveApi'
 import { ErrorResponse, WorkOrderPayload, WorkOrderResponse } from '../../../Type/ApiTypes'
@@ -21,6 +22,7 @@ import { Params } from '../../../Type/CommonType'
 import { Dialog } from 'primereact/dialog'
 import { Button } from 'primereact/button'
 import ReasonModal from './ReasonModal'
+import ApproveModal from './ApproveModal'
 
 const AccountRecievable = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -36,6 +38,8 @@ const AccountRecievable = () => {
   const [totalRecordsInvoice, setTotalRecordsInvoice] = useState<number>()
   const [isLoading, setIsLoading] = useState(false)
   const [denyModalOpen, setDenyModalOpen] = useState(false)
+  const [approveModalOpen, setApproveModalOpen] = useState(false)
+  const [workOrderId, setWorkOrderId] = useState<any>()
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false)
   const [isContactModalOpen, setIsContactModalOpen] = useState(false)
   const [addWorkOrderModal, setAddWorkOrderModal] = useState(false)
@@ -45,7 +49,7 @@ const AccountRecievable = () => {
   const [workOrderDataInvoice, setWorkOrderDataInvoice] = useState<WorkOrderPayload[]>([])
   const [getCompletedWorkOrderWithPendingPayApproval] =
     useGetCompletedWorkOrderWithPendingPayApprovalMutation()
-  const [getWorkOrderInvoice] = useGetWorkOrdersMutation()
+  const [getWorkOrderInvoice] = useGetWorkOrderInvoicesMutation()
 
   const toast = useRef<Toast>(null)
 
@@ -81,6 +85,7 @@ const AccountRecievable = () => {
     setIsContactModalOpen(false)
     setDenyModalOpen(false)
     setAddWorkOrderModal(false)
+    setApproveModalOpen(false)
   }
 
   const handlePaymentSave = (paymentDetails: any) => {
@@ -216,10 +221,18 @@ const AccountRecievable = () => {
     [],
   )
 
-  const handleDeny = (rowData: any) => {
-    setSelectedRowData(rowData)
-    setEditMode(true)
-    setVisible(true)
+  const handleActionTopSectionClick = (action: string, row: any) => {
+    if (action === 'Approve') {
+      setWorkOrderId(row?.id)
+      setApproveModalOpen(true)
+    } else if (action === 'Deny') {
+      setSelectedRowData(row?.id)
+      setDenyModalOpen(true)
+      setEditMode(true)
+      setVisible(true)
+    } else if (action === 'View') {
+      setAddWorkOrderModal(true)
+    }
   }
 
   const ActionButtonColumn: ActionButtonColumnProps = {
@@ -234,16 +247,17 @@ const AccountRecievable = () => {
           height: '17px',
           fontWeight: 700,
         },
+        onClick: (row: any) => handleActionTopSectionClick('Approve', row),
       },
       {
         label: 'Deny',
         filled: true,
-        onClick: (row: any) => handleDeny(row),
+        onClick: (row: any) => handleActionTopSectionClick('Deny', row),
       },
       {
         label: 'View',
         filled: true,
-        onClick: () => handleView(),
+        onClick: (row: any) => handleActionTopSectionClick('View', row),
       },
     ],
     headerStyle: {
@@ -334,7 +348,6 @@ const AccountRecievable = () => {
 
   useEffect(() => {
     getWorkOrderWithPendingPayApproval()
-    getOutStandingInvoice()
   }, [pageNumber, pageSize, selectedCustomerId])
 
   useEffect(() => {
@@ -362,44 +375,6 @@ const AccountRecievable = () => {
   return (
     <>
       <Header header="MOORPAY/Account Receivable" />
-      <div className="flex justify-end gap-6 mt-10 mr-16">
-        <div className="items-center">
-          <CustomModal
-            button={true}
-            children={
-              <ReasonModal
-                selectedRowData={selectedRowData}
-                setVisible={setVisible}
-                // toastRef={toast}
-                closeModal={handleModalClose}
-              />
-            }
-            headerText={<h1 className="text-xl font-extrabold text-black ml-4 mt-5">Reason</h1>}
-            visible={visible}
-            onClick={handleButtonClick}
-            onHide={handleModalClose}
-            buttonStyle={{
-              width: '121px',
-              height: '44px',
-              minHeight: '44px',
-              backgroundColor: '#0098FF',
-              cursor: 'pointer',
-              fontSize: '14px',
-              fontWeight: 600,
-              color: 'white',
-              borderRadius: '0.50rem',
-              marginLeft: '8px',
-              boxShadow: 'none',
-            }}
-            dialogStyle={{
-              width: '851px',
-              height: '526px',
-              borderRadius: '1rem',
-              backgroundColor: 'yellow',
-            }}
-          />
-        </div>
-      </div>
 
       <div
         style={{
@@ -694,10 +669,45 @@ const AccountRecievable = () => {
         }}
         draggable={false}
         headerStyle={{ cursor: 'alias' }}
+        visible={approveModalOpen}
+        onHide={handleModalClose}
+        header="Approve">
+        <ApproveModal
+          id={workOrderId}
+          setVisible={() => {
+            setApproveModalOpen(false)
+          }}
+          closeModal={() => {
+            handleModalClose()
+          }}
+        />
+      </Dialog>
+
+      <Dialog
+        position="center"
+        style={{
+          width: '520px',
+          minWidth: '520px',
+          height: '420px',
+          minHeight: '420px',
+          borderRadius: '1rem',
+          fontWeight: '400',
+          cursor: 'alias',
+        }}
+        draggable={false}
+        headerStyle={{ cursor: 'alias' }}
         visible={denyModalOpen}
         onHide={handleModalClose}
         header="Deny">
-        <ReasonModal selectedRowData={undefined} setVisible={() => {}} closeModal={() => {}} />
+        <ReasonModal
+          selectedRowData={selectedRowData}
+          setVisible={() => {
+            setDenyModalOpen(false)
+          }}
+          closeModal={() => {
+            handleModalClose()
+          }}
+        />
       </Dialog>
 
       {/* for view button */}

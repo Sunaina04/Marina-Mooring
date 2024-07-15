@@ -218,3 +218,9 @@ export interface ContactModalProps {
   onHide?: any
   onSendEmail: (emailDetails: { recipient: string; subject: string; message: string }) => void
 }
+
+export interface ApproveModalProps {
+  id: number
+  setVisible: React.Dispatch<React.SetStateAction<boolean>>
+  closeModal: () => void
+}

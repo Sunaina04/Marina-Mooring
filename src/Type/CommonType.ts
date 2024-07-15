@@ -129,4 +129,6 @@ export interface Params {
   sortDir?: string
   searchText?: string
   customerOwnerId?: number
+  invoiceAmount?: number
+  reportProblem?: string
 }

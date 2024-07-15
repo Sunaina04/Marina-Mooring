@@ -63,12 +63,50 @@ const MoorserveApi = userApi.injectEndpoints({
       }),
     }),
 
+    getWorkOrderInvoices: builder.mutation({
+      query: ({
+        pageNumber,
+        pageSize,
+        sortBy,
+        sortDir,
+        searchText,
+      }: {
+        pageNumber?: number
+        pageSize?: number
+        sortBy?: string
+        sortDir?: string
+        searchText?: string
+      }) => ({
+        url: 'api/v1/workOrder/fetchWorkOrderInvoice',
+        method: 'GET',
+        params: { pageNumber, pageSize, sortBy, sortDir, searchText },
+      }),
+    }),
+
     //Edit WorkOrder
     updateWorkOrder: builder.mutation({
       query: ({ payload, id }: { payload: WorkOrderPayload; id: number }) => ({
         url: `api/v1/workOrder/${id}`,
         method: 'PUT',
         body: payload,
+      }),
+    }),
+
+    //Approve WorkOrder
+    approveWorkOrder: builder.mutation({
+      query: ({ id, invoiceAmount }: { id: number; invoiceAmount: number }) => ({
+        url: `api/v1/workOrder/approveWorkOrder/${id}`,
+        method: 'PUT',
+        params: { invoiceAmount },
+      }),
+    }),
+
+    //Deny WorkOrder
+    denyWorkOrder: builder.mutation({
+      query: ({ id, reportProblem }: { id: number; reportProblem: string }) => ({
+        url: `api/v1/workOrder/denyWorkOrder/${id}`,
+        method: 'PUT',
+        params: { reportProblem },
       }),
     }),
 
@@ -172,9 +210,12 @@ export const {
   useAddWorkOrderMutation,
   useGetWorkOrderByIdMutation,
   useGetCompletedWorkOrderWithPendingPayApprovalMutation,
+  useGetWorkOrderInvoicesMutation,
   useDeleteWorkOrderMutation,
   useGetWorkOrdersMutation,
   useUpdateWorkOrderMutation,
+  useApproveWorkOrderMutation,
+  useDenyWorkOrderMutation,
   useUploadFormMutation,
   useGetFormsMutation,
   useDownloadFormMutation,
