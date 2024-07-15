@@ -71,119 +71,94 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ onHide, onSavePayment }) =>
   }
 
   const handleSavePayment = () => {
-    const errors = validateFields()
-    if (Object.keys(errors).length === 0) {
-      // onSavePayment(paymentDetails); // Pass payment details to parent component
-      // onHide();
-    }
+    // const errors = validateFields()
+    // if (Object.keys(errors).length === 0) {
+    //   // onSavePayment(paymentDetails); // Pass payment details to parent component
+    //   // onHide();
+    // }
   }
+
   return (
-    <div className="flex gap-8">
-      <div className="w-[300px], h-[400px]">
-        <div className="flex flex-col gap-24">
-          <div className="mt-4">
-            <img
-              src="/assets/images/moorfindLogo.png"
-              alt="Logo"
-              className="mx-auto w-56 h-16 mb-5"
-              id="logo"
+    <div>
+      <div className="flex gap-6">
+        <div className="mt-">
+          <span className="font-medium text-sm text-[#000000]">
+            <div className="flex gap-1">
+              Type
+              <p className="text-red-600">*</p>
+            </div>
+          </span>
+          <div className="mt-2">
+            <Dropdown
+              id="paymentOption"
+              value={paymentDetails.paymentOption}
+              options={[
+                { label: 'Card', value: 'Card' },
+                { label: 'Check', value: 'Check' },
+                { label: 'Cash', value: 'Cash' },
+              ]}
+              onChange={(e) => handleInputChange('paymentOption', e.value)}
+              optionLabel="label"
+              placeholder="Select payment option"
+              style={{
+                width: '230px',
+                height: '32px',
+                border: fieldErrors.paymentOption ? '1px solid red' : '1px solid #D5E1EA',
+                borderRadius: '0.50rem',
+                color: 'black',
+              }}
             />
+            <p className="" id="paymentOption">
+              {fieldErrors.paymentOption && (
+                <small className="p-error">{fieldErrors.paymentOption}</small>
+              )}
+            </p>
           </div>
-          <div className="mt-">
-            <img
-              src="/assets/images/card.jpg"
-              alt="Logo"
-              className="mx-auto w-56 h-18 mb-5"
-              id="logo"
+        </div>
+
+        <div>
+          <span className="font-medium text-sm text-[#000000]">
+            <div className="flex gap-1">
+              Amount:
+              <p className="text-red-600">*</p>
+            </div>
+          </span>
+          <div className="mt-2">
+            <InputComponent
+              value={paymentDetails.amount}
+              onChange={(e) => handleInputChange('amount', e.target.value)}
+              style={{
+                width: '230px',
+                height: '32px',
+                border: fieldErrors.amount ? '1px solid red' : '1px solid #D5E1EA',
+                borderRadius: '0.50rem',
+                fontSize: '0.8rem',
+                paddingLeft: '0.5rem',
+              }}
             />
+            <p className="" id="amount">
+              {fieldErrors.amount && <small className="p-error">{fieldErrors.amount}</small>}
+            </p>
           </div>
         </div>
       </div>
 
-      <div style={{ width: '500px', height: '400px', backgroundColor: '' }}>
-        <div>
-          <div className="flex gap-6">
-          <div className="mt-">
-              <span className="font-medium text-sm text-[#000000]">
-                <div className="flex gap-1">
-                  Type
-                  <p className="text-red-600">*</p>
-                </div>
-              </span>
-              <div className="mt-2">
-                <Dropdown
-                  id="paymentOption"
-                  value={paymentDetails.paymentOption}
-                  options={[
-                    { label: 'Card', value: 'Card' },
-                    { label: 'Check', value: 'Check' },
-                    { label: 'Cash', value: 'Cash' },
-                  ]}
-                  onChange={(e) => handleInputChange('paymentOption', e.value)}
-                  optionLabel="label"
-                  placeholder="Select payment option"
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: fieldErrors.paymentOption ? '1px solid red' : '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    color: 'black',
-                  }}
-                />
-                <p className="" id="paymentOption">
-                  {fieldErrors.paymentOption && (
-                    <small className="p-error">{fieldErrors.paymentOption}</small>
-                  )}
-                </p>
-              </div>
-            </div>
-
-            <div>
-              <span className="font-medium text-sm text-[#000000]">
-                <div className="flex gap-1">
-                  Amount:
-                  <p className="text-red-600">*</p>
-                </div>
-              </span>
-              <div className="mt-2">
-                <InputComponent
-                  value={paymentDetails.amount}
-                  onChange={(e) => handleInputChange('amount', e.target.value)}
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: fieldErrors.amount ? '1px solid red' : '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                    paddingLeft: '0.5rem',
-                  }}
-                />
-                <p className="" id="amount">
-                  {fieldErrors.amount && <small className="p-error">{fieldErrors.amount}</small>}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          
-          <div className="flex gap-6 ml-1 mt-20">
-            <Button
-              className="w-24 h-12 rounded-md text-lg"
-              label="Save"
-              severity="success"
-              onClick={handleSavePayment}
-              raised
-            />
-            <Button
-              className="rounded-md text-sm"
-              label="CANCEL"
-              severity="danger"
-              onClick={onHide}
-              text
-              raised
-            />
-          </div>
-        </div>
+      <div className="flex gap-6 ml-1 mt-20">
+        <Button
+          className="w-24 h-12 rounded-md text-lg"
+          label="Save"
+          severity="success"
+          onClick={handleSavePayment}
+          raised
+        />
+        <Button
+          className="rounded-md text-sm"
+          label="CANCEL"
+          severity="danger"
+          onClick={onHide}
+          text
+          raised
+        />
       </div>
     </div>
   )

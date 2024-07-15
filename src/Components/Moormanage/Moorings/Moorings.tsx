@@ -199,9 +199,9 @@ const Moorings = () => {
     () => [
       {
         id: 'id',
-        label: 'ID:',
+        label: 'ID',
         style: {
-          width: '4vw',
+          // width: '2vw',
           borderBottom: '1px solid #C0C0C0',
           fontWeight: '700',
           color: '#000000',
@@ -210,9 +210,31 @@ const Moorings = () => {
       },
       {
         id: 'mooringNumber',
-        label: 'Mooring Number:',
+        label: 'Mooring Number',
         style: {
-          width: '6vw',
+          // width: '6vw',
+          borderBottom: '1px solid #C0C0C0',
+          backgroundColor: '#FFFFFF',
+          fontWeight: '700',
+          color: '#000000',
+        },
+      },
+      {
+        id: 'customerName',
+        label: 'Customer Name',
+        style: {
+          // width: '6vw',
+          borderBottom: '1px solid #C0C0C0',
+          backgroundColor: '#FFFFFF',
+          fontWeight: '700',
+          color: '#000000',
+        },
+      },
+      {
+        id: '-',
+        label: 'Service Area',
+        style: {
+          // width: '5vw',
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#FFFFFF',
           fontWeight: '700',
@@ -221,9 +243,9 @@ const Moorings = () => {
       },
       {
         id: 'gpsCoordinates',
-        label: 'GPS Coordinates:',
+        label: 'GPS Coordinates',
         style: {
-          width: '6vw',
+          // width: '6vw',
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#FFFFFF',
           fontWeight: '700',

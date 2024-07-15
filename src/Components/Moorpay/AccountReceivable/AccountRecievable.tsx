@@ -341,7 +341,7 @@ const AccountRecievable = () => {
         color: 'black',
         label: 'Contact',
         filled: true,
-        onClick: (row) => handleActionClick('Contact', row),
+        // onClick: (row) => handleActionClick('Contact', row),
       },
       {
         color: 'black',
@@ -600,41 +600,20 @@ const AccountRecievable = () => {
       <Dialog
         position="center"
         style={{
-          width: '800px',
-          minWidth: '800px',
-          height: '580px',
-          minHeight: '580px',
+          width: '600px',
+          minWidth: '600px',
+          height: '400px',
+          minHeight: '400px',
           borderRadius: '1rem',
           fontWeight: '400',
           cursor: 'alias',
         }}
         draggable={false}
-        // visible={imageVisible}
-        // onHide={() => setImageVisible(false)}
         headerStyle={{ cursor: 'alias' }}
-        // header={'Images'}
         visible={isPaymentModalOpen}
         onHide={handleModalClose}
         header="Payment">
         <PaymentModal onHide={handleModalClose} onSavePayment={handlePaymentSave} />
-
-        <div className={`flex gap-4 ml-4 bottom-5 absolute left-6 ${isLoading ? 'blurred' : ''}`}>
-          <Button
-            label={'Close'}
-            onClick={() => setIsPaymentModalOpen(false)}
-            style={{
-              width: '89px',
-              height: '42px',
-              backgroundColor: '#0098FF',
-              cursor: 'pointer',
-              fontWeight: 'bolder',
-              fontSize: '1rem',
-              boxShadow: 'none',
-              color: 'white',
-              borderRadius: '0.5rem',
-            }}
-          />
-        </div>
       </Dialog>
 
       <Dialog
