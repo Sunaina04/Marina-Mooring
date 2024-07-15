@@ -505,7 +505,7 @@ const Moorings = () => {
                 }}
               />
             }
-            headerText={<h1 className="text-xxl font-bold text-black ">Add Mooring</h1>}
+            headerText={<h1 className="text-xxl font-bold text-black ">Mooring Information</h1>}
             visible={modalVisible}
             onClick={handleButtonClick}
             onHide={handleModalClose}
@@ -652,7 +652,7 @@ const Moorings = () => {
           <div className="flex-grow rounded-md border bg-white">
             <div className="bg-[#00426F] rounded-t-[10px] flex justify-between pb-2">
               <div className="text-sm font-semibold rounded-t-md bg-[]">
-                <h1 className="p-4 text-lg text-white">{'Customers Record'}</h1>
+                <h1 className="p-4 text-lg text-white">{'Customer Moorings'}</h1>
               </div>
               <div className="flex">
                 <FaEdit

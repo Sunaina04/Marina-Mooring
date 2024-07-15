@@ -28,6 +28,9 @@ import { ProgressSpinner } from 'primereact/progressspinner'
 import { Calendar } from 'primereact/calendar'
 import { Toast } from 'primereact/toast'
 import { Checkbox } from 'primereact/checkbox'
+import { FaFileUpload } from 'react-icons/fa'
+import { AiOutlineDelete } from 'react-icons/ai'
+import { Dialog } from 'primereact/dialog'
 
 const AddMoorings: React.FC<AddMooringProps> = ({
   moorings,
@@ -55,12 +58,17 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   const [conditionOfEye, setConditionOfEye] = useState<MetaData[]>([])
   const [bottomChainCondition, setbottomChainCondition] = useState<MetaData[]>([])
   const [shackleSwivelData, setShackleSwivelData] = useState<MetaData[]>([])
+  const [imageVisible, setImageVisible] = useState(false)
   const [customerName, setcustomerName] = useState<any[]>([])
   const [boatyardsName, setBoatYardsName] = useState<MetaData[]>([])
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
   const [firstErrorField, setFirstErrorField] = useState('')
   const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<string>()
   const [checkedDock, setCheckedDock] = useState(false)
+  const [mooringImages, setMooringImages] = useState<string[]>([])
+  const [hoveredIndex, setHoveredIndex] = useState<null | number>(null)
+  const [encodedImages, setEncodedImages] = useState<string[]>([])
+  const [imageRequestDtoList, setimageRequestDtoList] = useState<any>()
   const toastRef = useRef<Toast>(null)
 
   const getFomattedCoordinate = (gpsCoordinatesValue: any) => {
@@ -336,6 +344,90 @@ const AddMoorings: React.FC<AddMooringProps> = ({
         [field]: '',
       })
     }
+  }
+
+  const uploadImages = () => {
+    setImageVisible(true)
+  }
+
+  const handleRemoveImage = (index: number) => {
+    const newImages = [...mooringImages]
+    newImages.splice(index, 1)
+    setMooringImages(newImages)
+
+    // const newEncodedImages = [...encodedImages]
+    // newEncodedImages.splice(index, 1)
+    // setEncodedImages(newEncodedImages)
+  }
+
+  const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const fileInput = event.target
+    const files = Array.from(fileInput.files || [])
+
+    if (files.length === 0) {
+      return
+    }
+
+    const validImageFiles = files.filter(
+      (file) => file.type.startsWith('image/') && file.size >= 5120 && file.size <= 1048576,
+    )
+
+    const invalidTypeFiles = files.filter((file) => !file.type.startsWith('image/'))
+    const invalidSizeFiles = files.filter((file) => file.size < 5120 || file.size > 1048576)
+
+    if (invalidTypeFiles.length > 0 || invalidSizeFiles.length > 0) {
+      setMooringImages([])
+      setEncodedImages([])
+      let detailMessage = 'Only image files are allowed'
+
+      if (invalidSizeFiles.length > 0) {
+        detailMessage += '. Images must be between 5 KB and 1 MB.'
+      }
+
+      toastRef?.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: detailMessage,
+        life: 3000,
+      })
+      fileInput.value = ''
+      return
+    }
+
+    const newBase64Strings: string[] = []
+    const newImageUrls: string[] = []
+    const imageRequestDtoList: { imageName: string; imageData: string }[] = []
+
+    for (const file of validImageFiles) {
+      try {
+        const base64String = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader()
+          reader.onload = () => {
+            if (typeof reader.result === 'string') {
+              resolve(reader.result.split(',')[1])
+            } else {
+              reject(new Error('FileReader result is not a string.'))
+            }
+          }
+          reader.onerror = () => {
+            reject(new Error('Error reading file.'))
+          }
+          reader.readAsDataURL(file)
+        })
+        newBase64Strings.push(base64String)
+        newImageUrls.push(`data:image/png;base64,${base64String}`)
+        imageRequestDtoList.push({
+          imageName: file.name,
+          imageData: base64String,
+        })
+      } catch (error) {
+        console.error('Error reading file:', error)
+      }
+    }
+
+    setMooringImages((prevImages) => [...prevImages, ...newImageUrls])
+    setEncodedImages((prevEncoded) => [...prevEncoded, ...newBase64Strings])
+    setimageRequestDtoList(imageRequestDtoList)
   }
 
   const handleEditMode = () => {
@@ -630,6 +722,33 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               </p>
             </div>
           </div>
+
+          <div className="">
+              <span className="font-medium text-sm text-[#000000]">
+                <div className="flex gap-1"> Images</div>
+              </span>
+              <div className="mt-2">
+                <div />
+                <div
+                  style={{
+                    width: '230px',
+                    height: '32px',
+                    border: '1px solid #D5E1EA',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
+                    paddingLeft: '0.5rem',
+                    cursor: 'pointer',
+                  }}>
+                  <div onClick={uploadImages} className="flex gap-3 text-center">
+                    <FaFileUpload
+                      style={{ fontSize: '22px', color: '#0098FF', marginTop: '3px' }}
+                    />
+                    <div className="border-r-2 border-blue-100  h-[30px]"></div>
+                    <span className="pl-4 mt-1"> Upload Image </span>
+                  </div>
+                </div>
+              </div>
+            </div>
         </div>
 
         <div className="flex gap-6 mt-3">
@@ -637,7 +756,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
                 Harbor/Area&nbsp;&nbsp;
-                <p className="text-red-600">*</p>
               </div>
             </span>
             <div className="mt-2">
@@ -647,22 +765,19 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: fieldErrors.harbor ? '1px solid red' : '1px solid #D5E1EA',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   paddingLeft: '0.5rem',
                 }}
               />
-              <p id="harbor">
-                {fieldErrors.harbor && <small className="p-error">{fieldErrors.harbor}</small>}
-              </p>
+             
             </div>
           </div>
           <div>
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
                 G.P.S Coordinates
-                <p className="text-red-600">*</p>
               </div>
             </span>
             <div className="mt-2">
@@ -675,17 +790,12 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: fieldErrors.gpsCoordinatesValue ? '1px solid red' : '1px solid #D5E1EA',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   paddingLeft: '0.5rem',
                 }}
               />
-              <p id="waterDepth">
-                {fieldErrors.gpsCoordinatesValue && (
-                  <small className="p-error">{fieldErrors.gpsCoordinatesValue}</small>
-                )}
-              </p>
             </div>
           </div>
 
@@ -693,7 +803,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
                 Boatyard Name
-                <p className="text-red-600">*</p>
               </div>
             </span>
             <div className="mt-2">
@@ -708,16 +817,12 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: fieldErrors.boatYardName ? '1px solid red' : '1px solid #D5E1EA',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
-              <p id="boatYardName">
-                {fieldErrors.boatYardName && (
-                  <small className="p-error">{fieldErrors.boatYardName}</small>
-                )}
-              </p>
+            
             </div>
           </div>
         </div>
@@ -741,7 +846,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
                 Boat Name
-                <p className="text-red-600">*</p>
               </div>
             </span>
             <div className="mt-2">
@@ -751,22 +855,19 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: fieldErrors.boatName ? '1px solid red' : '1px solid #D5E1EA',
+                  border:  '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   paddingLeft: '0.5rem',
                 }}
               />
-              <p id="boatName">
-                {fieldErrors.boatName && <small className="p-error">{fieldErrors.boatName}</small>}
-              </p>
+             
             </div>
           </div>
           <div>
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
                 Boat Size (in feet)
-                <p className="text-red-600">*</p>
               </div>
             </span>
             <div className="mt-2">
@@ -777,15 +878,13 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: fieldErrors.boatSize ? '1px solid red' : '1px solid #D5E1EA',
+                  border:  '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   paddingLeft: '0.5rem',
                 }}
               />
-              <p id="boatName">
-                {fieldErrors.boatSize && <small className="p-error">{fieldErrors.boatSize}</small>}
-              </p>
+            
             </div>
           </div>
           <div>
@@ -793,7 +892,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               <span className="font-medium text-sm text-[#000000]">
                 <div className="flex gap-1">
                   Size of Weight
-                  <p className="text-red-600">*</p>
                 </div>
               </span>
             </div>
@@ -802,25 +900,17 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               <InputComponent
                 value={formData?.sizeOfWeight}
                 onChange={(e) => handleInputChange('sizeOfWeight', e.target.value)}
-                // options={sizeOfWeight}
-                // optionLabel="weight"
-                // editable
-                // placeholder="Select"
                 type="text"
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: fieldErrors.sizeOfWeight ? '1px solid red' : '1px solid #D5E1EA',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   paddingLeft: '0.5rem',
                 }}
               />
-              <p id="sizeOfWeight">
-                {fieldErrors.sizeOfWeight && (
-                  <small className="p-error">{fieldErrors.sizeOfWeight}</small>
-                )}
-              </p>
+             
             </div>
           </div>
         </div>
@@ -831,7 +921,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               <span className="font-medium text-sm text-[#000000]">
                 <div className="flex gap-1">
                   Type of Weight
-                  <p className="text-red-600">*</p>
                 </div>
               </span>
             </div>
@@ -848,16 +937,12 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: fieldErrors.typeOfWeight ? '1px solid red' : '1px solid #D5E1EA',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
-              <p id="typeOfWeight">
-                {fieldErrors.typeOfWeight && (
-                  <small className="p-error">{fieldErrors.typeOfWeight}</small>
-                )}
-              </p>
+            
             </div>
           </div>
           <div>
@@ -865,7 +950,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               <span className="font-medium text-sm text-[#000000]">
                 <div className="flex gap-1">
                   Top Chain Condition
-                  <p className="text-red-600">*</p>
                 </div>
               </span>
             </div>
@@ -882,16 +966,12 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: fieldErrors.topChainCondition ? '1px solid red' : '1px solid #D5E1EA',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
-              <p id="typeOfWeight">
-                {fieldErrors.topChainCondition && (
-                  <small className="p-error">{fieldErrors.topChainCondition}</small>
-                )}
-              </p>
+           
             </div>
           </div>
 
@@ -900,7 +980,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               <span className="font-medium text-sm text-[#000000]">
                 <div className="flex gap-1">
                   Top Chain Condition <span style={{ fontSize: '0.6rem' }}> (install date)</span>
-                  <p className="text-red-600">*</p>
                 </div>
               </span>
             </div>
@@ -913,17 +992,13 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: fieldErrors.topChainDate ? '1px solid red' : '1px solid #D5E1EA',
+                  border:  '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   padding: '0.5rem',
                 }}
               />
-              <p>
-                {fieldErrors.topChainDate && (
-                  <small className="p-error">{fieldErrors.topChainDate}</small>
-                )}
-              </p>
+             
             </div>
           </div>
         </div>
@@ -935,7 +1010,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
                     Depth at Mean High Water
-                    <p className="text-red-600">*</p>
                   </div>
                 </span>
               </div>
@@ -948,19 +1022,13 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: fieldErrors.depthAtMeanHighWater
-                      ? '1px solid red'
-                      : '1px solid #D5E1EA',
+                    border:  '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                     paddingLeft: '0.5rem',
                   }}
                 />
-                <p id="depthAtMeanHighWater">
-                  {fieldErrors.depthAtMeanHighWater && (
-                    <small className="p-error">{fieldErrors.depthAtMeanHighWater}</small>
-                  )}
-                </p>
+              
               </div>
             </div>
             <div>
@@ -968,7 +1036,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
                     Bottom Chain Condition
-                    <p className="text-red-600">*</p>
                   </div>
                 </span>
               </div>
@@ -985,18 +1052,12 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: fieldErrors.bottomChainCondition
-                      ? '1px solid red'
-                      : '1px solid #D5E1EA',
+                    border: '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                   }}
                 />
-                <p id="bottomChainCondition">
-                  {fieldErrors.bottomChainCondition && (
-                    <small className="p-error">{fieldErrors.bottomChainCondition}</small>
-                  )}
-                </p>
+              
               </div>
             </div>
             <div>
@@ -1005,7 +1066,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   <div className="flex gap-1">
                     Bottom Chain Condition
                     <span style={{ fontSize: '0.6rem' }}> (install date)</span>
-                    <p className="text-red-600">*</p>
                   </div>
                 </span>
               </div>
@@ -1018,17 +1078,13 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: fieldErrors.bottomChainDate ? '1px solid red' : '1px solid #D5E1EA',
+                    border: '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                     padding: '0.5rem',
                   }}
                 />
-                <p>
-                  {fieldErrors.bottomChainDate && (
-                    <small className="p-error">{fieldErrors.bottomChainDate}</small>
-                  )}
-                </p>
+                
               </div>
             </div>
           </div>
@@ -1039,7 +1095,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
                     Pendant Condition
-                    <p className="text-red-600">*</p>
                   </div>
                 </span>
               </div>
@@ -1051,17 +1106,13 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: fieldErrors.pendantCondition ? '1px solid red' : '1px solid #D5E1EA',
+                    border: '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                     paddingLeft: '0.5rem',
                   }}
                 />
-                <p id="conditionOfEye">
-                  {fieldErrors.pendantCondition && (
-                    <small className="p-error">{fieldErrors.pendantCondition}</small>
-                  )}
-                </p>
+               
               </div>
             </div>
             <div className="mt-3">
@@ -1069,7 +1120,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
                     Condition of Eye
-                    <p className="text-red-600">*</p>
                   </div>
                 </span>
               </div>
@@ -1085,16 +1135,12 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: fieldErrors.conditionOfEye ? '1px solid red' : '1px solid #D5E1EA',
+                    border: '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                   }}
                 />
-                <p id="conditionOfEye">
-                  {fieldErrors.conditionOfEye && (
-                    <small className="p-error">{fieldErrors.conditionOfEye}</small>
-                  )}
-                </p>
+               
               </div>
             </div>
 
@@ -1103,7 +1149,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
                     Condition of Eye <span style={{ fontSize: '0.6rem' }}> (install date)</span>
-                    <p className="text-red-600">*</p>
                   </div>
                 </span>
               </div>
@@ -1117,17 +1162,13 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: fieldErrors.conditionEyeDate ? '1px solid red' : '1px solid #D5E1EA',
+                    border: '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                     padding: '0.5rem',
                   }}
                 />
-                <p id="conditionOfEye">
-                  {fieldErrors.conditionEyeDate && (
-                    <small className="p-error">{fieldErrors.conditionEyeDate}</small>
-                  )}
-                </p>
+               
               </div>
             </div>
           </div>
@@ -1267,6 +1308,149 @@ const AddMoorings: React.FC<AddMooringProps> = ({
           }}
         />
       </div>
+
+      <Dialog
+        position="center"
+        style={{
+          width: '900px',
+          minWidth: '800px',
+          height: '580px',
+          minHeight: '580px',
+          borderRadius: '1rem',
+          fontWeight: '400',
+          cursor: 'alias',
+        }}
+        draggable={false}
+        visible={imageVisible}
+        onHide={() => setImageVisible(false)}
+        header={'Work Order Images'}>
+        <div className={`ml-4 ${isLoading ? 'blurred' : ''}`}>
+          <div className="flex justify-center">
+            <div className="mt-2">
+              <input
+                id="file-input"
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={handleImageChange}
+                style={{
+                  display: 'none',
+                }}
+              />
+              <label
+                htmlFor="file-input"
+                style={{
+                  width: '300px',
+                  height: '40px',
+                  border: '2px solid #0098FF',
+                  borderRadius: '0.50rem',
+                  fontSize: '0.8rem',
+                  paddingLeft: '0.5rem',
+                  display: 'flex',
+                  gap: '0.5rem',
+                  textAlign: 'center',
+                  lineHeight: '25px',
+                  cursor: 'pointer',
+                }}>
+                <FaFileUpload
+                  style={{
+                    fontSize: '29px',
+                    color: '#0098FF',
+                    marginLeft: '1rem',
+                    marginTop: '3px',
+                  }}
+                />
+                <div className="border-r-2 border-sky-500  h-9 pl-3"></div>
+                <span className="pl-10 mt-1"> UPLOAD IMAGES </span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div
+          //  style={{border:"1px solid red"}}
+
+          style={{ marginTop: '40px', marginLeft: '40px' }}>
+          {mooringImages.length > 0 && (
+            <div className="mt-2">
+              <div className="flex gap-16 flex-wrap">
+                {mooringImages.map((image, index) => (
+                  <div
+                    key={index}
+                    style={{ position: 'relative', display: 'inline-block' }}
+                    onMouseEnter={() => setHoveredIndex(index)}
+                    onMouseLeave={() => setHoveredIndex(null)}>
+                    {/* <h1
+                        style={{
+                          position: 'absolute',
+                          top: '12px',
+                          right: '0',
+                          left: '12px',
+                          background: 'gray',
+                          color: 'white',
+                          fontWeight: 'bolder',
+                          border: 'none',
+                          width: '80px',
+                          cursor: 'pointer',
+                          opacity: hoveredIndex === index ? 1 : 0,
+                          transition: 'opacity 0.3s',
+                        }}>
+                        name
+                      </h1> */}
+                    <AiOutlineDelete
+                      onClick={() => handleRemoveImage(index)}
+                      style={{
+                        position: 'absolute',
+                        top: '165px',
+                        right: '5px',
+                        background: 'red',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '5px',
+                        width: '28px',
+                        height: '25px',
+                        cursor: 'pointer',
+                        opacity: hoveredIndex === index ? 1 : 0,
+                        transition: 'opacity 0.3s',
+                      }}
+                    />
+                    <img
+                      src={image}
+                      alt={`Uploaded ${index}`}
+                      style={{
+                        width: '300px',
+                        height: '200px',
+                        objectFit: 'cover',
+                        borderRadius: '0.5rem',
+                        boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className={`flex gap-4 ml-4 bottom-5 absolute left-6 ${isLoading ? 'blurred' : ''}`}>
+          <Button
+            label={'Close'}
+            onClick={() => setImageVisible(false)}
+            style={{
+              width: '89px',
+              height: '42px',
+              backgroundColor: '#0098FF',
+              cursor: 'pointer',
+              fontWeight: 'bolder',
+              fontSize: '1rem',
+              boxShadow: 'none',
+              color: 'white',
+              borderRadius: '0.5rem',
+            }}
+          />
+        </div>
+        <Toast ref={toastRef} />
+      </Dialog>
     </>
   )
 }

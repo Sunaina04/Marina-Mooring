@@ -800,10 +800,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
           {/* Mooring Number */}
           <div>
             <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
-                Mooring Number
-                <p className="text-red-600">*</p>
-              </div>
+              <div className="flex gap-1">Mooring Number</div>
             </span>
             <div className="mt-1">
               <Dropdown
@@ -816,24 +813,19 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: errorMessage.mooringId ? '1px solid red' : '1px solid #D5E1EA',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
             </div>
-            <p>
-              {errorMessage.mooringId && (
-                <small className="p-error">{errorMessage.mooringId}</small>
-              )}
-            </p>
           </div>
           {!estimate && (
             <div className="">
               <span className="font-medium text-sm text-[#000000]">
                 <div className="flex gap-1">Work Order Image</div>
               </span>
-              <div className="mt-2">
+              <div className="mt-1">
                 <div />
                 <div
                   style={{
@@ -862,10 +854,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         <div className="flex gap-6 mt-3">
           <div>
             <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
-                Boatyard
-                <p className="text-red-600">*</p>
-              </div>
+              <div className="flex gap-1">Boatyard</div>
             </span>
             <div className="mt-1">
               <Dropdown
@@ -878,27 +867,19 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: errorMessage.boatyards ? '1px solid red' : '1px solid #D5E1EA',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   paddingLeft: '0.5rem',
                 }}
               />
             </div>
-            <p>
-              {errorMessage.boatyards && (
-                <small className="p-error">{errorMessage.boatyards}</small>
-              )}
-            </p>
           </div>
 
           {/* Assigned to */}
           <div>
             <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
-                Assigned to
-                <p className="text-red-600">*</p>
-              </div>
+              <div className="flex gap-1">Assigned to</div>
             </span>
             <div className="mt-1">
               <Dropdown
@@ -911,17 +892,12 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: errorMessage.assignedTo ? '1px solid red' : '1px solid #D5E1EA',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
             </div>
-            <p>
-              {errorMessage.assignedTo && (
-                <small className="p-error">{errorMessage.assignedTo}</small>
-              )}
-            </p>
           </div>
 
           {isLoading && (
@@ -941,10 +917,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
           {/* Due Date */}
           <div className="">
             <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
-                Due Date
-                <p className="text-red-600">*</p>
-              </div>
+              <div className="flex gap-1">Due Date</div>
             </span>
             <div className="mt-1">
               <Calendar
@@ -954,7 +927,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: errorMessage.dueDate ? '1px solid red' : '1px solid #D5E1EA',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   paddingLeft: '0.5rem',
@@ -962,9 +935,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 }}
               />
             </div>
-            <p>
-              {errorMessage.dueDate && <small className="p-error">{errorMessage.dueDate}</small>}
-            </p>
           </div>
         </div>
 
@@ -972,10 +942,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         <div className="flex gap-6 mt-3">
           <div>
             <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
-                Schedule Date
-                <p className="text-red-600">*</p>
-              </div>
+              <div className="flex gap-1">Schedule Date</div>
             </span>
             <div className="mt-1">
               <Calendar
@@ -985,7 +952,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: errorMessage.scheduleDate ? '1px solid red' : '1px solid #D5E1EA',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   paddingLeft: '0.5rem',
@@ -993,11 +960,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 }}
               />
             </div>
-            <p>
-              {errorMessage.scheduleDate && (
-                <small className="p-error">{errorMessage.scheduleDate}</small>
-              )}
-            </p>
           </div>
 
           {/* Status */}
@@ -1038,7 +1000,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
               <div className="flex flex-wrap gap-1">
                 <p className="font-medium text-sm text-[#000000] mt-0.5"> Time </p>
                 <span>(in minutes)</span>
-                <p className="text-red-600">*</p>
               </div>
             </span>
             <div
@@ -1047,7 +1008,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 // width: '8vw',
                 maxWidth: '100%',
                 height: '32px',
-                border: errorMessage.time ? '1px solid red' : '1px solid #D5E1EA',
+                border: '1px solid #D5E1EA',
                 borderRadius: '0.50rem',
               }}>
               <div className="flex justify-around text-center">
@@ -1073,7 +1034,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 </h1>
               </div>
             </div>
-            <p>{errorMessage.time && <small className="p-error">{errorMessage.time}</small>}</p>
           </div>
         </div>
 
