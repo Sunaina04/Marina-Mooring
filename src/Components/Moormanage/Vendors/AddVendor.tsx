@@ -54,61 +54,61 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
     const phoneRegex = /^.{10}$|^.{12}$/
     const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/
 
-    if (!formData.phone) {
-      errors.phone = 'Phone is required'
-    } else if (!phoneRegex.test(formData.phone)) {
-      errors.phone = 'Phone must be a 10-digit number'
-    }
-    if (!formData.phoneForRepresentative) {
-      errors.phoneForRepresentative = 'Phone is required'
-    } else if (!phoneRegex.test(formData.phoneForRepresentative)) {
-      errors.phoneForRepresentative = 'Phone must be a 10-digit number'
-    }
-    if (!formData.emailForAddress) {
-      errors.emailForAddress = 'Email is required'
-    } else if (!emailRegex.test(formData.emailForAddress)) {
-      errors.emailForAddress = 'Please enter a valid email format'
-    }
+    // if (!formData.phone) {
+    //   errors.phone = 'Phone is required'
+    // } else if (!phoneRegex.test(formData.phone)) {
+    //   errors.phone = 'Phone must be a 10-digit number'
+    // }
+    // if (!formData.phoneForRepresentative) {
+    //   errors.phoneForRepresentative = 'Phone is required'
+    // } else if (!phoneRegex.test(formData.phoneForRepresentative)) {
+    //   errors.phoneForRepresentative = 'Phone must be a 10-digit number'
+    // }
+    // if (!formData.emailForAddress) {
+    //   errors.emailForAddress = 'Email is required'
+    // } else if (!emailRegex.test(formData.emailForAddress)) {
+    //   errors.emailForAddress = 'Please enter a valid email format'
+    // }
 
-    if (!formData.emailForRemit) {
-      errors.emailForRemit = 'Email is required'
-    } else if (!emailRegex.test(formData.emailForRemit)) {
-      errors.emailForRemit = 'Please enter a valid email format'
-    }
+    // if (!formData.emailForRemit) {
+    //   errors.emailForRemit = 'Email is required'
+    // } else if (!emailRegex.test(formData.emailForRemit)) {
+    //   errors.emailForRemit = 'Please enter a valid email format'
+    // }
 
-    if (!formData.emailForRepresentative) {
-      errors.emailForRepresentative = 'Email is required'
-    } else if (!emailRegex.test(formData.emailForRepresentative)) {
-      errors.emailForRepresentative = 'Please enter a valid email format'
-    }
+    // if (!formData.emailForRepresentative) {
+    //   errors.emailForRepresentative = 'Email is required'
+    // } else if (!emailRegex.test(formData.emailForRepresentative)) {
+    //   errors.emailForRepresentative = 'Please enter a valid email format'
+    // }
 
-    if (!formData.website) {
-      errors.website = 'Website is required'
-    } else if (!urlRegex.test(formData.website)) {
-      errors.website = 'Please enter a valid URL'
-    }
+    // if (!formData.website) {
+    //   errors.website = 'Website is required'
+    // } else if (!urlRegex.test(formData.website)) {
+    //   errors.website = 'Please enter a valid URL'
+    // }
 
     if (!formData.companyName) errors.companyName = 'companyName is required'
-    if (!formData.streetBuildingForAddress)
-      errors.streetBuildingForAddress = 'street/Building is required'
-    if (!formData.aptSuiteForAddress) errors.aptSuiteForAddress = 'aptSuite is required'
-    if (!formData.countryForAddress) errors.countryForAddress = 'country is required'
-    if (!formData.stateForAddress) errors.stateForAddress = 'state is required'
-    if (!formData.zipCodeForAddress) {
-      errors.zipCodeForAddress = 'Zip Code is required'
-    }
-    if (!formData.streetBuildingForRemit)
-      errors.streetBuildingForRemit = 'Street/Building is required'
-    if (!formData.aptSuiteForRemit) errors.aptSuiteForRemit = 'Apt/Suite is required'
-    if (!formData.countryForRemit) errors.countryForRemit = 'Country is required'
-    if (!formData.stateForRemit) errors.stateForRemit = 'State is required'
-    if (!formData.zipCodeForRemit) {
-      errors.zipCodeForRemit = 'Zip Code is required'
-    }
-    if (!formData.accountNumber) errors.accountNumber = 'accountNumber is required'
-    if (!formData.firstName) errors.firstName = 'firstName is required'
-    if (!formData.lastName) errors.lastName = 'lastName is required'
-    if (!formData.note) errors.note = 'note is required'
+    // if (!formData.streetBuildingForAddress)
+    //   errors.streetBuildingForAddress = 'street/Building is required'
+    // if (!formData.aptSuiteForAddress) errors.aptSuiteForAddress = 'aptSuite is required'
+    // if (!formData.countryForAddress) errors.countryForAddress = 'country is required'
+    // if (!formData.stateForAddress) errors.stateForAddress = 'state is required'
+    // if (!formData.zipCodeForAddress) {
+    //   errors.zipCodeForAddress = 'Zip Code is required'
+    // }
+    // if (!formData.streetBuildingForRemit)
+    //   errors.streetBuildingForRemit = 'Street/Building is required'
+    // if (!formData.aptSuiteForRemit) errors.aptSuiteForRemit = 'Apt/Suite is required'
+    // if (!formData.countryForRemit) errors.countryForRemit = 'Country is required'
+    // if (!formData.stateForRemit) errors.stateForRemit = 'State is required'
+    // if (!formData.zipCodeForRemit) {
+    //   errors.zipCodeForRemit = 'Zip Code is required'
+    // }
+    // if (!formData.accountNumber) errors.accountNumber = 'accountNumber is required'
+    // if (!formData.firstName) errors.firstName = 'firstName is required'
+    // if (!formData.lastName) errors.lastName = 'lastName is required'
+    // if (!formData.note) errors.note = 'note is required'
 
     setFieldErrors(errors)
     return errors
@@ -335,11 +335,12 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
         <Toast ref={toastRef} />
         <div 
         className="flex">
-          <div className="flex gap-8">
+          {
+            editMode? " ": <div className="flex gap-8">
             <div>
               <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
                 <div className="flex gap-1">
-                  Company Name
+                  Vendor Name
                   <p className="text-red-600">*</p>
                 </div>
               </span>
@@ -367,7 +368,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
               <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
                 <div className="flex gap-1">
                   Phone
-                  <p className="text-red-600">*</p>
+                  {/* <p className="text-red-600">*</p> */}
                 </div>
               </span>
               <div
@@ -392,7 +393,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
               <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
                 <div className="flex gap-1">
                   Website
-                  <p className="text-red-600">*</p>
+                  {/* <p className="text-red-600">*</p> */}
                 </div>
               </span>
               <div className="mt-2">
@@ -414,6 +415,8 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
               </p>
             </div>
           </div>
+          }
+         
         </div>
         <div className="flex mt-3 gap-4">
           <div className="mt-5">
@@ -421,7 +424,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
               <h1 style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
                 <div className="flex gap-1">
                   Address
-                  <p className="text-red-600">*</p>
+                  {/* <p className="text-red-600">*</p> */}
                 </div>
               </h1>
             </div>
@@ -593,7 +596,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                 <h1 style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
                   <div className="flex gap-1">
                     Remit Address
-                    <p className="text-red-600">*</p>
+                    {/* <p className="text-red-600">*</p> */}
                   </div>
                 </h1>
               </div>
@@ -777,7 +780,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
             <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
               <div className="flex gap-1">
                 Account Number
-                <p className="text-red-600">*</p>
+                {/* <p className="text-red-600">*</p> */}
               </div>
             </span>
           </div>
@@ -819,7 +822,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
               <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
                 <div className="flex gap-1">
                   First Name
-                  <p className="text-red-600">*</p>
+                  {/* <p className="text-red-600">*</p> */}
                 </div>
               </span>
             </div>
@@ -853,7 +856,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                 <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
                   <div className="flex gap-1">
                     Last Name
-                    <p className="text-red-600">*</p>
+                    {/* <p className="text-red-600">*</p> */}
                   </div>
                 </span>
               </div>
@@ -888,7 +891,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                 <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
                   <div className="flex gap-1">
                     Phone
-                    <p className="text-red-600">*</p>
+                    {/* <p className="text-red-600">*</p> */}
                   </div>
                 </span>
               </div>
@@ -926,7 +929,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
               <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
                 <div className="flex gap-1">
                   Email
-                  <p className="text-red-600">*</p>
+                  {/* <p className="text-red-600">*</p> */}
                 </div>
               </span>
             </div>
@@ -961,7 +964,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
               <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
                 <div className="flex gap-1">
                   Note
-                  <p className="text-red-600">*</p>
+                  {/* <p className="text-red-600">*</p> */}
                 </div>
               </span>
             </div>

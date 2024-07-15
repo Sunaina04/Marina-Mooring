@@ -274,8 +274,7 @@ const Estimates = () => {
                   estimate={true}
                   setVisible={setVisible}
                   toastRef={toast}
-                  closeModal={handleModalClose}
-                />
+                  closeModal={handleModalClose} isAccountRecievable={false}                />
               }
               headerText={<h1 className="text-xl font-extrabold text-black ml-4">Estimate Form</h1>}
               visible={visible}

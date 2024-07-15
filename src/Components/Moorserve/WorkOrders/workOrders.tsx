@@ -228,8 +228,7 @@ const WorkOrders = () => {
                   editModeWorkOrder={editMode}
                   setVisible={setVisible}
                   toastRef={toast}
-                  closeModal={handleModalClose}
-                />
+                  closeModal={handleModalClose} isAccountRecievable={false}                />
               }
               headerText={<h1 className="text-xl font-extrabold text-black ml-4">Work Order</h1>}
               visible={visible}
@@ -299,20 +298,6 @@ const WorkOrders = () => {
                   />
                 </div>
               </div>
-
-              {/* <div className="">
-                <Button
-                  label={completedWorkOrder === "Yes" ? "Pending" : "Completed"}
-                  onClick={handleCompleted}
-                  style={{
-                    backgroundColor: completedWorkOrder === "Yes" ? "white" : " ",
-                    color: completedWorkOrder === "Yes" ? "black" : " ",
-
-                  }}
-                  className='border-none  w-28'
-                />
-              </div> */}
-
               <Button
                 label={completedWorkOrder === "Yes" ? "Pending" : "Completed"}
                 onClick={handleCompleted}

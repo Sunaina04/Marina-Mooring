@@ -34,6 +34,7 @@ import { ProgressSpinner } from 'primereact/progressspinner'
 import { Paginator } from 'primereact/paginator'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import { PositionType } from '../../../Type/Components/MapTypes'
+import AddImage from './AddImage'
 
 const Customer = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -50,6 +51,7 @@ const Customer = () => {
   const [mooringRowData, setMooringRowData] = useState<MooringPayload>()
   const [dialogVisible, setDialogVisible] = useState(false)
   const [imageVisible, setImageVisible] = useState(false)
+  const [imageEditVisible,setImageEditVisible]=useState(false)
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [selectedMooring, setSelectedMooring] = useState<any>()
   const [searchText, setSearchText] = useState('')
@@ -403,6 +405,19 @@ const Customer = () => {
             margin: 0,
           },
         },
+        {
+          color: 'black',
+          label: 'Edit',
+          onClick: (data) => {
+            // setShowImage((prev) => ({ ...prev, id: data.id, imageData: data.imageData }))
+            setImageEditVisible(true)
+          },
+          underline: true,
+          style: {
+            margin: 0,
+          },
+        },
+
       ],
       headerStyle: {
         backgroundColor: '#FFFFFF',
@@ -985,7 +1000,7 @@ const Customer = () => {
                 onClick={() => handleToggle('faq2')}>
                 <div className="flex items-center">
                   <div style={{ flexShrink: 1 }}>
-                    <h1 className="p-3 text-white text-lg font-extrabold">Customers Images</h1>
+                    <h1 className="p-3 text-white text-lg font-extrabold">Images</h1>
                   </div>
                 </div>
                 <div>
@@ -1256,6 +1271,49 @@ const Customer = () => {
           </div>
         </div>
       </Dialog>
+
+
+      <Dialog
+        position="center"
+        style={{
+          width: '851px',
+          height: '526px',
+          borderRadius: '1rem',
+        }}
+        draggable={false}
+        visible={imageEditVisible}
+        onHide={() => {
+          setImageEditVisible(false)
+  
+        }}
+        headerStyle={{ cursor: 'alias' }}
+        header={'Customer Image'}>
+       
+        {/* <AddWorkOrders
+                workOrderData={selectedCustomer}
+                editModeWorkOrder={editMode}
+                setVisible={setVisible}
+                toastRef={toast}
+                closeModal={handleModalClose}
+              /> */}
+
+              <AddImage/>
+      </Dialog>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
   )
 }

@@ -127,6 +127,7 @@ export interface WorkOrderProps {
   setVisible: React.Dispatch<React.SetStateAction<boolean>>
   toastRef?: any
   closeModal: () => void
+  
 }
 
 export interface ReasonModalProps {
