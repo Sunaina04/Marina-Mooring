@@ -744,10 +744,15 @@ const AccountRecievable = () => {
         onHide={handleModalClose}
         header="Work Order">
         <AddWorkOrders
-          workOrderData={undefined}
+          workOrderData={selectedWorkOrderRowData}
           isAccountRecievable={true}
-          setVisible={() => {}}
-          closeModal={() => {}}
+          editModeWorkOrder={true}
+          setVisible={() => {
+            setAddWorkOrderModal(false)
+          }}
+          closeModal={() => {
+            handleModalClose()
+          }}
         />
       </Dialog>
     </>

@@ -10,6 +10,8 @@ import { AiOutlineDelete } from 'react-icons/ai'
 import { ErrorResponse, WorkOrderResponse } from '../../../Type/ApiTypes'
 import {
   useAddWorkOrderMutation,
+  useApproveWorkOrderMutation,
+  useDenyWorkOrderMutation,
   useUpdateWorkOrderMutation,
 } from '../../../Services/MoorServe/MoorserveApi'
 import {
@@ -29,7 +31,7 @@ import {
   GetTechnicians,
   GetWorkOrderStatus,
 } from '../../CommonComponent/MetaDataComponent/MoorserveMetaDataApi'
-import { MetaData, MetaDataTechnician } from '../../../Type/CommonType'
+import { MetaData, MetaDataTechnician, Params } from '../../../Type/CommonType'
 import {
   BoatyardNameData,
   CustomersData,
@@ -104,6 +106,9 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   const { getBoatYardNameData } = BoatyardNameData(selectedCustomerId)
   const { getTechniciansData } = GetTechnicians()
   const { getMooringIdsData } = GetMooringIds()
+  const [approveWorkOrder] = useApproveWorkOrderMutation()
+  const [denyWorkOrder] = useDenyWorkOrderMutation()
+
   const { getWorkOrderStatusData } = GetWorkOrderStatus()
   const [saveWorkOrder] = useAddWorkOrderMutation()
   const [updateWorkOrder] = useUpdateWorkOrderMutation()
@@ -121,6 +126,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   const uploadImages = () => {
     setImageVisible(true)
   }
+
   const MooringNameOptions = (() => {
     if (workOrder?.customerName?.id && workOrder?.boatyards?.id) {
       return basedOnCustomerIdAndBoatyardId
@@ -557,6 +563,71 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         detail: message,
         life: 3000,
       })
+    }
+  }
+
+  const ApproveWorkOrderMethod = async () => {
+    try {
+      const params: Params = {}
+      // if (invoiceAmount) {
+      //   params.invoiceAmount = invoiceAmount
+      // }
+      const response = await approveWorkOrder({
+        id: workOrderData?.id,
+        //  invoiceAmount: invoiceAmount
+      }).unwrap()
+      const { status, content, message } = response as WorkOrderResponse
+      if (status === 200 && Array.isArray(content)) {
+        toast?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+      } else {
+        toast?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+      }
+    } catch (error) {
+      const { message: msg } = error as ErrorResponse
+      console.error('Error occurred while fetching customer data:', msg)
+    }
+  }
+
+  const DenyWorkOrderMethod = async () => {
+    try {
+      const params: Params = {}
+      // if (reasonDetails) {
+      //   params.reportProblem = reasonDetails
+      // }
+
+      const response = await denyWorkOrder({
+        id: workOrderData?.id,
+        // reportProblem: reasonDetails,
+      }).unwrap()
+      const { status, content, message } = response as WorkOrderResponse
+      if (status === 200 && Array.isArray(content)) {
+        toast?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+      } else {
+        toast?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+      }
+    } catch (error) {
+      const { message: msg } = error as ErrorResponse
+      console.error('Error occurred while fetching customer data:', msg)
     }
   }
 
@@ -1060,7 +1131,9 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         {isAccountRecievable ? (
           <>
             <Button
-              // onClick={handleApprove}
+              onClick={() => {
+                ApproveWorkOrderMethod()
+              }}
               label="Approve"
               style={{
                 width: '89px',
@@ -1076,7 +1149,9 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
               }}
             />
             <Button
-              // onClick={handleDeny}
+              onClick={() => {
+                DenyWorkOrderMethod()
+              }}
               label="Deny"
               text={true}
               style={{
