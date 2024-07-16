@@ -132,3 +132,10 @@ export interface Params {
   invoiceAmount?: number
   reportProblem?: string
 }
+
+export interface DropdownCellProps {
+  value: string;
+  options?: any,
+  onChange: (e: any) => void;
+  rowId?:string
+}

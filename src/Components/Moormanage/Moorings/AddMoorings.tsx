@@ -1626,33 +1626,95 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               </div>
 
               <div className="flex gap-6">
-                <div>
-                  <div className="mt-3">
-                    <div>
-                      <span className="font-medium text-sm text-[#000000]">
-                        <div className="flex gap-1">Shackle, Swivel Condition</div>
-                      </span>
-                    </div>
-
-                    <div className="mt-3">
-                      <Dropdown
-                        value={formData?.shackleSwivelCondition}
-                        onChange={(e) => handleInputChange('shackleSwivelCondition', e.value)}
-                        options={shackleSwivelData}
-                        optionLabel="condition"
-                        placeholder="Select"
-                        editable
-                        disabled={isLoading}
-                        style={{
-                          width: '230px',
-                          height: '32px',
-                          border: '1px solid #D5E1EA',
-                          borderRadius: '0.50rem',
-                          fontSize: '0.8rem',
-                        }}
-                      />
-                    </div>
+                <div className="mt-3">
+                  <div>
+                    <span className="font-medium text-sm text-[#000000]">
+                      <div className="flex gap-1">Inspection Date</div>
+                    </span>
                   </div>
+
+                  <div className="mt-2">
+                    <Calendar
+                      value={parseDate(formData.conditionEyeDate)}
+                      onChange={(e) =>
+                        handleInputChange('conditionEyeDate', formatDate(e.target.value))
+                      }
+                      dateFormat="mm/dd/yy"
+                      style={{
+                        width: '230px',
+                        height: '32px',
+                        border: '1px solid #D5E1EA',
+                        borderRadius: '0.50rem',
+                        fontSize: '0.8rem',
+                        padding: '0.5rem',
+                      }}
+                    />
+
+                  </div>
+                </div>
+                <div className="mt-3">
+                  <div>
+                    <span className="font-medium text-sm text-[#000000]">
+                      <div className="flex gap-1">Service Area</div>
+                    </span>
+                  </div>
+                  <div className="mt-2">
+                    <Dropdown
+                      value={formData?.conditionOfEye}
+                      onChange={(e) => handleInputChange('conditionOfEye', e.value)}
+                      options={conditionOfEye}
+                      optionLabel="condition"
+                      placeholder="Select"
+                      editable
+                      disabled={isLoading}
+                      style={{
+                        width: '230px',
+                        height: '32px',
+                        border: '1px solid #D5E1EA',
+                        borderRadius: '0.50rem',
+                        fontSize: '0.8rem',
+                      }}
+                    />
+                  </div>
+                </div>
+
+                <div className="mt-3">
+                  <div>
+                    <span className="font-medium text-sm text-[#000000]">
+                      <div className="flex gap-1">Shackle, Swivel Condition</div>
+                    </span>
+                  </div>
+                  <div className="mt-3">
+                    <Dropdown
+                      value={formData?.shackleSwivelCondition}
+                      onChange={(e) => handleInputChange('shackleSwivelCondition', e.value)}
+                      options={shackleSwivelData}
+                      optionLabel="condition"
+                      placeholder="Select"
+                      editable
+                      disabled={isLoading}
+                      style={{
+                        width: '230px',
+                        height: '32px',
+                        border: '1px solid #D5E1EA',
+                        borderRadius: '0.50rem',
+                        fontSize: '0.8rem',
+                      }}
+                    />
+                  </div>
+                </div>
+
+              </div>
+
+
+
+
+
+
+
+              <div className="flex gap-6">
+                <div>
+                
                   <div className="mt-3">
                     <div>
                       <span className="font-medium text-sm text-[#000000]">
