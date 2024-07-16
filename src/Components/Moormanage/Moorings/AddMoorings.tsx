@@ -440,6 +440,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     if (Object.keys(errors).length > 0) {
       return
     }
+    console.log('formData', mooringRowData)
 
     try {
       setIsLoading(true)
@@ -448,7 +449,10 @@ const AddMoorings: React.FC<AddMooringProps> = ({
         mooringNumber: formData?.mooringNumber
           ? formData?.mooringNumber
           : mooringRowData?.mooringNumber,
-        customerId: mooringRowData?.customerResponseDto?.id || formData?.customerName,
+        customerId:
+          mooringRowData?.customerId ||
+          mooringRowData?.customerResponseDto?.id ||
+          formData?.customerName,
         harborOrArea: formData?.harbor ? formData?.harbor : mooringRowData?.harborOrArea,
         gpsCoordinates: gpsCoordinatesValue,
         boatyardId: formData?.boatYardName?.id
@@ -1649,7 +1653,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                         padding: '0.5rem',
                       }}
                     />
-
                   </div>
                 </div>
                 <div className="mt-3">
@@ -1703,18 +1706,10 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                     />
                   </div>
                 </div>
-
               </div>
-
-
-
-
-
-
 
               <div className="flex gap-6">
                 <div>
-                
                   <div className="mt-3">
                     <div>
                       <span className="font-medium text-sm text-[#000000]">
