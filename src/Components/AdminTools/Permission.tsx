@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import CustomModal from '../CustomComponent/CustomModal'
 import DataTableComponent from '../CommonComponent/Table/DataTableComponent'
 import Header from '../Layout/LayoutComponents/Header'
@@ -7,6 +7,7 @@ import { ActionButtonColumnProps } from '../../Type/Components/TableTypes'
 import { useSelector } from 'react-redux'
 import {
   CustomerPayload,
+  CustomerResponse,
   DeleteUserResponse,
   ErrorResponse,
   GetUserResponse,
@@ -16,36 +17,37 @@ import AddNewCustomer from './AddNewCustomer'
 import { Toast } from 'primereact/toast'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { Paginator } from 'primereact/paginator'
-import { Params } from '../../Type/CommonType'
+import { DropdownCellProps, Params, State } from '../../Type/CommonType'
 import { properties } from '../Utils/MeassageProperties'
-
+import { Dropdown } from 'primereact/dropdown'
+import { Button } from 'primereact/button'
+import { StatesData } from '../CommonComponent/MetaDataComponent/MetaDataApi'
+import { useGetCustomerMutation } from '../../Services/MoorManage/MoormanageApi'
+import { selectCustomerId } from '../../Store/Slice/userSlice'
 const Permission = () => {
+  const selectedCustomerId = useSelector(selectCustomerId)
   const [modalVisible, setModalVisible] = useState(false)
   const [editMode, setEditMode] = useState(false)
-  const [selectedCustomer, setSelectedCustomer] = useState<any>()
-  const [searchInput, setSearchInput] = useState('')
-  const userData = useSelector((state: any) => state.user?.userData)
-  const customerAdminId = userData?.id
-  const [getUser] = useGetUsersMutation()
-  const [deleteUser] = useDeleteUserMutation()
-  const [getCustomerOwnerUserData, setgetCustomerOwnerUserData] = useState<CustomerPayload[]>([])
+ 
+
+  const [getCustomer] = useGetCustomerMutation()
+  const { getStatesData } = StatesData()
   const toast = useRef<Toast>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [totalRecords, setTotalRecords] = useState<number>()
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
   const [pageSize, setPageSize] = useState(10)
+  const [dropdownValues, setDropdownValues] = useState<{ [key: string]: string }>({})
+  const [savedValues, setSavedValues] = useState<{ [key: string]: string }>({})
+  const [statesData, setStatesData] = useState<{ label: any; id: any }[]>([])
+  const [customerData, setCustomerData] = useState<CustomerPayload[]>([])
+  const [dropdownDisabled, setDropdownDisabled] = useState<{ [key: string]: boolean }>({})
 
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
     setPageNumber1(event.first)
     setPageSize(event.rows)
-  }
-
-  const handleEditButtonClick = (rowData: any) => {
-    setEditMode(true)
-    setModalVisible(true)
-    setSelectedCustomer(rowData)
   }
 
   const columnStyle = {
@@ -55,227 +57,170 @@ const Permission = () => {
     fontWeight: 700,
   }
 
+  const DropdownCell: React.FC<DropdownCellProps & { disabled: boolean }> = ({
+    value,
+    onChange,
+    options,
+    disabled,
+  }) => {
+    return (
+      <Dropdown
+        optionLabel="label"
+        value={value}
+        options={options}
+        disabled={disabled}
+        onChange={onChange}
+        style={{
+          height: '32px',
+          border: '1px solid #D5E1EA',
+          borderRadius: '0.50rem',
+          fontSize: '0.8rem',
+          width: '40%',
+          textAlign: 'center',
+        }}
+      />
+    )
+  }
+
+  const firstLastName = (data: any) => {
+    return data.firstName + ' ' + data.lastName
+  }
+
   const tableColumnsPermission = useMemo(
     () => [
       {
-        id: 'id',
-        label: 'ID',
-        style: columnStyle,
+        id: 'firstName',
+        label: 'Customer Name',
+        body: firstLastName,
+        // style: { width: '20vw' },
+        style:columnStyle
       },
       {
-        id: 'name',
-        label: 'Name',
+        id: 'QuickBookCustomerName',
+        label: 'Quick Book Customer Name',
         style: columnStyle,
+        // style:{width:"40vw"},
+        body: (rowData: { id: string; dropdownValue: string }) => (
+          <DropdownCell
+            value={dropdownValues[rowData.id] || ''}
+            onChange={(e) => setDropdownValues({ ...dropdownValues, [rowData.id]: e.value })}
+            options={statesData}
+            disabled={!!dropdownDisabled[rowData.id]}
+          />
+        ),
       },
-
       {
-        id: 'email',
-        label: 'Email',
+        id: 'Action',
+        label: 'Action',
+        // style:{width:"20vw"},
         style: columnStyle,
-      },
-
-      {
-        id: 'phoneNumber',
-        label: 'Phone',
-        style: columnStyle,
-      },
-
-      {
-        id: 'roleResponseDto.name',
-        label: 'Role',
-        style: columnStyle,
+        body: (rowData: { id: string }) => (
+          <span
+            className={`cursor-pointer underline ${savedValues[rowData.id] ? 'black' : 'text-green-500'}`}
+            onClick={() => handleSaveOrEdit(rowData)}>
+            {savedValues[rowData.id] ? 'Edit' : 'Save'}
+          </span>
+        ),
       },
     ],
-
-    [],
+    [dropdownValues, savedValues, dropdownDisabled, statesData],
   )
 
-  const ActionButtonColumn: ActionButtonColumnProps = {
-    header: 'Action',
-    style: {
-      fontSize: '12px',
-      fontWeight: 700,
-      borderBottom: '1px solid #D5E1EA',
-    },
-    buttons: [
-      {
-        color: 'black',
-        label: 'Edit',
-        underline: true,
-        onClick: (rowData) => handleEditButtonClick(rowData),
-      },
-      {
-        color: 'red',
-        label: 'Delete',
-        underline: true,
-
-        onClick: (rowData) => handleDeleteButtonClick(rowData),
-      },
-    ],
-    headerStyle: columnStyle,
-  }
-
-  const handleButtonClick = () => {
-    setModalVisible(true)
-    setSelectedCustomer('')
-  }
-
-  const handleModalClose = () => {
-    setModalVisible(false)
-    setEditMode(false)
-    setSelectedCustomer('')
-  }
-
-  const handleDeleteButtonClick = async (rowData: any) => {
-    setIsLoading(true)
-    try {
-      const response = await deleteUser({
-        userId: rowData.id,
-        customerAdminId: rowData.customerAdminId,
-      }).unwrap()
-      const { status } = response as DeleteUserResponse
-      if (status === 200) {
-        setIsLoading(false)
-        toast.current?.show({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'User Deleted Successfully ',
-          life: 3000,
-        })
-        getCustomerAdminsUsers()
-      }
-    } catch (error) {
-      const { message: msg } = error as ErrorResponse
-      setIsLoading(false)
-      console.error('Error occurred while fetching customer data:', msg)
+  const handleSaveOrEdit = (rowData: any) => {
+    if (savedValues[rowData.id]) {
+      setDropdownDisabled((prevState) => ({ ...prevState, [rowData.id]: false }))
+      setSavedValues((prevState) => ({ ...prevState, [rowData.id]: '' }))
+    } else {
+      setDropdownDisabled((prevState) => ({ ...prevState, [rowData.id]: true }))
+      setSavedValues((prevState) => ({ ...prevState, [rowData.id]: dropdownValues[rowData.id] }))
+      toast.current?.show({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'Value Saved Successfully',
+        life: 3000,
+      })
     }
   }
 
-  const getCustomerAdminsUsers = async () => {
+  const getCustomerData = useCallback(async () => {
     setIsLoading(true)
     try {
       let params: Params = {}
-      if (searchInput) {
-        params.searchText = searchInput
-      }
       if (pageNumber) {
         params.pageNumber = pageNumber
       }
       if (pageSize) {
         params.pageSize = pageSize
       }
-      const response = await getUser(params).unwrap()
-      const { status, content, totalSize } = response as GetUserResponse
+
+      const response = await getCustomer(params).unwrap()
+      const { status, content, message, totalSize } = response as CustomerResponse
       if (status === 200 && Array.isArray(content)) {
+        if (content?.length > 0) {
+          setIsLoading(false)
+          setCustomerData(content)
+          setTotalRecords(totalSize)
+        } else {
+          setIsLoading(false)
+
+          setCustomerData([])
+          setTotalRecords(totalSize)
+        }
+      } else {
         setIsLoading(false)
-        setgetCustomerOwnerUserData(content)
-        setTotalRecords(totalSize)
+        toast?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
       }
     } catch (error) {
-      const { message: msg } = error as ErrorResponse
       setIsLoading(false)
+      const { message: msg } = error as ErrorResponse
       console.error('Error occurred while fetching customer data:', msg)
     }
-  }
+  }, [
+    getCustomer,
+    // searchText,
+    selectedCustomerId,
+    pageSize,
+    pageNumber,
+    // customerId,
+    // selectedProduct,
+    // sortable,
+  ])
+
+  const fetchDataAndUpdate = useCallback(async () => {
+    const { statesData } = await getStatesData()
+
+    if (statesData !== null) {
+      const parsedData = statesData.map((item) => ({
+        label: item.label,
+        id: item.id,
+      }))
+
+      setStatesData(parsedData)
+    }
+  }, [])
+
+  useEffect(() => {
+    fetchDataAndUpdate()
+  }, [fetchDataAndUpdate, dropdownValues])
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      getCustomerAdminsUsers()
+      getCustomerData()
     }, 600)
     return () => clearTimeout(timeoutId)
-  }, [searchInput, pageNumber, pageSize])
+  }, [selectedCustomerId, pageSize, pageNumber])
 
   return (
     <div style={{ height: '100vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
       <Header header="MOORMANAGE/Permission" />
-      <div className="flex mr-12 justify-end">
-        <Toast ref={toast} />
-        <div className="mt-5 mr-5 relative">
-          <InputText
-            value={searchInput}
-            onChange={(e) => {
-              setSearchInput(e.target.value)
-              setPageNumber(0)
-              setPageNumber1(0)
-            }}
-            placeholder="Search by name, ID, Role, phone no..."
-            style={{
-              width: '378px',
-              height: '44px',
-              padding: '0 4rem 0 3rem',
-              border: '1px solid #C5D9E0',
-              fontSize: '16px',
-              color: '#00426F',
-              borderRadius: '4px',
-              minHeight: '44px',
-              fontWeight: 500,
-            }}
-          />
-          <img
-            src="/assets/images/Search.svg"
-            alt="Search Icon"
-            className="p-clickable"
-            style={{
-              position: 'absolute',
-              left: '10px',
-              right: '-10px',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              width: '18px',
-              height: '18px',
-            }}
-          />
-        </div>
-
-        <div className="mt-[20px]">
-          <CustomModal
-            buttonText={'ADD NEW'}
-            onClick={handleButtonClick}
-            icon={<img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8 mb-0.5" />}
-            buttonStyle={{
-              width: '121px',
-              height: '44px',
-              minHeight: '44px',
-              backgroundColor: '#0098FF',
-              cursor: 'pointer',
-              fontSize: '14px',
-              fontWeight: 600,
-              color: 'white',
-              borderRadius: '0.50rem',
-              marginLeft: '8px',
-              boxShadow: 'none',
-            }}
-            visible={modalVisible}
-            onHide={handleModalClose}
-            dialogStyle={{
-              width: '840px',
-              minWidth: '840px',
-              height: editMode ? '500px' : '600px',
-              minHeight: editMode ? '500px' : '600px',
-              borderRadius: '1rem',
-              maxHeight: '60% !important',
-            }}
-            headerText={<h1 className="text-xl font-bold text-#000000 ml-4">New User</h1>}>
-            <AddNewCustomer
-              customerAdminId={customerAdminId}
-              editMode={editMode}
-              getUser={getCustomerAdminsUsers}
-              closeModal={handleModalClose}
-              setIsVisible={setModalVisible}
-              setModalVisible={setModalVisible}
-              customerData={selectedCustomer}
-              permission={true}
-              passWordDisplay={editMode}
-              toastRef={toast}
-              setSelectedCustomerUser={() => {}}
-              setSelectedCustomer={() => {}}
-            />
-          </CustomModal>
-        </div>
-      </div>
-
+      <Toast ref={toast} />
       <div
-        className={`flex gap-10 ml-6 mt-8 ${isLoading ? 'blur-screen' : ''}`}
+        className={`flex gap-10 ml-6 mt-16 ${isLoading ? 'blur-screen' : ''}`}
         style={{
           paddingRight: '40px',
           paddingLeft: '25px',
@@ -293,7 +238,7 @@ const Permission = () => {
           <div
             data-testid="customer-admin-data"
             className="flex flex-col  "
-            style={{ height: '550px' }}>
+            style={{ height: '700px' }}>
             <div className="flex-grow overflow-auto">
               <DataTableComponent
                 tableStyle={{
@@ -305,9 +250,8 @@ const Permission = () => {
                   overflow: 'auto',
                 }}
                 scrollable={true}
-                data={getCustomerOwnerUserData}
+                data={customerData}
                 columns={tableColumnsPermission}
-                actionButtons={ActionButtonColumn}
                 style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
                 emptyMessage={
                   <div className="text-center mt-14">
