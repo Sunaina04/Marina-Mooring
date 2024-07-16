@@ -18,7 +18,7 @@ const SidebarMenu = () => {
         {
           icon: '/assets/images/settings.svg',
           name: 'Settings',
-          link: '/permission',
+          link: '/settings',
         },
       ]
       break
@@ -34,7 +34,7 @@ const SidebarMenu = () => {
         {
           icon: '/assets/images/settings.svg',
           name: 'Settings',
-          link: '/customerAdmin',
+          link: '/settings',
         },
       ]
       break

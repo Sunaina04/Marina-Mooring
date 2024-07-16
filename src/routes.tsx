@@ -127,6 +127,10 @@ const routes = [
         path: 'permission',
         element: <Permission />,
       },
+      {
+        path: 'settings',
+        element: <Permission />,
+      },
     ],
   },
 ]
