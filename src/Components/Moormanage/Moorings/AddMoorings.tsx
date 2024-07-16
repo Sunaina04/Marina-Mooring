@@ -440,7 +440,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     if (Object.keys(errors).length > 0) {
       return
     }
-    console.log('formData', mooringRowData)
 
     try {
       setIsLoading(true)
