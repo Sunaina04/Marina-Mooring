@@ -976,9 +976,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                           paddingLeft: '0.5rem',
                         }}
                       />
-                      {/* <p className="" id="email">
-                        <small className="p-error">{emailError}</small>
-                      </p> */}
                     </div>
                   </div>
                 </div>
@@ -1231,7 +1228,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
             {(checkedMooring === true || editMooringMode) && (
               <div id="mooring" className="mt-4">
-                <div className="flex ">
+                <div className="flex gap-6">
                   <div>
                     <span className="font-medium text-sm text-[#000000]">
                       <div className="flex gap-1">Mooring Number</div>
@@ -1257,7 +1254,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     </div>
                   </div>
 
-                  <div className="ml-6">
+                  <div className="">
                     <span className="font-medium text-sm text-[#000000]">
                       <div className="flex gap-1">Harbor/Area</div>
                     </span>
@@ -1281,6 +1278,33 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       </p>
                     </div>
                   </div>
+
+                  <div className="">
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1"> Images</div>
+                </span>
+                <div className="mt-2">
+                  <div />
+                  <div
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.8rem',
+                      paddingLeft: '0.5rem',
+                      cursor: 'pointer',
+                    }}>
+                    <div onClick={uploadImages} className="flex gap-3 text-center">
+                      <FaFileUpload
+                        style={{ fontSize: '22px', color: '#0098FF', marginTop: '3px' }}
+                      />
+                      <div className="border-r-2 border-blue-100  h-[30px]"></div>
+                      <span className="pl-4 mt-1"> Upload Image </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
                 </div>
 
                 <div className="flex gap-6 mt-3">
