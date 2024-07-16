@@ -15,6 +15,7 @@ import { Toast } from 'primereact/toast'
 import { Params } from '../../../Type/CommonType'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { Paginator } from 'primereact/paginator'
+import { SelectButton } from 'primereact/selectbutton'
 
 const WorkOrders = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -42,9 +43,13 @@ const WorkOrders = () => {
     setSearchText(e.target.value)
   }
 
-  const handleCompleted = () => {
-    setCompletedOrder((prev) => (prev === 'Yes' ? 'No' : 'Yes'))
+  const handleCompleted = (e: { value: string }) => {
+    setCompletedOrder(e.value)
   }
+  const options = [
+    { label: 'Pending', value: 'No' },
+    { label: 'Completed', value: 'Yes' },
+  ]
 
   const ActionButtonColumn: ActionButtonColumnProps = {
     header: 'Action',
@@ -279,21 +284,14 @@ const WorkOrders = () => {
                   />
                 </div>
               </div>
-              <Button
-                label={completedWorkOrder === 'Yes' ? 'Completed' : 'Pending'}
-                onClick={handleCompleted}
-                style={{
-                  width: '120px',
-                  height: '42px',
-                  backgroundColor: completedWorkOrder === 'Yes' ? 'white' : ' ',
-                  cursor: 'pointer',
-                  // fontWeight: 'bolder',
-                  fontSize: '1rem',
-                  boxShadow: 'none',
-                  color: completedWorkOrder === 'Yes' ? 'black' : ' ',
-                  borderRadius: '0.2rem',
-                }}
-              />
+              <div className="card flex justify-content-center ">
+                <SelectButton
+                  value={completedWorkOrder}
+                  onChange={handleCompleted}
+                  options={options}
+                  className='selectButton'
+                />
+              </div>
             </div>
           </div>
 

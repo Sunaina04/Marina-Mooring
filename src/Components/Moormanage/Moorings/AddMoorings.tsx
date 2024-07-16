@@ -573,7 +573,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
         {isEditMooring ? (
           <>
             <div className="flex gap-6 ">
-              {/* <div>
+              <div>
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">
                     Customer Name
@@ -633,7 +633,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                     )}
                   </p>
                 </div>
-              </div> */}
+              </div>
 
               <div className="">
                 <span className="font-medium text-sm text-[#000000]">
