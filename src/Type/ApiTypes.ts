@@ -287,7 +287,6 @@ export interface MooringMetaDataTypes {
 }
 
 export interface MooringPayload {
-  boatyardName: string
   id: number
   mooringNumber: string
   mooringId: string
@@ -297,6 +296,7 @@ export interface MooringPayload {
   harborOrArea: string
   waterDepth: string
   gpsCoordinates: string
+  boatyardName: string
   boatName: string
   boatSize: string
   boatType: MooringMetaDataTypes
@@ -353,8 +353,14 @@ export interface MooringResponseDtoList {
   mooringStatus: MooringStatus
   customerId: number | string
   userId: number
+  statusId: number
 }
-
+export interface MooringWithGpsCoordinates {
+  id: number
+  mooringId: string
+  gpsCoordinates: string
+  statusId: number
+}
 export interface MooringResponse {
   message: string
   status: number
@@ -363,6 +369,8 @@ export interface MooringResponse {
   errorList: []
   time: string
   content: {
+    mooringResponseDtoList: MooringPayload
+    mooringWithGPSCoordinateResponseList: MooringWithGpsCoordinates
     MooringPayload: MooringPayload
   }
 }

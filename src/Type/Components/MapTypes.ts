@@ -45,6 +45,7 @@ export interface CustomMooringPositionMapProps extends CustomDisplayPositionMapP
   iconsByStatus?: { [key: string]: L.Icon }
   moorings?: any
   dashboard?: boolean
+  customerPage?: boolean
 }
 
 export type PositionType = LatLngExpression

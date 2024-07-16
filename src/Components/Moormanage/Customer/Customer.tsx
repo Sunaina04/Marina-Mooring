@@ -823,6 +823,7 @@ const Customer = () => {
             style={{ height: '600px' }}
             iconsByStatus={iconsByStatus}
             moorings={mooringData}
+            customerPage={true}
           />
         </div>
 
@@ -1278,14 +1279,12 @@ const Customer = () => {
           height: '400px',
           borderRadius: '1rem',
         }}
-        
         draggable={false}
         visible={imageEditVisible}
         onHide={() => {
           setImageEditVisible(false)
         }}
         headerStyle={{ cursor: 'alias' }}
-        
         header={'Images'}>
         {/* <AddWorkOrders
                 workOrderData={selectedCustomer}
@@ -1297,8 +1296,7 @@ const Customer = () => {
 
         <AddImage
 
-          // closeModal={handleModalClose}
-
+        // closeModal={handleModalClose}
         />
       </Dialog>
     </div>

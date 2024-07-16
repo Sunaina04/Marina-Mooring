@@ -43,6 +43,8 @@ const Moorings = () => {
   const [boatYardData, setBoatYardData] = useState<any[]>([])
   const [selectedCustomer, setSelectedCustomer] = useState<any>()
   const [mooringRowData, setMooringRowData] = useState<MooringPayload>()
+  const [mooringGPSResponseData, setMooringGPSResponseData] = useState<any>()
+  const [GPSResponseData, setGPSResponseData] = useState<any>()
   const [editMode, setEditMode] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState<any>()
   const [selectedMooring, setSelectedMooring] = useState<any>()
@@ -112,6 +114,12 @@ const Moorings = () => {
 
   const initialPosition = gpsCoordinatesArray?.length > 0 ? gpsCoordinatesArray[0] : position
 
+  const convertStringToArray = (str: any) => {
+    return str?.split(' ').map(Number)
+  }
+
+  const coordinatesArray = convertStringToArray(GPSResponseData)
+
   const iconsByStatus = {
     GearOn: GearOnIcon,
     GearOff: GearOffIcon,
@@ -123,7 +131,7 @@ const Moorings = () => {
     setSearchText(e.target.value)
     setCustomerRecordData('')
     setBoatYardData([])
-    setMooringResponseData('')
+    setMooringResponseData([])
     setPageNumber(0)
     setPageNumber1(0)
   }
@@ -141,6 +149,7 @@ const Moorings = () => {
   }
 
   const handleMooringRowClick = (rowData: any) => {
+    getCustomersWithMooring(rowData?.customerId)
     setCustomerId(rowData?.customerId)
     setMooringId(rowData?.id)
   }
@@ -361,6 +370,7 @@ const Moorings = () => {
     }),
     [],
   )
+
   const getMooringsData = useCallback(async () => {
     setIsLoading(true)
     try {
@@ -376,12 +386,13 @@ const Moorings = () => {
       }
       const response = await getMoorings(params).unwrap()
       const { status, content, message, totalSize } = response as MooringResponse
-      if (status === 200 && Array.isArray(content)) {
-        if (content?.length > 0) {
+      if (status === 200 && Array.isArray(content.mooringResponseDtoList)) {
+        if (content?.mooringResponseDtoList?.length > 0) {
           setIsLoading(false)
-          setMooringData(content)
-          setCustomerId(content[0]?.customerId)
-          setSelectedProduct(content[0])
+          setMooringData(content?.mooringResponseDtoList)
+          setMooringGPSResponseData(content?.mooringWithGPSCoordinateResponseList)
+          setCustomerId(content?.mooringResponseDtoList?.[0]?.customerId)
+          setSelectedProduct(content?.mooringResponseDtoList?.[0])
           setTotalRecords(totalSize)
         } else {
           setIsLoading(false)
@@ -392,7 +403,7 @@ const Moorings = () => {
           setBoatYardData([])
           setCustomerId('')
           setTotalRecords(totalSize)
-          setMooringResponseData('')
+          setMooringResponseData([])
         }
       } else {
         setIsLoading(false)
@@ -442,7 +453,7 @@ const Moorings = () => {
         setIsLoader(false)
         setIsLoading(false)
         setCustomerRecordData('')
-        setMooringResponseData('')
+        setMooringResponseData([])
       }
     } catch (error) {
       setIsLoading(false)
@@ -739,11 +750,11 @@ const Moorings = () => {
         <div
           className={`min-w-[21vw] min-h[600px] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
           <CustomMooringPositionMap
-            position={initialPosition}
-            zoomLevel={15}
+            position={coordinatesArray ? coordinatesArray : initialPosition}
+            zoomLevel={10}
             style={{ height: '600px' }}
             iconsByStatus={iconsByStatus}
-            moorings={mooringResponseData}
+            moorings={mooringGPSResponseData}
           />
         </div>
 
@@ -990,6 +1001,7 @@ const Moorings = () => {
                             onRowClick={(rowData: any) => {
                               setDialogVisible(true)
                               setMooringRowData(rowData.data)
+                              setGPSResponseData(rowData?.data?.gpsCoordinates)
                               // dispatch(setMooringRowData(rowData.data))
                             }}
                             onSelectionChange={(e) => {

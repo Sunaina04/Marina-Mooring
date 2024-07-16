@@ -1,17 +1,11 @@
-import { SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import DataTableComponent from '../CommonComponent/Table/DataTableComponent'
 import Header from '../Layout/LayoutComponents/Header'
 import { ActionButtonColumnProps, TableColumnProps } from '../../Type/Components/TableTypes'
 import CustomMooringPositionMap from '../Map/CustomMooringPositionMap'
-import {
-  ErrorResponse,
-  MooringAndWorkOrderResponse,
-  MooringPayload,
-  MooringResponse,
-} from '../../Type/ApiTypes'
+import { ErrorResponse, MooringAndWorkOrderResponse, MooringResponse } from '../../Type/ApiTypes'
 import {
   useGetAllOpenWorkOrdersAndMooringDueForServiceMutation,
-  useGetMooringsDueForServiceMutation,
   useGetMooringsMutation,
 } from '../../Services/MoorManage/MoormanageApi'
 import { useSelector } from 'react-redux'
@@ -19,7 +13,6 @@ import { selectCustomerId } from '../../Store/Slice/userSlice'
 import { Toast } from 'primereact/toast'
 import { PositionType } from '../../Type/Components/MapTypes'
 import { GearOffIcon, GearOnIcon, NeedInspectionIcon, NotInUseIcon } from '../Map/DefaultIcon'
-import DatePickerComponent from '../CommonComponent/DatePickerComponent'
 import { FiMinus } from 'react-icons/fi'
 import { IoAddOutline } from 'react-icons/io5'
 import { Paginator } from 'primereact/paginator'
@@ -27,8 +20,6 @@ import StatCard from '../StatCard/StatCard'
 import { Dialog } from 'primereact/dialog'
 import AddWorkOrders from '../Moorserve/WorkOrders/AddWorkOrders'
 import { Calendar } from 'primereact/calendar'
-import { Nullable } from 'primereact/ts-helpers'
-import AddMoorings from '../Moormanage/Moorings/AddMoorings'
 import { ProgressSpinner } from 'primereact/progressspinner'
 
 const Dashboard = () => {
@@ -38,20 +29,14 @@ const Dashboard = () => {
   const [selectedCustomer, setSelectedCustomer] = useState<any>()
   const [visible, setVisible] = useState(false)
   const [editMode, setEditMode] = useState(false)
-  const [selectedMooring, setSelectedMooring] = useState<any>()
-  const [visibleMooring, setVisibleMooring] = useState(false)
-  const [editModeMooring, setEditModeMooring] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [totalMoorings, setTotalMoorings] = useState<any>()
-  // console.log(totalMoorings,"totalMoorings");
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
   const [pageSize, setPageSize] = useState(10)
   const [totalRecords, setTotalRecords] = useState<number>()
   const [mooringData, setMooringData] = useState<any>()
-  // console.log(mooringData,"mooringData");
   const [selectedProduct, setSelectedProduct] = useState<any>()
-  console.log(selectedProduct,"selectedProduct");
   const [mooringResponseData, setMooringResponseData] = useState<any>()
   const [getMoorings] = useGetMooringsMutation()
   const today = new Date()
@@ -93,7 +78,7 @@ const Dashboard = () => {
   const gpsCoordinatesArray =
     mooringData &&
     mooringData?.map(
-      (mooring: any) => parseCoordinates(mooring.gpsCoordinates) || [41.56725, 70.94045],
+      (mooring: any) => parseCoordinates(mooring.gpsCoordinates) || [-31.896, 114.659],
     )
 
   const initialPosition = gpsCoordinatesArray?.length > 0 ? gpsCoordinatesArray[0] : position
@@ -160,14 +145,6 @@ const Dashboard = () => {
   const handleModalClose = () => {
     setVisible(false)
     setEditMode(false)
-    setVisibleMooring(false)
-    setEditModeMooring(false)
-  }
-
-  const handleEditMooring = (rowData: any) => {
-    setSelectedMooring(rowData)
-    setEditModeMooring(true)
-    setVisibleMooring(true)
   }
 
   const handleEdit = (rowData: any) => {
@@ -254,25 +231,6 @@ const Dashboard = () => {
     [],
   )
 
-  const MooringActionButtonColumn: ActionButtonColumnProps = {
-    header: '',
-    buttons: [
-      {
-        underline: true,
-        label: 'Edit',
-        color: 'green',
-        onClick: (row) => handleEditMooring(row),
-      },
-    ],
-    headerStyle: { backgroundColor: '#FFFFFF' },
-    style: {
-      fontSize: '10px',
-      backgroundColor: '#FFFFFF',
-      color: '#000000',
-      fontWeight: '700',
-    },
-  }
-
   const WorkOrderColumns: TableColumnProps[] = useMemo(
     () => [
       {
@@ -354,13 +312,11 @@ const Dashboard = () => {
         filterDateTo: filterDateTo,
       }).unwrap()
       const { status, content, message, totalSize } = response as MooringAndWorkOrderResponse
-     
-      
+
       if (status === 200) {
         if (content?.mooringDueServiceResponseDtoList) {
           setIsLoading(false)
           setMooringData(content?.mooringDueServiceResponseDtoList)
-          // console.log("content",content?.mooringDueServiceResponseDtoList[0]);
           setSelectedProduct(content?.mooringDueServiceResponseDtoList[0])
         } else {
           setIsLoading(false)
@@ -697,7 +653,9 @@ const Dashboard = () => {
                 editModeWorkOrder={editMode}
                 setVisible={setVisible}
                 toastRef={toast}
-                closeModal={handleModalClose} isAccountRecievable={false}              />
+                closeModal={handleModalClose}
+                isAccountRecievable={false}
+              />
             </Dialog>
 
             {/* <Dialog

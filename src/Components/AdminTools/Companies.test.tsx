@@ -1,4 +1,3 @@
-
 import { render, fireEvent, screen } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { store } from '../../Store/Store'
@@ -23,27 +22,26 @@ const columnStyle = {
 }
 
 const customerOwnerTableColumn = [
-    {
-      id: 'id',
-      label: 'ID',
-      style: { ...columnStyle, width: '4vw' },
-    },
-    {
-      id: 'name',
-      label: 'Name',
-      style: { ...columnStyle, width: '10vw' },
-    },
-    {
-      id: 'phoneNumber',
-      label: 'Phone',
-      style: { ...columnStyle, width: '10vw' },
-    },
-  ]
-  
+  {
+    id: 'id',
+    label: 'ID',
+    style: { ...columnStyle, width: '4vw' },
+  },
+  {
+    id: 'name',
+    label: 'Name',
+    style: { ...columnStyle, width: '10vw' },
+  },
+  {
+    id: 'phoneNumber',
+    label: 'Phone',
+    style: { ...columnStyle, width: '10vw' },
+  },
+]
 
 describe('Companies component', () => {
   it('should be render in the Company Page ', () => {
-    renderWithProvider(<CustomerOwner/>)
+    renderWithProvider(<CustomerOwner />)
     const headerText = screen.getByText(/Moormanage\/Permission/i)
     expect(headerText).toBeInTheDocument()
   })
@@ -91,7 +89,6 @@ describe('Companies component', () => {
   //   expect(emptyMessage).toBeInTheDocument()
   // })
 
-
   // it('renders the Paginator component with correct props and styles', () => {
   //   renderWithProvider(<CustomerOwner />)
   //   const firstPageButton = screen.getByRole('button', { name: /First Page/i })
@@ -112,7 +109,7 @@ describe('Companies component', () => {
   //   expect(paginator).toHaveStyle('padding: 0.5rem')
   //   expect(paginator).toHaveStyle( 'marginBottom:-20px')
   // })
-  
+
   // it('renders the customer admin data container', () => {
   //   renderWithProvider(<CustomerOwner />)
   //   const container = screen.getByTestId('customerData')
@@ -128,18 +125,8 @@ describe('Companies component', () => {
   it('renders headers correctly in DataTable', async () => {
     renderWithProvider(<CustomerOwner />)
     for (const column of customerOwnerTableColumn) {
-      console.log(column.label, 'column test')
       const headerElement = await screen.findByText(column.label)
-      console.log(headerElement, 'headerElement test')
       expect(headerElement).toBeInTheDocument()
     }
   })
-
-});
-
- 
-
-
-
-
-
+})
