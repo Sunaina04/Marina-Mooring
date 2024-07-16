@@ -995,6 +995,7 @@ const Moorings = () => {
                               color: '#000000',
                               fontWeight: 600,
                               backgroundColor: '#D9D9D9',
+                              cursor: 'pointer',
                             }}
                             data={mooringResponseData}
                             columns={tableColumnsMoorings}

@@ -72,18 +72,17 @@ const AccountRecievable = () => {
 
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
-    // setPageNumber1(event.first)
+    setPageNumber1(event.first)
     setPageSize(event.rows)
   }
 
   const onPageChangeTwo = (event: any) => {
     setPageNumberTwo(event.page)
-    // setPageNumber2(event.first)
+    setPageNumber2(event.first)
     setPageSizeTwo(event.rows)
   }
 
   const handleModalClose = () => {
-    // setIsModalOpen(false)
     setIsPaymentModalOpen(false)
     setIsContactModalOpen(false)
     setDenyModalOpen(false)
@@ -130,7 +129,7 @@ const AccountRecievable = () => {
       }
       const response = await getCompletedWorkOrderWithPendingPayApproval(params).unwrap()
       const { status, content, message, totalSize } = response as WorkOrderResponse
-      if (status === 200 && Array.isArray(content)) {
+      if ((status === 200 || status === 201) && Array.isArray(content)) {
         setWorkOrderData(content)
         setIsLoading(false)
         setTotalRecords(totalSize)
@@ -146,6 +145,7 @@ const AccountRecievable = () => {
     } catch (error) {
       const { message: msg } = error as ErrorResponse
       setIsLoading(false)
+      setModalVisible(false)
       console.error('Error occurred while fetching customer data:', msg)
     }
   }, [searchApproval, selectedCustomerId, pageNumber, pageSize])
@@ -165,7 +165,7 @@ const AccountRecievable = () => {
       }
       const response = await getWorkOrderInvoice(params).unwrap()
       const { status, content, message, totalSize } = response as WorkOrderInvoiceResponse
-      if (status === 200 && Array.isArray(content)) {
+      if ((status === 200 || status === 201) && Array.isArray(content)) {
         setWorkOrderDataInvoice(content)
         setIsLoading(false)
         setTotalRecordsInvoice(totalSize)
@@ -180,6 +180,7 @@ const AccountRecievable = () => {
       }
     } catch (error) {
       const { message: msg } = error as ErrorResponse
+      setModalVisible(false)
       setIsLoading(false)
       console.error('Error occurred while fetching customer data:', msg)
     }
@@ -476,7 +477,7 @@ const AccountRecievable = () => {
 
           <div className="">
             <Paginator
-              first={pageNumber}
+              first={pageNumber1}
               rows={pageSize}
               totalRecords={totalRecords}
               rowsPerPageOptions={[5, 10, 20, 30]}
@@ -578,7 +579,7 @@ const AccountRecievable = () => {
 
           <div className="">
             <Paginator
-              first={pageNumberTwo}
+              first={pageNumber2}
               rows={pageSizeTwo}
               totalRecords={totalRecordsInvoice}
               rowsPerPageOptions={[5, 10, 20, 30]}

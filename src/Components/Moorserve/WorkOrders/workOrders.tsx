@@ -191,7 +191,9 @@ const WorkOrders = () => {
   }, [searchText])
 
   useEffect(() => {
-    handleModalClose()
+    if (selectedCustomerId) {
+      handleModalClose()
+    }
   }, [selectedCustomerId])
 
   return (
@@ -289,7 +291,7 @@ const WorkOrders = () => {
                   value={completedWorkOrder}
                   onChange={handleCompleted}
                   options={options}
-                  className='selectButton'
+                  className="selectButton"
                 />
               </div>
             </div>

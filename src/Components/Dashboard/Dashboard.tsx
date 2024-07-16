@@ -277,31 +277,6 @@ const Dashboard = () => {
     headerStyle: { backgroundColor: '#FFFFFF' },
   }
 
-  const MooringHeader = (
-    <div>
-      <div className="flex justify-between gap-2 p-2 bg-white">
-        <div
-          style={{
-            fontWeight: '700',
-            fontSize: '16px',
-            color: '#000000',
-          }}>
-          Moorings Due for Service
-        </div>
-        {/* <div
-          style={{
-            width: '80px',
-            height: '16px',
-            opacity: '50%',
-            fontSize: '13.59px',
-            fontWeight: '500',
-          }}>
-          View all
-        </div> */}
-      </div>
-    </div>
-  )
-
   const getMooringsAndWorkOrderData = useCallback(async () => {
     setIsLoading(true)
     try {
@@ -412,7 +387,6 @@ const Dashboard = () => {
               <div style={{ overflow: 'auto', borderRadius: '10px', marginBottom: '10px' }}>
                 <DataTableComponent
                   columns={Mooringcolumns}
-                  // actionButtons={MooringActionButtonColumn}
                   scrollable={true}
                   tableStyle={{
                     backgroundColor: '#FFFFFF',
@@ -470,10 +444,10 @@ const Dashboard = () => {
 
           <div
             className={`md:ml-12 md:mt-3 lg:mt-0`}
-            style={{
-              flexGrow: 1,
-              // marginRight: '50px',
-            }}>
+            // style={{
+            //   flexGrow: 1,
+            // }}
+          >
             <div className="flex  flex-col wrapper ">
               <div
                 className=" px-5 relative mb-4 rounded-xl bg-white border-[1px] border-[#D5E1EA] mr-8"
@@ -657,26 +631,6 @@ const Dashboard = () => {
                 isAccountRecievable={false}
               />
             </Dialog>
-
-            {/* <Dialog
-              position="center"
-              style={{
-                width: '851px',
-                height: '526px',
-                borderRadius: '1rem',
-              }}
-              draggable={false}
-              visible={visibleMooring}
-              onHide={handleModalClose}
-              header={<h1 className="text-xl font-extrabold text-black ml-4">Work Order</h1>}>
-              <AddMoorings
-                moorings={selectedMooring}
-                mooringRowData={selectedMooring}
-                editMode={editModeMooring}
-                closeModal={handleModalClose}
-                getCustomer={() => {}}
-              />
-            </Dialog> */}
           </div>
         </div>
       </div>
@@ -685,3 +639,80 @@ const Dashboard = () => {
 }
 
 export default Dashboard
+
+{
+  /* <div style={{ marginLeft: '2rem' }}>
+<div
+  data-testid="mooring-data"
+  className="flex flex-col mt-[3px] ml-[15px] mr-[15px] table-container"
+  style={{ height: '300px' }}>
+  <div className="bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px] text-white">
+    <h1 className="p-4 text-xl font-extrabold">Moorings Due for Service</h1>
+  </div>
+  <div style={{ overflow: 'auto', borderRadius: '10px', marginBottom: '10px' }}>
+    <DataTableComponent
+      columns={Mooringcolumns}
+      scrollable={true}
+      tableStyle={{
+        backgroundColor: '#FFFFFF',
+        fontSize: '12px',
+        color: '#000000',
+        fontWeight: 600,
+        cursor: 'pointer',
+      }}
+      selectionMode="single"
+      onSelectionChange={(e) => {
+        setSelectedProduct(e.value)
+      }}
+      selection={selectedProduct}
+      dataKey="id"
+      onRowClick={(rowData) => {
+        setMooringResponseData(rowData?.data?.gpsCoordinates)
+      }}
+      data={mooringData}
+      emptyMessage={
+        <div className="text-center">
+          <img
+            src="/assets/images/empty.png"
+            alt="Empty Data"
+            className="w-20 mx-auto mb-2"
+          />
+          <p className="text-gray-500">No data available</p>
+        </div>
+      }
+    />
+  </div>
+
+  {isLoading && (
+    <ProgressSpinner
+      style={{
+        position: 'absolute',
+        top: '30%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: '50px',
+        height: '50px',
+      }}
+      strokeWidth="4"
+    />
+  )}
+</div>
+
+ <div
+  style={{
+    marginTop: '6px',
+    height: '300px',
+    marginLeft: '14px',
+    marginRight: '12px',
+  }}>
+  <CustomMooringPositionMap
+    position={coordinatesArray ? coordinatesArray : initialPosition}
+    zoomLevel={10}
+    style={{ height: '100%', width: '100%' }}
+    iconsByStatus={iconsByStatus}
+    moorings={mooringData}
+    dashboard={true}
+  />
+</div>
+</div>  */
+}
