@@ -200,7 +200,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
     const newBase64Strings: string[] = []
     const newImageUrls: string[] = []
-    const imageRequestDtoList: { imageName: string; imageData: string }[] = []
+    const imageRequestDtoList: { imageName: string; imageData: string; note: string }[] = []
 
     for (const file of validImageFiles) {
       try {
@@ -223,6 +223,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         imageRequestDtoList.push({
           imageName: file.name,
           imageData: base64String,
+          note: formData?.imageNote,
         })
       } catch (error) {
         console.error('Error reading file:', error)
