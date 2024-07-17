@@ -837,3 +837,9 @@ export interface InventoryPayload {
   salePrice: number
   taxable: boolean
 }
+
+export interface ImagePayload {
+  imageName: string
+  note: string
+  imageData: string
+}

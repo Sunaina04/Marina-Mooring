@@ -65,7 +65,7 @@ const MooringMapModal: React.FC<TimeLineProps> = ({
                 getCustomer={() => {}}
               />
             }
-            headerText={<h1 className="text-xxl font-bold text-black ">Add Mooring</h1>}
+            headerText={<h1 className="text-xxl font-bold text-black ">Mooring Information</h1>}
             visible={customerModalVisible}
             onHide={handleModalClose}
             dialogStyle={{

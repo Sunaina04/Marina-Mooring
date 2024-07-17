@@ -697,9 +697,9 @@ const Customer = () => {
             }
             headerText={
               editMooringMode ? (
-                <h1 className="text-xxl font-bold text-black ">Add Mooring</h1>
+                <h1 className="text-xxl font-bold text-black ">Mooring Information</h1>
               ) : (
-                <h1 className="text-xxl font-bold text-black "> Customers record</h1>
+                <h1 className="text-xxl font-bold text-black "> Customer Information</h1>
               )
             }
             visible={modalVisible}

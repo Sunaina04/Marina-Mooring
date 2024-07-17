@@ -1,6 +1,7 @@
 import {
   BoatYardPayload,
   CustomerPayload,
+  ImagePayload,
   InventoryPayload,
   MooringPayload,
   TechnicianPayload,
@@ -470,6 +471,22 @@ const moormanageApi = userApi.injectEndpoints({
         params: { pageNumber, pageSize, sortBy, sortDir, filterDateFrom, filterDateTo },
       }),
     }),
+
+    updateImage: builder.mutation({
+      query: ({
+        id,
+        entityId,
+        payload,
+      }: {
+        id: number
+        entityId: number
+        payload: ImagePayload
+      }) => ({
+        url: `api/v1/inventory/${id}/${entityId}`,
+        method: 'PUT',
+        body: payload,
+      }),
+    }),
   }),
 })
 
@@ -508,4 +525,5 @@ export const {
   useGetMooringsDueForServiceMutation,
   useGetAllOpenWorkOrdersMutation,
   useGetAllOpenWorkOrdersAndMooringDueForServiceMutation,
+  useUpdateImageMutation,
 } = moormanageApi
