@@ -532,8 +532,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         phone: phone,
         streetHouse: streetHouse,
         aptSuite: sectorBlock,
-        state: selectedState?.id,
-        country: selectedCountry?.id,
+        stateId: selectedState?.id,
+        countryId: selectedCountry?.id,
         imageRequestDtoList: imageRequestDtoList,
         customerOwnerId: selectedCustomerId,
         customerTypeId: selectedCustomerType === 'Dock' ? 5 : selectedCustomerType?.id,
@@ -1996,7 +1996,14 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     gap: '0.5rem',
                   }}
                   onClick={uploadImages}>
-                  <FaFileUpload style={{ fontSize: '29px', color: '#0098FF', marginTop: '3px',  marginLeft: '1rem', }} />
+                  <FaFileUpload
+                    style={{
+                      fontSize: '29px',
+                      color: '#0098FF',
+                      marginTop: '3px',
+                      marginLeft: '1rem',
+                    }}
+                  />
                   <div className="border-r-2 border-sky-500  h-9 pl-3"></div>
                   <span className="pl-10 mt-1"> Upload Images </span>
                 </label>

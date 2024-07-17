@@ -20,13 +20,10 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
   moorings,
   dashboard,
   customerPage,
-  setLeftContainer,
-  setRightContainer,
 }) => {
   const [map, setMap] = useState<any>()
   const mapRef = useRef<any>(null)
   const [showMapModal, setShowMapModal] = useState(false)
-  const [mapContainerWidth, setMapContainerWidth] = useState(false)
 
   useEffect(() => {
     if (map && position) {
@@ -38,18 +35,6 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
     if (!coordinates) return null
     const [latitude, longitude] = coordinates.split(' ').map(parseFloat)
     return isNaN(latitude) || isNaN(longitude) ? null : [latitude, longitude]
-  }
-
-  const IncreaseMapContainerWidth = () => {
-    setMapContainerWidth(true)
-    setLeftContainer(true)
-    setRightContainer(true)
-  }
-
-  const DecreaseMapContainerWidth = () => {
-    setMapContainerWidth(false)
-    setLeftContainer(false)
-    setRightContainer(false)
   }
 
   const boxStyle = {
@@ -105,7 +90,7 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
               paddingRight: '3%',
             }}
             onClick={() => setShowMapModal(false)}>
-            X
+            <img src="/assets/images/cross.png" alt="Key Icon" className="p-clickable" />
           </div>
           <div
             style={{
@@ -177,11 +162,9 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
         </div>
       ) : null}
       <div style={{ position: 'relative' }}>
-        {/* style={{ resize: 'both', overflow: 'auto' }} */}
         <div
           onClick={() => {
             setShowMapModal(true)
-            // mapContainerWidth ? DecreaseMapContainerWidth() : setRightContainer(true)
           }}
           className="p-2 h-8 w-8 mr-20"
           style={{ cursor: 'pointer', position: 'absolute', left: '95%', top: 0, zIndex: 999 }}>
