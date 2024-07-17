@@ -788,7 +788,10 @@ const Moorings = () => {
         )}
 
         {/* middle container */}
-        <div className={`min-h-[600] rounded-md border-[1px] ml-5 `} style={{ flexGrow: '1' }}>
+
+        <div
+          className={`min-h-[600] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}
+          style={{ flexGrow: '1' }}>
           <CustomMooringPositionMap
             position={coordinatesArray ? coordinatesArray : initialPosition}
             zoomLevel={10}
