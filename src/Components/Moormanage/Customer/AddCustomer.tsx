@@ -1231,7 +1231,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 <div className="flex gap-6">
                   <div>
                     <span className="font-medium text-sm text-[#000000]">
-                      <div className="flex gap-1">Mooring Number</div>
+                      <div className="flex gap-1">
+                        Mooring Number <p className="text-red-600">*</p>
+                      </div>
                     </span>
                     <div className="mt-2">
                       <InputComponent
@@ -1839,6 +1841,57 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   <div>
                     <div className="mt-3">
                       <div>
+                        <span className="font-medium text-sm text-[#000000]">
+                          <div className="flex gap-1">Inspection Date</div>
+                        </span>
+                      </div>
+
+                      <div className="mt-2">
+                        <Calendar
+                          value={parseDate(formData.conditionEyeDate)}
+                          onChange={(e) =>
+                            handleInputChange('conditionEyeDate', formatDate(e.target.value))
+                          }
+                          dateFormat="mm/dd/yy"
+                          style={{
+                            width: '230px',
+                            height: '32px',
+                            border: '1px solid #D5E1EA',
+                            borderRadius: '0.50rem',
+                            fontSize: '0.8rem',
+                            padding: '0.5rem',
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div className="mt-3">
+                      <div>
+                        <span className="font-medium text-sm text-[#000000]">
+                          <div className="flex gap-1">Service Area</div>
+                        </span>
+                      </div>
+                      <div className="mt-2">
+                        <Dropdown
+                          value={formData?.conditionOfEye}
+                          onChange={(e) => handleInputChange('conditionOfEye', e.value)}
+                          options={conditionOfEye}
+                          optionLabel="condition"
+                          placeholder="Select"
+                          editable
+                          disabled={isLoading}
+                          style={{
+                            width: '230px',
+                            height: '32px',
+                            border: '1px solid #D5E1EA',
+                            borderRadius: '0.50rem',
+                            fontSize: '0.8rem',
+                          }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="mt-3">
+                      <div>
                         <span className="font-medium text-sm text-[#000000]">Pin on Map</span>
                       </div>
                       <div
@@ -1916,8 +1969,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           headerStyle={{ cursor: 'alias' }}
           header={'Images'}>
           <div className={`ml-4 ${isLoading ? 'blurred' : ''}`}>
-            <div className="flex justify-center">
-              <div className="mt-2">
+            <div className="flex justify-between ">
+              <div className="mt-6">
                 <input
                   id="file-input"
                   type="file"
@@ -1931,9 +1984,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 <label
                   htmlFor="file-input"
                   style={{
-                    width: '230px',
-                    height: '32px',
-                    border: fieldErrors.email ? '1px solid red' : '1px solid #D5E1EA',
+                    width: '300px',
+                    height: '40px',
+                    border: '2px solid #0098FF',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                     paddingLeft: '0.5rem',
@@ -1943,10 +1996,32 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     gap: '0.5rem',
                   }}
                   onClick={uploadImages}>
-                  <FaFileUpload style={{ fontSize: '22px', color: '#0098FF', marginTop: '3px' }} />
-                  <div className="border-r-2 border-blue-100 h-[30px]"></div>
-                  <span className="pl-4 mt-1"> Upload Images </span>
+                  <FaFileUpload style={{ fontSize: '29px', color: '#0098FF', marginTop: '3px',  marginLeft: '1rem', }} />
+                  <div className="border-r-2 border-sky-500  h-9 pl-3"></div>
+                  <span className="pl-10 mt-1"> Upload Images </span>
                 </label>
+              </div>
+              <div className="">
+                <div className=" font-medium text-sm text-[#000000]">Note</div>
+                <div className="mt-1">
+                  <InputComponent
+                    // value={formData.note}
+
+                    onChange={(e) => handleInputChange('note', e.target.value)}
+                    style={{
+                      width: '370px',
+                      height: '40px',
+                      border: '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.8rem',
+                      boxShadow: 'none',
+                      paddingLeft: '0.5rem',
+                      color: 'black',
+                      resize: 'none',
+                    }}
+                  />
+                  {/* <p>{fieldErrors.note && <small className="p-error">{fieldErrors.note}</small>}</p> */}
+                </div>
               </div>
             </div>
           </div>
