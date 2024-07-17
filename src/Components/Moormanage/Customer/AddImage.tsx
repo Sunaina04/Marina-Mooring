@@ -1,14 +1,25 @@
 import { Button } from 'primereact/button'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import InputComponent from '../../CommonComponent/InputComponent'
 import { InputText } from 'primereact/inputtext'
 import { ImageDataProps } from '../../../Type/CommonType'
+import { useUpdateImageMutation } from '../../../Services/MoorManage/MoormanageApi'
+import { CustomerResponse, ErrorResponse } from '../../../Type/ApiTypes'
+import { Toast } from 'primereact/toast'
 
-const AddImage: React.FC<ImageDataProps> = ({ imageData, entityId, entity }) => {
+const AddImage: React.FC<ImageDataProps> = ({
+  imageData,
+  entityId,
+  entity,
+  closeModal,
+  getCustomersWithMooring,
+}) => {
   const [isLoading, setIsLoading] = useState(false)
-  const [imageName, setImageName] = useState('')
-  const [note, setNote] = useState('')
+  const [imageName, setImageName] = useState(imageData?.imageName)
+  const [note, setNote] = useState(imageData?.note)
   const [errors, setErrors] = useState<{ imageName?: string; note?: string }>({})
+  const [editImage] = useUpdateImageMutation()
+  const toastRef = useRef<Toast>(null)
 
   const validate = (field: string, value: string) => {
     let error = ''
@@ -36,18 +47,57 @@ const AddImage: React.FC<ImageDataProps> = ({ imageData, entityId, entity }) => 
     validate(field, value)
   }
 
-  const handleSubmit = () => {
-    const isImageNameValid = validate('imageName', imageName)
-    const isNoteValid = validate('note', note)
+  const handleSubmit = async () => {
+    validate('imageName', imageName)
+    validate('note', note)
 
-    if (isImageNameValid && isNoteValid) {
-      // Submit form
-      console.log('Form submitted:', { imageName, note })
+    try {
+      setIsLoading(true)
+      const editImagePayload = {
+        imageName: imageName,
+        note: note,
+      }
+      const response = await editImage({
+        payload: editImagePayload,
+        id: imageData?.id,
+        entity: entity,
+        entityId: entityId,
+      }).unwrap()
+      const { status, message } = response as CustomerResponse
+      if (status === 200 || status === 201) {
+        setIsLoading(false)
+        toastRef?.current?.show({
+          severity: 'success',
+          summary: 'Success',
+          detail: message,
+          life: 3000,
+        })
+        closeModal()
+        getCustomersWithMooring()
+      } else {
+        setIsLoading(false)
+        toastRef?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+      }
+    } catch (error) {
+      const { message, data } = error as ErrorResponse
+      setIsLoading(false)
+      toastRef?.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: data?.message,
+        life: 3000,
+      })
     }
   }
 
   return (
     <div>
+      <Toast ref={toastRef} />
       <div className={isLoading ? 'blurred' : ''}>
         <div>
           <div className="mt-5 ml-3">
@@ -143,7 +193,7 @@ const AddImage: React.FC<ImageDataProps> = ({ imageData, entityId, entity }) => 
           }}
         />
         <Button
-          // onClick={closeModal}
+          onClick={closeModal}
           label={'Back'}
           text={true}
           style={{

@@ -476,15 +476,18 @@ const moormanageApi = userApi.injectEndpoints({
       query: ({
         id,
         entityId,
+        entity,
         payload,
       }: {
         id: number
         entityId: number
+        entity: string
         payload: ImagePayload
       }) => ({
-        url: `api/v1/inventory/${id}/${entityId}`,
+        url: `api/v1/image/editImage/${id}/${entityId}`,
         method: 'PUT',
         body: payload,
+        params: { entity },
       }),
     }),
   }),

@@ -193,6 +193,7 @@ const Customer = () => {
     setEditCustomerMode(false)
     setEditMooringMode(false)
     setDialogVisible(false)
+    setImageEditVisible(false)
   }
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -1294,7 +1295,12 @@ const Customer = () => {
           imageData={imageData}
           entityId={customerId}
           entity={'Customer'}
-          // closeModal={handleModalClose}
+          closeModal={handleModalClose}
+          getCustomersWithMooring={() => {
+            if (customerId) {
+              getCustomersWithMooring(customerId)
+            }
+          }}
         />
       </Dialog>
     </div>

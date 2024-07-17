@@ -144,4 +144,6 @@ export interface ImageDataProps {
   imageData: any
   entityId: number
   entity: string
+  closeModal: () => void
+  getCustomersWithMooring: () => void
 }
