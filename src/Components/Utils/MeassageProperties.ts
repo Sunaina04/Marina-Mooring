@@ -16,6 +16,7 @@ export const properties = {
   customerHeader: 'Customers',
   customerRecord: 'Customers Record',
   mooringHeader: 'Moorings',
-  Users: 'Customer Mapping',
+  Users: 'User Management',
+  Settings: 'Customer Mapping',
   Technician: 'Technician',
 }

@@ -69,6 +69,7 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
 
   return (
     <>
+      {/* <div style={{ resize: 'both', overflow: 'auto' }}> */}
       <MapContainer
         ref={setMap}
         style={style}
@@ -123,6 +124,8 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
               )
             })}
       </MapContainer>
+      {/* </div> */}
+
       {dashboard ? (
         <div style={boxStyle}>
           <h2>Status</h2>

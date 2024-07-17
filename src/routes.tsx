@@ -21,6 +21,7 @@ import Permission from './Components/AdminTools/Permission'
 import LoginForm from './Components/Login/LoginForm'
 import CustomerAdmin from './Components/AdminTools/Companies'
 import InventoryDetails from './Components/Moormanage/Vendors/InventoryDetails'
+import Settings from './Components/AdminTools/Settings'
 
 const routes = [
   {
@@ -129,7 +130,7 @@ const routes = [
       },
       {
         path: 'settings',
-        element: <Permission />,
+        element: <Settings />,
       },
     ],
   },
