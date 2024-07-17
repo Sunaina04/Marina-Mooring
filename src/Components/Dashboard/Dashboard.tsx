@@ -333,8 +333,8 @@ const Dashboard = () => {
     try {
       const response = await getMoorings({}).unwrap()
       const { status, content, message, totalSize } = response as MooringResponse
-      if (status === 200 && Array.isArray(content)) {
-        if (content?.length > 0) {
+      if (status === 200) {
+        if (totalSize > 0) {
           setTotalMoorings(totalSize)
         } else {
           setTotalMoorings(0)
