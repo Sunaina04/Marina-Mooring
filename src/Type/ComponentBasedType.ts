@@ -125,6 +125,7 @@ export interface WorkOrderProps {
   editModeEstimate?: boolean
   estimate?: boolean
   isAccountRecievable?: boolean
+  isInvoice?: boolean
   setVisible: React.Dispatch<React.SetStateAction<boolean>>
   toastRef?: any
   closeModal: () => void

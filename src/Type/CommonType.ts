@@ -134,8 +134,14 @@ export interface Params {
 }
 
 export interface DropdownCellProps {
-  value: string;
-  options?: any,
-  onChange: (e: any) => void;
-  rowId?:string
+  value: string
+  options?: any
+  onChange: (e: any) => void
+  rowId?: string
+}
+
+export interface ImageDataProps {
+  imageData: any
+  entityId: number
+  entity: string
 }

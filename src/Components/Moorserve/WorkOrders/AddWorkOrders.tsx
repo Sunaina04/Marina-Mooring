@@ -52,6 +52,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   isAccountRecievable,
   getWorkOrderWithPendingPayApproval,
   getOutStandingInvoice,
+  isInvoice,
 }) => {
   const selectedCustomerId = useSelector(selectCustomerId)
   const [workOrder, setWorkOrder] = useState<any>({
@@ -1083,7 +1084,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
           padding: '0 12px',
           bottom: '0px',
         }}>
-        {isAccountRecievable ? (
+        {isAccountRecievable && !isInvoice ? (
           <>
             <Button
               onClick={() => {
@@ -1128,6 +1129,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
           <>
             <Button
               onClick={handleSave}
+              disabled={isInvoice}
               label="Save"
               style={{
                 width: '89px',

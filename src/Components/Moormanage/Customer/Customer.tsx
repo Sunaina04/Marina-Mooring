@@ -51,6 +51,7 @@ const Customer = () => {
   const [mooringRowData, setMooringRowData] = useState<MooringPayload>()
   const [dialogVisible, setDialogVisible] = useState(false)
   const [imageVisible, setImageVisible] = useState(false)
+  const [imageData, setImageData] = useState<any>()
   const [imageEditVisible, setImageEditVisible] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [selectedMooring, setSelectedMooring] = useState<any>()
@@ -409,7 +410,8 @@ const Customer = () => {
           color: 'black',
           label: 'Edit',
           onClick: (data) => {
-            // setShowImage((prev) => ({ ...prev, id: data.id, imageData: data.imageData }))
+            console.log('data', data)
+            setImageData(data)
             setImageEditVisible(true)
           },
           underline: true,
@@ -1286,17 +1288,11 @@ const Customer = () => {
         }}
         headerStyle={{ cursor: 'alias' }}
         header={'Images'}>
-        {/* <AddWorkOrders
-                workOrderData={selectedCustomer}
-                editModeWorkOrder={editMode}
-                setVisible={setVisible}
-                toastRef={toast}
-                closeModal={handleModalClose}
-              /> */}
-
         <AddImage
-
-        // closeModal={handleModalClose}
+          imageData={imageData}
+          entityId={customerId}
+          entity={'Customer'}
+          // closeModal={handleModalClose}
         />
       </Dialog>
     </div>

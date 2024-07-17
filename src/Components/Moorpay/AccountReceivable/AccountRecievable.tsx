@@ -69,6 +69,7 @@ const AccountRecievable = () => {
   const [selectedRowData, setSelectedRowData] = useState<any>()
   const [selectedWorkOrderRowData, setSelectedWorkOredrRowData] = useState<any>()
   const [isAccountRecievable, setIsAccountRecievable] = useState(false)
+  const [isInvoice, setIsInvoice] = useState(false)
 
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
@@ -99,7 +100,7 @@ const AccountRecievable = () => {
     setIsContactModalOpen(false)
   }
 
-  const handleActionClick = (action: string, row: any) => {
+  const handleBottomSectionActionClick = (action: string, row: any) => {
     if (action === 'Payments') {
       setModalVisible(true)
       setIsPaymentModalOpen(true)
@@ -107,10 +108,11 @@ const AccountRecievable = () => {
       setModalVisible(true)
       setIsContactModalOpen(true)
     } else if (action === 'View') {
-      // setSelectedWorkOredrRowData(row)
-      // setModalVisible(true)
-      // setAddWorkOrderModal(true)
-      // setIsAccountRecievable(false)
+      setSelectedWorkOredrRowData(row?.workOrderResponseDto)
+      setModalVisible(true)
+      setAddWorkOrderModal(true)
+      setIsAccountRecievable(true)
+      setIsInvoice(true)
     }
   }
 
@@ -336,19 +338,19 @@ const AccountRecievable = () => {
           width: '46px',
           height: '17px',
         },
-        onClick: (row) => handleActionClick('Payments', row),
+        onClick: (row) => handleBottomSectionActionClick('Payments', row),
       },
       {
         color: 'black',
         label: 'Contact',
         filled: true,
-        // onClick: (row) => handleActionClick('Contact', row),
+        // onClick: (row) => handleBottomSectionActionClick('Contact', row),
       },
       {
         color: 'black',
         label: 'View',
         filled: true,
-        onClick: (row) => handleActionClick('View', row),
+        onClick: (row) => handleBottomSectionActionClick('View', row),
       },
     ],
     headerStyle: {
@@ -734,6 +736,7 @@ const AccountRecievable = () => {
           getWorkOrderWithPendingPayApproval={getWorkOrderWithPendingPayApproval}
           getOutStandingInvoice={getOutStandingInvoice}
           editModeWorkOrder={true}
+          isInvoice={isInvoice}
           setVisible={() => {
             setAddWorkOrderModal(false)
           }}
