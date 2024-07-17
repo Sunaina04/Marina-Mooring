@@ -88,16 +88,23 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
               justifyContent: 'flex-end',
               color: 'white',
               paddingRight: '3%',
+              marginTop: '20px',
+              cursor: 'pointer',
             }}
             onClick={() => setShowMapModal(false)}>
-            <img src="/assets/images/cross.png" alt="Key Icon" className="p-clickable" />
+            <img
+              src="/assets/images/close.png"
+              alt="Key Icon"
+              className="p-clickable"
+              style={{ width: '23px' }}
+            />
           </div>
           <div
             style={{
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              height: '100vh',
+              height: '90vh',
             }}>
             <MapContainer
               ref={setMap}
