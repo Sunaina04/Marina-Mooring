@@ -224,7 +224,7 @@ const Vendors = () => {
 
   return (
     <>
-      <div style={{ height: '100vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
+      <div style={{ height: '150vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
         <Header header="MOORMANAGE/Vendor" />
         <Toast ref={toast} />
         <div className="flex justify-end">
@@ -348,9 +348,7 @@ const Vendors = () => {
                 }
               />
             </div>
-            <div
-              data-testid="PaginatorOne"
-              className="mt-auto">
+            <div data-testid="PaginatorOne" className="mt-auto">
               <Paginator
                 first={pageNumber1}
                 rows={pageSize}

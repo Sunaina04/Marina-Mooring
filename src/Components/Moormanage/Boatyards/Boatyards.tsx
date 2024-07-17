@@ -537,7 +537,7 @@ const Boatyards = () => {
   }, [selectedBoatYard, boatyardsData, mooringWithBoatyardsData])
 
   return (
-    <div style={{ height: '100vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
+    <div style={{ height: '150vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
       <Toast ref={toast} />
       <Header header="MOORMANAGE/Boatyards" />
       <div className="flex justify-end mr-14 mt-6 ">

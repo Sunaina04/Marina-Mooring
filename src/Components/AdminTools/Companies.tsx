@@ -409,7 +409,7 @@ const CustomerOwner = () => {
   }, [searchUsersText, selectedCustomerId, pageNumberTwo, pageSizeTwo])
 
   return (
-    <div style={{ height: '100vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
+    <div style={{ height: '150vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
       <Toast ref={toast} />
       <Header header="MOORMANAGE/Permission" customer={customerUpdated} />
 
@@ -547,7 +547,7 @@ const CustomerOwner = () => {
                 }
               />
             </div>
-            <div  data-testid="paginatorOne" className="mt-auto">
+            <div data-testid="paginatorOne" className="mt-auto">
               <Paginator
                 first={pageNumber1}
                 rows={pageSize}
@@ -561,7 +561,7 @@ const CustomerOwner = () => {
                   backgroundColor: 'white',
                   borderTop: '1px solid #D5E1EA',
                   padding: '0.5rem',
-                  marginBottom:'-20px'
+                  marginBottom: '-20px',
                 }}
               />
             </div>
@@ -598,20 +598,20 @@ const CustomerOwner = () => {
               height: '18px',
             }}
           />
-          <div data-testid= 'progress'>
-          {isLoading && (
-            <ProgressSpinner
-              style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                width: '50px',
-                height: '50px',
-              }}
-              strokeWidth="4"
-            />
-          )}
+          <div data-testid="progress">
+            {isLoading && (
+              <ProgressSpinner
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  width: '50px',
+                  height: '50px',
+                }}
+                strokeWidth="4"
+              />
+            )}
           </div>
           <div
             data-testid="customerDataAdmin"
@@ -642,7 +642,7 @@ const CustomerOwner = () => {
                 }
               />
             </div>
-            <div  data-testid="paginatorTwo" className="mt-auto">
+            <div data-testid="paginatorTwo" className="mt-auto">
               <Paginator
                 first={pageNumberOne}
                 rows={pageSizeTwo}
@@ -656,7 +656,7 @@ const CustomerOwner = () => {
                   backgroundColor: 'white',
                   borderTop: '1px solid #D5E1EA',
                   padding: '0.5rem',
-                   marginBottom:'-20px'
+                  marginBottom: '-20px',
                 }}
               />
             </div>

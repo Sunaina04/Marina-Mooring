@@ -216,7 +216,7 @@ const Settings = () => {
   }, [selectedCustomerId, pageSize, pageNumber])
 
   return (
-    <div style={{ height: '100vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
+    <div style={{ height: '150vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
       <Header header="MOORMANAGE/Permission" />
       <Toast ref={toast} />
       <div

@@ -97,8 +97,8 @@ const AdminLayout = () => {
   }
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh' }}>
-      <div style={{ display: 'flex', maxHeight: '100vh', overflowY: 'auto' }}>
+    <div style={{ display: 'flex', minHeight: '150vh' }}>
+      <div style={{ display: 'flex', maxHeight: '150vh', overflowY: 'auto' }}>
         <button
           onClick={handleToggleDrawer}
           style={{
@@ -126,7 +126,7 @@ const AdminLayout = () => {
             justifyContent: 'space-between',
             width: open ? '19rem' : '5rem',
             minWidth: open ? '18rem' : '5rem',
-            maxHeight: '100vh',
+            maxHeight: '150vh',
             background: '#00426F',
             borderRight: 'none',
             transition: 'width 0.3s ease-in-out',
@@ -328,7 +328,7 @@ const AdminLayout = () => {
           justifyContent: 'space-between',
           height: '100%',
           overflowY: 'auto',
-          maxHeight: '100vh',
+          maxHeight: '150vh',
         }}>
         <Outlet />
       </div>

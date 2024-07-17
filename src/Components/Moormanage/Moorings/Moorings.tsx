@@ -65,7 +65,7 @@ const Moorings = () => {
   const [showImage, setShowImage] = useState({ id: '', imageData: '' })
   const [imageVisible, setImageVisible] = useState(false)
   const [imageEditVisible, setImageEditVisible] = useState(false)
-  const [containerWidth, setContainerwidth] = useState()
+  const [containerWidth, setContainerwidth] = useState(false)
 
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
@@ -584,7 +584,7 @@ const Moorings = () => {
   }, [pageNumberTwo, pageSizeTwo, customerId, selectedCustomerId])
 
   return (
-    <div style={{ height: '100vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
+    <div style={{ height: '150vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
       <Header header={properties.MoormanageMoorings} />
       <Toast ref={toast} />
 
@@ -645,18 +645,31 @@ const Moorings = () => {
           style={{
             height: '700px',
             minHeight: '700px',
-            width: containerWidth ? '10px' : '500px',
-            minWidth: containerWidth ? '10px' : '500px',
+            width: containerWidth ? '20px' : '500px',
+            minWidth: containerWidth ? '20px' : '500px',
             backgroundColor: '#FFFFFF',
             position: 'relative',
           }}
-          className={` ml-[45px] w-[50px] ${containerWidth ? ' ' : 'flex-1'}`}>
+          className={`ml-[45px] ${containerWidth ? 'w-[20px]' : 'flex-1 w-[500px]'}`}>
           <div data-testid="customer-data" className="flex flex-col h-full ">
             <div className="flex item-center justify-between bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px] text-white cursor-pointer">
               <div>
-                <h1 className="p-4 text-xl font-extrabold">{properties.mooringHeader}</h1>
+                <h1 className="p-4 text-xl font-extrabold">
+                  {!containerWidth && properties.mooringHeader}
+                </h1>
+                {containerWidth && (
+                  <div
+                    className="p-1"
+                    onClick={() => setContainerwidth(false)}
+                    style={{ cursor: 'pointer' }}>
+                    <img src="/assets/images/plus.png" alt="Key Icon" className="p-clickable" />
+                  </div>
+                )}
               </div>
-              <div className="p-8" onClick={handleContainerWidth} style={{ cursor: 'pointer' }}>
+              <div
+                className="p-8"
+                onClick={() => setContainerwidth(true)}
+                style={{ cursor: 'pointer' }}>
                 <svg
                   width="24"
                   height="4"
@@ -670,32 +683,34 @@ const Moorings = () => {
                 </svg>
               </div>
             </div>
-            <InputTextWithHeader
-              value={searchText}
-              onChange={handleSearch}
-              placeholder="Search by name, ID, phone no.... "
-              inputTextStyle={{
-                width: '100%',
-                height: '44px',
-                padding: '0 4rem 0 3rem',
-                border: '1px solid #C5D9E0',
-                fontSize: '16px',
-                color: '#000000',
-                borderRadius: '4px',
-                minHeight: '44px',
-                fontWeight: 400,
-                backgroundColor: 'rgb(242 242 242 / 0%)',
-              }}
-              borderBottom={{ border: '1px solid #D5E1EA' }}
-              iconStyle={{
-                position: 'absolute',
-                left: '15px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                width: '18px',
-                height: '18px',
-              }}
-            />
+            {!containerWidth && (
+              <InputTextWithHeader
+                value={searchText}
+                onChange={handleSearch}
+                placeholder="Search by name, ID, phone no.... "
+                inputTextStyle={{
+                  width: '100%',
+                  height: '44px',
+                  padding: '0 4rem 0 3rem',
+                  border: '1px solid #C5D9E0',
+                  fontSize: '16px',
+                  color: '#000000',
+                  borderRadius: '4px',
+                  minHeight: '44px',
+                  fontWeight: 400,
+                  backgroundColor: 'rgb(242 242 242 / 0%)',
+                }}
+                borderBottom={{ border: '1px solid #D5E1EA' }}
+                iconStyle={{
+                  position: 'absolute',
+                  left: '15px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  width: '18px',
+                  height: '18px',
+                }}
+              />
+            )}
             <div className="ml-[15px] mr-[15px] table-container" style={{ overflow: 'auto' }}>
               <DataTableComponent
                 data={mooringData}
@@ -730,23 +745,25 @@ const Moorings = () => {
                 }
               />
             </div>
-            <div className="mt-auto">
-              <Paginator
-                first={pageNumber1}
-                rows={pageSize}
-                totalRecords={totalRecords}
-                rowsPerPageOptions={[5, 10, 20, 30]}
-                onPageChange={onPageChange}
-                style={{
-                  position: 'sticky',
-                  bottom: 0,
-                  zIndex: 1,
-                  backgroundColor: 'white',
-                  borderTop: '1px solid #D5E1EA',
-                  padding: '0.5rem',
-                }}
-              />
-            </div>
+            {!containerWidth && (
+              <div className="mt-auto">
+                <Paginator
+                  first={pageNumber1}
+                  rows={pageSize}
+                  totalRecords={totalRecords}
+                  rowsPerPageOptions={[5, 10, 20, 30]}
+                  onPageChange={onPageChange}
+                  style={{
+                    position: 'sticky',
+                    bottom: 0,
+                    zIndex: 1,
+                    backgroundColor: 'white',
+                    borderTop: '1px solid #D5E1EA',
+                    padding: '0.5rem',
+                  }}
+                />
+              </div>
+            )}
           </div>
         </div>
 
@@ -765,8 +782,24 @@ const Moorings = () => {
         )}
 
         {/* middle container */}
-
         <div
+          // className={`rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
+          className={`min-h-[600] rounded-md border-[1px] ml-5 ${containerWidth ? 'min-w-[82vw]' : 'min-w-[21vw]'}`}>
+          <CustomMooringPositionMap
+            position={coordinatesArray ? coordinatesArray : initialPosition}
+            zoomLevel={10}
+            style={{
+              height: '600px',
+              minHeight: '600px',
+              // width: containerWidth ? '82vw' : '21vw',
+              // minWidth: containerWidth ? '82vw' : '21vw',
+            }}
+            iconsByStatus={iconsByStatus}
+            moorings={mooringGPSResponseData}
+          />
+        </div>
+
+        {/* <div
           className={`min-w-[21vw] min-h[600px] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
           <CustomMooringPositionMap
             position={coordinatesArray ? coordinatesArray : initialPosition}
@@ -775,7 +808,7 @@ const Moorings = () => {
             iconsByStatus={iconsByStatus}
             moorings={mooringGPSResponseData}
           />
-        </div>
+        </div> */}
 
         {/* last container */}
 

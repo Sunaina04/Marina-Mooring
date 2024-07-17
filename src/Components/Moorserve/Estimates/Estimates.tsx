@@ -246,7 +246,7 @@ const Estimates = () => {
   }, [selectedCustomerId])
 
   return (
-    <div style={{ height: '100vh' }} className={visible ? 'backdrop-blur-lg' : ''}>
+    <div style={{ height: '150vh' }} className={visible ? 'backdrop-blur-lg' : ''}>
       <Header header="MOORSERVE/Estimate" />
       <Toast ref={toast} />
       <div className="">
@@ -274,7 +274,9 @@ const Estimates = () => {
                   estimate={true}
                   setVisible={setVisible}
                   toastRef={toast}
-                  closeModal={handleModalClose} isAccountRecievable={false}                />
+                  closeModal={handleModalClose}
+                  isAccountRecievable={false}
+                />
               }
               headerText={<h1 className="text-xl font-extrabold text-black ml-4">Estimate Form</h1>}
               visible={visible}

@@ -657,7 +657,7 @@ const Customer = () => {
   }, [pageNumberTwo, pageSizeTwo, customerId])
 
   return (
-    <div style={{ height: '100vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
+    <div style={{ height: '150vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
       <Header header="MOORMANAGE/Customer" />
       <Toast ref={toast} />
       <div className="flex justify-end mr-12 ">

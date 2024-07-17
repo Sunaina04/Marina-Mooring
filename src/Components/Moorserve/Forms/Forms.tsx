@@ -157,7 +157,7 @@ const Forms = () => {
 
   return (
     <>
-      <div style={{ height: '100vh' }} className={isModalOpen ? 'backdrop-blur-lg' : ''}>
+      <div style={{ height: '150vh' }} className={isModalOpen ? 'backdrop-blur-lg' : ''}>
         <Header header="MOORSERVE/Forms Library" />
 
         {/* <div className="flex justify-end">
