@@ -41,6 +41,7 @@ import { Toast } from 'primereact/toast'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import ReasonModal from '../../Moorpay/AccountReceivable/ReasonModal'
 import ApproveModal from '../../Moorpay/AccountReceivable/ApproveModal'
+import InputComponent from '../../CommonComponent/InputComponent'
 
 const AddWorkOrders: React.FC<WorkOrderProps> = ({
   workOrderData,
@@ -1239,7 +1240,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       <Dialog
         position="center"
         style={{
-          width: '900px',
+          width: '800px',
           minWidth: '800px',
           height: '580px',
           minHeight: '580px',
@@ -1252,8 +1253,8 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         onHide={() => setImageVisible(false)}
         header={'Images'}>
         <div className={`ml-4 ${isLoading ? 'blurred' : ''}`}>
-          <div className="flex justify-center">
-            <div className="mt-2">
+          <div className="flex justify-between">
+            <div className="mt-6">
               <input
                 id="file-input"
                 type="file"
@@ -1291,6 +1292,28 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 <span className="pl-10 mt-1"> UPLOAD IMAGES </span>
               </label>
             </div>
+            <div className="">
+                <div className=" font-medium text-sm text-[#000000]">Note</div>
+                <div className="mt-1">
+                  <InputComponent
+                    // value={formData.note}
+
+                    onChange={(e) => handleInputChange('note', e.target.value)}
+                    style={{
+                      width: '370px',
+                      height: '40px',
+                      border: '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.8rem',
+                      boxShadow: 'none',
+                      paddingLeft: '0.5rem',
+                      color: 'black',
+                      resize: 'none',
+                    }}
+                  />
+                  {/* <p>{fieldErrors.note && <small className="p-error">{fieldErrors.note}</small>}</p> */}
+                </div>
+              </div>
           </div>
         </div>
 
