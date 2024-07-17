@@ -15,7 +15,7 @@ import { Toast } from 'primereact/toast'
 import { Params } from '../../../Type/CommonType'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { Paginator } from 'primereact/paginator'
-import { SelectButton } from 'primereact/selectbutton'
+import { SelectButton, SelectButtonChangeEvent } from 'primereact/selectbutton'
 
 const WorkOrders = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -43,8 +43,10 @@ const WorkOrders = () => {
     setSearchText(e.target.value)
   }
 
-  const handleCompleted = (e: { value: string }) => {
-    setCompletedOrder(e.value)
+  const handleCompleted = (e: SelectButtonChangeEvent) => {
+    if (e.value) {
+      setCompletedOrder(e.value)
+    }
   }
   const options = [
     { label: 'Pending', value: 'No' },
