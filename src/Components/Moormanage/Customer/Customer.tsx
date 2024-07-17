@@ -826,6 +826,8 @@ const Customer = () => {
             iconsByStatus={iconsByStatus}
             moorings={mooringData}
             customerPage={true}
+            setLeftContainer={() => {}}
+            setRightContainer={() => {}}
           />
         </div>
 

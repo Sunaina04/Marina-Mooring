@@ -14,7 +14,7 @@ import {
   MooringResponse,
   MooringResponseDtoList,
 } from '../../../Type/ApiTypes'
-import { FaEdit } from 'react-icons/fa'
+import { FaEdit, FaFileSignature } from 'react-icons/fa'
 import { Dialog } from 'primereact/dialog'
 import { Params } from '../../../Type/CommonType'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
@@ -65,7 +65,8 @@ const Moorings = () => {
   const [showImage, setShowImage] = useState({ id: '', imageData: '' })
   const [imageVisible, setImageVisible] = useState(false)
   const [imageEditVisible, setImageEditVisible] = useState(false)
-  const [containerWidth, setContainerwidth] = useState(false)
+  const [leftContainerWidth, setLeftContainerWidth] = useState(false)
+  const [rightContainerWidth, setRightContainerWidth] = useState(false)
 
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
@@ -142,7 +143,7 @@ const Moorings = () => {
   }
 
   const handleContainerWidth = () => {
-    setContainerwidth(containerWidth)
+    setLeftContainerWidth(leftContainerWidth)
   }
 
   const handleModalClose = () => {
@@ -276,7 +277,7 @@ const Moorings = () => {
         id: 'id',
         label: 'ID:',
         style: {
-          width: '4vw',
+          // width: '4vw',
           borderBottom: '1px solid #C0C0C0',
           fontWeight: '700',
           color: '#000000',
@@ -288,7 +289,7 @@ const Moorings = () => {
         id: 'mooringNumber',
         label: 'Mooring Number:',
         style: {
-          width: '6vw',
+          // width: '6vw',
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#FFFFFF',
           fontSize: '12px',
@@ -300,7 +301,7 @@ const Moorings = () => {
         id: 'gpsCoordinates',
         label: 'GPS Coordinates:',
         style: {
-          width: '6vw',
+          // width: '6vw',
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#FFFFFF',
           fontSize: '12px',
@@ -322,7 +323,12 @@ const Moorings = () => {
       {
         id: 'id',
         label: 'id',
-        style: { width: '100px', backgroundColor: '#FFFFFF', fontWeight: '700', fontSize: '12px' },
+        style: {
+          //  width: '100px',
+          backgroundColor: '#FFFFFF',
+          fontWeight: '700',
+          fontSize: '12px',
+        },
       },
 
       {
@@ -645,22 +651,22 @@ const Moorings = () => {
           style={{
             height: '700px',
             minHeight: '700px',
-            width: containerWidth ? '20px' : '500px',
-            minWidth: containerWidth ? '20px' : '500px',
+            width: leftContainerWidth ? '20px' : '500px',
+            minWidth: leftContainerWidth ? '20px' : '500px',
             backgroundColor: '#FFFFFF',
             position: 'relative',
           }}
-          className={`ml-[45px] ${containerWidth ? 'w-[20px]' : 'flex-1 w-[500px]'}`}>
+          className={`ml-[45px] ${leftContainerWidth ? 'w-[20px]' : 'flex-1 w-[500px]'}`}>
           <div data-testid="customer-data" className="flex flex-col h-full ">
             <div className="flex item-center justify-between bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px] text-white cursor-pointer">
               <div>
                 <h1 className="p-4 text-xl font-extrabold">
-                  {!containerWidth && properties.mooringHeader}
+                  {!leftContainerWidth && properties.mooringHeader}
                 </h1>
-                {containerWidth && (
+                {leftContainerWidth && (
                   <div
                     className="p-1"
-                    onClick={() => setContainerwidth(false)}
+                    onClick={() => setLeftContainerWidth(false)}
                     style={{ cursor: 'pointer' }}>
                     <img src="/assets/images/plus.png" alt="Key Icon" className="p-clickable" />
                   </div>
@@ -668,7 +674,7 @@ const Moorings = () => {
               </div>
               <div
                 className="p-8"
-                onClick={() => setContainerwidth(true)}
+                onClick={() => setLeftContainerWidth(true)}
                 style={{ cursor: 'pointer' }}>
                 <svg
                   width="24"
@@ -683,7 +689,7 @@ const Moorings = () => {
                 </svg>
               </div>
             </div>
-            {!containerWidth && (
+            {!leftContainerWidth && (
               <InputTextWithHeader
                 value={searchText}
                 onChange={handleSearch}
@@ -745,7 +751,7 @@ const Moorings = () => {
                 }
               />
             </div>
-            {!containerWidth && (
+            {!leftContainerWidth && (
               <div className="mt-auto">
                 <Paginator
                   first={pageNumber1}
@@ -783,19 +789,17 @@ const Moorings = () => {
 
         {/* middle container */}
         <div
-          // className={`rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
-          className={`min-h-[600] rounded-md border-[1px] ml-5 ${containerWidth ? 'min-w-[82vw]' : 'min-w-[21vw]'}`}>
+          className={`min-h-[600] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : leftContainerWidth && rightContainerWidth ? 'min-w-[85vw]' : leftContainerWidth || rightContainerWidth ? 'min-w-[56vw]' : 'min-w-[21vw]'}`}>
           <CustomMooringPositionMap
             position={coordinatesArray ? coordinatesArray : initialPosition}
             zoomLevel={10}
             style={{
               height: '600px',
-              minHeight: '600px',
-              // width: containerWidth ? '82vw' : '21vw',
-              // minWidth: containerWidth ? '82vw' : '21vw',
             }}
             iconsByStatus={iconsByStatus}
             moorings={mooringGPSResponseData}
+            setRightContainer={setRightContainerWidth}
+            setLeftContainer={setLeftContainerWidth}
           />
         </div>
 
@@ -808,11 +812,8 @@ const Moorings = () => {
             iconsByStatus={iconsByStatus}
             moorings={mooringGPSResponseData}
           />
-        </div> */}
-
-        {/* last container */}
-
-        {/* <div className="lg:flex-row ml-5 mr-12 w-[500px]">
+        </div> */
+        /* <div className="lg:flex-row ml-5 mr-12 w-[500px]">
           <div className="flex-grow rounded-md border bg-white">
             <div className="bg-[#00426F] rounded-t-[10px] flex justify-between pb-2">
               <div className="text-sm font-semibold rounded-t-md bg-[]">
@@ -934,37 +935,63 @@ const Moorings = () => {
         </div> */}
 
         <div className="ml-5 mr-4">
-          <div style={{ maxWidth: '500px', width: '500px' }} className="flex-grow border bg-white">
+          <div
+            style={{
+              maxWidth: rightContainerWidth ? '20px' : '500px',
+              width: rightContainerWidth ? '20px' : '500px',
+            }}
+            className="flex-grow border bg-white">
             <div className="bg-[#00426F] rounded-t-[10px] flex justify-between">
               <div className="text-sm font-semibold rounded-t-md">
                 <h1 className="p-3 text-white text-lg font-extrabold">
-                  {properties.customerRecord}
+                  {!rightContainerWidth && properties.customerRecord}
                 </h1>
+                {rightContainerWidth && (
+                  <div
+                    className="p-1 mt-[4px] mb-[10px]"
+                    onClick={() => setRightContainerWidth(false)}
+                    style={{ cursor: 'pointer' }}>
+                    <img src="/assets/images/plus.png" alt="Key Icon" className="p-clickable" />
+                  </div>
+                )}
               </div>
+
               <div className="flex">
-                <FaEdit
-                  onClick={handleEdit}
-                  className="mr-3 mt-[19px] text-[white]"
-                  data-testid="FaEdit"
-                  style={{ cursor: 'pointer' }}
-                />
-                <RiDeleteBin5Fill
-                  onClick={handleDelete}
-                  className="text-white mr-2 mt-[19px] "
-                  data-testid="RiDeleteBin5Fill"
-                  style={{ cursor: 'pointer' }}
-                />
-                <svg
-                  width="24"
-                  height="4"
-                  viewBox="0 0 11 3"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M10.125 1.5C10.125 1.92188 9.77344 2.25 9.375 2.25H1.125C0.703125 2.25 0.375 1.92188 0.375 1.5C0.375 1.10156 0.703125 0.75 1.125 0.75H9.375C9.77344 0.75 10.125 1.10156 10.125 1.5Z"
-                    fill="white"
-                  />
-                </svg>
+                {!rightContainerWidth && (
+                  <>
+                    <FaEdit
+                      onClick={handleEdit}
+                      className="mr-3 mt-[19px] text-[white]"
+                      data-testid="FaEdit"
+                      style={{ cursor: 'pointer' }}
+                    />
+                    <RiDeleteBin5Fill
+                      onClick={handleDelete}
+                      className="text-white mr-2 mt-[19px]"
+                      data-testid="RiDeleteBin5Fill"
+                      style={{ cursor: 'pointer' }}
+                    />
+                  </>
+                )}
+
+                {!rightContainerWidth && (
+                  <div
+                    className="p-1 mt-[20px]"
+                    onClick={() => setRightContainerWidth(true)}
+                    style={{ cursor: 'pointer' }}>
+                    <svg
+                      width="24"
+                      height="4"
+                      viewBox="0 0 11 3"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M10.125 1.5C10.125 1.92188 9.77344 2.25 9.375 2.25H1.125C0.703125 2.25 0.375 1.92188 0.375 1.5C0.375 1.10156 0.703125 0.75 1.125 0.75H9.375C9.77344 0.75 10.125 1.10156 10.125 1.5Z"
+                        fill="white"
+                      />
+                    </svg>
+                  </div>
+                )}
               </div>
             </div>
             <div style={{ border: '1px solid white', height: '180px', overflowY: 'scroll' }}>
@@ -972,12 +999,16 @@ const Moorings = () => {
                 CustomerDetails
               ) : (
                 <div className="text-center mt-10">
-                  <img
-                    src="/assets/images/empty.png"
-                    alt="Empty Data"
-                    className="w-20 mx-auto mb-2"
-                  />
-                  <p className="text-gray-800 text-lg">No data available</p>
+                  {!rightContainerWidth && (
+                    <>
+                      <img
+                        src="/assets/images/empty.png"
+                        alt="Empty Data"
+                        className="w-20 mx-auto mb-2"
+                      />
+                      <p className="text-gray-800 text-lg">No data available</p>
+                    </>
+                  )}
                 </div>
               )}
             </div>
@@ -997,48 +1028,64 @@ const Moorings = () => {
             />
           )}
 
-          <div style={{ width: '500px' }} className="flex  flex-col wrapper">
+          <div
+            style={{ width: rightContainerWidth ? '20px' : '500px' }}
+            className="flex  flex-col wrapper">
             <div
               className=" relative  bg-white border-[1px] border-[#D5E1EA] mr-8"
-              style={{ width: '500px', maxWidth: '500px', marginBottom: '0px' }}>
+              style={{
+                width: rightContainerWidth ? '20px' : '500px',
+                maxWidth: rightContainerWidth ? '20px' : '500px',
+                marginBottom: '0px',
+              }}>
               <label
                 style={{ backgroundColor: '#00426F' }}
                 htmlFor="faq1"
                 className="cursor-pointer flex items-center justify-between h-14"
-                onClick={() => handleToggle('faq1')}>
+                onClick={() => !rightContainerWidth && handleToggle('faq1')}>
                 <div className="flex items-center gap-4 ">
                   <div>
-                    <h1 className="p-3 text-white text-lg font-extrabold"> Customer Moorings</h1>
+                    <h1 className="p-3 text-white text-lg font-extrabold">
+                      {!rightContainerWidth && properties.customerMooringHeader}
+                    </h1>
                   </div>
                 </div>
                 <div>
-                  <div className="mr-2">
-                    {accordion === 'faq1' ? (
-                      <svg
-                        width="24"
-                        height="4"
-                        viewBox="0 0 11 3"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M10.125 1.5C10.125 1.92188 9.77344 2.25 9.375 2.25H1.125C0.703125 2.25 0.375 1.92188 0.375 1.5C0.375 1.10156 0.703125 0.75 1.125 0.75H9.375C9.77344 0.75 10.125 1.10156 10.125 1.5Z"
-                          fill="white"
+                  {!rightContainerWidth && (
+                    <div className="mr-2">
+                      {accordion === 'faq1' ? (
+                        <svg
+                          width="24"
+                          height="4"
+                          viewBox="0 0 11 3"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg">
+                          <path
+                            d="M10.125 1.5C10.125 1.92188 9.77344 2.25 9.375 2.25H1.125C0.703125 2.25 0.375 1.92188 0.375 1.5C0.375 1.10156 0.703125 0.75 1.125 0.75H9.375C9.77344 0.75 10.125 1.10156 10.125 1.5Z"
+                            fill="white"
+                          />
+                        </svg>
+                      ) : (
+                        <img
+                          src="/assets/images/plus.png"
+                          alt="Key Icon"
+                          className="p-clickable"
+                          style={{}}
                         />
-                      </svg>
-                    ) : (
-                      <img
-                        src="/assets/images/plus.png"
-                        alt="Key Icon"
-                        className="p-clickable"
-                        style={{}}
-                      />
-                    )}
-                  </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               </label>
+
               <div
                 className={`content  transition-all ease-in-out duration-500 ${accordion === 'faq1' ? '' : 'hidden'}`}>
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <div
+                  style={{
+                    // display: rightContainerWidth && 'flex' ,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
                   <div className="flex-grow bg-white rounded-md border">
                     <div
                       style={{
@@ -1109,15 +1156,21 @@ const Moorings = () => {
             </div>
             <div
               className="tab relative bg-[#FFFFFF] border-[1px] border-[#D5E1EA] mr-8"
-              style={{ width: '500px', maxWidth: '500px', marginTop: '0px' }}>
+              style={{
+                width: rightContainerWidth ? '20px' : '500px',
+                maxWidth: rightContainerWidth ? '20px' : '500px',
+                marginTop: '0px',
+              }}>
               <label
                 htmlFor="faq2"
                 style={{ backgroundColor: '#00426F' }}
                 className="cursor-pointer flex items-center justify-between h-14"
-                onClick={() => handleToggle('faq2')}>
+                onClick={() => !rightContainerWidth && handleToggle('faq2')}>
                 <div className="flex items-center">
                   <div style={{ flexShrink: 1 }}>
-                    <h1 className="p-3 text-white text-lg font-extrabold">Images</h1>
+                    <h1 className="p-3 text-white text-lg font-extrabold">
+                      {!rightContainerWidth && properties.imageHeader}
+                    </h1>
                   </div>
                 </div>
                 <div>
@@ -1135,12 +1188,7 @@ const Moorings = () => {
                         />
                       </svg>
                     ) : (
-                      <img
-                        src="/assets/images/plus.png"
-                        alt="Key Icon"
-                        className="p-clickable"
-                        style={{}}
-                      />
+                      <img src="/assets/images/plus.png" alt="Key Icon" className="p-clickable" />
                     )}
                   </div>
                 </div>

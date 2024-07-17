@@ -9,7 +9,7 @@ export const properties = {
   CustomersOwner: 'Companies',
   CustomerOwnerUsers: 'User Management',
   label: 'ADD NEW',
-  customerMooringHeader: 'Moorings',
+  customerMooringHeader: 'Customer Moorings',
   MoormanageMoorings: 'MOORMANAGE/Moorings',
   Customersadmins: 'Customersadmins',
   workOrderHeader: 'Work Orders',
@@ -19,4 +19,5 @@ export const properties = {
   Users: 'User Management',
   Settings: 'Customer Mapping',
   Technician: 'Technician',
+  imageHeader: 'Images',
 }

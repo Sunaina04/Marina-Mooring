@@ -385,6 +385,8 @@ const Dashboard = () => {
                 iconsByStatus={iconsByStatus}
                 moorings={mooringData}
                 dashboard={true}
+                setLeftContainer={() => {}}
+                setRightContainer={() => {}}
               />
             </div>
             <div
