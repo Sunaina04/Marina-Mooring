@@ -65,6 +65,7 @@ const Moorings = () => {
   const [showImage, setShowImage] = useState({ id: '', imageData: '' })
   const [imageVisible, setImageVisible] = useState(false)
   const [imageEditVisible, setImageEditVisible] = useState(false)
+  const [containerWidth, setContainerwidth] = useState()
 
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
@@ -138,6 +139,10 @@ const Moorings = () => {
 
   const handleButtonClick = () => {
     setModalVisible(true)
+  }
+
+  const handleContainerWidth = () => {
+    setContainerwidth(containerWidth)
   }
 
   const handleModalClose = () => {
@@ -640,17 +645,31 @@ const Moorings = () => {
           style={{
             height: '700px',
             minHeight: '700px',
-            width: '500px',
-            minWidth: '500px',
+            width: containerWidth ? '10px' : '500px',
+            minWidth: containerWidth ? '10px' : '500px',
             backgroundColor: '#FFFFFF',
             position: 'relative',
           }}
-          className="flex-1 ml-[45px] w-[550px]">
+          className={` ml-[45px] w-[50px] ${containerWidth ? ' ' : 'flex-1'}`}>
           <div data-testid="customer-data" className="flex flex-col h-full ">
-            <div className="bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px] text-white">
-              <h1 className="p-4 text-xl font-extrabold">{properties.mooringHeader}</h1>
+            <div className="flex item-center justify-between bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px] text-white cursor-pointer">
+              <div>
+                <h1 className="p-4 text-xl font-extrabold">{properties.mooringHeader}</h1>
+              </div>
+              <div className="p-8" onClick={handleContainerWidth} style={{ cursor: 'pointer' }}>
+                <svg
+                  width="24"
+                  height="4"
+                  viewBox="0 0 11 3"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M10.125 1.5C10.125 1.92188 9.77344 2.25 9.375 2.25H1.125C0.703125 2.25 0.375 1.92188 0.375 1.5C0.375 1.10156 0.703125 0.75 1.125 0.75H9.375C9.77344 0.75 10.125 1.10156 10.125 1.5Z"
+                    fill="white"
+                  />
+                </svg>
+              </div>
             </div>
-
             <InputTextWithHeader
               value={searchText}
               onChange={handleSearch}
@@ -902,6 +921,17 @@ const Moorings = () => {
                   data-testid="RiDeleteBin5Fill"
                   style={{ cursor: 'pointer' }}
                 />
+                <svg
+                  width="24"
+                  height="4"
+                  viewBox="0 0 11 3"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M10.125 1.5C10.125 1.92188 9.77344 2.25 9.375 2.25H1.125C0.703125 2.25 0.375 1.92188 0.375 1.5C0.375 1.10156 0.703125 0.75 1.125 0.75H9.375C9.77344 0.75 10.125 1.10156 10.125 1.5Z"
+                    fill="white"
+                  />
+                </svg>
               </div>
             </div>
             <div style={{ border: '1px solid white', height: '180px', overflowY: 'scroll' }}>
