@@ -651,12 +651,12 @@ const Moorings = () => {
           style={{
             height: '700px',
             minHeight: '700px',
-            width: leftContainerWidth ? '20px' : '500px',
-            minWidth: leftContainerWidth ? '20px' : '500px',
+            width: leftContainerWidth ? '20px' : '450px',
+            minWidth: leftContainerWidth ? '20px' : '450px',
             backgroundColor: '#FFFFFF',
             position: 'relative',
           }}
-          className={`ml-[45px] ${leftContainerWidth ? 'w-[20px]' : 'flex-1 w-[500px]'}`}>
+          className={`ml-[45px] ${leftContainerWidth ? 'w-[20px]' : 'flex-1 w-[450px]'}`}>
           <div data-testid="customer-data" className="flex flex-col h-full ">
             <div className="flex item-center justify-between bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px] text-white cursor-pointer">
               <div>
@@ -803,142 +803,12 @@ const Moorings = () => {
           />
         </div>
 
-        {/* <div
-          className={`min-w-[21vw] min-h[600px] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
-          <CustomMooringPositionMap
-            position={coordinatesArray ? coordinatesArray : initialPosition}
-            zoomLevel={10}
-            style={{ height: '600px' }}
-            iconsByStatus={iconsByStatus}
-            moorings={mooringGPSResponseData}
-          />
-        </div> */
-        /* <div className="lg:flex-row ml-5 mr-12 w-[500px]">
-          <div className="flex-grow rounded-md border bg-white">
-            <div className="bg-[#00426F] rounded-t-[10px] flex justify-between pb-2">
-              <div className="text-sm font-semibold rounded-t-md bg-[]">
-                <h1 className="p-4 text-lg font-extrabold text-white">{'Customers Record'}</h1>
-              </div>
-              <div className="flex">
-                <FaEdit
-                  onClick={handleEdit}
-                  className="mr-3 mt-[19px] text-[white]"
-                  data-testid="FaEdit"
-                  style={{ cursor: 'pointer' }}
-                />
-                <RiDeleteBin5Fill
-                  onClick={handleDelete}
-                  className="text-white mr-2 mt-[19px] "
-                  data-testid="RiDeleteBin5Fill"
-                  style={{ cursor: 'pointer' }}
-                />
-              </div>
-            </div>
-
-            <div style={{ border: '1px solid white', height: '170px', overflow: 'scroll' }}>
-              {customerRecordData ? (
-                CustomerDetails
-              ) : (
-                <div className="text-center ">
-                  <img
-                    src="/assets/images/empty.png"
-                    alt="Empty Data"
-                    className="w-10 mx-auto mt-10 mb-3"
-                  />
-                  <p className="text-gray-500 font-extrabold mb-10">No data available</p>
-                </div>
-              )}
-            </div>
-          </div>
-
-          {isLoader && (
-            <ProgressSpinner
-              style={{
-                position: 'absolute',
-                top: '40%',
-                left: '85%',
-                transform: 'translate(-50%, -50%)',
-                width: '50px',
-                height: '50px',
-              }}
-              strokeWidth="4"
-            />
-          )}
-
-          <div className="flex-grow bg-white rounded-md border">
-            <div
-              style={{
-                backgroundColor: '#00426F',
-                fontWeight: '700',
-                color: 'white',
-                padding: '14px',
-                fontSize: '15px',
-              }}>
-              <h1 className="text-lg font-extrabold"> Customer Moorings</h1>
-            </div>
-
-            <div
-              className={`bg-#00426F overflow-x-hidden h-[400px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col`}>
-              <div className="flex-grow" style={{ overflow: 'auto' }}>
-                <DataTableComponent
-                  style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
-                  scrollable
-                  tableStyle={{
-                    fontSize: '12px',
-                    color: '#000000',
-                    fontWeight: 600,
-                    backgroundColor: '#D9D9D9',
-                  }}
-                  data={mooringResponseData}
-                  columns={tableColumnsMoorings}
-                  onRowClick={(rowData: any) => {
-                    setDialogVisible(true)
-                    setMooringRowData(rowData.data)
-                    // dispatch(setMooringRowData(rowData.data))
-                  }}
-                  selectionMode="single"
-                  onSelectionChange={(e) => {
-                    setSelectedMooring(e.value)
-                  }}
-                  selection={selectedMooring}
-                  dataKey="id"
-                  rowStyle={(rowData: any) => rowData}
-                  emptyMessage={
-                    <div className="text-center mt-10">
-                      <img
-                        src="/assets/images/empty.png"
-                        alt="Empty Data"
-                        className="w-20 mx-auto mb-4"
-                      />
-                      <p className="text-gray-500 text-lg">No data available</p>
-                    </div>
-                  }
-                />
-              </div>
-              <Paginator
-                first={pageNumber2}
-                rows={pageSizeTwo}
-                totalRecords={totalRecordsTwo}
-                rowsPerPageOptions={[5, 10, 20, 30]}
-                onPageChange={onPageChangeTwo}
-                style={{
-                  position: 'sticky',
-                  bottom: 0,
-                  zIndex: 1,
-                  backgroundColor: 'white',
-                  borderTop: '1px solid #D5E1EA',
-                  padding: '0.5rem',
-                }}
-              />
-            </div>
-          </div>
-        </div> */}
-
+        {/* Right Panel */}
         <div className="ml-5 mr-4">
           <div
             style={{
-              maxWidth: rightContainerWidth ? '20px' : '500px',
-              width: rightContainerWidth ? '20px' : '500px',
+              maxWidth: rightContainerWidth ? '20px' : '450px',
+              width: rightContainerWidth ? '20px' : '450px',
             }}
             className="flex-grow border bg-white">
             <div className="bg-[#00426F] rounded-t-[10px] flex justify-between">
@@ -1029,13 +899,13 @@ const Moorings = () => {
           )}
 
           <div
-            style={{ width: rightContainerWidth ? '20px' : '500px' }}
+            style={{ width: rightContainerWidth ? '20px' : '450px' }}
             className="flex  flex-col wrapper">
             <div
               className=" relative  bg-white border-[1px] border-[#D5E1EA] mr-8"
               style={{
-                width: rightContainerWidth ? '20px' : '500px',
-                maxWidth: rightContainerWidth ? '20px' : '500px',
+                width: rightContainerWidth ? '20px' : '450px',
+                maxWidth: rightContainerWidth ? '20px' : '450px',
                 marginBottom: '0px',
               }}>
               <label
@@ -1082,7 +952,6 @@ const Moorings = () => {
                 className={`content  transition-all ease-in-out duration-500 ${accordion === 'faq1' ? '' : 'hidden'}`}>
                 <div
                   style={{
-                    // display: rightContainerWidth && 'flex' ,
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
@@ -1113,7 +982,6 @@ const Moorings = () => {
                               setDialogVisible(true)
                               setMooringRowData(rowData.data)
                               setGPSResponseData(rowData?.data?.gpsCoordinates)
-                              // dispatch(setMooringRowData(rowData.data))
                             }}
                             onSelectionChange={(e) => {
                               setSelectedMooring(e.value)
@@ -1157,8 +1025,8 @@ const Moorings = () => {
             <div
               className="tab relative bg-[#FFFFFF] border-[1px] border-[#D5E1EA] mr-8"
               style={{
-                width: rightContainerWidth ? '20px' : '500px',
-                maxWidth: rightContainerWidth ? '20px' : '500px',
+                width: rightContainerWidth ? '20px' : '450px',
+                maxWidth: rightContainerWidth ? '20px' : '450px',
                 marginTop: '0px',
               }}>
               <label
