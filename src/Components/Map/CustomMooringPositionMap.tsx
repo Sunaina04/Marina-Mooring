@@ -25,6 +25,7 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
 }) => {
   const [map, setMap] = useState<any>()
   const mapRef = useRef<any>(null)
+  const [showMapModal, setShowMapModal] = useState(false)
   const [mapContainerWidth, setMapContainerWidth] = useState(false)
 
   useEffect(() => {
@@ -84,71 +85,169 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
 
   return (
     <>
-      <div>
+      {showMapModal ? (
+        <div
+          style={{
+            width: '100vw',
+            height: '100vh',
+            background: 'rgba(0,0,0,0.8)',
+            zIndex: 999999,
+            top: 0,
+            left: 0,
+            overflow: 'auto',
+            position: 'fixed',
+          }}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              color: 'white',
+              paddingRight: '3%',
+            }}
+            onClick={() => setShowMapModal(false)}>
+            X
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: '100vh',
+            }}>
+            <MapContainer
+              ref={setMap}
+              style={{ ...style, height: '80vh', width: '80vw' }}
+              center={position}
+              zoom={position ? zoomLevel : 4}
+              scrollWheelZoom={false}
+              attributionControl={false}>
+              <TileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              />
+
+              {moorings && customerPage
+                ? moorings.map((mooring: MooringPayload, index: number) => {
+                    const coordinates = parseCoordinates(mooring.gpsCoordinates) || [
+                      41.56725, 70.94045,
+                    ]
+                    const position: LatLngExpression = coordinates
+                    const iconKey = mooring?.mooringStatus?.id as keyof typeof iconsByStatusId
+                    const icon = iconsByStatusId[iconKey] || DefaultIcon
+
+                    return (
+                      <>
+                        <Marker key={index} position={position} icon={icon} ref={mapRef}>
+                          <Popup>
+                            <MooringMapModal
+                              gpsValue={position}
+                              mooringId={mooring?.mooringNumber}
+                              mooringData={mooring}
+                            />
+                          </Popup>
+                        </Marker>
+                      </>
+                    )
+                  })
+                : moorings &&
+                  moorings.map((mooring: MooringWithGpsCoordinates, index: number) => {
+                    const coordinates = parseCoordinates(mooring.gpsCoordinates) || [
+                      41.56725, 70.94045,
+                    ]
+                    const position: LatLngExpression = coordinates
+                    const iconKey = mooring?.statusId as keyof typeof iconsByStatusId
+                    const icon = iconsByStatusId[iconKey] || DefaultIcon
+
+                    return (
+                      <>
+                        <Marker key={index} position={position} icon={icon} ref={mapRef}>
+                          <Popup>
+                            <MooringMapModal
+                              gpsValue={position}
+                              mooringId={mooring?.mooringId}
+                              mooringData={mooring}
+                            />
+                          </Popup>
+                        </Marker>
+                      </>
+                    )
+                  })}
+            </MapContainer>
+          </div>
+        </div>
+      ) : null}
+      <div style={{ position: 'relative' }}>
         {/* style={{ resize: 'both', overflow: 'auto' }} */}
         <div
           onClick={() => {
-            mapContainerWidth ? DecreaseMapContainerWidth() : setRightContainer(true)
+            setShowMapModal(true)
+            // mapContainerWidth ? DecreaseMapContainerWidth() : setRightContainer(true)
           }}
           className="p-2 h-8 w-8 mr-20"
-          style={{ cursor: 'pointer' }}>
+          style={{ cursor: 'pointer', position: 'absolute', left: '95%', top: 0, zIndex: 999 }}>
           <img src="/assets/images/resize.png" alt="Key Icon" className="p-clickable" />
         </div>
-        <MapContainer
-          ref={setMap}
-          style={style}
-          center={position}
-          zoom={position ? zoomLevel : 4}
-          scrollWheelZoom={false}
-          attributionControl={false}>
-          <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          />
+        <div>
+          <MapContainer
+            ref={setMap}
+            style={style}
+            center={position}
+            zoom={position ? zoomLevel : 4}
+            scrollWheelZoom={false}
+            attributionControl={false}>
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            />
 
-          {moorings && customerPage
-            ? moorings.map((mooring: MooringPayload, index: number) => {
-                const coordinates = parseCoordinates(mooring.gpsCoordinates) || [41.56725, 70.94045]
-                const position: LatLngExpression = coordinates
-                const iconKey = mooring?.mooringStatus?.id as keyof typeof iconsByStatusId
-                const icon = iconsByStatusId[iconKey] || DefaultIcon
+            {moorings && customerPage
+              ? moorings.map((mooring: MooringPayload, index: number) => {
+                  const coordinates = parseCoordinates(mooring.gpsCoordinates) || [
+                    41.56725, 70.94045,
+                  ]
+                  const position: LatLngExpression = coordinates
+                  const iconKey = mooring?.mooringStatus?.id as keyof typeof iconsByStatusId
+                  const icon = iconsByStatusId[iconKey] || DefaultIcon
 
-                return (
-                  <>
-                    <Marker key={index} position={position} icon={icon} ref={mapRef}>
-                      <Popup>
-                        <MooringMapModal
-                          gpsValue={position}
-                          mooringId={mooring?.mooringNumber}
-                          mooringData={mooring}
-                        />
-                      </Popup>
-                    </Marker>
-                  </>
-                )
-              })
-            : moorings &&
-              moorings.map((mooring: MooringWithGpsCoordinates, index: number) => {
-                const coordinates = parseCoordinates(mooring.gpsCoordinates) || [41.56725, 70.94045]
-                const position: LatLngExpression = coordinates
-                const iconKey = mooring?.statusId as keyof typeof iconsByStatusId
-                const icon = iconsByStatusId[iconKey] || DefaultIcon
+                  return (
+                    <>
+                      <Marker key={index} position={position} icon={icon} ref={mapRef}>
+                        <Popup>
+                          <MooringMapModal
+                            gpsValue={position}
+                            mooringId={mooring?.mooringNumber}
+                            mooringData={mooring}
+                          />
+                        </Popup>
+                      </Marker>
+                    </>
+                  )
+                })
+              : moorings &&
+                moorings.map((mooring: MooringWithGpsCoordinates, index: number) => {
+                  const coordinates = parseCoordinates(mooring.gpsCoordinates) || [
+                    41.56725, 70.94045,
+                  ]
+                  const position: LatLngExpression = coordinates
+                  const iconKey = mooring?.statusId as keyof typeof iconsByStatusId
+                  const icon = iconsByStatusId[iconKey] || DefaultIcon
 
-                return (
-                  <>
-                    <Marker key={index} position={position} icon={icon} ref={mapRef}>
-                      <Popup>
-                        <MooringMapModal
-                          gpsValue={position}
-                          mooringId={mooring?.mooringId}
-                          mooringData={mooring}
-                        />
-                      </Popup>
-                    </Marker>
-                  </>
-                )
-              })}
-        </MapContainer>
+                  return (
+                    <>
+                      <Marker key={index} position={position} icon={icon} ref={mapRef}>
+                        <Popup>
+                          <MooringMapModal
+                            gpsValue={position}
+                            mooringId={mooring?.mooringId}
+                            mooringData={mooring}
+                          />
+                        </Popup>
+                      </Marker>
+                    </>
+                  )
+                })}
+          </MapContainer>
+        </div>
       </div>
 
       {dashboard ? (

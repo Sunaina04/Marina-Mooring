@@ -788,13 +788,13 @@ const Moorings = () => {
         )}
 
         {/* middle container */}
-        <div
-          className={`min-h-[600] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : leftContainerWidth && rightContainerWidth ? 'min-w-[85vw]' : leftContainerWidth || rightContainerWidth ? 'min-w-[56vw]' : 'min-w-[21vw]'}`}>
+        <div className={`min-h-[600] rounded-md border-[1px] ml-5 `} style={{ flexGrow: '1' }}>
           <CustomMooringPositionMap
             position={coordinatesArray ? coordinatesArray : initialPosition}
             zoomLevel={10}
             style={{
               height: '600px',
+              width: 'auto',
             }}
             iconsByStatus={iconsByStatus}
             moorings={mooringGPSResponseData}

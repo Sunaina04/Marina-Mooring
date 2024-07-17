@@ -377,18 +377,18 @@ const Dashboard = () => {
             style={{
               marginLeft: '3rem',
             }}>
-            <div style={{ resize: 'both', overflow: 'auto' }}>
-              <CustomMooringPositionMap
-                position={coordinatesArray ? coordinatesArray : initialPosition}
-                zoomLevel={10}
-                style={{ height: '300px', width: '100%' }}
-                iconsByStatus={iconsByStatus}
-                moorings={mooringData}
-                dashboard={true}
-                setLeftContainer={() => {}}
-                setRightContainer={() => {}}
-              />
-            </div>
+            {/* <div style={{ resize: 'both', overflow: 'auto' }}> */}
+            <CustomMooringPositionMap
+              position={coordinatesArray ? coordinatesArray : initialPosition}
+              zoomLevel={10}
+              style={{ height: '300px', width: '100%' }}
+              iconsByStatus={iconsByStatus}
+              moorings={mooringData}
+              dashboard={true}
+              setLeftContainer={() => {}}
+              setRightContainer={() => {}}
+            />
+            {/* </div> */}
             <div
               data-testid="mooring-data"
               className="flex flex-col mt-[15px] table-container "
