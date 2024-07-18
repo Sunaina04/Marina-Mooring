@@ -17,25 +17,24 @@ const AddImage: React.FC<ImageDataProps> = ({
   const [isLoading, setIsLoading] = useState(false)
   const [imageName, setImageName] = useState(imageData?.imageName)
   const [note, setNote] = useState(imageData?.note)
-  const [errors, setErrors] = useState<{ imageName?: string; note?: string }>({})
+  const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
   const [editImage] = useUpdateImageMutation()
   const toastRef = useRef<Toast>(null)
 
-  const validate = (field: string, value: string) => {
-    let error = ''
+  const validateFields = () => {
+    let firstError = ''
+    const errors: { [key: string]: string } = {}
 
-    if (field === 'imageName' && !value) {
-      error = 'Image Name is required'
-    } else if (field === 'note' && !value) {
-      error = 'Note is required'
+    if (!imageName) {
+      errors.imageName = 'Image name is required'
+      if (!firstError) firstError = 'imageName'
     }
-
-    setErrors((prevErrors) => ({
-      ...prevErrors,
-      [field]: error,
-    }))
-
-    return error === ''
+    if (!note) {
+      errors.note = 'Note is required'
+      if (!firstError) firstError = 'note'
+    }
+    setFieldErrors(errors)
+    return errors
   }
 
   const handleInputChange = (field: string, value: string) => {
@@ -44,13 +43,20 @@ const AddImage: React.FC<ImageDataProps> = ({
     } else if (field === 'note') {
       setNote(value)
     }
-    validate(field, value)
+
+    if (fieldErrors[field]) {
+      setFieldErrors({
+        ...fieldErrors,
+        [field]: '',
+      })
+    }
   }
 
   const handleSubmit = async () => {
-    validate('imageName', imageName)
-    validate('note', note)
-
+    const errors = validateFields()
+    if (Object.keys(errors).length > 0) {
+      return
+    }
     try {
       setIsLoading(true)
       const editImagePayload = {
@@ -120,15 +126,15 @@ const AddImage: React.FC<ImageDataProps> = ({
                   borderRadius: '0.50rem',
                   fontSize: '0.70rem',
                   padding: '1em',
-                  border: errors.imageName ? '1px solid red' : '1px solid #D5E1EA',
+                  border: fieldErrors.imageName ? '1px solid red' : '1px solid #D5E1EA',
                 }}
               />
-              {errors.imageName && (
-                <small className="p-error" style={{ color: 'red' }}>
-                  {errors.imageName}
-                </small>
-              )}
             </div>
+            {fieldErrors.imageName && (
+              <small className="p-error" style={{ color: 'red' }}>
+                {fieldErrors.imageName}
+              </small>
+            )}
           </div>
         </div>
 
@@ -154,12 +160,12 @@ const AddImage: React.FC<ImageDataProps> = ({
                     fontSize: '0.70rem',
                     boxShadow: 'none',
                     padding: '10px',
-                    border: errors.note ? '1px solid red' : '1px solid #D5E1EA',
+                    border: fieldErrors.note ? '1px solid red' : '1px solid #D5E1EA',
                   }}
                 />
-                {errors.note && (
+                {fieldErrors.note && (
                   <small className="p-error" style={{ color: 'red' }}>
-                    {errors.note}
+                    {fieldErrors.note}
                   </small>
                 )}
               </div>
