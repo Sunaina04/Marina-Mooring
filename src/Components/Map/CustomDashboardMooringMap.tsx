@@ -129,7 +129,7 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
               {moorings && (customerPage || dashboard)
                 ? moorings.map((mooring: MooringPayload, index: number) => {
                     const coordinates = parseCoordinates(mooring.gpsCoordinates) || [
-                      41.56725, 70.94045,
+                      44.2423649, -119.8093025,
                     ]
                     const position: LatLngExpression = coordinates
                     const iconKey = mooring?.mooringStatus?.id as keyof typeof iconsByStatusId
@@ -152,7 +152,7 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
                 : moorings &&
                   moorings.map((mooring: MooringWithGpsCoordinates, index: number) => {
                     const coordinates = parseCoordinates(mooring.gpsCoordinates) || [
-                      41.56725, 70.94045,
+                      44.2423649, -119.8093025,
                     ]
                     const position: LatLngExpression = coordinates
                     const iconKey = mooring?.statusId as keyof typeof iconsByStatusId
@@ -202,7 +202,7 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
               {moorings && (customerPage || dashboard)
                 ? moorings.map((mooring: MooringPayload, index: number) => {
                     const coordinates = parseCoordinates(mooring.gpsCoordinates) || [
-                      41.56725, 70.94045,
+                      44.2423649, -119.8093025,
                     ]
                     const position: LatLngExpression = coordinates
                     const iconKey = mooring?.mooringStatus?.id as keyof typeof iconsByStatusId
@@ -224,7 +224,7 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
                 : moorings &&
                   moorings.map((mooring: MooringWithGpsCoordinates, index: number) => {
                     const coordinates = parseCoordinates(mooring.gpsCoordinates) || [
-                      41.56725, 70.94045,
+                      44.2423649, -119.8093025,
                     ]
                     const position: LatLngExpression = coordinates
                     const iconKey = mooring?.statusId as keyof typeof iconsByStatusId

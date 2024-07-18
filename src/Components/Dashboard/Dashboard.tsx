@@ -68,7 +68,7 @@ const Dashboard = () => {
   const [getOpenWorkOrderAndMoorings] = useGetAllOpenWorkOrdersAndMooringDueForServiceMutation()
   const toast = useRef<Toast>(null)
 
-  const position: PositionType = [44.2423649, -119.8093025]
+  const position: PositionType = [41.56725, 70.94045]
 
   const parseCoordinates = (coordinates: any) => {
     if (!coordinates) return null

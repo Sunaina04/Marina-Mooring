@@ -101,7 +101,7 @@ const Moorings = () => {
     }
   }
 
-  const position: PositionType = [44.2423649, -119.8093025]
+  const position: PositionType = [41.56725, 70.94045]
 
   const parseCoordinates = (coordinates: any) => {
     if (!coordinates) return null
@@ -112,7 +112,7 @@ const Moorings = () => {
   const gpsCoordinatesArray =
     mooringResponseData &&
     mooringResponseData?.map(
-      (mooring: any) => parseCoordinates(mooring.gpsCoordinates) || [44.2423649, -119.8093025],
+      (mooring: any) => parseCoordinates(mooring.gpsCoordinates) || [41.56725, 70.94045],
     )
 
   const initialPosition = gpsCoordinatesArray?.length > 0 ? gpsCoordinatesArray[0] : position

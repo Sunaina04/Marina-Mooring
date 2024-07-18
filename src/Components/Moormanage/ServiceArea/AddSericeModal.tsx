@@ -67,14 +67,14 @@ const AddServiceModal: React.FC<BoatYardProps> = ({
       }
     } catch (error) {
       console.error('Error In Setting Center:', error)
-      return [44.2423649, -119.8093025]
+      return [41.56725, 70.94045]
     }
   }
 
   const [center, setCenter] = useState<any>(
     customerData?.gpsCoordinates || gpsCoordinatesValue
       ? getFormattedCoordinate(customerData?.gpsCoordinates || gpsCoordinatesValue)
-      : [44.2423649, -119.8093025],
+      : [41.56725, 70.94045],
   )
   const [isLoading, setIsLoading] = useState(true)
   const [addBoatyard] = useAddBoatyardsMutation()
