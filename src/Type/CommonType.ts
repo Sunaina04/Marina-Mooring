@@ -147,3 +147,8 @@ export interface ImageDataProps {
   closeModal: () => void
   getCustomersWithMooring: () => void
 }
+
+export interface DropdownValue {
+  id: number
+  label: string
+}

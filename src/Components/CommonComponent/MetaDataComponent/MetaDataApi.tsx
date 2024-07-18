@@ -16,6 +16,7 @@ import {
   useGetInventoryTypeMutation,
   useGetCustomerTypeMutation,
   useGetServiceAreaTypeMutation,
+  useGetQuickBookCustomerMutation,
 } from '../../../Services/MetaDataApi'
 import { ErrorResponse, MetaDataCustomerResponse, MetaDataResponse } from '../../../Type/ApiTypes'
 
@@ -403,4 +404,26 @@ export const TypeOfInventoryType = () => {
   })
 
   return { getTypeOfInventoryTypeData }
+}
+
+export const QuickBooksCustomerData = () => {
+  const [getQuickBookCustomer] = useGetQuickBookCustomerMutation()
+
+  const fetchQuickBookCustomer = async (getData: any) => {
+    try {
+      const response = await getData({})
+      const { status, content } = response.data as MetaDataResponse
+      return status === 200 && Array.isArray(content) ? content : null
+    } catch (error) {
+      const { message } = error as ErrorResponse
+      console.error('Error fetching metadata:', message)
+      return null
+    }
+  }
+
+  const getQuickBookCustomerData = async () => ({
+    quickBookCustomerData: await fetchQuickBookCustomer(getQuickBookCustomer),
+  })
+
+  return { getQuickBookCustomerData }
 }

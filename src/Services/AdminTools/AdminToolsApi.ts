@@ -64,6 +64,19 @@ const adminToolsApi = userApi.injectEndpoints({
         params: { customerOwnerId },
       }),
     }),
+
+    mapCustomerToQuickBook: builder.mutation({
+      query: ({
+        quickbookCustomerId,
+        customerId,
+      }: {
+        quickbookCustomerId: number
+        customerId: number
+      }) => ({
+        url: `api/v1/quickbook/saveMappingCustomerToQuickbook/${quickbookCustomerId}/${customerId}`,
+        method: 'POST',
+      }),
+    }),
   }),
 })
 
@@ -72,4 +85,5 @@ export const {
   useGetUsersMutation,
   useDeleteUserMutation,
   useUpdateUserMutation,
+  useMapCustomerToQuickBookMutation,
 } = adminToolsApi

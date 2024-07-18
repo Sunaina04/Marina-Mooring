@@ -168,6 +168,14 @@ const metaDataApi = userApi.injectEndpoints({
         params: { pageNumber, pageSize },
       }),
     }),
+
+    getQuickBookCustomer: builder.mutation({
+      query: ({ pageNumber, pageSize }: { pageNumber?: number; pageSize?: number }) => ({
+        url: 'api/v1/metadata/quickbookCustomers',
+        method: 'GET',
+        params: { pageNumber, pageSize },
+      }),
+    }),
   }),
 })
 
@@ -190,4 +198,5 @@ export const {
   useGetCustomersOwnersMutation,
   useGetCustomerTypeMutation,
   useGetServiceAreaTypeMutation,
+  useGetQuickBookCustomerMutation,
 } = metaDataApi
