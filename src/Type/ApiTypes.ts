@@ -165,6 +165,13 @@ export interface validateEmailResponse {
   success: boolean
 }
 
+export interface ImageDtoList {
+  id: number
+  imageData: string
+  imageName: string
+  note: string
+}
+
 export interface CustomerPayload {
   id: number
   creationDate: string
@@ -181,12 +188,7 @@ export interface CustomerPayload {
   country: string
   zipCode: string
   customerTypeDto: MetaDataResponse
-  imageDtoList: [
-    {
-      id: number
-      imageData: string
-    },
-  ]
+  imageDtoList: ImageDtoList
 }
 
 export interface UpdateMooringPayload {
@@ -256,12 +258,7 @@ export interface customerResponseDto {
     country: string
     zipCode: string
     mooringResponseDtoList: MooringResponseDtoList
-    imageDtoList: [
-      {
-        id: number
-        imageData: string
-      },
-    ]
+    imageDtoList: ImageDtoList
   }
   boatyardNames: []
 }
@@ -312,6 +309,7 @@ export interface MooringPayload {
   mooringStatus: MooringStatus
   mooringDueServiceStatusDto: MooringStatus
   customerResponseDto: customerResponseDto
+  imageDtoList: ImageDtoList
 }
 
 export interface ImageData {
@@ -330,6 +328,10 @@ export interface MooringStatus {
 
 export interface MooringResponseDtoList {
   id: number
+  installBottomChainDate: string
+  installTopChainDate: string
+  installConditionOfEyeDate: string
+  inspectionDate: string
   mooringNumber: string
   mooringName: string
   customerName: string
@@ -348,12 +350,14 @@ export interface MooringResponseDtoList {
   pendantCondition: MooringMetaDataTypes
   sizeOfWeight: MooringMetaDataTypes
   typeOfWeight: MooringMetaDataTypes
+  serviceAreaResponseDto: MooringMetaDataTypes
   depthAtMeanHighWater: number
   mainContact: string
   mooringStatus: MooringStatus
   customerId: number | string
   userId: number
   statusId: number
+  imageDtoList: ImageDtoList
 }
 export interface MooringWithGpsCoordinates {
   id: number
@@ -372,6 +376,7 @@ export interface MooringResponse {
     mooringResponseDtoList: MooringPayload
     mooringWithGPSCoordinateResponseList: MooringWithGpsCoordinates
     MooringPayload: MooringPayload
+    imageDtoList: ImageDtoList
   }
 }
 
@@ -768,7 +773,7 @@ export interface WorkOrderResponseStatusDto {
   technicianUserResponseDto: TechnicianUserResponseDto
   customerOwnerUserResponseDto: CustomerOwnerUserResponseDto
   workOrderStatusDto: WorkOrderStatusDto
-  // imageDtoList:
+  imageDtoList: ImageDtoList
 }
 export interface WorkOrderInvoiceResponse {
   message: string

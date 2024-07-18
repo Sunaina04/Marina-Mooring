@@ -57,16 +57,17 @@ const Moorings = () => {
   const [editCustomerMode, setEditCustomerMode] = useState(false)
   const [customerModalVisible, setCustomerModalVisible] = useState(false)
   const [accordion, setAccordion] = useState('faq1')
-  const toast = useRef<Toast>(null)
-  const [getMoorings] = useGetMooringsMutation()
-  const [deleteMooring] = useDeleteMooringsMutation()
-  const [getCustomerWithMooring] = useGetCustomersWithMooringMutation()
   const [isEditMooring, setIsEditMooring] = useState(false)
+  const [mooringImage, setMooringImage] = useState<any>()
   const [showImage, setShowImage] = useState({ id: '', imageData: '' })
   const [imageVisible, setImageVisible] = useState(false)
   const [imageEditVisible, setImageEditVisible] = useState(false)
   const [leftContainerWidth, setLeftContainerWidth] = useState(false)
   const [rightContainerWidth, setRightContainerWidth] = useState(false)
+  const toast = useRef<Toast>(null)
+  const [getMoorings] = useGetMooringsMutation()
+  const [deleteMooring] = useDeleteMooringsMutation()
+  const [getCustomerWithMooring] = useGetCustomersWithMooringMutation()
 
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
@@ -458,6 +459,7 @@ const Moorings = () => {
         setIsLoader(false)
         setCustomerRecordData(content?.customerResponseDto)
         setBoatYardData(content?.boatyardNames)
+        setMooringImage(content?.customerResponseDto?.mooringResponseDtoList?.imageDtoList)
         setMooringResponseData(content?.customerResponseDto?.mooringResponseDtoList)
         setTotalRecordsTwo(totalSize)
       } else {
@@ -588,6 +590,28 @@ const Moorings = () => {
       getCustomersWithMooring(customerId)
     }
   }, [pageNumberTwo, pageSizeTwo, customerId, selectedCustomerId])
+
+  useEffect(() => {
+    console.log('here map called')
+    ;<>
+      <div
+        className={`min-h-[600] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}
+        style={{ flexGrow: '1' }}>
+        <CustomMooringPositionMap
+          position={coordinatesArray ? coordinatesArray : initialPosition}
+          zoomLevel={10}
+          style={{
+            height: '600px',
+            width: 'auto',
+          }}
+          iconsByStatus={iconsByStatus}
+          moorings={mooringGPSResponseData}
+          setRightContainer={setRightContainerWidth}
+          setLeftContainer={setLeftContainerWidth}
+        />
+      </div>
+    </>
+  }, [rightContainerWidth, leftContainerWidth])
 
   return (
     <div style={{ height: '150vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
@@ -1078,7 +1102,7 @@ const Moorings = () => {
                         fontWeight: 600,
                         backgroundColor: '#D9D9D9',
                       }}
-                      // data={customerImage}
+                      data={mooringImage}
                       columns={customerImagesColumns}
                       selectionMode="single"
                       actionButtons={ActionButtonColumn}

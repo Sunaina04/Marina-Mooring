@@ -118,7 +118,7 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               />
 
-              {moorings && customerPage
+              {moorings && (customerPage || dashboard)
                 ? moorings.map((mooring: MooringPayload, index: number) => {
                     const coordinates = parseCoordinates(mooring.gpsCoordinates) || [
                       41.56725, 70.94045,
@@ -190,7 +190,7 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             />
 
-            {moorings && customerPage
+            {moorings && (customerPage || dashboard)
               ? moorings.map((mooring: MooringPayload, index: number) => {
                   const coordinates = parseCoordinates(mooring.gpsCoordinates) || [
                     41.56725, 70.94045,
@@ -198,7 +198,6 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
                   const position: LatLngExpression = coordinates
                   const iconKey = mooring?.mooringStatus?.id as keyof typeof iconsByStatusId
                   const icon = iconsByStatusId[iconKey] || DefaultIcon
-
                   return (
                     <>
                       <Marker key={index} position={position} icon={icon} ref={mapRef}>

@@ -386,7 +386,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     if (Object.keys(errors).length > 0) {
       return
     }
-    console.log('formdata', formData)
 
     try {
       setIsLoading(true)
@@ -536,8 +535,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
           getCustomerRecord()
         }
       } else {
-        console.log('here', message)
-
         setIsLoading(false)
         toastRef?.current?.show({
           severity: 'error',

@@ -411,7 +411,6 @@ const Customer = () => {
           color: 'black',
           label: 'Edit',
           onClick: (data) => {
-            console.log('data', data)
             setImageData(data)
             setImageEditVisible(true)
           },

@@ -125,8 +125,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   const handleEditMode = () => {
     setBoatyardId(customerData?.boatyardId || '')
     setBoatyardName(customerData?.boatyardName || '')
-    setPhone(customerData?.phone || '')
-    setEmailAddress(customerData?.emailAddress || '')
+    // setStorage(customerData?.storageAreas)
     setAddress(customerData?.street || '')
     setAptSuite(customerData?.apt || '')
     setZipCode(customerData?.zipCode || '')
@@ -216,6 +215,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
         mainContact: mainContact,
         gpsCoordinates: gpsCoordinatesValue,
         customerOwnerId: selectedCustomerId,
+        // storageAreas: storageList,
       }
       const response = await updateBoatyard({
         payload: editBoatYardPayload,
@@ -265,6 +265,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   const handleBack = () => {
     setModalVisible(false)
   }
+
   const handleAddStorage = () => {
     setStorageList([...storageList, storage])
     setStorage('')
