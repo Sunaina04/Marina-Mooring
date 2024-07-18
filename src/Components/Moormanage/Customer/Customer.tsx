@@ -68,6 +68,8 @@ const Customer = () => {
   const [pageNumber1, setPageNumber1] = useState(0)
   const [pageSize, setPageSize] = useState(10)
   const [totalRecordsOne, setTotalRecordsOne] = useState<number>()
+  const [leftContainerWidth, setLeftContainerWidth] = useState(false)
+  const [rightContainerWidth, setRightContainerWidth] = useState(false)
 
   const [pageNumberTwo, setPageNumberTwo] = useState(0)
   const [pageNumber2, setPageNumber2] = useState(0)
@@ -137,6 +139,10 @@ const Customer = () => {
     setPageNumberTwo(event.page)
     setPageNumber2(event.first)
     setPageSizeTwo(event.rows)
+  }
+
+  const handleContainerWidth = () => {
+    setLeftContainerWidth(leftContainerWidth)
   }
 
   const position: PositionType = [41.56725, 70.94045]
@@ -723,43 +729,73 @@ const Customer = () => {
           style={{
             height: '700px',
             minHeight: '700px',
-            width: '500px',
-            minWidth: '500px',
+            width: leftContainerWidth ? '20px' : '450px',
+            minWidth: leftContainerWidth ? '20px' : '450px',
             backgroundColor: '#FFFFFF',
             position: 'relative',
           }}
-          className="flex-1 ml-[45px] w-[550px]">
+          className={`ml-[45px] ${leftContainerWidth ? 'w-[20px]' : 'flex-1 w-[450px]'}`}>
           <div data-testid="customer-data" className="flex flex-col h-full">
-            <div className="bg-[#10293A] rounded-tl-[10px] rounded-tr-[10px] text-white">
-              <h1 className="p-4 text-xl font-extrabold">{properties.customerHeader}</h1>
+            <div className="flex item-center justify-between bg-[#10293A] rounded-tl-[10px] rounded-tr-[10px] text-white cursor-pointer">
+              <div>
+                <h1 className="p-4 text-xl font-extrabold">
+                  {' '}
+                  {!leftContainerWidth && properties.customerHeader}
+                </h1>
+                {leftContainerWidth && (
+                  <div
+                    className="p-1"
+                    onClick={() => setLeftContainerWidth(false)}
+                    style={{ cursor: 'pointer' }}>
+                    <img src="/assets/images/plus.png" alt="Key Icon" className="p-clickable" />
+                  </div>
+                )}
+              </div>
+              <div
+                className="p-8"
+                onClick={() => setLeftContainerWidth(true)}
+                style={{ cursor: 'pointer' }}>
+                <svg
+                  width="24"
+                  height="4"
+                  viewBox="0 0 11 3"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M10.125 1.5C10.125 1.92188 9.77344 2.25 9.375 2.25H1.125C0.703125 2.25 0.375 1.92188 0.375 1.5C0.375 1.10156 0.703125 0.75 1.125 0.75H9.375C9.77344 0.75 10.125 1.10156 10.125 1.5Z"
+                    fill="white"
+                  />
+                </svg>
+              </div>
             </div>
-
-            <InputTextWithHeader
-              value={searchText}
-              onChange={handleSearch}
-              placeholder="Search by name, ID, phone no.... "
-              inputTextStyle={{
-                width: '100%',
-                height: '44px',
-                padding: '0 4rem 0 3rem',
-                border: '1px solid #C5D9E0',
-                fontSize: '16px',
-                color: '#000000',
-                borderRadius: '4px',
-                minHeight: '44px',
-                fontWeight: 400,
-                backgroundColor: 'rgb(242 242 242 / 0%)',
-              }}
-              borderBottom={{ border: '1px solid #D5E1EA' }}
-              iconStyle={{
-                position: 'absolute',
-                left: '15px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                width: '18px',
-                height: '18px',
-              }}
-            />
+            {!leftContainerWidth && (
+              <InputTextWithHeader
+                value={searchText}
+                onChange={handleSearch}
+                placeholder="Search by name, ID, phone no.... "
+                inputTextStyle={{
+                  width: '100%',
+                  height: '44px',
+                  padding: '0 4rem 0 3rem',
+                  border: '1px solid #C5D9E0',
+                  fontSize: '16px',
+                  color: '#000000',
+                  borderRadius: '4px',
+                  minHeight: '44px',
+                  fontWeight: 400,
+                  backgroundColor: 'rgb(242 242 242 / 0%)',
+                }}
+                borderBottom={{ border: '1px solid #D5E1EA' }}
+                iconStyle={{
+                  position: 'absolute',
+                  left: '15px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  width: '18px',
+                  height: '18px',
+                }}
+              />
+            )}
             <div className="ml-[15px] mr-[15px] table-container" style={{ overflow: 'auto' }}>
               <DataTableComponent
                 data={customerData}
@@ -795,39 +831,43 @@ const Customer = () => {
                 }
               />
             </div>
-            <div className="mt-auto">
-              <Paginator
-                first={pageNumber1}
-                rows={pageSize}
-                totalRecords={totalRecordsOne}
-                rowsPerPageOptions={[5, 10, 20, 30]}
-                onPageChange={onPageChange}
-                style={{
-                  position: 'sticky',
-                  bottom: 0,
-                  zIndex: 1,
-                  backgroundColor: 'white',
-                  borderTop: '1px solid #D5E1EA',
-                  padding: '0.5rem',
-                }}
-              />
-            </div>
+
+            {!leftContainerWidth && (
+              <div className="mt-auto">
+                <Paginator
+                  first={pageNumber1}
+                  rows={pageSize}
+                  totalRecords={totalRecordsOne}
+                  rowsPerPageOptions={[5, 10, 20, 30]}
+                  onPageChange={onPageChange}
+                  style={{
+                    position: 'sticky',
+                    bottom: 0,
+                    zIndex: 1,
+                    backgroundColor: 'white',
+                    borderTop: '1px solid #D5E1EA',
+                    padding: '0.5rem',
+                  }}
+                />
+              </div>
+            )}
           </div>
         </div>
 
         {/* middle container */}
 
         <div
-          className={`min-w-[21vw] min-h[600px] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}>
+          className={` min-h-[600] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}
+             style={{ flexGrow: '1' }}>
           <CustomMooringPositionMap
             position={initialPosition}
             zoomLevel={15}
-            style={{ height: '600px' }}
+            style={{ height: '600px', width: 'auto' }}
             iconsByStatus={iconsByStatus}
             moorings={mooringData}
             customerPage={true}
-            setLeftContainer={() => {}}
-            setRightContainer={() => {}}
+            setRightContainer={setRightContainerWidth}
+            setLeftContainer={setLeftContainerWidth}
           />
         </div>
 
@@ -835,26 +875,62 @@ const Customer = () => {
 
         <div className="ml-5 mr-4">
           {/* Left Panel - Customer Record */}
-          <div style={{ maxWidth: '500px', width: '500px' }} className="flex-grow border bg-white">
+          <div
+            style={{
+              maxWidth: rightContainerWidth ? '20px' : '450px',
+              width: rightContainerWidth ? '20px' : '450px',
+            }}
+            className="flex-grow border bg-white">
             <div className="bg-[#10293A] rounded-t-[10px] flex justify-between">
               <div className="text-sm font-semibold rounded-t-md">
                 <h1 className="p-3 text-white text-lg font-extrabold">
-                  {properties.customerRecord}
+                  {!rightContainerWidth && properties.customerRecord}
                 </h1>
+                {rightContainerWidth && (
+                  <div
+                    className="p-1 mt-[4px] mb-[10px]"
+                    onClick={() => setRightContainerWidth(false)}
+                    style={{ cursor: 'pointer' }}>
+                    <img src="/assets/images/plus.png" alt="Key Icon" className="p-clickable" />
+                  </div>
+                )}
               </div>
               <div className="flex">
-                <FaEdit
-                  onClick={handleEdit}
-                  className="mr-3 mt-[19px] text-[white]"
-                  data-testid="FaEdit"
-                  style={{ cursor: 'pointer' }}
-                />
-                <RiDeleteBin5Fill
-                  onClick={handleDelete}
-                  className="text-white mr-2 mt-[19px] "
-                  data-testid="RiDeleteBin5Fill"
-                  style={{ cursor: 'pointer' }}
-                />
+                {!rightContainerWidth && (
+                  <>
+                    <FaEdit
+                      onClick={handleEdit}
+                      className="mr-3 mt-[19px] text-[white]"
+                      data-testid="FaEdit"
+                      style={{ cursor: 'pointer' }}
+                    />
+                    <RiDeleteBin5Fill
+                      onClick={handleDelete}
+                      className="text-white mr-2 mt-[19px] "
+                      data-testid="RiDeleteBin5Fill"
+                      style={{ cursor: 'pointer' }}
+                    />
+                  </>
+                )}
+
+                {!rightContainerWidth && (
+                  <div
+                    className="p-1 mt-[20px]"
+                    onClick={() => setRightContainerWidth(true)}
+                    style={{ cursor: 'pointer' }}>
+                    <svg
+                      width="24"
+                      height="4"
+                      viewBox="0 0 11 3"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M10.125 1.5C10.125 1.92188 9.77344 2.25 9.375 2.25H1.125C0.703125 2.25 0.375 1.92188 0.375 1.5C0.375 1.10156 0.703125 0.75 1.125 0.75H9.375C9.77344 0.75 10.125 1.10156 10.125 1.5Z"
+                        fill="white"
+                      />
+                    </svg>
+                  </div>
+                )}
               </div>
             </div>
             <div style={{ border: '1px solid white', height: '180px', overflowY: 'scroll' }}>
@@ -862,12 +938,16 @@ const Customer = () => {
                 CustomerDetails
               ) : (
                 <div className="text-center mt-10">
-                  <img
-                    src="/assets/images/empty.png"
-                    alt="Empty Data"
-                    className="w-20 mx-auto mb-2"
-                  />
-                  <p className="text-gray-800 text-lg">No data available</p>
+                  {!rightContainerWidth && (
+                    <>
+                      <img
+                        src="/assets/images/empty.png"
+                        alt="Empty Data"
+                        className="w-20 mx-auto mb-2"
+                      />
+                      <p className="text-gray-800 text-lg">No data available</p>
+                    </>
+                  )}
                 </div>
               )}
             </div>
@@ -887,48 +967,58 @@ const Customer = () => {
             />
           )}
 
-          <div style={{ width: '500px' }} className="flex  flex-col wrapper">
+          <div
+            style={{ width: rightContainerWidth ? '20px' : '450px' }}
+            className="flex  flex-col wrapper">
             <div
               className=" relative  bg-white border-[1px] border-[#D5E1EA] mr-8"
-              style={{ width: '500px', maxWidth: '500px', marginBottom: '0px' }}>
+              style={{
+                width: rightContainerWidth ? '20px' : '450px',
+                maxWidth: rightContainerWidth ? '20px' : '450px',
+                marginBottom: '0px',
+              }}>
               <label
                 style={{ backgroundColor: '#10293A' }}
                 htmlFor="faq1"
                 className="cursor-pointer flex items-center justify-between h-14"
-                onClick={() => handleToggle('faq1')}>
+                onClick={() => !rightContainerWidth && handleToggle('faq1')}>
                 <div className="flex items-center gap-4 ">
                   <div>
-                    <h1 className="p-3 text-white text-lg font-extrabold">Moorings</h1>
+                    <h1 className="p-3 text-white text-lg font-extrabold">
+                      {!rightContainerWidth && properties.mooringHeader}
+                    </h1>
                   </div>
                 </div>
                 <div>
-                  <div className="mr-2">
-                    {accordion === 'faq1' ? (
-                      <svg
-                        width="24"
-                        height="4"
-                        viewBox="0 0 11 3"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M10.125 1.5C10.125 1.92188 9.77344 2.25 9.375 2.25H1.125C0.703125 2.25 0.375 1.92188 0.375 1.5C0.375 1.10156 0.703125 0.75 1.125 0.75H9.375C9.77344 0.75 10.125 1.10156 10.125 1.5Z"
-                          fill="white"
+                  {!rightContainerWidth && (
+                    <div className="mr-2">
+                      {accordion === 'faq1' ? (
+                        <svg
+                          width="24"
+                          height="4"
+                          viewBox="0 0 11 3"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg">
+                          <path
+                            d="M10.125 1.5C10.125 1.92188 9.77344 2.25 9.375 2.25H1.125C0.703125 2.25 0.375 1.92188 0.375 1.5C0.375 1.10156 0.703125 0.75 1.125 0.75H9.375C9.77344 0.75 10.125 1.10156 10.125 1.5Z"
+                            fill="white"
+                          />
+                        </svg>
+                      ) : (
+                        <img
+                          src="/assets/images/plus.png"
+                          alt="Key Icon"
+                          className="p-clickable"
+                          style={{}}
                         />
-                      </svg>
-                    ) : (
-                      <img
-                        src="/assets/images/plus.png"
-                        alt="Key Icon"
-                        className="p-clickable"
-                        style={{}}
-                      />
-                    )}
-                  </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               </label>
               <div
                 className={`content  transition-all ease-in-out duration-500 ${accordion === 'faq1' ? '' : 'hidden'}`}>
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <div style={{ justifyContent: 'center', alignItems: 'center' }}>
                   <div className="flex-grow bg-white rounded-md border">
                     <div
                       style={{
@@ -996,15 +1086,21 @@ const Customer = () => {
             </div>
             <div
               className="tab relative bg-[#FFFFFF] border-[1px] border-[#D5E1EA] mr-8"
-              style={{ width: '500px', maxWidth: '500px', marginTop: '0px' }}>
+              style={{
+                width: rightContainerWidth ? '20px' : '450px',
+                maxWidth: rightContainerWidth ? '20px' : '450px',
+                marginTop: '0px',
+              }}>
               <label
                 htmlFor="faq2"
                 style={{ backgroundColor: '#10293A' }}
                 className="cursor-pointer flex items-center justify-between h-14"
-                onClick={() => handleToggle('faq2')}>
+                onClick={() => !rightContainerWidth && handleToggle('faq2')}>
                 <div className="flex items-center">
                   <div style={{ flexShrink: 1 }}>
-                    <h1 className="p-3 text-white text-lg font-extrabold">Images</h1>
+                    <h1 className="p-3 text-white text-lg font-extrabold">
+                      {!rightContainerWidth && properties.imageHeader}
+                    </h1>
                   </div>
                 </div>
                 <div>
