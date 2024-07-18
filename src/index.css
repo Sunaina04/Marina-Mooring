@@ -42,6 +42,11 @@ button {
   box-shadow: none;
   color: white !important;
 }
+.selectButtons .p-highlight {
+  background-color: #00426F !important;
+  box-shadow: none;
+  color: white !important;
+}
 
 * input {
   box-shadow: none !important;

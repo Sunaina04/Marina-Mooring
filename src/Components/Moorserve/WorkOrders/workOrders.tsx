@@ -48,6 +48,10 @@ const WorkOrders = () => {
       setCompletedOrder(e.value)
     }
   }
+  // const optionsStyle = {
+  //   backgroundColor:'white'
+  // }
+
   const options = [
     { label: 'Pending', value: 'No' },
     { label: 'Completed', value: 'Yes' },
@@ -270,7 +274,7 @@ const WorkOrders = () => {
               Work Orders
             </span>
 
-            <div className="flex gap-2">
+            <div className="flex gap-6">
               <div className="relative inline-block">
                 <div className="relative mt-1">
                   <img
@@ -288,13 +292,15 @@ const WorkOrders = () => {
                   />
                 </div>
               </div>
-              <div className="card flex justify-content-center ">
-                <SelectButton
-                  value={completedWorkOrder}
-                  onChange={handleCompleted}
-                  options={options}
-                  className="selectButton"
-                />
+              <div className="bg-white h-[6vh] rounded-md">
+                <div className="card flex justify-content-center p-0.5 pl-0.5">
+                  <SelectButton
+                    value={completedWorkOrder}
+                    onChange={handleCompleted}
+                    options={options}
+                    className="selectButtons"
+                  />
+                </div>
               </div>
             </div>
           </div>
