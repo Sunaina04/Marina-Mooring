@@ -44,6 +44,8 @@ const Estimates = () => {
   }
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPageNumber(0)
+    setPageNumber1(0)
     setSearchText(e.target.value)
   }
 
@@ -231,12 +233,10 @@ const Estimates = () => {
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      if (searchText) {
-        getEstimateData()
-      }
+      getEstimateData()
     }, 600)
     return () => clearTimeout(timeoutId)
-  }, [searchText])
+  }, [searchText, selectedCustomerId, pageSize, pageNumber])
 
   useEffect(() => {
     if (selectedCustomerId) {
