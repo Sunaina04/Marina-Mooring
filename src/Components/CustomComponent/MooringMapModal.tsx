@@ -1,9 +1,6 @@
 import React, { useState } from 'react'
 import { TimeLineProps } from '../../Type/Components/MapTypes'
-import { Dialog } from 'primereact/dialog'
-import { FaEdit } from 'react-icons/fa'
 import CustomModal from './CustomModal'
-import AddCustomer from '../Moormanage/Customer/AddCustomer'
 import AddMoorings from '../Moormanage/Moorings/AddMoorings'
 
 const MooringMapModal: React.FC<TimeLineProps> = ({

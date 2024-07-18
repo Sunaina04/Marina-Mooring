@@ -91,15 +91,15 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       }
     } catch (error) {
       console.log('Error In Setting Center', error)
-      return [41.56725, 70.94045]
+      return [44.2423649, -119.8093025]
     }
-    // return [41.56725, 70.94045]
+    // return [44.2423649, -119.8093025]
   }
 
   const [center, setCenter] = useState<any>(
     mooringRowData?.gpsCoordinates || gpsCoordinatesValue
       ? getFomattedCoordinate(mooringRowData?.gpsCoordinates || gpsCoordinatesValue)
-      : [41.56725, 70.94045],
+      : [44.2423649, -119.8093025],
   )
   const [saveMoorings] = useAddMooringsMutation()
   const [updateMooring] = useUpdateMooringsMutation()

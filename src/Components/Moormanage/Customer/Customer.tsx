@@ -145,7 +145,7 @@ const Customer = () => {
     setLeftContainerWidth(leftContainerWidth)
   }
 
-  const position: PositionType = [41.56725, 70.94045]
+  const position: PositionType = [44.2423649, -119.8093025]
 
   const parseCoordinates = (coordinates: any) => {
     if (!coordinates) return null
@@ -154,12 +154,12 @@ const Customer = () => {
   }
 
   const gpsCoordinatesArray = mooringData.map(
-    (mooring) => parseCoordinates(mooring.gpsCoordinates) || [41.56725, 70.94045],
+    (mooring) => parseCoordinates(mooring.gpsCoordinates) || [44.2423649, -119.8093025],
   )
 
   const calculateCenter = (coordinatesArray: any) => {
     if (coordinatesArray.length === 0) {
-      return [41.56725, 70.94045] // Default coordinates if the array is empty
+      return [44.2423649, -119.8093025] // Default coordinates if the array is empty
     }
 
     let totalLat = 0
