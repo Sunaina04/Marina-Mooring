@@ -591,28 +591,6 @@ const Moorings = () => {
     }
   }, [pageNumberTwo, pageSizeTwo, customerId, selectedCustomerId])
 
-  useEffect(() => {
-    console.log('here map called')
-    ;<>
-      <div
-        className={`min-h-[600] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}
-        style={{ flexGrow: '1' }}>
-        <CustomMooringPositionMap
-          position={coordinatesArray ? coordinatesArray : initialPosition}
-          zoomLevel={10}
-          style={{
-            height: '600px',
-            width: 'auto',
-          }}
-          iconsByStatus={iconsByStatus}
-          moorings={mooringGPSResponseData}
-          setRightContainer={setRightContainerWidth}
-          setLeftContainer={setLeftContainerWidth}
-        />
-      </div>
-    </>
-  }, [rightContainerWidth, leftContainerWidth])
-
   return (
     <div style={{ height: '150vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
       <Header header={properties.MoormanageMoorings} />
@@ -825,6 +803,8 @@ const Moorings = () => {
             }}
             iconsByStatus={iconsByStatus}
             moorings={mooringGPSResponseData}
+            rightContanerWidth={rightContainerWidth}
+            leftContanerWidth={leftContainerWidth}
             setRightContainer={setRightContainerWidth}
             setLeftContainer={setLeftContainerWidth}
           />

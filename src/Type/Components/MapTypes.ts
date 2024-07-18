@@ -48,6 +48,8 @@ export interface CustomMooringPositionMapProps extends CustomDisplayPositionMapP
   customerPage?: boolean
   setRightContainer: React.Dispatch<React.SetStateAction<boolean>>
   setLeftContainer: React.Dispatch<React.SetStateAction<boolean>>
+  rightContanerWidth?: any
+  leftContanerWidth?: any
 }
 
 export type PositionType = LatLngExpression

@@ -13,36 +13,30 @@ import {
 import { MooringPayload, MooringWithGpsCoordinates } from '../../Type/ApiTypes'
 import MooringMapModal from '../CustomComponent/MooringMapModal'
 
-const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
+const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
   position,
   zoomLevel,
   style,
   moorings,
   dashboard,
   customerPage,
-  setLeftContainer,
-  setRightContainer,
   leftContanerWidth,
   rightContanerWidth,
 }) => {
   const [map, setMap] = useState<any>()
   const mapRef = useRef<any>(null)
-  console.log(leftContanerWidth, rightContanerWidth)
+  const [showMapModal, setShowMapModal] = useState(false)
+
+  useEffect(() => {
+    if (map && position) {
+      map.setView(position)
+    }
+  }, [position, map])
 
   const parseCoordinates = (coordinates: string): [number, number] | null => {
     if (!coordinates) return null
     const [latitude, longitude] = coordinates.split(' ').map(parseFloat)
     return isNaN(latitude) || isNaN(longitude) ? null : [latitude, longitude]
-  }
-
-  const handleOpenMap = () => {
-    if (leftContanerWidth && rightContanerWidth) {
-      setLeftContainer(false)
-      setRightContainer(false)
-    } else {
-      setLeftContainer(true)
-      setRightContainer(true)
-    }
   }
 
   const boxStyle = {
@@ -76,18 +70,110 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
     4: NotInUseIcon,
   }
 
-  useEffect(() => {
-    if (map && position) {
-      map.setView(position)
-    }
-  }, [position, map])
-
   return (
     <>
+      {showMapModal ? (
+        <div
+          style={{
+            width: '100vw',
+            height: '100vh',
+            background: 'rgba(0,0,0,0.8)',
+            zIndex: 999999,
+            top: 0,
+            left: 0,
+            overflow: 'auto',
+            position: 'fixed',
+          }}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              color: 'white',
+              paddingRight: '3%',
+              marginTop: '20px',
+              cursor: 'pointer',
+            }}
+            onClick={() => setShowMapModal(false)}>
+            <img
+              src="/assets/images/close.png"
+              alt="Key Icon"
+              className="p-clickable"
+              style={{ width: '23px' }}
+            />
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: '90vh',
+            }}>
+            <MapContainer
+              ref={setMap}
+              style={{ ...style, height: '80vh', width: '80vw' }}
+              center={position}
+              zoom={position ? zoomLevel : 4}
+              scrollWheelZoom={false}
+              attributionControl={false}>
+              <TileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              />
+
+              {moorings && (customerPage || dashboard)
+                ? moorings.map((mooring: MooringPayload, index: number) => {
+                    const coordinates = parseCoordinates(mooring.gpsCoordinates) || [
+                      41.56725, 70.94045,
+                    ]
+                    const position: LatLngExpression = coordinates
+                    const iconKey = mooring?.mooringStatus?.id as keyof typeof iconsByStatusId
+                    const icon = iconsByStatusId[iconKey] || DefaultIcon
+
+                    return (
+                      <>
+                        <Marker key={index} position={position} icon={icon} ref={mapRef}>
+                          <Popup>
+                            <MooringMapModal
+                              gpsValue={position}
+                              mooringId={mooring?.mooringNumber}
+                              mooringData={mooring}
+                            />
+                          </Popup>
+                        </Marker>
+                      </>
+                    )
+                  })
+                : moorings &&
+                  moorings.map((mooring: MooringWithGpsCoordinates, index: number) => {
+                    const coordinates = parseCoordinates(mooring.gpsCoordinates) || [
+                      41.56725, 70.94045,
+                    ]
+                    const position: LatLngExpression = coordinates
+                    const iconKey = mooring?.statusId as keyof typeof iconsByStatusId
+                    const icon = iconsByStatusId[iconKey] || DefaultIcon
+
+                    return (
+                      <>
+                        <Marker key={index} position={position} icon={icon} ref={mapRef}>
+                          <Popup>
+                            <MooringMapModal
+                              gpsValue={position}
+                              mooringId={mooring?.mooringId}
+                              mooringData={mooring}
+                            />
+                          </Popup>
+                        </Marker>
+                      </>
+                    )
+                  })}
+            </MapContainer>
+          </div>
+        </div>
+      ) : null}
       <div style={{ position: 'relative' }}>
         <div
           onClick={() => {
-            handleOpenMap()
+            setShowMapModal(true)
           }}
           className="p-2 h-8 w-8 mr-20"
           style={{ cursor: 'pointer', position: 'absolute', left: '95%', top: 0, zIndex: 999 }}>
@@ -217,4 +303,4 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
 
 L.Marker.prototype.options.icon = DefaultIcon
 
-export default CustomMooringPositionMap
+export default CustomDashboardMooringMap

@@ -21,6 +21,7 @@ import { Dialog } from 'primereact/dialog'
 import AddWorkOrders from '../Moorserve/WorkOrders/AddWorkOrders'
 import { Calendar } from 'primereact/calendar'
 import { ProgressSpinner } from 'primereact/progressspinner'
+import CustomDashboardMooringMap from '../Map/CustomDashboardMooringMap'
 
 const Dashboard = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -432,7 +433,7 @@ const Dashboard = () => {
                 />
               )}
             </div>
-            <CustomMooringPositionMap
+            <CustomDashboardMooringMap
               position={coordinatesArray ? coordinatesArray : initialPosition}
               zoomLevel={10}
               style={{ height: '300px', width: '100%' }}

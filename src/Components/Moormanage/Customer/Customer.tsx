@@ -858,7 +858,7 @@ const Customer = () => {
 
         <div
           className={` min-h-[600] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}
-             style={{ flexGrow: '1' }}>
+          style={{ flexGrow: '1' }}>
           <CustomMooringPositionMap
             position={initialPosition}
             zoomLevel={15}
@@ -868,6 +868,8 @@ const Customer = () => {
             customerPage={true}
             setRightContainer={setRightContainerWidth}
             setLeftContainer={setLeftContainerWidth}
+            leftContanerWidth={leftContainerWidth}
+            rightContanerWidth={rightContainerWidth}
           />
         </div>
 
