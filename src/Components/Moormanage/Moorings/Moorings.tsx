@@ -63,8 +63,8 @@ const Moorings = () => {
   const [getCustomerWithMooring] = useGetCustomersWithMooringMutation()
   const [isEditMooring, setIsEditMooring] = useState(false)
   const [showImage, setShowImage] = useState({ id: '', imageData: '' })
-  const [imageVisible, setImageVisible] = useState(false)
-  const [imageEditVisible, setImageEditVisible] = useState(false)
+  const [imageVisible, setImageVisible] = useState(true)
+  const [imageEditVisible, setImageEditVisible] = useState(true)
   const [leftContainerWidth, setLeftContainerWidth] = useState(false)
   const [rightContainerWidth, setRightContainerWidth] = useState(false)
 
