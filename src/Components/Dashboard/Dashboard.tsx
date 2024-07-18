@@ -158,6 +158,7 @@ const Dashboard = () => {
   const firstLastName = (data: any) => {
     return data.customerResponseDto.firstName + ' ' + data.customerResponseDto.lastName
   }
+  
 
   const Mooringcolumns: TableColumnProps[] = useMemo(
     () => [
@@ -227,6 +228,8 @@ const Dashboard = () => {
     ],
     [],
   )
+  
+  
 
   const WorkOrderColumns: TableColumnProps[] = useMemo(
     () => [
@@ -381,7 +384,7 @@ const Dashboard = () => {
               <div className="bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px] text-white">
                 <h1 className="p-4 text-xl font-extrabold">Moorings Due for Service</h1>
               </div>
-              <div style={{ overflow: 'auto', borderRadius: '10px', marginBottom: '10px' }}>
+              <div style={{ overflow: 'auto', marginBottom: '10px', height:'13rem', minHeight:'13rem', borderBottomLeftRadius:'10px',  borderBottomRightRadius:'10px'}}>
                 <DataTableComponent
                   columns={Mooringcolumns}
                   scrollable={true}
@@ -391,6 +394,7 @@ const Dashboard = () => {
                     color: '#000000',
                     fontWeight: 600,
                     cursor: 'pointer',
+                    height:'13rem',
                   }}
                   selectionMode="single"
                   onSelectionChange={(e) => {
