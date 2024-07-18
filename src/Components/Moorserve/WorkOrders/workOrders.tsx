@@ -40,6 +40,8 @@ const WorkOrders = () => {
   }
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPageNumber(0)
+    setPageNumber1(0)
     setSearchText(e.target.value)
   }
 
@@ -189,12 +191,10 @@ const WorkOrders = () => {
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      if (searchText) {
-        getWorkOrderData()
-      }
+      getWorkOrderData()
     }, 600)
     return () => clearTimeout(timeoutId)
-  }, [searchText])
+  }, [searchText, selectedCustomerId, pageSize, pageNumber])
 
   useEffect(() => {
     if (selectedCustomerId) {
@@ -292,7 +292,7 @@ const WorkOrders = () => {
                   />
                 </div>
               </div>
-              <div className="bg-white h-[6vh] rounded-md">
+              <div className="bg-white min-h-[4.5vh] rounded-md">
                 <div className="card flex justify-content-center p-0.5 pl-0.5">
                   <SelectButton
                     value={completedWorkOrder}

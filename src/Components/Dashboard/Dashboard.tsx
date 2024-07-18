@@ -39,6 +39,7 @@ const Dashboard = () => {
   const [mooringData, setMooringData] = useState<any>()
   const [selectedProduct, setSelectedProduct] = useState<any>()
   const [mooringResponseData, setMooringResponseData] = useState<any>()
+  const [mooringSelected, setMooringSelected] = useState(false)
   const [getMoorings] = useGetMooringsMutation()
   const today = new Date()
   const dateAfter7Days = new Date(today)
@@ -68,7 +69,7 @@ const Dashboard = () => {
   const [getOpenWorkOrderAndMoorings] = useGetAllOpenWorkOrdersAndMooringDueForServiceMutation()
   const toast = useRef<Toast>(null)
 
-  const position: PositionType = [41.56725, 70.94045]
+  const position: PositionType = [39.4926173, -117.5714859]
 
   const parseCoordinates = (coordinates: any) => {
     if (!coordinates) return null
@@ -177,7 +178,6 @@ const Dashboard = () => {
         body: firstLastName,
         style: {
           fontSize: '10px',
-          // width: '8vw',
           backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: '700',
@@ -188,7 +188,6 @@ const Dashboard = () => {
         label: 'Mooring Number',
         style: {
           fontSize: '10px',
-          // width: '8vw',
           backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: '700',
@@ -200,7 +199,6 @@ const Dashboard = () => {
         label: 'Inspection Date',
         style: {
           fontSize: '10px',
-          // width: '9vw',
           backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: '700',
@@ -211,7 +209,6 @@ const Dashboard = () => {
         label: 'Mooring Location ',
         style: {
           fontSize: '10px',
-          // width: '10vw',
           backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: '700',
@@ -222,7 +219,6 @@ const Dashboard = () => {
         label: 'Status',
         style: {
           fontSize: '10px',
-          // width: '10vw',
           backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: '700',
@@ -333,7 +329,7 @@ const Dashboard = () => {
     setIsLoading(true)
     try {
       const response = await getMoorings({}).unwrap()
-      const { status, content, message, totalSize } = response as MooringResponse
+      const { status, totalSize } = response as MooringResponse
       if (status === 200) {
         if (totalSize > 0) {
           setTotalMoorings(totalSize)
@@ -404,6 +400,7 @@ const Dashboard = () => {
                   dataKey="id"
                   onRowClick={(rowData) => {
                     setMooringResponseData(rowData?.data?.gpsCoordinates)
+                    setMooringSelected(true)
                   }}
                   data={mooringData}
                   emptyMessage={
@@ -440,17 +437,13 @@ const Dashboard = () => {
               iconsByStatus={iconsByStatus}
               moorings={mooringData}
               dashboard={true}
+              leftContanerWidth={mooringSelected}
               setLeftContainer={() => {}}
               setRightContainer={() => {}}
             />
           </div>
 
-          <div
-            className={`md:ml-12 md:mt-3 lg:mt-0`}
-            // style={{
-            //   flexGrow: 1,
-            // }}
-          >
+          <div className={`md:ml-12 md:mt-3 lg:mt-0`}>
             <div className="flex  flex-col wrapper ">
               <div
                 className=" px-5 relative mb-4 rounded-xl bg-white border-[1px] border-[#D5E1EA] mr-8"
