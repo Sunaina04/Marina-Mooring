@@ -73,7 +73,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<string>()
   const [checkedMooring, setCheckedMooring] = useState(false)
   const [checkedDock, setCheckedDock] = useState(false)
-  const [customerTypeId, setCustomerTypeId] = useState<any>(customer?.customerTypeDto?.id)
   const toastRef = useRef<Toast>(null)
   const [imageVisible, setImageVisible] = useState(false)
   const [hoveredIndex, setHoveredIndex] = useState<null | number>(null)

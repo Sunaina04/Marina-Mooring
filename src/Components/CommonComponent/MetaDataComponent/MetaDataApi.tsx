@@ -15,6 +15,7 @@ import {
   useGetCustomersDataMutation,
   useGetInventoryTypeMutation,
   useGetCustomerTypeMutation,
+  useGetServiceAreaTypeMutation,
 } from '../../../Services/MetaDataApi'
 import { ErrorResponse, MetaDataCustomerResponse, MetaDataResponse } from '../../../Type/ApiTypes'
 
@@ -142,6 +143,28 @@ export const TypeOfChainCondition = () => {
   })
 
   return { getTypeOfChainData }
+}
+
+export const ServiceAreaData = () => {
+  const [getServiceAreaType] = useGetServiceAreaTypeMutation()
+
+  const fetchTypeOfServiceArea = async (getData: any) => {
+    try {
+      const response = await getData({})
+      const { status, content } = response.data as MetaDataResponse
+      return status === 200 && Array.isArray(content) ? content : null
+    } catch (error) {
+      const { message } = error as ErrorResponse
+      console.error('Error fetching metadata:', message)
+      return null
+    }
+  }
+
+  const getServiceAreaData = async () => ({
+    serviceAreaData: await fetchTypeOfServiceArea(getServiceAreaType),
+  })
+
+  return { getServiceAreaData }
 }
 
 export const TypeOfStatus = () => {
@@ -381,5 +404,3 @@ export const TypeOfInventoryType = () => {
 
   return { getTypeOfInventoryTypeData }
 }
-
-
