@@ -1434,7 +1434,7 @@ const Customer = () => {
           setImageEditVisible(false)
         }}
         headerStyle={{ cursor: 'alias' }}
-        header={'Images'}>
+        header={'Image Information'}>
         <AddImage
           imageData={imageData}
           entityId={customerId}
