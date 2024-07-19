@@ -155,48 +155,6 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
                 })}
             </MapContainer>
           </div>
-          <div
-            style={{
-              cursor: 'pointer',
-              position: 'absolute',
-              right: '40%',
-              top: '80%',
-              zIndex: 999,
-            }}>
-            <div style={boxStyle}>
-              <h2>Status</h2>
-              <div className="mt-1">
-                <hr style={{ border: '1px solid #D5E1EA' }} />
-              </div>
-              <div style={containerStyle}>
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                  }}>
-                  <div>
-                    <span style={dotStyle('red')}></span> Need Inspection
-                  </div>
-                  <div>
-                    <span style={dotStyle('blue')}></span> Gear Off
-                  </div>
-                </div>
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    marginRight: dashboard ? '300px' : '80px',
-                  }}>
-                  <div>
-                    <span style={dotStyle('green')}></span> Gear On
-                  </div>
-                  <div>
-                    <span style={dotStyle('#d3d3d3')}></span> Not in Use
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       ) : null}
 
