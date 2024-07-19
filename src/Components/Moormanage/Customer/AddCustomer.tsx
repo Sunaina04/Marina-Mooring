@@ -585,9 +585,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       setIsLoading(true)
       const editMooringPayload = {
         id: mooringRowData?.id,
-        mooringNumber: formData?.mooringNumber
-          ? formData?.mooringNumber
-          : mooringRowData?.mooringNumber,
+        // mooringNumber: formData?.mooringNumber
+        //   ? formData?.mooringNumber
+        //   : mooringRowData?.mooringNumber,
         customerId: formData?.customerName?.id
           ? formData?.customerName?.id
           : mooringRowData?.customerId,
@@ -1229,32 +1229,36 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             {(checkedMooring === true || editMooringMode) && (
               <div id="mooring" className="mt-4">
                 <div className="flex gap-6">
-                  <div>
-                    <span className="font-medium text-sm text-[#000000]">
-                      <div className="flex gap-1">
-                        Mooring Number <p className="text-red-600">*</p>
+                  {!editMooringMode && (
+                    <div>
+                      <span className="font-medium text-sm text-[#000000]">
+                        <div className="flex gap-1">
+                          Mooring Number <p className="text-red-600">*</p>
+                        </div>
+                      </span>
+                      <div className="mt-2">
+                        <InputComponent
+                          value={formData?.mooringNumber}
+                          onChange={(e) => handleInputChange('mooringNumber', e.target.value)}
+                          style={{
+                            width: '230px',
+                            height: '32px',
+                            border: fieldErrors.mooringNumber
+                              ? '1px solid red'
+                              : '1px solid #D5E1EA',
+                            borderRadius: '0.50rem',
+                            fontSize: '0.8rem',
+                            paddingLeft: '0.5rem',
+                          }}
+                        />
+                        <p id="mooringNumber">
+                          {fieldErrors.mooringNumber && (
+                            <small className="p-error">{fieldErrors.mooringNumber}</small>
+                          )}
+                        </p>
                       </div>
-                    </span>
-                    <div className="mt-2">
-                      <InputComponent
-                        value={formData?.mooringNumber}
-                        onChange={(e) => handleInputChange('mooringNumber', e.target.value)}
-                        style={{
-                          width: '230px',
-                          height: '32px',
-                          border: fieldErrors.mooringNumber ? '1px solid red' : '1px solid #D5E1EA',
-                          borderRadius: '0.50rem',
-                          fontSize: '0.8rem',
-                          paddingLeft: '0.5rem',
-                        }}
-                      />
-                      <p id="mooringNumber">
-                        {fieldErrors.mooringNumber && (
-                          <small className="p-error">{fieldErrors.mooringNumber}</small>
-                        )}
-                      </p>
                     </div>
-                  </div>
+                  )}
 
                   <div className="">
                     <span className="font-medium text-sm text-[#000000]">

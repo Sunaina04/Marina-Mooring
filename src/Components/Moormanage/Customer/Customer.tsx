@@ -68,8 +68,6 @@ const Customer = () => {
   const [pageNumber1, setPageNumber1] = useState(0)
   const [pageSize, setPageSize] = useState(10)
   const [totalRecordsOne, setTotalRecordsOne] = useState<number>()
-  const [isExpanded, setIsExpanded] = useState(true)
-  const [isExpand, setIsExpand] = useState(true)
   const [leftContainerWidth, setLeftContainerWidth] = useState(false)
   const [rightContainerWidth, setRightContainerWidth] = useState(false)
 
@@ -723,136 +721,41 @@ const Customer = () => {
       </div>
       <div className="flex flex-col md:flex-row mt-3">
         {/* Left Panel */}
-        {/* <div
-          style={{
-            height: '700px',
-            minHeight: '700px',
-            width: leftContainerWidth ? '20px' : '450px',
-            minWidth: leftContainerWidth ? '20px' : '450px',
-            backgroundColor: '#FFFFFF',
-            position: 'relative',
-          }}
-          className={`ml-[45px] ${leftContainerWidth ? 'w-[20px]' : 'flex-1 w-[450px]'}`}>
-          <div data-testid="customer-data" className="flex flex-col h-full">
-            <div className="flex item-center justify-between bg-[#10293A] rounded-tl-[10px] rounded-tr-[10px] text-white cursor-pointer">
-              <div>
-                <h1 className="p-4 text-xl font-extrabold">
-                  {' '}
-                  {!leftContainerWidth && properties.customerHeader}
-                </h1>
-                {leftContainerWidth && (
-                  <div
-                    className="p-1"
-                    onClick={() => setLeftContainerWidth(false)}
-                    style={{ cursor: 'pointer' }}>
-                    <img src="/assets/images/plus.png" alt="Key Icon" className="p-clickable" />
-                  </div>
-                )}
-              </div>
-              <div
-                className="p-8"
-                onClick={() => setLeftContainerWidth(true)}
-                style={{ cursor: 'pointer' }}>
-                <svg
-                  width="24"
-                  height="4"
-                  viewBox="0 0 11 3"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M10.125 1.5C10.125 1.92188 9.77344 2.25 9.375 2.25H1.125C0.703125 2.25 0.375 1.92188 0.375 1.5C0.375 1.10156 0.703125 0.75 1.125 0.75H9.375C9.77344 0.75 10.125 1.10156 10.125 1.5Z"
-                    fill="white"
-                  />
-                </svg>
-              </div>
-            </div>
-            {!leftContainerWidth && (
-              <InputTextWithHeader
-                value={searchText}
-                onChange={handleSearch}
-                placeholder="Search by name, ID, phone no.... "
-                inputTextStyle={{
-                  width: '100%',
-                  height: '44px',
-                  padding: '0 4rem 0 3rem',
-                  border: '1px solid #C5D9E0',
-                  fontSize: '16px',
-                  color: '#000000',
-                  borderRadius: '4px',
-                  minHeight: '44px',
-                  fontWeight: 400,
-                  backgroundColor: 'rgb(242 242 242 / 0%)',
-                }}
-                borderBottom={{ border: '1px solid #D5E1EA' }}
-                iconStyle={{
-                  position: 'absolute',
-                  left: '15px',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  width: '18px',
-                  height: '18px',
-                }}
-              />
-            )}
-            <div className="ml-[15px] mr-[15px] table-container" style={{ overflow: 'auto' }}>
-              <DataTableComponent
-                data={customerData}
-                tableStyle={{
-                  fontSize: '12px',
-                  color: '#000000',
-                  fontWeight: 600,
-                  backgroundColor: '#D9D9D9',
-                }}
-                scrollable={true}
-                columns={CustomerTableColumns}
-                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
-                onRowClick={(row) => {
-                  handleCustomerTableRowClick(row)
-                }}
-                selectionMode="single"
-                onSelectionChange={(e) => {
-                  setSelectedProduct(e.value)
-                }}
-                selection={selectedProduct}
-                dataKey="id"
-                paginator={true}
-                rowStyle={(rowData: any) => rowData}
-                emptyMessage={
-                  <div className="text-center mt-40">
-                    <img
-                      src="/assets/images/empty.png"
-                      alt="Empty Data"
-                      className="w-28 mx-auto mb-2"
-                    />
-                    <p className="text-gray-500 text-lg">No data available</p>
-                  </div>
-                }
-              />
-            </div>
 
-            {!leftContainerWidth && (
-              <div className="mt-auto">
-                <Paginator
-                  first={pageNumber1}
-                  rows={pageSize}
-                  totalRecords={totalRecordsOne}
-                  rowsPerPageOptions={[5, 10, 20, 30]}
-                  onPageChange={onPageChange}
-                  style={{
-                    position: 'sticky',
-                    bottom: 0,
-                    zIndex: 1,
-                    backgroundColor: 'white',
-                    borderTop: '1px solid #D5E1EA',
-                    padding: '0.5rem',
-                  }}
-                />
-              </div>
-            )}
+        {leftContainerWidth ? (
+          <div
+            style={{
+              height: '700px',
+              minHeight: '700px',
+              width: '40px',
+              minWidth: '40px',
+              backgroundColor: '#10293A',
+            }}
+            className="rounded-md ml-[45px]">
+            <div
+              className="p-3"
+              onClick={() => setLeftContainerWidth(false)}
+              style={{ cursor: 'pointer' }}>
+              <img src="/assets/images/plus.png" alt="Key Icon" className="p-clickable" />
+            </div>
+            <div
+              style={{
+                writingMode: 'vertical-lr',
+                textAlign: 'center',
+                color: 'white',
+                height: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transform: 'rotate(180deg)',
+                fontSize: '20px',
+                letterSpacing: '4px',
+              }}
+              className="pt-14">
+              Customer List
+            </div>
           </div>
-        </div> */}
-
-        {isExpanded ? (
+        ) : (
           <div
             style={{
               height: '700px',
@@ -870,7 +773,7 @@ const Customer = () => {
                 </div>
                 <div
                   className="p-8"
-                  onClick={() => setIsExpanded(false)}
+                  onClick={() => setLeftContainerWidth(true)}
                   style={{ cursor: 'pointer' }}>
                   <svg
                     width="24"
@@ -980,36 +883,6 @@ const Customer = () => {
               )}
             </div>
           </div>
-        ) : (
-          <div
-            style={{
-              height: '700px',
-              minHeight: '700px',
-              width: '40px',
-              minWidth: '40px',
-              backgroundColor: '#10293A',
-            }}
-            className="rounded-md ml-[45px]">
-            <div className="p-3" onClick={() => setIsExpanded(true)} style={{ cursor: 'pointer' }}>
-              <img src="/assets/images/plus.png" alt="Key Icon" className="p-clickable" />
-            </div>
-            <div
-              style={{
-                writingMode: 'vertical-lr',
-                textAlign: 'center',
-                color: 'white',
-                height: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transform: 'rotate(180deg)',
-                fontSize: '20px',
-                letterSpacing: '4px',
-              }}
-              className="pt-14">
-              Customer List
-            </div>
-          </div>
         )}
 
         {/* middle container */}
@@ -1032,7 +905,40 @@ const Customer = () => {
         </div>
 
         {/* last container */}
-        {isExpand ? (
+        {rightContainerWidth ? (
+          <div
+            style={{
+              height: '700px',
+              minHeight: '700px',
+              width: '40px',
+              minWidth: '40px',
+              backgroundColor: '#10293A',
+            }}
+            className="rounded-md ml-[20px] mr-[20px]">
+            <div
+              className="p-3"
+              onClick={() => setRightContainerWidth(false)}
+              style={{ cursor: 'pointer' }}>
+              <img src="/assets/images/plus.png" alt="Key Icon" className="p-clickable" />
+            </div>
+            <div
+              style={{
+                writingMode: 'vertical-rl',
+                textAlign: 'center',
+                color: 'white',
+                height: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                // transform: 'rotate(180deg)',
+                fontSize: '20px',
+                letterSpacing: '4px',
+              }}
+              className="pb-24 pl-2">
+              Customer Details
+            </div>
+          </div>
+        ) : (
           <div className="ml-5 mr-4">
             {/* Left Panel - Customer Record */}
             <div
@@ -1065,7 +971,7 @@ const Customer = () => {
 
                   <div
                     className="p-1 mt-[20px]"
-                    onClick={() => setIsExpand(false)}
+                    onClick={() => setRightContainerWidth(true)}
                     style={{ cursor: 'pointer' }}>
                     <svg
                       width="24"
@@ -1306,36 +1212,6 @@ const Customer = () => {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        ) : (
-          <div
-            style={{
-              height: '700px',
-              minHeight: '700px',
-              width: '40px',
-              minWidth: '40px',
-              backgroundColor: '#10293A',
-            }}
-            className="rounded-md ml-[20px] mr-[20px]">
-            <div className="p-3" onClick={() => setIsExpand(true)} style={{ cursor: 'pointer' }}>
-              <img src="/assets/images/plus.png" alt="Key Icon" className="p-clickable" />
-            </div>
-            <div
-              style={{
-                writingMode: 'vertical-rl',
-                textAlign: 'center',
-                color: 'white',
-                height: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                // transform: 'rotate(180deg)',
-                fontSize: '20px',
-                letterSpacing: '4px',
-              }}
-              className="pb-24 pl-2">
-              Customer Details
             </div>
           </div>
         )}

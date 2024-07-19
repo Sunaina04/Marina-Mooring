@@ -66,8 +66,6 @@ const Moorings = () => {
   const [imageEditVisible, setImageEditVisible] = useState(false)
   const [leftContainerWidth, setLeftContainerWidth] = useState(false)
   const [rightContainerWidth, setRightContainerWidth] = useState(false)
-  const [isMooringExpand, setIsMooringExpand] = useState(true)
-  const [isMooringExpanded, setIsMooringExpanded] = useState(true)
   const toast = useRef<Toast>(null)
   const [getMoorings] = useGetMooringsMutation()
   const [deleteMooring] = useDeleteMooringsMutation()
@@ -154,6 +152,7 @@ const Moorings = () => {
     setEditCustomerMode(false)
     setEditMode(false)
     setImageEditVisible(false)
+    setIsEditMooring(false)
   }
 
   const handleMooringRowClick = (rowData: any) => {
@@ -650,7 +649,40 @@ const Moorings = () => {
 
       <div className="flex flex-col md:flex-row mt-3">
         {/* Left Panel */}
-        {isMooringExpand ? (
+        {leftContainerWidth ? (
+          <div
+            style={{
+              height: '700px',
+              minHeight: '700px',
+              width: '40px',
+              minWidth: '40px',
+              backgroundColor: '#00426F',
+            }}
+            className="rounded-md ml-[45px]">
+            <div
+              className="p-3"
+              onClick={() => setLeftContainerWidth(false)}
+              style={{ cursor: 'pointer' }}>
+              <img src="/assets/images/plus.png" alt="Key Icon" className="p-clickable" />
+            </div>
+            <div
+              style={{
+                writingMode: 'vertical-lr',
+                textAlign: 'center',
+                color: 'white',
+                height: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transform: 'rotate(180deg)',
+                fontSize: '20px',
+                letterSpacing: '4px',
+              }}
+              className="pt-12">
+              Mooring List
+            </div>
+          </div>
+        ) : (
           <>
             <div
               style={{
@@ -669,7 +701,7 @@ const Moorings = () => {
                   </div>
                   <div
                     className="p-8"
-                    onClick={() => setIsMooringExpand(false)}
+                    onClick={() => setLeftContainerWidth(true)}
                     style={{ cursor: 'pointer' }}>
                     <svg
                       width="24"
@@ -780,39 +812,6 @@ const Moorings = () => {
               />
             )}
           </>
-        ) : (
-          <div
-            style={{
-              height: '700px',
-              minHeight: '700px',
-              width: '40px',
-              minWidth: '40px',
-              backgroundColor: '#00426F',
-            }}
-            className="rounded-md ml-[45px]">
-            <div
-              className="p-3"
-              onClick={() => setIsMooringExpand(true)}
-              style={{ cursor: 'pointer' }}>
-              <img src="/assets/images/plus.png" alt="Key Icon" className="p-clickable" />
-            </div>
-            <div
-              style={{
-                writingMode: 'vertical-lr',
-                textAlign: 'center',
-                color: 'white',
-                height: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transform: 'rotate(180deg)',
-                fontSize: '20px',
-                letterSpacing: '4px',
-              }}
-              className="pt-12">
-              Mooring List
-            </div>
-          </div>
         )}
 
         {/* middle container */}
@@ -839,7 +838,40 @@ const Moorings = () => {
         </div>
 
         {/* Right Panel */}
-        {isMooringExpanded ? (
+        {rightContainerWidth ? (
+          <div
+            style={{
+              height: '700px',
+              minHeight: '700px',
+              width: '40px',
+              minWidth: '40px',
+              backgroundColor: '#00426F',
+            }}
+            className="rounded-md ml-[20px] mr-[20px]">
+            <div
+              className="p-3"
+              onClick={() => setRightContainerWidth(false)}
+              style={{ cursor: 'pointer' }}>
+              <img src="/assets/images/plus.png" alt="Key Icon" className="p-clickable" />
+            </div>
+            <div
+              style={{
+                writingMode: 'vertical-rl',
+                textAlign: 'center',
+                color: 'white',
+                height: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                // transform: 'rotate(180deg)',
+                fontSize: '20px',
+                letterSpacing: '4px',
+              }}
+              className="pb-20 pl-2">
+              Mooring Details
+            </div>
+          </div>
+        ) : (
           <div className="ml-5 mr-4">
             <div
               style={{
@@ -872,7 +904,7 @@ const Moorings = () => {
 
                   <div
                     className="p-1 mt-[20px]"
-                    onClick={() => setIsMooringExpanded(false)}
+                    onClick={() => setRightContainerWidth(true)}
                     style={{ cursor: 'pointer' }}>
                     <svg
                       width="24"
@@ -1115,39 +1147,6 @@ const Moorings = () => {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        ) : (
-          <div
-            style={{
-              height: '700px',
-              minHeight: '700px',
-              width: '40px',
-              minWidth: '40px',
-              backgroundColor: '#00426F',
-            }}
-            className="rounded-md ml-[20px] mr-[20px]">
-            <div
-              className="p-3"
-              onClick={() => setIsMooringExpanded(true)}
-              style={{ cursor: 'pointer' }}>
-              <img src="/assets/images/plus.png" alt="Key Icon" className="p-clickable" />
-            </div>
-            <div
-              style={{
-                writingMode: 'vertical-rl',
-                textAlign: 'center',
-                color: 'white',
-                height: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                // transform: 'rotate(180deg)',
-                fontSize: '20px',
-                letterSpacing: '4px',
-              }}
-              className="pb-20 pl-2">
-              Mooring Details
             </div>
           </div>
         )}

@@ -73,6 +73,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   const [hoveredIndex, setHoveredIndex] = useState<null | number>(null)
   const [encodedImages, setEncodedImages] = useState<string[]>([])
   const [imageRequestDtoList, setimageRequestDtoList] = useState<any>()
+  const [imageNote, setImageNote] = useState('')
   const toastRef = useRef<Toast>(null)
 
   const getFomattedCoordinate = (gpsCoordinatesValue: any) => {
@@ -192,10 +193,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   }, [])
 
   const validateFields = () => {
-    const numberRegex = /^[0-9]+$/
-    const harborRegex = /^[a-zA-Z ]+$/
     const alphanumericRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$/
-    const nameRegex = /^[a-zA-Z ]+$/
     const errors: { [key: string]: string } = {}
     let firstError = ''
 
@@ -318,7 +316,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
 
     const newBase64Strings: string[] = []
     const newImageUrls: string[] = []
-    const imageRequestDtoList: { imageName: string; imageData: string; note: string }[] = []
+    const imageRequestDtoList: { imageName?: string; imageData?: string; note?: string }[] = []
 
     for (const file of validImageFiles) {
       try {
@@ -341,7 +339,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
         imageRequestDtoList.push({
           imageName: file.name,
           imageData: base64String,
-          note: formData?.imageNote,
+          note: imageNote,
         })
       } catch (error) {
         console.error('Error reading file:', error)
@@ -376,7 +374,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       bottomChainCondition: mooringRowData?.bottomChainCondition?.condition || '',
       bottomChainDate: mooringRowData?.installBottomChainDate || '',
       topChainDate: mooringRowData?.installTopChainDate || '',
+      inspectionDate: mooringRowData?.inspectionDate || '',
       conditionEyeDate: mooringRowData?.installConditionOfEyeDate || '',
+      serviceAreaId: mooringRowData?.serviceAreaResponseDto?.serviceAreaName || '',
       status: 3,
     }))
   }
@@ -512,9 +512,14 @@ const AddMoorings: React.FC<AddMooringProps> = ({
           ? formData?.depthAtMeanHighWater
           : mooringRowData?.depthAtMeanHighWater,
         statusId: 3,
-        inspectionDate: formData?.inspectionDate,
+        inspectionDate: formData?.inspectionDate
+          ? formData?.inspectionDate
+          : mooringRowData?.inspectionDate || '',
+        conditionEyeDate: mooringRowData?.installConditionOfEyeDate,
+        serviceAreaId: formData?.serviceAreaId?.id
+          ? formData?.serviceAreaId?.id
+          : mooringRowData?.serviceAreaResponseDto?.id,
         imageRequestDtoList: imageRequestDtoList,
-        serviceAreaId: formData?.serviceAreaId?.id,
       }
       const response = await updateMooring({
         payload: editMooringPayload,
@@ -1883,8 +1888,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 <div className=" font-medium text-sm text-[#000000]">Note</div>
                 <div className="mt-1">
                   <InputComponent
-                    value={formData.ImageNote}
-                    onChange={(e) => handleInputChange('ImageNote', e.target.value)}
+                    value={imageNote}
+                    onChange={(e) => setImageNote(e.target.value)}
                     style={{
                       width: '370px',
                       height: '40px',
