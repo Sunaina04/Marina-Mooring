@@ -82,9 +82,10 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
   }
 
   useEffect(() => {
-    mooringData.map((mooring: MooringPayload, index: number) => {
-      setMooringDetails(mooring)
-    })
+    mooringData &&
+      mooringData?.map((mooring: MooringPayload, index: number) => {
+        setMooringDetails(mooring)
+      })
   }, [mooringData])
 
   useEffect(() => {
