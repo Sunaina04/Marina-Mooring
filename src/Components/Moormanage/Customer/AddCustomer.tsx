@@ -77,6 +77,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [imageVisible, setImageVisible] = useState(false)
   const [hoveredIndex, setHoveredIndex] = useState<null | number>(null)
   const [imageRequestDtoList, setimageRequestDtoList] = useState<any>()
+  const [imagesNote, setImagesNote] = useState ('')
   const getFomattedCoordinate = (gpsCoordinatesValue: any) => {
     try {
       let [lat, long]: any = gpsCoordinatesValue.split(' ')
@@ -130,6 +131,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     depthAtMeanHighWater: '',
     status: 0,
     note: '',
+    imagesNote: '',
   })
 
   const { getStatesData } = StatesData()
@@ -2016,9 +2018,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 <div className=" font-medium text-sm text-[#000000]">Note</div>
                 <div className="mt-1">
                   <InputComponent
-                    // value={formData.note}
+                     value={formData.imagesNote}
 
-                    onChange={(e) => handleInputChange('note', e.target.value)}
+                    onChange={(e) => handleInputChange('imagesNote', e.target.value)}
                     style={{
                       width: '370px',
                       height: '40px',
