@@ -33,6 +33,7 @@ import { PositionType } from '../../../Type/Components/MapTypes'
 import { GearOffIcon, GearOnIcon, NeedInspectionIcon, NotInUseIcon } from '../../Map/DefaultIcon'
 import AddMoorings from './AddMoorings'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
+import AddImage from '../Customer/AddImage'
 
 const Moorings = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -61,7 +62,8 @@ const Moorings = () => {
   const [mooringImage, setMooringImage] = useState<any>()
   const [showImage, setShowImage] = useState({ id: '', imageData: '' })
   const [imageVisible, setImageVisible] = useState(true)
-  const [imageEditVisible, setImageEditVisible] = useState(true)
+  const [imageData, setImageData] = useState<any>()
+  const [imageEditVisible, setImageEditVisible] = useState(false)
   const [leftContainerWidth, setLeftContainerWidth] = useState(false)
   const [rightContainerWidth, setRightContainerWidth] = useState(false)
   const [isMooringExpand, setIsMooringExpand] = useState(true)
@@ -151,6 +153,7 @@ const Moorings = () => {
     setDialogVisible(false)
     setEditCustomerMode(false)
     setEditMode(false)
+    setImageEditVisible(false)
   }
 
   const handleMooringRowClick = (rowData: any) => {
@@ -359,7 +362,7 @@ const Moorings = () => {
           color: 'black',
           label: 'Edit',
           onClick: (data) => {
-            // setShowImage((prev) => ({ ...prev, id: data.id, imageData: data.imageData }))
+            setImageData(data)
             setImageEditVisible(true)
           },
           underline: true,
@@ -1249,6 +1252,33 @@ const Moorings = () => {
             </p>
           </div>
         </div>
+      </Dialog>
+
+      <Dialog
+        position="center"
+        style={{
+          width: '700px',
+          height: '400px',
+          borderRadius: '1rem',
+        }}
+        draggable={false}
+        visible={imageEditVisible}
+        onHide={() => {
+          setImageEditVisible(false)
+        }}
+        headerStyle={{ cursor: 'alias' }}
+        header={'Images'}>
+        <AddImage
+          imageData={imageData}
+          entityId={customerId}
+          entity={'Customer'}
+          closeModal={handleModalClose}
+          getCustomersWithMooring={() => {
+            if (customerId) {
+              getCustomersWithMooring(customerId)
+            }
+          }}
+        />
       </Dialog>
 
       {customerModalVisible && (
