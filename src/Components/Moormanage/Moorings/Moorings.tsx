@@ -763,18 +763,19 @@ const Moorings = () => {
                 </div>
               </div>
             </div>
-
-            <ProgressSpinner
-              style={{
-                position: 'absolute',
-                top: '50%',
-                left: '34%',
-                transform: 'translate(-50%, -50%)',
-                width: '50px',
-                height: '50px',
-              }}
-              strokeWidth="4"
-            />
+            {isLoading && (
+              <ProgressSpinner
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '34%',
+                  transform: 'translate(-50%, -50%)',
+                  width: '50px',
+                  height: '50px',
+                }}
+                strokeWidth="4"
+              />
+            )}
           </>
         ) : (
           <div
@@ -804,7 +805,8 @@ const Moorings = () => {
                 transform: 'rotate(180deg)',
                 fontSize: '20px',
                 letterSpacing: '4px',
-              }} className='pt-12'>
+              }}
+              className="pt-12">
               Mooring List
             </div>
           </div>
@@ -1122,7 +1124,10 @@ const Moorings = () => {
               backgroundColor: '#10293A',
             }}
             className="rounded-md ml-[20px] mr-[20px]">
-            <div className="p-3" onClick={() => setIsMooringExpanded(true)} style={{ cursor: 'pointer' }}>
+            <div
+              className="p-3"
+              onClick={() => setIsMooringExpanded(true)}
+              style={{ cursor: 'pointer' }}>
               <img src="/assets/images/plus.png" alt="Key Icon" className="p-clickable" />
             </div>
             <div
@@ -1137,7 +1142,8 @@ const Moorings = () => {
                 // transform: 'rotate(180deg)',
                 fontSize: '20px',
                 letterSpacing: '4px',
-              }} className='pb-20 pl-2'>
+              }}
+              className="pb-20 pl-2">
               Mooring Details
             </div>
           </div>

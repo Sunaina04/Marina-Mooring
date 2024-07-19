@@ -965,6 +965,19 @@ const Customer = () => {
                   }}
                 />
               </div>
+              {isLoading && (
+                <ProgressSpinner
+                  style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '34%',
+                    transform: 'translate(-50%, -50%)',
+                    width: '50px',
+                    height: '50px',
+                  }}
+                  strokeWidth="4"
+                />
+              )}
             </div>
           </div>
         ) : (
@@ -992,7 +1005,8 @@ const Customer = () => {
                 transform: 'rotate(180deg)',
                 fontSize: '20px',
                 letterSpacing: '4px',
-              }} className='pt-14'>
+              }}
+              className="pt-14">
               Customer List
             </div>
           </div>
@@ -1319,7 +1333,8 @@ const Customer = () => {
                 // transform: 'rotate(180deg)',
                 fontSize: '20px',
                 letterSpacing: '4px',
-              }}className='pb-24 pl-2'>
+              }}
+              className="pb-24 pl-2">
               Customer Details
             </div>
           </div>

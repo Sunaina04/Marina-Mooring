@@ -2,7 +2,12 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import DataTableComponent from '../CommonComponent/Table/DataTableComponent'
 import Header from '../Layout/LayoutComponents/Header'
 import { useSelector } from 'react-redux'
-import { CustomerPayload, CustomerResponse, ErrorResponse } from '../../Type/ApiTypes'
+import {
+  CustomerPayload,
+  CustomerResponse,
+  ErrorResponse,
+  QuickbookCustomerResponseDto,
+} from '../../Type/ApiTypes'
 import { Toast } from 'primereact/toast'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { Paginator } from 'primereact/paginator'
@@ -12,7 +17,10 @@ import { Dropdown } from 'primereact/dropdown'
 import { QuickBooksCustomerData } from '../CommonComponent/MetaDataComponent/MetaDataApi'
 import { useGetCustomerMutation } from '../../Services/MoorManage/MoormanageApi'
 import { selectCustomerId } from '../../Store/Slice/userSlice'
-import { useMapCustomerToQuickBookMutation } from '../../Services/AdminTools/AdminToolsApi'
+import {
+  useEditMapCustomerToQuickBookMutation,
+  useMapCustomerToQuickBookMutation,
+} from '../../Services/AdminTools/AdminToolsApi'
 
 const Settings = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -32,13 +40,13 @@ const Settings = () => {
   const [dropdownDisabled, setDropdownDisabled] = useState<{ [key: string]: boolean }>({})
   const { getQuickBookCustomerData } = QuickBooksCustomerData()
   const [mapCustomerToQuickBook] = useMapCustomerToQuickBookMutation()
+  const [editMapCustomerToQuickBook] = useEditMapCustomerToQuickBookMutation()
 
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
     setPageNumber1(event.first)
     setPageSize(event.rows)
   }
-
   const columnStyle = {
     borderBottom: '1px solid #D5E1EA',
     backgroundColor: '#FFFFFF',
@@ -85,13 +93,20 @@ const Settings = () => {
         style: columnStyle,
       },
       {
-        id: 'QuickBookCustomerName',
-        label: 'Quick Book Customer Name',
+        id: 'quickbookCustomerResponseDto.quickbookCustomerName',
+        label: 'QuickBook Customer Name',
         style: columnStyle,
         // style:{width:"40vw"},
-        body: (rowData: { id: string; dropdownValue: string }) => (
+        body: (rowData: {
+          id: string
+          dropdownValue: string
+          quickbookCustomerResponseDto: QuickbookCustomerResponseDto
+        }) => (
           <DropdownCell
-            value={dropdownValues[rowData.id] || ''}
+            value={
+              dropdownValues[rowData.id] ||
+              rowData?.quickbookCustomerResponseDto?.quickbookCustomerName
+            }
             onChange={(e) => setDropdownValues({ ...dropdownValues, [rowData.id]: e.value })}
             options={quickBookCustomer}
             disabled={!!dropdownDisabled[rowData.id] && rowData?.id !== currentlyEditing}
@@ -113,7 +128,7 @@ const Settings = () => {
                 if (!currentlyEditing) {
                   setCurrentlyEditing(rowData?.id)
                 } else {
-                  MapCustomerToQuickBook(rowData)
+                  UpdateMapCustomerToQuickBook(rowData)
                   setCurrentlyEditing(null)
                 }
               }
@@ -144,6 +159,14 @@ const Settings = () => {
           setIsLoading(false)
           setCustomerData(content)
           setTotalRecords(totalSize)
+          const dropdownValues = content.reduce((acc, customer) => {
+            acc[customer.id] = customer?.quickbookCustomerResponseDto?.quickbookCustomerName || ''
+            return acc
+          }, {})
+          // console.log('value is', dropdownValues)
+
+          setDropdownValues(dropdownValues)
+          // console.log('dropdown', dropdownValues)
         } else {
           setIsLoading(false)
 
@@ -218,9 +241,49 @@ const Settings = () => {
     }
   }
 
+  const UpdateMapCustomerToQuickBook = async (rowData: any) => {
+    try {
+      setIsLoading(true)
+
+      const response = await editMapCustomerToQuickBook({
+        customerId: rowData?.id,
+        quickbookCustomerId: Object.values(dropdownValues)?.map((value: any) => value.id)?.[0],
+      }).unwrap()
+      const { status, message } = response as CustomerResponse
+      if (status === 200 || status === 201) {
+        setDropdownDisabled((prevState) => ({ ...prevState, [rowData.id]: true }))
+        setSavedValues((prevState) => ({ ...prevState, [rowData.id]: dropdownValues[rowData.id] }))
+        setIsLoading(false)
+        toast?.current?.show({
+          severity: 'success',
+          summary: 'Success',
+          detail: message,
+          life: 3000,
+        })
+      } else {
+        setIsLoading(false)
+        toast?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+      }
+    } catch (error) {
+      const { message, data } = error as ErrorResponse
+      setIsLoading(false)
+      toast?.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: data?.message,
+        life: 3000,
+      })
+    }
+  }
+
   useEffect(() => {
     fetchDataAndUpdate()
-  }, [fetchDataAndUpdate, dropdownValues])
+  }, [fetchDataAndUpdate, dropdownValues, selectedCustomerId])
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -317,409 +380,3 @@ const Settings = () => {
 }
 
 export default Settings
-
-// import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-// import DataTableComponent from '../CommonComponent/Table/DataTableComponent'
-// import Header from '../Layout/LayoutComponents/Header'
-// import { useSelector } from 'react-redux'
-// import { CustomerPayload, CustomerResponse, ErrorResponse } from '../../Type/ApiTypes'
-// import { Toast } from 'primereact/toast'
-// import { ProgressSpinner } from 'primereact/progressspinner'
-// import { Paginator } from 'primereact/paginator'
-// import { DropdownCellProps, Params, State } from '../../Type/CommonType'
-// import { properties } from '../Utils/MeassageProperties'
-// import { Dropdown } from 'primereact/dropdown'
-// import { QuickBooksCustomerData } from '../CommonComponent/MetaDataComponent/MetaDataApi'
-// import { useGetCustomerMutation } from '../../Services/MoorManage/MoormanageApi'
-// import { selectCustomerId } from '../../Store/Slice/userSlice'
-// import { useMapCustomerToQuickBookMutation } from '../../Services/AdminTools/AdminToolsApi'
-// import { DataTable } from 'primereact/datatable'
-// import { Column } from 'primereact/column'
-// import { InputText } from 'primereact/inputtext'
-// import { Tag } from 'primereact/tag'
-
-// const Settings = () => {
-//   const selectedCustomerId = useSelector(selectCustomerId)
-//   const [quickBookCustomer, setQuickBookCustomer] = useState<{ label: any; id: any }[]>([])
-
-//   const [getCustomer] = useGetCustomerMutation()
-//   const toast = useRef<Toast>(null)
-//   const [isLoading, setIsLoading] = useState(true)
-//   const [totalRecords, setTotalRecords] = useState<number>()
-//   const [pageNumber, setPageNumber] = useState(0)
-//   const [pageNumber1, setPageNumber1] = useState(0)
-//   const [pageSize, setPageSize] = useState(10)
-//   const [dropdownValues, setDropdownValues] = useState<any>()
-//   const [savedValues, setSavedValues] = useState<{ [key: string]: string }>({})
-//   const [customerData, setCustomerData] = useState<CustomerPayload[]>([])
-//   const [dropdownDisabled, setDropdownDisabled] = useState<{ [key: string]: boolean }>({})
-//   const { getQuickBookCustomerData } = QuickBooksCustomerData()
-//   const [mapCustomerToQuickBook] = useMapCustomerToQuickBookMutation()
-
-//   const onPageChange = (event: any) => {
-//     setPageNumber(event.page)
-//     setPageNumber1(event.first)
-//     setPageSize(event.rows)
-//   }
-
-//   const columnStyle = {
-//     borderBottom: '1px solid #D5E1EA',
-//     backgroundColor: '#FFFFFF',
-//     color: '#000000',
-//     fontWeight: 700,
-//   }
-
-//   const DropdownCell: React.FC<DropdownCellProps & { disabled: boolean }> = ({
-//     value,
-//     onChange,
-//     options,
-//     disabled,
-//   }) => {
-//     console.log('value', value)
-
-//     return (
-//       <Dropdown
-//         optionLabel="label"
-//         value={dropdownValues?.label}
-//         options={quickBookCustomer}
-//         disabled={disabled}
-//         onChange={onChange}
-//         style={{
-//           height: '32px',
-//           border: '1px solid #D5E1EA',
-//           borderRadius: '0.50rem',
-//           fontSize: '0.8rem',
-//           width: '40%',
-//           textAlign: 'center',
-//         }}
-//       />
-//     )
-//   }
-
-//   const firstLastName = (data: any) => {
-//     return data.firstName + ' ' + data.lastName
-//   }
-
-//   const tableColumnsPermission = useMemo(
-//     () => [
-//       {
-//         id: 'firstName',
-//         label: 'Customer Name',
-//         body: firstLastName,
-//         // style: { width: '20vw' },
-//         style: columnStyle,
-//       },
-//       {
-//         id: 'QuickBookCustomerName',
-//         label: 'Quick Book Customer Name',
-//         style: columnStyle,
-//         // editor={(options) => statusEditor(options)},
-//         // style:{width:"40vw"},
-//         body: (rowData) => (
-//           <Dropdown
-//             optionLabel="label"
-//             value={dropdownValues}
-//             options={quickBookCustomer}
-//             disabled={!!dropdownDisabled[rowData.id]}
-//             onChange={(e) => setDropdownValues(e.value)}
-//             style={{
-//               height: '32px',
-//               border: '1px solid #D5E1EA',
-//               borderRadius: '0.50rem',
-//               fontSize: '0.8rem',
-//               width: '40%',
-//               textAlign: 'center',
-//             }}
-//           />
-//           // <DropdownCell
-//           //   value={rowData}
-//           //   onChange={(e) => setDropdownValues(e.value)}
-//           //   options={quickBookCustomer}
-//           //   disabled={!!dropdownDisabled[rowData.id]}
-//           // />
-//         ),
-//       },
-//       {
-//         id: 'Action',
-//         label: 'Action',
-//         // style:{width:"20vw"},
-//         style: columnStyle,
-//         body: (rowData: { id: string }) => (
-//           <span
-//             className={`cursor-pointer underline ${savedValues[rowData.id] ? 'black' : 'text-green-500'}`}
-//             onClick={() => MapCustomerToQuickBook(rowData)}>
-//             {savedValues[rowData.id] ? 'Edit' : 'Save'}
-//           </span>
-//         ),
-//       },
-//     ],
-//     [dropdownValues, savedValues, dropdownDisabled, quickBookCustomer],
-//   )
-
-//   const getCustomerData = useCallback(async () => {
-//     setIsLoading(true)
-//     try {
-//       let params: Params = {}
-//       if (pageNumber) {
-//         params.pageNumber = pageNumber
-//       }
-//       if (pageSize) {
-//         params.pageSize = pageSize
-//       }
-
-//       const response = await getCustomer(params).unwrap()
-//       const { status, content, message, totalSize } = response as CustomerResponse
-//       if (status === 200 && Array.isArray(content)) {
-//         if (content?.length > 0) {
-//           setIsLoading(false)
-//           setCustomerData(content)
-//           setTotalRecords(totalSize)
-//         } else {
-//           setIsLoading(false)
-
-//           setCustomerData([])
-//           setTotalRecords(totalSize)
-//         }
-//       } else {
-//         setIsLoading(false)
-//         toast?.current?.show({
-//           severity: 'error',
-//           summary: 'Error',
-//           detail: message,
-//           life: 3000,
-//         })
-//       }
-//     } catch (error) {
-//       setIsLoading(false)
-//       const { message: msg } = error as ErrorResponse
-//       console.error('Error occurred while fetching customer data:', msg)
-//     }
-//   }, [getCustomer, selectedCustomerId, pageSize, pageNumber])
-
-//   const fetchDataAndUpdate = useCallback(async () => {
-//     const { quickBookCustomerData } = await getQuickBookCustomerData()
-
-//     if (quickBookCustomerData !== null) {
-//       const parsedData = quickBookCustomerData?.map((item: any) => ({
-//         label: item.quickbookCustomerName,
-//         id: item.id,
-//       }))
-//       setQuickBookCustomer(parsedData)
-//     }
-//   }, [])
-
-//   const MapCustomerToQuickBook = async (rowData: any) => {
-//     try {
-//       setIsLoading(true)
-//       console.log('savedvalue', dropdownValues)
-
-//       const response = await mapCustomerToQuickBook({
-//         customerId: rowData?.id,
-//         quickbookCustomerId: 1,
-//       }).unwrap()
-//       const { status, message } = response as CustomerResponse
-//       if (status === 200 || status === 201) {
-//         setIsLoading(false)
-//         // if (savedValues[rowData.id]) {
-//         //   setDropdownDisabled((prevState) => ({ ...prevState, [rowData.id]: false }))
-//         //   setSavedValues((prevState) => ({ ...prevState, [rowData.id]: '' }))
-//         // } else {
-//         //   setDropdownDisabled((prevState) => ({ ...prevState, [rowData.id]: true }))
-//         //   setSavedValues((prevState) => ({
-//         //     ...prevState,
-//         //     [rowData.id]: dropdownValues[rowData.id],
-//         //   }))
-//         //   toast.current?.show({
-//         //     severity: 'success',
-//         //     summary: 'Success',
-//         //     detail: 'Value Saved Successfully',
-//         //     life: 3000,
-//         //   })
-//         // }
-//         toast?.current?.show({
-//           severity: 'success',
-//           summary: 'Success',
-//           detail: message,
-//           life: 3000,
-//         })
-//       } else {
-//         setIsLoading(false)
-//         toast?.current?.show({
-//           severity: 'error',
-//           summary: 'Error',
-//           detail: message,
-//           life: 3000,
-//         })
-//       }
-//     } catch (error) {
-//       const { message, data } = error as ErrorResponse
-//       setIsLoading(false)
-//       toast?.current?.show({
-//         severity: 'error',
-//         summary: 'Error',
-//         detail: data?.message,
-//         life: 3000,
-//       })
-//     }
-//   }
-
-//   const handleSaveOrEdit = (rowData: any) => {
-//     if (savedValues[rowData.id]) {
-//       setDropdownDisabled((prevState) => ({ ...prevState, [rowData.id]: false }))
-//       setSavedValues((prevState) => ({ ...prevState, [rowData.id]: '' }))
-//     } else {
-//       setDropdownDisabled((prevState) => ({ ...prevState, [rowData.id]: true }))
-//       setSavedValues((prevState) => ({ ...prevState, [rowData.id]: dropdownValues[rowData.id] }))
-//       toast.current?.show({
-//         severity: 'success',
-//         summary: 'Success',
-//         detail: 'Value Saved Successfully',
-//         life: 3000,
-//       })
-//     }
-//   }
-
-//   const statusEditor = (options: any) => {
-//     console.log(options.rowData)
-
-//     return (
-//       <Dropdown
-//         value={dropdownValues}
-//         options={quickBookCustomer}
-//         onChange={(e) => {
-//           setDropdownValues(e.value)
-//         }}
-//         placeholder="Select a QuickBook Customer"
-//         // itemTemplate={(option) => {
-//         //   return <Tag value={option}></Tag>
-//         // }}
-//       />
-//     )
-//   }
-
-//   const statusBodyTemplate = (rowData: any) => {
-//     return <Tag value={rowData.quickBookCustomerName}></Tag>
-//   }
-
-//   const allowEdit = (rowData: any) => {
-//     // MapCustomerToQuickBook(rowData)
-//     return rowData.name !== 'Blue Band'
-//   }
-
-//   useEffect(() => {
-//     fetchDataAndUpdate()
-//   }, [fetchDataAndUpdate, dropdownValues])
-
-//   useEffect(() => {
-//     const timeoutId = setTimeout(() => {
-//       getCustomerData()
-//     }, 600)
-//     return () => clearTimeout(timeoutId)
-//   }, [selectedCustomerId, pageSize, pageNumber])
-
-//   return (
-//     <div>
-//       <Header header="MOORMANAGE/Permission" />
-//       <Toast ref={toast} />
-//       <div
-//         className={`flex gap-10 ml-6 mt-16 ${isLoading ? 'blur-screen' : ''}`}
-//         style={{
-//           paddingRight: '40px',
-//           paddingLeft: '25px',
-//         }}>
-//         <div
-//           className="bg-[#FFFFFF] border-[1px] border-gray-300  rounded-lg"
-//           style={{
-//             flexGrow: 1,
-//             borderRadius: '10px',
-//             minHeight: 'calc(40vw - 550px)',
-//           }}>
-//           <div className="text-md font-semibold rounded-t-lg bg-[#00426F]">
-//             <h1 className="p-4 text-white">{properties.Settings}</h1>
-//           </div>
-//           <div
-//             data-testid="customer-admin-data"
-//             className="flex flex-col  "
-//             style={{ height: '700px' }}>
-//             <div className="flex-grow overflow-auto">
-//               {/* <DataTableComponent
-//                 tableStyle={{
-//                   fontSize: '12px',
-//                   color: '#000000',
-//                   fontWeight: 600,
-//                   backgroundColor: '#D9D9D9',
-//                   borderRadius: '0 0 10px 10px',
-//                   overflow: 'auto',
-//                 }}
-//                 scrollable={true}
-//                 data={customerData}
-//                 columns={tableColumnsPermission}
-//                 style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
-//                 emptyMessage={
-//                   <div className="text-center mt-14">
-//                     <img
-//                       src="/assets/images/empty.png"
-//                       alt="Empty Data"
-//                       className="w-20 mx-auto mb-4"
-//                     />
-//                     <p className="text-gray-500">No data available</p>
-//                     {isLoading && (
-//                       <ProgressSpinner
-//                         style={{
-//                           position: 'absolute',
-//                           top: '80%',
-//                           left: '50%',
-//                           transform: 'translate(-50%, -50%)',
-//                           width: '50px',
-//                           height: '50px',
-//                         }}
-//                         strokeWidth="4"
-//                       />
-//                     )}
-//                   </div>
-//                 }
-//               /> */}
-//               <DataTable
-//                 value={customerData}
-//                 editMode="row"
-//                 dataKey="id"
-//                 // onRowEditComplete={onRowEditComplete}
-//                 tableStyle={{ minWidth: '50rem' }}>
-//                 <Column field="firstName" header="Customer Name" style={{ width: '20%' }}></Column>
-//                 <Column
-//                   field="QuickBookCustomerName"
-//                   header="QuickBook Customer Name"
-//                   body={statusBodyTemplate}
-//                   editor={(options) => statusEditor(options)}
-//                   style={{ width: '20%' }}></Column>
-//                 <Column
-//                   rowEditor={allowEdit}
-//                   headerStyle={{ width: '10%', minWidth: '8rem' }}
-//                   bodyStyle={{ textAlign: 'center' }}></Column>
-//               </DataTable>
-//             </div>
-//             <div className="mt-auto">
-//               <Paginator
-//                 first={pageNumber1}
-//                 rows={pageSize}
-//                 totalRecords={totalRecords}
-//                 rowsPerPageOptions={[5, 10, 20, 30]}
-//                 onPageChange={onPageChange}
-//                 style={{
-//                   position: 'sticky',
-//                   bottom: 0,
-//                   zIndex: 1,
-//                   backgroundColor: 'white',
-//                   borderTop: '1px solid #D5E1EA',
-//                   padding: '0.5rem',
-//                 }}
-//               />
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   )
-// }
-
-// export default Settings

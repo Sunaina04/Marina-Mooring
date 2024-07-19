@@ -77,6 +77,19 @@ const adminToolsApi = userApi.injectEndpoints({
         method: 'POST',
       }),
     }),
+
+    editMapCustomerToQuickBook: builder.mutation({
+      query: ({
+        quickbookCustomerId,
+        customerId,
+      }: {
+        quickbookCustomerId: number
+        customerId: number
+      }) => ({
+        url: `api/v1/quickbook/editMappingCustomerToQuickbook/${quickbookCustomerId}/${customerId}`,
+        method: 'PUT',
+      }),
+    }),
   }),
 })
 
@@ -86,4 +99,5 @@ export const {
   useDeleteUserMutation,
   useUpdateUserMutation,
   useMapCustomerToQuickBookMutation,
+  useEditMapCustomerToQuickBookMutation,
 } = adminToolsApi

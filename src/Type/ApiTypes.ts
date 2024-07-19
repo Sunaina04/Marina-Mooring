@@ -172,6 +172,13 @@ export interface ImageDtoList {
   note: string
 }
 
+export interface QuickbookCustomerResponseDto {
+  id: number
+  quickbookCustomerName: string
+  quickbookCustomerId: string
+  userId: number
+}
+
 export interface CustomerPayload {
   id: number
   creationDate: string
@@ -189,6 +196,7 @@ export interface CustomerPayload {
   zipCode: string
   customerTypeDto: MetaDataResponse
   imageDtoList: ImageDtoList
+  quickbookCustomerResponseDto: QuickbookCustomerResponseDto
 }
 
 export interface UpdateMooringPayload {
