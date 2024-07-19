@@ -830,6 +830,7 @@ const Moorings = () => {
             }}
             iconsByStatus={iconsByStatus}
             moorings={mooringGPSResponseData}
+            mooringData={mooringData}
             rightContanerWidth={rightContainerWidth}
             leftContanerWidth={leftContainerWidth}
             setRightContainer={setRightContainerWidth}
@@ -863,7 +864,6 @@ const Moorings = () => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                // transform: 'rotate(180deg)',
                 fontSize: '20px',
                 letterSpacing: '4px',
               }}

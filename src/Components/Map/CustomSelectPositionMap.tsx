@@ -5,6 +5,7 @@ import './CustomMap.css'
 import DisplayPosition from './DisplayPosition'
 import { CustomSelectPositionMapProps } from '../../Type/Components/MapTypes'
 import { DefaultIcon } from './DefaultIcon'
+import { Toast } from 'primereact/toast'
 
 const CustomSelectPositionMap: React.FC<CustomSelectPositionMapProps> = ({
   onPositionChange,
@@ -13,6 +14,7 @@ const CustomSelectPositionMap: React.FC<CustomSelectPositionMapProps> = ({
 }) => {
   const [map, setMap] = useState<any>()
   const markerRef = useRef(null)
+  const toast = useRef<Toast>(null)
 
   useEffect(() => {
     if (map && center) {
@@ -37,6 +39,7 @@ const CustomSelectPositionMap: React.FC<CustomSelectPositionMapProps> = ({
 
   return (
     <div>
+      <Toast ref={toast} />
       {map && <DisplayPosition map={map} onPositionChange={onPositionChange} />}
       {displayMap}
     </div>

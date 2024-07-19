@@ -4,6 +4,7 @@ import './CustomMap.css'
 import { CustomDisplayPositionMapProps } from '../../Type/Components/MapTypes'
 import { useEffect, useRef, useState } from 'react'
 import { DefaultIcon } from './DefaultIcon'
+import { Toast } from 'primereact/toast'
 
 const CustomDisplayPositionMap: React.FC<CustomDisplayPositionMapProps> = ({
   position,
@@ -12,6 +13,7 @@ const CustomDisplayPositionMap: React.FC<CustomDisplayPositionMapProps> = ({
 }) => {
   const [map, setMap] = useState<any>()
   const markerRef = useRef(null)
+  const toast = useRef<Toast>(null)
 
   useEffect(() => {
     if (map && position) {
@@ -21,6 +23,7 @@ const CustomDisplayPositionMap: React.FC<CustomDisplayPositionMapProps> = ({
 
   return (
     <>
+      <Toast ref={toast} />
       <MapContainer
         style={style}
         center={position}

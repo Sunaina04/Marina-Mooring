@@ -12,6 +12,7 @@ import {
 } from './DefaultIcon'
 import { MooringPayload, MooringWithGpsCoordinates } from '../../Type/ApiTypes'
 import MooringMapModal from '../CustomComponent/MooringMapModal'
+import { Toast } from 'primereact/toast'
 
 const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
   position,
@@ -26,6 +27,7 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
   const mapRef = useRef<any>(null)
   const [showMap, setShowMap] = useState(true)
   const [showMapModal, setShowMapModal] = useState(false)
+  const toast = useRef<Toast>(null)
 
   const parseCoordinates = (coordinates: string): [number, number] | null => {
     if (!coordinates) return null
@@ -79,6 +81,7 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
 
   return (
     <>
+      <Toast ref={toast} />
       {showMapModal ? (
         <div
           style={{

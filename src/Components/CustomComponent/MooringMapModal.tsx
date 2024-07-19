@@ -58,6 +58,7 @@ const MooringMapModal: React.FC<TimeLineProps> = ({
                 moorings={mooringData}
                 mooringRowData={mooringData}
                 editMode={editMode}
+                isEditMooring={true}
                 closeModal={handleModalClose}
                 getCustomer={() => {}}
               />

@@ -44,6 +44,7 @@ export interface Mooring {
 export interface CustomMooringPositionMapProps extends CustomDisplayPositionMapProps {
   iconsByStatus?: { [key: string]: L.Icon }
   moorings?: any
+  mooringData?: any
   dashboard?: boolean
   customerPage?: boolean
   setRightContainer: React.Dispatch<React.SetStateAction<boolean>>

@@ -13,12 +13,14 @@ import {
 } from './DefaultIcon'
 import { MooringPayload, MooringWithGpsCoordinates } from '../../Type/ApiTypes'
 import MooringMapModal from '../CustomComponent/MooringMapModal'
+import { Toast } from 'primereact/toast'
 
 const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
   position,
   zoomLevel,
   style,
   moorings,
+  mooringData,
   dashboard,
   customerPage,
   setLeftContainer,
@@ -29,6 +31,8 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
   const [map, setMap] = useState<any>()
   const mapRef = useRef<any>(null)
   const [showMap, setShowMap] = useState(true)
+  const [mooringDetails, setMooringDetails] = useState<MooringPayload>()
+  const toast = useRef<Toast>(null)
 
   const parseCoordinates = (coordinates: string): [number, number] | null => {
     if (!coordinates) return null
@@ -78,6 +82,12 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
   }
 
   useEffect(() => {
+    mooringData.map((mooring: MooringPayload, index: number) => {
+      setMooringDetails(mooring)
+    })
+  }, [mooringData])
+
+  useEffect(() => {
     if (map && position) {
       map.setView(position)
     }
@@ -92,6 +102,7 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
 
   return (
     <>
+      <Toast ref={toast} />
       <div style={{ position: 'relative' }}>
         <div
           onClick={() => {
@@ -124,6 +135,7 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
                     const position: LatLngExpression = coordinates
                     const iconKey = mooring?.mooringStatus?.id as keyof typeof iconsByStatusId
                     const icon = iconsByStatusId[iconKey] || DefaultIcon
+
                     return (
                       <>
                         <Marker key={index} position={position} icon={icon} ref={mapRef}>
@@ -156,7 +168,7 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
                             <MooringMapModal
                               gpsValue={position}
                               mooringId={mooring?.mooringId}
-                              mooringData={mooring}
+                              mooringData={mooringDetails}
                             />
                           </Popup>
                         </Marker>

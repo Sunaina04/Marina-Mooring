@@ -158,7 +158,6 @@ const Dashboard = () => {
   const firstLastName = (data: any) => {
     return data.customerResponseDto.firstName + ' ' + data.customerResponseDto.lastName
   }
-  
 
   const Mooringcolumns: TableColumnProps[] = useMemo(
     () => [
@@ -228,8 +227,6 @@ const Dashboard = () => {
     ],
     [],
   )
-  
-  
 
   const WorkOrderColumns: TableColumnProps[] = useMemo(
     () => [
@@ -384,7 +381,15 @@ const Dashboard = () => {
               <div className="bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px] text-white">
                 <h1 className="p-4 text-xl font-extrabold">Moorings Due for Service</h1>
               </div>
-              <div style={{ overflow: 'auto', marginBottom: '10px', height:'13rem', minHeight:'13rem', borderBottomLeftRadius:'10px',  borderBottomRightRadius:'10px'}}>
+              <div
+                style={{
+                  overflow: 'auto',
+                  marginBottom: '10px',
+                  height: '13rem',
+                  minHeight: '13rem',
+                  borderBottomLeftRadius: '10px',
+                  borderBottomRightRadius: '10px',
+                }}>
                 <DataTableComponent
                   columns={Mooringcolumns}
                   scrollable={true}
@@ -394,7 +399,7 @@ const Dashboard = () => {
                     color: '#000000',
                     fontWeight: 600,
                     cursor: 'pointer',
-                    height:'13rem',
+                    height: '13rem',
                   }}
                   selectionMode="single"
                   onSelectionChange={(e) => {
@@ -639,80 +644,3 @@ const Dashboard = () => {
 }
 
 export default Dashboard
-
-{
-  /* <div style={{ marginLeft: '2rem' }}>
-<div
-  data-testid="mooring-data"
-  className="flex flex-col mt-[3px] ml-[15px] mr-[15px] table-container"
-  style={{ height: '300px' }}>
-  <div className="bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px] text-white">
-    <h1 className="p-4 text-xl font-extrabold">Moorings Due for Service</h1>
-  </div>
-  <div style={{ overflow: 'auto', borderRadius: '10px', marginBottom: '10px' }}>
-    <DataTableComponent
-      columns={Mooringcolumns}
-      scrollable={true}
-      tableStyle={{
-        backgroundColor: '#FFFFFF',
-        fontSize: '12px',
-        color: '#000000',
-        fontWeight: 600,
-        cursor: 'pointer',
-      }}
-      selectionMode="single"
-      onSelectionChange={(e) => {
-        setSelectedProduct(e.value)
-      }}
-      selection={selectedProduct}
-      dataKey="id"
-      onRowClick={(rowData) => {
-        setMooringResponseData(rowData?.data?.gpsCoordinates)
-      }}
-      data={mooringData}
-      emptyMessage={
-        <div className="text-center">
-          <img
-            src="/assets/images/empty.png"
-            alt="Empty Data"
-            className="w-20 mx-auto mb-2"
-          />
-          <p className="text-gray-500">No data available</p>
-        </div>
-      }
-    />
-  </div>
-
-  {isLoading && (
-    <ProgressSpinner
-      style={{
-        position: 'absolute',
-        top: '30%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: '50px',
-        height: '50px',
-      }}
-      strokeWidth="4"
-    />
-  )}
-</div>
-
- <div
-  style={{
-    marginTop: '6px',
-    height: '300px',
-    marginLeft: '14px',
-    marginRight: '12px',
-  }}>
-  <CustomMooringPositionMap
-    position={coordinatesArray ? coordinatesArray : initialPosition}
-    zoomLevel={10}
-    style={{ height: '100%', width: '100%' }}
-    iconsByStatus={iconsByStatus}
-    moorings={mooringData}
-    dashboard={true}
-  />
-</div>
-</div>  */
-}
