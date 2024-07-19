@@ -675,11 +675,13 @@ const AccountRecievable = () => {
           id={workOrderId}
           setVisible={() => {
             setApproveModalOpen(false)
+            setModalVisible(false);
           }}
           getWorkOrderWithPendingPayApproval={getWorkOrderWithPendingPayApproval}
           getOutStandingInvoice={getOutStandingInvoice}
           closeModal={() => {
             handleModalClose()
+            setModalVisible(false);
           }}
         />
       </Dialog>
@@ -704,11 +706,13 @@ const AccountRecievable = () => {
           selectedRowData={selectedRowData}
           setVisible={() => {
             setDenyModalOpen(false)
+            setModalVisible(false);
           }}
           getWorkOrderWithPendingPayApproval={getWorkOrderWithPendingPayApproval}
           getOutStandingInvoice={getOutStandingInvoice}
           closeModal={() => {
             handleModalClose()
+            setModalVisible(false);
           }}
         />
       </Dialog>
@@ -739,9 +743,11 @@ const AccountRecievable = () => {
           isInvoice={isInvoice}
           setVisible={() => {
             setAddWorkOrderModal(false)
+            setModalVisible(false);
           }}
           closeModal={() => {
             handleModalClose()
+            setModalVisible(false);
           }}
         />
       </Dialog>
