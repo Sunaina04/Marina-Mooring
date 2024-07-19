@@ -215,7 +215,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
         mainContact: mainContact,
         gpsCoordinates: gpsCoordinatesValue,
         customerOwnerId: selectedCustomerId,
-        // storageAreas: storageList,
+        storageAreas: customerData?.storageAreas || storageList,
       }
       const response = await updateBoatyard({
         payload: editBoatYardPayload,
@@ -378,11 +378,10 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
                     style={{
                       width: '230px',
                       height: '32px',
-                      border: errorMessage.name ? '1px solid red' : '1px solid #D5E1EA',
                       borderRadius: '0.50rem',
                       fontSize: '0.8rem',
                       padding: '0.5rem',
-                      paddingRight: '2.5rem', // Space for the icon
+                      paddingRight: '2.5rem',
                     }}
                   />
                   <IoMdAdd
@@ -431,7 +430,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
                 </li>
               ))}
             </ul>
-            <p>{errorMessage.name && <small className="p-error">{errorMessage.name}</small>}</p>
           </div>
         </div>
         {isLoading && (

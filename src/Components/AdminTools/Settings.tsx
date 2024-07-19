@@ -59,7 +59,7 @@ const Settings = () => {
     onChange,
     options,
     disabled,
-  }) => {
+  }: any) => {
     return (
       <Dropdown
         optionLabel="label"
@@ -67,6 +67,8 @@ const Settings = () => {
         options={quickBookCustomer}
         disabled={disabled}
         onChange={onChange}
+        editable
+        dataKey="id"
         style={{
           height: '32px',
           border: '1px solid #D5E1EA',
@@ -93,24 +95,27 @@ const Settings = () => {
         style: columnStyle,
       },
       {
-        id: 'quickbookCustomerResponseDto.quickbookCustomerName',
+        id: 'quickbookCustomerResponseDto.id',
         label: 'QuickBook Customer Name',
         style: columnStyle,
         // style:{width:"40vw"},
         body: (rowData: {
           id: string
           dropdownValue: string
-          quickbookCustomerResponseDto: QuickbookCustomerResponseDto
+          quickbookCustomerResponseDto: any
         }) => (
-          <DropdownCell
-            value={
-              dropdownValues[rowData.id] ||
-              rowData?.quickbookCustomerResponseDto?.quickbookCustomerName
-            }
-            onChange={(e) => setDropdownValues({ ...dropdownValues, [rowData.id]: e.value })}
-            options={quickBookCustomer}
-            disabled={!!dropdownDisabled[rowData.id] && rowData?.id !== currentlyEditing}
-          />
+          <>
+            <DropdownCell
+              // value={rowData?.quickbookCustomerResponseDto?.id}
+              value={dropdownValues[rowData.id] || rowData?.quickbookCustomerResponseDto?.id}
+              onChange={(e) => setDropdownValues({ ...dropdownValues, [rowData.id]: e.value })}
+              options={quickBookCustomer}
+              disabled={
+                (rowData?.quickbookCustomerResponseDto?.id || !!dropdownDisabled[rowData.id]) &&
+                rowData?.id !== currentlyEditing
+              }
+            />
+          </>
         ),
       },
       {
@@ -118,11 +123,11 @@ const Settings = () => {
         label: 'Action',
         // style:{width:"20vw"},
         style: columnStyle,
-        body: (rowData: { id: string }) => (
+        body: (rowData: any) => (
           <span
             className={`cursor-pointer underline ${savedValues[rowData.id] ? 'black' : 'text-green-500'}`}
             onClick={() => {
-              if (!savedValues[rowData?.id]) {
+              if (!(savedValues[rowData?.id] || rowData?.quickbookCustomerResponseDto?.id)) {
                 MapCustomerToQuickBook(rowData)
               } else {
                 if (!currentlyEditing) {
@@ -133,7 +138,10 @@ const Settings = () => {
                 }
               }
             }}>
-            {savedValues[rowData.id] && !currentlyEditing ? 'Edit' : 'Save'}
+            {(rowData?.quickbookCustomerResponseDto?.id || savedValues[rowData.id]) &&
+            !currentlyEditing
+              ? 'Edit'
+              : 'Save'}
           </span>
         ),
       },
@@ -159,14 +167,6 @@ const Settings = () => {
           setIsLoading(false)
           setCustomerData(content)
           setTotalRecords(totalSize)
-          const dropdownValues = content.reduce((acc, customer) => {
-            acc[customer.id] = customer?.quickbookCustomerResponseDto?.quickbookCustomerName || ''
-            return acc
-          }, {})
-          // console.log('value is', dropdownValues)
-
-          setDropdownValues(dropdownValues)
-          // console.log('dropdown', dropdownValues)
         } else {
           setIsLoading(false)
 
@@ -283,7 +283,7 @@ const Settings = () => {
 
   useEffect(() => {
     fetchDataAndUpdate()
-  }, [fetchDataAndUpdate, dropdownValues, selectedCustomerId])
+  }, [selectedCustomerId])
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {

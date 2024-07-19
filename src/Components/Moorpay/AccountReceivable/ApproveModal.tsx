@@ -37,7 +37,7 @@ const ApproveModal: React.FC<ApproveModalProps> = ({
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const key = e.key
-    if (!/^[0-9]$/.test(key) && key !== 'Backspace' && key !== 'Tab'  && key !== '.') {
+    if (!/^[0-9]$/.test(key) && key !== 'Backspace' && key !== 'Tab' && key !== '.') {
       e.preventDefault()
     }
   }
@@ -68,6 +68,9 @@ const ApproveModal: React.FC<ApproveModalProps> = ({
           life: 3000,
         })
       } else {
+        closeModal()
+        getWorkOrderWithPendingPayApproval()
+        getOutStandingInvoice()
         toast?.current?.show({
           severity: 'error',
           summary: 'Error',

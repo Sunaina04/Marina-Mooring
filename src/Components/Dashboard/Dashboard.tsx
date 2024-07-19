@@ -442,7 +442,7 @@ const Dashboard = () => {
             <CustomDashboardMooringMap
               position={coordinatesArray ? coordinatesArray : initialPosition}
               zoomLevel={10}
-              style={{ height: '300px', width: '100%' }}
+              style={{ height: '400px', minHeight: '400px', width: '100%' }}
               iconsByStatus={iconsByStatus}
               moorings={mooringData}
               dashboard={true}

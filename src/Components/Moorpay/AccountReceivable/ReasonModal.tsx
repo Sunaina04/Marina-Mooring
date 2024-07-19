@@ -60,6 +60,9 @@ const ReasonModal: React.FC<ReasonModalProps> = ({
           life: 3000,
         })
       } else {
+        closeModal()
+        getWorkOrderWithPendingPayApproval()
+        getOutStandingInvoice()
         toast?.current?.show({
           severity: 'error',
           summary: 'Error',
