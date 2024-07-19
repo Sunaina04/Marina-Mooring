@@ -660,7 +660,7 @@ const Moorings = () => {
               }}
               className="ml-[45px] w-[20px] flex-1">
               <div data-testid="customer-data" className="flex flex-col h-full ">
-                <div className="flex item-center justify-between bg-[#10293A]  rounded-tl-[10px] rounded-tr-[10px] text-white cursor-pointer">
+                <div className="flex item-center justify-between bg-[#00426F]  rounded-tl-[10px] rounded-tr-[10px] text-white cursor-pointer">
                   <div>
                     <h1 className="p-4 text-xl font-extrabold">{properties.mooringHeader}</h1>
                   </div>
@@ -784,7 +784,7 @@ const Moorings = () => {
               minHeight: '700px',
               width: '40px',
               minWidth: '40px',
-              backgroundColor: '#10293A',
+              backgroundColor: '#00426F',
             }}
             className="rounded-md ml-[45px]">
             <div
@@ -844,7 +844,7 @@ const Moorings = () => {
                 width: '450px',
               }}
               className="flex-grow border bg-white">
-              <div className="bg-[#10293A]  rounded-t-[10px] flex justify-between">
+              <div className="bg-[#00426F]  rounded-t-[10px] flex justify-between">
                 <div className="text-sm font-semibold rounded-t-md">
                   <h1 className="p-3 text-white text-lg font-extrabold">
                     {properties.customerRecord}
@@ -926,7 +926,7 @@ const Moorings = () => {
                   marginBottom: '0px',
                 }}>
                 <label
-                  style={{ backgroundColor: '#10293A' }}
+                  style={{ backgroundColor: '#00426F' }}
                   htmlFor="faq1"
                   className="cursor-pointer flex items-center justify-between h-14"
                   onClick={() => handleToggle('faq1')}>
@@ -1121,7 +1121,7 @@ const Moorings = () => {
               minHeight: '700px',
               width: '40px',
               minWidth: '40px',
-              backgroundColor: '#10293A',
+              backgroundColor: '#00426F',
             }}
             className="rounded-md ml-[20px] mr-[20px]">
             <div

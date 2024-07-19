@@ -30,14 +30,14 @@ const ApproveModal: React.FC<ApproveModalProps> = ({
   }
 
   const handleInvoiceAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/[^0-9]/g, '')
+    const value = e.target.value.replace(/[^0-9.]/g, '')
     setInvoiceAmount(value)
     setErrorMessage({})
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const key = e.key
-    if (!/^[0-9]$/.test(key) && key !== 'Backspace' && key !== 'Tab') {
+    if (!/^[0-9]$/.test(key) && key !== 'Backspace' && key !== 'Tab'  && key !== '.') {
       e.preventDefault()
     }
   }
