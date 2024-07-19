@@ -92,7 +92,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
     } else if (!nameRegex.test(boatyardName)) {
       errors.name = 'Name must only contain letters'
     }
-    if (!boatyardId) errors.id = 'Boatyard ID is required'
+    // if (!boatyardId) errors.id = 'Boatyard ID is required'
 
     if (!gpsCoordinatesValue) {
       errors.gpsCoordinatesValue = 'GPS Coordinates is required'
@@ -123,7 +123,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   }
 
   const handleEditMode = () => {
-    setBoatyardId(customerData?.boatyardId || '')
+    // setBoatyardId(customerData?.boatyardId || '')
     setBoatyardName(customerData?.boatyardName || '')
     // setStorage(customerData?.storageAreas)
     setAddress(customerData?.street || '')
@@ -146,7 +146,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
 
     try {
       const payload = {
-        boatyardId: boatyardId,
+        // boatyardId: boatyardId,
         boatyardName: boatyardName,
         street: address,
         apt: aptSuite,
@@ -204,7 +204,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
     try {
       setIsLoading(true)
       const editBoatYardPayload = {
-        boatyardId: boatyardId,
+        // boatyardId: boatyardId,
         boatyardName: boatyardName,
         street: address,
         apt: aptSuite,
@@ -314,7 +314,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
         <Toast ref={toastRef} />
 
         <div className="flex gap-6  ">
-          <div>
+          {/* <div>
             <span className="font-medium text-sm text-[#000000]">
               Boatyard ID <span className="text-red-500">*</span>
             </span>
@@ -336,7 +336,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
               />
             </div>
             <p>{errorMessage.id && <small className="p-error">{errorMessage.id}</small>}</p>
-          </div>
+          </div> */}
           <div>
             <span className="font-medium text-sm text-[#000000]">
               Boatyard Name <span className="text-red-500">*</span>
