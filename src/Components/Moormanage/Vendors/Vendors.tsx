@@ -140,7 +140,7 @@ const Vendors = () => {
   const VendorColumns = useMemo(
     () => [
       {
-        id: 'vendorName',
+        id: 'companyName',
         label: 'Vendor Name',
         style: {
           ...columnStyle,
