@@ -77,7 +77,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [imageVisible, setImageVisible] = useState(false)
   const [hoveredIndex, setHoveredIndex] = useState<null | number>(null)
   const [imageRequestDtoList, setimageRequestDtoList] = useState<any>()
-  const [imagesNote, setImagesNote] = useState ('')
+  const [imagesNote, setImagesNote] = useState('')
   const getFomattedCoordinate = (gpsCoordinatesValue: any) => {
     try {
       let [lat, long]: any = gpsCoordinatesValue.split(' ')
@@ -183,10 +183,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     if (invalidTypeFiles.length > 0 || invalidSizeFiles.length > 0) {
       setCustomerImages([])
       setEncodedImages([])
-      let detailMessage = 'Only image files are allowed'
+      let detailMessage = 'Only image files are allowed.'
 
       if (invalidSizeFiles.length > 0) {
-        detailMessage += '. Images must be between 5 KB and 1 MB.'
+        detailMessage = 'Images must be between 5 KB and 1 MB.'
       }
 
       toastRef?.current?.show({
@@ -224,7 +224,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         imageRequestDtoList.push({
           imageName: file.name,
           imageData: base64String,
-          note: formData?.imageNote,
+          note: imagesNote,
         })
       } catch (error) {
         console.error('Error reading file:', error)
@@ -464,6 +464,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             shackleSwivelConditionId: formData?.shackleSwivelCondition?.id,
             pendantConditionId: formData?.pendantCondition,
             depthAtMeanHighWater: formData?.depthAtMeanHighWater,
+            imageRequestDtoList: imageRequestDtoList,
             statusId: 1,
           },
         ],
@@ -478,7 +479,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         aptSuite: sectorBlock,
         stateId: selectedState?.id,
         countryId: selectedCountry?.id,
-        // encodedImages: encodedImages,
         imageRequestDtoList: imageRequestDtoList,
         customerTypeId: selectedCustomerType === 'Dock' ? 5 : selectedCustomerType?.id,
         ...(email && { emailAddress: email }),
@@ -587,9 +587,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       setIsLoading(true)
       const editMooringPayload = {
         id: mooringRowData?.id,
-        // mooringNumber: formData?.mooringNumber
-        //   ? formData?.mooringNumber
-        //   : mooringRowData?.mooringNumber,
+        mooringNumber: formData?.mooringNumber
+          ? formData?.mooringNumber
+          : mooringRowData?.mooringNumber,
         customerId: formData?.customerName?.id
           ? formData?.customerName?.id
           : mooringRowData?.customerId,
@@ -635,6 +635,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         depthAtMeanHighWater: formData?.depthAtMeanHighWater
           ? formData?.depthAtMeanHighWater
           : mooringRowData?.depthAtMeanHighWater,
+        imageRequestDtoList: imageRequestDtoList,
         statusId: 4,
       }
       const response = await updateMooring({
@@ -665,12 +666,12 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         })
       }
     } catch (error) {
-      const { message } = error as ErrorResponse
+      const { message, data } = error as ErrorResponse
       setIsLoading(false)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: message,
+        detail: message || data?.message,
         life: 3000,
       })
     }
@@ -866,9 +867,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
   return (
     <>
+      <Toast ref={toastRef} />
       <div className={isLoading ? 'blurred' : ''}>
         {/* Add Customer */}
-        <Toast ref={toastRef} />
         {!editMooringMode && (
           <>
             <div className="">
@@ -2018,9 +2019,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 <div className=" font-medium text-sm text-[#000000]">Note</div>
                 <div className="mt-1">
                   <InputComponent
-                     value={formData.imagesNote}
-
-                    onChange={(e) => handleInputChange('imagesNote', e.target.value)}
+                    value={imagesNote}
+                    onChange={(e) => setImagesNote(e.target.value)}
                     style={{
                       width: '370px',
                       height: '40px',

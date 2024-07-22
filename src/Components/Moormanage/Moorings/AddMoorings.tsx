@@ -301,7 +301,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       let detailMessage = 'Only image files are allowed'
 
       if (invalidSizeFiles.length > 0) {
-        detailMessage += '. Images must be between 5 KB and 1 MB.'
+        detailMessage = 'Images must be between 5 KB and 1 MB.'
       }
 
       toastRef?.current?.show({

@@ -310,9 +310,8 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
 
   return (
     <>
+      <Toast ref={toastRef} />
       <div className={`" ml-4" ${isLoading ? 'blurred' : ''}`}>
-        <Toast ref={toastRef} />
-
         <div className="flex gap-6  ">
           {/* <div>
             <span className="font-medium text-sm text-[#000000]">
