@@ -13,13 +13,19 @@ import InputTextWithHeader from '../CommonComponent/Table/InputTextWithHeader'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { Toast } from 'primereact/toast'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectCustomerId, setCustomerId, setCustomerName } from '../../Store/Slice/userSlice'
+import {
+  selectCustomerId,
+  selectCustomerName,
+  setCustomerId,
+  setCustomerName,
+} from '../../Store/Slice/userSlice'
 import { Paginator } from 'primereact/paginator'
 import { VirtualScroller } from 'primereact/virtualscroller'
 
 const CustomerOwner = () => {
   const dispatch = useDispatch()
   const selectedCustomerId = useSelector(selectCustomerId)
+  const selectedCustomerName = useSelector(selectCustomerName)
   const [modalVisible, setModalVisible] = useState(false)
   const [selectedCustomer, setSelectedCustomer] = useState<any>()
   const [selectedCustomerUser, setSelectedCustomerUser] = useState<any>()
@@ -266,9 +272,14 @@ const CustomerOwner = () => {
       const { status, message, content, totalSize, currentSize } = response as GetUserResponse
       if (status === 200 && Array.isArray(content)) {
         setIsLoading(false)
-        setSelectedProduct(content[0])
-        dispatch(setCustomerId(content[0]?.id))
-        dispatch(setCustomerName(content[0]?.name))
+        if (selectedCustomerId) {
+          dispatch(setCustomerId(selectedCustomerId))
+          dispatch(setCustomerName(selectedCustomerName))
+        } else {
+          dispatch(setCustomerId(content[0]?.id))
+          dispatch(setCustomerName(content[0]?.name))
+          setSelectedProduct(content[0])
+        }
         if (content.length > 0) {
           setgetCustomerOwnerData(content)
           setTotalRecords(totalSize)

@@ -107,7 +107,10 @@ const Settings = () => {
           <>
             <DropdownCell
               // value={rowData?.quickbookCustomerResponseDto?.id}
-              value={dropdownValues[rowData.id] || rowData?.quickbookCustomerResponseDto?.id}
+              value={
+                dropdownValues[rowData.id] ||
+                rowData?.quickbookCustomerResponseDto?.quickbookCustomerName
+              }
               onChange={(e) => setDropdownValues({ ...dropdownValues, [rowData.id]: e.value })}
               options={quickBookCustomer}
               disabled={
@@ -297,7 +300,7 @@ const Settings = () => {
       <Header header="MOORMANAGE/Permission" />
       <Toast ref={toast} />
       <div
-        className={`flex gap-10 ml-6 mt-16 ${isLoading ? 'blur-screen' : ''}`}
+        className={`flex gap-10 ml-6 mt-16`}
         style={{
           paddingRight: '40px',
           paddingLeft: '25px',
