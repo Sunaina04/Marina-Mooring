@@ -61,7 +61,7 @@ const Moorings = () => {
   const [isEditMooring, setIsEditMooring] = useState(false)
   const [mooringImage, setMooringImage] = useState<any>()
   const [showImage, setShowImage] = useState({ id: '', imageData: '' })
-  const [imageVisible, setImageVisible] = useState(true)
+  const [imageVisible, setImageVisible] = useState(false)
   const [imageData, setImageData] = useState<any>()
   const [imageEditVisible, setImageEditVisible] = useState(false)
   const [scale, setScale] = useState(1)

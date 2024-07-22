@@ -320,6 +320,35 @@ export interface MooringPayload {
   imageDtoList: ImageDtoList
 }
 
+export type MooringRowData = {
+  id: number
+  mooringNumber: string
+  customerId: number
+  customerResponseDto?: { id: number }
+  harborOrArea: string
+  gpsCoordinates: string
+  boatyardId?: { id: number }
+  boatName: string
+  boatSize: string
+  boatTypeId?: { id: number }
+  boatWeight: string
+  installBottomChainDate: string
+  installTopChainDate: string
+  installConditionOfEyeDate: string
+  sizeOfWeight: string
+  typeOfWeightId?: { id: number }
+  eyeConditionId?: { id: number }
+  topChainConditionId?: { id: number }
+  bottomChainConditionId?: { id: number }
+  shackleSwivelConditionId?: { id: number }
+  pendantCondition: string
+  depthAtMeanHighWater: string
+  inspectionDate: string
+  serviceAreaId?: { id: number }
+  statusId?: number
+  imageRequestDtoList?: ImageDtoList
+}
+
 export interface ImageData {
   id: string
   imageData: string
