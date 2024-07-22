@@ -224,9 +224,9 @@ const Vendors = () => {
 
   return (
     <>
+      <Toast ref={toast} />
       <div style={{ height: '150vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
         <Header header="MOORMANAGE/Vendor" />
-        <Toast ref={toast} />
         <div className="flex justify-end">
           <div className="flex gap-4 mr-12 mt-6">
             <div>
