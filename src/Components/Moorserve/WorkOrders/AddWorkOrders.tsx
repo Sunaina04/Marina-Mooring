@@ -158,6 +158,12 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       errors.value = 'Problem description is required'
     }
 
+    if (!workOrder.mooringId) {
+      errors.mooringId = 'Mooring Number is required'
+    }
+
+  
+
     setErrorMessage(errors)
     return errors
   }
@@ -793,7 +799,9 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
           {/* Mooring Number */}
           <div>
             <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">Mooring Number</div>
+              <div className="flex gap-1">Mooring Number
+              <p className="text-red-600">*</p>
+              </div>
             </span>
             <div className="mt-1">
               <Dropdown

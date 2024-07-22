@@ -551,6 +551,60 @@ export type BoatYardData = {
   }[]
 }
 
+export type ServiceAreaData = {
+  id: string
+  moorings: string
+  boatyards: number
+  name: string
+  phoneNumber: string
+  email: string
+  boatyardDetails: {
+    id: number
+    name: string
+    address: string
+    phone: string
+    mooring: number
+    mooringDetails: {
+      id: string
+      mainContact: string
+      mooringNumber: string
+      boatName: string
+    }[]
+  }[]
+}
+export interface ServiceAreaPayload {
+  id: number
+  serviceAreaName: string
+  serviceAreaTypeId:number
+  streetHouse: string
+  aptSuite: string
+  stateId: number
+  countryId: number
+  notes: string
+  gpsCoordinates: string
+ 
+}
+
+export interface RowExpansionServiceAreaData {
+  Response: [
+    {
+      id: number
+      boatyardId: string
+      serviceAreaName: string
+      emailAddress: string
+      phone: string
+      street: string
+      apt: string
+      state: string
+      country: string
+      zipCode: string
+      notes: string
+      gpsCoordinates: string
+      mooringInventoried: number
+    },
+  ]
+}
+
 export interface BoatYardPayload {
   id: number
   boatyardId: string
@@ -596,6 +650,16 @@ export interface BoatYardResponse {
   errorList: []
   time: string
   content: BoatYardPayload
+}
+
+export interface ServiceAreaResponse {
+  status: number
+  message: string
+  currentSize: number
+  totalSize: number
+  errorList: []
+  time: string
+  content: ServiceAreaPayload
 }
 
 export interface MooringWithBoatYardContent {
@@ -731,6 +795,21 @@ export interface BoatYardResponseDto {
   countryResponseDto: Country
   zipCode: string
   mainContact: string
+  gpsCoordinates: string
+  mooringInventoried: number
+  userId: number
+}
+export interface ServiceAreaResponseDto {
+  id: number
+  serviceAreaName: string
+  emailAddress: string
+  phone: string
+  street: string
+  apt: string
+  stateResponseDto: State
+  countryResponseDto: Country
+  zipCode: string
+  notes: string
   gpsCoordinates: string
   mooringInventoried: number
   userId: number
