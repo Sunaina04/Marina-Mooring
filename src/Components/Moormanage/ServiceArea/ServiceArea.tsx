@@ -33,7 +33,7 @@ import { RiDeleteBin5Fill } from 'react-icons/ri'
 import { Paginator } from 'primereact/paginator'
 import React from 'react'
 import AddBoatyards from '../Boatyards/AddBoatyards'
-import AddServiceModal from './AddSericeModal'
+import AddServiceModal from './AddServiceModal'
 
 const ServiceArea = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
