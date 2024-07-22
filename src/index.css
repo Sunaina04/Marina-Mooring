@@ -164,6 +164,14 @@ input[type='number']::-webkit-outer-spin-button {
   }
 }
 
+    /* background-color: #0098FF !important;
+    color:white !important
+}
+
+    
+  } */
+
+
 .p-datepicker .p-datepicker-header {
   padding: 0.5rem;
   color: #495057;
@@ -309,6 +317,7 @@ input:hover {
 
 input:focus {
   border-color: #d5e1ea !important; /* Replace with your desired border color */
+<<<<<<< Updated upstream
 }
 
 .map-container {
@@ -327,3 +336,6 @@ input:focus {
   height: 100%;
   z-index: 1000; /* Ensure it appears above other elements */
 }
+=======
+}
+>>>>>>> Stashed changes

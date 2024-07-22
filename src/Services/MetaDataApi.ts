@@ -16,6 +16,14 @@ const metaDataApi = userApi.injectEndpoints({
       }),
     }),
 
+    getServiceAreaType: builder.mutation({
+      query: () => ({
+        url: 'api/v1/metadata/serviceAreaTypes',
+        method: 'GET',
+      }),
+    }),
+
+
     getCountries: builder.mutation({
       query: () => ({
         url: 'api/v1/metadata/countries',
@@ -182,6 +190,7 @@ const metaDataApi = userApi.injectEndpoints({
 export const {
   useGetRolesMutation,
   useGetStatesMutation,
+  useGetServiceAreaTypeMutation,
   useGetCountriesMutation,
   useGetTypeOfWeightMutation,
   useGetCustomersDataMutation,
@@ -197,6 +206,5 @@ export const {
   useGetInventoryTypeMutation,
   useGetCustomersOwnersMutation,
   useGetCustomerTypeMutation,
-  useGetServiceAreaTypeMutation,
   useGetQuickBookCustomerMutation,
 } = metaDataApi

@@ -22,6 +22,7 @@ import LoginForm from './Components/Login/LoginForm'
 import CustomerAdmin from './Components/AdminTools/Companies'
 import InventoryDetails from './Components/Moormanage/Vendors/InventoryDetails'
 import Settings from './Components/AdminTools/Settings'
+import ServiceArea from './Components/Moormanage/ServiceArea/ServiceArea'
 
 const routes = [
   {
@@ -79,7 +80,7 @@ const routes = [
           },
           {
             path: 'serviceArea',
-            element: <Boatyards />,
+            element: <ServiceArea />,
           },
         ],
       },
