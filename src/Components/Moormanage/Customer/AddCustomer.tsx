@@ -997,7 +997,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       <Toast ref={toastRef} />
       <div className={isLoading ? 'blurred' : ''}>
         {/* Add Customer */}
-        {editCustomerMode && (
+        {!editMooringMode && (
           <>
             <div className="">
               <div className="flex gap-6">
@@ -1347,7 +1347,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           <></>
         )}
 
-        {editMooringMode && (
+        {!editCustomerMode && (
           <>
             {!editMooringMode && (
               <div className="flex gap-[7rem] text-xl text-black font-bold mb-12">
