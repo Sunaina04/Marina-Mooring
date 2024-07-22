@@ -126,6 +126,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
     // setBoatyardId(customerData?.boatyardId || '')
     setBoatyardName(customerData?.boatyardName || '')
     // setStorage(customerData?.storageAreas)
+    setStorageList(customerData?.storageAreas)
     setAddress(customerData?.street || '')
     setAptSuite(customerData?.apt || '')
     setZipCode(customerData?.zipCode || '')
@@ -215,7 +216,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
         mainContact: mainContact,
         gpsCoordinates: gpsCoordinatesValue,
         customerOwnerId: selectedCustomerId,
-        storageAreas: customerData?.storageAreas || storageList,
+        storageAreas: storageList,
       }
       const response = await updateBoatyard({
         payload: editBoatYardPayload,
@@ -272,9 +273,15 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   }
 
   const handleDeleteStorage = (index: number) => {
-    const newList = storageList.filter((_, i) => i !== index)
+    const newList = [...storageList]
+    newList.splice(index, 1)
     setStorageList(newList)
   }
+
+  // const handleDeleteStorage = (index: number) => {
+  //   const newList = storageList.filter((_, i) => i !== index)
+  //   setStorageList(newList)
+  // }
 
   const fetchDataAndUpdate = useCallback(async () => {
     const { statesData } = await getStatesData()
