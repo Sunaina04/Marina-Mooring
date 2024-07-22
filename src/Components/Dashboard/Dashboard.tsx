@@ -159,7 +159,6 @@ const Dashboard = () => {
     return data.customerResponseDto.firstName + ' ' + data.customerResponseDto.lastName
   }
 
-  
   const Mooringcolumns: TableColumnProps[] = useMemo(
     () => [
       {
@@ -381,14 +380,13 @@ const Dashboard = () => {
               // style={{ height: '300px' }}
               style={{
                 height: '300px',
-                minHeight: '300px',
-                width: '500px',
-                minWidth: '500px',
-                backgroundColor: '#FFFFFF',
-                position: 'relative',
-                borderRadius:'10px'
-              }}
-              >
+                // minHeight: '300px',
+                // width: '500px',
+                // minWidth: '500px',
+                // backgroundColor: '#FFFFFF',
+                // position: 'relative',
+                // borderRadius:'10px'
+              }}>
               <div className="bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px] text-white">
                 <h1 className="p-4 text-xl font-extrabold">Moorings Due for Service</h1>
               </div>
