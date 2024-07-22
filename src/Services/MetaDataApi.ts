@@ -161,7 +161,7 @@ const metaDataApi = userApi.injectEndpoints({
       }),
     }),
 
-    getServiceAreaType: builder.mutation({
+    getServiceAreas: builder.mutation({
       query: ({ pageNumber, pageSize }: { pageNumber?: number; pageSize?: number }) => ({
         url: 'api/v1/metadata/serviceAreas',
         method: 'GET',
@@ -197,6 +197,6 @@ export const {
   useGetInventoryTypeMutation,
   useGetCustomersOwnersMutation,
   useGetCustomerTypeMutation,
-  useGetServiceAreaTypeMutation,
+  useGetServiceAreasMutation,
   useGetQuickBookCustomerMutation,
 } = metaDataApi
