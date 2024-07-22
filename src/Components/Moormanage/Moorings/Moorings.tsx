@@ -271,7 +271,7 @@ const Moorings = () => {
         },
       },
       {
-        id: '-',
+        id: 'serviceAreaResponseDto.serviceAreaName',
         label: 'Service Area',
         style: {
           // width: '5vw',
