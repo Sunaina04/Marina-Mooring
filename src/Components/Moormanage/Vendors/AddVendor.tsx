@@ -48,6 +48,8 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
     note: '',
   })
 
+  console.log('dataa', formData.companyName)
+
   const validateAddVendorFields = () => {
     const errors: { [key: string]: string } = {}
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -193,29 +195,32 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
     setIsLoading(true)
 
     try {
-      const payload = {
-        companyName: formData?.companyName,
-        companyPhoneNumber: formData?.phone,
-        website: formData?.website,
-        street: formData?.streetBuildingForAddress,
-        aptSuite: formData?.aptSuiteForAddress,
-        stateId: formData?.stateForAddress?.id,
-        countryId: formData?.countryForAddress?.id || '',
-        zipCode: formData?.zipCodeForAddress,
-        companyEmail: formData?.emailForAddress,
-        accountNumber: formData?.accountNumber,
-        remitStreet: formData?.streetBuildingForRemit,
-        remitApt: formData?.aptSuiteForRemit,
-        remitStateId: formData?.stateForRemit?.id,
-        remitCountryId: formData?.countryForRemit?.id,
-        remitZipCode: formData?.zipCodeForRemit,
-        remitEmailAddress: formData?.emailForRemit,
-        firstName: formData?.firstName,
-        lastName: formData?.lastName,
-        salesRepPhoneNumber: formData?.phoneForRepresentative,
-        salesRepEmail: formData?.emailForRepresentative,
-        salesRepNote: formData?.note,
+      const payload: any = {
+        vendorName: formData?.companyName,
+        ...(formData?.phone && { companyPhoneNumber: formData.phone }),
+        ...(formData?.website && { website: formData.website }),
+        ...(formData?.streetBuildingForAddress && { street: formData.streetBuildingForAddress }),
+        ...(formData?.aptSuiteForAddress && { aptSuite: formData.aptSuiteForAddress }),
+        ...(formData?.stateForAddress?.id && { stateId: formData.stateForAddress.id }),
+        ...(formData?.countryForAddress?.id && { countryId: formData.countryForAddress.id }),
+        ...(formData?.zipCodeForAddress && { zipCode: formData.zipCodeForAddress }),
+        ...(formData?.emailForAddress && { companyEmail: formData.emailForAddress }),
+        ...(formData?.accountNumber && { accountNumber: formData.accountNumber }),
+        ...(formData?.streetBuildingForRemit && { remitStreet: formData.streetBuildingForRemit }),
+        ...(formData?.aptSuiteForRemit && { remitApt: formData.aptSuiteForRemit }),
+        ...(formData?.stateForRemit?.id && { remitStateId: formData.stateForRemit.id }),
+        ...(formData?.countryForRemit?.id && { remitCountryId: formData.countryForRemit.id }),
+        ...(formData?.zipCodeForRemit && { remitZipCode: formData.zipCodeForRemit }),
+        ...(formData?.emailForRemit && { remitEmailAddress: formData.emailForRemit }),
+        ...(formData?.firstName && { firstName: formData.firstName }),
+        ...(formData?.lastName && { lastName: formData.lastName }),
+        ...(formData?.phoneForRepresentative && {
+          salesRepPhoneNumber: formData.phoneForRepresentative,
+        }),
+        ...(formData?.emailForRepresentative && { salesRepEmail: formData.emailForRepresentative }),
+        ...(formData?.note && { salesRepNote: formData.note }),
       }
+
       const response = await addVendor(payload).unwrap()
       const { status, message } = response as VendorResponse
       if (status === 200 || status === 201) {
@@ -227,9 +232,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
         })
         closeModal()
         getVendor()
-        setIsLoading(false)
       } else {
-        setIsLoading(false)
         toastRef?.current?.show({
           severity: 'error',
           summary: 'Error',
@@ -239,13 +242,14 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
       }
     } catch (error) {
       const { message, data } = error as ErrorResponse
-      setIsLoading(false)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
         detail: data?.message,
         life: 3000,
       })
+    } finally {
+      setIsLoading(false)
     }
   }
 
