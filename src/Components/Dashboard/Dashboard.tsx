@@ -38,7 +38,6 @@ const Dashboard = () => {
   const [totalRecords, setTotalRecords] = useState<number>()
   const [mooringData, setMooringData] = useState<any>()
   const [selectedProduct, setSelectedProduct] = useState<any>()
-  const [selectedMooringRow, setSelectedMooringRow] = useState(true)
   const [mooringResponseData, setMooringResponseData] = useState<any>()
   const [mooringSelected, setMooringSelected] = useState(false)
   const [getMoorings] = useGetMooringsMutation()
@@ -410,7 +409,6 @@ const Dashboard = () => {
                   dataKey="id"
                   onRowClick={(rowData) => {
                     setMooringResponseData(rowData?.data?.gpsCoordinates)
-                    setSelectedMooringRow(true)
                     setMooringSelected(true)
                   }}
                   data={mooringData}
@@ -441,7 +439,6 @@ const Dashboard = () => {
                 />
               )}
             </div>
-
             <CustomDashboardMooringMap
               position={coordinatesArray ? coordinatesArray : initialPosition}
               zoomLevel={10}
@@ -449,8 +446,7 @@ const Dashboard = () => {
               iconsByStatus={iconsByStatus}
               moorings={mooringData}
               dashboard={true}
-              leftContanerWidth={selectedMooringRow}
-              rightContanerWidth={selectedMooringRow}
+              leftContanerWidth={mooringSelected}
               setLeftContainer={() => {}}
               setRightContainer={() => {}}
             />
