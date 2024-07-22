@@ -423,7 +423,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
-          detail: 'Mooring Saved successfully',
+          detail: message,
           life: 3000,
         })
         closeModal()

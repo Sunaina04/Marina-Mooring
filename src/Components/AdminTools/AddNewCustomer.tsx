@@ -339,7 +339,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
-          detail: 'Customer User Updated successfully',
+          detail: message,
           life: 3000,
         })
         if (getCustomerUser) {
@@ -566,7 +566,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
   return (
     <>
-      <div style={{ paddingBottom: '50px' }} className={isLoading ? "blurred" : ""}>
+      <div style={{ paddingBottom: '50px' }} className={isLoading ? 'blurred' : ''}>
         <Toast ref={toastRef} />
         <div className="flex gap-8 mt-5 ml-4">
           <div>
@@ -1086,7 +1086,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         )}
       </div>
       <div
-        className={`"flex gap-4 ml-4 bottom-2 absolute left-6"  ${isLoading ? "blurred" : ""}`}
+        className={`"flex gap-4 ml-4 bottom-2 absolute left-6"  ${isLoading ? 'blurred' : ''}`}
         style={{
           width: '100%',
           height: '80px',

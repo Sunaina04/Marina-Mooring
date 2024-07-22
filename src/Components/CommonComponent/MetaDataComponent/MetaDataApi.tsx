@@ -16,7 +16,7 @@ import {
   useGetCustomersDataMutation,
   useGetInventoryTypeMutation,
   useGetCustomerTypeMutation,
-  useGetServiceAreaTypeMutation,
+  useGetServiceAreasMutation,
   useGetQuickBookCustomerMutation,
 } from '../../../Services/MetaDataApi'
 import { ErrorResponse, MetaDataCustomerResponse, MetaDataResponse } from '../../../Type/ApiTypes'
@@ -170,7 +170,7 @@ export const TypeOfChainCondition = () => {
 }
 
 export const ServiceAreaData = () => {
-  const [getServiceAreaType] = useGetServiceAreaTypeMutation()
+  const [getServiceAreaType] = useGetServiceAreasMutation()
 
   const fetchTypeOfServiceArea = async (getData: any) => {
     try {
