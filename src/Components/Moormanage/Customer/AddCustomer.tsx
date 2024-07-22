@@ -10,7 +10,7 @@ import {
 import { Button } from 'primereact/button'
 import { CustomerDataProps } from '../../../Type/ComponentBasedType'
 import { Country, MetaData, Params, State } from '../../../Type/CommonType'
-import { CustomerResponse, ErrorResponse } from '../../../Type/ApiTypes'
+import { CustomerResponse, ErrorResponse, MooringRowData } from '../../../Type/ApiTypes'
 import {
   CountriesData,
   StatesData,
@@ -23,6 +23,7 @@ import {
   TypeOfSizeOfWeight,
   BoatyardNameData,
   CustomersType,
+  ServiceAreaData,
 } from '../../CommonComponent/MetaDataComponent/MetaDataApi'
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
@@ -64,6 +65,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [weightData, setWeightData] = useState<MetaData[]>([])
   const [chainData, setChainData] = useState<MetaData[]>([])
   const [sizeOfWeight, setSizeOfWeight] = useState<MetaData[]>([])
+  const [serviceArea, setServiceArea] = useState<MetaData[]>([])
   const [conditionOfEye, setConditionOfEye] = useState<MetaData[]>([])
   const [customerType, setCustomerType] = useState<MetaData[]>([])
   const [bottomChainCondition, setBottomChainCondition] = useState<MetaData[]>([])
@@ -131,6 +133,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     depthAtMeanHighWater: '',
     status: 0,
     note: '',
+    inspectionDate: '',
+    serviceAreaId: '',
     imagesNote: '',
   })
 
@@ -141,8 +145,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const { getTypeOfEyeData } = TypeOfEye()
   const { getTypeOfBottomChainData } = TypeOfBottomChain()
   const { getTypeOfShackleSwivelData } = TypeOfShackleSwivel()
-  const { getTypeOfSizeOfWeightData } = TypeOfSizeOfWeight()
   const { getBoatYardNameData } = BoatyardNameData(selectedCustomerId)
+  const { getServiceAreaData } = ServiceAreaData()
   const { getCountriesData } = CountriesData()
   const { getCustomersType } = CustomersType()
   const [addCustomer] = useAddCustomerMutation()
@@ -415,6 +419,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       bottomChainDate: mooringRowData?.installBottomChainDate || '',
       topChainDate: mooringRowData?.installTopChainDate || '',
       conditionEyeDate: mooringRowData?.installConditionOfEyeDate || '',
+      inspectionDate: mooringRowData?.inspectionDate || '',
+      serviceAreaId: mooringRowData?.serviceAreaResponseDto?.serviceAreaName || '',
       note: customer?.note || '',
       status: 1,
     }))
@@ -582,80 +588,201 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     }
   }
 
+  // const UpdateMooring = async () => {
+  //   try {
+  //     setIsLoading(true)
+  //     const editMooringPayload = {
+  //       id: mooringRowData?.id,
+  //       mooringNumber: formData?.mooringNumber
+  //         ? formData?.mooringNumber
+  //         : mooringRowData?.mooringNumber,
+  //       customerId: formData?.customerName?.id
+  //         ? formData?.customerName?.id
+  //         : mooringRowData?.customerId,
+  //       harborOrArea: formData?.harbor ? formData?.harbor : mooringRowData?.harborOrArea,
+  //       gpsCoordinates: gpsCoordinatesValue,
+  //       boatyardId: formData?.boatyardName
+  //         ? formData?.boatyardName
+  //         : mooringRowData?.boatyardResponseDto?.id,
+  //       boatName: formData?.boatName ? formData?.boatName : mooringRowData?.boatName,
+  //       boatSize: formData?.boatSize ? formData?.boatSize : mooringRowData?.boatSize,
+  //       boatTypeId: formData?.type?.id ? formData?.type?.id : mooringRowData?.boatType?.id,
+  //       boatWeight: formData?.boatWeight ? formData?.boatWeight : mooringRowData?.boatWeight,
+  //       installBottomChainDate: formData?.bottomChainDate
+  //         ? formData?.bottomChainDate
+  //         : mooringRowData?.installBottomChainDate,
+  //       installTopChainDate: formData?.topChainDate
+  //         ? formData?.topChainDate
+  //         : mooringRowData?.installTopChainDate,
+  //       installConditionOfEyeDate: formData?.conditionEyeDate
+  //         ? formData?.conditionEyeDate
+  //         : mooringRowData?.installConditionOfEyeDate,
+  //       sizeOfWeight: formData?.sizeOfWeight
+  //         ? formData?.sizeOfWeight
+  //         : mooringRowData?.sizeOfWeight,
+  //       typeOfWeightId: formData?.typeOfWeight.id
+  //         ? formData?.typeOfWeight.id
+  //         : mooringRowData?.typeOfWeight.id,
+  //       eyeConditionId: formData?.conditionOfEye.id
+  //         ? formData?.conditionOfEye.id
+  //         : mooringRowData?.eyeCondition?.id,
+  //       topChainConditionId: formData?.topChainCondition?.id
+  //         ? formData?.topChainCondition?.id
+  //         : mooringRowData?.topChainCondition?.id,
+  //       bottomChainConditionId: formData?.bottomChainCondition?.id
+  //         ? formData?.bottomChainCondition?.id
+  //         : mooringRowData?.bottomChainCondition?.id,
+  //       shackleSwivelConditionId: formData?.shackleSwivelCondition?.id
+  //         ? formData?.shackleSwivelCondition?.id
+  //         : mooringRowData?.shackleSwivelCondition?.id,
+  //       pendantCondition: formData?.pendantCondition
+  //         ? formData?.pendantCondition
+  //         : mooringRowData?.pendantCondition,
+  //       depthAtMeanHighWater: formData?.depthAtMeanHighWater
+  //         ? formData?.depthAtMeanHighWater
+  //         : mooringRowData?.depthAtMeanHighWater,
+  //       imageRequestDtoList: imageRequestDtoList,
+  //       statusId: 4,
+  //     }
+  //     const response = await updateMooring({
+  //       payload: editMooringPayload,
+  //       id: mooringRowData?.id,
+  //     }).unwrap()
+  //     const { status, message } = response as CustomerResponse
+  //     if (status === 200 || status === 201) {
+  //       setIsLoading(false)
+  //       closeModal()
+  //       getCustomer()
+  //       if (getCustomerRecord) {
+  //         getCustomerRecord()
+  //       }
+  //       toastRef?.current?.show({
+  //         severity: 'success',
+  //         summary: 'Success',
+  //         detail: message,
+  //         life: 3000,
+  //       })
+  //     } else {
+  //       setIsLoading(false)
+  //       toastRef?.current?.show({
+  //         severity: 'error',
+  //         summary: 'Error',
+  //         detail: message,
+  //         life: 3000,
+  //       })
+  //     }
+  //   } catch (error) {
+  //     const { message, data } = error as ErrorResponse
+  //     setIsLoading(false)
+  //     toastRef?.current?.show({
+  //       severity: 'error',
+  //       summary: 'Error',
+  //       detail: message || data?.message,
+  //       life: 3000,
+  //     })
+  //   }
+  // }
+
   const UpdateMooring = async () => {
+    const errors = validateFields()
+    if (Object.keys(errors).length > 0) {
+      return
+    }
+
     try {
       setIsLoading(true)
-      const editMooringPayload = {
-        id: mooringRowData?.id,
-        mooringNumber: formData?.mooringNumber
-          ? formData?.mooringNumber
-          : mooringRowData?.mooringNumber,
-        customerId: formData?.customerName?.id
-          ? formData?.customerName?.id
-          : mooringRowData?.customerId,
-        harborOrArea: formData?.harbor ? formData?.harbor : mooringRowData?.harborOrArea,
-        gpsCoordinates: gpsCoordinatesValue,
-        boatyardId: formData?.boatyardName
-          ? formData?.boatyardName
-          : mooringRowData?.boatyardResponseDto?.id,
-        boatName: formData?.boatName ? formData?.boatName : mooringRowData?.boatName,
-        boatSize: formData?.boatSize ? formData?.boatSize : mooringRowData?.boatSize,
-        boatTypeId: formData?.type?.id ? formData?.type?.id : mooringRowData?.boatType?.id,
-        boatWeight: formData?.boatWeight ? formData?.boatWeight : mooringRowData?.boatWeight,
-        installBottomChainDate: formData?.bottomChainDate
-          ? formData?.bottomChainDate
-          : mooringRowData?.installBottomChainDate,
-        installTopChainDate: formData?.topChainDate
-          ? formData?.topChainDate
-          : mooringRowData?.installTopChainDate,
-        installConditionOfEyeDate: formData?.conditionEyeDate
-          ? formData?.conditionEyeDate
-          : mooringRowData?.installConditionOfEyeDate,
-        sizeOfWeight: formData?.sizeOfWeight
-          ? formData?.sizeOfWeight
-          : mooringRowData?.sizeOfWeight,
-        typeOfWeightId: formData?.typeOfWeight.id
-          ? formData?.typeOfWeight.id
-          : mooringRowData?.typeOfWeight.id,
-        eyeConditionId: formData?.conditionOfEye.id
-          ? formData?.conditionOfEye.id
-          : mooringRowData?.eyeCondition?.id,
-        topChainConditionId: formData?.topChainCondition?.id
-          ? formData?.topChainCondition?.id
-          : mooringRowData?.topChainCondition?.id,
-        bottomChainConditionId: formData?.bottomChainCondition?.id
-          ? formData?.bottomChainCondition?.id
-          : mooringRowData?.bottomChainCondition?.id,
-        shackleSwivelConditionId: formData?.shackleSwivelCondition?.id
-          ? formData?.shackleSwivelCondition?.id
-          : mooringRowData?.shackleSwivelCondition?.id,
-        pendantCondition: formData?.pendantCondition
-          ? formData?.pendantCondition
-          : mooringRowData?.pendantCondition,
-        depthAtMeanHighWater: formData?.depthAtMeanHighWater
-          ? formData?.depthAtMeanHighWater
-          : mooringRowData?.depthAtMeanHighWater,
-        imageRequestDtoList: imageRequestDtoList,
-        statusId: 4,
+
+      const createPayload = (formData: any, mooringRowData: any) => {
+        const payload: Partial<MooringRowData> = {}
+
+        if (formData?.harbor !== mooringRowData?.harborOrArea) {
+          payload.harborOrArea = formData.harbor
+        }
+        if (formData?.boatYardName?.id !== mooringRowData?.boatyardResponseDto?.id) {
+          payload.boatyardId = formData.boatYardName.id
+        }
+        if (formData?.boatName !== mooringRowData?.boatName) {
+          payload.boatName = formData.boatName
+        }
+        if (formData?.boatSize !== mooringRowData?.boatSize) {
+          payload.boatSize = formData.boatSize
+        }
+        if (formData?.type?.id !== mooringRowData?.boatType?.id) {
+          payload.boatTypeId = formData.type.id
+        }
+        if (formData?.boatWeight !== mooringRowData?.boatWeight) {
+          payload.boatWeight = formData.boatWeight
+        }
+        if (formData?.bottomChainDate !== mooringRowData?.installBottomChainDate) {
+          payload.installBottomChainDate = formData.bottomChainDate
+        }
+        if (formData?.topChainDate !== mooringRowData?.installTopChainDate) {
+          payload.installTopChainDate = formData.topChainDate
+        }
+        if (formData?.conditionEyeDate !== mooringRowData?.installConditionOfEyeDate) {
+          payload.installConditionOfEyeDate = formData.conditionEyeDate
+        }
+        if (formData?.sizeOfWeight !== mooringRowData?.sizeOfWeight) {
+          payload.sizeOfWeight = formData.sizeOfWeight
+        }
+        if (formData?.typeOfWeight?.id !== mooringRowData?.typeOfWeight?.id) {
+          payload.typeOfWeightId = formData.typeOfWeight.id
+        }
+        if (formData?.conditionOfEye?.id !== mooringRowData?.eyeCondition?.id) {
+          payload.eyeConditionId = formData.conditionOfEye.id
+        }
+        if (formData?.topChainCondition?.id !== mooringRowData?.topChainCondition?.id) {
+          payload.topChainConditionId = formData.topChainCondition.id
+        }
+        if (formData?.bottomChainCondition?.id !== mooringRowData?.bottomChainCondition?.id) {
+          payload.bottomChainConditionId = formData.bottomChainCondition.id
+        }
+        if (formData?.shackleSwivelCondition?.id !== mooringRowData?.shackleSwivelCondition?.id) {
+          payload.shackleSwivelConditionId = formData.shackleSwivelCondition.id
+        }
+        if (formData?.pendantCondition !== mooringRowData?.pendantCondition) {
+          payload.pendantCondition = formData.pendantCondition
+        }
+        if (formData?.depthAtMeanHighWater !== mooringRowData?.depthAtMeanHighWater) {
+          payload.depthAtMeanHighWater = formData.depthAtMeanHighWater
+        }
+        if (formData?.inspectionDate !== mooringRowData?.inspectionDate) {
+          payload.inspectionDate = formData.inspectionDate
+        }
+        if (formData?.serviceAreaId?.id !== mooringRowData?.serviceAreaResponseDto?.id) {
+          payload.serviceAreaId = formData.serviceAreaId.id
+        }
+
+        payload.gpsCoordinates = gpsCoordinatesValue
+        payload.statusId = 3
+        payload.imageRequestDtoList = imageRequestDtoList
+        payload.id = mooringRowData?.id
+        payload.mooringNumber = mooringRowData?.mooringNumber
+        payload.customerId = mooringRowData?.customerId || mooringRowData?.customerResponseDto?.id
+        return payload
       }
+
+      const editMooringPayload = createPayload(formData, mooringRowData)
+
       const response = await updateMooring({
         payload: editMooringPayload,
         id: mooringRowData?.id,
       }).unwrap()
+
       const { status, message } = response as CustomerResponse
       if (status === 200 || status === 201) {
         setIsLoading(false)
-        closeModal()
-        getCustomer()
-        if (getCustomerRecord) {
-          getCustomerRecord()
-        }
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
           detail: message,
           life: 3000,
         })
+        closeModal()
+        getCustomer()
+        if (getCustomerRecord) {
+          getCustomerRecord()
+        }
       } else {
         setIsLoading(false)
         toastRef?.current?.show({
@@ -701,11 +828,11 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       const { typeOfBoatTypeData } = await getTypeOfBoatTypeData()
       const { typeOfWeightData } = await getTypeOfWeightData()
       const { typeOfChainData } = await getTypeOfChainData()
-      const { TypeOfSizeOfWeightData } = await getTypeOfSizeOfWeightData()
       const { typeOfEyeData } = await getTypeOfEyeData()
       const { typeOfBottomChainData } = await getTypeOfBottomChainData()
       const { typeOfShackleSwivelData } = await getTypeOfShackleSwivelData()
       const { boatYardName } = await getBoatYardNameData()
+      const { serviceAreaData } = await getServiceAreaData()
 
       if (typeOfBoatTypeData !== null) {
         setIsLoading(false)
@@ -719,9 +846,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         setIsLoading(false)
         setChainData(typeOfChainData)
       }
-      if (TypeOfSizeOfWeightData !== null) {
+      if (serviceAreaData !== null) {
         setIsLoading(false)
-        setSizeOfWeight(TypeOfSizeOfWeightData)
+        setServiceArea(serviceAreaData)
       }
       if (typeOfEyeData !== null) {
         setIsLoading(false)
@@ -870,7 +997,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       <Toast ref={toastRef} />
       <div className={isLoading ? 'blurred' : ''}>
         {/* Add Customer */}
-        {!editMooringMode && (
+        {editCustomerMode && (
           <>
             <div className="">
               <div className="flex gap-6">
@@ -1220,7 +1347,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           <></>
         )}
 
-        {!editCustomerMode && (
+        {editMooringMode && (
           <>
             {!editMooringMode && (
               <div className="flex gap-[7rem] text-xl text-black font-bold mb-12">
@@ -1855,9 +1982,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
                       <div className="mt-2">
                         <Calendar
-                          value={parseDate(formData.conditionEyeDate)}
+                          value={parseDate(formData.inspectionDate)}
                           onChange={(e) =>
-                            handleInputChange('conditionEyeDate', formatDate(e.target.value))
+                            handleInputChange('inspectionDate', formatDate(e.target.value))
                           }
                           dateFormat="mm/dd/yy"
                           style={{
@@ -1879,10 +2006,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       </div>
                       <div className="mt-2">
                         <Dropdown
-                          value={formData?.conditionOfEye}
-                          onChange={(e) => handleInputChange('conditionOfEye', e.value)}
-                          options={conditionOfEye}
-                          optionLabel="condition"
+                          value={formData?.serviceAreaId}
+                          onChange={(e) => handleInputChange('serviceAreaId', e.value)}
+                          options={serviceArea}
+                          optionLabel="serviceAreaName"
                           placeholder="Select"
                           editable
                           disabled={isLoading}

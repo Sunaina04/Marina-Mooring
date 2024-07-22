@@ -145,7 +145,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     const { TypeOfSizeOfWeightData } = await getTypeOfSizeOfWeightData()
     const { typeOfEyeData } = await getTypeOfEyeData()
     const { typeOfBottomChainData } = await getTypeOfBottomChainData()
-    const { typeOfShackleSwivelData } = await getTypeOfShackleSwivelData()
     const { customersData } = await getCustomersData()
     const { boatYardName } = await getBoatYardNameData()
     const { serviceAreaData } = await getServiceAreaData()
@@ -457,114 +456,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     }
   }
 
-  // const UpdateMooring = async () => {
-  //   const errors = validateFields()
-  //   if (Object.keys(errors).length > 0) {
-  //     return
-  //   }
-
-  //   try {
-  //     setIsLoading(true)
-  //     const editMooringPayload = {
-  //       id: mooringRowData?.id,
-  //       mooringNumber: formData?.mooringNumber
-  //         ? formData?.mooringNumber
-  //         : mooringRowData?.mooringNumber,
-  //       customerId:
-  //         mooringRowData?.customerId ||
-  //         mooringRowData?.customerResponseDto?.id ||
-  //         formData?.customerName,
-  //       harborOrArea: formData?.harbor ? formData?.harbor : mooringRowData?.harborOrArea,
-  //       gpsCoordinates: gpsCoordinatesValue,
-  //       boatyardId: formData?.boatYardName?.id
-  //         ? formData?.boatYardName?.id
-  //         : mooringRowData?.boatyardResponseDto?.id,
-  //       boatName: formData?.boatName ? formData?.boatName : mooringRowData?.boatName,
-  //       boatSize: formData?.boatSize ? formData?.boatSize : mooringRowData?.boatSize,
-  //       boatTypeId: formData?.type?.id ? formData?.type?.id : mooringRowData?.boatType?.id,
-  //       boatWeight: formData?.boatWeight ? formData?.boatWeight : mooringRowData?.boatWeight,
-  //       installBottomChainDate: formData?.bottomChainDate
-  //         ? formData?.bottomChainDate
-  //         : mooringRowData?.installBottomChainDate,
-  //       installTopChainDate: formData?.topChainDate
-  //         ? formData?.topChainDate
-  //         : mooringRowData?.installTopChainDate,
-  //       installConditionOfEyeDate: formData?.conditionEyeDate
-  //         ? formData?.conditionEyeDate
-  //         : mooringRowData?.installConditionOfEyeDate,
-  //       sizeOfWeight: formData?.sizeOfWeight
-  //         ? formData?.sizeOfWeight
-  //         : mooringRowData?.sizeOfWeight,
-  //       typeOfWeightId: formData?.typeOfWeight.id
-  //         ? formData?.typeOfWeight.id
-  //         : mooringRowData?.typeOfWeight.id,
-  //       eyeConditionId: formData?.conditionOfEye.id
-  //         ? formData?.conditionOfEye.id
-  //         : mooringRowData?.eyeCondition?.id,
-  //       topChainConditionId: formData?.topChainCondition?.id
-  //         ? formData?.topChainCondition?.id
-  //         : mooringRowData?.topChainCondition?.id,
-  //       bottomChainConditionId: formData?.bottomChainCondition?.id
-  //         ? formData?.bottomChainCondition?.id
-  //         : mooringRowData?.bottomChainCondition?.id,
-  //       shackleSwivelConditionId: formData?.shackleSwivelCondition?.id
-  //         ? formData?.shackleSwivelCondition?.id
-  //         : mooringRowData?.shackleSwivelCondition?.id,
-  //       pendantCondition: formData?.pendantCondition
-  //         ? formData?.pendantCondition
-  //         : mooringRowData?.pendantCondition,
-  //       depthAtMeanHighWater: formData?.depthAtMeanHighWater
-  //         ? formData?.depthAtMeanHighWater
-  //         : mooringRowData?.depthAtMeanHighWater,
-  //       statusId: 3,
-  //       inspectionDate: formData?.inspectionDate
-  //         ? formData?.inspectionDate
-  //         : mooringRowData?.inspectionDate || '',
-  //       conditionEyeDate: mooringRowData?.installConditionOfEyeDate,
-  //       serviceAreaId: formData?.serviceAreaId?.id
-  //         ? formData?.serviceAreaId?.id
-  //         : mooringRowData?.serviceAreaResponseDto?.id,
-  //       imageRequestDtoList: imageRequestDtoList,
-  //     }
-  //     const response = await updateMooring({
-  //       payload: editMooringPayload,
-  //       id: mooringRowData?.id,
-  //     }).unwrap()
-  //     const { status, message } = response as CustomerResponse
-  //     if (status === 200 || status === 201) {
-  //       setIsLoading(false)
-  //       toastRef?.current?.show({
-  //         severity: 'success',
-  //         summary: 'Success',
-  //         detail: message,
-  //         life: 3000,
-  //       })
-  //       closeModal()
-  //       getCustomer()
-  //       if (getCustomerRecord) {
-  //         getCustomerRecord()
-  //       }
-  //     } else {
-  //       setIsLoading(false)
-  //       toastRef?.current?.show({
-  //         severity: 'error',
-  //         summary: 'Error',
-  //         detail: message,
-  //         life: 3000,
-  //       })
-  //     }
-  //   } catch (error) {
-  //     const { message, data } = error as ErrorResponse
-  //     setIsLoading(false)
-  //     toastRef?.current?.show({
-  //       severity: 'error',
-  //       summary: 'Error',
-  //       detail: data?.message,
-  //       life: 3000,
-  //     })
-  //   }
-  // }
-
   const UpdateMooring = async () => {
     const errors = validateFields()
     if (Object.keys(errors).length > 0) {
@@ -635,18 +526,12 @@ const AddMoorings: React.FC<AddMooringProps> = ({
           payload.serviceAreaId = formData.serviceAreaId.id
         }
 
-        payload.gpsCoordinates = gpsCoordinatesValue // assuming this value is always included
-        payload.statusId = 3 // assuming this value is always included
-        payload.imageRequestDtoList = imageRequestDtoList // assuming this value is always included
+        payload.gpsCoordinates = gpsCoordinatesValue
+        payload.statusId = 3
+        payload.imageRequestDtoList = imageRequestDtoList
         payload.id = mooringRowData?.id
-        payload.mooringNumber = formData?.mooringNumber
-          ? formData?.mooringNumber
-          : mooringRowData?.mooringNumber
-        payload.customerId =
-          mooringRowData?.customerId ||
-          mooringRowData?.customerResponseDto?.id ||
-          formData?.customerName
-
+        payload.mooringNumber = mooringRowData?.mooringNumber
+        payload.customerId = mooringRowData?.customerId || mooringRowData?.customerResponseDto?.id
         return payload
       }
 
@@ -657,7 +542,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
         id: mooringRowData?.id,
       }).unwrap()
 
-      const { status, message } = response
+      const { status, message } = response as CustomerResponse
       if (status === 200 || status === 201) {
         setIsLoading(false)
         toastRef?.current?.show({
