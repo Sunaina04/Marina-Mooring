@@ -566,8 +566,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
   return (
     <>
+      <Toast ref={toastRef} />
       <div style={{ paddingBottom: '50px' }} className={isLoading ? 'blurred' : ''}>
-        <Toast ref={toastRef} />
         <div className="flex gap-8 mt-5 ml-4">
           <div>
             <span className="font-medium text-sm text-[#000000]">

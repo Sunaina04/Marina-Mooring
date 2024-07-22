@@ -604,8 +604,8 @@ const AccountRecievable = () => {
         style={{
           width: '600px',
           minWidth: '600px',
-          height: '400px',
-          minHeight: '400px',
+          height: '270px',
+          minHeight: '270px',
           borderRadius: '1rem',
           fontWeight: '400',
           cursor: 'alias',

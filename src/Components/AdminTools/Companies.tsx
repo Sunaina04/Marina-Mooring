@@ -420,261 +420,263 @@ const CustomerOwner = () => {
   }, [searchUsersText, selectedCustomerId, pageNumberTwo, pageSizeTwo])
 
   return (
-    <div style={{ height: '150vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
+    <>
       <Toast ref={toast} />
-      <Header header="MOORMANAGE/Permission" customer={customerUpdated} />
+      <div style={{ height: '150vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
+        <Header header="MOORMANAGE/Permission" customer={customerUpdated} />
 
-      <div className="flex mr-12 justify-end ">
-        <div className="mt-6">
-          <CustomModal
-            buttonText={'ADD NEW'}
-            buttonStyle={{
-              width: '121px',
-              height: '44px',
-              minHeight: '44px',
-              backgroundColor: '#0098FF',
-              cursor: 'pointer',
-              fontSize: '14px',
-              fontWeight: 600,
-              color: 'white',
-              borderRadius: '0.50rem',
-              marginLeft: '8px',
-              boxShadow: 'none',
-            }}
-            onHide={handleModalClose}
-            dialogStyle={{
-              width: '840px',
-              minWidth: '840px',
-              height: passWordDisplay ? '500px' : '600px',
-              minHeight: passWordDisplay ? '500px' : '600px',
-              borderRadius: '1rem',
-              maxHeight: '60% !important',
-            }}
-            icon={<img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8 " />}
-            children={
-              <AddNewCustomer
-                customerAdminId={customerAdminId ? customerAdminId : ''}
-                customerData={selectedCustomerUser || selectedCustomer}
-                editMode={editMode}
-                editCustomerMode={editCustomer}
-                getUser={getUserHandler}
-                getCustomerUser={() => {
-                  if (customerAdminId) {
-                    getCustomerAdminsUsers(customerAdminId)
+        <div className="flex mr-12 justify-end ">
+          <div className="mt-6">
+            <CustomModal
+              buttonText={'ADD NEW'}
+              buttonStyle={{
+                width: '121px',
+                height: '44px',
+                minHeight: '44px',
+                backgroundColor: '#0098FF',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: 600,
+                color: 'white',
+                borderRadius: '0.50rem',
+                marginLeft: '8px',
+                boxShadow: 'none',
+              }}
+              onHide={handleModalClose}
+              dialogStyle={{
+                width: '840px',
+                minWidth: '840px',
+                height: passWordDisplay ? '500px' : '600px',
+                minHeight: passWordDisplay ? '500px' : '600px',
+                borderRadius: '1rem',
+                maxHeight: '60% !important',
+              }}
+              icon={<img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8 " />}
+              children={
+                <AddNewCustomer
+                  customerAdminId={customerAdminId ? customerAdminId : ''}
+                  customerData={selectedCustomerUser || selectedCustomer}
+                  editMode={editMode}
+                  editCustomerMode={editCustomer}
+                  getUser={getUserHandler}
+                  getCustomerUser={() => {
+                    if (customerAdminId) {
+                      getCustomerAdminsUsers(customerAdminId)
+                    }
+                  }}
+                  closeModal={() => {
+                    handleModalClose()
+                  }}
+                  setModalVisible={setModalVisible}
+                  setEditCustomer={setEditCustomer}
+                  setIsVisible={() => {}}
+                  passWordDisplay={passWordDisplay}
+                  customerUsers={getCustomerOwnerData}
+                  toastRef={toast}
+                  setSelectedCustomerUser={setSelectedCustomerUser}
+                  setSelectedCustomer={setSelectedCustomer}
+                  setSelectedCustomerUsers={setgetCustomerOwnerUserData}
+                  setIsCustomerUpdated={setCustomerUpdated}
+                />
+              }
+              headerText={<span className="font-large text-2xl text-[#000000] ml-4">New User</span>}
+              visible={modalVisible}
+              onClick={() => {
+                setEditMode(false)
+                setModalVisible(true)
+                setSelectedCustomerUser('')
+                setSelectedCustomer('')
+                setEditCustomer(false)
+              }}
+            />
+          </div>
+        </div>
+
+        <div className={`flex flex-col md:flex-row gap-10 ml-8 mt-5`}>
+          <div className="flex-1 border border-gray-300 bg-white rounded-lg md:ml-10 overflow-hidden">
+            <div className="text-md font-semibold rounded-t-lg bg-[#00426F]">
+              <h1 className="p-4 text-white">{properties.CustomersOwner}</h1>
+            </div>
+            <InputTextWithHeader
+              value={searchText}
+              onChange={handleSearch}
+              placeholder="Search by name, ID, phone no...."
+              inputTextStyle={{
+                width: '100%',
+                height: '44px',
+                padding: '0 2rem 0 2.5rem',
+                border: '1px solid #C5D9E0',
+                fontSize: '14px',
+                color: '#000000',
+                borderRadius: '4px',
+                fontWeight: 400,
+                backgroundColor: '#FFFFFF',
+              }}
+              borderBottom={{ border: '1px solid #D5E1EA' }}
+              iconStyle={{
+                position: 'absolute',
+                left: '15px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                width: '18px',
+                height: '18px',
+              }}
+            />
+            <div
+              data-testid="customerData"
+              className="flex flex-col overflow-hidden p-4"
+              style={{ height: '500px' }}>
+              <div className="flex-grow overflow-auto">
+                <DataTableComponent
+                  data={getCustomerOwnerData}
+                  tableStyle={{
+                    fontSize: '12px',
+                    color: '#000000',
+                    fontWeight: 600,
+                    backgroundColor: '#F9FAFB',
+                  }}
+                  // scrollable={true}
+                  selectionMode="single"
+                  onSelectionChange={(e) => {
+                    setSelectedProduct(e.value)
+                  }}
+                  selection={selectedProduct}
+                  dataKey="id"
+                  rowStyle={(rowData) => rowData}
+                  columns={customerOwnerTableColumn}
+                  onRowClick={(e) => {
+                    setSelectedId(e.data.id)
+                    dispatch(setCustomerName(e.data.name))
+                    dispatch(setCustomerId(e.data.id))
+                  }}
+                  style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
+                  actionButtons={ActionButtonColumn}
+                  emptyMessage={
+                    <div className="flex flex-col justify-center items-center h-full mt-40">
+                      <img src="/assets/images/empty.png" alt="Empty Data" className="w-32 mb-4" />
+                      <p className="text-gray-500">No data available</p>
+                    </div>
                   }
-                }}
-                closeModal={() => {
-                  handleModalClose()
-                }}
-                setModalVisible={setModalVisible}
-                setEditCustomer={setEditCustomer}
-                setIsVisible={() => {}}
-                passWordDisplay={passWordDisplay}
-                customerUsers={getCustomerOwnerData}
-                toastRef={toast}
-                setSelectedCustomerUser={setSelectedCustomerUser}
-                setSelectedCustomer={setSelectedCustomer}
-                setSelectedCustomerUsers={setgetCustomerOwnerUserData}
-                setIsCustomerUpdated={setCustomerUpdated}
-              />
-            }
-            headerText={<span className="font-large text-2xl text-[#000000] ml-4">New User</span>}
-            visible={modalVisible}
-            onClick={() => {
-              setEditMode(false)
-              setModalVisible(true)
-              setSelectedCustomerUser('')
-              setSelectedCustomer('')
-              setEditCustomer(false)
-            }}
-          />
-        </div>
-      </div>
+                />
+              </div>
+              <div data-testid="paginatorOne" className="mt-auto">
+                <Paginator
+                  first={pageNumber1}
+                  rows={pageSize}
+                  totalRecords={totalRecords}
+                  rowsPerPageOptions={[5, 10, 20, 30]}
+                  onPageChange={onPageChange}
+                  style={{
+                    position: 'sticky',
+                    bottom: 0,
+                    zIndex: 1,
+                    backgroundColor: 'white',
+                    borderTop: '1px solid #D5E1EA',
+                    padding: '0.5rem',
+                    marginBottom: '-20px',
+                  }}
+                />
+              </div>
+            </div>
+          </div>
 
-      <div className={`flex flex-col md:flex-row gap-10 ml-8 mt-5`}>
-        <div className="flex-1 border border-gray-300 bg-white rounded-lg md:ml-10 overflow-hidden">
-          <div className="text-md font-semibold rounded-t-lg bg-[#00426F]">
-            <h1 className="p-4 text-white">{properties.CustomersOwner}</h1>
-          </div>
-          <InputTextWithHeader
-            value={searchText}
-            onChange={handleSearch}
-            placeholder="Search by name, ID, phone no...."
-            inputTextStyle={{
-              width: '100%',
-              height: '44px',
-              padding: '0 2rem 0 2.5rem',
-              border: '1px solid #C5D9E0',
-              fontSize: '14px',
-              color: '#000000',
-              borderRadius: '4px',
-              fontWeight: 400,
-              backgroundColor: '#FFFFFF',
-            }}
-            borderBottom={{ border: '1px solid #D5E1EA' }}
-            iconStyle={{
-              position: 'absolute',
-              left: '15px',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              width: '18px',
-              height: '18px',
-            }}
-          />
           <div
-            data-testid="customerData"
-            className="flex flex-col overflow-hidden p-4"
-            style={{ height: '500px' }}>
-            <div className="flex-grow overflow-auto">
-              <DataTableComponent
-                data={getCustomerOwnerData}
-                tableStyle={{
-                  fontSize: '12px',
-                  color: '#000000',
-                  fontWeight: 600,
-                  backgroundColor: '#F9FAFB',
-                }}
-                // scrollable={true}
-                selectionMode="single"
-                onSelectionChange={(e) => {
-                  setSelectedProduct(e.value)
-                }}
-                selection={selectedProduct}
-                dataKey="id"
-                rowStyle={(rowData) => rowData}
-                columns={customerOwnerTableColumn}
-                onRowClick={(e) => {
-                  setSelectedId(e.data.id)
-                  dispatch(setCustomerName(e.data.name))
-                  dispatch(setCustomerId(e.data.id))
-                }}
-                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
-                actionButtons={ActionButtonColumn}
-                emptyMessage={
-                  <div className="flex flex-col justify-center items-center h-full mt-40">
-                    <img src="/assets/images/empty.png" alt="Empty Data" className="w-32 mb-4" />
-                    <p className="text-gray-500">No data available</p>
-                  </div>
-                }
-              />
+            className={`flex-1 border border-gray-300 bg-white rounded-lg md:mr-10 overflow-hidden`}>
+            <div className="text-md font-semibold rounded-t-lg bg-[#00426F]">
+              <h1 className="p-4 text-white">{properties.CustomerOwnerUsers}</h1>
             </div>
-            <div data-testid="paginatorOne" className="mt-auto">
-              <Paginator
-                first={pageNumber1}
-                rows={pageSize}
-                totalRecords={totalRecords}
-                rowsPerPageOptions={[5, 10, 20, 30]}
-                onPageChange={onPageChange}
-                style={{
-                  position: 'sticky',
-                  bottom: 0,
-                  zIndex: 1,
-                  backgroundColor: 'white',
-                  borderTop: '1px solid #D5E1EA',
-                  padding: '0.5rem',
-                  marginBottom: '-20px',
-                }}
-              />
+            <InputTextWithHeader
+              value={searchUsersText}
+              onChange={handleUsersSearch}
+              placeholder="Search by name, ID, Email, Role, phone no..."
+              inputTextStyle={{
+                width: '100%',
+                height: '44px',
+                border: '1px solid #C5D9E0',
+                padding: '0 2rem 0 2.5rem',
+                fontSize: '14px',
+                color: '#000000',
+                borderRadius: '4px',
+                fontWeight: 400,
+                backgroundColor: '#FFFFFF',
+              }}
+              borderBottom={{ border: '1px solid #D5E1EA' }}
+              iconStyle={{
+                position: 'absolute',
+                left: '15px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                width: '18px',
+                height: '18px',
+              }}
+            />
+            <div data-testid="progress">
+              {isLoading && (
+                <ProgressSpinner
+                  style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: '50px',
+                    height: '50px',
+                  }}
+                  strokeWidth="4"
+                />
+              )}
             </div>
-          </div>
-        </div>
-
-        <div
-          className={`flex-1 border border-gray-300 bg-white rounded-lg md:mr-10 overflow-hidden`}>
-          <div className="text-md font-semibold rounded-t-lg bg-[#00426F]">
-            <h1 className="p-4 text-white">{properties.CustomerOwnerUsers}</h1>
-          </div>
-          <InputTextWithHeader
-            value={searchUsersText}
-            onChange={handleUsersSearch}
-            placeholder="Search by name, ID, Email, Role, phone no..."
-            inputTextStyle={{
-              width: '100%',
-              height: '44px',
-              border: '1px solid #C5D9E0',
-              padding: '0 2rem 0 2.5rem',
-              fontSize: '14px',
-              color: '#000000',
-              borderRadius: '4px',
-              fontWeight: 400,
-              backgroundColor: '#FFFFFF',
-            }}
-            borderBottom={{ border: '1px solid #D5E1EA' }}
-            iconStyle={{
-              position: 'absolute',
-              left: '15px',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              width: '18px',
-              height: '18px',
-            }}
-          />
-          <div data-testid="progress">
-            {isLoading && (
-              <ProgressSpinner
-                style={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  transform: 'translate(-50%, -50%)',
-                  width: '50px',
-                  height: '50px',
-                }}
-                strokeWidth="4"
-              />
-            )}
-          </div>
-          <div
-            data-testid="customerDataAdmin"
-            className="flex flex-col overflow-hidden p-4"
-            style={{ height: '500px' }}>
-            <div className="flex-grow overflow-auto">
-              <DataTableComponent
-                tableStyle={{
-                  fontSize: '12px',
-                  color: '#000000',
-                  fontWeight: 600,
-                  backgroundColor: '#F9FAFB',
-                }}
-                scrollable={true}
-                data={getCustomerOwnerUserData}
-                columns={customerOwnerUserTableColumn}
-                actionButtons={ActionButtonUsersColumn}
-                style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
-                emptyMessage={
-                  <div className="text-center mt-40">
-                    <img
-                      src="/assets/images/empty.png"
-                      alt="Empty Data"
-                      className="w-32 mx-auto mb-4"
-                    />
-                    <p className="text-gray-500">No data available</p>
-                  </div>
-                }
-              />
-            </div>
-            <div data-testid="paginatorTwo" className="mt-auto">
-              <Paginator
-                first={pageNumberOne}
-                rows={pageSizeTwo}
-                totalRecords={totalRecordsTwo}
-                rowsPerPageOptions={[5, 10, 20, 30]}
-                onPageChange={onPageChangeTwo}
-                style={{
-                  position: 'sticky',
-                  bottom: 0,
-                  zIndex: 1,
-                  backgroundColor: 'white',
-                  borderTop: '1px solid #D5E1EA',
-                  padding: '0.5rem',
-                  marginBottom: '-20px',
-                }}
-              />
+            <div
+              data-testid="customerDataAdmin"
+              className="flex flex-col overflow-hidden p-4"
+              style={{ height: '500px' }}>
+              <div className="flex-grow overflow-auto">
+                <DataTableComponent
+                  tableStyle={{
+                    fontSize: '12px',
+                    color: '#000000',
+                    fontWeight: 600,
+                    backgroundColor: '#F9FAFB',
+                  }}
+                  scrollable={true}
+                  data={getCustomerOwnerUserData}
+                  columns={customerOwnerUserTableColumn}
+                  actionButtons={ActionButtonUsersColumn}
+                  style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
+                  emptyMessage={
+                    <div className="text-center mt-40">
+                      <img
+                        src="/assets/images/empty.png"
+                        alt="Empty Data"
+                        className="w-32 mx-auto mb-4"
+                      />
+                      <p className="text-gray-500">No data available</p>
+                    </div>
+                  }
+                />
+              </div>
+              <div data-testid="paginatorTwo" className="mt-auto">
+                <Paginator
+                  first={pageNumberOne}
+                  rows={pageSizeTwo}
+                  totalRecords={totalRecordsTwo}
+                  rowsPerPageOptions={[5, 10, 20, 30]}
+                  onPageChange={onPageChangeTwo}
+                  style={{
+                    position: 'sticky',
+                    bottom: 0,
+                    zIndex: 1,
+                    backgroundColor: 'white',
+                    borderTop: '1px solid #D5E1EA',
+                    padding: '0.5rem',
+                    marginBottom: '-20px',
+                  }}
+                />
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 

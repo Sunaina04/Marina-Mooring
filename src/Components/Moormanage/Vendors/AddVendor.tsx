@@ -330,9 +330,9 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
 
   return (
     <>
+      <Toast ref={toastRef} />
       <div className={isLoading ? 'blurred' : ''}>
         <div className="main">
-          <Toast ref={toastRef} />
           <div className="flex">
             <div className="flex gap-8">
               <div>

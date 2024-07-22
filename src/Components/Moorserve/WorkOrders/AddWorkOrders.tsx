@@ -158,6 +158,12 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       errors.value = 'Problem description is required'
     }
 
+    if (!workOrder.mooringId) {
+      errors.mooringId = 'Mooring Number is required'
+    }
+
+  
+
     setErrorMessage(errors)
     return errors
   }
@@ -298,7 +304,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       let detailMessage = 'Only image files are allowed'
 
       if (invalidSizeFiles.length > 0) {
-        detailMessage += '. Images must be between 5 KB and 1 MB.'
+        detailMessage = 'Images must be between 5 KB and 1 MB.'
       }
 
       toastRef?.current?.show({
@@ -793,7 +799,9 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
           {/* Mooring Number */}
           <div>
             <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">Mooring Number</div>
+              <div className="flex gap-1">Mooring Number
+              <p className="text-red-600">*</p>
+              </div>
             </span>
             <div className="mt-1">
               <Dropdown
@@ -1293,27 +1301,27 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
               </label>
             </div>
             <div className="">
-                <div className=" font-medium text-sm text-[#000000]">Note</div>
-                <div className="mt-1">
-                  <InputComponent
-                    // value={formData.note}
+              <div className=" font-medium text-sm text-[#000000]">Note</div>
+              <div className="mt-1">
+                <InputComponent
+                  // value={formData.note}
 
-                    onChange={(e) => handleInputChange('note', e.target.value)}
-                    style={{
-                      width: '370px',
-                      height: '40px',
-                      border: '1px solid #D5E1EA',
-                      borderRadius: '0.50rem',
-                      fontSize: '0.8rem',
-                      boxShadow: 'none',
-                      paddingLeft: '0.5rem',
-                      color: 'black',
-                      resize: 'none',
-                    }}
-                  />
-                  {/* <p>{fieldErrors.note && <small className="p-error">{fieldErrors.note}</small>}</p> */}
-                </div>
+                  onChange={(e) => handleInputChange('note', e.target.value)}
+                  style={{
+                    width: '370px',
+                    height: '40px',
+                    border: '1px solid #D5E1EA',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
+                    boxShadow: 'none',
+                    paddingLeft: '0.5rem',
+                    color: 'black',
+                    resize: 'none',
+                  }}
+                />
+                {/* <p>{fieldErrors.note && <small className="p-error">{fieldErrors.note}</small>}</p> */}
               </div>
+            </div>
           </div>
         </div>
 

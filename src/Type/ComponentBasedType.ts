@@ -25,6 +25,16 @@ export interface BoatYardProps {
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
 
+export interface ServiceAreaProps {
+  customerData: any
+  editMode: boolean
+  toastRef?: any
+  gpsCoordinates?: string
+  closeModal: () => void
+  serviceAreaData: () => void
+  setModalVisible: React.Dispatch<React.SetStateAction<boolean>>
+}
+
 export interface BoatData {
   id: string
   customerName: string

@@ -127,24 +127,44 @@ const Settings = () => {
         // style:{width:"20vw"},
         style: columnStyle,
         body: (rowData: any) => (
+          // <span
+          //   className={`cursor-pointer underline ${savedValues[rowData.id] ? 'black' : 'text-green-500'}`}
+          //   onClick={() => {
+          //     if (!(savedValues[rowData?.id] || rowData?.quickbookCustomerResponseDto?.id)) {
+          //       MapCustomerToQuickBook(rowData)
+          //     } else {
+          //       if (!currentlyEditing) {
+          //         setCurrentlyEditing(rowData?.id)
+          //       } else {
+          //         UpdateMapCustomerToQuickBook(rowData)
+          //         setCurrentlyEditing(null)
+          //       }
+          //     }
+          //   }}>
+          //   {(rowData?.quickbookCustomerResponseDto?.id || savedValues[rowData.id]) &&
+          //   !currentlyEditing
+          //     ? 'Edit'
+          //     : 'Save'}
+          // </span>
           <span
             className={`cursor-pointer underline ${savedValues[rowData.id] ? 'black' : 'text-green-500'}`}
             onClick={() => {
-              if (!(savedValues[rowData?.id] || rowData?.quickbookCustomerResponseDto?.id)) {
-                MapCustomerToQuickBook(rowData)
+              if (rowData.id === currentlyEditing) {
+                UpdateMapCustomerToQuickBook(rowData)
+                setCurrentlyEditing(null)
               } else {
-                if (!currentlyEditing) {
-                  setCurrentlyEditing(rowData?.id)
+                if (!(savedValues[rowData?.id] || rowData?.quickbookCustomerResponseDto?.id)) {
+                  MapCustomerToQuickBook(rowData)
                 } else {
-                  UpdateMapCustomerToQuickBook(rowData)
-                  setCurrentlyEditing(null)
+                  setCurrentlyEditing(rowData.id)
                 }
               }
             }}>
-            {(rowData?.quickbookCustomerResponseDto?.id || savedValues[rowData.id]) &&
-            !currentlyEditing
-              ? 'Edit'
-              : 'Save'}
+            {rowData.id === currentlyEditing
+              ? 'Save'
+              : rowData?.quickbookCustomerResponseDto?.id || savedValues[rowData.id]
+                ? 'Edit'
+                : 'Save'}
           </span>
         ),
       },

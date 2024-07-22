@@ -71,6 +71,13 @@ export interface State {
   label: string
 }
 
+export interface ServiceAreaType {
+  id: number
+  name: string
+  label: string
+}
+
+
 export interface MetaData {
   type: any
   id: number

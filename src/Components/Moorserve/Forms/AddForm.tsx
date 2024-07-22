@@ -14,7 +14,7 @@ const AddForm = () => {
   const [fieldsError, setFieldsError] = useState<{ [key: string]: string }>({})
   const toastRef = useRef<Toast>(null)
 
-  const fileUploadRef = useRef<any>(null);
+  const fileUploadRef = useRef<any>(null)
 
   const [formData, setFormData] = useState<any>({
     customerName: '',
@@ -66,18 +66,20 @@ const AddForm = () => {
       return
     }
   }
- 
+
   const handleClickUploadText = () => {
     if (fileUploadRef.current) {
-      fileUploadRef.current.chooseFile(); // Trigger file selection dialog
+      fileUploadRef.current.chooseFile() // Trigger file selection dialog
     }
-  };
-
+  }
 
   const addContent = () => {
     return (
-      <div style={{ textAlign: 'center', marginTop: '50px', cursor:'pointer' }} onClick={handleClickUploadText}>
-        Drag and drop choose file to upload your files.<br/>
+      <div
+        style={{ textAlign: 'center', marginTop: '50px', cursor: 'pointer' }}
+        onClick={handleClickUploadText}>
+        Drag and drop choose file to upload your files.
+        <br />
         All pdf, doc,csv, xlsx are supported.
       </div>
     )
@@ -85,8 +87,9 @@ const AddForm = () => {
 
   return (
     <>
-      <div className="ml-4">
       <Toast ref={toastRef} />
+
+      <div className="ml-4">
         <div className="flex gap-6">
           <div>
             <span className="font-medium text-sm text-[#000000]">
@@ -186,9 +189,9 @@ const AddForm = () => {
               customUpload
               url="/api/upload"
               uploadHandler={(event) => {
-                const file = event.files[0];
-                setUploadFile(file);
-                setFormData({ ...formData, uploadFile: file });
+                const file = event.files[0]
+                setUploadFile(file)
+                setFormData({ ...formData, uploadFile: file })
               }}
               style={{
                 width: '700px',

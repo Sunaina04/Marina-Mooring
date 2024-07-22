@@ -1,5 +1,6 @@
 import {
   BoatYardPayload,
+  ServiceAreaPayload,
   CustomerPayload,
   ImagePayload,
   InventoryPayload,
@@ -154,6 +155,54 @@ const moormanageApi = userApi.injectEndpoints({
         body: payload,
       }),
     }),
+
+     // ServiceArea API
+     addServiceArea: builder.mutation({
+      query: (payload: ServiceAreaPayload) => ({
+        url: '/api/v1/serviceArea/',
+        method: 'POST',
+        body: payload,
+      }),
+    }),
+
+    getServiceArea: builder.mutation({
+      query: ({
+        pageNumber,
+        pageSize,
+        sortBy,
+        sortDir,
+        searchText,
+        customerOwnerId,
+      }: {
+        pageNumber?: number
+        pageSize?: number
+        sortBy?: string
+        sortDir?: string
+        searchText?: string
+        customerOwnerId?: number | null
+      }) => ({
+        url: 'api/v1/serviceArea/',
+        method: 'GET',
+        params: { pageNumber, pageSize, sortBy, sortDir, searchText, customerOwnerId },
+      }),
+    }),
+
+
+    deleteServiceArea: builder.mutation({
+      query: ({ id }: { id?: number }) => ({
+        url: `api/v1/serviceArea/${id}`,
+        method: 'DELETE',
+      }),
+    }),
+
+    updateServiceArea: builder.mutation({
+      query: ({ payload, id }: { payload: ServiceAreaPayload; id: number }) => ({
+        url: `api/v1/serviceArea/${id}`,
+        method: 'PUT',
+        body: payload,
+      }),
+    }),
+
 
     // Boatyards API
     addBoatyards: builder.mutation({
@@ -507,6 +556,10 @@ export const {
   useGetVendorByIdMutation,
   useDeleteVendorMutation,
   useUpdateVendorMutation,
+  useAddServiceAreaMutation,
+  useGetServiceAreaMutation,
+  useDeleteServiceAreaMutation,
+  useUpdateServiceAreaMutation,
   useAddBoatyardsMutation,
   useDeleteBoatyardsMutation,
   useUpdateBoatyardsMutation,
