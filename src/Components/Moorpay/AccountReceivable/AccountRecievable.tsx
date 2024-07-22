@@ -391,215 +391,214 @@ const AccountRecievable = () => {
   }, [searchInvoice])
 
   return (
-    <>
-      <div style={{ height: '180vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
-        <Header header="MOORPAY/Account Receivable" />
-        <Toast ref={toast} />
+    <div style={{ height: '150vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
+      <Header header="MOORPAY/Account Receivable" />
+      <Toast ref={toast} />
 
-        <div
-          style={{
-            height: '400px',
-            gap: '0px',
-            borderRadius: '10px',
-            border: '1px solid #D5E1EA',
-            opacity: '0px',
-            backgroundColor: '#FFFFFF',
-          }}
-          className="bg-[F2F2F2]  ml-12  mt-20 mr-14">
-          <div className="flex flex-wrap align-items-center justify-between  bg-[#00426F] p-2   rounded-tl-[10px] rounded-tr-[10px]">
-            <span
-              style={{
-                fontSize: '18px',
-                fontWeight: '700',
-                lineHeight: '21.09px',
-                letterSpacing: '0.4837472140789032px',
-                color: '#FFFFFF',
-                padding: '8px',
-              }}>
-              Work Orders Pending Approval
-            </span>
+      <div
+        style={{
+          height: '400px',
+          gap: '0px',
+          borderRadius: '10px',
+          border: '1px solid #D5E1EA',
+          opacity: '0px',
+          backgroundColor: '#FFFFFF',
+        }}
+        className="bg-[F2F2F2]  ml-12  mt-20 mr-14">
+        <div className="flex flex-wrap align-items-center justify-between  bg-[#00426F] p-2   rounded-tl-[10px] rounded-tr-[10px]">
+          <span
+            style={{
+              fontSize: '18px',
+              fontWeight: '700',
+              lineHeight: '21.09px',
+              letterSpacing: '0.4837472140789032px',
+              color: '#FFFFFF',
+              padding: '8px',
+            }}>
+            Work Orders Pending Approval
+          </span>
 
-            <div className="relative inline-block">
-              <div className="relative">
-                <img
-                  src="/assets/images/Search.png"
-                  alt="search icon"
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5"
-                  data-testid="search-icon"
-                />
-                <InputText
-                  value={searchApproval}
-                  onChange={handleSearchApproval}
-                  placeholder="Search"
-                  id="placeholderText"
-                  className="pl-10 w-[237px] bg-[#00426F] h-[35px] rounded-lg border text-[white] border-[#D5E1EA] placeholder:text-[#FFFFFF]  focus:outline-none"
-                />
-              </div>
+          <div className="relative inline-block">
+            <div className="relative">
+              <img
+                src="/assets/images/Search.png"
+                alt="search icon"
+                className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5"
+                data-testid="search-icon"
+              />
+              <InputText
+                value={searchApproval}
+                onChange={handleSearchApproval}
+                placeholder="Search"
+                id="placeholderText"
+                className="pl-10 w-[237px] bg-[#00426F] h-[35px] rounded-lg border text-[white] border-[#D5E1EA] placeholder:text-[#FFFFFF]  focus:outline-none"
+              />
             </div>
-          </div>
-          <div className="h-[293px] overflow-auto">
-            <DataTableComponent
-              tableStyle={{
-                fontSize: '13px',
-                color: '#000000',
-                fontWeight: 700,
-              }}
-              data={workOrderData}
-              columns={accountRecievableTableColumn}
-              actionButtons={ActionButtonColumn}
-              style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
-              scrollable
-              emptyMessage={
-                <div className="text-center mt-10">
-                  <img
-                    src="/assets/images/empty.png"
-                    alt="Empty Data"
-                    className="w-20 mx-auto mb-2"
-                  />
-                  <p className="text-gray-500 text-lg">No data available</p>
-                </div>
-              }
-            />
-            <div className="text-center">
-              {isLoading && (
-                <ProgressSpinner
-                  style={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '55%',
-                    transform: 'translate(-50%, -50%)',
-                    width: '50px',
-                    height: '50px',
-                  }}
-                  strokeWidth="4"
-                />
-              )}
-            </div>
-          </div>
-
-          <div className="">
-            <Paginator
-              first={pageNumber1}
-              rows={pageSize}
-              totalRecords={totalRecords}
-              rowsPerPageOptions={[5, 10, 20, 30]}
-              onPageChange={onPageChange}
-              style={{
-                position: 'sticky',
-                bottom: 0,
-                zIndex: 1,
-                backgroundColor: 'white',
-                borderTop: '1px solid #D5E1EA',
-                padding: '0.5rem',
-                borderBottomRightRadius: '10px',
-                borderBottomLeftRadius: '10px',
-              }}
-            />
           </div>
         </div>
-        {/* second data table  */}
-        <div
-          style={{
-            height: '400px',
-            gap: '0px',
-            borderRadius: '10px',
-            border: '1px solid #D5E1EA',
-            opacity: '0px',
-            backgroundColor: '#FFFFFF',
-          }}
-          className="bg-[F2F2F2]  ml-12  mt-6 mr-14">
-          <div className="flex flex-wrap align-items-center justify-between  bg-[#00426F] p-2   rounded-tl-[10px] rounded-tr-[10px]">
-            <span
-              style={{
-                fontSize: '18px',
-                fontWeight: '700',
-                lineHeight: '21.09px',
-                letterSpacing: '0.4837472140789032px',
-                color: '#FFFFFF',
-                padding: '8px',
-              }}>
-              Outstanding Invoices
-            </span>
-
-            <div className="relative inline-block">
-              <div className="relative">
+        <div className="h-[293px] overflow-auto">
+          <DataTableComponent
+            tableStyle={{
+              fontSize: '13px',
+              color: '#000000',
+              fontWeight: 700,
+            }}
+            data={workOrderData}
+            columns={accountRecievableTableColumn}
+            actionButtons={ActionButtonColumn}
+            style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+            scrollable
+            emptyMessage={
+              <div className="text-center mt-10">
                 <img
-                  src="/assets/images/Search.png"
-                  alt="search icon"
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5"
-                  data-testid="search-icon"
+                  src="/assets/images/empty.png"
+                  alt="Empty Data"
+                  className="w-20 mx-auto mb-2"
                 />
-                <InputText
-                  value={searchInvoice}
-                  onChange={handleSearchInvoice}
-                  placeholder="Search"
-                  id="placeholderText"
-                  className="pl-10 w-[237px] bg-[#00426F] h-[35px] rounded-lg border text-[white] border-[#D5E1EA] placeholder:text-[#FFFFFF]  focus:outline-none"
-                />
+                <p className="text-gray-500 text-lg">No data available</p>
               </div>
-            </div>
+            }
+          />
+          <div className="text-center">
+            {isLoading && (
+              <ProgressSpinner
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '55%',
+                  transform: 'translate(-50%, -50%)',
+                  width: '50px',
+                  height: '50px',
+                }}
+                strokeWidth="4"
+              />
+            )}
           </div>
-          <div className="h-[293px] overflow-auto">
-            <DataTableComponent
-              tableStyle={{
-                fontSize: '13px',
-                color: '#000000',
-                fontWeight: 700,
-              }}
-              data={workOrderDataInvoice}
-              columns={outstandingInvoiceTableColumn}
-              actionButtons={ActionButtonColumnInvoice}
-              style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
-              emptyMessage={
-                <div className="text-center mt-10">
-                  <img
-                    src="/assets/images/empty.png"
-                    alt="Empty Data"
-                    className="w-20 mx-auto mb-2"
-                  />
-                  <p className="text-gray-500 text-lg">No data available</p>
-                </div>
-              }
-            />
+        </div>
 
-            <div className="text-center">
-              {isLoading && (
-                <ProgressSpinner
-                  style={{
-                    position: 'absolute',
-                    top: '70%',
-                    left: '55%',
-                    transform: 'translate(-50%, -50%)',
-                    width: '50px',
-                    height: '50px',
-                  }}
-                  strokeWidth="4"
-                />
-              )}
-            </div>
-          </div>
-
-          <div className="">
-            <Paginator
-              first={pageNumber2}
-              rows={pageSizeTwo}
-              totalRecords={totalRecordsInvoice}
-              rowsPerPageOptions={[5, 10, 20, 30]}
-              onPageChange={onPageChangeTwo}
-              style={{
-                position: 'sticky',
-                bottom: 0,
-                zIndex: 1,
-                backgroundColor: 'white',
-                borderTop: '1px solid #D5E1EA',
-                padding: '0.5rem',
-                borderBottomRightRadius: '10px',
-                borderBottomLeftRadius: '10px',
-              }}
-            />
-          </div>
+        <div className="">
+          <Paginator
+            first={pageNumber1}
+            rows={pageSize}
+            totalRecords={totalRecords}
+            rowsPerPageOptions={[5, 10, 20, 30]}
+            onPageChange={onPageChange}
+            style={{
+              position: 'sticky',
+              bottom: 0,
+              zIndex: 1,
+              backgroundColor: 'white',
+              borderTop: '1px solid #D5E1EA',
+              padding: '0.5rem',
+              borderBottomRightRadius: '10px',
+              borderBottomLeftRadius: '10px',
+            }}
+          />
         </div>
       </div>
+      {/* second data table  */}
+      <div
+        style={{
+          height: '400px',
+          gap: '0px',
+          borderRadius: '10px',
+          border: '1px solid #D5E1EA',
+          opacity: '0px',
+          backgroundColor: '#FFFFFF',
+        }}
+        className="bg-[F2F2F2]  ml-12  mt-6 mr-14">
+        <div className="flex flex-wrap align-items-center justify-between  bg-[#00426F] p-2   rounded-tl-[10px] rounded-tr-[10px]">
+          <span
+            style={{
+              fontSize: '18px',
+              fontWeight: '700',
+              lineHeight: '21.09px',
+              letterSpacing: '0.4837472140789032px',
+              color: '#FFFFFF',
+              padding: '8px',
+            }}>
+            Outstanding Invoices
+          </span>
+
+          <div className="relative inline-block">
+            <div className="relative">
+              <img
+                src="/assets/images/Search.png"
+                alt="search icon"
+                className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5"
+                data-testid="search-icon"
+              />
+              <InputText
+                value={searchInvoice}
+                onChange={handleSearchInvoice}
+                placeholder="Search"
+                id="placeholderText"
+                className="pl-10 w-[237px] bg-[#00426F] h-[35px] rounded-lg border text-[white] border-[#D5E1EA] placeholder:text-[#FFFFFF]  focus:outline-none"
+              />
+            </div>
+          </div>
+        </div>
+        <div className="h-[293px] overflow-auto">
+          <DataTableComponent
+            tableStyle={{
+              fontSize: '13px',
+              color: '#000000',
+              fontWeight: 700,
+            }}
+            data={workOrderDataInvoice}
+            columns={outstandingInvoiceTableColumn}
+            actionButtons={ActionButtonColumnInvoice}
+            style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+            emptyMessage={
+              <div className="text-center mt-10">
+                <img
+                  src="/assets/images/empty.png"
+                  alt="Empty Data"
+                  className="w-20 mx-auto mb-2"
+                />
+                <p className="text-gray-500 text-lg">No data available</p>
+              </div>
+            }
+          />
+
+          <div className="text-center">
+            {isLoading && (
+              <ProgressSpinner
+                style={{
+                  position: 'absolute',
+                  top: '70%',
+                  left: '55%',
+                  transform: 'translate(-50%, -50%)',
+                  width: '50px',
+                  height: '50px',
+                }}
+                strokeWidth="4"
+              />
+            )}
+          </div>
+        </div>
+
+        <div className="">
+          <Paginator
+            first={pageNumber2}
+            rows={pageSizeTwo}
+            totalRecords={totalRecordsInvoice}
+            rowsPerPageOptions={[5, 10, 20, 30]}
+            onPageChange={onPageChangeTwo}
+            style={{
+              position: 'sticky',
+              bottom: 0,
+              zIndex: 1,
+              backgroundColor: 'white',
+              borderTop: '1px solid #D5E1EA',
+              padding: '0.5rem',
+              borderBottomRightRadius: '10px',
+              borderBottomLeftRadius: '10px',
+            }}
+          />
+        </div>
+      </div>
+
       <Dialog
         position="center"
         style={{
@@ -675,13 +674,13 @@ const AccountRecievable = () => {
           id={workOrderId}
           setVisible={() => {
             setApproveModalOpen(false)
-            setModalVisible(false);
+            setModalVisible(false)
           }}
           getWorkOrderWithPendingPayApproval={getWorkOrderWithPendingPayApproval}
           getOutStandingInvoice={getOutStandingInvoice}
           closeModal={() => {
             handleModalClose()
-            setModalVisible(false);
+            setModalVisible(false)
           }}
         />
       </Dialog>
@@ -706,13 +705,13 @@ const AccountRecievable = () => {
           selectedRowData={selectedRowData}
           setVisible={() => {
             setDenyModalOpen(false)
-            setModalVisible(false);
+            setModalVisible(false)
           }}
           getWorkOrderWithPendingPayApproval={getWorkOrderWithPendingPayApproval}
           getOutStandingInvoice={getOutStandingInvoice}
           closeModal={() => {
             handleModalClose()
-            setModalVisible(false);
+            setModalVisible(false)
           }}
         />
       </Dialog>
@@ -743,15 +742,15 @@ const AccountRecievable = () => {
           isInvoice={isInvoice}
           setVisible={() => {
             setAddWorkOrderModal(false)
-            setModalVisible(false);
+            setModalVisible(false)
           }}
           closeModal={() => {
             handleModalClose()
-            setModalVisible(false);
+            setModalVisible(false)
           }}
         />
       </Dialog>
-    </>
+    </div>
   )
 }
 
