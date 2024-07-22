@@ -144,7 +144,6 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ onHide, onSavePayment }) =>
       </div>
 
       <div className="flex gap-6 ml-1 mt-40">
-<<<<<<< Updated upstream
         <div
           className={`"flex gap-6 bottom-2 absolute left-7"`}
           style={{
@@ -186,68 +185,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ onHide, onSavePayment }) =>
             }}
           />
         </div>
-=======
-        
-      <div
-        className={`"flex gap-6 bottom-2 absolute left-7"`}
-        style={{
-          width: '100%',
-          height: '65px',
-          backgroundColor: 'white',
-          padding: '0 12px',
-          bottom: '0px',
-        }}>
-
-<Button
-          label={'Save'}
-          onClick={handleSavePayment}
-          style={{
-            width: '89px',
-            height: '42px',
-            backgroundColor: '#0098FF',
-            cursor: 'pointer',
-            fontWeight: 'bolder',
-            fontSize: '1rem',
-            boxShadow: 'none',
-            color: 'white',
-            borderRadius: '0.50rem',
-            marginTop: '4px',
-          }}
-        />
-          {/* <Button
-          className="w-24 h-12 rounded-md text-lg"
-          label="Save"
-          severity="success"
-          onClick={handleSavePayment}
-          raised
-        /> */}
-
-<Button
-         onClick={onHide}
-          label="CANCEL"
-          severity="danger"
-          text={true}
-          style={{
-            backgroundColor: 'white',
-            color: '#000000',
-            border: 'none',
-            width: '89px',
-            height: '42px',
-            marginTop: '4px',
-          }}
-        />
-        {/* <Button
-          className="rounded-md text-sm"
-          label="CANCEL"
-          severity="danger"
-          onClick={onHide}
-          text
-          raised
-        />
-       */}
->>>>>>> Stashed changes
       </div>
-</div>
     </div>
   )
 }
