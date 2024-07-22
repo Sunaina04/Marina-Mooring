@@ -30,6 +30,7 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
 }) => {
   const [map, setMap] = useState<any>()
   const mapRef = useRef<any>(null)
+  // const popupRefs = useRef<(L.Popup | null)[]>([])
   const [showMap, setShowMap] = useState(true)
   const [mooringDetails, setMooringDetails] = useState<MooringPayload>()
   const toast = useRef<Toast>(null)
@@ -94,6 +95,14 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
     }
   }, [position, map])
 
+  // useEffect(() => {
+  //   popupRefs.current.forEach((popup) => {
+  //     if (popup) {
+  //       popup.openOn(map)
+  //     }
+  //   })
+  // }, [moorings, map])
+
   useEffect(() => {
     setShowMap(false)
     setTimeout(() => {
@@ -140,15 +149,23 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
                     return (
                       <>
                         <Marker key={index} position={position} icon={icon} ref={mapRef}>
-                          {position && (
-                            <Popup>
+                          {/* {position && (
+                            <Popup ref={(ref) => (popupRefs.current[index] = ref)}>
                               <MooringMapModal
                                 gpsValue={position}
                                 mooringId={mooring?.mooringNumber}
                                 mooringData={mooring}
                               />
                             </Popup>
-                          )}
+                          )} */}
+
+                          <Popup>
+                            <MooringMapModal
+                              gpsValue={position}
+                              mooringId={mooring?.mooringNumber}
+                              mooringData={mooring}
+                            />
+                          </Popup>
                         </Marker>
                       </>
                     )
@@ -172,6 +189,15 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
                               mooringData={mooringDetails}
                             />
                           </Popup>
+                          {/* {position && (
+                            <Popup ref={(ref) => (popupRefs.current[index] = ref)}>
+                              <MooringMapModal
+                                gpsValue={position}
+                                mooringId={mooring?.mooringId}
+                                mooringData={mooringDetails}
+                              />
+                            </Popup>
+                          )} */}
                         </Marker>
                       </>
                     )
