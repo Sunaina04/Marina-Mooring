@@ -86,7 +86,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const phoneRegex = /^.{10}$|^.{12}$/
     const nameRegex = /^[a-zA-Z ]+$/
-    const zipCodeRegex = /^\d+$/
+    const zipCodeRegex = /^\\d{5}(-\\d{4})?$/
     const errors: { [key: string]: string } = {}
     let firstError = ''
     if (!name) {

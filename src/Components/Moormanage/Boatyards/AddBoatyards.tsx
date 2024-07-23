@@ -98,9 +98,11 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
       errors.gpsCoordinatesValue = 'GPS Coordinates is required'
     }
     if (!address) errors.address = 'Street/house is required'
+
     if (!zipCode) {
       errors.zipCode = 'Zip Code is required'
     }
+    
     if (!mainContact) errors.mainContact = 'Main contact is required'
     if (!country) errors.country = 'Country  is required'
     if (!selectedState) errors.state = 'State  is required'
