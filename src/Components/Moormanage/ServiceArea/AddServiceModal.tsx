@@ -85,6 +85,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
 
   const validateFields = () => {
     const nameRegex = /^[a-zA-Z ]+$/
+    // const regexp =  /^\\d{5}(-\\d{4})?$/
     const errors: { [key: string]: string } = {}
 
     // if (!serviceAreaName) {
@@ -94,7 +95,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
     // }
 
     if (!serviceAreaName) errors.name = 'serviceAreaName is required'
-
+    
     return errors
   }
 
