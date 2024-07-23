@@ -483,7 +483,7 @@ const Moorings = () => {
         setIsLoader(false)
         setCustomerRecordData(content?.customerResponseDto)
         setBoatYardData(content?.boatyardNames)
-        setMooringImage(content?.customerResponseDto?.imageDtoList)
+        setMooringImage(content?.customerResponseDto?.mooringResponseDtoList?.imageDtoList)
         setMooringResponseData(content?.customerResponseDto?.mooringResponseDtoList)
         setTotalRecordsTwo(totalSize)
       } else {

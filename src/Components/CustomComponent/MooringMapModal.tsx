@@ -8,6 +8,8 @@ const MooringMapModal: React.FC<TimeLineProps> = ({
   mooringId,
   viewEditClick,
   mooringData,
+  showMapModal,
+  setShowMapModal,
 }) => {
   const [customerModalVisible, setCustomerModalVisible] = useState(false)
   const [editMode, setEditMode] = useState(false)
@@ -15,6 +17,11 @@ const MooringMapModal: React.FC<TimeLineProps> = ({
   const viewEdit = () => {
     setEditMode(true)
     setCustomerModalVisible(true)
+    // if (setShowMapModal) {
+    //   setShowMapModal(false)
+    //   setEditMode(true)
+    //   setCustomerModalVisible(true)
+    // }
   }
 
   const handleModalClose = () => {
@@ -72,7 +79,7 @@ const MooringMapModal: React.FC<TimeLineProps> = ({
               borderRadius: '1rem',
               maxHeight: '95%',
               overflowY: 'auto',
-              zIndex: 1000001, // Ensure this is higher than other elements
+              zIndex: 1000001,
             }}
           />
         )}

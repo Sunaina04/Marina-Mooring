@@ -67,7 +67,6 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
 
   useEffect(() => {
     if (map && position) {
-      console.log('map', map)
       map.setView(position)
     }
   }, [position, map])
@@ -151,6 +150,8 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
                             gpsValue={position}
                             mooringId={mooring?.mooringNumber}
                             mooringData={mooring}
+                            showMapModal={showMapModal}
+                            // setShowMapModal={setShowMapModal}
                           />
                         </Popup>
                       </Marker>
