@@ -19,9 +19,8 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
   zoomLevel,
   style,
   moorings,
-  dashboard,
-  customerPage,
   leftContanerWidth,
+  setLeftContainer,
 }) => {
   const [map, setMap] = useState<any>()
   const mapRef = useRef<any>(null)
@@ -67,17 +66,19 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
   }
 
   useEffect(() => {
-    if (map && position && leftContanerWidth) {
+    if (map && position) {
+      console.log('map', map)
       map.setView(position)
     }
-  }, [position, map, leftContanerWidth])
+  }, [position, map])
 
   useEffect(() => {
-    // setShowMap(false)
-    setTimeout(() => {
+    if (showMapModal) {
+      setShowMap(false)
+    } else {
       setShowMap(true)
-    }, 0)
-  }, [leftContanerWidth])
+    }
+  }, [leftContanerWidth, showMapModal])
 
   return (
     <>
@@ -103,7 +104,10 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
               marginTop: '20px',
               cursor: 'pointer',
             }}
-            onClick={() => setShowMapModal(false)}>
+            onClick={() => {
+              setShowMapModal(false)
+              setShowMap(true)
+            }}>
             <img
               src="/assets/images/close.png"
               alt="Key Icon"
@@ -157,11 +161,13 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
           </div>
         </div>
       ) : null}
+
       {showMap ? (
         <div style={{ position: 'relative' }}>
           <div
             onClick={() => {
               setShowMapModal(true)
+              setShowMap(false)
             }}
             className="p-2 h-8 w-8 mr-20"
             style={{ cursor: 'pointer', position: 'absolute', left: '95%', top: 0, zIndex: 999 }}>
@@ -205,48 +211,6 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
                 })}
             </MapContainer>
           </div>
-          {/* <div
-          style={{
-            cursor: 'pointer',
-            position: 'absolute',
-            right: '70%',
-            top: '70%',
-            zIndex: 999,
-          }}>
-          <div style={boxStyle}>
-            <h2>Status</h2>
-            <div className="mt-1">
-              <hr style={{ border: '1px solid #D5E1EA' }} />
-            </div>
-            <div style={containerStyle}>
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                }}>
-                <div>
-                  <span style={dotStyle('red')}></span> Need Inspection
-                </div>
-                <div>
-                  <span style={dotStyle('blue')}></span> Gear Off
-                </div>
-              </div>
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  marginRight: '80px',
-                }}>
-                <div>
-                  <span style={dotStyle('green')}></span> Gear On
-                </div>
-                <div>
-                  <span style={dotStyle('#d3d3d3')}></span> Not in Use
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> */}
         </div>
       ) : null}
 

@@ -95,7 +95,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
     // }
 
     if (!serviceAreaName) errors.name = 'serviceAreaName is required'
-    
+
     return errors
   }
 

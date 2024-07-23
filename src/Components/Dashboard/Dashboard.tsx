@@ -464,7 +464,7 @@ const Dashboard = () => {
                 moorings={mooringData}
                 dashboard={true}
                 leftContanerWidth={mooringSelected}
-                setLeftContainer={() => {}}
+                setLeftContainer={setMooringSelected}
                 setRightContainer={() => {}}
               />
             </div>
