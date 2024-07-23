@@ -87,11 +87,13 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
     const nameRegex = /^[a-zA-Z ]+$/
     const errors: { [key: string]: string } = {}
 
-    if (!serviceAreaName) {
-      errors.name = 'Service Area Name is required'
-    } else if (!nameRegex.test(serviceAreaName)) {
-      errors.name = 'Name must only contain letters'
-    }
+    // if (!serviceAreaName) {
+    //   errors.name = 'Service Area Name is required'
+    // } else if (!nameRegex.test(serviceAreaName)) {
+    //   errors.name = 'Name must only contain letters'
+    // }
+
+    if (!serviceAreaName) errors.name = 'serviceAreaName is required'
 
     return errors
   }
