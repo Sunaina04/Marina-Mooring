@@ -10,6 +10,7 @@ import {
   CustomersWithMooringResponse,
   DeleteCustomerResponse,
   ErrorResponse,
+  ImageDtoList,
   MooringPayload,
   MooringResponse,
   MooringResponseDtoList,
@@ -483,7 +484,17 @@ const Moorings = () => {
         setIsLoader(false)
         setCustomerRecordData(content?.customerResponseDto)
         setBoatYardData(content?.boatyardNames)
-        setMooringImage(content?.customerResponseDto?.mooringResponseDtoList?.imageDtoList)
+        const allMooringImages: any = []
+        content?.customerResponseDto?.mooringResponseDtoList?.forEach(
+          (mooring: MooringResponseDtoList) => {
+            if (mooring?.imageDtoList) {
+              allMooringImages.push(...mooring?.imageDtoList)
+            }
+          },
+        )
+
+        setMooringImage(allMooringImages)
+
         setMooringResponseData(content?.customerResponseDto?.mooringResponseDtoList)
         setTotalRecordsTwo(totalSize)
       } else {
