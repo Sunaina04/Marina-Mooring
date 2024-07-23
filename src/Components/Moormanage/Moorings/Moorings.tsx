@@ -494,7 +494,6 @@ const Moorings = () => {
         )
 
         setMooringImage(allMooringImages)
-
         setMooringResponseData(content?.customerResponseDto?.mooringResponseDtoList)
         setTotalRecordsTwo(totalSize)
       } else {

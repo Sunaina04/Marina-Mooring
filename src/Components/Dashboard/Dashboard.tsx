@@ -39,6 +39,7 @@ const Dashboard = () => {
   const [mooringData, setMooringData] = useState<any>()
   const [selectedProduct, setSelectedProduct] = useState<any>()
   const [mooringResponseData, setMooringResponseData] = useState<any>()
+  const [leftContainerWidth, setLeftContainerWidth] = useState(false)
   const [mooringSelected, setMooringSelected] = useState(false)
   const [getMoorings] = useGetMooringsMutation()
   const today = new Date()
@@ -386,7 +387,7 @@ const Dashboard = () => {
               className="flex flex-col table-container "
               // style={{ height: '300px' }}
               style={{
-                height: '300px',
+                height: leftContainerWidth ? '50px' : '300px',
                 // minHeight: '300px',
                 // width: '500px',
                 // minWidth: '500px',
@@ -455,206 +456,246 @@ const Dashboard = () => {
                 />
               )}
             </div>
-            <div className="mt-4">
+            <div className="mt-8">
               <CustomDashboardMooringMap
                 position={coordinatesArray ? coordinatesArray : initialPosition}
                 zoomLevel={10}
-                style={{ height: '400px', minHeight: '400px', width: '100%' }}
+                style={{
+                  height: leftContainerWidth ? '700px' : '400px',
+                  minHeight: leftContainerWidth ? '700px' : '400px',
+                  width: '100%',
+                }}
                 iconsByStatus={iconsByStatus}
                 moorings={mooringData}
                 dashboard={true}
-                leftContanerWidth={mooringSelected}
-                setLeftContainer={setMooringSelected}
+                leftContanerWidth={leftContainerWidth}
+                setLeftContainer={setLeftContainerWidth}
                 setRightContainer={() => {}}
               />
             </div>
           </div>
 
-          <div className={`md:ml-12 md:mt-3 lg:mt-0`}>
-            <div className="flex  flex-col wrapper ">
-              <div
-                className=" px-5 relative mb-4 rounded-xl bg-white border-[1px] border-[#D5E1EA] mr-8"
-                style={{ width: '600px', maxWidth: '600px' }}>
-                <label
-                  htmlFor="faq1"
-                  className="cursor-pointer flex items-center justify-between h-14"
-                  onClick={() => handleToggle('faq1')}>
-                  <div className="flex items-center gap-4">
-                    <div>
-                      <img alt="icon" src="/assets/images/Calendar.svg" style={{ width: '23px' }} />
-                    </div>
-                    <div>
-                      <h1 className="text-[16px] font-[500] text-[#10293A] leading-[18.75px]">
-                        Calendar
-                      </h1>
-                    </div>
-                  </div>
-                  <div>
-                    <div className="">
-                      {accordion === 'faq1' ? (
-                        <FiMinus style={{ color: '#10293A' }} />
-                      ) : (
-                        <IoAddOutline style={{ color: '#10293A' }} />
-                      )}
-                    </div>
-                  </div>
-                </label>
-
-                <div
-                  className={`content mt-5 transition-all ease-in-out duration-500 ${accordion === 'faq1' ? '' : 'hidden'}`}>
-                  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <div
-                      className="card flex  justify-items-center"
-                      style={{
-                        height: 'auto',
-                        gap: '0px',
-                        borderRadius: '10px',
-                        border: '1.13px solid #D5E1EA',
-                        backgroundColor: '#D5E1EA',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        marginBottom: '2rem',
-                      }}>
-                      <Calendar
-                        value={dates}
-                        onChange={(e) => handleDateChange(e)}
-                        selectionMode="range"
-                        hideOnRangeSelection
-                        inline
-                        style={{
-                          width: '520px',
-                        }}
-                      />
-                    </div>{' '}
-                  </div>
-                </div>
+          {leftContainerWidth ? (
+            <div
+              style={{
+                height: '700px',
+                minHeight: '700px',
+                width: '40px',
+                minWidth: '40px',
+                backgroundColor: '#00426F',
+              }}
+              className="rounded-md mr-[40px]">
+              <div className="p-3" style={{ cursor: 'pointer' }}>
+                <img src="/assets/images/plus.png" alt="Key Icon" className="p-clickable" />
               </div>
               <div
-                className="tab px-5 relative mb-4 rounded-xl bg-[#FFFFFF] border-[1px] border-[#D5E1EA] mr-8"
-                style={{ width: '600px', maxWidth: '600px' }}>
-                <label
-                  htmlFor="faq2"
-                  className="cursor-pointer flex items-center justify-between h-14"
-                  onClick={() => handleToggle('faq2')}>
-                  <div className="flex items-center gap-4">
-                    <div>
-                      <img alt="icon" src="/assets/images/file.svg" style={{ width: '23px' }} />
-                    </div>
-                    <div style={{ flexShrink: 1 }}>
-                      <h1 className="text-[16px] font-[500] text-[#10293A] leading-[18.75px]">
-                        Open Work Orders
-                      </h1>
-                    </div>
-                  </div>
-                  <div>
-                    <div className="">
-                      {accordion === 'faq2' ? (
-                        <FiMinus style={{ color: '#10293A' }} />
-                      ) : (
-                        <IoAddOutline style={{ color: '#10293A' }} />
-                      )}
-                    </div>
-                  </div>
-                </label>
-                <div
-                  className={`content transition-all ease-in-out duration-500 ${accordion === 'faq2' ? '' : 'hidden'}`}>
-                  <div
-                    className={`bg-#00426F overflow-x-hidden h-[320px] table-container flex flex-col`}>
-                    <div className="flex-grow" style={{ overflow: 'auto' }}>
-                      <DataTableComponent
-                        data={workOrderData}
-                        columns={WorkOrderColumns}
-                        actionButtons={WorkOrderActionButtonColumn}
-                        scrollable={true}
-                        tableStyle={{ fontSize: '10px' }}
-                        emptyMessage={
-                          <div className="text-center mt-14">
-                            <img
-                              src="/assets/images/empty.png"
-                              alt="Empty Data"
-                              className="w-20 mx-auto mb-4"
-                            />
-                            <p className="text-gray-500">No data available</p>
-                          </div>
-                        }
-                      />
-                    </div>
-                    <Paginator
-                      first={pageNumber1}
-                      rows={pageSize}
-                      totalRecords={totalRecords}
-                      rowsPerPageOptions={[5, 10, 20, 30]}
-                      onPageChange={onPageChange}
-                      style={{
-                        position: 'sticky',
-                        bottom: 0,
-                        zIndex: 1,
-                        backgroundColor: 'white',
-                        borderTop: '1px solid #D5E1EA',
-                        padding: '0.5rem',
-                      }}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div
-                className="tab px-5 py-3 bg-white border-[1px] border-[#D5E1EA] relative mb-2 rounded-xl mr-8"
-                style={{ width: '600px', maxWidth: '600px' }}>
-                <label
-                  htmlFor="faq3"
-                  className="cursor-pointer flex items-center justify-between h-8"
-                  onClick={() => handleToggle('faq3')}>
-                  <div className="flex items-center gap-2">
-                    <img alt="icon" src="/assets/images/Group.svg" style={{ width: '25px' }} />
-                    <div className="ml-2 " style={{ flexShrink: 1 }}>
-                      <h1 className="text-[#10293A] font-[500] leading-[18.75px]">
-                        Total Moorings
-                      </h1>
-                    </div>
-                  </div>
-
-                  <div className="">
-                    {accordion === 'faq3' ? (
-                      <FiMinus style={{ color: '#10293A' }} />
-                    ) : (
-                      <IoAddOutline style={{ color: '#10293A' }} />
-                    )}
-                  </div>
-                </label>
-                <div
-                  className={`content mt-5 transition-all ease-in-out duration-500 ${accordion === 'faq3' ? '' : 'hidden'}`}>
-                  <div>
-                    {statCardsData.map((items) => (
-                      <StatCard key={items[0].title} items={items} />
-                    ))}
-                  </div>
-                </div>
+                style={{
+                  writingMode: 'vertical-rl',
+                  textAlign: 'center',
+                  color: 'white',
+                  height: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '20px',
+                  letterSpacing: '4px',
+                }}
+                className="pt-12">
+                Calender
               </div>
             </div>
+          ) : (
+            <div className={`md:ml-12 md:mt-3 lg:mt-0`}>
+              <div className="flex  flex-col wrapper ">
+                <div
+                  className=" px-5 relative mb-4 rounded-xl bg-white border-[1px] border-[#D5E1EA] mr-8"
+                  style={{ width: '600px', maxWidth: '600px' }}>
+                  <label
+                    htmlFor="faq1"
+                    className="cursor-pointer flex items-center justify-between h-14"
+                    onClick={() => handleToggle('faq1')}>
+                    <div className="flex items-center gap-4">
+                      <div>
+                        <img
+                          alt="icon"
+                          src="/assets/images/Calendar.svg"
+                          style={{ width: '23px' }}
+                        />
+                      </div>
+                      <div>
+                        <h1 className="text-[16px] font-[500] text-[#10293A] leading-[18.75px]">
+                          Calendar
+                        </h1>
+                      </div>
+                    </div>
+                    <div>
+                      <div className="">
+                        {accordion === 'faq1' ? (
+                          <FiMinus style={{ color: '#10293A' }} />
+                        ) : (
+                          <IoAddOutline style={{ color: '#10293A' }} />
+                        )}
+                      </div>
+                    </div>
+                  </label>
 
-            <Dialog
-              position="center"
-              style={{
-                width: '851px',
-                height: '526px',
-                borderRadius: '1rem',
-              }}
-              draggable={false}
-              visible={visible}
-              onHide={handleModalClose}
-              header={<h1 className="text-xl font-extrabold text-black ml-4">Work Order</h1>}>
-              <AddWorkOrders
-                workOrderData={selectedCustomer}
-                editModeWorkOrder={editMode}
-                setVisible={setVisible}
-                toastRef={toast}
-                closeModal={handleModalClose}
-                isAccountRecievable={false}
-              />
-            </Dialog>
-          </div>
+                  <div
+                    className={`content mt-5 transition-all ease-in-out duration-500 ${accordion === 'faq1' ? '' : 'hidden'}`}>
+                    <div
+                      style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                      <div
+                        className="card flex  justify-items-center"
+                        style={{
+                          height: 'auto',
+                          gap: '0px',
+                          borderRadius: '10px',
+                          border: '1.13px solid #D5E1EA',
+                          backgroundColor: '#D5E1EA',
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          marginBottom: '2rem',
+                        }}>
+                        <Calendar
+                          value={dates}
+                          onChange={(e) => handleDateChange(e)}
+                          selectionMode="range"
+                          hideOnRangeSelection
+                          inline
+                          style={{
+                            width: '520px',
+                          }}
+                        />
+                      </div>{' '}
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="tab px-5 relative mb-4 rounded-xl bg-[#FFFFFF] border-[1px] border-[#D5E1EA] mr-8"
+                  style={{ width: '600px', maxWidth: '600px' }}>
+                  <label
+                    htmlFor="faq2"
+                    className="cursor-pointer flex items-center justify-between h-14"
+                    onClick={() => handleToggle('faq2')}>
+                    <div className="flex items-center gap-4">
+                      <div>
+                        <img alt="icon" src="/assets/images/file.svg" style={{ width: '23px' }} />
+                      </div>
+                      <div style={{ flexShrink: 1 }}>
+                        <h1 className="text-[16px] font-[500] text-[#10293A] leading-[18.75px]">
+                          Open Work Orders
+                        </h1>
+                      </div>
+                    </div>
+                    <div>
+                      <div className="">
+                        {accordion === 'faq2' ? (
+                          <FiMinus style={{ color: '#10293A' }} />
+                        ) : (
+                          <IoAddOutline style={{ color: '#10293A' }} />
+                        )}
+                      </div>
+                    </div>
+                  </label>
+                  <div
+                    className={`content transition-all ease-in-out duration-500 ${accordion === 'faq2' ? '' : 'hidden'}`}>
+                    <div
+                      className={`bg-#00426F overflow-x-hidden h-[320px] table-container flex flex-col`}>
+                      <div className="flex-grow" style={{ overflow: 'auto' }}>
+                        <DataTableComponent
+                          data={workOrderData}
+                          columns={WorkOrderColumns}
+                          actionButtons={WorkOrderActionButtonColumn}
+                          scrollable={true}
+                          tableStyle={{ fontSize: '10px' }}
+                          emptyMessage={
+                            <div className="text-center mt-14">
+                              <img
+                                src="/assets/images/empty.png"
+                                alt="Empty Data"
+                                className="w-20 mx-auto mb-4"
+                              />
+                              <p className="text-gray-500">No data available</p>
+                            </div>
+                          }
+                        />
+                      </div>
+                      <Paginator
+                        first={pageNumber1}
+                        rows={pageSize}
+                        totalRecords={totalRecords}
+                        rowsPerPageOptions={[5, 10, 20, 30]}
+                        onPageChange={onPageChange}
+                        style={{
+                          position: 'sticky',
+                          bottom: 0,
+                          zIndex: 1,
+                          backgroundColor: 'white',
+                          borderTop: '1px solid #D5E1EA',
+                          padding: '0.5rem',
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  className="tab px-5 py-3 bg-white border-[1px] border-[#D5E1EA] relative mb-2 rounded-xl mr-8"
+                  style={{ width: '600px', maxWidth: '600px' }}>
+                  <label
+                    htmlFor="faq3"
+                    className="cursor-pointer flex items-center justify-between h-8"
+                    onClick={() => handleToggle('faq3')}>
+                    <div className="flex items-center gap-2">
+                      <img alt="icon" src="/assets/images/Group.svg" style={{ width: '25px' }} />
+                      <div className="ml-2 " style={{ flexShrink: 1 }}>
+                        <h1 className="text-[#10293A] font-[500] leading-[18.75px]">
+                          Total Moorings
+                        </h1>
+                      </div>
+                    </div>
+
+                    <div className="">
+                      {accordion === 'faq3' ? (
+                        <FiMinus style={{ color: '#10293A' }} />
+                      ) : (
+                        <IoAddOutline style={{ color: '#10293A' }} />
+                      )}
+                    </div>
+                  </label>
+                  <div
+                    className={`content mt-5 transition-all ease-in-out duration-500 ${accordion === 'faq3' ? '' : 'hidden'}`}>
+                    <div>
+                      {statCardsData.map((items) => (
+                        <StatCard key={items[0].title} items={items} />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <Dialog
+                position="center"
+                style={{
+                  width: '851px',
+                  height: '526px',
+                  borderRadius: '1rem',
+                }}
+                draggable={false}
+                visible={visible}
+                onHide={handleModalClose}
+                header={<h1 className="text-xl font-extrabold text-black ml-4">Work Order</h1>}>
+                <AddWorkOrders
+                  workOrderData={selectedCustomer}
+                  editModeWorkOrder={editMode}
+                  setVisible={setVisible}
+                  toastRef={toast}
+                  closeModal={handleModalClose}
+                  isAccountRecievable={false}
+                />
+              </Dialog>
+            </div>
+          )}
         </div>
       </div>
     </>
