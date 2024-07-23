@@ -163,7 +163,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
   const handleEditMode = () => {
     setFormData((prevState: any) => ({
       ...prevState,
-      companyName: vendors?.companyName || '',
+      companyName: vendors?.vendorName || '',
       phone: vendors?.companyPhoneNumber || '',
       website: vendors?.website || '',
       streetBuildingForAddress: vendors?.street || '',
@@ -197,7 +197,6 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
     try {
       const payload: any = {
         vendorName: formData?.companyName,
-        companyName: formData?.companyName,
         ...(formData?.phone && { companyPhoneNumber: formData.phone }),
         ...(formData?.website && { website: formData.website }),
         ...(formData?.streetBuildingForAddress && { street: formData.streetBuildingForAddress }),
@@ -264,8 +263,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
 
     try {
       const payload = {
-        companyName: formData?.companyName || vendors?.companyName,
-        vendorName: formData?.companyName || vendors?.companyName,
+        vendorName: formData?.companyName || vendors?.vendorName,
         companyPhoneNumber: formData?.phone || vendors?.companyPhoneNumber,
         website: formData?.website || vendors?.website,
         street: formData?.streetBuildingForAddress || vendors?.street,

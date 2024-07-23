@@ -433,6 +433,7 @@ export interface MooringAndWorkOrderResponse {
 export interface VendorPayload {
   id: number
   companyName: string
+  vendorName: string
   companyPhoneNumber: string
   website: string
   street: string
@@ -575,7 +576,7 @@ export type ServiceAreaData = {
 export interface ServiceAreaPayload {
   id: number
   serviceAreaName: string
-  serviceAreaTypeId:number
+  serviceAreaTypeId: number
   streetHouse: string
   zipCode: string
   aptSuite: string
@@ -583,7 +584,6 @@ export interface ServiceAreaPayload {
   countryId: number
   notes: string
   gpsCoordinates: string
- 
 }
 
 export interface RowExpansionServiceAreaData {
