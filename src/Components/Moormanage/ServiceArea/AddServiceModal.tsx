@@ -15,13 +15,7 @@ import {
   ServiceAreaTypeData,
   StatesData,
 } from '../../CommonComponent/MetaDataComponent/MetaDataApi'
-import { ProgressSpinner } from 'primereact/progressspinner'
-import { LatLngExpression } from 'leaflet'
-import { useSelector } from 'react-redux'
-import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import { Toast } from 'primereact/toast'
-import { IoMdAdd, IoMdClose } from 'react-icons/io'
-import { InputText } from 'primereact/inputtext'
 
 const AddServiceModal: React.FC<ServiceAreaProps> = ({
   closeModal,
@@ -30,16 +24,11 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
   customerData,
   editMode,
 }) => {
-  const selectedCustomerId = useSelector(selectCustomerId)
-  const [notesDetails, setNotesDetails] = useState<any>()
-  const [serviceAreaId, setServiceAreaId] = useState('')
   const [serviceAreaName, setServiceAreaName] = useState('')
   const [id, setId] = useState('')
   const [serviceAreaTypeId, setServiceAreaTypeId] = useState<any>()
   const [streetHouse, setStreetHouse] = useState('')
   const [notes, setNotes] = useState('')
-  const [emailAddress, setEmailAddress] = useState('')
-  const [phone, setPhone] = useState('')
   const [address, setAddress] = useState('')
   const [aptSuite, setAptSuite] = useState('')
   const [selectedState, setSelectedState] = useState<any>()
@@ -96,7 +85,6 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
 
   const validateFields = () => {
     const nameRegex = /^[a-zA-Z ]+$/
-    // const zipCodeRegex = /^\d+$/
     const errors: { [key: string]: string } = {}
 
     if (!serviceAreaName) {
@@ -104,19 +92,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
     } else if (!nameRegex.test(serviceAreaName)) {
       errors.name = 'Name must only contain letters'
     }
-    // if (!boatyardId) errors.id = 'Boatyard ID is required'
 
-    // if (!gpsCoordinatesValue) {
-    //   errors.gpsCoordinatesValue = 'GPS Coordinates is required'
-    // }
-    // if (!address) errors.address = 'Street/house is required'
-    // if (!zipCode) {
-    //   errors.zipCode = 'Zip Code is required'
-    // }
-    // if (!mainContact) errors.mainContact = 'Main contact is required'
-    //   if (!country) errors.country = 'Country  is required'
-    //   if (!selectedState) errors.state = 'State  is required'
-    //   if (!aptSuite) errors.aptSuite = 'Apt/Suite is required'
     return errors
   }
 
@@ -137,13 +113,11 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
   const handleEditMode = () => {
     setId(customerData?.Id || '')
     setServiceAreaName(customerData?.serviceAreaName || '')
-    setServiceAreaTypeId(customerData?.serviceAreaTypeId || '')
-    setStreetHouse(customerData?.streetHouse || '')
-
-    setAptSuite(customerData?.apt || '')
+    setServiceAreaTypeId(customerData?.serviceAreaTypeDto?.type || '')
+    setAddress(customerData?.streetHouse || '')
+    setAptSuite(customerData?.aptSuite || '')
     setZipCode(customerData?.zipCode || '')
     setSelectedState(customerData?.stateResponseDto?.name || '')
-    setSelectedType(customerData?.TypeResponseDto?.name || '')
     setNotes(customerData?.notes || '')
     setCountry(customerData?.countryResponseDto?.name || '')
     setGpsCoordinatesValue(customerData?.gpsCoordinates || '')
@@ -151,7 +125,6 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
 
   const saveServiceArea = async () => {
     const errors = validateFields()
-    console.log('testing', errors)
 
     if (Object.keys(errors).length > 0) {
       setErrorMessage(errors)
@@ -225,18 +198,6 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
         countryId: country?.id,
         notes: notes,
         gpsCoordinates: gpsCoordinatesValue,
-
-        // id: id,
-        // serviceAreaName: serviceAreaName,
-        // street: address,
-        // apt: aptSuite,
-        // zipCode: zipCode,
-        // contact: mainContact,
-        // stateId: selectedState?.id || customerData?.stateResponseDto?.id,
-        // countryId: country?.id || customerData?.countryResponseDto?.id,
-        // mainContact: mainContact,
-        // gpsCoordinates: gpsCoordinatesValue,
-        // customerOwnerId: selectedCustomerId,
       }
       const response = await updateServiceArea({
         payload: editServiceAreaPayload,
@@ -348,7 +309,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
                 value={serviceAreaName}
                 onChange={(e) => {
                   setServiceAreaName(e.target.value)
-                  setErrorMessage((prev) => ({ ...prev, id: '' }))
+                  setErrorMessage((prev) => ({ ...prev, serviceAreaName: '' }))
                 }}
                 style={{
                   width: '230px',
@@ -363,10 +324,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
             <p>{errorMessage.id && <small className="p-error">{errorMessage.id}</small>}</p>
           </div>
           <div>
-            <span className="font-medium text-sm text-[#000000]">
-              Type
-              {/* <span className="text-red-500">*</span> */}
-            </span>
+            <span className="font-medium text-sm text-[#000000]">Type</span>
 
             <div className="flex flex-col ">
               <Dropdown
@@ -376,7 +334,6 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
                 value={serviceAreaTypeId}
                 onChange={(e) => {
                   setServiceAreaTypeId(e.target.value)
-                  setErrorMessage((prev) => ({ ...prev, ServiceAreaType: '' }))
                 }}
                 options={serviceAreaTypeData}
                 optionLabel="type"
@@ -384,7 +341,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: errorMessage.ServiceAreaType ? '1px solid red' : '1px solid #D5E1EA',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   paddingLeft: '0.5rem',
@@ -392,109 +349,12 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
                   marginTop: '0.3rem',
                 }}
               />
-
-              <p>
-                {' '}
-                {errorMessage.ServiceAreaType && (
-                  <small className="p-error">{errorMessage.ServiceAreaType}</small>
-                )}
-              </p>
             </div>
           </div>
         </div>
-
-        {/* <div> */}
-        {/* <span className="font-medium text-sm text-[#000000]">
-              Storage Area */}
-        {/* <span className="text-red-500">*</span> */}
-        {/* </span> */}
-        {/* <div className="mt-1 flex items-center gap-1 relative"> */}
-        {/* <div> */}
-        {/* <div className="p-input-icon-left"> */}
-        {/* <IoSearchSharp className="ml-2 text-blue-900" /> */}
-
-        {/* <InputText
-                    value={storage}
-                    onChange={(e) => {
-                      setStorage(e.target.value)
-                    }}
-                    style={{
-                      width: '230px',
-                      height: '32px',
-                      border: errorMessage.name ? '1px solid red' : '1px solid #D5E1EA',
-                      borderRadius: '0.50rem',
-                      fontSize: '0.8rem',
-                      padding: '0.5rem',
-                      paddingRight: '2.5rem', // Space for the icon
-                    }}
-                  /> */}
-        {/* <IoMdAdd
-                    style={{
-                      position: 'absolute',
-                      left: '12.5rem',
-                      top: '72%',
-                      transform: 'translateY(-50%)',
-                      cursor: 'pointer',
-                      fontSize: '1.5rem',
-                      color: 'black',
-                      backgroundColor: '#D5E1EA',
-                      borderRadius: '5px',
-                      padding: '3px',
-                    }}
-                    onClick={() => storage && handleAddStorage()}
-                  /> */}
-        {/* </div> */}
-        {/* </div> */}
-        {/* </div> */}
-        {/* <ul className="mt-1 flex w-[230px] overflow-y-auto ">
-              {storageList.map((item, index) => (
-                <li
-                  key={index}
-                  style={{
-                    borderRadius: '5px',
-                    fontWeight: '400',
-                    fontSize: '12px',
-                    color: '#10293A',
-                    backgroundColor: '#D5E1EA',
-                    padding: '4px',
-                  }}
-                  className="flex items-center m-1">
-                  {item}
-                  <IoMdClose
-                    style={{
-                      marginLeft: '0.5rem',
-                      marginBottom: '12px',
-                      cursor: 'pointer',
-                      color: 'red',
-                    }}
-                    onClick={() => handleDeleteStorage(index)}
-                  />
-
-                  <button></button>
-                </li>
-              ))}
-            </ul> */}
-        {/* <p>{errorMessage.name && <small className="p-error">{errorMessage.name}</small>}</p> */}
-        {/* </div> */}
       </div>
-      {/* {isLoading && (
-          <ProgressSpinner
-            style={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              width: '50px',
-              height: '50px',
-            }}
-            strokeWidth="4"
-          />
-        )} */}
       <div className="mt-3">
-        <span className="font-medium text-sm text-[#000000]">
-          Address
-          {/* <span className="text-red-500">*</span> */}
-        </span>
+        <span className="font-medium text-sm text-[#000000]">Address</span>
       </div>
       <div className="flex gap-6 mt-1">
         <div>
@@ -503,21 +363,18 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
               value={address}
               onChange={(e) => {
                 setAddress(e.target.value)
-                setErrorMessage((prev) => ({ ...prev, address: '' }))
               }}
               placeholder="Street/house"
               style={{
                 width: '230px',
                 height: '32px',
-                border: errorMessage.address ? '1px solid red' : '1px solid #D5E1EA',
+                border: '1px solid #D5E1EA',
                 borderRadius: '0.50rem',
                 fontSize: '0.8rem',
                 padding: '0.5rem',
               }}
             />
           </div>
-
-          <p>{errorMessage.address && <small className="p-error">{errorMessage.address}</small>}</p>
         </div>
 
         <div className="">
@@ -526,20 +383,16 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
             placeholder="Apt/Suite"
             onChange={(e) => {
               setAptSuite(e.target.value)
-              setErrorMessage((prev) => ({ ...prev, aptSuite: '' }))
             }}
             style={{
               width: '230px',
               height: '32px',
-              border: errorMessage.aptSuite ? '1px solid red' : '1px solid #D5E1EA',
+              border: '1px solid #D5E1EA',
               borderRadius: '0.50rem',
               fontSize: '0.8rem',
               padding: '0.5rem',
             }}
           />
-          <p>
-            {errorMessage.aptSuite && <small className="p-error">{errorMessage.aptSuite}</small>}
-          </p>
         </div>
 
         <div className="flex flex-col ">
@@ -550,7 +403,6 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
             value={selectedState}
             onChange={(e) => {
               setSelectedState(e.target.value)
-              setErrorMessage((prev) => ({ ...prev, state: '' }))
             }}
             options={statesData}
             optionLabel="name"
@@ -558,15 +410,13 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
             style={{
               width: '230px',
               height: '32px',
-              border: errorMessage.state ? '1px solid red' : '1px solid #D5E1EA',
+              border: '1px solid #D5E1EA',
               borderRadius: '0.50rem',
               fontSize: '0.8rem',
               paddingLeft: '0.5rem',
               color: 'black',
             }}
           />
-
-          <p> {errorMessage.state && <small className="p-error">{errorMessage.state}</small>}</p>
         </div>
       </div>
 
@@ -578,7 +428,6 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
               value={country}
               onChange={(e) => {
                 setCountry(e.value)
-                setErrorMessage((prev) => ({ ...prev, country: '' }))
               }}
               editable
               placeholder="Country"
@@ -588,14 +437,13 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
               style={{
                 width: '230px',
                 height: '32px',
-                border: errorMessage.country ? '1px solid red' : '1px solid #D5E1EA',
+                border: '1px solid #D5E1EA',
                 borderRadius: '0.50rem',
                 fontSize: '0.8rem',
                 paddingLeft: '0.5rem',
               }}
             />
           </div>
-          <p>{errorMessage.country && <small className="p-error">{errorMessage.country}</small>}</p>
         </div>
 
         <div>
@@ -605,22 +453,18 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
                 value={zipCode}
                 onChange={(e) => {
                   setZipCode(e.target.value)
-                  setErrorMessage((prev) => ({ ...prev, zipCode: '' }))
                 }}
                 placeholder="Zip code"
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: errorMessage.zipCode ? '1px solid red' : '1px solid #D5E1EA',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   padding: '0.5rem',
                 }}
               />
             </div>
-            <p>
-              {errorMessage.zipCode && <small className="p-error">{errorMessage.zipCode}</small>}
-            </p>
           </div>
         </div>
         <div>
@@ -628,35 +472,24 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
             <InputComponent
               value={gpsCoordinatesValue}
               onChange={handleGpsCoordinatesChange}
-              // onBlur={handleGpsCoordinatesBlur}
               placeholder="GPS Coordinates"
               style={{
                 width: '230px',
                 height: '32px',
-                border: errorMessage.gpsCoordinatesValue ? '1px solid red' : '1px solid #D5E1EA',
+                border: '1px solid #D5E1EA',
                 borderRadius: '0.50rem',
                 fontSize: '0.8rem',
                 padding: '0.5rem',
               }}
             />
           </div>
-
-          <p>
-            {errorMessage.gpsCoordinatesValue && (
-              <small className="p-error">{errorMessage.gpsCoordinatesValue}</small>
-            )}
-          </p>
         </div>
       </div>
-      {/* </div> */}
 
       <div className="flex mt-4 ">
         <div>
           <div>
-            <span className="font-medium text-sm text-[#000000]">
-              Notes
-              {/* <span className="text-red-500">*</span> */}
-            </span>
+            <span className="font-medium text-sm text-[#000000]">Notes</span>
           </div>
           <div>
             <div>
@@ -665,12 +498,11 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
                   value={notes}
                   onChange={(e) => {
                     setNotes(e.target.value)
-                    //  setErrorMessage({})
                   }}
                   style={{
                     width: '230px',
-                    height: '70px',
-                    border: errorMessage.mainContact ? '1px solid red' : '1px solid #D5E1EA',
+                    height: '40px',
+                    border: '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                     padding: '0.5rem',
@@ -678,11 +510,6 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
                   }}
                 />
               </div>
-              {/* <p>
-                  {errorMessage.mainContact && (
-                    <small className="p-error">{errorMessage.mainContact}</small>
-                  )}
-                </p> */}
             </div>
           </div>
         </div>
@@ -693,37 +520,8 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
             center={center}
           />
         </div>
-
-        {/* <div className=" mt-4">
-          <span className="font-medium text-sm text-[#000000]">
-            <div className="flex gap-2 ml-2">
-              Notes
-              <p className="text-red-600">*</p>
-            </div>
-          </span>
-          <div className="mt-1 ml-1 text-[#000000]">
-            <div className="">
-              <InputComponent
-                value={notesDetails}
-                onChange={(e) => {
-                  setNotesDetails(e.target.value)
-                  setErrorMessage({})
-                }}
-                style={{
-                  width: '450px',
-                  height: '100px',
-                  border: errorMessage.reasonDetails ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  boxShadow: 'none',
-                  paddingLeft: '0.5rem',
-                  fontSize: '0.8rem',
-                  resize: 'none',
-                }}
-              />
-            </div> */}
-        {/* </div> */}
       </div>
-      {/* </div> */}
+
       <div className={`"flex gap-4 ml-4 bottom-5 absolute left-6" ${isLoading ? 'blurred' : ''}`}>
         <Button
           label={'Save'}

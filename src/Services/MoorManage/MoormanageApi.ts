@@ -338,6 +338,22 @@ const moormanageApi = userApi.injectEndpoints({
       }),
     }),
 
+    getMooringWithServiceArea: builder.mutation({
+      query: ({
+        id,
+        pageNumber,
+        pageSize,
+      }: {
+        id?: number
+        pageNumber?: number
+        pageSize?: number
+      }) => ({
+        url: `api/v1/serviceArea/fetchMooringsWithServiceArea/${id}`,
+        method: 'GET',
+        params: { pageNumber, pageSize },
+      }),
+    }),
+
     //Inventory Details
     getInventoryDetails: builder.mutation({
       query: ({
@@ -571,6 +587,7 @@ export const {
   useGetTechnicianByIdMutation,
   useGetCustomersWithMooringMutation,
   useGetMooringWithBoatyardMutation,
+  useGetMooringWithServiceAreaMutation,
   useGetInventoryDetailsMutation,
   useDeleteInventoryMutation,
   useAddInventoryMutation,

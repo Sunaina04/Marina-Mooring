@@ -699,6 +699,16 @@ export interface MooringWithBoatYardResponse {
   content: MooringWithBoatYardContent
 }
 
+export interface MooringWithServiceAreaResponse {
+  message: string
+  status: number
+  currentSize: number
+  totalSize: number
+  errorList: []
+  time: number
+  content: MooringWithBoatYardContent
+}
+
 export interface TechnicianPayload {
   openWorkOrder: any
   id: number

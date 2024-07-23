@@ -4,7 +4,7 @@ import { InputText } from 'primereact/inputtext'
 import {
   DeleteCustomerResponse,
   ErrorResponse,
-  MooringWithBoatYardResponse,
+  MooringWithServiceAreaResponse,
   ServiceAreaData,
   ServiceAreaPayload,
   ServiceAreaResponse,
@@ -12,7 +12,7 @@ import {
 import {
   useDeleteServiceAreaMutation,
   useGetServiceAreaMutation,
-  // useGetMooringWithBoatyardMutation,
+  useGetMooringWithServiceAreaMutation,
 } from '../../../Services/MoorManage/MoormanageApi'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader'
@@ -40,8 +40,8 @@ const ServiceArea = () => {
   const userData = useSelector((state: any) => state.user?.userData)
   const [modalVisible, setModalVisible] = useState(false)
   const [serviceAreaData, setServiceAreaData] = useState<ServiceAreaPayload[]>([])
-  const [mooringWithBoatyardsData, setMooringWithBoatyardsData] = useState<
-    MooringWithBoatYardResponse[]
+  const [mooringWithServiceAreasData, setMooringWithServiceAreasData] = useState<
+    MooringWithServiceAreaResponse[]
   >([])
   const [filteredServiceAreaData, setFilteredServiceAreaData] = useState<ServiceAreaPayload[]>([])
   const [expandedRows, setExpandedRows] = useState<any>()
@@ -61,7 +61,7 @@ const ServiceArea = () => {
 
   const [getServiceArea] = useGetServiceAreaMutation()
   const [deleteServiceArea] = useDeleteServiceAreaMutation()
-  // const [getMooringsWithBoatyard] = useGetMooringWithBoatyardMutation()
+  const [getMooringsWithServiceArea] = useGetMooringWithServiceAreaMutation()
 
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
@@ -110,7 +110,7 @@ const ServiceArea = () => {
   const handleModalClose = () => {
     setModalVisible(false)
     setEditMode(false)
-    // setSelectedBoatYard('')
+    // setSelectedServiceArea('')
     setMooringRowData('')
   }
 
@@ -130,7 +130,7 @@ const ServiceArea = () => {
     style: { borderBottom: '1px solid #D5E1EA' },
   }
 
-  const boatyardTableStyle = {
+  const serviceAreaTableStyle = {
     backgroundColor: '#00426F',
     borderBottom: '1px solid #C0C0C0',
     color: '#FFFFFF',
@@ -138,27 +138,27 @@ const ServiceArea = () => {
     fontSize: '10px',
   }
 
-  const tableColumnsBoatyards = useMemo(
+  const tableColumnsServiceAreas = useMemo(
     () => [
       {
         id: 'id',
         label: 'ID',
-        style: boatyardTableStyle,
+        style: serviceAreaTableStyle,
       },
       {
-        id: 'mainContact',
-        label: 'Main Contact',
-        style: boatyardTableStyle,
+        id: 'notes',
+        label: 'Notes',
+        style: serviceAreaTableStyle,
       },
       {
         id: 'mooringNumber',
         label: 'Mooring Number',
-        style: boatyardTableStyle,
+        style: serviceAreaTableStyle,
       },
       {
         id: 'boatName',
         label: 'Boat Name',
-        style: boatyardTableStyle,
+        style: serviceAreaTableStyle,
       },
     ],
     [],
@@ -228,7 +228,7 @@ const ServiceArea = () => {
     padding: '15px',
   }
 
-  const boatYardColumns = useMemo(
+  const serviceAreaColumns = useMemo(
     () => [
       {
         id: 'id',
@@ -250,10 +250,10 @@ const ServiceArea = () => {
     [],
   )
 
-  const handleRowClickBoatYardDetail = (rowData: any) => {
+  const handleRowClickServiceAreaDetail = (rowData: any) => {
     setIsLoader(true)
     setSelectedServiceArea('')
-    setMooringWithBoatyardsData([])
+    setMooringWithServiceAreasData([])
     setServiceAreaRecord(true)
     const timeoutId = setTimeout(() => {
       setSelectedServiceArea(rowData.data)
@@ -340,7 +340,7 @@ const ServiceArea = () => {
           if (status === 200 && Array.isArray(content)) {
             setServiceAreaData(content)
             setSelectedServiceArea(content[0])
-            // setSelectedMooring(content[0])
+            setSelectedMooring(content[0])
             setTotalRecords(totalSize)
             if (selectedServiceArea) {
               const data = content.find((data) => data.id === selectedServiceArea.id)
@@ -381,30 +381,30 @@ const ServiceArea = () => {
     pageNumber,
   ])
 
-  // const getMooringsWithBoatyardData = async () => {
-  //   try {
-  //     await getMooringsWithBoatyard({
-  //       id: selectedServiceArea?.id,
-  //       pageNumber: pageNumberTwo,
-  //       pageSize: pageSizeTwo,
-  //     })
-  //       .unwrap()
-  //       .then(async (response: any) => {
-  //         const { status, content, totalSize } = response as MooringWithBoatYardResponse
-  //         if (status === 200 && Array.isArray(content) && content.length > 0) {
-  //           setIsLoading(false)
-  //           setMooringWithBoatyardsData(content)
-  //           setTotalRecordsTwo(totalSize)
-  //         } else {
-  //           setIsLoading(false)
-  //         }
-  //       })
-  //   } catch (error) {
-  //     const { message } = error as ErrorResponse
-  //     setIsLoading(false)
-  //     console.error('Error fetching getMooringsWithBoatyardData:', error)
-  //   }
-  // }
+  const getMooringsWithServiceAreaData = async () => {
+    try {
+      await getMooringsWithServiceArea({
+        id: selectedServiceArea?.id,
+        pageNumber: pageNumberTwo,
+        pageSize: pageSizeTwo,
+      })
+        .unwrap()
+        .then(async (response: any) => {
+          const { status, content, totalSize } = response as MooringWithServiceAreaResponse
+          if (status === 200 && Array.isArray(content) && content.length > 0) {
+            setIsLoading(false)
+            setMooringWithServiceAreasData(content)
+            setTotalRecordsTwo(totalSize)
+          } else {
+            setIsLoading(false)
+          }
+        })
+    } catch (error) {
+      const { message } = error as ErrorResponse
+      setIsLoading(false)
+      console.error('Error fetching getMooringsWithServiceAreaData:', error)
+    }
+  }
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -413,12 +413,12 @@ const ServiceArea = () => {
     return () => clearTimeout(timeoutId)
   }, [searchText, selectedCustomerId, searchFieldText, pageSize, pageNumber])
 
-  // useEffect(() => {
-  //   const timeoutId = setTimeout(() => {
-  //     if (selectedServiceArea) getMooringsWithBoatyardData()
-  //   }, 600)
-  //   return () => clearTimeout(timeoutId)
-  // }, [selectedServiceArea, pageSizeTwo, pageNumberTwo])
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (selectedServiceArea) getMooringsWithServiceAreaData()
+    }, 600)
+    return () => clearTimeout(timeoutId)
+  }, [selectedServiceArea, pageSizeTwo, pageNumberTwo])
 
   useEffect(() => {
     setIsLoader(true)
@@ -450,7 +450,7 @@ const ServiceArea = () => {
           <p className="">
             {`${selectedServiceArea?.streetHouse || '-'}, ${selectedServiceArea?.aptSuite || '-'}, ${selectedServiceArea?.stateResponseDto?.name || '-'}, ${selectedServiceArea?.countryResponseDto?.name || '-'}`}
           </p>
-          {/* <p className="mr-[10rem]">{selectedServiceArea?.mooringInventoried || '-'}</p> */}
+          <p className="mr-[10rem]">{selectedServiceArea?.mooringInventoried || '-'}</p>
           <p className="underline mr-[4rem]">{selectedServiceArea?.gpsCoordinates || '-'}</p>
         </div>
 
@@ -475,8 +475,8 @@ const ServiceArea = () => {
                 fontSize: '12px',
                 color: '#000000',
               }}
-              data={mooringWithBoatyardsData || []}
-              columns={tableColumnsBoatyards}
+              data={mooringWithServiceAreasData || []}
+              columns={tableColumnsServiceAreas}
               actionButtons={ActionButtonColumn}
               selectionMode="single"
               dataKey="id"
@@ -536,7 +536,7 @@ const ServiceArea = () => {
         </div>
       </>
     )
-  }, [selectedServiceArea, serviceAreaData, mooringWithBoatyardsData])
+  }, [selectedServiceArea, serviceAreaData, mooringWithServiceAreasData])
 
   return (
     <div style={{ height: '150vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
@@ -661,8 +661,8 @@ const ServiceArea = () => {
                 selection={selectedMooring}
                 rowStyle={(rowData: any) => rowData}
                 dataKey="id"
-                columns={boatYardColumns}
-                onRowClick={(e: any) => handleRowClickBoatYardDetail(e)}
+                columns={serviceAreaColumns}
+                onRowClick={(e: any) => handleRowClickServiceAreaDetail(e)}
                 emptyMessage={
                   <div className="text-center mt-14">
                     <img
@@ -746,7 +746,7 @@ const ServiceArea = () => {
                 }}>
                 <p>{properties.address}</p>
                 <p className="">{properties.mooringInventoried}</p>
-                <p className="">{properties.boatyardGPSCoordinates}</p>
+                <p className="">{properties.serviceAreaGPSCoordinates}</p>
               </div>
             </div>
             <div className="mt-4">
@@ -836,7 +836,7 @@ const ServiceArea = () => {
                   <span>G.P.S Coordinates : </span> {mooringRowData?.gpsCoordinates}
                 </p>
                 <p>
-                  <span>Boatyard Name : </span> {mooringRowData?.boatyardName}
+                  <span>ServiceArea Name : </span> {mooringRowData?.serviceAreaName}
                 </p>
                 <p>
                   <span>Customer Name : </span> {mooringRowData?.customerName}
