@@ -303,6 +303,14 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const handleInputChange = (field: string, value: any) => {
     const phoneRegex = /^.{10}$|^.{12}$/
     const numberRegex = /^\d+$/
+    const regexp =  /^\\d{5}(-\\d{4})?$/
+
+
+    if (field === 'zipCode') {
+      if (value !== '' && !regexp.test(value)) {
+        return
+      }
+    }
 
     if (field === 'phone') {
       if (value !== '' && numberRegex.test(value)) {
@@ -315,6 +323,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         return
       }
     }
+
     if (field === 'sizeOfWeight') {
       if (value !== '' && !numberRegex.test(value)) {
         return
