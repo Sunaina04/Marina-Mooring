@@ -155,9 +155,60 @@ const Dashboard = () => {
     setVisible(true)
   }
 
+  // const firstLastName = (data: any) => {
+  //   return data.customerResponseDto.firstName + ' ' + data.customerResponseDto.lastName
+  // }
+
   const firstLastName = (data: any) => {
-    return data.customerResponseDto.firstName + ' ' + data.customerResponseDto.lastName
-  }
+    return `${data.firstName} ${data.lastName}`;
+  };
+  const dummyData = [
+    {
+      id: '1',
+      firstName: 'John',
+      lastName: 'Doe',
+      mooringNumber: 'M001',
+      mooringServiceDate: '2023-06-15',
+      gpsCoordinates: '34.0522° N, 118.2437° W',
+      status: 'Due',
+    },
+    {
+      id: '2',
+      firstName: 'Jane',
+      lastName: 'Smith',
+      mooringNumber: 'M002',
+      mooringServiceDate: '2023-07-20',
+      gpsCoordinates: '40.7128° N, 74.0060° W',
+      status: 'Completed',
+    },
+    // {
+    //   id: '3',
+    //   firstName: 'Alice',
+    //   lastName: 'Johnson',
+    //   mooringNumber: 'M003',
+    //   mooringServiceDate: '2023-08-10',
+    //   gpsCoordinates: '37.7749° N, 122.4194° W',
+    //   status: 'Pending',
+    // },
+    // {
+    //   id: '4',
+    //   firstName: 'Bob',
+    //   lastName: 'Brown',
+    //   mooringNumber: 'M004',
+    //   mooringServiceDate: '2023-09-05',
+    //   gpsCoordinates: '51.5074° N, 0.1278° W',
+    //   status: 'Overdue',
+    // },
+    // {
+    //   id: '5',
+    //   firstName: 'Charlie',
+    //   lastName: 'Davis',
+    //   mooringNumber: 'M005',
+    //   mooringServiceDate: '2023-10-12',
+    //   gpsCoordinates: '48.8566° N, 2.3522° E',
+    //   status: 'Due',
+    // },
+  ];
 
   const Mooringcolumns: TableColumnProps[] = useMemo(
     () => [
@@ -214,8 +265,18 @@ const Dashboard = () => {
           fontWeight: '700',
         },
       },
+      // {
+      //   id: 'mooringDueServiceStatusDto.status',
+      //   label: 'Status',
+      //   style: {
+      //     fontSize: '10px',
+      //     backgroundColor: '#FFFFFF',
+      //     color: '#000000',
+      //     fontWeight: '700',
+      //   },
+      // },
       {
-        id: 'mooringDueServiceStatusDto.status',
+        id: 'status',
         label: 'Status',
         style: {
           fontSize: '10px',
@@ -364,6 +425,13 @@ const Dashboard = () => {
     getMooringsData()
   }, [selectedCustomerId, totalMoorings])
 
+  // useEffect(() => {
+  //   setMooringSelected(false)
+  //   setTimeout(() => {
+  //     setMooringSelected(true)
+  //   }, 0)
+  // }, [mooringSelected])
+
   return (
     <>
       <Header header="MOORMANAGE/DASHBOARD" />
@@ -380,7 +448,7 @@ const Dashboard = () => {
               // style={{ height: '300px' }}
               style={{
                 height: '300px',
-                // minHeight: '300px',
+                minHeight: '300px',
                 // width: '500px',
                 // minWidth: '500px',
                 // backgroundColor: '#FFFFFF',
@@ -396,8 +464,8 @@ const Dashboard = () => {
                   marginBottom: '10px',
                   // height: '13rem',
                   // minHeight: '13rem',
-                  // borderBottomLeftRadius: '10px',
-                  // borderBottomRightRadius: '10px',
+                  borderBottomLeftRadius: '10px',
+                  borderBottomRightRadius: '10px',
                 }}>
                 <DataTableComponent
                   columns={Mooringcolumns}
@@ -420,7 +488,7 @@ const Dashboard = () => {
                     setMooringResponseData(rowData?.data?.gpsCoordinates)
                     setMooringSelected(true)
                   }}
-                  data={mooringData}
+                  data={dummyData}
                   emptyMessage={
                     <div className="text-center">
                       <img
