@@ -456,13 +456,14 @@ const Dashboard = () => {
                 />
               )}
             </div>
-            <div className="mt-8">
+
+            <div className={`${leftContainerWidth ? 'mt-8' : 'mt-4'}`}>
               <CustomDashboardMooringMap
                 position={coordinatesArray ? coordinatesArray : initialPosition}
                 zoomLevel={10}
                 style={{
-                  height: leftContainerWidth ? '700px' : '400px',
-                  minHeight: leftContainerWidth ? '700px' : '400px',
+                  height: leftContainerWidth ? '650px' : '550px',
+                  minHeight: leftContainerWidth ? '650px' : '550px',
                   width: '100%',
                 }}
                 iconsByStatus={iconsByStatus}
@@ -478,16 +479,13 @@ const Dashboard = () => {
           {leftContainerWidth ? (
             <div
               style={{
-                height: '700px',
-                minHeight: '700px',
+                height: '600px',
+                minHeight: '600px',
                 width: '40px',
                 minWidth: '40px',
                 backgroundColor: '#00426F',
               }}
-              className="rounded-md mr-[40px]">
-              <div className="p-3" style={{ cursor: 'pointer' }}>
-                <img src="/assets/images/plus.png" alt="Key Icon" className="p-clickable" />
-              </div>
+              className="rounded-md ml-[20px] mr-[20px]">
               <div
                 style={{
                   writingMode: 'vertical-rl',
