@@ -8,6 +8,8 @@ const MooringMapModal: React.FC<TimeLineProps> = ({
   mooringId,
   viewEditClick,
   mooringData,
+  showMapModal,
+  setShowMapModal,
 }) => {
   const [customerModalVisible, setCustomerModalVisible] = useState(false)
   const [editMode, setEditMode] = useState(false)
@@ -15,6 +17,11 @@ const MooringMapModal: React.FC<TimeLineProps> = ({
   const viewEdit = () => {
     setEditMode(true)
     setCustomerModalVisible(true)
+    // if (setShowMapModal) {
+    //   setShowMapModal(false)
+    //   setEditMode(true)
+    //   setCustomerModalVisible(true)
+    // }
   }
 
   const handleModalClose = () => {
@@ -24,7 +31,7 @@ const MooringMapModal: React.FC<TimeLineProps> = ({
 
   return (
     <>
-      <div className="rounded-sm flex gap-20 ">
+      <div className="rounded-sm flex gap-20">
         <div>
           <div>
             <p className="text-sm m-0 font-bold text-white">
@@ -41,13 +48,13 @@ const MooringMapModal: React.FC<TimeLineProps> = ({
             </p>
           </div>
         </div>
-        <div className=" ">
+        <div>
           <p
-            className=" text-black cursor-pointer mt-[5rem] p-1 border rounded-sm  bg-[#B1E0FF]"
+            className="text-black cursor-pointer mt-[5rem] p-1 border rounded-sm bg-[#B1E0FF]"
             onClick={viewEdit}>
             View/edit
           </p>
-          <p className="text-xs   text-white">ID:{mooringId}</p>
+          <p className="text-xs text-white">ID:{mooringId}</p>
         </div>
 
         {customerModalVisible && (
@@ -63,15 +70,16 @@ const MooringMapModal: React.FC<TimeLineProps> = ({
                 getCustomer={() => {}}
               />
             }
-            headerText={<h1 className="text-xxl font-bold text-black ">Mooring Information</h1>}
+            headerText={<h1 className="text-xxl font-bold text-black">Mooring Information</h1>}
             visible={customerModalVisible}
             onHide={handleModalClose}
             dialogStyle={{
               width: '800px',
               minWidth: '800px',
               borderRadius: '1rem',
-              maxHeight: '95% !important',
+              maxHeight: '95%',
               overflowY: 'auto',
+              zIndex: 1000001,
             }}
           />
         )}

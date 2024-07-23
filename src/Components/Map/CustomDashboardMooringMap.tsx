@@ -19,9 +19,8 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
   zoomLevel,
   style,
   moorings,
-  dashboard,
-  customerPage,
   leftContanerWidth,
+  setLeftContainer,
 }) => {
   const [map, setMap] = useState<any>()
   const mapRef = useRef<any>(null)
@@ -33,6 +32,16 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
     if (!coordinates) return null
     const [latitude, longitude] = coordinates.split(' ').map(parseFloat)
     return isNaN(latitude) || isNaN(longitude) ? null : [latitude, longitude]
+  }
+
+  const handleOpenMap = () => {
+    if (leftContanerWidth) {
+      setLeftContainer(false)
+      // setRightContainer(false)
+    } else {
+      setLeftContainer(true)
+      // setRightContainer(true)
+    }
   }
 
   const boxStyle = {
@@ -72,106 +81,31 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
     }
   }, [position, map])
 
-  useEffect(() => {
-    setShowMap(false)
-    setTimeout(() => {
-      setShowMap(true)
-    }, 0)
-  }, [leftContanerWidth])
+  // useEffect(() => {
+  //   if (showMapModal) {
+  //     setShowMap(false)
+  //   } else {
+  //     setShowMap(true)
+  //   }
+  // }, [leftContanerWidth, showMapModal])
 
   return (
     <>
       <Toast ref={toast} />
-      {showMapModal ? (
-        <div
-          style={{
-            width: '100vw',
-            height: '100vh',
-            background: 'rgba(0,0,0,0.8)',
-            zIndex: 999999,
-            top: 0,
-            left: 0,
-            overflow: 'auto',
-            position: 'fixed',
-          }}>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'flex-end',
-              color: 'white',
-              paddingRight: '3%',
-              marginTop: '20px',
-              cursor: 'pointer',
-            }}
-            onClick={() => setShowMapModal(false)}>
-            <img
-              src="/assets/images/close.png"
-              alt="Key Icon"
-              className="p-clickable"
-              style={{ width: '23px' }}
-            />
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              height: '90vh',
-            }}>
-            <MapContainer
-              ref={setMap}
-              style={{ ...style, height: '80vh', width: '80vw' }}
-              center={position}
-              zoom={position ? zoomLevel : 4}
-              scrollWheelZoom={false}
-              attributionControl={false}>
-              <TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              />
-
-              {moorings &&
-                moorings.map((mooring: MooringPayload, index: number) => {
-                  const coordinates = parseCoordinates(mooring.gpsCoordinates) || [
-                    39.4926173, -117.5714859,
-                  ]
-                  const position: LatLngExpression = coordinates
-                  const iconKey = mooring?.mooringStatus?.id as keyof typeof iconsByStatusId
-                  const icon = iconsByStatusId[iconKey] || DefaultIcon
-
-                  return (
-                    <>
-                      <Marker key={index} position={position} icon={icon} ref={mapRef}>
-                        <Popup>
-                          <MooringMapModal
-                            gpsValue={position}
-                            mooringId={mooring?.mooringNumber}
-                            mooringData={mooring}
-                          />
-                        </Popup>
-                      </Marker>
-                    </>
-                  )
-                })}
-            </MapContainer>
-          </div>
-        </div>
-      ) : null}
-
       <div style={{ position: 'relative' }}>
         <div
           onClick={() => {
-            setShowMapModal(true)
+            handleOpenMap()
           }}
           className="p-2 h-8 w-8 mr-20"
           style={{ cursor: 'pointer', position: 'absolute', left: '95%', top: 0, zIndex: 999 }}>
           <img src="/assets/images/resize.png" alt="Key Icon" className="p-clickable" />
         </div>
-
         <div>
+          {/* {leftContanerWidth ? ( */}
           <MapContainer
             ref={setMap}
-            style={style}
+            style={{ ...style, flexGrow: 1 }}
             center={position}
             zoom={position ? zoomLevel : 4}
             scrollWheelZoom={false}
@@ -189,6 +123,7 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
                 const position: LatLngExpression = coordinates
                 const iconKey = mooring?.mooringStatus?.id as keyof typeof iconsByStatusId
                 const icon = iconsByStatusId[iconKey] || DefaultIcon
+
                 return (
                   <>
                     <Marker key={index} position={position} icon={icon} ref={mapRef}>
@@ -197,6 +132,8 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
                           gpsValue={position}
                           mooringId={mooring?.mooringNumber}
                           mooringData={mooring}
+                          showMapModal={showMapModal}
+                          // setShowMapModal={setShowMapModal}
                         />
                       </Popup>
                     </Marker>
@@ -204,107 +141,82 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
                 )
               })}
           </MapContainer>
+          {/* ) : null} */}
         </div>
-        {/* <div
-          style={{
-            cursor: 'pointer',
-            position: 'absolute',
-            right: '70%',
-            top: '70%',
-            zIndex: 999,
-          }}>
-          <div style={boxStyle}>
-            <h2>Status</h2>
-            <div className="mt-1">
-              <hr style={{ border: '1px solid #D5E1EA' }} />
-            </div>
-            <div style={containerStyle}>
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                }}>
-                <div>
-                  <span style={dotStyle('red')}></span> Need Inspection
-                </div>
-                <div>
-                  <span style={dotStyle('blue')}></span> Gear Off
-                </div>
-              </div>
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  marginRight: '80px',
-                }}>
-                <div>
-                  <span style={dotStyle('green')}></span> Gear On
-                </div>
-                <div>
-                  <span style={dotStyle('#d3d3d3')}></span> Not in Use
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> */}
       </div>
 
-      {dashboard ? (
-        <div style={boxStyle}>
-          <h2>Status</h2>
-          <div className="mt-1">
-            <hr style={{ border: '1px solid #D5E1EA' }} />
+      {/* {showMap ? (
+        <div style={{ position: 'relative' }}>
+          <div
+            onClick={() => {
+              setShowMapModal(true)
+              setShowMap(false)
+            }}
+            className="p-2 h-8 w-8 mr-20"
+            style={{ cursor: 'pointer', position: 'absolute', left: '95%', top: 0, zIndex: 999 }}>
+            <img src="/assets/images/resize.png" alt="Key Icon" className="p-clickable" />
           </div>
-          <div style={containerStyle}>
-            <div>
-              <span style={dotStyle('red')}></span> Need Inspection
-            </div>
-            <div>
-              <span style={dotStyle('blue')}></span> Gear Off
-            </div>
-            <div>
-              <span style={dotStyle('green')}></span> Gear On
-            </div>
-            <div>
-              <span style={dotStyle('#d3d3d3')}></span> Not in Use
-            </div>
-          </div>
-        </div>
-      ) : (
-        <div style={boxStyle}>
-          <h2>Status</h2>
-          <div className="mt-1">
-            <hr style={{ border: '1px solid #D5E1EA' }} />
-          </div>
-          <div style={containerStyle}>
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-              }}>
-              <div>
-                <span style={dotStyle('red')}></span> Need Inspection
-              </div>
-              <div>
-                <span style={dotStyle('blue')}></span> Gear Off
-              </div>
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                marginRight: dashboard ? '300px' : '80px',
-              }}>
-              <div>
-                <span style={dotStyle('green')}></span> Gear On
-              </div>
-              <div>
-                <span style={dotStyle('#d3d3d3')}></span> Not in Use
-              </div>
-            </div>
+
+          <div>
+            <MapContainer
+              ref={setMap}
+              style={style}
+              center={position}
+              zoom={position ? zoomLevel : 4}
+              scrollWheelZoom={false}
+              attributionControl={false}>
+              <TileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              />
+
+              {moorings &&
+                moorings.map((mooring: MooringPayload, index: number) => {
+                  const coordinates = parseCoordinates(mooring.gpsCoordinates) || [
+                    39.4926173, -117.5714859,
+                  ]
+                  const position: LatLngExpression = coordinates
+                  const iconKey = mooring?.mooringStatus?.id as keyof typeof iconsByStatusId
+                  const icon = iconsByStatusId[iconKey] || DefaultIcon
+                  return (
+                    <>
+                      <Marker key={index} position={position} icon={icon} ref={mapRef}>
+                        <Popup>
+                          <MooringMapModal
+                            gpsValue={position}
+                            mooringId={mooring?.mooringNumber}
+                            mooringData={mooring}
+                          />
+                        </Popup>
+                      </Marker>
+                    </>
+                  )
+                })}
+            </MapContainer>
           </div>
         </div>
-      )}
+      ) : null} */}
+
+      <div style={boxStyle}>
+        <h2>Status</h2>
+        <div className="mt-1">
+          <hr style={{ border: '1px solid #D5E1EA' }} />
+        </div>
+        <div style={containerStyle}>
+          <div>
+            <span style={dotStyle('red')}></span> Need Inspection
+          </div>
+          <div>
+            <span style={dotStyle('blue')}></span> Gear Off
+          </div>
+          <div>
+            <span style={dotStyle('green')}></span> Gear On
+          </div>
+          <div>
+            <span style={dotStyle('#d3d3d3')}></span> Not in Use
+          </div>
+        </div>
+      </div>
     </>
   )
 }

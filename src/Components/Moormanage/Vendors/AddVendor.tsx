@@ -493,20 +493,18 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                         style={{
                           width: '178.39px',
                           height: '32px',
-                          border: fieldErrors.zipCodeForAddress
-                            ? '1px solid red'
-                            : '1px solid #D5E1EA',
+                          border: '1px solid #D5E1EA',
                           borderRadius: '0.50rem',
                           fontSize: '0.70rem',
                           paddingLeft: '0.5rem',
                         }}
                       />
                     </div>
-                    <p>
+                    {/* <p>
                       {fieldErrors.zipCodeForAddress && (
                         <small className="p-error">{fieldErrors.zipCodeForAddress}</small>
                       )}
-                    </p>
+                    </p> */}
                   </div>
                 </div>
                 <div className="">
@@ -669,9 +667,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                         style={{
                           width: '178.39px',
                           height: '32px',
-                          border: fieldErrors.zipCodeForRemit
-                            ? '1px solid red'
-                            : '1px solid #D5E1EA',
+                          border: '1px solid #D5E1EA',
                           borderRadius: '0.50rem',
                           fontSize: '0.70rem',
                           backgroundColor: '#F5F5F5',
@@ -679,11 +675,11 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                         }}
                       />
 
-                      <p>
+                      {/* <p>
                         {fieldErrors.zipCodeForRemit && (
                           <small className="p-error">{fieldErrors.zipCodeForRemit}</small>
                         )}
-                      </p>
+                      </p> */}
                     </div>
                   </div>
 

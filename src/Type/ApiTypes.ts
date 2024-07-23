@@ -394,7 +394,7 @@ export interface MooringResponseDtoList {
   customerId: number | string
   userId: number
   statusId: number
-  imageDtoList: ImageDtoList
+  imageDtoList: [ImageDtoList]
 }
 export interface MooringWithGpsCoordinates {
   id: number
