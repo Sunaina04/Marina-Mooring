@@ -376,8 +376,17 @@ const Dashboard = () => {
             }}>
             <div
               data-testid="mooring-data"
-              className="flex flex-col mt-[15px] table-container "
-              style={{ height: '300px' }}>
+              className="flex flex-col table-container "
+              // style={{ height: '300px' }}
+              style={{
+                height: '300px',
+                // minHeight: '300px',
+                // width: '500px',
+                // minWidth: '500px',
+                // backgroundColor: '#FFFFFF',
+                // position: 'relative',
+                // borderRadius:'10px'
+              }}>
               <div className="bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px] text-white">
                 <h1 className="p-4 text-xl font-extrabold">Moorings Due for Service</h1>
               </div>
@@ -385,10 +394,10 @@ const Dashboard = () => {
                 style={{
                   overflow: 'auto',
                   marginBottom: '10px',
-                  height: '13rem',
-                  minHeight: '13rem',
-                  borderBottomLeftRadius: '10px',
-                  borderBottomRightRadius: '10px',
+                  // height: '13rem',
+                  // minHeight: '13rem',
+                  // borderBottomLeftRadius: '10px',
+                  // borderBottomRightRadius: '10px',
                 }}>
                 <DataTableComponent
                   columns={Mooringcolumns}
@@ -399,7 +408,7 @@ const Dashboard = () => {
                     color: '#000000',
                     fontWeight: 600,
                     cursor: 'pointer',
-                    height: '13rem',
+                    // height: '13rem',
                   }}
                   selectionMode="single"
                   onSelectionChange={(e) => {
@@ -439,17 +448,19 @@ const Dashboard = () => {
                 />
               )}
             </div>
-            <CustomDashboardMooringMap
-              position={coordinatesArray ? coordinatesArray : initialPosition}
-              zoomLevel={10}
-              style={{ height: '400px', minHeight: '400px', width: '100%' }}
-              iconsByStatus={iconsByStatus}
-              moorings={mooringData}
-              dashboard={true}
-              leftContanerWidth={mooringSelected}
-              setLeftContainer={() => {}}
-              setRightContainer={() => {}}
-            />
+            <div className="mt-4">
+              <CustomDashboardMooringMap
+                position={coordinatesArray ? coordinatesArray : initialPosition}
+                zoomLevel={10}
+                style={{ height: '400px', minHeight: '400px', width: '100%' }}
+                iconsByStatus={iconsByStatus}
+                moorings={mooringData}
+                dashboard={true}
+                leftContanerWidth={mooringSelected}
+                setLeftContainer={() => {}}
+                setRightContainer={() => {}}
+              />
+            </div>
           </div>
 
           <div className={`md:ml-12 md:mt-3 lg:mt-0`}>

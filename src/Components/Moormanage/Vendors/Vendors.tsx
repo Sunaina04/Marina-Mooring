@@ -141,7 +141,7 @@ const Vendors = () => {
     () => [
       {
         id: 'companyName',
-        label: 'Company Name',
+        label: 'Vendor Name',
         style: {
           ...columnStyle,
           borderTopLeftRadius: '10px',
