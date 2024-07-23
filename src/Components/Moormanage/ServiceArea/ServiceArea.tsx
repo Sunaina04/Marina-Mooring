@@ -145,11 +145,11 @@ const ServiceArea = () => {
         label: 'ID',
         style: serviceAreaTableStyle,
       },
-      {
-        id: 'notes',
-        label: 'Notes',
-        style: serviceAreaTableStyle,
-      },
+      // {
+      //   id: 'notes',
+      //   label: 'Notes',
+      //   style: serviceAreaTableStyle,
+      // },
       {
         id: 'mooringNumber',
         label: 'Mooring Number',
