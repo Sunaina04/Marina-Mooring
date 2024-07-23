@@ -21,7 +21,6 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
   style,
   moorings,
   mooringData,
-  dashboard,
   customerPage,
   setLeftContainer,
   setRightContainer,
@@ -71,8 +70,8 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
   const containerStyle: React.CSSProperties = {
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: dashboard ? 'center' : 'flex-start',
-    gap: dashboard ? '20px' : '2px',
+    alignItems: 'flex-start',
+    gap: '2px',
   }
 
   const iconsByStatusId = {
@@ -137,7 +136,7 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               />
 
-              {moorings && (customerPage || dashboard)
+              {moorings && customerPage
                 ? moorings.map((mooring: MooringPayload, index: number) => {
                     const coordinates = parseCoordinates(mooring.gpsCoordinates) || [
                       39.4926173, -117.5714859,
@@ -204,64 +203,33 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
                   })}
             </MapContainer>
           ) : null}
-          {/* <div
-            style={{
-              cursor: 'pointer',
-              position: 'absolute',
-              right: '40%',
-              top: '80%',
-              zIndex: 999,
-            }}>
-            <div style={boxStyle}>
-              <h2>Status</h2>
-              <div className="mt-1">
-                <hr style={{ border: '1px solid #D5E1EA' }} />
-              </div>
-              <div style={containerStyle}>
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                  }}>
-                  <div>
-                    <span style={dotStyle('red')}></span> Need Inspection
-                  </div>
-                  <div>
-                    <span style={dotStyle('blue')}></span> Gear Off
-                  </div>
-                </div>
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    marginRight: dashboard ? '300px' : '80px',
-                  }}>
-                  <div>
-                    <span style={dotStyle('green')}></span> Gear On
-                  </div>
-                  <div>
-                    <span style={dotStyle('#d3d3d3')}></span> Not in Use
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> */}
         </div>
       </div>
 
-      {dashboard ? (
-        <div style={boxStyle}>
-          <h2>Status</h2>
-          <div className="mt-1">
-            <hr style={{ border: '1px solid #D5E1EA' }} />
-          </div>
-          <div style={containerStyle}>
+      <div style={boxStyle}>
+        <h2>Status</h2>
+        <div className="mt-1">
+          <hr style={{ border: '1px solid #D5E1EA' }} />
+        </div>
+        <div style={containerStyle}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+            }}>
             <div>
               <span style={dotStyle('red')}></span> Need Inspection
             </div>
             <div>
               <span style={dotStyle('blue')}></span> Gear Off
             </div>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              marginRight: '80px',
+            }}>
             <div>
               <span style={dotStyle('green')}></span> Gear On
             </div>
@@ -270,41 +238,7 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
             </div>
           </div>
         </div>
-      ) : (
-        <div style={boxStyle}>
-          <h2>Status</h2>
-          <div className="mt-1">
-            <hr style={{ border: '1px solid #D5E1EA' }} />
-          </div>
-          <div style={containerStyle}>
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-              }}>
-              <div>
-                <span style={dotStyle('red')}></span> Need Inspection
-              </div>
-              <div>
-                <span style={dotStyle('blue')}></span> Gear Off
-              </div>
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                marginRight: dashboard ? '300px' : '80px',
-              }}>
-              <div>
-                <span style={dotStyle('green')}></span> Gear On
-              </div>
-              <div>
-                <span style={dotStyle('#d3d3d3')}></span> Not in Use
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      </div>
     </>
   )
 }
