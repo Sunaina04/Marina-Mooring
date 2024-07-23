@@ -197,6 +197,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
     try {
       const payload: any = {
         vendorName: formData?.companyName,
+        companyName: formData?.companyName,
         ...(formData?.phone && { companyPhoneNumber: formData.phone }),
         ...(formData?.website && { website: formData.website }),
         ...(formData?.streetBuildingForAddress && { street: formData.streetBuildingForAddress }),
@@ -245,7 +246,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: data?.message,
+        detail: message || data?.message,
         life: 3000,
       })
     } finally {
@@ -264,6 +265,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
     try {
       const payload = {
         companyName: formData?.companyName || vendors?.companyName,
+        vendorName: formData?.companyName || vendors?.companyName,
         companyPhoneNumber: formData?.phone || vendors?.companyPhoneNumber,
         website: formData?.website || vendors?.website,
         street: formData?.streetBuildingForAddress || vendors?.street,

@@ -94,7 +94,7 @@ const Moorings = () => {
     setPageSizeTwo(event.rows)
   }
 
-  const modernButtonStyle = {
+  const ButtonStyle = {
     width: '40px',
     height: '40px',
     backgroundColor: 'transparent',
@@ -1375,7 +1375,7 @@ const Moorings = () => {
                 display: 'flex',
                 gap: '10px',
               }}>
-              <button onClick={handleZoomIn} style={modernButtonStyle}>
+              <button onClick={handleZoomIn} style={ButtonStyle}>
                 <svg
                   width="24"
                   height="24"
@@ -1392,7 +1392,7 @@ const Moorings = () => {
                   />
                 </svg>
               </button>
-              <button onClick={handleZoomOut} style={modernButtonStyle}>
+              <button onClick={handleZoomOut} style={ButtonStyle}>
                 <svg
                   width="24"
                   height="24"
