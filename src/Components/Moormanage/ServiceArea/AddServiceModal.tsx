@@ -139,6 +139,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
         serviceAreaTypeId: serviceAreaTypeId.id,
         streetHouse: address,
         aptSuite: aptSuite,
+        zipCode: zipCode,
         stateId: selectedState?.id,
         countryId: country?.id,
         notes: notes,
@@ -194,6 +195,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
         serviceAreaTypeId: serviceAreaTypeId.id,
         streetHouse: address,
         aptSuite: aptSuite,
+        zipCode: zipCode,
         stateId: selectedState?.id,
         countryId: country?.id,
         notes: notes,
@@ -314,14 +316,14 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: errorMessage.id ? '1px solid red' : '1px solid #D5E1EA',
+                  border: errorMessage.name ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   padding: '0.5rem',
                 }}
               />
             </div>
-            <p>{errorMessage.id && <small className="p-error">{errorMessage.id}</small>}</p>
+            <p>{errorMessage.name && <small className="p-error">{errorMessage.name}</small>}</p>
           </div>
           <div>
             <span className="font-medium text-sm text-[#000000]">Type</span>
@@ -453,6 +455,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
                 value={zipCode}
                 onChange={(e) => {
                   setZipCode(e.target.value)
+                  // setErrorMessage((prev) => ({ ...prev, zipCode: '' }))
                 }}
                 placeholder="Zip code"
                 style={{

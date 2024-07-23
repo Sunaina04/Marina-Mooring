@@ -577,6 +577,7 @@ export interface ServiceAreaPayload {
   serviceAreaName: string
   serviceAreaTypeId:number
   streetHouse: string
+  zipCode: string
   aptSuite: string
   stateId: number
   countryId: number

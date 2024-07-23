@@ -800,7 +800,7 @@ const ServiceArea = () => {
                   <span>ID : </span> {mooringRowData?.id}
                 </p>
                 <p>
-                  <span>Mooring Number : </span> {mooringRowData?.mooringId}
+                  <span>Mooring Number : </span> {mooringRowData?.mooringNumber}
                 </p>
                 <p>
                   <span>Boat Name : </span> {mooringRowData?.boatName}
@@ -810,8 +810,7 @@ const ServiceArea = () => {
                   <span>Type : </span> {mooringRowData?.boatType?.boatType}
                 </p>
                 <p className="flex gap-1">
-                  <span>Size of Weight : </span> {mooringRowData?.sizeOfWeight?.weight}
-                  <span>{mooringRowData?.sizeOfWeight?.unitType}</span>
+                  <span>Size of Weight : </span> {mooringRowData?.sizeOfWeight}
                 </p>
 
                 <p>
@@ -822,24 +821,26 @@ const ServiceArea = () => {
                   {mooringRowData?.bottomChainCondition?.condition}
                 </p>
                 <p>
-                  <span>Pennant Condition : </span> {mooringRowData?.pendantCondition?.condition}
+                  <span>Pendant Condition : </span> {mooringRowData?.pendantCondition}
                 </p>
                 <p>
-                  <span>Water Depth : </span> {mooringRowData?.waterDepth}
+                  <span>Water Depth : </span> {mooringRowData?.depthAtMeanHighWater}
                 </p>
               </div>
               <div>
                 <p>
-                  <span>Harbor : </span> {mooringRowData?.harbor}
+                  <span>Harbor : </span> {mooringRowData?.harborOrArea}
                 </p>
                 <p>
                   <span>G.P.S Coordinates : </span> {mooringRowData?.gpsCoordinates}
                 </p>
                 <p>
-                  <span>ServiceArea Name : </span> {mooringRowData?.serviceAreaName}
+                  <span>Boatyard Name :</span>
+                  {/* {mooringRowData?.boatyardResponseDto?.boatyardName} */}
                 </p>
                 <p>
-                  <span>Customer Name : </span> {mooringRowData?.customerName}
+                  <span>Customer Name : </span>
+                  {/* {mooringRowData?.customerName} */}
                 </p>
                 <p>
                   <span>Boat Size : </span> {mooringRowData?.boatSize}
