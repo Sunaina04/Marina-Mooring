@@ -1376,49 +1376,49 @@ const Customer = () => {
                 />
               </div>
             </div>
-            <div
-              style={{
-                position: 'absolute',
-                top: '10px',
-                right: '10px',
-                display: 'flex',
-                gap: '10px',
-              }}>
-              <button onClick={handleZoomIn} style={modernButtonStyle}>
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="12" cy="12" r="12" fill="#007bff" />
-                  <path
-                    d="M12 5v14M5 12h14"
-                    stroke="#fff"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </button>
-              <button onClick={handleZoomOut} style={modernButtonStyle}>
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="12" cy="12" r="12" fill="#007bff" />
-                  <path
-                    d="M5 12h14"
-                    stroke="#fff"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </button>
-            </div>
+          </div>
+          <div
+            style={{
+              position: 'absolute',
+              top: '85px',
+              right: '40px',
+              display: 'flex',
+              gap: '10px',
+            }}>
+            <button onClick={handleZoomIn} style={modernButtonStyle}>
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="12" fill="#007bff" />
+                <path
+                  d="M12 5v14M5 12h14"
+                  stroke="#fff"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+            <button onClick={handleZoomOut} style={modernButtonStyle}>
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="12" fill="#007bff" />
+                <path
+                  d="M5 12h14"
+                  stroke="#fff"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
           </div>
         </Dialog>
 
