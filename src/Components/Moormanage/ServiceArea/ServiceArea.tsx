@@ -835,12 +835,12 @@ const ServiceArea = () => {
                   <span>G.P.S Coordinates : </span> {mooringRowData?.gpsCoordinates}
                 </p>
                 <p>
-                  <span>Boatyard Name :</span>
-                  {/* {mooringRowData?.boatyardResponseDto?.boatyardName} */}
+                  <span>Boatyard Name : </span>
+                  {mooringRowData?.boatyardResponseDto?.boatyardName}
                 </p>
                 <p>
                   <span>Customer Name : </span>
-                  {/* {mooringRowData?.customerName} */}
+                  {mooringRowData?.customerName}
                 </p>
                 <p>
                   <span>Boat Size : </span> {mooringRowData?.boatSize}
