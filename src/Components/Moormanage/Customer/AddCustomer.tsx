@@ -1926,13 +1926,14 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             fontWeight: '500',
           }}
         />
+
         <Dialog
           position="center"
           style={{
             width: '800px',
             minWidth: '800px',
-            height: '580px',
-            minHeight: '580px',
+            height: '650px',
+            minHeight: '650px',
             borderRadius: '1rem',
             fontWeight: '400',
             cursor: 'alias',
@@ -1940,9 +1941,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           draggable={false}
           visible={imageVisible}
           onHide={() => setImageVisible(false)}
-          headerStyle={{ cursor: 'alias' }}
           header={'Images'}>
-          <div className="ml-4">
+          <div className={`ml-4 ${isLoading ? 'blurred' : ''}`} style={{ marginBottom: '60px' }}>
             <div className="flex justify-between">
               <div className="mt-6">
                 <input
@@ -1951,7 +1951,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   accept="image/*"
                   multiple
                   onChange={handleImageChange}
-                  style={{ display: 'none' }}
+                  style={{
+                    display: 'none',
+                  }}
                 />
                 <label
                   htmlFor="file-input"
@@ -1971,82 +1973,84 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     style={{
                       fontSize: '29px',
                       color: '#0098FF',
-                      marginTop: '3px',
                       marginLeft: '1rem',
+                      marginTop: '3px',
                     }}
                   />
-                  <div className="border-r-2 border-sky-500 h-9 pl-3"></div>
-                  <span className="pl-10 mt-1">Upload Images</span>
+                  <div className="border-r-2 border-sky-500  h-9 pl-3"></div>
+                  <span className="pl-10 mt-1">UPLOAD IMAGES</span>
                 </label>
               </div>
             </div>
-          </div>
 
-          <div style={{ marginTop: '40px', marginLeft: '40px' }}>
-            {customerImages.length > 0 && (
-              <div className="mt-2">
-                <div className="flex gap-16 flex-wrap">
-                  {customerImages.map((image, index) => (
-                    <div
-                      key={index}
-                      style={{ position: 'relative', display: 'inline-block' }}
-                      onMouseEnter={() => setHoveredIndex(index)}
-                      onMouseLeave={() => setHoveredIndex(null)}>
-                      <AiOutlineDelete
-                        onClick={() => handleRemoveImage(index)}
-                        style={{
-                          position: 'absolute',
-                          top: '165px',
-                          right: '5px',
-                          background: 'red',
-                          color: 'white',
-                          border: 'none',
-                          borderRadius: '5px',
-                          width: '28px',
-                          height: '25px',
-                          cursor: 'pointer',
-                          opacity: hoveredIndex === index ? 1 : 0,
-                          transition: 'opacity 0.3s',
-                        }}
-                      />
-                      <img
-                        src={image}
-                        alt={`Uploaded ${index}`}
-                        style={{
-                          width: '300px',
-                          height: '200px',
-                          objectFit: 'cover',
-                          borderRadius: '0.5rem',
-                          boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
-                        }}
-                      />
-                      <div className="mt-2">
-                        <InputText
-                          value={imageRequestDtoList[index].note}
-                          onChange={(e) => handleNoteChange(index, e.target.value)}
-                          placeholder="Add note"
+            <div style={{ marginTop: '40px' }}>
+              {customerImages.length > 0 && (
+                <div className="mt-2">
+                  <div className="flex gap-16 flex-wrap">
+                    {customerImages.map((image, index) => (
+                      <div
+                        key={index}
+                        style={{ position: 'relative', display: 'inline-block' }}
+                        onMouseEnter={() => setHoveredIndex(index)}
+                        onMouseLeave={() => setHoveredIndex(null)}>
+                        <AiOutlineDelete
+                          onClick={() => handleRemoveImage(index)}
                           style={{
-                            width: '300px',
-                            height: '40px',
-                            border: '1px solid #D5E1EA',
-                            borderRadius: '0.50rem',
-                            fontSize: '0.8rem',
-                            boxShadow: 'none',
-                            paddingLeft: '0.5rem',
-                            color: 'black',
-                            resize: 'none',
-                            marginTop: '10px',
+                            position: 'absolute',
+                            top: '165px',
+                            right: '5px',
+                            background: 'red',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '5px',
+                            width: '28px',
+                            height: '25px',
+                            cursor: 'pointer',
+                            opacity: hoveredIndex === index ? 1 : 0,
+                            transition: 'opacity 0.3s',
                           }}
                         />
+                        <img
+                          src={image}
+                          alt={`Uploaded ${index}`}
+                          style={{
+                            width: '300px',
+                            height: '200px',
+                            objectFit: 'cover',
+                            borderRadius: '0.5rem',
+                            boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+                          }}
+                        />
+                        <div className="mt-2">
+                          <InputText
+                            value={imageRequestDtoList[index].note}
+                            onChange={(e) => handleNoteChange(index, e.target.value)}
+                            placeholder="Add note"
+                            style={{
+                              width: '300px',
+                              height: '40px',
+                              border: '1px solid #D5E1EA',
+                              borderRadius: '0.50rem',
+                              fontSize: '0.8rem',
+                              boxShadow: 'none',
+                              paddingLeft: '0.5rem',
+                              color: 'black',
+                              resize: 'none',
+                              marginTop: '10px',
+                            }}
+                          />
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
 
-          <div className="flex gap-4 ml-4 bottom-5 absolute left-6">
+          <div
+            className={`flex gap-4 ml-4 absolute bottom-0 left-0 right-0 ${isLoading ? 'blurred' : ''}`}
+            style={{ padding: '16px', backgroundColor: 'white' }}>
             <Button
               label={'Close'}
               onClick={() => setImageVisible(false)}
