@@ -35,6 +35,8 @@ import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import AddImage from '../Customer/AddImage'
 import ViewImageDialog from '../../CommonComponent/ViewImageDialog'
 import EditImageDialog from '../../CommonComponent/EditImageDialog'
+import MooringInformations from '../../CommonComponent/MooringInformations'
+import ViewImage from '../../CommonComponent/ViewImage'
 
 const Moorings = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -1196,80 +1198,7 @@ const Moorings = () => {
               </div>
             </div>
           }>
-          <hr className="border border-[#000000] my-0 mx-0"></hr>
-
-          <div
-            style={{
-              fontSize: '14px',
-              fontWeight: '300',
-              color: '#000000',
-            }}
-            className="flex leading-[3.50rem] gap-32 p-4">
-            <div>
-              <p>
-                <span>ID: </span> {mooringRowData?.id || '-'}
-              </p>
-              <p>
-                <span>Mooring Number: </span>
-                {mooringRowData?.mooringNumber || '-'}
-              </p>
-              <p>
-                <span>Boat Name: </span>
-                {mooringRowData?.boatName || '-'}
-              </p>
-              <p>
-                <span>Type: </span> {mooringRowData?.boatType?.boatType || '-'}
-              </p>
-              <p>
-                <span>Size of Weight: </span>
-                {mooringRowData?.sizeOfWeight || '-'}
-              </p>
-              <p>
-                <span>Top Chain Condition: </span>
-                {mooringRowData?.topChainCondition?.condition || '-'}
-              </p>
-              <p className="tracking-tighter">
-                <span>Bottom Chain Condition: </span>
-                {mooringRowData?.bottomChainCondition?.condition || '-'}
-              </p>
-              <p>
-                <span>Pendant Condition: </span>
-                {mooringRowData?.pendantCondition || '-'}
-              </p>
-            </div>
-            <div>
-              <p>
-                <span>Harbor Area: </span> {mooringRowData?.harborOrArea || '-'}
-              </p>
-              <p>
-                <span>G.P.S Coordinates: </span>
-                {mooringRowData?.gpsCoordinates || '-'}
-              </p>
-              <p>
-                <span>Boat Size: </span>
-                {mooringRowData?.boatSize || '-'}
-              </p>
-              <p>
-                <span>Weight: </span> {mooringRowData?.boatWeight || '-'}
-              </p>
-              <p>
-                <span>Type of Weight: </span>
-                {mooringRowData?.typeOfWeight?.type || '-'}
-              </p>
-              <p>
-                <span>Condition of Eye: </span>
-                {mooringRowData?.eyeCondition?.condition || '-'}
-              </p>
-              <p>
-                <span>Shackle, Swivel Condition: </span>
-                {mooringRowData?.shackleSwivelCondition?.condition || '-'}
-              </p>
-              <p>
-                <span>Depth at Mean High Water: </span>
-                {mooringRowData?.depthAtMeanHighWater || '-'}
-              </p>
-            </div>
-          </div>
+          <MooringInformations mooringRowData={mooringRowData} />
         </Dialog>
 
         {/* Image Information */}

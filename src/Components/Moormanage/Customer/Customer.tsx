@@ -35,6 +35,8 @@ import { Paginator } from 'primereact/paginator'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import { PositionType } from '../../../Type/Components/MapTypes'
 import AddImage from './AddImage'
+import ViewImage from '../../CommonComponent/ViewImage'
+import MooringInformations from '../../CommonComponent/MooringInformations'
 
 const Customer = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -1243,80 +1245,7 @@ const Customer = () => {
               </div>
             </div>
           }>
-          <hr className="border border-[#000000] my-0 mx-0"></hr>
-
-          <div
-            style={{
-              fontSize: '14px',
-              fontWeight: '300',
-              color: '#000000',
-            }}
-            className="flex leading-[3.50rem] gap-32 p-4">
-            <div>
-              <p>
-                <span>ID: </span> {mooringRowData?.id}
-              </p>
-              <p>
-                <span>Mooring Number: </span>
-                {mooringRowData?.mooringNumber}
-              </p>
-              <p>
-                <span>Boat Name: </span>
-                {mooringRowData?.boatName}
-              </p>
-              <p>
-                <span>Type: </span> {mooringRowData?.boatType?.boatType}
-              </p>
-              <p>
-                <span>Size of Weight: </span>
-                {mooringRowData?.sizeOfWeight}
-              </p>
-              <p>
-                <span>Top Chain Condition: </span>
-                {mooringRowData?.topChainCondition?.condition}
-              </p>
-              <p className="tracking-tighter">
-                <span>Bottom Chain Condition: </span>
-                {mooringRowData?.bottomChainCondition?.condition}
-              </p>
-              <p>
-                <span>Pendant Condition: </span>
-                {mooringRowData?.pendantCondition}
-              </p>
-            </div>
-            <div>
-              <p>
-                <span>Harbor Area: </span> {mooringRowData?.harborOrArea}
-              </p>
-              <p>
-                <span>G.P.S Coordinates: </span>
-                {mooringRowData?.gpsCoordinates}
-              </p>
-              <p>
-                <span>Boat Size: </span>
-                {mooringRowData?.boatSize}
-              </p>
-              <p>
-                <span>Weight: </span> {mooringRowData?.boatWeight}
-              </p>
-              <p>
-                <span>Type of Weight: </span>
-                {mooringRowData?.typeOfWeight?.type}
-              </p>
-              <p>
-                <span>Condition of Eye: </span>
-                {mooringRowData?.eyeCondition?.condition}
-              </p>
-              <p>
-                <span>Shackle, Swivel Condition: </span>
-                {mooringRowData?.shackleSwivelCondition?.condition}
-              </p>
-              <p>
-                <span>Depth at Mean High Water: </span>
-                {mooringRowData?.depthAtMeanHighWater}
-              </p>
-            </div>
-          </div>
+          <MooringInformations mooringRowData={mooringRowData} />
         </Dialog>
 
         <Dialog
@@ -1337,89 +1266,12 @@ const Customer = () => {
           }}
           headerStyle={{ cursor: 'alias' }}
           header={'Images'}>
-          <div>
-            <hr className="border border-[#000000] my-0 mx-0"></hr>
-          </div>
-          <div
-            style={{
-              position: 'relative',
-              width: '100%',
-              height: '90%',
-              overflow: 'auto',
-            }}>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                width: '100%',
-                height: '100%',
-              }}>
-              <div
-                style={{
-                  transform: `scale(${scale})`,
-                  transformOrigin: 'top left',
-                  transition: 'transform 0.2s',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <img
-                  style={{
-                    width: 'auto',
-                    height: 'auto',
-                    maxWidth: '100%',
-                    maxHeight: '100%',
-                    display: 'block',
-                  }}
-                  src={`data:image/jpeg;base64,${showImage.imageData}`}
-                />
-              </div>
-            </div>
-          </div>
-          <div
-            style={{
-              position: 'absolute',
-              top: '85px',
-              right: '40px',
-              display: 'flex',
-              gap: '10px',
-            }}>
-            <button onClick={handleZoomIn} style={modernButtonStyle}>
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="12" r="12" fill="#007bff" />
-                <path
-                  d="M12 5v14M5 12h14"
-                  stroke="#fff"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
-            <button onClick={handleZoomOut} style={modernButtonStyle}>
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="12" r="12" fill="#007bff" />
-                <path
-                  d="M5 12h14"
-                  stroke="#fff"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
-          </div>
+          <ViewImage
+            handleZoomOut={handleZoomOut}
+            scale={scale}
+            showImage={showImage}
+            handleZoomIn={handleZoomIn}
+          />
         </Dialog>
 
         <Dialog
