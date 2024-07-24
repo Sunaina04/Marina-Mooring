@@ -46,7 +46,7 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
   const boxStyle: React.CSSProperties = {
     backgroundColor: 'white',
     borderRadius: '10px',
-    width: isZoom?'35vw ':"15vw",
+    width: '20vw',
     padding: '10px',
     marginBottom: '10px',
     boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
@@ -71,7 +71,6 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    flexDirection: isZoom ? 'row' : 'column',
     gap: '10px',
   }
 
@@ -97,7 +96,13 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
             handleOpenMap()
           }}
           className="p-2 h-8 w-9 mr-20"
-          style={{ cursor: 'pointer', position: 'absolute', left: isZoom? '96%':"90%", top: 0, zIndex: 999 }}>
+          style={{
+            cursor: 'pointer',
+            position: 'absolute',
+            left: isZoom ? '96%' : '90%',
+            top: 0,
+            zIndex: 999,
+          }}>
           <img src="/assets/images/resize.png" alt="Key Icon" className="p-clickable" />
         </div>
         <div>
@@ -147,16 +152,20 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
           </div>
           <div style={containerStyle}>
             <div>
-              <span style={dotStyle('#ED4C3E')}></span> Need Inspection
+              <div>
+                <span style={dotStyle('#ED4C3E')}></span> Need Inspection
+              </div>
+              <div>
+                <span style={dotStyle('#3BB15E')}></span> Gear On (in the water)
+              </div>
             </div>
             <div>
-              <span style={dotStyle('#8C0DD1')}></span> Gear Off (out of the water)
-            </div>
-            <div>
-              <span style={dotStyle('#3BB15E')}></span> Gear On (in the water)
-            </div>
-            <div>
-              <span style={dotStyle('#E9E9E9')}></span> Not in Use
+              <div>
+                <span style={dotStyle('#8C0DD1')}></span> Gear Off (out of the water)
+              </div>
+              <div>
+                <span style={dotStyle('#E9E9E9')}></span> Not in Use
+              </div>
             </div>
           </div>
         </div>
