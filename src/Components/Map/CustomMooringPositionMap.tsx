@@ -205,58 +205,35 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
             padding: '10px',
             boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
           }}>
-          {dashboard ? (
-            <div style={{ width: '5vw' }}>
-              <p>Status</p>
-              <div className="mt-1">
-                <hr style={{ border: '1px solid #3F3F3F' }} />
+          <div style={{ width: isZoom ? ' 22vw ' : '10vw' }}>
+            <h5>Status</h5>
+            <div className="mt-1">
+              <hr style={{ border: '1px solid #3F3F3F' }} />
+            </div>
+            <div style={containerStyle}>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <div>
+                  <span style={dotStyle('red')}></span> Need Inspection
+                </div>
+                <div>
+                  <span style={dotStyle('blue')}></span> Gear Off (out of the water)
+                </div>
               </div>
-              <div style={containerStyle}>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  marginRight: dashboard ? '300px' : '80px',
+                }}>
                 <div>
-                  <span style={dotStyle('#ED4C3E')}> </span> <span>Need Inspection</span>
+                  <span style={dotStyle('green')}></span> Gear On (in the water)
                 </div>
-                <div>
-                  <span style={dotStyle('#8C0DD1')}></span> Gear Off (out of the water)
-                </div>
-                <div>
-                  <span style={dotStyle('#3BB15E')}></span> Gear On (in the water)
-                </div>
-                <div>
-                  <span style={dotStyle('#E9E9E9')}></span> Not in Use
+                <div style={{ width: isZoom ? ' ' : '10vw' }}>
+                  <span style={dotStyle('#d3d3d3')}></span> Not in Use
                 </div>
               </div>
             </div>
-          ) : (
-            <div style={{ width: isZoom ? ' 22vw ' : '10vw' }}>
-              <h2>Status</h2>
-              <div className="mt-1">
-                <hr style={{ border: '1px solid #D5E1EA' }} />
-              </div>
-              <div style={containerStyle}>
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  <div>
-                    <span style={dotStyle('red')}></span> Need Inspection
-                  </div>
-                  <div>
-                    <span style={dotStyle('blue')}></span> Gear Off
-                  </div>
-                </div>
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    marginRight: dashboard ? '300px' : '80px',
-                  }}>
-                  <div>
-                    <span style={dotStyle('green')}></span> Gear On
-                  </div>
-                  <div style={{ width: isZoom ? ' ' : '10vw' }}>
-                    <span style={dotStyle('#d3d3d3')}></span> Not in Use
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
+          </div>
         </div>
       </div>
     </>
