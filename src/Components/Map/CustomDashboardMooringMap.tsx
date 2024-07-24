@@ -24,8 +24,7 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
 }) => {
   const [map, setMap] = useState<any>()
   const mapRef = useRef<any>(null)
-  const [showMap, setShowMap] = useState(true)
-  const [showMapModal, setShowMapModal] = useState(false)
+  const [showMap, setShowMap] = useState(false)
   const toast = useRef<Toast>(null)
   const [isZoom, setZoom] = useState<boolean>(false)
   const parseCoordinates = (coordinates: string): [number, number] | null => {
@@ -87,6 +86,13 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
     }
   }, [position, map])
 
+  useEffect(() => {
+    setShowMap(false)
+    setTimeout(() => {
+      setShowMap(true)
+    }, 0)
+  }, [leftContanerWidth])
+
   return (
     <>
       <Toast ref={toast} />
@@ -109,7 +115,10 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
           {showMap ? (
             <MapContainer
               ref={setMap}
-              style={{ ...style, flexGrow: 1 }}
+              style={{
+                ...style,
+                flexGrow: 1,
+              }}
               center={position}
               zoom={position ? zoomLevel : 4}
               scrollWheelZoom={false}
@@ -135,7 +144,6 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
                           gpsValue={position}
                           mooringId={mooring?.mooringNumber}
                           mooringData={mooring}
-                          showMapModal={showMapModal}
                         />
                       </Popup>
                     </Marker>

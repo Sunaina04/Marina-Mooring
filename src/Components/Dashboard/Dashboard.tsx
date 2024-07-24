@@ -365,13 +365,6 @@ const Dashboard = () => {
     getMooringsData()
   }, [selectedCustomerId, totalMoorings])
 
-  // useEffect(() => {
-  //   setMooringSelected(false)
-  //   setTimeout(() => {
-  //     setMooringSelected(true)
-  //   }, 0)
-  // }, [mooringSelected])
-
   return (
     <>
       <Header header="MOORMANAGE/DASHBOARD" />
@@ -396,9 +389,9 @@ const Dashboard = () => {
               </div>
               <div
                 style={{
-                  height: '240px', 
-                  overflowY: 'auto', 
-                  borderBottomLeftRadius:'10px'
+                  height: '240px',
+                  overflowY: 'auto',
+                  borderBottomLeftRadius: '10px',
                 }}
                 className="h-[240px] overflow-auto">
                 <DataTableComponent
@@ -455,8 +448,8 @@ const Dashboard = () => {
                 position={coordinatesArray ? coordinatesArray : initialPosition}
                 zoomLevel={10}
                 style={{
-                  height: leftContainerWidth ? '650px' : '550px',
-                  minHeight: leftContainerWidth ? '650px' : '550px',
+                  height: leftContainerWidth ? '650px' : '400px',
+                  minHeight: leftContainerWidth ? '650px' : '400px',
                   width: '100%',
                 }}
                 iconsByStatus={iconsByStatus}
