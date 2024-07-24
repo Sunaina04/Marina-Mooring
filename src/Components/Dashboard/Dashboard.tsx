@@ -465,8 +465,8 @@ const Dashboard = () => {
           {leftContainerWidth ? (
             <div
               style={{
-                height: '600px',
-                minHeight: '600px',
+                height: '720px',
+                minHeight: '720px',
                 width: '40px',
                 minWidth: '40px',
                 backgroundColor: '#00426F',
