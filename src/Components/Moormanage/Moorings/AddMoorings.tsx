@@ -77,7 +77,10 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   const [mooringImages, setMooringImages] = useState<string[]>([])
   const [hoveredIndex, setHoveredIndex] = useState<null | number>(null)
   const [encodedImages, setEncodedImages] = useState<string[]>([])
-  const [imageRequestDtoList, setimageRequestDtoList] = useState<any>()
+  // const [imageRequestDtoList, setimageRequestDtoList] = useState<any>()
+  const [imageRequestDtoList, setimageRequestDtoList] = useState<
+    { imageName: string; imageData: string; note: string }[]
+  >([])
   const [imageNote, setImageNote] = useState('')
   const toastRef = useRef<Toast>(null)
 
@@ -274,14 +277,91 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     setImageVisible(true)
   }
 
-  const handleRemoveImage = (index: number) => {
-    const newImages = [...mooringImages]
-    newImages.splice(index, 1)
-    setMooringImages(newImages)
+  // const handleRemoveImage = (index: number) => {
+  //   const newImages = [...mooringImages]
+  //   newImages.splice(index, 1)
+  //   setMooringImages(newImages)
 
-    // const newEncodedImages = [...encodedImages]
-    // newEncodedImages.splice(index, 1)
-    // setEncodedImages(newEncodedImages)
+  //   // const newEncodedImages = [...encodedImages]
+  //   // newEncodedImages.splice(index, 1)
+  //   // setEncodedImages(newEncodedImages)
+  // }
+
+  // const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const fileInput = event.target
+  //   const files = Array.from(fileInput.files || [])
+
+  //   if (files.length === 0) {
+  //     return
+  //   }
+
+  //   const validImageFiles = files.filter(
+  //     (file) => file.type.startsWith('image/') && file.size >= 5120 && file.size <= 1048576,
+  //   )
+
+  //   const invalidTypeFiles = files.filter((file) => !file.type.startsWith('image/'))
+  //   const invalidSizeFiles = files.filter((file) => file.size < 5120 || file.size > 1048576)
+
+  //   if (invalidTypeFiles.length > 0 || invalidSizeFiles.length > 0) {
+  //     setMooringImages([])
+  //     setEncodedImages([])
+  //     let detailMessage = 'Only image files are allowed'
+
+  //     if (invalidSizeFiles.length > 0) {
+  //       detailMessage = 'Images must be between 5 KB and 1 MB.'
+  //     }
+
+  //     toastRef?.current?.show({
+  //       severity: 'error',
+  //       summary: 'Error',
+  //       detail: detailMessage,
+  //       life: 3000,
+  //     })
+  //     fileInput.value = ''
+  //     return
+  //   }
+
+  //   const newBase64Strings: string[] = []
+  //   const newImageUrls: string[] = []
+  //   const imageRequestDtoList: { imageName?: string; imageData?: string; note?: string }[] = []
+
+  //   for (const file of validImageFiles) {
+  //     try {
+  //       const base64String = await new Promise<string>((resolve, reject) => {
+  //         const reader = new FileReader()
+  //         reader.onload = () => {
+  //           if (typeof reader.result === 'string') {
+  //             resolve(reader.result.split(',')[1])
+  //           } else {
+  //             reject(new Error('FileReader result is not a string.'))
+  //           }
+  //         }
+  //         reader.onerror = () => {
+  //           reject(new Error('Error reading file.'))
+  //         }
+  //         reader.readAsDataURL(file)
+  //       })
+  //       newBase64Strings.push(base64String)
+  //       newImageUrls.push(`data:image/png;base64,${base64String}`)
+  //       imageRequestDtoList.push({
+  //         imageName: file.name,
+  //         imageData: base64String,
+  //         note: "",
+  //       })
+  //     } catch (error) {
+  //       console.error('Error reading file:', error)
+  //     }
+  //   }
+
+  //   setMooringImages((prevImages) => [...prevImages, ...newImageUrls])
+  //   setEncodedImages((prevEncoded) => [...prevEncoded, ...newBase64Strings])
+  //   setimageRequestDtoList(imageRequestDtoList)
+  // }
+
+  const handleRemoveImage = (index: number) => {
+    setMooringImages((prevImages) => prevImages.filter((_, i) => i !== index))
+    setEncodedImages((prevEncoded) => prevEncoded.filter((_, i) => i !== index))
+    setimageRequestDtoList((prevList: any[]) => prevList.filter((_, i) => i !== index))
   }
 
   const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -302,7 +382,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     if (invalidTypeFiles.length > 0 || invalidSizeFiles.length > 0) {
       setMooringImages([])
       setEncodedImages([])
-      let detailMessage = 'Only image files are allowed'
+      let detailMessage = 'Only image files are allowed.'
 
       if (invalidSizeFiles.length > 0) {
         detailMessage = 'Images must be between 5 KB and 1 MB.'
@@ -314,13 +394,13 @@ const AddMoorings: React.FC<AddMooringProps> = ({
         detail: detailMessage,
         life: 3000,
       })
-      fileInput.value = ''
+      fileInput.value = '' // Reset input value
       return
     }
 
     const newBase64Strings: string[] = []
     const newImageUrls: string[] = []
-    const imageRequestDtoList: { imageName?: string; imageData?: string; note?: string }[] = []
+    const newImageRequestDtoList: { imageName: string; imageData: string; note: string }[] = []
 
     for (const file of validImageFiles) {
       try {
@@ -340,10 +420,10 @@ const AddMoorings: React.FC<AddMooringProps> = ({
         })
         newBase64Strings.push(base64String)
         newImageUrls.push(`data:image/png;base64,${base64String}`)
-        imageRequestDtoList.push({
+        newImageRequestDtoList.push({
           imageName: file.name,
           imageData: base64String,
-          note: imageNote,
+          note: '', // Initialize with an empty note
         })
       } catch (error) {
         console.error('Error reading file:', error)
@@ -352,7 +432,13 @@ const AddMoorings: React.FC<AddMooringProps> = ({
 
     setMooringImages((prevImages) => [...prevImages, ...newImageUrls])
     setEncodedImages((prevEncoded) => [...prevEncoded, ...newBase64Strings])
-    setimageRequestDtoList(imageRequestDtoList)
+    setimageRequestDtoList((prevList: any) => [...prevList, ...newImageRequestDtoList])
+  }
+
+  const handleNoteChange = (index: number, note: string) => {
+    setimageRequestDtoList((prevList: any[]) =>
+      prevList.map((item, i) => (i === index ? { ...item, note } : item)),
+    )
   }
 
   const handleEditMode = () => {
@@ -1901,7 +1987,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   <span className="pl-10 mt-1"> UPLOAD IMAGES </span>
                 </label>
               </div>
-              <div className="">
+              {/* <div className="">
                 <div className=" font-medium text-sm text-[#000000]">Note</div>
                 <div className="mt-1">
                   <InputComponent
@@ -1919,9 +2005,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                       resize: 'none',
                     }}
                   />
-                  {/* <p>{fieldErrors.note && <small className="p-error">{fieldErrors.note}</small>}</p> */}
+                  
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
 
@@ -1983,6 +2069,25 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                           boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
                         }}
                       />
+                      <div className="mt-2">
+                        <InputText
+                          value={imageRequestDtoList[index].note}
+                          onChange={(e) => handleNoteChange(index, e.target.value)}
+                          placeholder="Add note"
+                          style={{
+                            width: '300px',
+                            height: '40px',
+                            border: '1px solid #D5E1EA',
+                            borderRadius: '0.50rem',
+                            fontSize: '0.8rem',
+                            boxShadow: 'none',
+                            paddingLeft: '0.5rem',
+                            color: 'black',
+                            resize: 'none',
+                            marginTop: '10px',
+                          }}
+                        />
+                      </div>
                     </div>
                   ))}
                 </div>
