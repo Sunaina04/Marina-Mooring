@@ -84,7 +84,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
 
   const validateFields = () => {
     const nameRegex = /^[a-zA-Z ]+$/
-    // const zipCodeRegex = /^\d+$/
+    const zipCodeRegex = /^\d{5}(-\d{4})?$/
     const errors: { [key: string]: string } = {}
 
     if (!boatyardName) {
@@ -98,8 +98,11 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
       errors.gpsCoordinatesValue = 'GPS Coordinates is required'
     }
     if (!address) errors.address = 'Street/house is required'
+
     // if (!zipCode) {
     //   errors.zipCode = 'Zip Code is required'
+    // } else if (!zipCodeRegex.test(zipCode)) {
+    //   errors.zipCode = 'Invalid Zip Code format'
     // }
     if (!mainContact) errors.mainContact = 'Main contact is required'
     if (!country) errors.country = 'Country  is required'

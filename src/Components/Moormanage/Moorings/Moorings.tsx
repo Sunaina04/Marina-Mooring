@@ -859,7 +859,7 @@ const Moorings = () => {
               position={coordinatesArray ? coordinatesArray : initialPosition}
               zoomLevel={10}
               style={{
-                height: '600px',
+                height: '700px',
                 width: 'auto',
                 maxWidth: 'auto',
                 flexGrow: 1,

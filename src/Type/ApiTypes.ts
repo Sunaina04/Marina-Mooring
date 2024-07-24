@@ -761,6 +761,11 @@ export interface UploadPayload {
   customerId: string
 }
 
+export interface PaymentPayload {
+  paymentTypeId: number
+  amount: number
+}
+
 export interface WorkOrderPayload {
   customerResponseDto: any
   mooringResponseDto: any
