@@ -9,7 +9,7 @@ import {
 } from '../../../Services/MoorManage/MoormanageApi'
 import { Button } from 'primereact/button'
 import { CustomerDataProps } from '../../../Type/ComponentBasedType'
-import { Country, MetaData, Params, State } from '../../../Type/CommonType'
+import { Country, MetaData, State } from '../../../Type/CommonType'
 import { CustomerResponse, ErrorResponse, MooringRowData } from '../../../Type/ApiTypes'
 import {
   CountriesData,
@@ -20,7 +20,6 @@ import {
   TypeOfEye,
   TypeOfBottomChain,
   TypeOfShackleSwivel,
-  TypeOfSizeOfWeight,
   BoatyardNameData,
   CustomersType,
   ServiceAreaData,
@@ -28,16 +27,15 @@ import {
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import CustomSelectPositionMap from '../../Map/CustomSelectPositionMap'
-import { LatLngExpression } from 'leaflet'
 import { ProgressSpinner } from 'primereact/progressspinner'
-import { Checkbox } from 'primereact/checkbox'
 import { Calendar } from 'primereact/calendar'
 import { InputTextarea } from 'primereact/inputtextarea'
 import { Toast } from 'primereact/toast'
-import { FileUpload } from 'primereact/fileupload'
 import { FaFileUpload } from 'react-icons/fa'
 import { Dialog } from 'primereact/dialog'
 import { AiOutlineDelete } from 'react-icons/ai'
+import { NUMBER_REGEX } from '../../Utils/RegexUtils'
+
 const AddCustomer: React.FC<CustomerDataProps> = ({
   customer,
   mooringRowData,
@@ -77,7 +75,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [checkedDock, setCheckedDock] = useState(false)
   const [imageVisible, setImageVisible] = useState(false)
   const [hoveredIndex, setHoveredIndex] = useState<null | number>(null)
-  const [imageRequestDtoList, setimageRequestDtoList] = useState<any>()
+  const [imageRequestDtoList, setImageRequestDtoList] = useState<
+    { imageName: string; imageData: string; note: string }[]
+  >([])
   const [imagesNote, setImagesNote] = useState('')
   const getFomattedCoordinate = (gpsCoordinatesValue: any) => {
     try {
@@ -206,7 +206,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
     const newBase64Strings: string[] = []
     const newImageUrls: string[] = []
-    const imageRequestDtoList: { imageName: string; imageData: string; note: string }[] = []
+    const newImageRequestDtoList: { imageName: string; imageData: string; note: string }[] = []
 
     for (const file of validImageFiles) {
       try {
@@ -226,10 +226,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         })
         newBase64Strings.push(base64String)
         newImageUrls.push(`data:image/png;base64,${base64String}`)
-        imageRequestDtoList.push({
+        newImageRequestDtoList.push({
           imageName: file.name,
           imageData: base64String,
-          note: imagesNote,
+          note: '', // Initialize with an empty note
         })
       } catch (error) {
         console.error('Error reading file:', error)
@@ -238,17 +238,19 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
     setCustomerImages((prevImages) => [...prevImages, ...newImageUrls])
     setEncodedImages((prevEncoded) => [...prevEncoded, ...newBase64Strings])
-    setimageRequestDtoList(imageRequestDtoList)
+    setImageRequestDtoList((prevList) => [...prevList, ...newImageRequestDtoList])
   }
 
   const handleRemoveImage = (index: number) => {
-    const newImages = [...customerImages]
-    newImages.splice(index, 1)
-    setCustomerImages(newImages)
+    setCustomerImages((prevImages) => prevImages.filter((_, i) => i !== index))
+    setEncodedImages((prevEncoded) => prevEncoded.filter((_, i) => i !== index))
+    setImageRequestDtoList((prevList) => prevList.filter((_, i) => i !== index))
+  }
 
-    // const newEncodedImages = [...encodedImages]
-    // newEncodedImages.splice(index, 1)
-    // setEncodedImages(newEncodedImages)
+  const handleNoteChange = (index: number, note: string) => {
+    setImageRequestDtoList((prevList) =>
+      prevList.map((item, i) => (i === index ? { ...item, note } : item)),
+    )
   }
 
   const validateFields = () => {
@@ -267,20 +269,13 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       errors.firstName = 'First name must be at least 3 characters long'
       firstError = 'firstName'
     }
-
     if (!lastName) {
       errors.lastName = 'Last name is required'
       if (!firstError) firstError = 'lastName'
+    } else if (lastName.length < 3) {
+      errors.lastName = 'Last name must be at least 3 characters long'
+      firstError = 'lastName'
     }
-
-    if (!phone) {
-      errors.phone = 'Phone is required'
-      if (!firstError) firstError = 'phone'
-    } else if (!phoneRegex.test(phone)) {
-      errors.phone = 'Phone must be a 10-digit number'
-      if (!firstError) firstError = 'phone'
-    }
-
     setFirstErrorField(firstError)
     setFieldErrors(errors)
     return errors
@@ -302,40 +297,13 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   }
 
   const handleInputChange = (field: string, value: any) => {
-    const phoneRegex = /^.{10}$|^.{12}$/
-    const numberRegex = /^\d+$/
-    // const regexp =  /^\\d{5}(-\\d{4})?$/
-
-    // if (field === 'zipCode') {
-    //   if (value !== '' && !regexp.test(value)) {
-    //     return
-    //   }
-    // }
-
-    if (field === 'phone') {
-      if (value !== '' && numberRegex.test(value)) {
-        return
-      }
-    }
-
-    if (field === 'boatSize') {
-      if (value !== '' && !numberRegex.test(value)) {
-        return
-      }
-    }
-
-    if (field === 'sizeOfWeight') {
-      if (value !== '' && !numberRegex.test(value)) {
-        return
-      }
-    }
-    if (field === 'boatWeight') {
-      if (value !== '' && !numberRegex.test(value)) {
-        return
-      }
-    }
-    if (field === 'depthAtMeanHighWater') {
-      if (value !== '' && !numberRegex.test(value)) {
+    if (
+      field === 'boatSize' ||
+      field === 'sizeOfWeight' ||
+      field === 'boatWeight' ||
+      field === 'depthAtMeanHighWater'
+    ) {
+      if (value !== '' && !NUMBER_REGEX.test(value)) {
         return
       }
     }
@@ -343,7 +311,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       ...formData,
       [field]: value,
     })
-
     if (fieldErrors[field]) {
       setFieldErrors({
         ...fieldErrors,
@@ -362,7 +329,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         break
       case 'phone':
         setPhone(value)
-
         break
       case 'email':
         setEmail(value)
@@ -385,7 +351,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       case 'CustomerType':
         setSelectedCustomerType(value)
         break
-
       default:
         setFormData({ ...formData, [fieldName]: value })
         break
@@ -406,7 +371,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     setSelectedCountry(customer?.countryResponseDto?.name || undefined)
     setGpsCoordinatesValue(mooringRowData?.gpsCoordinates || '')
     setCheckedDock(selectedCustomerType === 'Dock')
-
     setFormData((prevState: any) => ({
       ...prevState,
       mooringNumber: mooringRowData?.mooringNumber || '',
@@ -437,6 +401,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
   const SaveCustomer = async () => {
     const errors = validateFields()
+
+    console.log('image list', imageRequestDtoList)
+
     if (Object.keys(errors).length > 0) {
       return
     }
@@ -540,7 +507,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     if (Object.keys(errors).length > 0) {
       return
     }
-
     try {
       setIsLoading(true)
       const editCustomerPayload = {
@@ -573,7 +539,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
-          detail: 'Customer Updated successfully',
+          detail: message,
           life: 3000,
         })
       } else {
@@ -602,13 +568,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     if (Object.keys(errors).length > 0) {
       return
     }
-
     try {
       setIsLoading(true)
-
       const createPayload = (formData: any, mooringRowData: any) => {
         const payload: Partial<MooringRowData> = {}
-
         if (formData?.harbor !== mooringRowData?.harborOrArea) {
           payload.harborOrArea = formData.harbor
         }
@@ -666,7 +629,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         if (formData?.serviceAreaId?.id !== mooringRowData?.serviceAreaResponseDto?.id) {
           payload.serviceAreaId = formData.serviceAreaId.id
         }
-
         payload.gpsCoordinates = gpsCoordinatesValue
         payload.statusId = 3
         payload.imageRequestDtoList = imageRequestDtoList
@@ -675,14 +637,11 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         payload.customerId = mooringRowData?.customerId || mooringRowData?.customerResponseDto?.id
         return payload
       }
-
       const editMooringPayload = createPayload(formData, mooringRowData)
-
       const response = await updateMooring({
         payload: editMooringPayload,
         id: mooringRowData?.id,
       }).unwrap()
-
       const { status, message } = response as CustomerResponse
       if (status === 200 || status === 201) {
         setIsLoading(false)
@@ -723,7 +682,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       const { statesData } = await getStatesData()
       const { countriesData } = await getCountriesData()
       const { customersType } = await getCustomersType()
-
       if (countriesData !== null) {
         setIsLoading(false)
         setCountriesData(countriesData)
@@ -747,7 +705,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       const { typeOfShackleSwivelData } = await getTypeOfShackleSwivelData()
       const { boatYardName } = await getBoatYardNameData()
       const { serviceAreaData } = await getServiceAreaData()
-
       if (typeOfBoatTypeData !== null) {
         setIsLoading(false)
         setType(typeOfBoatTypeData)
@@ -974,10 +931,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
                 <div className="">
                   <span className="font-medium text-sm text-[#000000]">
-                    <div className="flex gap-1">
-                      Phone
-                      <p className="text-red-600">*</p>
-                    </div>
+                    <div className="flex gap-1">Phone</div>
                   </span>
                   <div className="mt-2">
                     <InputComponent
@@ -986,15 +940,12 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       style={{
                         width: '230px',
                         height: '32px',
-                        border: fieldErrors.phone ? '1px solid red' : '1px solid #D5E1EA',
+                        border: '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.8rem',
                         paddingLeft: '0.5rem',
                       }}
                     />
-                    <p className="" id="phone">
-                      {fieldErrors.phone && <small className="p-error">{fieldErrors.phone}</small>}
-                    </p>
                   </div>
                 </div>
               </div>
@@ -1014,7 +965,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         style={{
                           width: '230px',
                           height: '32px',
-                          border: fieldErrors ? '1px solid #D5E1EA' : '',
+                          border: '1px solid #D5E1EA',
                           borderRadius: '0.50rem',
                           fontSize: '0.8rem',
                           paddingLeft: '0.5rem',
@@ -1052,13 +1003,12 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   <span className="font-medium text-sm text-[#000000]">
                     <div className="flex gap-1">Image</div>
                   </span>
-
                   <div className="mt-2">
                     <div
                       style={{
                         width: '230px',
                         height: '32px',
-                        border: fieldErrors.email ? '1px solid red' : '1px solid #D5E1EA',
+                        border: '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         fontSize: '0.8rem',
                         paddingLeft: '0.5rem',
@@ -1073,8 +1023,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       </div>
                     </div>
                   </div>
-
-                  {/* <input type="text" onChange={uploadImages}/>p */}
                 </div>
               </div>
             </div>
@@ -1094,10 +1042,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             <div className="mt-3">
               <div>
                 <h1 className="font-medium text-sm text-[#000000]">
-                  <div className="flex gap-1">
-                    Address
-                    {/* <p className="text-red-600">*</p> */}
-                  </div>
+                  <div className="flex gap-1">Address</div>
                 </h1>
               </div>
               <div className="flex gap-6 mt-2 ">
@@ -1135,18 +1080,13 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       style={{
                         width: '230px',
                         height: '32px',
-                        border: fieldErrors.sectorBlock ? '1px solid red' : '1px solid #D5E1EA',
+                        border: '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         color: 'black',
                         fontSize: '0.8rem',
                         paddingLeft: '0.5rem',
                       }}
                     />
-                    <p className="" id="sectorBlock">
-                      {fieldErrors.sectorBlock && (
-                        <small className="p-error">{fieldErrors.sectorBlock}</small>
-                      )}
-                    </p>
                   </div>
                 </div>
                 <div>
@@ -1162,15 +1102,12 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     style={{
                       width: '230px',
                       height: '32px',
-                      border: fieldErrors.state ? '1px solid red' : '1px solid #D5E1EA',
+                      border: '1px solid #D5E1EA',
                       borderRadius: '0.50rem',
                       color: 'black',
                       fontSize: '0.8rem',
                     }}
                   />
-                  <p className="" id="selectedState">
-                    {fieldErrors.state && <small className="p-error">{fieldErrors.state}</small>}
-                  </p>
                 </div>
               </div>
               <div className="flex mt-5 gap-6">
@@ -1188,16 +1125,11 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     style={{
                       width: '230px',
                       height: '32px',
-                      border: fieldErrors.country ? '1px solid red' : '1px solid #D5E1EA',
+                      border: '1px solid #D5E1EA',
                       borderRadius: '0.50rem',
                       fontSize: '0.8rem',
                     }}
                   />
-                  <p className="" id="selectedCountry">
-                    {fieldErrors.country && (
-                      <small className="p-error">{fieldErrors.country}</small>
-                    )}
-                  </p>
                 </div>
                 <div>
                   <InputText
@@ -1214,11 +1146,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       paddingLeft: '0.5rem',
                     }}
                   />
-                  {/* <p className="" id="pinCode">
-                    {fieldErrors.pinCode && (
-                      <small className="p-error">{fieldErrors.pinCode}</small>
-                    )}
-                  </p> */}
                 </div>
               </div>
             </div>
@@ -1237,7 +1164,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   style={{
                     width: '98%',
                     height: '50px',
-                    border: fieldErrors.note ? '1px solid red' : '1px solid #D5E1EA',
+                    border: '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                     boxShadow: 'none',
@@ -1246,7 +1173,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     resize: 'none',
                   }}
                 />
-                <p>{fieldErrors.note && <small className="p-error">{fieldErrors.note}</small>}</p>
               </div>
             </div>
           </>
@@ -2016,8 +1942,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           onHide={() => setImageVisible(false)}
           headerStyle={{ cursor: 'alias' }}
           header={'Images'}>
-          <div className={`ml-4 ${isLoading ? 'blurred' : ''}`}>
-            <div className="flex justify-between ">
+          <div className="ml-4">
+            <div className="flex justify-between">
               <div className="mt-6">
                 <input
                   id="file-input"
@@ -2025,9 +1951,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   accept="image/*"
                   multiple
                   onChange={handleImageChange}
-                  style={{
-                    display: 'none',
-                  }}
+                  style={{ display: 'none' }}
                 />
                 <label
                   htmlFor="file-input"
@@ -2042,8 +1966,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     display: 'flex',
                     alignItems: 'center',
                     gap: '0.5rem',
-                  }}
-                  onClick={uploadImages}>
+                  }}>
                   <FaFileUpload
                     style={{
                       fontSize: '29px',
@@ -2052,30 +1975,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       marginLeft: '1rem',
                     }}
                   />
-                  <div className="border-r-2 border-sky-500  h-9 pl-3"></div>
-                  <span className="pl-10 mt-1"> Upload Images </span>
+                  <div className="border-r-2 border-sky-500 h-9 pl-3"></div>
+                  <span className="pl-10 mt-1">Upload Images</span>
                 </label>
-              </div>
-              <div className="">
-                <div className=" font-medium text-sm text-[#000000]">Note</div>
-                <div className="mt-1">
-                  <InputComponent
-                    value={imagesNote}
-                    onChange={(e) => setImagesNote(e.target.value)}
-                    style={{
-                      width: '370px',
-                      height: '40px',
-                      border: '1px solid #D5E1EA',
-                      borderRadius: '0.50rem',
-                      fontSize: '0.8rem',
-                      boxShadow: 'none',
-                      paddingLeft: '0.5rem',
-                      color: 'black',
-                      resize: 'none',
-                    }}
-                  />
-                  {/* <p>{fieldErrors.note && <small className="p-error">{fieldErrors.note}</small>}</p> */}
-                </div>
               </div>
             </div>
           </div>
@@ -2090,23 +1992,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       style={{ position: 'relative', display: 'inline-block' }}
                       onMouseEnter={() => setHoveredIndex(index)}
                       onMouseLeave={() => setHoveredIndex(null)}>
-                      {/* <h1
-                        style={{
-                          position: 'absolute',
-                          top: '12px',
-                          right: '0',
-                          left: '12px',
-                          background: 'gray',
-                          color: 'white',
-                          fontWeight: 'bolder',
-                          border: 'none',
-                          width: '80px',
-                          cursor: 'pointer',
-                          opacity: hoveredIndex === index ? 1 : 0,
-                          transition: 'opacity 0.3s',
-                        }}>
-                        name
-                      </h1> */}
                       <AiOutlineDelete
                         onClick={() => handleRemoveImage(index)}
                         style={{
@@ -2135,6 +2020,25 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                           boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
                         }}
                       />
+                      <div className="mt-2">
+                        <InputText
+                          value={imageRequestDtoList[index].note}
+                          onChange={(e) => handleNoteChange(index, e.target.value)}
+                          placeholder="Add note"
+                          style={{
+                            width: '300px',
+                            height: '40px',
+                            border: '1px solid #D5E1EA',
+                            borderRadius: '0.50rem',
+                            fontSize: '0.8rem',
+                            boxShadow: 'none',
+                            paddingLeft: '0.5rem',
+                            color: 'black',
+                            resize: 'none',
+                            marginTop: '10px',
+                          }}
+                        />
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -2142,7 +2046,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             )}
           </div>
 
-          <div className={`flex gap-4 ml-4 bottom-5 absolute left-6 ${isLoading ? 'blurred' : ''}`}>
+          <div className="flex gap-4 ml-4 bottom-5 absolute left-6">
             <Button
               label={'Close'}
               onClick={() => setImageVisible(false)}
