@@ -60,13 +60,13 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
         errors.companyName = 'Vendor Name is required'
     }
 
-    if (formData.zipCodeForAddress && !zipCodeRegex.test(formData.zipCodeForAddress)) {
-        errors.zipCodeForAddress = 'Invalid Zip Code format'
-    }
+    // if (formData.zipCodeForAddress && !zipCodeRegex.test(formData.zipCodeForAddress)) {
+    //     errors.zipCodeForAddress = 'Invalid Zip Code format'
+    // }
 
-    if (formData.zipCodeForRemit && !zipCodeRegex.test(formData.zipCodeForRemit)) {
-        errors.zipCodeForRemit = 'Invalid Zip Code format'
-    }
+    // if (formData.zipCodeForRemit && !zipCodeRegex.test(formData.zipCodeForRemit)) {
+    //     errors.zipCodeForRemit = 'Invalid Zip Code format'
+    // }
 
     // if (!formData.phone) {
     //   errors.phone = 'Phone is required'
