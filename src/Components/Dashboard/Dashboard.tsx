@@ -160,8 +160,6 @@ const Dashboard = () => {
     return data.customerResponseDto.firstName + ' ' + data.customerResponseDto.lastName
   }
 
- 
-
   const Mooringcolumns: TableColumnProps[] = useMemo(
     () => [
       {
@@ -227,7 +225,6 @@ const Dashboard = () => {
           fontWeight: '700',
         },
       },
-      
     ],
     [],
   )
@@ -379,37 +376,31 @@ const Dashboard = () => {
     <>
       <Header header="MOORMANAGE/DASHBOARD" />
       <Toast ref={toast} />
-      <div className="mt-6">
-        <div className="flex lg:flex-row justify-around md:flex-col mt-4">
+      <div className="">
+        <div className="flex lg:flex-row justify-around md:flex-col mt-12">
           <div
             style={{
               marginLeft: '3rem',
             }}>
             <div
               data-testid="mooring-data"
-              className="flex flex-col table-container "
-              // style={{ height: '300px' }}
+              className="flex flex-col"
               style={{
                 height: leftContainerWidth ? '50px' : '300px',
-                // minHeight: '300px',
-                // width: '500px',
-                // minWidth: '500px',
-                // backgroundColor: '#FFFFFF',
-                // position: 'relative',
-                // borderRadius:'10px'
+                position: 'relative',
+                borderRadius: '10px',
+                backgroundColor: '#FFFFFF',
               }}>
               <div className="bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px] text-white">
                 <h1 className="p-4 text-xl font-extrabold">Moorings Due for Service</h1>
               </div>
               <div
                 style={{
-                  overflow: 'auto',
-                  marginBottom: '10px',
-                  // height: '13rem',
-                  // minHeight: '13rem',
-                  borderBottomLeftRadius: '10px',
-                  borderBottomRightRadius: '10px',
-                }}>
+                  height: '240px', 
+                  overflowY: 'auto', 
+                  borderBottomLeftRadius:'10px'
+                }}
+                className="h-[240px] overflow-auto">
                 <DataTableComponent
                   columns={Mooringcolumns}
                   scrollable={true}
@@ -419,7 +410,6 @@ const Dashboard = () => {
                     color: '#000000',
                     fontWeight: 600,
                     cursor: 'pointer',
-                    // height: '13rem',
                   }}
                   selectionMode="single"
                   onSelectionChange={(e) => {

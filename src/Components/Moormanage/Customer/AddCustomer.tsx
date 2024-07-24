@@ -297,40 +297,13 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   }
 
   const handleInputChange = (field: string, value: any) => {
-    const phoneRegex = /^.{10}$|^.{12}$/
-    const numberRegex = /^\d+$/
-    // const regexp =  /^\\d{5}(-\\d{4})?$/
-
-    // if (field === 'zipCode') {
-    //   if (value !== '' && !regexp.test(value)) {
-    //     return
-    //   }
-    // }
-
-    if (field === 'phone') {
-      if (value !== '' && numberRegex.test(value)) {
-        return
-      }
-    }
-
-    if (field === 'boatSize') {
-      if (value !== '' && !numberRegex.test(value)) {
-        return
-      }
-    }
-
-    if (field === 'sizeOfWeight') {
-      if (value !== '' && !numberRegex.test(value)) {
-        return
-      }
-    }
-    if (field === 'boatWeight') {
-      if (value !== '' && !numberRegex.test(value)) {
-        return
-      }
-    }
-    if (field === 'depthAtMeanHighWater') {
-      if (value !== '' && !numberRegex.test(value)) {
+    if (
+      field === 'boatSize' ||
+      field === 'sizeOfWeight' ||
+      field === 'boatWeight' ||
+      field === 'depthAtMeanHighWater'
+    ) {
+      if (value !== '' && !NUMBER_REGEX.test(value)) {
         return
       }
     }
@@ -1173,11 +1146,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       paddingLeft: '0.5rem',
                     }}
                   />
-                  {/* <p className="" id="pinCode">
-                    {fieldErrors.pinCode && (
-                      <small className="p-error">{fieldErrors.pinCode}</small>
-                    )}
-                  </p> */}
                 </div>
               </div>
             </div>
