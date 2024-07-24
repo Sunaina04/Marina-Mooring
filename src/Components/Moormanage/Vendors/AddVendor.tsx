@@ -55,6 +55,18 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const phoneRegex = /^.{10}$|^.{12}$/
     const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/
+    const zipCodeRegex = /^\d{5}(-\d{4})?$/
+    if (!formData.companyName) {
+        errors.companyName = 'Vendor Name is required'
+    }
+
+    if (formData.zipCodeForAddress && !zipCodeRegex.test(formData.zipCodeForAddress)) {
+        errors.zipCodeForAddress = 'Invalid Zip Code format'
+    }
+
+    if (formData.zipCodeForRemit && !zipCodeRegex.test(formData.zipCodeForRemit)) {
+        errors.zipCodeForRemit = 'Invalid Zip Code format'
+    }
 
     // if (!formData.phone) {
     //   errors.phone = 'Phone is required'
@@ -115,6 +127,34 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
     setFieldErrors(errors)
     return errors
   }
+
+//   const validateAddVendorFields = () => {
+//     const errors: { [key: string]: string } = {}
+//     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+//     const phoneRegex = /^.{10}$|^.{12}$/
+//     const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/
+//     const zipCodeRegex = /^\d{5}(-\d{4})?$/
+
+    
+
+//     if (!formData.companyName) {
+//         errors.companyName = 'Vendor Name is required'
+//     }
+
+//     if (formData.zipCodeForAddress && !zipCodeRegex.test(formData.zipCodeForAddress)) {
+//         errors.zipCodeForAddress = 'Invalid Zip Code format'
+//     }
+
+//     if (formData.zipCodeForRemit && !zipCodeRegex.test(formData.zipCodeForRemit)) {
+//         errors.zipCodeForRemit = 'Invalid Zip Code format'
+//     }
+
+    
+
+//     setFieldErrors(errors)
+//     return errors
+// }
+
 
   const handleInputChange = (field: string, value: any) => {
     const numberRegex = /^\d+$/
