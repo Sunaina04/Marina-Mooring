@@ -162,8 +162,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       errors.mooringId = 'Mooring Number is required'
     }
 
-  
-
     setErrorMessage(errors)
     return errors
   }
@@ -405,12 +403,13 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         })
       }
     } catch (error) {
-      const { message } = error as ErrorResponse
+      const { message, data } = error as ErrorResponse
       setIsLoading(false)
+
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: message,
+        detail: message || data?.message,
         life: 3000,
       })
     }
@@ -759,9 +758,9 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
 
   return (
     <>
-      <div className={`"w-full h-full mb-16 ml-4" ${isLoading ? 'blurred' : ''}`}>
-        <Toast ref={toastRef} />
+      <Toast ref={toastRef} />
 
+      <div className={`"w-full h-full mb-16 ml-4" ${isLoading ? 'blurred' : ''}`}>
         {/* Customer Name */}
         <div className="flex gap-6">
           <div>
@@ -799,8 +798,9 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
           {/* Mooring Number */}
           <div>
             <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">Mooring Number
-              <p className="text-red-600">*</p>
+              <div className="flex gap-1">
+                Mooring Number
+                <p className="text-red-600">*</p>
               </div>
             </span>
             <div className="mt-1">

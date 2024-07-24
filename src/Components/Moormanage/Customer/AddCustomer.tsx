@@ -75,7 +75,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<string>()
   const [checkedMooring, setCheckedMooring] = useState(false)
   const [checkedDock, setCheckedDock] = useState(false)
-  const toastRef = useRef<Toast>(null)
   const [imageVisible, setImageVisible] = useState(false)
   const [hoveredIndex, setHoveredIndex] = useState<null | number>(null)
   const [imageRequestDtoList, setimageRequestDtoList] = useState<any>()
@@ -152,6 +151,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [addCustomer] = useAddCustomerMutation()
   const [updateCustomer] = useUpdateCustomerMutation()
   const [updateMooring] = useUpdateMooringsMutation()
+
+  const toastRef = useRef<Toast>(null)
 
   const handlePositionChange = (lat: number, lng: number) => {
     setCenter([lat, lng])
@@ -863,7 +864,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
   useEffect(() => {
     fetchDataAndUpdate()
-  }, [fetchDataAndUpdate])
+  }, [])
 
   useEffect(() => {
     if (editMode && customer) {

@@ -227,6 +227,7 @@ export interface inputHeader {
 export interface PaymentModalProps {
   visible?: boolean
   onHide?: any
+  workOrderInvoiceId: number
   onSavePayment: (paymentDetails: { amount: string; type: string }) => void
 }
 export interface ContactModalProps {

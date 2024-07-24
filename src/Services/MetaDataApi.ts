@@ -23,7 +23,6 @@ const metaDataApi = userApi.injectEndpoints({
       }),
     }),
 
-
     getCountries: builder.mutation({
       query: () => ({
         url: 'api/v1/metadata/countries',
@@ -184,6 +183,14 @@ const metaDataApi = userApi.injectEndpoints({
         params: { pageNumber, pageSize },
       }),
     }),
+
+    getPaymentOption: builder.mutation({
+      query: ({ pageNumber, pageSize }: { pageNumber?: number; pageSize?: number }) => ({
+        url: 'api/v1/metadata/paymentTypes',
+        method: 'GET',
+        params: { pageNumber, pageSize },
+      }),
+    }),
   }),
 })
 
@@ -208,4 +215,5 @@ export const {
   useGetCustomerTypeMutation,
   useGetServiceAreasMutation,
   useGetQuickBookCustomerMutation,
+  useGetPaymentOptionMutation,
 } = metaDataApi
