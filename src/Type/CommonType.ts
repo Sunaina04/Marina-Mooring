@@ -159,3 +159,13 @@ export interface DropdownValue {
   id: number
   label: string
 }
+ export interface viewImageProp {
+  handleZoomOut: () => void;
+  handleZoomIn: () => void;
+  scale: number;
+  showImage: {
+    imageData: string;
+  };
+}
+
+

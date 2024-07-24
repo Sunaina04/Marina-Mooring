@@ -243,3 +243,19 @@ export interface ApproveModalProps {
   getWorkOrderWithPendingPayApproval: () => void
   getOutStandingInvoice: () => void
 }
+
+export interface ViewImageProps {
+  imageVisible: boolean
+  setImageVisible: React.Dispatch<React.SetStateAction<boolean>>
+  showImage: any
+}
+
+export interface EditImageProps {
+  imageEditVisible: any
+  setImageEditVisible: React.Dispatch<React.SetStateAction<boolean>>
+  imageData: any
+  customerId: number
+  entity: string
+  handleModalClose: () => void
+  getCustomersWithMooring: () => void
+}

@@ -346,7 +346,7 @@ export type MooringRowData = {
   inspectionDate: string
   serviceAreaId?: { id: number }
   statusId?: number
-  imageRequestDtoList?: ImageDtoList
+  imageRequestDtoList?: any
 }
 
 export interface ImageData {
