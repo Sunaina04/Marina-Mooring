@@ -1,4 +1,4 @@
-import { UploadPayload, WorkOrderPayload } from '../../Type/ApiTypes'
+import { PaymentPayload, UploadPayload, WorkOrderPayload } from '../../Type/ApiTypes'
 import { userApi } from '../UserApi'
 
 const MoorserveApi = userApi.injectEndpoints({
@@ -203,6 +203,20 @@ const MoorserveApi = userApi.injectEndpoints({
         method: 'DELETE',
       }),
     }),
+
+    savePayment: builder.mutation({
+      query: ({
+        payload,
+        workOrderInvoiceId,
+      }: {
+        payload: PaymentPayload
+        workOrderInvoiceId?: number
+      }) => ({
+        url: `api/v1/payment/${workOrderInvoiceId}`,
+        method: 'POST',
+        body: payload,
+      }),
+    }),
   }),
 })
 
@@ -224,4 +238,5 @@ export const {
   useDeleteEstimateMutation,
   useGetEstimateMutation,
   useGetConvertEstimateToWorkOrderMutation,
+  useSavePaymentMutation,
 } = MoorserveApi
