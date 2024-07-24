@@ -131,7 +131,7 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
           <img
             src="/assets/images/resize.png"
             alt="Resize Icon"
-            style={{ width: '32px', height: '32px' }}
+            style={{ width: '20px', height: '20px' }}
           />
         </div>
 
@@ -207,7 +207,7 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
           }}>
           {dashboard ? (
             <div style={{ width: '5vw' }}>
-              <h1>Status</h1>
+              <p>Status</p>
               <div className="mt-1">
                 <hr style={{ border: '1px solid #3F3F3F' }} />
               </div>
