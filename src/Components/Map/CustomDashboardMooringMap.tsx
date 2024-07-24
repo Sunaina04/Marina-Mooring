@@ -27,7 +27,7 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
   const [showMap, setShowMap] = useState(true)
   const [showMapModal, setShowMapModal] = useState(false)
   const toast = useRef<Toast>(null)
-
+  const [isZoom, setZoom] = useState<boolean>(false)
   const parseCoordinates = (coordinates: string): [number, number] | null => {
     if (!coordinates) return null
     const [latitude, longitude] = coordinates.split(' ').map(parseFloat)
@@ -35,6 +35,7 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
   }
 
   const handleOpenMap = () => {
+    setZoom((prevZoom) => !prevZoom)
     if (leftContanerWidth) {
       setLeftContainer(false)
     } else {
@@ -45,7 +46,7 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
   const boxStyle: React.CSSProperties = {
     backgroundColor: 'white',
     borderRadius: '10px',
-    width: '33vw',
+    width: isZoom?'35vw ':"15vw",
     padding: '10px',
     marginBottom: '10px',
     boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
@@ -70,6 +71,7 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
+    flexDirection: isZoom ? 'row' : 'column',
     gap: '10px',
   }
 
@@ -94,8 +96,8 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
           onClick={() => {
             handleOpenMap()
           }}
-          className="p-2 h-8 w-8 mr-20"
-          style={{ cursor: 'pointer', position: 'absolute', left: '95%', top: 0, zIndex: 999 }}>
+          className="p-2 h-8 w-9 mr-20"
+          style={{ cursor: 'pointer', position: 'absolute', left: isZoom? '96%':"90%", top: 0, zIndex: 999 }}>
           <img src="/assets/images/resize.png" alt="Key Icon" className="p-clickable" />
         </div>
         <div>
