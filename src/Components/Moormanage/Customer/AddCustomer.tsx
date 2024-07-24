@@ -303,13 +303,14 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const handleInputChange = (field: string, value: any) => {
     const phoneRegex = /^.{10}$|^.{12}$/
     const numberRegex = /^\d+$/
-    // const regexp =  /^\\d{5}(-\\d{4})?$/
+    const regexp =  /^\\d{5}(-\\d{4})?$/
 
-    // if (field === 'zipCode') {
-    //   if (value !== '' && !regexp.test(value)) {
-    //     return
-    //   }
-    // }
+
+    if (field === 'zipCode') {
+      if (value !== '' && !regexp.test(value)) {
+        return
+      }
+    }
 
     if (field === 'phone') {
       if (value !== '' && numberRegex.test(value)) {
@@ -1302,17 +1303,17 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     style={{
                       width: '230px',
                       height: '32px',
-                      border: '1px solid #D5E1EA',
+                      border: fieldErrors.pinCode ? '1px solid red' : '1px solid #D5E1EA',
                       borderRadius: '0.50rem',
                       fontSize: '0.8rem',
                       paddingLeft: '0.5rem',
                     }}
                   />
-                  {/* <p className="" id="pinCode">
+                  <p className="" id="pinCode">
                     {fieldErrors.pinCode && (
                       <small className="p-error">{fieldErrors.pinCode}</small>
                     )}
-                  </p> */}
+                  </p>
                 </div>
               </div>
             </div>

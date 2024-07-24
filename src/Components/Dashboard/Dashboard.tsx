@@ -464,8 +464,8 @@ const Dashboard = () => {
                 position={coordinatesArray ? coordinatesArray : initialPosition}
                 zoomLevel={10}
                 style={{
-                  height: leftContainerWidth ? '700px' : '400px',
-                  minHeight: leftContainerWidth ? '700px' : '400px',
+                  height: leftContainerWidth ? '700px' : '534px',
+                  minHeight: leftContainerWidth ? '700px' : '534px',
                   width: '100%',
                 }}
                 iconsByStatus={iconsByStatus}
