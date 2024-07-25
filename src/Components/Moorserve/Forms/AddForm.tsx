@@ -1,9 +1,9 @@
+
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import InputComponent from '../../CommonComponent/InputComponent'
 import { Button } from 'primereact/button'
 import { Dropdown } from 'primereact/dropdown'
 import { Toast } from 'primereact/toast'
-
 import { useGetCustomerMutation } from '../../../Services/MoorManage/MoormanageApi'
 import { CustomerPayload, CustomerResponse, ErrorResponse } from '../../../Type/ApiTypes'
 import { toast } from 'react-toastify'
@@ -22,8 +22,8 @@ const AddForm = () => {
   const toastRef = useRef<Toast>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [customerData, setCustomerData] = useState<any[]>([])
-  const toast = useRef<Toast>(null)
   const [isLoading, setIsLoading] = useState(true)
+  const toast = useRef<Toast>(null)
   const [formData, setFormData] = useState<any>({
     customerName: '',
     id: '',
@@ -58,7 +58,7 @@ const AddForm = () => {
     setIsLoading(true)
     try {
       const response = await getCustomer({}).unwrap()
-      const { status, content, message, totalSize } = response as CustomerResponse
+      const { status, content, message } = response as CustomerResponse
       if (status === 200 && Array.isArray(content)) {
         if (content?.length > 0) {
           setIsLoading(false)
@@ -72,7 +72,6 @@ const AddForm = () => {
           setCustomerData(extractedData)
         } else {
           setIsLoading(false)
-
           setCustomerData([])
         }
       } else {
@@ -82,7 +81,7 @@ const AddForm = () => {
           summary: 'Error',
           detail: message,
           life: 3000,
-        })
+        });
       }
     } catch (error) {
       setIsLoading(false)
@@ -262,7 +261,7 @@ const AddForm = () => {
             </div>
           </span>
           <div
-            className="mt-1 p-4 border border-gray-300 rounded flex flex-col items-center justify-center text-center"
+            className="mt-1 p-4  border-dashed border-2 border-gray-300 rounded flex flex-col items-center justify-center text-center"
             style={{ width: '700px', height: '200px', cursor: 'pointer' }}
             onClick={handleClickUploadButton}>
             {uploadStatus === 'idle' && (
@@ -278,9 +277,22 @@ const AddForm = () => {
             {uploadStatus === 'success' && uploadFile && (
               <div>
                 <p className="mt-2 text-green-600">File uploaded successfully!</p>
-                <p>
-                  <strong>File Name:</strong> {fileName}
-                </p>
+                <div>
+                  <label>
+                    <strong>File Name:</strong>
+                    <input
+                      type="text"
+                      value={fileName}
+                      onChange={(e) => setFileName(e.target.value)}
+                      style={{
+                        marginLeft: '10px',
+                        padding: '5px',
+                        border: '1px solid #D5E1EA',
+                        borderRadius: '4px',
+                      }}
+                    />
+                  </label>
+                </div>
                 <p>
                   <strong>File Size:</strong> {Math.round(fileSize! / 1024)} KB
                 </p>
