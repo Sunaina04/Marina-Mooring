@@ -94,7 +94,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ onHide, onSavePayment }) =>
               value={paymentDetails.paymentOption}
               options={[
                 { label: 'Card', value: 'Card' },
-                { label: 'Check', value: 'Check' },
+                { label: 'Cheque', value: 'Cheque' },
                 { label: 'Cash', value: 'Cash' },
               ]}
               onChange={(e) => handleInputChange('paymentOption', e.value)}

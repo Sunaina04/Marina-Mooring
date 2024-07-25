@@ -660,11 +660,15 @@ const Customer = () => {
 
   return (
     <>
+    
       <Toast ref={toast} />
       <div style={{ height: '150vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
+      {/* <div className="flex lg:flex-row justify-around md:flex-col mt-4"> */}
         <Header header="MOORMANAGE/Customer" />
+         
         <div className="flex justify-end mr-12 ">
           <div className="flex mt-6 ">
+        
             <CustomModal
               buttonText={'ADD NEW'}
               buttonStyle={{
@@ -1449,6 +1453,7 @@ const Customer = () => {
           />
         </Dialog>
       </div>
+      {/* </div> */}
     </>
   )
 }

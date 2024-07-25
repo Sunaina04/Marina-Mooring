@@ -364,6 +364,13 @@ const Dashboard = () => {
     getMooringsData()
   }, [selectedCustomerId, totalMoorings])
 
+  // useEffect(() => {
+  //   setMooringSelected(false)
+  //   setTimeout(() => {
+  //     setMooringSelected(true)
+  //   }, 0)
+  // }, [mooringSelected])
+
   return (
     <>
       <Header header="MOORMANAGE/DASHBOARD" />
@@ -457,7 +464,7 @@ const Dashboard = () => {
                 moorings={mooringData}
                 dashboard={true}
                 leftContanerWidth={mooringSelected}
-                setLeftContainer={() => {}}
+                setLeftContainer={setMooringSelected}
                 setRightContainer={() => {}}
               />
             </div>

@@ -19,17 +19,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
 }) => {
   return (
     <div className="card flex justify-content-center">
-      {!button && (
-        <Button
-          label={buttonText}
-          icon={
-            // <img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8 ml-4 mb-0.5" />
-            icon
-          }
-          onClick={onClick}
-          style={buttonStyle}
-        />
-      )}
+      {!button && <Button label={buttonText} icon={icon} onClick={onClick} style={buttonStyle} />}
       <Dialog
         header={headerText}
         headerStyle={{ cursor: 'context-menu' }}
@@ -38,7 +28,8 @@ const CustomModal: React.FC<CustomModalProps> = ({
         modal={false}
         onHide={onHide}
         draggable={false}
-        style={dialogStyle}>
+        style={dialogStyle}
+        className="custom-modal">
         {children}
       </Dialog>
     </div>

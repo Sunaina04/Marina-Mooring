@@ -85,20 +85,20 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
 
   const validateFields = () => {
     const nameRegex = /^[a-zA-Z0-9 ]+$/
-    const zipCodeRegex = /^\\d{5}(-\\d{4})?$/
+    // const zipCodeRegex = /^\\d{5}(-\\d{4})?$/
     const errors: { [key: string]: string } = {}
 
-    // if (!serviceAreaName) {
-    //   errors.name = 'Service Area Name is required'
-    // } else if (!nameRegex.test(serviceAreaName)) {
-    //   errors.name = 'Name is invalid'
-    // }
-
-    if (!serviceAreaName) errors.name = 'ServiceArea Name is required'
-
-    if (!zipCode) {
-      errors.zipCode = 'Zip Code is required'
+    if (!serviceAreaName) {
+      errors.name = 'Service Area Name is required'
+    } else if (!nameRegex.test(serviceAreaName)) {
+      errors.name = 'Name is invalid'
     }
+
+    // if (!serviceAreaName) errors.name = 'ServiceArea Name is required'
+
+    // if (!zipCode) {
+    //   errors.zipCode = 'Zip Code is required'
+    // }
     
     return errors
   }
@@ -133,6 +133,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
   const saveServiceArea = async () => {
     const errors = validateFields()
 
+
     if (Object.keys(errors).length > 0) {
       setErrorMessage(errors)
       return
@@ -143,14 +144,21 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
       const Payload = {
         id: id,
         serviceAreaName: serviceAreaName,
-        serviceAreaTypeId: serviceAreaTypeId.id,
-        streetHouse: address,
-        aptSuite: aptSuite,
-        zipCode: zipCode,
-        stateId: selectedState?.id,
-        countryId: country?.id,
-        notes: notes,
-        gpsCoordinates: gpsCoordinatesValue,
+        ...(serviceAreaTypeId && { serviceAreaTypeId: serviceAreaTypeId.id }),
+        
+        ...(streetHouse && { streetHouse:address }),
+      
+        ...(aptSuite && { aptSuite: aptSuite }),
+      
+        ...(zipCode && { zipCode: zipCode }),
+        
+        ...(country && { stateId: country.id }),
+      
+        ...(country && { countryId: country.id }),
+        
+        ...(notes && { notes: notes }),
+       
+        ...(gpsCoordinatesValue && { gpsCoordinates: gpsCoordinatesValue }),
       }
       const response = await addServiceArea(Payload).unwrap()
       const { status, message } = response as ServiceAreaResponse
