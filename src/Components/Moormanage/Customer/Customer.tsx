@@ -502,31 +502,20 @@ const Customer = () => {
     setIsLoading(true)
     setIsLoader(true)
     try {
-      let params: Params = {}
-      if (pageNumberTwo) {
-        params.pageNumber = pageNumberTwo
-      }
-      if (pageSizeTwo) {
-        params.pageSize = pageSizeTwo
-      }
       const response = await getCustomerWithMooring({
         id: id,
         pageNumber: pageNumberTwo,
         pageSize: pageSizeTwo,
       }).unwrap()
       const { status, content, message, totalSize } = response as CustomersWithMooringResponse
-      if (
-        status === 200 &&
-        Array.isArray(content?.customerResponseDto?.mooringResponseDtoList) &&
-        Array.isArray(content.boatyardNames)
-      ) {
+      if (status === 200 && Array.isArray(content?.customerResponseDto?.mooringResponseDtoList)) {
         setIsLoading(false)
         setIsLoader(false)
         setTotalRecordsTwo(totalSize)
         setCustomerRecordData(content?.customerResponseDto)
         setCustomerImage(content?.customerResponseDto?.imageDtoList)
         setMooringData(content?.customerResponseDto?.mooringResponseDtoList)
-        setBoatYardData(content?.boatyardNames)
+        Array.isArray(content.boatyardNames) && setBoatYardData(content?.boatyardNames)
       } else {
         setIsLoading(false)
         setIsLoader(false)

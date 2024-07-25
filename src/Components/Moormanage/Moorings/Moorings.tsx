@@ -54,7 +54,7 @@ const Moorings = () => {
   const [selectedMooring, setSelectedMooring] = useState<any>()
   const [searchText, setSearchText] = useState('')
   const [customerId, setCustomerId] = useState<any>()
-  const [mooringId, setMooringId] = useState()
+  const [mooringId, setMooringId] = useState<any>()
   const [isLoading, setIsLoading] = useState(true)
   const [isLoader, setIsLoader] = useState(false)
   const [dialogVisible, setDialogVisible] = useState(false)
@@ -69,6 +69,7 @@ const Moorings = () => {
   const [imageEditVisible, setImageEditVisible] = useState(false)
   const [leftContainerWidth, setLeftContainerWidth] = useState(false)
   const [rightContainerWidth, setRightContainerWidth] = useState(false)
+  const [editMooringImageId, setEditMooringImageId] = useState<any>()
   const toast = useRef<Toast>(null)
   const [getMoorings] = useGetMooringsMutation()
   const [deleteMooring] = useDeleteMooringsMutation()
@@ -336,7 +337,6 @@ const Moorings = () => {
           fontSize: '12px',
         },
       },
-
       {
         id: 'imageName',
         label: 'Image Name',
@@ -411,6 +411,7 @@ const Moorings = () => {
           setCustomerId(content?.mooringResponseDtoList?.[0]?.customerId)
           setSelectedProduct(content?.mooringResponseDtoList?.[0])
           setTotalRecords(totalSize)
+          setMooringId(content?.mooringResponseDtoList?.[0]?.id)
         } else {
           setIsLoading(false)
           setCustomerRecordData('')
@@ -448,6 +449,7 @@ const Moorings = () => {
 
   const getCustomersWithMooring = async (id: number) => {
     setIsLoader(true)
+    setIsLoading(true)
     try {
       const response = await getCustomerWithMooring({
         id: id,
@@ -455,24 +457,30 @@ const Moorings = () => {
         pageSize: pageSizeTwo,
       }).unwrap()
       const { status, content, totalSize } = response as CustomersWithMooringResponse
-      if (
-        status === 200 &&
-        Array.isArray(content?.customerResponseDto?.mooringResponseDtoList) &&
-        Array.isArray(content.boatyardNames)
-      ) {
+      if (status === 200 && Array.isArray(content?.customerResponseDto?.mooringResponseDtoList)) {
         setIsLoading(false)
         setIsLoader(false)
         setCustomerRecordData(content?.customerResponseDto)
-        setBoatYardData(content?.boatyardNames)
-        const allMooringImages: any = []
+        Array.isArray(content.boatyardNames) && setBoatYardData(content?.boatyardNames)
+        let matchedMooringImages: any[] = []
+        let matchedMooringNumber: string | null = null
         content?.customerResponseDto?.mooringResponseDtoList?.forEach(
           (mooring: MooringResponseDtoList) => {
-            if (mooring?.imageDtoList) {
-              allMooringImages.push(...mooring?.imageDtoList)
+            if (mooring?.id === mooringId) {
+              matchedMooringNumber = mooring?.mooringNumber
+              matchedMooringImages = mooring?.imageDtoList || []
+              setEditMooringImageId(mooringId)
             }
           },
         )
-        setMooringImage(allMooringImages)
+        if (matchedMooringNumber) {
+          setMooringImage(matchedMooringImages)
+        } else {
+          setMooringImage([]) // Clear images if no match found
+        }
+
+        setMooringId('')
+
         setMooringResponseData(content?.customerResponseDto?.mooringResponseDtoList)
         setTotalRecordsTwo(totalSize)
       } else {
@@ -1207,7 +1215,7 @@ const Moorings = () => {
           <MooringInformations mooringRowData={mooringRowData} />
         </Dialog>
 
-        {/* Image Information */}
+        {/*Edit Image Information */}
         <Dialog
           position="center"
           style={{
@@ -1224,7 +1232,7 @@ const Moorings = () => {
           header={'Image Information'}>
           <AddImage
             imageData={imageData}
-            entityId={customerId}
+            entityId={editMooringImageId}
             entity={'Mooring'}
             closeModal={handleModalClose}
             getCustomersWithMooring={() => {

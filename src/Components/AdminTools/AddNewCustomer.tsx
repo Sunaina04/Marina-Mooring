@@ -22,9 +22,10 @@ import {
   RolesData,
   StatesData,
 } from '../CommonComponent/MetaDataComponent/MetaDataApi'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { setCustomerId, setCustomerName } from '../../Store/Slice/userSlice'
 import { Toast } from 'primereact/toast'
+import { EMAIL_REGEX, NAME_REGEX, PHONE_REGEX } from '../Utils/RegexUtils'
 
 const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   customerData,
@@ -83,56 +84,34 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   })
 
   const validateFields = () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    const phoneRegex = /^.{10}$|^.{12}$/
-    const nameRegex = /^[a-zA-Z ]+$/
-    const zipCodeRegex = /^\d+$/
     const errors: { [key: string]: string } = {}
     let firstError = ''
     if (!name) {
       errors.name = 'Name is required'
-    } else if (!nameRegex.test(name)) {
+    } else if (!NAME_REGEX.test(name)) {
       errors.name = 'Name must only contain letters'
     } else if (name.length < 3) {
       errors.name = 'Name must be at least 3 characters long'
     }
-    if (errors.name) {
-      firstError = 'name'
-    }
+    if (errors.name) firstError = 'name'
     if (!phone) {
       errors.phone = 'Phone is required'
-    } else if (!phoneRegex.test(phone)) {
+    } else if (!PHONE_REGEX.test(phone)) {
       errors.phone = 'Phone must be a 10-digit number'
     }
-
-    if (errors.phone && !firstError) {
-      firstError = 'phone'
-    }
+    if (errors.phone && !firstError) firstError = 'phone'
     if (!email) {
       errors.email = 'Email is required'
-    } else if (!emailRegex.test(email)) {
+    } else if (!EMAIL_REGEX.test(email)) {
       errors.email = 'Please enter a valid email format'
     }
-    if (errors.email && !firstError) {
-      firstError = 'email'
-    }
+    if (errors.email && !firstError) firstError = 'email'
     if (!street) errors.street = 'Street is required'
-    if (errors.street && !firstError) {
-      firstError = 'street'
-    }
+    if (errors.street && !firstError) firstError = 'street'
     if (!apt) errors.apt = 'Apt is required'
-    if (errors.apt && !firstError) {
-      firstError = 'apt'
-    }
-
-    // if (!zipCode) {
-    //   errors.zipCode = 'Zip Code is required'
-    // }
-
+    if (errors.apt && !firstError) firstError = 'apt'
     if (!role) errors.role = 'Role is required'
-    if (errors.role && !firstError) {
-      firstError = 'role'
-    }
+    if (errors.role && !firstError) firstError = 'role'
     if (
       !selectedCustomerId &&
       customerAdminDropdownEnabled &&
@@ -140,33 +119,19 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       (role?.id === 3 || role?.id === 4)
     )
       errors.selectedCustomerId = 'Customer Owner is required'
-    if (errors.selectedCustomerId && !firstError) {
-      firstError = 'selectedCustomerId'
-    }
+    if (errors.selectedCustomerId && !firstError) firstError = 'selectedCustomerId'
     if (!companyName && role?.id === 2) errors.companyName = 'Company Name is required'
-    if (errors.companyName && !firstError) {
-      firstError = 'companyName'
-    }
+    if (errors.companyName && !firstError) firstError = 'companyName'
     if (!country) errors.country = 'Country is required'
-    if (errors.country && !firstError) {
-      firstError = 'country'
-    }
+    if (errors.country && !firstError) firstError = 'country'
     if (!state) errors.state = 'State is required'
-    if (errors.state && !firstError) {
-      firstError = 'state'
-    }
-    if (!password && !passWordDisplay) {
-      errors.password = 'Password is required'
-    }
-    if (errors.password && !firstError) {
-      firstError = 'password'
-    }
+    if (errors.state && !firstError) firstError = 'state'
+    if (!password && !passWordDisplay) errors.password = 'Password is required'
+    if (errors.password && !firstError) firstError = 'password'
     if (!confirmPassword && !passWordDisplay)
       errors.confirmPassword = 'Confirm Password is required'
     if (password !== confirmPassword) errors.confirmPassword = 'Passwords do not match'
-    if (errors.confirmPassword && !firstError) {
-      firstError = 'confirmPassword'
-    }
+    if (errors.confirmPassword && !firstError) firstError = 'confirmPassword'
     setFirstErrorField(firstError)
     return errors
   }

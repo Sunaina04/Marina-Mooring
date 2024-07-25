@@ -95,7 +95,7 @@ const AddImage: React.FC<ImageDataProps> = ({
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: data?.message,
+        detail: message || data?.message,
         life: 3000,
       })
     }
