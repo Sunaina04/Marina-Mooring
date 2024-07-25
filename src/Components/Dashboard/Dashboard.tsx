@@ -40,6 +40,7 @@ const Dashboard = () => {
   const [selectedProduct, setSelectedProduct] = useState<any>()
   const [mooringResponseData, setMooringResponseData] = useState<any>()
   const [leftContainerWidth, setLeftContainerWidth] = useState(false)
+  const [rightContainerWidth, setRightContainerWidth] = useState(false)
   const [mooringSelected, setMooringSelected] = useState(false)
   const [getMoorings] = useGetMooringsMutation()
   const today = new Date()
@@ -375,6 +376,41 @@ const Dashboard = () => {
             style={{
               marginLeft: '3rem',
             }}>
+           {leftContainerWidth ? (
+            <div
+              style={{
+                height: '40px',
+                minHeight: '40px',
+                width: '1300px',
+                minWidth: '1300px',
+                backgroundColor: '#00426F',
+                display:'flex',
+                justifyContent:'end'
+              }}
+              className="rounded-md">
+              <div
+                style={{
+                  textAlign: 'center',
+                  color: 'white',
+                  display: 'flex',
+                  alignItems: 'center',
+                 // justifyContent: 'center',
+                  fontSize: '20px',
+                  letterSpacing: '4px',
+                  marginRight:'28rem'
+                }}
+                className="">
+                Moorings Due For Service
+              </div>
+              <div
+                className="pt-3 pr-5"
+
+                onClick={() => setLeftContainerWidth(false)}
+                style={{ cursor: 'pointer' }}>
+                <img src="/assets/images/plus.png" alt="Key Icon" className="p-clickable" />
+              </div>
+            </div>
+           ) : (
             <div
               data-testid="mooring-data"
               className="flex flex-col"
@@ -384,8 +420,35 @@ const Dashboard = () => {
                 borderRadius: '10px',
                 backgroundColor: '#FFFFFF',
               }}>
-              <div className="bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px] text-white">
-                <h1 className="p-4 text-xl font-extrabold">Moorings Due for Service</h1>
+              <div className=" flex justify-between bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px] text-white">
+                <div>
+                  <h1 className="p-4 text-xl font-extrabold">Moorings Due for Service</h1>
+                </div>
+
+                <div
+                  className="p-7"
+                 onClick={() => setLeftContainerWidth(true)}
+                  style={{ cursor: 'pointer' }}>
+                  {leftContainerWidth ? (
+                    <div onClick={() => setLeftContainerWidth(false)}>
+                      <img src="/assets/images/plus.png" alt="Key Icon" className="p-clickable" />
+                    </div>
+                  ) : (
+                    <div onClick={() => setLeftContainerWidth(true)}>
+                      <svg
+                        width="24"
+                        height="4"
+                        viewBox="0 0 11 3"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M10.125 1.5C10.125 1.92188 9.77344 2.25 9.375 2.25H1.125C0.703125 2.25 0.375 1.92188 0.375 1.5C0.375 1.10156 0.703125 0.75 1.125 0.75H9.375C9.77344 0.75 10.125 1.10156 10.125 1.5Z"
+                          fill="white"
+                        />
+                      </svg>
+                    </div>
+                  )}
+                </div>
               </div>
               <div
                 style={{
@@ -442,7 +505,7 @@ const Dashboard = () => {
                 />
               )}
             </div>
-
+           )}
             <div className={`${leftContainerWidth ? 'mt-8' : 'mt-4'}`}>
               <CustomDashboardMooringMap
                 position={coordinatesArray ? coordinatesArray : initialPosition}
@@ -457,7 +520,8 @@ const Dashboard = () => {
                 dashboard={true}
                 leftContanerWidth={leftContainerWidth}
                 setLeftContainer={setLeftContainerWidth}
-                setRightContainer={() => {}}
+                rightContanerWidth={rightContainerWidth}
+                setRightContainer={setRightContainerWidth}
               />
             </div>
           </div>
@@ -472,6 +536,12 @@ const Dashboard = () => {
                 backgroundColor: '#00426F',
               }}
               className="rounded-md ml-[20px] mr-[20px]">
+              <div
+                className="p-3"
+                onClick={() => setLeftContainerWidth(false)}
+                style={{ cursor: 'pointer' }}>
+                <img src="/assets/images/plus.png" alt="Key Icon" className="p-clickable" />
+              </div>
               <div
                 style={{
                   writingMode: 'vertical-rl',
