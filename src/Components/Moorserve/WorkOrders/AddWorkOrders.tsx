@@ -821,7 +821,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
               />
             </div>
           </div>
-          {!estimate &&  !isAccountRecievable &&(
+          {!estimate && !isAccountRecievable && (
             <div className="">
               <span className="font-medium text-sm text-[#000000]">
                 <div className="flex gap-1">Image</div>
@@ -1245,6 +1245,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
           }}
         />
       </Dialog>
+
       <Dialog
         position="center"
         style={{
