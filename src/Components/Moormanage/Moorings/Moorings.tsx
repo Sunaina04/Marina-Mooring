@@ -608,7 +608,13 @@ const Moorings = () => {
     <>
       <Toast ref={toast} />
 
-      <div style={{ height: '150vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
+      <div
+        style={{ height: '150vh' }}
+        className={
+          modalVisible || dialogVisible || imageEditVisible || imageVisible || customerModalVisible
+            ? 'backdrop-blur-lg'
+            : ''
+        }>
         <Header header={properties.MoormanageMoorings} />
 
         <div className="flex justify-end mr-12 ">
@@ -834,7 +840,7 @@ const Moorings = () => {
           {/* middle container */}
 
           <div
-            className={`min-h-[600] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}
+            className={`min-h-[600] rounded-md border-[1px] ml-5 ${modalVisible || customerModalVisible || imageVisible || imageEditVisible || dialogVisible ? 'blur-screen' : ''}`}
             style={{ flexGrow: '1' }}>
             <CustomMooringPositionMap
               position={coordinatesArray ? coordinatesArray : initialPosition}

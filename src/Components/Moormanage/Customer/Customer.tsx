@@ -663,7 +663,13 @@ const Customer = () => {
   return (
     <>
       <Toast ref={toast} />
-      <div style={{ height: '150vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
+      <div
+        style={{ height: '150vh' }}
+        className={
+          modalVisible || imageVisible || imageEditVisible || dialogVisible
+            ? 'backdrop-blur-lg'
+            : ''
+        }>
         <Header header="MOORMANAGE/Customer" />
         <div className="flex justify-end mr-12 ">
           <div className="flex mt-6 ">
@@ -891,7 +897,7 @@ const Customer = () => {
           {/* middle container */}
 
           <div
-            className={` min-h-[600] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}
+            className={` min-h-[600] rounded-md border-[1px] ml-5 ${modalVisible || imageVisible || imageEditVisible || dialogVisible ? 'blur-screen' : ''}`}
             style={{ flexGrow: '1' }}>
             <CustomMooringPositionMap
               position={initialPosition}
