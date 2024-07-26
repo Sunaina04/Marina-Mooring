@@ -260,26 +260,25 @@ export interface EditImageProps {
   getCustomersWithMooring: () => void
 }
 
-
 export interface FormDataProps {
   closeModal: () => void
- 
 }
 export interface FormFillProps {
   formOpen: () => void
 }
 export interface ShowImagesProps {
-  handleNoteChange: (index: number, value: string) => void;
-  hoveredIndex: number | null;
-  handleRemoveImage: (index: number) => void;
-  setHoveredIndex: (index: number | null) => void;
-  handleImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  setImageVisible: (visible: boolean) => void;
-  imageRequestDtoList: { note: string }[];
-  isLoading: boolean;
-  customerImages: string[];
+  handleNoteChange: (index: number, value: string) => void
+  hoveredIndex: number | null
+  handleRemoveImage: (index: number) => void
+  setHoveredIndex: (index: number | null) => void
+  handleImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  setImageVisible: (visible: boolean) => void
+  imageRequestDtoList: { note: string }[]
+  isLoading: boolean
+  customerImages: string[]
 }
 
 export interface ResetModalProps {
   isResetModalOpen: () => void
+  customerId: number
 }

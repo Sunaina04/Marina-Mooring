@@ -7,7 +7,7 @@ import { ResetModalProps } from '../../Type/ComponentBasedType'
 import { ErrorResponse, SaveUserResponse } from '../../Type/ApiTypes'
 import { Toast } from 'primereact/toast'
 
-const ResetPassword: React.FC<ResetModalProps> = ({ isResetModalOpen }) => {
+const ResetPassword: React.FC<ResetModalProps> = ({ isResetModalOpen, customerId }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [editCustomer] = useUpdateUserMutation()
   const [password, setPassword] = useState('')
@@ -46,10 +46,9 @@ const ResetPassword: React.FC<ResetModalProps> = ({ isResetModalOpen }) => {
   const validateFields = () => {
     const errors: { [key: string]: string } = {}
     let firstError = ''
-    if (!password && !passWordDisplay) errors.password = 'Password is required'
+    if (!password) errors.password = 'Password is required'
     if (errors.password && !firstError) firstError = 'password'
-    if (!confirmPassword && !passWordDisplay)
-      errors.confirmPassword = 'Confirm Password is required'
+    if (!confirmPassword) errors.confirmPassword = 'Confirm Password is required'
     if (password !== confirmPassword) errors.confirmPassword = 'Passwords do not match'
     if (errors.confirmPassword && !firstError) firstError = 'confirmPassword'
     setFirstErrorField(firstError)
@@ -98,7 +97,7 @@ const ResetPassword: React.FC<ResetModalProps> = ({ isResetModalOpen }) => {
       }
       const response = await editCustomer({
         payload: editUserPayload,
-        id: customerData?.id,
+        id: customerId,
       }).unwrap()
       const { status, message } = response as SaveUserResponse
       if (status === 200 || status === 201) {

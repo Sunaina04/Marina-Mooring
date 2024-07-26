@@ -24,7 +24,6 @@ import { VirtualScroller } from 'primereact/virtualscroller'
 import { Dialog } from 'primereact/dialog'
 import ResetPassword from './ResetPassword'
 
-
 const CustomerOwner = () => {
   const dispatch = useDispatch()
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -116,6 +115,7 @@ const CustomerOwner = () => {
   const handleResetModalClose = () => {
     setIsPasswordModalOpen(false)
     setIsResetModalOpen(false)
+    setSelectedRow('')
   }
 
   const ActionButtonColumn: ActionButtonColumnProps = {
@@ -140,14 +140,17 @@ const CustomerOwner = () => {
         label: 'Reset Password',
         underline: true,
         fontWeight: 700,
-        onClick: () => setIsPasswordModalOpen(true)
+        onClick: (rowData) => {
+          setSelectedRow(rowData?.id)
+          setIsPasswordModalOpen(true)
+        },
       },
     ],
     headerStyle: {
       backgroundColor: '#FFFFFF',
       borderBottom: '1px solid #D5E1EA',
       color: '#000000',
-      fontWeight: 700, 
+      fontWeight: 700,
     },
     style: { borderBottom: '1px solid #D5E1EA' },
   }
@@ -208,7 +211,10 @@ const CustomerOwner = () => {
         label: 'Reset Password',
         underline: true,
         fontWeight: 700,
-        onClick: () => setIsResetModalOpen(true)
+        onClick: (rowData) => {
+          setSelectedRow(rowData?.id)
+          setIsResetModalOpen(true)
+        },
       },
     ],
     headerStyle: {
@@ -350,7 +356,6 @@ const CustomerOwner = () => {
           setIsLoading(false)
           if (content.length > 0) {
             setgetCustomerOwnerUserData(content)
-            setSelectedRow(id)
             setCustomerAdminId(id)
             setTotalRecordsTwo(totalSize)
           } else {
@@ -712,50 +717,42 @@ const CustomerOwner = () => {
         </div>
       </div>
       <Dialog
-       position="center"
-       style={{
-         width: '650px',
-         minWidth: '650px',
-         height: '450px',
-         minHeight: '450px',
-         borderRadius: '1rem',
-         fontWeight: '400',
-         cursor: 'alias',
-       }}
-       draggable={false}
-       headerStyle={{ cursor: 'alias' }}
-       header="Reset Password"
-       onHide={handleResetModalClose}
-       visible={isPasswordModalOpen}
-       >
-
-       <ResetPassword isResetModalOpen={handleResetModalClose}/>
-      
+        position="center"
+        style={{
+          width: '650px',
+          minWidth: '650px',
+          height: '450px',
+          minHeight: '450px',
+          borderRadius: '1rem',
+          fontWeight: '400',
+          cursor: 'alias',
+        }}
+        draggable={false}
+        headerStyle={{ cursor: 'alias' }}
+        header="Reset Password"
+        onHide={handleResetModalClose}
+        visible={isPasswordModalOpen}>
+        <ResetPassword customerId={selectedRow} isResetModalOpen={handleResetModalClose} />
       </Dialog>
 
       <Dialog
-       position="center"
-       style={{
-         width: '650px',
-         minWidth: '650px',
-         height: '450px',
-         minHeight: '450px',
-         borderRadius: '1rem',
-         fontWeight: '400',
-         cursor: 'alias',
-       }}
-       draggable={false}
-       headerStyle={{ cursor: 'alias' }}
-       header="Reset Password"
-       onHide={handleResetModalClose}
-       visible={isResetModalOpen}
-       >
-
-       <ResetPassword isResetModalOpen={handleResetModalClose}/>
-      
+        position="center"
+        style={{
+          width: '650px',
+          minWidth: '650px',
+          height: '450px',
+          minHeight: '450px',
+          borderRadius: '1rem',
+          fontWeight: '400',
+          cursor: 'alias',
+        }}
+        draggable={false}
+        headerStyle={{ cursor: 'alias' }}
+        header="Reset Password"
+        onHide={handleResetModalClose}
+        visible={isResetModalOpen}>
+        <ResetPassword customerId={selectedRow} isResetModalOpen={handleResetModalClose} />
       </Dialog>
-
-      
     </>
   )
 }
