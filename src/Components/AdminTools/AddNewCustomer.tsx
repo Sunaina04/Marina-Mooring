@@ -61,6 +61,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const [rolesData, setRolesData] = useState<Role[]>()
   const [countriesData, setCountriesData] = useState<Country[]>()
   const [statesData, setStatesData] = useState<State[]>()
+  const [countryId, setCountryId] = useState<any>()
   const [errorMessage, setErrorMessage] = useState<string>()
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
   const [selectedCustomerId, setSelectedCustomerId] = useState<any>()
@@ -72,7 +73,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const [editCustomer] = useUpdateUserMutation()
   const [getUsersData] = useGetUsersMutation()
   const { getRolesData } = RolesData()
-  const { getStatesData } = StatesData()
+  const { getStatesData } = StatesData(countryId)
   const { getCountriesData } = CountriesData()
   const toastRef = useRef<Toast>(null)
 
@@ -431,7 +432,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   }
 
   const fetchDataAndUpdate = useCallback(async () => {
-    const { statesData } = await getStatesData()
     const { rolesData } = await getRolesData()
     const { countriesData } = await getCountriesData()
 
@@ -443,11 +443,16 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       setIsLoading(false)
       setCountriesData(countriesData)
     }
+  }, [])
+
+  const fetchStateDataAndUpdate = useCallback(async () => {
+    const { statesData } = await getStatesData()
+
     if (statesData !== null) {
       setIsLoading(false)
       setStatesData(statesData)
     }
-  }, [])
+  }, [countryId])
 
   const handleEditMode = () => {
     if ((editMode || editCustomerMode) && customerData) {
@@ -514,7 +519,11 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   useEffect(() => {
     fetchDataAndUpdate()
     getUserHandler()
-  }, [fetchDataAndUpdate])
+  }, [])
+
+  useEffect(() => {
+    fetchStateDataAndUpdate()
+  }, [countryId])
 
   useEffect(() => {
     handleEditMode()
@@ -790,10 +799,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
         <div className="mt-5 ml-4">
           <span className="font-medium text-sm text-[#000000]">
-            <div className="flex gap-1">
-              Address
-              {/* <p className="text-red-600">*</p> */}
-            </div>
+            <div className="flex gap-1">Address</div>
           </span>
         </div>
         <div className="gap-8 mt-1 ml-4">
@@ -876,6 +882,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 value={country}
                 onChange={(e) => {
                   setCountry(e.value)
+                  setCountryId(e.value.id)
                   setFieldErrors((prevErrors) => ({ ...prevErrors, country: '' }))
                 }}
                 options={countriesData}
