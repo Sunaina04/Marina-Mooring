@@ -1,117 +1,115 @@
 
-import React, { useCallback, useEffect, useRef, useState } from 'react'
-import InputComponent from '../../CommonComponent/InputComponent'
-import { Button } from 'primereact/button'
-import { Toast } from 'primereact/toast'
-import { useGetCustomerMutation } from '../../../Services/MoorManage/MoormanageApi'
-import { CustomerPayload, CustomerResponse, ErrorResponse } from '../../../Type/ApiTypes'
-import { selectCustomerId } from '../../../Store/Slice/userSlice'
-import { useSelector } from 'react-redux'
-import { FormDataProps } from '../../../Type/ComponentBasedType'
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import InputComponent from '../../CommonComponent/InputComponent';
+import { Button } from 'primereact/button';
+import { Toast } from 'primereact/toast';
+import { useGetCustomerMutation } from '../../../Services/MoorManage/MoormanageApi';
+import { CustomerPayload, CustomerResponse, ErrorResponse, formUpload } from '../../../Type/ApiTypes';
+import { selectCustomerId } from '../../../Store/Slice/userSlice';
+import { useSelector } from 'react-redux';
+import { FormDataProps } from '../../../Type/ComponentBasedType';
+import { useUploadFormMutation } from '../../../Services/MoorServe/MoorserveApi';
 
 const AddForm: React.FC<FormDataProps> = ({ closeModal }) => {
-  const selectedCustomerId = useSelector(selectCustomerId)
-  const [getCustomer] = useGetCustomerMutation()
-  const [uploadFile, setUploadFile] = useState<File | null>(null)
-  const [fileName, setFileName] = useState('')
-  const [fileSize, setFileSize] = useState<number | null>(null)
-  const [encodedFile, setEncodedFile] = useState<string | null>(null)
-  const [uploadStatus, setUploadStatus] = useState<'idle' | 'success' | 'error'>('idle')
-  const [fieldsError, setFieldsError] = useState<{ [key: string]: string }>({})
-  const toastRef = useRef<Toast>(null)
-  const fileInputRef = useRef<HTMLInputElement>(null)
-  const [customerData, setCustomerData] = useState<any[]>([])
-  const [isLoading, setIsLoading] = useState(true)
+  const selectedCustomerId = useSelector(selectCustomerId);
+  const [getCustomer] = useGetCustomerMutation();
+  const [uploadForm] = useUploadFormMutation();
+  const [uploadFile, setUploadFile] = useState<File | null>(null);
+  const [fileName, setFileName] = useState('');
+  const [fileSize, setFileSize] = useState<number | null>(null);
+  const [encodedFile, setEncodedFile] = useState<string | null>(null);
+  const [uploadStatus, setUploadStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [fieldsError, setFieldsError] = useState<{ [key: string]: string }>({});
+  const toastRef = useRef<Toast>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [customerData, setCustomerData] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [formData, setFormData] = useState<any>({
     customerName: '',
     id: '',
     formName: '',
     uploadFile: '',
-  })
+  });
 
   const validateFields = () => {
-    const errors: { [key: string]: string } = {}
-
-    // if (!formData.customerName) {
-    //   errors.customerName = 'Customer Name is required';
-    // }
+    const errors: { [key: string]: string } = {};
 
     if (!formData.id) {
-      errors.id = 'ID is required'
+      errors.id = 'ID is required';
     }
 
     if (!formData.formName) {
-      errors.formName = 'Form Name is required'
+      errors.formName = 'Form Name is required';
     }
 
-    setFieldsError(errors)
-    return errors
-  }
+    setFieldsError(errors);
+    return errors;
+  };
 
   const getCustomerData = useCallback(async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-      const response = await getCustomer({}).unwrap()
-      const { status, content, message } = response as CustomerResponse
+      const response = await getCustomer({}).unwrap();
+      const { status, content, message } = response as CustomerResponse;
       if (status === 200 && Array.isArray(content)) {
         if (content?.length > 0) {
-          setIsLoading(false)
+          setIsLoading(false);
           const extractedData = content.map((item) => {
-            const fullname = `${item.firstName} ${item.lastName}`
+            const fullname = `${item.firstName} ${item.lastName}`;
             return {
               label: fullname,
               id: item.id,
-            }
-          })
-          setCustomerData(extractedData)
+            };
+          });
+          setCustomerData(extractedData);
         } else {
-          setIsLoading(false)
-          setCustomerData([])
+          setIsLoading(false);
+          setCustomerData([]);
         }
       } else {
-        setIsLoading(false)
+        setIsLoading(false);
         toastRef.current?.show({
           severity: 'error',
           summary: 'Error',
           detail: message,
           life: 3000,
-        })
+        });
       }
     } catch (error) {
-      setIsLoading(false)
-      const { message: msg } = error as ErrorResponse
-      console.error('Error occurred while fetching customer data:', msg)
+      setIsLoading(false);
+      const { message: msg } = error as ErrorResponse;
+      console.error('Error occurred while fetching customer data:', msg);
     }
-  }, [getCustomer, selectedCustomerId])
+  }, [getCustomer, selectedCustomerId]);
 
   const handleInputChange = (field: string, value: any) => {
     setFormData({
       ...formData,
       [field]: value,
-    })
+    });
 
     if (fieldsError[field]) {
       setFieldsError({
         ...fieldsError,
         [field]: '',
-      })
+      });
     }
-  }
+  };
 
   const encodeFileToBase64 = (file: File) => {
-    const reader = new FileReader()
+    const reader = new FileReader();
     reader.onloadend = () => {
-      const base64String = reader.result as string
-      setEncodedFile(base64String)
-    }
-    reader.readAsDataURL(file)
-  }
+      const base64String = reader.result as string;
+      setEncodedFile(base64String);
+    };
+    reader.readAsDataURL(file);
+  };
 
-  const saveForm = () => {
-    const errors = validateFields()
+  const saveForm = async () => {
+    const errors = validateFields();
     if (Object.keys(errors).length > 0) {
-      setFieldsError(errors)
-      return
+      setFieldsError(errors);
+      return;
     }
 
     if (!encodedFile) {
@@ -119,63 +117,92 @@ const AddForm: React.FC<FormDataProps> = ({ closeModal }) => {
         severity: 'error',
         summary: 'Error',
         detail: 'Upload file is required',
-      })
-      return
+      });
+      return;
     }
 
-    const finalFormData = {
-      ...formData,
-      uploadFile: encodedFile,
+    setIsLoading(true);
+
+    try {
+      const payload = {
+        formName: formData.formName,
+        encodedFormData: encodedFile,
+      };
+      const response = await uploadForm(payload).unwrap();
+      const { status, message } = response as formUpload;
+
+      if (status === 200 || status === 201) {
+        setIsLoading(false);
+        toastRef?.current?.show({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Form saved successfully!',
+          life: 3000,
+        });
+        closeModal();
+      } else {
+        setIsLoading(false);
+        toastRef?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        });
+      }
+    } catch (error) {
+      const { message, data } = error as ErrorResponse;
+      setIsLoading(false);
+      toastRef?.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: message,
+        life: 3000,
+      });
     }
+  };
 
-    console.log('Form Data:', finalFormData)
 
-    toastRef.current?.show({
-      severity: 'success',
-      summary: 'Success',
-      detail: 'Form saved successfully!',
-    })
-  }
 
+  
   const handleClickUploadButton = () => {
     if (fileInputRef.current) {
-      fileInputRef.current.click()
+      fileInputRef.current.click();
     }
-  }
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      const file = e.target.files[0]
+      const file = e.target.files[0];
       if (file.type === 'application/pdf') {
-        setUploadFile(file)
-        setFileName(file.name)
-        setFileSize(file.size)
-        setFormData({ ...formData, uploadFile: file })
-        setUploadStatus('success')
-        setFieldsError({ ...fieldsError, uploadFile: '' })
-        encodeFileToBase64(file)
+        setUploadFile(file);
+        setFileName(file.name);
+        setFileSize(file.size);
+        setFormData({ ...formData, uploadFile: file });
+        setUploadStatus('success');
+        setFieldsError({ ...fieldsError, uploadFile: '' });
+        encodeFileToBase64(file);
         toastRef.current?.show({
           severity: 'success',
           summary: 'File Upload',
           detail: 'File uploaded successfully',
-        })
+        });
       } else {
-        setUploadFile(null)
-        setFileName('')
-        setFileSize(null)
-        setUploadStatus('error')
+        setUploadFile(null);
+        setFileName('');
+        setFileSize(null);
+        setUploadStatus('error');
         toastRef.current?.show({
           severity: 'error',
           summary: 'Error',
           detail: 'Only PDF files are allowed',
-        })
+        });
       }
     }
-  }
+  };
 
   useEffect(() => {
-    getCustomerData()
-  }, [selectedCustomerId])
+    getCustomerData();
+  }, [selectedCustomerId]);
 
   return (
     <>

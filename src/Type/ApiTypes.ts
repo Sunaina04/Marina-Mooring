@@ -982,3 +982,13 @@ export interface ImagePayload {
   note: string
   imageData: string
 }
+
+export interface formUpload {
+  status: number
+  message: string
+  currentSize: number
+  totalSize: number
+  errorList: []
+  time: string
+  content: BoatYardPayload
+}

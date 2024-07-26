@@ -121,7 +121,7 @@ const MoorserveApi = userApi.injectEndpoints({
     //Upload Form
     uploadForm: builder.mutation({
       query: (payload: UploadPayload) => ({
-        url: 'api/v1/form/upload',
+        url: 'api/v1/form/uploadForm',
         method: 'POST',
         body: payload,
       }),
@@ -134,15 +134,17 @@ const MoorserveApi = userApi.injectEndpoints({
         pageSize,
         sortBy,
         sortDir,
+        searchText,
       }: {
         pageNumber?: number
         pageSize?: number
         sortBy?: string
         sortDir?: string
+        searchText?:string
       }) => ({
         url: 'api/v1/form/fetchForms',
         method: 'GET',
-        params: { pageNumber, pageSize, sortBy, sortDir },
+        params: { pageNumber, pageSize, sortBy, sortDir,searchText },
       }),
     }),
 
