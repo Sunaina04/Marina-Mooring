@@ -185,6 +185,8 @@ export interface CustomerPayload {
   createdBy: string
   lastModifiedDate: string
   lastModifiedBy: string
+  firstName: string
+  lastName: string
   customerName: string
   customerId: string
   phone: string

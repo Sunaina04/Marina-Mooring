@@ -99,6 +99,21 @@ const AddForm: React.FC<FormDataProps> = ({ closeModal }) => {
     }
   }
 
+  // const handleSave = async () => {
+  //   const formData = new FormData()
+  //   if (file) {
+  //     const blob = new Blob([file], { type: 'application/octet-stream' })
+  //     const fileBlob = new File([blob], 'filename.txt')
+  //     formData.append('file', fileBlob)
+  //   }
+  //   formData.append('customerName', customerName)
+  //   formData.append('customerId', customerID)
+  //   handleSubmit(formData)
+  //   if (response?.status === 200) {
+  //     setIsModalOpen(false)
+  //   }
+  // }
+
   const saveForm = () => {
     const errors = validateFields()
     if (Object.keys(errors).length > 0) {

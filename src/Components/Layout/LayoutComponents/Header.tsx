@@ -14,7 +14,7 @@ const Header: React.FC<HeaderProps> = ({ header, customer }) => {
   const dispatch = useDispatch()
   const selectedCustomerName = useSelector(selectCustomerName)
   const [expanded, setExpanded] = useState(false)
-  const [getCustomerOwnerData, setgetCustomerOwnerData] = useState<CustomerPayload[]>([])
+  const [getCustomerOwnerData, setgetCustomerOwnerData] = useState<any[]>([])
   const [getUser] = useGetCustomersOwnersMutation()
 
   const handleMenu = () => {
@@ -22,6 +22,8 @@ const Header: React.FC<HeaderProps> = ({ header, customer }) => {
   }
 
   const handleCustomerIdSelection = (customerId: any) => {
+    console.log(customerId, 'customerID')
+
     dispatch(setCustomerName(customerId?.name))
     dispatch(setCustomerId(customerId?.id))
   }
@@ -32,7 +34,11 @@ const Header: React.FC<HeaderProps> = ({ header, customer }) => {
       const { status, message, content } = response as GetUserResponse
       if (status === 200 && Array.isArray(content)) {
         if (content.length > 0) {
-          setgetCustomerOwnerData(content)
+          const firstLastName = content.map((item) => ({
+            label: item.firstName + ' ' + item.lastName,
+            value: item,
+          }))
+          setgetCustomerOwnerData(firstLastName)
         } else {
           setgetCustomerOwnerData([])
         }
@@ -48,6 +54,7 @@ const Header: React.FC<HeaderProps> = ({ header, customer }) => {
       getUserHandler()
     }
   }, [role === 1, customer])
+  console.log('selectedCustomerName', selectedCustomerName)
 
   return (
     <div
@@ -80,9 +87,12 @@ const Header: React.FC<HeaderProps> = ({ header, customer }) => {
           <Dropdown
             value={selectedCustomerName}
             onChange={(e) => {
+              console.log('e', e)
+
               handleCustomerIdSelection(e.value)
             }}
-            optionLabel="name"
+            optionLabel="label"
+            optionValue="value"
             placeholder="Select"
             options={getCustomerOwnerData}
             editable

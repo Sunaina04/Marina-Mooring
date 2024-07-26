@@ -26,6 +26,7 @@ import { properties } from '../../Utils/MeassageProperties'
 
 const Forms = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [viewPdf, setViewPdf] = useState(null)
   const [formsData, setFormsData] = useState<FormsPayload[]>([])
   const [customerName, setCustomerName] = useState('')
   const [customerID, setCustomerID] = useState('')
@@ -55,6 +56,10 @@ const Forms = () => {
   }
   const handleFormClose = () => {
     setFormOpen(false)
+  }
+
+  const handleView = (rowData: any) => {
+    setViewPdf(rowData.formUrl)
   }
 
   const handleDownload = async (rowData: any) => {
@@ -90,21 +95,6 @@ const Forms = () => {
       const { message } = error as ErrorResponse
       setIsLoading(false)
       console.error('Error fetching forms:', error)
-    }
-  }
-
-  const handleSave = async () => {
-    const formData = new FormData()
-    if (file) {
-      const blob = new Blob([file], { type: 'application/octet-stream' })
-      const fileBlob = new File([blob], 'filename.txt')
-      formData.append('file', fileBlob)
-    }
-    formData.append('customerName', customerName)
-    formData.append('customerId', customerID)
-    handleSubmit(formData)
-    if (response?.status === 200) {
-      setIsModalOpen(false)
     }
   }
 
@@ -149,7 +139,19 @@ const Forms = () => {
     buttons: [
       {
         color: 'black',
+        label: 'View',
+        underline: true,
+        onClick: (rowData: any) => handleView(rowData),
+      },
+      {
+        color: 'black',
         label: 'Download',
+        underline: true,
+        onClick: (rowData: any) => handleDownload(rowData),
+      },
+      {
+        color: 'red',
+        label: 'Delete',
         underline: true,
       },
     ],
@@ -290,7 +292,6 @@ const Forms = () => {
                   </div>
                 }
               />
-
               {isLoading && (
                 <ProgressSpinner
                   style={{
@@ -324,6 +325,16 @@ const Forms = () => {
             </div>
           </div>
         </div>
+
+        {viewPdf && (
+          <Dialog
+            header="View PDF"
+            visible={!!viewPdf}
+            style={{ width: '50vw' }}
+            onHide={() => setViewPdf(null)}>
+            <iframe src={viewPdf} style={{ width: '100%', height: '500px' }} title="PDF Viewer" />
+          </Dialog>
+        )}
 
         {/* <Dialog
         header="Fill in Form"

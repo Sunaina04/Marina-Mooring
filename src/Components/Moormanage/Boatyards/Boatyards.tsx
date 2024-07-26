@@ -109,7 +109,6 @@ const Boatyards = () => {
   const handleModalClose = () => {
     setModalVisible(false)
     setEditMode(false)
-    // setSelectedBoatYard('')
     setMooringRowData('')
   }
 
@@ -162,62 +161,6 @@ const Boatyards = () => {
     ],
     [],
   )
-
-  const allowExpansion = (rowData: BoatYardPayload): boolean => {
-    return !!rowData.mooringInventoried
-  }
-
-  const rowExpansionStyle = {
-    backgroundColor: '#00426F',
-    fontSize: '10px',
-    fontWeight: '700',
-    color: '#FFFFFF',
-    padding: '15px',
-  }
-
-  const rowExpansionColumn = useMemo(
-    () => [
-      {
-        id: 'street',
-        label: 'Address',
-        style: rowExpansionStyle,
-      },
-      {
-        id: 'mooringInventoried',
-        label: 'Mooring Inventoried',
-        style: rowExpansionStyle,
-      },
-      {
-        id: 'gpsCoordinates',
-        label: 'Mooring Number',
-        style: rowExpansionStyle,
-      },
-    ],
-    [],
-  )
-
-  const rowExpansionTemplate = (data: BoatYardData) => {
-    return (
-      <>
-        {boatyardsData ? (
-          <DataTableComponent
-            tableStyle={{
-              fontSize: '14px',
-              color: '#000000',
-              padding: '5rem',
-            }}
-            data={[data]}
-            columns={rowExpansionColumn}
-            style={{ fontWeight: '500', backgroundColor: '#ECF3F9' }}
-          />
-        ) : (
-          <div>
-            <img src="/assets/images/empty.png" alt="Empty Data" className="w-20 mx-auto mb-4" />
-          </div>
-        )}
-      </>
-    )
-  }
 
   const columnStyle = {
     backgroundColor: '#00426F',
