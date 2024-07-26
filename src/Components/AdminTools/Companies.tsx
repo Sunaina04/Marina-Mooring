@@ -21,12 +21,15 @@ import {
 } from '../../Store/Slice/userSlice'
 import { Paginator } from 'primereact/paginator'
 import { VirtualScroller } from 'primereact/virtualscroller'
+import { Dialog } from 'primereact/dialog'
+import ResetPassword from './ResetPassword'
 
 const CustomerOwner = () => {
   const dispatch = useDispatch()
   const selectedCustomerId = useSelector(selectCustomerId)
   const selectedCustomerName = useSelector(selectCustomerName)
   const [modalVisible, setModalVisible] = useState(false)
+  const [isResetModalOpen, setIsResetModalOpen] = useState(false)
   const [selectedCustomer, setSelectedCustomer] = useState<any>()
   const [selectedCustomerUser, setSelectedCustomerUser] = useState<any>()
   const [editMode, setEditMode] = useState(false)
@@ -79,6 +82,7 @@ const CustomerOwner = () => {
     setEditCustomer(false)
     setEditMode(false)
     setCustomerUpdated(true)
+    setIsResetModalOpen(false)
   }
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -126,12 +130,19 @@ const CustomerOwner = () => {
         fontWeight: 500,
         onClick: (rowData) => handleDeleteCustomerOwner(rowData),
       },
+      {
+        color: 'black',
+        label: 'Reset Password',
+        underline: true,
+        fontWeight: 700,
+        onClick: () => setIsResetModalOpen(true)
+      },
     ],
     headerStyle: {
       backgroundColor: '#FFFFFF',
       borderBottom: '1px solid #D5E1EA',
       color: '#000000',
-      fontWeight: 700,
+      fontWeight: 700, 
     },
     style: { borderBottom: '1px solid #D5E1EA' },
   }
@@ -688,6 +699,28 @@ const CustomerOwner = () => {
           </div>
         </div>
       </div>
+
+      <Dialog
+       position="center"
+       style={{
+         width: '650px',
+         minWidth: '650px',
+         height: '450px',
+         minHeight: '450px',
+         borderRadius: '1rem',
+         fontWeight: '400',
+         cursor: 'alias',
+       }}
+       draggable={false}
+       headerStyle={{ cursor: 'alias' }}
+       header="Reset Password"
+       onHide={handleModalClose}
+       visible={isResetModalOpen}
+       >
+
+       <ResetPassword/>
+      
+      </Dialog>
     </>
   )
 }
