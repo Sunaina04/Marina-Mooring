@@ -48,8 +48,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   getCustomerRecord,
 }) => {
   const selectedCustomerId = useSelector(selectCustomerId)
-  const [selectedCountry, setSelectedCountry] = useState<Country>()
-  const [selectedState, setSelectedState] = useState<State>()
+  const [selectedCountry, setSelectedCountry] = useState<any>()
+  const [selectedState, setSelectedState] = useState<any>()
   const [selectedCustomerType, setSelectedCustomerType] = useState<any>()
   const [firstName, setFirstName] = useState<string>('')
   const [lastName, setLastName] = useState<string>('')
@@ -63,7 +63,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [type, setType] = useState<MetaData[]>([])
   const [weightData, setWeightData] = useState<MetaData[]>([])
   const [chainData, setChainData] = useState<MetaData[]>([])
-  const [sizeOfWeight, setSizeOfWeight] = useState<MetaData[]>([])
   const [serviceArea, setServiceArea] = useState<MetaData[]>([])
   const [conditionOfEye, setConditionOfEye] = useState<MetaData[]>([])
   const [customerType, setCustomerType] = useState<MetaData[]>([])
@@ -138,7 +137,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     imagesNote: '',
   })
 
-  const { getStatesData } = StatesData()
+  const { getStatesData } = StatesData(selectedCountry?.id)
   const { getTypeOfBoatTypeData } = TypeOfBoatType()
   const { getTypeOfWeightData } = TypeOfWeightData()
   const { getTypeOfChainData } = TypeOfChainCondition()
@@ -402,9 +401,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
   const SaveCustomer = async () => {
     const errors = validateFields()
-
-    console.log('image list', imageRequestDtoList)
-
     if (Object.keys(errors).length > 0) {
       return
     }
@@ -680,16 +676,11 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
   const fetchDataAndUpdate = useCallback(async () => {
     if (editCustomerMode || !editMode) {
-      const { statesData } = await getStatesData()
       const { countriesData } = await getCountriesData()
       const { customersType } = await getCustomersType()
       if (countriesData !== null) {
         setIsLoading(false)
         setCountriesData(countriesData)
-      }
-      if (statesData !== null) {
-        setIsLoading(false)
-        setStatesData(statesData)
       }
       if (customersType !== null) {
         setIsLoading(false)
@@ -743,6 +734,16 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       }
     }
   }, [])
+
+  const fetchStateDataAndUpdate = useCallback(async () => {
+    const { statesData } = await getStatesData()
+    if (statesData !== null) {
+      setIsLoading(false)
+      setStatesData(statesData)
+    } else {
+      setSelectedState('')
+    }
+  }, [selectedCountry])
 
   const handleClick = () => {
     if (editCustomerMode) {
@@ -823,6 +824,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   useEffect(() => {
     fetchDataAndUpdate()
   }, [])
+
+  useEffect(() => {
+    fetchStateDataAndUpdate()
+  }, [selectedCountry])
 
   useEffect(() => {
     if (editMode && customer) {
@@ -1050,7 +1055,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       </span>
                     </div>
 
-                    <div className='mt-2'>
+                    <div className="mt-2">
                       <Dropdown
                         id="country"
                         value={selectedCountry}
@@ -1130,7 +1135,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 </div>
               </div>
             </div>
-            <div className='mt-3'>
+            <div className="mt-3">
               <div>
                 <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">Address</div>

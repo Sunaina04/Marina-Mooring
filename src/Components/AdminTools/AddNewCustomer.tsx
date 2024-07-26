@@ -54,14 +54,13 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const [zipCode, setZipCode] = useState('')
   const [role, setRole] = useState<Role>()
   const [companyName, setCompanyName] = useState('')
-  const [country, setCountry] = useState<Country>()
+  const [country, setCountry] = useState<any>()
   const [state, setState] = useState<any>()
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [rolesData, setRolesData] = useState<Role[]>()
   const [countriesData, setCountriesData] = useState<Country[]>()
   const [statesData, setStatesData] = useState<State[]>()
-  const [countryId, setCountryId] = useState<any>()
   const [errorMessage, setErrorMessage] = useState<string>()
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
   const [selectedCustomerId, setSelectedCustomerId] = useState<any>()
@@ -73,7 +72,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const [editCustomer] = useUpdateUserMutation()
   const [getUsersData] = useGetUsersMutation()
   const { getRolesData } = RolesData()
-  const { getStatesData } = StatesData(countryId)
+  const { getStatesData } = StatesData(country?.id)
   const { getCountriesData } = CountriesData()
   const toastRef = useRef<Toast>(null)
 
@@ -450,7 +449,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     } else {
       setState('')
     }
-  }, [countryId])
+  }, [country])
 
   const handleEditMode = () => {
     if ((editMode || editCustomerMode) && customerData) {
@@ -521,7 +520,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
   useEffect(() => {
     fetchStateDataAndUpdate()
-  }, [countryId])
+  }, [country])
 
   useEffect(() => {
     handleEditMode()
@@ -808,7 +807,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   value={country}
                   onChange={(e) => {
                     setCountry(e.value)
-                    setCountryId(e.value.id)
                     setFieldErrors((prevErrors) => ({ ...prevErrors, country: '' }))
                   }}
                   options={countriesData}
