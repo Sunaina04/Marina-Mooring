@@ -18,6 +18,7 @@ import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 import { Paginator } from 'primereact/paginator'
+import { properties } from '../../Utils/MeassageProperties'
 
 const Vendors = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -328,7 +329,7 @@ const Vendors = () => {
                       alt="Empty Data"
                       className="w-28 mx-auto mb-4"
                     />
-                    <p className="text-gray-500 font-[600] text-lg">No data available</p>
+                    <p className="text-gray-500 font-[600] text-lg">{properties.noDataMessage}</p>
                     <div data-testid="progress">
                       {isLoading && (
                         <ProgressSpinner

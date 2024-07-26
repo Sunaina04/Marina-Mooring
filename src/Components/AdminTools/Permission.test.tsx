@@ -71,7 +71,7 @@ describe('Permission component', () => {
 
   it('renders the DataTableComponent with empty message and loading spinner when data is empty and loading', () => {
     renderWithProvider(<Permission />)
-    const emptyMessage = screen.getByText('No data available')
+    const emptyMessage = screen.getByText('{properties.noDataMessage}')
     expect(emptyMessage).toBeInTheDocument()
     const emptyImage = screen.getByAltText('Empty Data')
     expect(emptyImage).toBeInTheDocument()

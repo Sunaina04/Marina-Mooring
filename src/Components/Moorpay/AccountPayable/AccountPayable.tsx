@@ -8,6 +8,7 @@ import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import Header from '../../Layout/LayoutComponents/Header'
 import AddCustomer from '../../Moormanage/Customer/AddCustomer'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
+import { properties } from '../../Utils/MeassageProperties'
 
 const AccountPayable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -172,7 +173,7 @@ const AccountPayable = () => {
         </div>
         <div className="text-center mt-40">
           <img src="/assets/images/empty.png" alt="Empty Data" className="w-32 mx-auto mb-4" />
-          <p className="text-gray-500">No data available</p>
+          <p className="text-gray-500">{properties.noDataMessage}</p>
         </div>
         <DataTableComponent
           tableStyle={{

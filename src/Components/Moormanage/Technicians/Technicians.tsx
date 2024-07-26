@@ -473,7 +473,7 @@ const Technicians = () => {
                         alt="Empty Data"
                         className="w-20 mx-auto mb-4"
                       />
-                      <p className="text-gray-500 text-lg font-bold">No data available</p>
+                      <p className="text-gray-500 text-lg font-bold">{properties.noDataMessage}</p>
                     </div>
                   }
                   style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
@@ -493,12 +493,8 @@ const Technicians = () => {
                     />
                   )}
                 </div>
-
               </div>
-              <div
-              
-              data-testid="PaginatorOne"
-              className="mt-auto">
+              <div data-testid="PaginatorOne" className="mt-auto">
                 <Paginator
                   first={pageNumber1}
                   rows={pageSize}
@@ -555,9 +551,7 @@ const Technicians = () => {
               data-testid="workOrder"
               className="flex flex-col mt-[3px] ml-[15px] mr-[15px] table-container "
               style={{ height: '600px' }}>
-              <div
-
-                className="flex-grow overflow-auto">
+              <div className="flex-grow overflow-auto">
                 <DataTableComponent
                   columns={WorkOrdersColumn}
                   scrollable={true}
@@ -578,7 +572,7 @@ const Technicians = () => {
                         alt="Empty Data"
                         className="w-20 mx-auto mb-4"
                       />
-                      <p className="text-gray-500 text-lg font-bold">No data available</p>
+                      <p className="text-gray-500 text-lg font-bold">{properties.noDataMessage}</p>
                     </div>
                   }
                   style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
@@ -597,14 +591,9 @@ const Technicians = () => {
                       strokeWidth="4"
                     />
                   )}
-
                 </div>
-
               </div>
-              <div 
-              data-testid="Paginator"
-              
-              className="mt-auto">
+              <div data-testid="Paginator" className="mt-auto">
                 <Paginator
                   first={pageNumber2}
                   rows={pageSizeTwo}

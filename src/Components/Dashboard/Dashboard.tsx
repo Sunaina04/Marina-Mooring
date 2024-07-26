@@ -22,6 +22,7 @@ import AddWorkOrders from '../Moorserve/WorkOrders/AddWorkOrders'
 import { Calendar } from 'primereact/calendar'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import CustomDashboardMooringMap from '../Map/CustomDashboardMooringMap'
+import { properties } from '../Utils/MeassageProperties'
 
 const Dashboard = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -376,136 +377,135 @@ const Dashboard = () => {
             style={{
               marginLeft: '3rem',
             }}>
-           {leftContainerWidth ? (
-            <div
-              style={{
-                height: '40px',
-                minHeight: '40px',
-                width: '1300px',
-                minWidth: '1300px',
-                backgroundColor: '#00426F',
-                display:'flex',
-                justifyContent:'end'
-              }}
-              className="rounded-md">
+            {leftContainerWidth ? (
               <div
                 style={{
-                  textAlign: 'center',
-                  color: 'white',
+                  height: '40px',
+                  minHeight: '40px',
+                  width: '1300px',
+                  minWidth: '1300px',
+                  backgroundColor: '#00426F',
                   display: 'flex',
-                  alignItems: 'center',
-                 // justifyContent: 'center',
-                  fontSize: '20px',
-                  letterSpacing: '4px',
-                  marginRight:'28rem'
+                  justifyContent: 'end',
                 }}
-                className="">
-                Moorings Due For Service
-              </div>
-              <div
-                className="pt-3 pr-5"
-
-                onClick={() => setLeftContainerWidth(false)}
-                style={{ cursor: 'pointer' }}>
-                <img src="/assets/images/plus.png" alt="Key Icon" className="p-clickable" />
-              </div>
-            </div>
-           ) : (
-            <div
-              data-testid="mooring-data"
-              className="flex flex-col"
-              style={{
-                height: leftContainerWidth ? '50px' : '300px',
-                position: 'relative',
-                borderRadius: '10px',
-                backgroundColor: '#FFFFFF',
-              }}>
-              <div className=" flex justify-between bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px] text-white">
-                <div>
-                  <h1 className="p-4 text-xl font-extrabold">Moorings Due for Service</h1>
-                </div>
-
+                className="rounded-md">
                 <div
-                  className="p-7"
-                 onClick={() => setLeftContainerWidth(true)}
+                  style={{
+                    textAlign: 'center',
+                    color: 'white',
+                    display: 'flex',
+                    alignItems: 'center',
+                    // justifyContent: 'center',
+                    fontSize: '20px',
+                    letterSpacing: '4px',
+                    marginRight: '28rem',
+                  }}
+                  className="">
+                  Moorings Due For Service
+                </div>
+                <div
+                  className="pt-3 pr-5"
+                  onClick={() => setLeftContainerWidth(false)}
                   style={{ cursor: 'pointer' }}>
-                  {leftContainerWidth ? (
-                    <div onClick={() => setLeftContainerWidth(false)}>
-                      <img src="/assets/images/plus.png" alt="Key Icon" className="p-clickable" />
-                    </div>
-                  ) : (
-                    <div onClick={() => setLeftContainerWidth(true)}>
-                      <svg
-                        width="24"
-                        height="4"
-                        viewBox="0 0 11 3"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M10.125 1.5C10.125 1.92188 9.77344 2.25 9.375 2.25H1.125C0.703125 2.25 0.375 1.92188 0.375 1.5C0.375 1.10156 0.703125 0.75 1.125 0.75H9.375C9.77344 0.75 10.125 1.10156 10.125 1.5Z"
-                          fill="white"
-                        />
-                      </svg>
-                    </div>
-                  )}
+                  <img src="/assets/images/plus.png" alt="Key Icon" className="p-clickable" />
                 </div>
               </div>
+            ) : (
               <div
+                data-testid="mooring-data"
+                className="flex flex-col"
                 style={{
-                  height: '240px',
-                  overflowY: 'auto',
-                  borderBottomLeftRadius: '10px',
-                }}
-                className="h-[240px] overflow-auto">
-                <DataTableComponent
-                  columns={Mooringcolumns}
-                  scrollable={true}
-                  tableStyle={{
-                    backgroundColor: '#FFFFFF',
-                    fontSize: '12px',
-                    color: '#000000',
-                    fontWeight: 600,
-                    cursor: 'pointer',
-                  }}
-                  selectionMode="single"
-                  onSelectionChange={(e) => {
-                    setSelectedProduct(e.value)
-                  }}
-                  selection={selectedProduct}
-                  dataKey="id"
-                  onRowClick={(rowData) => {
-                    setMooringResponseData(rowData?.data?.gpsCoordinates)
-                    setMooringSelected(true)
-                  }}
-                  data={mooringData}
-                  emptyMessage={
-                    <div className="text-center">
-                      <img
-                        src="/assets/images/empty.png"
-                        alt="Empty Data"
-                        className="w-20 mx-auto mb-2"
-                      />
-                      <p className="text-gray-500">No data available</p>
-                    </div>
-                  }
-                />
-              </div>
+                  height: leftContainerWidth ? '50px' : '300px',
+                  position: 'relative',
+                  borderRadius: '10px',
+                  backgroundColor: '#FFFFFF',
+                }}>
+                <div className=" flex justify-between bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px] text-white">
+                  <div>
+                    <h1 className="p-4 text-xl font-extrabold">Moorings Due for Service</h1>
+                  </div>
 
-              {isLoading && (
-                <ProgressSpinner
+                  <div
+                    className="p-7"
+                    onClick={() => setLeftContainerWidth(true)}
+                    style={{ cursor: 'pointer' }}>
+                    {leftContainerWidth ? (
+                      <div onClick={() => setLeftContainerWidth(false)}>
+                        <img src="/assets/images/plus.png" alt="Key Icon" className="p-clickable" />
+                      </div>
+                    ) : (
+                      <div onClick={() => setLeftContainerWidth(true)}>
+                        <svg
+                          width="24"
+                          height="4"
+                          viewBox="0 0 11 3"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg">
+                          <path
+                            d="M10.125 1.5C10.125 1.92188 9.77344 2.25 9.375 2.25H1.125C0.703125 2.25 0.375 1.92188 0.375 1.5C0.375 1.10156 0.703125 0.75 1.125 0.75H9.375C9.77344 0.75 10.125 1.10156 10.125 1.5Z"
+                            fill="white"
+                          />
+                        </svg>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div
                   style={{
-                    position: 'absolute',
-                    top: '30%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    width: '50px',
-                    height: '50px',
+                    height: '240px',
+                    overflowY: 'auto',
+                    borderBottomLeftRadius: '10px',
                   }}
-                  strokeWidth="4"
-                />
-              )}
-            </div>
-           )}
+                  className="h-[240px] overflow-auto">
+                  <DataTableComponent
+                    columns={Mooringcolumns}
+                    scrollable={true}
+                    tableStyle={{
+                      backgroundColor: '#FFFFFF',
+                      fontSize: '12px',
+                      color: '#000000',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                    }}
+                    selectionMode="single"
+                    onSelectionChange={(e) => {
+                      setSelectedProduct(e.value)
+                    }}
+                    selection={selectedProduct}
+                    dataKey="id"
+                    onRowClick={(rowData) => {
+                      setMooringResponseData(rowData?.data?.gpsCoordinates)
+                      setMooringSelected(true)
+                    }}
+                    data={mooringData}
+                    emptyMessage={
+                      <div className="text-center">
+                        <img
+                          src="/assets/images/empty.png"
+                          alt="Empty Data"
+                          className="w-20 mx-auto mb-2"
+                        />
+                        <p className="text-gray-500">{properties.noDataMessage}</p>
+                      </div>
+                    }
+                  />
+                </div>
+
+                {isLoading && (
+                  <ProgressSpinner
+                    style={{
+                      position: 'absolute',
+                      top: '30%',
+                      left: '50%',
+                      transform: 'translate(-50%, -50%)',
+                      width: '50px',
+                      height: '50px',
+                    }}
+                    strokeWidth="4"
+                  />
+                )}
+              </div>
+            )}
             <div className={`${leftContainerWidth ? 'mt-8' : 'mt-4'}`}>
               <CustomDashboardMooringMap
                 position={coordinatesArray ? coordinatesArray : initialPosition}
@@ -669,7 +669,7 @@ const Dashboard = () => {
                                 alt="Empty Data"
                                 className="w-20 mx-auto mb-4"
                               />
-                              <p className="text-gray-500">No data available</p>
+                              <p className="text-gray-500">{properties.noDataMessage}</p>
                             </div>
                           }
                         />

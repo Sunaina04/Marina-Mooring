@@ -20,6 +20,7 @@ import AddForm from './AddForm'
 import { Paginator } from 'primereact/paginator'
 import { Params } from '../../../Type/CommonType'
 import { ProgressSpinner } from 'primereact/progressspinner'
+import { properties } from '../../Utils/MeassageProperties'
 
 const Forms = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -261,7 +262,7 @@ const Forms = () => {
                       alt="Empty Data"
                       className="w-28 mx-auto mb-4"
                     />
-                    <p className="text-gray-500">No data available</p>
+                    <p className="text-gray-500">{properties.noDataMessage}</p>
                   </div>
                 }
               />

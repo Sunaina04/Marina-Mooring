@@ -28,6 +28,7 @@ import { Dialog } from 'primereact/dialog'
 import { Button } from 'primereact/button'
 import ReasonModal from './ReasonModal'
 import ApproveModal from './ApproveModal'
+import { properties } from '../../Utils/MeassageProperties'
 
 const AccountRecievable = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -449,7 +450,7 @@ const AccountRecievable = () => {
                   alt="Empty Data"
                   className="w-20 mx-auto mb-2"
                 />
-                <p className="text-gray-500 text-lg">No data available</p>
+                <p className="text-gray-500 text-lg">{properties.noDataMessage}</p>
               </div>
             }
           />
@@ -550,7 +551,7 @@ const AccountRecievable = () => {
                   alt="Empty Data"
                   className="w-20 mx-auto mb-2"
                 />
-                <p className="text-gray-500 text-lg">No data available</p>
+                <p className="text-gray-500 text-lg">{properties.noDataMessage}</p>
               </div>
             }
           />

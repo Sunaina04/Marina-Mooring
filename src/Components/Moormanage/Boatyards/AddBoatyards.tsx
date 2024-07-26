@@ -575,7 +575,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
                     setZipCode(e.target.value)
                     // setErrorMessage((prev) => ({ ...prev, zipCode: '' }))
                   }}
-                  placeholder="Zip code"
+                  placeholder="Zip Code"
                   style={{
                     width: '230px',
                     height: '32px',

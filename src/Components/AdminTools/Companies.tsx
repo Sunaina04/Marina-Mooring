@@ -554,7 +554,7 @@ const CustomerOwner = () => {
                   emptyMessage={
                     <div className="flex flex-col justify-center items-center h-full mt-40">
                       <img src="/assets/images/empty.png" alt="Empty Data" className="w-32 mb-4" />
-                      <p className="text-gray-500">No data available</p>
+                      <p className="text-gray-500">{properties.noDataMessage}</p>
                     </div>
                   }
                 />
@@ -649,7 +649,7 @@ const CustomerOwner = () => {
                         alt="Empty Data"
                         className="w-32 mx-auto mb-4"
                       />
-                      <p className="text-gray-500">No data available</p>
+                      <p className="text-gray-500">{properties.noDataMessage}</p>
                     </div>
                   }
                 />
