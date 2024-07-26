@@ -45,7 +45,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   setIsCustomerUpdated,
 }) => {
   const dispatch = useDispatch()
-  const [name, setName] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
   const [street, setStreet] = useState('')
@@ -86,20 +87,22 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const validateFields = () => {
     const errors: { [key: string]: string } = {}
     let firstError = ''
-    if (!name) {
-      errors.name = 'Name is required'
-    } else if (!NAME_REGEX.test(name)) {
-      errors.name = 'Name must only contain letters'
-    } else if (name.length < 3) {
-      errors.name = 'Name must be at least 3 characters long'
+    if (!firstName) {
+      errors.firstName = 'First Name is required'
+    } else if (!NAME_REGEX.test(firstName)) {
+      errors.firstName = 'First Name must only contain letters'
+    } else if (firstName.length < 3) {
+      errors.firstName = 'First Name must be at least 3 characters long'
     }
-    if (errors.name) firstError = 'name'
-    if (!phone) {
-      errors.phone = 'Phone is required'
-    } else if (!PHONE_REGEX.test(phone)) {
-      errors.phone = 'Phone must be a 10-digit number'
+    if (errors.firstName) firstError = 'firstName'
+    if (!lastName) {
+      errors.lastName = 'Last Name is required'
+    } else if (!NAME_REGEX.test(lastName)) {
+      errors.lastName = 'Last Name must only contain letters'
+    } else if (lastName.length < 3) {
+      errors.lastName = 'Last Name must be at least 3 characters long'
     }
-    if (errors.phone && !firstError) firstError = 'phone'
+    if (errors.lastName) firstError = 'lastName'
     if (!email) {
       errors.email = 'Email is required'
     } else if (!EMAIL_REGEX.test(email)) {
@@ -107,9 +110,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     }
     if (errors.email && !firstError) firstError = 'email'
     if (!street) errors.street = 'Street is required'
-    if (errors.street && !firstError) firstError = 'street'
-    if (!apt) errors.apt = 'Apt is required'
-    if (errors.apt && !firstError) firstError = 'apt'
     if (!role) errors.role = 'Role is required'
     if (errors.role && !firstError) firstError = 'role'
     if (
@@ -124,8 +124,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     if (errors.companyName && !firstError) firstError = 'companyName'
     if (!country) errors.country = 'Country is required'
     if (errors.country && !firstError) firstError = 'country'
-    if (!state) errors.state = 'State is required'
-    if (errors.state && !firstError) firstError = 'state'
     if (!password && !passWordDisplay) errors.password = 'Password is required'
     if (errors.password && !firstError) firstError = 'password'
     if (!confirmPassword && !passWordDisplay)
@@ -164,8 +162,11 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
   const handleInputChange = (fieldName: string, value: any) => {
     switch (fieldName) {
-      case 'name':
-        setName(value)
+      case 'firstName':
+        setFirstName(value)
+        break
+      case 'lastName':
+        setLastName(value)
         break
       case 'companyName':
         setCompanyName(value)
@@ -195,7 +196,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       case 'confirmPassword':
         setConfirmPassword(value)
         break
-
       default:
         break
     }
@@ -215,7 +215,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     }
     setIsLoading(true)
     const editUserPayload = {
-      name,
+      name: firstName,
       companyName: companyName,
       phoneNumber: phone,
       email,
@@ -261,12 +261,12 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         })
       }
     } catch (error) {
-      const { message } = error as ErrorResponse
+      const { message, data } = error as ErrorResponse
       setIsLoading(false)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: message,
+        detail: message || data?.message,
         life: 3000,
       })
     }
@@ -279,9 +279,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       return
     }
     dispatch(setCustomerId(editMode ? '' : customerData?.customerOwnerId))
-
     const editUserPayload = {
-      name,
+      name: firstName,
       companyName: companyName,
       phoneNumber: phone,
       email,
@@ -292,7 +291,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       countryId: country?.id,
       roleId: role?.id,
     }
-
     setIsLoading(true)
     try {
       const response = await editCustomer({
@@ -329,12 +327,12 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         })
       }
     } catch (error) {
-      const { message } = error as ErrorResponse
+      const { message, data } = error as ErrorResponse
       setIsLoading(false)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: message,
+        detail: message || data?.message,
         life: 3000,
       })
     }
@@ -367,7 +365,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       // Encode the password using base64
       const encodedPassword = btoa(password)
       const addUserPayload = {
-        name,
+        name: firstName,
         companyName: companyName,
         phoneNumber: phone,
         email,
@@ -418,7 +416,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: data?.message,
+        detail: message || data?.message,
         life: 3000,
       })
     }
@@ -461,7 +459,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
   const handleEditMode = () => {
     if ((editMode || editCustomerMode) && customerData) {
-      setName(customerData?.name || '')
+      setFirstName(customerData?.name || '')
+      setLastName(customerData?.name || '')
       setCompanyName(customerData?.userID || '')
       setPhone(customerData?.phoneNumber || '')
       setEmail(customerData?.email || '')
@@ -537,19 +536,46 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           <div>
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
-                Name
+                First Name
                 <p className="text-red-600">*</p>
               </div>
             </span>
             <div className="mt-1">
               <InputText
-                value={name}
-                onChange={(e) => handleInputChange('name', e.target.value)}
-                className={fieldErrors.name ? 'p-invalid' : ''}
+                value={firstName}
+                onChange={(e) => handleInputChange('firstName', e.target.value)}
+                className={fieldErrors.firstName ? 'p-invalid' : ''}
                 style={{
                   width: '232px',
                   height: '32px',
-                  border: fieldErrors.name ? '1px solid red' : '1px solid #D5E1EA',
+                  border: fieldErrors.firstName ? '1px solid red' : '1px solid #D5E1EA',
+                  borderRadius: '0.50rem',
+                  fontSize: '0.8rem',
+                  padding: '0.5rem',
+                }}
+              />
+            </div>
+            <p className="" id="firstName">
+              {fieldErrors.firstName && <small className="p-error">{fieldErrors.firstName}</small>}
+            </p>
+          </div>
+
+          <div>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Last Name
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
+            <div className="mt-1">
+              <InputText
+                value={lastName}
+                onChange={(e) => handleInputChange('lastName', e.target.value)}
+                className={fieldErrors.lastName ? 'p-invalid' : ''}
+                style={{
+                  width: '232px',
+                  height: '32px',
+                  border: fieldErrors.lastName ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   padding: '0.5rem',
@@ -557,17 +583,14 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
               />
             </div>
 
-            <p className="" id="name">
-              {fieldErrors.name && <small className="p-error">{fieldErrors.name}</small>}
+            <p className="" id="lastName">
+              {fieldErrors.lastName && <small className="p-error">{fieldErrors.lastName}</small>}
             </p>
           </div>
 
           <div>
             <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
-                Phone
-                <p className="text-red-600">*</p>
-              </div>
+              <div className="flex gap-1">Phone</div>
             </span>
             <div className="mt-1">
               <InputText
@@ -576,25 +599,26 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: fieldErrors.phone ? '1px solid red' : '1px solid #D5E1EA',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   padding: '0.5rem',
                 }}
               />
             </div>
-            <p className="" id="phone">
-              {fieldErrors.phone && <small className="p-error">{fieldErrors.phone}</small>}
-            </p>
           </div>
+        </div>
 
+        <div className="flex gap-8 ml-4">
           <div>
-            <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
-                Email Address
-                <p className="text-red-600">*</p>
-              </div>
-            </span>
+            <div className="mt-3">
+              <span className="font-medium text-sm text-[#000000]">
+                <div className="flex gap-1">
+                  Email Address
+                  <p className="text-red-600">*</p>
+                </div>
+              </span>
+            </div>
 
             <div className="mt-1">
               <InputText
@@ -623,9 +647,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
               )}
             </p>
           </div>
-        </div>
-
-        <div className="flex gap-8 ml-4">
           <div>
             <div className="mt-3">
               <span className="font-medium text-sm text-[#000000]">
@@ -900,155 +921,147 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   padding: '0.83em',
                 }}
               />
-              {/* <p className="" id="zipCode">
-                {fieldErrors.zipCode && <small className="p-error">{fieldErrors.zipCode}</small>}
-              </p> */}
             </div>
           </div>
         </div>
+        <div className="flex mt-5 gap-8 ml-4">
+          <div>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1 text-center ">
+                {passWordDisplay ? ' Reset password' : 'Create Password'}
+                {!passWordDisplay && <p className="text-red-600">*</p>}
+              </div>
+            </span>
+            <div className="mt-1">
+              <div style={{ position: 'relative', width: '230px', marginBottom: '10px' }}>
+                <InputComponent
+                  value={password}
+                  type="password"
+                  onChange={(e) => handleInputChange('password', e.target.value)}
+                  onBlur={handleBlur}
+                  style={{
+                    width: '230px',
+                    height: '32px',
+                    border:
+                      fieldErrors.password || errorMessage ? '1px solid red' : '1px solid #D5E1EA',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
+                    padding: '0.5rem',
+                  }}
+                />
 
-        {!passWordDisplay && (
-          <div className="flex mt-5 gap-8 ml-4">
-            <div>
-              <span className="font-medium text-sm text-[#000000]">
-                <div className="flex gap-1 text-center ">
-                  Create password
-                  <p className="text-red-600">*</p>
-                </div>
-              </span>
-              <div className="mt-1">
-                <div style={{ position: 'relative', width: '230px', marginBottom: '10px' }}>
-                  <InputComponent
-                    value={password}
-                    type="password"
-                    onChange={(e) => handleInputChange('password', e.target.value)}
-                    onBlur={handleBlur}
-                    style={{
-                      width: '230px',
-                      height: '32px',
-                      border:
-                        fieldErrors.password || errorMessage
-                          ? '1px solid red'
-                          : '1px solid #D5E1EA',
-                      borderRadius: '0.50rem',
-                      fontSize: '0.8rem',
-                      padding: '0.5rem',
-                    }}
-                  />
+                <p className=" w-48" id="password">
+                  {fieldErrors.password || errorMessage ? (
+                    <small className="p-error">
+                      {fieldErrors.password}
+                      {errorMessage}
+                    </small>
+                  ) : (
+                    ''
+                  )}
+                </p>
+              </div>
 
-                  <p className=" w-48" id="password">
-                    {fieldErrors.password || errorMessage ? (
-                      <small className="p-error">
-                        {fieldErrors.password}
-                        {errorMessage}
-                      </small>
-                    ) : (
-                      ''
-                    )}
+              <div
+                style={{ width: '230px', fontSize: '14px' }}
+                id="password-message"
+                className="mt-2 hidden ">
+                <h3 className="font-medium text-sm text-[#000000] flex justify-center mr-3">
+                  PASSWORD MUST CONTAIN:
+                </h3>
+                <div className="flex items-center gap-6 p-1 mt-2">
+                  {passwordCriteria.uppercase ? (
+                    <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
+                  ) : (
+                    <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
+                  )}
+                  <p
+                    className={`password-message-item ${passwordCriteria.uppercase ? 'text-green-500' : 'text-red-500'}`}>
+                    At least <span className="font-[500]"> one uppercase letter</span>
                   </p>
                 </div>
 
-                <div
-                  style={{ width: '230px', fontSize: '14px' }}
-                  id="password-message"
-                  className="mt-2 hidden ">
-                  <h3 className="font-medium text-sm text-[#000000] flex justify-center mr-3">
-                    PASSWORD MUST CONTAIN:
-                  </h3>
-                  <div className="flex items-center gap-6 p-1 mt-2">
-                    {passwordCriteria.uppercase ? (
-                      <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
-                    ) : (
-                      <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
-                    )}
-                    <p
-                      className={`password-message-item ${passwordCriteria.uppercase ? 'text-green-500' : 'text-red-500'}`}>
-                      At least <span className="font-[500]"> one uppercase letter</span>
-                    </p>
-                  </div>
-
-                  <div className="flex items-center gap-6 p-1 ">
-                    {passwordCriteria.lowercase ? (
-                      <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
-                    ) : (
-                      <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
-                    )}
-
-                    <p
-                      className={`password-message-item ${passwordCriteria.lowercase ? 'text-green-500' : 'text-red-500'}`}>
-                      At least <span className="font-[500]">one lowercase letter</span>
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-6 p-1 ">
-                    {passwordCriteria.number ? (
-                      <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
-                    ) : (
-                      <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
-                    )}
-                    <p
-                      className={`password-message-item ${passwordCriteria.number ? 'text-green-500' : 'text-red-500'}`}>
-                      At least<span className="font-[500]">one number</span>
-                    </p>
-                  </div>
-
-                  <div className="flex items-center gap-6 p-1 ">
-                    {passwordCriteria.specialChar ? (
-                      <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
-                    ) : (
-                      <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
-                    )}
-                    <p
-                      className={`password-message-item ${passwordCriteria.specialChar ? 'text-green-500' : 'text-red-500'}`}>
-                      At least<span className="font-[500]">one special character</span>
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-6 p-1 ">
-                    {passwordCriteria.length ? (
-                      <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
-                    ) : (
-                      <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
-                    )}
-                    <p
-                      className={`password-message-item ${passwordCriteria.length ? 'text-green-500' : 'text-red-500'}`}>
-                      At least <span className="font-[500]">10 characters</span>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="">
-              <span className="font-medium text-sm text-[#000000]">
-                <div className="flex gap-1">
-                  Confirm password
-                  <p className="text-red-600">*</p>
-                </div>
-              </span>
-              <div className="mt-1 ">
-                <div style={{ position: 'relative', marginBottom: '10px' }}>
-                  <InputComponent
-                    value={confirmPassword}
-                    type="password"
-                    onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
-                    style={{
-                      width: '230px',
-                      height: '32px',
-                      border: fieldErrors.confirmPassword ? '1px solid red' : '1px solid #D5E1EA',
-                      borderRadius: '0.50rem',
-                      fontSize: '0.8rem',
-                      padding: '0.5rem',
-                    }}
-                  />
-
-                  {fieldErrors.confirmPassword && (
-                    <small className="p-error" id="confirmPassword">
-                      {fieldErrors.confirmPassword}
-                    </small>
+                <div className="flex items-center gap-6 p-1 ">
+                  {passwordCriteria.lowercase ? (
+                    <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
+                  ) : (
+                    <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
                   )}
+
+                  <p
+                    className={`password-message-item ${passwordCriteria.lowercase ? 'text-green-500' : 'text-red-500'}`}>
+                    At least <span className="font-[500]">one lowercase letter</span>
+                  </p>
+                </div>
+                <div className="flex items-center gap-6 p-1 ">
+                  {passwordCriteria.number ? (
+                    <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
+                  ) : (
+                    <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
+                  )}
+                  <p
+                    className={`password-message-item ${passwordCriteria.number ? 'text-green-500' : 'text-red-500'}`}>
+                    At least<span className="font-[500]">one number</span>
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-6 p-1 ">
+                  {passwordCriteria.specialChar ? (
+                    <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
+                  ) : (
+                    <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
+                  )}
+                  <p
+                    className={`password-message-item ${passwordCriteria.specialChar ? 'text-green-500' : 'text-red-500'}`}>
+                    At least<span className="font-[500]">one special character</span>
+                  </p>
+                </div>
+                <div className="flex items-center gap-6 p-1 ">
+                  {passwordCriteria.length ? (
+                    <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
+                  ) : (
+                    <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
+                  )}
+                  <p
+                    className={`password-message-item ${passwordCriteria.length ? 'text-green-500' : 'text-red-500'}`}>
+                    At least <span className="font-[500]">10 characters</span>
+                  </p>
                 </div>
               </div>
             </div>
           </div>
-        )}
+          <div className="">
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Confirm password
+                {!passWordDisplay && <p className="text-red-600">*</p>}
+              </div>
+            </span>
+            <div className="mt-1 ">
+              <div style={{ position: 'relative', marginBottom: '10px' }}>
+                <InputComponent
+                  value={confirmPassword}
+                  type="password"
+                  onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
+                  style={{
+                    width: '230px',
+                    height: '32px',
+                    border: fieldErrors.confirmPassword ? '1px solid red' : '1px solid #D5E1EA',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
+                    padding: '0.5rem',
+                  }}
+                />
+
+                {fieldErrors.confirmPassword && (
+                  <small className="p-error" id="confirmPassword">
+                    {fieldErrors.confirmPassword}
+                  </small>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div
         className={`"flex gap-4 ml-4 bottom-2 absolute left-6"  ${isLoading ? 'blurred' : ''}`}
@@ -1091,8 +1104,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           }}
         />
       </div>
-
-      {/* </div> */}
     </>
   )
 }
