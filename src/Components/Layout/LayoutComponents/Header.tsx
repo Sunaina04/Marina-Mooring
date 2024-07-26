@@ -22,8 +22,9 @@ const Header: React.FC<HeaderProps> = ({ header, customer }) => {
   }
 
   const handleCustomerIdSelection = (customerId: any) => {
-    const firstLastName = customerId?.firstName + ' ' + customerId?.lastName
-    dispatch(setCustomerName(firstLastName))
+    console.log(customerId, 'customerID')
+
+    dispatch(setCustomerName(customerId?.name))
     dispatch(setCustomerId(customerId?.id))
   }
 
@@ -86,6 +87,8 @@ const Header: React.FC<HeaderProps> = ({ header, customer }) => {
           <Dropdown
             value={selectedCustomerName}
             onChange={(e) => {
+              console.log('e', e)
+
               handleCustomerIdSelection(e.value)
             }}
             optionLabel="label"
