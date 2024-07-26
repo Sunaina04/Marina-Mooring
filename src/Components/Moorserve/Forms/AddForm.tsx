@@ -113,8 +113,6 @@ const AddForm: React.FC<FormDataProps> = ({ closeModal }) => {
         detail: 'Upload file is required',
       })
     }
-
-    console.log({ ...formData, uploadFileName: fileName })
     toastRef.current?.show({
       severity: 'success',
       summary: 'Success',
@@ -167,7 +165,7 @@ const AddForm: React.FC<FormDataProps> = ({ closeModal }) => {
 
       <div className="ml-4">
         <div className="flex gap-6">
-          <div>
+          {/* <div>
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
                 Customer Name
@@ -193,21 +191,7 @@ const AddForm: React.FC<FormDataProps> = ({ closeModal }) => {
                 <small className="p-error">{fieldsError.customerName}</small>
               )}
             </div>
-          </div>
-
-          {isLoading && (
-            <ProgressSpinner
-              style={{
-                position: 'absolute',
-                top: '40%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                width: '50px',
-                height: '50px',
-              }}
-              strokeWidth="4"
-            />
-          )}
+          </div> */}
           <div>
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
