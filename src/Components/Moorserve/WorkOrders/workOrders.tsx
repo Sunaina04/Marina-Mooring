@@ -16,6 +16,7 @@ import { Params } from '../../../Type/CommonType'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { Paginator } from 'primereact/paginator'
 import { SelectButton, SelectButtonChangeEvent } from 'primereact/selectbutton'
+import { properties } from '../../Utils/MeassageProperties'
 
 const WorkOrders = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -328,7 +329,7 @@ const WorkOrders = () => {
                       alt="Empty Data"
                       className="w-28 mx-auto mb-4"
                     />
-                    <p className="text-gray-500 text-lg">No data available</p>
+                    <p className="text-gray-500 text-lg">{properties.noDataMessage}</p>
                   </div>
                 }
               />

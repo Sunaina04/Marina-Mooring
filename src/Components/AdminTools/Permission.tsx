@@ -316,7 +316,7 @@ const Permission = () => {
                       alt="Empty Data"
                       className="w-20 mx-auto mb-4"
                     />
-                    <p className="text-gray-500">No data available</p>
+                    <p className="text-gray-500">{properties.noDataMessage}</p>
                     {isLoading && (
                       <ProgressSpinner
                         style={{

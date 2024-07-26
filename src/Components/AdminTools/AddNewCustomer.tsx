@@ -109,7 +109,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       errors.email = 'Please enter a valid email format'
     }
     if (errors.email && !firstError) firstError = 'email'
-    if (!street) errors.street = 'Street is required'
+    // if (!street) errors.street = 'Street is required'
     if (!role) errors.role = 'Role is required'
     if (errors.role && !firstError) firstError = 'role'
     if (
@@ -122,8 +122,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     if (errors.selectedCustomerId && !firstError) firstError = 'selectedCustomerId'
     if (!companyName && role?.id === 2) errors.companyName = 'Company Name is required'
     if (errors.companyName && !firstError) firstError = 'companyName'
-    if (!country) errors.country = 'Country is required'
-    if (errors.country && !firstError) firstError = 'country'
+    // if (!country) errors.country = 'Country is required'
+    // if (errors.country && !firstError) firstError = 'country'
     if (!password && !passWordDisplay) errors.password = 'Password is required'
     if (errors.password && !firstError) firstError = 'password'
     if (!confirmPassword && !passWordDisplay)
@@ -213,22 +213,29 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       setFieldErrors(errors)
       return
     }
-    setIsLoading(true)
-    const editUserPayload = {
-      name: firstName,
-      companyName: companyName,
-      phoneNumber: phone,
-      email,
-      street,
-      apt,
-      zipCode,
-      stateId: state?.id,
-      countryId: country?.id,
-      roleId: role?.id,
-      customerOwnerId: editCustomerMode ? '' : customerData?.customerOwnerId,
+    if (!validatePassword(password)) {
+      setErrorMessage('Password is Incorrect')
+      return
     }
-
+    setIsLoading(true)
     try {
+      const encodedPassword = btoa(password)
+      const editUserPayload = {
+        firstName,
+        lastName,
+        companyName,
+        phoneNumber: phone,
+        email,
+        street,
+        apt,
+        zipCode,
+        password: encodedPassword,
+        stateId: state?.id,
+        countryId: country?.id,
+        roleId: role?.id,
+        customerOwnerId: editCustomerMode ? '' : customerData?.customerOwnerId,
+        confirmPassword: encodedPassword,
+      }
       const response = await editCustomer({
         payload: editUserPayload,
         id: customerData?.id,
@@ -278,21 +285,30 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       setFieldErrors(errors)
       return
     }
-    dispatch(setCustomerId(editMode ? '' : customerData?.customerOwnerId))
-    const editUserPayload = {
-      name: firstName,
-      companyName: companyName,
-      phoneNumber: phone,
-      email,
-      street,
-      apt,
-      zipCode,
-      stateId: state?.id,
-      countryId: country?.id,
-      roleId: role?.id,
+    if (!validatePassword(password)) {
+      setErrorMessage('Password is Incorrect')
+      return
     }
+    dispatch(setCustomerId(editMode ? '' : customerData?.customerOwnerId))
+
     setIsLoading(true)
     try {
+      const encodedPassword = btoa(password)
+      const editUserPayload = {
+        firstName,
+        lastName,
+        companyName,
+        phoneNumber: phone,
+        email,
+        street,
+        apt,
+        zipCode,
+        password: encodedPassword,
+        stateId: state?.id,
+        countryId: country?.id,
+        roleId: role?.id,
+        confirmPassword: encodedPassword,
+      }
       const response = await editCustomer({
         payload: editUserPayload,
         id: customerData?.id,
@@ -344,29 +360,20 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       setFieldErrors(errors)
       return
     }
-
-    const selectedCustomerAdminId = selectedCustomerId?.id
-
-    if (password !== confirmPassword) {
-      setFieldErrors((prevErrors) => ({
-        ...prevErrors,
-        confirmPassword: 'Passwords do not match',
-      }))
-      return
-    }
-
     if (!validatePassword(password)) {
       setErrorMessage('Password is Incorrect')
       return
     }
+    const selectedCustomerAdminId = selectedCustomerId?.id
     dispatch(setCustomerId(permission ? customerAdminId : selectedCustomerAdminId))
     setIsLoading(true)
     try {
       // Encode the password using base64
       const encodedPassword = btoa(password)
       const addUserPayload = {
-        name: firstName,
-        companyName: companyName,
+        firstName,
+        lastName,
+        companyName,
         phoneNumber: phone,
         email,
         street,
@@ -800,7 +807,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           <span className="font-medium text-sm text-[#000000]">
             <div className="flex gap-1">
               Address
-              <p className="text-red-600">*</p>
+              {/* <p className="text-red-600">*</p> */}
             </div>
           </span>
         </div>
@@ -911,7 +918,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 value={zipCode}
                 invalid
                 onChange={(e) => handleInputChange('zipCode', e.target.value)}
-                placeholder="Zip code"
+                placeholder="Zip Code"
                 style={{
                   width: '230px',
                   height: '32px',

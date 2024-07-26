@@ -537,6 +537,168 @@ const Customer = () => {
     }
   }
 
+  const CustomersList = useMemo(() => {
+    return (
+      <div
+        style={{
+          height: '700px',
+          minHeight: '700px',
+          width: '500px',
+          minWidth: '500px',
+          backgroundColor: '#FFFFFF',
+          position: 'relative',
+        }}
+        className="ml-[45px] w-[20px] flex-1">
+        <div data-testid="customer-data" className="flex flex-col h-full">
+          <div className="flex item-center justify-between bg-[#10293A] rounded-tl-[10px] rounded-tr-[10px] text-white cursor-pointer">
+            <div>
+              <h1 className="p-4 text-xl font-extrabold">{properties.customerHeader}</h1>
+            </div>
+            <div
+              className="p-8"
+              onClick={() => setLeftContainerWidth(true)}
+              style={{ cursor: 'pointer' }}>
+              <svg
+                width="24"
+                height="4"
+                viewBox="0 0 11 3"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M10.125 1.5C10.125 1.92188 9.77344 2.25 9.375 2.25H1.125C0.703125 2.25 0.375 1.92188 0.375 1.5C0.375 1.10156 0.703125 0.75 1.125 0.75H9.375C9.77344 0.75 10.125 1.10156 10.125 1.5Z"
+                  fill="white"
+                />
+              </svg>
+            </div>
+          </div>
+          <InputTextWithHeader
+            value={searchText}
+            onChange={handleSearch}
+            placeholder="Search by name, ID, phone no.... "
+            inputTextStyle={{
+              width: '100%',
+              height: '44px',
+              padding: '0 4rem 0 3rem',
+              border: '1px solid #C5D9E0',
+              fontSize: '16px',
+              color: '#000000',
+              borderRadius: '4px',
+              minHeight: '44px',
+              fontWeight: 400,
+              backgroundColor: 'rgb(242 242 242 / 0%)',
+            }}
+            borderBottom={{ border: '1px solid #D5E1EA' }}
+            iconStyle={{
+              position: 'absolute',
+              left: '15px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              width: '18px',
+              height: '18px',
+            }}
+          />
+
+          <div className="ml-[15px] mr-[15px] table-container" style={{ overflow: 'auto' }}>
+            <DataTableComponent
+              data={customerData}
+              tableStyle={{
+                fontSize: '12px',
+                color: '#000000',
+                fontWeight: 600,
+                backgroundColor: '#D9D9D9',
+              }}
+              scrollable={true}
+              columns={CustomerTableColumns}
+              style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
+              onRowClick={(row) => {
+                handleCustomerTableRowClick(row)
+              }}
+              selectionMode="single"
+              onSelectionChange={(e) => {
+                setSelectedProduct(e.value)
+              }}
+              selection={selectedProduct}
+              dataKey="id"
+              paginator={true}
+              rowStyle={(rowData: any) => rowData}
+              emptyMessage={
+                <div className="text-center mt-40">
+                  <img
+                    src="/assets/images/empty.png"
+                    alt="Empty Data"
+                    className="w-28 mx-auto mb-2"
+                  />
+                  <p className="text-gray-500 text-lg">{properties.noDataMessage}</p>
+                </div>
+              }
+            />
+          </div>
+
+          <div className="mt-auto">
+            <Paginator
+              first={pageNumber1}
+              rows={pageSize}
+              totalRecords={totalRecordsOne}
+              rowsPerPageOptions={[5, 10, 20, 30]}
+              onPageChange={onPageChange}
+              style={{
+                position: 'sticky',
+                bottom: 0,
+                zIndex: 1,
+                backgroundColor: 'white',
+                borderTop: '1px solid #D5E1EA',
+                padding: '0.5rem',
+              }}
+            />
+          </div>
+        </div>
+      </div>
+    )
+  }, [customerData, selectedProduct])
+
+  const CustomerRecordHeader = useMemo(() => {
+    return (
+      <div className="bg-[#10293A] rounded-t-[10px] flex justify-between">
+        <div className="text-sm font-semibold rounded-t-md">
+          <h1 className="p-3 text-white text-lg font-extrabold">{properties.customerRecord}</h1>
+        </div>
+        <div className="flex">
+          <>
+            <FaEdit
+              onClick={handleEdit}
+              className="mr-3 mt-[19px] text-[white]"
+              data-testid="FaEdit"
+              style={{ cursor: 'pointer' }}
+            />
+            <RiDeleteBin5Fill
+              onClick={handleDelete}
+              className="text-white mr-2 mt-[19px] "
+              data-testid="RiDeleteBin5Fill"
+              style={{ cursor: 'pointer' }}
+            />
+          </>
+
+          <div
+            className="p-1 mt-[20px]"
+            onClick={() => setRightContainerWidth(true)}
+            style={{ cursor: 'pointer' }}>
+            <svg
+              width="24"
+              height="4"
+              viewBox="0 0 11 3"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M10.125 1.5C10.125 1.92188 9.77344 2.25 9.375 2.25H1.125C0.703125 2.25 0.375 1.92188 0.375 1.5C0.375 1.10156 0.703125 0.75 1.125 0.75H9.375C9.77344 0.75 10.125 1.10156 10.125 1.5Z"
+                fill="white"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    )
+  }, [])
+
   const CustomerDetails = useMemo(() => {
     return (
       <div className="">
@@ -659,7 +821,7 @@ const Customer = () => {
             ? 'backdrop-blur-lg'
             : ''
         }>
-        <Header header="MOORMANAGE/Customer" />
+        <Header header={properties.customerPageHeader} />
         <div className="flex justify-end mr-12 ">
           <div className="flex mt-6 ">
             <CustomModal
@@ -697,9 +859,13 @@ const Customer = () => {
               }
               headerText={
                 editMooringMode ? (
-                  <h1 className="text-xxl font-bold text-black ">Mooring Information</h1>
+                  <h1 className="text-xxl font-bold text-black ">
+                    {properties.mooringInformation}
+                  </h1>
                 ) : (
-                  <h1 className="text-xxl font-bold text-black "> Customer Information</h1>
+                  <h1 className="text-xxl font-bold text-black ">
+                    {properties.customerInformation}
+                  </h1>
                 )
               }
               visible={modalVisible}
@@ -754,137 +920,27 @@ const Customer = () => {
               </div>
             </div>
           ) : (
-            <div
-              style={{
-                height: '700px',
-                minHeight: '700px',
-                width: '500px',
-                minWidth: '500px',
-                backgroundColor: '#FFFFFF',
-                position: 'relative',
-              }}
-              className="ml-[45px] w-[20px] flex-1">
-              <div data-testid="customer-data" className="flex flex-col h-full">
-                <div className="flex item-center justify-between bg-[#10293A] rounded-tl-[10px] rounded-tr-[10px] text-white cursor-pointer">
-                  <div>
-                    <h1 className="p-4 text-xl font-extrabold"> {properties.customerHeader}</h1>
-                  </div>
-                  <div
-                    className="p-8"
-                    onClick={() => setLeftContainerWidth(true)}
-                    style={{ cursor: 'pointer' }}>
-                    <svg
-                      width="24"
-                      height="4"
-                      viewBox="0 0 11 3"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg">
-                      <path
-                        d="M10.125 1.5C10.125 1.92188 9.77344 2.25 9.375 2.25H1.125C0.703125 2.25 0.375 1.92188 0.375 1.5C0.375 1.10156 0.703125 0.75 1.125 0.75H9.375C9.77344 0.75 10.125 1.10156 10.125 1.5Z"
-                        fill="white"
-                      />
-                    </svg>
-                  </div>
-                </div>
-                <InputTextWithHeader
-                  value={searchText}
-                  onChange={handleSearch}
-                  placeholder="Search by name, ID, phone no.... "
-                  inputTextStyle={{
-                    width: '100%',
-                    height: '44px',
-                    padding: '0 4rem 0 3rem',
-                    border: '1px solid #C5D9E0',
-                    fontSize: '16px',
-                    color: '#000000',
-                    borderRadius: '4px',
-                    minHeight: '44px',
-                    fontWeight: 400,
-                    backgroundColor: 'rgb(242 242 242 / 0%)',
-                  }}
-                  borderBottom={{ border: '1px solid #D5E1EA' }}
-                  iconStyle={{
+            <>
+              {/* Customers List Data Table */}
+              {CustomersList}
+              {/* Loader */}
+              {isLoading && (
+                <ProgressSpinner
+                  style={{
                     position: 'absolute',
-                    left: '15px',
                     top: '50%',
-                    transform: 'translateY(-50%)',
-                    width: '18px',
-                    height: '18px',
+                    left: '34%',
+                    transform: 'translate(-50%, -50%)',
+                    width: '50px',
+                    height: '50px',
                   }}
+                  strokeWidth="4"
                 />
-
-                <div className="ml-[15px] mr-[15px] table-container" style={{ overflow: 'auto' }}>
-                  <DataTableComponent
-                    data={customerData}
-                    tableStyle={{
-                      fontSize: '12px',
-                      color: '#000000',
-                      fontWeight: 600,
-                      backgroundColor: '#D9D9D9',
-                    }}
-                    scrollable={true}
-                    columns={CustomerTableColumns}
-                    style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
-                    onRowClick={(row) => {
-                      handleCustomerTableRowClick(row)
-                    }}
-                    selectionMode="single"
-                    onSelectionChange={(e) => {
-                      setSelectedProduct(e.value)
-                    }}
-                    selection={selectedProduct}
-                    dataKey="id"
-                    paginator={true}
-                    rowStyle={(rowData: any) => rowData}
-                    emptyMessage={
-                      <div className="text-center mt-40">
-                        <img
-                          src="/assets/images/empty.png"
-                          alt="Empty Data"
-                          className="w-28 mx-auto mb-2"
-                        />
-                        <p className="text-gray-500 text-lg">No data available</p>
-                      </div>
-                    }
-                  />
-                </div>
-
-                <div className="mt-auto">
-                  <Paginator
-                    first={pageNumber1}
-                    rows={pageSize}
-                    totalRecords={totalRecordsOne}
-                    rowsPerPageOptions={[5, 10, 20, 30]}
-                    onPageChange={onPageChange}
-                    style={{
-                      position: 'sticky',
-                      bottom: 0,
-                      zIndex: 1,
-                      backgroundColor: 'white',
-                      borderTop: '1px solid #D5E1EA',
-                      padding: '0.5rem',
-                    }}
-                  />
-                </div>
-                {isLoading && (
-                  <ProgressSpinner
-                    style={{
-                      position: 'absolute',
-                      top: '50%',
-                      left: '34%',
-                      transform: 'translate(-50%, -50%)',
-                      width: '50px',
-                      height: '50px',
-                    }}
-                    strokeWidth="4"
-                  />
-                )}
-              </div>
-            </div>
+              )}
+            </>
           )}
 
           {/* middle container */}
-
           <div
             className={` min-h-[600] rounded-md border-[1px] ml-5 ${modalVisible || imageVisible || imageEditVisible || dialogVisible ? 'blur-screen' : ''}`}
             style={{ flexGrow: '1' }}>
@@ -945,46 +1001,7 @@ const Customer = () => {
                   width: '450px',
                 }}
                 className="flex-grow border bg-white">
-                <div className="bg-[#10293A] rounded-t-[10px] flex justify-between">
-                  <div className="text-sm font-semibold rounded-t-md">
-                    <h1 className="p-3 text-white text-lg font-extrabold">
-                      {properties.customerRecord}
-                    </h1>
-                  </div>
-                  <div className="flex">
-                    <>
-                      <FaEdit
-                        onClick={handleEdit}
-                        className="mr-3 mt-[19px] text-[white]"
-                        data-testid="FaEdit"
-                        style={{ cursor: 'pointer' }}
-                      />
-                      <RiDeleteBin5Fill
-                        onClick={handleDelete}
-                        className="text-white mr-2 mt-[19px] "
-                        data-testid="RiDeleteBin5Fill"
-                        style={{ cursor: 'pointer' }}
-                      />
-                    </>
-
-                    <div
-                      className="p-1 mt-[20px]"
-                      onClick={() => setRightContainerWidth(true)}
-                      style={{ cursor: 'pointer' }}>
-                      <svg
-                        width="24"
-                        height="4"
-                        viewBox="0 0 11 3"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M10.125 1.5C10.125 1.92188 9.77344 2.25 9.375 2.25H1.125C0.703125 2.25 0.375 1.92188 0.375 1.5C0.375 1.10156 0.703125 0.75 1.125 0.75H9.375C9.77344 0.75 10.125 1.10156 10.125 1.5Z"
-                          fill="white"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
+                {CustomerRecordHeader}
                 <div style={{ border: '1px solid white', height: '180px', overflowY: 'scroll' }}>
                   {customerRecordData ? (
                     CustomerDetails
@@ -996,7 +1013,7 @@ const Customer = () => {
                           alt="Empty Data"
                           className="w-20 mx-auto mb-2"
                         />
-                        <p className="text-gray-800 text-lg">No data available</p>
+                        <p className="text-gray-800 text-lg">{properties.noDataMessage}</p>
                       </>
                     </div>
                   )}
@@ -1104,7 +1121,9 @@ const Customer = () => {
                                       alt="Empty Data"
                                       className="w-20 mx-auto mb-2"
                                     />
-                                    <p className="text-gray-500 text-lg">No data available</p>
+                                    <p className="text-gray-500 text-lg">
+                                      {properties.noDataMessage}
+                                    </p>
                                   </div>
                                 }
                               />
@@ -1202,7 +1221,7 @@ const Customer = () => {
                                 alt="Empty Data"
                                 className="w-20 mx-auto mb-2"
                               />
-                              <p className="text-gray-500 text-lg">No data available</p>
+                              <p className="text-gray-500 text-lg">{properties.noDataMessage}</p>
                             </div>
                           }
                         />
@@ -1215,7 +1234,7 @@ const Customer = () => {
           )}
         </div>
 
-        {/* Dialog BOX */}
+        {/*Mooring Information Dialog BOX */}
         <Dialog
           position="center"
           style={{
@@ -1234,7 +1253,7 @@ const Customer = () => {
           headerStyle={{ cursor: 'alias' }}
           header={
             <div className="flex gap-4">
-              <div className="font-bolder text-[black]">Mooring Information</div>
+              <div className="font-bolder text-[black]">{properties.mooringInformation}</div>
               <div className="font-bold mt-1">
                 <FaEdit onClick={handleMooringEdit} color="#0098FF" style={{ cursor: 'pointer' }} />
               </div>
@@ -1243,6 +1262,7 @@ const Customer = () => {
           <MooringInformations mooringRowData={mooringRowData} />
         </Dialog>
 
+        {/* View Image */}
         <Dialog
           position="center"
           style={{
@@ -1260,7 +1280,7 @@ const Customer = () => {
             setScale(1)
           }}
           headerStyle={{ cursor: 'alias' }}
-          header={'Images'}>
+          header={properties.imageHeader}>
           <ViewImage
             handleZoomOut={handleZoomOut}
             scale={scale}
@@ -1269,6 +1289,7 @@ const Customer = () => {
           />
         </Dialog>
 
+        {/* Image Information */}
         <Dialog
           position="center"
           style={{
@@ -1282,7 +1303,7 @@ const Customer = () => {
             setImageEditVisible(false)
           }}
           headerStyle={{ cursor: 'alias' }}
-          header={'Image Information'}>
+          header={properties.imageInformation}>
           <AddImage
             imageData={imageData}
             entityId={customerId}

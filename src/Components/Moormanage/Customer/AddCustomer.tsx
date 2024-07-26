@@ -1136,7 +1136,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     id="pinCode"
                     value={pinCode}
                     onChange={(e) => handleInputChangeCustomer('pinCode', e.target.value)}
-                    placeholder="Zip code"
+                    placeholder="Zip Code"
                     style={{
                       width: '230px',
                       height: '32px',

@@ -36,7 +36,7 @@ const Settings = () => {
   const [currentlyEditing, setCurrentlyEditing] = useState<any>(null)
   const [dropdownValues, setDropdownValues] = useState<{ [key: string]: string }>({})
   // console.log("dropdownValues",dropdownValues);
-  
+
   const [savedValues, setSavedValues] = useState<{ [key: string]: string }>({})
   const [customerData, setCustomerData] = useState<CustomerPayload[]>([])
   const [dropdownDisabled, setDropdownDisabled] = useState<{ [key: string]: boolean }>({})
@@ -173,7 +173,7 @@ const Settings = () => {
   //   ],
   //   [dropdownValues, savedValues, dropdownDisabled, quickBookCustomer, currentlyEditing],
   // )
-  
+
   const tableColumnsPermission = useMemo(
     () => [
       {
@@ -219,11 +219,9 @@ const Settings = () => {
               const hasDropdownSelected =
                 rowData?.quickbookCustomerResponseDto?.id || savedValues[rowData.id]
               if (rowData.id === currentlyEditing) {
-            
                 UpdateMapCustomerToQuickBook(rowData)
                 setCurrentlyEditing(null)
               } else if (dropdownValue || hasDropdownSelected) {
-               
                 if (!(savedValues[rowData?.id] || rowData?.quickbookCustomerResponseDto?.id)) {
                   MapCustomerToQuickBook(rowData)
                 } else {
@@ -242,8 +240,6 @@ const Settings = () => {
     ],
     [dropdownValues, savedValues, dropdownDisabled, quickBookCustomer, currentlyEditing],
   )
-
-  
 
   const getCustomerData = useCallback(async () => {
     setIsLoading(true)
@@ -433,7 +429,7 @@ const Settings = () => {
                       alt="Empty Data"
                       className="w-20 mx-auto mb-4"
                     />
-                    <p className="text-gray-500">No data available</p>
+                    <p className="text-gray-500">{properties.noDataMessage}</p>
                     {isLoading && (
                       <ProgressSpinner
                         style={{
