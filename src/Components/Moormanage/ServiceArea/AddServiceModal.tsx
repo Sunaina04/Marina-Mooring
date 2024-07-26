@@ -84,17 +84,21 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
   const { getCountriesData } = CountriesData()
 
   const validateFields = () => {
-    const nameRegex = /^[a-zA-Z ]+$/
-    // const regexp =  /^\\d{5}(-\\d{4})?$/
+    const nameRegex = /^[a-zA-Z0-9 ]+$/
+    // const zipCodeRegex = /^\\d{5}(-\\d{4})?$/
     const errors: { [key: string]: string } = {}
 
-    // if (!serviceAreaName) {
-    //   errors.name = 'Service Area Name is required'
-    // } else if (!nameRegex.test(serviceAreaName)) {
-    //   errors.name = 'Name must only contain letters'
-    // }
+    if (!serviceAreaName) {
+      errors.name = 'Service Area Name is required'
+    } else if (!nameRegex.test(serviceAreaName)) {
+      errors.name = 'Name is invalid'
+    }
 
-    if (!serviceAreaName) errors.name = 'serviceAreaName is required'
+    // if (!serviceAreaName) errors.name = 'ServiceArea Name is required'
+
+    // if (!zipCode) {
+    //   errors.zipCode = 'Zip Code is required'
+    // }
 
     return errors
   }
@@ -139,14 +143,21 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
       const Payload = {
         id: id,
         serviceAreaName: serviceAreaName,
-        serviceAreaTypeId: serviceAreaTypeId.id,
-        streetHouse: address,
-        aptSuite: aptSuite,
-        zipCode: zipCode,
-        stateId: selectedState?.id,
-        countryId: country?.id,
-        notes: notes,
-        gpsCoordinates: gpsCoordinatesValue,
+        ...(serviceAreaTypeId && { serviceAreaTypeId: serviceAreaTypeId.id }),
+
+        ...(streetHouse && { streetHouse: address }),
+
+        ...(aptSuite && { aptSuite: aptSuite }),
+
+        ...(zipCode && { zipCode: zipCode }),
+
+        ...(country && { stateId: country.id }),
+
+        ...(country && { countryId: country.id }),
+
+        ...(notes && { notes: notes }),
+
+        ...(gpsCoordinatesValue && { gpsCoordinates: gpsCoordinatesValue }),
       }
       const response = await addServiceArea(Payload).unwrap()
       const { status, message } = response as ServiceAreaResponse
@@ -314,7 +325,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
                 value={serviceAreaName}
                 onChange={(e) => {
                   setServiceAreaName(e.target.value)
-                  setErrorMessage((prev) => ({ ...prev, serviceAreaName: '' }))
+                  setErrorMessage((prev) => ({ ...prev, name: '' }))
                 }}
                 style={{
                   width: '230px',
@@ -460,7 +471,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
                   setZipCode(e.target.value)
                   // setErrorMessage((prev) => ({ ...prev, zipCode: '' }))
                 }}
-                placeholder="Zip Code"
+                placeholder="Zip code"
                 style={{
                   width: '230px',
                   height: '32px',

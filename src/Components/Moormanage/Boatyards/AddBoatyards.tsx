@@ -586,9 +586,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
                   }}
                 />
               </div>
-              {/* <p>
-                {errorMessage.zipCode && <small className="p-error">{errorMessage.zipCode}</small>}
-              </p> */}
             </div>
           </div>
           <div>
@@ -596,7 +593,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
               <InputComponent
                 value={gpsCoordinatesValue}
                 onChange={handleGpsCoordinatesChange}
-                // onBlur={handleGpsCoordinatesBlur}
                 placeholder="GPS Coordinates"
                 style={{
                   width: '230px',
