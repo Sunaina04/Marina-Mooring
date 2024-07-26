@@ -644,7 +644,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
               <span className="font-medium text-sm text-[#000000]">
                 <div className="flex gap-1">
                   Role
-                  <p className="text-red-600">*</p>
+                  {/* <p className="text-red-600">*</p> */}
                 </div>
               </span>
             </div>
@@ -788,122 +788,129 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           />
         )}
 
-        <div className="mt-5 ml-4">
-          <span className="font-medium text-sm text-[#000000]">
-            <div className="flex gap-1">
-              Address
-              {/* <p className="text-red-600">*</p> */}
-            </div>
-          </span>
-        </div>
         <div className="gap-8 mt-1 ml-4">
           <div className="flex gap-8 ">
             <div>
-              <div className="mt-2">
-                <InputText
-                  value={street}
-                  onChange={(e) => handleInputChange('street', e.target.value)}
-                  placeholder="Street/house"
+              <div className="mt-3">
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">
+                    Country
+                    <p className="text-red-600">*</p>
+                  </div>
+                </span>
+              </div>
+              <div className="mt-1">
+                <Dropdown
+                  value={country}
+                  onChange={(e) => {
+                    setCountry(e.value)
+                    setFieldErrors((prevErrors) => ({ ...prevErrors, country: '' }))
+                  }}
+                  options={countriesData}
+                  optionLabel="name"
+                  editable
+                  // placeholder="Country"
+                  disabled={isLoading}
+                  className=""
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: fieldErrors.street ? '1px solid red' : '1px solid #D5E1EA',
+                    border: fieldErrors.country ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
-                    padding: '0.80em',
                   }}
                 />
               </div>
-
-              <p className="" id="street">
-                {fieldErrors.street && <small className="p-error">{fieldErrors.street}</small>}
+              <p className="" id="role">
+                {fieldErrors.role && <small className="p-error">{fieldErrors.role}</small>}
               </p>
             </div>
 
             <div>
-              <div className="mt-2">
-                <InputText
-                  value={apt}
-                  onChange={(e) => handleInputChange('apt', e.target.value)}
-                  placeholder="Apt/Suite"
-                  type="text"
+              <div className="mt-3">
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">
+                    State
+                    {/* <p className="text-red-600">*</p> */}
+                  </div>
+                </span>
+              </div>
+              <div className="mt-1">
+                <Dropdown
+                  value={state}
+                  onChange={(e) => {
+                    setState(e.value)
+                    setFieldErrors((prevErrors) => ({ ...prevErrors, state: '' }))
+                  }}
+                  options={statesData}
+                  optionLabel="name"
+                  editable
+                  // placeholder="State"
+                  disabled={isLoading}
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: fieldErrors.apt ? '1px solid red' : '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
+                    minHeight: '32px',
+                    border: fieldErrors.state ? '1px solid red' : '1px solid #D5E1EA',
                     fontSize: '0.8rem',
-                    padding: '0.83em',
+                    borderRadius: '0.50rem',
+                    color: 'gray',
                   }}
                 />
               </div>
-              <p className="" id="apt">
-                {fieldErrors.apt && <small className="p-error">{fieldErrors.apt}</small>}
-              </p>
-            </div>
-
-            <div className=" mt-2 ">
-              <Dropdown
-                value={state}
-                onChange={(e) => {
-                  setState(e.value)
-                  setFieldErrors((prevErrors) => ({ ...prevErrors, state: '' }))
-                }}
-                options={statesData}
-                optionLabel="name"
-                editable
-                placeholder="State"
-                disabled={isLoading}
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  minHeight: '32px',
-                  border: fieldErrors.state ? '1px solid red' : '1px solid #D5E1EA',
-                  fontSize: '0.8rem',
-                  borderRadius: '0.50rem',
-                  color: 'gray',
-                }}
-              />
               <p className="" id="state">
                 {fieldErrors.state && <small className="p-error">{fieldErrors.state}</small>}
               </p>
             </div>
+
+            <div className="flex mt-3 gap-8 ">
+              <div>
+                <div className="mt-">
+                  <span className="font-medium text-sm text-[#000000]">
+                    <div className="flex gap-1">
+                      Zip Code
+                      {/* <p className="text-red-600">*</p> */}
+                    </div>
+                  </span>
+                </div>
+                <div className="mt-1">
+                  <InputText
+                    value={zipCode}
+                    invalid
+                    onChange={(e) => handleInputChange('zipCode', e.target.value)}
+                    // placeholder="Zip Code"
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.8rem',
+                      padding: '0.83em',
+                    }}
+                  />
+                </div>
+                <p className="" id="state">
+                  {fieldErrors.state && <small className="p-error">{fieldErrors.state}</small>}
+                </p>
+              </div>
+            </div>
           </div>
 
-          <div className="flex mt-5 gap-8 ">
-            <div className="">
-              <Dropdown
-                value={country}
-                onChange={(e) => {
-                  setCountry(e.value)
-                  setFieldErrors((prevErrors) => ({ ...prevErrors, country: '' }))
-                }}
-                options={countriesData}
-                optionLabel="name"
-                editable
-                placeholder="Country"
-                disabled={isLoading}
-                className=""
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: fieldErrors.country ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                }}
-              />
-
-              <p className="" id="country">
-                {fieldErrors.country && <small className="p-error">{fieldErrors.country}</small>}
-              </p>
+          <div>
+            <div className="mt-3">
+              <span className="font-medium text-sm text-[#000000]">
+                <div className="flex gap-1">
+                  Address
+                  {/* <p className="text-red-600">*</p> */}
+                </div>
+              </span>
             </div>
-
-            <div>
+            <div className="mt-1">
               <InputText
                 value={zipCode}
                 invalid
-                onChange={(e) => handleInputChange('zipCode', e.target.value)}
-                placeholder="Zip Code"
+                onChange={(e) => handleInputChange('apt', e.target.value)}
+                // placeholder=" Address"
                 style={{
                   width: '230px',
                   height: '32px',
@@ -914,6 +921,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 }}
               />
             </div>
+            <p className="" id="state">
+              {fieldErrors.state && <small className="p-error">{fieldErrors.state}</small>}
+            </p>
           </div>
         </div>
         {!passWordDisplay && (
