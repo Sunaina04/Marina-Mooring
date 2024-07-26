@@ -259,3 +259,9 @@ export interface EditImageProps {
   handleModalClose: () => void
   getCustomersWithMooring: () => void
 }
+
+
+export interface FormDataProps {
+  closeModal: () => void
+ 
+}

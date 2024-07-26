@@ -1,4 +1,3 @@
-
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import InputComponent from '../../CommonComponent/InputComponent'
 import { Button } from 'primereact/button'
@@ -6,12 +5,12 @@ import { Dropdown } from 'primereact/dropdown'
 import { Toast } from 'primereact/toast'
 import { useGetCustomerMutation } from '../../../Services/MoorManage/MoormanageApi'
 import { CustomerPayload, CustomerResponse, ErrorResponse } from '../../../Type/ApiTypes'
-import { toast } from 'react-toastify'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import { useSelector } from 'react-redux'
 import { ProgressSpinner } from 'primereact/progressspinner'
+import { FormDataProps } from '../../../Type/ComponentBasedType'
 
-const AddForm = () => {
+const AddForm: React.FC<FormDataProps> = ({ closeModal }) => {
   const selectedCustomerId = useSelector(selectCustomerId)
   const [getCustomer] = useGetCustomerMutation()
   const [uploadFile, setUploadFile] = useState<File | null>(null)
@@ -46,10 +45,6 @@ const AddForm = () => {
       errors.formName = 'Form Name is required'
     }
 
-    if (!formData.uploadFile) {
-      errors.uploadFile = 'Upload file is required'
-    }
-
     setFieldsError(errors)
     return errors
   }
@@ -81,7 +76,7 @@ const AddForm = () => {
           summary: 'Error',
           detail: message,
           life: 3000,
-        });
+        })
       }
     } catch (error) {
       setIsLoading(false)
@@ -108,10 +103,15 @@ const AddForm = () => {
     const errors = validateFields()
     if (Object.keys(errors).length > 0) {
       setFieldsError(errors)
-      Object.values(errors).forEach((message) => {
-        toastRef.current?.show({ severity: 'error', summary: 'Validation Error', detail: message })
-      })
       return
+    }
+
+    if (!formData.uploadFile) {
+      toastRef.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Upload file is required',
+      })
     }
 
     console.log({ ...formData, uploadFileName: fileName })
@@ -148,10 +148,9 @@ const AddForm = () => {
         setFileName('')
         setFileSize(null)
         setUploadStatus('error')
-        setFieldsError({ ...fieldsError, uploadFile: 'Only PDF files are allowed' })
         toastRef.current?.show({
           severity: 'error',
-          summary: 'File Error',
+          summary: 'Error',
           detail: 'Only PDF files are allowed',
         })
       }
@@ -190,6 +189,9 @@ const AddForm = () => {
                   paddingLeft: '0.5rem',
                 }}
               />
+              {fieldsError.customerName && (
+                <small className="p-error">{fieldsError.customerName}</small>
+              )}
             </div>
           </div>
 
@@ -226,6 +228,7 @@ const AddForm = () => {
                   paddingLeft: '0.5rem',
                 }}
               />
+              {fieldsError.id && <small className="p-error">{fieldsError.id}</small>}
             </div>
           </div>
 
@@ -249,6 +252,7 @@ const AddForm = () => {
                   paddingLeft: '0.5rem',
                 }}
               />
+              {fieldsError.formName && <small className="p-error">{fieldsError.formName}</small>}
             </div>
           </div>
         </div>
@@ -260,16 +264,26 @@ const AddForm = () => {
               <p className="text-red-600">*</p>
             </div>
           </span>
+
           <div
-            className="mt-1 p-4  border-dashed border-2 border-gray-300 rounded flex flex-col items-center justify-center text-center"
-            style={{ width: '700px', height: '200px', cursor: 'pointer' }}
+            className="mt-2 flex justify-center items-center flex-col p-4"
+            style={{
+              width: '100%',
+              height: '150px',
+              border: '1px dashed #D5E1EA',
+              borderRadius: '0.50rem',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
             onClick={handleClickUploadButton}>
             {uploadStatus === 'idle' && (
               <div>
                 <img
-                  src="/assets/images/moorfindLogo.png"
+                  src="/assets/images/file.png"
                   alt="Upload Icon"
-                  style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain' }}
+                  style={{ maxWidth: '50px', maxHeight: '50px', objectFit: 'contain' }}
                 />
                 <p className="mt-2">Choose file</p>
               </div>
@@ -298,19 +312,14 @@ const AddForm = () => {
                 </p>
               </div>
             )}
-            {uploadStatus === 'error' && (
-              <div>
-                <p className="mt-2 text-red-600">Error: Only PDF files are allowed</p>
-              </div>
-            )}
-            <input
-              ref={fileInputRef}
-              type="file"
-              style={{ display: 'none' }}
-              onChange={handleFileChange}
-              accept=".pdf"
-            />
           </div>
+          <input
+            ref={fileInputRef}
+            type="file"
+            style={{ display: 'none' }}
+            onChange={handleFileChange}
+            accept=".pdf"
+          />
         </div>
 
         <div
@@ -337,7 +346,7 @@ const AddForm = () => {
           />
           <Button
             onClick={() => {
-              // setVisible(false);
+              closeModal()
             }}
             label={'Back'}
             text={true}
