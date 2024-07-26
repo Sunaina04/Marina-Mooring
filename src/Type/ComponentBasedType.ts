@@ -265,3 +265,6 @@ export interface FormDataProps {
   closeModal: () => void
  
 }
+export interface FormFillProps {
+  formOpen: () => void
+}
