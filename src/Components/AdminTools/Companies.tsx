@@ -458,8 +458,8 @@ const CustomerOwner = () => {
               dialogStyle={{
                 width: '840px',
                 minWidth: '840px',
-                height: '600px',
-                minHeight: '600px',
+                height: editMode ? '500px' : '600px',
+                minHeight: editMode ? '500px' : '600px',
                 borderRadius: '1rem',
                 maxHeight: '60% !important',
               }}

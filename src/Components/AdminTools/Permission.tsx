@@ -250,8 +250,8 @@ const Permission = () => {
             dialogStyle={{
               width: '840px',
               minWidth: '840px',
-              height: '600px',
-              minHeight: '600px',
+              height: editMode ? '500px' : '600px',
+              minHeight: editMode ? '500px' : '600px',
               borderRadius: '1rem',
               maxHeight: '60% !important',
             }}
@@ -316,7 +316,7 @@ const Permission = () => {
                       alt="Empty Data"
                       className="w-20 mx-auto mb-4"
                     />
-                    <p className="text-gray-500">{properties.noDataMessage}</p>
+                    <p className="text-gray-500">No data available</p>
                     {isLoading && (
                       <ProgressSpinner
                         style={{

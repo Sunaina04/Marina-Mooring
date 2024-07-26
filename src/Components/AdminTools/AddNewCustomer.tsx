@@ -213,10 +213,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       setFieldErrors(errors)
       return
     }
-
     setIsLoading(true)
     try {
-      const encodedPassword = btoa(password)
       const editUserPayload = {
         firstName,
         lastName,
@@ -226,12 +224,10 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         street,
         apt,
         zipCode,
-        password: encodedPassword,
         stateId: state?.id,
         countryId: country?.id,
         roleId: role?.id,
         customerOwnerId: editCustomerMode ? '' : customerData?.customerOwnerId,
-        confirmPassword: encodedPassword,
       }
       const response = await editCustomer({
         payload: editUserPayload,
@@ -282,12 +278,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       setFieldErrors(errors)
       return
     }
-
     dispatch(setCustomerId(editMode ? '' : customerData?.customerOwnerId))
-
     setIsLoading(true)
     try {
-      const encodedPassword = btoa(password)
       const editUserPayload = {
         firstName,
         lastName,
@@ -297,11 +290,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         street,
         apt,
         zipCode,
-        password: encodedPassword,
         stateId: state?.id,
         countryId: country?.id,
         roleId: role?.id,
-        confirmPassword: encodedPassword,
       }
       const response = await editCustomer({
         payload: editUserPayload,
@@ -925,144 +916,148 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
             </div>
           </div>
         </div>
-        <div className="flex mt-5 gap-8 ml-4">
-          <div>
-            <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1 text-center ">
-                {passWordDisplay ? ' Reset password' : 'Create Password'}
-                {!passWordDisplay && <p className="text-red-600">*</p>}
-              </div>
-            </span>
-            <div className="mt-1">
-              <div style={{ position: 'relative', width: '230px', marginBottom: '10px' }}>
-                <InputComponent
-                  value={password}
-                  type="password"
-                  onChange={(e) => handleInputChange('password', e.target.value)}
-                  onBlur={handleBlur}
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border:
-                      fieldErrors.password || errorMessage ? '1px solid red' : '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                    padding: '0.5rem',
-                  }}
-                />
+        {!passWordDisplay && (
+          <div className="flex mt-5 gap-8 ml-4">
+            <div>
+              <span className="font-medium text-sm text-[#000000]">
+                <div className="flex gap-1 text-center ">
+                  Create Password
+                  <p className="text-red-600">*</p>
+                </div>
+              </span>
+              <div className="mt-1">
+                <div style={{ position: 'relative', width: '230px', marginBottom: '10px' }}>
+                  <InputComponent
+                    value={password}
+                    type="password"
+                    onChange={(e) => handleInputChange('password', e.target.value)}
+                    onBlur={handleBlur}
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border:
+                        fieldErrors.password || errorMessage
+                          ? '1px solid red'
+                          : '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.8rem',
+                      padding: '0.5rem',
+                    }}
+                  />
 
-                <p className=" w-48" id="password">
-                  {fieldErrors.password || errorMessage ? (
-                    <small className="p-error">
-                      {fieldErrors.password}
-                      {errorMessage}
+                  <p className=" w-48" id="password">
+                    {fieldErrors.password || errorMessage ? (
+                      <small className="p-error">
+                        {fieldErrors.password}
+                        {errorMessage}
+                      </small>
+                    ) : (
+                      ''
+                    )}
+                  </p>
+                </div>
+
+                <div
+                  style={{ width: '230px', fontSize: '14px' }}
+                  id="password-message"
+                  className="mt-2 hidden ">
+                  <h3 className="font-medium text-sm text-[#000000] flex justify-center mr-3">
+                    PASSWORD MUST CONTAIN:
+                  </h3>
+                  <div className="flex items-center gap-6 p-1 mt-2">
+                    {passwordCriteria.uppercase ? (
+                      <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
+                    ) : (
+                      <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
+                    )}
+                    <p
+                      className={`password-message-item ${passwordCriteria.uppercase ? 'text-green-500' : 'text-red-500'}`}>
+                      At least <span className="font-[500]"> one uppercase letter</span>
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-6 p-1 ">
+                    {passwordCriteria.lowercase ? (
+                      <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
+                    ) : (
+                      <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
+                    )}
+
+                    <p
+                      className={`password-message-item ${passwordCriteria.lowercase ? 'text-green-500' : 'text-red-500'}`}>
+                      At least <span className="font-[500]">one lowercase letter</span>
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-6 p-1 ">
+                    {passwordCriteria.number ? (
+                      <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
+                    ) : (
+                      <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
+                    )}
+                    <p
+                      className={`password-message-item ${passwordCriteria.number ? 'text-green-500' : 'text-red-500'}`}>
+                      At least<span className="font-[500]">one number</span>
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-6 p-1 ">
+                    {passwordCriteria.specialChar ? (
+                      <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
+                    ) : (
+                      <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
+                    )}
+                    <p
+                      className={`password-message-item ${passwordCriteria.specialChar ? 'text-green-500' : 'text-red-500'}`}>
+                      At least<span className="font-[500]">one special character</span>
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-6 p-1 ">
+                    {passwordCriteria.length ? (
+                      <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
+                    ) : (
+                      <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
+                    )}
+                    <p
+                      className={`password-message-item ${passwordCriteria.length ? 'text-green-500' : 'text-red-500'}`}>
+                      At least <span className="font-[500]">10 characters</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="">
+              <span className="font-medium text-sm text-[#000000]">
+                <div className="flex gap-1">
+                  Confirm password
+                  <p className="text-red-600">*</p>
+                </div>
+              </span>
+              <div className="mt-1 ">
+                <div style={{ position: 'relative', marginBottom: '10px' }}>
+                  <InputComponent
+                    value={confirmPassword}
+                    type="password"
+                    onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: fieldErrors.confirmPassword ? '1px solid red' : '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.8rem',
+                      padding: '0.5rem',
+                    }}
+                  />
+
+                  {fieldErrors.confirmPassword && (
+                    <small className="p-error" id="confirmPassword">
+                      {fieldErrors.confirmPassword}
                     </small>
-                  ) : (
-                    ''
                   )}
-                </p>
-              </div>
-
-              <div
-                style={{ width: '230px', fontSize: '14px' }}
-                id="password-message"
-                className="mt-2 hidden ">
-                <h3 className="font-medium text-sm text-[#000000] flex justify-center mr-3">
-                  PASSWORD MUST CONTAIN:
-                </h3>
-                <div className="flex items-center gap-6 p-1 mt-2">
-                  {passwordCriteria.uppercase ? (
-                    <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
-                  ) : (
-                    <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
-                  )}
-                  <p
-                    className={`password-message-item ${passwordCriteria.uppercase ? 'text-green-500' : 'text-red-500'}`}>
-                    At least <span className="font-[500]"> one uppercase letter</span>
-                  </p>
-                </div>
-
-                <div className="flex items-center gap-6 p-1 ">
-                  {passwordCriteria.lowercase ? (
-                    <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
-                  ) : (
-                    <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
-                  )}
-
-                  <p
-                    className={`password-message-item ${passwordCriteria.lowercase ? 'text-green-500' : 'text-red-500'}`}>
-                    At least <span className="font-[500]">one lowercase letter</span>
-                  </p>
-                </div>
-                <div className="flex items-center gap-6 p-1 ">
-                  {passwordCriteria.number ? (
-                    <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
-                  ) : (
-                    <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
-                  )}
-                  <p
-                    className={`password-message-item ${passwordCriteria.number ? 'text-green-500' : 'text-red-500'}`}>
-                    At least<span className="font-[500]">one number</span>
-                  </p>
-                </div>
-
-                <div className="flex items-center gap-6 p-1 ">
-                  {passwordCriteria.specialChar ? (
-                    <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
-                  ) : (
-                    <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
-                  )}
-                  <p
-                    className={`password-message-item ${passwordCriteria.specialChar ? 'text-green-500' : 'text-red-500'}`}>
-                    At least<span className="font-[500]">one special character</span>
-                  </p>
-                </div>
-                <div className="flex items-center gap-6 p-1 ">
-                  {passwordCriteria.length ? (
-                    <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
-                  ) : (
-                    <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
-                  )}
-                  <p
-                    className={`password-message-item ${passwordCriteria.length ? 'text-green-500' : 'text-red-500'}`}>
-                    At least <span className="font-[500]">10 characters</span>
-                  </p>
                 </div>
               </div>
             </div>
           </div>
-          <div className="">
-            <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
-                Confirm password
-                {!passWordDisplay && <p className="text-red-600">*</p>}
-              </div>
-            </span>
-            <div className="mt-1 ">
-              <div style={{ position: 'relative', marginBottom: '10px' }}>
-                <InputComponent
-                  value={confirmPassword}
-                  type="password"
-                  onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: fieldErrors.confirmPassword ? '1px solid red' : '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                    padding: '0.5rem',
-                  }}
-                />
-
-                {fieldErrors.confirmPassword && (
-                  <small className="p-error" id="confirmPassword">
-                    {fieldErrors.confirmPassword}
-                  </small>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
+        )}
       </div>
       <div
         className={`"flex gap-4 ml-4 bottom-2 absolute left-6"  ${isLoading ? 'blurred' : ''}`}

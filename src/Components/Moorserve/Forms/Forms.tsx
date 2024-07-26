@@ -164,12 +164,14 @@ const Forms = () => {
 
   return (
     <>
-      <div style={{ height: '150vh' }} className={isModalOpen || formOpen ? 'backdrop-blur-lg' : ''}>
+      <div
+        style={{ height: '150vh' }}
+        className={isModalOpen || formOpen ? 'backdrop-blur-lg' : ''}>
         <Header header="MOORSERVE/Forms Library" />
 
         <div className="flex justify-end">
           <div className="flex mr-16 mt-10">
-            <Button
+            {/* <Button
               label="Fill in Form"
               onClick={() => setFormOpen(true)}
               style={{
@@ -184,7 +186,7 @@ const Forms = () => {
                 borderRadius: '0.50rem',
                 marginLeft: '15px',
                 boxShadow: 'none',
-              }}></Button>
+              }}></Button> */}
             <CustomModal
               buttonText={'Upload New'}
               buttonStyle={{
@@ -322,8 +324,8 @@ const Forms = () => {
             </div>
           </div>
         </div>
-      
-      <Dialog
+
+        {/* <Dialog
         header="Fill in Form"
         position="center"
         style={{
@@ -340,7 +342,7 @@ const Forms = () => {
         visible={formOpen}
         onHide={handleFormClose}>
         <FormFill formOpen={handleFormClose}/>
-      </Dialog>
+      </Dialog> */}
       </div>
     </>
   )
