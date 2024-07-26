@@ -53,7 +53,6 @@ const Header: React.FC<HeaderProps> = ({ header, customer }) => {
       getUserHandler()
     }
   }, [role === 1, customer])
-  console.log('selectedCustomerName', selectedCustomerName)
 
   return (
     <div

@@ -206,7 +206,7 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
             boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
           }}>
           <div style={{ width: isZoom ? ' 22vw ' : '10vw' }}>
-            <h1 className='text-[11px]'>Status</h1>
+            <h5>Status</h5>
             <div className="mt-1">
               <hr style={{ border: '1px solid #3F3F3F' }} />
             </div>

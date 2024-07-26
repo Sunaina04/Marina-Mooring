@@ -30,10 +30,9 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
   const [streetHouse, setStreetHouse] = useState('')
   const [notes, setNotes] = useState('')
   const [address, setAddress] = useState('')
-  const [aptSuite, setAptSuite] = useState('')
   const [selectedState, setSelectedState] = useState<any>()
   const [selectedType, setSelectedType] = useState<any>()
-  const [country, setCountry] = useState<Country>()
+  const [country, setCountry] = useState<any>()
   const [zipCode, setZipCode] = useState('')
 
   const [mainContact, setMainContact] = useState('')
@@ -79,23 +78,18 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
   const [isLoading, setIsLoading] = useState(true)
   const [addServiceArea] = useAddServiceAreaMutation()
   const [updateServiceArea] = useUpdateServiceAreaMutation()
-  const { getStatesData } = StatesData()
+  const { getStatesData } = StatesData(country?.id)
   const { getServiceAreaTypeData } = ServiceAreaTypeData()
   const { getCountriesData } = CountriesData()
 
   const validateFields = () => {
-    const nameRegex = /^[a-zA-Z ]+$/
-    // const regexp =  /^\\d{5}(-\\d{4})?$/
+    const nameRegex = /^[a-zA-Z0-9 ]+$/
     const errors: { [key: string]: string } = {}
-
-    // if (!serviceAreaName) {
-    //   errors.name = 'Service Area Name is required'
-    // } else if (!nameRegex.test(serviceAreaName)) {
-    //   errors.name = 'Name must only contain letters'
-    // }
-
-    if (!serviceAreaName) errors.name = 'serviceAreaName is required'
-
+    if (!serviceAreaName) {
+      errors.name = 'Service Area Name is required'
+    } else if (!nameRegex.test(serviceAreaName)) {
+      errors.name = 'Name is invalid'
+    }
     return errors
   }
 
@@ -117,8 +111,6 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
     setId(customerData?.Id || '')
     setServiceAreaName(customerData?.serviceAreaName || '')
     setServiceAreaTypeId(customerData?.serviceAreaTypeDto?.type || '')
-    setAddress(customerData?.streetHouse || '')
-    setAptSuite(customerData?.aptSuite || '')
     setZipCode(customerData?.zipCode || '')
     setSelectedState(customerData?.stateResponseDto?.name || '')
     setNotes(customerData?.notes || '')
@@ -140,8 +132,6 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
         id: id,
         serviceAreaName: serviceAreaName,
         serviceAreaTypeId: serviceAreaTypeId.id,
-        streetHouse: address,
-        aptSuite: aptSuite,
         zipCode: zipCode,
         stateId: selectedState?.id,
         countryId: country?.id,
@@ -196,8 +186,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
         id: id,
         serviceAreaName: serviceAreaName,
         serviceAreaTypeId: serviceAreaTypeId.id,
-        streetHouse: address,
-        aptSuite: aptSuite,
+        // streetHouse: address,
         zipCode: zipCode,
         stateId: selectedState?.id,
         countryId: country?.id,
@@ -252,39 +241,37 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
   const handleBack = () => {
     setModalVisible(false)
   }
-  const handleAddStorage = () => {
-    setStorageList([...storageList, storage])
-    setStorage('')
-  }
-
-  const handleDeleteStorage = (index: number) => {
-    const newList = storageList.filter((_, i) => i !== index)
-    setStorageList(newList)
-  }
 
   const fetchDataAndUpdate = useCallback(async () => {
-    const { statesData } = await getStatesData()
     const { countriesData } = await getCountriesData()
     const { ServiceAreaTypeData } = await getServiceAreaTypeData()
     if (countriesData !== null) {
       setIsLoading(false)
       setCountriesData(countriesData)
     }
-
-    if (statesData !== null) {
-      setIsLoading(false)
-      setStatesData(statesData)
-    }
-
     if (ServiceAreaTypeData !== null) {
       setIsLoading(false)
       setServiceAreaTypeData(ServiceAreaTypeData)
     }
   }, [])
 
+  const fetchStateDataAndUpdate = useCallback(async () => {
+    const { statesData } = await getStatesData()
+    if (statesData !== null) {
+      setIsLoading(false)
+      setStatesData(statesData)
+    } else {
+      setSelectedState('')
+    }
+  }, [country])
+
   useEffect(() => {
     fetchDataAndUpdate()
-  }, [fetchDataAndUpdate])
+  }, [])
+
+  useEffect(() => {
+    fetchStateDataAndUpdate()
+  }, [country])
 
   useEffect(() => {
     if (editMode && customerData) {
@@ -314,7 +301,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
                 value={serviceAreaName}
                 onChange={(e) => {
                   setServiceAreaName(e.target.value)
-                  setErrorMessage((prev) => ({ ...prev, serviceAreaName: '' }))
+                  setErrorMessage((prev) => ({ ...prev, name: '' }))
                 }}
                 style={{
                   width: '230px',
@@ -364,40 +351,27 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
       <div className="flex gap-6 mt-1">
         <div>
           <div className="">
-            <InputComponent
-              value={address}
+            <Dropdown
+              id="stateDropdown"
+              value={country}
               onChange={(e) => {
-                setAddress(e.target.value)
+                setCountry(e.value)
               }}
-              placeholder="Street/house"
+              editable
+              placeholder="Country"
+              options={countriesData}
+              optionLabel="name"
+              disabled={isLoading}
               style={{
                 width: '230px',
                 height: '32px',
                 border: '1px solid #D5E1EA',
                 borderRadius: '0.50rem',
                 fontSize: '0.8rem',
-                padding: '0.5rem',
+                paddingLeft: '0.5rem',
               }}
             />
           </div>
-        </div>
-
-        <div className="">
-          <InputComponent
-            value={aptSuite}
-            placeholder="Apt/Suite"
-            onChange={(e) => {
-              setAptSuite(e.target.value)
-            }}
-            style={{
-              width: '230px',
-              height: '32px',
-              border: '1px solid #D5E1EA',
-              borderRadius: '0.50rem',
-              fontSize: '0.8rem',
-              padding: '0.5rem',
-            }}
-          />
         </div>
 
         <div className="flex flex-col ">
@@ -428,24 +402,20 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
       <div className="flex  gap-6 mt-4">
         <div>
           <div className="">
-            <Dropdown
-              id="stateDropdown"
-              value={country}
+            <InputComponent
+              value={zipCode}
               onChange={(e) => {
-                setCountry(e.value)
+                setZipCode(e.target.value)
+                // setErrorMessage((prev) => ({ ...prev, zipCode: '' }))
               }}
-              editable
-              placeholder="Country"
-              options={countriesData}
-              optionLabel="name"
-              disabled={isLoading}
+              placeholder="Zip code"
               style={{
                 width: '230px',
                 height: '32px',
                 border: '1px solid #D5E1EA',
                 borderRadius: '0.50rem',
                 fontSize: '0.8rem',
-                paddingLeft: '0.5rem',
+                padding: '0.5rem',
               }}
             />
           </div>
@@ -455,12 +425,11 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
           <div>
             <div className="">
               <InputComponent
-                value={zipCode}
+                value={address}
                 onChange={(e) => {
-                  setZipCode(e.target.value)
-                  // setErrorMessage((prev) => ({ ...prev, zipCode: '' }))
+                  setAddress(e.target.value)
                 }}
-                placeholder="Zip Code"
+                placeholder="Address"
                 style={{
                   width: '230px',
                   height: '32px',

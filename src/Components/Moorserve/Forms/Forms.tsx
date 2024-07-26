@@ -310,7 +310,7 @@ const Forms = () => {
               <Paginator
                 first={pageNumber1}
                 rows={pageSize}
-                totalRecords={120}
+                totalRecords={1}
                 rowsPerPageOptions={[5, 10, 20, 30]}
                 onPageChange={onPageChange}
                 style={{

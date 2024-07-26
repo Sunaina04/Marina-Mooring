@@ -22,12 +22,12 @@ import {
 } from '../../../Services/MetaDataApi'
 import { ErrorResponse, MetaDataCustomerResponse, MetaDataResponse } from '../../../Type/ApiTypes'
 
-export const StatesData = () => {
+export const StatesData = (countryId: number) => {
   const [getStates] = useGetStatesMutation()
 
   const fetchMetaData = async (getData: any) => {
     try {
-      const response = await getData({})
+      const response = await getData({ countryId: countryId })
       const { status, content } = response.data as MetaDataResponse
       return status === 200 && Array.isArray(content) ? content : null
     } catch (error) {

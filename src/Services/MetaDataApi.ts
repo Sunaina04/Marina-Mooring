@@ -10,8 +10,8 @@ const metaDataApi = userApi.injectEndpoints({
     }),
 
     getStates: builder.mutation({
-      query: () => ({
-        url: 'api/v1/metadata/states',
+      query: ({ countryId }: { countryId: number }) => ({
+        url: `api/v1/metadata/states/${countryId}`,
         method: 'GET',
       }),
     }),

@@ -50,12 +50,12 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
   const [street, setStreet] = useState('')
-  const [apt, setApt] = useState('')
+  const [address, setAddress] = useState('')
   const [zipCode, setZipCode] = useState('')
   const [role, setRole] = useState<Role>()
   const [companyName, setCompanyName] = useState('')
-  const [country, setCountry] = useState<Country>()
-  const [state, setState] = useState<State>()
+  const [country, setCountry] = useState<any>()
+  const [state, setState] = useState<any>()
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [rolesData, setRolesData] = useState<Role[]>()
@@ -64,15 +64,16 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const [errorMessage, setErrorMessage] = useState<string>()
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
   const [selectedCustomerId, setSelectedCustomerId] = useState<any>()
+  const [selectedCustomerName, setSelectedCustomerName] = useState<any>()
   const [firstErrorField, setFirstErrorField] = useState('')
   const [customerAdminDropdownEnabled, setCustomerAdminDropdownEnabled] = useState(false)
-  const [getCustomerOwnerData, setgetCustomerOwnerData] = useState<CustomerPayload[]>([])
+  const [getCustomerOwnerData, setgetCustomerOwnerData] = useState<any[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [addCustomer] = useAddUserMutation()
   const [editCustomer] = useUpdateUserMutation()
   const [getUsersData] = useGetUsersMutation()
   const { getRolesData } = RolesData()
-  const { getStatesData } = StatesData()
+  const { getStatesData } = StatesData(country?.id)
   const { getCountriesData } = CountriesData()
   const toastRef = useRef<Toast>(null)
 
@@ -109,7 +110,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       errors.email = 'Please enter a valid email format'
     }
     if (errors.email && !firstError) firstError = 'email'
-    // if (!street) errors.street = 'Street is required'
     if (!role) errors.role = 'Role is required'
     if (errors.role && !firstError) firstError = 'role'
     if (
@@ -122,8 +122,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     if (errors.selectedCustomerId && !firstError) firstError = 'selectedCustomerId'
     if (!companyName && role?.id === 2) errors.companyName = 'Company Name is required'
     if (errors.companyName && !firstError) firstError = 'companyName'
-    // if (!country) errors.country = 'Country is required'
-    // if (errors.country && !firstError) firstError = 'country'
     if (!password && !passWordDisplay) errors.password = 'Password is required'
     if (errors.password && !firstError) firstError = 'password'
     if (!confirmPassword && !passWordDisplay)
@@ -181,8 +179,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       case 'street':
         setStreet(value)
         break
-      case 'apt':
-        setApt(value)
+      case 'address':
+        setAddress(value)
         break
       case 'zipCode':
         setZipCode(value)
@@ -222,7 +220,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         phoneNumber: phone,
         email,
         street,
-        apt,
         zipCode,
         stateId: state?.id,
         countryId: country?.id,
@@ -288,7 +285,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         phoneNumber: phone,
         email,
         street,
-        apt,
         zipCode,
         stateId: state?.id,
         countryId: country?.id,
@@ -349,8 +345,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       setErrorMessage('Password is Incorrect')
       return
     }
-    const selectedCustomerAdminId = selectedCustomerId?.id
-    dispatch(setCustomerId(permission ? customerAdminId : selectedCustomerAdminId))
+    dispatch(setCustomerId(permission ? customerAdminId : selectedCustomerId))
     setIsLoading(true)
     try {
       // Encode the password using base64
@@ -362,7 +357,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         phoneNumber: phone,
         email,
         street,
-        apt,
         zipCode,
         password: encodedPassword, // Using base64 encoded password
         stateId: state?.id,
@@ -431,7 +425,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   }
 
   const fetchDataAndUpdate = useCallback(async () => {
-    const { statesData } = await getStatesData()
     const { rolesData } = await getRolesData()
     const { countriesData } = await getCountriesData()
 
@@ -443,11 +436,17 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       setIsLoading(false)
       setCountriesData(countriesData)
     }
+  }, [])
+
+  const fetchStateDataAndUpdate = useCallback(async () => {
+    const { statesData } = await getStatesData()
     if (statesData !== null) {
       setIsLoading(false)
       setStatesData(statesData)
+    } else {
+      setState('')
     }
-  }, [])
+  }, [country])
 
   const handleEditMode = () => {
     if ((editMode || editCustomerMode) && customerData) {
@@ -457,7 +456,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       setPhone(customerData?.phoneNumber || '')
       setEmail(customerData?.email || '')
       setStreet(customerData?.street || '')
-      setApt(customerData?.apt || '')
+      setAddress(customerData?.apt || '')
       setZipCode(customerData?.zipCode || '')
       setRole(customerData?.roleResponseDto?.name || undefined)
       setCountry(customerData?.countryResponseDto?.name || undefined)
@@ -484,7 +483,11 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       if (status === 200 && Array.isArray(content)) {
         setIsLoading(false)
         if (content.length > 0) {
-          setgetCustomerOwnerData(content)
+          const firstLastName = content.map((item) => ({
+            label: item.firstName + ' ' + item.lastName,
+            value: item,
+          }))
+          setgetCustomerOwnerData(firstLastName)
         } else {
           setgetCustomerOwnerData([])
         }
@@ -514,7 +517,11 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   useEffect(() => {
     fetchDataAndUpdate()
     getUserHandler()
-  }, [fetchDataAndUpdate])
+  }, [])
+
+  useEffect(() => {
+    fetchStateDataAndUpdate()
+  }, [country])
 
   useEffect(() => {
     handleEditMode()
@@ -642,10 +649,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           <div>
             <div className="mt-3">
               <span className="font-medium text-sm text-[#000000]">
-                <div className="flex gap-1">
-                  Role
-                  <p className="text-red-600">*</p>
-                </div>
+                <div className="flex gap-1">Role</div>
               </span>
             </div>
             <div className="mt-1">
@@ -695,15 +699,18 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
               <div className="mt-1">
                 <Dropdown
                   className="cursor-wait"
-                  value={selectedCustomerId}
+                  value={selectedCustomerName}
                   onChange={(e) => {
-                    setSelectedCustomerId(e.value)
+                    const firstLastName = e?.value?.firstName + ' ' + e?.value?.lastName
+                    setSelectedCustomerName(firstLastName)
+                    setSelectedCustomerId(e.value.id)
                     if (role?.id === 3 || role?.id === 4) {
                       setFieldErrors((prevErrors) => ({ ...prevErrors, selectedCustomerId: '' }))
                     }
                   }}
                   options={getCustomerOwnerData}
-                  optionLabel="name"
+                  optionLabel="label"
+                  optionValue="value"
                   editable
                   placeholder="Select"
                   disabled={customerAdminDropdownEnabled ? false : true}
@@ -788,122 +795,116 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           />
         )}
 
-        <div className="mt-5 ml-4">
-          <span className="font-medium text-sm text-[#000000]">
-            <div className="flex gap-1">
-              Address
-              {/* <p className="text-red-600">*</p> */}
-            </div>
-          </span>
-        </div>
         <div className="gap-8 mt-1 ml-4">
           <div className="flex gap-8 ">
             <div>
-              <div className="mt-2">
-                <InputText
-                  value={street}
-                  onChange={(e) => handleInputChange('street', e.target.value)}
-                  placeholder="Street/house"
+              <div className="mt-3">
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">Country</div>
+                </span>
+              </div>
+              <div className="mt-1">
+                <Dropdown
+                  value={country}
+                  onChange={(e) => {
+                    setCountry(e.value)
+                    setFieldErrors((prevErrors) => ({ ...prevErrors, country: '' }))
+                  }}
+                  options={countriesData}
+                  optionLabel="name"
+                  editable
+                  disabled={isLoading}
+                  className=""
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: fieldErrors.street ? '1px solid red' : '1px solid #D5E1EA',
+                    border: fieldErrors.country ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
-                    padding: '0.80em',
                   }}
                 />
               </div>
-
-              <p className="" id="street">
-                {fieldErrors.street && <small className="p-error">{fieldErrors.street}</small>}
+              <p className="" id="role">
+                {fieldErrors.role && <small className="p-error">{fieldErrors.role}</small>}
               </p>
             </div>
 
             <div>
-              <div className="mt-2">
-                <InputText
-                  value={apt}
-                  onChange={(e) => handleInputChange('apt', e.target.value)}
-                  placeholder="Apt/Suite"
-                  type="text"
+              <div className="mt-3">
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">State</div>
+                </span>
+              </div>
+              <div className="mt-1">
+                <Dropdown
+                  value={state}
+                  onChange={(e) => {
+                    setState(e.value)
+                    setFieldErrors((prevErrors) => ({ ...prevErrors, state: '' }))
+                  }}
+                  options={statesData}
+                  optionLabel="name"
+                  editable
+                  disabled={isLoading}
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: fieldErrors.apt ? '1px solid red' : '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
+                    minHeight: '32px',
+                    border: fieldErrors.state ? '1px solid red' : '1px solid #D5E1EA',
                     fontSize: '0.8rem',
-                    padding: '0.83em',
+                    borderRadius: '0.50rem',
+                    color: 'gray',
                   }}
                 />
               </div>
-              <p className="" id="apt">
-                {fieldErrors.apt && <small className="p-error">{fieldErrors.apt}</small>}
-              </p>
-            </div>
-
-            <div className=" mt-2 ">
-              <Dropdown
-                value={state}
-                onChange={(e) => {
-                  setState(e.value)
-                  setFieldErrors((prevErrors) => ({ ...prevErrors, state: '' }))
-                }}
-                options={statesData}
-                optionLabel="name"
-                editable
-                placeholder="State"
-                disabled={isLoading}
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  minHeight: '32px',
-                  border: fieldErrors.state ? '1px solid red' : '1px solid #D5E1EA',
-                  fontSize: '0.8rem',
-                  borderRadius: '0.50rem',
-                  color: 'gray',
-                }}
-              />
               <p className="" id="state">
                 {fieldErrors.state && <small className="p-error">{fieldErrors.state}</small>}
               </p>
             </div>
+
+            <div className="flex mt-3 gap-8 ">
+              <div>
+                <div className="mt-">
+                  <span className="font-medium text-sm text-[#000000]">
+                    <div className="flex gap-1">
+                      Zip Code
+                      {/* <p className="text-red-600">*</p> */}
+                    </div>
+                  </span>
+                </div>
+                <div className="mt-1">
+                  <InputText
+                    value={zipCode}
+                    invalid
+                    onChange={(e) => handleInputChange('zipCode', e.target.value)}
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.8rem',
+                      padding: '0.83em',
+                    }}
+                  />
+                </div>
+                <p className="" id="state">
+                  {fieldErrors.state && <small className="p-error">{fieldErrors.state}</small>}
+                </p>
+              </div>
+            </div>
           </div>
 
-          <div className="flex mt-5 gap-8 ">
-            <div className="">
-              <Dropdown
-                value={country}
-                onChange={(e) => {
-                  setCountry(e.value)
-                  setFieldErrors((prevErrors) => ({ ...prevErrors, country: '' }))
-                }}
-                options={countriesData}
-                optionLabel="name"
-                editable
-                placeholder="Country"
-                disabled={isLoading}
-                className=""
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: fieldErrors.country ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                }}
-              />
-
-              <p className="" id="country">
-                {fieldErrors.country && <small className="p-error">{fieldErrors.country}</small>}
-              </p>
+          <div>
+            <div className="mt-3">
+              <span className="font-medium text-sm text-[#000000]">
+                <div className="flex gap-1">Address</div>
+              </span>
             </div>
-
-            <div>
+            <div className="mt-1">
               <InputText
-                value={zipCode}
+                value={address}
                 invalid
-                onChange={(e) => handleInputChange('zipCode', e.target.value)}
-                placeholder="Zip Code"
+                onChange={(e) => handleInputChange('address', e.target.value)}
                 style={{
                   width: '230px',
                   height: '32px',

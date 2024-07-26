@@ -1,13 +1,12 @@
+
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import InputComponent from '../../CommonComponent/InputComponent'
 import { Button } from 'primereact/button'
-import { Dropdown } from 'primereact/dropdown'
 import { Toast } from 'primereact/toast'
 import { useGetCustomerMutation } from '../../../Services/MoorManage/MoormanageApi'
 import { CustomerPayload, CustomerResponse, ErrorResponse } from '../../../Type/ApiTypes'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import { useSelector } from 'react-redux'
-import { ProgressSpinner } from 'primereact/progressspinner'
 import { FormDataProps } from '../../../Type/ComponentBasedType'
 
 const AddForm: React.FC<FormDataProps> = ({ closeModal }) => {
@@ -16,13 +15,13 @@ const AddForm: React.FC<FormDataProps> = ({ closeModal }) => {
   const [uploadFile, setUploadFile] = useState<File | null>(null)
   const [fileName, setFileName] = useState('')
   const [fileSize, setFileSize] = useState<number | null>(null)
+  const [encodedFile, setEncodedFile] = useState<string | null>(null)
   const [uploadStatus, setUploadStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [fieldsError, setFieldsError] = useState<{ [key: string]: string }>({})
   const toastRef = useRef<Toast>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [customerData, setCustomerData] = useState<any[]>([])
   const [isLoading, setIsLoading] = useState(true)
-  const toast = useRef<Toast>(null)
   const [formData, setFormData] = useState<any>({
     customerName: '',
     id: '',
@@ -33,9 +32,9 @@ const AddForm: React.FC<FormDataProps> = ({ closeModal }) => {
   const validateFields = () => {
     const errors: { [key: string]: string } = {}
 
-    if (!formData.customerName) {
-      errors.customerName = 'Customer Name is required'
-    }
+    // if (!formData.customerName) {
+    //   errors.customerName = 'Customer Name is required';
+    // }
 
     if (!formData.id) {
       errors.id = 'ID is required'
@@ -71,7 +70,7 @@ const AddForm: React.FC<FormDataProps> = ({ closeModal }) => {
         }
       } else {
         setIsLoading(false)
-        toast?.current?.show({
+        toastRef.current?.show({
           severity: 'error',
           summary: 'Error',
           detail: message,
@@ -99,20 +98,14 @@ const AddForm: React.FC<FormDataProps> = ({ closeModal }) => {
     }
   }
 
-  // const handleSave = async () => {
-  //   const formData = new FormData()
-  //   if (file) {
-  //     const blob = new Blob([file], { type: 'application/octet-stream' })
-  //     const fileBlob = new File([blob], 'filename.txt')
-  //     formData.append('file', fileBlob)
-  //   }
-  //   formData.append('customerName', customerName)
-  //   formData.append('customerId', customerID)
-  //   handleSubmit(formData)
-  //   if (response?.status === 200) {
-  //     setIsModalOpen(false)
-  //   }
-  // }
+  const encodeFileToBase64 = (file: File) => {
+    const reader = new FileReader()
+    reader.onloadend = () => {
+      const base64String = reader.result as string
+      setEncodedFile(base64String)
+    }
+    reader.readAsDataURL(file)
+  }
 
   const saveForm = () => {
     const errors = validateFields()
@@ -121,13 +114,22 @@ const AddForm: React.FC<FormDataProps> = ({ closeModal }) => {
       return
     }
 
-    if (!formData.uploadFile) {
+    if (!encodedFile) {
       toastRef.current?.show({
         severity: 'error',
         summary: 'Error',
         detail: 'Upload file is required',
       })
+      return
     }
+
+    const finalFormData = {
+      ...formData,
+      uploadFile: encodedFile,
+    }
+
+    console.log('Form Data:', finalFormData)
+
     toastRef.current?.show({
       severity: 'success',
       summary: 'Success',
@@ -151,6 +153,7 @@ const AddForm: React.FC<FormDataProps> = ({ closeModal }) => {
         setFormData({ ...formData, uploadFile: file })
         setUploadStatus('success')
         setFieldsError({ ...fieldsError, uploadFile: '' })
+        encodeFileToBase64(file)
         toastRef.current?.show({
           severity: 'success',
           summary: 'File Upload',
@@ -180,33 +183,6 @@ const AddForm: React.FC<FormDataProps> = ({ closeModal }) => {
 
       <div className="ml-4">
         <div className="flex gap-6">
-          {/* <div>
-            <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
-                Customer Name
-                <p className="text-red-600">*</p>
-              </div>
-            </span>
-            <div className="mt-1">
-              <Dropdown
-                value={formData.customerName}
-                onChange={(e) => handleInputChange('customerName', e.value)}
-                options={customerData}
-                optionLabel="label"
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: fieldsError.customerName ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                  paddingLeft: '0.5rem',
-                }}
-              />
-              {fieldsError.customerName && (
-                <small className="p-error">{fieldsError.customerName}</small>
-              )}
-            </div>
-          </div> */}
           <div>
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">

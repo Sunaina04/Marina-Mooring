@@ -738,7 +738,7 @@ const AccountRecievable = () => {
         headerStyle={{ cursor: 'alias' }}
         visible={addWorkOrderModal}
         onHide={handleModalClose}
-        header="Work Order">
+        header={<h1 className="text-xl font-extrabold text-black ml-4">Work Order</h1>}>
         <AddWorkOrders
           workOrderData={selectedWorkOrderRowData}
           isAccountRecievable={isAccountRecievable}
