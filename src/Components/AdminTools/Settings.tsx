@@ -84,7 +84,8 @@ const Settings = () => {
   }
 
   const firstLastName = (data: any) => {
-    return data.firstName + ' ' + data.lastName
+    if (data.firstName === null) return '-'
+    else return data.firstName + ' ' + data.lastName
   }
 
   // const tableColumnsPermission = useMemo(

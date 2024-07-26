@@ -57,7 +57,8 @@ const Accordion = () => {
   }
 
   const firstLastName = (data: any) => {
-    return data.customerResponseDto.firstName + ' ' + data.customerResponseDto.lastName
+    if (data.customerResponseDto.firstName === null) return '-'
+    else return data.customerResponseDto.firstName + ' ' + data.customerResponseDto.lastName
   }
 
   const onPageChange = (event: any) => {

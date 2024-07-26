@@ -143,6 +143,11 @@ const CustomerOwner = () => {
     fontWeight: 700,
   }
 
+  const firstLastNameCustomerOwner = (data: any) => {
+    if (data.firstName === null) return '-'
+    else return data.firstName + ' ' + data.lastName
+  }
+
   const customerOwnerTableColumn = useMemo(
     () => [
       {
@@ -153,6 +158,7 @@ const CustomerOwner = () => {
       {
         id: 'name',
         label: 'Name',
+        body: firstLastNameCustomerOwner,
         style: { ...columnStyle, width: '10vw' },
       },
       {
@@ -192,6 +198,11 @@ const CustomerOwner = () => {
     style: { borderBottom: '1px solid #D5E1EA' },
   }
 
+  const firstLastName = (data: any) => {
+    if (data.firstName === null) return '-'
+    else return data.firstName + ' ' + data.lastName
+  }
+
   const customerOwnerUserTableColumn = useMemo(
     () => [
       {
@@ -208,6 +219,7 @@ const CustomerOwner = () => {
       {
         id: 'name',
         label: 'Name',
+        body: firstLastName,
         style: {
           borderBottom: '1px solid #D5E1EA',
           backgroundColor: '#FFFFFF',

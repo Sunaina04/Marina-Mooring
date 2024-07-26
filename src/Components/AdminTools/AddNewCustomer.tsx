@@ -213,10 +213,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       setFieldErrors(errors)
       return
     }
-    if (!validatePassword(password)) {
-      setErrorMessage('Password is Incorrect')
-      return
-    }
+
     setIsLoading(true)
     try {
       const encodedPassword = btoa(password)
@@ -285,10 +282,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       setFieldErrors(errors)
       return
     }
-    if (!validatePassword(password)) {
-      setErrorMessage('Password is Incorrect')
-      return
-    }
+
     dispatch(setCustomerId(editMode ? '' : customerData?.customerOwnerId))
 
     setIsLoading(true)
@@ -466,8 +460,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
   const handleEditMode = () => {
     if ((editMode || editCustomerMode) && customerData) {
-      setFirstName(customerData?.name || '')
-      setLastName(customerData?.name || '')
+      setFirstName(customerData?.firstName || '')
+      setLastName(customerData?.lastName || '')
       setCompanyName(customerData?.userID || '')
       setPhone(customerData?.phoneNumber || '')
       setEmail(customerData?.email || '')
