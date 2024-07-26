@@ -890,7 +890,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 value={zipCode}
                 invalid
                 onChange={(e) => handleInputChange('zipCode', e.target.value)}
-                placeholder="Zipcode"
+                placeholder="Zip code"
                 style={{
                   width: '230px',
                   height: '32px',

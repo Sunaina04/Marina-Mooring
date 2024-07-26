@@ -177,7 +177,7 @@ const Forms = () => {
                 marginLeft: '8px',
                 boxShadow: 'none',
               }}
-              children={<AddForm />}
+              children={<AddForm closeModal={handleModalClose} />}
               headerText={<h1 className="text-xl font-extrabold text-black ml-4">Form Details</h1>}
               visible={isModalOpen}
               onClick={handleButtonClick}
