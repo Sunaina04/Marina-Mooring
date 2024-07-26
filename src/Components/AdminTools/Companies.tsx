@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import CustomModal from '../CustomComponent/CustomModal'
 import DataTableComponent from '../CommonComponent/Table/DataTableComponent'
 import { properties } from '../Utils/MeassageProperties'
@@ -24,11 +24,13 @@ import { VirtualScroller } from 'primereact/virtualscroller'
 import { Dialog } from 'primereact/dialog'
 import ResetPassword from './ResetPassword'
 
+
 const CustomerOwner = () => {
   const dispatch = useDispatch()
   const selectedCustomerId = useSelector(selectCustomerId)
   const selectedCustomerName = useSelector(selectCustomerName)
   const [modalVisible, setModalVisible] = useState(false)
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false)
   const [isResetModalOpen, setIsResetModalOpen] = useState(false)
   const [selectedCustomer, setSelectedCustomer] = useState<any>()
   const [selectedCustomerUser, setSelectedCustomerUser] = useState<any>()
@@ -82,7 +84,6 @@ const CustomerOwner = () => {
     setEditCustomer(false)
     setEditMode(false)
     setCustomerUpdated(true)
-    setIsResetModalOpen(false)
   }
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -112,6 +113,10 @@ const CustomerOwner = () => {
     setModalVisible(true)
     // setEditMode(true)
   }
+  const handleResetModalClose = () => {
+    setIsPasswordModalOpen(false)
+    setIsResetModalOpen(false)
+  }
 
   const ActionButtonColumn: ActionButtonColumnProps = {
     header: 'Action',
@@ -135,7 +140,7 @@ const CustomerOwner = () => {
         label: 'Reset Password',
         underline: true,
         fontWeight: 700,
-        onClick: () => setIsResetModalOpen(true)
+        onClick: () => setIsPasswordModalOpen(true)
       },
     ],
     headerStyle: {
@@ -197,6 +202,13 @@ const CustomerOwner = () => {
         underline: true,
         fontWeight: 700,
         onClick: (rowData) => handleDeleteCustomerOwnerUser(rowData),
+      },
+      {
+        color: 'black',
+        label: 'Reset Password',
+        underline: true,
+        fontWeight: 700,
+        onClick: () => setIsResetModalOpen(true)
       },
     ],
     headerStyle: {
@@ -699,6 +711,27 @@ const CustomerOwner = () => {
           </div>
         </div>
       </div>
+      <Dialog
+       position="center"
+       style={{
+         width: '650px',
+         minWidth: '650px',
+         height: '450px',
+         minHeight: '450px',
+         borderRadius: '1rem',
+         fontWeight: '400',
+         cursor: 'alias',
+       }}
+       draggable={false}
+       headerStyle={{ cursor: 'alias' }}
+       header="Reset Password"
+       onHide={handleResetModalClose}
+       visible={isPasswordModalOpen}
+       >
+
+       <ResetPassword isResetModalOpen={handleResetModalClose}/>
+      
+      </Dialog>
 
       <Dialog
        position="center"
@@ -714,13 +747,15 @@ const CustomerOwner = () => {
        draggable={false}
        headerStyle={{ cursor: 'alias' }}
        header="Reset Password"
-       onHide={handleModalClose}
+       onHide={handleResetModalClose}
        visible={isResetModalOpen}
        >
 
-       <ResetPassword/>
+       <ResetPassword isResetModalOpen={handleResetModalClose}/>
       
       </Dialog>
+
+      
     </>
   )
 }

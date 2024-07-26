@@ -279,3 +279,7 @@ export interface ShowImagesProps {
   isLoading: boolean;
   customerImages: string[];
 }
+
+export interface ResetModalProps {
+  isResetModalOpen: () => void
+}
