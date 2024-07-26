@@ -55,7 +55,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const [role, setRole] = useState<Role>()
   const [companyName, setCompanyName] = useState('')
   const [country, setCountry] = useState<Country>()
-  const [state, setState] = useState<State>()
+  const [state, setState] = useState<any>()
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [rolesData, setRolesData] = useState<Role[]>()
@@ -110,7 +110,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       errors.email = 'Please enter a valid email format'
     }
     if (errors.email && !firstError) firstError = 'email'
-    // if (!street) errors.street = 'Street is required'
     if (!role) errors.role = 'Role is required'
     if (errors.role && !firstError) firstError = 'role'
     if (
@@ -123,8 +122,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     if (errors.selectedCustomerId && !firstError) firstError = 'selectedCustomerId'
     if (!companyName && role?.id === 2) errors.companyName = 'Company Name is required'
     if (errors.companyName && !firstError) firstError = 'companyName'
-    // if (!country) errors.country = 'Country is required'
-    // if (errors.country && !firstError) firstError = 'country'
     if (!password && !passWordDisplay) errors.password = 'Password is required'
     if (errors.password && !firstError) firstError = 'password'
     if (!confirmPassword && !passWordDisplay)
@@ -447,10 +444,11 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
   const fetchStateDataAndUpdate = useCallback(async () => {
     const { statesData } = await getStatesData()
-
     if (statesData !== null) {
       setIsLoading(false)
       setStatesData(statesData)
+    } else {
+      setState('')
     }
   }, [countryId])
 
