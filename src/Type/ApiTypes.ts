@@ -346,7 +346,7 @@ export type MooringRowData = {
   inspectionDate: string
   serviceAreaId?: { id: number }
   statusId?: number
-  imageRequestDtoList?: ImageDtoList
+  imageRequestDtoList?: any
 }
 
 export interface ImageData {
@@ -759,6 +759,11 @@ export interface UploadPayload {
   file: string
   customerName: string
   customerId: string
+}
+
+export interface PaymentPayload {
+  paymentTypeId: number
+  amount: number
 }
 
 export interface WorkOrderPayload {

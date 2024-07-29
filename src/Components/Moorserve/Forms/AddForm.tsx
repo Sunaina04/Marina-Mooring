@@ -1,21 +1,29 @@
-import React, { useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import InputComponent from '../../CommonComponent/InputComponent'
 import { Button } from 'primereact/button'
 import { Dropdown } from 'primereact/dropdown'
-import { FileUpload } from 'primereact/fileupload'
 import { Toast } from 'primereact/toast'
 
+import { useGetCustomerMutation } from '../../../Services/MoorManage/MoormanageApi'
+import { CustomerPayload, CustomerResponse, ErrorResponse } from '../../../Type/ApiTypes'
+import { toast } from 'react-toastify'
+import { selectCustomerId } from '../../../Store/Slice/userSlice'
+import { useSelector } from 'react-redux'
+import { ProgressSpinner } from 'primereact/progressspinner'
+
 const AddForm = () => {
-  const [customerName, setCustomerName] = useState<string>('')
-  const [formId, setFormId] = useState<string>('')
-  const [formName, setFormName] = useState<string>('')
-  const [uploadFile, setUploadFile] = useState<any>('')
-  const [visible, setVisible] = useState<boolean>(false)
+  const selectedCustomerId = useSelector(selectCustomerId)
+  const [getCustomer] = useGetCustomerMutation()
+  const [uploadFile, setUploadFile] = useState<File | null>(null)
+  const [fileName, setFileName] = useState('')
+  const [fileSize, setFileSize] = useState<number | null>(null)
+  const [uploadStatus, setUploadStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [fieldsError, setFieldsError] = useState<{ [key: string]: string }>({})
   const toastRef = useRef<Toast>(null)
-
-  const fileUploadRef = useRef<any>(null)
-
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const [customerData, setCustomerData] = useState<any[]>([])
+  const toast = useRef<Toast>(null)
+  const [isLoading, setIsLoading] = useState(true)
   const [formData, setFormData] = useState<any>({
     customerName: '',
     id: '',
@@ -31,12 +39,13 @@ const AddForm = () => {
     }
 
     if (!formData.id) {
-      errors.id = 'Id is required'
+      errors.id = 'ID is required'
     }
 
     if (!formData.formName) {
       errors.formName = 'Form Name is required'
     }
+
     if (!formData.uploadFile) {
       errors.uploadFile = 'Upload file is required'
     }
@@ -44,6 +53,43 @@ const AddForm = () => {
     setFieldsError(errors)
     return errors
   }
+
+  const getCustomerData = useCallback(async () => {
+    setIsLoading(true)
+    try {
+      const response = await getCustomer({}).unwrap()
+      const { status, content, message, totalSize } = response as CustomerResponse
+      if (status === 200 && Array.isArray(content)) {
+        if (content?.length > 0) {
+          setIsLoading(false)
+          const extractedData = content.map((item) => {
+            const fullname = `${item.firstName} ${item.lastName}`
+            return {
+              label: fullname,
+              id: item.id,
+            }
+          })
+          setCustomerData(extractedData)
+        } else {
+          setIsLoading(false)
+
+          setCustomerData([])
+        }
+      } else {
+        setIsLoading(false)
+        toast?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+      }
+    } catch (error) {
+      setIsLoading(false)
+      const { message: msg } = error as ErrorResponse
+      console.error('Error occurred while fetching customer data:', msg)
+    }
+  }, [getCustomer, selectedCustomerId])
 
   const handleInputChange = (field: string, value: any) => {
     setFormData({
@@ -63,27 +109,59 @@ const AddForm = () => {
     const errors = validateFields()
     if (Object.keys(errors).length > 0) {
       setFieldsError(errors)
+      Object.values(errors).forEach((message) => {
+        toastRef.current?.show({ severity: 'error', summary: 'Validation Error', detail: message })
+      })
       return
     }
+
+    console.log({ ...formData, uploadFileName: fileName })
+    toastRef.current?.show({
+      severity: 'success',
+      summary: 'Success',
+      detail: 'Form saved successfully!',
+    })
   }
 
-  const handleClickUploadText = () => {
-    if (fileUploadRef.current) {
-      fileUploadRef.current.chooseFile() // Trigger file selection dialog
+  const handleClickUploadButton = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click()
     }
   }
 
-  const addContent = () => {
-    return (
-      <div
-        style={{ textAlign: 'center', marginTop: '50px', cursor: 'pointer' }}
-        onClick={handleClickUploadText}>
-        Drag and drop choose file to upload your files.
-        <br />
-        All pdf, doc,csv, xlsx are supported.
-      </div>
-    )
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0]
+      if (file.type === 'application/pdf') {
+        setUploadFile(file)
+        setFileName(file.name)
+        setFileSize(file.size)
+        setFormData({ ...formData, uploadFile: file })
+        setUploadStatus('success')
+        setFieldsError({ ...fieldsError, uploadFile: '' })
+        toastRef.current?.show({
+          severity: 'success',
+          summary: 'File Upload',
+          detail: 'File uploaded successfully',
+        })
+      } else {
+        setUploadFile(null)
+        setFileName('')
+        setFileSize(null)
+        setUploadStatus('error')
+        setFieldsError({ ...fieldsError, uploadFile: 'Only PDF files are allowed' })
+        toastRef.current?.show({
+          severity: 'error',
+          summary: 'File Error',
+          detail: 'Only PDF files are allowed',
+        })
+      }
+    }
   }
+
+  useEffect(() => {
+    getCustomerData()
+  }, [selectedCustomerId])
 
   return (
     <>
@@ -101,10 +179,9 @@ const AddForm = () => {
             <div className="mt-1">
               <Dropdown
                 value={formData.customerName}
-                onChange={(e) => handleInputChange('customerName', e.target.value)}
-                options={[]}
-                optionLabel="name"
-                editable
+                onChange={(e) => handleInputChange('customerName', e.value)}
+                options={customerData}
+                optionLabel="label"
                 style={{
                   width: '230px',
                   height: '32px',
@@ -115,13 +192,21 @@ const AddForm = () => {
                 }}
               />
             </div>
-            <p>
-              {fieldsError.customerName && (
-                <small className="p-error">{fieldsError.customerName}</small>
-              )}
-            </p>
           </div>
 
+          {isLoading && (
+            <ProgressSpinner
+              style={{
+                position: 'absolute',
+                top: '40%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: '50px',
+                height: '50px',
+              }}
+              strokeWidth="4"
+            />
+          )}
           <div>
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
@@ -143,7 +228,6 @@ const AddForm = () => {
                 }}
               />
             </div>
-            <p>{fieldsError.id && <small className="p-error">{fieldsError.id}</small>}</p>
           </div>
 
           <div>
@@ -167,11 +251,9 @@ const AddForm = () => {
                 }}
               />
             </div>
-            <p>
-              {fieldsError.formName && <small className="p-error">{fieldsError.formName}</small>}
-            </p>
           </div>
         </div>
+
         <div className="mt-4">
           <span className="font-medium text-sm text-[#000000]">
             <div className="flex gap-1">
@@ -179,35 +261,44 @@ const AddForm = () => {
               <p className="text-red-600">*</p>
             </div>
           </span>
-          <div className="mt-1">
-            <FileUpload
-              //   value={formData.uploadFile}
-              //   onChange={(e) => handleInputChange('uploadFile', e.target.value)}
-              // mode='basic'
-              ref={fileUploadRef}
-              accept=".pdf,.doc,.csv,.xlsx"
-              customUpload
-              url="/api/upload"
-              uploadHandler={(event) => {
-                const file = event.files[0]
-                setUploadFile(file)
-                setFormData({ ...formData, uploadFile: file })
-              }}
-              style={{
-                width: '700px',
-                height: '174px',
-                border: fieldsError.uploadFile ? '1px solid red' : '1px solid #D5E1EA',
-                borderRadius: '0.50rem',
-                fontSize: '0.8rem',
-                paddingTop: '1rem',
-              }}
-              headerTemplate={() => null}
-              emptyTemplate={addContent}
+          <div
+            className="mt-1 p-4 border border-gray-300 rounded flex flex-col items-center justify-center text-center"
+            style={{ width: '700px', height: '200px', cursor: 'pointer' }}
+            onClick={handleClickUploadButton}>
+            {uploadStatus === 'idle' && (
+              <div>
+                <img
+                  src="/assets/images/moorfindLogo.png"
+                  alt="Upload Icon"
+                  style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'contain' }}
+                />
+                <p className="mt-2">Choose file</p>
+              </div>
+            )}
+            {uploadStatus === 'success' && uploadFile && (
+              <div>
+                <p className="mt-2 text-green-600">File uploaded successfully!</p>
+                <p>
+                  <strong>File Name:</strong> {fileName}
+                </p>
+                <p>
+                  <strong>File Size:</strong> {Math.round(fileSize! / 1024)} KB
+                </p>
+              </div>
+            )}
+            {uploadStatus === 'error' && (
+              <div>
+                <p className="mt-2 text-red-600">Error: Only PDF files are allowed</p>
+              </div>
+            )}
+            <input
+              ref={fileInputRef}
+              type="file"
+              style={{ display: 'none' }}
+              onChange={handleFileChange}
+              accept=".pdf"
             />
           </div>
-          <p>
-            {fieldsError.uploadFile && <small className="p-error">{fieldsError.uploadFile}</small>}
-          </p>
         </div>
 
         <div
@@ -223,13 +314,10 @@ const AddForm = () => {
             onClick={saveForm}
             label={'Save'}
             style={{
-              width: '89px',
+              width: '100px',
               height: '42px',
-              backgroundColor: '#0098FF',
-              cursor: 'pointer',
-              fontWeight: 'bolder',
-              fontSize: '1rem',
-              boxShadow: 'none',
+              border: 'none',
+              backgroundColor: '#007bff',
               color: 'white',
               borderRadius: '0.50rem',
               marginTop: '10px',
@@ -237,7 +325,7 @@ const AddForm = () => {
           />
           <Button
             onClick={() => {
-              setVisible(false)
+              // setVisible(false);
             }}
             label={'Back'}
             text={true}

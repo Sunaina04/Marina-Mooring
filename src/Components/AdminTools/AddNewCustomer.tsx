@@ -125,9 +125,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       firstError = 'apt'
     }
 
-    if (!zipCode) {
-      errors.zipCode = 'Zip Code is required'
-    }
+    // if (!zipCode) {
+    //   errors.zipCode = 'Zip Code is required'
+    // }
 
     if (!role) errors.role = 'Role is required'
     if (errors.role && !firstError) {
@@ -929,15 +929,15 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: fieldErrors.zipCode ? '1px solid red' : '1px solid #D5E1EA',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   padding: '0.83em',
                 }}
               />
-              <p className="" id="zipCode">
+              {/* <p className="" id="zipCode">
                 {fieldErrors.zipCode && <small className="p-error">{fieldErrors.zipCode}</small>}
-              </p>
+              </p> */}
             </div>
           </div>
         </div>

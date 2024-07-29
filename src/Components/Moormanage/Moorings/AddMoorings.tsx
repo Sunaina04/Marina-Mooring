@@ -77,7 +77,10 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   const [mooringImages, setMooringImages] = useState<string[]>([])
   const [hoveredIndex, setHoveredIndex] = useState<null | number>(null)
   const [encodedImages, setEncodedImages] = useState<string[]>([])
-  const [imageRequestDtoList, setimageRequestDtoList] = useState<any>()
+  // const [imageRequestDtoList, setimageRequestDtoList] = useState<any>()
+  const [imageRequestDtoList, setimageRequestDtoList] = useState<
+    { imageName: string; imageData: string; note: string }[]
+  >([])
   const [imageNote, setImageNote] = useState('')
   const toastRef = useRef<Toast>(null)
 
@@ -274,14 +277,91 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     setImageVisible(true)
   }
 
-  const handleRemoveImage = (index: number) => {
-    const newImages = [...mooringImages]
-    newImages.splice(index, 1)
-    setMooringImages(newImages)
+  // const handleRemoveImage = (index: number) => {
+  //   const newImages = [...mooringImages]
+  //   newImages.splice(index, 1)
+  //   setMooringImages(newImages)
 
-    // const newEncodedImages = [...encodedImages]
-    // newEncodedImages.splice(index, 1)
-    // setEncodedImages(newEncodedImages)
+  //   // const newEncodedImages = [...encodedImages]
+  //   // newEncodedImages.splice(index, 1)
+  //   // setEncodedImages(newEncodedImages)
+  // }
+
+  // const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const fileInput = event.target
+  //   const files = Array.from(fileInput.files || [])
+
+  //   if (files.length === 0) {
+  //     return
+  //   }
+
+  //   const validImageFiles = files.filter(
+  //     (file) => file.type.startsWith('image/') && file.size >= 5120 && file.size <= 1048576,
+  //   )
+
+  //   const invalidTypeFiles = files.filter((file) => !file.type.startsWith('image/'))
+  //   const invalidSizeFiles = files.filter((file) => file.size < 5120 || file.size > 1048576)
+
+  //   if (invalidTypeFiles.length > 0 || invalidSizeFiles.length > 0) {
+  //     setMooringImages([])
+  //     setEncodedImages([])
+  //     let detailMessage = 'Only image files are allowed'
+
+  //     if (invalidSizeFiles.length > 0) {
+  //       detailMessage = 'Images must be between 5 KB and 1 MB.'
+  //     }
+
+  //     toastRef?.current?.show({
+  //       severity: 'error',
+  //       summary: 'Error',
+  //       detail: detailMessage,
+  //       life: 3000,
+  //     })
+  //     fileInput.value = ''
+  //     return
+  //   }
+
+  //   const newBase64Strings: string[] = []
+  //   const newImageUrls: string[] = []
+  //   const imageRequestDtoList: { imageName?: string; imageData?: string; note?: string }[] = []
+
+  //   for (const file of validImageFiles) {
+  //     try {
+  //       const base64String = await new Promise<string>((resolve, reject) => {
+  //         const reader = new FileReader()
+  //         reader.onload = () => {
+  //           if (typeof reader.result === 'string') {
+  //             resolve(reader.result.split(',')[1])
+  //           } else {
+  //             reject(new Error('FileReader result is not a string.'))
+  //           }
+  //         }
+  //         reader.onerror = () => {
+  //           reject(new Error('Error reading file.'))
+  //         }
+  //         reader.readAsDataURL(file)
+  //       })
+  //       newBase64Strings.push(base64String)
+  //       newImageUrls.push(`data:image/png;base64,${base64String}`)
+  //       imageRequestDtoList.push({
+  //         imageName: file.name,
+  //         imageData: base64String,
+  //         note: "",
+  //       })
+  //     } catch (error) {
+  //       console.error('Error reading file:', error)
+  //     }
+  //   }
+
+  //   setMooringImages((prevImages) => [...prevImages, ...newImageUrls])
+  //   setEncodedImages((prevEncoded) => [...prevEncoded, ...newBase64Strings])
+  //   setimageRequestDtoList(imageRequestDtoList)
+  // }
+
+  const handleRemoveImage = (index: number) => {
+    setMooringImages((prevImages) => prevImages.filter((_, i) => i !== index))
+    setEncodedImages((prevEncoded) => prevEncoded.filter((_, i) => i !== index))
+    setimageRequestDtoList((prevList: any[]) => prevList.filter((_, i) => i !== index))
   }
 
   const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -302,7 +382,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     if (invalidTypeFiles.length > 0 || invalidSizeFiles.length > 0) {
       setMooringImages([])
       setEncodedImages([])
-      let detailMessage = 'Only image files are allowed'
+      let detailMessage = 'Only image files are allowed.'
 
       if (invalidSizeFiles.length > 0) {
         detailMessage = 'Images must be between 5 KB and 1 MB.'
@@ -314,13 +394,13 @@ const AddMoorings: React.FC<AddMooringProps> = ({
         detail: detailMessage,
         life: 3000,
       })
-      fileInput.value = ''
+      fileInput.value = '' // Reset input value
       return
     }
 
     const newBase64Strings: string[] = []
     const newImageUrls: string[] = []
-    const imageRequestDtoList: { imageName?: string; imageData?: string; note?: string }[] = []
+    const newImageRequestDtoList: { imageName: string; imageData: string; note: string }[] = []
 
     for (const file of validImageFiles) {
       try {
@@ -340,10 +420,10 @@ const AddMoorings: React.FC<AddMooringProps> = ({
         })
         newBase64Strings.push(base64String)
         newImageUrls.push(`data:image/png;base64,${base64String}`)
-        imageRequestDtoList.push({
+        newImageRequestDtoList.push({
           imageName: file.name,
           imageData: base64String,
-          note: imageNote,
+          note: '', // Initialize with an empty note
         })
       } catch (error) {
         console.error('Error reading file:', error)
@@ -352,7 +432,13 @@ const AddMoorings: React.FC<AddMooringProps> = ({
 
     setMooringImages((prevImages) => [...prevImages, ...newImageUrls])
     setEncodedImages((prevEncoded) => [...prevEncoded, ...newBase64Strings])
-    setimageRequestDtoList(imageRequestDtoList)
+    setimageRequestDtoList((prevList: any) => [...prevList, ...newImageRequestDtoList])
+  }
+
+  const handleNoteChange = (index: number, note: string) => {
+    setimageRequestDtoList((prevList: any[]) =>
+      prevList.map((item, i) => (i === index ? { ...item, note } : item)),
+    )
   }
 
   const handleEditMode = () => {
@@ -1846,14 +1932,13 @@ const AddMoorings: React.FC<AddMooringProps> = ({
             }}
           />
         </div>
-
         <Dialog
           position="center"
           style={{
             width: '800px',
             minWidth: '800px',
-            height: '580px',
-            minHeight: '580px',
+            height: '650px',
+            minHeight: '650px',
             borderRadius: '1rem',
             fontWeight: '400',
             cursor: 'alias',
@@ -1862,7 +1947,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
           visible={imageVisible}
           onHide={() => setImageVisible(false)}
           header={'Images'}>
-          <div className={`ml-4 ${isLoading ? 'blurred' : ''}`}>
+          <div className={`ml-4 ${isLoading ? 'blurred' : ''}`} style={{ marginBottom: '60px' }}>
             <div className="flex justify-between">
               <div className="mt-6">
                 <input
@@ -1898,99 +1983,79 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                     }}
                   />
                   <div className="border-r-2 border-sky-500  h-9 pl-3"></div>
-                  <span className="pl-10 mt-1"> UPLOAD IMAGES </span>
+                  <span className="pl-10 mt-1">UPLOAD IMAGES</span>
                 </label>
               </div>
-              <div className="">
-                <div className=" font-medium text-sm text-[#000000]">Note</div>
-                <div className="mt-1">
-                  <InputComponent
-                    value={imageNote}
-                    onChange={(e) => setImageNote(e.target.value)}
-                    style={{
-                      width: '370px',
-                      height: '40px',
-                      border: '1px solid #D5E1EA',
-                      borderRadius: '0.50rem',
-                      fontSize: '0.8rem',
-                      boxShadow: 'none',
-                      paddingLeft: '0.5rem',
-                      color: 'black',
-                      resize: 'none',
-                    }}
-                  />
-                  {/* <p>{fieldErrors.note && <small className="p-error">{fieldErrors.note}</small>}</p> */}
+            </div>
+
+            <div style={{ marginTop: '40px' }}>
+              {mooringImages.length > 0 && (
+                <div className="mt-2">
+                  <div className="flex gap-16 flex-wrap">
+                    {mooringImages.map((image, index) => (
+                      <div
+                        key={index}
+                        style={{ position: 'relative', display: 'inline-block' }}
+                        onMouseEnter={() => setHoveredIndex(index)}
+                        onMouseLeave={() => setHoveredIndex(null)}>
+                        <AiOutlineDelete
+                          onClick={() => handleRemoveImage(index)}
+                          style={{
+                            position: 'absolute',
+                            top: '165px',
+                            right: '5px',
+                            background: 'red',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '5px',
+                            width: '28px',
+                            height: '25px',
+                            cursor: 'pointer',
+                            opacity: hoveredIndex === index ? 1 : 0,
+                            transition: 'opacity 0.3s',
+                          }}
+                        />
+                        <img
+                          src={image}
+                          alt={`Uploaded ${index}`}
+                          style={{
+                            width: '300px',
+                            height: '200px',
+                            objectFit: 'cover',
+                            borderRadius: '0.5rem',
+                            boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+                          }}
+                        />
+                        <div className="mt-2">
+                          <InputText
+                            value={imageRequestDtoList[index].note}
+                            onChange={(e) => handleNoteChange(index, e.target.value)}
+                            placeholder="Add note"
+                            style={{
+                              width: '300px',
+                              height: '40px',
+                              border: '1px solid #D5E1EA',
+                              borderRadius: '0.50rem',
+                              fontSize: '0.8rem',
+                              boxShadow: 'none',
+                              paddingLeft: '0.5rem',
+                              color: 'black',
+                              resize: 'none',
+                              marginTop: '10px',
+                            }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
 
           <div
-            //  style={{border:"1px solid red"}}
-
-            style={{ marginTop: '40px', marginLeft: '40px' }}>
-            {mooringImages.length > 0 && (
-              <div className="mt-2">
-                <div className="flex gap-16 flex-wrap">
-                  {mooringImages.map((image, index) => (
-                    <div
-                      key={index}
-                      style={{ position: 'relative', display: 'inline-block' }}
-                      onMouseEnter={() => setHoveredIndex(index)}
-                      onMouseLeave={() => setHoveredIndex(null)}>
-                      {/* <h1
-                        style={{
-                          position: 'absolute',
-                          top: '12px',
-                          right: '0',
-                          left: '12px',
-                          background: 'gray',
-                          color: 'white',
-                          fontWeight: 'bolder',
-                          border: 'none',
-                          width: '80px',
-                          cursor: 'pointer',
-                          opacity: hoveredIndex === index ? 1 : 0,
-                          transition: 'opacity 0.3s',
-                        }}>
-                        name
-                      </h1> */}
-                      <AiOutlineDelete
-                        onClick={() => handleRemoveImage(index)}
-                        style={{
-                          position: 'absolute',
-                          top: '165px',
-                          right: '5px',
-                          background: 'red',
-                          color: 'white',
-                          border: 'none',
-                          borderRadius: '5px',
-                          width: '28px',
-                          height: '25px',
-                          cursor: 'pointer',
-                          opacity: hoveredIndex === index ? 1 : 0,
-                          transition: 'opacity 0.3s',
-                        }}
-                      />
-                      <img
-                        src={image}
-                        alt={`Uploaded ${index}`}
-                        style={{
-                          width: '300px',
-                          height: '200px',
-                          objectFit: 'cover',
-                          borderRadius: '0.5rem',
-                          boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
-                        }}
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-
-          <div className={`flex gap-4 ml-4 bottom-5 absolute left-6 ${isLoading ? 'blurred' : ''}`}>
+            className={`flex gap-4 ml-4 absolute bottom-0 left-0 right-0 ${isLoading ? 'blurred' : ''}`}
+            style={{ padding: '16px', backgroundColor: 'white' }}>
             <Button
               label={'Close'}
               onClick={() => setImageVisible(false)}

@@ -613,7 +613,7 @@ const Customer = () => {
             <div className="mt-1">
               <h1 className="">Boatyard: </h1>
             </div>
-            <div className="flex gap-4 ml-2">
+            <div className="flex gap-4 ml-2 mt-3">
               {boatYardData.length > 0 ? (
                 boatYardData.map((boatyard, index) => (
                   <p
@@ -660,15 +660,11 @@ const Customer = () => {
 
   return (
     <>
-    
       <Toast ref={toast} />
       <div style={{ height: '150vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
-      {/* <div className="flex lg:flex-row justify-around md:flex-col mt-4"> */}
         <Header header="MOORMANAGE/Customer" />
-         
         <div className="flex justify-end mr-12 ">
           <div className="flex mt-6 ">
-        
             <CustomModal
               buttonText={'ADD NEW'}
               buttonStyle={{
@@ -770,7 +766,7 @@ const Customer = () => {
                 backgroundColor: '#FFFFFF',
                 position: 'relative',
               }}
-              className="ml-[45px] w-[20px] flex-1">
+              className="ml-[45px] w-[20px] flex-1 mt-3">
               <div data-testid="customer-data" className="flex flex-col h-full">
                 <div className="flex item-center justify-between bg-[#10293A] rounded-tl-[10px] rounded-tr-[10px] text-white cursor-pointer">
                   <div>
@@ -893,7 +889,7 @@ const Customer = () => {
           {/* middle container */}
 
           <div
-            className={` min-h-[600] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}
+            className={` min-h-[600] rounded-md border-[1px] ml-9 mt-3 ${modalVisible || isLoading ? 'blur-screen' : ''}`}
             style={{ flexGrow: '1' }}>
             <CustomMooringPositionMap
               position={initialPosition}
@@ -944,7 +940,7 @@ const Customer = () => {
               </div>
             </div>
           ) : (
-            <div className="ml-5 mr-4">
+            <div className="ml-5 mr-4 mt-3">
               {/* Left Panel - Customer Record */}
               <div
                 style={{
@@ -1453,7 +1449,6 @@ const Customer = () => {
           />
         </Dialog>
       </div>
-      {/* </div> */}
     </>
   )
 }

@@ -84,7 +84,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
 
   const validateFields = () => {
     const nameRegex = /^[a-zA-Z ]+$/
-    const zipCodeRegex = /^\d+$/
+    const zipCodeRegex = /^\d{5}(-\d{4})?$/
     const errors: { [key: string]: string } = {}
 
     if (!boatyardName) {
@@ -99,10 +99,11 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
     }
     if (!address) errors.address = 'Street/house is required'
 
-    if (!zipCode) {
-      errors.zipCode = 'Zip Code is required'
-    }
-    
+    // if (!zipCode) {
+    //   errors.zipCode = 'Zip Code is required'
+    // } else if (!zipCodeRegex.test(zipCode)) {
+    //   errors.zipCode = 'Invalid Zip Code format'
+    // }
     if (!mainContact) errors.mainContact = 'Main contact is required'
     if (!country) errors.country = 'Country  is required'
     if (!selectedState) errors.state = 'State  is required'
@@ -220,7 +221,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
         customerOwnerId: selectedCustomerId,
         storageAreas: storageList,
       }
-    
+
       const response = await updateBoatyard({
         payload: editBoatYardPayload,
         id: customerData?.id,
@@ -572,22 +573,22 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
                   value={zipCode}
                   onChange={(e) => {
                     setZipCode(e.target.value)
-                    setErrorMessage((prev) => ({ ...prev, zipCode: '' }))
+                    // setErrorMessage((prev) => ({ ...prev, zipCode: '' }))
                   }}
                   placeholder="Zip code"
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: errorMessage.zipCode ? '1px solid red' : '1px solid #D5E1EA',
+                    border: '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                     padding: '0.5rem',
                   }}
                 />
               </div>
-              <p>
+              {/* <p>
                 {errorMessage.zipCode && <small className="p-error">{errorMessage.zipCode}</small>}
-              </p>
+              </p> */}
             </div>
           </div>
           <div>

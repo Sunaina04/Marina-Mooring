@@ -86,20 +86,20 @@ const Forms = () => {
     }
   }
 
-  // const handleSave = async () => {
-  //   const formData = new FormData()
-  //   if (file) {
-  //     const blob = new Blob([file], { type: 'application/octet-stream' })
-  //     const fileBlob = new File([blob], 'filename.txt')
-  //     formData.append('file', fileBlob)
-  //   }
-  //   formData.append('customerName', customerName)
-  //   formData.append('customerId', customerID)
-  //   handleSubmit(formData)
-  //   if (response?.status === 200) {
-  //     setIsModalOpen(false)
-  //   }
-  // }
+  const handleSave = async () => {
+    const formData = new FormData()
+    if (file) {
+      const blob = new Blob([file], { type: 'application/octet-stream' })
+      const fileBlob = new File([blob], 'filename.txt')
+      formData.append('file', fileBlob)
+    }
+    formData.append('customerName', customerName)
+    formData.append('customerId', customerID)
+    handleSubmit(formData)
+    if (response?.status === 200) {
+      setIsModalOpen(false)
+    }
+  }
 
   useEffect(() => {
     getFormsData()
@@ -160,7 +160,7 @@ const Forms = () => {
       <div style={{ height: '150vh' }} className={isModalOpen ? 'backdrop-blur-lg' : ''}>
         <Header header="MOORSERVE/Forms Library" />
 
-        {/* <div className="flex justify-end">
+        <div className="flex justify-end">
           <div className=" mr-16 mt-10">
             <CustomModal
               buttonText={'Upload New'}
@@ -298,7 +298,7 @@ const Forms = () => {
               />
             </div>
           </div>
-        </div> */}
+        </div>
       </div>
     </>
   )

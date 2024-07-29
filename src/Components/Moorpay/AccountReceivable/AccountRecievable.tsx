@@ -90,20 +90,14 @@ const AccountRecievable = () => {
     setAddWorkOrderModal(false)
     setApproveModalOpen(false)
     setModalVisible(false)
-  }
-
-  const handlePaymentSave = (paymentDetails: any) => {
-    setIsPaymentModalOpen(false)
-  }
-
-  const handleSendEmail = (emailDetails: any) => {
-    setIsContactModalOpen(false)
+    setSelectedWorkOredrRowData('')
   }
 
   const handleBottomSectionActionClick = (action: string, row: any) => {
     if (action === 'Payments') {
       setModalVisible(true)
       setIsPaymentModalOpen(true)
+      setSelectedWorkOredrRowData(row?.id)
     } else if (action === 'Contact') {
       setModalVisible(true)
       setIsContactModalOpen(true)
@@ -615,7 +609,13 @@ const AccountRecievable = () => {
         visible={isPaymentModalOpen}
         onHide={handleModalClose}
         header="Payment">
-        <PaymentModal onHide={handleModalClose} onSavePayment={handlePaymentSave} />
+        <PaymentModal
+          onHide={handleModalClose}
+          workOrderInvoiceId={selectedWorkOrderRowData}
+          onSavePayment={() => {
+            setIsPaymentModalOpen(false)
+          }}
+        />
       </Dialog>
 
       <Dialog
@@ -634,7 +634,12 @@ const AccountRecievable = () => {
         visible={isContactModalOpen}
         onHide={handleModalClose}
         header="Contact Customer">
-        <ContactModal onHide={handleModalClose} onSendEmail={handleSendEmail} />
+        <ContactModal
+          onHide={handleModalClose}
+          onSendEmail={() => {
+            setIsContactModalOpen(false)
+          }}
+        />
         <div className={`flex gap-4 ml-4 bottom-5 absolute left-6 ${isLoading ? 'blurred' : ''}`}>
           <Button
             label={'Close'}

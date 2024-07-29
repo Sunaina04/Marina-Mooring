@@ -5,17 +5,15 @@ import {
   useGetCustomersWithMooringMutation,
   useGetMooringsMutation,
 } from '../../../Services/MoorManage/MoormanageApi'
-import { InputSwitchChangeEvent } from 'primereact/inputswitch'
 import {
   CustomersWithMooringResponse,
   DeleteCustomerResponse,
   ErrorResponse,
-  ImageDtoList,
   MooringPayload,
   MooringResponse,
   MooringResponseDtoList,
 } from '../../../Type/ApiTypes'
-import { FaEdit, FaFileSignature } from 'react-icons/fa'
+import { FaEdit } from 'react-icons/fa'
 import { Dialog } from 'primereact/dialog'
 import { Params } from '../../../Type/CommonType'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
@@ -23,7 +21,7 @@ import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader
 import { properties } from '../../Utils/MeassageProperties'
 import Header from '../../Layout/LayoutComponents/Header'
 import { Toast } from 'primereact/toast'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import CustomMooringPositionMap from '../../Map/CustomMooringPositionMap'
 import { RiDeleteBin5Fill } from 'react-icons/ri'
 import { ProgressSpinner } from 'primereact/progressspinner'
@@ -35,6 +33,10 @@ import { GearOffIcon, GearOnIcon, NeedInspectionIcon, NotInUseIcon } from '../..
 import AddMoorings from './AddMoorings'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import AddImage from '../Customer/AddImage'
+import ViewImageDialog from '../../CommonComponent/ViewImageDialog'
+import EditImageDialog from '../../CommonComponent/EditImageDialog'
+import MooringInformations from '../../CommonComponent/MooringInformations'
+import ViewImage from '../../CommonComponent/ViewImage'
 
 const Moorings = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -65,7 +67,6 @@ const Moorings = () => {
   const [imageVisible, setImageVisible] = useState(false)
   const [imageData, setImageData] = useState<any>()
   const [imageEditVisible, setImageEditVisible] = useState(false)
-  const [scale, setScale] = useState(1)
   const [leftContainerWidth, setLeftContainerWidth] = useState(false)
   const [rightContainerWidth, setRightContainerWidth] = useState(false)
   const toast = useRef<Toast>(null)
@@ -108,14 +109,6 @@ const Moorings = () => {
     borderRadius: '50%',
     boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
     transition: 'transform 0.2s',
-  }
-
-  const handleZoomIn = () => {
-    setScale((prevScale) => prevScale + 0.1)
-  }
-
-  const handleZoomOut = () => {
-    setScale((prevScale) => Math.max(prevScale - 0.1, 0.1))
   }
 
   const handleToggle = (faq: SetStateAction<string>) => {
@@ -164,10 +157,6 @@ const Moorings = () => {
     setMooringResponseData([])
     setPageNumber(0)
     setPageNumber1(0)
-  }
-
-  const handleButtonClick = () => {
-    setModalVisible(true)
   }
 
   const handleModalClose = () => {
@@ -242,7 +231,6 @@ const Moorings = () => {
         id: 'id',
         label: 'ID',
         style: {
-          // width: '2vw',
           borderBottom: '1px solid #C0C0C0',
           fontWeight: '700',
           color: '#000000',
@@ -253,7 +241,6 @@ const Moorings = () => {
         id: 'mooringNumber',
         label: 'Mooring Number',
         style: {
-          // width: '6vw',
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#FFFFFF',
           fontWeight: '700',
@@ -264,7 +251,6 @@ const Moorings = () => {
         id: 'customerName',
         label: 'Customer Name',
         style: {
-          // width: '6vw',
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#FFFFFF',
           fontWeight: '700',
@@ -275,7 +261,6 @@ const Moorings = () => {
         id: 'serviceAreaResponseDto.serviceAreaName',
         label: 'Service Area',
         style: {
-          // width: '5vw',
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#FFFFFF',
           fontWeight: '700',
@@ -286,7 +271,6 @@ const Moorings = () => {
         id: 'gpsCoordinates',
         label: 'GPS Coordinates',
         style: {
-          // width: '6vw',
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#FFFFFF',
           fontWeight: '700',
@@ -303,7 +287,6 @@ const Moorings = () => {
         id: 'id',
         label: 'ID:',
         style: {
-          // width: '4vw',
           borderBottom: '1px solid #C0C0C0',
           fontWeight: '700',
           color: '#000000',
@@ -315,7 +298,6 @@ const Moorings = () => {
         id: 'mooringNumber',
         label: 'Mooring Number:',
         style: {
-          // width: '6vw',
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#FFFFFF',
           fontSize: '12px',
@@ -327,7 +309,6 @@ const Moorings = () => {
         id: 'gpsCoordinates',
         label: 'GPS Coordinates:',
         style: {
-          // width: '6vw',
           borderBottom: '1px solid #C0C0C0',
           backgroundColor: '#FFFFFF',
           fontSize: '12px',
@@ -350,7 +331,6 @@ const Moorings = () => {
         id: 'id',
         label: 'id',
         style: {
-          //  width: '100px',
           backgroundColor: '#FFFFFF',
           fontWeight: '700',
           fontSize: '12px',
@@ -492,9 +472,7 @@ const Moorings = () => {
             }
           },
         )
-
         setMooringImage(allMooringImages)
-
         setMooringResponseData(content?.customerResponseDto?.mooringResponseDtoList)
         setTotalRecordsTwo(totalSize)
       } else {
@@ -630,7 +608,13 @@ const Moorings = () => {
     <>
       <Toast ref={toast} />
 
-      <div style={{ height: '150vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
+      <div
+        style={{ height: '150vh' }}
+        className={
+          modalVisible || dialogVisible || imageEditVisible || imageVisible || customerModalVisible
+            ? 'backdrop-blur-lg'
+            : ''
+        }>
         <Header header={properties.MoormanageMoorings} />
 
         <div className="flex justify-end mr-12 ">
@@ -670,7 +654,9 @@ const Moorings = () => {
               }
               headerText={<h1 className="text-xxl font-bold text-black ">Mooring Information</h1>}
               visible={modalVisible}
-              onClick={handleButtonClick}
+              onClick={() => {
+                setModalVisible(true)
+              }}
               onHide={handleModalClose}
               dialogStyle={{
                 width: '800px',
@@ -730,7 +716,7 @@ const Moorings = () => {
                   backgroundColor: '#FFFFFF',
                   position: 'relative',
                 }}
-                className="ml-[45px] w-[20px] flex-1">
+                className="ml-[45px] w-[20px] flex-1 mt-3">
                 <div data-testid="customer-data" className="flex flex-col h-full ">
                   <div className="flex item-center justify-between bg-[#00426F]  rounded-tl-[10px] rounded-tr-[10px] text-white cursor-pointer">
                     <div>
@@ -854,13 +840,13 @@ const Moorings = () => {
           {/* middle container */}
 
           <div
-            className={`min-h-[600] rounded-md border-[1px] ml-5 ${modalVisible || isLoading ? 'blur-screen' : ''}`}
+            className={`min-h-[600] rounded-md border-[1px] ml-5 mt-3 ${modalVisible || customerModalVisible || imageVisible || imageEditVisible || dialogVisible ? 'blur-screen' : ''}`}
             style={{ flexGrow: '1' }}>
             <CustomMooringPositionMap
               position={coordinatesArray ? coordinatesArray : initialPosition}
               zoomLevel={10}
               style={{
-                height: '600px',
+                height: '700px',
                 width: 'auto',
                 maxWidth: 'auto',
                 flexGrow: 1,
@@ -909,7 +895,7 @@ const Moorings = () => {
               </div>
             </div>
           ) : (
-            <div className="ml-5 mr-4">
+            <div className="ml-5 mr-4 mt-3">
               <div
                 style={{
                   maxWidth: '450px',
@@ -1193,7 +1179,7 @@ const Moorings = () => {
           )}
         </div>
 
-        {/* Dialog BOX */}
+        {/* Mooring Information */}
         <Dialog
           position="center"
           style={{
@@ -1218,82 +1204,10 @@ const Moorings = () => {
               </div>
             </div>
           }>
-          <hr className="border border-[#000000] my-0 mx-0"></hr>
-
-          <div
-            style={{
-              fontSize: '14px',
-              fontWeight: '300',
-              color: '#000000',
-            }}
-            className="flex leading-[3.50rem] gap-32 p-4">
-            <div>
-              <p>
-                <span>ID: </span> {mooringRowData?.id || '-'}
-              </p>
-              <p>
-                <span>Mooring Number: </span>
-                {mooringRowData?.mooringNumber || '-'}
-              </p>
-              <p>
-                <span>Boat Name: </span>
-                {mooringRowData?.boatName || '-'}
-              </p>
-              <p>
-                <span>Type: </span> {mooringRowData?.boatType?.boatType || '-'}
-              </p>
-              <p>
-                <span>Size of Weight: </span>
-                {mooringRowData?.sizeOfWeight || '-'}
-              </p>
-              <p>
-                <span>Top Chain Condition: </span>
-                {mooringRowData?.topChainCondition?.condition || '-'}
-              </p>
-              <p className="tracking-tighter">
-                <span>Bottom Chain Condition: </span>
-                {mooringRowData?.bottomChainCondition?.condition || '-'}
-              </p>
-              <p>
-                <span>Pendant Condition: </span>
-                {mooringRowData?.pendantCondition || '-'}
-              </p>
-            </div>
-            <div>
-              <p>
-                <span>Harbor Area: </span> {mooringRowData?.harborOrArea || '-'}
-              </p>
-              <p>
-                <span>G.P.S Coordinates: </span>
-                {mooringRowData?.gpsCoordinates || '-'}
-              </p>
-              <p>
-                <span>Boat Size: </span>
-                {mooringRowData?.boatSize || '-'}
-              </p>
-              <p>
-                <span>Weight: </span> {mooringRowData?.boatWeight || '-'}
-              </p>
-              <p>
-                <span>Type of Weight: </span>
-                {mooringRowData?.typeOfWeight?.type || '-'}
-              </p>
-              <p>
-                <span>Condition of Eye: </span>
-                {mooringRowData?.eyeCondition?.condition || '-'}
-              </p>
-              <p>
-                <span>Shackle, Swivel Condition: </span>
-                {mooringRowData?.shackleSwivelCondition?.condition || '-'}
-              </p>
-              <p>
-                <span>Depth at Mean High Water: </span>
-                {mooringRowData?.depthAtMeanHighWater || '-'}
-              </p>
-            </div>
-          </div>
+          <MooringInformations mooringRowData={mooringRowData} />
         </Dialog>
 
+        {/* Image Information */}
         <Dialog
           position="center"
           style={{
@@ -1311,7 +1225,7 @@ const Moorings = () => {
           <AddImage
             imageData={imageData}
             entityId={customerId}
-            entity={'Customer'}
+            entity={'Mooring'}
             closeModal={handleModalClose}
             getCustomersWithMooring={() => {
               if (customerId) {
@@ -1321,108 +1235,12 @@ const Moorings = () => {
           />
         </Dialog>
 
-        <Dialog
-          position="center"
-          style={{
-            width: '740px',
-            minWidth: '300px',
-            height: '500px',
-            borderRadius: '1rem',
-            fontWeight: '400',
-            cursor: 'alias',
-          }}
-          draggable={false}
-          visible={imageVisible}
-          onHide={() => {
-            setImageVisible(false)
-            setScale(1)
-          }}
-          headerStyle={{ cursor: 'alias' }}
-          header={'Images'}>
-          <div>
-            <hr className="border border-[#000000] my-0 mx-0"></hr>
-          </div>
-          <div
-            style={{
-              position: 'relative',
-              width: '100%',
-              height: '90%',
-              overflow: 'auto',
-            }}>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                width: '100%',
-                height: '100%',
-              }}>
-              <div
-                style={{
-                  transform: `scale(${scale})`,
-                  transformOrigin: 'top left',
-                  transition: 'transform 0.2s',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <img
-                  style={{
-                    width: 'auto',
-                    height: 'auto',
-                    maxWidth: '100%',
-                    maxHeight: '100%',
-                    display: 'block',
-                  }}
-                  src={`data:image/jpeg;base64,${showImage.imageData}`}
-                />
-              </div>
-            </div>
-            <div
-              style={{
-                position: 'absolute',
-                top: '10px',
-                right: '10px',
-                display: 'flex',
-                gap: '10px',
-              }}>
-              <button onClick={handleZoomIn} style={ButtonStyle}>
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="12" cy="12" r="12" fill="#007bff" />
-                  <path
-                    d="M12 5v14M5 12h14"
-                    stroke="#fff"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </button>
-              <button onClick={handleZoomOut} style={ButtonStyle}>
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="12" cy="12" r="12" fill="#007bff" />
-                  <path
-                    d="M5 12h14"
-                    stroke="#fff"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </Dialog>
+        {/* View Image */}
+        <ViewImageDialog
+          imageVisible={imageVisible}
+          setImageVisible={setImageVisible}
+          showImage={showImage}
+        />
 
         {customerModalVisible && (
           <CustomModal

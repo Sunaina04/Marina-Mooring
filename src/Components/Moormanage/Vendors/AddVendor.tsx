@@ -15,15 +15,10 @@ import { ProgressSpinner } from 'primereact/progressspinner'
 import { Toast } from 'primereact/toast'
 
 const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, getVendor }) => {
-  const [addVendor] = useAddVendorsMutation()
-  const [editVendor] = useUpdateVendorMutation()
-  const { getStatesData } = StatesData()
-  const { getCountriesData } = CountriesData()
   const [countriesData, setCountriesData] = useState<Country[]>()
   const [statesData, setStatesData] = useState<State[]>()
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
   const [isLoading, setIsLoading] = useState(true)
-  const toastRef = useRef<Toast>(null)
   const [formData, setFormData] = useState<any>({
     companyName: '',
     phone: '',
@@ -47,84 +42,28 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
     emailForRepresentative: '',
     note: '',
   })
-
-  console.log('dataa', formData.companyName)
+  const [addVendor] = useAddVendorsMutation()
+  const [editVendor] = useUpdateVendorMutation()
+  const { getStatesData } = StatesData()
+  const { getCountriesData } = CountriesData()
+  const toastRef = useRef<Toast>(null)
 
   const validateAddVendorFields = () => {
     const errors: { [key: string]: string } = {}
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    const phoneRegex = /^.{10}$|^.{12}$/
-    const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/
-
-    // if (!formData.phone) {
-    //   errors.phone = 'Phone is required'
-    // } else if (!phoneRegex.test(formData.phone)) {
-    //   errors.phone = 'Phone must be a 10-digit number'
-    // }
-    // if (!formData.phoneForRepresentative) {
-    //   errors.phoneForRepresentative = 'Phone is required'
-    // } else if (!phoneRegex.test(formData.phoneForRepresentative)) {
-    //   errors.phoneForRepresentative = 'Phone must be a 10-digit number'
-    // }
-    // if (!formData.emailForAddress) {
-    //   errors.emailForAddress = 'Email is required'
-    // } else if (!emailRegex.test(formData.emailForAddress)) {
-    //   errors.emailForAddress = 'Please enter a valid email format'
-    // }
-
-    // if (!formData.emailForRemit) {
-    //   errors.emailForRemit = 'Email is required'
-    // } else if (!emailRegex.test(formData.emailForRemit)) {
-    //   errors.emailForRemit = 'Please enter a valid email format'
-    // }
-
-    // if (!formData.emailForRepresentative) {
-    //   errors.emailForRepresentative = 'Email is required'
-    // } else if (!emailRegex.test(formData.emailForRepresentative)) {
-    //   errors.emailForRepresentative = 'Please enter a valid email format'
-    // }
-
-    // if (!formData.website) {
-    //   errors.website = 'Website is required'
-    // } else if (!urlRegex.test(formData.website)) {
-    //   errors.website = 'Please enter a valid URL'
-    // }
-
-    if (!formData.companyName) errors.companyName = 'Vendor Name is required'
-    // if (!formData.streetBuildingForAddress)
-    //   errors.streetBuildingForAddress = 'street/Building is required'
-    // if (!formData.aptSuiteForAddress) errors.aptSuiteForAddress = 'aptSuite is required'
-    // if (!formData.countryForAddress) errors.countryForAddress = 'country is required'
-    // if (!formData.stateForAddress) errors.stateForAddress = 'state is required'
-    // if (!formData.zipCodeForAddress) {
-    //   errors.zipCodeForAddress = 'Zip Code is required'
-    // }
-    // if (!formData.streetBuildingForRemit)
-    //   errors.streetBuildingForRemit = 'Street/Building is required'
-    // if (!formData.aptSuiteForRemit) errors.aptSuiteForRemit = 'Apt/Suite is required'
-    // if (!formData.countryForRemit) errors.countryForRemit = 'Country is required'
-    // if (!formData.stateForRemit) errors.stateForRemit = 'State is required'
-    // if (!formData.zipCodeForRemit) {
-    //   errors.zipCodeForRemit = 'Zip Code is required'
-    // }
-    // if (!formData.accountNumber) errors.accountNumber = 'accountNumber is required'
-    // if (!formData.firstName) errors.firstName = 'firstName is required'
-    // if (!formData.lastName) errors.lastName = 'lastName is required'
-    // if (!formData.note) errors.note = 'note is required'
-
+    if (!formData.companyName) {
+      errors.companyName = 'Vendor Name is required'
+    }
     setFieldErrors(errors)
     return errors
   }
 
   const handleInputChange = (field: string, value: any) => {
     const numberRegex = /^\d+$/
-
     if (field === 'accountNumber') {
       if (value !== '' && !numberRegex.test(value)) {
         return
       }
     }
-
     setFormData({
       ...formData,
       [field]: value,
@@ -193,7 +132,6 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
       return
     }
     setIsLoading(true)
-
     try {
       const payload: any = {
         vendorName: formData?.companyName,
@@ -258,9 +196,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
     if (Object.keys(errors).length > 0) {
       return
     }
-
     setIsLoading(true)
-
     try {
       const payload = {
         vendorName: formData?.companyName || vendors?.vendorName,
@@ -295,7 +231,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
-          detail: 'Vendor Updated successfully',
+          detail: message,
           life: 3000,
         })
         closeModal()
@@ -315,7 +251,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: data.message,
+        detail: message || data?.message,
         life: 3000,
       })
     }
@@ -324,13 +260,12 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
   useEffect(() => {
     if (editMode && vendors) {
       handleEditMode()
-    } else {
     }
   }, [editMode, vendors])
 
   useEffect(() => {
     fetchDataAndUpdate()
-  }, [fetchDataAndUpdate])
+  }, [])
 
   return (
     <>
@@ -350,7 +285,6 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                   <InputComponent
                     onChange={(e) => handleInputChange('companyName', e.target.value)}
                     value={formData.companyName}
-                    // disabled={editMode}
                     style={{
                       width: '230px',
                       height: '32px',
@@ -367,10 +301,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
               </div>
               <div>
                 <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
-                  <div className="flex gap-1">
-                    Phone
-                    {/* <p className="text-red-600">*</p> */}
-                  </div>
+                  <div className="flex gap-1">Phone</div>
                 </span>
                 <div className="mt-2">
                   <InputComponent
@@ -380,21 +311,17 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                     style={{
                       width: '230px',
                       height: '32px',
-                      border: fieldErrors.phone ? '1px solid red' : '1px solid #D5E1EA',
+                      border: '1px solid #D5E1EA',
                       borderRadius: '0.50rem',
                       fontSize: '0.70rem',
                       paddingLeft: '0.5rem',
                     }}
                   />
                 </div>
-                {fieldErrors.phone && <small className="p-error">{fieldErrors.phone}</small>}
               </div>
               <div>
                 <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
-                  <div className="flex gap-1">
-                    Website
-                    {/* <p className="text-red-600">*</p> */}
-                  </div>
+                  <div className="flex gap-1">Website</div>
                 </span>
                 <div className="mt-2">
                   <InputComponent
@@ -403,16 +330,13 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                     style={{
                       width: '230px',
                       height: '32px',
-                      border: fieldErrors.website ? '1px solid red' : '1px solid #D5E1EA',
+                      border: '1px solid #D5E1EA',
                       borderRadius: '0.50rem',
                       fontSize: '0.70rem',
                       paddingLeft: '0.5rem',
                     }}
                   />
                 </div>
-                <p>
-                  {fieldErrors.website && <small className="p-error">{fieldErrors.website}</small>}
-                </p>
               </div>
             </div>
           </div>
@@ -420,10 +344,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
             <div className="mt-5">
               <div>
                 <h1 style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
-                  <div className="flex gap-1">
-                    Address
-                    {/* <p className="text-red-600">*</p> */}
-                  </div>
+                  <div className="flex gap-1">Address</div>
                 </h1>
               </div>
 
@@ -440,22 +361,13 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                         style={{
                           width: '178.39px',
                           height: '32px',
-                          border: fieldErrors.streetBuildingForAddress
-                            ? '1px solid red'
-                            : '1px solid #D5E1EA',
+                          border: '1px solid #D5E1EA',
                           borderRadius: '0.50rem',
                           fontSize: '0.70rem',
                           paddingLeft: '0.5rem',
                         }}
                       />
                     </div>
-                    <p>
-                      <p>
-                        {fieldErrors.streetBuildingForAddress && (
-                          <small className="p-error">{fieldErrors.streetBuildingForAddress}</small>
-                        )}
-                      </p>
-                    </p>
                   </div>
                   <div>
                     <div className="mt-3">
@@ -471,17 +383,12 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                         style={{
                           width: '178.39px',
                           height: '32px',
-                          border: fieldErrors.countryForAddress
-                            ? '1px solid red'
-                            : '1px solid #D5E1EA',
+                          border: '1px solid #D5E1EA',
                           borderRadius: '0.50rem',
                           fontSize: '0.70rem',
                         }}
                       />
                     </div>
-                    {fieldErrors.countryForAddress && (
-                      <small className="p-error">{fieldErrors.countryForAddress}</small>
-                    )}
                   </div>
                   <div>
                     <div className="mt-3 ">
@@ -493,20 +400,13 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                         style={{
                           width: '178.39px',
                           height: '32px',
-                          border: fieldErrors.zipCodeForAddress
-                            ? '1px solid red'
-                            : '1px solid #D5E1EA',
+                          border: '1px solid #D5E1EA',
                           borderRadius: '0.50rem',
                           fontSize: '0.70rem',
                           paddingLeft: '0.5rem',
                         }}
                       />
                     </div>
-                    <p>
-                      {fieldErrors.zipCodeForAddress && (
-                        <small className="p-error">{fieldErrors.zipCodeForAddress}</small>
-                      )}
-                    </p>
                   </div>
                 </div>
                 <div className="">
@@ -519,20 +419,13 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                         style={{
                           width: '178.39px',
                           height: '32px',
-                          border: fieldErrors.aptSuiteForAddress
-                            ? '1px solid red'
-                            : '1px solid #D5E1EA',
+                          border: '1px solid #D5E1EA',
                           borderRadius: '0.50rem',
                           fontSize: '0.70rem',
                           paddingLeft: '0.5rem',
                         }}
                       />
                     </div>
-                    <p>
-                      {fieldErrors.aptSuiteForAddress && (
-                        <small className="p-error">{fieldErrors.aptSuiteForAddress}</small>
-                      )}
-                    </p>
                   </div>
                   <div>
                     <div className="mt-3">
@@ -548,20 +441,12 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                         style={{
                           width: '178.39px',
                           height: '32px',
-                          border: fieldErrors.stateForAddress
-                            ? '1px solid red'
-                            : '1px solid #D5E1EA',
+                          border: '1px solid #D5E1EA',
                           borderRadius: '0.50rem',
                           fontSize: '0.70rem',
                         }}
                       />
                     </div>
-
-                    <p>
-                      {fieldErrors.stateForAddress && (
-                        <small className="p-error">{fieldErrors.stateForAddress}</small>
-                      )}
-                    </p>
                   </div>
 
                   <div>
@@ -573,21 +458,13 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                         style={{
                           width: '178.39px',
                           height: '32px',
-                          border: fieldErrors.emailForAddress
-                            ? '1px solid red'
-                            : '1px solid #D5E1EA',
+                          border: '1px solid #D5E1EA',
                           borderRadius: '0.50rem',
                           fontSize: '0.70rem',
                           paddingLeft: '0.5rem',
                         }}
                       />
                     </div>
-
-                    <p>
-                      {fieldErrors.emailForAddress && (
-                        <small className="p-error">{fieldErrors.emailForAddress}</small>
-                      )}
-                    </p>
                   </div>
                 </div>
               </div>
@@ -596,10 +473,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
               <div className="mt-1 py-5 px-5 rounded-lg" style={{ backgroundColor: '#F5F5F5' }}>
                 <div>
                   <h1 style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
-                    <div className="flex gap-1">
-                      Remit Address
-                      {/* <p className="text-red-600">*</p> */}
-                    </div>
+                    <div className="flex gap-1">Remit Address</div>
                   </h1>
                 </div>
                 <div className="flex mt-2 gap-2">
@@ -615,9 +489,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                           style={{
                             width: '178.39px',
                             height: '32px',
-                            border: fieldErrors.streetBuildingForRemit
-                              ? '1px solid red'
-                              : '1px solid #D5E1EA',
+                            border: '1px solid #D5E1EA',
                             borderRadius: '0.50rem',
                             fontSize: '0.70rem',
                             backgroundColor: '#F5F5F5',
@@ -625,11 +497,6 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                           }}
                         />
                       </div>
-                      <p>
-                        {fieldErrors.streetBuildingForRemit && (
-                          <small className="p-error">{fieldErrors.streetBuildingForRemit}</small>
-                        )}
-                      </p>
                     </div>
                     <div className="mt-3">
                       <Dropdown
@@ -644,20 +511,12 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                         style={{
                           width: '178.39px',
                           height: '32px',
-                          border: fieldErrors.countryForRemit
-                            ? '1px solid red'
-                            : '1px solid #D5E1EA',
+                          border: '1px solid #D5E1EA',
                           borderRadius: '0.50rem',
                           fontSize: '0.70rem',
                           backgroundColor: '#F5F5F5',
                         }}
                       />
-
-                      <p>
-                        {fieldErrors.countryForRemit && (
-                          <small className="p-error">{fieldErrors.countryForRemit}</small>
-                        )}
-                      </p>
                     </div>
 
                     <div className="mt-3">
@@ -669,21 +528,13 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                         style={{
                           width: '178.39px',
                           height: '32px',
-                          border: fieldErrors.zipCodeForRemit
-                            ? '1px solid red'
-                            : '1px solid #D5E1EA',
+                          border: '1px solid #D5E1EA',
                           borderRadius: '0.50rem',
                           fontSize: '0.70rem',
                           backgroundColor: '#F5F5F5',
                           paddingLeft: '0.5rem',
                         }}
                       />
-
-                      <p>
-                        {fieldErrors.zipCodeForRemit && (
-                          <small className="p-error">{fieldErrors.zipCodeForRemit}</small>
-                        )}
-                      </p>
                     </div>
                   </div>
 
@@ -697,9 +548,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                           style={{
                             width: '178.39px',
                             height: '32px',
-                            border: fieldErrors.aptSuiteForRemit
-                              ? '1px solid red'
-                              : '1px solid #D5E1EA',
+                            border: '1px solid #D5E1EA',
                             borderRadius: '0.50rem',
                             fontSize: '0.70rem',
                             backgroundColor: '#F5F5F5',
@@ -707,11 +556,6 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                           }}
                         />
                       </div>
-                      <p>
-                        {fieldErrors.aptSuiteForRemit && (
-                          <small className="p-error">{fieldErrors.aptSuiteForRemit}</small>
-                        )}
-                      </p>
                     </div>
                     <div>
                       <div className="mt-3">
@@ -727,19 +571,12 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                           style={{
                             width: '178.39px',
                             height: '32px',
-                            border: fieldErrors.stateForRemit
-                              ? '1px solid red'
-                              : '1px solid #D5E1EA',
+                            border: '1px solid #D5E1EA',
                             borderRadius: '0.50rem',
                             fontSize: '0.70rem',
                             backgroundColor: '#F5F5F5',
                           }}
                         />
-                        <p>
-                          {fieldErrors.stateForRemit && (
-                            <small className="p-error">{fieldErrors.stateForRemit}</small>
-                          )}
-                        </p>
                       </div>
                     </div>
                     <div className="mt-3">
@@ -750,18 +587,13 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                         style={{
                           width: '178.39px',
                           height: '32px',
-                          border: fieldErrors.emailForRemit ? '1px solid red' : '1px solid #D5E1EA',
+                          border: '1px solid #D5E1EA',
                           borderRadius: '0.50rem',
                           fontSize: '0.70rem',
                           backgroundColor: '#F5F5F5',
                           paddingLeft: '0.5rem',
                         }}
                       />
-                      <p>
-                        {fieldErrors.emailForRemit && (
-                          <small className="p-error">{fieldErrors.emailForRemit}</small>
-                        )}
-                      </p>
                     </div>
                   </div>
                 </div>
@@ -786,10 +618,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
           <div className="mt-5">
             <div className="ml-1 text-black font-semibold text-sm">
               <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
-                <div className="flex gap-1">
-                  Account Number
-                  {/* <p className="text-red-600">*</p> */}
-                </div>
+                <div className="flex gap-1">Account Number</div>
               </span>
             </div>
             <div className="mt-2">
@@ -800,17 +629,12 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: fieldErrors.accountNumber ? '1px solid red' : '1px solid #D5E1EA',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.70rem',
                   padding: '1em',
                 }}
               />
-              <p>
-                {fieldErrors.accountNumber && (
-                  <small className="p-error">{fieldErrors.accountNumber}</small>
-                )}
-              </p>
             </div>
           </div>
         </div>
@@ -828,10 +652,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
             <div className="mt-2">
               <div>
                 <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
-                  <div className="flex gap-1">
-                    First Name
-                    {/* <p className="text-red-600">*</p> */}
-                  </div>
+                  <div className="flex gap-1">First Name</div>
                 </span>
               </div>
               <div className="mt-1">
@@ -843,18 +664,13 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: fieldErrors.firstName ? '1px solid red' : '1px solid #D5E1EA',
+                    border: '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.70rem',
                     backgroundColor: '#F5F5F5',
                     paddingLeft: '0.5rem',
                   }}
                 />
-                <p>
-                  {fieldErrors.firstName && (
-                    <small className="p-error">{fieldErrors.firstName}</small>
-                  )}
-                </p>
               </div>
             </div>
 
@@ -862,10 +678,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
               <div className="mt-2">
                 <div>
                   <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
-                    <div className="flex gap-1">
-                      Last Name
-                      {/* <p className="text-red-600">*</p> */}
-                    </div>
+                    <div className="flex gap-1">Last Name</div>
                   </span>
                 </div>
                 <div className="mt-1">
@@ -877,18 +690,13 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                     style={{
                       width: '230px',
                       height: '32px',
-                      border: fieldErrors.lastName ? '1px solid red' : '1px solid #D5E1EA',
+                      border: '1px solid #D5E1EA',
                       borderRadius: '0.50rem',
                       fontSize: '0.70rem',
                       backgroundColor: '#F5F5F5',
                       paddingLeft: '0.5rem',
                     }}
                   />
-                  <p>
-                    {fieldErrors.lastName && (
-                      <small className="p-error">{fieldErrors.lastName}</small>
-                    )}
-                  </p>
                 </div>
               </div>
             </div>
@@ -897,10 +705,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
               <div className="">
                 <div>
                   <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
-                    <div className="flex gap-1">
-                      Phone
-                      {/* <p className="text-red-600">*</p> */}
-                    </div>
+                    <div className="flex gap-1">Phone</div>
                   </span>
                 </div>
                 <div className="mt-1">
@@ -912,20 +717,13 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                     style={{
                       width: '230px',
                       height: '32px',
-                      border: fieldErrors.phoneForRepresentative
-                        ? '1px solid red'
-                        : '1px solid #D5E1EA',
+                      border: '1px solid #D5E1EA',
                       borderRadius: '0.50rem',
                       fontSize: '0.70rem',
                       backgroundColor: '#F5F5F5',
                       paddingLeft: '0.5rem',
                     }}
                   />
-                  <p>
-                    {fieldErrors.phoneForRepresentative && (
-                      <small className="p-error">{fieldErrors.phoneForRepresentative}</small>
-                    )}
-                  </p>
                 </div>
               </div>
             </div>
@@ -935,10 +733,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
             <div className="mt-2">
               <div>
                 <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
-                  <div className="flex gap-1">
-                    Email
-                    {/* <p className="text-red-600">*</p> */}
-                  </div>
+                  <div className="flex gap-1">Email</div>
                 </span>
               </div>
               <div className="mt-1">
@@ -950,30 +745,20 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: fieldErrors.emailForRepresentative
-                      ? '1px solid red'
-                      : '1px solid #D5E1EA',
+                    border: '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.70rem',
                     backgroundColor: '#F5F5F5',
                     paddingLeft: '0.5rem',
                   }}
                 />
-                <p>
-                  {fieldErrors.emailForRepresentative && (
-                    <small className="p-error">{fieldErrors.emailForRepresentative}</small>
-                  )}
-                </p>
               </div>
             </div>
 
             <div className="mt-2">
               <div className="">
                 <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
-                  <div className="flex gap-1">
-                    Note
-                    {/* <p className="text-red-600">*</p> */}
-                  </div>
+                  <div className="flex gap-1">Note</div>
                 </span>
               </div>
               <div className="mt-1">
@@ -983,7 +768,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                   style={{
                     width: '487.77px',
                     height: '32px',
-                    border: fieldErrors.note ? '1px solid red' : '1px solid #D5E1EA',
+                    border: '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.70rem',
                     backgroundColor: '#F5F5F5',
@@ -991,7 +776,6 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                     padding: '10px',
                   }}
                 />
-                <p>{fieldErrors.note && <small className="p-error">{fieldErrors.note}</small>}</p>
               </div>
             </div>
           </div>

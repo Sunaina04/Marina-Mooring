@@ -22,6 +22,7 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
   moorings,
   mooringData,
   customerPage,
+  dashboard,
   setLeftContainer,
   setRightContainer,
   leftContanerWidth,
@@ -33,6 +34,7 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
   const [showMap, setShowMap] = useState(true)
   const [mooringDetails, setMooringDetails] = useState<MooringPayload>()
   const toast = useRef<Toast>(null)
+  const [isZoom, setZoom] = useState<boolean>(false)
 
   const parseCoordinates = (coordinates: string): [number, number] | null => {
     if (!coordinates) return null
@@ -41,6 +43,7 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
   }
 
   const handleOpenMap = () => {
+    setZoom((prevZoom) => !prevZoom)
     if (leftContanerWidth && rightContanerWidth) {
       setLeftContainer(false)
       setRightContainer(false)
@@ -70,8 +73,10 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
   const containerStyle: React.CSSProperties = {
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    gap: '2px',
+    flexDirection: isZoom ? 'row' : 'column',
+    alignItems: dashboard ? 'center' : 'flex-start',
+    gap: dashboard ? '20px' : '2px',
+    fontSize: '10px',
   }
 
   const iconsByStatusId = {
@@ -111,130 +116,122 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
 
   return (
     <>
-      <Toast ref={toast} />
       <div style={{ position: 'relative' }}>
+        <Toast ref={toast} />
+
         <div
-          onClick={() => {
-            handleOpenMap()
-          }}
-          className="p-2 h-8 w-8 mr-20"
-          style={{ cursor: 'pointer', position: 'absolute', left: '95%', top: 0, zIndex: 999 }}>
-          <img src="/assets/images/resize.png" alt="Key Icon" className="p-clickable" />
+          onClick={handleOpenMap}
+          style={{
+            position: 'absolute',
+            top: '10px',
+            right: '10px',
+            cursor: 'pointer',
+            zIndex: 9999,
+          }}>
+          <img
+            src="/assets/images/resize.png"
+            alt="Resize Icon"
+            style={{ width: '20px', height: '20px' }}
+          />
         </div>
 
-        <div>
-          {showMap ? (
-            <MapContainer
-              ref={setMap}
-              style={{ ...style, flexGrow: 1 }}
-              center={position}
-              zoom={position ? zoomLevel : 4}
-              scrollWheelZoom={false}
-              attributionControl={false}>
-              <TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              />
+        {showMap ? (
+          <MapContainer
+            ref={setMap}
+            style={{ ...style, flexGrow: 1 }}
+            center={position}
+            zoom={position ? zoomLevel : 4}
+            scrollWheelZoom={false}
+            attributionControl={false}>
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            />
 
-              {moorings && customerPage
-                ? moorings.map((mooring: MooringPayload, index: number) => {
-                    const coordinates = parseCoordinates(mooring.gpsCoordinates) || [
-                      39.4926173, -117.5714859,
-                    ]
-                    const position: LatLngExpression = coordinates
-                    const iconKey = mooring?.mooringStatus?.id as keyof typeof iconsByStatusId
-                    const icon = iconsByStatusId[iconKey] || DefaultIcon
+            {moorings && (customerPage || dashboard)
+              ? moorings.map((mooring: MooringPayload, index: number) => {
+                  const coordinates = parseCoordinates(mooring.gpsCoordinates) || [
+                    39.4926173, -117.5714859,
+                  ]
+                  const position: LatLngExpression = coordinates
+                  const iconKey = mooring?.mooringStatus?.id as keyof typeof iconsByStatusId
+                  const icon = iconsByStatusId[iconKey] || DefaultIcon
 
-                    return (
-                      <>
-                        <Marker key={index} position={position} icon={icon} ref={mapRef}>
-                          {/* {position && (
-                            <Popup ref={(ref) => (popupRefs.current[index] = ref)}>
-                              <MooringMapModal
-                                gpsValue={position}
-                                mooringId={mooring?.mooringNumber}
-                                mooringData={mooring}
-                              />
-                            </Popup>
-                          )} */}
+                  return (
+                    <Marker key={index} position={position} icon={icon} ref={mapRef}>
+                      <Popup>
+                        <MooringMapModal
+                          gpsValue={position}
+                          mooringId={mooring?.mooringNumber}
+                          mooringData={mooring}
+                        />
+                      </Popup>
+                    </Marker>
+                  )
+                })
+              : moorings &&
+                moorings.map((mooring: MooringWithGpsCoordinates, index: number) => {
+                  const coordinates = parseCoordinates(mooring.gpsCoordinates) || [
+                    39.4926173, -117.5714859,
+                  ]
+                  const position: LatLngExpression = coordinates
+                  const iconKey = mooring?.statusId as keyof typeof iconsByStatusId
+                  const icon = iconsByStatusId[iconKey] || DefaultIcon
 
-                          <Popup>
-                            <MooringMapModal
-                              gpsValue={position}
-                              mooringId={mooring?.mooringNumber}
-                              mooringData={mooring}
-                            />
-                          </Popup>
-                        </Marker>
-                      </>
-                    )
-                  })
-                : moorings &&
-                  moorings.map((mooring: MooringWithGpsCoordinates, index: number) => {
-                    const coordinates = parseCoordinates(mooring.gpsCoordinates) || [
-                      39.4926173, -117.5714859,
-                    ]
-                    const position: LatLngExpression = coordinates
-                    const iconKey = mooring?.statusId as keyof typeof iconsByStatusId
-                    const icon = iconsByStatusId[iconKey] || DefaultIcon
+                  return (
+                    <Marker key={index} position={position} icon={icon} ref={mapRef}>
+                      <Popup>
+                        <MooringMapModal
+                          gpsValue={position}
+                          mooringId={mooring?.mooringId}
+                          mooringData={mooringDetails}
+                        />
+                      </Popup>
+                    </Marker>
+                  )
+                })}
+          </MapContainer>
+        ) : null}
 
-                    return (
-                      <>
-                        <Marker key={index} position={position} icon={icon} ref={mapRef}>
-                          <Popup>
-                            <MooringMapModal
-                              gpsValue={position}
-                              mooringId={mooring?.mooringId}
-                              mooringData={mooringDetails}
-                            />
-                          </Popup>
-                          {/* {position && (
-                            <Popup ref={(ref) => (popupRefs.current[index] = ref)}>
-                              <MooringMapModal
-                                gpsValue={position}
-                                mooringId={mooring?.mooringId}
-                                mooringData={mooringDetails}
-                              />
-                            </Popup>
-                          )} */}
-                        </Marker>
-                      </>
-                    )
-                  })}
-            </MapContainer>
-          ) : null}
-        </div>
-      </div>
-
-      <div style={boxStyle}>
-        <h2>Status</h2>
-        <div className="mt-1">
-          <hr style={{ border: '1px solid #D5E1EA' }} />
-        </div>
-        <div style={containerStyle}>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-            }}>
-            <div>
-              <span style={dotStyle('red')}></span> Need Inspection
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '10px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            zIndex: 9999,
+            backgroundColor: 'white',
+            borderRadius: '10px',
+            padding: '10px',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+          }}>
+          <div style={{ width: isZoom ? ' 22vw ' : '10vw' }}>
+            <h5>Status</h5>
+            <div className="mt-1">
+              <hr style={{ border: '1px solid #3F3F3F' }} />
             </div>
-            <div>
-              <span style={dotStyle('blue')}></span> Gear Off
-            </div>
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              marginRight: '80px',
-            }}>
-            <div>
-              <span style={dotStyle('green')}></span> Gear On
-            </div>
-            <div>
-              <span style={dotStyle('#d3d3d3')}></span> Not in Use
+            <div style={containerStyle}>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <div>
+                  <span style={dotStyle('red')}></span> Need Inspection
+                </div>
+                <div>
+                  <span style={dotStyle('blue')}></span> Gear Off (out of the water)
+                </div>
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  marginRight: dashboard ? '300px' : '80px',
+                }}>
+                <div>
+                  <span style={dotStyle('green')}></span> Gear On (in the water)
+                </div>
+                <div style={{ width: isZoom ? ' ' : '10vw' }}>
+                  <span style={dotStyle('#d3d3d3')}></span> Not in Use
+                </div>
+              </div>
             </div>
           </div>
         </div>

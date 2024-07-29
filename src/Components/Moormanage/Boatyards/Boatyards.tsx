@@ -33,6 +33,7 @@ import { FaEdit } from 'react-icons/fa'
 import { RiDeleteBin5Fill } from 'react-icons/ri'
 import { Paginator } from 'primereact/paginator'
 import React from 'react'
+import MooringInformations from '../../CommonComponent/MooringInformations'
 
 const Boatyards = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -780,80 +781,7 @@ const Boatyards = () => {
                   </div> */}
               </div>
             }>
-            <hr className="border border-[#000000] my-0 mx-0"></hr>
-
-            <div
-              style={{
-                fontSize: '14px',
-                fontWeight: '300',
-                color: '#000000',
-              }}
-              className="flex leading-[3.50rem] gap-32 p-4">
-              <div>
-                <p>
-                  <span>ID : </span> {mooringRowData?.id}
-                </p>
-                <p>
-                  <span>Mooring Number : </span> {mooringRowData?.mooringNumber}
-                </p>
-                <p>
-                  <span>Boat Name : </span> {mooringRowData?.boatName}
-                </p>
-
-                <p>
-                  <span>Type : </span> {mooringRowData?.boatType?.boatType}
-                </p>
-                <p className="flex gap-1">
-                  <span>Size of Weight : </span> {mooringRowData?.sizeOfWeight}
-                </p>
-
-                <p>
-                  <span>Top Chain Condition : </span> {mooringRowData?.topChainCondition?.condition}
-                </p>
-                <p className="tracking-tighter">
-                  <span>Bottom Chain Condition : </span>{' '}
-                  {mooringRowData?.bottomChainCondition?.condition}
-                </p>
-                <p>
-                  <span>Pendant Condition : </span> {mooringRowData?.pendantCondition}
-                </p>
-                <p>
-                  <span>Water Depth : </span> {mooringRowData?.depthAtMeanHighWater}
-                </p>
-              </div>
-              <div>
-                <p>
-                  <span>Harbor : </span> {mooringRowData?.harborOrArea}
-                </p>
-                <p>
-                  <span>G.P.S Coordinates : </span> {mooringRowData?.gpsCoordinates}
-                </p>
-                <p>
-                  <span>Boatyard Name : </span>
-                  {mooringRowData?.boatyardResponseDto?.boatyardName}
-                </p>
-                <p>
-                  <span>Customer Name : </span>
-                  {mooringRowData?.customerName}
-                </p>
-                <p>
-                  <span>Boat Size : </span> {mooringRowData?.boatSize}
-                </p>
-                <p>
-                  <span>Weight : </span> {mooringRowData?.boatWeight}
-                </p>
-                <p>
-                  <span>Type of Weight : </span> {mooringRowData?.typeOfWeight?.type}
-                </p>
-                <p>
-                  <span>Condition of Eye : </span> {mooringRowData?.eyeCondition?.condition}
-                </p>
-                <p>
-                  <span>Shackle, Swivel Condition : </span>{' '}
-                  {mooringRowData?.shackleSwivelCondition?.condition}
-                </p>
-              </div>
-            </div>
+            <MooringInformations mooringRowData={mooringRowData} />
           </Dialog>
         </div>
       </div>
