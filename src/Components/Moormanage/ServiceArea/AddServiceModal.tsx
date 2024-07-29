@@ -30,10 +30,13 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
   const [streetHouse, setStreetHouse] = useState('')
   const [notes, setNotes] = useState('')
   const [address, setAddress] = useState('')
+
   const [selectedState, setSelectedState] = useState<any>()
   const [selectedType, setSelectedType] = useState<any>()
   const [country, setCountry] = useState<any>()
+  const [state, setState] = useState<any>()
   const [zipCode, setZipCode] = useState('')
+  const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
 
   const [mainContact, setMainContact] = useState('')
   const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<any>()
@@ -78,7 +81,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
   const [isLoading, setIsLoading] = useState(true)
   const [addServiceArea] = useAddServiceAreaMutation()
   const [updateServiceArea] = useUpdateServiceAreaMutation()
-  const { getStatesData } = StatesData(country?.id)
+  const { getStatesData } = StatesData(country?.id || customerData?.countryResponseDto?.id)
   const { getServiceAreaTypeData } = ServiceAreaTypeData()
   const { getCountriesData } = CountriesData()
 
@@ -114,7 +117,8 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
     setZipCode(customerData?.zipCode || '')
     setSelectedState(customerData?.stateResponseDto?.name || '')
     setNotes(customerData?.notes || '')
-    setCountry(customerData?.countryResponseDto?.name || '')
+    setCountry(customerData?.countryResponseDto?.name || undefined)
+    setState(customerData?.stateResponseDto?.name || undefined)
     setGpsCoordinatesValue(customerData?.gpsCoordinates || '')
   }
 
@@ -189,7 +193,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
         serviceAreaTypeId: serviceAreaTypeId.id,
         // streetHouse: address,
         zipCode: zipCode,
-        stateId: selectedState?.id,
+        stateId: state?.id,
         countryId: country?.id,
         notes: notes,
         gpsCoordinates: gpsCoordinatesValue,
@@ -357,6 +361,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
               value={country}
               onChange={(e) => {
                 setCountry(e.value)
+                setFieldErrors((prevErrors) => ({ ...prevErrors, country: '' }))
               }}
               editable
               placeholder="Country"
@@ -383,6 +388,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
             value={selectedState}
             onChange={(e) => {
               setSelectedState(e.target.value)
+              setFieldErrors((prevErrors) => ({ ...prevErrors, state: '' }))
             }}
             options={statesData}
             optionLabel="name"
