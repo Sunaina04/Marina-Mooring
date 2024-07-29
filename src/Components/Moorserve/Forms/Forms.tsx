@@ -23,8 +23,11 @@ import { ProgressSpinner } from 'primereact/progressspinner'
 import { Dialog } from 'primereact/dialog'
 import FormFill from './FormFill'
 import { properties } from '../../Utils/MeassageProperties'
+import { useSelector } from 'react-redux'
+import { selectCustomerId } from '../../../Store/Slice/userSlice'
 
 const Forms = () => {
+  const selectedCustomerId = useSelector(selectCustomerId)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [viewPdf, setViewPdf] = useState(null)
   const [formsData, setFormsData] = useState<FormsPayload[]>([])
@@ -100,7 +103,7 @@ const Forms = () => {
 
   useEffect(() => {
     getFormsData()
-  }, [])
+  }, [selectedCustomerId])
 
   const columnStyle = {
     backgroundColor: '#FFFFFF',
