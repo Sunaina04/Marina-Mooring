@@ -372,8 +372,8 @@ const Dashboard = () => {
     <>
       <Header header="MOORMANAGE/DASHBOARD" />
       <Toast ref={toast} />
-      <div className="">
-        <div className="flex lg:flex-row justify-around md:flex-col mt-12">
+      <div className=""><div className="flex lg:flex-row justify-around md:flex-col mt-12">
+        
           <div
             style={{
               marginLeft: '3rem',

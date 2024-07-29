@@ -24,7 +24,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
     phone: '',
     website: '',
     countryForAddress: '',
-    stateForAddress: '',
+    stateForAddress: '', 
     zipCodeForAddress: '',
     emailForAddress: '',
     countryForRemit: '',
