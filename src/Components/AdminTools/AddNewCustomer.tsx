@@ -73,7 +73,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const [editCustomer] = useUpdateUserMutation()
   const [getUsersData] = useGetUsersMutation()
   const { getRolesData } = RolesData()
-  const { getStatesData } = StatesData(country?.id || customerData?.countryResponseDto?.id)
+  const { getStatesData } = StatesData(
+    country?.id ? country?.id : customerData?.countryResponseDto?.id,
+  )
   const { getCountriesData } = CountriesData()
   const toastRef = useRef<Toast>(null)
 
