@@ -141,7 +141,7 @@ const CustomerOwner = () => {
         underline: true,
         fontWeight: 700,
         onClick: (rowData) => {
-          setSelectedRow(rowData?.id)
+          setSelectedRow(rowData)
           setIsPasswordModalOpen(true)
         },
       },

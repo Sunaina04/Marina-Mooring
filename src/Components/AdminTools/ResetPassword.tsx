@@ -90,11 +90,16 @@ const ResetPassword: React.FC<ResetModalProps> = ({ isResetModalOpen, customerId
       return
     }
     setIsLoading(true)
+    const encodedPassword = btoa(password)
     try {
       const editUserPayload = {
-        password: 'password',
-        confirmPassword: 'confirmPassword',
+        password: encodedPassword,
+        confirmPassword: encodedPassword,
+        firstName:customerId?.firstName,
+        lastName:customerId?.lastName,
+        email:customerId.email
       }
+  
       const response = await editCustomer({
         payload: editUserPayload,
         id: customerId?.id,
