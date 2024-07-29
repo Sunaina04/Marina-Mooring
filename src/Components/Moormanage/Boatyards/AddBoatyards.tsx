@@ -108,7 +108,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   const handleEditMode = () => {
     setBoatyardName(customerData?.boatyardName || '')
     setStorageList(customerData?.storageAreas)
-    setAddress(customerData?.street || '')
+    setAddress(customerData?.address || '')
     setZipCode(customerData?.zipCode || '')
     setSelectedState(customerData?.stateResponseDto?.name || '')
     setMainContact(customerData?.mainContact || '')
@@ -129,7 +129,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
       const payload = {
         // boatyardId: boatyardId,
         boatyardName: boatyardName,
-        street: address,
+        address: address,
         zipCode: zipCode,
         contact: mainContact,
         stateId: selectedState?.id,
@@ -186,7 +186,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
       const editBoatYardPayload = {
         // boatyardId: boatyardId,
         boatyardName: boatyardName,
-        street: address,
+        address: address,
         zipCode: zipCode,
         contact: mainContact,
         stateId: selectedState?.id || customerData?.stateResponseDto?.id,
@@ -521,9 +521,9 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
           <div>
             <div className="">
               <InputComponent
-                value={zipCode}
+                value={address}
                 onChange={(e) => {
-                  setZipCode(e.target.value)
+                  setAddress(e.target.value)
                   // setErrorMessage((prev) => ({ ...prev, zipCode: '' }))
                 }}
                 placeholder="Address"
