@@ -22,6 +22,7 @@ import { Toast } from 'primereact/toast'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
+import { properties } from '../../Utils/MeassageProperties'
 
 const InventoryDetails: React.FC = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -345,7 +346,7 @@ const InventoryDetails: React.FC = () => {
           emptyMessage={
             <div className="text-center mt-40">
               <img src="/assets/images/empty.png" alt="Empty Data" className="w-28 mx-auto mb-4" />
-              <p className="text-gray-500">No data available</p>
+              <p className="text-gray-500">{properties.noDataMessage}</p>
               {isLoading && (
                 <ProgressSpinner
                   style={{

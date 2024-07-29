@@ -1,5 +1,6 @@
 export const properties = {
   header: 'MOORMANAGE/Boatyards',
+  customerPageHeader: 'MOORMANAGE/Customer',
   boatyardMooringHeader: 'Boatyard Moorings',
   serviceAreaMooringHeader: 'Service Area Moorings',
   boatyardDetail: 'Boatyards Detail',
@@ -23,4 +24,8 @@ export const properties = {
   Settings: 'Customer Mapping',
   Technician: 'Technician',
   imageHeader: 'Images',
+  mooringInformation: 'Mooring Information',
+  customerInformation: 'Customer Information',
+  imageInformation: 'Image Information',
+  noDataMessage: 'No data available',
 }

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import CustomModal from '../CustomComponent/CustomModal'
 import DataTableComponent from '../CommonComponent/Table/DataTableComponent'
 import { properties } from '../Utils/MeassageProperties'
@@ -21,12 +21,16 @@ import {
 } from '../../Store/Slice/userSlice'
 import { Paginator } from 'primereact/paginator'
 import { VirtualScroller } from 'primereact/virtualscroller'
+import { Dialog } from 'primereact/dialog'
+import ResetPassword from './ResetPassword'
 
 const CustomerOwner = () => {
   const dispatch = useDispatch()
   const selectedCustomerId = useSelector(selectCustomerId)
   const selectedCustomerName = useSelector(selectCustomerName)
   const [modalVisible, setModalVisible] = useState(false)
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false)
+  const [isResetModalOpen, setIsResetModalOpen] = useState(false)
   const [selectedCustomer, setSelectedCustomer] = useState<any>()
   const [selectedCustomerUser, setSelectedCustomerUser] = useState<any>()
   const [editMode, setEditMode] = useState(false)
@@ -108,6 +112,11 @@ const CustomerOwner = () => {
     setModalVisible(true)
     // setEditMode(true)
   }
+  const handleResetModalClose = () => {
+    setIsPasswordModalOpen(false)
+    setIsResetModalOpen(false)
+    setSelectedRow('')
+  }
 
   const ActionButtonColumn: ActionButtonColumnProps = {
     header: 'Action',
@@ -126,6 +135,16 @@ const CustomerOwner = () => {
         fontWeight: 500,
         onClick: (rowData) => handleDeleteCustomerOwner(rowData),
       },
+      {
+        color: 'black',
+        label: 'Reset Password',
+        underline: true,
+        fontWeight: 700,
+        onClick: (rowData) => {
+          setSelectedRow(rowData?.id)
+          setIsPasswordModalOpen(true)
+        },
+      },
     ],
     headerStyle: {
       backgroundColor: '#FFFFFF',
@@ -143,6 +162,11 @@ const CustomerOwner = () => {
     fontWeight: 700,
   }
 
+  const firstLastNameCustomerOwner = (data: any) => {
+    if (data.firstName === null) return '-'
+    else return data.firstName + ' ' + data.lastName
+  }
+
   const customerOwnerTableColumn = useMemo(
     () => [
       {
@@ -153,6 +177,7 @@ const CustomerOwner = () => {
       {
         id: 'name',
         label: 'Name',
+        body: firstLastNameCustomerOwner,
         style: { ...columnStyle, width: '10vw' },
       },
       {
@@ -181,6 +206,16 @@ const CustomerOwner = () => {
         fontWeight: 700,
         onClick: (rowData) => handleDeleteCustomerOwnerUser(rowData),
       },
+      {
+        color: 'black',
+        label: 'Reset Password',
+        underline: true,
+        fontWeight: 700,
+        onClick: (rowData) => {
+          setSelectedRow(rowData?.id)
+          setIsResetModalOpen(true)
+        },
+      },
     ],
     headerStyle: {
       backgroundColor: '#FFFFFF',
@@ -190,6 +225,11 @@ const CustomerOwner = () => {
       width: '5vw',
     },
     style: { borderBottom: '1px solid #D5E1EA' },
+  }
+
+  const firstLastName = (data: any) => {
+    if (data.firstName === null) return '-'
+    else return data.firstName + ' ' + data.lastName
   }
 
   const customerOwnerUserTableColumn = useMemo(
@@ -208,6 +248,7 @@ const CustomerOwner = () => {
       {
         id: 'name',
         label: 'Name',
+        body: firstLastName,
         style: {
           borderBottom: '1px solid #D5E1EA',
           backgroundColor: '#FFFFFF',
@@ -315,7 +356,6 @@ const CustomerOwner = () => {
           setIsLoading(false)
           if (content.length > 0) {
             setgetCustomerOwnerUserData(content)
-            setSelectedRow(id)
             setCustomerAdminId(id)
             setTotalRecordsTwo(totalSize)
           } else {
@@ -446,8 +486,8 @@ const CustomerOwner = () => {
               dialogStyle={{
                 width: '840px',
                 minWidth: '840px',
-                height: passWordDisplay ? '500px' : '600px',
-                minHeight: passWordDisplay ? '500px' : '600px',
+                height: editMode ? '500px' : '600px',
+                minHeight: editMode ? '500px' : '600px',
                 borderRadius: '1rem',
                 maxHeight: '60% !important',
               }}
@@ -554,7 +594,7 @@ const CustomerOwner = () => {
                   emptyMessage={
                     <div className="flex flex-col justify-center items-center h-full mt-40">
                       <img src="/assets/images/empty.png" alt="Empty Data" className="w-32 mb-4" />
-                      <p className="text-gray-500">No data available</p>
+                      <p className="text-gray-500">{properties.noDataMessage}</p>
                     </div>
                   }
                 />
@@ -649,7 +689,7 @@ const CustomerOwner = () => {
                         alt="Empty Data"
                         className="w-32 mx-auto mb-4"
                       />
-                      <p className="text-gray-500">No data available</p>
+                      <p className="text-gray-500">{properties.noDataMessage}</p>
                     </div>
                   }
                 />
@@ -676,6 +716,43 @@ const CustomerOwner = () => {
           </div>
         </div>
       </div>
+      <Dialog
+        position="center"
+        style={{
+          width: '650px',
+          minWidth: '650px',
+          height: '450px',
+          minHeight: '450px',
+          borderRadius: '1rem',
+          fontWeight: '400',
+          cursor: 'alias',
+        }}
+        draggable={false}
+        headerStyle={{ cursor: 'alias' }}
+        header="Reset Password"
+        onHide={handleResetModalClose}
+        visible={isPasswordModalOpen}>
+        <ResetPassword customerId={selectedRow} isResetModalOpen={handleResetModalClose} />
+      </Dialog>
+
+      <Dialog
+        position="center"
+        style={{
+          width: '650px',
+          minWidth: '650px',
+          height: '450px',
+          minHeight: '450px',
+          borderRadius: '1rem',
+          fontWeight: '400',
+          cursor: 'alias',
+        }}
+        draggable={false}
+        headerStyle={{ cursor: 'alias' }}
+        header="Reset Password"
+        onHide={handleResetModalClose}
+        visible={isResetModalOpen}>
+        <ResetPassword customerId={selectedRow} isResetModalOpen={handleResetModalClose} />
+      </Dialog>
     </>
   )
 }

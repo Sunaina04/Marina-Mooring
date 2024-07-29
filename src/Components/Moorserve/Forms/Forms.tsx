@@ -20,12 +20,17 @@ import AddForm from './AddForm'
 import { Paginator } from 'primereact/paginator'
 import { Params } from '../../../Type/CommonType'
 import { ProgressSpinner } from 'primereact/progressspinner'
+import { Dialog } from 'primereact/dialog'
+import FormFill from './FormFill'
+import { properties } from '../../Utils/MeassageProperties'
 
 const Forms = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [viewPdf, setViewPdf] = useState(null)
   const [formsData, setFormsData] = useState<FormsPayload[]>([])
   const [customerName, setCustomerName] = useState('')
   const [customerID, setCustomerID] = useState('')
+  const [formOpen, setFormOpen] = useState(false)
   const [formName, setFormName] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [file, setFile] = useState<File | undefined>(undefined)
@@ -48,6 +53,13 @@ const Forms = () => {
 
   const handleModalClose = () => {
     setIsModalOpen(false)
+  }
+  const handleFormClose = () => {
+    setFormOpen(false)
+  }
+
+  const handleView = (rowData: any) => {
+    setViewPdf(rowData.formUrl)
   }
 
   const handleDownload = async (rowData: any) => {
@@ -83,21 +95,6 @@ const Forms = () => {
       const { message } = error as ErrorResponse
       setIsLoading(false)
       console.error('Error fetching forms:', error)
-    }
-  }
-
-  const handleSave = async () => {
-    const formData = new FormData()
-    if (file) {
-      const blob = new Blob([file], { type: 'application/octet-stream' })
-      const fileBlob = new File([blob], 'filename.txt')
-      formData.append('file', fileBlob)
-    }
-    formData.append('customerName', customerName)
-    formData.append('customerId', customerID)
-    handleSubmit(formData)
-    if (response?.status === 200) {
-      setIsModalOpen(false)
     }
   }
 
@@ -142,7 +139,19 @@ const Forms = () => {
     buttons: [
       {
         color: 'black',
+        label: 'View',
+        underline: true,
+        onClick: (rowData: any) => handleView(rowData),
+      },
+      {
+        color: 'black',
         label: 'Download',
+        underline: true,
+        onClick: (rowData: any) => handleDownload(rowData),
+      },
+      {
+        color: 'red',
+        label: 'Delete',
         underline: true,
       },
     ],
@@ -157,11 +166,29 @@ const Forms = () => {
 
   return (
     <>
-      <div style={{ height: '150vh' }} className={isModalOpen ? 'backdrop-blur-lg' : ''}>
+      <div
+        style={{ height: '150vh' }}
+        className={isModalOpen || formOpen ? 'backdrop-blur-lg' : ''}>
         <Header header="MOORSERVE/Forms Library" />
 
         <div className="flex justify-end">
-          <div className=" mr-16 mt-10">
+          <div className="flex mr-16 mt-10">
+            {/* <Button
+              label="Fill in Form"
+              onClick={() => setFormOpen(true)}
+              style={{
+                width: '121px',
+                height: '44px',
+                minHeight: '44px',
+                backgroundColor: '#0098FF',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: 600,
+                color: 'white',
+                borderRadius: '0.50rem',
+                marginLeft: '15px',
+                boxShadow: 'none',
+              }}></Button> */}
             <CustomModal
               buttonText={'Upload New'}
               buttonStyle={{
@@ -177,7 +204,7 @@ const Forms = () => {
                 marginLeft: '8px',
                 boxShadow: 'none',
               }}
-              children={<AddForm />}
+              children={<AddForm closeModal={handleModalClose} />}
               headerText={<h1 className="text-xl font-extrabold text-black ml-4">Form Details</h1>}
               visible={isModalOpen}
               onClick={handleButtonClick}
@@ -261,11 +288,10 @@ const Forms = () => {
                       alt="Empty Data"
                       className="w-28 mx-auto mb-4"
                     />
-                    <p className="text-gray-500">No data available</p>
+                    <p className="text-gray-500">{properties.noDataMessage}</p>
                   </div>
                 }
               />
-
               {isLoading && (
                 <ProgressSpinner
                   style={{
@@ -284,7 +310,7 @@ const Forms = () => {
               <Paginator
                 first={pageNumber1}
                 rows={pageSize}
-                totalRecords={120}
+                totalRecords={1}
                 rowsPerPageOptions={[5, 10, 20, 30]}
                 onPageChange={onPageChange}
                 style={{
@@ -299,6 +325,35 @@ const Forms = () => {
             </div>
           </div>
         </div>
+
+        {viewPdf && (
+          <Dialog
+            header="View PDF"
+            visible={!!viewPdf}
+            style={{ width: '50vw' }}
+            onHide={() => setViewPdf(null)}>
+            <iframe src={viewPdf} style={{ width: '100%', height: '500px' }} title="PDF Viewer" />
+          </Dialog>
+        )}
+
+        {/* <Dialog
+        header="Fill in Form"
+        position="center"
+        style={{
+          width: '800px',
+          minWidth: '800px',
+          height: '300px',
+          minHeight: '300px',
+          borderRadius: '1rem',
+          fontWeight: '400',
+          cursor: 'alias',
+        }}
+        draggable={false}
+        headerStyle={{ cursor: 'alias' }}
+        visible={formOpen}
+        onHide={handleFormClose}>
+        <FormFill formOpen={handleFormClose}/>
+      </Dialog> */}
       </div>
     </>
   )

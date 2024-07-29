@@ -19,6 +19,7 @@ import { Paginator } from 'primereact/paginator'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { utils, writeFile } from 'xlsx'
 import React from 'react'
+import { properties } from '../../Utils/MeassageProperties'
 
 const Estimates = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -370,7 +371,7 @@ const Estimates = () => {
                       alt="Empty Data"
                       className="w-28 mx-auto mb-4"
                     />
-                    <p className="text-gray-500 text-lg">No data available</p>
+                    <p className="text-gray-500 text-lg">{properties.noDataMessage}</p>
                   </div>
                 }
               />

@@ -22,9 +22,10 @@ import {
   RolesData,
   StatesData,
 } from '../CommonComponent/MetaDataComponent/MetaDataApi'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { setCustomerId, setCustomerName } from '../../Store/Slice/userSlice'
 import { Toast } from 'primereact/toast'
+import { EMAIL_REGEX, NAME_REGEX, PHONE_REGEX } from '../Utils/RegexUtils'
 
 const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   customerData,
@@ -44,16 +45,17 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   setIsCustomerUpdated,
 }) => {
   const dispatch = useDispatch()
-  const [name, setName] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
   const [street, setStreet] = useState('')
-  const [apt, setApt] = useState('')
+  const [address, setAddress] = useState('')
   const [zipCode, setZipCode] = useState('')
   const [role, setRole] = useState<Role>()
   const [companyName, setCompanyName] = useState('')
-  const [country, setCountry] = useState<Country>()
-  const [state, setState] = useState<State>()
+  const [country, setCountry] = useState<any>()
+  const [state, setState] = useState<any>()
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [rolesData, setRolesData] = useState<Role[]>()
@@ -62,15 +64,16 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const [errorMessage, setErrorMessage] = useState<string>()
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
   const [selectedCustomerId, setSelectedCustomerId] = useState<any>()
+  const [selectedCustomerName, setSelectedCustomerName] = useState<any>()
   const [firstErrorField, setFirstErrorField] = useState('')
   const [customerAdminDropdownEnabled, setCustomerAdminDropdownEnabled] = useState(false)
-  const [getCustomerOwnerData, setgetCustomerOwnerData] = useState<CustomerPayload[]>([])
+  const [getCustomerOwnerData, setgetCustomerOwnerData] = useState<any[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [addCustomer] = useAddUserMutation()
   const [editCustomer] = useUpdateUserMutation()
   const [getUsersData] = useGetUsersMutation()
   const { getRolesData } = RolesData()
-  const { getStatesData } = StatesData()
+  const { getStatesData } = StatesData(country?.id)
   const { getCountriesData } = CountriesData()
   const toastRef = useRef<Toast>(null)
 
@@ -83,56 +86,32 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   })
 
   const validateFields = () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    const phoneRegex = /^.{10}$|^.{12}$/
-    const nameRegex = /^[a-zA-Z ]+$/
-    const zipCodeRegex = /^\\d{5}(-\\d{4})?$/
     const errors: { [key: string]: string } = {}
     let firstError = ''
-    if (!name) {
-      errors.name = 'Name is required'
-    } else if (!nameRegex.test(name)) {
-      errors.name = 'Name must only contain letters'
-    } else if (name.length < 3) {
-      errors.name = 'Name must be at least 3 characters long'
+    if (!firstName) {
+      errors.firstName = 'First Name is required'
+    } else if (!NAME_REGEX.test(firstName)) {
+      errors.firstName = 'First Name must only contain letters'
+    } else if (firstName.length < 3) {
+      errors.firstName = 'First Name must be at least 3 characters long'
     }
-    if (errors.name) {
-      firstError = 'name'
+    if (errors.firstName) firstError = 'firstName'
+    if (!lastName) {
+      errors.lastName = 'Last Name is required'
+    } else if (!NAME_REGEX.test(lastName)) {
+      errors.lastName = 'Last Name must only contain letters'
+    } else if (lastName.length < 3) {
+      errors.lastName = 'Last Name must be at least 3 characters long'
     }
-    if (!phone) {
-      errors.phone = 'Phone is required'
-    } else if (!phoneRegex.test(phone)) {
-      errors.phone = 'Phone must be a 10-digit number'
-    }
-
-    if (errors.phone && !firstError) {
-      firstError = 'phone'
-    }
+    if (errors.lastName) firstError = 'lastName'
     if (!email) {
       errors.email = 'Email is required'
-    } else if (!emailRegex.test(email)) {
+    } else if (!EMAIL_REGEX.test(email)) {
       errors.email = 'Please enter a valid email format'
     }
-    if (errors.email && !firstError) {
-      firstError = 'email'
-    }
-    if (!street) errors.street = 'Street is required'
-    if (errors.street && !firstError) {
-      firstError = 'street'
-    }
-    if (!apt) errors.apt = 'Apt is required'
-    if (errors.apt && !firstError) {
-      firstError = 'apt'
-    }
-
-    // if (!zipCode) {
-    //   errors.zipCode = 'Zip Code is required'
-    // }
-
+    if (errors.email && !firstError) firstError = 'email'
     if (!role) errors.role = 'Role is required'
-    if (errors.role && !firstError) {
-      firstError = 'role'
-    }
+    if (errors.role && !firstError) firstError = 'role'
     if (
       !selectedCustomerId &&
       customerAdminDropdownEnabled &&
@@ -140,33 +119,15 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       (role?.id === 3 || role?.id === 4)
     )
       errors.selectedCustomerId = 'Customer Owner is required'
-    if (errors.selectedCustomerId && !firstError) {
-      firstError = 'selectedCustomerId'
-    }
+    if (errors.selectedCustomerId && !firstError) firstError = 'selectedCustomerId'
     if (!companyName && role?.id === 2) errors.companyName = 'Company Name is required'
-    if (errors.companyName && !firstError) {
-      firstError = 'companyName'
-    }
-    if (!country) errors.country = 'Country is required'
-    if (errors.country && !firstError) {
-      firstError = 'country'
-    }
-    if (!state) errors.state = 'State is required'
-    if (errors.state && !firstError) {
-      firstError = 'state'
-    }
-    if (!password && !passWordDisplay) {
-      errors.password = 'Password is required'
-    }
-    if (errors.password && !firstError) {
-      firstError = 'password'
-    }
+    if (errors.companyName && !firstError) firstError = 'companyName'
+    if (!password && !passWordDisplay) errors.password = 'Password is required'
+    if (errors.password && !firstError) firstError = 'password'
     if (!confirmPassword && !passWordDisplay)
       errors.confirmPassword = 'Confirm Password is required'
     if (password !== confirmPassword) errors.confirmPassword = 'Passwords do not match'
-    if (errors.confirmPassword && !firstError) {
-      firstError = 'confirmPassword'
-    }
+    if (errors.confirmPassword && !firstError) firstError = 'confirmPassword'
     setFirstErrorField(firstError)
     return errors
   }
@@ -199,8 +160,11 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
   const handleInputChange = (fieldName: string, value: any) => {
     switch (fieldName) {
-      case 'name':
-        setName(value)
+      case 'firstName':
+        setFirstName(value)
+        break
+      case 'lastName':
+        setLastName(value)
         break
       case 'companyName':
         setCompanyName(value)
@@ -215,8 +179,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       case 'street':
         setStreet(value)
         break
-      case 'apt':
-        setApt(value)
+      case 'address':
+        setAddress(value)
         break
       case 'zipCode':
         setZipCode(value)
@@ -230,7 +194,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       case 'confirmPassword':
         setConfirmPassword(value)
         break
-
       default:
         break
     }
@@ -249,21 +212,20 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       return
     }
     setIsLoading(true)
-    const editUserPayload = {
-      name,
-      companyName: companyName,
-      phoneNumber: phone,
-      email,
-      street,
-      apt,
-      zipCode,
-      stateId: state?.id,
-      countryId: country?.id,
-      roleId: role?.id,
-      customerOwnerId: editCustomerMode ? '' : customerData?.customerOwnerId,
-    }
-
     try {
+      const editUserPayload = {
+        firstName,
+        lastName,
+        companyName,
+        phoneNumber: phone,
+        email,
+        street,
+        zipCode,
+        stateId: state?.id,
+        countryId: country?.id,
+        roleId: role?.id,
+        customerOwnerId: editCustomerMode ? '' : customerData?.customerOwnerId,
+      }
       const response = await editCustomer({
         payload: editUserPayload,
         id: customerData?.id,
@@ -296,12 +258,12 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         })
       }
     } catch (error) {
-      const { message } = error as ErrorResponse
+      const { message, data } = error as ErrorResponse
       setIsLoading(false)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: message,
+        detail: message || data?.message,
         life: 3000,
       })
     }
@@ -314,22 +276,20 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       return
     }
     dispatch(setCustomerId(editMode ? '' : customerData?.customerOwnerId))
-
-    const editUserPayload = {
-      name,
-      companyName: companyName,
-      phoneNumber: phone,
-      email,
-      street,
-      apt,
-      zipCode,
-      stateId: state?.id,
-      countryId: country?.id,
-      roleId: role?.id,
-    }
-
     setIsLoading(true)
     try {
+      const editUserPayload = {
+        firstName,
+        lastName,
+        companyName,
+        phoneNumber: phone,
+        email,
+        street,
+        zipCode,
+        stateId: state?.id,
+        countryId: country?.id,
+        roleId: role?.id,
+      }
       const response = await editCustomer({
         payload: editUserPayload,
         id: customerData?.id,
@@ -364,12 +324,12 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         })
       }
     } catch (error) {
-      const { message } = error as ErrorResponse
+      const { message, data } = error as ErrorResponse
       setIsLoading(false)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: message,
+        detail: message || data?.message,
         life: 3000,
       })
     }
@@ -381,33 +341,22 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       setFieldErrors(errors)
       return
     }
-
-    const selectedCustomerAdminId = selectedCustomerId?.id
-
-    if (password !== confirmPassword) {
-      setFieldErrors((prevErrors) => ({
-        ...prevErrors,
-        confirmPassword: 'Passwords do not match',
-      }))
-      return
-    }
-
     if (!validatePassword(password)) {
       setErrorMessage('Password is Incorrect')
       return
     }
-    dispatch(setCustomerId(permission ? customerAdminId : selectedCustomerAdminId))
+    dispatch(setCustomerId(permission ? customerAdminId : selectedCustomerId))
     setIsLoading(true)
     try {
       // Encode the password using base64
       const encodedPassword = btoa(password)
       const addUserPayload = {
-        name,
-        companyName: companyName,
+        firstName,
+        lastName,
+        companyName,
         phoneNumber: phone,
         email,
         street,
-        apt,
         zipCode,
         password: encodedPassword, // Using base64 encoded password
         stateId: state?.id,
@@ -453,7 +402,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: data?.message,
+        detail: message || data?.message,
         life: 3000,
       })
     }
@@ -476,7 +425,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   }
 
   const fetchDataAndUpdate = useCallback(async () => {
-    const { statesData } = await getStatesData()
     const { rolesData } = await getRolesData()
     const { countriesData } = await getCountriesData()
 
@@ -488,20 +436,27 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       setIsLoading(false)
       setCountriesData(countriesData)
     }
+  }, [])
+
+  const fetchStateDataAndUpdate = useCallback(async () => {
+    const { statesData } = await getStatesData()
     if (statesData !== null) {
       setIsLoading(false)
       setStatesData(statesData)
+    } else {
+      setState('')
     }
-  }, [])
+  }, [country])
 
   const handleEditMode = () => {
     if ((editMode || editCustomerMode) && customerData) {
-      setName(customerData?.name || '')
+      setFirstName(customerData?.firstName || '')
+      setLastName(customerData?.lastName || '')
       setCompanyName(customerData?.userID || '')
       setPhone(customerData?.phoneNumber || '')
       setEmail(customerData?.email || '')
       setStreet(customerData?.street || '')
-      setApt(customerData?.apt || '')
+      setAddress(customerData?.apt || '')
       setZipCode(customerData?.zipCode || '')
       setRole(customerData?.roleResponseDto?.name || undefined)
       setCountry(customerData?.countryResponseDto?.name || undefined)
@@ -528,7 +483,11 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       if (status === 200 && Array.isArray(content)) {
         setIsLoading(false)
         if (content.length > 0) {
-          setgetCustomerOwnerData(content)
+          const firstLastName = content.map((item) => ({
+            label: item.firstName + ' ' + item.lastName,
+            value: item,
+          }))
+          setgetCustomerOwnerData(firstLastName)
         } else {
           setgetCustomerOwnerData([])
         }
@@ -558,7 +517,11 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   useEffect(() => {
     fetchDataAndUpdate()
     getUserHandler()
-  }, [fetchDataAndUpdate])
+  }, [])
+
+  useEffect(() => {
+    fetchStateDataAndUpdate()
+  }, [country])
 
   useEffect(() => {
     handleEditMode()
@@ -572,19 +535,46 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           <div>
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
-                Name
+                First Name
                 <p className="text-red-600">*</p>
               </div>
             </span>
             <div className="mt-1">
               <InputText
-                value={name}
-                onChange={(e) => handleInputChange('name', e.target.value)}
-                className={fieldErrors.name ? 'p-invalid' : ''}
+                value={firstName}
+                onChange={(e) => handleInputChange('firstName', e.target.value)}
+                className={fieldErrors.firstName ? 'p-invalid' : ''}
                 style={{
                   width: '232px',
                   height: '32px',
-                  border: fieldErrors.name ? '1px solid red' : '1px solid #D5E1EA',
+                  border: fieldErrors.firstName ? '1px solid red' : '1px solid #D5E1EA',
+                  borderRadius: '0.50rem',
+                  fontSize: '0.8rem',
+                  padding: '0.5rem',
+                }}
+              />
+            </div>
+            <p className="" id="firstName">
+              {fieldErrors.firstName && <small className="p-error">{fieldErrors.firstName}</small>}
+            </p>
+          </div>
+
+          <div>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Last Name
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
+            <div className="mt-1">
+              <InputText
+                value={lastName}
+                onChange={(e) => handleInputChange('lastName', e.target.value)}
+                className={fieldErrors.lastName ? 'p-invalid' : ''}
+                style={{
+                  width: '232px',
+                  height: '32px',
+                  border: fieldErrors.lastName ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   padding: '0.5rem',
@@ -592,17 +582,14 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
               />
             </div>
 
-            <p className="" id="name">
-              {fieldErrors.name && <small className="p-error">{fieldErrors.name}</small>}
+            <p className="" id="lastName">
+              {fieldErrors.lastName && <small className="p-error">{fieldErrors.lastName}</small>}
             </p>
           </div>
 
           <div>
             <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
-                Phone
-                <p className="text-red-600">*</p>
-              </div>
+              <div className="flex gap-1">Phone</div>
             </span>
             <div className="mt-1">
               <InputText
@@ -611,25 +598,26 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: fieldErrors.phone ? '1px solid red' : '1px solid #D5E1EA',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   padding: '0.5rem',
                 }}
               />
             </div>
-            <p className="" id="phone">
-              {fieldErrors.phone && <small className="p-error">{fieldErrors.phone}</small>}
-            </p>
           </div>
+        </div>
 
+        <div className="flex gap-8 ml-4">
           <div>
-            <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
-                Email Address
-                <p className="text-red-600">*</p>
-              </div>
-            </span>
+            <div className="mt-3">
+              <span className="font-medium text-sm text-[#000000]">
+                <div className="flex gap-1">
+                  Email Address
+                  <p className="text-red-600">*</p>
+                </div>
+              </span>
+            </div>
 
             <div className="mt-1">
               <InputText
@@ -658,16 +646,10 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
               )}
             </p>
           </div>
-        </div>
-
-        <div className="flex gap-8 ml-4">
           <div>
             <div className="mt-3">
               <span className="font-medium text-sm text-[#000000]">
-                <div className="flex gap-1">
-                  Role
-                  <p className="text-red-600">*</p>
-                </div>
+                <div className="flex gap-1">Role</div>
               </span>
             </div>
             <div className="mt-1">
@@ -717,15 +699,18 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
               <div className="mt-1">
                 <Dropdown
                   className="cursor-wait"
-                  value={selectedCustomerId}
+                  value={selectedCustomerName}
                   onChange={(e) => {
-                    setSelectedCustomerId(e.value)
+                    const firstLastName = e?.value?.firstName + ' ' + e?.value?.lastName
+                    setSelectedCustomerName(firstLastName)
+                    setSelectedCustomerId(e.value.id)
                     if (role?.id === 3 || role?.id === 4) {
                       setFieldErrors((prevErrors) => ({ ...prevErrors, selectedCustomerId: '' }))
                     }
                   }}
                   options={getCustomerOwnerData}
-                  optionLabel="name"
+                  optionLabel="label"
+                  optionValue="value"
                   editable
                   placeholder="Select"
                   disabled={customerAdminDropdownEnabled ? false : true}
@@ -810,122 +795,116 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           />
         )}
 
-        <div className="mt-5 ml-4">
-          <span className="font-medium text-sm text-[#000000]">
-            <div className="flex gap-1">
-              Address
-              <p className="text-red-600">*</p>
-            </div>
-          </span>
-        </div>
         <div className="gap-8 mt-1 ml-4">
           <div className="flex gap-8 ">
             <div>
-              <div className="mt-2">
-                <InputText
-                  value={street}
-                  onChange={(e) => handleInputChange('street', e.target.value)}
-                  placeholder="Street/house"
+              <div className="mt-3">
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">Country</div>
+                </span>
+              </div>
+              <div className="mt-1">
+                <Dropdown
+                  value={country}
+                  onChange={(e) => {
+                    setCountry(e.value)
+                    setFieldErrors((prevErrors) => ({ ...prevErrors, country: '' }))
+                  }}
+                  options={countriesData}
+                  optionLabel="name"
+                  editable
+                  disabled={isLoading}
+                  className=""
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: fieldErrors.street ? '1px solid red' : '1px solid #D5E1EA',
+                    border: fieldErrors.country ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
-                    padding: '0.80em',
                   }}
                 />
               </div>
-
-              <p className="" id="street">
-                {fieldErrors.street && <small className="p-error">{fieldErrors.street}</small>}
+              <p className="" id="role">
+                {fieldErrors.role && <small className="p-error">{fieldErrors.role}</small>}
               </p>
             </div>
 
             <div>
-              <div className="mt-2">
-                <InputText
-                  value={apt}
-                  onChange={(e) => handleInputChange('apt', e.target.value)}
-                  placeholder="Apt/Suite"
-                  type="text"
+              <div className="mt-3">
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">State</div>
+                </span>
+              </div>
+              <div className="mt-1">
+                <Dropdown
+                  value={state}
+                  onChange={(e) => {
+                    setState(e.value)
+                    setFieldErrors((prevErrors) => ({ ...prevErrors, state: '' }))
+                  }}
+                  options={statesData}
+                  optionLabel="name"
+                  editable
+                  disabled={isLoading}
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: fieldErrors.apt ? '1px solid red' : '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
+                    minHeight: '32px',
+                    border: fieldErrors.state ? '1px solid red' : '1px solid #D5E1EA',
                     fontSize: '0.8rem',
-                    padding: '0.83em',
+                    borderRadius: '0.50rem',
+                    color: 'gray',
                   }}
                 />
               </div>
-              <p className="" id="apt">
-                {fieldErrors.apt && <small className="p-error">{fieldErrors.apt}</small>}
-              </p>
-            </div>
-
-            <div className=" mt-2 ">
-              <Dropdown
-                value={state}
-                onChange={(e) => {
-                  setState(e.value)
-                  setFieldErrors((prevErrors) => ({ ...prevErrors, state: '' }))
-                }}
-                options={statesData}
-                optionLabel="name"
-                editable
-                placeholder="State"
-                disabled={isLoading}
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  minHeight: '32px',
-                  border: fieldErrors.state ? '1px solid red' : '1px solid #D5E1EA',
-                  fontSize: '0.8rem',
-                  borderRadius: '0.50rem',
-                  color: 'gray',
-                }}
-              />
               <p className="" id="state">
                 {fieldErrors.state && <small className="p-error">{fieldErrors.state}</small>}
               </p>
             </div>
+
+            <div className="flex mt-3 gap-8 ">
+              <div>
+                <div className="mt-">
+                  <span className="font-medium text-sm text-[#000000]">
+                    <div className="flex gap-1">
+                      Zip Code
+                      {/* <p className="text-red-600">*</p> */}
+                    </div>
+                  </span>
+                </div>
+                <div className="mt-1">
+                  <InputText
+                    value={zipCode}
+                    invalid
+                    onChange={(e) => handleInputChange('zipCode', e.target.value)}
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.8rem',
+                      padding: '0.83em',
+                    }}
+                  />
+                </div>
+                <p className="" id="state">
+                  {fieldErrors.state && <small className="p-error">{fieldErrors.state}</small>}
+                </p>
+              </div>
+            </div>
           </div>
 
-          <div className="flex mt-5 gap-8 ">
-            <div className="">
-              <Dropdown
-                value={country}
-                onChange={(e) => {
-                  setCountry(e.value)
-                  setFieldErrors((prevErrors) => ({ ...prevErrors, country: '' }))
-                }}
-                options={countriesData}
-                optionLabel="name"
-                editable
-                placeholder="Country"
-                disabled={isLoading}
-                className=""
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: fieldErrors.country ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                }}
-              />
-
-              <p className="" id="country">
-                {fieldErrors.country && <small className="p-error">{fieldErrors.country}</small>}
-              </p>
+          <div>
+            <div className="mt-3">
+              <span className="font-medium text-sm text-[#000000]">
+                <div className="flex gap-1">Address</div>
+              </span>
             </div>
-
-            <div>
+            <div className="mt-1">
               <InputText
-                value={zipCode}
+                value={address}
                 invalid
-                onChange={(e) => handleInputChange('zipCode', e.target.value)}
-                placeholder="Zipcode"
+                onChange={(e) => handleInputChange('address', e.target.value)}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -935,19 +914,15 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   padding: '0.83em',
                 }}
               />
-              {/* <p className="" id="zipCode">
-                {fieldErrors.zipCode && <small className="p-error">{fieldErrors.zipCode}</small>}
-              </p> */}
             </div>
           </div>
         </div>
-
         {!passWordDisplay && (
           <div className="flex mt-5 gap-8 ml-4">
             <div>
               <span className="font-medium text-sm text-[#000000]">
                 <div className="flex gap-1 text-center ">
-                  Create password
+                  Create Password
                   <p className="text-red-600">*</p>
                 </div>
               </span>
@@ -1126,8 +1101,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           }}
         />
       </div>
-
-      {/* </div> */}
     </>
   )
 }

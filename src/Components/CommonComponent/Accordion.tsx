@@ -20,6 +20,7 @@ import { Params } from '../../Type/CommonType'
 import CustomModal from '../CustomComponent/CustomModal'
 import AddWorkOrders from '../Moorserve/WorkOrders/AddWorkOrders'
 import { Dialog } from 'primereact/dialog'
+import { properties } from '../Utils/MeassageProperties'
 
 const Accordion = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -56,7 +57,8 @@ const Accordion = () => {
   }
 
   const firstLastName = (data: any) => {
-    return data.customerResponseDto.firstName + ' ' + data.customerResponseDto.lastName
+    if (data.customerResponseDto.firstName === null) return '-'
+    else return data.customerResponseDto.firstName + ' ' + data.customerResponseDto.lastName
   }
 
   const onPageChange = (event: any) => {
@@ -205,7 +207,7 @@ const Accordion = () => {
                     alt="Empty Data"
                     className="w-20 mx-auto mb-4"
                   />
-                  <p className="text-gray-500">No data available</p>
+                  <p className="text-gray-500">{properties.noDataMessage}</p>
                 </div>
               }
             />
@@ -282,7 +284,9 @@ const Accordion = () => {
           editModeWorkOrder={editMode}
           setVisible={setVisible}
           toastRef={toast}
-          closeModal={handleModalClose} isAccountRecievable={false}        />
+          closeModal={handleModalClose}
+          isAccountRecievable={false}
+        />
       </Dialog>
     </>
   )

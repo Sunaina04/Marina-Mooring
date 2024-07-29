@@ -35,6 +35,7 @@ import { FaFileUpload } from 'react-icons/fa'
 import { Dialog } from 'primereact/dialog'
 import { AiOutlineDelete } from 'react-icons/ai'
 import { NUMBER_REGEX } from '../../Utils/RegexUtils'
+import UploadImages from '../../CommonComponent/UploadImages'
 
 const AddCustomer: React.FC<CustomerDataProps> = ({
   customer,
@@ -47,8 +48,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   getCustomerRecord,
 }) => {
   const selectedCustomerId = useSelector(selectCustomerId)
-  const [selectedCountry, setSelectedCountry] = useState<Country>()
-  const [selectedState, setSelectedState] = useState<State>()
+  const [selectedCountry, setSelectedCountry] = useState<any>()
+  const [selectedState, setSelectedState] = useState<any>()
   const [selectedCustomerType, setSelectedCustomerType] = useState<any>()
   const [firstName, setFirstName] = useState<string>('')
   const [lastName, setLastName] = useState<string>('')
@@ -62,7 +63,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [type, setType] = useState<MetaData[]>([])
   const [weightData, setWeightData] = useState<MetaData[]>([])
   const [chainData, setChainData] = useState<MetaData[]>([])
-  const [sizeOfWeight, setSizeOfWeight] = useState<MetaData[]>([])
   const [serviceArea, setServiceArea] = useState<MetaData[]>([])
   const [conditionOfEye, setConditionOfEye] = useState<MetaData[]>([])
   const [customerType, setCustomerType] = useState<MetaData[]>([])
@@ -137,7 +137,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     imagesNote: '',
   })
 
-  const { getStatesData } = StatesData()
+  const { getStatesData } = StatesData(selectedCountry?.id)
   const { getTypeOfBoatTypeData } = TypeOfBoatType()
   const { getTypeOfWeightData } = TypeOfWeightData()
   const { getTypeOfChainData } = TypeOfChainCondition()
@@ -401,9 +401,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
   const SaveCustomer = async () => {
     const errors = validateFields()
-
-    console.log('image list', imageRequestDtoList)
-
     if (Object.keys(errors).length > 0) {
       return
     }
@@ -679,16 +676,11 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
   const fetchDataAndUpdate = useCallback(async () => {
     if (editCustomerMode || !editMode) {
-      const { statesData } = await getStatesData()
       const { countriesData } = await getCountriesData()
       const { customersType } = await getCustomersType()
       if (countriesData !== null) {
         setIsLoading(false)
         setCountriesData(countriesData)
-      }
-      if (statesData !== null) {
-        setIsLoading(false)
-        setStatesData(statesData)
       }
       if (customersType !== null) {
         setIsLoading(false)
@@ -742,6 +734,16 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       }
     }
   }, [])
+
+  const fetchStateDataAndUpdate = useCallback(async () => {
+    const { statesData } = await getStatesData()
+    if (statesData !== null) {
+      setIsLoading(false)
+      setStatesData(statesData)
+    } else {
+      setSelectedState('')
+    }
+  }, [selectedCountry])
 
   const handleClick = () => {
     if (editCustomerMode) {
@@ -822,6 +824,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   useEffect(() => {
     fetchDataAndUpdate()
   }, [])
+
+  useEffect(() => {
+    fetchStateDataAndUpdate()
+  }, [selectedCountry])
 
   useEffect(() => {
     if (editMode && customer) {
@@ -1040,121 +1046,124 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               />
             )}
             <div className="mt-3">
-              <div>
-                <h1 className="font-medium text-sm text-[#000000]">
-                  <div className="flex gap-1">Address</div>
-                </h1>
-              </div>
               <div className="flex gap-6 mt-2 ">
                 <div>
                   <div>
-                    <InputText
-                      value={streetHouse}
-                      onChange={(e) => handleInputChangeCustomer('streetHouse', e.target.value)}
-                      placeholder="Street/house"
-                      style={{
-                        width: '230px',
-                        height: '32px',
-                        border: fieldErrors.streetHouse ? '1px solid red' : '1px solid #D5E1EA',
-                        borderRadius: '0.50rem',
-                        color: 'black',
-                        fontSize: '0.8rem',
-                        paddingLeft: '0.5rem',
-                      }}
-                    />
-                    <p className="" id="streetHouse">
-                      {fieldErrors.streetHouse && (
-                        <small className="p-error">{fieldErrors.streetHouse}</small>
-                      )}
-                    </p>
+                    <div>
+                      <span className="font-medium text-sm text-[#000000]">
+                        <div className="flex gap-1">Country</div>
+                      </span>
+                    </div>
+
+                    <div className="mt-2">
+                      <Dropdown
+                        id="country"
+                        value={selectedCountry}
+                        onChange={(e) => handleInputChangeCustomer('country', e.target.value)}
+                        options={countriesData}
+                        optionLabel="name"
+                        editable
+                        // placeholder="Country"
+                        disabled={isLoading}
+                        className=""
+                        style={{
+                          width: '230px',
+                          height: '32px',
+                          border: '1px solid #D5E1EA',
+                          borderRadius: '0.50rem',
+                          fontSize: '0.8rem',
+                        }}
+                      />
+                    </div>
                   </div>
                 </div>
                 <div>
                   <div>
-                    <InputText
-                      id="sectorBlock"
-                      value={sectorBlock}
-                      onChange={(e) => handleInputChangeCustomer('sectorBlock', e.target.value)}
-                      placeholder="Apt/Suite"
-                      type="text"
-                      style={{
-                        width: '230px',
-                        height: '32px',
-                        border: '1px solid #D5E1EA',
-                        borderRadius: '0.50rem',
-                        color: 'black',
-                        fontSize: '0.8rem',
-                        paddingLeft: '0.5rem',
-                      }}
-                    />
+                    <div>
+                      <span className="font-medium text-sm text-[#000000]">
+                        <div className="flex gap-1">State</div>
+                      </span>
+                    </div>
+
+                    <div className="mt-2">
+                      <Dropdown
+                        id="state"
+                        value={selectedState}
+                        options={statesData}
+                        onChange={(e) => handleInputChangeCustomer('state', e.target.value)}
+                        optionLabel="name"
+                        editable
+                        // placeholder="State"
+                        disabled={isLoading}
+                        style={{
+                          width: '230px',
+                          height: '32px',
+                          border: '1px solid #D5E1EA',
+                          borderRadius: '0.50rem',
+                          color: 'black',
+                          fontSize: '0.8rem',
+                        }}
+                      />
+                    </div>
                   </div>
                 </div>
                 <div>
-                  <Dropdown
-                    id="state"
-                    value={selectedState}
-                    options={statesData}
-                    onChange={(e) => handleInputChangeCustomer('state', e.target.value)}
-                    optionLabel="name"
-                    editable
-                    placeholder="State"
-                    disabled={isLoading}
-                    style={{
-                      width: '230px',
-                      height: '32px',
-                      border: '1px solid #D5E1EA',
-                      borderRadius: '0.50rem',
-                      color: 'black',
-                      fontSize: '0.8rem',
-                    }}
-                  />
+                  <div>
+                    <div>
+                      <span className="font-medium text-sm text-[#000000]">
+                        <div className="flex gap-1">Zip Code</div>
+                      </span>
+                    </div>
+
+                    <div className="mt-2">
+                      <InputText
+                        id="pinCode"
+                        value={pinCode}
+                        onChange={(e) => handleInputChangeCustomer('pinCode', e.target.value)}
+                        // placeholder="Zip Code"
+                        style={{
+                          width: '230px',
+                          height: '32px',
+                          border: fieldErrors.pinCode ? '1px solid red' : '1px solid #D5E1EA',
+                          borderRadius: '0.50rem',
+                          fontSize: '0.8rem',
+                          paddingLeft: '0.5rem',
+                        }}
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="flex mt-5 gap-6">
-                <div>
-                  <Dropdown
-                    id="country"
-                    value={selectedCountry}
-                    onChange={(e) => handleInputChangeCustomer('country', e.target.value)}
-                    options={countriesData}
-                    optionLabel="name"
-                    editable
-                    placeholder="Country"
-                    disabled={isLoading}
-                    className=""
-                    style={{
-                      width: '230px',
-                      height: '32px',
-                      border: '1px solid #D5E1EA',
-                      borderRadius: '0.50rem',
-                      fontSize: '0.8rem',
-                    }}
-                  />
-                </div>
-                <div>
-                  <InputText
-                    id="pinCode"
-                    value={pinCode}
-                    onChange={(e) => handleInputChangeCustomer('pinCode', e.target.value)}
-                    placeholder="Zipcode"
-                    style={{
-                      width: '230px',
-                      height: '32px',
-                      border: fieldErrors.pinCode ? '1px solid red' : '1px solid #D5E1EA',
-                      borderRadius: '0.50rem',
-                      fontSize: '0.8rem',
-                      paddingLeft: '0.5rem',
-                    }}
-                  />
-                </div>
+            </div>
+            <div className="mt-3">
+              <div>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">Address</div>
+                </span>
+              </div>
+              <div className="mt-2">
+                <InputText
+                  id="pinCode"
+                  value={pinCode}
+                  onChange={(e) => handleInputChangeCustomer('pinCode', e.target.value)}
+                  // placeholder="Zip Code"
+                  style={{
+                    width: '230px',
+                    height: '32px',
+                    border: fieldErrors.pinCode ? '1px solid red' : '1px solid #D5E1EA',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
+                    paddingLeft: '0.5rem',
+                  }}
+                />
               </div>
             </div>
             <div
               className={`mt-3 
-    ${selectedCustomerType?.id === 5 || selectedCustomerType === 'Dock' ? 'mb-2' : editCustomerMode ? 'mb-20' : ''}`}>
+    ${selectedCustomerType?.id === 5 || selectedCustomerType === 'Dock' ? 'mb-2' : editCustomerMode ? 'mb-20' || 'blur' : ''} `}>
               <div className="">
                 <span style={{ fontWeight: '400', fontSize: '14px', color: '#000000' }}>
-                  <div className="flex gap-1 font-medium text-sm text-[#000000]">Note</div>
+                  <div className="flex gap-1 font-medium text-sm text-[#000000]">Notes</div>
                 </span>
               </div>
               <div className="mt-2">
@@ -1942,131 +1951,17 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           visible={imageVisible}
           onHide={() => setImageVisible(false)}
           header={'Images'}>
-          <div className={`ml-4 ${isLoading ? 'blurred' : ''}`} style={{ marginBottom: '60px' }}>
-            <div className="flex justify-between">
-              <div className="mt-6">
-                <input
-                  id="file-input"
-                  type="file"
-                  accept="image/*"
-                  multiple
-                  onChange={handleImageChange}
-                  style={{
-                    display: 'none',
-                  }}
-                />
-                <label
-                  htmlFor="file-input"
-                  style={{
-                    width: '300px',
-                    height: '40px',
-                    border: '2px solid #0098FF',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                    paddingLeft: '0.5rem',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                  }}>
-                  <FaFileUpload
-                    style={{
-                      fontSize: '29px',
-                      color: '#0098FF',
-                      marginLeft: '1rem',
-                      marginTop: '3px',
-                    }}
-                  />
-                  <div className="border-r-2 border-sky-500  h-9 pl-3"></div>
-                  <span className="pl-10 mt-1">UPLOAD IMAGES</span>
-                </label>
-              </div>
-            </div>
-
-            <div style={{ marginTop: '40px' }}>
-              {customerImages.length > 0 && (
-                <div className="mt-2">
-                  <div className="flex gap-16 flex-wrap">
-                    {customerImages.map((image, index) => (
-                      <div
-                        key={index}
-                        style={{ position: 'relative', display: 'inline-block' }}
-                        onMouseEnter={() => setHoveredIndex(index)}
-                        onMouseLeave={() => setHoveredIndex(null)}>
-                        <AiOutlineDelete
-                          onClick={() => handleRemoveImage(index)}
-                          style={{
-                            position: 'absolute',
-                            top: '165px',
-                            right: '5px',
-                            background: 'red',
-                            color: 'white',
-                            border: 'none',
-                            borderRadius: '5px',
-                            width: '28px',
-                            height: '25px',
-                            cursor: 'pointer',
-                            opacity: hoveredIndex === index ? 1 : 0,
-                            transition: 'opacity 0.3s',
-                          }}
-                        />
-                        <img
-                          src={image}
-                          alt={`Uploaded ${index}`}
-                          style={{
-                            width: '300px',
-                            height: '200px',
-                            objectFit: 'cover',
-                            borderRadius: '0.5rem',
-                            boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
-                          }}
-                        />
-                        <div className="mt-2">
-                          <InputText
-                            value={imageRequestDtoList[index].note}
-                            onChange={(e) => handleNoteChange(index, e.target.value)}
-                            placeholder="Add note"
-                            style={{
-                              width: '300px',
-                              height: '40px',
-                              border: '1px solid #D5E1EA',
-                              borderRadius: '0.50rem',
-                              fontSize: '0.8rem',
-                              boxShadow: 'none',
-                              paddingLeft: '0.5rem',
-                              color: 'black',
-                              resize: 'none',
-                              marginTop: '10px',
-                            }}
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div
-            className={`flex gap-4 ml-4 absolute bottom-0 left-0 right-0 ${isLoading ? 'blurred' : ''}`}
-            style={{ padding: '16px', backgroundColor: 'white' }}>
-            <Button
-              label={'Close'}
-              onClick={() => setImageVisible(false)}
-              style={{
-                width: '89px',
-                height: '42px',
-                backgroundColor: '#0098FF',
-                cursor: 'pointer',
-                fontWeight: 'bolder',
-                fontSize: '1rem',
-                boxShadow: 'none',
-                color: 'white',
-                borderRadius: '0.5rem',
-              }}
-            />
-          </div>
+          <UploadImages
+            handleNoteChange={handleNoteChange}
+            hoveredIndex={hoveredIndex}
+            handleRemoveImage={handleRemoveImage}
+            setHoveredIndex={setHoveredIndex}
+            handleImageChange={handleImageChange}
+            setImageVisible={setImageVisible}
+            imageRequestDtoList={imageRequestDtoList}
+            isLoading={isLoading}
+            customerImages={customerImages}
+          />
           <Toast ref={toastRef} />
         </Dialog>
       </div>

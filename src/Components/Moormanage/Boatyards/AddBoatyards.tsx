@@ -12,7 +12,6 @@ import { BoatYardResponse, ErrorResponse } from '../../../Type/ApiTypes'
 import CustomSelectPositionMap from '../../Map/CustomSelectPositionMap'
 import { CountriesData, StatesData } from '../../CommonComponent/MetaDataComponent/MetaDataApi'
 import { ProgressSpinner } from 'primereact/progressspinner'
-import { LatLngExpression } from 'leaflet'
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import { Toast } from 'primereact/toast'
@@ -27,16 +26,11 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   editMode,
 }) => {
   const selectedCustomerId = useSelector(selectCustomerId)
-  const [boatyardId, setBoatyardId] = useState('')
   const [boatyardName, setBoatyardName] = useState('')
-  const [emailAddress, setEmailAddress] = useState('')
-  const [phone, setPhone] = useState('')
   const [address, setAddress] = useState('')
-  const [aptSuite, setAptSuite] = useState('')
   const [selectedState, setSelectedState] = useState<any>()
-  const [country, setCountry] = useState<Country>()
+  const [country, setCountry] = useState<any>()
   const [zipCode, setZipCode] = useState('')
-
   const [mainContact, setMainContact] = useState('')
   const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<any>()
   const [countriesData, setCountriesData] = useState<Country[]>()
@@ -79,35 +73,21 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   const [isLoading, setIsLoading] = useState(true)
   const [addBoatyard] = useAddBoatyardsMutation()
   const [updateBoatyard] = useUpdateBoatyardsMutation()
-  const { getStatesData } = StatesData()
+  const { getStatesData } = StatesData(country?.id)
   const { getCountriesData } = CountriesData()
 
   const validateFields = () => {
     const nameRegex = /^[a-zA-Z ]+$/
-    const zipCodeRegex = /^\d{5}(-\d{4})?$/
     const errors: { [key: string]: string } = {}
-
     if (!boatyardName) {
       errors.name = 'Boatyard Name is required'
     } else if (!nameRegex.test(boatyardName)) {
       errors.name = 'Name must only contain letters'
     }
-    // if (!boatyardId) errors.id = 'Boatyard ID is required'
-
     if (!gpsCoordinatesValue) {
       errors.gpsCoordinatesValue = 'GPS Coordinates is required'
     }
-    if (!address) errors.address = 'Street/house is required'
-
-    // if (!zipCode) {
-    //   errors.zipCode = 'Zip Code is required'
-    // } else if (!zipCodeRegex.test(zipCode)) {
-    //   errors.zipCode = 'Invalid Zip Code format'
-    // }
     if (!mainContact) errors.mainContact = 'Main contact is required'
-    if (!country) errors.country = 'Country  is required'
-    if (!selectedState) errors.state = 'State  is required'
-    if (!aptSuite) errors.aptSuite = 'Apt/Suite is required'
     return errors
   }
 
@@ -126,12 +106,9 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   }
 
   const handleEditMode = () => {
-    // setBoatyardId(customerData?.boatyardId || '')
     setBoatyardName(customerData?.boatyardName || '')
-    // setStorage(customerData?.storageAreas)
     setStorageList(customerData?.storageAreas)
     setAddress(customerData?.street || '')
-    setAptSuite(customerData?.apt || '')
     setZipCode(customerData?.zipCode || '')
     setSelectedState(customerData?.stateResponseDto?.name || '')
     setMainContact(customerData?.mainContact || '')
@@ -153,7 +130,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
         // boatyardId: boatyardId,
         boatyardName: boatyardName,
         street: address,
-        apt: aptSuite,
         zipCode: zipCode,
         contact: mainContact,
         stateId: selectedState?.id,
@@ -211,7 +187,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
         // boatyardId: boatyardId,
         boatyardName: boatyardName,
         street: address,
-        apt: aptSuite,
         zipCode: zipCode,
         contact: mainContact,
         stateId: selectedState?.id || customerData?.stateResponseDto?.id,
@@ -221,7 +196,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
         customerOwnerId: selectedCustomerId,
         storageAreas: storageList,
       }
-
       const response = await updateBoatyard({
         payload: editBoatYardPayload,
         id: customerData?.id,
@@ -235,7 +209,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
-          detail: 'Boatyard Updated successfully',
+          detail: message,
           life: 3000,
         })
       } else {
@@ -253,7 +227,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: data?.message,
+        detail: message || data?.message,
         life: 3000,
       })
     }
@@ -282,29 +256,31 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
     setStorageList(newList)
   }
 
-  // const handleDeleteStorage = (index: number) => {
-  //   const newList = storageList.filter((_, i) => i !== index)
-  //   setStorageList(newList)
-  // }
-
   const fetchDataAndUpdate = useCallback(async () => {
-    const { statesData } = await getStatesData()
     const { countriesData } = await getCountriesData()
-
     if (countriesData !== null) {
       setIsLoading(false)
       setCountriesData(countriesData)
     }
+  }, [])
 
+  const fetchStateDataAndUpdate = useCallback(async () => {
+    const { statesData } = await getStatesData()
     if (statesData !== null) {
       setIsLoading(false)
       setStatesData(statesData)
+    } else {
+      setSelectedState('')
     }
-  }, [])
+  }, [country])
 
   useEffect(() => {
     fetchDataAndUpdate()
   }, [fetchDataAndUpdate])
+
+  useEffect(() => {
+    fetchStateDataAndUpdate()
+  }, [country])
 
   useEffect(() => {
     if (editMode && customerData) {
@@ -463,82 +439,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
         <div className="flex gap-6 mt-1">
           <div>
             <div className="">
-              <InputComponent
-                value={address}
-                onChange={(e) => {
-                  setAddress(e.target.value)
-                  setErrorMessage((prev) => ({ ...prev, address: '' }))
-                }}
-                placeholder="Street/house"
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: errorMessage.address ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                  padding: '0.5rem',
-                }}
-              />
-            </div>
-
-            <p>
-              {errorMessage.address && <small className="p-error">{errorMessage.address}</small>}
-            </p>
-          </div>
-
-          <div className="">
-            <InputComponent
-              value={aptSuite}
-              placeholder="Apt/Suite"
-              onChange={(e) => {
-                setAptSuite(e.target.value)
-                setErrorMessage((prev) => ({ ...prev, aptSuite: '' }))
-              }}
-              style={{
-                width: '230px',
-                height: '32px',
-                border: errorMessage.aptSuite ? '1px solid red' : '1px solid #D5E1EA',
-                borderRadius: '0.50rem',
-                fontSize: '0.8rem',
-                padding: '0.5rem',
-              }}
-            />
-            <p>
-              {errorMessage.aptSuite && <small className="p-error">{errorMessage.aptSuite}</small>}
-            </p>
-          </div>
-
-          <div className="flex flex-col ">
-            <Dropdown
-              id="stateDropdown"
-              placeholder="State"
-              editable
-              value={selectedState}
-              onChange={(e) => {
-                setSelectedState(e.target.value)
-                setErrorMessage((prev) => ({ ...prev, state: '' }))
-              }}
-              options={statesData}
-              optionLabel="name"
-              disabled={isLoading}
-              style={{
-                width: '230px',
-                height: '32px',
-                border: errorMessage.state ? '1px solid red' : '1px solid #D5E1EA',
-                borderRadius: '0.50rem',
-                fontSize: '0.8rem',
-                paddingLeft: '0.5rem',
-                color: 'black',
-              }}
-            />
-
-            <p> {errorMessage.state && <small className="p-error">{errorMessage.state}</small>}</p>
-          </div>
-        </div>
-
-        <div className="flex  gap-6 mt-4">
-          <div>
-            <div className="">
               <Dropdown
                 id="stateDropdown"
                 value={country}
@@ -561,62 +461,115 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
                 }}
               />
             </div>
-            <p>
-              {errorMessage.country && <small className="p-error">{errorMessage.country}</small>}
-            </p>
+
+            {/* <p>
+              {errorMessage.address && <small className="p-error">{errorMessage.address}</small>}
+            </p> */}
           </div>
 
-          <div>
-            <div>
-              <div className="">
-                <InputComponent
-                  value={zipCode}
-                  onChange={(e) => {
-                    setZipCode(e.target.value)
-                    // setErrorMessage((prev) => ({ ...prev, zipCode: '' }))
-                  }}
-                  placeholder="Zip code"
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                    padding: '0.5rem',
-                  }}
-                />
-              </div>
-              {/* <p>
-                {errorMessage.zipCode && <small className="p-error">{errorMessage.zipCode}</small>}
-              </p> */}
-            </div>
+          <div className="">
+            <Dropdown
+              id="stateDropdown"
+              placeholder="State"
+              editable
+              value={selectedState}
+              onChange={(e) => {
+                setSelectedState(e.target.value)
+                setErrorMessage((prev) => ({ ...prev, state: '' }))
+              }}
+              options={statesData}
+              optionLabel="name"
+              disabled={isLoading}
+              style={{
+                width: '230px',
+                height: '32px',
+                border: errorMessage.state ? '1px solid red' : '1px solid #D5E1EA',
+                borderRadius: '0.50rem',
+                fontSize: '0.8rem',
+                paddingLeft: '0.5rem',
+                color: 'black',
+              }}
+            />
+            {/* <p>
+              {errorMessage.aptSuite && <small className="p-error">{errorMessage.aptSuite}</small>}
+            </p> */}
           </div>
+
+          <div className="flex flex-col ">
+            <InputComponent
+              value={zipCode}
+              onChange={(e) => {
+                setZipCode(e.target.value)
+                // setErrorMessage((prev) => ({ ...prev, zipCode: '' }))
+              }}
+              placeholder="Zip Code"
+              style={{
+                width: '230px',
+                height: '32px',
+                border: '1px solid #D5E1EA',
+                borderRadius: '0.50rem',
+                fontSize: '0.8rem',
+                padding: '0.5rem',
+              }}
+            />
+
+            {/* <p> {errorMessage.state && <small className="p-error">{errorMessage.state}</small>}</p> */}
+          </div>
+        </div>
+
+        <div className="flex  gap-6 mt-4">
           <div>
             <div className="">
               <InputComponent
-                value={gpsCoordinatesValue}
-                onChange={handleGpsCoordinatesChange}
-                // onBlur={handleGpsCoordinatesBlur}
-                placeholder="GPS Coordinates"
+                value={zipCode}
+                onChange={(e) => {
+                  setZipCode(e.target.value)
+                  // setErrorMessage((prev) => ({ ...prev, zipCode: '' }))
+                }}
+                placeholder="Address"
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: errorMessage.gpsCoordinatesValue ? '1px solid red' : '1px solid #D5E1EA',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   padding: '0.5rem',
                 }}
               />
             </div>
-
-            <p>
-              {errorMessage.gpsCoordinatesValue && (
-                <small className="p-error">{errorMessage.gpsCoordinatesValue}</small>
-              )}
-            </p>
+            {/* <p>
+              {errorMessage.country && <small className="p-error">{errorMessage.country}</small>}
+            </p> */}
           </div>
+
+          <div>
+            <div>
+              <div className="">
+                <InputComponent
+                  value={gpsCoordinatesValue}
+                  onChange={handleGpsCoordinatesChange}
+                  placeholder="GPS Coordinates"
+                  style={{
+                    width: '230px',
+                    height: '32px',
+                    border: errorMessage.gpsCoordinatesValue
+                      ? '1px solid red'
+                      : '1px solid #D5E1EA',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
+                    padding: '0.5rem',
+                  }}
+                />
+              </div>
+              <p>
+                {errorMessage.gpsCoordinatesValue && (
+                  <small className="p-error">{errorMessage.gpsCoordinatesValue}</small>
+                )}
+              </p>
+            </div>
+          </div>
+          <div></div>
         </div>
-        {/* </div> */}
 
         <div className="flex mt-4 ">
           <div>

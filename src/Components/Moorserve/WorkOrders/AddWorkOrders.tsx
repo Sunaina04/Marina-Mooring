@@ -42,6 +42,7 @@ import { ProgressSpinner } from 'primereact/progressspinner'
 import ReasonModal from '../../Moorpay/AccountReceivable/ReasonModal'
 import ApproveModal from '../../Moorpay/AccountReceivable/ApproveModal'
 import InputComponent from '../../CommonComponent/InputComponent'
+import ShowImages from '../../CommonComponent/UploadImages'
 
 const AddWorkOrders: React.FC<WorkOrderProps> = ({
   workOrderData,
@@ -164,6 +165,12 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
 
     setErrorMessage(errors)
     return errors
+  }
+
+  const handleNoteChange = (index: number, note: string) => {
+    setimageRequestDtoList((prevList: any[]) =>
+      prevList.map((item, i) => (i === index ? { ...item, note } : item)),
+    )
   }
 
   const handleInputChange = (field: string, value: any) => {
@@ -821,7 +828,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
               />
             </div>
           </div>
-          {!estimate &&  !isAccountRecievable &&(
+          {!estimate && !isAccountRecievable && (
             <div className="">
               <span className="font-medium text-sm text-[#000000]">
                 <div className="flex gap-1">Image</div>
@@ -1245,6 +1252,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
           }}
         />
       </Dialog>
+
       <Dialog
         position="center"
         style={{
@@ -1260,7 +1268,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         visible={imageVisible}
         onHide={() => setImageVisible(false)}
         header={'Images'}>
-        <div className={`ml-4 ${isLoading ? 'blurred' : ''}`}>
+        {/* <div className={`ml-4 ${isLoading ? 'blurred' : ''}`}>
           <div className="flex justify-between">
             <div className="mt-6">
               <input
@@ -1319,14 +1327,14 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                     resize: 'none',
                   }}
                 />
-                {/* <p>{fieldErrors.note && <small className="p-error">{fieldErrors.note}</small>}</p> */}
+              
               </div>
             </div>
           </div>
         </div>
 
         <div
-          //  style={{border:"1px solid red"}}
+          
 
           style={{ marginTop: '40px', marginLeft: '40px' }}>
           {customerImages.length > 0 && (
@@ -1338,23 +1346,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                     style={{ position: 'relative', display: 'inline-block' }}
                     onMouseEnter={() => setHoveredIndex(index)}
                     onMouseLeave={() => setHoveredIndex(null)}>
-                    {/* <h1
-                        style={{
-                          position: 'absolute',
-                          top: '12px',
-                          right: '0',
-                          left: '12px',
-                          background: 'gray',
-                          color: 'white',
-                          fontWeight: 'bolder',
-                          border: 'none',
-                          width: '80px',
-                          cursor: isAccountRecievable ? 'disabled' : 'pointer' ,
-                          opacity: hoveredIndex === index ? 1 : 0,
-                          transition: 'opacity 0.3s',
-                        }}>
-                        name
-                      </h1> */}
+                    
                     <AiOutlineDelete
                       onClick={() => handleRemoveImage(index)}
                       style={{
@@ -1406,7 +1398,20 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
               borderRadius: '0.5rem',
             }}
           />
-        </div>
+        </div> */}
+
+        <ShowImages
+          handleNoteChange={handleNoteChange}
+          hoveredIndex={hoveredIndex}
+          handleRemoveImage={handleRemoveImage}
+          setHoveredIndex={setHoveredIndex}
+          handleImageChange={handleImageChange}
+          setImageVisible={setImageVisible}
+          imageRequestDtoList={imageRequestDtoList}
+          isLoading={isLoading}
+          customerImages={customerImages}
+        />
+
         <Toast ref={toastRef} />
       </Dialog>
     </>

@@ -23,14 +23,10 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
     companyName: '',
     phone: '',
     website: '',
-    streetBuildingForAddress: '',
-    aptSuiteForAddress: '',
     countryForAddress: '',
     stateForAddress: '', 
     zipCodeForAddress: '',
     emailForAddress: '',
-    streetBuildingForRemit: '',
-    aptSuiteForRemit: '',
     countryForRemit: '',
     stateForRemit: '',
     zipCodeForRemit: '',
@@ -44,7 +40,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
   })
   const [addVendor] = useAddVendorsMutation()
   const [editVendor] = useUpdateVendorMutation()
-  const { getStatesData } = StatesData()
+  const { getStatesData } = StatesData(formData?.countryForAddress?.id)
   const { getCountriesData } = CountriesData()
   const toastRef = useRef<Toast>(null)
 
@@ -78,18 +74,26 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
   }
 
   const fetchDataAndUpdate = useCallback(async () => {
-    const { statesData } = await getStatesData()
     const { countriesData } = await getCountriesData()
 
     if (countriesData !== null) {
       setIsLoading(false)
       setCountriesData(countriesData)
     }
+  }, [])
+
+  const fetchStateDataAndUpdate = useCallback(async () => {
+    const { statesData } = await getStatesData()
     if (statesData !== null) {
       setIsLoading(false)
       setStatesData(statesData)
+    } else {
+      setFormData({
+        ...formData,
+        ['stateForAddress']: '',
+      })
     }
-  }, [])
+  }, [formData?.countryForAddress?.id])
 
   const handleClick = () => {
     if (editMode) {
@@ -105,14 +109,10 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
       companyName: vendors?.vendorName || '',
       phone: vendors?.companyPhoneNumber || '',
       website: vendors?.website || '',
-      streetBuildingForAddress: vendors?.street || '',
-      aptSuiteForAddress: vendors?.aptSuite || '',
       countryForAddress: vendors?.countryResponseDto?.name || '',
       stateForAddress: vendors?.stateResponseDto?.name || '',
       zipCodeForAddress: vendors?.zipCode || '',
       emailForAddress: vendors?.companyEmail || '',
-      streetBuildingForRemit: vendors?.remitStreet || '',
-      aptSuiteForRemit: vendors?.remitApt || '',
       countryForRemit: vendors?.remitCountryResponseDto?.name || '',
       stateForRemit: vendors?.remitStateResponseDto?.name || '',
       zipCodeForRemit: vendors?.remitZipCode || '',
@@ -137,15 +137,11 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
         vendorName: formData?.companyName,
         ...(formData?.phone && { companyPhoneNumber: formData.phone }),
         ...(formData?.website && { website: formData.website }),
-        ...(formData?.streetBuildingForAddress && { street: formData.streetBuildingForAddress }),
-        ...(formData?.aptSuiteForAddress && { aptSuite: formData.aptSuiteForAddress }),
         ...(formData?.stateForAddress?.id && { stateId: formData.stateForAddress.id }),
         ...(formData?.countryForAddress?.id && { countryId: formData.countryForAddress.id }),
         ...(formData?.zipCodeForAddress && { zipCode: formData.zipCodeForAddress }),
         ...(formData?.emailForAddress && { companyEmail: formData.emailForAddress }),
         ...(formData?.accountNumber && { accountNumber: formData.accountNumber }),
-        ...(formData?.streetBuildingForRemit && { remitStreet: formData.streetBuildingForRemit }),
-        ...(formData?.aptSuiteForRemit && { remitApt: formData.aptSuiteForRemit }),
         ...(formData?.stateForRemit?.id && { remitStateId: formData.stateForRemit.id }),
         ...(formData?.countryForRemit?.id && { remitCountryId: formData.countryForRemit.id }),
         ...(formData?.zipCodeForRemit && { remitZipCode: formData.zipCodeForRemit }),
@@ -202,15 +198,11 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
         vendorName: formData?.companyName || vendors?.vendorName,
         companyPhoneNumber: formData?.phone || vendors?.companyPhoneNumber,
         website: formData?.website || vendors?.website,
-        street: formData?.streetBuildingForAddress || vendors?.street,
-        aptSuite: formData?.aptSuiteForAddress || vendors?.aptSuite,
         stateId: formData?.stateForAddress?.id || vendors?.stateResponseDto?.id,
         countryId: formData?.countryForAddress?.id || vendors?.countryResponseDto?.id,
         zipCode: formData?.zipCodeForAddress || vendors?.zipCode,
         companyEmail: formData?.emailForAddress || vendors?.companyEmail,
         accountNumber: formData?.accountNumber || vendors?.accountNumber,
-        remitStreet: formData?.streetBuildingForRemit || vendors?.remitStreet,
-        remitApt: formData?.aptSuiteForRemit || vendors?.remitApt,
         remitStateId: formData?.stateForRemit?.id || vendors?.remitStateResponseDto?.id,
         remitCountryId: formData?.countryForRemit?.id || vendors?.remitCountryResponseDto?.id,
         remitZipCode: formData?.zipCodeForRemit || vendors?.remitZipCode,
@@ -262,6 +254,10 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
       handleEditMode()
     }
   }, [editMode, vendors])
+
+  useEffect(() => {
+    fetchStateDataAndUpdate()
+  }, [formData?.countryForAddress?.id])
 
   useEffect(() => {
     fetchDataAndUpdate()
@@ -350,25 +346,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
 
               <div className=" flex gap-2 mt-2">
                 <div>
-                  <div>
-                    <div className="mt-2">
-                      <InputComponent
-                        placeholder="Street/Building"
-                        value={formData.streetBuildingForAddress}
-                        onChange={(e) =>
-                          handleInputChange('streetBuildingForAddress', e.target.value)
-                        }
-                        style={{
-                          width: '178.39px',
-                          height: '32px',
-                          border: '1px solid #D5E1EA',
-                          borderRadius: '0.50rem',
-                          fontSize: '0.70rem',
-                          paddingLeft: '0.5rem',
-                        }}
-                      />
-                    </div>
-                  </div>
+                  <div></div>
                   <div>
                     <div className="mt-3">
                       <Dropdown
@@ -408,14 +386,12 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                       />
                     </div>
                   </div>
-                </div>
-                <div className="">
                   <div>
                     <div className="mt-2">
                       <InputComponent
-                        placeholder="Apt/Suite"
-                        value={formData.aptSuiteForAddress}
-                        onChange={(e) => handleInputChange('aptSuiteForAddress', e.target.value)}
+                        placeholder="Email Address"
+                        value={formData.emailForAddress}
+                        onChange={(e) => handleInputChange('emailForAddress', e.target.value)}
                         style={{
                           width: '178.39px',
                           height: '32px',
@@ -427,6 +403,9 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                       />
                     </div>
                   </div>
+                </div>
+
+                <div className="">
                   <div>
                     <div className="mt-3">
                       <Dropdown
@@ -452,9 +431,9 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                   <div>
                     <div className="mt-3 ">
                       <InputComponent
-                        placeholder="Email Address"
-                        value={formData.emailForAddress}
-                        onChange={(e) => handleInputChange('emailForAddress', e.target.value)}
+                        placeholder="Address"
+                        value={formData.aptSuiteForAddress}
+                        onChange={(e) => handleInputChange('aptSuiteForAddress', e.target.value)}
                         style={{
                           width: '178.39px',
                           height: '32px',
@@ -480,12 +459,15 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                   <div className="mt-1">
                     <div>
                       <div className="">
-                        <InputComponent
-                          placeholder="Street/Building"
-                          value={formData.streetBuildingForRemit}
-                          onChange={(e) =>
-                            handleInputChange('streetBuildingForRemit', e.target.value)
-                          }
+                        <Dropdown
+                          value={formData.countryForRemit}
+                          onChange={(e) => handleInputChange('countryForRemit', e.target.value)}
+                          options={countriesData}
+                          optionLabel="name"
+                          editable
+                          placeholder="Country"
+                          disabled={isLoading}
+                          className=""
                           style={{
                             width: '178.39px',
                             height: '32px',
@@ -493,32 +475,10 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                             borderRadius: '0.50rem',
                             fontSize: '0.70rem',
                             backgroundColor: '#F5F5F5',
-                            paddingLeft: '0.5rem',
                           }}
                         />
                       </div>
                     </div>
-                    <div className="mt-3">
-                      <Dropdown
-                        value={formData.countryForRemit}
-                        onChange={(e) => handleInputChange('countryForRemit', e.target.value)}
-                        options={countriesData}
-                        optionLabel="name"
-                        editable
-                        placeholder="Country"
-                        disabled={isLoading}
-                        className=""
-                        style={{
-                          width: '178.39px',
-                          height: '32px',
-                          border: '1px solid #D5E1EA',
-                          borderRadius: '0.50rem',
-                          fontSize: '0.70rem',
-                          backgroundColor: '#F5F5F5',
-                        }}
-                      />
-                    </div>
-
                     <div className="mt-3">
                       <InputComponent
                         type="text"
@@ -536,29 +496,28 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                         }}
                       />
                     </div>
+
+                    <div className="mt-3">
+                      <InputComponent
+                        placeholder="Email Address"
+                        value={formData.emailForRemit}
+                        onChange={(e) => handleInputChange('emailForRemit', e.target.value)}
+                        style={{
+                          width: '178.39px',
+                          height: '32px',
+                          border: '1px solid #D5E1EA',
+                          borderRadius: '0.50rem',
+                          fontSize: '0.70rem',
+                          backgroundColor: '#F5F5F5',
+                          paddingLeft: '0.5rem',
+                        }}
+                      />
+                    </div>
                   </div>
 
                   <div>
                     <div>
                       <div className="mt-1">
-                        <InputComponent
-                          placeholder="Apt/Suite"
-                          value={formData.aptSuiteForRemit}
-                          onChange={(e) => handleInputChange('aptSuiteForRemit', e.target.value)}
-                          style={{
-                            width: '178.39px',
-                            height: '32px',
-                            border: '1px solid #D5E1EA',
-                            borderRadius: '0.50rem',
-                            fontSize: '0.70rem',
-                            backgroundColor: '#F5F5F5',
-                            paddingLeft: '0.5rem',
-                          }}
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <div className="mt-3">
                         <Dropdown
                           onChange={(e) => handleInputChange('stateForRemit', e.target.value)}
                           value={formData.stateForRemit}
@@ -579,21 +538,23 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                         />
                       </div>
                     </div>
-                    <div className="mt-3">
-                      <InputComponent
-                        placeholder="Email Address"
-                        value={formData.emailForRemit}
-                        onChange={(e) => handleInputChange('emailForRemit', e.target.value)}
-                        style={{
-                          width: '178.39px',
-                          height: '32px',
-                          border: '1px solid #D5E1EA',
-                          borderRadius: '0.50rem',
-                          fontSize: '0.70rem',
-                          backgroundColor: '#F5F5F5',
-                          paddingLeft: '0.5rem',
-                        }}
-                      />
+                    <div>
+                      <div className="mt-3">
+                        <InputComponent
+                          placeholder="Address"
+                          value={formData.emailForRemit}
+                          onChange={(e) => handleInputChange('emailForRemit', e.target.value)}
+                          style={{
+                            width: '178.39px',
+                            height: '32px',
+                            border: '1px solid #D5E1EA',
+                            borderRadius: '0.50rem',
+                            fontSize: '0.70rem',
+                            backgroundColor: '#F5F5F5',
+                            paddingLeft: '0.5rem',
+                          }}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>

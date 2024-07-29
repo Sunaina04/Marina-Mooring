@@ -616,7 +616,6 @@ const Moorings = () => {
             : ''
         }>
         <Header header={properties.MoormanageMoorings} />
-
         <div className="flex justify-end mr-12 ">
           <div className="flex mt-6">
             <CustomModal

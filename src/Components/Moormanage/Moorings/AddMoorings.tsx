@@ -37,6 +37,7 @@ import { Checkbox } from 'primereact/checkbox'
 import { FaFileUpload } from 'react-icons/fa'
 import { AiOutlineDelete } from 'react-icons/ai'
 import { Dialog } from 'primereact/dialog'
+import UploadImages from '../../CommonComponent/UploadImages'
 
 const AddMoorings: React.FC<AddMooringProps> = ({
   moorings,
@@ -276,87 +277,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   const uploadImages = () => {
     setImageVisible(true)
   }
-
-  // const handleRemoveImage = (index: number) => {
-  //   const newImages = [...mooringImages]
-  //   newImages.splice(index, 1)
-  //   setMooringImages(newImages)
-
-  //   // const newEncodedImages = [...encodedImages]
-  //   // newEncodedImages.splice(index, 1)
-  //   // setEncodedImages(newEncodedImages)
-  // }
-
-  // const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const fileInput = event.target
-  //   const files = Array.from(fileInput.files || [])
-
-  //   if (files.length === 0) {
-  //     return
-  //   }
-
-  //   const validImageFiles = files.filter(
-  //     (file) => file.type.startsWith('image/') && file.size >= 5120 && file.size <= 1048576,
-  //   )
-
-  //   const invalidTypeFiles = files.filter((file) => !file.type.startsWith('image/'))
-  //   const invalidSizeFiles = files.filter((file) => file.size < 5120 || file.size > 1048576)
-
-  //   if (invalidTypeFiles.length > 0 || invalidSizeFiles.length > 0) {
-  //     setMooringImages([])
-  //     setEncodedImages([])
-  //     let detailMessage = 'Only image files are allowed'
-
-  //     if (invalidSizeFiles.length > 0) {
-  //       detailMessage = 'Images must be between 5 KB and 1 MB.'
-  //     }
-
-  //     toastRef?.current?.show({
-  //       severity: 'error',
-  //       summary: 'Error',
-  //       detail: detailMessage,
-  //       life: 3000,
-  //     })
-  //     fileInput.value = ''
-  //     return
-  //   }
-
-  //   const newBase64Strings: string[] = []
-  //   const newImageUrls: string[] = []
-  //   const imageRequestDtoList: { imageName?: string; imageData?: string; note?: string }[] = []
-
-  //   for (const file of validImageFiles) {
-  //     try {
-  //       const base64String = await new Promise<string>((resolve, reject) => {
-  //         const reader = new FileReader()
-  //         reader.onload = () => {
-  //           if (typeof reader.result === 'string') {
-  //             resolve(reader.result.split(',')[1])
-  //           } else {
-  //             reject(new Error('FileReader result is not a string.'))
-  //           }
-  //         }
-  //         reader.onerror = () => {
-  //           reject(new Error('Error reading file.'))
-  //         }
-  //         reader.readAsDataURL(file)
-  //       })
-  //       newBase64Strings.push(base64String)
-  //       newImageUrls.push(`data:image/png;base64,${base64String}`)
-  //       imageRequestDtoList.push({
-  //         imageName: file.name,
-  //         imageData: base64String,
-  //         note: "",
-  //       })
-  //     } catch (error) {
-  //       console.error('Error reading file:', error)
-  //     }
-  //   }
-
-  //   setMooringImages((prevImages) => [...prevImages, ...newImageUrls])
-  //   setEncodedImages((prevEncoded) => [...prevEncoded, ...newBase64Strings])
-  //   setimageRequestDtoList(imageRequestDtoList)
-  // }
 
   const handleRemoveImage = (index: number) => {
     setMooringImages((prevImages) => prevImages.filter((_, i) => i !== index))
@@ -1947,131 +1867,18 @@ const AddMoorings: React.FC<AddMooringProps> = ({
           visible={imageVisible}
           onHide={() => setImageVisible(false)}
           header={'Images'}>
-          <div className={`ml-4 ${isLoading ? 'blurred' : ''}`} style={{ marginBottom: '60px' }}>
-            <div className="flex justify-between">
-              <div className="mt-6">
-                <input
-                  id="file-input"
-                  type="file"
-                  accept="image/*"
-                  multiple
-                  onChange={handleImageChange}
-                  style={{
-                    display: 'none',
-                  }}
-                />
-                <label
-                  htmlFor="file-input"
-                  style={{
-                    width: '300px',
-                    height: '40px',
-                    border: '2px solid #0098FF',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                    paddingLeft: '0.5rem',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                  }}>
-                  <FaFileUpload
-                    style={{
-                      fontSize: '29px',
-                      color: '#0098FF',
-                      marginLeft: '1rem',
-                      marginTop: '3px',
-                    }}
-                  />
-                  <div className="border-r-2 border-sky-500  h-9 pl-3"></div>
-                  <span className="pl-10 mt-1">UPLOAD IMAGES</span>
-                </label>
-              </div>
-            </div>
+          <UploadImages
+            handleNoteChange={handleNoteChange}
+            hoveredIndex={hoveredIndex}
+            handleRemoveImage={handleRemoveImage}
+            setHoveredIndex={setHoveredIndex}
+            handleImageChange={handleImageChange}
+            setImageVisible={setImageVisible}
+            imageRequestDtoList={imageRequestDtoList}
+            isLoading={isLoading}
+            customerImages={mooringImages}
+          />
 
-            <div style={{ marginTop: '40px' }}>
-              {mooringImages.length > 0 && (
-                <div className="mt-2">
-                  <div className="flex gap-16 flex-wrap">
-                    {mooringImages.map((image, index) => (
-                      <div
-                        key={index}
-                        style={{ position: 'relative', display: 'inline-block' }}
-                        onMouseEnter={() => setHoveredIndex(index)}
-                        onMouseLeave={() => setHoveredIndex(null)}>
-                        <AiOutlineDelete
-                          onClick={() => handleRemoveImage(index)}
-                          style={{
-                            position: 'absolute',
-                            top: '165px',
-                            right: '5px',
-                            background: 'red',
-                            color: 'white',
-                            border: 'none',
-                            borderRadius: '5px',
-                            width: '28px',
-                            height: '25px',
-                            cursor: 'pointer',
-                            opacity: hoveredIndex === index ? 1 : 0,
-                            transition: 'opacity 0.3s',
-                          }}
-                        />
-                        <img
-                          src={image}
-                          alt={`Uploaded ${index}`}
-                          style={{
-                            width: '300px',
-                            height: '200px',
-                            objectFit: 'cover',
-                            borderRadius: '0.5rem',
-                            boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
-                          }}
-                        />
-                        <div className="mt-2">
-                          <InputText
-                            value={imageRequestDtoList[index].note}
-                            onChange={(e) => handleNoteChange(index, e.target.value)}
-                            placeholder="Add note"
-                            style={{
-                              width: '300px',
-                              height: '40px',
-                              border: '1px solid #D5E1EA',
-                              borderRadius: '0.50rem',
-                              fontSize: '0.8rem',
-                              boxShadow: 'none',
-                              paddingLeft: '0.5rem',
-                              color: 'black',
-                              resize: 'none',
-                              marginTop: '10px',
-                            }}
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div
-            className={`flex gap-4 ml-4 absolute bottom-0 left-0 right-0 ${isLoading ? 'blurred' : ''}`}
-            style={{ padding: '16px', backgroundColor: 'white' }}>
-            <Button
-              label={'Close'}
-              onClick={() => setImageVisible(false)}
-              style={{
-                width: '89px',
-                height: '42px',
-                backgroundColor: '#0098FF',
-                cursor: 'pointer',
-                fontWeight: 'bolder',
-                fontSize: '1rem',
-                boxShadow: 'none',
-                color: 'white',
-                borderRadius: '0.5rem',
-              }}
-            />
-          </div>
           <Toast ref={toastRef} />
         </Dialog>
       </>
