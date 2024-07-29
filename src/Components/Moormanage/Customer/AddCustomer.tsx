@@ -359,6 +359,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   }
 
   const handleEditMode = () => {
+    console.log('here', customer)
+
     setFirstName(customer?.firstName || '')
     setLastName(customer?.lastName || '')
     setPhone(customer?.phone || '')
@@ -830,6 +832,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   }, [selectedCountry])
 
   useEffect(() => {
+    console.log(editMode, customer)
+
     if (editMode && customer) {
       handleEditMode()
     }

@@ -62,6 +62,8 @@ const Forms = () => {
   }
 
   const handleView = (rowData: any) => {
+    console.log('rowdata', rowData)
+
     setViewPdf(rowData.formUrl)
   }
 

@@ -208,6 +208,8 @@ const Customer = () => {
 
   const handleEdit = () => {
     setSelectedCustomer(customerRecordData)
+    console.log('here in customer', selectedCustomer)
+
     setEditCustomerMode(true)
     setModalVisible(true)
     setEditMode(true)
