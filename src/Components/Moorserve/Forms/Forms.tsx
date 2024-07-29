@@ -280,7 +280,7 @@ const Forms = () => {
                   backgroundColor: '#D9D9D9',
                   cursor: 'pointer',
                 }}
-                data={undefined}
+                data={formsData}
                 columns={FormsColumns}
                 actionButtons={ActionButtonColumn}
                 style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}

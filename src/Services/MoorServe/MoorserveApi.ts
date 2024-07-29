@@ -140,19 +140,27 @@ const MoorserveApi = userApi.injectEndpoints({
         pageSize?: number
         sortBy?: string
         sortDir?: string
-        searchText?:string
+        searchText?: string
       }) => ({
         url: 'api/v1/form/fetchForms',
         method: 'GET',
-        params: { pageNumber, pageSize, sortBy, sortDir,searchText },
+        params: { pageNumber, pageSize, sortBy, sortDir, searchText },
       }),
     }),
 
     //Download Form
     DownloadForm: builder.mutation({
       query: ({ filename }: { filename?: string }) => ({
-        url: `api/v1/form/download/${filename}`,
+        url: `api/v1/form/downloadForm/${filename}`,
         method: 'GET',
+      }),
+    }),
+
+    //Delete Form
+    DeleteForm: builder.mutation({
+      query: ({ id }: { id?: string }) => ({
+        url: `api/v1/deleteForm/${id}`,
+        method: 'DELETE',
       }),
     }),
 
@@ -241,4 +249,5 @@ export const {
   useGetEstimateMutation,
   useGetConvertEstimateToWorkOrderMutation,
   useSavePaymentMutation,
+  useDeleteFormMutation
 } = MoorserveApi
