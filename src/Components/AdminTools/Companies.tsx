@@ -151,6 +151,7 @@ const CustomerOwner = () => {
       borderBottom: '1px solid #D5E1EA',
       color: '#000000',
       fontWeight: 700,
+      width:"10vw"
     },
     style: { borderBottom: '1px solid #D5E1EA' },
   }
@@ -178,14 +179,16 @@ const CustomerOwner = () => {
         id: 'name',
         label: 'Name',
         body: firstLastNameCustomerOwner,
-        style: { ...columnStyle, width: '10vw' },
+        style: { ...columnStyle, width: '4vw' },
       },
       {
         id: 'phoneNumber',
         label: 'Phone',
-        style: { ...columnStyle, width: '10vw' },
+        style: { ...columnStyle, width: '5vw' },
       },
+      
     ],
+    
     [],
   )
 
@@ -199,6 +202,8 @@ const CustomerOwner = () => {
         fontWeight: 700,
         onClick: (rowData) => handleEditButtonUsersClick(rowData),
       },
+      
+      
       {
         color: 'black',
         label: 'Disable',
@@ -206,6 +211,7 @@ const CustomerOwner = () => {
         fontWeight: 700,
         onClick: (rowData) => handleDeleteCustomerOwnerUser(rowData),
       },
+      
       {
         color: 'black',
         label: 'Reset Password',
@@ -222,7 +228,7 @@ const CustomerOwner = () => {
       borderBottom: '1px solid #D5E1EA',
       color: '#000000',
       fontWeight: 700,
-      width: '5vw',
+      width: '10vw',
     },
     style: { borderBottom: '1px solid #D5E1EA' },
   }
