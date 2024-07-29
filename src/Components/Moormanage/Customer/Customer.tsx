@@ -949,7 +949,7 @@ const Customer = () => {
             <CustomMooringPositionMap
               position={initialPosition}
               zoomLevel={15}
-              style={{ height: '600px', width: 'auto' }}
+              style={{ height: '700px', width: 'auto' }}
               iconsByStatus={iconsByStatus}
               moorings={mooringData}
               customerPage={true}

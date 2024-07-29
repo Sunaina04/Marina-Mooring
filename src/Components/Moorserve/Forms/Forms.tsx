@@ -25,6 +25,7 @@ import FormFill from './FormFill'
 import { properties } from '../../Utils/MeassageProperties'
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
+import Preview from './Preview'
 
 const Forms = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -62,9 +63,8 @@ const Forms = () => {
   }
 
   const handleView = (rowData: any) => {
-    console.log('rowdata', rowData)
-
-    setViewPdf(rowData.formUrl)
+    console.log('rowData', rowData)
+    setViewPdf(rowData.formData)
   }
 
   const handleDownload = async (rowData: any) => {
@@ -332,13 +332,14 @@ const Forms = () => {
         </div>
 
         {viewPdf && (
-          <Dialog
-            header="View PDF"
-            visible={!!viewPdf}
-            style={{ width: '50vw' }}
-            onHide={() => setViewPdf(null)}>
-            <iframe src={viewPdf} style={{ width: '100%', height: '500px' }} title="PDF Viewer" />
-          </Dialog>
+          <Preview s3Path={viewPdf} onClose={() => setViewPdf(null)} />
+          // <Dialog
+          //   header="View PDF"
+          //   visible={!!viewPdf}
+          //   style={{ width: '50vw' }}
+          //   onHide={() => setViewPdf(null)}>
+          //   <iframe src={viewPdf} style={{ width: '100%', height: '500px' }} title="PDF Viewer" />
+          // </Dialog>
         )}
 
         {/* <Dialog

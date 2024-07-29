@@ -31,22 +31,15 @@ const AddForm: React.FC<FormDataProps> = ({ closeModal }) => {
   const [isLoading, setIsLoading] = useState(true)
   const [formData, setFormData] = useState<any>({
     customerName: '',
-    id: '',
     formName: '',
     uploadFile: '',
   })
 
   const validateFields = () => {
     const errors: { [key: string]: string } = {}
-
-    if (!formData.id) {
-      errors.id = 'ID is required'
-    }
-
     if (!formData.formName) {
       errors.formName = 'Form Name is required'
     }
-
     setFieldsError(errors)
     return errors
   }
@@ -226,30 +219,6 @@ const AddForm: React.FC<FormDataProps> = ({ closeModal }) => {
 
       <div className="ml-4">
         <div className="flex gap-6">
-          <div>
-            <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
-                ID
-                <p className="text-red-600">*</p>
-              </div>
-            </span>
-            <div className="mt-1">
-              <InputComponent
-                value={formData.id}
-                onChange={(e) => handleInputChange('id', e.target.value)}
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: fieldsError.id ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                  paddingLeft: '0.5rem',
-                }}
-              />
-              {fieldsError.id && <small className="p-error">{fieldsError.id}</small>}
-            </div>
-          </div>
-
           <div>
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
