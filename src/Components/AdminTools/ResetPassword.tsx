@@ -90,14 +90,19 @@ const ResetPassword: React.FC<ResetModalProps> = ({ isResetModalOpen, customerId
       return
     }
     setIsLoading(true)
+    const encodedPassword = btoa(password)
     try {
       const editUserPayload = {
-        password: 'password',
-        confirmPassword: 'confirmPassword',
+        password: encodedPassword,
+        confirmPassword: encodedPassword,
+        firstName:customerId?.firstName,
+        lastName:customerId?.lastName,
+        email:customerId.email
       }
+  
       const response = await editCustomer({
         payload: editUserPayload,
-        id: customerId,
+        id: customerId?.id,
       }).unwrap()
       const { status, message } = response as SaveUserResponse
       if (status === 200 || status === 201) {
@@ -312,10 +317,10 @@ const ResetPassword: React.FC<ResetModalProps> = ({ isResetModalOpen, customerId
               />
             </div>
             {fieldErrors.confirmPassword && (
-                <small className="p-error" id="confirmPassword">
-                  {fieldErrors.confirmPassword}
-                </small>
-              )}
+              <small className="p-error" id="confirmPassword">
+                {fieldErrors.confirmPassword}
+              </small>
+            )}
           </div>
         </div>
       </div>

@@ -73,7 +73,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const [editCustomer] = useUpdateUserMutation()
   const [getUsersData] = useGetUsersMutation()
   const { getRolesData } = RolesData()
-  const { getStatesData } = StatesData(country?.id)
+  const { getStatesData } = StatesData(country?.id || customerData?.countryResponseDto?.id)
   const { getCountriesData } = CountriesData()
   const toastRef = useRef<Toast>(null)
 
@@ -84,6 +84,32 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
     specialChar: false,
     length: false,
   })
+
+  const handleEditMode = () => {
+    if ((editMode || editCustomerMode) && customerData) {
+      setFirstName(customerData?.firstName || '')
+      setLastName(customerData?.lastName || '')
+      setCompanyName(customerData?.userID || '')
+      setPhone(customerData?.phoneNumber || '')
+      setEmail(customerData?.email || '')
+      setStreet(customerData?.street || '')
+      setAddress(customerData?.apt || '')
+      setZipCode(customerData?.zipCode || '')
+      setRole(customerData?.roleResponseDto?.name || undefined)
+      setCountry(customerData?.countryResponseDto?.name || undefined)
+      setCompanyName(customerData?.companyName || '')
+      setState(customerData?.stateResponseDto?.name || undefined)
+      const selectedCustomerAdmin = customerUsers?.find(
+        (customer: any) => customer.id === customerAdminId,
+      )
+      const selectedCustomerAdminName = selectedCustomerAdmin ? selectedCustomerAdmin.name : ''
+      if (customerData?.roleResponseDto.id !== 2) {
+        setSelectedCustomerId(selectedCustomerAdminName)
+      }
+      dispatch(setCustomerName(selectedCustomerAdminName))
+      dispatch(setCustomerId(selectedCustomerAdmin ? selectedCustomerAdmin.id : ''))
+    }
+  }
 
   const validateFields = () => {
     const errors: { [key: string]: string } = {}
@@ -444,35 +470,11 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       setIsLoading(false)
       setStatesData(statesData)
     } else {
+      console.log('i am here')
+
       setState('')
     }
   }, [country])
-
-  const handleEditMode = () => {
-    if ((editMode || editCustomerMode) && customerData) {
-      setFirstName(customerData?.firstName || '')
-      setLastName(customerData?.lastName || '')
-      setCompanyName(customerData?.userID || '')
-      setPhone(customerData?.phoneNumber || '')
-      setEmail(customerData?.email || '')
-      setStreet(customerData?.street || '')
-      setAddress(customerData?.apt || '')
-      setZipCode(customerData?.zipCode || '')
-      setRole(customerData?.roleResponseDto?.name || undefined)
-      setCountry(customerData?.countryResponseDto?.name || undefined)
-      setCompanyName(customerData?.companyName || '')
-      setState(customerData?.stateResponseDto?.name || undefined)
-      const selectedCustomerAdmin = customerUsers?.find(
-        (customer: any) => customer.id === customerAdminId,
-      )
-      const selectedCustomerAdminName = selectedCustomerAdmin ? selectedCustomerAdmin.name : ''
-      if (customerData?.roleResponseDto.id !== 2) {
-        setSelectedCustomerId(selectedCustomerAdminName)
-      }
-      dispatch(setCustomerName(selectedCustomerAdminName))
-      dispatch(setCustomerId(selectedCustomerAdmin ? selectedCustomerAdmin.id : ''))
-    }
-  }
 
   const getUserHandler = async () => {
     try {
@@ -520,7 +522,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   }, [])
 
   useEffect(() => {
-    fetchStateDataAndUpdate()
+    if (country) fetchStateDataAndUpdate()
   }, [country])
 
   useEffect(() => {

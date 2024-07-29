@@ -280,5 +280,5 @@ export interface ShowImagesProps {
 
 export interface ResetModalProps {
   isResetModalOpen: () => void
-  customerId: number
+  customerId: any
 }
