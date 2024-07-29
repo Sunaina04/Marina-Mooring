@@ -262,6 +262,7 @@ export interface EditImageProps {
 
 export interface FormDataProps {
   closeModal: () => void
+  getFormsData: () => void
 }
 export interface FormFillProps {
   formOpen: () => void

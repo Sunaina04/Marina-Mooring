@@ -15,7 +15,7 @@ import { FormDataProps } from '../../../Type/ComponentBasedType'
 import { useUploadFormMutation } from '../../../Services/MoorServe/MoorserveApi'
 import { FaTrash } from 'react-icons/fa'
 
-const AddForm: React.FC<FormDataProps> = ({ closeModal }) => {
+const AddForm: React.FC<FormDataProps> = ({ closeModal, getFormsData }) => {
   const selectedCustomerId = useSelector(selectCustomerId)
   const [getCustomer] = useGetCustomerMutation()
   const [uploadForm] = useUploadFormMutation()
@@ -132,13 +132,14 @@ const AddForm: React.FC<FormDataProps> = ({ closeModal }) => {
 
       if (status === 200 || status === 201) {
         setIsLoading(false)
-        closeModal()
         toastRef.current?.show({
           severity: 'success',
           summary: 'Success',
           detail: message,
           life: 3000,
         })
+        closeModal()
+        getFormsData()
       } else {
         setIsLoading(false)
         toastRef?.current?.show({

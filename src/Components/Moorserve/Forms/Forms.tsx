@@ -4,6 +4,7 @@ import { Column } from 'primereact/column'
 import CustomModal from '../../CustomComponent/CustomModal'
 import { ErrorResponse, FormsPayload, FormsResponse } from '../../../Type/ApiTypes'
 import {
+  useDeleteFormMutation,
   useDownloadFormMutation,
   useGetFormsMutation,
 } from '../../../Services/MoorServe/MoorserveApi'
@@ -40,6 +41,7 @@ const Forms = () => {
   const [file, setFile] = useState<File | undefined>(undefined)
   const [getForms] = useGetFormsMutation()
   const [downloadForms] = useDownloadFormMutation()
+  const [deleteForm] = useDeleteFormMutation()
   const { error, response, handleSubmit } = useSubmit()
   const [searchText, setSearchText] = useState('')
   const [pageNumber, setPageNumber] = useState(0)
@@ -68,15 +70,32 @@ const Forms = () => {
   }
 
   const handleDownload = async (rowData: any) => {
+    console.log(rowData, 'rowData')
+
     try {
       const response = await downloadForms({
-        filename: rowData.formName,
+        id: rowData.id,
       }).unwrap()
     } catch (error) {
       const { message } = error as ErrorResponse
       setIsLoading(false)
       console.error('Error fetching forms:', error)
     }
+  }
+
+  const handleDelete = async (rowData: any) => {
+    console.log(rowData, 'rowData')
+
+    try {
+      const response = await deleteForm({
+        id: rowData.id,
+      }).unwrap()
+    } catch (error) {
+      const { message } = error as ErrorResponse
+      setIsLoading(false)
+      console.error('Error fetching forms:', error)
+    }
+    getFormsData()
   }
 
   const getFormsData = async () => {
@@ -158,6 +177,7 @@ const Forms = () => {
         color: 'red',
         label: 'Delete',
         underline: true,
+        onClick: (rowData: any) => handleDelete(rowData),
       },
     ],
     headerStyle: {
@@ -209,7 +229,7 @@ const Forms = () => {
                 marginLeft: '8px',
                 boxShadow: 'none',
               }}
-              children={<AddForm closeModal={handleModalClose} />}
+              children={<AddForm closeModal={handleModalClose} getFormsData={getFormsData} />}
               headerText={<h1 className="text-xl font-extrabold text-black ml-4">Form Details</h1>}
               visible={isModalOpen}
               onClick={handleButtonClick}

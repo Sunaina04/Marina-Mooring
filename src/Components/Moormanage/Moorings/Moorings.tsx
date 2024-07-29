@@ -715,7 +715,7 @@ const Moorings = () => {
                   backgroundColor: '#FFFFFF',
                   position: 'relative',
                 }}
-                className="ml-[45px] w-[20px] flex-1 mt-3">
+                className="ml-[45px] w-[20px] flex-1">
                 <div data-testid="customer-data" className="flex flex-col h-full ">
                   <div className="flex item-center justify-between bg-[#00426F]  rounded-tl-[10px] rounded-tr-[10px] text-white cursor-pointer">
                     <div>
@@ -839,7 +839,7 @@ const Moorings = () => {
           {/* middle container */}
 
           <div
-            className={`min-h-[600] rounded-md border-[1px] ml-5 mt-3 ${modalVisible || customerModalVisible || imageVisible || imageEditVisible || dialogVisible ? 'blur-screen' : ''}`}
+            className={`min-h-[600] rounded-md border-[1px] ml-5 ${modalVisible || customerModalVisible || imageVisible || imageEditVisible || dialogVisible ? 'blur-screen' : ''}`}
             style={{ flexGrow: '1' }}>
             <CustomMooringPositionMap
               position={coordinatesArray ? coordinatesArray : initialPosition}
@@ -894,7 +894,7 @@ const Moorings = () => {
               </div>
             </div>
           ) : (
-            <div className="ml-5 mr-4 mt-3">
+            <div className="ml-5 mr-4">
               <div
                 style={{
                   maxWidth: '450px',
