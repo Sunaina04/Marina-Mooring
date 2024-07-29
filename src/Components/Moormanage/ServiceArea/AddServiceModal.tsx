@@ -115,6 +115,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
     setServiceAreaName(customerData?.serviceAreaName || '')
     setServiceAreaTypeId(customerData?.serviceAreaTypeDto?.type || '')
     setZipCode(customerData?.zipCode || '')
+    setAddress(customerData?.address || '')
     setSelectedState(customerData?.stateResponseDto?.name || '')
     setNotes(customerData?.notes || '')
     setCountry(customerData?.countryResponseDto?.name || undefined)
@@ -138,6 +139,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
         serviceAreaName: serviceAreaName,
         serviceAreaTypeId: serviceAreaTypeId.id,
         zipCode: zipCode,
+        address: address,
         stateId: selectedState?.id,
         countryId: country?.id,
         notes: notes,
@@ -191,7 +193,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
         id: id,
         serviceAreaName: serviceAreaName,
         serviceAreaTypeId: serviceAreaTypeId.id,
-        // streetHouse: address,
+        address: address,
         zipCode: zipCode,
         stateId: state?.id,
         countryId: country?.id,
