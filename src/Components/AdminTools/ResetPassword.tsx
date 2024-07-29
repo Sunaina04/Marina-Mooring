@@ -1,7 +1,7 @@
 import { Button } from 'primereact/button'
 import { Password } from 'primereact/password'
 import { ProgressSpinner } from 'primereact/progressspinner'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useUpdateUserMutation } from '../../Services/AdminTools/AdminToolsApi'
 import { ResetModalProps } from '../../Type/ComponentBasedType'
 import { ErrorResponse, SaveUserResponse } from '../../Type/ApiTypes'
@@ -84,16 +84,16 @@ const ResetPassword: React.FC<ResetModalProps> = ({ isResetModalOpen, customerId
   }
 
   const handleEdit = async () => {
-    // const errors = validateFields()
-    // if (Object.keys(errors).length > 0) {
-    //   setFieldErrors(errors)
-    //   return
-    // }
+    const errors = validateFields()
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors)
+      return
+    }
     setIsLoading(true)
     try {
       const editUserPayload = {
-        password: '',
-        confirmPassword: '',
+        password: 'password',
+        confirmPassword: 'confirmPassword',
       }
       const response = await editCustomer({
         payload: editUserPayload,
@@ -132,38 +132,30 @@ const ResetPassword: React.FC<ResetModalProps> = ({ isResetModalOpen, customerId
 
   return (
     <>
+      <Toast ref={toastRef} />
       <div
-        className={`bg-white rounded-xl p-8  left-420 gap-6 h-auto ${isLoading ? 'blur-screen' : ''}`}
-        style={{ width: '600px' }}>
-        <div className="text-center text-xl font-bold tracking-wide">
-          {/* <img
-            src="/assets/images/moorfindLogo.png"
-            alt="Logo"
-            className="mx-auto w-60 h-14 mb-5"
-            id="logo"
-          /> */}
-          {/* <h1>Reset Password</h1> */}
-        </div>
-        <div className="flex flex-col justify-center text-center min-[320px]:w[270px]">
-          <div className="text-red-500  text-sm"></div>
-          <div className="flex flex-col items-center">
-            <div className="p-input-icon-left">
+        className={`bg-white rounded-xl p-8  left-420 gap-6 h-auto ${isLoading ? 'blur-screen' : ''}`}>
+        <div className="flex flex-col items-center">
+          <div className="p-input-icon-left">
+            <div>
               <div
                 className="card flex justify-content-center"
                 style={{ position: 'relative', width: '100%' }}>
                 <Password
                   type={'text'}
                   name="password"
-                  // value={password}
-                  // onChange={handleChange}
-                  // onKeyUp={handleKeyUp}
+                  value={password}
+                  onChange={(e) => handleInputChange('password', e.target.value)}
+                  //    onKeyUp={handleKeyUp}
+                  onBlur={handleBlur}
                   feedback={false}
                   toggleMask
                   disabled={isLoading}
                   placeholder={isLoading ? 'Loading...' : 'New Password'}
                   style={{
                     padding: '0 2rem 0 3rem',
-                    border: '1px solid #C5D9E0',
+                    border:
+                      fieldErrors.password || errorMessage ? '1px solid red' : '1px solid #D5E1EA',
                     fontSize: '18px',
                     color: '#00426F',
                     borderRadius: '10px',
@@ -186,181 +178,184 @@ const ResetPassword: React.FC<ResetModalProps> = ({ isResetModalOpen, customerId
                   }}
                 />
               </div>
-              <div
-                style={{ width: '230px', fontSize: '14px' }}
-                id="password-message"
-                className="mt-2 hidden ">
-                <h3 className="font-medium text-sm text-[#000000] flex justify-center mr-3">
-                  PASSWORD MUST CONTAIN:
-                </h3>
-                <div className="flex items-center gap-6 p-1 mt-2">
-                  {passwordCriteria.uppercase ? (
-                    <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
-                  ) : (
-                    <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
-                  )}
-                  <p
-                    className={`password-message-item ${passwordCriteria.uppercase ? 'text-green-500' : 'text-red-500'}`}>
-                    At least <span className="font-[500]"> one uppercase letter</span>
-                  </p>
-                </div>
-
-                <div className="flex items-center gap-6 p-1 ">
-                  {passwordCriteria.lowercase ? (
-                    <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
-                  ) : (
-                    <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
-                  )}
-
-                  <p
-                    className={`password-message-item ${passwordCriteria.lowercase ? 'text-green-500' : 'text-red-500'}`}>
-                    At least <span className="font-[500]">one lowercase letter</span>
-                  </p>
-                </div>
-                <div className="flex items-center gap-6 p-1 ">
-                  {passwordCriteria.number ? (
-                    <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
-                  ) : (
-                    <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
-                  )}
-                  <p
-                    className={`password-message-item ${passwordCriteria.number ? 'text-green-500' : 'text-red-500'}`}>
-                    At least<span className="font-[500]">one number</span>
-                  </p>
-                </div>
-
-                <div className="flex items-center gap-6 p-1 ">
-                  {passwordCriteria.specialChar ? (
-                    <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
-                  ) : (
-                    <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
-                  )}
-                  <p
-                    className={`password-message-item ${passwordCriteria.specialChar ? 'text-green-500' : 'text-red-500'}`}>
-                    At least<span className="font-[500]">one special character</span>
-                  </p>
-                </div>
-                <div className="flex items-center gap-6 p-1 ">
-                  {passwordCriteria.length ? (
-                    <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
-                  ) : (
-                    <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
-                  )}
-                  <p
-                    className={`password-message-item ${passwordCriteria.length ? 'text-green-500' : 'text-red-500'}`}>
-                    At least <span className="font-[500]">10 characters</span>
-                  </p>
-                </div>
-              </div>
+              <p className=" w-48" id="password">
+                {fieldErrors.password || errorMessage ? (
+                  <small className="p-error">
+                    {fieldErrors.password}
+                    {errorMessage}
+                  </small>
+                ) : (
+                  ''
+                )}
+              </p>
             </div>
-
-            {isLoading && (
-              <ProgressSpinner
-                style={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  transform: 'translate(-50%, -50%)',
-                  width: '50px',
-                  height: '50px',
-                }}
-                strokeWidth="4"
-              />
-            )}
-
-            <div className="p-input-icon-left">
-              <div
-                className="card flex justify-content-center"
-                style={{ position: 'relative', width: '100%' }}>
-                <Password
-                  type={'text'}
-                  name="password"
-                  // value={password}
-                  // onChange={handleChange}
-                  // onKeyUp={handleKeyUp}
-                  feedback={false}
-                  toggleMask
-                  disabled={isLoading}
-                  placeholder={isLoading ? 'Loading...' : 'Confirm Password'}
-                  style={{
-                    padding: '0 2rem 0 3rem',
-                    border: '1px solid #C5D9E0',
-                    fontSize: '18px',
-                    color: '#00426F',
-                    borderRadius: '10px',
-                    width: '500px',
-                    height: '60px',
-                    marginTop: '2rem',
-                  }}
-                />
-                <img
-                  src="/assets/images/key.png"
-                  alt="Key Icon"
-                  className="p-clickable"
-                  style={{
-                    position: 'absolute',
-                    left: '13px',
-                    top: '70%',
-                    transform: 'translateY(-50%)',
-                    width: '22px',
-                    height: '20px',
-                    pointerEvents: 'none',
-                  }}
-                />
-              </div>
-            </div>
-            <div className="flex justify-end mb-8 mt-5 w-[500px] cursor-pointer underline">
-              <span
-                className="font-normal"
-                style={{
-                  fontSize: '16px',
-                  fontWeight: 400,
-                  lineHeight: '18.75px',
-                  textAlign: 'right',
-                  color: '#00426F',
-                }}></span>
-            </div>
-
             <div
-              className="flex gap-6 bottom-2 absolute left-7"
-              style={{
-                width: '100%',
-                height: '80px',
-                backgroundColor: 'white',
-                padding: '0 12px',
-                bottom: '0px',
-              }}>
-              <Button
-                onClick={handleEdit}
-                label={'Save'}
-                style={{
-                  width: '100px',
-                  height: '42px',
-                  border: 'none',
-                  backgroundColor: '#007bff',
-                  color: 'white',
-                  borderRadius: '0.50rem',
-                  marginTop: '10px',
-                }}
-              />
-              <Button
-                onClick={() => {
-                  isResetModalOpen()
-                }}
-                label={'Back'}
-                text={true}
-                style={{
-                  backgroundColor: 'white',
-                  color: '#000000',
-                  border: 'none',
-                  width: '89px',
-                  height: '42px',
-                  marginTop: '10px',
-                }}
-              />
+              style={{ width: '230px', fontSize: '14px' }}
+              id="password-message"
+              className="mt-2 hidden ">
+              <h3 className="font-medium text-sm text-[#000000] flex justify-center mr-3">
+                PASSWORD MUST CONTAIN:
+              </h3>
+              <div className="flex items-center gap-6 p-1 mt-2">
+                {passwordCriteria.uppercase ? (
+                  <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
+                ) : (
+                  <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
+                )}
+                <p
+                  className={`password-message-item ${passwordCriteria.uppercase ? 'text-green-500' : 'text-red-500'}`}>
+                  At least <span className="font-[500]"> one uppercase letter</span>
+                </p>
+              </div>
+
+              <div className="flex items-center gap-6 p-1 ">
+                {passwordCriteria.lowercase ? (
+                  <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
+                ) : (
+                  <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
+                )}
+
+                <p
+                  className={`password-message-item ${passwordCriteria.lowercase ? 'text-green-500' : 'text-red-500'}`}>
+                  At least <span className="font-[500]">one lowercase letter</span>
+                </p>
+              </div>
+              <div className="flex items-center gap-6 p-1 ">
+                {passwordCriteria.number ? (
+                  <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
+                ) : (
+                  <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
+                )}
+                <p
+                  className={`password-message-item ${passwordCriteria.number ? 'text-green-500' : 'text-red-500'}`}>
+                  At least<span className="font-[500]">one number</span>
+                </p>
+              </div>
+
+              <div className="flex items-center gap-6 p-1 ">
+                {passwordCriteria.specialChar ? (
+                  <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
+                ) : (
+                  <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
+                )}
+                <p
+                  className={`password-message-item ${passwordCriteria.specialChar ? 'text-green-500' : 'text-red-500'}`}>
+                  At least<span className="font-[500]">one special character</span>
+                </p>
+              </div>
+              <div className="flex items-center gap-6 p-1 ">
+                {passwordCriteria.length ? (
+                  <img src={'/assets/images/check-mark.png'} alt="icon" className="w-4" />
+                ) : (
+                  <img src={'/assets/images/close.png'} alt="icon" className="w-3 " />
+                )}
+                <p
+                  className={`password-message-item ${passwordCriteria.length ? 'text-green-500' : 'text-red-500'}`}>
+                  At least <span className="font-[500]">10 characters</span>
+                </p>
+              </div>
             </div>
           </div>
+
+          {isLoading && (
+            <ProgressSpinner
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: '50px',
+                height: '50px',
+              }}
+              strokeWidth="4"
+            />
+          )}
+
+          <div className="p-input-icon-left">
+            <div
+              className="card flex justify-content-center mb-5"
+              style={{ position: 'relative', width: '100%' }}>
+              <Password
+                type={'text'}
+                name="password"
+                value={confirmPassword}
+                onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
+                // onKeyUp={handleKeyUp}
+                feedback={false}
+                toggleMask
+                disabled={isLoading}
+                placeholder={isLoading ? 'Loading...' : 'Confirm Password'}
+                style={{
+                  padding: '0 2rem 0 3rem',
+                  border: fieldErrors.confirmPassword ? '1px solid red' : '1px solid #D5E1EA',
+                  fontSize: '18px',
+                  color: '#00426F',
+                  borderRadius: '10px',
+                  width: '500px',
+                  height: '60px',
+                  marginTop: '2rem',
+                }}
+              />
+              <img
+                src="/assets/images/key.png"
+                alt="Key Icon"
+                className="p-clickable"
+                style={{
+                  position: 'absolute',
+                  left: '13px',
+                  top: '70%',
+                  transform: 'translateY(-50%)',
+                  width: '22px',
+                  height: '20px',
+                  pointerEvents: 'none',
+                }}
+              />
+            </div>
+            {fieldErrors.confirmPassword && (
+                <small className="p-error" id="confirmPassword">
+                  {fieldErrors.confirmPassword}
+                </small>
+              )}
+          </div>
         </div>
+      </div>
+      <div
+        className="flex gap-6 bottom-2 absolute left-7"
+        style={{
+          width: '100%',
+          height: '80px',
+          backgroundColor: 'white',
+          padding: '0 12px',
+          bottom: '0px',
+        }}>
+        <Button
+          onClick={handleEdit}
+          label={'Save'}
+          style={{
+            width: '100px',
+            height: '42px',
+            border: 'none',
+            backgroundColor: '#007bff',
+            color: 'white',
+            borderRadius: '0.50rem',
+            marginTop: '10px',
+          }}
+        />
+        <Button
+          onClick={() => {
+            isResetModalOpen()
+          }}
+          label={'Back'}
+          text={true}
+          style={{
+            backgroundColor: 'white',
+            color: '#000000',
+            border: 'none',
+            width: '89px',
+            height: '42px',
+            marginTop: '10px',
+          }}
+        />
       </div>
     </>
   )

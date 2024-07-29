@@ -721,8 +721,8 @@ const CustomerOwner = () => {
         style={{
           width: '650px',
           minWidth: '650px',
-          height: '450px',
-          minHeight: '450px',
+          height: '500px',
+          minHeight: '500px',
           borderRadius: '1rem',
           fontWeight: '400',
           cursor: 'alias',
@@ -740,8 +740,8 @@ const CustomerOwner = () => {
         style={{
           width: '650px',
           minWidth: '650px',
-          height: '450px',
-          minHeight: '450px',
+          height: '500px',
+          minHeight: '500px',
           borderRadius: '1rem',
           fontWeight: '400',
           cursor: 'alias',
