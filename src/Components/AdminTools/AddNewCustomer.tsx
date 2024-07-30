@@ -49,7 +49,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const [lastName, setLastName] = useState('')
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
-  const [street, setStreet] = useState('')
   const [address, setAddress] = useState('')
   const [zipCode, setZipCode] = useState('')
   const [role, setRole] = useState<Role>()
@@ -73,7 +72,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   const [editCustomer] = useUpdateUserMutation()
   const [getUsersData] = useGetUsersMutation()
   const { getRolesData } = RolesData()
-  const { getStatesData } = StatesData(country?.id || customerData?.countryResponseDto?.id)
+  const { getStatesData } = StatesData(
+    country?.id ? country?.id : customerData?.countryResponseDto?.id,
+  )
   const { getCountriesData } = CountriesData()
   const toastRef = useRef<Toast>(null)
 
@@ -92,8 +93,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       setCompanyName(customerData?.userID || '')
       setPhone(customerData?.phoneNumber || '')
       setEmail(customerData?.email || '')
-      setStreet(customerData?.street || '')
-      setAddress(customerData?.apt || '')
+      setAddress(customerData?.address || '')
       setZipCode(customerData?.zipCode || '')
       setRole(customerData?.roleResponseDto?.name || undefined)
       setCountry(customerData?.countryResponseDto?.name || undefined)
@@ -202,9 +202,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         setEmail(value)
         setErrorMessage('')
         break
-      case 'street':
-        setStreet(value)
-        break
       case 'address':
         setAddress(value)
         break
@@ -245,7 +242,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         companyName,
         phoneNumber: phone,
         email,
-        street,
+        address,
         zipCode,
         stateId: state?.id,
         countryId: country?.id,
@@ -310,7 +307,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         companyName,
         phoneNumber: phone,
         email,
-        street,
+        address,
         zipCode,
         stateId: state?.id,
         countryId: country?.id,
@@ -382,7 +379,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
         companyName,
         phoneNumber: phone,
         email,
-        street,
+        address,
         zipCode,
         password: encodedPassword, // Using base64 encoded password
         stateId: state?.id,

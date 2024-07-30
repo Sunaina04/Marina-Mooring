@@ -95,11 +95,11 @@ const ResetPassword: React.FC<ResetModalProps> = ({ isResetModalOpen, customerId
       const editUserPayload = {
         password: encodedPassword,
         confirmPassword: encodedPassword,
-        firstName:customerId?.firstName,
-        lastName:customerId?.lastName,
-        email:customerId.email
+        firstName: customerId?.firstName,
+        lastName: customerId?.lastName,
+        email: customerId.email,
       }
-  
+
       const response = await editCustomer({
         payload: editUserPayload,
         id: customerId?.id,
@@ -110,7 +110,7 @@ const ResetPassword: React.FC<ResetModalProps> = ({ isResetModalOpen, customerId
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
-          detail: message,
+          detail: 'Password Updated Successfully!!!',
           life: 3000,
         })
         isResetModalOpen()

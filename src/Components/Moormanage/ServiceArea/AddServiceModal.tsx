@@ -115,7 +115,8 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
     setServiceAreaName(customerData?.serviceAreaName || '')
     setServiceAreaTypeId(customerData?.serviceAreaTypeDto?.type || '')
     setZipCode(customerData?.zipCode || '')
-    // setSelectedState(customerData?.stateResponseDto?.name || '')
+    setAddress(customerData?.address || '')
+    setState(customerData?.stateResponseDto?.name || '')
     setNotes(customerData?.notes || '')
     setCountry(customerData?.countryResponseDto?.name || undefined)
     setState(customerData?.stateResponseDto?.name || undefined)
@@ -138,6 +139,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
         serviceAreaName: serviceAreaName,
         serviceAreaTypeId: serviceAreaTypeId.id,
         zipCode: zipCode,
+        address: address,
         stateId: state?.id,
         countryId: country?.id,
         notes: notes,
@@ -191,6 +193,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
         id: id,
         serviceAreaName: serviceAreaName,
         serviceAreaTypeId: serviceAreaTypeId.id,
+        address: address,
         zipCode: zipCode,
         stateId: state?.id,
         countryId: country?.id,
@@ -435,27 +438,6 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
             {/* <p> {errorMessage.state && <small className="p-error">{errorMessage.state}</small>}</p> */}
           </div>
         </div>
-
-
-
-      
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
       <div className="flex  gap-6 mt-4">
         <div>

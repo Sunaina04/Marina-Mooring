@@ -6,7 +6,7 @@ import { Button } from 'primereact/button'
 import { Calendar } from 'primereact/calendar'
 import { useSavePaymentMutation } from '../../../Services/MoorServe/MoorserveApi'
 import { Toast } from 'primereact/toast'
-import { ErrorResponse } from '../../../Type/ApiTypes'
+import { ErrorResponse, SaveUserResponse } from '../../../Type/ApiTypes'
 import { PaymentOptionType } from '../../CommonComponent/MetaDataComponent/MetaDataApi'
 
 const PaymentModal: React.FC<PaymentModalProps> = ({ onHide, workOrderInvoiceId }) => {
@@ -60,7 +60,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ onHide, workOrderInvoiceId 
         payload: savePaymentPayload,
         workOrderInvoiceId: workOrderInvoiceId,
       }).unwrap()
-      const { status, message } = response
+      const { status, message } = response as SaveUserResponse
       if (status === 200 || status === 201) {
         setIsLoading(false)
         onHide()

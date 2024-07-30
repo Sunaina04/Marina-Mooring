@@ -59,6 +59,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [sectorBlock, setSectorBlock] = useState<string>('')
   const [pinCode, setPinCode] = useState<string>('')
   const [countriesData, setCountriesData] = useState<Country[]>()
+  const [address, setAddress] = useState('')
   const [statesData, setStatesData] = useState<State[]>()
   const [type, setType] = useState<MetaData[]>([])
   const [weightData, setWeightData] = useState<MetaData[]>([])
@@ -333,11 +334,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       case 'email':
         setEmail(value)
         break
-      case 'streetHouse':
-        setStreetHouse(value)
-        break
-      case 'sectorBlock':
-        setSectorBlock(value)
+      case 'address':
+        setAddress(value)
         break
       case 'pinCode':
         setPinCode(value)
@@ -363,8 +361,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     setLastName(customer?.lastName || '')
     setPhone(customer?.phone || '')
     setEmail(customer?.emailAddress || '')
-    setStreetHouse(customer?.streetHouse || '')
-    setSectorBlock(customer?.aptSuite || '')
+    setAddress(customer?.address || '')
+    // setSectorBlock(customer?.aptSuite || '')
     setPinCode(customer?.zipCode || '')
     setSelectedCustomerType(customer?.customerTypeDto?.type)
     setSelectedState(customer?.stateResponseDto?.name || undefined)
@@ -411,9 +409,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         firstName: firstName,
         lastName: lastName,
         phone: phone,
-        streetHouse: streetHouse,
+        address: address,
         note: formData.note,
-        aptSuite: sectorBlock,
+        // aptSuite: sectorBlock,
         stateId: selectedState?.id,
         countryId: selectedCountry?.id,
         imageRequestDtoList: imageRequestDtoList,
@@ -453,9 +451,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         firstName: firstName,
         lastName: lastName,
         phone: phone,
-        streetHouse: streetHouse,
+        address: address,
         note: formData.note,
-        aptSuite: sectorBlock,
+        // aptSuite: sectorBlock,
         stateId: selectedState?.id,
         countryId: selectedCountry?.id,
         imageRequestDtoList: imageRequestDtoList,
@@ -510,8 +508,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         firstName: firstName,
         lastName: lastName,
         phone: phone,
-        streetHouse: streetHouse,
-        aptSuite: sectorBlock,
+        address: address,
+        // streetHouse: streetHouse,
+        // aptSuite: sectorBlock,
         stateId: selectedState?.id,
         countryId: selectedCountry?.id,
         imageRequestDtoList: imageRequestDtoList,
@@ -1144,13 +1143,13 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               <div className="mt-2">
                 <InputText
                   id="pinCode"
-                  value={pinCode}
-                  onChange={(e) => handleInputChangeCustomer('pinCode', e.target.value)}
+                  value={address}
+                  onChange={(e) => handleInputChangeCustomer('address', e.target.value)}
                   // placeholder="Zip Code"
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: fieldErrors.pinCode ? '1px solid red' : '1px solid #D5E1EA',
+                    border: fieldErrors.address ? '1px solid red' : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                     paddingLeft: '0.5rem',

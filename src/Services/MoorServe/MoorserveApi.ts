@@ -150,16 +150,16 @@ const MoorserveApi = userApi.injectEndpoints({
 
     //Download Form
     DownloadForm: builder.mutation({
-      query: ({ filename }: { filename?: string }) => ({
-        url: `api/v1/form/downloadForm/${filename}`,
+      query: ({ id }: { id?: number }) => ({
+        url: `api/v1/form/downloadForm/${id}`,
         method: 'GET',
       }),
     }),
 
     //Delete Form
     DeleteForm: builder.mutation({
-      query: ({ id }: { id?: string }) => ({
-        url: `api/v1/deleteForm/${id}`,
+      query: ({ id }: { id?: number }) => ({
+        url: `api/v1/form/deleteForm/${id}`,
         method: 'DELETE',
       }),
     }),
@@ -249,5 +249,5 @@ export const {
   useGetEstimateMutation,
   useGetConvertEstimateToWorkOrderMutation,
   useSavePaymentMutation,
-  useDeleteFormMutation
+  useDeleteFormMutation,
 } = MoorserveApi

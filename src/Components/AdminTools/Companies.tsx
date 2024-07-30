@@ -151,7 +151,7 @@ const CustomerOwner = () => {
       borderBottom: '1px solid #D5E1EA',
       color: '#000000',
       fontWeight: 700,
-      width:"10vw"
+      width: '10vw',
     },
     style: { borderBottom: '1px solid #D5E1EA' },
   }
@@ -186,9 +186,8 @@ const CustomerOwner = () => {
         label: 'Phone',
         style: { ...columnStyle, width: '5vw' },
       },
-      
     ],
-    
+
     [],
   )
 
@@ -202,8 +201,7 @@ const CustomerOwner = () => {
         fontWeight: 700,
         onClick: (rowData) => handleEditButtonUsersClick(rowData),
       },
-      
-      
+
       {
         color: 'black',
         label: 'Disable',
@@ -211,7 +209,7 @@ const CustomerOwner = () => {
         fontWeight: 700,
         onClick: (rowData) => handleDeleteCustomerOwnerUser(rowData),
       },
-      
+
       {
         color: 'black',
         label: 'Reset Password',
@@ -592,7 +590,7 @@ const CustomerOwner = () => {
                   columns={customerOwnerTableColumn}
                   onRowClick={(e) => {
                     setSelectedId(e.data.id)
-                    dispatch(setCustomerName(e.data.name))
+                    dispatch(setCustomerName(e.data.firstName + ' ' + e.data.lastName))
                     dispatch(setCustomerId(e.data.id))
                   }}
                   style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
