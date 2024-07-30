@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import CustomModal from '../../CustomComponent/CustomModal'
@@ -27,6 +27,7 @@ import { properties } from '../../Utils/MeassageProperties'
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import Preview from './Preview'
+import { Toast } from 'primereact/toast'
 
 const Forms = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -47,6 +48,7 @@ const Forms = () => {
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
   const [pageSize, setPageSize] = useState(10)
+  const toastRef = useRef<Toast>(null)
 
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
@@ -76,6 +78,15 @@ const Forms = () => {
       const response = await downloadForms({
         id: rowData.id,
       }).unwrap()
+      const { status, message } = response as FormsResponse
+      if (status === 200) {
+        toastRef?.current?.show({
+          severity: 'success',
+          summary: 'Success',
+          detail: message,
+          life: 3000,
+        })
+      }
     } catch (error) {
       const { message } = error as ErrorResponse
       setIsLoading(false)
@@ -84,12 +95,19 @@ const Forms = () => {
   }
 
   const handleDelete = async (rowData: any) => {
-    console.log(rowData, 'rowData')
-
     try {
       const response = await deleteForm({
         id: rowData.id,
       }).unwrap()
+      const { status, message } = response as FormsResponse
+      if (status === 200) {
+        toastRef?.current?.show({
+          severity: 'success',
+          summary: 'Success',
+          detail: message,
+          life: 3000,
+        })
+      }
     } catch (error) {
       const { message } = error as ErrorResponse
       setIsLoading(false)
@@ -191,6 +209,7 @@ const Forms = () => {
 
   return (
     <>
+      <Toast ref={toastRef} />
       <div
         style={{ height: '150vh' }}
         className={isModalOpen || formOpen ? 'backdrop-blur-lg' : ''}>
