@@ -25,8 +25,8 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
     companyName: '',
     phone: '',
     website: '',
-    vendorAddress:'',
-    remitAddress:'',
+    vendorAddress: '',
+    remitAddress: '',
     countryForAddress: '',
     stateForAddress: '',
     zipCodeForAddress: '',
@@ -104,10 +104,6 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
     if (country) fetchStateDataAndUpdate()
   }, [country])
 
- 
-
-
-
   const handleClick = () => {
     if (editMode) {
       updateVendor()
@@ -140,7 +136,6 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
       note: vendors?.salesRepNote || '',
     }))
   }
-  console.log(vendors,"vendors")
 
   const saveVendor = async () => {
     const errors = validateAddVendorFields()
@@ -517,8 +512,8 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                     <div className="mt-3">
                       <InputComponent
                         placeholder="Email Address"
-                        value={formData.remitAddress}
-                        onChange={(e) => handleInputChange('remitAddress', e.target.value)}
+                        value={formData.remitEmailAddress}
+                        onChange={(e) => handleInputChange('remitEmailAddress', e.target.value)}
                         style={{
                           width: '178.39px',
                           height: '32px',

@@ -613,7 +613,12 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         firstName: item.firstName + ' ' + item.lastName,
         id: item.id,
       }))
-      console.log('first name', firstLastName)
+      console.log(
+        'first name',
+        getTechnicians.map((item) => ({
+          item,
+        })),
+      )
 
       setIsLoading(false)
       // setTechnicians(firstLastName)
@@ -631,6 +636,8 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         firstName: item.firstName + ' ' + item.lastName,
         id: item.id,
       }))
+      console.log('customerData', customersData)
+
       setIsLoading(false)
       setcustomerNameValue(firstLastName)
     }
