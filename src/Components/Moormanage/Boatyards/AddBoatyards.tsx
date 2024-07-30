@@ -73,7 +73,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   const [isLoading, setIsLoading] = useState(true)
   const [addBoatyard] = useAddBoatyardsMutation()
   const [updateBoatyard] = useUpdateBoatyardsMutation()
-  const { getStatesData } = StatesData(country?.id)
+  const { getStatesData } = StatesData(country?.id || customerData?.countryResponseDto?.id)
   const { getCountriesData } = CountriesData()
 
   const validateFields = () => {

@@ -449,7 +449,8 @@ const ServiceArea = () => {
       <>
         <div className={`flex justify-between mt-4 p-3 ml-5 font-normal text-[12px]`}>
           <p className="">
-            {`${selectedServiceArea?.streetHouse || '-'}, ${selectedServiceArea?.aptSuite || '-'}, ${selectedServiceArea?.stateResponseDto?.name || '-'}, ${selectedServiceArea?.countryResponseDto?.name || '-'}`}
+            {`${selectedServiceArea?.address || '-'}, ${selectedServiceArea?.stateResponseDto?.name || '-'}, ${selectedServiceArea?.countryResponseDto?.name || '-'}`}
+           
           </p>
           <p className="mr-[10rem]">{selectedServiceArea?.mooringInventoried || '-'}</p>
           <p className="underline mr-[4rem]">{selectedServiceArea?.gpsCoordinates || '-'}</p>

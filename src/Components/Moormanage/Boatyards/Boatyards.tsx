@@ -390,7 +390,7 @@ const Boatyards = () => {
       <>
         <div className={`flex justify-between mt-4 p-3 ml-5 font-normal text-[12px]`}>
           <p className="">
-            {`${selectedBoatYard?.street || '-'}, ${selectedBoatYard?.apt || '-'}, ${selectedBoatYard?.stateResponseDto?.name || '-'}, ${selectedBoatYard?.countryResponseDto?.name || '-'}`}
+            {`${selectedBoatYard?.address || '-'}, ${selectedBoatYard?.stateResponseDto?.name || '-'}, ${selectedBoatYard?.countryResponseDto?.name || '-'}`}
           </p>
           <p className="mr-[10rem]">{selectedBoatYard?.mooringInventoried || '-'}</p>
           <p className="underline mr-[4rem]">{selectedBoatYard?.gpsCoordinates || '-'}</p>

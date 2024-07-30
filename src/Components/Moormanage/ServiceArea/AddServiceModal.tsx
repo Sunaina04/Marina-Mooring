@@ -31,7 +31,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
   const [notes, setNotes] = useState('')
   const [address, setAddress] = useState('')
 
-  const [selectedState, setSelectedState] = useState<any>()
+  // const [selectedState, setSelectedState] = useState<any>()
   const [selectedType, setSelectedType] = useState<any>()
   const [country, setCountry] = useState<any>()
   const [state, setState] = useState<any>()
@@ -115,7 +115,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
     setServiceAreaName(customerData?.serviceAreaName || '')
     setServiceAreaTypeId(customerData?.serviceAreaTypeDto?.type || '')
     setZipCode(customerData?.zipCode || '')
-    setSelectedState(customerData?.stateResponseDto?.name || '')
+    // setSelectedState(customerData?.stateResponseDto?.name || '')
     setNotes(customerData?.notes || '')
     setCountry(customerData?.countryResponseDto?.name || undefined)
     setState(customerData?.stateResponseDto?.name || undefined)
@@ -138,7 +138,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
         serviceAreaName: serviceAreaName,
         serviceAreaTypeId: serviceAreaTypeId.id,
         zipCode: zipCode,
-        stateId: selectedState?.id,
+        stateId: state?.id,
         countryId: country?.id,
         notes: notes,
         gpsCoordinates: gpsCoordinatesValue,
@@ -191,7 +191,6 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
         id: id,
         serviceAreaName: serviceAreaName,
         serviceAreaTypeId: serviceAreaTypeId.id,
-        // streetHouse: address,
         zipCode: zipCode,
         stateId: state?.id,
         countryId: country?.id,
@@ -236,6 +235,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
   }
 
   const handleSave = () => {
+    console.log("test")
     if (editMode) {
       updateService()
     } else {
@@ -266,7 +266,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
       setIsLoading(false)
       setStatesData(statesData)
     } else {
-      setSelectedState('')
+      setState('')
     }
   }, [country])
 
@@ -275,7 +275,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
   }, [])
 
   useEffect(() => {
-    fetchStateDataAndUpdate()
+    if (country) fetchStateDataAndUpdate()
   }, [country])
 
   useEffect(() => {
@@ -351,13 +351,15 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
         </div>
       </div>
       <div className="mt-3">
-        <span className="font-medium text-sm text-[#000000]">Address</span>
-      </div>
-      <div className="flex gap-6 mt-1">
-        <div>
-          <div className="">
+          <span className="font-medium text-sm text-[#000000]">
+            Address <span className="text-red-500">*</span>
+          </span>
+        </div>
+        <div className="flex gap-6 mt-1">
+          <div>
+            <div className="">
             <Dropdown
-              id="stateDropdown"
+              id="countryDropdown"
               value={country}
               onChange={(e) => {
                 setCountry(e.value)
@@ -377,17 +379,21 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
                 paddingLeft: '0.5rem',
               }}
             />
-          </div>
-        </div>
+            </div>
 
-        <div className="flex flex-col ">
+            {/* <p>
+              {errorMessage.address && <small className="p-error">{errorMessage.address}</small>}
+            </p> */}
+          </div>
+
+          <div className="">
           <Dropdown
             id="stateDropdown"
             placeholder="State"
             editable
-            value={selectedState}
+            value={state}
             onChange={(e) => {
-              setSelectedState(e.target.value)
+              setState(e.target.value)
               setFieldErrors((prevErrors) => ({ ...prevErrors, state: '' }))
             }}
             options={statesData}
@@ -403,19 +409,19 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
               color: 'black',
             }}
           />
-        </div>
-      </div>
+            {/* <p>
+              {errorMessage.aptSuite && <small className="p-error">{errorMessage.aptSuite}</small>}
+            </p> */}
+          </div>
 
-      <div className="flex  gap-6 mt-4">
-        <div>
-          <div className="">
+          <div className="flex flex-col ">
             <InputComponent
               value={zipCode}
               onChange={(e) => {
                 setZipCode(e.target.value)
                 // setErrorMessage((prev) => ({ ...prev, zipCode: '' }))
               }}
-              placeholder="Zip code"
+              placeholder="Zip Code"
               style={{
                 width: '230px',
                 height: '32px',
@@ -425,13 +431,36 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
                 padding: '0.5rem',
               }}
             />
+
+            {/* <p> {errorMessage.state && <small className="p-error">{errorMessage.state}</small>}</p> */}
           </div>
         </div>
 
+
+
+      
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <div className="flex  gap-6 mt-4">
         <div>
-          <div>
-            <div className="">
-              <InputComponent
+          <div className="">
+          <InputComponent
                 value={address}
                 onChange={(e) => {
                   setAddress(e.target.value)
@@ -446,11 +475,12 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
                   padding: '0.5rem',
                 }}
               />
-            </div>
           </div>
         </div>
+
         <div>
-          <div className="">
+          <div>
+            <div className="">
             <InputComponent
               value={gpsCoordinatesValue}
               onChange={handleGpsCoordinatesChange}
@@ -464,7 +494,10 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
                 padding: '0.5rem',
               }}
             />
+            </div>
           </div>
+        </div>
+        <div>        
         </div>
       </div>
 
