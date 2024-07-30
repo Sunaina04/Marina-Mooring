@@ -1,23 +1,13 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import InputComponent from '../../CommonComponent/InputComponent'
 import { Button } from 'primereact/button'
 import { Toast } from 'primereact/toast'
-import { useGetCustomerMutation } from '../../../Services/MoorManage/MoormanageApi'
-import {
-  CustomerPayload,
-  CustomerResponse,
-  ErrorResponse,
-  formUpload,
-} from '../../../Type/ApiTypes'
-import { selectCustomerId } from '../../../Store/Slice/userSlice'
-import { useSelector } from 'react-redux'
-import { FormDataProps } from '../../../Type/ComponentBasedType'
 import { useUploadFormMutation } from '../../../Services/MoorServe/MoorserveApi'
 import { FaTrash } from 'react-icons/fa'
+import { ErrorResponse, formUpload } from '../../../Type/ApiTypes'
+import { FormDataProps } from '../../../Type/ComponentBasedType'
 
 const AddForm: React.FC<FormDataProps> = ({ closeModal, getFormsData }) => {
-  const selectedCustomerId = useSelector(selectCustomerId)
-  const [getCustomer] = useGetCustomerMutation()
   const [uploadForm] = useUploadFormMutation()
   const [uploadFile, setUploadFile] = useState<File | null>(null)
   const [fileName, setFileName] = useState('')
@@ -27,8 +17,6 @@ const AddForm: React.FC<FormDataProps> = ({ closeModal, getFormsData }) => {
   const [fieldsError, setFieldsError] = useState<{ [key: string]: string }>({})
   const toastRef = useRef<Toast>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const [customerData, setCustomerData] = useState<any[]>([])
-  const [isLoading, setIsLoading] = useState(true)
   const [formData, setFormData] = useState<any>({
     customerName: '',
     formName: '',
@@ -43,42 +31,6 @@ const AddForm: React.FC<FormDataProps> = ({ closeModal, getFormsData }) => {
     setFieldsError(errors)
     return errors
   }
-
-  const getCustomerData = useCallback(async () => {
-    setIsLoading(true)
-    try {
-      const response = await getCustomer({}).unwrap()
-      const { status, content, message } = response as CustomerResponse
-      if (status === 200 && Array.isArray(content)) {
-        if (content?.length > 0) {
-          setIsLoading(false)
-          const extractedData = content.map((item) => {
-            const fullname = `${item.firstName} ${item.lastName}`
-            return {
-              label: fullname,
-              id: item.id,
-            }
-          })
-          setCustomerData(extractedData)
-        } else {
-          setIsLoading(false)
-          setCustomerData([])
-        }
-      } else {
-        setIsLoading(false)
-        toastRef.current?.show({
-          severity: 'error',
-          summary: 'Error',
-          detail: message,
-          life: 3000,
-        })
-      }
-    } catch (error) {
-      setIsLoading(false)
-      const { message: msg } = error as ErrorResponse
-      console.error('Error occurred while fetching customer data:', msg)
-    }
-  }, [getCustomer, selectedCustomerId])
 
   const handleInputChange = (field: string, value: any) => {
     setFormData({
@@ -109,7 +61,6 @@ const AddForm: React.FC<FormDataProps> = ({ closeModal, getFormsData }) => {
       setFieldsError(errors)
       return
     }
-
     if (!encodedFile) {
       toastRef.current?.show({
         severity: 'error',
@@ -118,9 +69,6 @@ const AddForm: React.FC<FormDataProps> = ({ closeModal, getFormsData }) => {
       })
       return
     }
-
-    setIsLoading(true)
-
     try {
       const payload = {
         formName: formData.formName,
@@ -128,10 +76,7 @@ const AddForm: React.FC<FormDataProps> = ({ closeModal, getFormsData }) => {
       }
       const response = await uploadForm(payload).unwrap()
       const { status, message } = response as formUpload
-      console.log(message, 'messagee')
-
       if (status === 200 || status === 201) {
-        setIsLoading(false)
         toastRef.current?.show({
           severity: 'success',
           summary: 'Success',
@@ -141,7 +86,6 @@ const AddForm: React.FC<FormDataProps> = ({ closeModal, getFormsData }) => {
         closeModal()
         getFormsData()
       } else {
-        setIsLoading(false)
         toastRef?.current?.show({
           severity: 'error',
           summary: 'Error',
@@ -151,14 +95,10 @@ const AddForm: React.FC<FormDataProps> = ({ closeModal, getFormsData }) => {
       }
     } catch (error) {
       const { message, data } = error as ErrorResponse
-
-      console.log(message, 'message')
-
-      setIsLoading(false)
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: data.message,
+        detail: message || data?.message,
         life: 3000,
       })
     }
@@ -208,11 +148,10 @@ const AddForm: React.FC<FormDataProps> = ({ closeModal, getFormsData }) => {
     setFileSize(null)
     setEncodedFile(null)
     setUploadStatus('idle')
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''
+    }
   }
-
-  useEffect(() => {
-    getCustomerData()
-  }, [selectedCustomerId])
 
   return (
     <>
