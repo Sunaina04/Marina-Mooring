@@ -437,9 +437,9 @@ export interface VendorPayload {
   companyName: string
   vendorName: string
   companyPhoneNumber: string
+  address: string
+  remitAddress: string
   website: string
-  street: string
-  aptSuite: string
   state: string
   country: string
   zipCode: number
@@ -452,8 +452,6 @@ export interface VendorPayload {
   salesRepNote: string
   stateResponseDto: MetaData
   countryResponseDto: MetaData
-  remitStreet: string
-  remitApt: string
   remitStateResponseDto: MetaData
   remitCountryResponseDto: MetaData
   remitZipCode: string

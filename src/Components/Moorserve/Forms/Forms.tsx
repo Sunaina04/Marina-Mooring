@@ -58,6 +58,11 @@ const Forms = () => {
   const handleButtonClick = () => {
     setIsModalOpen(true)
   }
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPageNumber(0)
+    setPageNumber1(0)
+    setSearchText(e.target.value)
+  }
 
   const handleModalClose = () => {
     setIsModalOpen(false)
@@ -298,11 +303,10 @@ const Forms = () => {
                 />
                 <InputText
                   placeholder="Search"
-                  id="placeholder"
-                  className="pl-10 w-[237px] 
-                  bg-[#00426F]
-              
-                  h-[35px] rounded-lg border text-white border-[#D5E1EA] focus:outline-none"
+                  onChange={handleSearch}
+                  id="placeholderText"
+                  className="pl-10 w-[237px] bg-[#00426F] h-[35px] rounded-lg border text-[white] 
+                  border-[#D5E1EA] placeholder:text-[#FFFFFF]  focus:outline-none overflow-hidden"
                 />
               </div>
             </div>
