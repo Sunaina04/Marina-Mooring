@@ -48,8 +48,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   getCustomerRecord,
 }) => {
   const selectedCustomerId = useSelector(selectCustomerId)
-  const [selectedCountry, setSelectedCountry] = useState<any>()
-  const [selectedState, setSelectedState] = useState<any>()
+  // const [selectedCountry, setSelectedCountry] = useState<any>()
+  // const [selectedState, setSelectedState] = useState<any>()
+  const [country, setCountry] = useState<any>()
+  const [state, setState] = useState<any>()
   const [selectedCustomerType, setSelectedCustomerType] = useState<any>()
   const [firstName, setFirstName] = useState<string>('')
   const [lastName, setLastName] = useState<string>('')
@@ -59,8 +61,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [sectorBlock, setSectorBlock] = useState<string>('')
   const [pinCode, setPinCode] = useState<string>('')
   const [countriesData, setCountriesData] = useState<Country[]>()
-  const [address, setAddress] = useState('')
   const [statesData, setStatesData] = useState<State[]>()
+  const [address, setAddress] = useState('')
   const [type, setType] = useState<MetaData[]>([])
   const [weightData, setWeightData] = useState<MetaData[]>([])
   const [chainData, setChainData] = useState<MetaData[]>([])
@@ -138,7 +140,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     imagesNote: '',
   })
 
-  const { getStatesData } = StatesData(selectedCountry?.id)
+  const { getStatesData } = StatesData(country?.id || customer?.countryResponseDto?.id)
   const { getTypeOfBoatTypeData } = TypeOfBoatType()
   const { getTypeOfWeightData } = TypeOfWeightData()
   const { getTypeOfChainData } = TypeOfChainCondition()
@@ -341,10 +343,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         setPinCode(value)
         break
       case 'state':
-        setSelectedState(value)
+        setState(value)
         break
       case 'country':
-        setSelectedCountry(value)
+        setCountry(value)
         break
       case 'CustomerType':
         setSelectedCustomerType(value)
@@ -365,8 +367,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     // setSectorBlock(customer?.aptSuite || '')
     setPinCode(customer?.zipCode || '')
     setSelectedCustomerType(customer?.customerTypeDto?.type)
-    setSelectedState(customer?.stateResponseDto?.name || undefined)
-    setSelectedCountry(customer?.countryResponseDto?.name || undefined)
+    setState(customer?.stateResponseDto?.name || undefined)
+    setCountry(customer?.countryResponseDto?.name || undefined)
     setGpsCoordinatesValue(mooringRowData?.gpsCoordinates || '')
     setCheckedDock(selectedCustomerType === 'Dock')
     setFormData((prevState: any) => ({
@@ -412,8 +414,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         address: address,
         note: formData.note,
         // aptSuite: sectorBlock,
-        stateId: selectedState?.id,
-        countryId: selectedCountry?.id,
+        stateId: state?.id,
+        countryId: country?.id,
         imageRequestDtoList: imageRequestDtoList,
         customerTypeId: selectedCustomerType === 'Dock' ? 5 : selectedCustomerType?.id,
         ...(email && { emailAddress: email }),
@@ -454,8 +456,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         address: address,
         note: formData.note,
         // aptSuite: sectorBlock,
-        stateId: selectedState?.id,
-        countryId: selectedCountry?.id,
+        stateId: state?.id,
+        countryId: country?.id,
         imageRequestDtoList: imageRequestDtoList,
         customerTypeId: selectedCustomerType === 'Dock' ? 5 : selectedCustomerType?.id,
         ...(email && { emailAddress: email }),
@@ -509,10 +511,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         lastName: lastName,
         phone: phone,
         address: address,
-        // streetHouse: streetHouse,
-        // aptSuite: sectorBlock,
-        stateId: selectedState?.id,
-        countryId: selectedCountry?.id,
+        stateId: state?.id,
+        countryId: country?.id,
         imageRequestDtoList: imageRequestDtoList,
         customerOwnerId: selectedCustomerId,
         customerTypeId: selectedCustomerType === 'Dock' ? 5 : selectedCustomerType?.id,
@@ -740,9 +740,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       setIsLoading(false)
       setStatesData(statesData)
     } else {
-      setSelectedState('')
+      setState('')
     }
-  }, [selectedCountry])
+  }, [country])
 
   const handleClick = () => {
     if (editCustomerMode) {
@@ -826,7 +826,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
   useEffect(() => {
     fetchStateDataAndUpdate()
-  }, [selectedCountry])
+  }, [country])
 
   useEffect(() => {
     if (editMode && customer) {
@@ -1057,7 +1057,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     <div className="mt-2">
                       <Dropdown
                         id="country"
-                        value={selectedCountry}
+                        value={country}
                         onChange={(e) => handleInputChangeCustomer('country', e.target.value)}
                         options={countriesData}
                         optionLabel="name"
@@ -1087,7 +1087,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     <div className="mt-2">
                       <Dropdown
                         id="state"
-                        value={selectedState}
+                        value={state}
                         options={statesData}
                         onChange={(e) => handleInputChangeCustomer('state', e.target.value)}
                         optionLabel="name"
