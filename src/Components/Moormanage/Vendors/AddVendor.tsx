@@ -24,7 +24,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
     phone: '',
     website: '',
     countryForAddress: '',
-    stateForAddress: '', 
+    stateForAddress: '',
     zipCodeForAddress: '',
     emailForAddress: '',
     countryForRemit: '',
@@ -88,10 +88,10 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
       setIsLoading(false)
       setStatesData(statesData)
     } else {
-      setFormData({
-        ...formData,
-        ['stateForAddress']: '',
-      })
+      setFormData((prevFormData: any) => ({
+        ...prevFormData,
+        stateForAddress: '',
+      }))
     }
   }, [formData?.countryForAddress?.id])
 
