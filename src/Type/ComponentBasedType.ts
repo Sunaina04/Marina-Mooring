@@ -283,3 +283,8 @@ export interface ResetModalProps {
   isResetModalOpen: () => void
   customerId: any
 }
+
+export interface PreviewProps {
+  s3Path: string
+  onClose: () => void
+}

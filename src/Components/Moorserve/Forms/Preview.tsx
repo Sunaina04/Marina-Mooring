@@ -1,36 +1,29 @@
-import { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Sidebar } from 'primereact/sidebar'
-import CryptoJS from 'crypto-js'
 import { ProgressSpinner } from 'primereact/progressspinner'
-
-interface PreviewProps {
-  s3Path: string
-  onClose: () => void
-}
+import { Worker, Viewer } from '@react-pdf-viewer/core'
+import { PreviewProps } from '../../../Type/ComponentBasedType'
+import { Document } from 'react-pdf'
+import '@react-pdf-viewer/core/lib/styles/index.css'
 
 const Preview: React.FC<PreviewProps> = ({ s3Path, onClose }) => {
   const [loading, setLoading] = useState<boolean>(false)
   const encryptedBase64Key = 'bXVzdGJlMTZieXRlc2tleQ=='
   const [pdfUrl, setPdfUrl] = useState<string | null>(null)
-  const [viewAccess, setViewAccess] = useState<boolean>(false)
-  const iframeRef = useRef<HTMLIFrameElement>(null)
-  const interval = useRef<NodeJS.Timeout | null>(null)
+  const [viewAccess, setViewAccess] = useState<boolean>(true)
 
   const convertBytetoUrl = (encryptedBase64: string) => {
     const mimeType = 'application/pdf'
-    const parsedBase64key = CryptoJS.enc.Base64.parse(encryptedBase64Key)
-    const decryptedData = CryptoJS.AES.decrypt(encryptedBase64, parsedBase64key, {
-      mode: CryptoJS.mode.ECB,
-      padding: CryptoJS.pad.Pkcs7,
-    })
+
     try {
-      const decryptedText = decryptedData.toString(CryptoJS.enc.Utf8)
-      const binaryData = atob(decryptedText)
+      const binaryData = atob(encryptedBase64)
       const arrayBuffer = new ArrayBuffer(binaryData.length)
       const uint8Array = new Uint8Array(arrayBuffer)
+
       for (let i = 0; i < binaryData.length; i++) {
         uint8Array[i] = binaryData.charCodeAt(i)
       }
+
       const blob = new Blob([uint8Array], { type: mimeType })
       const pdfUrl = URL.createObjectURL(blob)
       setPdfUrl(pdfUrl)
@@ -38,66 +31,34 @@ const Preview: React.FC<PreviewProps> = ({ s3Path, onClose }) => {
       console.error('Error parsing decrypted JSON:', error)
     }
   }
-
   useEffect(() => {
-    const docRights = JSON.parse(localStorage.getItem('docRights') || '[]')
-    const hasDownloadAccess = docRights.some((item: any) => item.name === 'Download')
-    setViewAccess(hasDownloadAccess)
-  }, [])
-
-  //   useEffect(() => {
-  //     setLoading(true)
-  //     requestApi(`/v1/oms/enquiry/download?s3FilePath=${s3Path}`)
-  //       .then((res) => {
-  //         setLoading(false)
-  //         convertBytetoUrl(res.bytes)
-  //       })
-  //       .catch((err) => {
-  //         console.log('Error:', err)
-  //         setLoading(false)
-  //       })
-  //   }, [s3Path])
-
-  const clearCheckingInterval = () => {
-    if (interval.current) {
-      clearInterval(interval.current)
-    }
-  }
-
-  const onIframeLoaded = () => {
-    clearCheckingInterval()
-  }
-
-  useEffect(() => {
-    interval.current = setInterval(() => {
-      try {
-        if (iframeRef.current && iframeRef.current.contentWindow?.document.body.innerHTML === '') {
-          iframeRef.current.src = pdfUrl || ''
+    //@ts-expect-error
+    if (typeof Promise?.withResolvers === 'undefined') {
+      if (window)
+        // @ts-expect-error This does not exist outside of polyfill which this is doing
+        window.Promise.withResolvers = function () {
+          let resolve, reject
+          const promise = new Promise((res, rej) => {
+            resolve = res
+            reject = rej
+          })
+          return { promise, resolve, reject }
         }
-      } catch (e) {
-        onIframeLoaded()
-      }
-    }, 2000)
+    }
+  })
 
-    return clearCheckingInterval
+  useEffect(() => {
+    if (s3Path) {
+      setLoading(true)
+      convertBytetoUrl(s3Path)
+    }
+  }, [s3Path])
+
+  useEffect(() => {
+    if (pdfUrl) {
+      setLoading(false)
+    }
   }, [pdfUrl])
-
-  if (!viewAccess) {
-    return (
-      <Sidebar visible position="right" style={{ width: '40vw' }} onHide={onClose}>
-        <div
-          style={{
-            height: '100vh',
-            fontSize: 14,
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          Access denied as user does not have Download rights
-        </div>
-      </Sidebar>
-    )
-  }
 
   if (loading) {
     return (
@@ -137,18 +98,29 @@ const Preview: React.FC<PreviewProps> = ({ s3Path, onClose }) => {
   }
 
   return (
-    <Sidebar visible position="right" style={{ width: '40vw' }} onHide={onClose}>
-      <iframe
-        ref={iframeRef}
-        title="PDF Viewer"
-        src={pdfUrl || ''}
-        width="100%"
-        height="100%"
-        style={{ border: '1px solid black' }}
-        onLoad={onIframeLoaded}
-      />
-    </Sidebar>
+    <Worker workerUrl={`https://unpkg.com/pdfjs-dist@2.10.377/build/pdf.worker.min.js`}>
+      <div style={{ height: '100vh' }}>
+        abcd
+        <Viewer fileUrl={'https://pdfobject.com/pdf/sample.pdf'} />
+      </div>
+    </Worker>
   )
+  // return <Document file={'https://unpkg.com/pdfjs-dist@2.10.377/build/pdf.worker.min.js'} />
+
+  // return (
+  //   <>
+  //     <script src="~/js/libs/pdf.js"></script>
+  //     <Sidebar visible position="right" style={{ width: '40vw' }} onHide={onClose}>
+  //       {pdfUrl && (
+  // <Worker workerUrl={`https://unpkg.com/pdfjs-dist@2.10.377/build/pdf.worker.min.js`}>
+  //   <div style={{ height: '100vh' }}>
+  //     <Viewer fileUrl={pdfUrl} plugins={[defaultLayoutPluginInstance]} />
+  //   </div>
+  // </Worker>
+  //       )}
+  //     </Sidebar>
+  //   </>
+  // )
 }
 
 export default Preview

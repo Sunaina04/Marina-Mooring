@@ -34,10 +34,6 @@ const Forms = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [viewPdf, setViewPdf] = useState(null)
   const [formsData, setFormsData] = useState<FormsPayload[]>([])
-  const [customerName, setCustomerName] = useState('')
-  const [customerID, setCustomerID] = useState('')
-  const [formOpen, setFormOpen] = useState(false)
-  const [formName, setFormName] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [file, setFile] = useState<File | undefined>(undefined)
   const [getForms] = useGetFormsMutation()
@@ -62,12 +58,8 @@ const Forms = () => {
   const handleModalClose = () => {
     setIsModalOpen(false)
   }
-  const handleFormClose = () => {
-    setFormOpen(false)
-  }
 
   const handleView = (rowData: any) => {
-    console.log('rowData', rowData)
     setViewPdf(rowData.formData)
   }
 
@@ -210,29 +202,11 @@ const Forms = () => {
   return (
     <>
       <Toast ref={toastRef} />
-      <div
-        style={{ height: '150vh' }}
-        className={isModalOpen || formOpen ? 'backdrop-blur-lg' : ''}>
+      <div style={{ height: '150vh' }} className={isModalOpen ? 'backdrop-blur-lg' : ''}>
         <Header header="MOORSERVE/Forms Library" />
 
         <div className="flex justify-end">
           <div className="flex mr-16 mt-10">
-            {/* <Button
-              label="Fill in Form"
-              onClick={() => setFormOpen(true)}
-              style={{
-                width: '121px',
-                height: '44px',
-                minHeight: '44px',
-                backgroundColor: '#0098FF',
-                cursor: 'pointer',
-                fontSize: '14px',
-                fontWeight: 600,
-                color: 'white',
-                borderRadius: '0.50rem',
-                marginLeft: '15px',
-                boxShadow: 'none',
-              }}></Button> */}
             <CustomModal
               buttonText={'Upload New'}
               buttonStyle={{
@@ -370,35 +344,7 @@ const Forms = () => {
           </div>
         </div>
 
-        {viewPdf && (
-          <Preview s3Path={viewPdf} onClose={() => setViewPdf(null)} />
-          // <Dialog
-          //   header="View PDF"
-          //   visible={!!viewPdf}
-          //   style={{ width: '50vw' }}
-          //   onHide={() => setViewPdf(null)}>
-          //   <iframe src={viewPdf} style={{ width: '100%', height: '500px' }} title="PDF Viewer" />
-          // </Dialog>
-        )}
-
-        {/* <Dialog
-        header="Fill in Form"
-        position="center"
-        style={{
-          width: '800px',
-          minWidth: '800px',
-          height: '300px',
-          minHeight: '300px',
-          borderRadius: '1rem',
-          fontWeight: '400',
-          cursor: 'alias',
-        }}
-        draggable={false}
-        headerStyle={{ cursor: 'alias' }}
-        visible={formOpen}
-        onHide={handleFormClose}>
-        <FormFill formOpen={handleFormClose}/>
-      </Dialog> */}
+        {viewPdf && <Preview s3Path={viewPdf} onClose={() => setViewPdf(null)} />}
       </div>
     </>
   )

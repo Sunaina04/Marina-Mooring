@@ -74,7 +74,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   const [mooringBasedOnCustomerId, setMooringBasedOnCustomerId] = useState<MetaData[]>()
   const [boatyardBasedOnMooringId, setBoatyardBasedOnMooringId] = useState<MetaData[]>()
   const [customerBasedOnMooringId, setCustomerBasedOnMooringId] = useState<any[]>()
-  const [technicians, setTechnicians] = useState<MetaDataTechnician[]>()
+  const [technicians, setTechnicians] = useState<any[]>()
   const [moorings, setMoorings] = useState<MetaData[]>()
   const [workOrderStatusValue, setWorkOrderStatusValue] = useState<MetaData[]>()
   const [customerNameValue, setcustomerNameValue] = useState<any[]>()
@@ -362,10 +362,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     const newImages = [...customerImages]
     newImages.splice(index, 1)
     setCustomerImages(newImages)
-
-    // const newEncodedImages = [...encodedImages]
-    // newEncodedImages.splice(index, 1)
-    // setEncodedImages(newEncodedImages)
   }
 
   const SaveWorkOrder = async () => {
@@ -611,8 +607,16 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     const { boatYardName } = await getBoatYardNameData()
 
     if (getTechnicians !== null) {
+      console.log(getTechnicians)
+
+      const firstLastName = getTechnicians.map((item) => ({
+        firstName: item.firstName + ' ' + item.lastName,
+        id: item.id,
+      }))
+      console.log('first name', firstLastName)
+
       setIsLoading(false)
-      setTechnicians(getTechnicians)
+      // setTechnicians(firstLastName)
     }
     if (mooringIds !== null) {
       setIsLoading(false)
