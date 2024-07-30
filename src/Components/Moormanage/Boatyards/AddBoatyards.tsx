@@ -28,9 +28,11 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   const selectedCustomerId = useSelector(selectCustomerId)
   const [boatyardName, setBoatyardName] = useState('')
   const [address, setAddress] = useState('')
-  const [selectedState, setSelectedState] = useState<any>()
+  // const [selectedState, setSelectedState] = useState<any>()
+  const [state, setState] = useState<any>()
   const [country, setCountry] = useState<any>()
   const [zipCode, setZipCode] = useState('')
+  const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
   const [mainContact, setMainContact] = useState('')
   const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<any>()
   const [countriesData, setCountriesData] = useState<Country[]>()
@@ -73,7 +75,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   const [isLoading, setIsLoading] = useState(true)
   const [addBoatyard] = useAddBoatyardsMutation()
   const [updateBoatyard] = useUpdateBoatyardsMutation()
-  const { getStatesData } = StatesData(country?.id)
+  const { getStatesData } = StatesData(country?.id || customerData?.countryResponseDto?.id)
   const { getCountriesData } = CountriesData()
 
   const validateFields = () => {
@@ -110,9 +112,9 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
     setStorageList(customerData?.storageAreas)
     setAddress(customerData?.address || '')
     setZipCode(customerData?.zipCode || '')
-    setSelectedState(customerData?.stateResponseDto?.name || '')
+    setState(customerData?.stateResponseDto?.name || undefined)
     setMainContact(customerData?.mainContact || '')
-    setCountry(customerData?.countryResponseDto?.name || '')
+    setCountry(customerData?.countryResponseDto?.name || undefined)
     setGpsCoordinatesValue(customerData?.gpsCoordinates || '')
   }
 
@@ -132,7 +134,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
         address: address,
         zipCode: zipCode,
         contact: mainContact,
-        stateId: selectedState?.id,
+        stateId: state?.id,
         countryId: country?.id,
         mainContact: mainContact,
         gpsCoordinates: gpsCoordinatesValue,
@@ -189,8 +191,10 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
         address: address,
         zipCode: zipCode,
         contact: mainContact,
-        stateId: selectedState?.id || customerData?.stateResponseDto?.id,
-        countryId: country?.id || customerData?.countryResponseDto?.id,
+        // stateId: selectedState?.id || customerData?.stateResponseDto?.id,
+        // countryId: country?.id || customerData?.countryResponseDto?.id,
+        stateId: state?.id,
+        countryId: country?.id,
         mainContact: mainContact,
         gpsCoordinates: gpsCoordinatesValue,
         customerOwnerId: selectedCustomerId,
@@ -270,7 +274,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
       setIsLoading(false)
       setStatesData(statesData)
     } else {
-      setSelectedState('')
+      setState('')
     }
   }, [country])
 
@@ -278,8 +282,11 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
     fetchDataAndUpdate()
   }, [fetchDataAndUpdate])
 
+  // useEffect(() => {
+  //   fetchStateDataAndUpdate()
+  // }, [country])
   useEffect(() => {
-    fetchStateDataAndUpdate()
+    if (country) fetchStateDataAndUpdate()
   }, [country])
 
   useEffect(() => {
@@ -472,10 +479,10 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
               id="stateDropdown"
               placeholder="State"
               editable
-              value={selectedState}
+              value={state}
               onChange={(e) => {
-                setSelectedState(e.target.value)
-                setErrorMessage((prev) => ({ ...prev, state: '' }))
+                setState(e.target.value)
+                setFieldErrors((prevErrors) => ({ ...prevErrors, state: '' }))
               }}
               options={statesData}
               optionLabel="name"
