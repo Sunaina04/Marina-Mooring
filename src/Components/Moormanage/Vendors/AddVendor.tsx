@@ -17,6 +17,8 @@ import { Toast } from 'primereact/toast'
 const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, getVendor }) => {
   const [countriesData, setCountriesData] = useState<Country[]>()
   const [statesData, setStatesData] = useState<State[]>()
+  const [country, setCountry] = useState<any>()
+  const [state, setState] = useState<any>()
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
   const [isLoading, setIsLoading] = useState(true)
   const [formData, setFormData] = useState<any>({
@@ -40,7 +42,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
   })
   const [addVendor] = useAddVendorsMutation()
   const [editVendor] = useUpdateVendorMutation()
-  const { getStatesData } = StatesData(formData?.countryForAddress?.id)
+  const { getStatesData } = StatesData(country?.id || vendors?.countryResponseDto?.id)
   const { getCountriesData } = CountriesData()
   const toastRef = useRef<Toast>(null)
 
@@ -88,12 +90,21 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
       setIsLoading(false)
       setStatesData(statesData)
     } else {
-      setFormData((prevFormData: any) => ({
-        ...prevFormData,
-        stateForAddress: '',
-      }))
+      setState('')
     }
-  }, [formData?.countryForAddress?.id])
+  }, [country])
+
+  useEffect(() => {
+    fetchDataAndUpdate()
+  }, [])
+
+  useEffect(() => {
+    if (country) fetchStateDataAndUpdate()
+  }, [country])
+
+ 
+
+
 
   const handleClick = () => {
     if (editMode) {
@@ -109,8 +120,8 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
       companyName: vendors?.vendorName || '',
       phone: vendors?.companyPhoneNumber || '',
       website: vendors?.website || '',
-      countryForAddress: vendors?.countryResponseDto?.name || '',
-      stateForAddress: vendors?.stateResponseDto?.name || '',
+      countryForAddress: vendors?.countryResponseDto?.name || undefined,
+      stateForAddress: vendors?.stateResponseDto?.name || undefined,
       zipCodeForAddress: vendors?.zipCode || '',
       emailForAddress: vendors?.companyEmail || '',
       countryForRemit: vendors?.remitCountryResponseDto?.name || '',
