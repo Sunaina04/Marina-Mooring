@@ -3,56 +3,20 @@ import { Sidebar } from 'primereact/sidebar'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { Worker, Viewer } from '@react-pdf-viewer/core'
 import { PreviewProps } from '../../../Type/ComponentBasedType'
-import { Document } from 'react-pdf'
 import '@react-pdf-viewer/core/lib/styles/index.css'
+import { convertBytetoUrl } from '../../Helper/Helper'
 
-const Preview: React.FC<PreviewProps> = ({ s3Path, onClose }) => {
+const Preview: React.FC<PreviewProps> = ({ fileData, onClose }) => {
   const [loading, setLoading] = useState<boolean>(false)
-  const encryptedBase64Key = 'bXVzdGJlMTZieXRlc2tleQ=='
-  const [pdfUrl, setPdfUrl] = useState<string | null>(null)
-  const [viewAccess, setViewAccess] = useState<boolean>(true)
-
-  const convertBytetoUrl = (encryptedBase64: string) => {
-    const mimeType = 'application/pdf'
-
-    try {
-      const binaryData = atob(encryptedBase64)
-      const arrayBuffer = new ArrayBuffer(binaryData.length)
-      const uint8Array = new Uint8Array(arrayBuffer)
-
-      for (let i = 0; i < binaryData.length; i++) {
-        uint8Array[i] = binaryData.charCodeAt(i)
-      }
-
-      const blob = new Blob([uint8Array], { type: mimeType })
-      const pdfUrl = URL.createObjectURL(blob)
-      setPdfUrl(pdfUrl)
-    } catch (error) {
-      console.error('Error parsing decrypted JSON:', error)
-    }
-  }
-  useEffect(() => {
-    //@ts-expect-error
-    if (typeof Promise?.withResolvers === 'undefined') {
-      if (window)
-        // @ts-expect-error This does not exist outside of polyfill which this is doing
-        window.Promise.withResolvers = function () {
-          let resolve, reject
-          const promise = new Promise((res, rej) => {
-            resolve = res
-            reject = rej
-          })
-          return { promise, resolve, reject }
-        }
-    }
-  })
+  const [pdfUrl, setPdfUrl] = useState<string>('')
 
   useEffect(() => {
-    if (s3Path) {
+    if (fileData) {
       setLoading(true)
-      convertBytetoUrl(s3Path)
+      const dummyURl = convertBytetoUrl(fileData)
+      setPdfUrl(dummyURl)
     }
-  }, [s3Path])
+  }, [fileData])
 
   useEffect(() => {
     if (pdfUrl) {
@@ -98,29 +62,14 @@ const Preview: React.FC<PreviewProps> = ({ s3Path, onClose }) => {
   }
 
   return (
-    <Worker workerUrl={`https://unpkg.com/pdfjs-dist@2.10.377/build/pdf.worker.min.js`}>
-      <div style={{ height: '100vh' }}>
-        abcd
-        <Viewer fileUrl={'https://pdfobject.com/pdf/sample.pdf'} />
-      </div>
-    </Worker>
+    <Sidebar visible position="right" style={{ width: '40vw' }} onHide={onClose}>
+      <Worker workerUrl={`https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js`}>
+        <div style={{ height: '100vh' }}>
+          <Viewer fileUrl={pdfUrl} />
+        </div>
+      </Worker>
+    </Sidebar>
   )
-  // return <Document file={'https://unpkg.com/pdfjs-dist@2.10.377/build/pdf.worker.min.js'} />
-
-  // return (
-  //   <>
-  //     <script src="~/js/libs/pdf.js"></script>
-  //     <Sidebar visible position="right" style={{ width: '40vw' }} onHide={onClose}>
-  //       {pdfUrl && (
-  // <Worker workerUrl={`https://unpkg.com/pdfjs-dist@2.10.377/build/pdf.worker.min.js`}>
-  //   <div style={{ height: '100vh' }}>
-  //     <Viewer fileUrl={pdfUrl} plugins={[defaultLayoutPluginInstance]} />
-  //   </div>
-  // </Worker>
-  //       )}
-  //     </Sidebar>
-  //   </>
-  // )
 }
 
 export default Preview

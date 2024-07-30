@@ -152,6 +152,7 @@ const MoorserveApi = userApi.injectEndpoints({
     DownloadForm: builder.mutation({
       query: ({ id }: { id?: number }) => ({
         url: `api/v1/form/downloadForm/${id}`,
+        'content/type': 'application/pdf',
         method: 'GET',
       }),
     }),

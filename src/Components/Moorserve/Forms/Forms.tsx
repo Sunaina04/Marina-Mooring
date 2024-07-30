@@ -28,6 +28,7 @@ import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import Preview from './Preview'
 import { Toast } from 'primereact/toast'
+import { convertBytetoUrl } from '../../Helper/Helper'
 
 const Forms = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -69,21 +70,14 @@ const Forms = () => {
   }
 
   const handleDownload = async (rowData: any) => {
-    console.log(rowData, 'rowData')
-
     try {
-      const response = await downloadForms({
-        id: rowData.id,
-      }).unwrap()
-      const { status, message } = response as FormsResponse
-      if (status === 200) {
-        toastRef?.current?.show({
-          severity: 'success',
-          summary: 'Success',
-          detail: message,
-          life: 3000,
-        })
-      }
+      const dummyUrl = convertBytetoUrl(rowData.formData)
+      const link = document.createElement('a')
+      link.href = dummyUrl
+      const name = 'abc.pdf'
+      link.setAttribute('download', name) //or any other extension
+      document.body.appendChild(link)
+      link.click()
     } catch (error) {
       const { message } = error as ErrorResponse
       setIsLoading(false)
@@ -348,7 +342,7 @@ const Forms = () => {
           </div>
         </div>
 
-        {viewPdf && <Preview s3Path={viewPdf} onClose={() => setViewPdf(null)} />}
+        {viewPdf && <Preview fileData={viewPdf} onClose={() => setViewPdf(null)} />}
       </div>
     </>
   )

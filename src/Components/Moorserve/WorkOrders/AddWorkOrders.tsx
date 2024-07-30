@@ -85,7 +85,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
   const [lastChangedField, setLastChangedField] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(true)
-  const [customerImage, setCustomerImage] = useState<any>()
   const [encodedImages, setEncodedImages] = useState<string[]>([])
   const [approveModalOpen, setApproveModalOpen] = useState(false)
   const [denyModalOpen, setDenyModalOpen] = useState(false)
@@ -221,7 +220,10 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         ' ' +
         workOrderData?.customerResponseDto?.lastName,
       boatyards: workOrderData?.boatyardResponseDto?.boatyardName,
-      assignedTo: workOrderData?.technicianUserResponseDto?.name,
+      assignedTo:
+        workOrderData?.technicianUserResponseDto?.firstName +
+        ' ' +
+        workOrderData?.technicianUserResponseDto?.lastName,
       dueDate: workOrderData?.dueDate,
       scheduleDate: workOrderData?.scheduledDate,
       workOrderStatus: workOrderData?.workOrderStatusDto?.status,
@@ -607,21 +609,12 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     const { boatYardName } = await getBoatYardNameData()
 
     if (getTechnicians !== null) {
-      console.log(getTechnicians)
-
       const firstLastName = getTechnicians.map((item) => ({
         firstName: item.firstName + ' ' + item.lastName,
         id: item.id,
       }))
-      console.log(
-        'first name',
-        getTechnicians.map((item) => ({
-          item,
-        })),
-      )
-
       setIsLoading(false)
-      // setTechnicians(firstLastName)
+      setTechnicians(firstLastName)
     }
     if (mooringIds !== null) {
       setIsLoading(false)
@@ -636,8 +629,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         firstName: item.firstName + ' ' + item.lastName,
         id: item.id,
       }))
-      console.log('customerData', customersData)
-
       setIsLoading(false)
       setcustomerNameValue(firstLastName)
     }
@@ -909,7 +900,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 value={workOrder.assignedTo}
                 onChange={(e) => handleInputChange('assignedTo', e.target.value)}
                 options={technicians}
-                optionLabel="name"
+                optionLabel="firstName"
                 editable
                 disabled={isLoading || isAccountRecievable}
                 style={{

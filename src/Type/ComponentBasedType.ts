@@ -285,6 +285,6 @@ export interface ResetModalProps {
 }
 
 export interface PreviewProps {
-  s3Path: string
+  fileData: string
   onClose: () => void
 }

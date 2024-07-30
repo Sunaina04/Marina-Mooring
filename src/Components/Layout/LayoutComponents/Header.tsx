@@ -85,7 +85,6 @@ const Header: React.FC<HeaderProps> = ({ header, customer }) => {
           <Dropdown
             value={selectedCustomerName}
             onChange={(e) => {
-              console.log(e,'dgfsf')
               handleCustomerIdSelection(e.value)
             }}
             optionLabel="label"
