@@ -90,6 +90,12 @@ const WorkOrders = () => {
     return data?.customerResponseDto?.firstName + ' ' + data?.customerResponseDto?.lastName
   }
 
+  const TechnicianfirstLastName = (data: any) => {
+    return (
+      data?.technicianUserResponseDto?.firstName + ' ' + data?.technicianUserResponseDto?.lastName
+    )
+  }
+
   const workOrderColumns = useMemo(
     () => [
       {
@@ -117,6 +123,7 @@ const WorkOrders = () => {
         id: 'technicianUserResponseDto.name',
         label: 'Assigned to',
         style: columnStyle,
+        body: TechnicianfirstLastName,
       },
       {
         id: 'dueDate',

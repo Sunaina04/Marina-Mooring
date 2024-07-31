@@ -125,7 +125,6 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
   const saveServiceArea = async () => {
     const errors = validateFields()
 
-
     if (Object.keys(errors).length > 0) {
       setErrorMessage(errors)
       return
@@ -237,7 +236,6 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
   }
 
   const handleSave = () => {
-    console.log("test")
     if (editMode) {
       updateService()
     } else {
@@ -353,13 +351,13 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
         </div>
       </div>
       <div className="mt-3">
-          <span className="font-medium text-sm text-[#000000]">
-            Address <span className="text-red-500">*</span>
-          </span>
-        </div>
-        <div className="flex gap-6 mt-1">
-          <div>
-            <div className="">
+        <span className="font-medium text-sm text-[#000000]">
+          Address <span className="text-red-500">*</span>
+        </span>
+      </div>
+      <div className="flex gap-6 mt-1">
+        <div>
+          <div className="">
             <Dropdown
               id="countryDropdown"
               value={country}
@@ -381,14 +379,14 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
                 paddingLeft: '0.5rem',
               }}
             />
-            </div>
-
-            {/* <p>
-              {errorMessage.address && <small className="p-error">{errorMessage.address}</small>}
-            </p> */}
           </div>
 
-          <div className="">
+          {/* <p>
+              {errorMessage.address && <small className="p-error">{errorMessage.address}</small>}
+            </p> */}
+        </div>
+
+        <div className="">
           <Dropdown
             id="stateDropdown"
             placeholder="State"
@@ -411,19 +409,42 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
               color: 'black',
             }}
           />
-            {/* <p>
+          {/* <p>
               {errorMessage.aptSuite && <small className="p-error">{errorMessage.aptSuite}</small>}
             </p> */}
-          </div>
+        </div>
 
-          <div className="flex flex-col ">
+        <div className="flex flex-col ">
+          <InputComponent
+            value={zipCode}
+            onChange={(e) => {
+              setZipCode(e.target.value)
+              // setErrorMessage((prev) => ({ ...prev, zipCode: '' }))
+            }}
+            placeholder="Zip Code"
+            style={{
+              width: '230px',
+              height: '32px',
+              border: '1px solid #D5E1EA',
+              borderRadius: '0.50rem',
+              fontSize: '0.8rem',
+              padding: '0.5rem',
+            }}
+          />
+
+          {/* <p> {errorMessage.state && <small className="p-error">{errorMessage.state}</small>}</p> */}
+        </div>
+      </div>
+
+      <div className="flex  gap-6 mt-4">
+        <div>
+          <div className="">
             <InputComponent
-              value={zipCode}
+              value={address}
               onChange={(e) => {
-                setZipCode(e.target.value)
-                // setErrorMessage((prev) => ({ ...prev, zipCode: '' }))
+                setAddress(e.target.value)
               }}
-              placeholder="Zip Code"
+              placeholder="Address"
               style={{
                 width: '230px',
                 height: '32px',
@@ -433,20 +454,16 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
                 padding: '0.5rem',
               }}
             />
-
-            {/* <p> {errorMessage.state && <small className="p-error">{errorMessage.state}</small>}</p> */}
           </div>
         </div>
 
-      <div className="flex  gap-6 mt-4">
         <div>
-          <div className="">
-          <InputComponent
-                value={address}
-                onChange={(e) => {
-                  setAddress(e.target.value)
-                }}
-                placeholder="Address"
+          <div>
+            <div className="">
+              <InputComponent
+                value={gpsCoordinatesValue}
+                onChange={handleGpsCoordinatesChange}
+                placeholder="GPS Coordinates"
                 style={{
                   width: '230px',
                   height: '32px',
@@ -456,30 +473,10 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
                   padding: '0.5rem',
                 }}
               />
-          </div>
-        </div>
-
-        <div>
-          <div>
-            <div className="">
-            <InputComponent
-              value={gpsCoordinatesValue}
-              onChange={handleGpsCoordinatesChange}
-              placeholder="GPS Coordinates"
-              style={{
-                width: '230px',
-                height: '32px',
-                border: '1px solid #D5E1EA',
-                borderRadius: '0.50rem',
-                fontSize: '0.8rem',
-                padding: '0.5rem',
-              }}
-            />
             </div>
           </div>
         </div>
-        <div>        
-        </div>
+        <div></div>
       </div>
 
       <div className="flex mt-4 ">

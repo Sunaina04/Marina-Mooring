@@ -25,6 +25,8 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
     companyName: '',
     phone: '',
     website: '',
+    vendorAddress: '',
+    remitAddress: '',
     countryForAddress: '',
     stateForAddress: '',
     zipCodeForAddress: '',
@@ -102,10 +104,6 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
     if (country) fetchStateDataAndUpdate()
   }, [country])
 
- 
-
-
-
   const handleClick = () => {
     if (editMode) {
       updateVendor()
@@ -120,8 +118,10 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
       companyName: vendors?.vendorName || '',
       phone: vendors?.companyPhoneNumber || '',
       website: vendors?.website || '',
-      countryForAddress: vendors?.countryResponseDto?.name || undefined,
-      stateForAddress: vendors?.stateResponseDto?.name || undefined,
+      vendorAddress: vendors?.address || '',
+      remitAddress: vendors?.remitAddress || '',
+      countryForAddress: vendors?.countryResponseDto?.name || '',
+      stateForAddress: vendors?.stateResponseDto?.name || '',
       zipCodeForAddress: vendors?.zipCode || '',
       emailForAddress: vendors?.companyEmail || '',
       countryForRemit: vendors?.remitCountryResponseDto?.name || undefined,
@@ -212,6 +212,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
         stateId: formData?.stateForAddress?.id || vendors?.stateResponseDto?.id,
         countryId: formData?.countryForAddress?.id || vendors?.countryResponseDto?.id,
         zipCode: formData?.zipCodeForAddress || vendors?.zipCode,
+        vendorAddress: formData?.address || vendors?.address,
         companyEmail: formData?.emailForAddress || vendors?.companyEmail,
         accountNumber: formData?.accountNumber || vendors?.accountNumber,
         remitStateId: formData?.stateForRemit?.id || vendors?.remitStateResponseDto?.id,
@@ -443,8 +444,8 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                     <div className="mt-3 ">
                       <InputComponent
                         placeholder="Address"
-                        value={formData.aptSuiteForAddress}
-                        onChange={(e) => handleInputChange('aptSuiteForAddress', e.target.value)}
+                        value={formData.vendorAddress}
+                        onChange={(e) => handleInputChange('vendorAddress', e.target.value)}
                         style={{
                           width: '178.39px',
                           height: '32px',
@@ -511,8 +512,8 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                     <div className="mt-3">
                       <InputComponent
                         placeholder="Email Address"
-                        value={formData.emailForRemit}
-                        onChange={(e) => handleInputChange('emailForRemit', e.target.value)}
+                        value={formData.remitEmailAddress}
+                        onChange={(e) => handleInputChange('remitEmailAddress', e.target.value)}
                         style={{
                           width: '178.39px',
                           height: '32px',
@@ -553,8 +554,8 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                       <div className="mt-3">
                         <InputComponent
                           placeholder="Address"
-                          value={formData.emailForRemit}
-                          onChange={(e) => handleInputChange('emailForRemit', e.target.value)}
+                          value={formData.remitAddress}
+                          onChange={(e) => handleInputChange('remitAddress', e.target.value)}
                           style={{
                             width: '178.39px',
                             height: '32px',

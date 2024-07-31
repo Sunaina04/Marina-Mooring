@@ -467,9 +467,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       setIsLoading(false)
       setStatesData(statesData)
     } else {
-      console.log('i am here')
-
       setState('')
+      setStatesData([])
     }
   }, [country])
 

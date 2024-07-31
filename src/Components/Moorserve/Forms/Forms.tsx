@@ -28,16 +28,13 @@ import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import Preview from './Preview'
 import { Toast } from 'primereact/toast'
+import { convertBytetoUrl } from '../../Helper/Helper'
 
 const Forms = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [viewPdf, setViewPdf] = useState(null)
   const [formsData, setFormsData] = useState<FormsPayload[]>([])
-  const [customerName, setCustomerName] = useState('')
-  const [customerID, setCustomerID] = useState('')
-  const [formOpen, setFormOpen] = useState(false)
-  const [formName, setFormName] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [file, setFile] = useState<File | undefined>(undefined)
   const [getForms] = useGetFormsMutation()
@@ -58,35 +55,29 @@ const Forms = () => {
   const handleButtonClick = () => {
     setIsModalOpen(true)
   }
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPageNumber(0)
+    setPageNumber1(0)
+    setSearchText(e.target.value)
+  }
 
   const handleModalClose = () => {
     setIsModalOpen(false)
   }
-  const handleFormClose = () => {
-    setFormOpen(false)
-  }
 
   const handleView = (rowData: any) => {
-    console.log('rowData', rowData)
     setViewPdf(rowData.formData)
   }
 
   const handleDownload = async (rowData: any) => {
-    console.log(rowData, 'rowData')
-
     try {
-      const response = await downloadForms({
-        id: rowData.id,
-      }).unwrap()
-      const { status, message } = response as FormsResponse
-      if (status === 200) {
-        toastRef?.current?.show({
-          severity: 'success',
-          summary: 'Success',
-          detail: message,
-          life: 3000,
-        })
-      }
+      const dummyUrl = convertBytetoUrl(rowData.formData)
+      const link = document.createElement('a')
+      link.href = dummyUrl
+      const name = 'abc.pdf'
+      link.setAttribute('download', name) //or any other extension
+      document.body.appendChild(link)
+      link.click()
     } catch (error) {
       const { message } = error as ErrorResponse
       setIsLoading(false)
@@ -210,29 +201,11 @@ const Forms = () => {
   return (
     <>
       <Toast ref={toastRef} />
-      <div
-        style={{ height: '150vh' }}
-        className={isModalOpen || formOpen ? 'backdrop-blur-lg' : ''}>
+      <div style={{ height: '150vh' }} className={isModalOpen ? 'backdrop-blur-lg' : ''}>
         <Header header="MOORSERVE/Forms Library" />
 
         <div className="flex justify-end">
           <div className="flex mr-16 mt-10">
-            {/* <Button
-              label="Fill in Form"
-              onClick={() => setFormOpen(true)}
-              style={{
-                width: '121px',
-                height: '44px',
-                minHeight: '44px',
-                backgroundColor: '#0098FF',
-                cursor: 'pointer',
-                fontSize: '14px',
-                fontWeight: 600,
-                color: 'white',
-                borderRadius: '0.50rem',
-                marginLeft: '15px',
-                boxShadow: 'none',
-              }}></Button> */}
             <CustomModal
               buttonText={'Upload New'}
               buttonStyle={{
@@ -298,11 +271,10 @@ const Forms = () => {
                 />
                 <InputText
                   placeholder="Search"
-                  id="placeholder"
-                  className="pl-10 w-[237px] 
-                  bg-[#00426F]
-              
-                  h-[35px] rounded-lg border text-white border-[#D5E1EA] focus:outline-none"
+                  onChange={handleSearch}
+                  id="placeholderText"
+                  className="pl-10 w-[237px] bg-[#00426F] h-[35px] rounded-lg border text-[white] 
+                  border-[#D5E1EA] placeholder:text-[#FFFFFF]  focus:outline-none overflow-hidden"
                 />
               </div>
             </div>
@@ -370,35 +342,7 @@ const Forms = () => {
           </div>
         </div>
 
-        {viewPdf && (
-          <Preview s3Path={viewPdf} onClose={() => setViewPdf(null)} />
-          // <Dialog
-          //   header="View PDF"
-          //   visible={!!viewPdf}
-          //   style={{ width: '50vw' }}
-          //   onHide={() => setViewPdf(null)}>
-          //   <iframe src={viewPdf} style={{ width: '100%', height: '500px' }} title="PDF Viewer" />
-          // </Dialog>
-        )}
-
-        {/* <Dialog
-        header="Fill in Form"
-        position="center"
-        style={{
-          width: '800px',
-          minWidth: '800px',
-          height: '300px',
-          minHeight: '300px',
-          borderRadius: '1rem',
-          fontWeight: '400',
-          cursor: 'alias',
-        }}
-        draggable={false}
-        headerStyle={{ cursor: 'alias' }}
-        visible={formOpen}
-        onHide={handleFormClose}>
-        <FormFill formOpen={handleFormClose}/>
-      </Dialog> */}
+        {viewPdf && <Preview fileData={viewPdf} onClose={() => setViewPdf(null)} />}
       </div>
     </>
   )

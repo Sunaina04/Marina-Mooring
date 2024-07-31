@@ -74,7 +74,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   const [mooringBasedOnCustomerId, setMooringBasedOnCustomerId] = useState<MetaData[]>()
   const [boatyardBasedOnMooringId, setBoatyardBasedOnMooringId] = useState<MetaData[]>()
   const [customerBasedOnMooringId, setCustomerBasedOnMooringId] = useState<any[]>()
-  const [technicians, setTechnicians] = useState<MetaDataTechnician[]>()
+  const [technicians, setTechnicians] = useState<any[]>()
   const [moorings, setMoorings] = useState<MetaData[]>()
   const [workOrderStatusValue, setWorkOrderStatusValue] = useState<MetaData[]>()
   const [customerNameValue, setcustomerNameValue] = useState<any[]>()
@@ -85,7 +85,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
   const [lastChangedField, setLastChangedField] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(true)
-  const [customerImage, setCustomerImage] = useState<any>()
   const [encodedImages, setEncodedImages] = useState<string[]>([])
   const [approveModalOpen, setApproveModalOpen] = useState(false)
   const [denyModalOpen, setDenyModalOpen] = useState(false)
@@ -221,7 +220,10 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         ' ' +
         workOrderData?.customerResponseDto?.lastName,
       boatyards: workOrderData?.boatyardResponseDto?.boatyardName,
-      assignedTo: workOrderData?.technicianUserResponseDto?.name,
+      assignedTo:
+        workOrderData?.technicianUserResponseDto?.firstName +
+        ' ' +
+        workOrderData?.technicianUserResponseDto?.lastName,
       dueDate: workOrderData?.dueDate,
       scheduleDate: workOrderData?.scheduledDate,
       workOrderStatus: workOrderData?.workOrderStatusDto?.status,
@@ -362,10 +364,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     const newImages = [...customerImages]
     newImages.splice(index, 1)
     setCustomerImages(newImages)
-
-    // const newEncodedImages = [...encodedImages]
-    // newEncodedImages.splice(index, 1)
-    // setEncodedImages(newEncodedImages)
   }
 
   const SaveWorkOrder = async () => {
@@ -611,8 +609,12 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     const { boatYardName } = await getBoatYardNameData()
 
     if (getTechnicians !== null) {
+      const firstLastName = getTechnicians.map((item) => ({
+        firstName: item.firstName + ' ' + item.lastName,
+        id: item.id,
+      }))
       setIsLoading(false)
-      setTechnicians(getTechnicians)
+      setTechnicians(firstLastName)
     }
     if (mooringIds !== null) {
       setIsLoading(false)
@@ -898,7 +900,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 value={workOrder.assignedTo}
                 onChange={(e) => handleInputChange('assignedTo', e.target.value)}
                 options={technicians}
-                optionLabel="name"
+                optionLabel="firstName"
                 editable
                 disabled={isLoading || isAccountRecievable}
                 style={{
