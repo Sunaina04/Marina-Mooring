@@ -27,26 +27,18 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
   const [serviceAreaName, setServiceAreaName] = useState('')
   const [id, setId] = useState('')
   const [serviceAreaTypeId, setServiceAreaTypeId] = useState<any>()
-  const [streetHouse, setStreetHouse] = useState('')
   const [notes, setNotes] = useState('')
   const [address, setAddress] = useState('')
-
-  // const [selectedState, setSelectedState] = useState<any>()
-  const [selectedType, setSelectedType] = useState<any>()
   const [country, setCountry] = useState<any>()
   const [state, setState] = useState<any>()
   const [zipCode, setZipCode] = useState('')
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
-
-  const [mainContact, setMainContact] = useState('')
   const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<any>()
   const [countriesData, setCountriesData] = useState<Country[]>()
   const [statesData, setStatesData] = useState<State[]>()
   const [serviceAreaTypeData, setServiceAreaTypeData] = useState<ServiceAreaType[]>()
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
   const toastRef = useRef<Toast>(null)
-  const [storage, setStorage] = useState('')
-  const [storageList, setStorageList] = useState<string[]>([])
   const getFormattedCoordinate = (coordinates: any) => {
     try {
       let [lat, long] = coordinates.split(/[ ,]+/)
@@ -91,9 +83,8 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
     if (!serviceAreaName) {
       errors.name = 'Service Area Name is required'
     } else if (!nameRegex.test(serviceAreaName)) {
-      errors.name = 'Name is invalid'
+      errors.name = 'Service Area Name is invalid'
     }
-
     if (!gpsCoordinatesValue) {
       errors.gpsCoordinatesValue = 'GPS Coordinates is required'
     }
@@ -128,7 +119,6 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
 
   const saveServiceArea = async () => {
     const errors = validateFields()
-
     if (Object.keys(errors).length > 0) {
       setErrorMessage(errors)
       return
@@ -139,7 +129,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
       const Payload = {
         id: id,
         serviceAreaName: serviceAreaName,
-        serviceAreaTypeId: serviceAreaTypeId.id,
+        serviceAreaTypeId: serviceAreaTypeId?.id,
         zipCode: zipCode,
         address: address,
         stateId: state?.id,
@@ -175,7 +165,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: data?.message,
+        detail: message || data?.message,
         life: 3000,
       })
     }
@@ -356,9 +346,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
         </div>
       </div>
       <div className="mt-3">
-        <span className="font-medium text-sm text-[#000000]">
-          Address 
-        </span>
+        <span className="font-medium text-sm text-[#000000]">Address</span>
       </div>
       <div className="flex gap-6 mt-1">
         <div>
@@ -471,21 +459,19 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
                 placeholder="GPS Coordinates"
                 style={{
                   width: '230px',
-                    height: '32px',
-                    border: errorMessage.gpsCoordinatesValue
-                      ? '1px solid red'
-                      : '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                    padding: '0.5rem',
+                  height: '32px',
+                  border: errorMessage.gpsCoordinatesValue ? '1px solid red' : '1px solid #D5E1EA',
+                  borderRadius: '0.50rem',
+                  fontSize: '0.8rem',
+                  padding: '0.5rem',
                 }}
               />
             </div>
             <p>
-                {errorMessage.gpsCoordinatesValue && (
-                  <small className="p-error">{errorMessage.gpsCoordinatesValue}</small>
-                )}
-              </p>
+              {errorMessage.gpsCoordinatesValue && (
+                <small className="p-error">{errorMessage.gpsCoordinatesValue}</small>
+              )}
+            </p>
           </div>
         </div>
         <div></div>
