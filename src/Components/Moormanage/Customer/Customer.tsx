@@ -698,7 +698,7 @@ const Customer = () => {
         </div>
       </div>
     )
-  }, [])
+  }, [selectedCustomer, customerRecordData])
 
   const CustomerDetails = useMemo(() => {
     return (
