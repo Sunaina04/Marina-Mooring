@@ -54,7 +54,7 @@ const Moorings = () => {
   const [selectedMooring, setSelectedMooring] = useState<any>()
   const [searchText, setSearchText] = useState('')
   const [customerId, setCustomerId] = useState<any>()
-  const [mooringId, setMooringId] = useState()
+  const [mooringId, setMooringId] = useState<any>()
   const [isLoading, setIsLoading] = useState(true)
   const [isLoader, setIsLoader] = useState(false)
   const [dialogVisible, setDialogVisible] = useState(false)
@@ -468,6 +468,7 @@ const Moorings = () => {
         content?.customerResponseDto?.mooringResponseDtoList?.forEach(
           (mooring: MooringResponseDtoList) => {
             if (mooring?.imageDtoList) {
+              setMooringId(mooring?.id)
               allMooringImages.push(...mooring?.imageDtoList)
             }
           },
@@ -1206,7 +1207,7 @@ const Moorings = () => {
           <MooringInformations mooringRowData={mooringRowData} />
         </Dialog>
 
-        {/* Image Information */}
+        {/*Edit Image Information */}
         <Dialog
           position="center"
           style={{
@@ -1223,7 +1224,7 @@ const Moorings = () => {
           header={'Image Information'}>
           <AddImage
             imageData={imageData}
-            entityId={customerId}
+            entityId={mooringId}
             entity={'Mooring'}
             closeModal={handleModalClose}
             getCustomersWithMooring={() => {
