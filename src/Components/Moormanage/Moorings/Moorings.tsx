@@ -48,7 +48,7 @@ import ViewImage from '../../CommonComponent/ViewImage'
 import { AppContext } from '../../../AppContext'
 
 const Moorings = () => {
-  const selectedCustomerId = useSelector(selectCustomerId)
+  const selectedCustomerId: any = useSelector(selectCustomerId)
   const [modalVisible, setModalVisible] = useState(false)
   const [mooringData, setMooringData] = useState<MooringPayload[]>([])
   const [customerRecordData, setCustomerRecordData] = useState<any>()
@@ -92,11 +92,7 @@ const Moorings = () => {
   const [pageNumber2, setPageNumber2] = useState(0)
   const [pageSizeTwo, setPageSizeTwo] = useState(10)
   const [totalRecordsTwo, setTotalRecordsTwo] = useState<number>()
-
   const { isMapModalOpen } = useContext(AppContext)
-
-  // console.log('isMapModalOpen', isMapModalOpen.editMode)
-
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
     setPageNumber1(event.first)

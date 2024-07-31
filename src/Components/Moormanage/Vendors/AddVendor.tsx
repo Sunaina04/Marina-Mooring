@@ -17,8 +17,7 @@ import { Toast } from 'primereact/toast'
 const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, getVendor }) => {
   const [countriesData, setCountriesData] = useState<Country[]>()
   const [statesData, setStatesData] = useState<State[]>()
-  const [country, setCountry] = useState<any>()
-  const [state, setState] = useState<any>()
+  const [remitAddressStatesData, setRemitAddressStatesData] = useState<State[]>()
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
   const [isLoading, setIsLoading] = useState(true)
   const [formData, setFormData] = useState<any>({
@@ -45,7 +44,9 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
   const [addVendor] = useAddVendorsMutation()
   const [editVendor] = useUpdateVendorMutation()
   const { getStatesData } = StatesData(
-    formData?.countryForAddress?.id || vendors?.countryResponseDto?.id,
+    formData?.countryForAddress?.id ||
+      vendors?.countryResponseDto?.id ||
+      formData?.countryForRemit?.id,
   )
   const { getCountriesData } = CountriesData()
   const toastRef = useRef<Toast>(null)
@@ -81,7 +82,6 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
 
   const fetchDataAndUpdate = useCallback(async () => {
     const { countriesData } = await getCountriesData()
-
     if (countriesData !== null) {
       setIsLoading(false)
       setCountriesData(countriesData)
@@ -94,18 +94,32 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
       setIsLoading(false)
       setStatesData(statesData)
     } else {
-      setState('')
       setStatesData([])
     }
-  }, [country])
+  }, [formData?.countryForAddress?.id])
+
+  const fetchRemitAddressStateDataAndUpdate = useCallback(async () => {
+    const { statesData } = await getStatesData()
+    if (statesData !== null) {
+      setIsLoading(false)
+      setRemitAddressStatesData(statesData)
+    } else {
+      setRemitAddressStatesData([])
+    }
+  }, [formData?.countryForRemit?.id])
+
+  useEffect(() => {
+    if (formData?.countryForAddress?.id) {
+      fetchStateDataAndUpdate()
+    }
+    if (formData?.countryForRemit?.id) {
+      fetchRemitAddressStateDataAndUpdate()
+    }
+  }, [formData?.countryForAddress?.id, formData?.countryForRemit?.id])
 
   useEffect(() => {
     fetchDataAndUpdate()
   }, [])
-
-  useEffect(() => {
-    if (country) fetchStateDataAndUpdate()
-  }, [country])
 
   const handleClick = () => {
     if (editMode) {
@@ -535,7 +549,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                         <Dropdown
                           onChange={(e) => handleInputChange('stateForRemit', e.target.value)}
                           value={formData.stateForRemit}
-                          options={statesData}
+                          options={remitAddressStatesData}
                           optionLabel="name"
                           editable
                           placeholder="State"

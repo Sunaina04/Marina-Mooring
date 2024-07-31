@@ -750,6 +750,8 @@ export interface FormsResponse {
   status: number
   errorList: null
   time: string
+  currentSize: number
+  totalSize: number
   content: {
     FormsPayload: FormsPayload
   }
