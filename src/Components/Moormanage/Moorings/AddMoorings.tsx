@@ -288,25 +288,18 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     const fileInput = event.target
     const files = Array.from(fileInput.files || [])
 
-    if (files.length === 0) {
-      return
-    }
+    if (files.length === 0) return
 
     const validImageFiles = files.filter(
       (file) => file.type.startsWith('image/') && file.size >= 5120 && file.size <= 1048576,
     )
 
     const invalidTypeFiles = files.filter((file) => !file.type.startsWith('image/'))
-    const invalidSizeFiles = files.filter((file) => file.size < 5120 || file.size > 1048576)
+    const invalidSizeFiles: any = files.filter((file) => file.size < 5120 || file.size > 1048576)
 
     if (invalidTypeFiles.length > 0 || invalidSizeFiles.length > 0) {
-      setMooringImages([])
-      setEncodedImages([])
       let detailMessage = 'Only image files are allowed.'
-
-      if (invalidSizeFiles.length > 0) {
-        detailMessage = 'Images must be between 5 KB and 1 MB.'
-      }
+      if (invalidSizeFiles.length > 0) detailMessage = 'Images must be between 5 KB and 1 MB.'
 
       toastRef?.current?.show({
         severity: 'error',
@@ -314,7 +307,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({
         detail: detailMessage,
         life: 3000,
       })
-      fileInput.value = '' // Reset input value
+
+      fileInput.value = ''
       return
     }
 
@@ -442,13 +436,13 @@ const AddMoorings: React.FC<AddMooringProps> = ({
           getCustomerRecord()
         }
       } else {
-        setIsLoading(false)
         toastRef?.current?.show({
           severity: 'error',
           summary: 'Error',
           detail: message,
           life: 3000,
         })
+        setIsLoading(false)
       }
     } catch (error) {
       const { message, data } = error as ErrorResponse
@@ -456,7 +450,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: data.message,
+        detail: message || data?.message,
         life: 3000,
       })
     }
@@ -1878,10 +1872,10 @@ const AddMoorings: React.FC<AddMooringProps> = ({
             isLoading={isLoading}
             customerImages={mooringImages}
           />
-
           <Toast ref={toastRef} />
         </Dialog>
       </>
+      <Toast ref={toastRef} />
     </>
   )
 }

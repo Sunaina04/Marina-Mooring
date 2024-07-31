@@ -480,6 +480,7 @@ const Moorings = () => {
         setIsLoading(false)
         setCustomerRecordData('')
         setMooringResponseData([])
+        setMooringImage('')
       }
     } catch (error) {
       setIsLoading(false)
