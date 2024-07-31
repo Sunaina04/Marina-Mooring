@@ -96,7 +96,7 @@ const Estimates = () => {
       },
       {
         id: 'firstName',
-        label: 'CustomerName',
+        label: 'Customer Name',
         style: columnStyle,
         body: firstLastName,
       },

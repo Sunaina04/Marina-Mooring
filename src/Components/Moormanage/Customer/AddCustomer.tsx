@@ -48,8 +48,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   getCustomerRecord,
 }) => {
   const selectedCustomerId = useSelector(selectCustomerId)
-  // const [selectedCountry, setSelectedCountry] = useState<any>()
-  // const [selectedState, setSelectedState] = useState<any>()
   const [country, setCountry] = useState<any>()
   const [state, setState] = useState<any>()
   const [selectedCustomerType, setSelectedCustomerType] = useState<any>()
@@ -176,27 +174,17 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const fileInput = event.target
     const files = Array.from(fileInput.files || [])
-
-    if (files.length === 0) {
-      return
-    }
-
+    if (files.length === 0) return
     const validImageFiles = files.filter(
       (file) => file.type.startsWith('image/') && file.size >= 5120 && file.size <= 1048576,
     )
-
     const invalidTypeFiles = files.filter((file) => !file.type.startsWith('image/'))
     const invalidSizeFiles = files.filter((file) => file.size < 5120 || file.size > 1048576)
-
     if (invalidTypeFiles.length > 0 || invalidSizeFiles.length > 0) {
       setCustomerImages([])
       setEncodedImages([])
       let detailMessage = 'Only image files are allowed.'
-
-      if (invalidSizeFiles.length > 0) {
-        detailMessage = 'Images must be between 5 KB and 1 MB.'
-      }
-
+      if (invalidSizeFiles.length > 0) detailMessage = 'Images must be between 5 KB and 1 MB.'
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
@@ -1145,7 +1133,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   id="pinCode"
                   value={address}
                   onChange={(e) => handleInputChangeCustomer('address', e.target.value)}
-                   placeholder="Address"
+                  placeholder="Address"
                   style={{
                     width: '230px',
                     height: '32px',
