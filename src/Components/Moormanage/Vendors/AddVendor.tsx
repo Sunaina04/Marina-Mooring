@@ -95,15 +95,15 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
       setState('')
       setStatesData([])
     }
-  }, [formData?.countryForAddress?.id])
+  }, [country])
 
   useEffect(() => {
     fetchDataAndUpdate()
   }, [])
 
   useEffect(() => {
-    if (formData?.country) fetchStateDataAndUpdate()
-  }, [formData?.countryForAddress?.id])
+    if (country) fetchStateDataAndUpdate()
+  }, [country])
 
   const handleClick = () => {
     if (editMode) {
@@ -125,8 +125,8 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
       stateForAddress: vendors?.stateResponseDto?.name || '',
       zipCodeForAddress: vendors?.zipCode || '',
       emailForAddress: vendors?.companyEmail || '',
-      countryForRemit: vendors?.remitCountryResponseDto?.name || undefined,
-      stateForRemit: vendors?.remitStateResponseDto?.name || undefined,
+      countryForRemit: vendors?.remitCountryResponseDto?.name || '',
+      stateForRemit: vendors?.remitStateResponseDto?.name || '',
       zipCodeForRemit: vendors?.remitZipCode || '',
       emailForRemit: vendors?.remitEmailAddress || '',
       accountNumber: vendors?.accountNumber || '',

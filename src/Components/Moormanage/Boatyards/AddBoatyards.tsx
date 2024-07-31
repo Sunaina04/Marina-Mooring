@@ -438,7 +438,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
         )}
         <div className="mt-3">
           <span className="font-medium text-sm text-[#000000]">
-            Address <span className="text-red-500">*</span>
+            Address 
           </span>
         </div>
         <div className="flex gap-6 mt-1">
