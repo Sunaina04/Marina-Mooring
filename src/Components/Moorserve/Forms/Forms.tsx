@@ -128,6 +128,9 @@ const Forms = () => {
       if (status === 200 && Array.isArray(content)) {
         setFormsData(content)
         setTotalRecords(totalSize)
+      } else {
+        setFormsData([])
+        setTotalRecords(totalSize)
       }
     } catch (error) {
       const { message, data } = error as ErrorResponse
