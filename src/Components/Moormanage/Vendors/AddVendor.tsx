@@ -149,6 +149,8 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
         vendorName: formData?.companyName,
         ...(formData?.phone && { companyPhoneNumber: formData.phone }),
         ...(formData?.website && { website: formData.website }),
+        ...(formData?.vendorAddress && { address: formData.vendorAddress }),
+        ...(formData?.remitAddress && { remitAddress: formData.remitAddress }),
         ...(formData?.stateForAddress?.id && { stateId: formData.stateForAddress.id }),
         ...(formData?.countryForAddress?.id && { countryId: formData.countryForAddress.id }),
         ...(formData?.zipCodeForAddress && { zipCode: formData.zipCodeForAddress }),
@@ -213,7 +215,8 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
         stateId: formData?.stateForAddress?.id || vendors?.stateResponseDto?.id,
         countryId: formData?.countryForAddress?.id || vendors?.countryResponseDto?.id,
         zipCode: formData?.zipCodeForAddress || vendors?.zipCode,
-        vendorAddress: formData?.address || vendors?.address,
+        vendorAddress: formData?.vendorAddress || vendors?.address,
+        remitAddress: formData?.remitAddress || vendors?.remitAddress,
         companyEmail: formData?.emailForAddress || vendors?.companyEmail,
         accountNumber: formData?.accountNumber || vendors?.accountNumber,
         remitStateId: formData?.stateForRemit?.id || vendors?.remitStateResponseDto?.id,
@@ -511,8 +514,8 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
                     <div className="mt-3">
                       <InputComponent
                         placeholder="Email Address"
-                        value={formData.remitEmailAddress}
-                        onChange={(e) => handleInputChange('remitEmailAddress', e.target.value)}
+                        value={formData.emailForRemit}
+                        onChange={(e) => handleInputChange('emailForRemit', e.target.value)}
                         style={{
                           width: '178.39px',
                           height: '32px',
