@@ -465,9 +465,10 @@ const Moorings = () => {
         const allMooringImages: any = []
         content?.customerResponseDto?.mooringResponseDtoList?.forEach(
           (mooring: MooringResponseDtoList) => {
-            if (mooring?.imageDtoList) {
-              setMooringId(mooring?.id)
+            if (mooring?.id === mooringId) {
               allMooringImages.push(...mooring?.imageDtoList)
+            } else {
+              setMooringImage('')
             }
           },
         )
