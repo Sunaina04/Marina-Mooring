@@ -311,6 +311,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   }
 
   const handleInputChangeCustomer = (fieldName: string, value: any) => {
+    if (fieldName === 'phone') {
+      value = value.replace(/[^0-9+]/g, '')
+    }
     switch (fieldName) {
       case 'firstName':
         setFirstName(value)
@@ -345,6 +348,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     }
     setFieldErrors((prevErrors) => ({ ...prevErrors, [fieldName]: '' }))
   }
+
+  
 
   const handleEditMode = () => {
     setFirstName(customer?.firstName || '')
