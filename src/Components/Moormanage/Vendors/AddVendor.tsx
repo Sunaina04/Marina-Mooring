@@ -44,7 +44,9 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
   })
   const [addVendor] = useAddVendorsMutation()
   const [editVendor] = useUpdateVendorMutation()
-  const { getStatesData } = StatesData(country?.id || vendors?.countryResponseDto?.id)
+  const { getStatesData } = StatesData(
+    formData?.countryForAddress?.id || vendors?.countryResponseDto?.id,
+  )
   const { getCountriesData } = CountriesData()
   const toastRef = useRef<Toast>(null)
 
@@ -272,10 +274,8 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
   }, [editMode, vendors])
 
   useEffect(() => {
-    fetchStateDataAndUpdate()
+    formData?.countryForAddress?.id && fetchStateDataAndUpdate()
   }, [formData?.countryForAddress?.id])
-
- 
 
   return (
     <>
