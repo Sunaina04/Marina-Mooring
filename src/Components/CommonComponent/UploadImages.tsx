@@ -1,9 +1,10 @@
 import { Button } from 'primereact/button'
 import { InputText } from 'primereact/inputtext'
-import React from 'react'
+import React, { useRef } from 'react'
 import { AiOutlineDelete } from 'react-icons/ai'
 import { FaFileUpload } from 'react-icons/fa'
 import { ShowImagesProps } from '../../Type/ComponentBasedType'
+import { Toast } from 'primereact/toast'
 const UploadImages: React.FC<ShowImagesProps> = ({
   handleNoteChange,
   hoveredIndex,
@@ -15,8 +16,11 @@ const UploadImages: React.FC<ShowImagesProps> = ({
   isLoading,
   customerImages,
 }) => {
+  const toastRef = useRef<Toast>(null)
+
   return (
     <div>
+      <Toast ref={toastRef} />
       <div className={`ml-4 ${isLoading ? 'blurred' : ''}`} style={{ marginBottom: '60px' }}>
         <div className="flex justify-center text-center">
           <div className="mt-6">

@@ -1,5 +1,13 @@
 import CustomModal from '../../CustomComponent/CustomModal'
-import React, { useState, useEffect, useMemo, useRef, useCallback, SetStateAction } from 'react'
+import React, {
+  useState,
+  useEffect,
+  useMemo,
+  useRef,
+  useCallback,
+  SetStateAction,
+  useContext,
+} from 'react'
 import {
   useDeleteMooringsMutation,
   useGetCustomersWithMooringMutation,
@@ -37,6 +45,7 @@ import ViewImageDialog from '../../CommonComponent/ViewImageDialog'
 import EditImageDialog from '../../CommonComponent/EditImageDialog'
 import MooringInformations from '../../CommonComponent/MooringInformations'
 import ViewImage from '../../CommonComponent/ViewImage'
+import { AppContext } from '../../../AppContext'
 
 const Moorings = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -84,6 +93,10 @@ const Moorings = () => {
   const [pageSizeTwo, setPageSizeTwo] = useState(10)
   const [totalRecordsTwo, setTotalRecordsTwo] = useState<number>()
 
+  const { isMapModalOpen } = useContext(AppContext)
+
+  // console.log('isMapModalOpen', isMapModalOpen.editMode)
+
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
     setPageNumber1(event.first)
@@ -94,21 +107,6 @@ const Moorings = () => {
     setPageNumberTwo(event.page)
     setPageNumber2(event.first)
     setPageSizeTwo(event.rows)
-  }
-
-  const ButtonStyle = {
-    width: '40px',
-    height: '40px',
-    backgroundColor: 'transparent',
-    border: 'none',
-    cursor: 'pointer',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: '0',
-    borderRadius: '50%',
-    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-    transition: 'transform 0.2s',
   }
 
   const handleToggle = (faq: SetStateAction<string>) => {
@@ -467,9 +465,10 @@ const Moorings = () => {
         const allMooringImages: any = []
         content?.customerResponseDto?.mooringResponseDtoList?.forEach(
           (mooring: MooringResponseDtoList) => {
-            if (mooring?.imageDtoList) {
-              setMooringId(mooring?.id)
+            if (mooring?.id === mooringId) {
               allMooringImages.push(...mooring?.imageDtoList)
+            } else {
+              setMooringImage('')
             }
           },
         )
@@ -481,6 +480,7 @@ const Moorings = () => {
         setIsLoading(false)
         setCustomerRecordData('')
         setMooringResponseData([])
+        setMooringImage('')
       }
     } catch (error) {
       setIsLoading(false)
@@ -612,7 +612,12 @@ const Moorings = () => {
       <div
         style={{ height: '150vh' }}
         className={
-          modalVisible || dialogVisible || imageEditVisible || imageVisible || customerModalVisible
+          modalVisible ||
+          dialogVisible ||
+          imageEditVisible ||
+          imageVisible ||
+          customerModalVisible ||
+          isMapModalOpen.editMode
             ? 'backdrop-blur-lg'
             : ''
         }>
@@ -840,7 +845,7 @@ const Moorings = () => {
           {/* middle container */}
 
           <div
-            className={`min-h-[600] rounded-md border-[1px] ml-5 ${modalVisible || customerModalVisible || imageVisible || imageEditVisible || dialogVisible ? 'blur-screen' : ''}`}
+            className={`min-h-[600] rounded-md border-[1px] ml-5 ${modalVisible || customerModalVisible || imageVisible || imageEditVisible || dialogVisible || isMapModalOpen.editMode ? 'blur-screen' : ''}`}
             style={{ flexGrow: '1' }}>
             <CustomMooringPositionMap
               position={coordinatesArray ? coordinatesArray : initialPosition}

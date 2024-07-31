@@ -294,25 +294,18 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     const fileInput = event.target
     const files = Array.from(fileInput.files || [])
 
-    if (files.length === 0) {
-      return
-    }
+    if (files.length === 0) return
 
     const validImageFiles = files.filter(
       (file) => file.type.startsWith('image/') && file.size >= 5120 && file.size <= 1048576,
     )
 
     const invalidTypeFiles = files.filter((file) => !file.type.startsWith('image/'))
-    const invalidSizeFiles = files.filter((file) => file.size < 5120 || file.size > 1048576)
+    const invalidSizeFiles: any = files.filter((file) => file.size < 5120 || file.size > 1048576)
 
     if (invalidTypeFiles.length > 0 || invalidSizeFiles.length > 0) {
-      setCustomerImages([])
-      setEncodedImages([])
-      let detailMessage = 'Only image files are allowed'
-
-      if (invalidSizeFiles.length > 0) {
-        detailMessage = 'Images must be between 5 KB and 1 MB.'
-      }
+      let detailMessage = 'Only image files are allowed.'
+      if (invalidSizeFiles.length > 0) detailMessage = 'Images must be between 5 KB and 1 MB.'
 
       toastRef?.current?.show({
         severity: 'error',
@@ -320,13 +313,14 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         detail: detailMessage,
         life: 3000,
       })
+
       fileInput.value = ''
       return
     }
 
     const newBase64Strings: string[] = []
     const newImageUrls: string[] = []
-    const imageRequestDtoList: { imageName: string; imageData: string }[] = []
+    const newImageRequestDtoList: { imageName: string; imageData: string; note: string }[] = []
 
     for (const file of validImageFiles) {
       try {
@@ -346,9 +340,10 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         })
         newBase64Strings.push(base64String)
         newImageUrls.push(`data:image/png;base64,${base64String}`)
-        imageRequestDtoList.push({
+        newImageRequestDtoList.push({
           imageName: file.name,
           imageData: base64String,
+          note: '', // Initialize with an empty note
         })
       } catch (error) {
         console.error('Error reading file:', error)
@@ -357,9 +352,8 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
 
     setCustomerImages((prevImages) => [...prevImages, ...newImageUrls])
     setEncodedImages((prevEncoded) => [...prevEncoded, ...newBase64Strings])
-    setimageRequestDtoList(imageRequestDtoList)
+    setimageRequestDtoList((prevList: any) => [...prevList, ...newImageRequestDtoList])
   }
-
   const handleRemoveImage = (index: number) => {
     const newImages = [...customerImages]
     newImages.splice(index, 1)

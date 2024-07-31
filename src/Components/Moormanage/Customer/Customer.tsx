@@ -1,4 +1,12 @@
-import { SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import {
+  SetStateAction,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import CustomModal from '../../CustomComponent/CustomModal'
 import AddCustomer from './AddCustomer'
 import { FaEdit, FaSort, FaSortDown, FaSortUp } from 'react-icons/fa'
@@ -37,6 +45,7 @@ import { PositionType } from '../../../Type/Components/MapTypes'
 import AddImage from './AddImage'
 import ViewImage from '../../CommonComponent/ViewImage'
 import MooringInformations from '../../CommonComponent/MooringInformations'
+import { AppContext } from '../../../AppContext'
 
 const Customer = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -81,34 +90,7 @@ const Customer = () => {
   const [showImage, setShowImage] = useState({ id: '', imageData: '' })
   const [scale, setScale] = useState(1)
 
-  const buttonStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '40px',
-    height: '40px',
-    borderRadius: '50%',
-    border: 'none',
-    background: '#10293A',
-    color: 'white',
-    cursor: 'pointer',
-    margin: '5px',
-  }
-
-  const modernButtonStyle = {
-    width: '40px',
-    height: '40px',
-    backgroundColor: 'transparent',
-    border: 'none',
-    cursor: 'pointer',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: '0',
-    borderRadius: '50%',
-    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-    transition: 'transform 0.2s',
-  }
+  const { isMapModalOpen } = useContext(AppContext)
 
   const handleZoomIn = () => {
     setScale((prevScale) => prevScale + 0.1)
@@ -818,7 +800,11 @@ const Customer = () => {
       <div
         style={{ height: '150vh' }}
         className={
-          modalVisible || imageVisible || imageEditVisible || dialogVisible
+          modalVisible ||
+          imageVisible ||
+          imageEditVisible ||
+          dialogVisible ||
+          isMapModalOpen.editMode
             ? 'backdrop-blur-lg'
             : ''
         }>
@@ -943,7 +929,7 @@ const Customer = () => {
 
           {/* middle container */}
           <div
-            className={` min-h-[600] rounded-md border-[1px] ml-5 ${modalVisible || imageVisible || imageEditVisible || dialogVisible ? 'blur-screen' : ''}`}
+            className={` min-h-[600] rounded-md border-[1px] ml-5 ${modalVisible || imageVisible || imageEditVisible || dialogVisible || isMapModalOpen.editMode ? 'blur-screen' : ''}`}
             style={{ flexGrow: '1' }}>
             <CustomMooringPositionMap
               position={initialPosition}

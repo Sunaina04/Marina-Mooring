@@ -167,28 +167,31 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       passwordMessage.scrollIntoView({ behavior: 'smooth' })
     }
   }
-
   const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const fileInput = event.target
     const files = Array.from(fileInput.files || [])
+
     if (files.length === 0) return
+
     const validImageFiles = files.filter(
       (file) => file.type.startsWith('image/') && file.size >= 5120 && file.size <= 1048576,
     )
+
     const invalidTypeFiles = files.filter((file) => !file.type.startsWith('image/'))
-    const invalidSizeFiles = files.filter((file) => file.size < 5120 || file.size > 1048576)
+    const invalidSizeFiles: any = files.filter((file) => file.size < 5120 || file.size > 1048576)
+
     if (invalidTypeFiles.length > 0 || invalidSizeFiles.length > 0) {
-      setCustomerImages([])
-      setEncodedImages([])
       let detailMessage = 'Only image files are allowed.'
       if (invalidSizeFiles.length > 0) detailMessage = 'Images must be between 5 KB and 1 MB.'
+
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
         detail: detailMessage,
         life: 3000,
       })
-      fileInput.value = '' // Reset input value
+
+      fileInput.value = ''
       return
     }
 
@@ -226,7 +229,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
     setCustomerImages((prevImages) => [...prevImages, ...newImageUrls])
     setEncodedImages((prevEncoded) => [...prevEncoded, ...newBase64Strings])
-    setImageRequestDtoList((prevList) => [...prevList, ...newImageRequestDtoList])
+    setImageRequestDtoList((prevList: any) => [...prevList, ...newImageRequestDtoList])
   }
 
   const handleRemoveImage = (index: number) => {
@@ -808,7 +811,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   useEffect(() => {
     fetchDataAndUpdate()
   }, [])
-
 
   useEffect(() => {
     if (country) fetchStateDataAndUpdate()
