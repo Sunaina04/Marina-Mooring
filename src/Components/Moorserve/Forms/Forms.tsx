@@ -74,7 +74,8 @@ const Forms = () => {
       const dummyUrl = convertBytetoUrl(rowData.formData)
       const link = document.createElement('a')
       link.href = dummyUrl
-      const name = 'abc.pdf'
+
+      const name = rowData.fileName
       link.setAttribute('download', name) //or any other extension
       document.body.appendChild(link)
       link.click()

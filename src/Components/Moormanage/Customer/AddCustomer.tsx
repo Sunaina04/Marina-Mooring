@@ -34,7 +34,7 @@ import { Toast } from 'primereact/toast'
 import { FaFileUpload } from 'react-icons/fa'
 import { Dialog } from 'primereact/dialog'
 import { AiOutlineDelete } from 'react-icons/ai'
-import { NUMBER_REGEX } from '../../Utils/RegexUtils'
+import { NAME_REGEX, NUMBER_REGEX } from '../../Utils/RegexUtils'
 import UploadImages from '../../CommonComponent/UploadImages'
 
 const AddCustomer: React.FC<CustomerDataProps> = ({
@@ -48,8 +48,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   getCustomerRecord,
 }) => {
   const selectedCustomerId = useSelector(selectCustomerId)
-  // const [selectedCountry, setSelectedCountry] = useState<any>()
-  // const [selectedState, setSelectedState] = useState<any>()
   const [country, setCountry] = useState<any>()
   const [state, setState] = useState<any>()
   const [selectedCustomerType, setSelectedCustomerType] = useState<any>()
@@ -57,8 +55,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [lastName, setLastName] = useState<string>('')
   const [phone, setPhone] = useState<string>('')
   const [email, setEmail] = useState<string>('')
-  const [streetHouse, setStreetHouse] = useState<string>('')
-  const [sectorBlock, setSectorBlock] = useState<string>('')
   const [pinCode, setPinCode] = useState<string>('')
   const [countriesData, setCountriesData] = useState<Country[]>()
   const [statesData, setStatesData] = useState<State[]>()
@@ -81,7 +77,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [imageRequestDtoList, setImageRequestDtoList] = useState<
     { imageName: string; imageData: string; note: string }[]
   >([])
-  const [imagesNote, setImagesNote] = useState('')
   const getFomattedCoordinate = (gpsCoordinatesValue: any) => {
     try {
       let [lat, long]: any = gpsCoordinatesValue.split(' ')
@@ -176,27 +171,17 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const fileInput = event.target
     const files = Array.from(fileInput.files || [])
-
-    if (files.length === 0) {
-      return
-    }
-
+    if (files.length === 0) return
     const validImageFiles = files.filter(
       (file) => file.type.startsWith('image/') && file.size >= 5120 && file.size <= 1048576,
     )
-
     const invalidTypeFiles = files.filter((file) => !file.type.startsWith('image/'))
     const invalidSizeFiles = files.filter((file) => file.size < 5120 || file.size > 1048576)
-
     if (invalidTypeFiles.length > 0 || invalidSizeFiles.length > 0) {
       setCustomerImages([])
       setEncodedImages([])
       let detailMessage = 'Only image files are allowed.'
-
-      if (invalidSizeFiles.length > 0) {
-        detailMessage = 'Images must be between 5 KB and 1 MB.'
-      }
-
+      if (invalidSizeFiles.length > 0) detailMessage = 'Images must be between 5 KB and 1 MB.'
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
@@ -257,15 +242,12 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   }
 
   const validateFields = () => {
-    const phoneRegex = /^.{10}$|^.{12}$/
-    const nameRegex = /^[a-zA-Z ]+$/
-
     const errors: { [key: string]: string } = {}
     let firstError = ''
     if (!firstName) {
       errors.firstName = 'First name is required'
       firstError = 'firstName'
-    } else if (!nameRegex.test(firstName)) {
+    } else if (!NAME_REGEX.test(firstName)) {
       errors.firstName = 'First name must only contain letters'
       firstError = 'firstName'
     } else if (firstName.length < 3) {
@@ -275,6 +257,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     if (!lastName) {
       errors.lastName = 'Last name is required'
       if (!firstError) firstError = 'lastName'
+    } else if (!NAME_REGEX.test(lastName)) {
+      errors.lastName = 'Last name must only contain letters'
+      firstError = 'lastName'
     } else if (lastName.length < 3) {
       errors.lastName = 'Last name must be at least 3 characters long'
       firstError = 'lastName'
@@ -364,7 +349,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     setPhone(customer?.phone || '')
     setEmail(customer?.emailAddress || '')
     setAddress(customer?.address || '')
-    // setSectorBlock(customer?.aptSuite || '')
     setPinCode(customer?.zipCode || '')
     setSelectedCustomerType(customer?.customerTypeDto?.type)
     setState(customer?.stateResponseDto?.name || undefined)
@@ -829,9 +813,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   }, [country])
 
   useEffect(() => {
-    if (editMode && customer) {
-      handleEditMode()
-    }
+    if (editMode && customer) handleEditMode()
   }, [editMode, customer])
 
   useEffect(() => {
@@ -1145,7 +1127,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   id="pinCode"
                   value={address}
                   onChange={(e) => handleInputChangeCustomer('address', e.target.value)}
-                   placeholder="Address"
+                  placeholder="Address"
                   style={{
                     width: '230px',
                     height: '32px',

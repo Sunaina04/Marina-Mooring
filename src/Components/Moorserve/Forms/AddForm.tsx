@@ -72,6 +72,7 @@ const AddForm: React.FC<FormDataProps> = ({ closeModal, getFormsData }) => {
     try {
       const payload = {
         formName: formData.formName,
+        fileName: fileName,
         encodedFormData: encodedFile,
       }
       const response = await uploadForm(payload).unwrap()
