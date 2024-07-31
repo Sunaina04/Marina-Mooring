@@ -51,9 +51,6 @@ const WorkOrders = () => {
       setCompletedOrder(e.value)
     }
   }
-  // const optionsStyle = {
-  //   backgroundColor:'white'
-  // }
 
   const options = [
     { label: 'Pending', value: 'No' },
