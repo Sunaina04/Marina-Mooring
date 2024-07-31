@@ -116,7 +116,6 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
     setServiceAreaTypeId(customerData?.serviceAreaTypeDto?.type || '')
     setZipCode(customerData?.zipCode || '')
     setAddress(customerData?.address || '')
-    setState(customerData?.stateResponseDto?.name || '')
     setNotes(customerData?.notes || '')
     setCountry(customerData?.countryResponseDto?.name || undefined)
     setState(customerData?.stateResponseDto?.name || undefined)
