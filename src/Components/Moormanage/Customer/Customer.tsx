@@ -732,9 +732,7 @@ const Customer = () => {
           }}>
           <p className="ml-4">
             <span className="address-label">Address: </span>
-            {(customerRecordData?.streetHouse || '-') +
-              ', ' +
-              (customerRecordData?.aptSuite || '-') +
+            {(customerRecordData?.address || '-') +
               ', ' +
               (customerRecordData?.stateResponseDto?.name || '-') +
               ', ' +
