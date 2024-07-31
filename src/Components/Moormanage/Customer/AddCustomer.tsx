@@ -725,6 +725,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       setStatesData(statesData)
     } else {
       setState('')
+      setStatesData([])
     }
   }, [country])
 
@@ -808,8 +809,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     fetchDataAndUpdate()
   }, [])
 
+
   useEffect(() => {
-    fetchStateDataAndUpdate()
+    if (country) fetchStateDataAndUpdate()
   }, [country])
 
   useEffect(() => {

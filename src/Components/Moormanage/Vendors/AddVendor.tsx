@@ -93,6 +93,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
       setStatesData(statesData)
     } else {
       setState('')
+      setStatesData([])
     }
   }, [formData?.countryForAddress?.id])
 
@@ -101,8 +102,8 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
   }, [])
 
   useEffect(() => {
-    if (country) fetchStateDataAndUpdate()
-  }, [country])
+    if (formData?.country) fetchStateDataAndUpdate()
+  }, [formData?.countryForAddress?.id])
 
   const handleClick = () => {
     if (editMode) {
@@ -271,9 +272,7 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
     fetchStateDataAndUpdate()
   }, [formData?.countryForAddress?.id])
 
-  useEffect(() => {
-    fetchDataAndUpdate()
-  }, [])
+ 
 
   return (
     <>

@@ -271,6 +271,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
       setStatesData(statesData)
     } else {
       setState('')
+      setStatesData([])
     }
   }, [country])
 

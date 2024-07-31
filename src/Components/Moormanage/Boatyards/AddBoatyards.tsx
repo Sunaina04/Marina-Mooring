@@ -275,6 +275,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
       setStatesData(statesData)
     } else {
       setState('')
+      setStatesData([])
     }
   }, [country])
 
@@ -282,9 +283,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
     fetchDataAndUpdate()
   }, [fetchDataAndUpdate])
 
-  // useEffect(() => {
-  //   fetchStateDataAndUpdate()
-  // }, [country])
   useEffect(() => {
     if (country) fetchStateDataAndUpdate()
   }, [country])
