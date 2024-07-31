@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { TimeLineProps } from '../../Type/Components/MapTypes'
 import CustomModal from './CustomModal'
 import AddMoorings from '../Moormanage/Moorings/AddMoorings'
+import { AppContext } from '../../AppContext'
 
 const MooringMapModal: React.FC<TimeLineProps> = ({
   gpsValue,
@@ -12,20 +13,15 @@ const MooringMapModal: React.FC<TimeLineProps> = ({
   setShowMapModal,
 }) => {
   const [customerModalVisible, setCustomerModalVisible] = useState(false)
-  const [editMode, setEditMode] = useState(false)
+  const { isMapModalOpen, setMapModalOpen } = useContext(AppContext)
 
   const viewEdit = () => {
-    setEditMode(true)
+    setMapModalOpen((prevState: any) => ({ ...prevState, editMode: true }))
     setCustomerModalVisible(true)
-    // if (setShowMapModal) {
-    //   setShowMapModal(false)
-    //   setEditMode(true)
-    //   setCustomerModalVisible(true)
-    // }
   }
 
   const handleModalClose = () => {
-    setEditMode(false)
+    setMapModalOpen((prevState: any) => ({ ...prevState, editMode: false }))
     setCustomerModalVisible(false)
   }
 
@@ -42,7 +38,7 @@ const MooringMapModal: React.FC<TimeLineProps> = ({
           </div>
           <div>
             <p className="text-xs text-white mt-2">
-              GPS Cordinates:
+              GPS Coordinates:
               <br />
               {gpsValue}
             </p>
@@ -64,7 +60,7 @@ const MooringMapModal: React.FC<TimeLineProps> = ({
               <AddMoorings
                 moorings={mooringData}
                 mooringRowData={mooringData}
-                editMode={editMode}
+                editMode={isMapModalOpen.editMode}
                 isEditMooring={true}
                 closeModal={handleModalClose}
                 getCustomer={() => {}}
@@ -73,13 +69,22 @@ const MooringMapModal: React.FC<TimeLineProps> = ({
             headerText={<h1 className="text-xxl font-bold text-black">Mooring Information</h1>}
             visible={customerModalVisible}
             onHide={handleModalClose}
+            // dialogStyle={{
+            //   width: '800px',
+            //   minWidth: '800px',
+            //   borderRadius: '1rem',
+            //   maxHeight: '95%',
+            //   overflowY: 'auto',
+            //   zIndex: 1000001,
+            // }}
+
             dialogStyle={{
               width: '800px',
               minWidth: '800px',
+              height: '630px',
+              minHeight: '630px',
               borderRadius: '1rem',
-              maxHeight: '95%',
-              overflowY: 'auto',
-              zIndex: 1000001,
+              maxHeight: '95% !important',
             }}
           />
         )}
