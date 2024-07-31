@@ -36,15 +36,14 @@ const Forms = () => {
   const [viewPdf, setViewPdf] = useState(null)
   const [formsData, setFormsData] = useState<FormsPayload[]>([])
   const [isLoading, setIsLoading] = useState(false)
-  const [file, setFile] = useState<File | undefined>(undefined)
   const [getForms] = useGetFormsMutation()
   const [downloadForms] = useDownloadFormMutation()
   const [deleteForm] = useDeleteFormMutation()
-  const { error, response, handleSubmit } = useSubmit()
   const [searchText, setSearchText] = useState('')
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
   const [pageSize, setPageSize] = useState(10)
+  const [totalRecords, setTotalRecords] = useState<number>()
   const toastRef = useRef<Toast>(null)
 
   const onPageChange = (event: any) => {
@@ -74,9 +73,8 @@ const Forms = () => {
       const dummyUrl = convertBytetoUrl(rowData.formData)
       const link = document.createElement('a')
       link.href = dummyUrl
-
       const name = rowData.fileName
-      link.setAttribute('download', name) //or any other extension
+      link.setAttribute('download', name)
       document.body.appendChild(link)
       link.click()
     } catch (error) {
@@ -101,9 +99,14 @@ const Forms = () => {
         })
       }
     } catch (error) {
-      const { message } = error as ErrorResponse
+      const { message, data } = error as ErrorResponse
       setIsLoading(false)
-      console.error('Error fetching forms:', error)
+      toastRef?.current?.show({
+        severity: 'success',
+        summary: 'Success',
+        detail: message || data?.message,
+        life: 3000,
+      })
     }
     getFormsData()
   }
@@ -121,20 +124,29 @@ const Forms = () => {
         params.pageSize = pageSize
       }
       const response = await getForms(params).unwrap()
-      const { status, content } = response as FormsResponse
+      const { status, content, totalSize } = response as FormsResponse
       if (status === 200 && Array.isArray(content)) {
         setFormsData(content)
+        setTotalRecords(totalSize)
       }
     } catch (error) {
-      const { message } = error as ErrorResponse
+      const { message, data } = error as ErrorResponse
       setIsLoading(false)
-      console.error('Error fetching forms:', error)
+      toastRef?.current?.show({
+        severity: 'success',
+        summary: 'Success',
+        detail: message || data?.message,
+        life: 3000,
+      })
     }
   }
 
   useEffect(() => {
-    getFormsData()
-  }, [selectedCustomerId])
+    const timeoutId = setTimeout(() => {
+      getFormsData()
+    }, 2000)
+    return () => clearTimeout(timeoutId)
+  }, [selectedCustomerId, searchText, pageNumber, pageSize])
 
   const columnStyle = {
     backgroundColor: '#FFFFFF',
@@ -327,7 +339,7 @@ const Forms = () => {
               <Paginator
                 first={pageNumber1}
                 rows={pageSize}
-                totalRecords={1}
+                totalRecords={totalRecords}
                 rowsPerPageOptions={[5, 10, 20, 30]}
                 onPageChange={onPageChange}
                 style={{
