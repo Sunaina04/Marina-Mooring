@@ -218,6 +218,10 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       if (!firstError) firstError = 'mooringNumber'
     }
 
+    if (!formData?.gpsCoordinatesValue) {
+      errors.gpsCoordinatesValue = 'GPS Coordinates is required'
+    }
+
     setFirstErrorField(firstError)
     setFieldErrors(errors)
     return errors
@@ -1300,22 +1304,29 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   <div className="flex gap-1">G.P.S Coordinates</div>
                 </span>
                 <div className="mt-2">
-                  <InputComponent
-                    value={gpsCoordinatesValue}
+                <InputComponent
+                    value={formData?.gpsCoordinatesValue}
                     onChange={(e) => {
                       setGpsCoordinatesValue(e.target.value)
                       setFieldErrors((prevErrors) => ({ ...prevErrors, gpsCoordinatesValue: '' }))
                     }}
                     style={{
                       width: '230px',
-                      height: '32px',
-                      border: '1px solid #D5E1EA',
-                      borderRadius: '0.50rem',
-                      fontSize: '0.8rem',
-                      paddingLeft: '0.5rem',
+                        height: '32px',
+                        border: fieldErrors.gpsCoordinatesValue
+                          ? '1px solid red'
+                          : '1px solid #D5E1EA',
+                        borderRadius: '0.50rem',
+                        fontSize: '0.8rem',
+                        padding: '0.5rem',
                     }}
                   />
                 </div>
+                <p>
+                {fieldErrors.gpsCoordinatesValue && (
+                  <small className="p-error">{fieldErrors.gpsCoordinatesValue}</small>
+                )}
+              </p>
               </div>
 
               <div>

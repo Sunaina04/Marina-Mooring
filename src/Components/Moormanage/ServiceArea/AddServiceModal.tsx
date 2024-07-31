@@ -76,7 +76,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
   const [center, setCenter] = useState<any>(
     customerData?.gpsCoordinates || gpsCoordinatesValue
       ? getFormattedCoordinate(customerData?.gpsCoordinates || gpsCoordinatesValue)
-      : [41.56725, 70.94045],
+      : [39.4926173, -117.5714859],
   )
   const [isLoading, setIsLoading] = useState(true)
   const [addServiceArea] = useAddServiceAreaMutation()
@@ -92,6 +92,10 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
       errors.name = 'Service Area Name is required'
     } else if (!nameRegex.test(serviceAreaName)) {
       errors.name = 'Name is invalid'
+    }
+
+    if (!gpsCoordinatesValue) {
+      errors.gpsCoordinatesValue = 'GPS Coordinates is required'
     }
     return errors
   }
@@ -352,7 +356,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
       </div>
       <div className="mt-3">
         <span className="font-medium text-sm text-[#000000]">
-          Address <span className="text-red-500">*</span>
+          Address 
         </span>
       </div>
       <div className="flex gap-6 mt-1">
@@ -466,14 +470,21 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
                 placeholder="GPS Coordinates"
                 style={{
                   width: '230px',
-                  height: '32px',
-                  border: '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                  padding: '0.5rem',
+                    height: '32px',
+                    border: errorMessage.gpsCoordinatesValue
+                      ? '1px solid red'
+                      : '1px solid #D5E1EA',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
+                    padding: '0.5rem',
                 }}
               />
             </div>
+            <p>
+                {errorMessage.gpsCoordinatesValue && (
+                  <small className="p-error">{errorMessage.gpsCoordinatesValue}</small>
+                )}
+              </p>
           </div>
         </div>
         <div></div>
