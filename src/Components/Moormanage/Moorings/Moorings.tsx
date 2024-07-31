@@ -168,7 +168,6 @@ const Moorings = () => {
     await getCustomersWithMooring(rowData?.customerId, rowData?.id)
     setCustomerId(rowData?.customerId)
     setMooringId(rowData?.id)
-    console.log('I did set Mooring ID', rowData.id)
   }
 
   const handleEdit = (rowData: any) => {
