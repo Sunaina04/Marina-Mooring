@@ -85,10 +85,19 @@ const Technicians = () => {
     fontWeight: '700',
   }
 
+  const TechfirstLastName = (data: any) => {
+    return data?.firstName + ' ' + data?.lastName
+  }
+
   const TechnicianTableColumn = useMemo(
     () => [
       { id: 'id', label: 'ID', style: TechnicianTableColumnStyle },
-      { id: 'name', label: 'Technicians Name', style: TechnicianTableColumnStyle },
+      {
+        id: 'name',
+        label: 'Technicians Name',
+        body: TechfirstLastName,
+        style: TechnicianTableColumnStyle,
+      },
       { id: 'openWorkOrder', label: 'Open Work Orders', style: TechnicianTableColumnStyle },
       { id: 'closeWorkOrder', label: 'Completed Jobs', style: TechnicianTableColumnStyle },
     ],
