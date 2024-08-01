@@ -105,6 +105,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
     const formattedLng = lng.toFixed(3)
     const concatenatedValue = `${formattedLat} ${formattedLng}`
     setGpsCoordinatesValue(concatenatedValue)
+    setErrorMessage((prev) => ({ ...prev, gpsCoordinatesValue: '' }))
   }
 
   const handleEditMode = () => {

@@ -108,10 +108,12 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
 
   const handlePositionChange = (lat: number, lng: number) => {
     setCenter([lat, lng])
+
     const formattedLat = lat.toFixed(3)
     const formattedLng = lng.toFixed(3)
     const concatenatedValue = `${formattedLat} ${formattedLng}`
     setGpsCoordinatesValue(concatenatedValue)
+    setErrorMessage((prev) => ({ ...prev, gpsCoordinatesValue: '' }))
   }
 
   const handleEditMode = () => {
@@ -468,6 +470,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
               <InputComponent
                 value={gpsCoordinatesValue}
                 onChange={handleGpsCoordinatesChange}
+                
                 placeholder="GPS Coordinates"
                 style={{
                   width: '230px',
