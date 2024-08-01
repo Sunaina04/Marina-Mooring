@@ -107,7 +107,7 @@ const Vendors = () => {
         toast.current?.show({
           severity: 'success',
           summary: 'Success',
-          detail: 'User deleted successfully',
+          detail: message,
           life: 3000,
         })
       } else {
