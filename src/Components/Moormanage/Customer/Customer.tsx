@@ -743,7 +743,7 @@ const Customer = () => {
             {customerRecordData?.note || '-'}
           </p>
 
-          <div className="flex mt-2 ml-4 mb-3 overflow-x-auto">
+          <div className="flex mt-2 ml-4 mb-3">
             <div className="mt-1">
               <h1 className="">Boatyard: </h1>
             </div>
