@@ -544,6 +544,11 @@ const Boatyards = () => {
       </div>
 
       <div className="flex flex-col md:flex-row mt-3">
+      <div
+            style={{
+              borderRadius: '5px',
+              marginLeft: '1.7rem',
+            }}>
         {/* Left Panel */}
         <div className="bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-6 md:mb-0 w-[700px]">
           {/* Header */}
@@ -628,6 +633,7 @@ const Boatyards = () => {
                 }}
               />
             </div>
+          </div>
           </div>
         </div>
         {isLoading && (

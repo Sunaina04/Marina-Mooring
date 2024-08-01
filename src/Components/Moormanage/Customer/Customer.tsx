@@ -46,6 +46,7 @@ import AddImage from './AddImage'
 import ViewImage from '../../CommonComponent/ViewImage'
 import MooringInformations from '../../CommonComponent/MooringInformations'
 import { AppContext } from '../../../AppContext'
+import ViewImageDialog from '../../CommonComponent/ViewImageDialog'
 
 const Customer = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -88,17 +89,8 @@ const Customer = () => {
   const [totalRecordsTwo, setTotalRecordsTwo] = useState<number>()
   const [accordion, setAccordion] = useState('faq1')
   const [showImage, setShowImage] = useState({ id: '', imageData: '' })
-  const [scale, setScale] = useState(1)
 
   const { isMapModalOpen } = useContext(AppContext)
-
-  const handleZoomIn = () => {
-    setScale((prevScale) => prevScale + 0.1)
-  }
-
-  const handleZoomOut = () => {
-    setScale((prevScale) => Math.max(prevScale - 0.1, 0.1))
-  }
 
   // const handleToggle = (id: string) => {
   //   setAccordion((prevState) => (prevState === id ? '' : id))
@@ -743,7 +735,7 @@ const Customer = () => {
             {customerRecordData?.note || '-'}
           </p>
 
-          <div className="flex mt-2 ml-4 mb-3 overflow-x-auto">
+          <div className="flex mt-2 ml-4 mb-3">
             <div className="mt-1">
               <h1 className="">Boatyard: </h1>
             </div>
@@ -1262,15 +1254,14 @@ const Customer = () => {
           visible={imageVisible}
           onHide={() => {
             setImageVisible(false)
-            setScale(1)
+            // setScale(1)
           }}
           headerStyle={{ cursor: 'alias' }}
           header={properties.imageHeader}>
-          <ViewImage
-            handleZoomOut={handleZoomOut}
-            scale={scale}
+          <ViewImageDialog
+            imageVisible={imageVisible}
+            setImageVisible={setImageVisible}
             showImage={showImage}
-            handleZoomIn={handleZoomIn}
           />
         </Dialog>
 

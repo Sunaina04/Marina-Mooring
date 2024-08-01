@@ -605,6 +605,12 @@ const ServiceArea = () => {
       </div>
 
       <div className="flex flex-col md:flex-row mt-3">
+      <div
+            style={{
+              // border: '1px solid #D5E1EA',
+              borderRadius: '5px',
+              marginLeft: '1.8rem',
+            }}>
         {/* Left Panel */}
         <div className="bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-6 md:mb-0 w-[700px]">
           {/* Header */}
@@ -689,6 +695,7 @@ const ServiceArea = () => {
                 }}
               />
             </div>
+          </div>
           </div>
         </div>
         {isLoading && (
