@@ -269,7 +269,6 @@ const AccountRecievable = () => {
       height: '3.50rem',
       fontSize: '14px',
       color: '#000000',
-      // borderBottom: '1px solid #C0C0C0',
       width: '12.7vw',
       fontWeight: 700,
     },
@@ -383,7 +382,7 @@ const AccountRecievable = () => {
       }
     }, 600)
     return () => clearTimeout(timeoutId)
-  }, [searchInvoice])
+  }, [searchInvoice, pageNumberTwo, pageSizeTwo, selectedCustomerId])
 
   return (
     <div style={{ height: '150vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
