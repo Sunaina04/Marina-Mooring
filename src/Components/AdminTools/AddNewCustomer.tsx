@@ -185,6 +185,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   }
 
   const handleInputChange = (fieldName: string, value: any) => {
+    if (fieldName === 'phone') {
+      value = value.replace(/[^0-9+]/g, '')
+    }
     switch (fieldName) {
       case 'firstName':
         setFirstName(value)

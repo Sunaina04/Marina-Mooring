@@ -232,6 +232,12 @@ const Dashboard = () => {
     [],
   )
 
+  const TechnicianfirstLastName = (data: any) => {
+    return (
+      data?.technicianUserResponseDto?.firstName + ' ' + data?.technicianUserResponseDto?.lastName
+    )
+  }
+
   const WorkOrderColumns: TableColumnProps[] = useMemo(
     () => [
       {
@@ -253,6 +259,7 @@ const Dashboard = () => {
       {
         id: 'technicianUserResponseDto.name',
         label: 'Assigned To',
+        body: TechnicianfirstLastName,
         style: { fontSize: '10px', backgroundColor: '#FFFFFF', color: '#000000' },
       },
       {
@@ -372,8 +379,8 @@ const Dashboard = () => {
     <>
       <Header header="MOORMANAGE/DASHBOARD" />
       <Toast ref={toast} />
-      <div className=""><div className="flex lg:flex-row justify-around md:flex-col mt-12">
-        
+      <div className="">
+        <div className="flex lg:flex-row justify-around md:flex-col mt-12">
           <div
             style={{
               marginLeft: '3rem',

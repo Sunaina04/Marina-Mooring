@@ -61,6 +61,12 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
   }
 
   const handleInputChange = (field: string, value: any) => {
+    if (field === 'phone') {
+      value = value.replace(/[^0-9+]/g, '')
+    }
+    if (field === 'phoneForRepresentative') {
+      value = value.replace(/[^0-9+]/g, '')
+    }
     const numberRegex = /^\d+$/
     if (field === 'accountNumber') {
       if (value !== '' && !numberRegex.test(value)) {

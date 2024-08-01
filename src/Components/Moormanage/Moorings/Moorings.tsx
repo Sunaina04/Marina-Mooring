@@ -60,6 +60,7 @@ const Moorings = () => {
   const [GPSResponseData, setGPSResponseData] = useState<any>()
   const [editMode, setEditMode] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState<any>()
+  const [rowClickedActionInProgress, setRowClickedActionInProgress] = useState(false)
   const [selectedMooring, setSelectedMooring] = useState<any>()
   const [searchText, setSearchText] = useState('')
   const [customerId, setCustomerId] = useState<any>()
@@ -163,8 +164,8 @@ const Moorings = () => {
     setIsEditMooring(false)
   }
 
-  const handleMooringRowClick = (rowData: any) => {
-    getCustomersWithMooring(rowData?.customerId)
+  const handleMooringRowClick = async (rowData: any) => {
+    await getCustomersWithMooring(rowData?.customerId, rowData?.id)
     setCustomerId(rowData?.customerId)
     setMooringId(rowData?.id)
   }
@@ -440,7 +441,8 @@ const Moorings = () => {
     selectedProduct,
   ])
 
-  const getCustomersWithMooring = async (id: number) => {
+  const getCustomersWithMooring = async (id: number, givenMooringId?: number) => {
+    givenMooringId = givenMooringId ?? mooringId
     setIsLoader(true)
     try {
       const response = await getCustomerWithMooring({
@@ -458,10 +460,12 @@ const Moorings = () => {
         setIsLoader(false)
         setCustomerRecordData(content?.customerResponseDto)
         setBoatYardData(content?.boatyardNames)
+        setMooringResponseData(content?.customerResponseDto?.mooringResponseDtoList)
+        setTotalRecordsTwo(totalSize)
         const allMooringImages: any = []
         content?.customerResponseDto?.mooringResponseDtoList?.forEach(
           (mooring: MooringResponseDtoList) => {
-            if (mooring?.id === mooringId) {
+            if (mooring?.id === givenMooringId) {
               allMooringImages.push(...mooring?.imageDtoList)
             } else {
               setMooringImage('')
@@ -469,8 +473,6 @@ const Moorings = () => {
           },
         )
         setMooringImage(allMooringImages)
-        setMooringResponseData(content?.customerResponseDto?.mooringResponseDtoList)
-        setTotalRecordsTwo(totalSize)
       } else {
         setIsLoader(false)
         setIsLoading(false)
@@ -772,14 +774,22 @@ const Moorings = () => {
                       tableStyle={{
                         fontSize: '12px',
                         color: '#000000',
+                        opacity: rowClickedActionInProgress ? 0.5 : 1,
                         fontWeight: 600,
                         backgroundColor: '#D9D9D9',
                       }}
                       scrollable={true}
                       columns={tableColumns}
                       style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
-                      onRowClick={(row) => {
-                        handleMooringRowClick(row?.data)
+                      onRowClick={async (row) => {
+                        // console.log('row is clicked', row.data)
+                        if (rowClickedActionInProgress) return null
+                        setRowClickedActionInProgress(true)
+                        try {
+                          await handleMooringRowClick(row?.data)
+                        } finally {
+                          setRowClickedActionInProgress(false)
+                        }
                       }}
                       selectionMode="single"
                       onSelectionChange={(e) => {

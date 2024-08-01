@@ -301,10 +301,11 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     )
 
     const invalidTypeFiles = files.filter((file) => !file.type.startsWith('image/'))
-    const invalidSizeFiles: any = files.filter((file) => file.size < 5120 || file.size > 1048576)
+    const invalidSizeFiles = files.filter((file) => file.size < 5120 || file.size > 1048576)
 
     if (invalidTypeFiles.length > 0 || invalidSizeFiles.length > 0) {
-      let detailMessage = 'Only image files are allowed.'
+      let detailMessage = 'Only image files are allowed'
+
       if (invalidSizeFiles.length > 0) detailMessage = 'Images must be between 5 KB and 1 MB.'
 
       toastRef?.current?.show({
@@ -313,14 +314,13 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         detail: detailMessage,
         life: 3000,
       })
-
       fileInput.value = ''
       return
     }
 
     const newBase64Strings: string[] = []
     const newImageUrls: string[] = []
-    const newImageRequestDtoList: { imageName: string; imageData: string; note: string }[] = []
+    const imageRequestDtoList: { imageName: string; imageData: string }[] = []
 
     for (const file of validImageFiles) {
       try {
@@ -340,10 +340,9 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         })
         newBase64Strings.push(base64String)
         newImageUrls.push(`data:image/png;base64,${base64String}`)
-        newImageRequestDtoList.push({
+        imageRequestDtoList.push({
           imageName: file.name,
           imageData: base64String,
-          note: '', // Initialize with an empty note
         })
       } catch (error) {
         console.error('Error reading file:', error)
@@ -352,8 +351,9 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
 
     setCustomerImages((prevImages) => [...prevImages, ...newImageUrls])
     setEncodedImages((prevEncoded) => [...prevEncoded, ...newBase64Strings])
-    setimageRequestDtoList((prevList: any) => [...prevList, ...newImageRequestDtoList])
+    setimageRequestDtoList(imageRequestDtoList)
   }
+
   const handleRemoveImage = (index: number) => {
     const newImages = [...customerImages]
     newImages.splice(index, 1)

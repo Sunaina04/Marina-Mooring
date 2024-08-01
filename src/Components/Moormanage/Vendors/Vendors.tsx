@@ -92,9 +92,6 @@ const Vendors = () => {
   }, [getVendors, searchText, selectedCustomerId, pageSize, pageNumber])
 
   const handleEdit = (rowData: any) => {
-
-    console.log(rowData,"dataa");
-    
     setModalVisible(true)
     setSelectedCustomer(rowData)
     setEditMode(true)
@@ -224,7 +221,7 @@ const Vendors = () => {
       getVendorData()
     }, 600)
     return () => clearTimeout(timeoutId)
-  }, [searchText, selectedCustomerId, pageSize, pageNumber,selectedCustomerId])
+  }, [searchText, selectedCustomerId, pageSize, pageNumber, selectedCustomerId])
 
   return (
     <>
