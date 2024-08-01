@@ -109,7 +109,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [encodedImages, setEncodedImages] = useState<string[]>([])
 
   const [formData, setFormData] = useState<any>({
-    mooringId: '',
+    mooringNumber: '',
     mooringName: '',
     customerName: '',
     harbor: '',
@@ -267,6 +267,12 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       errors.lastName = 'Last name must be at least 3 characters long'
       firstError = 'lastName'
     }
+    if (checkedMooring) {
+      if (!formData?.mooringNumber) {
+        errors.mooringNumber = 'Mooring Number is required'
+      }
+    }
+
     setFirstErrorField(firstError)
     setFieldErrors(errors)
     return errors
@@ -349,8 +355,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     setFieldErrors((prevErrors) => ({ ...prevErrors, [fieldName]: '' }))
   }
 
-  
-
   const handleEditMode = () => {
     setFirstName(customer?.firstName || '')
     setLastName(customer?.lastName || '')
@@ -405,7 +409,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         phone: phone,
         address: address,
         note: formData.note,
-        // aptSuite: sectorBlock,
         stateId: state?.id,
         countryId: country?.id,
         imageRequestDtoList: imageRequestDtoList,
@@ -416,7 +419,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           {
             customerId: formData?.customerName,
             addDock: checkedDock,
-            mooringNumber: formData?.mooringId,
+            mooringNumber: formData?.mooringNumber,
             harborOrArea: formData?.harbor,
             gpsCoordinates: gpsCoordinatesValue,
             installBottomChainDate: formData?.bottomChainDate,
