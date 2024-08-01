@@ -1870,7 +1870,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
             setImageVisible={setImageVisible}
             imageRequestDtoList={imageRequestDtoList}
             isLoading={isLoading}
-            customerImages={mooringImages}
+            images={mooringImages}
           />
           <Toast ref={toastRef} />
         </Dialog>

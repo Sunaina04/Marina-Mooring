@@ -276,7 +276,7 @@ export interface ShowImagesProps {
   setImageVisible: (visible: boolean) => void
   imageRequestDtoList: { note: string }[]
   isLoading: boolean
-  customerImages: string[]
+  images: string[]
 }
 
 export interface ResetModalProps {

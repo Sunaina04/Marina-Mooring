@@ -1264,138 +1264,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         visible={imageVisible}
         onHide={() => setImageVisible(false)}
         header={'Images'}>
-        {/* <div className={`ml-4 ${isLoading ? 'blurred' : ''}`}>
-          <div className="flex justify-between">
-            <div className="mt-6">
-              <input
-                id="file-input"
-                type="file"
-                accept="image/*"
-                multiple
-                onChange={handleImageChange}
-                style={{
-                  display: 'none',
-                }}
-              />
-              <label
-                htmlFor="file-input"
-                style={{
-                  width: '300px',
-                  height: '40px',
-                  border: '2px solid #0098FF',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                  paddingLeft: '0.5rem',
-                  display: 'flex',
-                  gap: '0.5rem',
-                  textAlign: 'center',
-                  lineHeight: '25px',
-                  cursor: isAccountRecievable ? 'disabled' : 'pointer',
-                }}>
-                <FaFileUpload
-                  style={{
-                    fontSize: '29px',
-                    color: '#0098FF',
-                    marginLeft: '1rem',
-                    marginTop: '3px',
-                  }}
-                />
-                <div className="border-r-2 border-sky-500  h-9 pl-3"></div>
-                <span className="pl-10 mt-1"> UPLOAD IMAGES </span>
-              </label>
-            </div>
-            <div className="">
-              <div className=" font-medium text-sm text-[#000000]">Note</div>
-              <div className="mt-1">
-                <InputComponent
-                  // value={formData.note}
-
-                  onChange={(e) => handleInputChange('note', e.target.value)}
-                  style={{
-                    width: '370px',
-                    height: '40px',
-                    border: '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                    boxShadow: 'none',
-                    paddingLeft: '0.5rem',
-                    color: 'black',
-                    resize: 'none',
-                  }}
-                />
-              
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div
-          
-
-          style={{ marginTop: '40px', marginLeft: '40px' }}>
-          {customerImages.length > 0 && (
-            <div className="mt-2">
-              <div className="flex gap-16 flex-wrap">
-                {customerImages.map((image, index) => (
-                  <div
-                    key={index}
-                    style={{ position: 'relative', display: 'inline-block' }}
-                    onMouseEnter={() => setHoveredIndex(index)}
-                    onMouseLeave={() => setHoveredIndex(null)}>
-                    
-                    <AiOutlineDelete
-                      onClick={() => handleRemoveImage(index)}
-                      style={{
-                        position: 'absolute',
-                        top: '165px',
-                        right: '5px',
-                        background: 'red',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '5px',
-                        width: '28px',
-                        height: '25px',
-                        cursor: isAccountRecievable ? 'disabled' : 'pointer',
-                        opacity: hoveredIndex === index ? 1 : 0,
-                        transition: 'opacity 0.3s',
-                      }}
-                    />
-                    <img
-                      src={image}
-                      alt={`Uploaded ${index}`}
-                      style={{
-                        width: '300px',
-                        height: '200px',
-                        objectFit: 'cover',
-                        borderRadius: '0.5rem',
-                        boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
-                      }}
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-
-        <div className={`flex gap-4 ml-4 bottom-5 absolute left-6 ${isLoading ? 'blurred' : ''}`}>
-          <Button
-            label={'Close'}
-            onClick={() => setImageVisible(false)}
-            style={{
-              width: '89px',
-              height: '42px',
-              backgroundColor: '#0098FF',
-              cursor: isAccountRecievable ? 'disabled' : 'pointer',
-              fontWeight: 'bolder',
-              fontSize: '1rem',
-              boxShadow: 'none',
-              color: 'white',
-              borderRadius: '0.5rem',
-            }}
-          />
-        </div> */}
-
         <ShowImages
           handleNoteChange={handleNoteChange}
           hoveredIndex={hoveredIndex}
@@ -1405,9 +1273,8 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
           setImageVisible={setImageVisible}
           imageRequestDtoList={imageRequestDtoList}
           isLoading={isLoading}
-          customerImages={customerImages}
+          images={customerImages}
         />
-
         <Toast ref={toastRef} />
       </Dialog>
     </>
