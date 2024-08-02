@@ -360,11 +360,11 @@ const AccountRecievable = () => {
 
   useEffect(() => {
     getWorkOrderWithPendingPayApproval()
-  }, [pageNumber, pageSize, selectedCustomerId])
+  }, [pageNumber, pageSize, selectedCustomerId, searchApproval])
 
   useEffect(() => {
     getOutStandingInvoice()
-  }, [pageNumberTwo, pageSizeTwo, selectedCustomerId])
+  }, [pageNumberTwo, pageSizeTwo, selectedCustomerId, searchInvoice])
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
