@@ -358,13 +358,22 @@ const AccountRecievable = () => {
     style: { borderBottom: '1px solid #D5E1EA', fontWeight: '' },
   }
 
+  // useEffect(() => {
+  //   getWorkOrderWithPendingPayApproval()
+  // }, [pageNumber, pageSize, selectedCustomerId])
+
   useEffect(() => {
-    getWorkOrderWithPendingPayApproval()
-  }, [pageNumber, pageSize, selectedCustomerId, searchApproval])
+    const handler = setTimeout(() => {
+      getWorkOrderWithPendingPayApproval()
+    }, 600)
+    return () => {
+      clearTimeout(handler)
+    }
+  }, [searchApproval, pageNumber, pageSize, selectedCustomerId, getWorkOrderWithPendingPayApproval])
 
   useEffect(() => {
     getOutStandingInvoice()
-  }, [pageNumberTwo, pageSizeTwo, selectedCustomerId, searchInvoice])
+  }, [pageNumberTwo, pageSizeTwo, selectedCustomerId])
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
