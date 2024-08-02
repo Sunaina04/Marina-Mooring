@@ -5,6 +5,7 @@ import { AiOutlineDelete } from 'react-icons/ai'
 import { FaFileUpload } from 'react-icons/fa'
 import { ShowImagesProps } from '../../Type/ComponentBasedType'
 import { Toast } from 'primereact/toast'
+
 const UploadImages: React.FC<ShowImagesProps> = ({
   handleNoteChange,
   hoveredIndex,
@@ -14,7 +15,7 @@ const UploadImages: React.FC<ShowImagesProps> = ({
   setImageVisible,
   imageRequestDtoList,
   isLoading,
-  customerImages,
+  images,
 }) => {
   const toastRef = useRef<Toast>(null)
 
@@ -63,10 +64,10 @@ const UploadImages: React.FC<ShowImagesProps> = ({
         </div>
 
         <div style={{ marginTop: '40px' }}>
-          {customerImages.length > 0 && (
+          {images.length > 0 && (
             <div className="mt-2">
               <div className="flex gap-16 flex-wrap">
-                {customerImages.map((image: string | undefined, index: number) => (
+                {images.map((image: string | undefined, index: number) => (
                   <div
                     key={index}
                     style={{ position: 'relative', display: 'inline-block' }}

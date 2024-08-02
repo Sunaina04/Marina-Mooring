@@ -43,7 +43,6 @@ describe('Estimates Components', () => {
     expect(iconImage).toHaveClass('w-3.8 h-3.8 mb-0.5')
   })
 
-
   it('renders data correctly in DataTable', () => {
     render(<Estimates />)
 
@@ -54,7 +53,7 @@ describe('Estimates Components', () => {
         name: 'John Smith',
         date: '15, March 2024 to 15, March 2024',
         measurement: 'Length: 10m, Width: 3.8m',
-        place: 'Boatyard',
+        place: 'Marina',
       },
       {
         id: '02',

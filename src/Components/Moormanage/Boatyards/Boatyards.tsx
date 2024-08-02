@@ -220,7 +220,7 @@ const Boatyards = () => {
           toast.current?.show({
             severity: 'success',
             summary: 'Success',
-            detail: 'BoatYard deleted successfully',
+            detail: message,
             life: 3000,
           })
           setSelectedBoatYard('')
@@ -527,7 +527,7 @@ const Boatyards = () => {
             }}
             icon={<img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8  mb-0.5" />}
             children={random}
-            headerText={<h1 className="text-xl font-extrabold text-black ml-4">Add Boatyard</h1>}
+            headerText={<h1 className="text-xl font-extrabold text-black ml-4">Add Marina</h1>}
             visible={modalVisible}
             onClick={handleButtonClick}
             onHide={handleModalClose}
@@ -544,96 +544,96 @@ const Boatyards = () => {
       </div>
 
       <div className="flex flex-col md:flex-row mt-3">
-      <div
-            style={{
-              borderRadius: '5px',
-              marginLeft: '1.7rem',
-            }}>
-        {/* Left Panel */}
-        <div className="bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-6 md:mb-0 w-[700px]">
-          {/* Header */}
-          <div className="bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px] text-white">
-            <h1 className="p-4 text-xl font-extrabold">{properties.boatyardDetail}</h1>
-          </div>
-
-          <InputTextWithHeader
-            value={searchText}
-            onChange={handleSearch}
-            placeholder={'Search by name, ID,address...'}
-            iconStyle={{
-              position: 'absolute',
-              left: '15px',
-              top: '65%',
-              transform: 'translateY(-50%)',
-              width: '16px',
-              height: '16px',
-              fontWeight: 'bold',
-            }}
-            inputTextStyle={{
-              flexGrow: 1,
-              marginTop: '10px',
-              height: '44px',
-              border: '1px solid #C5D9E0',
-              padding: '0 2rem 0 2.5rem',
-              fontSize: '14px',
-              color: '#000000',
-              borderRadius: '4px',
-              minHeight: '44px',
-              fontWeight: 400,
-              backgroundColor: '#FFFFFF',
-            }}
-          />
-          <div
-            className={`bg-#00426F overflow-x-hidden h-[590px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col`}>
-            <div className="flex-grow overflow-auto">
-              <DataTableComponent
-                tableStyle={{
-                  fontSize: '12px',
-                  color: '#000000',
-                  fontWeight: 500,
-                  backgroundColor: '#D9D9D9',
-                }}
-                data={boatyardsData}
-                selectionMode="single"
-                onSelectionChange={(e: any) => {
-                  setSelectedMooring(e.value)
-                }}
-                selection={selectedMooring}
-                rowStyle={(rowData: any) => rowData}
-                dataKey="id"
-                columns={boatYardColumns}
-                onRowClick={(e: any) => handleRowClickBoatYardDetail(e)}
-                emptyMessage={
-                  <div className="text-center mt-14">
-                    <img
-                      src="/assets/images/empty.png"
-                      alt="Empty Data"
-                      className="w-20 mx-auto mb-4"
-                    />
-                    <p className="text-gray-500 text-lg font-bold">{properties.noDataMessage}</p>
-                  </div>
-                }
-              />
+        <div
+          style={{
+            borderRadius: '5px',
+            marginLeft: '1.7rem',
+          }}>
+          {/* Left Panel */}
+          <div className="bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-6 md:mb-0 w-[700px]">
+            {/* Header */}
+            <div className="bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px] text-white">
+              <h1 className="p-4 text-xl font-extrabold">{properties.boatyardDetail}</h1>
             </div>
 
-            <div>
-              <Paginator
-                first={pageNumber1}
-                rows={pageSize}
-                totalRecords={totalRecords}
-                rowsPerPageOptions={[5, 10, 20, 30]}
-                onPageChange={onPageChange}
-                style={{
-                  position: 'sticky',
-                  bottom: 0,
-                  zIndex: 1,
-                  backgroundColor: 'white',
-                  borderTop: '1px solid #D5E1EA',
-                  padding: '0.5rem',
-                }}
-              />
+            <InputTextWithHeader
+              value={searchText}
+              onChange={handleSearch}
+              placeholder={'Search by name, ID,address...'}
+              iconStyle={{
+                position: 'absolute',
+                left: '15px',
+                top: '65%',
+                transform: 'translateY(-50%)',
+                width: '16px',
+                height: '16px',
+                fontWeight: 'bold',
+              }}
+              inputTextStyle={{
+                flexGrow: 1,
+                marginTop: '10px',
+                height: '44px',
+                border: '1px solid #C5D9E0',
+                padding: '0 2rem 0 2.5rem',
+                fontSize: '14px',
+                color: '#000000',
+                borderRadius: '4px',
+                minHeight: '44px',
+                fontWeight: 400,
+                backgroundColor: '#FFFFFF',
+              }}
+            />
+            <div
+              className={`bg-#00426F overflow-x-hidden h-[590px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col`}>
+              <div className="flex-grow overflow-auto">
+                <DataTableComponent
+                  tableStyle={{
+                    fontSize: '12px',
+                    color: '#000000',
+                    fontWeight: 500,
+                    backgroundColor: '#D9D9D9',
+                  }}
+                  data={boatyardsData}
+                  selectionMode="single"
+                  onSelectionChange={(e: any) => {
+                    setSelectedMooring(e.value)
+                  }}
+                  selection={selectedMooring}
+                  rowStyle={(rowData: any) => rowData}
+                  dataKey="id"
+                  columns={boatYardColumns}
+                  onRowClick={(e: any) => handleRowClickBoatYardDetail(e)}
+                  emptyMessage={
+                    <div className="text-center mt-14">
+                      <img
+                        src="/assets/images/empty.png"
+                        alt="Empty Data"
+                        className="w-20 mx-auto mb-4"
+                      />
+                      <p className="text-gray-500 text-lg font-bold">{properties.noDataMessage}</p>
+                    </div>
+                  }
+                />
+              </div>
+
+              <div>
+                <Paginator
+                  first={pageNumber1}
+                  rows={pageSize}
+                  totalRecords={totalRecords}
+                  rowsPerPageOptions={[5, 10, 20, 30]}
+                  onPageChange={onPageChange}
+                  style={{
+                    position: 'sticky',
+                    bottom: 0,
+                    zIndex: 1,
+                    backgroundColor: 'white',
+                    borderTop: '1px solid #D5E1EA',
+                    padding: '0.5rem',
+                  }}
+                />
+              </div>
             </div>
-          </div>
           </div>
         </div>
         {isLoading && (

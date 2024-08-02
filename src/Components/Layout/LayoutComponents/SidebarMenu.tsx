@@ -123,8 +123,8 @@ const SidebarMenu = () => {
           },
           {
             icon: '/assets/images/boatYard.svg',
-            name: 'Boatyards',
-            link: 'moormanage/boatyards',
+            name: 'Marinas',
+            link: 'moormanage/marinas',
           },
           {
             icon: '/assets/images/boatYard.svg',

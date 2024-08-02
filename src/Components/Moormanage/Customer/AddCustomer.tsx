@@ -72,11 +72,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<string>()
   const [checkedMooring, setCheckedMooring] = useState(false)
   const [checkedDock, setCheckedDock] = useState(false)
-  const [imageVisible, setImageVisible] = useState(false)
+  const [customerImageVisible, setCustomerImageVisible] = useState(false)
+  const [mooringImageVisible, setMooringImageVisible] = useState(false)
   const [hoveredIndex, setHoveredIndex] = useState<null | number>(null)
-  const [imageRequestDtoList, setImageRequestDtoList] = useState<
-    { imageName: string; imageData: string; note: string }[]
-  >([])
   const getFomattedCoordinate = (gpsCoordinatesValue: any) => {
     try {
       let [lat, long]: any = gpsCoordinatesValue.split(' ')
@@ -105,8 +103,12 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [firstErrorField, setFirstErrorField] = useState('')
   const [isLoading, setIsLoading] = useState(true)
   const [customerImages, setCustomerImages] = useState<string[]>([])
+  const [encodedCustomerImages, setEncodedCustomerImages] = useState<string[]>([])
+  const [customerImageRequestDtoList, setCustomerImageRequestDtoList] = useState<any[]>([])
 
-  const [encodedImages, setEncodedImages] = useState<string[]>([])
+  const [mooringImages, setMooringImages] = useState<string[]>([])
+  const [encodedMooringImages, setEncodedMooringImages] = useState<string[]>([])
+  const [mooringImageRequestDtoList, setMooringImageRequestDtoList] = useState<any[]>([])
 
   const [formData, setFormData] = useState<any>({
     mooringNumber: '',
@@ -167,7 +169,14 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       passwordMessage.scrollIntoView({ behavior: 'smooth' })
     }
   }
-  const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+
+  const handleImageChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+    setImages: React.Dispatch<React.SetStateAction<string[]>>,
+    setEncodedImages: React.Dispatch<React.SetStateAction<string[]>>,
+    setImageRequestDtoList: React.Dispatch<React.SetStateAction<any[]>>,
+    toastRef: any,
+  ) => {
     const fileInput = event.target
     const files = Array.from(fileInput.files || [])
 
@@ -227,19 +236,51 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       }
     }
 
-    setCustomerImages((prevImages) => [...prevImages, ...newImageUrls])
+    setImages((prevImages) => [...prevImages, ...newImageUrls])
     setEncodedImages((prevEncoded) => [...prevEncoded, ...newBase64Strings])
     setImageRequestDtoList((prevList: any) => [...prevList, ...newImageRequestDtoList])
   }
 
-  const handleRemoveImage = (index: number) => {
-    setCustomerImages((prevImages) => prevImages.filter((_, i) => i !== index))
-    setEncodedImages((prevEncoded) => prevEncoded.filter((_, i) => i !== index))
-    setImageRequestDtoList((prevList) => prevList.filter((_, i) => i !== index))
+  const handleCustomerImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    handleImageChange(
+      event,
+      setCustomerImages,
+      setEncodedCustomerImages,
+      setCustomerImageRequestDtoList,
+      toastRef,
+    )
   }
 
-  const handleNoteChange = (index: number, note: string) => {
-    setImageRequestDtoList((prevList) =>
+  const handleMooringImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    handleImageChange(
+      event,
+      setMooringImages,
+      setEncodedMooringImages,
+      setMooringImageRequestDtoList,
+      toastRef,
+    )
+  }
+
+  const handleRemoveCustomerImage = (index: number) => {
+    setCustomerImages((prevImages) => prevImages.filter((_, i) => i !== index))
+    setEncodedCustomerImages((prevEncoded) => prevEncoded.filter((_, i) => i !== index))
+    setCustomerImageRequestDtoList((prevList: any[]) => prevList.filter((_, i) => i !== index))
+  }
+
+  const handleRemoveMooringImage = (index: number) => {
+    setMooringImages((prevImages) => prevImages.filter((_, i) => i !== index))
+    setEncodedMooringImages((prevEncoded) => prevEncoded.filter((_, i) => i !== index))
+    setMooringImageRequestDtoList((prevList: any[]) => prevList.filter((_, i) => i !== index))
+  }
+
+  const handleCustomerNoteChange = (index: number, note: string) => {
+    setCustomerImageRequestDtoList((prevList: any[]) =>
+      prevList.map((item, i) => (i === index ? { ...item, note } : item)),
+    )
+  }
+
+  const handleMooringNoteChange = (index: number, note: string) => {
+    setMooringImageRequestDtoList((prevList: any[]) =>
       prevList.map((item, i) => (i === index ? { ...item, note } : item)),
     )
   }
@@ -272,7 +313,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         errors.mooringNumber = 'Mooring Number is required'
       }
     }
-
     setFirstErrorField(firstError)
     setFieldErrors(errors)
     return errors
@@ -408,10 +448,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         lastName: lastName,
         phone: phone,
         address: address,
-        note: formData.note,
+        notes: formData.note,
         stateId: state?.id,
         countryId: country?.id,
-        imageRequestDtoList: imageRequestDtoList,
+        imageRequestDtoList: customerImageRequestDtoList,
         customerTypeId: selectedCustomerType === 'Dock' ? 5 : selectedCustomerType?.id,
         ...(email && { emailAddress: email }),
         ...(pinCode && { zipCode: pinCode }),
@@ -438,7 +478,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             shackleSwivelConditionId: formData?.shackleSwivelCondition?.id,
             pendantConditionId: formData?.pendantCondition,
             depthAtMeanHighWater: formData?.depthAtMeanHighWater,
-            imageRequestDtoList: imageRequestDtoList,
+            imageRequestDtoList: mooringImageRequestDtoList,
             statusId: 1,
           },
         ],
@@ -449,11 +489,11 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         lastName: lastName,
         phone: phone,
         address: address,
-        note: formData.note,
+        notes: formData.note,
         // aptSuite: sectorBlock,
         stateId: state?.id,
         countryId: country?.id,
-        imageRequestDtoList: imageRequestDtoList,
+        imageRequestDtoList: customerImageRequestDtoList,
         customerTypeId: selectedCustomerType === 'Dock' ? 5 : selectedCustomerType?.id,
         ...(email && { emailAddress: email }),
         ...(pinCode && { zipCode: pinCode }),
@@ -508,10 +548,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         address: address,
         stateId: state?.id,
         countryId: country?.id,
-        imageRequestDtoList: imageRequestDtoList,
+        imageRequestDtoList: customerImageRequestDtoList,
         customerOwnerId: selectedCustomerId,
         customerTypeId: selectedCustomerType === 'Dock' ? 5 : selectedCustomerType?.id,
-        note: formData?.note,
+        notes: formData?.note,
         ...(email && { emailAddress: email }),
         ...(pinCode && { zipCode: pinCode }),
       }
@@ -622,7 +662,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         }
         payload.gpsCoordinates = gpsCoordinatesValue
         payload.statusId = 3
-        payload.imageRequestDtoList = imageRequestDtoList
+        payload.imageRequestDtoList = mooringImageRequestDtoList
         payload.id = mooringRowData?.id
         payload.mooringNumber = mooringRowData?.mooringNumber
         payload.customerId = mooringRowData?.customerId || mooringRowData?.customerResponseDto?.id
@@ -808,10 +848,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     )
   }
 
-  const uploadImages = () => {
-    setImageVisible(true)
-  }
-
   useEffect(() => {
     handleFocus()
   }, [checkedMooring])
@@ -861,6 +897,12 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       setSelectedCustomerType(undefined)
     }
   }, [checkedDock])
+
+  useEffect(() => {
+    if (country?.id === 13) {
+      setSelectedCustomerType('')
+    }
+  }, [country?.id === 13])
 
   return (
     <>
@@ -986,13 +1028,14 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       optionLabel="type"
                       editable
                       placeholder="Customer Type"
-                      disabled={isLoading}
+                      disabled={isLoading || country?.id === 13}
                       style={{
                         width: '230px',
                         height: '32px',
                         border: '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         color: 'black',
+                        cursor: country?.id === 13 ? 'not-allowed' : 'pointer',
                       }}
                     />
                   </div>
@@ -1013,7 +1056,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         paddingLeft: '0.5rem',
                         cursor: 'pointer',
                       }}>
-                      <div onClick={uploadImages} className="flex gap-3 text-center ">
+                      <div
+                        onClick={() => setCustomerImageVisible(true)}
+                        className="flex gap-3 text-center ">
                         <FaFileUpload
                           style={{ fontSize: '22px', color: '#0098FF', marginTop: '3px' }}
                         />
@@ -1273,7 +1318,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                           paddingLeft: '0.5rem',
                           cursor: 'pointer',
                         }}>
-                        <div onClick={uploadImages} className="flex gap-3 text-center">
+                        <div
+                          onClick={() => setMooringImageVisible(true)}
+                          className="flex gap-3 text-center">
                           <FaFileUpload
                             style={{ fontSize: '22px', color: '#0098FF', marginTop: '3px' }}
                           />
@@ -1321,7 +1368,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
                   <div>
                     <span className="font-medium text-sm text-[#000000]">
-                      <div className="flex gap-1">Boatyard Name</div>
+                      <div className="flex gap-1">Marina Name</div>
                     </span>
                     <div className="mt-2">
                       <Dropdown
@@ -1929,6 +1976,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           }}
         />
 
+        {/* Upload Image */}
         <Dialog
           position="center"
           style={{
@@ -1941,19 +1989,48 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             cursor: 'alias',
           }}
           draggable={false}
-          visible={imageVisible}
-          onHide={() => setImageVisible(false)}
+          visible={customerImageVisible}
+          onHide={() => setCustomerImageVisible(false)}
           header={'Images'}>
           <UploadImages
-            handleNoteChange={handleNoteChange}
+            handleNoteChange={handleCustomerNoteChange}
             hoveredIndex={hoveredIndex}
-            handleRemoveImage={handleRemoveImage}
+            handleRemoveImage={handleRemoveCustomerImage}
             setHoveredIndex={setHoveredIndex}
-            handleImageChange={handleImageChange}
-            setImageVisible={setImageVisible}
-            imageRequestDtoList={imageRequestDtoList}
+            handleImageChange={handleCustomerImageChange}
+            setImageVisible={setCustomerImageVisible}
+            imageRequestDtoList={customerImageRequestDtoList}
             isLoading={isLoading}
-            customerImages={customerImages}
+            images={customerImages}
+          />
+          <Toast ref={toastRef} />
+        </Dialog>
+
+        <Dialog
+          position="center"
+          style={{
+            width: '800px',
+            minWidth: '800px',
+            height: '650px',
+            minHeight: '650px',
+            borderRadius: '1rem',
+            fontWeight: '400',
+            cursor: 'alias',
+          }}
+          draggable={false}
+          visible={mooringImageVisible}
+          onHide={() => setMooringImageVisible(false)}
+          header={'Mooring Images'}>
+          <UploadImages
+            handleNoteChange={handleMooringNoteChange}
+            hoveredIndex={hoveredIndex}
+            handleRemoveImage={handleRemoveMooringImage}
+            setHoveredIndex={setHoveredIndex}
+            handleImageChange={handleMooringImageChange}
+            setImageVisible={setMooringImageVisible}
+            imageRequestDtoList={mooringImageRequestDtoList}
+            isLoading={isLoading}
+            images={mooringImages}
           />
           <Toast ref={toastRef} />
         </Dialog>

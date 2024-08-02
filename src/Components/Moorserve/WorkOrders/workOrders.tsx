@@ -113,7 +113,7 @@ const WorkOrders = () => {
       },
       {
         id: 'boatyardResponseDto.boatyardId',
-        label: 'Boatyard',
+        label: 'Marina',
         style: columnStyle,
       },
       {
