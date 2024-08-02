@@ -150,13 +150,13 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       errors.customerName = 'Customer Name is required'
     }
 
-    if (!workOrder.workOrderStatus) {
-      errors.workOrderStatus = 'Work order Status is required'
-    }
+    // if (!workOrder.workOrderStatus) {
+    //   errors.workOrderStatus = 'Work order Status is required'
+    // }
 
-    if (!workOrder.value) {
-      errors.value = 'Problem description is required'
-    }
+    // if (!workOrder.value) {
+    //   errors.value = 'Problem description is required'
+    // }
 
     if (!workOrder.mooringId) {
       errors.mooringId = 'Mooring Number is required'
@@ -817,12 +817,17 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: '1px solid #D5E1EA',
+                  border: errorMessage.mooringId ? '1px solid red' : '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
             </div>
+            <p>
+              {errorMessage.mooringId && (
+                <small className="p-error">{errorMessage.mooringId}</small>
+              )}
+            </p>
           </div>
           {!estimate && !isAccountRecievable && (
             <div className="">
@@ -977,7 +982,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
                 Status
-                <p className="text-red-600">*</p>
               </div>
             </span>
             <div className="mt-1">
@@ -991,17 +995,12 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: errorMessage.workOrderStatus ? '1px solid red' : '1px solid #D5E1EA',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                 }}
               />
             </div>
-            <p>
-              {errorMessage.workOrderStatus && (
-                <small className="p-error">{errorMessage.workOrderStatus}</small>
-              )}
-            </p>
           </div>
 
           {/* Time (in minutes) */}
@@ -1057,7 +1056,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
           <span className="font-medium text-sm text-[#000000]">
             <div className="flex gap-1">
               Report Problem
-              <p className="text-red-600">*</p>
             </div>
           </span>
           <div className="mt-1 text-[#000000]">
@@ -1071,7 +1069,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 style={{
                   width: '740px',
                   height: '66px',
-                  border: errorMessage.value ? '1px solid red' : '1px solid #D5E1EA',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   boxShadow: 'none',
                   paddingLeft: '0.5rem',
@@ -1082,7 +1080,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
               />
             </div>
           </div>
-          <p>{errorMessage.value && <small className="p-error">{errorMessage.value}</small>}</p>
+        
         </div>
       </div>
       {/* Save and Back buttons */}

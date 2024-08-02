@@ -293,6 +293,10 @@ const AddVendor: React.FC<AddVendorProps> = ({ vendors, editMode, closeModal, ge
     }
   }, [editMode, vendors])
 
+  // useEffect(() => {
+  //   fetchStateDataAndUpdate()
+  // }, [formData?.countryForAddress?.id])
+
   useEffect(() => {
     formData?.countryForAddress?.id && fetchStateDataAndUpdate()
   }, [formData?.countryForAddress?.id])
