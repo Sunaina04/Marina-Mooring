@@ -1361,7 +1361,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
                   <div>
                     <span className="font-medium text-sm text-[#000000]">
-                      <div className="flex gap-1">Boatyard Name</div>
+                      <div className="flex gap-1">Marina Name</div>
                     </span>
                     <div className="mt-2">
                       <Dropdown

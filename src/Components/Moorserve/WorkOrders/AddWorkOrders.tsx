@@ -701,7 +701,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         toastRef.current?.show({
           severity: 'info',
           summary: 'Info',
-          detail: 'No Mooring Associated with Selected Boatyard',
+          detail: 'No Mooring Associated with Selected Marina',
           life: 3000,
         })
       }
@@ -718,7 +718,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         toastRef.current?.show({
           severity: 'info',
           summary: 'Info',
-          detail: 'No Mooring Associated with Selected Customer and Boatyard',
+          detail: 'No Mooring Associated with Selected Customer and Marina',
           life: 3000,
         })
       }
@@ -980,9 +980,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
           {/* Status */}
           <div>
             <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
-                Status
-              </div>
+              <div className="flex gap-1">Status</div>
             </span>
             <div className="mt-1">
               <Dropdown
@@ -1054,9 +1052,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         {/* Report Problem */}
         <div className=" mt-4 mb-20">
           <span className="font-medium text-sm text-[#000000]">
-            <div className="flex gap-1">
-              Report Problem
-            </div>
+            <div className="flex gap-1">Report Problem</div>
           </span>
           <div className="mt-1 text-[#000000]">
             <div className="">
@@ -1080,7 +1076,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
               />
             </div>
           </div>
-        
         </div>
       </div>
       {/* Save and Back buttons */}

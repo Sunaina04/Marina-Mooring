@@ -19,7 +19,7 @@ describe('AddBoatyards', () => {
         }}
       />,
     )
-    expect(getByText('Boatyard ID')).toBeInTheDocument()
+    expect(getByText('Marina ID')).toBeInTheDocument()
     expect(getByText('Main Contact')).toBeInTheDocument()
     expect(getByText('Email Address')).toBeInTheDocument()
     expect(getByText('Phone')).toBeInTheDocument()

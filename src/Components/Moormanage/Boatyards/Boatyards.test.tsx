@@ -3,7 +3,7 @@ import Boatyards from './Boatyards'
 import { Provider } from 'react-redux'
 import { store } from '../../../Store/Store'
 
-describe('Boatyards components', () => {
+describe('Marinas components', () => {
   it('renderTextWithHeader', () => {
     render(
       <Provider store={store}>
@@ -38,7 +38,7 @@ describe('Boatyards components', () => {
         <Boatyards />
       </Provider>,
     )
-    const textField = screen.getByText('Boatyard GPS Coordinates')
+    const textField = screen.getByText('Marina GPS Coordinates')
     expect(textField).toBeInTheDocument()
   })
   it('should render the text in boatyards Component', () => {
@@ -74,7 +74,7 @@ describe('Boatyards components', () => {
         <Boatyards />
       </Provider>,
     )
-    expect(screen.getByText('Boatyards Detail')).toBeInTheDocument()
+    expect(screen.getByText('Marinas Detail')).toBeInTheDocument()
   })
   it('should render the text in boatyards Component', () => {
     render(
