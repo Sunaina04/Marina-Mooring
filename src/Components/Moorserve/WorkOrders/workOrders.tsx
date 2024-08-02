@@ -97,41 +97,126 @@ const WorkOrders: React.FC<WorkOrderValue> = ({ report }) => {
   const workOrderColumns = useMemo(
     () => [
       {
-        id: 'customerResponseDto.customerId',
-        label: 'Customer ID',
-        style: columnStyle,
-      },
-      {
         id: 'firstName',
         label: 'Customer Name',
-        style: columnStyle,
+        style: {
+          backgroundColor: '#FFFFFF',
+          color: '#000000',
+          fontWeight: '700',
+          fontSize: '12px',
+          width: '130px',
+        },
         body: firstLastName,
       },
       {
         id: 'mooringResponseDto.mooringNumber',
         label: 'Mooring Number',
-        style: columnStyle,
+        // style: columnStyle,
+        style: {
+          backgroundColor: '#FFFFFF',
+          color: '#000000',
+          fontWeight: '700',
+          fontSize: '12px',
+          width: '130px',
+        },
       },
       {
-        id: 'boatyardResponseDto.boatyardId',
+        id: 'marina',
         label: 'Marina',
-        style: columnStyle,
+        // style: columnStyle,
+        style: {
+          backgroundColor: '#FFFFFF',
+          color: '#000000',
+          fontWeight: '700',
+          fontSize: '12px',
+          width: '80px',
+        },
       },
+      {
+        id: 'ServiceArea',
+        label: 'Service Area',
+        // style: columnStyle,
+        style: {
+          backgroundColor: '#FFFFFF',
+          color: '#000000',
+          fontWeight: '700',
+          fontSize: '12px',
+          width: '120px',
+        },
+      },
+      {
+        id: 'jobType',
+        label: 'Job Type',
+        // style: columnStyle,
+        style: {
+          backgroundColor: '#FFFFFF',
+          color: '#000000',
+          fontWeight: '700',
+          fontSize: '12px',
+          width: '90px',
+        },
+      },
+
       {
         id: 'technicianUserResponseDto.name',
         label: 'Assigned to',
-        style: columnStyle,
+        // style: columnStyle,
+        style: {
+          backgroundColor: '#FFFFFF',
+          color: '#000000',
+          fontWeight: '700',
+          fontSize: '12px',
+          width: '100px',
+        },
         body: TechnicianfirstLastName,
+      },
+      {
+        id: 'orderDate',
+        label: 'Order Date',
+        // style: columnStyle,
+        style: {
+          backgroundColor: '#FFFFFF',
+          color: '#000000',
+          fontWeight: '700',
+          fontSize: '12px',
+          width: '100px',
+        },
+      },
+      {
+        id: 'Creation Date',
+        label: 'Creation Date',
+        // style: columnStyle,
+        style: {
+          backgroundColor: '#FFFFFF',
+          color: '#000000',
+          fontWeight: '700',
+          fontSize: '12px',
+          width: '120px',
+        },
       },
       {
         id: 'dueDate',
         label: 'Due Date',
-        style: columnStyle,
+        // style: columnStyle,
+        style: {
+          backgroundColor: '#FFFFFF',
+          color: '#000000',
+          fontWeight: '700',
+          fontSize: '12px',
+          width: '100px',
+        },
       },
       {
         id: 'workOrderStatusDto.status',
         label: 'Status',
-        style: columnStyle,
+        // style: columnStyle,
+        style: {
+          backgroundColor: '#FFFFFF',
+          color: '#000000',
+          fontWeight: '700',
+          fontSize: '12px',
+          width: '80px',
+        },
       },
     ],
     [],
@@ -215,6 +300,22 @@ const WorkOrders: React.FC<WorkOrderValue> = ({ report }) => {
       <div className="">
         {!report && (
           <div className="flex justify-end gap-6 mt-10 mr-16">
+            <Button
+              style={{
+                width: '125px',
+                height: '44px',
+                minHeight: '44px',
+                backgroundColor: '#0098FF',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: 600,
+                color: 'white',
+                borderRadius: '0.50rem',
+                marginLeft: '8px',
+                boxShadow: 'none',
+              }}>
+              Export To PDF
+            </Button>
             <div className="items-center">
               <CustomModal
                 buttonText={'ADD NEW'}

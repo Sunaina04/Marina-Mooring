@@ -607,7 +607,6 @@ const ServiceArea = () => {
       <div className="flex flex-col md:flex-row mt-3">
       <div
             style={{
-              // border: '1px solid #D5E1EA',
               borderRadius: '5px',
               marginLeft: '1.8rem',
             }}>
