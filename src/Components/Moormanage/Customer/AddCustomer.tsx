@@ -1035,7 +1035,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         border: '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         color: 'black',
-                        cursor: country?.id === 13 ? 'not-allowed' : 'pointer',
+                        cursor: country?.id == 13 ? 'not-allowed' : 'pointer',
                       }}
                     />
                   </div>

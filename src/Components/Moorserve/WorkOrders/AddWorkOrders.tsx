@@ -867,7 +867,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         <div className="flex gap-6 mt-3">
           <div>
             <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">Boatyard</div>
+              <div className="flex gap-1">Marina</div>
             </span>
             <div className="mt-1">
               <Dropdown

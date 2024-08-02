@@ -82,7 +82,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   const [imageRequestDtoList, setimageRequestDtoList] = useState<
     { imageName: string; imageData: string; note: string }[]
   >([])
-  const [imageNote, setImageNote] = useState('')
   const toastRef = useRef<Toast>(null)
 
   const getFomattedCoordinate = (gpsCoordinatesValue: any) => {
@@ -690,7 +689,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
             <div className="flex gap-6 mt-3">
               <div>
                 <span className="font-medium text-sm text-[#000000]">
-                  <div className="flex gap-1">Marina Name</div>
+                  <div className="flex gap-1">Boatyard Name</div>
                 </span>
                 <div className="mt-2">
                   <Dropdown
@@ -1314,7 +1313,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
 
               <div>
                 <span className="font-medium text-sm text-[#000000]">
-                  <div className="flex gap-1">Marina Name</div>
+                  <div className="flex gap-1">Boatyard Name</div>
                 </span>
                 <div className="mt-2">
                   <Dropdown

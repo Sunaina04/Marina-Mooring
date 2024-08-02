@@ -143,6 +143,10 @@ export interface WorkOrderProps {
   getOutStandingInvoice?: () => void
 }
 
+export interface WorkOrderValue {
+  report?: boolean
+}
+
 export interface ReasonModalProps {
   selectedRowData: any
   setVisible: React.Dispatch<React.SetStateAction<boolean>>
