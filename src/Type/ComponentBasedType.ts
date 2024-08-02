@@ -196,7 +196,7 @@ export interface CustomerAdminDataProps {
 }
 
 export interface HeaderProps {
-  header: string
+  header?: string
   customer?: boolean
 }
 

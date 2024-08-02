@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { CustomerPayload, ErrorResponse, GetUserResponse } from '../../../Type/ApiTypes'
 import { setCustomerId, setCustomerName, selectCustomerName } from '../../../Store/Slice/userSlice'
 import { useGetCustomersOwnersMutation } from '../../../Services/MetaDataApi'
+import HeaderProfile from './HeaderProfile'
 
 const Header: React.FC<HeaderProps> = ({ header, customer }) => {
   const userData = useSelector((state: any) => state.user?.userData)
@@ -16,9 +17,13 @@ const Header: React.FC<HeaderProps> = ({ header, customer }) => {
   const [expanded, setExpanded] = useState(false)
   const [getCustomerOwnerData, setgetCustomerOwnerData] = useState<any[]>([])
   const [getUser] = useGetCustomersOwnersMutation()
+ 
+  const [tooltipVisible, setTooltipVisible] = useState(false)
+
 
   const handleMenu = () => {
     setExpanded(!expanded)
+    setTooltipVisible(!tooltipVisible)
   }
 
   const handleCustomerIdSelection = (customerId: any) => {
@@ -26,6 +31,7 @@ const Header: React.FC<HeaderProps> = ({ header, customer }) => {
     dispatch(setCustomerName(firstLastName))
     dispatch(setCustomerId(customerId?.id))
   }
+  
 
   const getUserHandler = useCallback(async () => {
     try {
@@ -111,17 +117,11 @@ const Header: React.FC<HeaderProps> = ({ header, customer }) => {
             </span>{' '}
           </>
         )}
-        <Button
-          onClick={handleMenu}
-          className="p-button-rounded p-button-outlined"
-          style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>
-          <img
-            src={expanded ? '/assets/images/angleDown.svg' : '/assets/images/angleDown.svg'}
-            alt="angleDown"
-            style={{ width: '12px', height: '10px' }}
-          />
-        </Button>
+    
+        <HeaderProfile customer={userData} />
       </div>
+
+      
     </div>
   )
 }
