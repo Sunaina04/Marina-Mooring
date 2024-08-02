@@ -1984,7 +1984,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
           draggable={false}
           visible={customerImageVisible}
           onHide={() => setCustomerImageVisible(false)}
-          header={'Customer Images'}>
+          header={'Images'}>
           <UploadImages
             handleNoteChange={handleCustomerNoteChange}
             hoveredIndex={hoveredIndex}

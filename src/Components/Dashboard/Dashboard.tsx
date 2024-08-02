@@ -31,7 +31,7 @@ const Dashboard = () => {
   const [selectedCustomer, setSelectedCustomer] = useState<any>()
   const [visible, setVisible] = useState(false)
   const [editMode, setEditMode] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
   const [totalMoorings, setTotalMoorings] = useState<any>()
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
@@ -42,7 +42,6 @@ const Dashboard = () => {
   const [mooringResponseData, setMooringResponseData] = useState<any>()
   const [leftContainerWidth, setLeftContainerWidth] = useState(false)
   const [rightContainerWidth, setRightContainerWidth] = useState(false)
-  const [mooringSelected, setMooringSelected] = useState(false)
   const [getMoorings] = useGetMooringsMutation()
   const today = new Date()
   const dateAfter7Days = new Date(today)
@@ -434,7 +433,6 @@ const Dashboard = () => {
                   dataKey="id"
                   onRowClick={(rowData) => {
                     setMooringResponseData(rowData?.data?.gpsCoordinates)
-                    setMooringSelected(true)
                   }}
                   data={mooringData}
                   emptyMessage={
@@ -622,13 +620,13 @@ const Dashboard = () => {
                           scrollable={true}
                           tableStyle={{ fontSize: '10px' }}
                           emptyMessage={
-                            <div className="text-center mt-14">
+                            <div className="text-center mt-8">
                               <img
                                 src="/assets/images/empty.png"
                                 alt="Empty Data"
-                                className="w-20 mx-auto mb-4"
+                                className="w-20 mx-auto mb-3"
                               />
-                              <p className="text-gray-500">{properties.noDataMessage}</p>
+                              <p className="text-sm text-gray-500">{properties.noDataMessage}</p>
                             </div>
                           }
                         />
