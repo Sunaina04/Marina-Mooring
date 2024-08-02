@@ -129,6 +129,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     bottomChainCondition: '',
     shackleSwivelCondition: '',
     pendantCondition: '',
+    boatRegistration: '',
     depthAtMeanHighWater: '',
     status: 0,
     note: '',
@@ -1195,7 +1196,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   }}
                 />
               </div>
+              
             </div>
+            
+            
             <div
               className={`mt-3 
     ${selectedCustomerType?.id === 5 || selectedCustomerType === 'Dock' ? 'mb-2' : editCustomerMode ? 'mb-20' || 'blur' : ''} `}>
@@ -1699,9 +1703,31 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                           style={{
                             width: '230px',
                             height: '32px',
-                            border: fieldErrors.pendantCondition
-                              ? '1px solid red'
-                              : '1px solid #D5E1EA',
+                            border:'1px solid #D5E1EA',
+                            borderRadius: '0.50rem',
+                            fontSize: '0.8rem',
+                            paddingLeft: '0.5rem',
+                          }}
+                        />
+                      
+                      </div>
+                    </div>
+
+                    <div className="mt-3">
+                      <div>
+                        <span className="font-medium text-sm text-[#000000]">
+                          <div className="flex gap-1">Boat registration</div>
+                        </span>
+                      </div>
+
+                      <div className="mt-2">
+                        <InputComponent
+                          value={formData?.boatRegistration}
+                          onChange={(e) => handleInputChange('boatRegistration', e.target.value)}
+                          style={{
+                            width: '230px',
+                            height: '32px',
+                            border: '1px solid #D5E1EA',
                             borderRadius: '0.50rem',
                             fontSize: '0.8rem',
                             paddingLeft: '0.5rem',
@@ -1840,6 +1866,30 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         />
                       </div>
                     </div>
+
+                    <div className="mt-3">
+                      <div>
+                        <span className="font-medium text-sm text-[#000000]">
+                          <div className="flex gap-1">Boat Type</div>
+                        </span>
+                      </div>
+
+                      <div className="mt-2">
+                      <InputComponent
+                          value={formData?.boatType}
+                          onChange={(e) => handleInputChange('boatType', e.target.value)}
+                          style={{
+                            width: '230px',
+                            height: '32px',
+                            border: '1px solid #D5E1EA',
+                            borderRadius: '0.50rem',
+                            fontSize: '0.8rem',
+                            paddingLeft: '0.5rem',
+                          }}
+                        />
+                      </div>
+                    </div>
+                    
 
                     <div className="mt-3">
                       <span className="font-medium text-sm text-[#000000]">

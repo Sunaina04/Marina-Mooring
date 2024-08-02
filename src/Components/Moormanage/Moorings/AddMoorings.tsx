@@ -131,6 +131,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     bottomChainCondition: '',
     shackleSwivelCondition: '',
     pendantCondition: '',
+    boatRegistration: '',
+    boatType: '',
     depthAtMeanHighWater: '',
     boatYardName: '',
     note: '',
@@ -1079,6 +1081,83 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                     />
                   </div>
                 </div>
+
+                
+              </div>
+              <div className="flex gap-6">
+                <div className="mt-3">
+                  <div>
+                    <span className="font-medium text-sm text-[#000000]">
+                      <div className="flex gap-1">
+                        Condition of Eye <span style={{ fontSize: '0.6rem' }}> (install date)</span>
+                      </div>
+                    </span>
+                  </div>
+                  <div className="mt-2">
+                    <Calendar
+                      value={parseDate(formData.conditionEyeDate)}
+                      onChange={(e) =>
+                        handleInputChange('conditionEyeDate', formatDate(e.target.value))
+                      }
+                      dateFormat="mm/dd/yy"
+                      style={{
+                        width: '230px',
+                        height: '32px',
+                        border: '1px solid #D5E1EA',
+                        borderRadius: '0.50rem',
+                        fontSize: '0.8rem',
+                        padding: '0.5rem',
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className="mt-3">
+                  <div>
+                    <span className="font-medium text-sm text-[#000000]">
+                      <div className="flex gap-1">Boat registration</div>
+                    </span>
+                  </div>
+
+                  <div className="mt-2">
+                  <InputComponent
+                        value={formData?.boatRegistration}
+                        type="text"
+                        onChange={(e) => handleInputChange('boatRegistration', e.target.value)}
+                        style={{
+                          width: '230px',
+                          height: '32px',
+                          border: '1px solid #D5E1EA',
+                          borderRadius: '0.50rem',
+                          fontSize: '0.8rem',
+                          paddingLeft: '0.5rem',
+                        }}
+                      />
+                  </div>
+                </div>
+                <div className="mt-3">
+                  <div>
+                    <span className="font-medium text-sm text-[#000000]">
+                      <div className="flex gap-1">Boat Type</div>
+                    </span>
+                  </div>
+                  <div className="mt-2">
+                  <InputComponent
+                        value={formData?.boatType}
+                        type="text"
+                        onChange={(e) => handleInputChange('boatType', e.target.value)}
+                        style={{
+                          width: '230px',
+                          height: '32px',
+                          border: '1px solid #D5E1EA',
+                          borderRadius: '0.50rem',
+                          fontSize: '0.8rem',
+                          paddingLeft: '0.5rem',
+                        }}
+                      />
+                  </div>
+                </div>
+
+                
               </div>
 
               <div className="flex gap-6">
@@ -1109,6 +1188,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                       />
                     </div>
                   </div>
+
+
+                  
                   <div className="mt-3">
                     <div>
                       <span className="font-medium text-sm text-[#000000]">
@@ -1154,6 +1236,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                     </div>
                   </div>
                 </div>
+
 
                 <div className="mt-3">
                   <div>
@@ -1734,18 +1817,62 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   </div>
                 </div>
               </div>
-
               <div className="flex gap-6">
-                <div>
-                  <div className="mt-3">
-                    <div>
-                      <span className="font-medium text-sm text-[#000000]">
-                        <div className="flex gap-1">Type</div>
-                      </span>
-                    </div>
+                <div className="mt-3">
+                  <div>
+                    <span className="font-medium text-sm text-[#000000]">
+                      <div className="flex gap-1">Boat registration</div>
+                    </span>
+                  </div>
 
-                    <div className="mt-2">
-                      <Dropdown
+                  <div className="mt-2">
+                    <InputComponent
+                      value={formData?.boatRegistration}
+                      onChange={(e) => handleInputChange('boatRegistration', e.target.value)}
+                      style={{
+                        width: '230px',
+                        height: '32px',
+                        border: '1px solid #D5E1EA',
+                        borderRadius: '0.50rem',
+                        fontSize: '0.8rem',
+                        paddingLeft: '0.5rem',
+                      }}
+                    />
+                  </div>
+                </div>
+
+                <div className="mt-3">
+                  <div>
+                    <span className="font-medium text-sm text-[#000000]">
+                      <div className="flex gap-1">Boat Type</div>
+                    </span>
+                  </div>
+
+                  <div className="mt-2">
+                    <InputComponent
+                      value={formData?.boatType}
+                      onChange={(e) => handleInputChange('boatType', e.target.value)}
+                      style={{
+                        width: '230px',
+                        height: '32px',
+                        border: '1px solid #D5E1EA',
+                        borderRadius: '0.50rem',
+                        fontSize: '0.8rem',
+                        paddingLeft: '0.5rem',
+                      }}
+                    />
+                  </div>
+                </div>
+
+                <div className="mt-3">
+                  <div>
+                    <span className="font-medium text-sm text-[#000000]">
+                      <div className="flex gap-1">Type</div>
+                    </span>
+                  </div>
+
+                  <div className="mt-2">
+                  <Dropdown
                         value={formData?.type}
                         onChange={(e) => handleInputChange('type', e.target.value)}
                         options={[]}
@@ -1758,13 +1885,20 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                           fontSize: '0.8rem',
                         }}
                       />
-                    </div>
                   </div>
+                </div>
 
+
+</div>
+              <div className="flex gap-6">
+                <div>
                   <div className="mt-3">
-                    <span className="font-medium text-sm text-[#000000]">
-                      <div className="flex gap-1">Weight (in kg)</div>
-                    </span>
+                    <div>
+                      <span className="font-medium text-sm text-[#000000]">
+                        <div className="flex gap-1">Weight (in kg)</div>
+                      </span>
+                    </div>
+
                     <div className="mt-2">
                       <InputComponent
                         value={formData?.boatWeight}
@@ -1781,6 +1915,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                       />
                     </div>
                   </div>
+
+                  
                 </div>
 
                 <div className="mt-3">
