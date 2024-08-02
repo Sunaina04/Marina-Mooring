@@ -257,7 +257,7 @@ const Estimates = () => {
       <Header header="MOORSERVE/Estimate" />
       <Toast ref={toast} />
       <div className="">
-        <div className="flex justify-end gap-6 mt-10 mr-16">
+        <div className="flex justify-end gap-6 mt-6 mr-16">
           <div className="flex text-gray-600 mt-3 font-extrabold">
             <div className="">
               <img
@@ -320,22 +320,24 @@ const Estimates = () => {
             opacity: '0px',
             backgroundColor: '#FFFFFF',
           }}
-          className="bg-[F2F2F2]  ml-12  mt-6 mr-14">
+          className="bg-[F2F2F2]  ml-12  mt-3 mr-14">
           <div className="flex flex-wrap align-items-center justify-between  bg-[#00426F] p-2   rounded-tl-[10px] rounded-tr-[10px]">
-            <span
-              style={{
-                fontSize: '18px',
-                fontWeight: '700',
-                lineHeight: '21.09px',
-                letterSpacing: '0.4837472140789032px',
-                color: '#FFFFFF',
-                padding: '8px',
-              }}>
+            <h1
+              // style={{
+              //   fontSize: '18px',
+              //   fontWeight: '700',
+              //   lineHeight: '21.09px',
+              //   letterSpacing: '0.4837472140789032px',
+              //   color: '#FFFFFF',
+              //   padding: '8px',
+              // }}
+             className=' p-2 text-xl font-extrabold text-white'
+              >
               Estimate
-            </span>
+            </h1>
 
             <div className="relative inline-block">
-              <div className="relative">
+              <div className="relative mt-1">
                 <img
                   src="/assets/images/Search.png"
                   alt="search icon"

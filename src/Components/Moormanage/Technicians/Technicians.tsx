@@ -416,7 +416,7 @@ const Technicians = () => {
           </div>
         </div>
 
-        <div className="flex lg:flex-row justify-around md:flex-col mt-4">
+        <div className="flex lg:flex-row justify-around md:flex-col mt-3">
           <div
             style={{
               width: '700px',
@@ -466,6 +466,7 @@ const Technicians = () => {
                     color: '#000000',
                     fontWeight: 600,
                     backgroundColor: '#FFFFFF',
+                    cursor: 'pointer'
                   }}
                   onRowClick={(row) => {
                     handleWorkOrder(row.data)
@@ -569,6 +570,7 @@ const Technicians = () => {
                     color: '#000000',
                     fontWeight: 600,
                     backgroundColor: '#FFFFFF',
+                     cursor: 'pointer'
                   }}
                   onSelectionChange={(e) => {
                     setSelectedProduct(e.value)

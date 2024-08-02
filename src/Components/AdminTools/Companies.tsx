@@ -536,10 +536,10 @@ const CustomerOwner = () => {
           </div>
         </div>
 
-        <div className={`flex flex-col md:flex-row gap-10 ml-8 mt-5`}>
+        <div className={`flex flex-col md:flex-row gap-10 ml-8 mt-3`}>
           <div className="flex-1 border border-gray-300 bg-white rounded-lg md:ml-10 overflow-hidden">
             <div className="text-md font-semibold rounded-t-lg bg-[#00426F]">
-              <h1 className="p-4 text-white">{properties.CustomersOwner}</h1>
+              <h1 className="p-4 text-xl font-extrabold  text-white">{properties.CustomersOwner}</h1>
             </div>
             <InputTextWithHeader
               value={searchText}
@@ -627,7 +627,7 @@ const CustomerOwner = () => {
           <div
             className={`flex-1 border border-gray-300 bg-white rounded-lg md:mr-10 overflow-hidden`}>
             <div className="text-md font-semibold rounded-t-lg bg-[#00426F]">
-              <h1 className="p-4 text-white">{properties.CustomerOwnerUsers}</h1>
+              <h1 className="p-4 text-xl font-extrabold  text-white">{properties.CustomerOwnerUsers}</h1>
             </div>
             <InputTextWithHeader
               value={searchUsersText}

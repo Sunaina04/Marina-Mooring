@@ -724,7 +724,7 @@ const Moorings = () => {
                       <h1 className="p-4 text-xl font-extrabold">{properties.mooringHeader}</h1>
                     </div>
                     <div
-                      className="p-8"
+                      className="mr-4 mt-[26px]"
                       onClick={() => setLeftContainerWidth(true)}
                       style={{ cursor: 'pointer' }}>
                       <svg
@@ -912,8 +912,8 @@ const Moorings = () => {
                 }}
                 className="flex-grow border bg-white">
                 <div className="bg-[#00426F]  rounded-t-[10px] flex justify-between">
-                  <div className="text-sm font-semibold rounded-t-md">
-                    <h1 className="p-3 text-white text-lg font-extrabold">
+                  <div>
+                    <h1 className="p-4 text-white text-xl font-extrabold">
                       {properties.customerRecord}
                     </h1>
                   </div>
@@ -922,20 +922,20 @@ const Moorings = () => {
                     <>
                       <FaEdit
                         onClick={handleEdit}
-                        className="mr-3 mt-[19px] text-[white]"
+                        className="mr-3 mt-[22px] text-[white]"
                         data-testid="FaEdit"
                         style={{ cursor: 'pointer' }}
                       />
                       <RiDeleteBin5Fill
                         onClick={handleDelete}
-                        className="text-white mr-2 mt-[19px]"
+                        className="text-white mr-2 mt-[22px]"
                         data-testid="RiDeleteBin5Fill"
                         style={{ cursor: 'pointer' }}
                       />
                     </>
 
                     <div
-                      className="p-1 mt-[20px]"
+                      className="p-1 mt-[22px]"
                       onClick={() => setRightContainerWidth(true)}
                       style={{ cursor: 'pointer' }}>
                       <svg
@@ -999,7 +999,7 @@ const Moorings = () => {
                     onClick={() => handleToggle('faq1')}>
                     <div className="flex items-center gap-4 ">
                       <div>
-                        <h1 className="p-3 text-white text-lg font-extrabold">
+                        <h1 className="p-4 text-white text-xl font-extrabold">
                           {properties.customerMooringHeader}
                         </h1>
                       </div>

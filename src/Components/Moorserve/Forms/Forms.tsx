@@ -221,7 +221,7 @@ const Forms = () => {
         <Header header="MOORSERVE/Forms Library" />
 
         <div className="flex justify-end">
-          <div className="flex mr-16 mt-10">
+          <div className="flex mr-16 mt-6">
             <CustomModal
               buttonText={'Upload New'}
               buttonStyle={{
@@ -263,22 +263,24 @@ const Forms = () => {
             opacity: '0px',
             backgroundColor: '#FFFFFF',
           }}
-          className="bg-[F2F2F2]  ml-12  mt-6 mr-14">
+          className="bg-[F2F2F2]  ml-12  mt-3 mr-14">
           <div className="flex flex-wrap align-items-center justify-between  bg-[#00426F] p-2   rounded-tl-[10px] rounded-tr-[10px]">
             <span
-              style={{
-                fontSize: '18px',
-                fontWeight: '700',
-                lineHeight: '21.09px',
-                letterSpacing: '0.4837472140789032px',
-                color: '#FFFFFF',
-                padding: '8px',
-              }}>
+              // style={{
+              //   fontSize: '18px',
+              //   fontWeight: '700',
+              //   lineHeight: '21.09px',
+              //   letterSpacing: '0.4837472140789032px',
+              //   color: '#FFFFFF',
+              //   padding: '8px',
+              // }}
+              className=' p-2 text-xl font-extrabold text-white'
+              >
               Forms
             </span>
 
             <div className="relative inline-block">
-              <div className="relative">
+              <div className="relative mt-1">
                 <img
                   src="/assets/images/Search.png"
                   alt="search icon"

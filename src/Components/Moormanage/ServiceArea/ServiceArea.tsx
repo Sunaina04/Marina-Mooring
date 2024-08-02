@@ -116,7 +116,7 @@ const ServiceArea = () => {
   }
 
   const ActionButtonColumn: ActionButtonColumnProps = {
-    header: '',
+    header: 'Action',
     buttons: [
       {
         color: 'red',
@@ -127,7 +127,13 @@ const ServiceArea = () => {
         },
       },
     ],
-    headerStyle: { backgroundColor: '#00426F', color: 'black' },
+    headerStyle: {
+      backgroundColor: '#00426F',
+      color: '#FFFFFF',
+      height: '3.50rem',
+      borderTopRightRadius: '10px',
+      borderBottom: '1px solid #C0C0C0',
+    },
     style: { borderBottom: '1px solid #D5E1EA' },
   }
 

@@ -655,19 +655,19 @@ const Boatyards = () => {
           <div className="">
             <div className="text-sm font-extrabold rounded-sm w-full bg-[#D9D9D9]">
               <div
-                className="flex align-items-center justify-between bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px]"
+                className="flex justify-between bg-[#00426F] rounded-t-[10px]"
                 style={{ color: '#FFFFFF' }}>
                 <h1 className="p-4 text-xl font-extrabold">{properties.boatyardMooringHeader}</h1>
-                <div className="flex">
+                <div className="flex mr-2">
                   <FaEdit
                     onClick={handleEdit}
-                    className="mr-4 mt-4 text-[white]"
+                    className="mr-3 mt-[22px] text-[white]"
                     data-testid="FaEdit"
                     style={{ cursor: boatYardRecord ? 'pointer' : 'not-allowed' }}
                   />
                   <RiDeleteBin5Fill
                     onClick={handleDelete}
-                    className="text-white mr-4 mt-4"
+                   className="text-white mr-2 mt-[22px] "
                     data-testid="RiDeleteBin5Fill"
                     style={{ cursor: boatYardRecord ? 'pointer' : 'not-allowed' }}
                   />

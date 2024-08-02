@@ -390,7 +390,7 @@ const Settings = () => {
       <Header header="MOORMANAGE/Permission" />
       <Toast ref={toast} />
       <div
-        className={`flex gap-10 ml-6 mt-16`}
+        className={`flex gap-10 ml-6 mt-6`}
         style={{
           paddingRight: '40px',
           paddingLeft: '25px',
@@ -403,7 +403,7 @@ const Settings = () => {
             minHeight: 'calc(40vw - 550px)',
           }}>
           <div className="text-md font-semibold rounded-t-lg bg-[#00426F]">
-            <h1 className="p-4 text-white">{properties.Settings}</h1>
+            <h1 className="p-4 text-xl font-extrabold  text-white">{properties.Settings}</h1>
           </div>
           <div
             data-testid="customer-admin-data"

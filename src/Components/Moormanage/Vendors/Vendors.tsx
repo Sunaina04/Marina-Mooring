@@ -308,7 +308,7 @@ const Vendors = () => {
             backgroundColor: '#FFFFFF',
             position: 'relative',
           }}
-          className={`ml-[3rem] mr-[2.30rem] mt-8 `}>
+          className={`ml-[3rem] mr-[2.30rem] mt-3 `}>
           <div data-testid="customer" className="flex flex-col h-full ">
             <div className="flex-grow overflow-auto">
               <DataTableComponent
