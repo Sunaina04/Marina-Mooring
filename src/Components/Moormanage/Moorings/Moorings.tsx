@@ -547,7 +547,7 @@ const Moorings = () => {
           </p>
           <p className="ml-4 mt-3">
             <span className="address-label">Notes: </span>
-            {customerRecordData?.note || '-'}
+            {customerRecordData?.notes || '-'}
           </p>
 
           <div className="flex mt-2 ml-4 mb-3 overflow-x-auto">
