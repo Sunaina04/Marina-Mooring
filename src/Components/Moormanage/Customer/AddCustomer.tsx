@@ -898,6 +898,12 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     }
   }, [checkedDock])
 
+  useEffect(() => {
+    if (country?.id === 13) {
+      setSelectedCustomerType('')
+    }
+  }, [country?.id === 13])
+
   return (
     <>
       <Toast ref={toastRef} />
@@ -1022,13 +1028,14 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       optionLabel="type"
                       editable
                       placeholder="Customer Type"
-                      disabled={isLoading}
+                      disabled={isLoading || country?.id === 13}
                       style={{
                         width: '230px',
                         height: '32px',
                         border: '1px solid #D5E1EA',
                         borderRadius: '0.50rem',
                         color: 'black',
+                        cursor: country?.id === 13 ? 'not-allowed' : 'pointer',
                       }}
                     />
                   </div>
