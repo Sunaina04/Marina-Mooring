@@ -2,6 +2,7 @@ import InputComponent from '../../CommonComponent/InputComponent'
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { Button } from 'primereact/button'
 import { Dropdown } from 'primereact/dropdown'
+import { ProgressSpinner } from 'primereact/progressspinner'
 import {
   useUpdateServiceAreaMutation,
   useAddServiceAreaMutation,
@@ -16,6 +17,8 @@ import {
   StatesData,
 } from '../../CommonComponent/MetaDataComponent/MetaDataApi'
 import { Toast } from 'primereact/toast'
+import { IoMdAdd, IoMdClose } from 'react-icons/io'
+import { InputText } from 'primereact/inputtext'
 
 const AddServiceModal: React.FC<ServiceAreaProps> = ({
   closeModal,
@@ -36,6 +39,8 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
   const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<any>()
   const [countriesData, setCountriesData] = useState<Country[]>()
   const [statesData, setStatesData] = useState<State[]>()
+  const [storage, setStorage] = useState('')
+  const [storageList, setStorageList] = useState<string[]>([])
   const [serviceAreaTypeData, setServiceAreaTypeData] = useState<ServiceAreaType[]>()
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
   const toastRef = useRef<Toast>(null)
@@ -243,6 +248,17 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
     setModalVisible(false)
   }
 
+  const handleAddStorage = () => {
+    setStorageList([...storageList, storage])
+    setStorage('')
+  }
+
+  const handleDeleteStorage = (index: number) => {
+    const newList = [...storageList]
+    newList.splice(index, 1)
+    setStorageList(newList)
+  }
+
   const fetchDataAndUpdate = useCallback(async () => {
     const { countriesData } = await getCountriesData()
     const { ServiceAreaTypeData } = await getServiceAreaTypeData()
@@ -344,9 +360,93 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
                 }}
               />
             </div>
+            
           </div>
+          <div>
+            <span className="font-medium text-sm text-[#000000]">
+            Sub Service Area
+              {/* <span className="text-red-500">*</span> */}
+            </span>
+            <div className="mt-1 flex items-center gap-1 relative">
+              <div>
+                <div className="p-input-icon-left">
+                  {/* <IoSearchSharp className="ml-2 text-blue-900" /> */}
+
+                  <InputText
+                    value={storage}
+                    onChange={(e) => {
+                      setStorage(e.target.value)
+                    }}
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.8rem',
+                      padding: '0.5rem',
+                      paddingRight: '2.5rem',
+                    }}
+                  />
+                  <IoMdAdd
+                    style={{
+                      position: 'absolute',
+                      left: '12.5rem',
+                      top: '72%',
+                      transform: 'translateY(-50%)',
+                      cursor: 'pointer',
+                      fontSize: '1.5rem',
+                      color: 'black',
+                      backgroundColor: '#D5E1EA',
+                      borderRadius: '5px',
+                      padding: '3px',
+                    }}
+                    onClick={() => storage && handleAddStorage()}
+                  />
+                  </div>
+                  </div>
+            </div>
+            <ul className="mt-1 flex w-[230px] overflow-y-auto ">
+              {storageList.map((item, index) => (
+                <li
+                  key={index}
+                  style={{
+                    borderRadius: '5px',
+                    fontWeight: '400',
+                    fontSize: '12px',
+                    color: '#10293A',
+                    backgroundColor: '#D5E1EA',
+                    padding: '4px',
+                  }}
+                  className="flex items-center m-1">
+                  {item}
+                  <IoMdClose
+                    style={{
+                      marginLeft: '0.5rem',
+                      marginBottom: '12px',
+                      cursor: 'pointer',
+                      color: 'red',
+                    }}
+                    onClick={() => handleDeleteStorage(index)}
+                  />
+
+                  <button></button>
+                </li>
+              ))}
+            </ul>
         </div>
       </div>
+      {isLoading && (
+          <ProgressSpinner
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: '50px',
+              height: '50px',
+            }}
+            strokeWidth="4"
+          />
+        )}
       <div className="mt-3">
         <span className="font-medium text-sm text-[#000000]">Address</span>
       </div>
@@ -547,6 +647,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
             fontWeight: '500',
           }}
         />
+      </div>
       </div>
     </>
   )
