@@ -67,6 +67,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     workOrderStatus: '',
     value: '',
     jobType: '',
+    attachForm:"",
   })
 
   const [time, setTime] = useState({ minutes: 0, seconds: 0 })
@@ -1060,6 +1061,30 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
               <Dropdown
                 value={workOrder.jobType}
                 onChange={(e) => handleInputChange('jobType', e.target.value)}
+                options={workOrderStatusValue}
+                optionLabel="status"
+                editable
+                disabled={isLoading || isAccountRecievable}
+                style={{
+                  width: '230px',
+                  height: '32px',
+                  border: '1px solid #D5E1EA',
+                  borderRadius: '0.50rem',
+                  fontSize: '0.8rem',
+                }}
+              />
+            </div>
+          </div>
+
+
+          <div>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">Attach Form</div>
+            </span>
+            <div className="mt-1">
+              <Dropdown
+                value={workOrder.attachForm}
+                onChange={(e) => handleInputChange('attachForm', e.target.value)}
                 options={workOrderStatusValue}
                 optionLabel="status"
                 editable
