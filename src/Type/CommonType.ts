@@ -77,7 +77,6 @@ export interface ServiceAreaType {
   label: string
 }
 
-
 export interface MetaData {
   type: any
   id: number
@@ -91,6 +90,7 @@ export interface MetaData {
   firstName: string
   lastName: string
   boatyardName: string
+  serviceAreaName: string
   customer: {
     customerTypeDto: {
       id: number
@@ -159,13 +159,11 @@ export interface DropdownValue {
   id: number
   label: string
 }
- export interface viewImageProp {
-  handleZoomOut: () => void;
-  handleZoomIn: () => void;
-  scale: number;
+export interface viewImageProp {
+  handleZoomOut: () => void
+  handleZoomIn: () => void
+  scale: number
   showImage: {
-    imageData: string;
-  };
+    imageData: string
+  }
 }
-
-

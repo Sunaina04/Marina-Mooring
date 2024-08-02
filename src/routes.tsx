@@ -23,6 +23,7 @@ import CustomerAdmin from './Components/AdminTools/Companies'
 import InventoryDetails from './Components/Moormanage/Vendors/InventoryDetails'
 import Settings from './Components/AdminTools/Settings'
 import ServiceArea from './Components/Moormanage/ServiceArea/ServiceArea'
+import Reports from './Components/Reports/Reports'
 
 const routes = [
   {
@@ -120,7 +121,10 @@ const routes = [
           },
         ],
       },
-
+      {
+        path: 'reports',
+        element: <Reports />,
+      },
       {
         path: 'customerAdmin',
         element: <CustomerAdmin />,

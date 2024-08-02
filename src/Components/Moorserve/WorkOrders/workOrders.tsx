@@ -17,8 +17,9 @@ import { ProgressSpinner } from 'primereact/progressspinner'
 import { Paginator } from 'primereact/paginator'
 import { SelectButton, SelectButtonChangeEvent } from 'primereact/selectbutton'
 import { properties } from '../../Utils/MeassageProperties'
+import { WorkOrderValue } from '../../../Type/ComponentBasedType'
 
-const WorkOrders = () => {
+const WorkOrders: React.FC<WorkOrderValue> = ({ report }) => {
   const selectedCustomerId = useSelector(selectCustomerId)
   const [visible, setVisible] = useState(false)
   const [searchText, setSearchText] = useState('')
@@ -72,8 +73,6 @@ const WorkOrders = () => {
       color: '#000000',
       fontWeight: '700',
       fontSize: '12px',
-
-      
     },
     style: { borderBottom: '1px solid #D5E1EA', backgroundColor: '#FFFFFF', fontWeight: '400' },
   }
@@ -296,48 +295,14 @@ const WorkOrders = () => {
 
   return (
     <div style={{ height: '150vh' }} className={visible ? 'backdrop-blur-lg' : ''}>
-      <Header header="MOORSERVE/Work Orders" />
       <Toast ref={toast} />
+      {!report && <Header header="MOORSERVE/Work Orders" />}{' '}
       <div className="">
-        <div className="flex justify-end gap-6 mt-10 mr-16">
-          <Button
-            style={{
-              width: '125px',
-              height: '44px',
-              minHeight: '44px',
-              backgroundColor: '#0098FF',
-              cursor: 'pointer',
-              fontSize: '14px',
-              fontWeight: 600,
-              color: 'white',
-              borderRadius: '0.50rem',
-              marginLeft: '8px',
-              boxShadow: 'none',
-            }}>
-            Export To PDF
-          </Button>
-          <div className="items-center">
-            <CustomModal
-              buttonText={'ADD NEW'}
-              icon={
-                <img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8  mb-0.5" />
-              }
-              children={
-                <AddWorkOrders
-                  workOrderData={selectedCustomer}
-                  editModeWorkOrder={editMode}
-                  setVisible={setVisible}
-                  toastRef={toast}
-                  closeModal={handleModalClose}
-                  isAccountRecievable={false}
-                />
-              }
-              headerText={<h1 className="text-xl font-extrabold text-black ml-4">Work Order</h1>}
-              visible={visible}
-              onClick={handleButtonClick}
-              onHide={handleModalClose}
-              buttonStyle={{
-                width: '121px',
+        {!report && (
+          <div className="flex justify-end gap-6 mt-10 mr-16">
+            <Button
+              style={{
+                width: '125px',
                 height: '44px',
                 minHeight: '44px',
                 backgroundColor: '#0098FF',
@@ -348,15 +313,51 @@ const WorkOrders = () => {
                 borderRadius: '0.50rem',
                 marginLeft: '8px',
                 boxShadow: 'none',
-              }}
-              dialogStyle={{
-                width: '851px',
-                height: '526px',
-                borderRadius: '1rem',
-              }}
-            />
+              }}>
+              Export To PDF
+            </Button>
+            <div className="items-center">
+              <CustomModal
+                buttonText={'ADD NEW'}
+                icon={
+                  <img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8  mb-0.5" />
+                }
+                children={
+                  <AddWorkOrders
+                    workOrderData={selectedCustomer}
+                    editModeWorkOrder={editMode}
+                    setVisible={setVisible}
+                    toastRef={toast}
+                    closeModal={handleModalClose}
+                    isAccountRecievable={false}
+                  />
+                }
+                headerText={<h1 className="text-xl font-extrabold text-black ml-4">Work Order</h1>}
+                visible={visible}
+                onClick={handleButtonClick}
+                onHide={handleModalClose}
+                buttonStyle={{
+                  width: '121px',
+                  height: '44px',
+                  minHeight: '44px',
+                  backgroundColor: '#0098FF',
+                  cursor: 'pointer',
+                  fontSize: '14px',
+                  fontWeight: 600,
+                  color: 'white',
+                  borderRadius: '0.50rem',
+                  marginLeft: '8px',
+                  boxShadow: 'none',
+                }}
+                dialogStyle={{
+                  width: '851px',
+                  height: '526px',
+                  borderRadius: '1rem',
+                }}
+              />
+            </div>
           </div>
-        </div>
+        )}
 
         <div
           style={{
