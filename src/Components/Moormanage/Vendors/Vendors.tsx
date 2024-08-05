@@ -307,6 +307,7 @@ const Vendors = () => {
             border: '1px solid #D5E1EA',
             backgroundColor: '#FFFFFF',
             position: 'relative',
+            zIndex:-1
           }}
           className={`ml-[3rem] mr-[2.30rem] mt-3 `}>
           <div data-testid="customer" className="flex flex-col h-full ">

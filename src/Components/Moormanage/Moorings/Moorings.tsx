@@ -93,7 +93,8 @@ const Moorings = () => {
   const [pageNumber2, setPageNumber2] = useState(0)
   const [pageSizeTwo, setPageSizeTwo] = useState(10)
   const [totalRecordsTwo, setTotalRecordsTwo] = useState<number>()
-  const { isMapModalOpen } = useContext(AppContext)
+  const { isMapModalOpen, IsdialogVisible, isUploadImageDialogVisible } = useContext(AppContext)
+
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
     setPageNumber1(event.first)
@@ -613,6 +614,8 @@ const Moorings = () => {
           imageEditVisible ||
           imageVisible ||
           customerModalVisible ||
+          IsdialogVisible ||
+          isUploadImageDialogVisible ||
           isMapModalOpen.editMode
             ? 'backdrop-blur-lg'
             : ''
@@ -849,7 +852,7 @@ const Moorings = () => {
           {/* middle container */}
 
           <div
-            className={`min-h-[600] rounded-md border-[1px] ml-5 ${modalVisible || customerModalVisible || imageVisible || imageEditVisible || dialogVisible || isMapModalOpen.editMode ? 'blur-screen' : ''}`}
+            className={`min-h-[600] rounded-md border-[1px] ml-5 ${modalVisible || customerModalVisible || isUploadImageDialogVisible || imageVisible || imageEditVisible || dialogVisible || IsdialogVisible || isUploadImageDialogVisible || isMapModalOpen.editMode ? 'blur-screen' : ''}`}
             style={{ flexGrow: '1' }}>
             <CustomMooringPositionMap
               position={coordinatesArray ? coordinatesArray : initialPosition}

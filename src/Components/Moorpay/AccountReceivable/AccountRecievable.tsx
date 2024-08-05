@@ -188,6 +188,7 @@ const AccountRecievable = () => {
     color: '#000000',
     fontWeight: '700',
     fontSize: '12px',
+    zIndex: -1,
   }
 
   const firstLastName = (data: any) => {
@@ -271,6 +272,7 @@ const AccountRecievable = () => {
       color: '#000000',
       width: '12.7vw',
       fontWeight: 700,
+      zIndex: -1,
     },
     style: { borderBottom: '1px solid #D5E1EA', fontWeight: '400' },
   }

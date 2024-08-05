@@ -121,6 +121,8 @@ const Header: React.FC<HeaderProps> = ({ header, customer }) => {
         <HeaderProfile customer={userData} />
       </div>
 
+
+
       
     </div>
   )
