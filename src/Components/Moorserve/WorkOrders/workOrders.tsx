@@ -244,7 +244,7 @@ const WorkOrders: React.FC<WorkOrderValue> = ({ report }) => {
     const xStart = 14
     const yStart = 30
 
-    doc.setFontSize(12)
+    doc.setFontSize(8)
     let xPosition = xStart
     let yPosition = yStart
 
