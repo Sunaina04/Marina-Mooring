@@ -16,6 +16,7 @@ import {
 import { MooringPayload, MooringWithGpsCoordinates } from '../../Type/ApiTypes'
 import MooringMapModal from '../CustomComponent/MooringMapModal'
 import { Toast } from 'primereact/toast'
+import { InputSwitch } from 'primereact/inputswitch'
 
 const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
   position,
@@ -32,6 +33,7 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
   const [showMap, setShowMap] = useState(false)
   const toast = useRef<Toast>(null)
   const [isZoom, setZoom] = useState<boolean>(false)
+  const [checked, setChecked] = useState(true)
   const parseCoordinates = (coordinates: string): [number, number] | null => {
     if (!coordinates) return null
     const [latitude, longitude] = coordinates.split(' ').map(parseFloat)
@@ -52,7 +54,7 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
   }
 
   const handleCheckboxChange = () => {
-    setIsChecked(!isChecked)
+    setChecked(!checked)
   }
 
   const boxStyle: React.CSSProperties = {
@@ -161,7 +163,11 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
                   console.log(serviceAreaName)
 
                   return (
-                    <Marker key={index} position={position} icon={icon} ref={mapRef}>
+                    <Marker
+                      key={index}
+                      position={position}
+                      icon={checked ? iconSeviceType : icon}
+                      ref={mapRef}>
                       <Popup>
                         <MooringMapModal
                           gpsValue={position}
@@ -177,37 +183,39 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
         </div>
 
         <div style={boxStyle}>
-          <h2>Status</h2>
-          <button className={`toggle-button ${isToggled ? 'on' : 'off'}`} onClick={handleToggle}>
-            {isToggled ? 'ON' : 'OFF'}
-          </button>
-
-          <label className="flex cursor-pointer select-none items-center">
-            <div className="relative">
-              <input
-                type="checkbox"
-                checked={isChecked}
-                onChange={handleCheckboxChange}
-                className="sr-only"
-              />
-              <div className="block h-6 w-12 rounded-full border border-[#BFCEFF] bg-[#0000ff]"></div>
-              <div className="dot bg-primary absolute left-1 top-1 h-6 w-6 rounded-full transition"></div>
+          <div className="flex justify-between">
+            <h2>Status</h2>
+            <div className=" flex  ">
+              <button
+                className={`relative inline-flex h-6 mb-14 w-11 items-center rounded-full transition-colors duration-300 ${
+                  checked ? 'bg-green-500' : 'bg-gray-300'
+                }`}
+                onClick={handleCheckboxChange}>
+                <span
+                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-300 ${
+                    checked ? 'translate-x-6' : 'translate-x-1'
+                  }`}
+                />
+              </button>
             </div>
-          </label>
+          </div>
 
           <div className="mt-1">
             <hr style={{ border: '1px solid #3F3F3F' }} />
           </div>
 
           <div style={containerStyle}>
-            <div>
+            {checked && (
               <div>
-                <span style={dotStyle('#87CEEB')}></span> North
+                <div>
+                  <span style={dotStyle('#87CEEB')}></span> North
+                </div>
+                <div>
+                  <span style={dotStyle('#FFC0CB')}></span> East
+                </div>
               </div>
-              <div>
-                <span style={dotStyle('#FFC0CB')}></span> East
-              </div>
-            </div>
+            )}
+
             <div>
               <div>
                 <span style={dotStyle('#FFFF00')}></span> West

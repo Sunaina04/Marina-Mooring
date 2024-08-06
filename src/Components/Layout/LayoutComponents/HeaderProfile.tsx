@@ -316,7 +316,7 @@ const HeaderProfile: React.FC<HeaderProps> = ({ customer }) => {
               color: 'black',
               padding: '8px',
               boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
-              zIndex: 1,
+              zIndex: 2,
             }}>
             <ul style={{ listStyleType: 'none', margin: 0, padding: 0 }}>
               {['Upload Photo', 'Reset Password', 'Logout'].map((item) => (
