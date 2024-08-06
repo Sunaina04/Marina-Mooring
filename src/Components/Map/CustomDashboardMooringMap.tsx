@@ -101,6 +101,9 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
     East: EastIcon,
     North: NorthIcon,
     West: WestIcon,
+    east: EastIcon,
+    north: NorthIcon,
+    west: WestIcon,
   }
 
   useEffect(() => {
@@ -162,7 +165,6 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
                   const serviceAreaName = mooring?.serviceAreaResponseDto
                     ?.serviceAreaName as keyof typeof iconsByServiceAreaName
                   const iconSeviceType = iconsByServiceAreaName[serviceAreaName] || DefaultIcon
-                  console.log(serviceAreaName)
 
                   return (
                     <Marker
@@ -210,16 +212,16 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
             <div style={containerStyle}>
               <div>
                 <div>
-                  <span style={dotStyle('#87CEEB')}></span> North
+                  <span style={dotStyle('#d82bbd')}></span> North
                 </div>
                 <div>
-                  <span style={dotStyle('#FFC0CB')}></span> East
+                  <span style={dotStyle('#0ba7f1')}></span> East
                 </div>
               </div>
 
               <div>
                 <div>
-                  <span style={dotStyle('#FFFF00')}></span> West
+                  <span style={dotStyle('#fe7515')}></span> West
                 </div>
               </div>
             </div>

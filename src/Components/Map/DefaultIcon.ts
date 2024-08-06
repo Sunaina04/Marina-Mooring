@@ -36,22 +36,22 @@ const needInspectionIconOptions: IconOptions = {
 export const NeedInspectionIcon = L.icon(needInspectionIconOptions)
 
 const northIconOptions: IconOptions = {
-  iconUrl: '/assets/images/GearOff.png',
-  iconSize: [40, 50],
+  iconUrl: '/assets/images/north.png',
+  iconSize: [90, 100],
 }
 
 export const NorthIcon = L.icon(northIconOptions)
 
 const eastIconOptions: IconOptions = {
-  iconUrl: '/assets/images/NotInUse.png',
-  iconSize: [40, 50],
+  iconUrl: '/assets/images/east.png',
+  iconSize: [90, 100],
 }
 
 export const EastIcon = L.icon(eastIconOptions)
 
 const westIconOptions: IconOptions = {
-  iconUrl: '/assets/images/NeedInspection.png',
-  iconSize: [40, 50],
+  iconUrl: '/assets/images/west.png',
+  iconSize: [90, 100],
 }
 
 export const WestIcon = L.icon(westIconOptions)
