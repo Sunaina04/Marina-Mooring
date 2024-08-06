@@ -407,8 +407,8 @@ const Settings = () => {
           </div>
           <div
             data-testid="customer-admin-data"
-            className="flex flex-col  "
-            style={{ height: '700px' }}>
+            className="flex flex-col"
+            style={{ height: '700px', }}>
             <div className="flex-grow overflow-auto">
               <DataTableComponent
                 tableStyle={{

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import CustomModal from '../../CustomComponent/CustomModal'
 import AddBoatyards from './AddBoatyards'
 import { InputText } from 'primereact/inputtext'
@@ -34,6 +34,7 @@ import { RiDeleteBin5Fill } from 'react-icons/ri'
 import { Paginator } from 'primereact/paginator'
 import React from 'react'
 import MooringInformations from '../../CommonComponent/MooringInformations'
+import { AppContext } from '../../../AppContext'
 
 const Boatyards = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -71,6 +72,8 @@ const Boatyards = () => {
   const [pageSizeTwo, setPageSizeTwo] = useState(10)
   const [totalRecordsTwo, setTotalRecordsTwo] = useState<number>()
 
+  const { isMapModalOpen, IsdialogVisible } = useContext(AppContext)
+  
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
     setPageNumber1(event.first)
@@ -481,7 +484,7 @@ const Boatyards = () => {
   }, [selectedBoatYard, boatyardsData, mooringWithBoatyardsData])
 
   return (
-    <div style={{ height: '150vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
+    <div style={{ height: '150vh' }} className={modalVisible || IsdialogVisible ? 'backdrop-blur-lg' : ''}>
       <Toast ref={toast} />
       <Header header="MOORMANAGE/Boatyards" />
       <div className="flex justify-end mr-14 mt-6 ">

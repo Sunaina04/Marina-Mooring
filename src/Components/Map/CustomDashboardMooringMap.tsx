@@ -22,6 +22,8 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
   leftContanerWidth,
   setLeftContainer,
 }) => {
+  const [isToggled, setIsToggled] = useState(false);
+  const [isChecked, setIsChecked] = useState(false)
   const [map, setMap] = useState<any>()
   const mapRef = useRef<any>(null)
   const [showMap, setShowMap] = useState(false)
@@ -40,6 +42,14 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
     } else {
       setLeftContainer(true)
     }
+  }
+
+  const handleToggle = () => {
+    setIsToggled(!isToggled);
+  };
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked)
   }
 
   const boxStyle: React.CSSProperties = {
@@ -155,9 +165,47 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
 
         <div style={boxStyle}>
           <h2>Status</h2>
+          <button
+             className={`toggle-button ${isToggled ? 'on' : 'off'}`}
+             onClick={handleToggle}>
+             {isToggled ? 'ON' : 'OFF'}
+          </button>
+
+
+     <label className='flex cursor-pointer select-none items-center'>
+        <div className='relative'>
+          <input
+            type='checkbox'
+            checked={isChecked}
+            onChange={handleCheckboxChange}
+            className='sr-only'
+          />
+          <div className='block h-6 w-12 rounded-full border border-[#BFCEFF] bg-[#0000ff]'></div>
+          <div className='dot bg-primary absolute left-1 top-1 h-6 w-6 rounded-full transition'></div>
+        </div>
+      </label>
+
           <div className="mt-1">
             <hr style={{ border: '1px solid #3F3F3F' }} />
           </div>
+         
+          <div style={containerStyle}>
+            <div>
+              <div>
+                <span style={dotStyle('#87CEEB')}></span> North
+              </div>
+              <div>
+                <span style={dotStyle('#FFC0CB')}></span> East
+              </div>
+            </div>
+            <div>
+              <div>
+                <span style={dotStyle('#FFFF00')}></span> West
+              </div>
+            </div>
+          </div>
+            
+
           <div style={containerStyle}>
             <div>
               <div>
