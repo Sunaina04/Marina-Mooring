@@ -33,7 +33,7 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
   const [showMap, setShowMap] = useState(false)
   const toast = useRef<Toast>(null)
   const [isZoom, setZoom] = useState<boolean>(false)
-  const [checked, setChecked] = useState(true)
+  const [checked, setChecked] = useState(false)
   const parseCoordinates = (coordinates: string): [number, number] | null => {
     if (!coordinates) return null
     const [latitude, longitude] = coordinates.split(' ').map(parseFloat)
@@ -70,6 +70,7 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
     fontSize: '10px',
     transform: 'translateX(-50%)',
     zIndex: 1000,
+    // border:"1px solid red"
   }
 
   const dotStyle = (color: any): React.CSSProperties => ({
@@ -86,6 +87,7 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
     justifyContent: 'space-between',
     alignItems: 'flex-start',
     gap: '10px',
+    marginTop: '5px',
   }
 
   const iconsByStatusId = {
@@ -183,9 +185,9 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
         </div>
 
         <div style={boxStyle}>
-          <div className="flex justify-between">
+          <div className="flex justify-between  h-8">
             <h2>Status</h2>
-            <div className=" flex  ">
+            <div className="flex">
               <button
                 className={`relative inline-flex h-6 mb-14 w-11 items-center rounded-full transition-colors duration-300 ${
                   checked ? 'bg-green-500' : 'bg-gray-300'
@@ -204,8 +206,8 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
             <hr style={{ border: '1px solid #3F3F3F' }} />
           </div>
 
-          <div style={containerStyle}>
-            {checked && (
+          {checked ? (
+            <div style={containerStyle}>
               <div>
                 <div>
                   <span style={dotStyle('#87CEEB')}></span> North
@@ -214,33 +216,33 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
                   <span style={dotStyle('#FFC0CB')}></span> East
                 </div>
               </div>
-            )}
 
-            <div>
               <div>
-                <span style={dotStyle('#FFFF00')}></span> West
+                <div>
+                  <span style={dotStyle('#FFFF00')}></span> West
+                </div>
               </div>
             </div>
-          </div>
-
-          <div style={containerStyle}>
-            <div>
+          ) : (
+            <div style={containerStyle}>
               <div>
-                <span style={dotStyle('#ED4C3E')}></span> Need Inspection
+                <div>
+                  <span style={dotStyle('#ED4C3E')}></span> Need Inspection
+                </div>
+                <div>
+                  <span style={dotStyle('#3BB15E')}></span> Gear On (in the water)
+                </div>
               </div>
               <div>
-                <span style={dotStyle('#3BB15E')}></span> Gear On (in the water)
+                <div>
+                  <span style={dotStyle('#8C0DD1')}></span> Gear Off (out of the water)
+                </div>
+                <div>
+                  <span style={dotStyle('#E9E9E9')}></span> Not in Use
+                </div>
               </div>
             </div>
-            <div>
-              <div>
-                <span style={dotStyle('#8C0DD1')}></span> Gear Off (out of the water)
-              </div>
-              <div>
-                <span style={dotStyle('#E9E9E9')}></span> Not in Use
-              </div>
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </>
