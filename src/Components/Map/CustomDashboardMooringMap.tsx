@@ -5,14 +5,18 @@ import './CustomMap.css'
 import { CustomMooringPositionMapProps } from '../../Type/Components/MapTypes'
 import {
   DefaultIcon,
+  EastIcon,
   GearOffIcon,
   GearOnIcon,
   NeedInspectionIcon,
+  NorthIcon,
   NotInUseIcon,
+  WestIcon,
 } from './DefaultIcon'
 import { MooringPayload, MooringWithGpsCoordinates } from '../../Type/ApiTypes'
 import MooringMapModal from '../CustomComponent/MooringMapModal'
 import { Toast } from 'primereact/toast'
+import { InputSwitch } from 'primereact/inputswitch'
 
 const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
   position,
@@ -22,13 +26,14 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
   leftContanerWidth,
   setLeftContainer,
 }) => {
-  const [isToggled, setIsToggled] = useState(false);
+  const [isToggled, setIsToggled] = useState(false)
   const [isChecked, setIsChecked] = useState(false)
   const [map, setMap] = useState<any>()
   const mapRef = useRef<any>(null)
   const [showMap, setShowMap] = useState(false)
   const toast = useRef<Toast>(null)
   const [isZoom, setZoom] = useState<boolean>(false)
+  const [checked, setChecked] = useState(false)
   const parseCoordinates = (coordinates: string): [number, number] | null => {
     if (!coordinates) return null
     const [latitude, longitude] = coordinates.split(' ').map(parseFloat)
@@ -45,11 +50,11 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
   }
 
   const handleToggle = () => {
-    setIsToggled(!isToggled);
-  };
+    setIsToggled(!isToggled)
+  }
 
   const handleCheckboxChange = () => {
-    setIsChecked(!isChecked)
+    setChecked(!checked)
   }
 
   const boxStyle: React.CSSProperties = {
@@ -65,6 +70,7 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
     fontSize: '10px',
     transform: 'translateX(-50%)',
     zIndex: 1000,
+    // border:"1px solid red"
   }
 
   const dotStyle = (color: any): React.CSSProperties => ({
@@ -81,6 +87,7 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
     justifyContent: 'space-between',
     alignItems: 'flex-start',
     gap: '10px',
+    marginTop: '5px',
   }
 
   const iconsByStatusId = {
@@ -88,6 +95,15 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
     2: GearOffIcon,
     3: NeedInspectionIcon,
     4: NotInUseIcon,
+  }
+
+  const iconsByServiceAreaName = {
+    East: EastIcon,
+    North: NorthIcon,
+    West: WestIcon,
+    east: EastIcon,
+    north: NorthIcon,
+    west: WestIcon,
   }
 
   useEffect(() => {
@@ -146,9 +162,16 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
                   const position: LatLngExpression = coordinates
                   const iconKey = mooring?.mooringStatus?.id as keyof typeof iconsByStatusId
                   const icon = iconsByStatusId[iconKey] || DefaultIcon
+                  const serviceAreaName = mooring?.serviceAreaResponseDto
+                    ?.serviceAreaName as keyof typeof iconsByServiceAreaName
+                  const iconSeviceType = iconsByServiceAreaName[serviceAreaName] || DefaultIcon
 
                   return (
-                    <Marker key={index} position={position} icon={icon} ref={mapRef}>
+                    <Marker
+                      key={index}
+                      position={position}
+                      icon={checked ? iconSeviceType : icon}
+                      ref={mapRef}>
                       <Popup>
                         <MooringMapModal
                           gpsValue={position}
@@ -164,66 +187,64 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
         </div>
 
         <div style={boxStyle}>
-          <h2>Status</h2>
-          <button
-             className={`toggle-button ${isToggled ? 'on' : 'off'}`}
-             onClick={handleToggle}>
-             {isToggled ? 'ON' : 'OFF'}
-          </button>
-
-
-     {/* <label className='flex cursor-pointer select-none items-center'>
-        <div className='relative'>
-          <input
-            type='checkbox'
-            checked={isChecked}
-            onChange={handleCheckboxChange}
-            className='sr-only'
-          />
-          <div className='block h-6 w-12 rounded-full border border-[#BFCEFF] bg-[#0000ff]'></div>
-          <div className='dot bg-primary absolute left-1 top-1 h-6 w-6 rounded-full transition'></div>
-        </div>
-      </label> */}
+          <div className="flex justify-between  h-8">
+            <h2>Status</h2>
+            <div className="flex">
+              <button
+                className={`relative inline-flex h-6 mb-14 w-11 items-center rounded-full transition-colors duration-300 ${
+                  checked ? 'bg-green-500' : 'bg-gray-300'
+                }`}
+                onClick={handleCheckboxChange}>
+                <span
+                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-300 ${
+                    checked ? 'translate-x-6' : 'translate-x-1'
+                  }`}
+                />
+              </button>
+            </div>
+          </div>
 
           <div className="mt-1">
             <hr style={{ border: '1px solid #3F3F3F' }} />
           </div>
-         
-          <div style={containerStyle}>
-            <div>
-              <div>
-                <span style={dotStyle('#87CEEB')}></span> North
-              </div>
-              <div>
-                <span style={dotStyle('#FFC0CB')}></span> East
-              </div>
-            </div>
-            <div>
-              <div>
-                <span style={dotStyle('#FFFF00')}></span> West
-              </div>
-            </div>
-          </div>
-            
 
-          <div style={containerStyle}>
-            <div>
+          {checked ? (
+            <div style={containerStyle}>
               <div>
-                <span style={dotStyle('#ED4C3E')}></span> Need Inspection
+                <div>
+                  <span style={dotStyle('#d82bbd')}></span> North
+                </div>
+                <div>
+                  <span style={dotStyle('#0ba7f1')}></span> East
+                </div>
               </div>
+
               <div>
-                <span style={dotStyle('#3BB15E')}></span> Gear On (in the water)
+                <div>
+                  <span style={dotStyle('#fe7515')}></span> West
+                </div>
               </div>
             </div>
-            <div>
+          ) : (
+            <div style={containerStyle}>
               <div>
-                <span style={dotStyle('#8C0DD1')}></span> Gear Off (out of the water)
+                <div>
+                  <span style={dotStyle('#ED4C3E')}></span> Need Inspection
+                </div>
+                <div>
+                  <span style={dotStyle('#3BB15E')}></span> Gear On (in the water)
+                </div>
               </div>
               <div>
-                <span style={dotStyle('#E9E9E9')}></span> Not in Use
+                <div>
+                  <span style={dotStyle('#8C0DD1')}></span> Gear Off (out of the water)
+                </div>
+                <div>
+                  <span style={dotStyle('#E9E9E9')}></span> Not in Use
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </>

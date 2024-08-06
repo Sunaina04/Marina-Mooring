@@ -293,6 +293,19 @@ export interface MooringMetaDataTypes {
   type: string
 }
 
+export interface ServiceAreaList {
+  address: any
+  countryResponseDto: any
+  gpsCoordinates: string
+  id: number
+  mooringInventoried: any
+  notes: string
+  serviceAreaName: string
+  serviceAreaTypeDto: any
+  stateResponseDto: any
+  userId: any
+  zipCode: any
+}
 export interface MooringPayload {
   id: number
   mooringNumber: string
@@ -320,6 +333,7 @@ export interface MooringPayload {
   mooringDueServiceStatusDto: MooringStatus
   customerResponseDto: customerResponseDto
   imageDtoList: ImageDtoList
+  serviceAreaResponseDto: ServiceAreaList
 }
 
 export type MooringRowData = {
@@ -748,7 +762,7 @@ export interface FormsPayload {
 export interface FormsResponse {
   message: string
   status: number
-  errorList: null
+  errorList: any
   time: string
   currentSize: number
   totalSize: number
@@ -794,11 +808,11 @@ export interface CustomerResponseDto {
   emailAddress: 'cust1@gmail.com'
   streetHouse: 'Test'
   aptSuite: 'Test'
-  stateResponseDto: null
-  countryResponseDto: null
+  stateResponseDto: any
+  countryResponseDto: any
   zipCode: '64937'
-  userId: null
-  mooringResponseDtoList: null
+  userId: any
+  mooringResponseDtoList: any
 }
 
 export interface BoatYardResponseDto {
@@ -853,7 +867,7 @@ export interface CustomerOwnerUserResponseDto {
   name: string
   email: string
   phoneNumber: string
-  customerOwnerId: null
+  customerOwnerId: any
   roleResponseDto: Role
   stateResponseDto: State
   countryResponseDto: Country
