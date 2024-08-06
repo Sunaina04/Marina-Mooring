@@ -2,11 +2,17 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import CustomModal from '../../CustomComponent/CustomModal'
-import { ErrorResponse, FormsPayload, FormsResponse } from '../../../Type/ApiTypes'
+import {
+  ErrorResponse,
+  FormsPayload,
+  FormsResponse,
+  ViewFormsResponse,
+} from '../../../Type/ApiTypes'
 import {
   useDeleteFormMutation,
   useDownloadFormMutation,
   useGetFormsMutation,
+  useGetViewFormMutation,
 } from '../../../Services/MoorServe/MoorserveApi'
 import { Button } from 'primereact/button'
 import useSubmit from '../../../Services/CustomHook/useSubmit'
@@ -33,17 +39,17 @@ import { convertBytetoUrl } from '../../Helper/Helper'
 const Forms = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [viewPdf, setViewPdf] = useState(null)
+  const [viewPdf, setViewPdf] = useState<any>()
   const [formsData, setFormsData] = useState<FormsPayload[]>([])
   const [isLoading, setIsLoading] = useState(false)
-  const [getForms] = useGetFormsMutation()
-  const [downloadForms] = useDownloadFormMutation()
-  const [deleteForm] = useDeleteFormMutation()
   const [searchText, setSearchText] = useState('')
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
   const [pageSize, setPageSize] = useState(10)
   const [totalRecords, setTotalRecords] = useState<number>()
+  const [getForms] = useGetFormsMutation()
+  const [deleteForm] = useDeleteFormMutation()
+  const [getViewForms] = useGetViewFormMutation()
   const toastRef = useRef<Toast>(null)
 
   const onPageChange = (event: any) => {
@@ -62,10 +68,6 @@ const Forms = () => {
 
   const handleModalClose = () => {
     setIsModalOpen(false)
-  }
-
-  const handleView = (rowData: any) => {
-    setViewPdf(rowData.formData)
   }
 
   const handleDownload = async (rowData: any) => {
@@ -114,9 +116,7 @@ const Forms = () => {
   const getFormsData = async () => {
     try {
       let params: Params = {}
-      if (searchText) {
-        params.searchText = searchText
-      }
+      params.searchText = searchText
       if (pageNumber) {
         params.pageNumber = pageNumber
       }
@@ -131,6 +131,48 @@ const Forms = () => {
       } else {
         setFormsData([])
         setTotalRecords(totalSize)
+      }
+    } catch (error) {
+      const { message, data } = error as ErrorResponse
+      setIsLoading(false)
+      toastRef?.current?.show({
+        severity: 'success',
+        summary: 'Success',
+        detail: message || data?.message,
+        life: 3000,
+      })
+    }
+  }
+
+  const viewFormsData = async (id: any) => {
+    try {
+      const response = await getViewForms({ id: id }).unwrap()
+      const { status, content } = response as ViewFormsResponse
+      if (status === 200) {
+        setViewPdf(content)
+      } else {
+        setViewPdf('')
+      }
+    } catch (error) {
+      const { message, data } = error as ErrorResponse
+      setIsLoading(false)
+      toastRef?.current?.show({
+        severity: 'success',
+        summary: 'Success',
+        detail: message || data?.message,
+        life: 3000,
+      })
+    }
+  }
+
+  const downloadFormsData = async (id: any) => {
+    try {
+      const response = await getViewForms({ id: id }).unwrap()
+      const { status, content } = response as ViewFormsResponse
+      if (status === 200) {
+        handleDownload(content)
+      } else {
+        setViewPdf('')
       }
     } catch (error) {
       const { message, data } = error as ErrorResponse
@@ -190,13 +232,13 @@ const Forms = () => {
         color: 'black',
         label: 'View',
         underline: true,
-        onClick: (rowData: any) => handleView(rowData),
+        onClick: (rowData: any) => viewFormsData(rowData.id),
       },
       {
         color: 'black',
         label: 'Download',
         underline: true,
-        onClick: (rowData: any) => handleDownload(rowData),
+        onClick: (rowData: any) => downloadFormsData(rowData.id),
       },
       {
         color: 'red',
@@ -265,19 +307,7 @@ const Forms = () => {
           }}
           className="bg-[F2F2F2]  ml-12  mt-3 mr-14">
           <div className="flex flex-wrap align-items-center justify-between  bg-[#00426F] p-2   rounded-tl-[10px] rounded-tr-[10px]">
-            <span
-              // style={{
-              //   fontSize: '18px',
-              //   fontWeight: '700',
-              //   lineHeight: '21.09px',
-              //   letterSpacing: '0.4837472140789032px',
-              //   color: '#FFFFFF',
-              //   padding: '8px',
-              // }}
-              className=' p-2 text-xl font-extrabold text-white'
-              >
-              Forms
-            </span>
+            <span className=" p-2 text-xl font-extrabold text-white">Forms</span>
 
             <div className="relative inline-block">
               <div className="relative mt-1">
@@ -360,7 +390,7 @@ const Forms = () => {
           </div>
         </div>
 
-        {viewPdf && <Preview fileData={viewPdf} onClose={() => setViewPdf(null)} />}
+        {viewPdf && <Preview fileData={viewPdf?.formData} onClose={() => setViewPdf(null)} />}
       </div>
     </>
   )

@@ -140,7 +140,7 @@ const MoorserveApi = userApi.injectEndpoints({
         pageSize?: number
         sortBy?: string
         sortDir?: string
-        searchText?: string
+        searchText: string
       }) => ({
         url: 'api/v1/form/fetchForms',
         method: 'GET',
@@ -152,6 +152,15 @@ const MoorserveApi = userApi.injectEndpoints({
     DownloadForm: builder.mutation({
       query: ({ id }: { id?: number }) => ({
         url: `api/v1/form/downloadForm/${id}`,
+        'content/type': 'application/pdf',
+        method: 'GET',
+      }),
+    }),
+
+    //View Form
+    getViewForm: builder.mutation({
+      query: ({ id }: { id?: number }) => ({
+        url: `api/v1/form/viewForm/${id}`,
         'content/type': 'application/pdf',
         method: 'GET',
       }),
@@ -251,4 +260,5 @@ export const {
   useGetConvertEstimateToWorkOrderMutation,
   useSavePaymentMutation,
   useDeleteFormMutation,
+  useGetViewFormMutation,
 } = MoorserveApi

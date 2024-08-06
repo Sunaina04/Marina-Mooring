@@ -771,6 +771,37 @@ export interface FormsResponse {
   }
 }
 
+export interface ViewFormsResponse {
+  message: string
+  status: number
+  errorList: any
+  time: string
+  currentSize: number
+  totalSize: number
+  content: {
+    id: number
+    submittedDate: string
+    submittedBy: string
+    formName: string
+    fileName: string
+    formData: string
+    userResponseDto: {
+      id: number
+      firstName: string
+      lastName: string
+      email: string
+      phoneNumber: string
+      customerOwnerId: number
+      roleResponseDto: any
+      stateResponseDto: any
+      countryResponseDto: any
+      address: string
+      zipCode: string
+      companyName: string
+    }
+  }
+}
+
 export interface UploadPayload {
   file: string
   customerName: string
