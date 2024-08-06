@@ -155,7 +155,9 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
                   const position: LatLngExpression = coordinates
                   const iconKey = mooring?.mooringStatus?.id as keyof typeof iconsByStatusId
                   const icon = iconsByStatusId[iconKey] || DefaultIcon
-                  const serviceAreaName = mooring?.serviceAreaResponseDto?.serviceAreaName
+                  const serviceAreaName = mooring?.serviceAreaResponseDto
+                    ?.serviceAreaName as keyof typeof iconsByServiceAreaName
+                  const iconSeviceType = iconsByServiceAreaName[serviceAreaName] || DefaultIcon
                   console.log(serviceAreaName)
 
                   return (
