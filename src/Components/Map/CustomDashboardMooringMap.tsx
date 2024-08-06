@@ -5,10 +5,13 @@ import './CustomMap.css'
 import { CustomMooringPositionMapProps } from '../../Type/Components/MapTypes'
 import {
   DefaultIcon,
+  EastIcon,
   GearOffIcon,
   GearOnIcon,
   NeedInspectionIcon,
+  NorthIcon,
   NotInUseIcon,
+  WestIcon,
 } from './DefaultIcon'
 import { MooringPayload, MooringWithGpsCoordinates } from '../../Type/ApiTypes'
 import MooringMapModal from '../CustomComponent/MooringMapModal'
@@ -22,7 +25,7 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
   leftContanerWidth,
   setLeftContainer,
 }) => {
-  const [isToggled, setIsToggled] = useState(false);
+  const [isToggled, setIsToggled] = useState(false)
   const [isChecked, setIsChecked] = useState(false)
   const [map, setMap] = useState<any>()
   const mapRef = useRef<any>(null)
@@ -45,8 +48,8 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
   }
 
   const handleToggle = () => {
-    setIsToggled(!isToggled);
-  };
+    setIsToggled(!isToggled)
+  }
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked)
@@ -88,6 +91,12 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
     2: GearOffIcon,
     3: NeedInspectionIcon,
     4: NotInUseIcon,
+  }
+
+  const iconsByServiceAreaName = {
+    East: EastIcon,
+    North: NorthIcon,
+    West: WestIcon,
   }
 
   useEffect(() => {
@@ -146,6 +155,8 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
                   const position: LatLngExpression = coordinates
                   const iconKey = mooring?.mooringStatus?.id as keyof typeof iconsByStatusId
                   const icon = iconsByStatusId[iconKey] || DefaultIcon
+                  const serviceAreaName = mooring?.serviceAreaResponseDto?.serviceAreaName
+                  console.log(serviceAreaName)
 
                   return (
                     <Marker key={index} position={position} icon={icon} ref={mapRef}>
@@ -165,30 +176,27 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
 
         <div style={boxStyle}>
           <h2>Status</h2>
-          <button
-             className={`toggle-button ${isToggled ? 'on' : 'off'}`}
-             onClick={handleToggle}>
-             {isToggled ? 'ON' : 'OFF'}
+          <button className={`toggle-button ${isToggled ? 'on' : 'off'}`} onClick={handleToggle}>
+            {isToggled ? 'ON' : 'OFF'}
           </button>
 
-
-     <label className='flex cursor-pointer select-none items-center'>
-        <div className='relative'>
-          <input
-            type='checkbox'
-            checked={isChecked}
-            onChange={handleCheckboxChange}
-            className='sr-only'
-          />
-          <div className='block h-6 w-12 rounded-full border border-[#BFCEFF] bg-[#0000ff]'></div>
-          <div className='dot bg-primary absolute left-1 top-1 h-6 w-6 rounded-full transition'></div>
-        </div>
-      </label>
+          <label className="flex cursor-pointer select-none items-center">
+            <div className="relative">
+              <input
+                type="checkbox"
+                checked={isChecked}
+                onChange={handleCheckboxChange}
+                className="sr-only"
+              />
+              <div className="block h-6 w-12 rounded-full border border-[#BFCEFF] bg-[#0000ff]"></div>
+              <div className="dot bg-primary absolute left-1 top-1 h-6 w-6 rounded-full transition"></div>
+            </div>
+          </label>
 
           <div className="mt-1">
             <hr style={{ border: '1px solid #3F3F3F' }} />
           </div>
-         
+
           <div style={containerStyle}>
             <div>
               <div>
@@ -204,7 +212,6 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
               </div>
             </div>
           </div>
-            
 
           <div style={containerStyle}>
             <div>
