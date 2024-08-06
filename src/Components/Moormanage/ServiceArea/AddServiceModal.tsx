@@ -83,7 +83,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
   const { getCountriesData } = CountriesData()
 
   const validateFields = () => {
-    const nameRegex = /^[a-zA-Z0-9 ]+$/
+    const nameRegex =  /^[A-Za-z\s]*$/
     const errors: { [key: string]: string } = {}
     if (!serviceAreaName) {
       errors.name = 'Service Area Name is required'

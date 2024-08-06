@@ -172,7 +172,7 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
           </button>
 
 
-     <label className='flex cursor-pointer select-none items-center'>
+     {/* <label className='flex cursor-pointer select-none items-center'>
         <div className='relative'>
           <input
             type='checkbox'
@@ -183,7 +183,7 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
           <div className='block h-6 w-12 rounded-full border border-[#BFCEFF] bg-[#0000ff]'></div>
           <div className='dot bg-primary absolute left-1 top-1 h-6 w-6 rounded-full transition'></div>
         </div>
-      </label>
+      </label> */}
 
           <div className="mt-1">
             <hr style={{ border: '1px solid #3F3F3F' }} />
