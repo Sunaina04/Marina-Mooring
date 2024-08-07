@@ -1017,37 +1017,11 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   </div>
                 </div>
                 <div className="mt-3">
-                  <span className="font-medium text-sm text-[#000000]">
-                    <div className="gap-1">Customer Type</div>
-                  </span>
-                  <div className="mt-2">
-                    <Dropdown
-                      id="CustomerType"
-                      value={selectedCustomerType}
-                      options={customerType}
-                      onChange={(e) => handleInputChangeCustomer('CustomerType', e.target.value)}
-                      optionLabel="type"
-                      editable
-                      placeholder="Customer Type"
-                      disabled={isLoading || country?.id === 13}
-                      style={{
-                        width: '230px',
-                        height: '32px',
-                        border: '1px solid #D5E1EA',
-                        borderRadius: '0.50rem',
-                        color: 'black',
-                        cursor: country?.id == 13 ? 'not-allowed' : 'pointer',
-                      }}
-                    />
-                  </div>
-                </div>
-
-                <div className="mt-3">
-                  <span className="font-medium text-sm text-[#000000]">
+                <span className="font-medium text-sm text-[#000000]">
                     <div className="flex gap-1">Image</div>
                   </span>
                   <div className="mt-2">
-                    <div
+                  <div
                       style={{
                         width: '230px',
                         height: '32px',
@@ -1067,6 +1041,32 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         <span className="pl-4 mt-1"> Upload Image </span>
                       </div>
                     </div>
+                  </div>
+                </div>
+
+                <div className="mt-3">
+                <span className="font-medium text-sm text-[#000000]">
+                        <div className="flex gap-1">Country</div>
+                      </span>
+                  <div className="mt-2">
+                  <Dropdown
+                        id="country"
+                        value={country}
+                        onChange={(e) => handleInputChangeCustomer('country', e.target.value)}
+                        options={countriesData}
+                        optionLabel="name"
+                        editable
+                        // placeholder="Country"
+                        disabled={isLoading}
+                        className=""
+                        style={{
+                          width: '230px',
+                          height: '32px',
+                          border: '1px solid #D5E1EA',
+                          borderRadius: '0.50rem',
+                          fontSize: '0.8rem',
+                        }}
+                      />
                   </div>
                 </div>
               </div>
@@ -1089,43 +1089,13 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 <div>
                   <div>
                     <div>
-                      <span className="font-medium text-sm text-[#000000]">
-                        <div className="flex gap-1">Country</div>
-                      </span>
-                    </div>
-
-                    <div className="mt-2">
-                      <Dropdown
-                        id="country"
-                        value={country}
-                        onChange={(e) => handleInputChangeCustomer('country', e.target.value)}
-                        options={countriesData}
-                        optionLabel="name"
-                        editable
-                        // placeholder="Country"
-                        disabled={isLoading}
-                        className=""
-                        style={{
-                          width: '230px',
-                          height: '32px',
-                          border: '1px solid #D5E1EA',
-                          borderRadius: '0.50rem',
-                          fontSize: '0.8rem',
-                        }}
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <div>
-                    <div>
-                      <span className="font-medium text-sm text-[#000000]">
+                    <span className="font-medium text-sm text-[#000000]">
                         <div className="flex gap-1">State</div>
                       </span>
                     </div>
 
                     <div className="mt-2">
-                      <Dropdown
+                    <Dropdown
                         id="state"
                         value={state}
                         options={statesData}
@@ -1149,13 +1119,13 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 <div>
                   <div>
                     <div>
-                      <span className="font-medium text-sm text-[#000000]">
+                    <span className="font-medium text-sm text-[#000000]">
                         <div className="flex gap-1">Zip Code</div>
                       </span>
                     </div>
 
                     <div className="mt-2">
-                      <InputText
+                    <InputText
                         id="pinCode"
                         value={pinCode}
                         onChange={(e) => handleInputChangeCustomer('pinCode', e.target.value)}
@@ -1172,16 +1142,16 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div className="mt-3">
-              <div>
-                <span className="font-medium text-sm text-[#000000]">
+                <div>
+                  <div>
+                    <div>
+                    <span className="font-medium text-sm text-[#000000]">
                   <div className="flex gap-1">Address</div>
                 </span>
-              </div>
-              <div className="mt-2">
-                <InputText
+                    </div>
+
+                    <div className="mt-2">
+                    <InputText
                   id="pinCode"
                   value={address}
                   onChange={(e) => handleInputChangeCustomer('address', e.target.value)}
@@ -1195,6 +1165,36 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     paddingLeft: '0.5rem',
                   }}
                 />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="mt-3">
+              <div>
+              <span className="font-medium text-sm text-[#000000]">
+                    <div className="gap-1">Customer Type</div>
+                  </span>
+              </div>
+              <div className="mt-2">
+              <Dropdown
+                      id="CustomerType"
+                      value={selectedCustomerType}
+                      options={customerType}
+                      onChange={(e) => handleInputChangeCustomer('CustomerType', e.target.value)}
+                      optionLabel="type"
+                      editable
+                      placeholder="Customer Type"
+                      disabled={isLoading || country?.id === 13}
+                      style={{
+                        width: '230px',
+                        height: '32px',
+                        border: '1px solid #D5E1EA',
+                        borderRadius: '0.50rem',
+                        color: 'black',
+                        cursor: country?.id == 13 ? 'not-allowed' : 'pointer',
+                      }}
+                    />
               </div>
               
             </div>

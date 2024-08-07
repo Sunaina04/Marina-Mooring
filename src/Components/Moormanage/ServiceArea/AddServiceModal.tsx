@@ -84,11 +84,12 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
 
   const validateFields = () => {
     const nameRegex =  /^[A-Za-z\s]*$/
+    //  const nameRegex =  /^[A-Za-z\s]*$/
     const errors: { [key: string]: string } = {}
     if (!serviceAreaName) {
       errors.name = 'Service Area Name is required'
     } else if (!nameRegex.test(serviceAreaName)) {
-      errors.name = 'Service Area Name is invalid'
+      errors.name = 'Service Area Name must only contain letters'
     }
     if (!gpsCoordinatesValue) {
       errors.gpsCoordinatesValue = 'GPS Coordinates is required'

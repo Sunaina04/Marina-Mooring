@@ -503,7 +503,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
   useEffect(() => {
     if (firstErrorField) {
-      document.getElementById(firstErrorField)?.scrollIntoView({ behavior: 'smooth' })
+      document.getElementById(firstErrorField)?.scrollIntoView({ behavior:'smooth' })
     }
   }, [firstErrorField])
 
