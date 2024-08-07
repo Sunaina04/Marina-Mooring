@@ -677,7 +677,7 @@ const ServiceArea = () => {
                       alt="Empty Data"
                       className="w-20 mx-auto mb-4"
                     />
-                    <p className="text-gray-500 text-lg font-bold">{properties.noDataMessage}</p>
+                    <p className="text-gray-500 text-lg">{properties.noDataMessage}</p>
                   </div>
                 }
               />
@@ -767,7 +767,7 @@ const ServiceArea = () => {
           ) : (
             <div className="text-center mt-40 mb-10">
               <img src="/assets/images/empty.png" alt="Empty Data" className="w-20 mx-auto mb-4" />
-              <p className="text-gray-500 text-lg font-bold">{properties.noDataMessage}</p>
+              <p className="text-gray-500 text-lg">{properties.noDataMessage}</p>
             </div>
           )}
         </div>

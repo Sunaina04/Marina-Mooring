@@ -152,7 +152,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [addCustomer] = useAddCustomerMutation()
   const [updateCustomer] = useUpdateCustomerMutation()
   const [updateMooring] = useUpdateMooringsMutation()
-
+  const scrollableContainerRef = useRef(null);
   const toastRef = useRef<Toast>(null)
 
   const handlePositionChange = (lat: number, lng: number) => {
@@ -164,10 +164,13 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   }
 
   const handleFocus = () => {
+    // if (scrollableContainerRef.current) {
+   
+    //   scrollableContainerRef.current.scrollTop = 0;
     const passwordMessage = document.getElementById('mooring')
     if (passwordMessage) {
       passwordMessage.style.display = 'block'
-      passwordMessage.scrollIntoView({ behavior: 'smooth' })
+      passwordMessage.scrollIntoView({ behavior: 'smooth', block: 'start'})
     }
   }
 
@@ -437,6 +440,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   }
 
   const SaveCustomer = async () => {
+    
     const errors = validateFields()
     if (Object.keys(errors).length > 0) {
       return

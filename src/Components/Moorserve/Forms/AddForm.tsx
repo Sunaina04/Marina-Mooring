@@ -16,6 +16,7 @@ const AddForm: React.FC<FormDataProps> = ({ closeModal, getFormsData }) => {
   const [uploadStatus, setUploadStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [fieldsError, setFieldsError] = useState<{ [key: string]: string }>({})
   const toastRef = useRef<Toast>(null)
+  const toast = useRef<Toast>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [formData, setFormData] = useState<any>({
     customerName: '',
@@ -157,6 +158,7 @@ const AddForm: React.FC<FormDataProps> = ({ closeModal, getFormsData }) => {
   return (
     <>
       <Toast ref={toastRef} />
+      <Toast ref={toast} />
 
       <div className="ml-4">
         <div className="flex gap-6">

@@ -505,7 +505,7 @@ const WorkOrders: React.FC<WorkOrderValue> = ({ report }) => {
                       alt="Empty Data"
                       className="w-28 mx-auto mb-4"
                     />
-                    <p className="text-gray-500 text-lg">{properties.noDataMessage}</p>
+                    <p className="text-gray-500 font-[600] text-lg">{properties.noDataMessage}</p>
                   </div>
                 }
               />
