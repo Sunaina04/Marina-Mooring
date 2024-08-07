@@ -358,10 +358,6 @@ const AccountRecievable = () => {
     style: { borderBottom: '1px solid #D5E1EA', fontWeight: '' },
   }
 
-  // useEffect(() => {
-  //   getWorkOrderWithPendingPayApproval()
-  // }, [pageNumber, pageSize, selectedCustomerId])
-
   useEffect(() => {
     const handler = setTimeout(() => {
       getWorkOrderWithPendingPayApproval()
@@ -372,26 +368,13 @@ const AccountRecievable = () => {
   }, [searchApproval, pageNumber, pageSize, selectedCustomerId, getWorkOrderWithPendingPayApproval])
 
   useEffect(() => {
-    getOutStandingInvoice()
-  }, [pageNumberTwo, pageSizeTwo, selectedCustomerId])
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      if (searchApproval) {
-        getWorkOrderWithPendingPayApproval()
-      }
+    const handler = setTimeout(() => {
+      getOutStandingInvoice()
     }, 600)
-    return () => clearTimeout(timeoutId)
-  }, [searchApproval])
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      if (searchInvoice) {
-        getOutStandingInvoice()
-      }
-    }, 600)
-    return () => clearTimeout(timeoutId)
-  }, [searchInvoice, pageNumberTwo, pageSizeTwo, selectedCustomerId])
+    return () => {
+      clearTimeout(handler)
+    }
+  }, [searchInvoice, pageNumberTwo, pageSizeTwo, selectedCustomerId, getOutStandingInvoice])
 
   return (
     <div style={{ height: '150vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
