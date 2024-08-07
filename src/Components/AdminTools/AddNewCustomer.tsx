@@ -809,7 +809,6 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   value={country}
                   onChange={(e) => {
                     setCountry(e.value)
-                    setFieldErrors((prevErrors) => ({ ...prevErrors, country: '' }))
                   }}
                   options={countriesData}
                   optionLabel="name"
@@ -819,15 +818,12 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: fieldErrors.country ? '1px solid red' : '1px solid #D5E1EA',
+                    border: '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                   }}
                 />
               </div>
-              <p className="" id="role">
-                {fieldErrors.role && <small className="p-error">{fieldErrors.role}</small>}
-              </p>
             </div>
 
             <div>
