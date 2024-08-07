@@ -156,7 +156,6 @@ const Report: React.FC = () => {
       if (elements.length > 0) {
         const index = elements[0].index
         const label = jobType[index]?.serviceAreaName
-        alert(`Clicked on ${label}`)
         setJobTypeSelected(true)
         setServiceAreaSelected(true)
       }
