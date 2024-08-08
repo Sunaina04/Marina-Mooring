@@ -156,8 +156,8 @@ const moormanageApi = userApi.injectEndpoints({
       }),
     }),
 
-     // ServiceArea API
-     addServiceArea: builder.mutation({
+    // ServiceArea API
+    addServiceArea: builder.mutation({
       query: (payload: ServiceAreaPayload) => ({
         url: '/api/v1/serviceArea/',
         method: 'POST',
@@ -187,7 +187,6 @@ const moormanageApi = userApi.injectEndpoints({
       }),
     }),
 
-
     deleteServiceArea: builder.mutation({
       query: ({ id }: { id?: number }) => ({
         url: `api/v1/serviceArea/${id}`,
@@ -202,7 +201,6 @@ const moormanageApi = userApi.injectEndpoints({
         body: payload,
       }),
     }),
-
 
     // Boatyards API
     addBoatyards: builder.mutation({
@@ -555,6 +553,28 @@ const moormanageApi = userApi.injectEndpoints({
         params: { entity },
       }),
     }),
+
+
+
+    getCustomerWithMooringWithCustomerImages: builder.mutation({
+      query: ({
+        id,
+        pageNumber,
+        pageSize,
+        sortBy,
+        sortDir,
+      }: {
+        id: number
+        pageNumber?: number
+        pageSize?: number
+        sortBy?: string
+        sortDir?: string
+      }) => ({
+        url: `/api/v1/customer/fetchCustomerWithMooringsWithCustomerImages/${id}`,
+        method: 'GET',
+        params: { id, pageNumber, pageSize, sortBy, sortDir },
+      }),
+    }),
   }),
 })
 
@@ -599,4 +619,5 @@ export const {
   useGetAllOpenWorkOrdersMutation,
   useGetAllOpenWorkOrdersAndMooringDueForServiceMutation,
   useUpdateImageMutation,
+  useGetCustomerWithMooringWithCustomerImagesMutation,
 } = moormanageApi
