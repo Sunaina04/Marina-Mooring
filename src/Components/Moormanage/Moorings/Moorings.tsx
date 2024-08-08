@@ -388,9 +388,7 @@ const Moorings = () => {
     setIsLoading(true)
     try {
       let params: Params = {}
-      if (searchText) {
-        params.searchText = searchText
-      }
+      params.searchText = searchText
       if (pageNumber) {
         params.pageNumber = pageNumber
       }

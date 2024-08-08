@@ -90,7 +90,7 @@ const Customer = () => {
   const [accordion, setAccordion] = useState('faq1')
   const [showImage, setShowImage] = useState({ id: '', imageData: '' })
 
-  const { isMapModalOpen, IsdialogVisible ,isUploadImageDialogVisible} = useContext(AppContext)
+  const { isMapModalOpen, IsdialogVisible, isUploadImageDialogVisible } = useContext(AppContext)
 
   // const handleToggle = (id: string) => {
   //   setAccordion((prevState) => (prevState === id ? '' : id))
@@ -416,9 +416,7 @@ const Customer = () => {
     setIsLoading(true)
     try {
       let params: Params = {}
-      if (searchText) {
-        params.searchText = searchText
-      }
+      params.searchText = searchText
       if (pageNumber) {
         params.pageNumber = pageNumber
       }
@@ -921,7 +919,7 @@ const Customer = () => {
 
           {/* middle container */}
           <div
-            className={` min-h-[600] rounded-md border-[1px] ml-5 ${modalVisible || imageVisible ||  isUploadImageDialogVisible || imageEditVisible || dialogVisible || dialogVisible || isMapModalOpen.editMode || IsdialogVisible ? 'blur-screen' : ''}`}
+            className={` min-h-[600] rounded-md border-[1px] ml-5 ${modalVisible || imageVisible || isUploadImageDialogVisible || imageEditVisible || dialogVisible || dialogVisible || isMapModalOpen.editMode || IsdialogVisible ? 'blur-screen' : ''}`}
             style={{ flexGrow: '1' }}>
             <CustomMooringPositionMap
               position={initialPosition}
