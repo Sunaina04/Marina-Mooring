@@ -17,8 +17,10 @@ import {
   useDeleteCustomerMutation,
   useGetCustomerMutation,
   useGetCustomersWithMooringMutation,
+  useGetCustomerWithMooringWithCustomerImagesMutation,
 } from '../../../Services/MoorManage/MoormanageApi'
 import {
+  CustomerImage,
   CustomerPayload,
   CustomerResponse,
   CustomersWithMooringResponse,
@@ -74,6 +76,7 @@ const Customer = () => {
   const [sortable, setSortable] = useState(false)
   const [getCustomer] = useGetCustomerMutation()
   const [deleteCustomer] = useDeleteCustomerMutation()
+  const [imagesData] = useGetCustomerWithMooringWithCustomerImagesMutation()
   const [getCustomerWithMooring] = useGetCustomersWithMooringMutation()
   const toast = useRef<Toast>(null)
   const [pageNumber, setPageNumber] = useState(0)
@@ -90,7 +93,7 @@ const Customer = () => {
   const [accordion, setAccordion] = useState('faq1')
   const [showImage, setShowImage] = useState({ id: '', imageData: '' })
 
-  const { isMapModalOpen, IsdialogVisible ,isUploadImageDialogVisible} = useContext(AppContext)
+  const { isMapModalOpen, IsdialogVisible, isUploadImageDialogVisible } = useContext(AppContext)
 
   // const handleToggle = (id: string) => {
   //   setAccordion((prevState) => (prevState === id ? '' : id))
@@ -473,6 +476,29 @@ const Customer = () => {
     sortable,
   ])
 
+  const getCustomerImage = useCallback(async () => {
+    setIsLoading(true)
+
+    try {
+      const response = await imagesData({ id: '' }).unwrap()
+      const { status, content, message } = response as CustomerImage
+      if (status === 200 && Array.isArray(content) && content.length > 0) {
+      } else {
+        toast?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+      }
+    } catch (error) {
+      const { message: errorMessage } = error as ErrorResponse
+      console.error('Error occurred while fetching customer data:', errorMessage)
+    } finally {
+      setIsLoading(false)
+    }
+  }, [customerId])
+
   const getCustomersWithMooring = async (id: number) => {
     setIsLoading(true)
     setIsLoader(true)
@@ -784,6 +810,10 @@ const Customer = () => {
     }
   }, [pageNumberTwo, pageSizeTwo, customerId])
 
+  useEffect(() => {
+    getCustomerImage()
+  }, [customerId])
+
   return (
     <>
       <Toast ref={toast} />
@@ -921,7 +951,7 @@ const Customer = () => {
 
           {/* middle container */}
           <div
-            className={` min-h-[600] rounded-md border-[1px] ml-5 ${modalVisible || imageVisible ||  isUploadImageDialogVisible || imageEditVisible || dialogVisible || dialogVisible || isMapModalOpen.editMode || IsdialogVisible ? 'blur-screen' : ''}`}
+            className={` min-h-[600] rounded-md border-[1px] ml-5 ${modalVisible || imageVisible || isUploadImageDialogVisible || imageEditVisible || dialogVisible || dialogVisible || isMapModalOpen.editMode || IsdialogVisible ? 'blur-screen' : ''}`}
             style={{ flexGrow: '1' }}>
             <CustomMooringPositionMap
               position={initialPosition}

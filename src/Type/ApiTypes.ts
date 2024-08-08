@@ -247,6 +247,16 @@ export interface CustomerResponse {
   content: { CustomerPayload: CustomerPayload }
 }
 
+export interface CustomerImage {
+  message: string
+  status: number
+  currentSize: number
+  totalSize: number
+  errorList: []
+  time: string
+  content: {}
+}
+
 export interface DeleteCustomerResponse {
   message: string
   status: number

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Pie } from 'react-chartjs-2'
 import { Chart, ArcElement, Tooltip, Legend, ChartData, ChartOptions } from 'chart.js'
 import 'chart.js/auto'
@@ -39,7 +39,6 @@ const ChartCard = styled.div`
   text-align: center;
   transition: transform 0.2s;
   margin: 10px;
-
   &:hover {
     transform: translateY(-10px);
   }
@@ -61,7 +60,7 @@ const Report: React.FC = () => {
   const [jobTypeSelected, setJobTypeSelected] = useState(false)
   const [serviceArea, setServiceArea] = useState<MetaData[]>([])
   const [jobType, setJobType] = useState<MetaData[]>([])
-
+  const workOrdersRef = useRef<HTMLDivElement>(null)
   const { getServiceAreaData } = ServiceAreaData()
 
   const fetchMetaData = useCallback(async () => {
@@ -77,6 +76,12 @@ const Report: React.FC = () => {
   useEffect(() => {
     fetchMetaData()
   }, [selectedCustomerId])
+
+  useEffect(() => {
+    if (jobTypeSelected && workOrdersRef.current) {
+      workOrdersRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }, [jobTypeSelected])
 
   const getTotal = (data: MetaData[]) => {
     return data.reduce((acc, item) => acc + item.id, 0)
@@ -179,7 +184,11 @@ const Report: React.FC = () => {
         </ChartsContainer>
       </div>
 
-      {jobTypeSelected && <WorkOrders report={true} />}
+      {jobTypeSelected && (
+        <div ref={workOrdersRef}>
+          <WorkOrders report={true} />
+        </div>
+      )}
     </>
   )
 }
