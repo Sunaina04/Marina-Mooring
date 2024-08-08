@@ -483,7 +483,7 @@ const Technicians = () => {
                         alt="Empty Data"
                         className="w-20 mx-auto mb-4"
                       />
-                      <p className="text-gray-500 text-lg font-bold">{properties.noDataMessage}</p>
+                      <p className="text-gray-500 text-lg ">{properties.noDataMessage}</p>
                     </div>
                   }
                   style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
@@ -583,7 +583,7 @@ const Technicians = () => {
                         alt="Empty Data"
                         className="w-20 mx-auto mb-4"
                       />
-                      <p className="text-gray-500 text-lg font-bold">{properties.noDataMessage}</p>
+                      <p className="text-gray-500 text-lg ">{properties.noDataMessage}</p>
                     </div>
                   }
                   style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}

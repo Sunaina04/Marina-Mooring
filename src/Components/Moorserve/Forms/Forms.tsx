@@ -51,6 +51,7 @@ const Forms = () => {
   const [deleteForm] = useDeleteFormMutation()
   const [getViewForms] = useGetViewFormMutation()
   const toastRef = useRef<Toast>(null)
+  const toast = useRef<Toast>(null)
 
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
@@ -259,6 +260,7 @@ const Forms = () => {
   return (
     <>
       <Toast ref={toastRef} />
+      <Toast ref={toast} />
       <div style={{ height: '150vh' }} className={isModalOpen ? 'backdrop-blur-lg' : ''}>
         <Header header="MOORSERVE/Forms Library" />
 
@@ -279,7 +281,7 @@ const Forms = () => {
                 marginLeft: '8px',
                 boxShadow: 'none',
               }}
-              children={<AddForm closeModal={handleModalClose} getFormsData={getFormsData} />}
+              children={<AddForm closeModal={handleModalClose} getFormsData={getFormsData} toastRef={toast} />}
               headerText={<h1 className="text-xl font-extrabold text-black ml-4">Form Details</h1>}
               visible={isModalOpen}
               onClick={handleButtonClick}
@@ -352,7 +354,8 @@ const Forms = () => {
                       alt="Empty Data"
                       className="w-28 mx-auto mb-4"
                     />
-                    <p className="text-gray-500">{properties.noDataMessage}</p>
+                    
+                    <p className="text-gray-500 font-[600] text-lg">{properties.noDataMessage}</p>
                   </div>
                 }
               />
