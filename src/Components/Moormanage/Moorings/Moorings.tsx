@@ -10,6 +10,7 @@ import React, {
 } from 'react'
 import {
   useDeleteMooringsMutation,
+  useGetCustomerWithMooringWithMooringImagesMutation,
   useGetCustomersWithMooringMutation,
   useGetMooringsMutation,
 } from '../../../Services/MoorManage/MoormanageApi'
@@ -82,7 +83,8 @@ const Moorings = () => {
   const toast = useRef<Toast>(null)
   const [getMoorings] = useGetMooringsMutation()
   const [deleteMooring] = useDeleteMooringsMutation()
-  const [getCustomerWithMooring] = useGetCustomersWithMooringMutation()
+  const [getCustomerWithMooringWithMooringImages] =
+    useGetCustomerWithMooringWithMooringImagesMutation()
 
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
@@ -444,7 +446,7 @@ const Moorings = () => {
     givenMooringId = givenMooringId ?? mooringId
     setIsLoader(true)
     try {
-      const response = await getCustomerWithMooring({
+      const response = await getCustomerWithMooringWithMooringImages({
         id: id,
         pageNumber: pageNumberTwo,
         pageSize: pageSizeTwo,

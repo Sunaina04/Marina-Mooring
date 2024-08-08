@@ -554,8 +554,6 @@ const moormanageApi = userApi.injectEndpoints({
       }),
     }),
 
-
-
     getCustomerWithMooringWithCustomerImages: builder.mutation({
       query: ({
         id,
@@ -571,6 +569,26 @@ const moormanageApi = userApi.injectEndpoints({
         sortDir?: string
       }) => ({
         url: `/api/v1/customer/fetchCustomerWithMooringsWithCustomerImages/${id}`,
+        method: 'GET',
+        params: { id, pageNumber, pageSize, sortBy, sortDir },
+      }),
+    }),
+
+    getCustomerWithMooringWithMooringImages: builder.mutation({
+      query: ({
+        id,
+        pageNumber,
+        pageSize,
+        sortBy,
+        sortDir,
+      }: {
+        id: number
+        pageNumber?: number
+        pageSize?: number
+        sortBy?: string
+        sortDir?: string
+      }) => ({
+        url: `/api/v1/customer/fetchCustomerWithMooringsWithMooringImages/${id}`,
         method: 'GET',
         params: { id, pageNumber, pageSize, sortBy, sortDir },
       }),
@@ -620,4 +638,5 @@ export const {
   useGetAllOpenWorkOrdersAndMooringDueForServiceMutation,
   useUpdateImageMutation,
   useGetCustomerWithMooringWithCustomerImagesMutation,
+  useGetCustomerWithMooringWithMooringImagesMutation,
 } = moormanageApi

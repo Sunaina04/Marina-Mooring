@@ -76,8 +76,8 @@ const Customer = () => {
   const [sortable, setSortable] = useState(false)
   const [getCustomer] = useGetCustomerMutation()
   const [deleteCustomer] = useDeleteCustomerMutation()
-  const [imagesData] = useGetCustomerWithMooringWithCustomerImagesMutation()
-  const [getCustomerWithMooring] = useGetCustomersWithMooringMutation()
+  const [getCustomerWithMooringWithCustomerImages] =
+    useGetCustomerWithMooringWithCustomerImagesMutation()
   const toast = useRef<Toast>(null)
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
@@ -474,34 +474,11 @@ const Customer = () => {
     sortable,
   ])
 
-  const getCustomerImage = useCallback(async () => {
-    setIsLoading(true)
-
-    try {
-      const response = await imagesData({ id: '' }).unwrap()
-      const { status, content, message } = response as CustomerImage
-      if (status === 200 && Array.isArray(content) && content.length > 0) {
-      } else {
-        toast?.current?.show({
-          severity: 'error',
-          summary: 'Error',
-          detail: message,
-          life: 3000,
-        })
-      }
-    } catch (error) {
-      const { message: errorMessage } = error as ErrorResponse
-      console.error('Error occurred while fetching customer data:', errorMessage)
-    } finally {
-      setIsLoading(false)
-    }
-  }, [customerId])
-
   const getCustomersWithMooring = async (id: number) => {
     setIsLoading(true)
     setIsLoader(true)
     try {
-      const response = await getCustomerWithMooring({
+      const response = await getCustomerWithMooringWithCustomerImages({
         id: id,
         pageNumber: pageNumberTwo,
         pageSize: pageSizeTwo,
@@ -807,10 +784,6 @@ const Customer = () => {
       getCustomersWithMooring(customerId)
     }
   }, [pageNumberTwo, pageSizeTwo, customerId])
-
-  useEffect(() => {
-    getCustomerImage()
-  }, [customerId])
 
   return (
     <>
