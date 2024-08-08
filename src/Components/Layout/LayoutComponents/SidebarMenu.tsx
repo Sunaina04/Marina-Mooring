@@ -173,7 +173,7 @@ const SidebarMenu = () => {
         ],
       },
       {
-        icon: '/assets/images/pie-chart.png',
+        icon: '/assets/images/estimates.svg',
         name: 'REPORT',
         link: '/reports',
       },

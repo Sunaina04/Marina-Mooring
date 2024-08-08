@@ -18,9 +18,10 @@ const ChartsContainer = styled.div`
   justify-content: space-around;
   align-items: flex-start;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 20px 15px;
   flex-wrap: wrap;
+  gap: 50px;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -32,7 +33,7 @@ const ChartCard = styled.div`
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+  padding: 40px;
   width: 45%;
   max-width: 550px;
   text-align: center;
@@ -44,7 +45,7 @@ const ChartCard = styled.div`
   }
 
   h2 {
-    margin-bottom: 20px;
+    margin-bottom: -20px;
     font-size: 1.5rem;
     color: #333;
   }
@@ -165,16 +166,18 @@ const Report: React.FC = () => {
   return (
     <>
       <Header header={properties.reportHeader} />
-      <ChartsContainer>
-        <ChartCard>
-          <h2>Job Type</h2>
-          <Pie data={jobTypeData} options={chartOptions} />
-        </ChartCard>
-        <ChartCard>
-          <h2>Service Area</h2>
-          <Pie data={serviceAreaData} options={chartOptions} />
-        </ChartCard>
-      </ChartsContainer>
+      <div className="ml-40">
+        <ChartsContainer>
+          <ChartCard>
+            <h2>Job Type</h2>
+            <Pie data={jobTypeData} options={chartOptions} />
+          </ChartCard>
+          <ChartCard>
+            <h2>Service Area</h2>
+            <Pie data={serviceAreaData} options={chartOptions} />
+          </ChartCard>
+        </ChartsContainer>
+      </div>
 
       {jobTypeSelected && <WorkOrders report={true} />}
     </>
