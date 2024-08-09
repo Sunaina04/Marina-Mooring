@@ -459,7 +459,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const SaveCustomer = async () => {
     const errors = validateFields()
     if (Object.keys(errors).length > 0) {
-      // setCheckedMooring(false);
+      setCheckedMooring(false);
       return
     }
     let payload
