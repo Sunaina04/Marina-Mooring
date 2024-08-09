@@ -180,7 +180,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     if (errorFields.length > 0) {
       // If there are error fields, scroll to the first one
       errorFields[0].scrollIntoView({ behavior: 'smooth', block: 'start' })
-    
     } else {
       // Otherwise, proceed with the original logic
       const passwordMessage = document.getElementById('mooring')
@@ -897,7 +896,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     if (checkedDock === true) {
       setSelectedCustomerType(customerType.find((item: any) => item.id === 5)?.type)
     } else if (checkedDock === false && !editCustomerMode) {
-      setSelectedCustomerType(undefined)
+      setSelectedCustomerType('')
     }
   }, [])
 
@@ -923,6 +922,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   useEffect(() => {
     if (country?.id === 13) {
       setSelectedCustomerType('')
+      setState('')
     }
   }, [country?.id === 13])
 

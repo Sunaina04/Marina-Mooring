@@ -458,11 +458,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   }
 
   const UpdateMooring = async () => {
-    const errors = validateFields()
-    if (Object.keys(errors).length > 0) {
-      return
-    }
-
     try {
       setIsLoading(true)
 
