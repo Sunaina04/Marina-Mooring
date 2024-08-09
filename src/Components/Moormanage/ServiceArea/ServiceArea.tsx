@@ -611,96 +611,96 @@ const ServiceArea = () => {
       </div>
 
       <div className="flex flex-col md:flex-row mt-3">
-      <div
-            style={{
-              borderRadius: '5px',
-              marginLeft: '1.8rem',
-            }}>
-        {/* Left Panel */}
-        <div className="bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-6 md:mb-0 w-[700px]">
-          {/* Header */}
-          <div className="bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px] text-white">
-            <h1 className="p-4 text-xl font-extrabold">{properties.serviceAreaDetail}</h1>
-          </div>
-
-          <InputTextWithHeader
-            value={searchText}
-            onChange={handleSearch}
-            placeholder={'Search by name, ID,address...'}
-            iconStyle={{
-              position: 'absolute',
-              left: '15px',
-              top: '65%',
-              transform: 'translateY(-50%)',
-              width: '16px',
-              height: '16px',
-              fontWeight: 'bold',
-            }}
-            inputTextStyle={{
-              flexGrow: 1,
-              marginTop: '10px',
-              height: '44px',
-              border: '1px solid #C5D9E0',
-              padding: '0 2rem 0 2.5rem',
-              fontSize: '14px',
-              color: '#000000',
-              borderRadius: '4px',
-              minHeight: '44px',
-              fontWeight: 400,
-              backgroundColor: '#FFFFFF',
-            }}
-          />
-          <div
-            className={`bg-#00426F overflow-x-hidden h-[590px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col`}>
-            <div className="flex-grow overflow-auto">
-              <DataTableComponent
-                tableStyle={{
-                  fontSize: '12px',
-                  color: '#000000',
-                  fontWeight: 500,
-                  backgroundColor: '#D9D9D9',
-                }}
-                data={serviceAreaData}
-                selectionMode="single"
-                onSelectionChange={(e: any) => {
-                  setSelectedMooring(e.value)
-                }}
-                selection={selectedMooring}
-                rowStyle={(rowData: any) => rowData}
-                dataKey="id"
-                columns={serviceAreaColumns}
-                onRowClick={(e: any) => handleRowClickServiceAreaDetail(e)}
-                emptyMessage={
-                  <div className="text-center mt-14">
-                    <img
-                      src="/assets/images/empty.png"
-                      alt="Empty Data"
-                      className="w-20 mx-auto mb-4"
-                    />
-                    <p className="text-gray-500 text-lg">{properties.noDataMessage}</p>
-                  </div>
-                }
-              />
+        <div
+          style={{
+            borderRadius: '5px',
+            marginLeft: '1.8rem',
+          }}>
+          {/* Left Panel */}
+          <div className="bg-white rounded-xl border-[1px] border-[#D5E1EA] mb-4 ml-6 md:mb-0 w-[700px]">
+            {/* Header */}
+            <div className="bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px] text-white">
+              <h1 className="p-4 text-xl font-extrabold">{properties.serviceAreaDetail}</h1>
             </div>
 
-            <div>
-              <Paginator
-                first={pageNumber1}
-                rows={pageSize}
-                totalRecords={totalRecords}
-                rowsPerPageOptions={[5, 10, 20, 30]}
-                onPageChange={onPageChange}
-                style={{
-                  position: 'sticky',
-                  bottom: 0,
-                  zIndex: 1,
-                  backgroundColor: 'white',
-                  borderTop: '1px solid #D5E1EA',
-                  padding: '0.5rem',
-                }}
-              />
+            <InputTextWithHeader
+              value={searchText}
+              onChange={handleSearch}
+              placeholder={'Search by name, ID,address...'}
+              iconStyle={{
+                position: 'absolute',
+                left: '15px',
+                top: '65%',
+                transform: 'translateY(-50%)',
+                width: '16px',
+                height: '16px',
+                fontWeight: 'bold',
+              }}
+              inputTextStyle={{
+                flexGrow: 1,
+                marginTop: '10px',
+                height: '44px',
+                border: '1px solid #C5D9E0',
+                padding: '0 2rem 0 2.5rem',
+                fontSize: '14px',
+                color: '#000000',
+                borderRadius: '4px',
+                minHeight: '44px',
+                fontWeight: 400,
+                backgroundColor: '#FFFFFF',
+              }}
+            />
+            <div
+              className={`bg-#00426F overflow-x-hidden h-[590px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col`}>
+              <div className="flex-grow overflow-auto">
+                <DataTableComponent
+                  tableStyle={{
+                    fontSize: '12px',
+                    color: '#000000',
+                    fontWeight: 500,
+                    backgroundColor: '#D9D9D9',
+                  }}
+                  data={serviceAreaData}
+                  selectionMode="single"
+                  onSelectionChange={(e: any) => {
+                    setSelectedMooring(e.value)
+                  }}
+                  selection={selectedMooring}
+                  rowStyle={(rowData: any) => rowData}
+                  dataKey="id"
+                  columns={serviceAreaColumns}
+                  onRowClick={(e: any) => handleRowClickServiceAreaDetail(e)}
+                  emptyMessage={
+                    <div className="text-center mt-14">
+                      <img
+                        src="/assets/images/empty.png"
+                        alt="Empty Data"
+                        className="w-20 mx-auto mb-4"
+                      />
+                      <p className="text-gray-500 text-lg">{properties.noDataMessage}</p>
+                    </div>
+                  }
+                />
+              </div>
+
+              <div>
+                <Paginator
+                  first={pageNumber1}
+                  rows={pageSize}
+                  totalRecords={totalRecords}
+                  rowsPerPageOptions={[5, 10, 20, 30]}
+                  onPageChange={onPageChange}
+                  style={{
+                    position: 'sticky',
+                    bottom: 0,
+                    zIndex: 1,
+                    backgroundColor: 'white',
+                    borderTop: '1px solid #D5E1EA',
+                    padding: '0.5rem',
+                  }}
+                />
+              </div>
             </div>
-          </div>
           </div>
         </div>
         {isLoading && (
@@ -716,13 +716,14 @@ const ServiceArea = () => {
             strokeWidth="4"
           />
         )}
+
         <div
           data-testid="customer-admin-users-table"
-          className="flex-grow overflow-auto bg-[#FFFFFF] rounded-xl border-[1px] border-gray-300 w-[515px] h-[732px] mr-[50px] ml-[30px]  mb-0 ">
-          <div className="">
+          className="flex-grow bg-[#FFFFFF] rounded-xl border-[1px] border-gray-300 w-[515px] h-[732px] mr-[50px] ml-[30px] mb-0 ">
+          <div className="flex flex-col h-full">
             <div className="text-sm font-extrabold rounded-sm w-full bg-[#D9D9D9]">
               <div
-                className="flex align-items-center justify-between bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px]"
+                className="flex items-center justify-between bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px]"
                 style={{ color: '#FFFFFF' }}>
                 <h1 className="p-4 text-xl font-extrabold">
                   {properties.serviceAreaMooringHeader}
@@ -743,9 +744,9 @@ const ServiceArea = () => {
                 </div>
               </div>
             </div>
-            <div className={`bg-[] mt-2 ml-5`}>
+            <div className="bg-[] mt-2 ml-5">
               <div
-                className="flex justify-between p-2 mr-10 "
+                className="flex justify-between p-2 mr-10"
                 style={{
                   fontSize: '13px',
                   fontWeight: '500',
@@ -753,23 +754,29 @@ const ServiceArea = () => {
                   marginBottom: '-6px',
                 }}>
                 <p>{properties.address}</p>
-                <p className="">{properties.mooringInventoried}</p>
-                <p className="">{properties.serviceAreaGPSCoordinates}</p>
+                <p>{properties.mooringInventoried}</p>
+                <p>{properties.serviceAreaGPSCoordinates}</p>
               </div>
             </div>
             <div className="mt-4">
               <hr style={{ border: '1px solid #D5E1EA' }} />
             </div>
-          </div>
 
-          {selectedServiceArea ? (
-            serviceAreaMooring
-          ) : (
-            <div className="text-center mt-40 mb-10">
-              <img src="/assets/images/empty.png" alt="Empty Data" className="w-20 mx-auto mb-4" />
-              <p className="text-gray-500 text-lg">{properties.noDataMessage}</p>
+            <div className="flex-grow overflow-auto">
+              {selectedServiceArea ? (
+                serviceAreaMooring
+              ) : (
+                <div className="text-center mt-40 mb-10">
+                  <img
+                    src="/assets/images/empty.png"
+                    alt="Empty Data"
+                    className="w-20 mx-auto mb-4"
+                  />
+                  <p className="text-gray-500 text-lg">{properties.noDataMessage}</p>
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
 
         {/* Dialog BOX */}
