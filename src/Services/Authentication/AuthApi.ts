@@ -5,6 +5,7 @@ import {
   LoginPayload,
   ResetPasswordPayload,
   SignUpPayload,
+  UserProfile,
 } from '../../Type/ApiTypes'
 
 const authApi = userApi.injectEndpoints({
@@ -80,6 +81,14 @@ const authApi = userApi.injectEndpoints({
         method: 'POST',
       }),
     }),
+
+    uploadProfileImage: builder.mutation({
+      query: (payload: UserProfile) => ({
+        url: '/api/v1/user/',
+        method: 'POST',
+        body: payload,
+      }),
+    }),
   }),
 })
 
@@ -91,4 +100,5 @@ export const {
   useValidateEmailMutation,
   useRefreshTokenMutation,
   useLogoutMutation,
+  useUploadProfileImageMutation
 } = authApi

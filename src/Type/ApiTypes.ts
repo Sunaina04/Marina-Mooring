@@ -1047,3 +1047,14 @@ export interface formUpload {
   time: string
   content: BoatYardPayload
 }
+
+export interface UserProfile {
+  message: string;
+  status: number;
+  errorList: string[];
+  time: string;
+  currentSize: number;
+  totalSize: number;
+  content: Record<string, any>;
+}
+
