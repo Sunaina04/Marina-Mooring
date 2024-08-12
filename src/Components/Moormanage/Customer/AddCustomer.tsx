@@ -168,9 +168,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
    
     //   scrollableContainerRef.current.scrollTop = 0;
     const passwordMessage = document.getElementById('mooring')
+    
     if (passwordMessage) {
       passwordMessage.style.display = 'block'
-      passwordMessage.scrollIntoView({ behavior: 'smooth', block: 'start'})
+      passwordMessage.scrollIntoView({ behavior: 'smooth'})
     }
   }
 
