@@ -11,6 +11,9 @@ import HeaderProfile from './HeaderProfile'
 
 const Header: React.FC<HeaderProps> = ({ header, customer }) => {
   const userData = useSelector((state: any) => state.user?.userData)
+
+  console.log("dataaa",userData);
+  
   const role = userData?.role?.id
   const dispatch = useDispatch()
   const selectedCustomerName = useSelector(selectCustomerName)

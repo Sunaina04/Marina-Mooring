@@ -1,3 +1,4 @@
+
 import { Button } from 'primereact/button'
 import React, { useRef, useState } from 'react'
 import { AiOutlineDelete } from 'react-icons/ai'
@@ -6,88 +7,81 @@ import { Toast } from 'primereact/toast'
 import { useUploadProfileImageMutation } from '../../../Services/Authentication/AuthApi'
 import { ErrorResponse, UserProfile } from '../../../Type/ApiTypes'
 
-const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose }) => {
-  const [images, setImages] = useState<string[]>([])
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose, customerId }) => {
+  const [image, setImage] = useState<string>('')
+  // console.log(image, 'image')
   const toastRef = useRef<Toast>(null)
-  const [uploadProfileImage]=useUploadProfileImageMutation()
+  const [uploadProfileImage] = useUploadProfileImageMutation()
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (file) {
+      const fileSizeInKB = file.size / 1024
+      if (fileSizeInKB > 100) {
+        toastRef.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'File size exceeds 100KB. Please upload a smaller image.',
+          life: 3000,
+        })
+        return
+      }
       const reader = new FileReader()
       reader.onloadend = () => {
-        const base64String = reader.result as string
-        setImages([base64String])
+        let base64String = reader.result as string
+        let onlyBase64 = base64String.replace(/^data:image\/\w+;base64,/, '')
+        if (!onlyBase64.startsWith('/')) {
+          onlyBase64 = '/' + onlyBase64
+        }
+
+        setImage(onlyBase64)
       }
       reader.readAsDataURL(file)
     }
   }
 
-  const uploadIamge = async () => {
-    // Validate form fields
-    // const errors = validateFields();
-    // if (Object.keys(errors).length > 0) {
-    //   setFieldsError(errors);
-    //   return;
-    // }
-
+  const uploadImage = async () => {
     try {
-      // Create the payload
       const payload = {
-        id: 0,
-        firstName: "",
-        lastName: "",
-        email: "",
-        phoneNumber: "",
-        password: "",
-        roleId: 0,
-        customerOwnerId: 0,
-        companyName: "",
-        stateId: 0,
-        countryId: 0,
-        address: "",
-        zipCode: "",
-        confirmPassword: "",
-        encodedImage:images
-      };
-  
-      // Upload profile image
-      const response = await uploadProfileImage(payload).unwrap();
-      const { status, message } = response as UserProfile;
-  
-      // Handle success response
+        id: customerId?.id,
+        email: customerId?.email,
+        firstName: customerId?.firstName,
+        lastName: customerId?.lastName,
+        roleId: customerId?.role?.id,
+        encodedImage: image,
+      }
+
+      const response = await uploadProfileImage({ payload, id: customerId?.id }).unwrap()
+      const { status, message } = response as UserProfile
+
       if (status === 200 || status === 201) {
-        // toastRef.current?.show({
-        //   severity: 'success',
-        //   summary: 'Success',
-        //   detail: message,
-        //   life: 3000,
-        // });
+        toastRef.current?.show({
+          severity: 'success',
+          summary: 'Success',
+          detail: message,
+          life: 3000,
+        })
         handleModalClose()
-        // getFormsData();
       } else {
-        // toastRef.current?.show({
-        //   severity: 'error',
-        //   summary: 'Error',
-        //   detail: message,
-        //   life: 3000,
-        // });
+        toastRef.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
       }
     } catch (error) {
-      const { message, data } = error as ErrorResponse;
-      // toastRef.current?.show({
-      //   severity: 'error',
-      //   summary: 'Error',
-      //   detail: message || data?.message,
-      //   life: 3000,
-      // });
+      const { message, data } = error as ErrorResponse
+      toastRef.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: message || data?.message,
+        life: 3000,
+      })
     }
-  };
-
-
+  }
 
   const handleRemoveImage = () => {
-    setImages([])
+    setImage('')
   }
 
   return (
@@ -124,7 +118,7 @@ const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose }) => {
                   fontSize: '29px',
                   color: '#0098FF',
                   marginLeft: '1rem',
-                  marginTop: '3px',
+                  marginTop: '1px',
                 }}
               />
               <div className="border-r-2 border-sky-500 h-9 pl-3"></div>
@@ -133,50 +127,41 @@ const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose }) => {
           </div>
         </div>
 
-        <div style={{ marginTop: '40px' }}>
-          {images.length > 0 && (
-            <div className="mt-2">
-              <div className="flex gap-16 justify-center text-center">
-                {images.map((image, index) => (
-                  <div
-                    key={index}
-                    style={{ position: 'relative', display: 'inline-block' }}
-                    onMouseEnter={() => setHoveredIndex(index)}
-                    onMouseLeave={() => setHoveredIndex(null)}>
-                    <AiOutlineDelete
-                      onClick={handleRemoveImage}
-                      style={{
-                        position: 'absolute',
-                        top: '165px',
-                        right: '5px',
-                        background: 'red',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '5px',
-                        width: '28px',
-                        height: '25px',
-                        cursor: 'pointer',
-                        opacity: hoveredIndex === index ? 1 : 0,
-                        transition: 'opacity 0.3s',
-                      }}
-                    />
-                    <img
-                      src={image}
-                      alt={`Uploaded ${index}`}
-                      style={{
-                        width: '300px',
-                        height: '200px',
-                        objectFit: 'cover',
-                        borderRadius: '0.5rem',
-                        boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
-                      }}
-                    />
-                  </div>
-                ))}
+        {image && (
+          <div style={{ marginTop: '40px' }}>
+            <div className="flex gap-16 justify-center text-center">
+              <div style={{ position: 'relative', display: 'inline-block' }}>
+                <AiOutlineDelete
+                  onClick={handleRemoveImage}
+                  style={{
+                    position: 'absolute',
+                    top: '165px',
+                    right: '5px',
+                    background: 'red',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '5px',
+                    width: '28px',
+                    height: '25px',
+                    cursor: 'pointer',
+                  }}
+                />
+                <img
+                  // src={image}
+                  src={`data:image/png;base64,${image}`}
+                  alt="Uploaded"
+                  style={{
+                    width: '300px',
+                    height: '200px',
+                    objectFit: 'cover',
+                    borderRadius: '0.5rem',
+                    boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+                  }}
+                />
               </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
 
       <div
@@ -184,7 +169,7 @@ const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose }) => {
         style={{ padding: '16px', backgroundColor: 'white' }}>
         <Button
           label={'Save'}
-          onClick={uploadIamge}
+          onClick={uploadImage}
           style={{
             width: '89px',
             height: '42px',
@@ -198,18 +183,15 @@ const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose }) => {
           }}
         />
         <Button
-          label={'Close'}
           onClick={() => handleModalClose()}
+          label={'Back'}
           style={{
+            backgroundColor: 'white',
+            color: '#000000',
+            border: 'none',
             width: '89px',
             height: '42px',
-            backgroundColor: '#0098FF',
-            cursor: 'pointer',
-            fontWeight: 'bolder',
-            fontSize: '1rem',
-            boxShadow: 'none',
-            color: 'white',
-            borderRadius: '0.5rem',
+            marginTop: 'px',
           }}
         />
       </div>

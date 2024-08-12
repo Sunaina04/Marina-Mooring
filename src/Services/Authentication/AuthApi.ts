@@ -82,13 +82,23 @@ const authApi = userApi.injectEndpoints({
       }),
     }),
 
+    // uploadProfileImage: builder.mutation({
+    //   query: (payload: UserProfile) => ({
+    //     url: '/api/v1/user/',
+    //     method: 'POST',
+    //     body: payload,
+    //   }),
+    // }),
+
     uploadProfileImage: builder.mutation({
-      query: (payload: UserProfile) => ({
-        url: '/api/v1/user/',
-        method: 'POST',
+      query: ({ payload, id }: { payload: UserProfile; id: number }) => ({
+        url: `/api/v1/user/${id}`,
+        method: 'PUT',
         body: payload,
       }),
     }),
+
+
   }),
 })
 
