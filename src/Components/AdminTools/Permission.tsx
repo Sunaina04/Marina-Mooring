@@ -42,6 +42,11 @@ const Permission = () => {
     setPageSize(event.rows)
   }
 
+  const firstLastName = (data: any) => {
+    if (data.firstName === null) return '-'
+    else return data.firstName + ' ' + data.lastName
+  }
+
   const handleEditButtonClick = (rowData: any) => {
     setEditMode(true)
     setModalVisible(true)
@@ -65,6 +70,7 @@ const Permission = () => {
       {
         id: 'name',
         label: 'Name',
+        body: firstLastName,
         style: columnStyle,
       },
 
