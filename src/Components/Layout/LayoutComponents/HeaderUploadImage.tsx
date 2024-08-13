@@ -10,7 +10,7 @@ const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose }) => {
   const [images, setImages] = useState<string[]>([])
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const toastRef = useRef<Toast>(null)
-  const [uploadProfileImage]=useUploadProfileImageMutation()
+  const [uploadProfileImage] = useUploadProfileImageMutation()
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (file) {
@@ -35,26 +35,26 @@ const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose }) => {
       // Create the payload
       const payload = {
         id: 0,
-        firstName: "",
-        lastName: "",
-        email: "",
-        phoneNumber: "",
-        password: "",
+        firstName: '',
+        lastName: '',
+        email: '',
+        phoneNumber: '',
+        password: '',
         roleId: 0,
         customerOwnerId: 0,
-        companyName: "",
+        companyName: '',
         stateId: 0,
         countryId: 0,
-        address: "",
-        zipCode: "",
-        confirmPassword: "",
-        encodedImage:images
-      };
-  
+        address: '',
+        zipCode: '',
+        confirmPassword: '',
+        encodedImage: images,
+      }
+
       // Upload profile image
-      const response = await uploadProfileImage(payload).unwrap();
-      const { status, message } = response as UserProfile;
-  
+      const response = await uploadProfileImage(payload).unwrap()
+      const { status, message } = response as UserProfile
+
       // Handle success response
       if (status === 200 || status === 201) {
         // toastRef.current?.show({
@@ -74,7 +74,7 @@ const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose }) => {
         // });
       }
     } catch (error) {
-      const { message, data } = error as ErrorResponse;
+      const { message, data } = error as ErrorResponse
       // toastRef.current?.show({
       //   severity: 'error',
       //   summary: 'Error',
@@ -82,9 +82,7 @@ const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose }) => {
       //   life: 3000,
       // });
     }
-  };
-
-
+  }
 
   const handleRemoveImage = () => {
     setImages([])
