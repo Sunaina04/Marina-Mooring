@@ -53,6 +53,22 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
     }
   }
 
+  const boxStyle: React.CSSProperties = {
+    backgroundColor: 'white',
+    borderRadius: '10px',
+    width: '11vw',
+    padding: '10px',
+    marginBottom: '10px',
+    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+    position: 'absolute' as 'absolute',
+    bottom: '10px',
+    left: '50%',
+    fontSize: '10px',
+    transform: 'translateX(-50%)',
+    zIndex: 1000,
+    // border:"1px solid red"
+  }
+
 
   const dotStyle = (color: any) => ({
     display: 'inline-block',
@@ -198,8 +214,9 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
             padding: '10px',
             boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
           }}>
-          <div style={{ width: isZoom ? ' 22vw ' : '10vw' }}>
-            <h5>Status</h5>
+          {/* <div style={{ width: isZoom ? ' 22vw ' : '10vw' }}> */}
+          <div style={boxStyle}>
+          <h2>Status</h2>
             <div className="mt-1">
               <hr style={{ border: '1px solid #3F3F3F' }} />
             </div>

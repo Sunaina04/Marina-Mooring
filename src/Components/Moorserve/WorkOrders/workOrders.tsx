@@ -288,7 +288,7 @@ const WorkOrders: React.FC<WorkOrderValue> = ({ report }) => {
   }, [selectedCustomerId])
 
   return (
-    <div style={{ height: '150vh' }} className={visible ? 'backdrop-blur-lg' : ''}>
+    <div style={{ height: '95vh' }} className={visible ? 'backdrop-blur-lg' : ''}>
       <Toast ref={toast} />
       {!report && <Header header="MOORSERVE/Work Orders" />}{' '}
       <div className="">
