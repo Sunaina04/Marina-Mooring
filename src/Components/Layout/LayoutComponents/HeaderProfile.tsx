@@ -211,7 +211,7 @@ const HeaderProfile: React.FC<HeaderProps> = ({ customer }) => {
         header=""
         onHide={handleModalClose}
         visible={isUploadImageDialogVisible}>
-        {isUploadImageDialogVisible && <HeaderUploadImage handleModalClose={handleModalClose} />}
+        {isUploadImageDialogVisible && <HeaderUploadImage handleModalClose={handleModalClose}   customerId={customer}/>}
       </Dialog>
     </>
   )
