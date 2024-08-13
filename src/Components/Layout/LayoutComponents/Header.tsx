@@ -12,17 +12,16 @@ import HeaderProfile from './HeaderProfile'
 const Header: React.FC<HeaderProps> = ({ header, customer }) => {
   const userData = useSelector((state: any) => state.user?.userData)
 
-  console.log("dataaa",userData);
-  
+  // console.log("dataaa",userData);
+
   const role = userData?.role?.id
   const dispatch = useDispatch()
   const selectedCustomerName = useSelector(selectCustomerName)
   const [expanded, setExpanded] = useState(false)
   const [getCustomerOwnerData, setgetCustomerOwnerData] = useState<any[]>([])
   const [getUser] = useGetCustomersOwnersMutation()
- 
-  const [tooltipVisible, setTooltipVisible] = useState(false)
 
+  const [tooltipVisible, setTooltipVisible] = useState(false)
 
   const handleMenu = () => {
     setExpanded(!expanded)
@@ -34,7 +33,6 @@ const Header: React.FC<HeaderProps> = ({ header, customer }) => {
     dispatch(setCustomerName(firstLastName))
     dispatch(setCustomerId(customerId?.id))
   }
-  
 
   const getUserHandler = useCallback(async () => {
     try {
@@ -120,13 +118,8 @@ const Header: React.FC<HeaderProps> = ({ header, customer }) => {
             </span>{' '}
           </>
         )}
-    
         <HeaderProfile customer={userData} />
       </div>
-
-
-
-      
     </div>
   )
 }

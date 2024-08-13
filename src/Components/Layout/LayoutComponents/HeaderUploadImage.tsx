@@ -54,6 +54,8 @@ const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose, custome
       const { status, message } = response as UserProfile
 
       if (status === 200 || status === 201) {
+        console.log(message,"heyy");
+        
         toastRef.current?.show({
           severity: 'success',
           summary: 'Success',

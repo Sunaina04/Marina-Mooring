@@ -143,6 +143,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     imageNote: '',
   })
 
+  console.log(formData, 'editmooring')
+
   const fetchMetaData = useCallback(async () => {
     const { typeOfBoatTypeData } = await getTypeOfBoatTypeData()
     const { typeOfWeightData } = await getTypeOfWeightData()
@@ -368,7 +370,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       boatYardName: mooringRowData?.boatyardResponseDto?.boatyardName || '',
       boatName: mooringRowData?.boatName || '',
       boatSize: mooringRowData?.boatSize || '',
-      type: mooringRowData?.boatType?.boatType || '',
+      boatType: mooringRowData?.boatType?.boatType || '',
       boatWeight: mooringRowData?.boatWeight || '',
       sizeOfWeight: mooringRowData?.sizeOfWeight || '',
       typeOfWeight: mooringRowData?.typeOfWeight?.type || '',
@@ -410,7 +412,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
         boatyardId: formData?.boatYardName?.id,
         boatName: formData?.boatName,
         boatSize: formData?.boatSize,
-        boatTypeId: formData?.type?.id,
+        boatTypeId: formData?.boatType?.id,
         boatWeight: formData?.boatWeight,
         sizeOfWeight: formData?.sizeOfWeight,
         typeOfWeightId: formData?.typeOfWeight?.id,
@@ -481,8 +483,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({
         if (formData?.boatSize !== mooringRowData?.boatSize) {
           payload.boatSize = formData.boatSize
         }
-        if (formData?.type?.id !== mooringRowData?.boatType?.id) {
-          payload.boatTypeId = formData.type.id
+        if (formData?.boatType?.id !== mooringRowData?.boatType?.id) {
+          payload.boatTypeId = formData.boatType.id
         }
         if (formData?.boatWeight !== mooringRowData?.boatWeight) {
           payload.boatWeight = formData.boatWeight
@@ -537,6 +539,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       }
 
       const editMooringPayload = createPayload(formData, mooringRowData)
+      console.log('Edit Mooring Payload:', editMooringPayload)
 
       const response = await updateMooring({
         payload: editMooringPayload,
@@ -1157,6 +1160,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                       onChange={(e) => handleInputChange('boatType', e.target.value)}
                       options={type}
                       optionLabel="boatType"
+                      editable
                       // disabled={isLoading}
                       style={{
                         width: '230px',
