@@ -1,7 +1,8 @@
-
-
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { useLogoutMutation, useUploadProfileImageMutation } from '../../../Services/Authentication/AuthApi'
+import {
+  useLogoutMutation,
+  useUploadProfileImageMutation,
+} from '../../../Services/Authentication/AuthApi'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import {
@@ -22,7 +23,7 @@ import { Toast } from 'react-hot-toast'
 
 const HeaderProfile: React.FC<HeaderProps> = ({ customer }) => {
   const [getLogout] = useLogoutMutation()
-  
+
   const [tooltipVisible, setTooltipVisible] = useState(false)
   const [expanded, setExpanded] = useState(false)
   const dispatch = useDispatch()
@@ -33,7 +34,7 @@ const HeaderProfile: React.FC<HeaderProps> = ({ customer }) => {
     isUploadImageDialogVisible,
     setUploadImageDialogVisible,
   } = useContext(AppContext)
-  const tooltipRef = useRef<HTMLDivElement>(null);
+  const tooltipRef = useRef<HTMLDivElement>(null)
   const toastRef = useRef<Toast>(null)
   const handleMenu = () => {
     setExpanded(!expanded)
@@ -106,20 +107,14 @@ const HeaderProfile: React.FC<HeaderProps> = ({ customer }) => {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (tooltipRef.current && !tooltipRef.current.contains(event.target as Node)) {
-        setTooltipVisible(false);
+        setTooltipVisible(false)
       }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-
+    }
+    document.addEventListener('mousedown', handleClickOutside)
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
-
-  
-
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
 
   return (
     <>
@@ -136,7 +131,7 @@ const HeaderProfile: React.FC<HeaderProps> = ({ customer }) => {
         </button>
         {tooltipVisible && (
           <div
-          ref={tooltipRef}
+            ref={tooltipRef}
             style={{
               position: 'absolute',
               width: '200px',
@@ -216,12 +211,10 @@ const HeaderProfile: React.FC<HeaderProps> = ({ customer }) => {
         header=""
         onHide={handleModalClose}
         visible={isUploadImageDialogVisible}>
-        {isUploadImageDialogVisible && <HeaderUploadImage handleModalClose={handleModalClose} />}
+        {isUploadImageDialogVisible && <HeaderUploadImage handleModalClose={handleModalClose}   customerId={customer}/>}
       </Dialog>
     </>
   )
 }
 
 export default HeaderProfile
-
-
