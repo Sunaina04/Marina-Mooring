@@ -207,14 +207,14 @@ const Preview: React.FC<PreviewProps> = ({ fileData, onClose }) => {
     <Sidebar visible position="right" style={{ width: '40vw' }} onHide={onClose}>
       <Worker workerUrl={`https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js`}>
         <div style={{ height: '100vh' }}>
-          <MenuBar
+          {/* <MenuBar
             openHelp={() => setHelpModalOpen(true)}
             savePdf={handleSavePdf}
             addText={addText}
             savingPdfStatus={isSaving}
             uploadNewPdf={handlePdfClick}
             isPdfLoaded={!!file}
-          />
+          /> */}
           <Viewer fileUrl={pdfUrl} />
         </div>
       </Worker>
