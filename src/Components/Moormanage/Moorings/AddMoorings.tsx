@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { InputText } from 'primereact/inputtext'
 import { Dropdown } from 'primereact/dropdown'
 import InputComponent from '../../CommonComponent/InputComponent'
@@ -38,6 +38,7 @@ import { FaFileUpload } from 'react-icons/fa'
 import { AiOutlineDelete } from 'react-icons/ai'
 import { Dialog } from 'primereact/dialog'
 import UploadImages from '../../CommonComponent/UploadImages'
+import { AppContext } from '../../../AppContext'
 
 const AddMoorings: React.FC<AddMooringProps> = ({
   moorings,
@@ -82,6 +83,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   const [imageRequestDtoList, setimageRequestDtoList] = useState<
     { imageName: string; imageData: string; note: string }[]
   >([])
+  
   const toastRef = useRef<Toast>(null)
   const firstErrorRef = useRef<HTMLDivElement>(null)
   const getFomattedCoordinate = (gpsCoordinatesValue: any) => {
@@ -113,6 +115,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   const [saveMoorings] = useAddMooringsMutation()
   const [updateMooring] = useUpdateMooringsMutation()
   const [isLoading, setIsLoading] = useState(true)
+
+  const { isMapModalOpen, setMapModalOpen } = useContext(AppContext)
   const [formData, setFormData] = useState<any>({
     customerName: '',
     mooringNumber: '',
@@ -143,7 +147,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     imageNote: '',
   })
 
-  console.log(formData, 'editmooring')
+  // console.log(formData, 'editmooring')
 
   const fetchMetaData = useCallback(async () => {
     const { typeOfBoatTypeData } = await getTypeOfBoatTypeData()
@@ -465,6 +469,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   }
 
   const UpdateMooring = async () => {
+    // alert("hi")
+    
     try {
       setIsLoading(true)
 

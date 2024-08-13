@@ -18,6 +18,8 @@ import { ProgressSpinner } from 'primereact/progressspinner'
 import { Paginator } from 'primereact/paginator'
 import { Params } from '../../Type/CommonType'
 import { properties } from '../Utils/MeassageProperties'
+import { Dialog } from 'primereact/dialog'
+import ResetPassword from './ResetPassword'
 
 const Permission = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -35,6 +37,9 @@ const Permission = () => {
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
   const [pageSize, setPageSize] = useState(10)
+  const [selectedRow, setSelectedRow] = useState<any>()
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false)
+  const [isResetModalOpen, setIsResetModalOpen] = useState(false)
 
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
@@ -42,10 +47,20 @@ const Permission = () => {
     setPageSize(event.rows)
   }
 
+  const firstLastName = (data: any) => {
+    if (data.firstName === null) return '-'
+    else return data.firstName + ' ' + data.lastName
+  }
+
   const handleEditButtonClick = (rowData: any) => {
     setEditMode(true)
     setModalVisible(true)
     setSelectedCustomer(rowData)
+  }
+  const handleResetModalClose = () => {
+    setIsPasswordModalOpen(false)
+    setIsResetModalOpen(false)
+    setSelectedRow('')
   }
 
   const columnStyle = {
@@ -65,6 +80,7 @@ const Permission = () => {
       {
         id: 'name',
         label: 'Name',
+        body: firstLastName,
         style: columnStyle,
       },
 
@@ -104,12 +120,22 @@ const Permission = () => {
         underline: true,
         onClick: (rowData) => handleEditButtonClick(rowData),
       },
+    
       {
         color: 'red',
         label: 'Delete',
         underline: true,
 
         onClick: (rowData) => handleDeleteButtonClick(rowData),
+      },
+      {
+        color: 'black',
+        label: 'Reset Password',
+        underline: true,
+        onClick: (rowData) => {
+          setSelectedRow(rowData)
+          setIsPasswordModalOpen(true)
+        },
       },
     ],
     headerStyle: columnStyle,
@@ -186,6 +212,7 @@ const Permission = () => {
   }, [searchInput, pageNumber, pageSize])
 
   return (
+    <>
     <div style={{ height: '150vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>
       <Header header="MOORMANAGE/Permission" />
       <div className="flex mr-12 justify-end">
@@ -355,6 +382,44 @@ const Permission = () => {
         </div>
       </div>
     </div>
+    <Dialog
+    position="center"
+    style={{
+      width: '650px',
+      minWidth: '650px',
+      height: '500px',
+      minHeight: '500px',
+      borderRadius: '1rem',
+      fontWeight: '400',
+      cursor: 'alias',
+    }}
+    draggable={false}
+    headerStyle={{ cursor: 'alias' }}
+    header="Reset Password"
+    onHide={handleResetModalClose}
+    visible={isPasswordModalOpen}>
+    <ResetPassword customerId={selectedRow} isResetModalOpen={handleResetModalClose} />
+  </Dialog>
+
+  <Dialog
+    position="center"
+    style={{
+      width: '650px',
+      minWidth: '650px',
+      height: '500px',
+      minHeight: '500px',
+      borderRadius: '1rem',
+      fontWeight: '400',
+      cursor: 'alias',
+    }}
+    draggable={false}
+    headerStyle={{ cursor: 'alias' }}
+    header="Reset Password"
+    onHide={handleResetModalClose}
+    visible={isResetModalOpen}>
+    <ResetPassword customerId={selectedRow} isResetModalOpen={handleResetModalClose} />
+  </Dialog>
+</>
   )
 }
 

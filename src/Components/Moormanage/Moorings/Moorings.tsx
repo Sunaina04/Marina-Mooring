@@ -52,6 +52,9 @@ const Moorings = () => {
   const selectedCustomerId: any = useSelector(selectCustomerId)
   const [modalVisible, setModalVisible] = useState(false)
   const [mooringData, setMooringData] = useState<MooringPayload[]>([])
+
+  // console.log(mooringData,"dataa");
+
   const [customerRecordData, setCustomerRecordData] = useState<any>()
   const [mooringResponseData, setMooringResponseData] = useState<any>()
   const [boatYardData, setBoatYardData] = useState<any[]>([])

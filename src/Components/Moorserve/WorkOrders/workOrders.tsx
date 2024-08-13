@@ -171,7 +171,7 @@ const WorkOrders: React.FC<WorkOrderValue> = ({ report }) => {
       'Due Date',
       'Status',
     ]
-    const columnWidths = [40, 40, 30, 30, 30, 20]
+    const columnWidths = [30, 30, 30, 30, 30, 30]
     const xStart = 14
     const yStart = 30
     doc.setFontSize(8)
