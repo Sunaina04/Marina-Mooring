@@ -169,51 +169,50 @@ const Vendors = () => {
     [],
   )
 
-  const ActionButtonColumn: ActionButtonColumnProps = useMemo(
-    () => ({
-      header: 'Action',
-      buttons: [
-        {
-          color: 'black',
-          label: 'View Inventory',
-          onClick: (rowData) => {
-            navigate(`/moormanage/inventoryDetails?vendorId=${rowData.id}`)
-          },
-          underline: true,
-          style: {
-            margin: 0,
-          },
+  const ActionButtonColumn: ActionButtonColumnProps = {
+    header: 'Action',
+    buttons: [
+      {
+        color: 'black',
+        label: 'View Inventory',
+        onClick: (rowData) => {
+          console.log('here')
+          navigate(`/moormanage/inventoryDetails?vendorId=${rowData.id}`)
         },
-        {
-          color: 'green',
-          label: 'Edit',
-          onClick: handleEdit,
-          underline: true,
+        underline: true,
+        style: {
+          margin: 0,
         },
-        {
-          color: 'red',
-          label: 'Delete',
-          onClick: (rowData) => {
-            handleDelete(rowData)
-          },
-          underline: true,
-        },
-      ],
-      headerStyle: {
-        backgroundColor: '#00426F',
-        color: '#FFFFFF',
-        height: '3.50rem',
-        borderTopRightRadius: '10px',
-        borderBottom: '1px solid #C0C0C0',
       },
-      style: {
-        borderBottom: '1px solid #D5E1EA ',
-        width: '14rem',
-        fontWeight: 700,
+      {
+        color: 'green',
+        label: 'Edit',
+        onClick: handleEdit,
+        underline: true,
       },
-    }),
-    [],
-  )
+      {
+        color: 'red',
+        label: 'Delete',
+        onClick: (rowData) => {
+          console.log('here')
+          handleDelete(rowData)
+        },
+        underline: true,
+      },
+    ],
+    headerStyle: {
+      backgroundColor: '#00426F',
+      color: '#FFFFFF',
+      height: '3.50rem',
+      borderTopRightRadius: '10px',
+      borderBottom: '1px solid #C0C0C0',
+    },
+    style: {
+      borderBottom: '1px solid #D5E1EA ',
+      width: '14rem',
+      fontWeight: 700,
+    },
+  }
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -307,7 +306,6 @@ const Vendors = () => {
             border: '1px solid #D5E1EA',
             backgroundColor: '#FFFFFF',
             position: 'relative',
-            zIndex:-1
           }}
           className={`ml-[3rem] mr-[2.30rem] mt-3 `}>
           <div data-testid="customer" className="flex flex-col h-full ">
@@ -318,6 +316,7 @@ const Vendors = () => {
                   color: '#000000',
                   fontWeight: 600,
                   backgroundColor: '#F9FAFB',
+                  cursor: 'pointer',
                 }}
                 data={vendorData}
                 columns={VendorColumns}
