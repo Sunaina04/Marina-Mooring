@@ -41,7 +41,7 @@ const Forms = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [viewPdf, setViewPdf] = useState<any>()
   const [formsData, setFormsData] = useState<FormsPayload[]>([])
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [searchText, setSearchText] = useState('')
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
@@ -115,6 +115,7 @@ const Forms = () => {
   }
 
   const getFormsData = async () => {
+    setIsLoading(true)
     try {
       let params: Params = {}
       params.searchText = searchText
@@ -125,13 +126,21 @@ const Forms = () => {
         params.pageSize = pageSize
       }
       const response = await getForms(params).unwrap()
-      const { status, content, totalSize } = response as FormsResponse
+      const { status, message, content, totalSize } = response as FormsResponse
       if (status === 200 && Array.isArray(content)) {
+        setIsLoading(false)
         setFormsData(content)
         setTotalRecords(totalSize)
       } else {
         setFormsData([])
         setTotalRecords(totalSize)
+        setIsLoading(false)
+        toastRef?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
       }
     } catch (error) {
       const { message, data } = error as ErrorResponse
