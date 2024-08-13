@@ -186,7 +186,6 @@ const WorkOrders: React.FC<WorkOrderValue> = ({ report }) => {
     yPosition += 10
     data.forEach((item, rowIndex) => {
       xPosition = xStart
-      console.log(`Processing row ${rowIndex + 1}:`, item)
       const row = [
         item?.customerResponseDto?.firstName && item?.customerResponseDto?.lastName
           ? `${item.customerResponseDto.firstName} ${item.customerResponseDto.lastName}`
@@ -223,9 +222,7 @@ const WorkOrders: React.FC<WorkOrderValue> = ({ report }) => {
     setIsLoading(true)
     try {
       const params: Params = {}
-      if (searchText) {
-        params.searchText = searchText
-      }
+      params.searchText = searchText
       if (pageNumber) {
         params.pageNumber = pageNumber
       }
@@ -291,7 +288,7 @@ const WorkOrders: React.FC<WorkOrderValue> = ({ report }) => {
   }, [selectedCustomerId])
 
   return (
-    <div style={{ height: '150vh' }} className={visible ? 'backdrop-blur-lg' : ''}>
+    <div style={{ height: '95vh' }} className={visible ? 'backdrop-blur-lg' : ''}>
       <Toast ref={toast} />
       {!report && <Header header="MOORSERVE/Work Orders" />}{' '}
       <div className="">

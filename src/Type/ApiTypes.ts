@@ -247,6 +247,16 @@ export interface CustomerResponse {
   content: { CustomerPayload: CustomerPayload }
 }
 
+export interface CustomerImage {
+  message: string
+  status: number
+  currentSize: number
+  totalSize: number
+  errorList: []
+  time: string
+  content: {}
+}
+
 export interface DeleteCustomerResponse {
   message: string
   status: number
@@ -1037,3 +1047,14 @@ export interface formUpload {
   time: string
   content: BoatYardPayload
 }
+
+export interface UserProfile {
+  message: string;
+  status: number;
+  errorList: string[];
+  time: string;
+  currentSize: number;
+  totalSize: number;
+  content: Record<string, any>;
+}
+

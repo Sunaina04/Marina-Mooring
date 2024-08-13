@@ -152,7 +152,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [addCustomer] = useAddCustomerMutation()
   const [updateCustomer] = useUpdateCustomerMutation()
   const [updateMooring] = useUpdateMooringsMutation()
-  const scrollableContainerRef = useRef(null);
+  const scrollableContainerRef = useRef(null)
   const toastRef = useRef<Toast>(null)
 
   const handlePositionChange = (lat: number, lng: number) => {
@@ -163,15 +163,30 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     setGpsCoordinatesValue(concatenatedValue)
   }
 
+  // const handleFocus = () => {
+  //   // if (scrollableContainerRef.current) {
+
+  //   //   scrollableContainerRef.current.scrollTop = 0;
+  //   const passwordMessage = document.getElementById('mooring')
+  //   if (passwordMessage) {
+  //     passwordMessage.style.display = 'block'
+  //     passwordMessage.scrollIntoView({ behavior: 'smooth', block: 'start'})
+  //   }
+  // }
+
   const handleFocus = () => {
-    // if (scrollableContainerRef.current) {
-   
-    //   scrollableContainerRef.current.scrollTop = 0;
-    const passwordMessage = document.getElementById('mooring')
-    
-    if (passwordMessage) {
-      passwordMessage.style.display = 'block'
-      passwordMessage.scrollIntoView({ behavior: 'smooth'})
+    // Check for fields with errors
+    const errorFields = document.querySelectorAll('.error')
+    if (errorFields.length > 0) {
+      // If there are error fields, scroll to the first one
+      errorFields[0].scrollIntoView({ behavior: 'smooth', block: 'start' })
+    } else {
+      // Otherwise, proceed with the original logic
+      const passwordMessage = document.getElementById('mooring')
+      if (passwordMessage) {
+        passwordMessage.style.display = 'block'
+        passwordMessage.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
     }
   }
 
@@ -441,9 +456,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   }
 
   const SaveCustomer = async () => {
-    
     const errors = validateFields()
     if (Object.keys(errors).length > 0) {
+      setCheckedMooring(false);
       return
     }
     let payload
@@ -881,7 +896,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     if (checkedDock === true) {
       setSelectedCustomerType(customerType.find((item: any) => item.id === 5)?.type)
     } else if (checkedDock === false && !editCustomerMode) {
-      setSelectedCustomerType(undefined)
+      setSelectedCustomerType('')
     }
   }, [])
 
@@ -907,6 +922,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   useEffect(() => {
     if (country?.id === 13) {
       setSelectedCustomerType('')
+      setState('')
     }
   }, [country?.id === 13])
 
@@ -1022,11 +1038,11 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   </div>
                 </div>
                 <div className="mt-3">
-                <span className="font-medium text-sm text-[#000000]">
+                  <span className="font-medium text-sm text-[#000000]">
                     <div className="flex gap-1">Image</div>
                   </span>
                   <div className="mt-2">
-                  <div
+                    <div
                       style={{
                         width: '230px',
                         height: '32px',
@@ -1050,28 +1066,28 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 </div>
 
                 <div className="mt-3">
-                <span className="font-medium text-sm text-[#000000]">
-                        <div className="flex gap-1">Country</div>
-                      </span>
+                  <span className="font-medium text-sm text-[#000000]">
+                    <div className="flex gap-1">Country</div>
+                  </span>
                   <div className="mt-2">
-                  <Dropdown
-                        id="country"
-                        value={country}
-                        onChange={(e) => handleInputChangeCustomer('country', e.target.value)}
-                        options={countriesData}
-                        optionLabel="name"
-                        editable
-                        // placeholder="Country"
-                        disabled={isLoading}
-                        className=""
-                        style={{
-                          width: '230px',
-                          height: '32px',
-                          border: '1px solid #D5E1EA',
-                          borderRadius: '0.50rem',
-                          fontSize: '0.8rem',
-                        }}
-                      />
+                    <Dropdown
+                      id="country"
+                      value={country}
+                      onChange={(e) => handleInputChangeCustomer('country', e.target.value)}
+                      options={countriesData}
+                      optionLabel="name"
+                      editable
+                      // placeholder="Country"
+                      disabled={isLoading}
+                      className=""
+                      style={{
+                        width: '230px',
+                        height: '32px',
+                        border: '1px solid #D5E1EA',
+                        borderRadius: '0.50rem',
+                        fontSize: '0.8rem',
+                      }}
+                    />
                   </div>
                 </div>
               </div>
@@ -1094,13 +1110,13 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 <div>
                   <div>
                     <div>
-                    <span className="font-medium text-sm text-[#000000]">
+                      <span className="font-medium text-sm text-[#000000]">
                         <div className="flex gap-1">State</div>
                       </span>
                     </div>
 
                     <div className="mt-2">
-                    <Dropdown
+                      <Dropdown
                         id="state"
                         value={state}
                         options={statesData}
@@ -1124,13 +1140,13 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 <div>
                   <div>
                     <div>
-                    <span className="font-medium text-sm text-[#000000]">
+                      <span className="font-medium text-sm text-[#000000]">
                         <div className="flex gap-1">Zip Code</div>
                       </span>
                     </div>
 
                     <div className="mt-2">
-                    <InputText
+                      <InputText
                         id="pinCode"
                         value={pinCode}
                         onChange={(e) => handleInputChangeCustomer('pinCode', e.target.value)}
@@ -1150,26 +1166,26 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 <div>
                   <div>
                     <div>
-                    <span className="font-medium text-sm text-[#000000]">
-                  <div className="flex gap-1">Address</div>
-                </span>
+                      <span className="font-medium text-sm text-[#000000]">
+                        <div className="flex gap-1">Address</div>
+                      </span>
                     </div>
 
                     <div className="mt-2">
-                    <InputText
-                  id="pinCode"
-                  value={address}
-                  onChange={(e) => handleInputChangeCustomer('address', e.target.value)}
-                  placeholder="Address"
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: fieldErrors.address ? '1px solid red' : '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                    paddingLeft: '0.5rem',
-                  }}
-                />
+                      <InputText
+                        id="pinCode"
+                        value={address}
+                        onChange={(e) => handleInputChangeCustomer('address', e.target.value)}
+                        placeholder="Address"
+                        style={{
+                          width: '230px',
+                          height: '32px',
+                          border: fieldErrors.address ? '1px solid red' : '1px solid #D5E1EA',
+                          borderRadius: '0.50rem',
+                          fontSize: '0.8rem',
+                          paddingLeft: '0.5rem',
+                        }}
+                      />
                     </div>
                   </div>
                 </div>
@@ -1177,34 +1193,32 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             </div>
             <div className="mt-3">
               <div>
-              <span className="font-medium text-sm text-[#000000]">
-                    <div className="gap-1">Customer Type</div>
-                  </span>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="gap-1">Customer Type</div>
+                </span>
               </div>
               <div className="mt-2">
-              <Dropdown
-                      id="CustomerType"
-                      value={selectedCustomerType}
-                      options={customerType}
-                      onChange={(e) => handleInputChangeCustomer('CustomerType', e.target.value)}
-                      optionLabel="type"
-                      editable
-                      placeholder="Customer Type"
-                      disabled={isLoading || country?.id === 13}
-                      style={{
-                        width: '230px',
-                        height: '32px',
-                        border: '1px solid #D5E1EA',
-                        borderRadius: '0.50rem',
-                        color: 'black',
-                        cursor: country?.id == 13 ? 'not-allowed' : 'pointer',
-                      }}
-                    />
+                <Dropdown
+                  id="CustomerType"
+                  value={selectedCustomerType}
+                  options={customerType}
+                  onChange={(e) => handleInputChangeCustomer('CustomerType', e.target.value)}
+                  optionLabel="type"
+                  editable
+                  placeholder="Customer Type"
+                  disabled={isLoading || country?.id === 13}
+                  style={{
+                    width: '230px',
+                    height: '32px',
+                    border: '1px solid #D5E1EA',
+                    borderRadius: '0.50rem',
+                    color: 'black',
+                    cursor: country?.id == 13 ? 'not-allowed' : 'pointer',
+                  }}
+                />
               </div>
-              
             </div>
-            
-            
+
             <div
               className={`mt-3 
     ${selectedCustomerType?.id === 5 || selectedCustomerType === 'Dock' ? 'mb-2' : editCustomerMode ? 'mb-20' || 'blur' : ''} `}>
@@ -1708,13 +1722,12 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                           style={{
                             width: '230px',
                             height: '32px',
-                            border:'1px solid #D5E1EA',
+                            border: '1px solid #D5E1EA',
                             borderRadius: '0.50rem',
                             fontSize: '0.8rem',
                             paddingLeft: '0.5rem',
                           }}
                         />
-                      
                       </div>
                     </div>
 
@@ -1880,7 +1893,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       </div>
 
                       <div className="mt-2">
-                      <InputComponent
+                        <InputComponent
                           value={formData?.boatType}
                           onChange={(e) => handleInputChange('boatType', e.target.value)}
                           style={{
@@ -1894,7 +1907,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         />
                       </div>
                     </div>
-                    
 
                     <div className="mt-3">
                       <span className="font-medium text-sm text-[#000000]">

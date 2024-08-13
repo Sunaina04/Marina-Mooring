@@ -83,7 +83,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     { imageName: string; imageData: string; note: string }[]
   >([])
   const toastRef = useRef<Toast>(null)
-
+  const firstErrorRef = useRef<HTMLDivElement>(null)
   const getFomattedCoordinate = (gpsCoordinatesValue: any) => {
     try {
       let [lat, long]: any = gpsCoordinatesValue.split(' ')
@@ -221,6 +221,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
 
     setFirstErrorField(firstError)
     setFieldErrors(errors)
+
     return errors
   }
 
@@ -389,6 +390,10 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   const SaveMoorings = async () => {
     const errors = validateFields()
     if (Object.keys(errors).length > 0) {
+      console.log('Validation errors:', errors)
+      if (firstErrorRef.current) {
+        firstErrorRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      }
       return
     }
 
@@ -458,11 +463,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   }
 
   const UpdateMooring = async () => {
-    const errors = validateFields()
-    if (Object.keys(errors).length > 0) {
-      return
-    }
-
     try {
       setIsLoading(true)
 
@@ -1261,7 +1261,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                     <p className="text-red-600">*</p>
                   </div>
                 </span>
-                <div className="mt-2">
+                <div
+                  className="mt-2"
+                  ref={firstErrorField === 'customerName' ? firstErrorRef : null}>
                   <Dropdown
                     value={formData?.customerName}
                     onChange={(e) => handleInputChange('customerName', e.target.value)}
@@ -1295,7 +1297,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                     <p className="text-red-600">*</p>
                   </div>
                 </span>
-                <div className="mt-2">
+                <div
+                  className="mt-2"
+                  ref={firstErrorField === 'mooringNumber' ? firstErrorRef : null}>
                   <InputComponent
                     value={formData?.mooringNumber}
                     onChange={(e) => handleInputChange('mooringNumber', e.target.value)}

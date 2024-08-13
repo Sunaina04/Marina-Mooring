@@ -17,8 +17,10 @@ import {
   useDeleteCustomerMutation,
   useGetCustomerMutation,
   useGetCustomersWithMooringMutation,
+  useGetCustomerWithMooringWithCustomerImagesMutation,
 } from '../../../Services/MoorManage/MoormanageApi'
 import {
+  CustomerImage,
   CustomerPayload,
   CustomerResponse,
   CustomersWithMooringResponse,
@@ -74,7 +76,8 @@ const Customer = () => {
   const [sortable, setSortable] = useState(false)
   const [getCustomer] = useGetCustomerMutation()
   const [deleteCustomer] = useDeleteCustomerMutation()
-  const [getCustomerWithMooring] = useGetCustomersWithMooringMutation()
+  const [getCustomerWithMooringWithCustomerImages] =
+    useGetCustomerWithMooringWithCustomerImagesMutation()
   const toast = useRef<Toast>(null)
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
@@ -90,7 +93,7 @@ const Customer = () => {
   const [accordion, setAccordion] = useState('faq1')
   const [showImage, setShowImage] = useState({ id: '', imageData: '' })
 
-  const { isMapModalOpen, IsdialogVisible ,isUploadImageDialogVisible} = useContext(AppContext)
+  const { isMapModalOpen, IsdialogVisible, isUploadImageDialogVisible } = useContext(AppContext)
 
   // const handleToggle = (id: string) => {
   //   setAccordion((prevState) => (prevState === id ? '' : id))
@@ -416,9 +419,7 @@ const Customer = () => {
     setIsLoading(true)
     try {
       let params: Params = {}
-      if (searchText) {
-        params.searchText = searchText
-      }
+      params.searchText = searchText
       if (pageNumber) {
         params.pageNumber = pageNumber
       }
@@ -477,7 +478,7 @@ const Customer = () => {
     setIsLoading(true)
     setIsLoader(true)
     try {
-      const response = await getCustomerWithMooring({
+      const response = await getCustomerWithMooringWithCustomerImages({
         id: id,
         pageNumber: pageNumberTwo,
         pageSize: pageSizeTwo,
@@ -921,7 +922,7 @@ const Customer = () => {
 
           {/* middle container */}
           <div
-            className={` min-h-[600] rounded-md border-[1px] ml-5 ${modalVisible || imageVisible ||  isUploadImageDialogVisible || imageEditVisible || dialogVisible || dialogVisible || isMapModalOpen.editMode || IsdialogVisible ? 'blur-screen' : ''}`}
+            className={` min-h-[600] rounded-md border-[1px] ml-5 ${modalVisible || imageVisible || isUploadImageDialogVisible || imageEditVisible || dialogVisible || dialogVisible || isMapModalOpen.editMode || IsdialogVisible ? 'blur-screen' : ''}`}
             style={{ flexGrow: '1' }}>
             <CustomMooringPositionMap
               position={initialPosition}

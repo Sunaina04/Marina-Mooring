@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Pie } from 'react-chartjs-2'
 import { Chart, ArcElement, Tooltip, Legend, ChartData, ChartOptions } from 'chart.js'
 import 'chart.js/auto'
@@ -10,6 +10,7 @@ import { MetaData } from '../../Type/CommonType'
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../Store/Slice/userSlice'
 import WorkOrders from '../Moorserve/WorkOrders/workOrders'
+import { ProgressSpinner } from 'primereact/progressspinner'
 
 Chart.register(ArcElement, Tooltip, Legend)
 
@@ -18,9 +19,10 @@ const ChartsContainer = styled.div`
   justify-content: space-around;
   align-items: flex-start;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 20px 15px;
   flex-wrap: wrap;
+  gap: 50px;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -29,22 +31,21 @@ const ChartsContainer = styled.div`
 `
 
 const ChartCard = styled.div`
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  width: 45%;
-  max-width: 550px;
+ borderRadius: '5px',
+border: '1px solid #D5E1EA',
+  backgroundColor: '#FFFFFF',
+  marginRight: '50px',
+  width: '700px',
+  height: '500px',
   text-align: center;
   transition: transform 0.2s;
   margin: 10px;
-
   &:hover {
     transform: translateY(-10px);
   }
 
   h2 {
-    margin-bottom: 20px;
+    margin-bottom: -20px;
     font-size: 1.5rem;
     color: #333;
   }
@@ -60,7 +61,7 @@ const Report: React.FC = () => {
   const [jobTypeSelected, setJobTypeSelected] = useState(false)
   const [serviceArea, setServiceArea] = useState<MetaData[]>([])
   const [jobType, setJobType] = useState<MetaData[]>([])
-
+  const workOrdersRef = useRef<HTMLDivElement>(null)
   const { getServiceAreaData } = ServiceAreaData()
 
   const fetchMetaData = useCallback(async () => {
@@ -76,6 +77,12 @@ const Report: React.FC = () => {
   useEffect(() => {
     fetchMetaData()
   }, [selectedCustomerId])
+
+  useEffect(() => {
+    if (jobTypeSelected && workOrdersRef.current) {
+      workOrdersRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }, [jobTypeSelected])
 
   const getTotal = (data: MetaData[]) => {
     return data.reduce((acc, item) => acc + item.id, 0)
@@ -165,18 +172,82 @@ const Report: React.FC = () => {
   return (
     <>
       <Header header={properties.reportHeader} />
-      <ChartsContainer>
-        <ChartCard>
-          <h2>Job Type</h2>
-          <Pie data={jobTypeData} options={chartOptions} />
-        </ChartCard>
-        <ChartCard>
-          <h2>Service Area</h2>
-          <Pie data={serviceAreaData} options={chartOptions} />
-        </ChartCard>
-      </ChartsContainer>
+      <div className="mt-6">
+        <div className="flex justify-end mr-[54px]">
+          <div className="flex gap-4 items-center">
+            <div
+              className="flex-auto"
+              style={{
+                position: 'relative',
+                border: '1px solid #D5E1EA',
+                borderRadius: '5px',
+                display: 'flex',
+                gap: '8px',
+                padding: '8px',
+              }}></div>
+          </div>
+        </div>
 
-      {jobTypeSelected && <WorkOrders report={true} />}
+        <div className="flex lg:flex-row justify-around md:flex-col mt-3">
+          <div
+            style={{
+              width: '700px',
+              height: '400px',
+              backgroundColor: '#FFFFFF',
+              border: '1px solid #D5E1EA',
+              borderRadius: '5px',
+              marginLeft: '3rem',
+            }}>
+            <div
+              data-testid="technician-data"
+              className="flex flex-col mt-[3px] ml-[15px] mr-[15px] table-container "
+              style={{ height: '548px' }}>
+              {/* hello one */}
+
+              <ChartsContainer>
+                <ChartCard>
+                  <h2 className="ml-12">Job Type</h2>
+                  <Pie data={jobTypeData} options={chartOptions} />
+                </ChartCard>
+              </ChartsContainer>
+            </div>
+          </div>
+
+          <div
+            className={`md:ml-12 md:mt-3 lg:mt-0`}
+            style={{
+              flexGrow: 1,
+              borderRadius: '5px',
+              border: '1px solid #D5E1EA',
+              backgroundColor: '#FFFFFF',
+              marginRight: '50px',
+              width: '700px',
+              height: '400px',
+            }}>
+            <div
+              data-testid="workOrder"
+              className="flex flex-col mt-[3px] ml-[15px] mr-[15px] table-container "
+              style={{ height: '600px' }}>
+              <div className="flex-grow ">
+                {/* hello */}
+
+                <ChartsContainer>
+                  <ChartCard>
+                    <h2 className="ml-8">Service Area</h2>
+                    <Pie data={serviceAreaData} options={chartOptions} />
+                  </ChartCard>
+                </ChartsContainer>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {jobTypeSelected && (
+          <div ref={workOrdersRef}>
+            <WorkOrders report={true} />
+          </div>
+        )}
+      </div>
     </>
   )
 }

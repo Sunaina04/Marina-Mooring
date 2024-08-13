@@ -330,7 +330,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         detail: detailMessage,
         life: 3000,
       })
-      fileInput.value = ''
+      // fileInput.value = ''
       return
     }
 
@@ -856,7 +856,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                   style={{
                     width: '230px',
                     height: '32px',
-                    border: fieldErrors.email ? '1px solid red' : '1px solid #D5E1EA',
+                    border: '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                     paddingLeft: '0.5rem',
@@ -1375,7 +1375,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
           isLoading={isLoading}
           images={customerImages}
         />
-        <Toast ref={toastRef} />
+        {/* <Toast ref={toastRef} /> */}
       </Dialog>
     </>
   )

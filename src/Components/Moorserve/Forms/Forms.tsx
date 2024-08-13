@@ -137,8 +137,8 @@ const Forms = () => {
       const { message, data } = error as ErrorResponse
       setIsLoading(false)
       toastRef?.current?.show({
-        severity: 'success',
-        summary: 'Success',
+        severity: 'error',
+        summary: 'Error',
         detail: message || data?.message,
         life: 3000,
       })
@@ -158,8 +158,8 @@ const Forms = () => {
       const { message, data } = error as ErrorResponse
       setIsLoading(false)
       toastRef?.current?.show({
-        severity: 'success',
-        summary: 'Success',
+        severity: 'error',
+        summary: 'Error',
         detail: message || data?.message,
         life: 3000,
       })
@@ -179,8 +179,8 @@ const Forms = () => {
       const { message, data } = error as ErrorResponse
       setIsLoading(false)
       toastRef?.current?.show({
-        severity: 'success',
-        summary: 'Success',
+        severity: 'error',
+        summary: 'Error',
         detail: message || data?.message,
         life: 3000,
       })
@@ -281,7 +281,13 @@ const Forms = () => {
                 marginLeft: '8px',
                 boxShadow: 'none',
               }}
-              children={<AddForm closeModal={handleModalClose} getFormsData={getFormsData} toastRef={toast} />}
+              children={
+                <AddForm
+                  closeModal={handleModalClose}
+                  getFormsData={getFormsData}
+                  toastRef={toast}
+                />
+              }
               headerText={<h1 className="text-xl font-extrabold text-black ml-4">Form Details</h1>}
               visible={isModalOpen}
               onClick={handleButtonClick}
@@ -354,7 +360,7 @@ const Forms = () => {
                       alt="Empty Data"
                       className="w-28 mx-auto mb-4"
                     />
-                    
+
                     <p className="text-gray-500 font-[600] text-lg">{properties.noDataMessage}</p>
                   </div>
                 }

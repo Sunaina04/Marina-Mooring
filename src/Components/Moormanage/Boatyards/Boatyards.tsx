@@ -73,7 +73,7 @@ const Boatyards = () => {
   const [totalRecordsTwo, setTotalRecordsTwo] = useState<number>()
 
   const { isMapModalOpen, IsdialogVisible } = useContext(AppContext)
-  
+
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
     setPageNumber1(event.first)
@@ -484,7 +484,9 @@ const Boatyards = () => {
   }, [selectedBoatYard, boatyardsData, mooringWithBoatyardsData])
 
   return (
-    <div style={{ height: '150vh' }} className={modalVisible || IsdialogVisible ? 'backdrop-blur-lg' : ''}>
+    <div
+      style={{ height: '150vh' }}
+      className={modalVisible || IsdialogVisible ? 'backdrop-blur-lg' : ''}>
       <Toast ref={toast} />
       <Header header="MOORMANAGE/Boatyards" />
       <div className="flex justify-end mr-14 mt-6 ">
@@ -652,34 +654,37 @@ const Boatyards = () => {
             strokeWidth="4"
           />
         )}
+
         <div
           data-testid="customer-admin-users-table"
-          className="flex-grow overflow-auto bg-[#FFFFFF] rounded-xl border-[1px] border-gray-300 w-[515px] h-[732px] mr-[50px] ml-[30px]  mb-0 ">
-          <div className="">
+          className="flex-grow bg-[#FFFFFF] rounded-xl border-[1px] border-gray-300 w-[515px] h-[732px] mr-[50px] ml-[30px] mb-0 ">
+          <div className="flex flex-col h-full">
             <div className="text-sm font-extrabold rounded-sm w-full bg-[#D9D9D9]">
               <div
-                className="flex justify-between bg-[#00426F] rounded-t-[10px]"
+                className="flex items-center justify-between bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px]"
                 style={{ color: '#FFFFFF' }}>
-                <h1 className="p-4 text-xl font-extrabold">{properties.boatyardMooringHeader}</h1>
-                <div className="flex mr-2">
+                <h1 className="p-4 text-xl font-extrabold">
+                  {properties.serviceAreaMooringHeader}
+                </h1>
+                <div className="flex">
                   <FaEdit
                     onClick={handleEdit}
-                    className="mr-3 mt-[22px] text-[white]"
+                    className="mr-4 mt-4 text-[white]"
                     data-testid="FaEdit"
                     style={{ cursor: boatYardRecord ? 'pointer' : 'not-allowed' }}
                   />
                   <RiDeleteBin5Fill
                     onClick={handleDelete}
-                   className="text-white mr-2 mt-[22px] "
+                    className="text-white mr-4 mt-4"
                     data-testid="RiDeleteBin5Fill"
                     style={{ cursor: boatYardRecord ? 'pointer' : 'not-allowed' }}
                   />
                 </div>
               </div>
             </div>
-            <div className={`bg-[] mt-2 ml-5`}>
+            <div className="bg-[] mt-2 ml-5">
               <div
-                className="flex justify-between p-2 mr-10 "
+                className="flex justify-between p-2 mr-10"
                 style={{
                   fontSize: '13px',
                   fontWeight: '500',
@@ -687,23 +692,29 @@ const Boatyards = () => {
                   marginBottom: '-6px',
                 }}>
                 <p>{properties.address}</p>
-                <p className="">{properties.mooringInventoried}</p>
-                <p className="">{properties.boatyardGPSCoordinates}</p>
+                <p>{properties.mooringInventoried}</p>
+                <p>{properties.serviceAreaGPSCoordinates}</p>
               </div>
             </div>
             <div className="mt-4">
               <hr style={{ border: '1px solid #D5E1EA' }} />
             </div>
-          </div>
 
-          {selectedBoatYard ? (
-            BoatyardMoorings
-          ) : (
-            <div className="text-center mt-40 mb-10">
-              <img src="/assets/images/empty.png" alt="Empty Data" className="w-20 mx-auto mb-4" />
-              <p className="text-gray-500 text-lg">{properties.noDataMessage}</p>
+            <div className="flex-grow overflow-auto">
+              {selectedBoatYard ? (
+                BoatyardMoorings
+              ) : (
+                <div className="text-center mt-40 mb-10">
+                  <img
+                    src="/assets/images/empty.png"
+                    alt="Empty Data"
+                    className="w-20 mx-auto mb-4"
+                  />
+                  <p className="text-gray-500 text-lg">{properties.noDataMessage}</p>
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
 
         {/* Mooring Informtaion Dialog BOX */}

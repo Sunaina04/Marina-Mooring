@@ -3,12 +3,14 @@ import React, { useRef, useState } from 'react'
 import { AiOutlineDelete } from 'react-icons/ai'
 import { FaFileUpload } from 'react-icons/fa'
 import { Toast } from 'primereact/toast'
+import { useUploadProfileImageMutation } from '../../../Services/Authentication/AuthApi'
+import { ErrorResponse, UserProfile } from '../../../Type/ApiTypes'
 
 const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose }) => {
   const [images, setImages] = useState<string[]>([])
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const toastRef = useRef<Toast>(null)
-
+  const [uploadProfileImage]=useUploadProfileImageMutation()
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (file) {
@@ -20,6 +22,69 @@ const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose }) => {
       reader.readAsDataURL(file)
     }
   }
+
+  const uploadIamge = async () => {
+    // Validate form fields
+    // const errors = validateFields();
+    // if (Object.keys(errors).length > 0) {
+    //   setFieldsError(errors);
+    //   return;
+    // }
+
+    try {
+      // Create the payload
+      const payload = {
+        id: 0,
+        firstName: "",
+        lastName: "",
+        email: "",
+        phoneNumber: "",
+        password: "",
+        roleId: 0,
+        customerOwnerId: 0,
+        companyName: "",
+        stateId: 0,
+        countryId: 0,
+        address: "",
+        zipCode: "",
+        confirmPassword: "",
+        encodedImage:images
+      };
+  
+      // Upload profile image
+      const response = await uploadProfileImage(payload).unwrap();
+      const { status, message } = response as UserProfile;
+  
+      // Handle success response
+      if (status === 200 || status === 201) {
+        // toastRef.current?.show({
+        //   severity: 'success',
+        //   summary: 'Success',
+        //   detail: message,
+        //   life: 3000,
+        // });
+        handleModalClose()
+        // getFormsData();
+      } else {
+        // toastRef.current?.show({
+        //   severity: 'error',
+        //   summary: 'Error',
+        //   detail: message,
+        //   life: 3000,
+        // });
+      }
+    } catch (error) {
+      const { message, data } = error as ErrorResponse;
+      // toastRef.current?.show({
+      //   severity: 'error',
+      //   summary: 'Error',
+      //   detail: message || data?.message,
+      //   life: 3000,
+      // });
+    }
+  };
+
+
 
   const handleRemoveImage = () => {
     setImages([])
@@ -119,7 +184,7 @@ const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose }) => {
         style={{ padding: '16px', backgroundColor: 'white' }}>
         <Button
           label={'Save'}
-          onClick={() =>{}}
+          onClick={uploadIamge}
           style={{
             width: '89px',
             height: '42px',
