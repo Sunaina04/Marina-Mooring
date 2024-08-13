@@ -87,7 +87,7 @@ import { useAttachments } from './ViewPdf/hooks/useAttachments'
 import { ggID } from './ViewPdf/utils/helpers'
 import { AttachmentTypes } from './ViewPdf/entities'
 import { UploadTypes, useUploader } from './ViewPdf/hooks/useUploader'
-import 'semantic-ui-css/semantic.min.css'
+// import 'semantic-ui-css/semantic.min.css'
 import { prepareAssets } from './ViewPdf/utils/prepareAssets'
 
 const Preview: React.FC<PreviewProps> = ({ fileData, onClose }) => {
