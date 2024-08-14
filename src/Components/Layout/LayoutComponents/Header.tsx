@@ -12,21 +12,14 @@ import HeaderProfile from './HeaderProfile'
 const Header: React.FC<HeaderProps> = ({ header, customer }) => {
   const userData = useSelector((state: any) => state.user?.userData)
 
-  // console.log("dataaa",userData);
-
   const role = userData?.role?.id
   const dispatch = useDispatch()
   const selectedCustomerName = useSelector(selectCustomerName)
-  const [expanded, setExpanded] = useState(false)
   const [getCustomerOwnerData, setgetCustomerOwnerData] = useState<any[]>([])
   const [getUser] = useGetCustomersOwnersMutation()
 
-  const [tooltipVisible, setTooltipVisible] = useState(false)
-
-  const handleMenu = () => {
-    setExpanded(!expanded)
-    setTooltipVisible(!tooltipVisible)
-  }
+  const imageData = userData?.imageDto?.imageData
+  const imageUrl = imageData && `data:image/jpeg;base64,${imageData}`
 
   const handleCustomerIdSelection = (customerId: any) => {
     const firstLastName = customerId?.firstName + ' ' + customerId?.lastName
@@ -112,7 +105,7 @@ const Header: React.FC<HeaderProps> = ({ header, customer }) => {
         )}
         {userData && (
           <>
-            <Avatar image={'/assets/images/user.png'} />
+            <Avatar image={imageUrl} />
             <span style={{ color: '#000000', fontSize: '16px', fontWeight: 400 }}>
               {userData.name}
             </span>{' '}

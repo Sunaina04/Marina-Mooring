@@ -87,7 +87,7 @@ import { useAttachments } from './ViewPdf/hooks/useAttachments'
 import { ggID } from './ViewPdf/utils/helpers'
 import { AttachmentTypes } from './ViewPdf/entities'
 import { UploadTypes, useUploader } from './ViewPdf/hooks/useUploader'
-import 'semantic-ui-css/semantic.min.css'
+// import 'semantic-ui-css/semantic.min.css'
 import { prepareAssets } from './ViewPdf/utils/prepareAssets'
 
 const Preview: React.FC<PreviewProps> = ({ fileData, onClose }) => {
@@ -207,14 +207,14 @@ const Preview: React.FC<PreviewProps> = ({ fileData, onClose }) => {
     <Sidebar visible position="right" style={{ width: '40vw' }} onHide={onClose}>
       <Worker workerUrl={`https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js`}>
         <div style={{ height: '100vh' }}>
-          <MenuBar
+          {/* <MenuBar
             openHelp={() => setHelpModalOpen(true)}
             savePdf={handleSavePdf}
             addText={addText}
             savingPdfStatus={isSaving}
             uploadNewPdf={handlePdfClick}
             isPdfLoaded={!!file}
-          />
+          /> */}
           <Viewer fileUrl={pdfUrl} />
         </div>
       </Worker>
