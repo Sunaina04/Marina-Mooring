@@ -489,7 +489,7 @@ const Technicians = () => {
                   style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
                 />
                 <div data-testid="progress">
-                  {isLoading && (
+                  {/* {isLoading && (
                     <ProgressSpinner
                       style={{
                         position: 'absolute',
@@ -501,7 +501,7 @@ const Technicians = () => {
                       }}
                       strokeWidth="4"
                     />
-                  )}
+                  )} */}
                 </div>
               </div>
               <div data-testid="PaginatorOne" className="mt-auto">
@@ -593,7 +593,7 @@ const Technicians = () => {
                     <ProgressSpinner
                       style={{
                         position: 'absolute',
-                        top: '50%',
+                        top: '70%',
                         left: '40%',
                         transform: 'translate(-50%, -50%)',
                         width: '50px',

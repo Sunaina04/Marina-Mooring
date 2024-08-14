@@ -840,7 +840,7 @@ const Moorings = () => {
                 <ProgressSpinner
                   style={{
                     position: 'absolute',
-                    top: '50%',
+                    top: '65%',
                     left: '34%',
                     transform: 'translate(-50%, -50%)',
                     width: '50px',
