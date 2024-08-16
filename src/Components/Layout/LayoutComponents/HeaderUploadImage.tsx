@@ -8,14 +8,14 @@ import { ErrorResponse, UserProfile } from '../../../Type/ApiTypes'
 
 const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose, customerId }) => {
   const [image, setImage] = useState<string>('')
-  // console.log(image, 'image')
+  const [imageName, setImageName] = useState<string>('')
   const toastRef = useRef<Toast>(null)
-  // const DEFAULT_IMAGE_URL ='/assets/images/close.png'
-
   const [uploadProfileImage] = useUploadProfileImageMutation()
+
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (file) {
+      setImageName(file.name)
       const fileSizeInKB = file.size / 1024
       if (fileSizeInKB > 100) {
         toastRef.current?.show({
@@ -33,7 +33,6 @@ const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose, custome
         if (!onlyBase64.startsWith('/')) {
           onlyBase64 = '/' + onlyBase64
         }
-
         setImage(onlyBase64)
       }
       reader.readAsDataURL(file)
@@ -43,20 +42,12 @@ const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose, custome
   const uploadImage = async () => {
     try {
       const payload = {
-        id: customerId?.id,
-        email: customerId?.email,
-        firstName: customerId?.firstName,
-        lastName: customerId?.lastName,
-        roleId: customerId?.role?.id,
-        encodedImage: image,
+        imageName: imageName,
+        imageData: image,
       }
-
-      const response = await uploadProfileImage({ payload, id: customerId?.id }).unwrap()
+      const response = await uploadProfileImage({ payload, userId: customerId?.id }).unwrap()
       const { status, message } = response as UserProfile
-
       if (status === 200 || status === 201) {
-        console.log(message, 'heyy')
-
         toastRef.current?.show({
           severity: 'success',
           summary: 'Success',
@@ -132,8 +123,7 @@ const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose, custome
 
         {image && (
           <div style={{ marginTop: '40px' }}>
-            {/* <div className="flex gap-16 justify-center text-center"> */}
-           <div className="w-24 h-24 rounded-full object-cover">
+            <div className="flex gap-16 justify-center text-center">
               <div style={{ position: 'relative', display: 'inline-block' }}>
                 <AiOutlineDelete
                   onClick={handleRemoveImage}
@@ -151,7 +141,6 @@ const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose, custome
                   }}
                 />
                 <img
-                
                   src={`data:image/png;base64,${image}`}
                   alt="Uploaded"
                   //  className="w-24 h-24 rounded-full object-cover"
