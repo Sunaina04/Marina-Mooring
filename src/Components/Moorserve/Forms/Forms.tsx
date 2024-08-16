@@ -35,7 +35,6 @@ import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import Preview from './Preview'
 import { Toast } from 'primereact/toast'
 import { convertBytetoUrl } from '../../Helper/Helper'
-import ViewPdf from './ViewPdf/ViewPdf'
 
 const Forms = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
