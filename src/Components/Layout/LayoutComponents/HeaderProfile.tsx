@@ -42,8 +42,6 @@ const HeaderProfile: React.FC<HeaderProps> = ({ customer }) => {
   }
 
   const handleItemClick = (value: string) => {
-    console.log(value)
-
     switch (value) {
       case 'Logout':
         handleLogout()
@@ -211,7 +209,9 @@ const HeaderProfile: React.FC<HeaderProps> = ({ customer }) => {
         header=""
         onHide={handleModalClose}
         visible={isUploadImageDialogVisible}>
-        {isUploadImageDialogVisible && <HeaderUploadImage handleModalClose={handleModalClose}   customerId={customer}/>}
+        {isUploadImageDialogVisible && (
+          <HeaderUploadImage handleModalClose={handleModalClose} customerId={customer} />
+        )}
       </Dialog>
     </>
   )

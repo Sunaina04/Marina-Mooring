@@ -10,7 +10,6 @@ const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose, custome
   const [image, setImage] = useState<string>('')
   // console.log(image, 'image')
   const toastRef = useRef<Toast>(null)
-  // const DEFAULT_IMAGE_URL ='/assets/images/close.png'
 
   const [uploadProfileImage] = useUploadProfileImageMutation()
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -132,9 +131,7 @@ const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose, custome
 
         {image && (
           <div style={{ marginTop: '40px' }}>
-            {/* <div className="flex gap-16 justify-center text-center"> */}
-           <div className="w-24 h-24 rounded-full object-cover">
-            
+            <div className="flex gap-16 justify-center text-center">
               <div style={{ position: 'relative', display: 'inline-block' }}>
                 <AiOutlineDelete
                   onClick={handleRemoveImage}

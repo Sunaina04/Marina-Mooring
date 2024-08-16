@@ -3,7 +3,6 @@ import { Sidebar } from 'primereact/sidebar'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { Button } from 'primereact/button'
 import { InputText } from 'primereact/inputtext'
-import { Dropdown } from 'primereact/dropdown'
 import { Worker, Viewer } from '@react-pdf-viewer/core'
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib'
 import '@react-pdf-viewer/core/lib/styles/index.css'
@@ -15,7 +14,6 @@ const PDFEditor: React.FC<PreviewProps> = ({ fileData, onClose }) => {
   const [pdfUrl, setPdfUrl] = useState('')
   const [textEntries, setTextEntries] = useState<{ text: string; x: number; y: number }[]>([])
   const [fontSize, setFontSize] = useState<any>(16)
-  const [textColor, setTextColor] = useState({ r: 0, g: 0, b: 0 })
   const [newText, setNewText] = useState('')
   const [clickPosition, setClickPosition] = useState<{ x: number; y: number } | null>(null)
   const pdfRef = useRef<HTMLDivElement>(null)
@@ -61,7 +59,7 @@ const PDFEditor: React.FC<PreviewProps> = ({ fileData, onClose }) => {
         x: entry.x,
         y: firstPage.getHeight() - entry.y,
         size: fontSize,
-        color: rgb(textColor.r / 255, textColor.g / 255, textColor.b / 255),
+        color: rgb(0 / 255, 0 / 255, 0 / 255),
       })
     })
 
@@ -74,33 +72,9 @@ const PDFEditor: React.FC<PreviewProps> = ({ fileData, onClose }) => {
 
   const handleUndo = async () => {
     if (textEntries.length === 0) return
-
     // Remove the last text entry
     const updatedEntries = textEntries.slice(0, -1)
     setTextEntries(updatedEntries)
-
-    if (!pdfUrl) return
-
-    // Re-generate the PDF with the updated text entries
-    const existingPdfBytes = await fetch(pdfUrl).then((res) => res.arrayBuffer())
-    const pdfDoc = await PDFDocument.load(existingPdfBytes)
-    const pages = pdfDoc.getPages()
-    const firstPage = pages[0]
-
-    updatedEntries.forEach((entry) => {
-      firstPage.drawText(entry.text, {
-        x: entry.x,
-        y: firstPage.getHeight() - entry.y,
-        size: fontSize,
-        color: rgb(textColor.r / 255, textColor.g / 255, textColor.b / 255),
-      })
-    })
-
-    const pdfBytes = await pdfDoc.save()
-    const blob = new Blob([pdfBytes], { type: 'application/pdf' })
-    const url = URL.createObjectURL(blob)
-
-    setPdfUrl(url) // Update the PDF URL to re-render the PDF
   }
 
   const handleDownload = () => {
@@ -115,13 +89,6 @@ const PDFEditor: React.FC<PreviewProps> = ({ fileData, onClose }) => {
   const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewText(e.target.value)
   }
-
-  const fontSizeOptions = [12, 14, 16, 18, 20].map((size) => ({ label: `${size}px`, value: size }))
-  const fontFamilyOptions = [
-    { label: 'Helvetica', value: StandardFonts.Helvetica },
-    { label: 'Times Roman', value: StandardFonts.TimesRoman },
-    { label: 'Courier', value: StandardFonts.Courier },
-  ]
 
   return (
     <Sidebar visible position="right" style={{ width: '40vw' }} onHide={onClose}>
@@ -200,7 +167,7 @@ const PDFEditor: React.FC<PreviewProps> = ({ fileData, onClose }) => {
                   position: 'absolute',
                   left: entry.x,
                   top: entry.y,
-                  color: `rgb(${textColor.r}, ${textColor.g}, ${textColor.b})`,
+                  color: `rgb(0,0,0)`,
                   fontSize: `${fontSize}px`,
                 }}>
                 {entry.text}

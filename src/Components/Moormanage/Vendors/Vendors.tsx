@@ -176,7 +176,6 @@ const Vendors = () => {
         color: 'black',
         label: 'View Inventory',
         onClick: (rowData) => {
-          console.log('here')
           navigate(`/moormanage/inventoryDetails?vendorId=${rowData.id}`)
         },
         underline: true,
@@ -194,7 +193,6 @@ const Vendors = () => {
         color: 'red',
         label: 'Delete',
         onClick: (rowData) => {
-          console.log('here')
           handleDelete(rowData)
         },
         underline: true,
