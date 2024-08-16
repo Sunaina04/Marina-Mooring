@@ -5,11 +5,16 @@ import { FaFileUpload } from 'react-icons/fa'
 import { Toast } from 'primereact/toast'
 import { useUploadProfileImageMutation } from '../../../Services/Authentication/AuthApi'
 import { ErrorResponse, UserProfile } from '../../../Type/ApiTypes'
+import { useDispatch, useSelector } from 'react-redux'
+import { setUserData } from '../../../Store/Slice/userSlice'
 
 const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose, customerId }) => {
+  const dispatch = useDispatch()
   const [image, setImage] = useState<string>('')
   const [imageName, setImageName] = useState<string>('')
+  const [imageResponse, setImageResponse] = useState<any>()
   const toastRef = useRef<Toast>(null)
+  const userData = useSelector((state: any) => state.user?.userData)
   const [uploadProfileImage] = useUploadProfileImageMutation()
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,7 +51,7 @@ const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose, custome
         imageData: image,
       }
       const response = await uploadProfileImage({ payload, userId: customerId?.id }).unwrap()
-      const { status, message } = response as UserProfile
+      const { status, message, content } = response as UserProfile
       if (status === 200 || status === 201) {
         toastRef.current?.show({
           severity: 'success',
@@ -54,6 +59,7 @@ const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose, custome
           detail: message,
           life: 3000,
         })
+        dispatch(setUserData(content))
         handleModalClose()
       } else {
         toastRef.current?.show({
@@ -79,7 +85,7 @@ const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose, custome
   }
 
   return (
-    <div>
+    <>
       <Toast ref={toastRef} />
       <div className={`ml-4 ${isLoading ? 'blurred' : ''}`} style={{ marginBottom: '60px' }}>
         <div className="flex justify-center text-center">
@@ -188,8 +194,9 @@ const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose, custome
             marginTop: 'px',
           }}
         />
+        <Toast ref={toastRef} />
       </div>
-    </div>
+    </>
   )
 }
 

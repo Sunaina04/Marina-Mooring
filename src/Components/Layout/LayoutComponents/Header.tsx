@@ -17,10 +17,8 @@ const Header: React.FC<HeaderProps> = ({ header, customer }) => {
   const selectedCustomerName = useSelector(selectCustomerName)
   const [getCustomerOwnerData, setgetCustomerOwnerData] = useState<any[]>([])
   const [getUser] = useGetCustomersOwnersMutation()
-
-  const imageData = userData?.imageDto?.imageData
-  const imageUrl = imageData? `data:image/jpeg;base64,${imageData}`:'/assets/images/user12.png'
-
+  const imageData = userData?.imageResponseDto?.imageData
+  const imageUrl = imageData ? `data:image/jpeg;base64,${imageData}` : '/assets/images/user12.png'
 
   const handleCustomerIdSelection = (customerId: any) => {
     const firstLastName = customerId?.firstName + ' ' + customerId?.lastName
@@ -108,7 +106,7 @@ const Header: React.FC<HeaderProps> = ({ header, customer }) => {
           <>
             <Avatar image={imageUrl} />
             <span style={{ color: '#000000', fontSize: '16px', fontWeight: 400 }}>
-              {userData.name}
+              {userData.firstName + ' ' + userData.lastName}
             </span>{' '}
           </>
         )}

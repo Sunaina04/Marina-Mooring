@@ -83,7 +83,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   const [imageRequestDtoList, setimageRequestDtoList] = useState<
     { imageName: string; imageData: string; note: string }[]
   >([])
-  
+
   const toastRef = useRef<Toast>(null)
   const firstErrorRef = useRef<HTMLDivElement>(null)
   const getFomattedCoordinate = (gpsCoordinatesValue: any) => {
@@ -146,8 +146,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     serviceAreaId: '',
     imageNote: '',
   })
-
-  // console.log(formData, 'editmooring')
 
   const fetchMetaData = useCallback(async () => {
     const { typeOfBoatTypeData } = await getTypeOfBoatTypeData()
@@ -396,7 +394,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   const SaveMoorings = async () => {
     const errors = validateFields()
     if (Object.keys(errors).length > 0) {
-      console.log('Validation errors:', errors)
       if (firstErrorRef.current) {
         firstErrorRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
       }
@@ -470,7 +467,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
 
   const UpdateMooring = async () => {
     // alert("hi")
-    
+
     try {
       setIsLoading(true)
 
@@ -545,8 +542,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       }
 
       const editMooringPayload = createPayload(formData, mooringRowData)
-      console.log('Edit Mooring Payload:', editMooringPayload)
-
       const response = await updateMooring({
         payload: editMooringPayload,
         id: mooringRowData?.id,

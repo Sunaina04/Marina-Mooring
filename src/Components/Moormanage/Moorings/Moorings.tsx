@@ -52,9 +52,6 @@ const Moorings = () => {
   const selectedCustomerId: any = useSelector(selectCustomerId)
   const [modalVisible, setModalVisible] = useState(false)
   const [mooringData, setMooringData] = useState<MooringPayload[]>([])
-
-  // console.log(mooringData,"dataa");
-
   const [customerRecordData, setCustomerRecordData] = useState<any>()
   const [mooringResponseData, setMooringResponseData] = useState<any>()
   const [boatYardData, setBoatYardData] = useState<any[]>([])
@@ -788,7 +785,6 @@ const Moorings = () => {
                       columns={tableColumns}
                       style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
                       onRowClick={async (row) => {
-                        // console.log('row is clicked', row.data)
                         if (rowClickedActionInProgress) return null
                         setRowClickedActionInProgress(true)
                         try {

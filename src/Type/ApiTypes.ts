@@ -1049,12 +1049,11 @@ export interface formUpload {
 }
 
 export interface UserProfile {
-  message: string;
-  status: number;
-  errorList: string[];
-  time: string;
-  currentSize: number;
-  totalSize: number;
-  content: Record<string, any>;
+  message: string
+  status: number
+  errorList: string[]
+  time: string
+  currentSize: number
+  totalSize: number
+  content: any
 }
-

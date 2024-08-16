@@ -35,8 +35,6 @@ const Settings = () => {
   const [pageSize, setPageSize] = useState(10)
   const [currentlyEditing, setCurrentlyEditing] = useState<any>(null)
   const [dropdownValues, setDropdownValues] = useState<{ [key: string]: string }>({})
-  // console.log("dropdownValues",dropdownValues);
-
   const [savedValues, setSavedValues] = useState<{ [key: string]: string }>({})
   const [customerData, setCustomerData] = useState<CustomerPayload[]>([])
   const [dropdownDisabled, setDropdownDisabled] = useState<{ [key: string]: boolean }>({})
@@ -408,7 +406,7 @@ const Settings = () => {
           <div
             data-testid="customer-admin-data"
             className="flex flex-col"
-            style={{ height: '700px', }}>
+            style={{ height: '700px' }}>
             <div className="flex-grow overflow-auto">
               <DataTableComponent
                 tableStyle={{
