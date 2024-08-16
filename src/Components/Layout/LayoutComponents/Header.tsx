@@ -19,7 +19,8 @@ const Header: React.FC<HeaderProps> = ({ header, customer }) => {
   const [getUser] = useGetCustomersOwnersMutation()
 
   const imageData = userData?.imageDto?.imageData
-  const imageUrl = imageData && `data:image/jpeg;base64,${imageData}`
+  const imageUrl = imageData? `data:image/jpeg;base64,${imageData}`:'/assets/images/user12.png'
+
 
   const handleCustomerIdSelection = (customerId: any) => {
     const firstLastName = customerId?.firstName + ' ' + customerId?.lastName

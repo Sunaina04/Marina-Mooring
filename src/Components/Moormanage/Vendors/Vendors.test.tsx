@@ -23,8 +23,8 @@ const columnStyle = {
 }
 const VendorColumns = [
   {
-    id: 'companyName',
-    label: 'Company Name',
+    id: 'vendorName',
+    label: 'Vendor Name',
     style: {
       ...columnStyle,
       borderTopLeftRadius: '10px',
