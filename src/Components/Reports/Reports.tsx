@@ -32,7 +32,7 @@ const ChartsContainer = styled.div`
 
 const ChartCard = styled.div`
  borderRadius: '5px',
-border: '1px solid #D5E1EA',
+ border: '1px solid #D5E1EA',
   backgroundColor: '#FFFFFF',
   marginRight: '50px',
   width: '700px',
@@ -200,10 +200,7 @@ const Report: React.FC = () => {
             }}>
             <div
               data-testid="technician-data"
-              className="flex flex-col mt-[3px] ml-[15px] mr-[15px] table-container "
-              style={{ height: '548px' }}>
-              {/* hello one */}
-
+              className="flex flex-col mt-[3px] ml-[15px] mr-[15px] table-container ">
               <ChartsContainer>
                 <ChartCard>
                   <h2 className="ml-12">Job Type</h2>
@@ -226,11 +223,8 @@ const Report: React.FC = () => {
             }}>
             <div
               data-testid="workOrder"
-              className="flex flex-col mt-[3px] ml-[15px] mr-[15px] table-container "
-              style={{ height: '600px' }}>
+              className="flex flex-col mt-[3px] ml-[15px] mr-[15px] table-container ">
               <div className="flex-grow ">
-                {/* hello */}
-
                 <ChartsContainer>
                   <ChartCard>
                     <h2 className="ml-8">Service Area</h2>
