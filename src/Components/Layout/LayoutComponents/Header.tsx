@@ -106,7 +106,7 @@ const Header: React.FC<HeaderProps> = ({ header, customer }) => {
         )}
         {userData && (
           <>
-            <Avatar image={imageUrl} />
+            <Avatar image={imageUrl} shape="circle" />
             <span style={{ color: '#000000', fontSize: '16px', fontWeight: 400 }}>
               {userData.name}
             </span>{' '}

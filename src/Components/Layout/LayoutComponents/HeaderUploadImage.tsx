@@ -134,6 +134,7 @@ const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose, custome
           <div style={{ marginTop: '40px' }}>
             {/* <div className="flex gap-16 justify-center text-center"> */}
            <div className="w-24 h-24 rounded-full object-cover">
+            
               <div style={{ position: 'relative', display: 'inline-block' }}>
                 <AiOutlineDelete
                   onClick={handleRemoveImage}
@@ -154,7 +155,7 @@ const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose, custome
                 
                   src={`data:image/png;base64,${image}`}
                   alt="Uploaded"
-                  //  className="w-24 h-24 rounded-full object-cover"
+                   className="w-24 h-24 rounded-full object-cover"
                   style={{
                     width: '300px',
                     height: '200px',
