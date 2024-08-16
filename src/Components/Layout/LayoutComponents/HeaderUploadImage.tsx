@@ -5,22 +5,16 @@ import { FaFileUpload } from 'react-icons/fa'
 import { Toast } from 'primereact/toast'
 import { useUploadProfileImageMutation } from '../../../Services/Authentication/AuthApi'
 import { ErrorResponse, UserProfile } from '../../../Type/ApiTypes'
-import { useDispatch, useSelector } from 'react-redux'
-import { setUserData } from '../../../Store/Slice/userSlice'
 
 const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose, customerId }) => {
-  const dispatch = useDispatch()
   const [image, setImage] = useState<string>('')
-  const [imageName, setImageName] = useState<string>('')
-  const [imageResponse, setImageResponse] = useState<any>()
+  // console.log(image, 'image')
   const toastRef = useRef<Toast>(null)
-  const userData = useSelector((state: any) => state.user?.userData)
-  const [uploadProfileImage] = useUploadProfileImageMutation()
 
+  const [uploadProfileImage] = useUploadProfileImageMutation()
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (file) {
-      setImageName(file.name)
       const fileSizeInKB = file.size / 1024
       if (fileSizeInKB > 100) {
         toastRef.current?.show({
@@ -38,6 +32,7 @@ const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose, custome
         if (!onlyBase64.startsWith('/')) {
           onlyBase64 = '/' + onlyBase64
         }
+
         setImage(onlyBase64)
       }
       reader.readAsDataURL(file)
@@ -47,19 +42,26 @@ const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose, custome
   const uploadImage = async () => {
     try {
       const payload = {
-        imageName: imageName,
-        imageData: image,
+        id: customerId?.id,
+        email: customerId?.email,
+        firstName: customerId?.firstName,
+        lastName: customerId?.lastName,
+        roleId: customerId?.role?.id,
+        encodedImage: image,
       }
-      const response = await uploadProfileImage({ payload, userId: customerId?.id }).unwrap()
-      const { status, message, content } = response as UserProfile
+
+      const response = await uploadProfileImage({ payload, id: customerId?.id }).unwrap()
+      const { status, message } = response as UserProfile
+
       if (status === 200 || status === 201) {
+        console.log(message, 'heyy')
+
         toastRef.current?.show({
           severity: 'success',
           summary: 'Success',
           detail: message,
           life: 3000,
         })
-        dispatch(setUserData(content))
         handleModalClose()
       } else {
         toastRef.current?.show({
@@ -85,7 +87,7 @@ const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose, custome
   }
 
   return (
-    <>
+    <div>
       <Toast ref={toastRef} />
       <div className={`ml-4 ${isLoading ? 'blurred' : ''}`} style={{ marginBottom: '60px' }}>
         <div className="flex justify-center text-center">
@@ -147,9 +149,10 @@ const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose, custome
                   }}
                 />
                 <img
+                
                   src={`data:image/png;base64,${image}`}
                   alt="Uploaded"
-                  //  className="w-24 h-24 rounded-full object-cover"
+                   className="w-24 h-24 rounded-full object-cover"
                   style={{
                     width: '300px',
                     height: '200px',
@@ -194,9 +197,8 @@ const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose, custome
             marginTop: 'px',
           }}
         />
-        <Toast ref={toastRef} />
       </div>
-    </>
+    </div>
   )
 }
 
