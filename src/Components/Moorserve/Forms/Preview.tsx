@@ -38,11 +38,44 @@ const PDFEditor: React.FC<PreviewProps> = ({ fileData, onClose }) => {
     setClickPosition(null)
   }
 
+  // const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  //   const rect = pdfRef.current?.getBoundingClientRect()
+  //   console.log(rect, 'rect')
+  //   console.log(e.clientX, 'e.client/x')
+  //   console.log(e.clientY, 'e.client/Y')
+
+  //   if (rect) {
+  //     const ele = document.querySelector('.p-sidebar-content')
+  //     const value = ((window.outerWidth - window.innerWidth) / window.innerWidth) * 100
+  //     console.log(value, 'value')
+  //     const x = e.clientX - rect.left
+  //     const y = e.clientY - rect.top - (ele?.scrollTop || 0) + 57
+  //     console.log('ele?.scrollTop', ele?.scrollTop)
+
+  //     console.log(x, y)
+
+  //     setClickPosition({ x, y })
+  //   }
+  // }
+
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = pdfRef.current?.getBoundingClientRect()
+
     if (rect) {
-      const x = e.clientX - rect.left
-      const y = e.clientY - rect.top
+      const scaleX = pdfRef.current ? pdfRef.current.clientWidth / rect.width : 1
+      const scaleY = pdfRef.current ? pdfRef.current.clientHeight / rect.height : 1
+
+      const x = (e.clientX - rect.left) * scaleX
+      const y = (e.clientY - rect.top) * scaleY
+
+      // Temporary visual indicator
+      // const marker = document.createElement('span')
+      // marker.style.position = 'absolute'
+      // marker.style.left = `${x}px`
+      // marker.style.top = `calc(${y}px - 16px)`
+      // marker.innerHTML = 'abc'
+      // pdfRef.current?.appendChild(marker)
+
       setClickPosition({ x, y })
     }
   }
@@ -54,10 +87,12 @@ const PDFEditor: React.FC<PreviewProps> = ({ fileData, onClose }) => {
     const pdfDoc = await PDFDocument.load(existingPdfBytes)
     const pages = pdfDoc.getPages()
     const firstPage = pages[0]
+    const pageHeight = firstPage.getHeight()
+
     textEntries.forEach((entry) => {
       firstPage.drawText(entry.text, {
         x: entry.x,
-        y: firstPage.getHeight() - entry.y,
+        y: pageHeight - entry.y,
         size: fontSize,
         color: rgb(0 / 255, 0 / 255, 0 / 255),
       })
@@ -119,7 +154,7 @@ const PDFEditor: React.FC<PreviewProps> = ({ fileData, onClose }) => {
               marginBottom: '10px',
             }}>
             <Button label="Save" icon="pi pi-save" onClick={handleSave} />
-            <Button label="Undo" icon="pi pi-undo" onClick={handleUndo} />
+            {/* <Button label="Undo" icon="pi pi-undo" onClick={handleUndo} /> */}
             <Button label="Download" icon="pi pi-download" onClick={handleDownload} />
           </div>
 
@@ -173,7 +208,12 @@ const PDFEditor: React.FC<PreviewProps> = ({ fileData, onClose }) => {
                 {entry.text}
               </div>
             ))}
-            <div onClick={handleClick} style={{ cursor: 'text', height: '100%' }}>
+            <div
+              onClick={handleClick}
+              style={{
+                cursor: 'text',
+                zoom: (window.outerWidth - window.innerWidth) / window.outerWidth,
+              }}>
               <Worker workerUrl={`https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js`}>
                 <Viewer fileUrl={pdfUrl} />
               </Worker>
