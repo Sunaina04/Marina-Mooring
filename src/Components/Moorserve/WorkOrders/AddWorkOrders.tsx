@@ -33,6 +33,7 @@ import { MetaData, MetaDataTechnician, Params } from '../../../Type/CommonType'
 import {
   BoatyardNameData,
   CustomersData,
+  JobTypesData,
 } from '../../CommonComponent/MetaDataComponent/MetaDataApi'
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
@@ -41,7 +42,6 @@ import { Toast } from 'primereact/toast'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import ReasonModal from '../../Moorpay/AccountReceivable/ReasonModal'
 import ApproveModal from '../../Moorpay/AccountReceivable/ApproveModal'
-import InputComponent from '../../CommonComponent/InputComponent'
 import ShowImages from '../../CommonComponent/UploadImages'
 
 const AddWorkOrders: React.FC<WorkOrderProps> = ({
@@ -67,7 +67,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     workOrderStatus: '',
     value: '',
     jobType: '',
-    attachForm:"",
+    attachForm: '',
   })
 
   const [time, setTime] = useState({ minutes: 0, seconds: 0 })
@@ -90,6 +90,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   const [encodedImages, setEncodedImages] = useState<string[]>([])
   const [approveModalOpen, setApproveModalOpen] = useState(false)
   const [denyModalOpen, setDenyModalOpen] = useState(false)
+  const [jobTypesValues, setJobTypesValues] = useState<any>()
 
   const [hoveredIndex, setHoveredIndex] = useState<null | number>(null)
   const [customerImages, setCustomerImages] = useState<string[]>([])
@@ -112,6 +113,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   )
   const { getCustomersData } = CustomersData(selectedCustomerId)
   const { getBoatYardNameData } = BoatyardNameData(selectedCustomerId)
+  const { getJobTypeData } = JobTypesData()
   const { getTechniciansData } = GetTechnicians()
   const { getMooringIdsData } = GetMooringIds()
 
@@ -122,7 +124,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   const [updateEstimate] = useUpdateEstimateMutation()
   const toastRef = useRef<Toast>(null)
   const [imageVisible, setImageVisible] = useState(false)
-  const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
   const [imageRequestDtoList, setimageRequestDtoList] = useState<any>()
   const boatyardsNameOptions = workOrder?.mooringId?.id ? boatyardBasedOnMooringId : boatyardsName
   const CustomerNameOptions = workOrder?.mooringId?.id
@@ -169,11 +170,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     if (!workOrder.boatyards) {
       errors.boatyards = 'Marina is required'
     }
-
-    // if (!workOrder.value) {
-    //   errors.value = 'Problem description is required'
-    // }
-
     if (!workOrder.mooringId) {
       errors.mooringId = 'Mooring Number is required'
     }
@@ -617,6 +613,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     const { WorkOrderStatus } = await getWorkOrderStatusData()
     const { customersData } = await getCustomersData()
     const { boatYardName } = await getBoatYardNameData()
+    const { jobTypeValue } = await getJobTypeData()
 
     if (getTechnicians !== null) {
       const firstLastName = getTechnicians.map((item) => ({
@@ -634,6 +631,11 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       setIsLoading(false)
       setWorkOrderStatusValue(WorkOrderStatus)
     }
+    if (jobTypeValue !== null) {
+      setIsLoading(false)
+      setJobTypesValues(jobTypeValue)
+    }
+
     if (customersData !== null) {
       const firstLastName = customersData.map((item) => ({
         firstName: item.firstName + ' ' + item.lastName,
@@ -885,9 +887,8 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
                 Marina
-              <p className="text-red-600">*</p>
+                <p className="text-red-600">*</p>
               </div>
-             
             </span>
             <div className="mt-1">
               <Dropdown
@@ -917,10 +918,10 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
           {/* Assigned to */}
           <div>
             <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">Assigned to
-              <p className="text-red-600">*</p>
+              <div className="flex gap-1">
+                Assigned to
+                <p className="text-red-600">*</p>
               </div>
-             
             </span>
             <div className="mt-1">
               <Dropdown
@@ -963,10 +964,10 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
           {/* Due Date */}
           <div className="">
             <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">Due Date
-              <p className="text-red-600">*</p>
+              <div className="flex gap-1">
+                Due Date
+                <p className="text-red-600">*</p>
               </div>
-              
             </span>
             <div className="mt-1">
               <Calendar
@@ -986,9 +987,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
               />
             </div>
             <p>
-              {errorMessage.dueDate && (
-                <small className="p-error">{errorMessage.dueDate}</small>
-              )}
+              {errorMessage.dueDate && <small className="p-error">{errorMessage.dueDate}</small>}
             </p>
           </div>
         </div>
@@ -997,10 +996,10 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         <div className="flex gap-6 mt-3">
           <div>
             <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">Schedule Date
-              <p className="text-red-600">*</p>
+              <div className="flex gap-1">
+                Schedule Date
+                <p className="text-red-600">*</p>
               </div>
-            
             </span>
             <div className="mt-1">
               <Calendar
@@ -1029,10 +1028,10 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
           {/* Status */}
           <div>
             <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">Status
-              <p className="text-red-600">*</p>
+              <div className="flex gap-1">
+                Status
+                <p className="text-red-600">*</p>
               </div>
-          
             </span>
             <div className="mt-1">
               <Dropdown
@@ -1116,8 +1115,8 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
               <Dropdown
                 value={workOrder.jobType}
                 onChange={(e) => handleInputChange('jobType', e.target.value)}
-                options={workOrderStatusValue}
-                optionLabel="status"
+                options={jobTypesValues}
+                optionLabel="type"
                 editable
                 disabled={isLoading || isAccountRecievable}
                 style={{
@@ -1131,7 +1130,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
             </div>
           </div>
 
-
           <div>
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">Attach Form</div>
@@ -1140,7 +1138,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
               <Dropdown
                 value={workOrder.attachForm}
                 onChange={(e) => handleInputChange('attachForm', e.target.value)}
-                options={workOrderStatusValue}
+                // options={workOrderStatusValue}
                 optionLabel="status"
                 editable
                 disabled={isLoading || isAccountRecievable}

@@ -19,6 +19,7 @@ import {
   useGetServiceAreasMutation,
   useGetQuickBookCustomerMutation,
   useGetPaymentOptionMutation,
+  useGetJobTypeMutation,
 } from '../../../Services/MetaDataApi'
 import { ErrorResponse, MetaDataCustomerResponse, MetaDataResponse } from '../../../Type/ApiTypes'
 
@@ -146,6 +147,28 @@ export const BoatyardNameData = (customerOwnerId: any) => {
   })
 
   return { getBoatYardNameData }
+}
+
+export const JobTypesData = () => {
+  const [getJobTypes] = useGetJobTypeMutation()
+
+  const fetchJobTypes = async (getData: any) => {
+    try {
+      const response = await getData({})
+      const { status, content } = response.data as MetaDataResponse
+      return status === 200 && Array.isArray(content) ? content : null
+    } catch (error) {
+      const { message } = error as ErrorResponse
+      console.error('Error fetching metadata:', error)
+      return null
+    }
+  }
+
+  const getJobTypeData = async () => ({
+    jobTypeValue: await fetchJobTypes(getJobTypes),
+  })
+
+  return { getJobTypeData }
 }
 
 export const TypeOfChainCondition = () => {

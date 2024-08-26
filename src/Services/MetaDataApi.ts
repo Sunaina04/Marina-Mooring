@@ -191,6 +191,14 @@ const metaDataApi = userApi.injectEndpoints({
         params: { pageNumber, pageSize },
       }),
     }),
+
+    getJobType: builder.mutation({
+      query: ({ pageNumber, pageSize }: { pageNumber?: number; pageSize?: number }) => ({
+        url: 'api/v1/metadata/jobTypes',
+        method: 'GET',
+        params: { pageNumber, pageSize },
+      }),
+    }),
   }),
 })
 
@@ -210,6 +218,7 @@ export const {
   useGetBottomChainConditionsMutation,
   useGetBoatTypeMutation,
   useGetBoatyardsTypeMutation,
+  useGetJobTypeMutation,
   useGetInventoryTypeMutation,
   useGetCustomersOwnersMutation,
   useGetCustomerTypeMutation,
