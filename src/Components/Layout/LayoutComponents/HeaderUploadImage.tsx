@@ -8,7 +8,6 @@ import { ErrorResponse, UserProfile } from '../../../Type/ApiTypes'
 
 const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose, customerId }) => {
   const [image, setImage] = useState<string>('')
-  // console.log(image, 'image')
   const toastRef = useRef<Toast>(null)
 
   const [uploadProfileImage] = useUploadProfileImageMutation()
@@ -32,7 +31,6 @@ const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose, custome
         if (!onlyBase64.startsWith('/')) {
           onlyBase64 = '/' + onlyBase64
         }
-
         setImage(onlyBase64)
       }
       reader.readAsDataURL(file)
@@ -42,20 +40,13 @@ const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose, custome
   const uploadImage = async () => {
     try {
       const payload = {
-        id: customerId?.id,
-        email: customerId?.email,
-        firstName: customerId?.firstName,
-        lastName: customerId?.lastName,
-        roleId: customerId?.role?.id,
-        encodedImage: image,
+        note: '',
+        imageData: image,
       }
 
-      const response = await uploadProfileImage({ payload, id: customerId?.id }).unwrap()
+      const response = await uploadProfileImage({ payload, userId: customerId?.id }).unwrap()
       const { status, message } = response as UserProfile
-
       if (status === 200 || status === 201) {
-        console.log(message, 'heyy')
-
         toastRef.current?.show({
           severity: 'success',
           summary: 'Success',
@@ -149,10 +140,9 @@ const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose, custome
                   }}
                 />
                 <img
-                
                   src={`data:image/png;base64,${image}`}
                   alt="Uploaded"
-                   className="w-24 h-24 rounded-full object-cover"
+                  className="w-24 h-24 rounded-full object-cover"
                   style={{
                     width: '300px',
                     height: '200px',

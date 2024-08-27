@@ -1057,3 +1057,9 @@ export interface UserProfile {
   totalSize: number
   content: any
 }
+
+export interface imageDataPayload {
+  imageName: string
+  note: string
+  imageData: string
+}

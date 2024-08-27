@@ -6,6 +6,7 @@ import {
   ResetPasswordPayload,
   SignUpPayload,
   UserProfile,
+  imageDataPayload,
 } from '../../Type/ApiTypes'
 
 const authApi = userApi.injectEndpoints({
@@ -83,7 +84,7 @@ const authApi = userApi.injectEndpoints({
     }),
 
     uploadProfileImage: builder.mutation({
-      query: ({ payload, userId }: { payload: UserProfile; userId: number }) => ({
+      query: ({ payload, userId }: { payload: imageDataPayload; userId: number }) => ({
         url: `/api/v1/user/uploadImage/${userId}`,
         method: 'PUT',
         body: payload,

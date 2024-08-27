@@ -3,7 +3,6 @@ import { PaymentModalProps } from '../../../Type/ComponentBasedType'
 import InputComponent from '../../CommonComponent/InputComponent'
 import { Dropdown } from 'primereact/dropdown'
 import { Button } from 'primereact/button'
-import { Calendar } from 'primereact/calendar'
 import { useSavePaymentMutation } from '../../../Services/MoorServe/MoorserveApi'
 import { Toast } from 'primereact/toast'
 import { ErrorResponse, SaveUserResponse } from '../../../Type/ApiTypes'
@@ -62,14 +61,14 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ onHide, workOrderInvoiceId 
       }).unwrap()
       const { status, message } = response as SaveUserResponse
       if (status === 200 || status === 201) {
-        setIsLoading(false)
-        onHide()
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
           detail: message,
           life: 3000,
         })
+        setIsLoading(false)
+        onHide()
       } else {
         setIsLoading(false)
         toastRef?.current?.show({
@@ -208,6 +207,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ onHide, workOrderInvoiceId 
                 marginTop: '4px',
               }}
             />
+            <Toast ref={toastRef} />
           </div>
         </div>
       </div>
