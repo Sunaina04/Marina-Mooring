@@ -395,7 +395,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
               </div>
             </div>
             <ul className="mt-1 flex w-[230px] overflow-y-auto ">
-              {storageList.map((item, index) => (
+              {storageList?.map((item, index) => (
                 <li
                   key={index}
                   style={{

@@ -41,6 +41,7 @@ const InventoryDetails: React.FC = () => {
   const [deleteInventory] = useDeleteInventoryMutation()
   const toast = useRef<Toast>(null)
   const navigate = useNavigate()
+  console.log('i m here in inventory')
 
   const handleEdit = (rowData: any) => {
     setEditMode(true)
@@ -208,7 +209,7 @@ const InventoryDetails: React.FC = () => {
       } else {
         setIsLoading(false)
         setInventoryData([])
-        navigate('/moormanage/vendors')
+        // navigate('/moormanage/vendors')
       }
     } catch (error) {
       setIsLoading(false)

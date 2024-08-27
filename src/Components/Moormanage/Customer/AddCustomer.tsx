@@ -1729,7 +1729,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       </div>
                     </div>
 
-                    <div className="mt-3">
+                    {/* <div className="mt-3">
                       <div>
                         <span className="font-medium text-sm text-[#000000]">
                           <div className="flex gap-1">Boat registration</div>
@@ -1755,7 +1755,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                           )}
                         </p>
                       </div>
-                    </div>
+                    </div> */}
                     <div className="mt-3">
                       <div>
                         <span className="font-medium text-sm text-[#000000]">
@@ -1777,6 +1777,26 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                             border: '1px solid #D5E1EA',
                             borderRadius: '0.50rem',
                             fontSize: '0.8rem',
+                          }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="mt-3">
+                      <span className="font-medium text-sm text-[#000000]">
+                        <div className="flex gap-1">Weight (in kg)</div>
+                      </span>
+                      <div className="mt-2">
+                        <InputComponent
+                          value={formData?.boatWeight}
+                          onChange={(e) => handleInputChange('boatWeight', e.target.value)}
+                          style={{
+                            width: '230px',
+                            height: '32px',
+                            border: '1px solid #D5E1EA',
+                            borderRadius: '0.50rem',
+                            fontSize: '0.8rem',
+                            paddingLeft: '0.5rem',
                           }}
                         />
                       </div>
@@ -1882,7 +1902,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         />
                       </div>
                     </div>
-
+                    {/* 
                     <div className="mt-3">
                       <div>
                         <span className="font-medium text-sm text-[#000000]">
@@ -1904,27 +1924,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                           }}
                         />
                       </div>
-                    </div>
-
-                    <div className="mt-3">
-                      <span className="font-medium text-sm text-[#000000]">
-                        <div className="flex gap-1">Weight (in kg)</div>
-                      </span>
-                      <div className="mt-2">
-                        <InputComponent
-                          value={formData?.boatWeight}
-                          onChange={(e) => handleInputChange('boatWeight', e.target.value)}
-                          style={{
-                            width: '230px',
-                            height: '32px',
-                            border: '1px solid #D5E1EA',
-                            borderRadius: '0.50rem',
-                            fontSize: '0.8rem',
-                            paddingLeft: '0.5rem',
-                          }}
-                        />
-                      </div>
-                    </div>
+                    </div> */}
                   </div>
                   <div>
                     <div className="mt-3">
@@ -2002,14 +2002,14 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         />
                       </div>
                     </div>
-                    <div className="mt-3">
+                    <div className="mt-3" style={{ marginLeft: '-15.5rem' }}>
                       <div>
                         <span className="font-medium text-sm text-[#000000]">Pin on Map</span>
                       </div>
                       <div
                         style={{
                           height: '200px',
-                          width: '230px',
+                          width: '480px',
                         }}>
                         <CustomSelectPositionMap
                           onPositionChange={handlePositionChange}
