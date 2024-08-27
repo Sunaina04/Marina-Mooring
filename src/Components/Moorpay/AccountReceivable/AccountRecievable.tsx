@@ -343,9 +343,8 @@ const AccountRecievable = () => {
         color: 'black',
         label: 'Contact',
         filled: true,
-        onClick: (row) => {
-          const email = 'matt.pusey@moorfind.com'
-          window.location.href = `mailto:${email}`
+        onClick: () => {
+          window.location.href = `mailto:`
         },
       },
       {

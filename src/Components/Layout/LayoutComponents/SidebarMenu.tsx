@@ -172,11 +172,11 @@ const SidebarMenu = () => {
           },
         ],
       },
-      {
-        icon: '/assets/images/estimates.svg',
-        name: 'REPORT',
-        link: '/reports',
-      },
+      // {
+      //   icon: '/assets/images/estimates.svg',
+      //   name: 'REPORT',
+      //   link: '/reports',
+      // },
     ]
   }
 
