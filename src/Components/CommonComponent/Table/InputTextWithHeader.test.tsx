@@ -5,7 +5,7 @@ describe('InputTextWithHeader Component', () => {
   it('renders the header correctly', () => {
     const { getByText } = render(
       <InputTextWithHeader
-        header="Marinas Detail"
+        header="Boatyards Detail"
         placeholder="Search by name, ID,address..."
         inputTextStyle={{
           width: '80vh',
@@ -17,14 +17,14 @@ describe('InputTextWithHeader Component', () => {
         }}
       />,
     )
-    const headerElement = getByText('Marinas Detail')
+    const headerElement = getByText('Boatyards Detail')
     expect(headerElement).toBeInTheDocument()
   })
 
   it('renders the input field correctly', () => {
     const { getByPlaceholderText } = render(
       <InputTextWithHeader
-        header="Marinas Detail"
+        header="Boatyards Detail"
         placeholder="Search by name, ID,address..."
         inputTextStyle={{
           width: '80vh',
@@ -44,7 +44,7 @@ describe('InputTextWithHeader Component', () => {
     const mockOnChange = jest.fn()
     const { getByPlaceholderText } = render(
       <InputTextWithHeader
-        header="Marinas Detail"
+        header="Boatyards Detail"
         placeholder="Search by name, ID,address..."
         inputTextStyle={{
           width: '80vh',

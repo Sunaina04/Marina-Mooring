@@ -76,7 +76,7 @@ const routes = [
             element: <Technicians />,
           },
           {
-            path: 'marinas',
+            path: 'Boatyards',
             element: <Boatyards />,
           },
           {

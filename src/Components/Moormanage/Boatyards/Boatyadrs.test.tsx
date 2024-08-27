@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { store } from '../../../Store/Store'
 import Boatyards from './Boatyards'
 
-describe('Marinas components', () => {
+describe('Boatyards components', () => {
   it('should render text with header', () => {
     render(
       <Provider store={store}>
@@ -36,13 +36,13 @@ describe('Marinas components', () => {
     expect(textField).toBeInTheDocument()
   })
 
-  it('should render "Marina GPS Coordinates"', () => {
+  it('should render "Boatyard GPS Coordinates"', () => {
     render(
       <Provider store={store}>
         <Boatyards />
       </Provider>,
     )
-    const textField = screen.getByText('Marina GPS Coordinates')
+    const textField = screen.getByText('Boatyard GPS Coordinates')
     expect(textField).toBeInTheDocument()
   })
 
@@ -76,13 +76,13 @@ describe('Marinas components', () => {
     expect(customModal).toBeInTheDocument()
   })
 
-  it('should render "Marinas Detail" component', () => {
+  it('should render "Boatyards Detail" component', () => {
     render(
       <Provider store={store}>
         <Boatyards />
       </Provider>,
     )
-    expect(screen.getByText('Marinas Detail')).toBeInTheDocument()
+    expect(screen.getByText('Boatyards Detail')).toBeInTheDocument()
   })
 
   it('should render "Address"', () => {

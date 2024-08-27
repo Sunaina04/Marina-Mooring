@@ -532,7 +532,7 @@ const Boatyards = () => {
             }}
             icon={<img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8  mb-0.5" />}
             children={random}
-            headerText={<h1 className="text-xl font-extrabold text-black ml-4">Add Marina</h1>}
+            headerText={<h1 className="text-xl font-extrabold text-black ml-4">Add Boatyard</h1>}
             visible={modalVisible}
             onClick={handleButtonClick}
             onHide={handleModalClose}
@@ -663,9 +663,7 @@ const Boatyards = () => {
               <div
                 className="flex items-center justify-between bg-[#00426F] rounded-tl-[10px] rounded-tr-[10px]"
                 style={{ color: '#FFFFFF' }}>
-                <h1 className="p-4 text-xl font-extrabold">
-                  {properties.serviceAreaMooringHeader}
-                </h1>
+                <h1 className="p-4 text-xl font-extrabold">{properties.boatyardMooringHeader}</h1>
                 <div className="flex">
                   <FaEdit
                     onClick={handleEdit}

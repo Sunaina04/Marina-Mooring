@@ -82,7 +82,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
     const nameRegex = /^[a-zA-Z ]+$/
     const errors: { [key: string]: string } = {}
     if (!boatyardName) {
-      errors.name = 'Marina Name is required'
+      errors.name = 'Boatyard Name is required'
     } else if (!nameRegex.test(boatyardName)) {
       errors.name = 'Name must only contain letters'
     }
@@ -152,7 +152,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
-          detail: 'Marina Saved successfully',
+          detail: message,
           life: 3000,
         })
       } else {
@@ -331,7 +331,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
           </div> */}
           <div>
             <span className="font-medium text-sm text-[#000000]">
-              Marina Name <span className="text-red-500">*</span>
+              Boatyard Name <span className="text-red-500">*</span>
             </span>
             <div className="mt-1">
               <InputComponent

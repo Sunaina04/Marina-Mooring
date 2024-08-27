@@ -168,7 +168,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       errors.scheduleDate = 'Schedule Date is required'
     }
     if (!workOrder.boatyards) {
-      errors.boatyards = 'Marina is required'
+      errors.boatyards = 'Boatyard is required'
     }
     if (!workOrder.mooringId) {
       errors.mooringId = 'Mooring Number is required'
@@ -719,7 +719,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         toastRef.current?.show({
           severity: 'info',
           summary: 'Info',
-          detail: 'No Mooring Associated with Selected Marina',
+          detail: 'No Mooring Associated with Selected Boatyard',
           life: 3000,
         })
       }
@@ -736,7 +736,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         toastRef.current?.show({
           severity: 'info',
           summary: 'Info',
-          detail: 'No Mooring Associated with Selected Customer and Marina',
+          detail: 'No Mooring Associated with Selected Customer and Boatyard',
           life: 3000,
         })
       }
@@ -886,7 +886,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
           <div>
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
-                Marina
+                Boatyard
                 <p className="text-red-600">*</p>
               </div>
             </span>
@@ -1105,8 +1105,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
           </div>
         </div>
 
-        <div className="flex gap-6 mt-3">
-          {/* job Type */}
+        {/* <div className="flex gap-6 mt-3">
           <div>
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">Job Type</div>
@@ -1138,7 +1137,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
               <Dropdown
                 value={workOrder.attachForm}
                 onChange={(e) => handleInputChange('attachForm', e.target.value)}
-                // options={workOrderStatusValue}
                 optionLabel="status"
                 editable
                 disabled={isLoading || isAccountRecievable}
@@ -1152,7 +1150,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
               />
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Report Problem */}
         <div className=" mt-4 mb-20">

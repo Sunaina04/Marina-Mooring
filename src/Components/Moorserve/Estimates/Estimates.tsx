@@ -112,7 +112,7 @@ const Estimates = () => {
       },
       {
         id: 'boatyardResponseDto.boatyardId',
-        label: 'Marina',
+        label: 'Boatyard',
         style: columnStyle,
       },
       {
@@ -331,8 +331,7 @@ const Estimates = () => {
               //   color: '#FFFFFF',
               //   padding: '8px',
               // }}
-             className=' p-2 text-xl font-extrabold text-white'
-              >
+              className=" p-2 text-xl font-extrabold text-white">
               Estimate
             </h1>
 

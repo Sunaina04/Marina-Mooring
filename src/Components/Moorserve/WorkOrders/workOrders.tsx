@@ -108,21 +108,21 @@ const WorkOrders: React.FC<WorkOrderValue> = ({ report }) => {
         label: 'Mooring Number',
         style: columnStyle,
       },
-      {
-        id: 'marina',
-        label: 'Marina',
-        style: columnStyle,
-      },
-      {
-        id: 'ServiceArea',
-        label: 'Service Area',
-        style: columnStyle,
-      },
-      {
-        id: 'jobType',
-        label: 'Job Type',
-        style: columnStyle,
-      },
+      // {
+      //   id: 'Boatyard',
+      //   label: 'Boatyard',
+      //   style: columnStyle,
+      // },
+      // {
+      //   id: 'ServiceArea',
+      //   label: 'Service Area',
+      //   style: columnStyle,
+      // },
+      // {
+      //   id: 'jobType',
+      //   label: 'Job Type',
+      //   style: columnStyle,
+      // },
 
       {
         id: 'technicianUserResponseDto.name',
@@ -130,16 +130,16 @@ const WorkOrders: React.FC<WorkOrderValue> = ({ report }) => {
         style: columnStyle,
         body: TechnicianfirstLastName,
       },
-      {
-        id: 'orderDate',
-        label: 'Order Date',
-        style: columnStyle,
-      },
-      {
-        id: 'Creation Date',
-        label: 'Creation Date',
-        style: columnStyle,
-      },
+      // {
+      //   id: 'orderDate',
+      //   label: 'Order Date',
+      //   style: columnStyle,
+      // },
+      // {
+      //   id: 'Creation Date',
+      //   label: 'Creation Date',
+      //   style: columnStyle,
+      // },
       {
         id: 'dueDate',
         label: 'Due Date',
@@ -166,7 +166,7 @@ const WorkOrders: React.FC<WorkOrderValue> = ({ report }) => {
     const headers = [
       'Customer Name',
       'Mooring Number',
-      'Marina',
+      'Boatyard',
       'Assigned To',
       'Due Date',
       'Status',
@@ -603,8 +603,8 @@ export default WorkOrders
 //         },
 //       },
 //       {
-//         id: 'marina',
-//         label: 'Marina',
+//         id: 'Boatyard',
+//         label: 'Boatyard',
 //         style: {
 //           backgroundColor: '#FFFFFF',
 //           color: '#000000',

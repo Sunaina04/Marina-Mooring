@@ -53,7 +53,7 @@ describe('Estimates Components', () => {
         name: 'John Smith',
         date: '15, March 2024 to 15, March 2024',
         measurement: 'Length: 10m, Width: 3.8m',
-        place: 'Marina',
+        place: 'Boatyard',
       },
       {
         id: '02',
