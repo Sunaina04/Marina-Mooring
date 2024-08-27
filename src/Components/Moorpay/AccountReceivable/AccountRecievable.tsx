@@ -283,6 +283,10 @@ const AccountRecievable = () => {
     )
   }
 
+  const invoiceAmount = (data: any) => {
+    return '$' + '' + data?.invoiceAmount
+  }
+
   const outstandingInvoiceTableColumn = useMemo(
     () => [
       {
@@ -304,6 +308,7 @@ const AccountRecievable = () => {
       {
         id: 'invoiceAmount',
         label: 'Invoice Amount',
+        body: invoiceAmount,
         style: columnStyle,
       },
       {
@@ -338,7 +343,10 @@ const AccountRecievable = () => {
         color: 'black',
         label: 'Contact',
         filled: true,
-        // onClick: (row) => handleBottomSectionActionClick('Contact', row),
+        onClick: (row) => {
+          const email = 'matt.pusey@moorfind.com'
+          window.location.href = `mailto:${email}`
+        },
       },
       {
         color: 'black',
