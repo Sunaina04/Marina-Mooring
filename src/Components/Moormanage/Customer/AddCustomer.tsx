@@ -441,7 +441,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       conditionEyeDate: mooringRowData?.installConditionOfEyeDate || '',
       inspectionDate: mooringRowData?.inspectionDate || '',
       serviceAreaId: mooringRowData?.serviceAreaResponseDto?.serviceAreaName || '',
-      note: customer?.note || '',
+      note: customer?.notes || '',
       mooringStatus: mooringRowData?.mooringStatus?.status || '',
     }))
   }
