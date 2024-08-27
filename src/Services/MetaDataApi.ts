@@ -199,6 +199,14 @@ const metaDataApi = userApi.injectEndpoints({
         params: { pageNumber, pageSize },
       }),
     }),
+
+    getMooringStatusType: builder.mutation({
+      query: ({ pageNumber, pageSize }: { pageNumber?: number; pageSize?: number }) => ({
+        url: 'api/v1/metadata/mooringStatus',
+        method: 'GET',
+        params: { pageNumber, pageSize },
+      }),
+    }),
   }),
 })
 
@@ -225,4 +233,5 @@ export const {
   useGetServiceAreasMutation,
   useGetQuickBookCustomerMutation,
   useGetPaymentOptionMutation,
+  useGetMooringStatusTypeMutation,
 } = metaDataApi

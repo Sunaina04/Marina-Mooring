@@ -11,6 +11,9 @@ import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../Store/Slice/userSlice'
 import WorkOrders from '../Moorserve/WorkOrders/workOrders'
 import { ProgressSpinner } from 'primereact/progressspinner'
+import { useGetJobTypeMutation } from '../../Services/MetaDataApi'
+import { ErrorResponse, WorkOrderResponse } from '../../Type/ApiTypes'
+import { useGetJobLocationMutation } from '../../Services/Report/Reports'
 
 Chart.register(ArcElement, Tooltip, Legend)
 
@@ -62,20 +65,64 @@ const Report: React.FC = () => {
   const [serviceArea, setServiceArea] = useState<MetaData[]>([])
   const [jobType, setJobType] = useState<MetaData[]>([])
   const workOrdersRef = useRef<HTMLDivElement>(null)
-  const { getServiceAreaData } = ServiceAreaData()
+  const [getJobType] = useGetJobTypeMutation()
+  const [getJobLocation] = useGetJobLocationMutation()
 
-  const fetchMetaData = useCallback(async () => {
-    const { serviceAreaData } = await getServiceAreaData()
-    if (serviceAreaData !== null) {
-      setServiceArea(serviceAreaData)
+  const getJobTypeData = useCallback(async () => {
+    // setIsLoading(true)
+    try {
+      const response = await getJobType({}).unwrap()
+      const { status, content, message, totalSize } = response as WorkOrderResponse
+      if (status === 200 && Array.isArray(content)) {
+        setJobType(content)
+        // setWorkOrderData(content)
+        // setIsLoading(false)
+        // setTotalRecords(totalSize)
+      } else {
+        // setIsLoading(false)
+        // toast?.current?.show({
+        //   severity: 'error',
+        //   summary: 'Error',
+        //   detail: message,
+        //   life: 3000,
+        // })
+      }
+    } catch (error) {
+      const { message: msg } = error as ErrorResponse
+      // setIsLoading(false)
+      console.error('Error occurred while fetching customer data:', msg)
     }
-    if (serviceAreaData !== null) {
-      setJobType(serviceAreaData)
+  }, [selectedCustomerId])
+
+  const getJobLocationData = useCallback(async () => {
+    // setIsLoading(true)
+    try {
+      const response = await getJobLocation({}).unwrap()
+      const { status, content, message, totalSize } = response as WorkOrderResponse
+      if (status === 200 && Array.isArray(content)) {
+        setServiceArea(content)
+        // setWorkOrderData(content)
+        // setIsLoading(false)
+        // setTotalRecords(totalSize)
+      } else {
+        // setIsLoading(false)
+        // toast?.current?.show({
+        //   severity: 'error',
+        //   summary: 'Error',
+        //   detail: message,
+        //   life: 3000,
+        // })
+      }
+    } catch (error) {
+      const { message: msg } = error as ErrorResponse
+      // setIsLoading(false)
+      console.error('Error occurred while fetching customer data:', msg)
     }
-  }, [getServiceAreaData])
+  }, [selectedCustomerId])
 
   useEffect(() => {
-    fetchMetaData()
+    getJobTypeData()
+    getJobLocationData()
   }, [selectedCustomerId])
 
   useEffect(() => {
@@ -89,7 +136,7 @@ const Report: React.FC = () => {
   }
 
   const jobTypeData: ChartData<'pie'> = {
-    labels: jobType.map((item) => item?.serviceAreaName),
+    labels: jobType.map((item) => item?.type),
     datasets: [
       {
         label: 'Job Type',
@@ -116,7 +163,7 @@ const Report: React.FC = () => {
   }
 
   const serviceAreaData: ChartData<'pie'> = {
-    labels: serviceArea.map((item) => item?.serviceAreaName),
+    labels: serviceArea.map((item) => item?.jobLocation),
     datasets: [
       {
         label: 'Service Area',
@@ -162,7 +209,7 @@ const Report: React.FC = () => {
     onClick: (event, elements) => {
       if (elements.length > 0) {
         const index = elements[0].index
-        const label = jobType[index]?.serviceAreaName
+        const label = jobType[index]?.type
         setJobTypeSelected(true)
         setServiceAreaSelected(true)
       }

@@ -268,11 +268,9 @@ export interface FormDataProps {
   closeModal: () => void
   getFormsData: () => void
   toastRef?: any
-
 }
 export interface FormFillProps {
   formOpen: () => void
-  
 }
 export interface ShowImagesProps {
   handleNoteChange: (index: number, value: string) => void
@@ -293,5 +291,6 @@ export interface ResetModalProps {
 
 export interface PreviewProps {
   fileData: string
+  fileName: any
   onClose: () => void
 }

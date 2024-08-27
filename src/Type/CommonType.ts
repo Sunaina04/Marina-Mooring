@@ -87,6 +87,7 @@ export interface MetaData {
   status: string
   description: string
   technicianName: string
+  jobLocation: string
   firstName: string
   lastName: string
   boatyardName: string

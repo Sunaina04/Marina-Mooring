@@ -18,6 +18,7 @@ import {
   TypeOfBottomChain,
   TypeOfChainCondition,
   TypeOfEye,
+  TypeOfMooringStatus,
   TypeOfShackleSwivel,
   TypeOfSizeOfWeight,
   TypeOfWeightData,
@@ -51,6 +52,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
 }) => {
   const selectedCustomerId = useSelector(selectCustomerId)
   const { getTypeOfBoatTypeData } = TypeOfBoatType()
+  const { getTypeOfMooringStatusData } = TypeOfMooringStatus()
   const { getTypeOfWeightData } = TypeOfWeightData()
   const { getTypeOfChainData } = TypeOfChainCondition()
   const { getTypeOfEyeData } = TypeOfEye()
@@ -62,6 +64,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   const { getServiceAreaData } = ServiceAreaData()
 
   const [type, setType] = useState<MetaData[]>([])
+  const [mooringStatus, setMooringStatus] = useState<MetaData[]>([])
   const [weightData, setWeightData] = useState<MetaData[]>([])
   const [chainData, setChainData] = useState<MetaData[]>([])
   const [serviceArea, setServiceArea] = useState<MetaData[]>([])
@@ -79,7 +82,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   const [mooringImages, setMooringImages] = useState<string[]>([])
   const [hoveredIndex, setHoveredIndex] = useState<null | number>(null)
   const [encodedImages, setEncodedImages] = useState<string[]>([])
-  // const [imageRequestDtoList, setimageRequestDtoList] = useState<any>()
   const [imageRequestDtoList, setimageRequestDtoList] = useState<
     { imageName: string; imageData: string; note: string }[]
   >([])
@@ -145,10 +147,12 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     inspectionDate: '',
     serviceAreaId: '',
     imageNote: '',
+    mooringStatus: '',
   })
 
   const fetchMetaData = useCallback(async () => {
     const { typeOfBoatTypeData } = await getTypeOfBoatTypeData()
+    const { typeOfMooringStatusTypeData } = await getTypeOfMooringStatusData()
     const { typeOfWeightData } = await getTypeOfWeightData()
     const { typeOfChainData } = await getTypeOfChainData()
     const { TypeOfSizeOfWeightData } = await getTypeOfSizeOfWeightData()
@@ -162,6 +166,12 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       setIsLoading(false)
       setWeightData(typeOfWeightData)
     }
+
+    if (typeOfMooringStatusTypeData !== null) {
+      setIsLoading(false)
+      setMooringStatus(typeOfMooringStatusTypeData)
+    }
+
     if (typeOfChainData !== null) {
       setIsLoading(false)
       setChainData(typeOfChainData)
@@ -387,7 +397,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       inspectionDate: mooringRowData?.inspectionDate || '',
       conditionEyeDate: mooringRowData?.installConditionOfEyeDate || '',
       serviceAreaId: mooringRowData?.serviceAreaResponseDto?.serviceAreaName || '',
-      status: 3,
+      mooringStatus: mooringRowData?.mooringStatus?.status || '',
     }))
   }
 
@@ -423,7 +433,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
         shackleSwivelConditionId: formData?.shackleSwivelCondition?.id,
         pendantConditionId: formData?.pendantCondition,
         depthAtMeanHighWater: formData?.depthAtMeanHighWater,
-        statusId: 2,
+        statusId: formData?.mooringStatus?.id,
         inspectionDate: formData?.inspectionDate,
         imageRequestDtoList: imageRequestDtoList,
         serviceAreaId: formData?.serviceAreaId?.id,
@@ -466,8 +476,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   }
 
   const UpdateMooring = async () => {
-    // alert("hi")
-
     try {
       setIsLoading(true)
 
@@ -531,9 +539,11 @@ const AddMoorings: React.FC<AddMooringProps> = ({
         if (formData?.serviceAreaId?.id !== mooringRowData?.serviceAreaResponseDto?.id) {
           payload.serviceAreaId = formData.serviceAreaId.id
         }
+        if (formData?.mooringStatus?.id !== mooringRowData?.mooringStatus?.id) {
+          payload.statusId = formData.mooringStatus.id
+        }
 
         payload.gpsCoordinates = gpsCoordinatesValue
-        payload.statusId = 3
         payload.imageRequestDtoList = imageRequestDtoList
         payload.id = mooringRowData?.id
         payload.mooringNumber = mooringRowData?.mooringNumber
@@ -1142,20 +1152,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                     </span>
                   </div>
                   <div className="mt-2">
-                    {/* <InputComponent
-                      value={formData?.boatType}
-                      type="text"
-                      onChange={(e) => handleInputChange('boatType', e.target.value)}
-                      style={{
-                        width: '230px',
-                        height: '32px',
-                        border: '1px solid #D5E1EA',
-                        borderRadius: '0.50rem',
-                        fontSize: '0.8rem',
-                        paddingLeft: '0.5rem',
-                      }}
-                    /> */}
-
                     <Dropdown
                       value={formData?.boatType}
                       onChange={(e) => handleInputChange('boatType', e.target.value)}
@@ -1177,6 +1173,30 @@ const AddMoorings: React.FC<AddMooringProps> = ({
 
               <div className="flex gap-6">
                 <div>
+                  <div className="mt-3">
+                    <div>
+                      <span className="font-medium text-sm text-[#000000]">
+                        <div className="flex gap-1">Mooring Status</div>
+                      </span>
+                    </div>
+                    <div className="mt-2">
+                      <Dropdown
+                        value={formData?.mooringStatus}
+                        onChange={(e) => handleInputChange('mooringStatus', e.target.value)}
+                        options={mooringStatus}
+                        optionLabel="status"
+                        editable
+                        disabled={isLoading}
+                        style={{
+                          width: '230px',
+                          height: '32px',
+                          border: '1px solid #D5E1EA',
+                          borderRadius: '0.50rem',
+                          fontSize: '0.8rem',
+                        }}
+                      />
+                    </div>
+                  </div>
                   <div className="mt-3">
                     <div>
                       <span className="font-medium text-sm text-[#000000]">
@@ -1203,30 +1223,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                       />
                     </div>
                   </div>
-
-                  {/* <div className="mt-3">
-                    <div>
-                      <span className="font-medium text-sm text-[#000000]">
-                        <div className="flex gap-1">Boat Type</div>
-                      </span>
-                    </div>
-
-                    <div className="mt-2">
-                      <Dropdown
-                        value={formData?.type}
-                        onChange={(e) => handleInputChange('type', e.target.value)}
-                        options={[]}
-                        disabled={isLoading}
-                        style={{
-                          width: '230px',
-                          height: '32px',
-                          border: '1px solid #D5E1EA',
-                          borderRadius: '0.50rem',
-                          fontSize: '0.8rem',
-                        }}
-                      />
-                    </div>
-                  </div> */}
 
                   <div className="mt-3">
                     <span className="font-medium text-sm text-[#000000]">
@@ -1856,29 +1852,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   </div>
                 </div>
 
-                {/* <div className="mt-3">
-                  <div>
-                    <span className="font-medium text-sm text-[#000000]">
-                      <div className="flex gap-1">Boat Type</div>
-                    </span>
-                  </div>
-
-                  <div className="mt-2">
-                    <InputComponent
-                      value={formData?.boatType}
-                      onChange={(e) => handleInputChange('boatType', e.target.value)}
-                      style={{
-                        width: '230px',
-                        height: '32px',
-                        border: '1px solid #D5E1EA',
-                        borderRadius: '0.50rem',
-                        fontSize: '0.8rem',
-                        paddingLeft: '0.5rem',
-                      }}
-                    />
-                  </div>
-                </div> */}
-
                 <div className="mt-3">
                   <div>
                     <span className="font-medium text-sm text-[#000000]">
@@ -1892,6 +1865,31 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                       onChange={(e) => handleInputChange('boatType', e.target.value)}
                       options={type}
                       optionLabel="boatType"
+                      disabled={isLoading}
+                      style={{
+                        width: '230px',
+                        height: '32px',
+                        border: '1px solid #D5E1EA',
+                        borderRadius: '0.50rem',
+                        fontSize: '0.8rem',
+                      }}
+                    />
+                  </div>
+                </div>
+
+                <div className="mt-3">
+                  <div>
+                    <span className="font-medium text-sm text-[#000000]">
+                      <div className="flex gap-1">Mooring Status</div>
+                    </span>
+                  </div>
+                  <div className="mt-2">
+                    <Dropdown
+                      value={formData?.mooringStatus}
+                      onChange={(e) => handleInputChange('mooringStatus', e.target.value)}
+                      options={mooringStatus}
+                      optionLabel="status"
+                      editable
                       disabled={isLoading}
                       style={{
                         width: '230px',

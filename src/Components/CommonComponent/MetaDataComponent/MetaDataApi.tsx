@@ -20,6 +20,7 @@ import {
   useGetQuickBookCustomerMutation,
   useGetPaymentOptionMutation,
   useGetJobTypeMutation,
+  useGetMooringStatusTypeMutation,
 } from '../../../Services/MetaDataApi'
 import { ErrorResponse, MetaDataCustomerResponse, MetaDataResponse } from '../../../Type/ApiTypes'
 
@@ -387,6 +388,28 @@ export const TypeOfBoatType = () => {
   })
 
   return { getTypeOfBoatTypeData }
+}
+
+export const TypeOfMooringStatus = () => {
+  const [getMooringStatusType] = useGetMooringStatusTypeMutation()
+
+  const fetchTypeOfMooringStatusType = async (getData: any) => {
+    try {
+      const response = await getData({})
+      const { status, content } = response.data as MetaDataResponse
+      return status === 200 && Array.isArray(content) ? content : null
+    } catch (error) {
+      const { message } = error as ErrorResponse
+      console.error('Error fetching metadata:', message)
+      return null
+    }
+  }
+
+  const getTypeOfMooringStatusData = async () => ({
+    typeOfMooringStatusTypeData: await fetchTypeOfMooringStatusType(getMooringStatusType),
+  })
+
+  return { getTypeOfMooringStatusData }
 }
 
 export const CustomersData = (customerOwnerId: any) => {

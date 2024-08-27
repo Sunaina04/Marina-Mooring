@@ -23,6 +23,7 @@ import {
   BoatyardNameData,
   CustomersType,
   ServiceAreaData,
+  TypeOfMooringStatus,
 } from '../../CommonComponent/MetaDataComponent/MetaDataApi'
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
@@ -75,6 +76,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [customerImageVisible, setCustomerImageVisible] = useState(false)
   const [mooringImageVisible, setMooringImageVisible] = useState(false)
   const [hoveredIndex, setHoveredIndex] = useState<null | number>(null)
+  const [mooringStatus, setMooringStatus] = useState<MetaData[]>([])
+
   const getFomattedCoordinate = (gpsCoordinatesValue: any) => {
     try {
       let [lat, long]: any = gpsCoordinatesValue.split(' ')
@@ -136,6 +139,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     inspectionDate: '',
     serviceAreaId: '',
     imagesNote: '',
+    mooringStatus: '',
   })
 
   const { getStatesData } = StatesData(country?.id || customer?.countryResponseDto?.id)
@@ -152,7 +156,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [addCustomer] = useAddCustomerMutation()
   const [updateCustomer] = useUpdateCustomerMutation()
   const [updateMooring] = useUpdateMooringsMutation()
-  const scrollableContainerRef = useRef(null)
+  const { getTypeOfMooringStatusData } = TypeOfMooringStatus()
+
   const toastRef = useRef<Toast>(null)
 
   const handlePositionChange = (lat: number, lng: number) => {
@@ -163,25 +168,11 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     setGpsCoordinatesValue(concatenatedValue)
   }
 
-  // const handleFocus = () => {
-  //   // if (scrollableContainerRef.current) {
-
-  //   //   scrollableContainerRef.current.scrollTop = 0;
-  //   const passwordMessage = document.getElementById('mooring')
-  //   if (passwordMessage) {
-  //     passwordMessage.style.display = 'block'
-  //     passwordMessage.scrollIntoView({ behavior: 'smooth', block: 'start'})
-  //   }
-  // }
-
   const handleFocus = () => {
-    // Check for fields with errors
     const errorFields = document.querySelectorAll('.error')
     if (errorFields.length > 0) {
-      // If there are error fields, scroll to the first one
       errorFields[0].scrollIntoView({ behavior: 'smooth', block: 'start' })
     } else {
-      // Otherwise, proceed with the original logic
       const passwordMessage = document.getElementById('mooring')
       if (passwordMessage) {
         passwordMessage.style.display = 'block'
@@ -451,14 +442,14 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       inspectionDate: mooringRowData?.inspectionDate || '',
       serviceAreaId: mooringRowData?.serviceAreaResponseDto?.serviceAreaName || '',
       note: customer?.note || '',
-      status: 1,
+      mooringStatus: mooringRowData?.mooringStatus?.status || '',
     }))
   }
 
   const SaveCustomer = async () => {
     const errors = validateFields()
     if (Object.keys(errors).length > 0) {
-      setCheckedMooring(false);
+      setCheckedMooring(false)
       return
     }
     let payload
@@ -500,7 +491,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             pendantConditionId: formData?.pendantCondition,
             depthAtMeanHighWater: formData?.depthAtMeanHighWater,
             imageRequestDtoList: mooringImageRequestDtoList,
-            statusId: 1,
+            statusId: formData?.mooringStatus?.id,
           },
         ],
       }
@@ -511,7 +502,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         phone: phone,
         address: address,
         notes: formData.note,
-        // aptSuite: sectorBlock,
         stateId: state?.id,
         countryId: country?.id,
         imageRequestDtoList: customerImageRequestDtoList,
@@ -681,8 +671,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         if (formData?.serviceAreaId?.id !== mooringRowData?.serviceAreaResponseDto?.id) {
           payload.serviceAreaId = formData.serviceAreaId.id
         }
+        if (formData?.mooringStatus?.id !== mooringRowData?.mooringStatus?.id) {
+          payload.statusId = formData.mooringStatus.id
+        }
         payload.gpsCoordinates = gpsCoordinatesValue
-        payload.statusId = 3
         payload.imageRequestDtoList = mooringImageRequestDtoList
         payload.id = mooringRowData?.id
         payload.mooringNumber = mooringRowData?.mooringNumber
@@ -752,6 +744,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       const { typeOfShackleSwivelData } = await getTypeOfShackleSwivelData()
       const { boatYardName } = await getBoatYardNameData()
       const { serviceAreaData } = await getServiceAreaData()
+      const { typeOfMooringStatusTypeData } = await getTypeOfMooringStatusData()
+
       if (typeOfBoatTypeData !== null) {
         setIsLoading(false)
         setType(typeOfBoatTypeData)
@@ -786,6 +780,10 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       if (boatYardName !== null) {
         setIsLoading(false)
         setBoatyardName(boatYardName)
+      }
+      if (typeOfMooringStatusTypeData !== null) {
+        setIsLoading(false)
+        setMooringStatus(typeOfMooringStatusTypeData)
       }
     }
   }, [])
@@ -1980,6 +1978,30 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                       </div>
                     </div>
 
+                    <div className="mt-3">
+                      <div>
+                        <span className="font-medium text-sm text-[#000000]">
+                          <div className="flex gap-1">Mooring Status</div>
+                        </span>
+                      </div>
+                      <div className="mt-2">
+                        <Dropdown
+                          value={formData?.mooringStatus}
+                          onChange={(e) => handleInputChange('mooringStatus', e.target.value)}
+                          options={mooringStatus}
+                          optionLabel="status"
+                          editable
+                          disabled={isLoading}
+                          style={{
+                            width: '230px',
+                            height: '32px',
+                            border: '1px solid #D5E1EA',
+                            borderRadius: '0.50rem',
+                            fontSize: '0.8rem',
+                          }}
+                        />
+                      </div>
+                    </div>
                     <div className="mt-3">
                       <div>
                         <span className="font-medium text-sm text-[#000000]">Pin on Map</span>

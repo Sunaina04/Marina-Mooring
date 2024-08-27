@@ -408,7 +408,13 @@ const Forms = () => {
           </div>
         </div>
 
-        {viewPdf && <Preview fileData={viewPdf?.formData} onClose={() => setViewPdf(null)} />}
+        {viewPdf && (
+          <Preview
+            fileData={viewPdf?.formData}
+            fileName={viewPdf?.formName}
+            onClose={() => setViewPdf(null)}
+          />
+        )}
       </div>
     </>
   )
