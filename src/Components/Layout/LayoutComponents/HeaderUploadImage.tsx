@@ -43,7 +43,6 @@ const HeaderUploadImage: React.FC<any> = ({ isLoading, handleModalClose, custome
         note: '',
         imageData: image,
       }
-
       const response = await uploadProfileImage({ payload, userId: customerId?.id }).unwrap()
       const { status, message } = response as UserProfile
       if (status === 200 || status === 201) {

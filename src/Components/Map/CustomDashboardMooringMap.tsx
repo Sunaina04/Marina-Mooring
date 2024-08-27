@@ -189,7 +189,7 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
         <div style={boxStyle}>
           <div className="flex justify-between  h-8">
             <h2>Status</h2>
-            <div className="flex">
+            {/* <div className="flex">
               <button
                 className={`relative inline-flex h-6 mb-14 w-11 items-center rounded-full transition-colors duration-300 ${
                   checked ? 'bg-green-500' : 'bg-gray-300'
@@ -201,7 +201,7 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
                   }`}
                 />
               </button>
-            </div>
+            </div> */}
           </div>
 
           <div className="mt-1">
