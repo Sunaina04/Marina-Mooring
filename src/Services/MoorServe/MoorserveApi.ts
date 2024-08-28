@@ -140,7 +140,7 @@ const MoorserveApi = userApi.injectEndpoints({
         pageSize?: number
         sortBy?: string
         sortDir?: string
-        searchText: string
+        searchText?: string
       }) => ({
         url: 'api/v1/form/fetchForms',
         method: 'GET',

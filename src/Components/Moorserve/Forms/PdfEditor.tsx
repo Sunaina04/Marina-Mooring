@@ -1,142 +1,451 @@
-import React, { useState, useRef } from 'react'
-import { PDFDocument, rgb, StandardFonts } from 'pdf-lib'
-import { saveAs } from 'file-saver'
+// import React, { useEffect, useRef, useState } from 'react'
+// import { Sidebar } from 'primereact/sidebar'
+// import { ProgressSpinner } from 'primereact/progressspinner'
+// import { Button } from 'primereact/button'
+// import { InputText } from 'primereact/inputtext'
+// import { Worker, Viewer } from '@react-pdf-viewer/core'
+// import '@react-pdf-viewer/core/lib/styles/index.css'
+// import { convertBytetoUrl } from '../../Helper/Helper'
+// import { PreviewProps } from '../../../Type/ComponentBasedType'
+// import { PDFDocument, rgb, StandardFonts } from 'pdf-lib'
+// import { usePDF } from 'react-to-pdf'
+// import { set } from 'lodash'
+
+// const PDFEditor: React.FC<PreviewProps> = ({ fileData, fileName, onClose }) => {
+//   const [loading, setLoading] = useState(false)
+//   const [pdfUrl, setPdfUrl] = useState('')
+//   const [textEntries, setTextEntries] = useState<
+//     { text: string; x: number; y: number; size: number }[]
+//   >([])
+//   const [fontSize, setFontSize] = useState<any>(16)
+//   const [newText, setNewText] = useState('')
+//   const [isDownloadVisible, setIsDownloadVisible] = useState(false)
+//   const [clickPosition, setClickPosition] = useState<{ x: number; y: number } | null>(null)
+//   const [isAddTextVisible, setIsAddTextVisible] = useState(false)
+//   const { toPDF, targetRef } = usePDF({
+//     filename: fileName,
+//   })
+//   const pdfRef = useRef<HTMLDivElement>(null)
+
+//   useEffect(() => {
+//     if (fileData) {
+//       setLoading(true)
+//       const dummyUrl = convertBytetoUrl(fileData)
+//       setPdfUrl(dummyUrl)
+//     }
+//   }, [fileData])
+
+//   useEffect(() => {
+//     if (pdfUrl) {
+//       setLoading(false)
+//     }
+//   }, [pdfUrl])
+
+//   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+//     setIsAddTextVisible(true)
+//     const rect = pdfRef.current?.getBoundingClientRect()
+//     if (rect) {
+//       const x = e.clientX - rect.left
+//       const y = e.clientY - rect.top + 5
+//       console.log('Click Position:', { x, y })
+//       setClickPosition({ x, y })
+//     }
+//   }
+
+//   const handleAddText = () => {
+//     if (clickPosition && newText) {
+//       const newEntries = [
+//         ...textEntries,
+//         { text: newText, x: clickPosition.x, y: clickPosition.y, size: fontSize },
+//       ]
+//       console.log('Text Entries:', newEntries)
+//       setTextEntries(newEntries)
+//       setNewText('')
+//       setFontSize(fontSize)
+//       setClickPosition(null)
+//       setIsDownloadVisible(true)
+//     }
+//   }
+
+//   const handleDownload = () => {
+//     if (pdfUrl) {
+//       toPDF()
+//       const a = document.createElement('a')
+//       a.href = pdfUrl
+//       a.download = fileName
+//       a.click()
+//     }
+//   }
+
+//   return (
+//     <Sidebar visible position="right" style={{ width: '40vw' }} onHide={onClose}>
+//       {loading ? (
+//         <div
+//           style={{
+//             height: '100vh',
+//             display: 'flex',
+//             justifyContent: 'center',
+//             alignItems: 'center',
+//           }}>
+//           <ProgressSpinner
+//             style={{ width: '50px', height: '50px' }}
+//             strokeWidth="3"
+//             animationDuration="1.5s"
+//           />
+//         </div>
+//       ) : (
+//         <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', padding: '20px' }}>
+//           {isAddTextVisible && (
+//             <>
+// <div
+//   style={{
+//     display: 'flex',
+//     justifyContent: 'space-between',
+//     alignItems: 'center',
+//     borderRadius: '8px',
+//     marginBottom: '15px',
+//   }}>
+//   <div style={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
+//     <InputText
+//       value={fontSize}
+//       type="number"
+//       onChange={(e) => setFontSize(Number(e.target.value || 16))}
+//       style={{
+//         width: '64px',
+//         marginRight: '10px',
+//         borderRadius: '4px',
+//         border: '1px solid #ccc',
+//       }}
+//       placeholder="Font Size"
+//     />
+
+//     <InputText
+//       value={newText}
+//       onChange={(e) => setNewText(e.target.value)}
+//       placeholder="Enter text"
+//       style={{
+//         flexGrow: 1,
+//         padding: '8px',
+//         borderRadius: '4px',
+//         border: '1px solid #ccc',
+//       }}
+//     />
+//   </div>
+
+//   <Button
+//     label="Add Text"
+//     onClick={handleAddText}
+//     style={{
+//       marginLeft: '20px',
+//       marginRight: '10px',
+//       padding: '8px 12px',
+//       height: '38px',
+//       lineHeight: '22px',
+//     }}
+//   />
+
+//   {isDownloadVisible && (
+//     <Button
+//       label="Download"
+//       icon="pi pi-download"
+//       onClick={handleDownload}
+//       style={{
+//         marginRight: '-10px',
+//         padding: '8px 12px',
+//         height: '38px',
+//         lineHeight: '22px',
+//       }}
+//     />
+//   )}
+// </div>
+//             </>
+//           )}
+
+//           <div ref={targetRef} style={{ flexGrow: 1, overflow: 'auto', position: 'relative' }}>
+//             <div ref={pdfRef} style={{ position: 'relative', height: '100%' }}>
+//               <div
+//                 onClick={handleClick}
+//                 style={{
+//                   cursor: 'text',
+//                   position: 'relative',
+//                   height: '100%',
+//                   zoom: (window.outerWidth - window.innerWidth) / window.outerWidth,
+//                 }}>
+//                 <Worker workerUrl={`https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js`}>
+//                   <Viewer fileUrl={pdfUrl} />
+//                 </Worker>
+//                 {textEntries.map((entry, index) => (
+//                   <span
+//                     key={index}
+//                     style={{
+//                       position: 'absolute',
+//                       left: `${entry.x}px`,
+//                       top: `calc(${entry.y}px - ${entry.size}px)`,
+//                       fontSize: `${entry.size}px`,
+//                       color: 'black',
+//                       whiteSpace: 'pre-wrap',
+//                       transform: 'translate(-50%, -50%)',
+//                     }}>
+//                     {entry.text}
+//                   </span>
+//                 ))}
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       )}
+//     </Sidebar>
+//   )
+// }
+
+// export default PDFEditor
+
+import React, { useEffect, useRef, useState } from 'react'
+import { Sidebar } from 'primereact/sidebar'
+import { ProgressSpinner } from 'primereact/progressspinner'
+import { Button } from 'primereact/button'
+import { Dialog } from 'primereact/dialog'
 import { Worker, Viewer } from '@react-pdf-viewer/core'
 import '@react-pdf-viewer/core/lib/styles/index.css'
+import { convertBytetoUrl } from '../../Helper/Helper'
+import { PreviewProps } from '../../../Type/ComponentBasedType'
+import { usePDF } from 'react-to-pdf'
+import { InputText } from 'primereact/inputtext'
+import { InputNumber } from 'primereact/inputnumber'
 
-const PdfEditor = () => {
-  const [pdfBytes, setPdfBytes] = useState<Uint8Array | null>(null)
-  const [inputText, setInputText] = useState<string>('')
-  const [fontSize, setFontSize] = useState<number>(16)
-  const [fontFamily, setFontFamily] = useState<keyof typeof StandardFonts>('Helvetica')
-  const [textColor, setTextColor] = useState({ r: 0, g: 0, b: 0 })
-  const textEntries = useRef<Array<{ text: string; x: number; y: number }>>([])
+const PDFEditor: React.FC<PreviewProps> = ({ fileData, fileName, onClose }) => {
+  const [loading, setLoading] = useState(false)
+  const [pdfUrl, setPdfUrl] = useState('')
+  const [newText, setNewText] = useState('')
+  const [textSize, setTextSize] = useState<any>(16)
+  const { toPDF, targetRef } = usePDF({ filename: fileName })
+  const [textEntries, setTextEntries] = useState<
+    { text: string; x: number; y: number; size: number }[]
+  >([])
+  const [clickPosition, setClickPosition] = useState<{ x: number; y: number } | null>(null)
+  const pdfRef = useRef<HTMLDivElement>(null)
+  const [showDialog, setShowDialog] = useState(false)
 
-  const loadPdf = async () => {
-    const url = '/path-to-your-pdf-template/Bourne-Inspection-Form.pdf' // Update with your PDF template path
-    const existingPdfBytes = await fetch(url).then((res) => res.arrayBuffer())
-    setPdfBytes(new Uint8Array(existingPdfBytes))
-  }
+  useEffect(() => {
+    if (fileData) {
+      setLoading(true)
+      const dummyUrl = convertBytetoUrl(fileData)
+      setPdfUrl(dummyUrl)
+    }
+  }, [fileData])
 
-  const addText = async (text: string, x: number, y: number) => {
-    if (!pdfBytes) return
+  useEffect(() => {
+    if (pdfUrl) {
+      setLoading(false)
+    }
+  }, [pdfUrl])
 
-    const pdfDoc = await PDFDocument.load(pdfBytes)
-    const font = await pdfDoc.embedFont(StandardFonts[fontFamily])
-    const pages = pdfDoc.getPages()
-    const firstPage = pages[0]
-
-    firstPage.drawText(text, {
-      x,
-      y,
-      size: fontSize,
-      font: font,
-      color: rgb(textColor.r / 255, textColor.g / 255, textColor.b / 255),
-    })
-
-    textEntries.current.push({ text, x, y })
-    const modifiedPdfBytes = await pdfDoc.save()
-    setPdfBytes(new Uint8Array(modifiedPdfBytes))
-  }
-
-  const undoLastText = async () => {
-    if (textEntries.current.length === 0 || !pdfBytes) return
-
-    const lastEntry = textEntries.current.pop()
-    // Recreate PDF without the last text entry
-    const pdfDoc = await PDFDocument.load(pdfBytes)
-    const font = await pdfDoc.embedFont(StandardFonts[fontFamily])
-    const pages = pdfDoc.getPages()
-    const firstPage = pages[0]
-
-    textEntries.current.forEach((entry) => {
-      firstPage.drawText(entry.text, {
-        x: entry.x,
-        y: entry.y,
-        size: fontSize,
-        font: font,
-        color: rgb(textColor.r / 255, textColor.g / 255, textColor.b / 255),
-      })
-    })
-
-    const modifiedPdfBytes = await pdfDoc.save()
-    setPdfBytes(new Uint8Array(modifiedPdfBytes))
-  }
-
-  const clearText = () => {
-    textEntries.current = []
-    loadPdf() // Reload the original PDF without any added text
-  }
-
-  const savePdf = () => {
-    if (pdfBytes) {
-      const blob = new Blob([pdfBytes], { type: 'application/pdf' })
-      saveAs(blob, 'modified-form.pdf')
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = pdfRef.current?.getBoundingClientRect()
+    if (rect) {
+      const x = e.clientX - rect.left
+      const y = e.clientY - rect.top + 5
+      setClickPosition({ x, y })
+      setShowDialog(true)
     }
   }
 
-  const handleTextInput = () => {
-    const x = 50 // X coordinate where the text will be placed
-    const y = 700 // Y coordinate where the text will be placed
-    addText(inputText, x, y)
+  const handleAddText = () => {
+    if (clickPosition && newText) {
+      setTextEntries([
+        ...textEntries,
+        { text: newText, x: clickPosition.x, y: clickPosition.y, size: textSize },
+      ])
+      setNewText('')
+      setTextSize(16)
+      setClickPosition(null)
+      setShowDialog(false)
+    }
   }
 
-  React.useEffect(() => {
-    loadPdf()
-  }, [])
+  const handleDownload = () => {
+    if (pdfUrl) {
+      toPDF()
+      const a = document.createElement('a')
+      a.href = pdfUrl
+      a.download = fileName
+      a.click()
+    }
+  }
 
   return (
-    <div>
-      <div>
-        <input
-          type="text"
-          value={inputText}
-          onChange={(e) => setInputText(e.target.value)}
-          placeholder="Your text here"
-        />
-        <input
-          type="number"
-          value={fontSize}
-          onChange={(e) => setFontSize(Number(e.target.value))}
-          placeholder="Font Size"
-        />
-        <select
-          value={fontFamily}
-          onChange={(e) => setFontFamily(e.target.value as keyof typeof StandardFonts)}>
-          <option value="Helvetica">Helvetica</option>
-          <option value="TimesRoman">Times Roman</option>
-          {/* Add other font options */}
-        </select>
+    <Sidebar visible position="right" style={{ width: '40vw' }} onHide={onClose}>
+      {loading ? (
+        <div
+          style={{
+            height: '100vh',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <ProgressSpinner
+            style={{ width: '50px', height: '50px' }}
+            strokeWidth="3"
+            animationDuration="1.5s"
+          />
+        </div>
+      ) : (
+        <>
+          <div
+            style={{ display: 'flex', flexDirection: 'column', height: '100vh', padding: '20px' }}>
+            {/* <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                borderRadius: '8px',
+                marginBottom: '15px',
+              }}>
+              <div style={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
+                <InputText
+                  value={textSize}
+                  type="number"
+                  onChange={(e) => setTextSize(Number(e.target.value || 16))}
+                  style={{
+                    width: '64px',
+                    marginRight: '10px',
+                    borderRadius: '4px',
+                    border: '1px solid #ccc',
+                  }}
+                  placeholder="Font Size"
+                />
 
-        <input
-          type="color"
-          value={`#${((1 << 24) + (textColor.r << 16) + (textColor.g << 8) + textColor.b)
-            .toString(16)
-            .slice(1)}`}
-          onChange={(e) => {
-            const hex = e.target.value
-            setTextColor({
-              r: parseInt(hex.slice(1, 3), 16),
-              g: parseInt(hex.slice(3, 5), 16),
-              b: parseInt(hex.slice(5, 7), 16),
-            })
-          }}
-        />
-        <button onClick={handleTextInput}>Add Text</button>
-        <button onClick={undoLastText}>Undo</button>
-        <button onClick={clearText}>Clear</button>
-        <button onClick={savePdf}>Save</button>
-      </div>
+                <InputText
+                  value={newText}
+                  onChange={(e) => setNewText(e.target.value)}
+                  placeholder="Enter text"
+                  style={{
+                    flexGrow: 1,
+                    padding: '8px',
+                    borderRadius: '4px',
+                    border: '1px solid #ccc',
+                  }}
+                />
+              </div>
 
-      <div>
-        {pdfBytes && (
-          <Worker workerUrl={`https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js`}>
-            <Viewer fileUrl={pdfBytes} />
-          </Worker>
-        )}
-      </div>
-    </div>
+              <Button
+                label="Add Text"
+                onClick={handleAddText}
+                style={{
+                  marginLeft: '20px',
+                  marginRight: '10px',
+                  padding: '8px 12px',
+                  height: '38px',
+                  lineHeight: '22px',
+                }}
+              />
+
+              <Button
+                label="Download"
+                icon="pi pi-download"
+                onClick={handleDownload}
+                style={{
+                  marginRight: '-10px',
+                  padding: '8px 12px',
+                  height: '38px',
+                  lineHeight: '22px',
+                }}
+              />
+            </div> */}
+            <div
+              style={{
+                position: 'fixed',
+                top: '20px',
+                right: '80px',
+                bottom: '40px',
+                zIndex: 1000,
+              }}>
+              <Button
+                label="Download PDF"
+                icon="pi pi-download"
+                className="p-button-rounded p-button-info"
+                onClick={handleDownload}
+              />
+            </div>
+
+            <div ref={targetRef} style={{ flexGrow: 1, overflow: 'auto', position: 'relative' }}>
+              <div ref={pdfRef} style={{ position: 'relative', height: '100%' }}>
+                <div
+                  onClick={handleClick}
+                  style={{
+                    cursor: 'text',
+                    zoom: (window.outerWidth - window.innerWidth) / window.outerWidth,
+                  }}>
+                  <Worker
+                    workerUrl={`https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js`}>
+                    <Viewer fileUrl={pdfUrl} />
+                  </Worker>
+                  {textEntries.map((entry, index) => (
+                    <span
+                      key={index}
+                      style={{
+                        position: 'absolute',
+                        left: `${entry.x}px`,
+                        top: `calc(${entry.y}px - ${entry.size}px)`,
+                        fontSize: `${entry.size}px`,
+                        color: 'black',
+                        whiteSpace: 'pre-wrap',
+                        transform: 'translate(-50%, -50%)',
+                      }}>
+                      {entry.text}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+          <Dialog
+            header="Enter Text"
+            visible={showDialog}
+            style={{ width: '30vw' }}
+            footer={
+              <div>
+                <Button label="Add" icon="pi pi-check" onClick={handleAddText} />
+                <Button
+                  label="Cancel"
+                  icon="pi pi-times"
+                  className="p-button-secondary"
+                  onClick={() => setShowDialog(false)}
+                />
+              </div>
+            }
+            onHide={() => setShowDialog(false)}>
+            <div style={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
+              <InputText
+                value={textSize}
+                type="number"
+                onChange={(e) => setTextSize(Number(e.target.value || 16))}
+                style={{
+                  width: '64px',
+                  marginRight: '10px',
+                  borderRadius: '4px',
+                  border: '1px solid #ccc',
+                }}
+                placeholder="Font Size"
+              />
+
+              <InputText
+                value={newText}
+                onChange={(e) => setNewText(e.target.value)}
+                placeholder="Enter text"
+                style={{
+                  flexGrow: 1,
+                  padding: '8px',
+                  borderRadius: '4px',
+                  border: '1px solid #ccc',
+                }}
+              />
+            </div>
+          </Dialog>
+        </>
+      )}
+    </Sidebar>
   )
 }
 
-export default PdfEditor
+export default PDFEditor

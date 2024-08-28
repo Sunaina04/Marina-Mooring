@@ -7,9 +7,17 @@ import { FaFileUpload } from 'react-icons/fa'
 import { Dialog } from 'primereact/dialog'
 import { AiOutlineDelete } from 'react-icons/ai'
 
-import { ErrorResponse, WorkOrderResponse } from '../../../Type/ApiTypes'
+import {
+  ErrorResponse,
+  FormsPayload,
+  FormsResponse,
+  ViewFormsResponse,
+  WorkOrderResponse,
+} from '../../../Type/ApiTypes'
 import {
   useAddWorkOrderMutation,
+  useGetFormsMutation,
+  useGetViewFormMutation,
   useUpdateWorkOrderMutation,
 } from '../../../Services/MoorServe/MoorserveApi'
 import {
@@ -43,6 +51,8 @@ import { ProgressSpinner } from 'primereact/progressspinner'
 import ReasonModal from '../../Moorpay/AccountReceivable/ReasonModal'
 import ApproveModal from '../../Moorpay/AccountReceivable/ApproveModal'
 import ShowImages from '../../CommonComponent/UploadImages'
+import Preview from '../Forms/Preview'
+import PDFEditor from '../Forms/PdfEditor'
 
 const AddWorkOrders: React.FC<WorkOrderProps> = ({
   workOrderData,
@@ -78,6 +88,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   const [customerBasedOnMooringId, setCustomerBasedOnMooringId] = useState<any[]>()
   const [technicians, setTechnicians] = useState<any[]>()
   const [moorings, setMoorings] = useState<MetaData[]>()
+  const [viewPdf, setViewPdf] = useState<any>()
   const [workOrderStatusValue, setWorkOrderStatusValue] = useState<MetaData[]>()
   const [customerNameValue, setcustomerNameValue] = useState<any[]>()
   const [boatyardsName, setBoatYardsName] = useState<MetaData[]>([])
@@ -91,6 +102,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   const [approveModalOpen, setApproveModalOpen] = useState(false)
   const [denyModalOpen, setDenyModalOpen] = useState(false)
   const [jobTypesValues, setJobTypesValues] = useState<any>()
+  const [formsData, setFormsData] = useState<any[]>([])
 
   const [hoveredIndex, setHoveredIndex] = useState<null | number>(null)
   const [customerImages, setCustomerImages] = useState<string[]>([])
@@ -116,12 +128,13 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   const { getJobTypeData } = JobTypesData()
   const { getTechniciansData } = GetTechnicians()
   const { getMooringIdsData } = GetMooringIds()
-
+  const [getForms] = useGetFormsMutation()
   const { getWorkOrderStatusData } = GetWorkOrderStatus()
   const [saveWorkOrder] = useAddWorkOrderMutation()
   const [updateWorkOrder] = useUpdateWorkOrderMutation()
   const [saveEstimation] = useAddEstimateMutation()
   const [updateEstimate] = useUpdateEstimateMutation()
+  const [getViewForms] = useGetViewFormMutation()
   const toastRef = useRef<Toast>(null)
   const [imageVisible, setImageVisible] = useState(false)
   const [imageRequestDtoList, setimageRequestDtoList] = useState<any>()
@@ -613,7 +626,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     const { WorkOrderStatus } = await getWorkOrderStatusData()
     const { customersData } = await getCustomersData()
     const { boatYardName } = await getBoatYardNameData()
-    const { jobTypeValue } = await getJobTypeData()
+    // const { jobTypeValue } = await getJobTypeData()
 
     if (getTechnicians !== null) {
       const firstLastName = getTechnicians.map((item) => ({
@@ -631,10 +644,10 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       setIsLoading(false)
       setWorkOrderStatusValue(WorkOrderStatus)
     }
-    if (jobTypeValue !== null) {
-      setIsLoading(false)
-      setJobTypesValues(jobTypeValue)
-    }
+    // if (jobTypeValue !== null) {
+    //   setIsLoading(false)
+    //   setJobTypesValues(jobTypeValue)
+    // }
 
     if (customersData !== null) {
       const firstLastName = customersData.map((item) => ({
@@ -743,9 +756,69 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     }
   }, [workOrder?.boatyards?.id, workOrder?.customerName?.id])
 
+  const getFormsData = async () => {
+    try {
+      let params: Params = {}
+      params.searchText = ''
+      const response = await getForms(params).unwrap()
+      const { status, message, content, totalSize } = response as FormsResponse
+      if (status === 200 && Array.isArray(content)) {
+        setIsLoading(false)
+        setFormsData(content)
+      } else {
+        setFormsData([])
+        toastRef?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+      }
+    } catch (error) {
+      const { message, data } = error as ErrorResponse
+      toastRef?.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: message || data?.message,
+        life: 3000,
+      })
+    }
+  }
+
+  const viewFormsData = async (id: any) => {
+    setIsLoading(true)
+    try {
+      const response = await getViewForms({ id: id }).unwrap()
+      const { status, content, message } = response as ViewFormsResponse
+      if (status === 200) {
+        setIsLoading(false)
+        setViewPdf(content)
+      } else {
+        setViewPdf('')
+        setIsLoading(false)
+        toastRef?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+      }
+    } catch (error) {
+      const { message, data } = error as ErrorResponse
+      setIsLoading(false)
+      toastRef?.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: message || data?.message,
+        life: 3000,
+      })
+    }
+  }
+
   useEffect(() => {
     fetchDataAndUpdate()
-  }, [fetchDataAndUpdate])
+    getFormsData()
+  }, [])
 
   useEffect(() => {
     if (workOrder?.boatyards?.id) {
@@ -1127,17 +1200,23 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 }}
               />
             </div>
-          </div>
+          </div> 
+          </div> */}
 
-          <div>
+        {editModeWorkOrder && (
+          <div className="mt-3">
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">Attach Form</div>
             </span>
             <div className="mt-1">
               <Dropdown
                 value={workOrder.attachForm}
-                onChange={(e) => handleInputChange('attachForm', e.target.value)}
-                optionLabel="status"
+                onChange={(e) => {
+                  handleInputChange('attachForm', e.target.value)
+                  viewFormsData(e.value.id)
+                }}
+                options={formsData}
+                optionLabel="fileName"
                 editable
                 disabled={isLoading || isAccountRecievable}
                 style={{
@@ -1150,7 +1229,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
               />
             </div>
           </div>
-        </div> */}
+        )}
 
         {/* Report Problem */}
         <div className=" mt-4 mb-20">
@@ -1373,6 +1452,13 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         />
         {/* <Toast ref={toastRef} /> */}
       </Dialog>
+      {viewPdf && (
+        <PDFEditor
+          fileData={viewPdf?.formData}
+          fileName={viewPdf?.formName}
+          onClose={() => setViewPdf(null)}
+        />
+      )}
     </>
   )
 }

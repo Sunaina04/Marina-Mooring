@@ -291,6 +291,6 @@ export interface ResetModalProps {
 
 export interface PreviewProps {
   fileData: string
-  fileName: any
+  fileName?: any
   onClose: () => void
 }
