@@ -41,8 +41,6 @@ const InventoryDetails: React.FC = () => {
   const [deleteInventory] = useDeleteInventoryMutation()
   const toast = useRef<Toast>(null)
   const navigate = useNavigate()
-  console.log('i m here in inventory')
-
   const handleEdit = (rowData: any) => {
     setEditMode(true)
     setModalVisible(true)

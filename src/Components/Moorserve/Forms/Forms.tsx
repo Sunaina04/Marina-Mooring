@@ -72,6 +72,7 @@ const Forms = () => {
   }
 
   const handleDownload = async (rowData: any) => {
+    setIsLoading(true)
     try {
       const dummyUrl = convertBytetoUrl(rowData.formData)
       const link = document.createElement('a')
@@ -88,15 +89,25 @@ const Forms = () => {
   }
 
   const handleDelete = async (rowData: any) => {
+    setIsLoading(true)
     try {
       const response = await deleteForm({
         id: rowData.id,
       }).unwrap()
       const { status, message } = response as FormsResponse
       if (status === 200) {
+        setIsLoading(false)
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
+          detail: message,
+          life: 3000,
+        })
+      } else {
+        setIsLoading(false)
+        toastRef?.current?.show({
+          severity: 'error',
+          summary: 'Error',
           detail: message,
           life: 3000,
         })
@@ -155,13 +166,22 @@ const Forms = () => {
   }
 
   const viewFormsData = async (id: any) => {
+    setIsLoading(true)
     try {
       const response = await getViewForms({ id: id }).unwrap()
-      const { status, content } = response as ViewFormsResponse
+      const { status, content, message } = response as ViewFormsResponse
       if (status === 200) {
+        setIsLoading(false)
         setViewPdf(content)
       } else {
         setViewPdf('')
+        setIsLoading(false)
+        toastRef?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
       }
     } catch (error) {
       const { message, data } = error as ErrorResponse
@@ -178,11 +198,19 @@ const Forms = () => {
   const downloadFormsData = async (id: any) => {
     try {
       const response = await getViewForms({ id: id }).unwrap()
-      const { status, content } = response as ViewFormsResponse
+      const { status, content, message } = response as ViewFormsResponse
       if (status === 200) {
         handleDownload(content)
+        setIsLoading(false)
       } else {
         setViewPdf('')
+        setIsLoading(false)
+        toastRef?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
       }
     } catch (error) {
       const { message, data } = error as ErrorResponse
