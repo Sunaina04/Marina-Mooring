@@ -21,6 +21,7 @@ const PDFEditor: React.FC<PreviewProps> = ({ fileData, fileName, onClose }) => {
     { text: string; x: number; y: number; size: number }[]
   >([])
   const [clickPosition, setClickPosition] = useState<{ x: number; y: number } | null>(null)
+  const [history, setHistory] = useState<{ text: string; x: number; y: number; size: number }[]>([]) // History will store the state before the last change
   const pdfRef = useRef<HTMLDivElement>(null)
   const [showDialog, setShowDialog] = useState(false)
 
@@ -50,14 +51,25 @@ const PDFEditor: React.FC<PreviewProps> = ({ fileData, fileName, onClose }) => {
 
   const handleAddText = () => {
     if (clickPosition && newText) {
-      setTextEntries([
-        ...textEntries,
-        { text: newText, x: clickPosition.x, y: clickPosition.y, size: textSize },
-      ])
+      setHistory([...textEntries]) // Store the current state in history before making changes
+      const newEntry = {
+        text: newText,
+        x: clickPosition.x,
+        y: clickPosition.y,
+        size: textSize,
+      }
+      setTextEntries([...textEntries, newEntry])
       setNewText('')
       setTextSize(16)
       setClickPosition(null)
       setShowDialog(false)
+    }
+  }
+
+  const handleUndo = () => {
+    if (history.length > 0) {
+      setTextEntries(history) // Restore the previous state
+      setHistory([]) // Clear the history since undo can only go back one step
     }
   }
 
@@ -132,6 +144,14 @@ const PDFEditor: React.FC<PreviewProps> = ({ fileData, fileName, onClose }) => {
                 icon="pi pi-download"
                 className="p-button-rounded p-button-info"
                 onClick={handleDownload}
+              />
+              <Button
+                label="Undo"
+                icon="pi pi-undo"
+                className="p-button-rounded p-button-secondary"
+                onClick={handleUndo}
+                style={{ marginLeft: '10px' }}
+                disabled={history.length === 0}
               />
             </div>
 
