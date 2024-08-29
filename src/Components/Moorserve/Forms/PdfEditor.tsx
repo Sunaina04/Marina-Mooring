@@ -21,7 +21,12 @@ const PDFEditor: React.FC<PreviewProps> = ({ fileData, fileName, onClose }) => {
     { text: string; x: number; y: number; size: number }[]
   >([])
   const [clickPosition, setClickPosition] = useState<{ x: number; y: number } | null>(null)
-  const [history, setHistory] = useState<{ text: string; x: number; y: number; size: number }[]>([]) // History will store the state before the last change
+  const [history, setHistory] = useState<
+    { textEntries: { text: string; x: number; y: number; size: number }[] }[]
+  >([]) // History for undo/redo functionality
+  const [redoStack, setRedoStack] = useState<
+    { textEntries: { text: string; x: number; y: number; size: number }[] }[]
+  >([]) // Redo stack
   const pdfRef = useRef<HTMLDivElement>(null)
   const [showDialog, setShowDialog] = useState(false)
 
@@ -51,7 +56,8 @@ const PDFEditor: React.FC<PreviewProps> = ({ fileData, fileName, onClose }) => {
 
   const handleAddText = () => {
     if (clickPosition && newText) {
-      setHistory([...textEntries]) // Store the current state in history before making changes
+      setHistory([...history, { textEntries: [...textEntries] }])
+      setRedoStack([]) // Clear redo stack on new action
       const newEntry = {
         text: newText,
         x: clickPosition.x,
@@ -68,13 +74,31 @@ const PDFEditor: React.FC<PreviewProps> = ({ fileData, fileName, onClose }) => {
 
   const handleUndo = () => {
     if (history.length > 0) {
-      setTextEntries(history) // Restore the previous state
-      setHistory([]) // Clear the history since undo can only go back one step
+      const previousState = history[history.length - 1]
+      setRedoStack([...redoStack, { textEntries }])
+      setTextEntries(previousState.textEntries)
+      setHistory(history.slice(0, history.length - 1))
     }
+  }
+
+  const handleRedo = () => {
+    if (redoStack.length > 0) {
+      const nextState = redoStack[redoStack.length - 1]
+      setHistory([...history, { textEntries }])
+      setTextEntries(nextState.textEntries)
+      setRedoStack(redoStack.slice(0, redoStack.length - 1))
+    }
+  }
+
+  const handleSave = () => {
+    setHistory([...history, { textEntries: [...textEntries] }])
+    setRedoStack([])
+    onClose()
   }
 
   const handleDownload = async () => {
     if (pdfUrl) {
+      handleSave() // Ensure all changes are saved before download
       toPDF()
       const existingPdfBytes = await fetch(pdfUrl).then((res) => res.arrayBuffer())
       const pdfDoc = await PDFDocument.load(existingPdfBytes)
@@ -140,10 +164,17 @@ const PDFEditor: React.FC<PreviewProps> = ({ fileData, fileName, onClose }) => {
                 height: '40px',
               }}>
               <Button
+                label="Save"
+                icon="pi pi-save"
+                className="p-button-rounded p-button-success"
+                onClick={handleSave}
+              />
+              <Button
                 label="Download PDF"
                 icon="pi pi-download"
                 className="p-button-rounded p-button-info"
                 onClick={handleDownload}
+                style={{ marginLeft: '10px' }}
               />
               <Button
                 label="Undo"
@@ -152,6 +183,14 @@ const PDFEditor: React.FC<PreviewProps> = ({ fileData, fileName, onClose }) => {
                 onClick={handleUndo}
                 style={{ marginLeft: '10px' }}
                 disabled={history.length === 0}
+              />
+              <Button
+                label="Redo"
+                icon="pi pi-redo"
+                className="p-button-rounded p-button-secondary"
+                onClick={handleRedo}
+                style={{ marginLeft: '10px' }}
+                disabled={redoStack.length === 0}
               />
             </div>
 
@@ -204,28 +243,17 @@ const PDFEditor: React.FC<PreviewProps> = ({ fileData, fileName, onClose }) => {
             onHide={() => setShowDialog(false)}>
             <div style={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
               <InputText
-                value={textSize}
-                type="number"
-                onChange={(e) => setTextSize(Number(e.target.value || 16))}
-                style={{
-                  width: '64px',
-                  marginRight: '10px',
-                  borderRadius: '4px',
-                  border: '1px solid #ccc',
-                }}
-                placeholder="Font Size"
-              />
-
-              <InputText
                 value={newText}
                 onChange={(e) => setNewText(e.target.value)}
-                placeholder="Enter text"
-                style={{
-                  flexGrow: 1,
-                  padding: '8px',
-                  borderRadius: '4px',
-                  border: '1px solid #ccc',
-                }}
+                placeholder="Enter your text"
+                style={{ flexGrow: 1, marginRight: '10px' }}
+              />
+              <InputText
+                value={textSize}
+                type="number"
+                onChange={(e) => setTextSize(parseInt(e.target.value))}
+                placeholder="Font size"
+                style={{ width: '60px' }}
               />
             </div>
           </Dialog>
