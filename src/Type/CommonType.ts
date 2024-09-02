@@ -1,3 +1,9 @@
+import {
+  GearOffIcon,
+  GearOnIcon,
+  NeedInspectionIcon,
+  NotInUseIcon,
+} from '../Components/Map/DefaultIcon'
 import { BoatYardData, UserData } from './ApiTypes'
 
 export interface CityProps {
@@ -167,4 +173,11 @@ export interface viewImageProp {
   showImage: {
     imageData: string
   }
+}
+
+export const iconsByStatus = {
+  GearOn: GearOnIcon,
+  GearOff: GearOffIcon,
+  NeedInspection: NeedInspectionIcon,
+  NotInUse: NotInUseIcon,
 }

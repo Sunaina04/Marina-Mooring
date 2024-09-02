@@ -12,6 +12,8 @@ export const properties = {
   moormanagePermission: 'MOORMANAGE/Permission',
   CustomersOwner: 'Companies',
   CustomerOwnerUsers: 'User Management',
+  CustomerDetails: 'Customer Details',
+  CustomerList: 'Customer List',
   label: 'ADD NEW',
   customerMooringHeader: 'Customer Moorings',
   reportHeader: 'Report',

@@ -214,8 +214,24 @@ const WorkOrders: React.FC<WorkOrderValue> = ({ report }) => {
     doc.save('WorkOrders.pdf')
   }
 
-  const handleExportPdf = () => {
-    dataToPdf(workOrderData)
+  const handleExportPdf = async () => {
+    setIsLoading(true)
+    const params: Params = {}
+    params.pageSize = 999999
+    const response = await getWorkOrder(params).unwrap()
+    const { status, content, message } = response as WorkOrderResponse
+    if (status === 200 && Array.isArray(content)) {
+      dataToPdf(content)
+      setIsLoading(false)
+    } else {
+      setIsLoading(false)
+      toast?.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: message,
+        life: 3000,
+      })
+    }
   }
 
   const getWorkOrderData = useCallback(async () => {

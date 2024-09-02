@@ -2,7 +2,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import DataTableComponent from '../CommonComponent/Table/DataTableComponent'
 import Header from '../Layout/LayoutComponents/Header'
 import { ActionButtonColumnProps, TableColumnProps } from '../../Type/Components/TableTypes'
-import CustomMooringPositionMap from '../Map/CustomMooringPositionMap'
 import { ErrorResponse, MooringAndWorkOrderResponse, MooringResponse } from '../../Type/ApiTypes'
 import {
   useGetAllOpenWorkOrdersAndMooringDueForServiceMutation,

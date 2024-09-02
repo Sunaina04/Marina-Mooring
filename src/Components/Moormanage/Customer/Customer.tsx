@@ -9,18 +9,15 @@ import {
 } from 'react'
 import CustomModal from '../../CustomComponent/CustomModal'
 import AddCustomer from './AddCustomer'
-import { FaEdit, FaSort, FaSortDown, FaSortUp } from 'react-icons/fa'
+import { FaEdit } from 'react-icons/fa'
 import { RiDeleteBin5Fill } from 'react-icons/ri'
 import { Dialog } from 'primereact/dialog'
-
 import {
   useDeleteCustomerMutation,
   useGetCustomerMutation,
-  useGetCustomersWithMooringMutation,
   useGetCustomerWithMooringWithCustomerImagesMutation,
 } from '../../../Services/MoorManage/MoormanageApi'
 import {
-  CustomerImage,
   CustomerPayload,
   CustomerResponse,
   CustomersWithMooringResponse,
@@ -29,26 +26,24 @@ import {
   MooringPayload,
   MooringResponseDtoList,
 } from '../../../Type/ApiTypes'
-
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 import Header from '../../Layout/LayoutComponents/Header'
 import InputTextWithHeader from '../../CommonComponent/Table/InputTextWithHeader'
 import { properties } from '../../Utils/MeassageProperties'
-import { Params } from '../../../Type/CommonType'
+import { Params, iconsByStatus } from '../../../Type/CommonType'
 import { Toast } from 'primereact/toast'
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import CustomMooringPositionMap from '../../Map/CustomMooringPositionMap'
-import { GearOffIcon, GearOnIcon, NeedInspectionIcon, NotInUseIcon } from '../../Map/DefaultIcon'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { Paginator } from 'primereact/paginator'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import { PositionType } from '../../../Type/Components/MapTypes'
 import AddImage from './AddImage'
-import ViewImage from '../../CommonComponent/ViewImage'
 import MooringInformations from '../../CommonComponent/MooringInformations'
 import { AppContext } from '../../../AppContext'
 import ViewImageDialog from '../../CommonComponent/ViewImageDialog'
+import { MooringTableColumnStyle } from '../../Style'
 
 const Customer = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -85,19 +80,14 @@ const Customer = () => {
   const [totalRecordsOne, setTotalRecordsOne] = useState<number>()
   const [leftContainerWidth, setLeftContainerWidth] = useState(false)
   const [rightContainerWidth, setRightContainerWidth] = useState(false)
-
   const [pageNumberTwo, setPageNumberTwo] = useState(0)
   const [pageNumber2, setPageNumber2] = useState(0)
   const [pageSizeTwo, setPageSizeTwo] = useState(10)
   const [totalRecordsTwo, setTotalRecordsTwo] = useState<number>()
   const [accordion, setAccordion] = useState('faq1')
   const [showImage, setShowImage] = useState({ id: '', imageData: '' })
-
   const { isMapModalOpen, IsdialogVisible, isUploadImageDialogVisible } = useContext(AppContext)
-
-  // const handleToggle = (id: string) => {
-  //   setAccordion((prevState) => (prevState === id ? '' : id))
-  // }
+  const position: PositionType = [39.4926173, -117.5714859]
 
   const handleToggle = (faq: SetStateAction<string>) => {
     if (faq === 'faq1' && accordion === 'faq1') {
@@ -113,53 +103,36 @@ const Customer = () => {
     setPageNumber1(event.first)
     setPageSize(event.rows)
   }
-
   const onPageChangeTwo = (event: any) => {
     setPageNumberTwo(event.page)
     setPageNumber2(event.first)
     setPageSizeTwo(event.rows)
   }
-
-  const position: PositionType = [39.4926173, -117.5714859]
-
   const parseCoordinates = (coordinates: any) => {
     if (!coordinates) return null
     const [latitude, longitude] = coordinates.split(' ').map(parseFloat)
     return isNaN(latitude) || isNaN(longitude) ? null : [latitude, longitude]
   }
-
   const gpsCoordinatesArray = mooringData.map(
     (mooring) => parseCoordinates(mooring.gpsCoordinates) || [39.4926173, -117.5714859],
   )
-
   const calculateCenter = (coordinatesArray: any) => {
     if (coordinatesArray.length === 0) {
-      return [39.4926173, -117.5714859] // Default coordinates if the array is empty
+      return [39.4926173, -117.5714859]
     }
-
     let totalLat = 0
     let totalLong = 0
-
     coordinatesArray.forEach(([lat, long]: any) => {
       totalLat += lat
       totalLong += long
     })
-
     const avgLat = totalLat / coordinatesArray.length
     const avgLong = totalLong / coordinatesArray.length
-
     return [avgLat, avgLong]
   }
 
   const initialPosition =
     gpsCoordinatesArray.length > 0 ? calculateCenter(gpsCoordinatesArray) : position
-
-  const iconsByStatus = {
-    GearOn: GearOnIcon,
-    GearOff: GearOffIcon,
-    NeedInspection: NeedInspectionIcon,
-    NotInUse: NotInUseIcon,
-  }
 
   const handleButtonClick = () => {
     setModalVisible(true)
@@ -178,9 +151,9 @@ const Customer = () => {
   }
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value)
     setPageNumber(0)
     setPageNumber1(0)
-    setSearchText(e.target.value)
   }
 
   const handleEdit = () => {
@@ -316,13 +289,6 @@ const Customer = () => {
     [],
   )
 
-  const MooringTableColumnStyle = {
-    backgroundColor: '#FFFFFF',
-    fontSize: '12px',
-    color: '#000000',
-    fontWeight: '700',
-  }
-
   const MooringTableColumn = useMemo(
     () => [
       {
@@ -350,12 +316,6 @@ const Customer = () => {
     [],
   )
 
-  const columnStyle = {
-    backgroundColor: '#FFFFFF',
-    fontWeight: '700',
-    fontSize: '12px',
-  }
-
   const customerImagesColumns = useMemo(
     () => [
       {
@@ -363,11 +323,10 @@ const Customer = () => {
         label: 'id',
         style: { width: '100px', backgroundColor: '#FFFFFF', fontWeight: '700', fontSize: '12px' },
       },
-
       {
         id: 'imageName',
         label: 'Image Name',
-        style: columnStyle,
+        style: { backgroundColor: '#FFFFFF', fontWeight: '700', fontSize: '12px' },
       },
     ],
     [],
@@ -420,16 +379,9 @@ const Customer = () => {
     try {
       let params: Params = {}
       params.searchText = searchText
-      if (pageNumber) {
-        params.pageNumber = pageNumber
-      }
-      if (pageSize) {
-        params.pageSize = pageSize
-      }
-      if (sortable) {
-        params.sortBy = 'customerType'
-      }
-
+      pageNumber && (params.pageNumber = pageNumber)
+      pageSize && (params.pageSize = pageSize)
+      sortable && (params.sortBy = 'customerType')
       const response = await getCustomer(params).unwrap()
       const { status, content, message, totalSize } = response as CustomerResponse
       if (status === 200 && Array.isArray(content)) {
@@ -464,8 +416,8 @@ const Customer = () => {
       console.error('Error occurred while fetching customer data:', msg)
     }
   }, [
-    getCustomer,
     searchText,
+    getCustomer,
     selectedCustomerId,
     pageSize,
     pageNumber,
@@ -630,7 +582,7 @@ const Customer = () => {
         </div>
       </div>
     )
-  }, [customerData, selectedProduct])
+  }, [customerData, selectedProduct, searchText])
 
   const CustomerRecordHeader = useMemo(() => {
     return (
@@ -865,7 +817,6 @@ const Customer = () => {
         </div>
         <div className="flex flex-col md:flex-row mt-3">
           {/* Left Panel */}
-
           {leftContainerWidth ? (
             <div
               style={{
@@ -896,7 +847,7 @@ const Customer = () => {
                   letterSpacing: '4px',
                 }}
                 className="pt-14">
-                Customer List
+                {properties.CustomerList}
               </div>
             </div>
           ) : (
@@ -964,12 +915,11 @@ const Customer = () => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  // transform: 'rotate(180deg)',
                   fontSize: '20px',
                   letterSpacing: '4px',
                 }}
                 className="pb-24 pl-2">
-                Customer Details
+                {properties.CustomerDetails}{' '}
               </div>
             </div>
           ) : (
@@ -1257,7 +1207,6 @@ const Customer = () => {
           visible={imageVisible}
           onHide={() => {
             setImageVisible(false)
-            // setScale(1)
           }}
           headerStyle={{ cursor: 'alias' }}
           header={properties.imageHeader}>

@@ -391,12 +391,8 @@ const Moorings = () => {
     try {
       let params: Params = {}
       params.searchText = searchText
-      if (pageNumber) {
-        params.pageNumber = pageNumber
-      }
-      if (pageSize) {
-        params.pageSize = pageSize
-      }
+      pageNumber && (params.pageNumber = pageNumber)
+      pageSize && (params.pageSize = pageSize)
       const response = await getMoorings(params).unwrap()
       const { status, content, message, totalSize } = response as MooringResponse
       if (status === 200 && Array.isArray(content.mooringResponseDtoList)) {

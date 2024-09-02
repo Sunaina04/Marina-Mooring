@@ -53,7 +53,6 @@ export const filterFooterWrapperStyle = {
   justifyContent: 'center',
   alignItems: 'center',
   gap: { xs: '0.5rem', sm: '2rem', md: '5rem' },
-  // width: "100%",
   display: 'flex',
   marginTop: '0.2rem',
   flexDirection: { xs: 'column', sm: 'row' },
@@ -111,15 +110,10 @@ export const tabListStyle = {
 
 export const filterModalStyle = {
   position: 'absolute' as 'absolute',
-  // top: "40%",
   top: 105,
   left: "''",
-  // transform: "translate(-80%)",
   width: { xs: '100%', sm: '70%', md: '36%' },
   overflowX: 'auto',
-  // bgcolor: "background.paper",
-  // border: "2px solid #000",
-  // boxShadow: 24,
   p: { xs: 2, md: 4 },
 }
 
@@ -131,7 +125,6 @@ export const ChipWrapperStyle = {
 
 export const filterTitleStyle = {
   fontSize: 16,
-  // marginBottom: 2,
   textAlign: 'center',
   fontWeight: 600,
 }
@@ -150,9 +143,6 @@ export const propertyModalStyle = {
     height: '100%',
     overflowY: 'auto',
   },
-  // border: "2px solid #000",
-  // boxShadow: 24,
-  // p: 4,
 }
 
 export const propertyModalHeaderStyle = {
@@ -177,7 +167,6 @@ export const propetyTextStyle = {
   fontSize: '0.85rem',
   fontWeight: 300,
   letterSpacing: '0.5px',
-  // marginBotton: 4,
 }
 
 export const propertyDetailWrapperStyle = {
@@ -260,25 +249,6 @@ export const sliderStyle = {
       display: 'none',
     },
   },
-  // "& .MuiSlider-valueLabel": {
-  //   lineHeight: 1.2,
-  //   fontSize: 12,
-  //   background: "unset",
-  //   padding: 0,
-  //   width: 32,
-  //   height: 32,
-  //   borderRadius: "50% 50% 50% 0",
-  //   backgroundColor: "#52af77",
-  //   transformOrigin: "bottom left",
-  //   transform: "translate(50%, -100%) rotate(-45deg) scale(0)",
-  //   "&::before": { display: "none" },
-  //   "&.MuiSlider-valueLabelOpen": {
-  //     transform: "translate(50%, -100%) rotate(-45deg) scale(1)",
-  //   },
-  //   "& > *": {
-  //     transform: "rotate(45deg)",
-  //   },
-  // },
 }
 
 export const checkIconStyle = {
@@ -309,7 +279,6 @@ export const textFieldLabelStyle = {
 
 export const textFieldStyle = {
   marginBottom: 1.75,
-  // backgroundColor: "#fff",
   borderRadius: 0,
   borderColor: '#e7e8e7',
 }
@@ -324,9 +293,6 @@ export const carouselIcons = {
 }
 
 export const triangleIcon = {
-  // color: '$primary_white',
-  // fontSize: '3vw',
-  // fontWeight: 500,
   cursor: 'pointer',
   top: 0,
   left: 0,
@@ -349,4 +315,11 @@ export const priceGraph = {
 
 export const myMarketPlaceBackBtn = {
   marginRight: `calc(100% - 82% )`,
+}
+
+export const MooringTableColumnStyle = {
+  backgroundColor: '#FFFFFF',
+  fontSize: '12px',
+  color: '#000000',
+  fontWeight: '700',
 }
