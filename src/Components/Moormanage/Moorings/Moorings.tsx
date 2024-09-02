@@ -43,10 +43,9 @@ import AddMoorings from './AddMoorings'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import AddImage from '../Customer/AddImage'
 import ViewImageDialog from '../../CommonComponent/ViewImageDialog'
-import EditImageDialog from '../../CommonComponent/EditImageDialog'
 import MooringInformations from '../../CommonComponent/MooringInformations'
-import ViewImage from '../../CommonComponent/ViewImage'
-import { AppContext } from '../../../AppContext'
+import { AddNewButtonStyle, DialogStyle } from '../../Style'
+import { AppContext } from '../../../Services/ContextApi/AppContext'
 
 const Moorings = () => {
   const selectedCustomerId: any = useSelector(selectCustomerId)
@@ -621,19 +620,7 @@ const Moorings = () => {
           <div className="flex mt-6">
             <CustomModal
               buttonText={'ADD NEW'}
-              buttonStyle={{
-                width: '121px',
-                height: '44px',
-                minHeight: '44px',
-                backgroundColor: '#0098FF',
-                cursor: 'pointer',
-                fontSize: '14px',
-                fontWeight: 600,
-                color: 'white',
-                borderRadius: '0.50rem',
-                marginLeft: '8px',
-                boxShadow: 'none',
-              }}
+              buttonStyle={AddNewButtonStyle}
               icon={<img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8" />}
               children={
                 <AddMoorings
@@ -659,12 +646,9 @@ const Moorings = () => {
               }}
               onHide={handleModalClose}
               dialogStyle={{
-                width: '800px',
-                minWidth: '800px',
                 height: '630px',
                 minHeight: '630px',
-                borderRadius: '1rem',
-                maxHeight: '95% !important',
+                ...DialogStyle,
               }}
             />
           </div>

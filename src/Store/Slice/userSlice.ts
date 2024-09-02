@@ -3,7 +3,7 @@ import { RootState } from '../Store'
 import { InitialState } from '../../Type/CommonType'
 import { UserData } from '../../Type/ApiTypes'
 
-export const userSlice = createSlice({
+export const userSlice: any = createSlice({
   name: 'user',
   initialState: {} as InitialState,
   reducers: {

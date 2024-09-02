@@ -20,6 +20,7 @@ import { ProgressSpinner } from 'primereact/progressspinner'
 import { utils, writeFile } from 'xlsx'
 import React from 'react'
 import { properties } from '../../Utils/MeassageProperties'
+import { AddNewButtonStyle } from '../../Style'
 
 const Estimates = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -289,19 +290,7 @@ const Estimates = () => {
               visible={visible}
               onClick={handleButtonClick}
               onHide={handleModalClose}
-              buttonStyle={{
-                width: '121px',
-                height: '44px',
-                minHeight: '44px',
-                backgroundColor: '#0098FF',
-                cursor: 'pointer',
-                fontSize: '14px',
-                fontWeight: 600,
-                color: 'white',
-                borderRadius: '0.50rem',
-                marginLeft: '8px',
-                boxShadow: 'none',
-              }}
+              buttonStyle={AddNewButtonStyle}
               dialogStyle={{
                 width: '851px',
                 height: '526px',

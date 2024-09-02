@@ -10,7 +10,6 @@ import {
 import { DeleteCustomerResponse, VendorPayload, VendorResponse } from '../../../Type/ApiTypes'
 import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import Header from '../../Layout/LayoutComponents/Header'
-import { IoSearchSharp } from 'react-icons/io5'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { Toast } from 'primereact/toast'
 import { Params } from '../../../Type/CommonType'
@@ -19,6 +18,7 @@ import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 import { Paginator } from 'primereact/paginator'
 import { properties } from '../../Utils/MeassageProperties'
+import { AddNewButtonStyle, DialogStyle, VendorcolumnStyle } from '../../Style'
 
 const Vendors = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -28,14 +28,14 @@ const Vendors = () => {
   const [editMode, setEditMode] = useState(false)
   const [searchText, setSearchText] = useState('')
   const [isLoading, setIsLoading] = useState(true)
-  const toast = useRef<Toast>(null)
-  const [getVendors] = useGetVendorsMutation()
-  const [deleteVendor] = useDeleteVendorMutation()
-  const navigate = useNavigate()
   const [pageNumber, setPageNumber] = useState(0)
   const [pageNumber1, setPageNumber1] = useState(0)
   const [pageSize, setPageSize] = useState(10)
   const [totalRecords, setTotalRecords] = useState<number>()
+  const toast = useRef<Toast>(null)
+  const [getVendors] = useGetVendorsMutation()
+  const [deleteVendor] = useDeleteVendorMutation()
+  const navigate = useNavigate()
 
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
@@ -49,24 +49,13 @@ const Vendors = () => {
     setSearchText(e.target.value)
   }
 
-  const handleButtonClick = () => {
-    setModalVisible(true)
-  }
-
   const getVendorData = useCallback(async () => {
     setIsLoading(true)
     try {
       let params: Params = {}
-      if (searchText) {
-        params.searchText = searchText
-      }
-      if (pageNumber) {
-        params.pageNumber = pageNumber
-      }
-      if (pageSize) {
-        params.pageSize = pageSize
-      }
-
+      searchText && (params.searchText = searchText)
+      pageNumber && (params.pageNumber = pageNumber)
+      pageSize && (params.pageSize = pageSize)
       await getVendors(params)
         .unwrap()
         .then(async (response: any) => {
@@ -131,39 +120,32 @@ const Vendors = () => {
     setEditMode(false)
   }
 
-  const columnStyle = {
-    backgroundColor: '#00426F',
-    color: '#FFFFFF',
-    fontWeight: '700',
-    fontSize: '12px',
-  }
-
   const VendorColumns = useMemo(
     () => [
       {
         id: 'vendorName',
         label: 'Vendor Name',
         style: {
-          ...columnStyle,
+          ...VendorcolumnStyle,
           borderTopLeftRadius: '10px',
         },
       },
       {
         id: 'companyPhoneNumber',
         label: 'Phone Number',
-        style: columnStyle,
+        style: VendorcolumnStyle,
         className: 'phone',
       },
       {
         id: 'companyEmail',
         label: 'Email Address',
-        style: columnStyle,
+        style: VendorcolumnStyle,
         className: 'email',
       },
       {
         id: 'inventoryItems',
         label: 'Inventory Items',
-        style: columnStyle,
+        style: VendorcolumnStyle,
       },
     ],
     [],
@@ -254,19 +236,7 @@ const Vendors = () => {
 
             <CustomModal
               buttonText={'ADD NEW'}
-              buttonStyle={{
-                width: '121px',
-                height: '44px',
-                minHeight: '44px',
-                backgroundColor: '#0098FF',
-                cursor: 'pointer',
-                fontSize: '14px',
-                fontWeight: 600,
-                color: 'white',
-                borderRadius: '0.50rem',
-                marginLeft: '8px',
-                boxShadow: 'none',
-              }}
+              buttonStyle={AddNewButtonStyle}
               icon={<img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8" />}
               children={
                 <AddVendor
@@ -283,15 +253,14 @@ const Vendors = () => {
                 </h1>
               }
               visible={modalVisible}
-              onClick={handleButtonClick}
+              onClick={() => {
+                setModalVisible(true)
+              }}
               onHide={handleModalClose}
               dialogStyle={{
-                width: '851px',
-                minWidth: '800px',
                 height: '630px',
                 minHeight: '630px',
-                borderRadius: '1rem',
-                maxHeight: '95% !important',
+                ...DialogStyle,
               }}
             />
           </div>

@@ -35,6 +35,7 @@ import React from 'react'
 //import AddBoatyards from '../Boatyards/AddBoatyards'
 import AddServiceModal from './AddServiceModal'
 import MooringInformations from '../../CommonComponent/MooringInformations'
+import { AddNewButtonStyle, DialogStyle } from '../../Style'
 
 const ServiceArea = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -577,19 +578,7 @@ const ServiceArea = () => {
           </div>
           <CustomModal
             buttonText={'ADD NEW'}
-            buttonStyle={{
-              width: '121px',
-              height: '44px',
-              minHeight: '44px',
-              backgroundColor: '#0098FF',
-              cursor: 'pointer',
-              fontSize: '14px',
-              fontWeight: 600,
-              color: 'white',
-              borderRadius: '0.50rem',
-              marginLeft: '8px',
-              boxShadow: 'none',
-            }}
+            buttonStyle={AddNewButtonStyle}
             icon={<img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8  mb-0.5" />}
             children={random}
             headerText={
@@ -599,12 +588,9 @@ const ServiceArea = () => {
             onClick={handleButtonClick}
             onHide={handleModalClose}
             dialogStyle={{
-              width: '820px',
-              minWidth: '800px',
               height: '550px',
               minHeight: '550px',
-              borderRadius: '1rem',
-              maxHeight: '60% !important',
+              ...DialogStyle,
             }}
           />
         </div>

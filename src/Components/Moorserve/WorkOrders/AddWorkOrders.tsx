@@ -1,15 +1,13 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react'
+import React, { useState, useEffect, useCallback, useRef, useContext } from 'react'
 import { InputTextarea } from 'primereact/inputtextarea'
 import { Dropdown } from 'primereact/dropdown'
 import { IoIosAdd } from 'react-icons/io'
 import { GrFormSubtract } from 'react-icons/gr'
 import { FaFileUpload } from 'react-icons/fa'
 import { Dialog } from 'primereact/dialog'
-import { AiOutlineDelete } from 'react-icons/ai'
 
 import {
   ErrorResponse,
-  FormsPayload,
   FormsResponse,
   ViewFormsResponse,
   WorkOrderResponse,
@@ -37,7 +35,7 @@ import {
   GetTechnicians,
   GetWorkOrderStatus,
 } from '../../CommonComponent/MetaDataComponent/MoorserveMetaDataApi'
-import { MetaData, MetaDataTechnician, Params } from '../../../Type/CommonType'
+import { MetaData, Params } from '../../../Type/CommonType'
 import {
   BoatyardNameData,
   CustomersData,
@@ -51,8 +49,8 @@ import { ProgressSpinner } from 'primereact/progressspinner'
 import ReasonModal from '../../Moorpay/AccountReceivable/ReasonModal'
 import ApproveModal from '../../Moorpay/AccountReceivable/ApproveModal'
 import ShowImages from '../../CommonComponent/UploadImages'
-import Preview from '../Forms/Preview'
 import PDFEditor from '../Forms/PdfEditor'
+import { FormDataContext } from '../../../Services/ContextApi/FormDataContext'
 
 const AddWorkOrders: React.FC<WorkOrderProps> = ({
   workOrderData,
@@ -89,6 +87,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   const [technicians, setTechnicians] = useState<any[]>()
   const [moorings, setMoorings] = useState<MetaData[]>()
   const [viewPdf, setViewPdf] = useState<any>()
+  const [selectedformData, setSelectedFormData] = useState<any>()
   const [workOrderStatusValue, setWorkOrderStatusValue] = useState<MetaData[]>()
   const [customerNameValue, setcustomerNameValue] = useState<any[]>()
   const [boatyardsName, setBoatYardsName] = useState<MetaData[]>([])
@@ -103,7 +102,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   const [denyModalOpen, setDenyModalOpen] = useState(false)
   const [jobTypesValues, setJobTypesValues] = useState<any>()
   const [formsData, setFormsData] = useState<any[]>([])
-
+  const { formData } = useContext(FormDataContext)
   const [hoveredIndex, setHoveredIndex] = useState<null | number>(null)
   const [customerImages, setCustomerImages] = useState<string[]>([])
 
@@ -161,19 +160,15 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
 
   const validateFields = () => {
     const errors: { [key: string]: string } = {}
-
     if (!workOrder.customerName) {
       errors.customerName = 'Customer Name is required'
     }
-
     if (!workOrder.workOrderStatus) {
       errors.workOrderStatus = 'Status is required'
     }
-
     if (!workOrder.assignedTo) {
       errors.assignedTo = 'Assigned To is required'
     }
-
     if (!workOrder.dueDate) {
       errors.dueDate = 'Due Date  is required'
     }
@@ -402,7 +397,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       workOrderStatusId: workOrder?.workOrderStatus?.id,
       time: '00:' + formatTime(time.minutes, time.seconds),
       problem: workOrder?.value,
-      imageRequestDtoList: imageRequestDtoList,
+      encodedImages: imageRequestDtoList,
     }
 
     try {
@@ -444,7 +439,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     if (Object.keys(errors).length > 0) {
       return
     }
-
     try {
       setIsLoading(true)
       const editPayload = {
@@ -457,7 +451,14 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         workOrderStatusId: workOrder?.workOrderStatus?.id || workOrderData?.workOrderStatusDto?.id,
         time: '00:' + formatTime(time.minutes, time.seconds) || workOrderData?.time,
         problem: workOrder?.value || workOrderData?.problem,
-        imageRequestDtoList: imageRequestDtoList,
+        // encodedImages: imageRequestDtoList,
+        formRequestDtoList: [
+          {
+            formName: workOrder.attachForm.fileName,
+            fileName: workOrder.attachForm.fileName,
+            encodedFormData: formData,
+          },
+        ],
       }
       const response = await updateWorkOrder({
         payload: editPayload,
@@ -793,6 +794,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       if (status === 200) {
         setIsLoading(false)
         setViewPdf(content)
+        setSelectedFormData(content?.formData)
       } else {
         setViewPdf('')
         setIsLoading(false)
@@ -1214,6 +1216,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 onChange={(e) => {
                   handleInputChange('attachForm', e.target.value)
                   viewFormsData(e.value.id)
+                  setSelectedFormData(viewPdf?.formData)
                 }}
                 options={formsData}
                 optionLabel="fileName"

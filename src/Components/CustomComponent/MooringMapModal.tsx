@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react'
 import { TimeLineProps } from '../../Type/Components/MapTypes'
 import CustomModal from './CustomModal'
 import AddMoorings from '../Moormanage/Moorings/AddMoorings'
-import { AppContext } from '../../AppContext'
+import { AppContext } from '../../Services/ContextApi/AppContext'
 
 const MooringMapModal: React.FC<TimeLineProps> = ({
   gpsValue,

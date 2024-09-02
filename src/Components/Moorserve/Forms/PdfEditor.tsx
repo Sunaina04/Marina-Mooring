@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Sidebar } from 'primereact/sidebar'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { Button } from 'primereact/button'
@@ -10,6 +10,7 @@ import { PreviewProps } from '../../../Type/ComponentBasedType'
 import { usePDF } from 'react-to-pdf'
 import { InputText } from 'primereact/inputtext'
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib'
+import { FormDataContext } from '../../../Services/ContextApi/FormDataContext'
 
 const PDFEditor: React.FC<PreviewProps> = ({ fileData, fileName, onClose }) => {
   const [loading, setLoading] = useState(false)
@@ -23,12 +24,13 @@ const PDFEditor: React.FC<PreviewProps> = ({ fileData, fileName, onClose }) => {
   const [clickPosition, setClickPosition] = useState<{ x: number; y: number } | null>(null)
   const [history, setHistory] = useState<
     { textEntries: { text: string; x: number; y: number; size: number }[] }[]
-  >([]) // History for undo/redo functionality
+  >([])
   const [redoStack, setRedoStack] = useState<
     { textEntries: { text: string; x: number; y: number; size: number }[] }[]
-  >([]) // Redo stack
+  >([])
   const pdfRef = useRef<HTMLDivElement>(null)
   const [showDialog, setShowDialog] = useState(false)
+  const { setFormData } = useContext(FormDataContext)
 
   useEffect(() => {
     if (fileData) {
@@ -57,7 +59,7 @@ const PDFEditor: React.FC<PreviewProps> = ({ fileData, fileName, onClose }) => {
   const handleAddText = () => {
     if (clickPosition && newText) {
       setHistory([...history, { textEntries: [...textEntries] }])
-      setRedoStack([]) // Clear redo stack on new action
+      setRedoStack([])
       const newEntry = {
         text: newText,
         x: clickPosition.x,
@@ -90,10 +92,38 @@ const PDFEditor: React.FC<PreviewProps> = ({ fileData, fileName, onClose }) => {
     }
   }
 
-  const handleSave = () => {
-    setHistory([...history, { textEntries: [...textEntries] }])
-    setRedoStack([])
-    onClose()
+  const handleSave = async () => {
+    if (pdfUrl) {
+      setLoading(true) // Show loading spinner during the process
+      const existingPdfBytes = await fetch(pdfUrl).then((res) => res.arrayBuffer())
+      const pdfDoc = await PDFDocument.load(existingPdfBytes)
+
+      const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica)
+      const pages = pdfDoc.getPages()
+
+      textEntries.forEach((entry) => {
+        pages.forEach((page) => {
+          const { height: pageHeight } = page.getSize()
+
+          if (entry.y <= pageHeight) {
+            page.drawText(entry.text, {
+              x: entry.x,
+              y: pageHeight - entry.y,
+              size: entry.size,
+              font: helveticaFont,
+              color: rgb(0, 0, 0),
+            })
+          }
+
+          entry.y = entry.y > pageHeight ? entry.y - pageHeight : entry.y
+        })
+      })
+
+      const pdfBase64 = await pdfDoc.saveAsBase64({ dataUri: false })
+      setLoading(false)
+      setFormData(pdfBase64)
+      onClose() // Pass the encoded PDF data to onClose handler
+    }
   }
 
   const handleDownload = async () => {
@@ -164,8 +194,8 @@ const PDFEditor: React.FC<PreviewProps> = ({ fileData, fileName, onClose }) => {
                 height: '40px',
               }}>
               <Button
-                label="Save"
-                icon="pi pi-save"
+                label="Done"
+                icon="pi pi-check"
                 className="p-button-rounded p-button-success"
                 onClick={handleSave}
               />

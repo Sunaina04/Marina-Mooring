@@ -23,6 +23,7 @@ import { ProgressSpinner } from 'primereact/progressspinner'
 import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import { properties } from '../../Utils/MeassageProperties'
+import { AddNewButtonStyle, DialogStyle } from '../../Style'
 
 const InventoryDetails: React.FC = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -278,27 +279,12 @@ const InventoryDetails: React.FC = () => {
             visible={modalVisible}
             onClick={handleButtonClick}
             onHide={handleModalClose}
-            buttonStyle={{
-              width: '121px',
-              height: '44px',
-              minHeight: '44px',
-              backgroundColor: '#0098FF',
-              cursor: 'pointer',
-              fontSize: '14px',
-              fontWeight: 600,
-              color: 'white',
-              borderRadius: '0.50rem',
-              marginLeft: '8px',
-              boxShadow: 'none',
-            }}
+            buttonStyle={AddNewButtonStyle}
             icon={<img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8" />}
             dialogStyle={{
-              width: '851px',
-              minWidth: '851px',
               height: '400px',
               minHeight: '400px',
-              borderRadius: '1rem',
-              maxHeight: '95% !important',
+              ...DialogStyle,
             }}
           />
         </div>

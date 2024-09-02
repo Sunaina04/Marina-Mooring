@@ -323,3 +323,31 @@ export const MooringTableColumnStyle = {
   color: '#000000',
   fontWeight: '700',
 }
+
+export const VendorcolumnStyle = {
+  backgroundColor: '#00426F',
+  color: '#FFFFFF',
+  fontWeight: '700',
+  fontSize: '12px',
+}
+
+export const AddNewButtonStyle = {
+  width: '121px',
+  height: '44px',
+  minHeight: '44px',
+  backgroundColor: '#0098FF',
+  cursor: 'pointer',
+  fontSize: '14px',
+  fontWeight: 600,
+  color: 'white',
+  borderRadius: '0.50rem',
+  marginLeft: '8px',
+  boxShadow: 'none',
+}
+
+export const DialogStyle = {
+  width: '840px',
+  minWidth: '840px',
+  borderRadius: '1rem',
+  maxHeight: '60% !important',
+}

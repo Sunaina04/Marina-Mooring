@@ -39,7 +39,7 @@ import { FaFileUpload } from 'react-icons/fa'
 import { AiOutlineDelete } from 'react-icons/ai'
 import { Dialog } from 'primereact/dialog'
 import UploadImages from '../../CommonComponent/UploadImages'
-import { AppContext } from '../../../AppContext'
+import { AppContext } from '../../../Services/ContextApi/AppContext'
 
 const AddMoorings: React.FC<AddMooringProps> = ({
   moorings,

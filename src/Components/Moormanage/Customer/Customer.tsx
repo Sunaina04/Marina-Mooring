@@ -41,9 +41,9 @@ import { ActionButtonColumnProps } from '../../../Type/Components/TableTypes'
 import { PositionType } from '../../../Type/Components/MapTypes'
 import AddImage from './AddImage'
 import MooringInformations from '../../CommonComponent/MooringInformations'
-import { AppContext } from '../../../AppContext'
 import ViewImageDialog from '../../CommonComponent/ViewImageDialog'
-import { MooringTableColumnStyle } from '../../Style'
+import { AddNewButtonStyle, DialogStyle, MooringTableColumnStyle } from '../../Style'
+import { AppContext } from '../../../Services/ContextApi/AppContext'
 
 const Customer = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -758,19 +758,7 @@ const Customer = () => {
           <div className="flex mt-6 ">
             <CustomModal
               buttonText={'ADD NEW'}
-              buttonStyle={{
-                width: '121px',
-                height: '44px',
-                minHeight: '44px',
-                backgroundColor: '#0098FF',
-                cursor: 'pointer',
-                fontSize: '14px',
-                fontWeight: 600,
-                color: 'white',
-                borderRadius: '0.50rem',
-                marginLeft: '8px',
-                boxShadow: 'none',
-              }}
+              buttonStyle={AddNewButtonStyle}
               icon={<img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8" />}
               children={
                 <AddCustomer
@@ -804,13 +792,10 @@ const Customer = () => {
               onClick={handleButtonClick}
               onHide={handleModalClose}
               dialogStyle={{
-                width: '800px',
-                minWidth: '800px',
                 height: '580px',
                 minHeight: '580px',
-                borderRadius: '1rem',
-                maxHeight: '95% !important',
                 overflowY: 'auto',
+                ...DialogStyle,
               }}
             />
           </div>

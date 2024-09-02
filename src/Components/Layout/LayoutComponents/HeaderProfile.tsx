@@ -13,13 +13,12 @@ import {
   setToken,
   setUserData,
 } from '../../../Store/Slice/userSlice'
-import { ErrorResponse, UserProfile } from '../../../Type/ApiTypes'
+import { ErrorResponse } from '../../../Type/ApiTypes'
 import ResetPassword from '../../AdminTools/ResetPassword'
-import { HeaderProps, ResetModalProps } from '../../../Type/ComponentBasedType'
+import { HeaderProps } from '../../../Type/ComponentBasedType'
 import { Dialog } from 'primereact/dialog'
 import HeaderUploadImage from './HeaderUploadImage'
-import { AppContext } from '../../../AppContext'
-import { Toast } from 'react-hot-toast'
+import { AppContext } from '../../../Services/ContextApi/AppContext'
 
 const HeaderProfile: React.FC<HeaderProps> = ({ customer }) => {
   const [getLogout] = useLogoutMutation()
@@ -35,7 +34,6 @@ const HeaderProfile: React.FC<HeaderProps> = ({ customer }) => {
     setUploadImageDialogVisible,
   } = useContext(AppContext)
   const tooltipRef = useRef<HTMLDivElement>(null)
-  const toastRef = useRef<Toast>(null)
   const handleMenu = () => {
     setExpanded(!expanded)
     setTooltipVisible(!tooltipVisible)

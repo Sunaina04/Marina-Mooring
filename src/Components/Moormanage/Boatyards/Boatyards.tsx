@@ -34,7 +34,8 @@ import { RiDeleteBin5Fill } from 'react-icons/ri'
 import { Paginator } from 'primereact/paginator'
 import React from 'react'
 import MooringInformations from '../../CommonComponent/MooringInformations'
-import { AppContext } from '../../../AppContext'
+import { AddNewButtonStyle, DialogStyle } from '../../Style'
+import { AppContext } from '../../../Services/ContextApi/AppContext'
 
 const Boatyards = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -517,19 +518,7 @@ const Boatyards = () => {
           </div>
           <CustomModal
             buttonText={'ADD NEW'}
-            buttonStyle={{
-              width: '121px',
-              height: '44px',
-              minHeight: '44px',
-              backgroundColor: '#0098FF',
-              cursor: 'pointer',
-              fontSize: '14px',
-              fontWeight: 600,
-              color: 'white',
-              borderRadius: '0.50rem',
-              marginLeft: '8px',
-              boxShadow: 'none',
-            }}
+            buttonStyle={AddNewButtonStyle}
             icon={<img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8  mb-0.5" />}
             children={random}
             headerText={<h1 className="text-xl font-extrabold text-black ml-4">Add Boatyard</h1>}
@@ -537,12 +526,9 @@ const Boatyards = () => {
             onClick={handleButtonClick}
             onHide={handleModalClose}
             dialogStyle={{
-              width: '820px',
-              minWidth: '800px',
               height: '550px',
               minHeight: '550px',
-              borderRadius: '1rem',
-              maxHeight: '60% !important',
+              ...DialogStyle,
             }}
           />
         </div>

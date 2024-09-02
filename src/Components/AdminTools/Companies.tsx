@@ -23,6 +23,7 @@ import { Paginator } from 'primereact/paginator'
 import { VirtualScroller } from 'primereact/virtualscroller'
 import { Dialog } from 'primereact/dialog'
 import ResetPassword from './ResetPassword'
+import { AddNewButtonStyle, DialogStyle } from '../Style'
 
 const CustomerOwner = () => {
   const dispatch = useDispatch()
@@ -473,27 +474,12 @@ const CustomerOwner = () => {
           <div className="mt-6">
             <CustomModal
               buttonText={'ADD NEW'}
-              buttonStyle={{
-                width: '121px',
-                height: '44px',
-                minHeight: '44px',
-                backgroundColor: '#0098FF',
-                cursor: 'pointer',
-                fontSize: '14px',
-                fontWeight: 600,
-                color: 'white',
-                borderRadius: '0.50rem',
-                marginLeft: '8px',
-                boxShadow: 'none',
-              }}
+              buttonStyle={AddNewButtonStyle}
               onHide={handleModalClose}
               dialogStyle={{
-                width: '840px',
-                minWidth: '840px',
                 height: editMode ? '500px' : '600px',
                 minHeight: editMode ? '500px' : '600px',
-                borderRadius: '1rem',
-                maxHeight: '60% !important',
+                ...DialogStyle,
               }}
               icon={<img src="/assets/images/Plus.png" alt="icon" className="w-3.8 h-3.8 " />}
               children={
@@ -539,7 +525,9 @@ const CustomerOwner = () => {
         <div className={`flex flex-col md:flex-row gap-10 ml-8 mt-3`}>
           <div className="flex-1 border border-gray-300 bg-white rounded-lg md:ml-10 overflow-hidden">
             <div className="text-md font-semibold rounded-t-lg bg-[#00426F]">
-              <h1 className="p-4 text-xl font-extrabold  text-white">{properties.CustomersOwner}</h1>
+              <h1 className="p-4 text-xl font-extrabold  text-white">
+                {properties.CustomersOwner}
+              </h1>
             </div>
             <InputTextWithHeader
               value={searchText}
@@ -627,7 +615,9 @@ const CustomerOwner = () => {
           <div
             className={`flex-1 border border-gray-300 bg-white rounded-lg md:mr-10 overflow-hidden`}>
             <div className="text-md font-semibold rounded-t-lg bg-[#00426F]">
-              <h1 className="p-4 text-xl font-extrabold  text-white">{properties.CustomerOwnerUsers}</h1>
+              <h1 className="p-4 text-xl font-extrabold  text-white">
+                {properties.CustomerOwnerUsers}
+              </h1>
             </div>
             <InputTextWithHeader
               value={searchUsersText}

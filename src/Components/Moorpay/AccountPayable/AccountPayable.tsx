@@ -9,6 +9,7 @@ import Header from '../../Layout/LayoutComponents/Header'
 import AddCustomer from '../../Moormanage/Customer/AddCustomer'
 import DataTableComponent from '../../CommonComponent/Table/DataTableComponent'
 import { properties } from '../../Utils/MeassageProperties'
+import { AddNewButtonStyle, DialogStyle } from '../../Style'
 
 const AccountPayable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -124,25 +125,11 @@ const AccountPayable = () => {
             visible={isModalOpen}
             onClick={handleButtonClick}
             onHide={handleModalClose}
-            buttonStyle={{
-              width: '121px',
-              height: '44px',
-              minHeight: '44px',
-              backgroundColor: '#0098FF',
-              cursor: 'pointer',
-              fontSize: '16px',
-              fontWeight: 700,
-              color: 'white',
-              borderRadius: '0.50rem',
-              marginLeft: '8px',
-            }}
+            buttonStyle={AddNewButtonStyle}
             dialogStyle={{
-              width: '800px',
-              minWidth: '800px',
               height: '630px',
               minHeight: '630px',
-              borderRadius: '1rem',
-              maxHeight: '95% !important',
+              ...DialogStyle,
             }}
           />
         </div>

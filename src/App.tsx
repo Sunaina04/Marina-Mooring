@@ -10,7 +10,8 @@ import { PrimeReactProvider } from 'primereact/api'
 import 'primereact/resources/themes/saga-blue/theme.css'
 import 'primereact/resources/primereact.min.css'
 import './utils.css'
-import { AppProvider } from './AppContext' // Import the AppProvider
+import { AppProvider } from './Services/ContextApi/AppContext'
+import { FormDataProvider } from './Services/ContextApi/FormDataContext'
 const queryClient = new QueryClient()
 const App: React.FC = () => {
   const allPages = useRoutes(routes)
@@ -27,9 +28,11 @@ const App: React.FC = () => {
         <PrimeReactProvider value={{ cssTransition: true }}>
           <QueryClientProvider client={queryClient}>
             <AppProvider>
-              <Toaster toastOptions={toasterOptions} />
-              {allPages}
-              <ToastContainer hideProgressBar autoClose={2000} position="top-right" />
+              <FormDataProvider>
+                <Toaster toastOptions={toasterOptions} />
+                {allPages}
+                <ToastContainer hideProgressBar autoClose={2000} position="top-right" />
+              </FormDataProvider>
             </AppProvider>
           </QueryClientProvider>
         </PrimeReactProvider>
