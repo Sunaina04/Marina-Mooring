@@ -37,6 +37,7 @@ import {
 } from '../../CommonComponent/MetaDataComponent/MoorserveMetaDataApi'
 import { MetaData, Params } from '../../../Type/CommonType'
 import {
+  AttachFormsTypesData,
   BoatyardNameData,
   CustomersData,
   JobTypesData,
@@ -125,6 +126,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   const { getCustomersData } = CustomersData(selectedCustomerId)
   const { getBoatYardNameData } = BoatyardNameData(selectedCustomerId)
   const { getJobTypeData } = JobTypesData()
+  const { getAttachFormsTypeData } = AttachFormsTypesData()
   const { getTechniciansData } = GetTechnicians()
   const { getMooringIdsData } = GetMooringIds()
   const [getForms] = useGetFormsMutation()
@@ -627,6 +629,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     const { WorkOrderStatus } = await getWorkOrderStatusData()
     const { customersData } = await getCustomersData()
     const { boatYardName } = await getBoatYardNameData()
+    const { attachFormsTypeValue } = await getAttachFormsTypeData()
     // const { jobTypeValue } = await getJobTypeData()
 
     if (getTechnicians !== null) {
@@ -649,7 +652,10 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     //   setIsLoading(false)
     //   setJobTypesValues(jobTypeValue)
     // }
-
+    if (attachFormsTypeValue != null) {
+      setIsLoading(false)
+      setFormsData(attachFormsTypeValue)
+    }
     if (customersData !== null) {
       const firstLastName = customersData.map((item) => ({
         firstName: item.firstName + ' ' + item.lastName,
@@ -757,35 +763,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     }
   }, [workOrder?.boatyards?.id, workOrder?.customerName?.id])
 
-  const getFormsData = async () => {
-    try {
-      let params: Params = {}
-      params.searchText = ''
-      const response = await getForms(params).unwrap()
-      const { status, message, content, totalSize } = response as FormsResponse
-      if (status === 200 && Array.isArray(content)) {
-        setIsLoading(false)
-        setFormsData(content)
-      } else {
-        setFormsData([])
-        toastRef?.current?.show({
-          severity: 'error',
-          summary: 'Error',
-          detail: message,
-          life: 3000,
-        })
-      }
-    } catch (error) {
-      const { message, data } = error as ErrorResponse
-      toastRef?.current?.show({
-        severity: 'error',
-        summary: 'Error',
-        detail: message || data?.message,
-        life: 3000,
-      })
-    }
-  }
-
   const viewFormsData = async (id: any) => {
     setIsLoading(true)
     try {
@@ -819,7 +796,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
 
   useEffect(() => {
     fetchDataAndUpdate()
-    getFormsData()
   }, [])
 
   useEffect(() => {
@@ -1219,7 +1195,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                   setSelectedFormData(viewPdf?.formData)
                 }}
                 options={formsData}
-                optionLabel="fileName"
+                optionLabel="formName"
                 editable
                 disabled={isLoading || isAccountRecievable}
                 style={{

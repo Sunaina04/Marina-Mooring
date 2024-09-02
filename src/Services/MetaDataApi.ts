@@ -207,6 +207,14 @@ const metaDataApi = userApi.injectEndpoints({
         params: { pageNumber, pageSize },
       }),
     }),
+
+    getAttachFormsType: builder.mutation({
+      query: ({ pageNumber, pageSize }: { pageNumber?: number; pageSize?: number }) => ({
+        url: 'api/v1/metadata/forms',
+        method: 'GET',
+        params: { pageNumber, pageSize },
+      }),
+    }),
   }),
 })
 
@@ -234,4 +242,5 @@ export const {
   useGetQuickBookCustomerMutation,
   useGetPaymentOptionMutation,
   useGetMooringStatusTypeMutation,
+  useGetAttachFormsTypeMutation,
 } = metaDataApi

@@ -21,6 +21,7 @@ import {
   useGetPaymentOptionMutation,
   useGetJobTypeMutation,
   useGetMooringStatusTypeMutation,
+  useGetAttachFormsTypeMutation,
 } from '../../../Services/MetaDataApi'
 import { ErrorResponse, MetaDataCustomerResponse, MetaDataResponse } from '../../../Type/ApiTypes'
 
@@ -170,6 +171,28 @@ export const JobTypesData = () => {
   })
 
   return { getJobTypeData }
+}
+
+export const AttachFormsTypesData = () => {
+  const [getAttachFormsTypes] = useGetAttachFormsTypeMutation()
+
+  const fetchAttachFormsTypes = async (getData: any) => {
+    try {
+      const response = await getData({})
+      const { status, content } = response.data as MetaDataResponse
+      return status === 200 && Array.isArray(content) ? content : null
+    } catch (error) {
+      const { message } = error as ErrorResponse
+      console.error('Error fetching metadata:', error)
+      return null
+    }
+  }
+
+  const getAttachFormsTypeData = async () => ({
+    attachFormsTypeValue: await fetchAttachFormsTypes(getAttachFormsTypes),
+  })
+
+  return { getAttachFormsTypeData }
 }
 
 export const TypeOfChainCondition = () => {
