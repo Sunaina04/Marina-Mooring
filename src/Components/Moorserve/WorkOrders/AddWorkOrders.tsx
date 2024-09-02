@@ -397,7 +397,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       workOrderStatusId: workOrder?.workOrderStatus?.id,
       time: '00:' + formatTime(time.minutes, time.seconds),
       problem: workOrder?.value,
-      encodedImages: imageRequestDtoList,
+      imageRequestDtoList: imageRequestDtoList,
     }
 
     try {
@@ -451,7 +451,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         workOrderStatusId: workOrder?.workOrderStatus?.id || workOrderData?.workOrderStatusDto?.id,
         time: '00:' + formatTime(time.minutes, time.seconds) || workOrderData?.time,
         problem: workOrder?.value || workOrderData?.problem,
-        // encodedImages: imageRequestDtoList,
+        imageRequestDtoList: imageRequestDtoList,
         formRequestDtoList: [
           {
             formName: workOrder.attachForm.fileName,
