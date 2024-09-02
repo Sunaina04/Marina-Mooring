@@ -216,21 +216,68 @@ const WorkOrders: React.FC<WorkOrderValue> = ({ report }) => {
 
   const handleExportPdf = async () => {
     setIsLoading(true)
-    const params: Params = {}
-    params.pageSize = 999999
-    const response = await getWorkOrder(params).unwrap()
-    const { status, content, message } = response as WorkOrderResponse
-    if (status === 200 && Array.isArray(content)) {
-      dataToPdf(content)
-      setIsLoading(false)
-    } else {
-      setIsLoading(false)
+    const params1: Params = {
+      pageSize: 999999,
+      showCompletedWorkOrders: 'Yes',
+    }
+    const params2: Params = {
+      pageSize: 999999,
+      showCompletedWorkOrders: 'No',
+    }
+
+    try {
+      const [response1, response2] = await Promise.all([
+        getWorkOrder(params1).unwrap(),
+        getWorkOrder(params2).unwrap(),
+      ])
+
+      const {
+        status: status1,
+        content: content1,
+        message: message1,
+      } = response1 as WorkOrderResponse
+      const {
+        status: status2,
+        content: content2,
+        message: message2,
+      } = response2 as WorkOrderResponse
+
+      if (
+        status1 === 200 &&
+        Array.isArray(content1) &&
+        status2 === 200 &&
+        Array.isArray(content2)
+      ) {
+        // Combine the contents from both responses
+        const combinedContent = [...content1, ...content2]
+        dataToPdf(combinedContent)
+      } else {
+        if (status1 !== 200 || !Array.isArray(content1)) {
+          toast?.current?.show({
+            severity: 'error',
+            summary: 'Error',
+            detail: message1,
+            life: 3000,
+          })
+        }
+        if (status2 !== 200 || !Array.isArray(content2)) {
+          toast?.current?.show({
+            severity: 'error',
+            summary: 'Error',
+            detail: message2,
+            life: 3000,
+          })
+        }
+      }
+    } catch (error) {
       toast?.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: message,
+        detail: 'An error occurred while fetching work orders.',
         life: 3000,
       })
+    } finally {
+      setIsLoading(false)
     }
   }
 
