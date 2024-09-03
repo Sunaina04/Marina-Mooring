@@ -388,7 +388,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       case 'address':
         setAddress(value)
         break
-        case 'city':
+      case 'city':
         setCity(value)
         break
       case 'pinCode':
@@ -465,7 +465,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         lastName: lastName,
         phone: phone,
         address: address,
-        city:city,
+        city: city,
         notes: formData.note,
         stateId: state?.id,
         countryId: country?.id,
@@ -507,7 +507,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         lastName: lastName,
         phone: phone,
         address: address,
-        city:city,
+        city: city,
         notes: formData.note,
         stateId: state?.id,
         countryId: country?.id,
@@ -564,7 +564,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
         lastName: lastName,
         phone: phone,
         address: address,
-        city:city,
+        city: city,
         stateId: state?.id,
         countryId: country?.id,
         imageRequestDtoList: customerImageRequestDtoList,
@@ -1079,24 +1079,24 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 </div>
 
                 <div className="mt-3">
-                <span className="font-medium text-sm text-[#000000]">
-                        <div className="flex gap-1">Address</div>
-                      </span>
+                  <span className="font-medium text-sm text-[#000000]">
+                    <div className="flex gap-1">Address</div>
+                  </span>
                   <div className="mt-2">
-                  <InputText
-                        id="pinCode"
-                        value={address}
-                        onChange={(e) => handleInputChangeCustomer('address', e.target.value)}
-                        placeholder="Address"
-                        style={{
-                          width: '230px',
-                          height: '32px',
-                          border: fieldErrors.address ? '1px solid red' : '1px solid #D5E1EA',
-                          borderRadius: '0.50rem',
-                          fontSize: '0.8rem',
-                          paddingLeft: '0.5rem',
-                        }}
-                      />
+                    <InputText
+                      id="pinCode"
+                      value={address}
+                      onChange={(e) => handleInputChangeCustomer('address', e.target.value)}
+                      placeholder="Address"
+                      style={{
+                        width: '230px',
+                        height: '32px',
+                        border: fieldErrors.address ? '1px solid red' : '1px solid #D5E1EA',
+                        borderRadius: '0.50rem',
+                        fontSize: '0.8rem',
+                        paddingLeft: '0.5rem',
+                      }}
+                    />
                   </div>
                 </div>
               </div>
@@ -1125,7 +1125,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     </div>
 
                     <div className="mt-2">
-                    <InputText
+                      <InputText
                         id="pinCode"
                         value={city}
                         onChange={(e) => handleInputChangeCustomer('city', e.target.value)}
@@ -1145,13 +1145,13 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 <div>
                   <div>
                     <div>
-                    <span className="font-medium text-sm text-[#000000]">
+                      <span className="font-medium text-sm text-[#000000]">
                         <div className="flex gap-1">State</div>
                       </span>
                     </div>
 
                     <div className="mt-2">
-                    <Dropdown
+                      <Dropdown
                         id="state"
                         value={state}
                         options={statesData}
@@ -1175,13 +1175,13 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 <div>
                   <div>
                     <div>
-                    <span className="font-medium text-sm text-[#000000]">
+                      <span className="font-medium text-sm text-[#000000]">
                         <div className="flex gap-1">Zip Code</div>
                       </span>
                     </div>
 
                     <div className="mt-2">
-                    <InputText
+                      <InputText
                         id="pinCode"
                         value={pinCode}
                         onChange={(e) => handleInputChangeCustomer('pinCode', e.target.value)}
@@ -1201,69 +1201,63 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
               </div>
             </div>
             <div className="flex gap-6">
-            <div className="mt-3">
-              <div>
-                <span className="font-medium text-sm text-[#000000]">
-                  <div className="gap-1">Customer Type</div>
-                </span>
-              </div>
-              <div className="mt-2">
-                <Dropdown
-                  id="CustomerType"
-                  value={selectedCustomerType}
-                  options={customerType}
-                  onChange={(e) => handleInputChangeCustomer('CustomerType', e.target.value)}
-                  optionLabel="type"
-                  editable
-                  placeholder="Customer Type"
-                  disabled={isLoading || country?.id === 13}
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    color: 'black',
-                    cursor: country?.id == 13 ? 'not-allowed' : 'pointer',
-                  }}
-                />
-              </div>
-
-              
-            </div>
-            {/* <div className="mt-3"> */}
-              
               <div className="mt-3">
+                <div>
                   <span className="font-medium text-sm text-[#000000]">
-                    <div className="flex gap-1">Image</div>
+                    <div className="gap-1">Customer Type</div>
                   </span>
-                  <div className="mt-2">
+                </div>
+                <div className="mt-2">
+                  <Dropdown
+                    id="CustomerType"
+                    value={selectedCustomerType}
+                    options={customerType}
+                    onChange={(e) => handleInputChangeCustomer('CustomerType', e.target.value)}
+                    optionLabel="type"
+                    editable
+                    placeholder="Customer Type"
+                    disabled={isLoading || country?.id === 13}
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      color: 'black',
+                      cursor: country?.id == 13 ? 'not-allowed' : 'pointer',
+                    }}
+                  />
+                </div>
+              </div>
+              {/* <div className="mt-3"> */}
+
+              <div className="mt-3">
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">Image</div>
+                </span>
+                <div className="mt-2">
+                  <div
+                    style={{
+                      width: '230px',
+                      height: '32px',
+                      border: '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.8rem',
+                      paddingLeft: '0.5rem',
+                      cursor: 'pointer',
+                    }}>
                     <div
-                      style={{
-                        width: '230px',
-                        height: '32px',
-                        border: '1px solid #D5E1EA',
-                        borderRadius: '0.50rem',
-                        fontSize: '0.8rem',
-                        paddingLeft: '0.5rem',
-                        cursor: 'pointer',
-                      }}>
-                      <div
-                        onClick={() => setCustomerImageVisible(true)}
-                        className="flex gap-3 text-center ">
-                        <FaFileUpload
-                          style={{ fontSize: '22px', color: '#0098FF', marginTop: '3px' }}
-                        />
-                        <div className="border-r-2 border-blue-100  h-[30px]"></div>
-                        <span className="pl-4 mt-1"> Upload Image </span>
-                      </div>
+                      onClick={() => setCustomerImageVisible(true)}
+                      className="flex gap-3 text-center ">
+                      <FaFileUpload
+                        style={{ fontSize: '22px', color: '#0098FF', marginTop: '3px' }}
+                      />
+                      <div className="border-r-2 border-blue-100  h-[30px]"></div>
+                      <span className="pl-4 mt-1"> Upload Image </span>
                     </div>
                   </div>
                 </div>
-
-              
+              </div>
             </div>
-            
-            
 
             <div
               className={`mt-3 
@@ -1315,59 +1309,57 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
             {(checkedMooring === true || editMooringMode) && (
               <div id="mooring" className="mt-4">
                 <div className="flex gap-6">
-                  {!editMooringMode && (
-                    <div>
-                      <span className="font-medium text-sm text-[#000000]">
-                        <div className="flex gap-1">
-                          Mooring Number <p className="text-red-600">*</p>
-                        </div>
-                      </span>
-                      <div className="mt-2">
-                        <InputComponent
-                          value={formData?.mooringNumber}
-                          onChange={(e) => handleInputChange('mooringNumber', e.target.value)}
-                          style={{
-                            width: '230px',
-                            height: '32px',
-                            border: fieldErrors.mooringNumber
-                              ? '1px solid red'
-                              : '1px solid #D5E1EA',
-                            borderRadius: '0.50rem',
-                            fontSize: '0.8rem',
-                            paddingLeft: '0.5rem',
-                          }}
-                        />
-                        <p id="mooringNumber">
-                          {fieldErrors.mooringNumber && (
-                            <small className="p-error">{fieldErrors.mooringNumber}</small>
-                          )}
-                        </p>
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="">
+                  <div>
                     <span className="font-medium text-sm text-[#000000]">
-                      <div className="flex gap-1">Harbor/Area</div>
+                      <div className="flex gap-1">
+                        Mooring Number <p className="text-red-600">*</p>
+                      </div>
                     </span>
                     <div className="mt-2">
                       <InputComponent
-                        value={formData?.harbor}
-                        onChange={(e) => handleInputChange('harbor', e.target.value)}
+                        value={formData?.mooringNumber}
+                        onChange={(e) => handleInputChange('mooringNumber', e.target.value)}
+                        disabled={editMooringMode}
                         style={{
                           width: '230px',
                           height: '32px',
-                          border: fieldErrors.harbor ? '1px solid red' : '1px solid #D5E1EA',
+                          border: fieldErrors.mooringNumber ? '1px solid red' : '1px solid #D5E1EA',
                           borderRadius: '0.50rem',
                           fontSize: '0.8rem',
                           paddingLeft: '0.5rem',
                         }}
                       />
-                      <p id="harbor">
-                        {fieldErrors.harbor && (
-                          <small className="p-error">{fieldErrors.harbor}</small>
+                      <p id="mooringNumber">
+                        {fieldErrors.mooringNumber && (
+                          <small className="p-error">{fieldErrors.mooringNumber}</small>
                         )}
                       </p>
+                    </div>
+                  </div>
+
+                  <div className="">
+                    <div>
+                      <span className="font-medium text-sm text-[#000000]">
+                        <div className="flex gap-1">Service Area</div>
+                      </span>
+                    </div>
+                    <div className="mt-2">
+                      <Dropdown
+                        value={formData?.serviceAreaId}
+                        onChange={(e) => handleInputChange('serviceAreaId', e.value)}
+                        options={serviceArea}
+                        optionLabel="serviceAreaName"
+                        placeholder="Select"
+                        editable
+                        disabled={isLoading}
+                        style={{
+                          width: '230px',
+                          height: '32px',
+                          border: '1px solid #D5E1EA',
+                          borderRadius: '0.50rem',
+                          fontSize: '0.8rem',
+                        }}
+                      />
                     </div>
                   </div>
 
@@ -1758,21 +1750,24 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     <div className="mt-3">
                       <div>
                         <span className="font-medium text-sm text-[#000000]">
-                          <div className="flex gap-1">Pendant Condition</div>
+                          <div className="flex gap-1">Shackle, Swivel Condition</div>
                         </span>
                       </div>
 
                       <div className="mt-2">
-                        <InputComponent
-                          value={formData?.pendantCondition}
-                          onChange={(e) => handleInputChange('pendantCondition', e.target.value)}
+                        <Dropdown
+                          value={formData?.shackleSwivelCondition}
+                          onChange={(e) => handleInputChange('shackleSwivelCondition', e.value)}
+                          options={shackleSwivelData}
+                          optionLabel="condition"
+                          editable
+                          placeholder="Select"
                           style={{
                             width: '230px',
                             height: '32px',
                             border: '1px solid #D5E1EA',
                             borderRadius: '0.50rem',
                             fontSize: '0.8rem',
-                            paddingLeft: '0.5rem',
                           }}
                         />
                       </div>
@@ -1805,31 +1800,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         </p>
                       </div>
                     </div> */}
-                    <div className="mt-3">
-                      <div>
-                        <span className="font-medium text-sm text-[#000000]">
-                          <div className="flex gap-1">Type of Vessel </div>
-                        </span>
-                      </div>
-
-                      <div className="mt-2">
-                        <Dropdown
-                          value={formData?.type}
-                          onChange={(e) => handleInputChange('type', e.target.value)}
-                          options={type}
-                          optionLabel="boatType"
-                          editable
-                          placeholder="Select"
-                          style={{
-                            width: '230px',
-                            height: '32px',
-                            border: '1px solid #D5E1EA',
-                            borderRadius: '0.50rem',
-                            fontSize: '0.8rem',
-                          }}
-                        />
-                      </div>
-                    </div>
 
                     <div className="mt-3">
                       <span className="font-medium text-sm text-[#000000]">
@@ -1929,18 +1899,17 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     <div className="mt-3">
                       <div>
                         <span className="font-medium text-sm text-[#000000]">
-                          <div className="flex gap-1">Shackle, Swivel Condition</div>
+                          <div className="flex gap-1">Mooring Status</div>
                         </span>
                       </div>
-
                       <div className="mt-2">
                         <Dropdown
-                          value={formData?.shackleSwivelCondition}
-                          onChange={(e) => handleInputChange('shackleSwivelCondition', e.value)}
-                          options={shackleSwivelData}
-                          optionLabel="condition"
+                          value={formData?.mooringStatus}
+                          onChange={(e) => handleInputChange('mooringStatus', e.target.value)}
+                          options={mooringStatus}
+                          optionLabel="status"
                           editable
-                          placeholder="Select"
+                          disabled={isLoading}
                           style={{
                             width: '230px',
                             height: '32px',
@@ -2004,24 +1973,21 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     <div className="mt-3">
                       <div>
                         <span className="font-medium text-sm text-[#000000]">
-                          <div className="flex gap-1">Service Area</div>
+                          <div className="flex gap-1">Pendant Condition</div>
                         </span>
                       </div>
+
                       <div className="mt-2">
-                        <Dropdown
-                          value={formData?.serviceAreaId}
-                          onChange={(e) => handleInputChange('serviceAreaId', e.value)}
-                          options={serviceArea}
-                          optionLabel="serviceAreaName"
-                          placeholder="Select"
-                          editable
-                          disabled={isLoading}
+                        <InputComponent
+                          value={formData?.pendantCondition}
+                          onChange={(e) => handleInputChange('pendantCondition', e.target.value)}
                           style={{
                             width: '230px',
                             height: '32px',
                             border: '1px solid #D5E1EA',
                             borderRadius: '0.50rem',
                             fontSize: '0.8rem',
+                            paddingLeft: '0.5rem',
                           }}
                         />
                       </div>
@@ -2030,17 +1996,18 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     <div className="mt-3">
                       <div>
                         <span className="font-medium text-sm text-[#000000]">
-                          <div className="flex gap-1">Mooring Status</div>
+                          <div className="flex gap-1">Type of Vessel </div>
                         </span>
                       </div>
+
                       <div className="mt-2">
                         <Dropdown
-                          value={formData?.mooringStatus}
-                          onChange={(e) => handleInputChange('mooringStatus', e.target.value)}
-                          options={mooringStatus}
-                          optionLabel="status"
+                          value={formData?.type}
+                          onChange={(e) => handleInputChange('type', e.target.value)}
+                          options={type}
+                          optionLabel="boatType"
                           editable
-                          disabled={isLoading}
+                          placeholder="Select"
                           style={{
                             width: '230px',
                             height: '32px',
