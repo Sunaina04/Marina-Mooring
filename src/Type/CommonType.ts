@@ -29,6 +29,7 @@ export interface CustomerProps {
   phone: string
   email: string
   address: string
+  city:string
 }
 
 export interface BillsData {
