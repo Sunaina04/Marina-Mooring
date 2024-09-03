@@ -1200,7 +1200,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 </div>
               </div>
             </div>
-            
+            <div className="flex gap-6">
             <div className="mt-3">
               <div>
                 <span className="font-medium text-sm text-[#000000]">
@@ -1230,7 +1230,39 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
               
             </div>
+            {/* <div className="mt-3"> */}
+              
+              <div className="mt-3">
+                  <span className="font-medium text-sm text-[#000000]">
+                    <div className="flex gap-1">Image</div>
+                  </span>
+                  <div className="mt-2">
+                    <div
+                      style={{
+                        width: '230px',
+                        height: '32px',
+                        border: '1px solid #D5E1EA',
+                        borderRadius: '0.50rem',
+                        fontSize: '0.8rem',
+                        paddingLeft: '0.5rem',
+                        cursor: 'pointer',
+                      }}>
+                      <div
+                        onClick={() => setCustomerImageVisible(true)}
+                        className="flex gap-3 text-center ">
+                        <FaFileUpload
+                          style={{ fontSize: '22px', color: '#0098FF', marginTop: '3px' }}
+                        />
+                        <div className="border-r-2 border-blue-100  h-[30px]"></div>
+                        <span className="pl-4 mt-1"> Upload Image </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
+              
+            </div>
+            
             
 
             <div
