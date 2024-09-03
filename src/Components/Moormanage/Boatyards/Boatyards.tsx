@@ -677,7 +677,7 @@ const Boatyards = () => {
                 }}>
                 <p>{properties.address}</p>
                 <p>{properties.mooringInventoried}</p>
-                <p>{properties.serviceAreaGPSCoordinates}</p>
+                <p>{properties.boatyardGPSCoordinates}</p>
               </div>
             </div>
             <div className="mt-4">

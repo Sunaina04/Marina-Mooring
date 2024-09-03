@@ -23,7 +23,7 @@ import { IoSearchSharp } from 'react-icons/io5'
 import '../Boatyards/Boatyard.module.css'
 import CustomDisplayPositionMap from '../../Map/CustomDisplayPositionMap'
 import { Toast } from 'primereact/toast'
-import { Params } from '../../../Type/CommonType'
+import { Params, iconsByStatus } from '../../../Type/CommonType'
 import { Dialog } from 'primereact/dialog'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { useSelector } from 'react-redux'
@@ -36,6 +36,8 @@ import React from 'react'
 import AddServiceModal from './AddServiceModal'
 import MooringInformations from '../../CommonComponent/MooringInformations'
 import { AddNewButtonStyle, DialogStyle } from '../../Style'
+import CustomServiceAreaMoorinMap from '../../Map/CustomServiceAreaMoorinMap'
+import { PositionType } from '../../../Type/Components/MapTypes'
 
 const ServiceArea = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -58,6 +60,8 @@ const ServiceArea = () => {
   const [dialogVisible, setDialogVisible] = useState(false)
   const [mooringRowData, setMooringRowData] = useState<any>([])
   const [serviceAreaRecord, setServiceAreaRecord] = useState(true)
+  const [GPSResponseData, setGPSResponseData] = useState<any>()
+  const [mooringGPSResponseData, setMooringGPSResponseData] = useState<any>()
 
   const toast = useRef<Toast>(null)
 
@@ -73,6 +77,22 @@ const ServiceArea = () => {
   const [pageNumberOne, setPageNumberOne] = useState(0)
   const [pageSizeTwo, setPageSizeTwo] = useState(10)
   const [totalRecordsTwo, setTotalRecordsTwo] = useState<number>()
+
+  const position: PositionType = [39.4926173, -117.5714859]
+
+  const parseCoordinates = (coordinates: any) => {
+    if (!coordinates) return null
+    const [latitude, longitude] = coordinates.split(' ').map(parseFloat)
+    return isNaN(latitude) || isNaN(longitude) ? null : [latitude, longitude]
+  }
+
+  const gpsCoordinatesArray =
+    mooringWithServiceAreasData &&
+    mooringWithServiceAreasData?.map(
+      (mooring: any) => parseCoordinates(mooring.gpsCoordinates) || [39.4926173, -117.5714859],
+    )
+
+  const initialPosition = gpsCoordinatesArray?.length > 0 ? gpsCoordinatesArray[0] : position
 
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
@@ -172,62 +192,6 @@ const ServiceArea = () => {
     [],
   )
 
-  // const allowExpansion = (rowData: ServiceAreaPayload): boolean => {
-  //   return !!rowData.mooringInventoried
-  // }
-
-  const rowExpansionStyle = {
-    backgroundColor: '#00426F',
-    fontSize: '10px',
-    fontWeight: '700',
-    color: '#FFFFFF',
-    padding: '15px',
-  }
-
-  const rowExpansionColumn = useMemo(
-    () => [
-      {
-        id: 'street',
-        label: 'Address',
-        style: rowExpansionStyle,
-      },
-      {
-        id: 'mooringInventoried',
-        label: 'Mooring Inventoried',
-        style: rowExpansionStyle,
-      },
-      {
-        id: 'gpsCoordinates',
-        label: 'Mooring Number',
-        style: rowExpansionStyle,
-      },
-    ],
-    [],
-  )
-
-  const rowExpansionTemplate = (data: ServiceAreaData) => {
-    return (
-      <>
-        {serviceAreaData ? (
-          <DataTableComponent
-            tableStyle={{
-              fontSize: '14px',
-              color: '#000000',
-              padding: '5rem',
-            }}
-            data={[data]}
-            columns={rowExpansionColumn}
-            style={{ fontWeight: '500', backgroundColor: '#ECF3F9' }}
-          />
-        ) : (
-          <div>
-            <img src="/assets/images/empty.png" alt="Empty Data" className="w-20 mx-auto mb-4" />
-          </div>
-        )}
-      </>
-    )
-  }
-
   const columnStyle = {
     backgroundColor: '#00426F',
     fontSize: '12px',
@@ -254,7 +218,6 @@ const ServiceArea = () => {
         style: columnStyle,
       },
     ],
-    // [allowExpansion],
     [],
   )
 
@@ -316,13 +279,13 @@ const ServiceArea = () => {
     setServiceAreaRecord(false)
   }
 
-  const parseCoordinates = (coordinates: any) => {
-    if (!coordinates) return null
-    const [latitude, longitude] = coordinates.split(' ').map(parseFloat)
-    return isNaN(latitude) || isNaN(longitude) ? null : [latitude, longitude]
-  }
+  // const parseCoordinates = (coordinates: any) => {
+  //   if (!coordinates) return null
+  //   const [latitude, longitude] = coordinates.split(' ').map(parseFloat)
+  //   return isNaN(latitude) || isNaN(longitude) ? null : [latitude, longitude]
+  // }
 
-  const [latitude, longitude] = parseCoordinates(selectedServiceArea?.gpsCoordinates) || []
+  // const [latitude, longitude] = parseCoordinates(selectedServiceArea?.gpsCoordinates) || []
 
   const getServiceAreaData = useCallback(async () => {
     setIsLoading(true)
@@ -472,7 +435,12 @@ const ServiceArea = () => {
             marginLeft: '10px',
             marginRight: '10px',
           }}>
-          <CustomDisplayPositionMap position={[latitude, longitude]} zoomLevel={15} />
+          <CustomServiceAreaMoorinMap
+            position={initialPosition}
+            iconsByStatus={iconsByStatus}
+            moorings={mooringWithServiceAreasData}
+          />
+          {/* <CustomDisplayPositionMap position={[latitude, longitude]} zoomLevel={15} /> */}
         </div>
 
         <div
