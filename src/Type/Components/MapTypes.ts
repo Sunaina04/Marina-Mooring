@@ -63,3 +63,9 @@ export interface TimeLineProps {
   showMapModal?: boolean
   setShowMapModal?: React.Dispatch<React.SetStateAction<boolean>>
 }
+
+export interface CustomServiceAreaMoorinMapProps extends CustomDisplayPositionMapProps {
+  iconsByStatus?: { [key: string]: L.Icon }
+  moorings?: any
+  mooringData?: any
+}
