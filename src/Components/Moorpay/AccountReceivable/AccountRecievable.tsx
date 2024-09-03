@@ -744,6 +744,7 @@ const AccountRecievable = () => {
           getOutStandingInvoice={getOutStandingInvoice}
           editModeWorkOrder={true}
           isInvoice={isInvoice}
+          isTechnician={true}
           setVisible={() => {
             setAddWorkOrderModal(false)
             setModalVisible(false)
