@@ -705,7 +705,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
             <div className="flex gap-6 mt-3">
               <div>
                 <span className="font-medium text-sm text-[#000000]">
-                  <div className="flex gap-1">Boatyard Name</div>
+                  <div className="flex gap-1">Boatyard</div>
                 </span>
                 <div className="mt-2">
                   <Dropdown
@@ -1226,7 +1226,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
 
                   <div className="mt-3">
                     <span className="font-medium text-sm text-[#000000]">
-                      <div className="flex gap-1">Weight (in kg)</div>
+                      <div className="flex gap-1">Weight of Vessel</div>
                     </span>
                     <div className="mt-2">
                       <InputComponent
@@ -1408,7 +1408,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               </div>
               <div>
                 <span className="font-medium text-sm text-[#000000]">
-                  <div className="flex gap-1">Boatyard Name</div>
+                  <div className="flex gap-1">Boatyard</div>
                 </span>
                 <div className="mt-2">
                   <Dropdown
@@ -1930,7 +1930,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                   <div className="mt-3">
                     <div>
                       <span className="font-medium text-sm text-[#000000]">
-                        <div className="flex gap-1">Type</div>
+                        <div className="flex gap-1">Type of Vessel</div>
                       </span>
                     </div>
 
@@ -1954,7 +1954,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
 
                   <div className="mt-3">
                     <span className="font-medium text-sm text-[#000000]">
-                      <div className="flex gap-1">Weight (in kg)</div>
+                      <div className="flex gap-1">Weight of Vessel</div>
                     </span>
                     <div className="mt-2">
                       <InputComponent

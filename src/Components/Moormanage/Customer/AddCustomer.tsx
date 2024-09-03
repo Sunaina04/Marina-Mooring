@@ -1036,8 +1036,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   </div>
                 </div>
                 <div className="mt-3">
-                  <span className="font-medium text-sm text-[#000000]">
-                    <div className="flex gap-1">Image</div>
+                 <span className="font-medium text-sm text-[#000000]">
+                    <div className="flex gap-1">Country</div>
                   </span>
                   <div className="mt-2">
                     <div
@@ -1389,7 +1389,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
                   <div>
                     <span className="font-medium text-sm text-[#000000]">
-                      <div className="flex gap-1">Boatyard Name</div>
+                      <div className="flex gap-1">Boatyard</div>
                     </span>
                     <div className="mt-2">
                       <Dropdown
@@ -1784,7 +1784,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
 
                     <div className="mt-3">
                       <span className="font-medium text-sm text-[#000000]">
-                        <div className="flex gap-1">Weight (in kg)</div>
+                        <div className="flex gap-1">Weight of Vessel</div>
                       </span>
                       <div className="mt-2">
                         <InputComponent

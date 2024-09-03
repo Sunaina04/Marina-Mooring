@@ -29,6 +29,7 @@ const AddInventory: React.FC<AddInventoryProps> = ({
   const [formData, setFormData] = useState<any>({
     itemName: '',
     cost: '',
+    quantity:'',
     salePrice: '',
     itemsName: '',
     type: '',
@@ -39,6 +40,9 @@ const AddInventory: React.FC<AddInventoryProps> = ({
 
   const handleInputChange = (field: string, value: any) => {
     if (field === 'cost' && value !== '' && !/^\d*\.?\d*$/.test(value)) {
+      return
+    }
+    if (field === 'quantity' && value !== '' && !/^\d*\.?\d*$/.test(value)) {
       return
     }
     if (field === 'salePrice' && value !== '' && !/^\d*\.?\d*$/.test(value)) {
@@ -59,6 +63,7 @@ const AddInventory: React.FC<AddInventoryProps> = ({
     if (!formData.type) newErrors.type = 'Type is required'
     if (!formData.itemName) newErrors.itemName = 'Item Name/Number is required'
     if (!formData.cost) newErrors.cost = 'Cost is required'
+     if (!formData.quantity) newErrors.quantity = 'Quantity is required'
     if (!formData.salePrice) newErrors.salePrice = 'Sale Price is required'
     if (!checked && !unChecked) newErrors.taxable = 'Please select Taxable Yes or No'
     setErrors(newErrors)
@@ -85,6 +90,7 @@ const AddInventory: React.FC<AddInventoryProps> = ({
       itemName: selectedInventory?.itemName || '',
       type: selectedInventory?.inventoryType?.type || '',
       cost: selectedInventory?.cost || '',
+      quantity: selectedInventory?.quantity || '',
       salePrice: selectedInventory?.salePrice,
     }))
     if (selectedInventory?.taxable === 'yes') {
@@ -107,6 +113,7 @@ const AddInventory: React.FC<AddInventoryProps> = ({
       const savePayload = {
         inventoryTypeId: formData?.type?.id,
         cost: formData?.cost,
+        quantity: formData?.quantity,
         salePrice: formData?.salePrice,
         itemName: formData?.itemName,
         taxable: checked === true ? 'yes' : 'no',
@@ -155,6 +162,7 @@ const AddInventory: React.FC<AddInventoryProps> = ({
       const editPayload = {
         inventoryTypeId: formData?.type?.id,
         cost: formData?.cost,
+        quantity: formData?.quantity,
         salePrice: formData?.salePrice,
         itemName: formData?.itemName,
         taxable: checked === true ? 'yes' : 'no',
@@ -297,6 +305,28 @@ const AddInventory: React.FC<AddInventoryProps> = ({
                 value={formData.cost}
               />
               <p className="">{errors.cost && <small className="p-error">{errors.cost}</small>}</p>
+            </div>
+          </div>
+          <div>
+            <div className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+              Quantity
+                <p className="text-red-600">*</p>
+              </div>
+            </div>
+            <div className="mt-2">
+              <InputComponent
+                style={{
+                  width: '230px',
+                  height: '32px',
+                  border: errors.quantity ? '1px solid red' : '1px solid #D5E1EA',
+                  borderRadius: '0.50rem',
+                  fontSize: '0.8rem',
+                }}
+                onChange={(e) => handleInputChange('quantity', e.target.value)}
+                value={formData.quantity}
+              />
+              <p className="">{errors.quantity && <small className="p-error">{errors.quantity}</small>}</p>
             </div>
           </div>
         </div>
