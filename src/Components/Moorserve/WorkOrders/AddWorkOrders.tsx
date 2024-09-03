@@ -52,6 +52,7 @@ import ApproveModal from '../../Moorpay/AccountReceivable/ApproveModal'
 import ShowImages from '../../CommonComponent/UploadImages'
 import PDFEditor from '../Forms/PdfEditor'
 import { FormDataContext } from '../../../Services/ContextApi/FormDataContext'
+import InputComponent from '../../CommonComponent/InputComponent'
 
 const AddWorkOrders: React.FC<WorkOrderProps> = ({
   workOrderData,
@@ -80,6 +81,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     attachForm: '',
   })
 
+  const [cost, setCost] = useState('')
   const [time, setTime] = useState({ minutes: 0, seconds: 0 })
   const [basedOnCustomerIdAndBoatyardId, setbasedOnCustomerIdAndBoatyardId] = useState<MetaData[]>()
   const [mooringsBasedOnBoatyardIdData, setMooringsBasedOnBoatyardIdData] = useState<MetaData[]>()
@@ -196,6 +198,9 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   }
 
   const handleInputChange = (field: string, value: any) => {
+    if (field === 'cost' && value !== '' && !/^\d*\.?\d*$/.test(value)) {
+      return
+    }
     let updatedWorkOrder = { ...workOrder, [field]: value }
 
     if (editMode) {
@@ -233,6 +238,8 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       })
     }
   }
+
+    
 
   const handleEditMode = () => {
     setWorkOrder((prevState: any) => ({
@@ -899,6 +906,41 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
               )}
             </p>
           </div>
+
+
+          <div>
+          <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Boatyard
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
+            <div className="mt-1">
+            <Dropdown
+                value={workOrder.boatyards?.boatyardName || workOrder.boatyards}
+                onChange={(e) => handleInputChange('boatyards', e.target.value)}
+                options={boatyardsNameOptions}
+                optionLabel="boatyardName"
+                editable
+                disabled={isLoading || isAccountRecievable || isTechnician}
+                style={{
+                  width: '230px',
+                  height: '32px',
+                  border: errorMessage.boatyards ? '1px solid red' : '1px solid #D5E1EA',
+                  borderRadius: '0.50rem',
+                  fontSize: '0.8rem',
+                  paddingLeft: '0.5rem',
+                }}
+              />
+            </div>
+            <p>
+              {errorMessage.boatyards && (
+                <small className="p-error">{errorMessage.boatyards}</small>
+              )}
+            </p>
+          </div>
+
+
           {!estimate && !isAccountRecievable && (
             <div className="">
               <span className="font-medium text-sm text-[#000000]">
@@ -936,47 +978,14 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         {/* Boatyards */}
         <div className="flex gap-6 mt-3">
           <div>
-            <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
-                Boatyard
-                <p className="text-red-600">*</p>
-              </div>
-            </span>
-            <div className="mt-1">
-              <Dropdown
-                value={workOrder.boatyards?.boatyardName || workOrder.boatyards}
-                onChange={(e) => handleInputChange('boatyards', e.target.value)}
-                options={boatyardsNameOptions}
-                optionLabel="boatyardName"
-                editable
-                disabled={isLoading || isAccountRecievable || isTechnician}
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: errorMessage.boatyards ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                  paddingLeft: '0.5rem',
-                }}
-              />
-            </div>
-            <p>
-              {errorMessage.boatyards && (
-                <small className="p-error">{errorMessage.boatyards}</small>
-              )}
-            </p>
-          </div>
-
-          {/* Assigned to */}
-          <div>
-            <span className="font-medium text-sm text-[#000000]">
+          <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
                 Assigned to
                 <p className="text-red-600">*</p>
               </div>
             </span>
             <div className="mt-1">
-              <Dropdown
+            <Dropdown
                 value={workOrder.assignedTo}
                 onChange={(e) => handleInputChange('assignedTo', e.target.value)}
                 options={technicians}
@@ -999,30 +1008,16 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
             </p>
           </div>
 
-          {isLoading && (
-            <ProgressSpinner
-              style={{
-                position: 'absolute',
-                top: '45%',
-                left: '45%',
-                transform: 'translate(-50%, -50%)',
-                width: '50px',
-                height: '50px',
-              }}
-              strokeWidth="4"
-            />
-          )}
-
-          {/* Due Date */}
-          <div className="">
-            <span className="font-medium text-sm text-[#000000]">
+          {/* Assigned to */}
+          <div>
+          <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
                 Due Date
                 <p className="text-red-600">*</p>
               </div>
             </span>
             <div className="mt-1">
-              <Calendar
+            <Calendar
                 value={parseDate(workOrder.dueDate)}
                 onChange={(e) => handleInputChange('dueDate', formatDate(e.target.value))}
                 dateFormat="mm/dd/yy"
@@ -1042,19 +1037,31 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
               {errorMessage.dueDate && <small className="p-error">{errorMessage.dueDate}</small>}
             </p>
           </div>
-        </div>
 
-        {/* Schedule Date */}
-        <div className="flex gap-6 mt-3">
-          <div>
-            <span className="font-medium text-sm text-[#000000]">
+          {isLoading && (
+            <ProgressSpinner
+              style={{
+                position: 'absolute',
+                top: '45%',
+                left: '45%',
+                transform: 'translate(-50%, -50%)',
+                width: '50px',
+                height: '50px',
+              }}
+              strokeWidth="4"
+            />
+          )}
+
+          {/* Due Date */}
+          <div className="">
+          <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
                 Schedule Date
                 <p className="text-red-600">*</p>
               </div>
             </span>
             <div className="mt-1">
-              <Calendar
+            <Calendar
                 value={parseDate(workOrder.scheduleDate)}
                 onChange={(e) => handleInputChange('scheduleDate', formatDate(e.target.value))}
                 dateFormat="mm/dd/yy"
@@ -1076,17 +1083,19 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
               )}
             </p>
           </div>
+        </div>
 
-          {/* Status */}
+        {/* Schedule Date */}
+        <div className="flex gap-6 mt-3">
           <div>
-            <span className="font-medium text-sm text-[#000000]">
+          <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
                 Status
                 <p className="text-red-600">*</p>
               </div>
             </span>
             <div className="mt-1">
-              <Dropdown
+            <Dropdown
                 value={workOrder.workOrderStatus}
                 onChange={(e) => handleInputChange('workOrderStatus', e.target.value)}
                 options={workOrderStatusValue}
@@ -1101,6 +1110,39 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                   fontSize: '0.8rem',
                 }}
               />
+            </div>
+            <p>
+              {errorMessage.workOrderStatus && (
+                <small className="p-error">{errorMessage.workOrderStatus}</small>
+              )}
+            </p>
+          </div>
+
+          {/* Status */}
+          <div>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Cost
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
+            <div className="mt-1">
+            <InputComponent
+              value={cost}
+              onChange={(e) => {
+                setCost(e.target.value)
+                // setErrorMessage((prev) => ({ ...prev, zipCode: '' }))
+              }}
+             
+              style={{
+                width: '230px',
+                height: '32px',
+                border: '1px solid #D5E1EA',
+                borderRadius: '0.50rem',
+                fontSize: '0.8rem',
+                padding: '0.5rem',
+              }}
+            />
             </div>
             <p>
               {errorMessage.workOrderStatus && (

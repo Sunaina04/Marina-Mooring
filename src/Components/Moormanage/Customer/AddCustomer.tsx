@@ -60,6 +60,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [countriesData, setCountriesData] = useState<Country[]>()
   const [statesData, setStatesData] = useState<State[]>()
   const [address, setAddress] = useState('')
+  const [city, setCity] = useState('')
   const [type, setType] = useState<MetaData[]>([])
   const [weightData, setWeightData] = useState<MetaData[]>([])
   const [chainData, setChainData] = useState<MetaData[]>([])
@@ -387,6 +388,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
       case 'address':
         setAddress(value)
         break
+        case 'city':
+        setCity(value)
+        break
       case 'pinCode':
         setPinCode(value)
         break
@@ -412,6 +416,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     setPhone(customer?.phone || '')
     setEmail(customer?.emailAddress || '')
     setAddress(customer?.address || '')
+    setCity(customer?.city || '')
     setPinCode(customer?.zipCode || '')
     setSelectedCustomerType(customer?.customerTypeDto?.type)
     setState(customer?.stateResponseDto?.name || undefined)
@@ -1040,34 +1045,6 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     <div className="flex gap-1">Country</div>
                   </span>
                   <div className="mt-2">
-                    <div
-                      style={{
-                        width: '230px',
-                        height: '32px',
-                        border: '1px solid #D5E1EA',
-                        borderRadius: '0.50rem',
-                        fontSize: '0.8rem',
-                        paddingLeft: '0.5rem',
-                        cursor: 'pointer',
-                      }}>
-                      <div
-                        onClick={() => setCustomerImageVisible(true)}
-                        className="flex gap-3 text-center ">
-                        <FaFileUpload
-                          style={{ fontSize: '22px', color: '#0098FF', marginTop: '3px' }}
-                        />
-                        <div className="border-r-2 border-blue-100  h-[30px]"></div>
-                        <span className="pl-4 mt-1"> Upload Image </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-3">
-                  <span className="font-medium text-sm text-[#000000]">
-                    <div className="flex gap-1">Country</div>
-                  </span>
-                  <div className="mt-2">
                     <Dropdown
                       id="country"
                       value={country}
@@ -1086,6 +1063,28 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         fontSize: '0.8rem',
                       }}
                     />
+                  </div>
+                </div>
+
+                <div className="mt-3">
+                <span className="font-medium text-sm text-[#000000]">
+                        <div className="flex gap-1">Address</div>
+                      </span>
+                  <div className="mt-2">
+                  <InputText
+                        id="pinCode"
+                        value={address}
+                        onChange={(e) => handleInputChangeCustomer('address', e.target.value)}
+                        placeholder="Address"
+                        style={{
+                          width: '230px',
+                          height: '32px',
+                          border: fieldErrors.address ? '1px solid red' : '1px solid #D5E1EA',
+                          borderRadius: '0.50rem',
+                          fontSize: '0.8rem',
+                          paddingLeft: '0.5rem',
+                        }}
+                      />
                   </div>
                 </div>
               </div>
@@ -1109,12 +1108,38 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   <div>
                     <div>
                       <span className="font-medium text-sm text-[#000000]">
+                        <div className="flex gap-1">City</div>
+                      </span>
+                    </div>
+
+                    <div className="mt-2">
+                    <InputText
+                        id="pinCode"
+                        value={city}
+                        onChange={(e) => handleInputChangeCustomer('city', e.target.value)}
+                        placeholder="City"
+                        style={{
+                          width: '230px',
+                          height: '32px',
+                          border: fieldErrors.city ? '1px solid red' : '1px solid #D5E1EA',
+                          borderRadius: '0.50rem',
+                          fontSize: '0.8rem',
+                          paddingLeft: '0.5rem',
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <div>
+                    <span className="font-medium text-sm text-[#000000]">
                         <div className="flex gap-1">State</div>
                       </span>
                     </div>
 
                     <div className="mt-2">
-                      <Dropdown
+                    <Dropdown
                         id="state"
                         value={state}
                         options={statesData}
@@ -1138,13 +1163,13 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                 <div>
                   <div>
                     <div>
-                      <span className="font-medium text-sm text-[#000000]">
+                    <span className="font-medium text-sm text-[#000000]">
                         <div className="flex gap-1">Zip Code</div>
                       </span>
                     </div>
 
                     <div className="mt-2">
-                      <InputText
+                    <InputText
                         id="pinCode"
                         value={pinCode}
                         onChange={(e) => handleInputChangeCustomer('pinCode', e.target.value)}
@@ -1161,34 +1186,9 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     </div>
                   </div>
                 </div>
-                <div>
-                  <div>
-                    <div>
-                      <span className="font-medium text-sm text-[#000000]">
-                        <div className="flex gap-1">Address</div>
-                      </span>
-                    </div>
-
-                    <div className="mt-2">
-                      <InputText
-                        id="pinCode"
-                        value={address}
-                        onChange={(e) => handleInputChangeCustomer('address', e.target.value)}
-                        placeholder="Address"
-                        style={{
-                          width: '230px',
-                          height: '32px',
-                          border: fieldErrors.address ? '1px solid red' : '1px solid #D5E1EA',
-                          borderRadius: '0.50rem',
-                          fontSize: '0.8rem',
-                          paddingLeft: '0.5rem',
-                        }}
-                      />
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
+            
             <div className="mt-3">
               <div>
                 <span className="font-medium text-sm text-[#000000]">
@@ -1215,7 +1215,11 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   }}
                 />
               </div>
+
+              
             </div>
+
+            
 
             <div
               className={`mt-3 
