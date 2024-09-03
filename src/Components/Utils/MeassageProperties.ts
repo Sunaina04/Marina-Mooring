@@ -8,7 +8,7 @@ export const properties = {
   address: 'Address',
   mooringInventoried: 'Mooring Inventoried',
   boatyardGPSCoordinates: 'Boatyard GPS Coordinates',
-  serviceAreaGPSCoordinates: 'Boatyard GPS Coordinates',
+  serviceAreaGPSCoordinates: 'Service Area GPS Coordinates',
   moormanagePermission: 'MOORMANAGE/Permission',
   CustomersOwner: 'Companies',
   CustomerOwnerUsers: 'User Management',

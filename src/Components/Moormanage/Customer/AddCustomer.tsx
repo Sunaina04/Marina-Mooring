@@ -1036,8 +1036,8 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   </div>
                 </div>
                 <div className="mt-3">
-                  <span className="font-medium text-sm text-[#000000]">
-                    <div className="flex gap-1">Image</div>
+                 <span className="font-medium text-sm text-[#000000]">
+                    <div className="flex gap-1">Country</div>
                   </span>
                   <div className="mt-2">
                     <div

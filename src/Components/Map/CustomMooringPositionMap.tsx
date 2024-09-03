@@ -212,7 +212,7 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
                   <span style={dotStyle('green')}></span> Gear On (in the water)
                 </div>
                 <div style={{ width: isZoom ? ' ' : '10vw' }}>
-                  <span style={dotStyle('#d3d3d3')}></span> Not in Use
+                  <span style={dotStyle('#ffff00')}></span> Need Service
                 </div>
               </div>
             </div>
