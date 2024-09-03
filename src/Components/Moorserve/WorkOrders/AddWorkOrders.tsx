@@ -64,6 +64,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   getWorkOrderWithPendingPayApproval,
   getOutStandingInvoice,
   isInvoice,
+  isTechnician,
 }) => {
   const selectedCustomerId = useSelector(selectCustomerId)
   const [workOrder, setWorkOrder] = useState<any>({
@@ -849,7 +850,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 options={CustomerNameOptions}
                 optionLabel="firstName"
                 editable
-                disabled={isLoading || isAccountRecievable}
+                disabled={isLoading || isAccountRecievable || isTechnician}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -882,7 +883,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 options={MooringNameOptions}
                 optionLabel="mooringNumber"
                 editable
-                disabled={isLoading || isAccountRecievable}
+                disabled={isLoading || isAccountRecievable || isTechnician}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -948,7 +949,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 options={boatyardsNameOptions}
                 optionLabel="boatyardName"
                 editable
-                disabled={isLoading || isAccountRecievable}
+                disabled={isLoading || isAccountRecievable || isTechnician}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -981,7 +982,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 options={technicians}
                 optionLabel="firstName"
                 editable
-                disabled={isLoading || isAccountRecievable}
+                disabled={isLoading || isAccountRecievable || isTechnician}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -1025,7 +1026,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 value={parseDate(workOrder.dueDate)}
                 onChange={(e) => handleInputChange('dueDate', formatDate(e.target.value))}
                 dateFormat="mm/dd/yy"
-                disabled={isLoading || isAccountRecievable}
+                disabled={isLoading || isAccountRecievable || isTechnician}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -1057,7 +1058,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 value={parseDate(workOrder.scheduleDate)}
                 onChange={(e) => handleInputChange('scheduleDate', formatDate(e.target.value))}
                 dateFormat="mm/dd/yy"
-                disabled={isLoading || isAccountRecievable}
+                disabled={isLoading || isAccountRecievable || isTechnician}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -1091,7 +1092,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 options={workOrderStatusValue}
                 optionLabel="status"
                 editable
-                disabled={isLoading || isAccountRecievable}
+                disabled={isLoading || isAccountRecievable || isTechnician}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -1119,7 +1120,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
             <div
               className=""
               style={{
-                // width: '8vw',
                 maxWidth: '100%',
                 height: '32px',
                 border: '1px solid #D5E1EA',
@@ -1129,7 +1129,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 <h1
                   className="mt-1 p-[0.1rem] bg-slate-300 rounded-md cursor-pointer"
                   onClick={() => {
-                    !isAccountRecievable && handleDecrement()
+                    ;(!isAccountRecievable || !isTechnician) && handleDecrement()
                   }}>
                   <GrFormSubtract />
                 </h1>
@@ -1137,11 +1137,10 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                   type="text"
                   value={formatTime(time.minutes, time.seconds)}
                   onChange={handleTimeChange}
-                  disabled={isLoading || isAccountRecievable}
+                  disabled={isLoading || isAccountRecievable || isTechnician}
                   className="text-center w-16"
                   style={{
                     boxShadow: 'none',
-                    //  border: errorMessage.time ? '1px solid red' : '1px solid #D5E1EA',
                   }}
                 />
                 <h1
@@ -1168,7 +1167,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 options={jobTypesValues}
                 optionLabel="type"
                 editable
-                disabled={isLoading || isAccountRecievable}
+                disabled={isLoading || isAccountRecievable || isTechnician}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -1197,7 +1196,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 options={formsData}
                 optionLabel="formName"
                 editable
-                disabled={isLoading || isAccountRecievable}
+                disabled={isLoading || isAccountRecievable || isTechnician}
                 style={{
                   width: '230px',
                   height: '32px',
@@ -1221,7 +1220,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 value={workOrder.value}
                 rows={3}
                 cols={30}
-                disabled={isLoading || isAccountRecievable}
+                disabled={isLoading || isAccountRecievable || isTechnician}
                 onChange={(e) => handleInputChange('value', e.target.value)}
                 style={{
                   width: '740px',

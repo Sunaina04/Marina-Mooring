@@ -31,4 +31,5 @@ export const properties = {
   customerInformation: 'Customer Information',
   imageInformation: 'Image Information',
   noDataMessage: 'No data available',
+  Address: 'Address',
 }
