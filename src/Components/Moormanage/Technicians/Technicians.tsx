@@ -24,6 +24,8 @@ import { useSelector } from 'react-redux'
 import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import { Toast } from 'primereact/toast'
 import { Paginator } from 'primereact/paginator'
+import { Dialog } from 'primereact/dialog'
+import AddWorkOrders from '../../Moorserve/WorkOrders/AddWorkOrders'
 
 const Technicians = () => {
   const [dateFrom, setDateFrom] = useState<any>()
@@ -40,6 +42,9 @@ const Technicians = () => {
   const [searchText, setSearchText] = useState('')
   const [selectedProduct, setSelectedProduct] = useState()
   const [technicianId, setTechnicianId] = useState()
+  const [selectedWorkOrderRowData, setSelectedWorkOredrRowData] = useState<any>()
+  const [addWorkOrderModal, setAddWorkOrderModal] = useState(false)
+  const [modalVisible, setModalVisible] = useState(false)
   const toast = useRef<Toast>(null)
   const selectedCustomerId = useSelector(selectCustomerId)
   const [pageNumber, setPageNumber] = useState(0)
@@ -105,6 +110,17 @@ const Technicians = () => {
     [],
   )
 
+  const handleModalClose = () => {
+    setAddWorkOrderModal(false)
+    setModalVisible(false)
+    setSelectedWorkOredrRowData('')
+  }
+
+  const handleActionClick = (row: any) => {
+    setSelectedWorkOredrRowData(row)
+    setAddWorkOrderModal(true)
+    setModalVisible(true)
+  }
   const firstLastName = (data: any) => {
     return data?.customerResponseDto?.firstName + ' ' + data?.customerResponseDto?.lastName
   }
@@ -123,6 +139,23 @@ const Technicians = () => {
     ],
     [],
   )
+
+  const WorkOrderActionColumn: ActionButtonColumnProps = {
+    header: 'Action',
+    buttons: [
+      {
+        color: 'black',
+        label: 'View',
+        filled: true,
+        onClick: (row) => {
+          handleActionClick(row)
+          console.log('row', row)
+        },
+      },
+    ],
+    headerStyle: WorkOrdersColumnStyle,
+    style: { borderBottom: '1px solid #D5E1EA', fontWeight: '' },
+  }
 
   const formatDate = (dateString: any) => {
     const date = new Date(dateString)
@@ -466,7 +499,7 @@ const Technicians = () => {
                     color: '#000000',
                     fontWeight: 600,
                     backgroundColor: '#FFFFFF',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
                   }}
                   onRowClick={(row) => {
                     handleWorkOrder(row.data)
@@ -564,13 +597,14 @@ const Technicians = () => {
               <div className="flex-grow overflow-auto">
                 <DataTableComponent
                   columns={WorkOrdersColumn}
+                  actionButtons={WorkOrderActionColumn}
                   scrollable={true}
                   tableStyle={{
                     fontSize: '12px',
                     color: '#000000',
                     fontWeight: 600,
                     backgroundColor: '#FFFFFF',
-                     cursor: 'pointer'
+                    cursor: 'pointer',
                   }}
                   onSelectionChange={(e) => {
                     setSelectedProduct(e.value)
@@ -626,6 +660,38 @@ const Technicians = () => {
           </div>
         </div>
       </div>
+
+      {/* for view button */}
+      <Dialog
+        position="center"
+        style={{
+          width: '851px',
+          minWidth: '851px',
+          height: '526px',
+          minHeight: '526px',
+          borderRadius: '1rem',
+          fontWeight: '400',
+          cursor: 'alias',
+        }}
+        draggable={false}
+        headerStyle={{ cursor: 'alias' }}
+        visible={addWorkOrderModal}
+        onHide={handleModalClose}
+        header={<h1 className="text-xl font-extrabold text-black ml-4">Work Order</h1>}>
+        <AddWorkOrders
+          workOrderData={selectedWorkOrderRowData}
+          isTechnician={true}
+          editModeWorkOrder={true}
+          setVisible={() => {
+            setAddWorkOrderModal(false)
+            setModalVisible(false)
+          }}
+          closeModal={() => {
+            handleModalClose()
+            setModalVisible(false)
+          }}
+        />
+      </Dialog>
     </>
   )
 }
