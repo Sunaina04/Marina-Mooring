@@ -929,6 +929,15 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
     }
   }, [country?.id === 13])
 
+  useEffect(() => {
+    if (formData?.mooringStatus?.id === 2) {
+      setFormData({
+        ...formData,
+        boatYardName: '',
+      })
+    }
+  }, [formData?.mooringStatus?.id])
+
   return (
     <>
       <Toast ref={toastRef} />
@@ -1041,7 +1050,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                   </div>
                 </div>
                 <div className="mt-3">
-                 <span className="font-medium text-sm text-[#000000]">
+                  <span className="font-medium text-sm text-[#000000]">
                     <div className="flex gap-1">Country</div>
                   </span>
                   <div className="mt-2">
@@ -1401,6 +1410,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                         onChange={(e) => handleInputChange('boatYardName', e.target.value)}
                         options={boatyardName}
                         optionLabel="boatyardName"
+                        disabled={formData?.mooringStatus?.id === 2}
                         editable
                         placeholder="Select"
                         style={{

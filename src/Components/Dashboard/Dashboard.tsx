@@ -54,7 +54,8 @@ const Dashboard = () => {
   }
   const [startDate, setStartDate] = useState<any>(formatDate(today))
   const [endDate, setEndDate] = useState<any>(formatDate(dateAfter7Days))
-  const [dates, setDates] = useState<[Date, Date]>([today, dateAfter7Days])
+  // const [dates, setDates] = useState<[Date, Date]>([today, dateAfter7Days])
+  const [dates, setDates] = useState<[Date, Date]>()
   const [filterDateFrom, setFilterDateFrom] = useState<any>(formatDate(today))
   const [filterDateTo, setFilterDateTo] = useState<any>(formatDate(dateAfter7Days))
 

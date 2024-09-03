@@ -865,6 +865,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   paddingLeft: '0.5rem',
+                  cursor: isTechnician ? 'disabled' : 'pointer',
                 }}
               />
             </div>
@@ -906,42 +907,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
               )}
             </p>
           </div>
-
-
-          <div>
-          <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
-                Boatyard
-                <p className="text-red-600">*</p>
-              </div>
-            </span>
-            <div className="mt-1">
-            <Dropdown
-                value={workOrder.boatyards?.boatyardName || workOrder.boatyards}
-                onChange={(e) => handleInputChange('boatyards', e.target.value)}
-                options={boatyardsNameOptions}
-                optionLabel="boatyardName"
-                editable
-                disabled={isLoading || isAccountRecievable || isTechnician}
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: errorMessage.boatyards ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                  paddingLeft: '0.5rem',
-                }}
-              />
-            </div>
-            <p>
-              {errorMessage.boatyards && (
-                <small className="p-error">{errorMessage.boatyards}</small>
-              )}
-            </p>
-          </div>
-
-
-          {!estimate && !isAccountRecievable && (
+          {!estimate && (
             <div className="">
               <span className="font-medium text-sm text-[#000000]">
                 <div className="flex gap-1">Image</div>
@@ -956,11 +922,11 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                     paddingLeft: '0.5rem',
-                    cursor: isAccountRecievable ? 'disabled' : 'pointer',
+                    cursor: isTechnician ? 'disabled' : 'pointer',
                   }}>
                   <div
                     onClick={() => {
-                      !isAccountRecievable && uploadImages()
+                      !isTechnician && uploadImages()
                     }}
                     className="flex gap-3 text-center">
                     <FaFileUpload
@@ -1171,7 +1137,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 <h1
                   className="mt-1 p-[0.1rem] bg-slate-300 rounded-md cursor-pointer"
                   onClick={() => {
-                    ;(!isAccountRecievable || !isTechnician) && handleDecrement()
+                    !isTechnician && handleDecrement()
                   }}>
                   <GrFormSubtract />
                 </h1>
@@ -1188,7 +1154,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 <h1
                   className="mt-1 p-[0.1rem] bg-slate-300 rounded-md cursor-pointer"
                   onClick={() => {
-                    !isAccountRecievable && handleIncrement()
+                    !isTechnician && handleIncrement()
                   }}>
                   <IoIosAdd />
                 </h1>
@@ -1336,13 +1302,13 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
           <>
             <Button
               onClick={handleSave}
-              disabled={isInvoice}
+              disabled={isInvoice || isTechnician}
               label="Save"
               style={{
                 width: '89px',
                 height: '42px',
                 backgroundColor: '#0098FF',
-                cursor: isAccountRecievable ? 'disabled' : 'pointer',
+                cursor: isTechnician ? 'disabled' : 'pointer',
                 fontWeight: 'bolder',
                 fontSize: '1rem',
                 boxShadow: 'none',

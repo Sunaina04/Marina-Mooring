@@ -625,6 +625,15 @@ const AddMoorings: React.FC<AddMooringProps> = ({
     }
   }, [gpsCoordinatesValue])
 
+  useEffect(() => {
+    if (formData?.mooringStatus?.id === 2) {
+      setFormData({
+        ...formData,
+        boatYardName: '',
+      })
+    }
+  }, [formData?.mooringStatus?.id])
+
   return (
     <>
       <Toast ref={toastRef} />
@@ -715,7 +724,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                     optionLabel="boatyardName"
                     placeholder="Select"
                     editable
-                    disabled={isLoading}
+                    disabled={isLoading || formData?.mooringStatus?.id === 2}
                     style={{
                       width: '230px',
                       height: '32px',
@@ -1418,13 +1427,14 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                     optionLabel="boatyardName"
                     placeholder="Select"
                     editable
-                    disabled={isLoading}
+                    disabled={isLoading || formData?.mooringStatus?.id === 2}
                     style={{
                       width: '230px',
                       height: '32px',
                       border: '1px solid #D5E1EA',
                       borderRadius: '0.50rem',
                       fontSize: '0.8rem',
+                      cursor: formData?.mooringStatus?.id === 2 ? 'not-allowed' : 'pointer',
                     }}
                   />
                 </div>
