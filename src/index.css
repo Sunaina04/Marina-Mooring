@@ -31,18 +31,25 @@ button {
   padding: 10px;
 } */
 
-.p-highlight {
+.p-customHighlight {
   background-color: #ffffff !important;
-  /* border: 1px solid #ffffff !important; */
   color: black !important;
   border: none;
 }
-.selectButton .p-highlight {
+.p-highlight.under30 {
+  color: black !important;
+}
+.under30 {
+  background-color: #a32f2f !important;
+  color: rgb(247, 245, 245) !important;
+  border: none;
+}
+.selectButton .p-customHighlight {
   background-color: #0098ff !important;
   box-shadow: none;
   color: white !important;
 }
-.selectButtons .p-highlight {
+.selectButtons .p-customHighlight {
   background-color: #00426f !important;
   box-shadow: none;
   color: white !important;
@@ -158,7 +165,7 @@ input[type='number']::-webkit-outer-spin-button {
 .p-datepicker {
   background-color: #f7fafc;
   border-radius: 11px;
-  .p-highlight {
+  .p-customHighlight {
     background-color: #0098ff !important;
     color: white !important;
   }
@@ -182,7 +189,7 @@ input[type='number']::-webkit-outer-spin-button {
   background: #f7fafc;
 }
 
-/* .p-highlight {
+/* .p-customHighlight {
   color: #FFFFFF !important;
 } */
 /* .p-datepicker {

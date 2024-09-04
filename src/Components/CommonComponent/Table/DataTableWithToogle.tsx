@@ -23,7 +23,7 @@ const DataTableWithToogle: React.FC<RowExpansionDemoProps> = ({
 
   const getRowClassName = (rowData: any) => {
     return {
-      'p-highlight': selection && selection.id === rowData.id,
+      'p-customHighlight': selection && !rowData.under30 && selection.id === rowData.id,
     }
   }
 

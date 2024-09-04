@@ -38,7 +38,8 @@ const DataTableComponent: React.FC<DataTableProps> = ({
 
   const getRowClassName = (rowData: any) => {
     return {
-      'p-highlight': selection && selection.id === rowData.id,
+      under30: rowData.under30,
+      'p-customHighlight': selection && selection.id === rowData.id,
     }
   }
 
@@ -82,7 +83,6 @@ const DataTableComponent: React.FC<DataTableProps> = ({
 }
 
 export default DataTableComponent
-
 
 // import React, { useState } from 'react';
 // import { Column } from 'primereact/column';
@@ -133,7 +133,7 @@ export default DataTableComponent
 
 //   const getRowClassName = (rowData: any) => {
 //     return {
-//       'p-highlight': selection && selection.id === rowData.id,
+//       'p-customHighlight': selection && selection.id === rowData.id,
 //     };
 //   };
 
