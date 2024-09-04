@@ -263,6 +263,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     }
     const parsedTime = parseTime(workOrderData.time)
     setTime(parsedTime)
+    setCost(workOrder?.cost)
   }
 
   const handleIncrement = () => {
@@ -406,6 +407,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       time: '00:' + formatTime(time.minutes, time.seconds),
       problem: workOrder?.value,
       imageRequestDtoList: imageRequestDtoList,
+      cost: cost,
     }
 
     try {
@@ -467,6 +469,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
             encodedFormData: formData,
           },
         ],
+        cost: workOrder?.cost || cost,
       }
       const response = await updateWorkOrder({
         payload: editPayload,
