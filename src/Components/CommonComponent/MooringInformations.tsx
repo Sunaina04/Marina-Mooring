@@ -24,7 +24,7 @@ const MooringInformations: React.FC<any> = ({ mooringRowData }) => {
             {mooringRowData?.boatName}
           </p>
           <p>
-            <span>Boat Type: </span> {mooringRowData?.boatType?.boatType}
+            <span>Boatyard: </span> {mooringRowData?.boatyardResponseDto?.boatyardName}
           </p>
           <p>
             <span>Size of Weight: </span>
@@ -45,7 +45,7 @@ const MooringInformations: React.FC<any> = ({ mooringRowData }) => {
         </div>
         <div>
           <p>
-            <span>Harbor Area: </span> {mooringRowData?.harborOrArea}
+            <span>Service Area: </span> {mooringRowData?.serviceAreaResponseDto?.serviceAreaName}
           </p>
           <p>
             <span>G.P.S Coordinates: </span>

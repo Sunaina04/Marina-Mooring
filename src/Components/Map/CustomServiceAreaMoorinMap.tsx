@@ -31,38 +31,23 @@ const CustomServiceAreaMoorinMap: React.FC<CustomServiceAreaMoorinMapProps> = ({
     return isNaN(latitude) || isNaN(longitude) ? null : [latitude, longitude]
   }
 
-  const boxStyle: React.CSSProperties = {
-    backgroundColor: 'white',
-    borderRadius: '10px',
-    width: '20vw',
-    padding: '10px',
-    marginBottom: '10px',
-    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-    position: 'absolute',
-    bottom: '10px',
-    left: '50%',
-    fontSize: '10px',
-    transform: 'translateX(-50%)',
-    zIndex: 1000,
-  }
-
   const dotStyle = (color: any): React.CSSProperties => ({
     display: 'inline-block',
-    width: '10px',
-    height: '10px',
+    width: '6px',
+    height: '6px',
     borderRadius: '50%',
     backgroundColor: color,
-    marginRight: '10px',
+    marginRight: '6px',
   })
 
   const containerStyle: React.CSSProperties = {
     display: 'flex',
     justifyContent: 'space-between',
+    flexDirection: 'column',
     alignItems: 'flex-start',
-    gap: '10px',
-    marginTop: '5px',
+    gap: '2px',
+    fontSize: '10px',
   }
-
   const iconsByStatusId = {
     1: GearOnIcon,
     2: GearOffIcon,
@@ -117,30 +102,44 @@ const CustomServiceAreaMoorinMap: React.FC<CustomServiceAreaMoorinMapProps> = ({
           </MapContainer>
         </div>
 
-        <div style={boxStyle}>
-          <div className="flex justify-between h-8">
-            <h2>Status</h2>
-          </div>
-
-          <div className="mt-1">
-            <hr style={{ border: '1px solid #3F3F3F' }} />
-          </div>
-
-          <div style={containerStyle}>
-            <div>
-              <div>
-                <span style={dotStyle('#ED4C3E')}></span> Need Inspection
-              </div>
-              <div>
-                <span style={dotStyle('#3BB15E')}></span> Gear On (in the water)
-              </div>
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '3px',
+            left: '85%',
+            transform: 'translateX(-50%)',
+            zIndex: 9999,
+            backgroundColor: 'white',
+            borderRadius: '10px',
+            padding: '10px',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+          }}>
+          <div style={{ width: '8vw' }}>
+            <h5 className="text-xs">Status</h5>
+            <div className="mt-0.5">
+              <hr style={{ border: '1px solid #3F3F3F' }} />
             </div>
-            <div>
-              <div>
-                <span style={dotStyle('#8C0DD1')}></span> Gear Off (out of the water)
+            <div style={containerStyle}>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <div>
+                  <span style={dotStyle('red')}></span> Need Inspection
+                </div>
+                <div>
+                  <span style={dotStyle('blue')}></span> Gear Off (out of the water)
+                </div>
               </div>
-              <div>
-                <span style={dotStyle('#ffff00')}></span> Need Service
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  marginRight: '10px',
+                }}>
+                <div>
+                  <span style={dotStyle('green')}></span> Gear On (in the water)
+                </div>
+                <div style={{ width: '5vw' }}>
+                  <span style={dotStyle('#ffff00')}></span> Need Service
+                </div>
               </div>
             </div>
           </div>

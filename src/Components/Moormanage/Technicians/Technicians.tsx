@@ -149,7 +149,6 @@ const Technicians = () => {
         filled: true,
         onClick: (row) => {
           handleActionClick(row)
-          console.log('row', row)
         },
       },
     ],

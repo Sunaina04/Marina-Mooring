@@ -239,8 +239,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     }
   }
 
-    
-
   const handleEditMode = () => {
     setWorkOrder((prevState: any) => ({
       ...prevState,
@@ -944,14 +942,14 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         {/* Boatyards */}
         <div className="flex gap-6 mt-3">
           <div>
-          <span className="font-medium text-sm text-[#000000]">
+            <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
                 Assigned to
                 <p className="text-red-600">*</p>
               </div>
             </span>
             <div className="mt-1">
-            <Dropdown
+              <Dropdown
                 value={workOrder.assignedTo}
                 onChange={(e) => handleInputChange('assignedTo', e.target.value)}
                 options={technicians}
@@ -976,14 +974,14 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
 
           {/* Assigned to */}
           <div>
-          <span className="font-medium text-sm text-[#000000]">
+            <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
                 Due Date
                 <p className="text-red-600">*</p>
               </div>
             </span>
             <div className="mt-1">
-            <Calendar
+              <Calendar
                 value={parseDate(workOrder.dueDate)}
                 onChange={(e) => handleInputChange('dueDate', formatDate(e.target.value))}
                 dateFormat="mm/dd/yy"
@@ -1020,14 +1018,14 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
 
           {/* Due Date */}
           <div className="">
-          <span className="font-medium text-sm text-[#000000]">
+            <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
                 Schedule Date
                 <p className="text-red-600">*</p>
               </div>
             </span>
             <div className="mt-1">
-            <Calendar
+              <Calendar
                 value={parseDate(workOrder.scheduleDate)}
                 onChange={(e) => handleInputChange('scheduleDate', formatDate(e.target.value))}
                 dateFormat="mm/dd/yy"
@@ -1054,14 +1052,14 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         {/* Schedule Date */}
         <div className="flex gap-6 mt-3">
           <div>
-          <span className="font-medium text-sm text-[#000000]">
+            <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
                 Status
                 <p className="text-red-600">*</p>
               </div>
             </span>
             <div className="mt-1">
-            <Dropdown
+              <Dropdown
                 value={workOrder.workOrderStatus}
                 onChange={(e) => handleInputChange('workOrderStatus', e.target.value)}
                 options={workOrderStatusValue}
@@ -1093,22 +1091,21 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
               </div>
             </span>
             <div className="mt-1">
-            <InputComponent
-              value={cost}
-              onChange={(e) => {
-                setCost(e.target.value)
-                // setErrorMessage((prev) => ({ ...prev, zipCode: '' }))
-              }}
-             
-              style={{
-                width: '230px',
-                height: '32px',
-                border: '1px solid #D5E1EA',
-                borderRadius: '0.50rem',
-                fontSize: '0.8rem',
-                padding: '0.5rem',
-              }}
-            />
+              <InputComponent
+                value={cost}
+                onChange={(e) => {
+                  setCost(e.target.value)
+                }}
+                disabled={isLoading || isAccountRecievable || isTechnician}
+                style={{
+                  width: '230px',
+                  height: '32px',
+                  border: '1px solid #D5E1EA',
+                  borderRadius: '0.50rem',
+                  fontSize: '0.8rem',
+                  padding: '0.5rem',
+                }}
+              />
             </div>
             <p>
               {errorMessage.workOrderStatus && (
