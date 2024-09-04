@@ -299,7 +299,7 @@ const Dashboard = () => {
         if (content?.mooringDueServiceResponseDtoList) {
           setIsLoading(false)
           setMooringData(content?.mooringDueServiceResponseDtoList)
-          setSelectedProduct(content?.mooringDueServiceResponseDtoList[0])
+          // setSelectedProduct(content?.mooringDueServiceResponseDtoList[0])
         } else {
           setIsLoading(false)
           setMooringData([])
