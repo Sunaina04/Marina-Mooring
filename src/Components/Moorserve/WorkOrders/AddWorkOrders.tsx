@@ -79,9 +79,9 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     value: '',
     jobType: '',
     attachForm: '',
+    cost: '',
   })
 
-  const [cost, setCost] = useState('')
   const [time, setTime] = useState({ minutes: 0, seconds: 0 })
   const [basedOnCustomerIdAndBoatyardId, setbasedOnCustomerIdAndBoatyardId] = useState<MetaData[]>()
   const [mooringsBasedOnBoatyardIdData, setMooringsBasedOnBoatyardIdData] = useState<MetaData[]>()
@@ -198,9 +198,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   }
 
   const handleInputChange = (field: string, value: any) => {
-    if (field === 'cost' && value !== '' && !/^\d*\.?\d*$/.test(value)) {
-      return
-    }
     let updatedWorkOrder = { ...workOrder, [field]: value }
 
     if (editMode) {
@@ -256,6 +253,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       scheduleDate: workOrderData?.scheduledDate,
       workOrderStatus: workOrderData?.workOrderStatusDto?.status,
       value: workOrderData?.problem,
+      cost: workOrderData?.cost,
     }))
     const parseTime = (timeString: any) => {
       const [hours, minutes, seconds] = timeString.split(':').map(Number)
@@ -263,7 +261,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     }
     const parsedTime = parseTime(workOrderData.time)
     setTime(parsedTime)
-    setCost(workOrder?.cost)
   }
 
   const handleIncrement = () => {
@@ -407,7 +404,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       time: '00:' + formatTime(time.minutes, time.seconds),
       problem: workOrder?.value,
       imageRequestDtoList: imageRequestDtoList,
-      cost: cost,
     }
 
     try {
@@ -469,7 +465,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
             encodedFormData: formData,
           },
         ],
-        cost: workOrder?.cost || cost,
       }
       const response = await updateWorkOrder({
         payload: editPayload,
@@ -522,6 +517,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       workOrderStatusId: workOrder?.workOrderStatus?.id,
       time: '00:' + formatTime(time.minutes, time.seconds),
       problem: workOrder?.value,
+      cost: workOrder?.cost,
     }
 
     try {
@@ -575,6 +571,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         workOrderStatusId: workOrder?.workOrderStatus?.id || workOrderData?.workOrderStatusDto?.id,
         time: '00:' + formatTime(time.minutes, time.seconds) || workOrderData?.time,
         problem: workOrder?.value || workOrderData?.problem,
+        cost: workOrder?.cost || workOrderData?.cost,
       }
       const response = await updateEstimate({
         payload: editCustomerPayload,
@@ -866,7 +863,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   paddingLeft: '0.5rem',
-                  cursor: isTechnician ? 'disabled' : 'pointer',
                 }}
               />
             </div>
@@ -908,7 +904,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
               )}
             </p>
           </div>
-          {!estimate && (
+          {!estimate && !isAccountRecievable ? (
             <div className="">
               <span className="font-medium text-sm text-[#000000]">
                 <div className="flex gap-1">Image</div>
@@ -923,11 +919,11 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                     paddingLeft: '0.5rem',
-                    cursor: isTechnician ? 'disabled' : 'pointer',
+                    cursor: isAccountRecievable ? 'disabled' : 'pointer',
                   }}>
                   <div
                     onClick={() => {
-                      !isTechnician && uploadImages()
+                      !isAccountRecievable && uploadImages()
                     }}
                     className="flex gap-3 text-center">
                     <FaFileUpload
@@ -939,11 +935,65 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 </div>
               </div>
             </div>
+          ) : (
+            <div>
+              <span className="font-medium text-sm text-[#000000]">
+                <div className="flex gap-1">Cost</div>
+              </span>
+              <div className="mt-1">
+                <InputComponent
+                  value={workOrder.cost}
+                  onChange={(e) => handleInputChange('cost', e.target.value)}
+                  disabled={isLoading || isAccountRecievable || isTechnician}
+                  style={{
+                    width: '230px',
+                    height: '32px',
+                    border: '1px solid #D5E1EA',
+                    fontSize: '0.8rem',
+                    padding: '0.5rem',
+                  }}
+                />
+              </div>
+              {/* <p>{errorMessage.cost && <small className="p-error">{errorMessage.cost}</small>}</p> */}
+            </div>
           )}
         </div>
 
         {/* Boatyards */}
         <div className="flex gap-6 mt-3">
+          <div>
+            <span className="font-medium text-sm text-[#000000]">
+              <div className="flex gap-1">
+                Boatyard
+                <p className="text-red-600">*</p>
+              </div>
+            </span>
+            <div className="mt-1">
+              <Dropdown
+                value={workOrder.boatyards?.boatyardName || workOrder.boatyards}
+                onChange={(e) => handleInputChange('boatyards', e.target.value)}
+                options={boatyardsNameOptions}
+                optionLabel="boatyardName"
+                editable
+                disabled={isLoading || isAccountRecievable || isTechnician}
+                style={{
+                  width: '230px',
+                  height: '32px',
+                  border: errorMessage.boatyards ? '1px solid red' : '1px solid #D5E1EA',
+                  borderRadius: '0.50rem',
+                  fontSize: '0.8rem',
+                  paddingLeft: '0.5rem',
+                }}
+              />
+            </div>
+            <p>
+              {errorMessage.boatyards && (
+                <small className="p-error">{errorMessage.boatyards}</small>
+              )}
+            </p>
+          </div>
+
+          {/* Assigned to */}
           <div>
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
@@ -975,8 +1025,22 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
             </p>
           </div>
 
-          {/* Assigned to */}
-          <div>
+          {isLoading && (
+            <ProgressSpinner
+              style={{
+                position: 'absolute',
+                top: '45%',
+                left: '45%',
+                transform: 'translate(-50%, -50%)',
+                width: '50px',
+                height: '50px',
+              }}
+              strokeWidth="4"
+            />
+          )}
+
+          {/* Due Date */}
+          <div className="">
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
                 Due Date
@@ -1004,23 +1068,11 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
               {errorMessage.dueDate && <small className="p-error">{errorMessage.dueDate}</small>}
             </p>
           </div>
+        </div>
 
-          {isLoading && (
-            <ProgressSpinner
-              style={{
-                position: 'absolute',
-                top: '45%',
-                left: '45%',
-                transform: 'translate(-50%, -50%)',
-                width: '50px',
-                height: '50px',
-              }}
-              strokeWidth="4"
-            />
-          )}
-
-          {/* Due Date */}
-          <div className="">
+        {/* Schedule Date */}
+        <div className="flex gap-6 mt-3">
+          <div>
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
                 Schedule Date
@@ -1050,10 +1102,8 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
               )}
             </p>
           </div>
-        </div>
 
-        {/* Schedule Date */}
-        <div className="flex gap-6 mt-3">
+          {/* Status */}
           <div>
             <span className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
@@ -1085,38 +1135,6 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
             </p>
           </div>
 
-          {/* Status */}
-          <div>
-            <span className="font-medium text-sm text-[#000000]">
-              <div className="flex gap-1">
-                Cost
-                <p className="text-red-600">*</p>
-              </div>
-            </span>
-            <div className="mt-1">
-              <InputComponent
-                value={cost}
-                onChange={(e) => {
-                  setCost(e.target.value)
-                }}
-                disabled={isLoading || isAccountRecievable || isTechnician}
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                  padding: '0.5rem',
-                }}
-              />
-            </div>
-            <p>
-              {errorMessage.workOrderStatus && (
-                <small className="p-error">{errorMessage.workOrderStatus}</small>
-              )}
-            </p>
-          </div>
-
           {/* Time (in minutes) */}
           <div className="card  ">
             <span>
@@ -1137,7 +1155,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 <h1
                   className="mt-1 p-[0.1rem] bg-slate-300 rounded-md cursor-pointer"
                   onClick={() => {
-                    !isTechnician && handleDecrement()
+                    ;(!isAccountRecievable || !isTechnician) && handleDecrement()
                   }}>
                   <GrFormSubtract />
                 </h1>
@@ -1154,7 +1172,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 <h1
                   className="mt-1 p-[0.1rem] bg-slate-300 rounded-md cursor-pointer"
                   onClick={() => {
-                    !isTechnician && handleIncrement()
+                    !isAccountRecievable && handleIncrement()
                   }}>
                   <IoIosAdd />
                 </h1>
@@ -1302,13 +1320,13 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
           <>
             <Button
               onClick={handleSave}
-              disabled={isInvoice || isTechnician}
+              disabled={isInvoice}
               label="Save"
               style={{
                 width: '89px',
                 height: '42px',
                 backgroundColor: '#0098FF',
-                cursor: isTechnician ? 'disabled' : 'pointer',
+                cursor: isAccountRecievable ? 'disabled' : 'pointer',
                 fontWeight: 'bolder',
                 fontSize: '1rem',
                 boxShadow: 'none',
