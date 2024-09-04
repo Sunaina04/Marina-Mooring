@@ -835,7 +835,7 @@ const Moorings = () => {
             style={{ flexGrow: '1' }}>
             <CustomMooringPositionMap
               position={coordinatesArray ? coordinatesArray : initialPosition}
-              zoomLevel={10}
+              zoomLevel={20}
               style={{
                 height: '700px',
                 width: 'auto',

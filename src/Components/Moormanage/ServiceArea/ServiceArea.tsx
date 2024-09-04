@@ -60,8 +60,7 @@ const ServiceArea = () => {
   const [dialogVisible, setDialogVisible] = useState(false)
   const [mooringRowData, setMooringRowData] = useState<any>([])
   const [serviceAreaRecord, setServiceAreaRecord] = useState(true)
-  const [GPSResponseData, setGPSResponseData] = useState<any>()
-  const [mooringGPSResponseData, setMooringGPSResponseData] = useState<any>()
+  const [mooringResponseData, setMooringResponseData] = useState<any>()
 
   const toast = useRef<Toast>(null)
 
@@ -93,6 +92,12 @@ const ServiceArea = () => {
     )
 
   const initialPosition = gpsCoordinatesArray?.length > 0 ? gpsCoordinatesArray[0] : position
+
+  const convertStringToArray = (str: any) => {
+    return str?.split(' ').map(Number)
+  }
+
+  const coordinatesArray = convertStringToArray(mooringResponseData)
 
   const onPageChange = (event: any) => {
     setPageNumber(event.page)
@@ -279,13 +284,13 @@ const ServiceArea = () => {
     setServiceAreaRecord(false)
   }
 
-  // const parseCoordinates = (coordinates: any) => {
-  //   if (!coordinates) return null
-  //   const [latitude, longitude] = coordinates.split(' ').map(parseFloat)
-  //   return isNaN(latitude) || isNaN(longitude) ? null : [latitude, longitude]
-  // }
+  const parseCoordinate = (coordinates: any) => {
+    if (!coordinates) return null
+    const [latitude, longitude] = coordinates.split(' ').map(parseFloat)
+    return isNaN(latitude) || isNaN(longitude) ? null : [latitude, longitude]
+  }
 
-  // const [latitude, longitude] = parseCoordinates(selectedServiceArea?.gpsCoordinates) || []
+  const [latitude, longitude] = parseCoordinate(selectedServiceArea?.gpsCoordinates) || []
 
   const getServiceAreaData = useCallback(async () => {
     setIsLoading(true)
@@ -365,6 +370,7 @@ const ServiceArea = () => {
           if (status === 200 && Array.isArray(content) && content.length > 0) {
             setIsLoading(false)
             setMooringWithServiceAreasData(content)
+            setSelectedProduct(content[0])
             setTotalRecordsTwo(totalSize)
           } else {
             setIsLoading(false)
@@ -436,9 +442,10 @@ const ServiceArea = () => {
             marginRight: '10px',
           }}>
           <CustomServiceAreaMoorinMap
-            position={initialPosition}
+            position={coordinatesArray ? coordinatesArray : initialPosition}
             iconsByStatus={iconsByStatus}
             moorings={mooringWithServiceAreasData}
+            zoomLevel={10}
           />
           {/* <CustomDisplayPositionMap position={[latitude, longitude]} zoomLevel={15} /> */}
         </div>
@@ -459,8 +466,10 @@ const ServiceArea = () => {
               onSelectionChange={(e) => {
                 setSelectedProduct(e.value)
               }}
+              onRowClick={(rowData) => {
+                setMooringResponseData(rowData?.data?.gpsCoordinates)
+              }}
               selection={selectedProduct}
-              rowStyle={(rowData) => rowData}
               style={{
                 borderBottom: '1px solid #D5E1EA',
                 marginLeft: '5px',
@@ -512,7 +521,15 @@ const ServiceArea = () => {
         </div>
       </>
     )
-  }, [selectedServiceArea, serviceAreaData, mooringWithServiceAreasData])
+  }, [
+    selectedServiceArea,
+    serviceAreaData,
+    mooringWithServiceAreasData,
+    coordinatesArray,
+    mooringResponseData,
+    selectedProduct,
+    getMooringsWithServiceAreaData,
+  ])
 
   return (
     <div style={{ height: '150vh' }} className={modalVisible ? 'backdrop-blur-lg' : ''}>

@@ -41,7 +41,6 @@ const Dashboard = () => {
   const [mooringResponseData, setMooringResponseData] = useState<any>()
   const [leftContainerWidth, setLeftContainerWidth] = useState(false)
   const [rightContainerWidth, setRightContainerWidth] = useState(false)
-  const [underThirtyDays, setUnderThirtyDays] = useState(false)
   const [getMoorings] = useGetMooringsMutation()
   const today = new Date()
   const dateAfter7Days = new Date(today)
@@ -374,14 +373,6 @@ const Dashboard = () => {
   useEffect(() => {
     getMooringsData()
   }, [selectedCustomerId, totalMoorings])
-  const data = mooringData?.map((row: any) => ({
-    ...row,
-    isDueForService: row?.content?.mooringDueServiceResponseDtoList.under30,
-  }))
-  console.log(
-    'data',
-    mooringData?.map((row: any) => ({ row })),
-  )
 
   return (
     <>
@@ -444,14 +435,6 @@ const Dashboard = () => {
                     setMooringResponseData(rowData?.data?.gpsCoordinates)
                   }}
                   data={mooringData}
-                  rowStyle={(rowData) => ({
-                    backgroundColor: rowData.under30 ? 'red' : 'red',
-                    color: rowData.under30 ? 'white' : 'inherit',
-                  })}
-                  // rowStyle={(rowData: any) => ({
-                  //   backgroundColor: rowData?.isDueForService ? 'red' : 'transparent',
-                  //   color: rowData?.isDueForService ? 'white' : 'inherit',
-                  // })}
                   emptyMessage={
                     <div className="text-center">
                       <img

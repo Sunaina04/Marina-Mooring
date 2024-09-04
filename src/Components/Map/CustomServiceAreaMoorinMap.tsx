@@ -70,7 +70,7 @@ const CustomServiceAreaMoorinMap: React.FC<CustomServiceAreaMoorinMapProps> = ({
             ref={setMap}
             style={{ ...style, flexGrow: 1 }}
             center={position}
-            zoom={10}
+            zoom={position ? zoomLevel : 4}
             scrollWheelZoom={false}
             attributionControl={false}>
             <TileLayer
