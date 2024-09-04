@@ -90,6 +90,13 @@ const adminToolsApi = userApi.injectEndpoints({
         method: 'PUT',
       }),
     }),
+
+    quickBook: builder.mutation({
+      query: () => ({
+        url: 'api/v1/QBO/connectToQuickbooks',
+        method: 'GET',
+      }),
+    }),
   }),
 })
 
@@ -100,4 +107,5 @@ export const {
   useUpdateUserMutation,
   useMapCustomerToQuickBookMutation,
   useEditMapCustomerToQuickBookMutation,
+  useQuickBookMutation,
 } = adminToolsApi

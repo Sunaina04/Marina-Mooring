@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery, BaseQueryApi, FetchArgs } from '@reduxjs/toolkit/query/react'
 import { RootState } from '../Store/Store'
-import { useSelector } from 'react-redux'
 import { selectCustomerId, selectUserRole } from '../Store/Slice/userSlice'
 
 // Fetch base query configuration

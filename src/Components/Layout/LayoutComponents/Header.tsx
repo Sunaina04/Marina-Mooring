@@ -8,6 +8,7 @@ import { ErrorResponse, GetUserResponse } from '../../../Type/ApiTypes'
 import { setCustomerId, setCustomerName, selectCustomerName } from '../../../Store/Slice/userSlice'
 import { useGetCustomersOwnersMutation } from '../../../Services/MetaDataApi'
 import HeaderProfile from './HeaderProfile'
+import { useQuickBookMutation } from '../../../Services/AdminTools/AdminToolsApi'
 
 const Header: React.FC<HeaderProps> = ({ header, customer }) => {
   const userData = useSelector((state: any) => state.user?.userData)
@@ -17,6 +18,7 @@ const Header: React.FC<HeaderProps> = ({ header, customer }) => {
   const selectedCustomerName = useSelector(selectCustomerName)
   const [getCustomerOwnerData, setgetCustomerOwnerData] = useState<any[]>([])
   const [getUser] = useGetCustomersOwnersMutation()
+  const [quickBookButtonClick] = useQuickBookMutation()
   const imageData = userData?.imageDto?.imageData
   const UserName =
     userData && userData?.firstName && userData?.lastName
@@ -50,6 +52,15 @@ const Header: React.FC<HeaderProps> = ({ header, customer }) => {
       console.error('Error occurred while fetching customer data:', message)
     }
   }, [getUser, role === 1, customer])
+
+  const handleButtonClick = async () => {
+    try {
+      const response = await quickBookButtonClick({}).unwrap()
+    } catch (error) {
+      const { message } = error as ErrorResponse
+      console.error('Error fetching moorings data:', error)
+    }
+  }
 
   useEffect(() => {
     if (role === 1) {
@@ -85,33 +96,47 @@ const Header: React.FC<HeaderProps> = ({ header, customer }) => {
           justifyContent: 'end',
         }}>
         {role === 1 && (
-          <Dropdown
-            value={selectedCustomerName}
-            onChange={(e) => {
-              handleCustomerIdSelection(e.value)
-            }}
-            optionLabel="label"
-            optionValue="value"
-            placeholder="Select"
-            options={getCustomerOwnerData}
-            editable
-            style={{
-              width: '160px',
-              height: '32px',
-              minHeight: '32px',
-              border: '1px solid gray',
-              borderRadius: '0.5rem',
-              color: 'black',
-              marginRight: '40px',
-            }}
-          />
+          <>
+            <button
+              style={{
+                backgroundColor: 'transparent',
+                border: 'none',
+                cursor: 'pointer',
+                marginRight: '10px',
+              }}
+              onClick={handleButtonClick}>
+              <img
+                src="/assets/images/quickBook.png"
+                alt="Button Icon"
+                style={{ width: '150px', height: '35px' }}
+              />
+            </button>
+            <Dropdown
+              value={selectedCustomerName}
+              onChange={(e) => {
+                handleCustomerIdSelection(e.value)
+              }}
+              optionLabel="label"
+              optionValue="value"
+              placeholder="Select"
+              options={getCustomerOwnerData}
+              editable
+              style={{
+                width: '160px',
+                height: '32px',
+                minHeight: '32px',
+                border: '1px solid gray',
+                borderRadius: '0.5rem',
+                color: 'black',
+                marginRight: '40px',
+              }}
+            />
+          </>
         )}
         {userData && (
           <>
             <Avatar image={imageUrl} shape="circle" />
-            <span style={{ color: '#000000', fontSize: '16px', fontWeight: 400 }}>
-              {UserName}
-            </span>{' '}
+            <span style={{ color: '#000000', fontSize: '16px', fontWeight: 400 }}>{UserName}</span>
           </>
         )}
         <HeaderProfile customer={userData} />
