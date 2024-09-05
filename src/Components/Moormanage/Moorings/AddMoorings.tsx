@@ -845,8 +845,8 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 <div className="flex gap-1">Boat Size (in feet)</div>
               </span>
               <div className="mt-2">
-                <InputComponent
-                  type="number"
+                <InputText
+                  type="text"
                   value={formData?.boatSize}
                   onChange={(e) => handleInputChange('boatSize', e.target.value)}
                   style={{

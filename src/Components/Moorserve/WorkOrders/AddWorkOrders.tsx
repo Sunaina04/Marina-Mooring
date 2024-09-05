@@ -53,6 +53,7 @@ import ShowImages from '../../CommonComponent/UploadImages'
 import PDFEditor from '../Forms/PdfEditor'
 import { FormDataContext } from '../../../Services/ContextApi/FormDataContext'
 import InputComponent from '../../CommonComponent/InputComponent'
+import { InputText } from 'primereact/inputtext'
 
 const AddWorkOrders: React.FC<WorkOrderProps> = ({
   workOrderData,
@@ -198,6 +199,13 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   }
 
   const handleInputChange = (field: string, value: any) => {
+    const numberRegex = /^\d+$/
+
+    if (field === 'cost') {
+      if (value !== '' && !numberRegex.test(value)) {
+        return
+      }
+    }
     let updatedWorkOrder = { ...workOrder, [field]: value }
 
     if (editMode) {
@@ -941,7 +949,8 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
                 <div className="flex gap-1">Cost</div>
               </span>
               <div className="mt-1">
-                <InputComponent
+                <InputText
+                  type="text"
                   value={workOrder.cost}
                   onChange={(e) => handleInputChange('cost', e.target.value)}
                   disabled={isLoading || isAccountRecievable || isTechnician}
