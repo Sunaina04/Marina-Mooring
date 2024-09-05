@@ -9,7 +9,6 @@ import { ErrorResponse, GetUserResponse } from '../../../Type/ApiTypes'
 import { setCustomerId, setCustomerName, selectCustomerName } from '../../../Store/Slice/userSlice'
 import { useGetCustomersOwnersMutation } from '../../../Services/MetaDataApi'
 import HeaderProfile from './HeaderProfile'
-import { useQuickBookMutation } from '../../../Services/AdminTools/AdminToolsApi'
 
 const Header: React.FC<HeaderProps> = ({ header, customer }) => {
   const userData = useSelector((state: any) => state.user?.userData)
@@ -18,10 +17,6 @@ const Header: React.FC<HeaderProps> = ({ header, customer }) => {
   const selectedCustomerName = useSelector(selectCustomerName)
   const [getCustomerOwnerData, setgetCustomerOwnerData] = useState<any[]>([])
   const [getUser] = useGetCustomersOwnersMutation()
-  const [quickBookButtonClick] = useQuickBookMutation()
-  const [isModalOpen, setModalOpen] = useState(false)
-  const [apiResponse, setApiResponse] = useState<any>()
-  const [error, setError] = useState('')
   const imageData = userData?.imageDto?.imageData
   const UserName =
     userData && userData?.firstName && userData?.lastName
