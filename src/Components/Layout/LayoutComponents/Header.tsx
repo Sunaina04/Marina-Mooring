@@ -56,6 +56,11 @@ const Header: React.FC<HeaderProps> = ({ header, customer }) => {
   const handleButtonClick = async () => {
     try {
       const response = await quickBookButtonClick({}).unwrap()
+      console.log('res', response)
+
+      // const quickBooksLoginUrl =
+      //   'https://accounts.intuit.com/app/sign-in?app_group=QBO&asset_alias=Intuit.devx.appsdotcomreverseproxy&redirect_uri=https%3A%2F%2Fappcenter.intuit.com%2Fapp%2Fconnect%2Foauth2%3Fclient_id%3DABqtQJ4Cl5VN8scyoM7WgCNiDwir0IyrptqjpltxU1JQtKzfKS%26response_type%3Dcode%26scope%3Dopenid%2520profile%2520email%2520phone%2520address%2520com.intuit.quickbooks.accounting%2520com.intuit.quickbooks.payment%26redirect_uri%3Dhttp%253A%252F%252Flocalhost%253A8080%252Foauth2redirect%26state%3D806d5988-4d76-42d7-9560-54465369475d&partner_uid_button=google&appfabric=true'
+      // window.open(quickBooksLoginUrl, 'QuickBooksWindow', 'width=800,height=600,scrollbars=yes')
     } catch (error) {
       const { message } = error as ErrorResponse
       console.error('Error fetching moorings data:', error)
@@ -63,10 +68,10 @@ const Header: React.FC<HeaderProps> = ({ header, customer }) => {
   }
 
   // const handleButtonClick = () => {
-  //   const quickBooksLoginUrl =
-  //     'https://accounts.intuit.com/app/sign-in?app_group=QBO&asset_alias=Intuit.devx.appsdotcomreverseproxy&redirect_uri=https%3A%2F%2Fappcenter.intuit.com%2Fapp%2Fconnect%2Foauth2%3Fclient_id%3DABqtQJ4Cl5VN8scyoM7WgCNiDwir0IyrptqjpltxU1JQtKzfKS%26response_type%3Dcode%26scope%3Dopenid%2520profile%2520email%2520phone%2520address%2520com.intuit.quickbooks.accounting%2520com.intuit.quickbooks.payment%26redirect_uri%3Dhttp%253A%252F%252Flocalhost%253A8080%252Foauth2redirect%26state%3D806d5988-4d76-42d7-9560-54465369475d&partner_uid_button=google&appfabric=true'
+  // const quickBooksLoginUrl =
+  //   'https://accounts.intuit.com/app/sign-in?app_group=QBO&asset_alias=Intuit.devx.appsdotcomreverseproxy&redirect_uri=https%3A%2F%2Fappcenter.intuit.com%2Fapp%2Fconnect%2Foauth2%3Fclient_id%3DABqtQJ4Cl5VN8scyoM7WgCNiDwir0IyrptqjpltxU1JQtKzfKS%26response_type%3Dcode%26scope%3Dopenid%2520profile%2520email%2520phone%2520address%2520com.intuit.quickbooks.accounting%2520com.intuit.quickbooks.payment%26redirect_uri%3Dhttp%253A%252F%252Flocalhost%253A8080%252Foauth2redirect%26state%3D806d5988-4d76-42d7-9560-54465369475d&partner_uid_button=google&appfabric=true'
 
-  //   window.open(quickBooksLoginUrl, 'QuickBooksWindow', 'width=800,height=600,scrollbars=yes')
+  // window.open(quickBooksLoginUrl, 'QuickBooksWindow', 'width=800,height=600,scrollbars=yes')
   // }
 
   useEffect(() => {
