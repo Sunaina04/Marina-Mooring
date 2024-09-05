@@ -264,7 +264,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
       cost: workOrderData?.cost,
     }))
     const parseTime = (timeString: any) => {
-      const [hours, minutes, seconds] = timeString.split(':').map(Number)
+      const [hours, minutes, seconds] = timeString?.split(':')?.map(Number)
       return { minutes: hours * 60 + minutes, seconds }
     }
     const parsedTime = parseTime(workOrderData.time)
