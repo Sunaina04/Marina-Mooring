@@ -56,24 +56,9 @@ const Header: React.FC<HeaderProps> = ({ header, customer }) => {
     }
   }, [getUser, role === 1, customer])
 
-  const handleButtonClick = async () => {
-    setModalOpen(true) // Open the modal on button click
-  }
-  const handleQuickBookApi = async () => {
-    try {
-      const response: any = await quickBookButtonClick({}).unwrap()
-      console.log('Response received:', response)
-      const redirectUrl = response.redirectUrl
-      if (redirectUrl) {
-        window.open(redirectUrl, '_blank')
-      }
-      setApiResponse(response)
-      setError('')
-    } catch (error) {
-      const { message } = error as ErrorResponse
-      console.error('Error fetching QuickBooks data:', message)
-      setError('Error occurred while fetching data.')
-    }
+  const handleQuickBookApi = () => {
+    const quickBooksLoginUrl = `${process.env.REACT_APP_BASE_URL}/api/v1/QBO/connectToQuickbooks`
+    window.open(quickBooksLoginUrl, 'QuickBooksWindow', 'width=800,height=600,scrollbars=yes')
   }
 
   useEffect(() => {
