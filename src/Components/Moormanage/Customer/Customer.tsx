@@ -682,6 +682,8 @@ const Customer = () => {
             <span className="address-label">Address: </span>
             {(customerRecordData?.address || '-') +
               ', ' +
+              (customerRecordData?.city || '-') +
+              ', ' +
               (customerRecordData?.stateResponseDto?.name || '-') +
               ', ' +
               (customerRecordData?.countryResponseDto?.name || '-')}
