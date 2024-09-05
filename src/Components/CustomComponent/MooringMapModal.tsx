@@ -69,15 +69,6 @@ const MooringMapModal: React.FC<TimeLineProps> = ({
             headerText={<h1 className="text-xxl font-bold text-black">Mooring Information</h1>}
             visible={customerModalVisible}
             onHide={handleModalClose}
-            // dialogStyle={{
-            //   width: '800px',
-            //   minWidth: '800px',
-            //   borderRadius: '1rem',
-            //   maxHeight: '95%',
-            //   overflowY: 'auto',
-            //   zIndex: 1000001,
-            // }}
-
             dialogStyle={{
               width: '800px',
               minWidth: '800px',

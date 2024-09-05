@@ -44,6 +44,7 @@ import MooringInformations from '../../CommonComponent/MooringInformations'
 import ViewImageDialog from '../../CommonComponent/ViewImageDialog'
 import { AddNewButtonStyle, DialogStyle, MooringTableColumnStyle } from '../../Style'
 import { AppContext } from '../../../Services/ContextApi/AppContext'
+import AddMoorings from '../Moorings/AddMoorings'
 
 const Customer = () => {
   const selectedCustomerId = useSelector(selectCustomerId)
@@ -87,6 +88,7 @@ const Customer = () => {
   const [accordion, setAccordion] = useState('faq1')
   const [showImage, setShowImage] = useState({ id: '', imageData: '' })
   const { isMapModalOpen, IsdialogVisible, isUploadImageDialogVisible } = useContext(AppContext)
+  const [mooringModalVisible, setMooringModalVisible] = useState(false)
   const position: PositionType = [39.4926173, -117.5714859]
 
   const handleToggle = (faq: SetStateAction<string>) => {
@@ -213,7 +215,7 @@ const Customer = () => {
   }
 
   const handleMooringTableRowClick = (rowData: any) => {
-    setDialogVisible(true)
+    setMooringModalVisible(true)
     setMooringRowData(rowData.data)
   }
 
@@ -1229,6 +1231,34 @@ const Customer = () => {
             }}
           />
         </Dialog>
+
+        {mooringModalVisible && (
+          <CustomModal
+            button={true}
+            children={
+              <AddMoorings
+                moorings={selectedCustomer}
+                mooringRowData={mooringRowData}
+                editMode={editMode}
+                editCustomerMode={editCustomerMode}
+                toastRef={toast}
+                closeModal={handleModalClose}
+                getCustomer={() => {}}
+              />
+            }
+            headerText={<h1 className="text-xxl font-bold text-black">Mooring Information</h1>}
+            visible={mooringModalVisible}
+            onHide={handleModalClose}
+            dialogStyle={{
+              width: '800px',
+              minWidth: '800px',
+              height: '630px',
+              minHeight: '630px',
+              borderRadius: '1rem',
+              maxHeight: '95% !important',
+            }}
+          />
+        )}
       </div>
     </>
   )

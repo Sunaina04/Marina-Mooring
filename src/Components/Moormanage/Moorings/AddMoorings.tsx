@@ -377,7 +377,12 @@ const AddMoorings: React.FC<AddMooringProps> = ({
       ...prevState,
       mooringNumber: mooringRowData?.mooringNumber || '',
       mooringName: mooringRowData?.mooringName || '',
-      customerName: mooringRowData?.customerName || '',
+      customerName:
+        mooringRowData?.customerName ||
+        mooringRowData?.customerResponseDto?.firstName +
+          ' ' +
+          mooringRowData?.customerResponseDto?.lastName ||
+        '',
       harbor: mooringRowData?.harborOrArea || '',
       boatYardName: mooringRowData?.boatyardResponseDto?.boatyardName || '',
       boatName: mooringRowData?.boatName || '',
