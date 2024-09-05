@@ -95,6 +95,7 @@ const adminToolsApi = userApi.injectEndpoints({
       query: () => ({
         url: 'api/v1/QBO/connectToQuickbooks',
         method: 'GET',
+        // redirect: 'manual',
       }),
     }),
   }),

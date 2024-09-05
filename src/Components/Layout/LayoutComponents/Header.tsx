@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { Button } from 'primereact/button'
 import { Avatar } from 'primereact/avatar'
 import { Dropdown } from 'primereact/dropdown'
+import { Dialog } from 'primereact/dialog' // Import Dialog component
 import { HeaderProps } from '../../../Type/ComponentBasedType'
 import { useDispatch, useSelector } from 'react-redux'
 import { ErrorResponse, GetUserResponse } from '../../../Type/ApiTypes'
@@ -12,13 +13,15 @@ import { useQuickBookMutation } from '../../../Services/AdminTools/AdminToolsApi
 
 const Header: React.FC<HeaderProps> = ({ header, customer }) => {
   const userData = useSelector((state: any) => state.user?.userData)
-
   const role = userData?.role?.id
   const dispatch = useDispatch()
   const selectedCustomerName = useSelector(selectCustomerName)
   const [getCustomerOwnerData, setgetCustomerOwnerData] = useState<any[]>([])
   const [getUser] = useGetCustomersOwnersMutation()
   const [quickBookButtonClick] = useQuickBookMutation()
+  const [isModalOpen, setModalOpen] = useState(false)
+  const [apiResponse, setApiResponse] = useState<any>()
+  const [error, setError] = useState('')
   const imageData = userData?.imageDto?.imageData
   const UserName =
     userData && userData?.firstName && userData?.lastName
@@ -54,25 +57,24 @@ const Header: React.FC<HeaderProps> = ({ header, customer }) => {
   }, [getUser, role === 1, customer])
 
   const handleButtonClick = async () => {
+    setModalOpen(true) // Open the modal on button click
+  }
+  const handleQuickBookApi = async () => {
     try {
-      const response = await quickBookButtonClick({}).unwrap()
-      console.log('res', response)
-
-      // const quickBooksLoginUrl =
-      //   'https://accounts.intuit.com/app/sign-in?app_group=QBO&asset_alias=Intuit.devx.appsdotcomreverseproxy&redirect_uri=https%3A%2F%2Fappcenter.intuit.com%2Fapp%2Fconnect%2Foauth2%3Fclient_id%3DABqtQJ4Cl5VN8scyoM7WgCNiDwir0IyrptqjpltxU1JQtKzfKS%26response_type%3Dcode%26scope%3Dopenid%2520profile%2520email%2520phone%2520address%2520com.intuit.quickbooks.accounting%2520com.intuit.quickbooks.payment%26redirect_uri%3Dhttp%253A%252F%252Flocalhost%253A8080%252Foauth2redirect%26state%3D806d5988-4d76-42d7-9560-54465369475d&partner_uid_button=google&appfabric=true'
-      // window.open(quickBooksLoginUrl, 'QuickBooksWindow', 'width=800,height=600,scrollbars=yes')
+      const response: any = await quickBookButtonClick({}).unwrap()
+      console.log('Response received:', response)
+      const redirectUrl = response.redirectUrl
+      if (redirectUrl) {
+        window.open(redirectUrl, '_blank')
+      }
+      setApiResponse(response)
+      setError('')
     } catch (error) {
       const { message } = error as ErrorResponse
-      console.error('Error fetching moorings data:', error)
+      console.error('Error fetching QuickBooks data:', message)
+      setError('Error occurred while fetching data.')
     }
   }
-
-  // const handleButtonClick = () => {
-  // const quickBooksLoginUrl =
-  //   'https://accounts.intuit.com/app/sign-in?app_group=QBO&asset_alias=Intuit.devx.appsdotcomreverseproxy&redirect_uri=https%3A%2F%2Fappcenter.intuit.com%2Fapp%2Fconnect%2Foauth2%3Fclient_id%3DABqtQJ4Cl5VN8scyoM7WgCNiDwir0IyrptqjpltxU1JQtKzfKS%26response_type%3Dcode%26scope%3Dopenid%2520profile%2520email%2520phone%2520address%2520com.intuit.quickbooks.accounting%2520com.intuit.quickbooks.payment%26redirect_uri%3Dhttp%253A%252F%252Flocalhost%253A8080%252Foauth2redirect%26state%3D806d5988-4d76-42d7-9560-54465369475d&partner_uid_button=google&appfabric=true'
-
-  // window.open(quickBooksLoginUrl, 'QuickBooksWindow', 'width=800,height=600,scrollbars=yes')
-  // }
 
   useEffect(() => {
     if (role === 1) {
@@ -116,7 +118,7 @@ const Header: React.FC<HeaderProps> = ({ header, customer }) => {
                 cursor: 'pointer',
                 marginRight: '10px',
               }}
-              onClick={handleButtonClick}>
+              onClick={handleQuickBookApi}>
               <img
                 src="/assets/images/quickBook.png"
                 alt="Button Icon"
