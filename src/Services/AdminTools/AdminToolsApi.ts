@@ -94,7 +94,7 @@ const adminToolsApi = userApi.injectEndpoints({
     quickBook: builder.mutation({
       query: () => ({
         url: 'connectToQuickbooks',
-        method: 'GET',
+        method: 'POST',
       }),
     }),
   }),
