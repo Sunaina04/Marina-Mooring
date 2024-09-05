@@ -149,6 +149,7 @@ const Customer = () => {
     setEditCustomerMode(false)
     setEditMooringMode(false)
     setDialogVisible(false)
+    setMooringModalVisible(false)
     setImageEditVisible(false)
   }
 
@@ -168,7 +169,7 @@ const Customer = () => {
   const handleMooringEdit = () => {
     setSelectedCustomer(customerRecordData)
     setEditMooringMode(true)
-    setModalVisible(true)
+    setMooringModalVisible(true)
     setEditMode(true)
   }
 
@@ -1243,7 +1244,13 @@ const Customer = () => {
                 editCustomerMode={editCustomerMode}
                 toastRef={toast}
                 closeModal={handleModalClose}
-                getCustomer={() => {}}
+                getCustomer={getCustomerData}
+                isEditMooring={true}
+                getCustomerRecord={() => {
+                  if (customerId) {
+                    getCustomersWithMooring(customerId)
+                  }
+                }}
               />
             }
             headerText={<h1 className="text-xxl font-bold text-black">Mooring Information</h1>}

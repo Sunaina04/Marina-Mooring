@@ -1223,6 +1223,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                       onChange={(e) => handleInputChange('boatType', e.target.value)}
                       options={type}
                       optionLabel="boatType"
+                      editable
                       disabled={isLoading}
                       style={{
                         width: '230px',
