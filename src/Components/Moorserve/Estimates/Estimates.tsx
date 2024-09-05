@@ -205,7 +205,7 @@ const Estimates = () => {
       CustomerName: `${item.customerResponseDto.firstName} ${item.customerResponseDto.lastName}`,
       MooringNumber: item.mooringResponseDto.mooringNumber,
       Boatyard: item.boatyardResponseDto.boatyardId,
-      AssignedTo: item.technicianUserResponseDto.name,
+      AssignedTo: `${item.technicianUserResponseDto.firstName} ${item.technicianUserResponseDto.lastName}`,
       DueDate: item.dueDate,
       Status: item.workOrderStatusDto.status,
     }))

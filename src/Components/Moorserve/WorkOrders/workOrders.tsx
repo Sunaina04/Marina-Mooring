@@ -197,7 +197,9 @@ const WorkOrders: React.FC<WorkOrderValue> = ({ report }) => {
         item?.boatyardResponseDto?.boatyardId
           ? item.boatyardResponseDto.boatyardId.toString()
           : 'N/A',
-        item?.technicianUserResponseDto?.name ? item.technicianUserResponseDto.name : 'N/A',
+        item?.technicianUserResponseDto?.firstName && item?.technicianUserResponseDto?.lastName
+          ? `${item.technicianUserResponseDto.firstName} ${item.technicianUserResponseDto.lastName}`
+          : 'N/A',
         item?.dueDate ? item.dueDate.toString() : 'N/A',
         item?.workOrderStatusDto?.status ? item.workOrderStatusDto.status : 'N/A',
       ]
