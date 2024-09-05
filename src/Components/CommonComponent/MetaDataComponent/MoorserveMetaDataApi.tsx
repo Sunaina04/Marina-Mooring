@@ -17,7 +17,7 @@ export const GetMooringBasedOnCustomerIdAndBoatyardId = (customerId: any, boatya
   const fetchMooringBasedOnCustomerIdAndBoatyardId = async (getData: any) => {
     try {
       const response = await getData({ customerId: customerId, boatyardId: boatyardId })
-      const { status, content } = response.data as MetaDataResponse
+      const { status, content } = response?.data as MetaDataResponse
       return status === 200 && Array.isArray(content) ? content : null
     } catch (error) {
       const { message } = error as ErrorResponse
@@ -40,7 +40,7 @@ export const GetMooringsBasedOnCustomerId = (customerId: any) => {
   const fetchMooringsBasedOnCustomerIdData = async (getData: any) => {
     try {
       const response = await getData({ customerId: customerId })
-      const { status, content } = response.data as MetaDataResponse
+      const { status, content } = response?.data as MetaDataResponse
       return status === 200 && Array.isArray(content) ? content : null
     } catch (error) {
       const { message } = error as ErrorResponse
@@ -63,7 +63,7 @@ export const GetMooringsBasedOnBoatyardId = (boatyardId: any) => {
   const fetchMooringBasedOnCustomerIdAndBoatyardId = async (getData: any) => {
     try {
       const response = await getData({ boatyardId: boatyardId })
-      const { status, content } = response.data as MetaDataResponse
+      const { status, content } = response?.data as MetaDataResponse
       return status === 200 && Array.isArray(content) ? content : null
     } catch (error) {
       const { message } = error as ErrorResponse
@@ -86,7 +86,7 @@ export const GetBoatyardBasedOnMooringId = (mooringId: any) => {
   const fetchBoatyardBasedOnMooringId = async (getData: any) => {
     try {
       const response = await getData({ mooringId: mooringId })
-      const { status, content } = response.data as MetaDataResponse
+      const { status, content } = response?.data as MetaDataResponse
       return status === 200 && Array.isArray(content) ? content : null
     } catch (error) {
       const { message } = error as ErrorResponse
@@ -107,7 +107,7 @@ export const GetCustomerBasedOnMooringId = (mooringId: any) => {
   const fetchCustomerBasedOnMooringId = async (getData: any) => {
     try {
       const response = await getData({ mooringId: mooringId })
-      const { status, content } = response.data as MetaDataResponse
+      const { status, content } = response?.data as MetaDataResponse
       return status === 200 && Array.isArray(content) ? content : null
     } catch (error) {
       const { message } = error as ErrorResponse
@@ -128,7 +128,7 @@ export const GetTechnicians = () => {
   const fetchTechniciansData = async (getData: any) => {
     try {
       const response = await getData({})
-      const { status, content } = response.data as MetaDataResponse
+      const { status, content } = response?.data as MetaDataResponse
       return status === 200 && Array.isArray(content) ? content : null
     } catch (error) {
       const { message } = error as ErrorResponse
@@ -149,7 +149,7 @@ export const GetMooringIds = () => {
   const fetchMooringIdsData = async (getData: any) => {
     try {
       const response = await getData({})
-      const { status, content } = response.data as MetaDataResponse
+      const { status, content } = response?.data as MetaDataResponse
       return status === 200 && Array.isArray(content) ? content : null
     } catch (error) {
       const { message } = error as ErrorResponse
@@ -170,7 +170,7 @@ export const GetWorkOrderStatus = () => {
   const fetchWorkOrderStatusData = async (getData: any) => {
     try {
       const response = await getData({})
-      const { status, content } = response.data as MetaDataResponse
+      const { status, content } = response?.data as MetaDataResponse
       return status === 200 && Array.isArray(content) ? content : null
     } catch (error) {
       const { message } = error as ErrorResponse
