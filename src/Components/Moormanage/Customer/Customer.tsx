@@ -215,7 +215,7 @@ const Customer = () => {
   }
 
   const handleMooringTableRowClick = (rowData: any) => {
-    setMooringModalVisible(true)
+    setDialogVisible(true)
     setMooringRowData(rowData.data)
   }
 
