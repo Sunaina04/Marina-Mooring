@@ -455,7 +455,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
     }
     try {
       setIsLoading(true)
-      const editPayload = {
+      const editPayload: any = {
         mooringId: workOrder?.mooringId?.id || workOrderData?.mooringResponseDto?.id,
         customerId: workOrder?.customerName?.id || workOrderData?.customerResponseDto?.id,
         boatyardId: workOrder?.boatyards?.id || workOrderData?.boatyardResponseDto?.id,
@@ -466,13 +466,16 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
         time: '00:' + formatTime(time.minutes, time.seconds) || workOrderData?.time,
         problem: workOrder?.value || workOrderData?.problem,
         imageRequestDtoList: imageRequestDtoList,
-        formRequestDtoList: [
+      }
+
+      if (workOrder?.attachForm) {
+        editPayload.formRequestDtoList = [
           {
-            formName: workOrder.attachForm.fileName,
+            formName: workOrder.attachForm.formName,
             fileName: workOrder.attachForm.fileName,
-            encodedFormData: formData,
+            encodedFormData: formData ? formData : workOrder.attachForm.formData,
           },
-        ],
+        ]
       }
       const response = await updateWorkOrder({
         payload: editPayload,
