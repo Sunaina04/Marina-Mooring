@@ -175,7 +175,7 @@ const ResetPassword: React.FC<ResetModalProps> = ({ isResetModalOpen, customerId
                   }}
                 />
               </div>
-              <p className=" w-48" id="password">
+              <p className="w-48" id="password">
                 {fieldErrors.password || errorMessage ? (
                   <small className="p-error">
                     {fieldErrors.password}
@@ -308,11 +308,13 @@ const ResetPassword: React.FC<ResetModalProps> = ({ isResetModalOpen, customerId
                 }}
               />
             </div>
-            {fieldErrors.confirmPassword && (
-              <small className="p-error" id="confirmPassword">
-                {fieldErrors.confirmPassword}
-              </small>
-            )}
+            <p className="w-48" id="password">
+              {fieldErrors.confirmPassword && (
+                <small className="p-error" id="confirmPassword">
+                  {fieldErrors.confirmPassword}
+                </small>
+              )}
+            </p>
           </div>
         </div>
       </div>
@@ -353,6 +355,7 @@ const ResetPassword: React.FC<ResetModalProps> = ({ isResetModalOpen, customerId
             marginTop: '10px',
           }}
         />
+        <Toast ref={toastRef} />
       </div>
     </>
   )
