@@ -702,7 +702,7 @@ const Dashboard = () => {
                   setVisible={setVisible}
                   toastRef={toast}
                   closeModal={handleModalClose}
-                  isAccountRecievable={false}
+                  isTechnician={true}
                 />
               </Dialog>
             </div>

@@ -29,7 +29,7 @@ const AddInventory: React.FC<AddInventoryProps> = ({
   const [formData, setFormData] = useState<any>({
     itemName: '',
     cost: '',
-    quantity:'',
+    quantity: '',
     salePrice: '',
     itemsName: '',
     type: '',
@@ -63,7 +63,7 @@ const AddInventory: React.FC<AddInventoryProps> = ({
     if (!formData.type) newErrors.type = 'Type is required'
     if (!formData.itemName) newErrors.itemName = 'Item Name/Number is required'
     if (!formData.cost) newErrors.cost = 'Cost is required'
-     if (!formData.quantity) newErrors.quantity = 'Quantity is required'
+    if (!formData.quantity) newErrors.quantity = 'Quantity is required'
     if (!formData.salePrice) newErrors.salePrice = 'Sale Price is required'
     if (!checked && !unChecked) newErrors.taxable = 'Please select Taxable Yes or No'
     setErrors(newErrors)
@@ -224,7 +224,7 @@ const AddInventory: React.FC<AddInventoryProps> = ({
 
   return (
     <>
-      <div className={`"ml-4" ${isLoading ? 'blurred' : ''}`}>
+      <div className={`w-full h-full mb-16 ml-4 ${isLoading ? 'blurred' : ''}`}>
         <div>
           <Dropdown
             value={formData.type}
@@ -310,7 +310,7 @@ const AddInventory: React.FC<AddInventoryProps> = ({
           <div>
             <div className="font-medium text-sm text-[#000000]">
               <div className="flex gap-1">
-              Quantity
+                Quantity
                 <p className="text-red-600">*</p>
               </div>
             </div>
@@ -326,7 +326,9 @@ const AddInventory: React.FC<AddInventoryProps> = ({
                 onChange={(e) => handleInputChange('quantity', e.target.value)}
                 value={formData.quantity}
               />
-              <p className="">{errors.quantity && <small className="p-error">{errors.quantity}</small>}</p>
+              <p className="">
+                {errors.quantity && <small className="p-error">{errors.quantity}</small>}
+              </p>
             </div>
           </div>
         </div>
@@ -393,9 +395,8 @@ const AddInventory: React.FC<AddInventoryProps> = ({
                 </span>
                 <p className="font-medium text-lg text-[#000000] mt-8 ml-[14px]">No</p>
               </div>
-
-              {errors.taxable && <small className="p-error">{errors.taxable}</small>}
             </div>
+            {errors.taxable && <small className="p-error">{errors.taxable}</small>}
           </div>
         </div>
       </div>
