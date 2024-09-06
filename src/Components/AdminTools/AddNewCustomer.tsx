@@ -22,8 +22,13 @@ import {
   RolesData,
   StatesData,
 } from '../CommonComponent/MetaDataComponent/MetaDataApi'
-import { useDispatch } from 'react-redux'
-import { setCustomerId, setCustomerName } from '../../Store/Slice/userSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  selectCustomerId,
+  selectCustomerName,
+  setCustomerId,
+  setCustomerName,
+} from '../../Store/Slice/userSlice'
 import { Toast } from 'primereact/toast'
 import { EMAIL_REGEX, NAME_REGEX, PHONE_REGEX } from '../Utils/RegexUtils'
 
@@ -45,6 +50,8 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   setIsCustomerUpdated,
 }) => {
   const dispatch = useDispatch()
+  const selectedCustomerOwnerName = useSelector(selectCustomerName)
+  const selectedCustomerOwnerId = useSelector(selectCustomerId)
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [phone, setPhone] = useState('')
@@ -102,7 +109,9 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
       const selectedCustomerAdmin = customerUsers?.find(
         (customer: any) => customer.id === customerAdminId,
       )
-      const selectedCustomerAdminName = selectedCustomerAdmin ? selectedCustomerAdmin.name : ''
+      const selectedCustomerAdminName = selectedCustomerAdmin
+        ? selectedCustomerAdmin.firstName + ' ' + selectedCustomerAdmin.lastName
+        : ''
       if (customerData?.roleResponseDto.id !== 2) {
         setSelectedCustomerId(selectedCustomerAdminName)
       }
@@ -503,7 +512,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
 
   useEffect(() => {
     if (firstErrorField) {
-      document.getElementById(firstErrorField)?.scrollIntoView({ behavior:'smooth' })
+      document.getElementById(firstErrorField)?.scrollIntoView({ behavior: 'smooth' })
     }
   }, [firstErrorField])
 
@@ -525,7 +534,12 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
   }, [country])
 
   useEffect(() => {
-    handleEditMode()
+    if (editMode || editCustomerMode) {
+      handleEditMode()
+    } else {
+      dispatch(setCustomerId(selectedCustomerOwnerId))
+      dispatch(setCustomerName(selectedCustomerOwnerName))
+    }
   }, [editMode, editCustomerMode, customerData])
 
   return (
@@ -1067,7 +1081,7 @@ const AddNewCustomer: React.FC<CustomerAdminDataProps> = ({
           marginBottom: '2px',
         }}>
         <Button
-          label={editMode ? 'Update' : 'Save'}
+          label={'Save'}
           onClick={handleClick}
           style={{
             width: '89px',

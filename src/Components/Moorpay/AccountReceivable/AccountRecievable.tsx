@@ -100,8 +100,9 @@ const AccountRecievable = () => {
       setIsPaymentModalOpen(true)
       setSelectedWorkOredrRowData(row?.id)
     } else if (action === 'Contact') {
-      setModalVisible(true)
-      setIsContactModalOpen(true)
+      setIsLoading(true)
+      window.location.href = `mailto:`
+      setIsLoading(false)
     } else if (action === 'View') {
       setSelectedWorkOredrRowData(row?.workOrderResponseDto)
       setModalVisible(true)
@@ -343,9 +344,7 @@ const AccountRecievable = () => {
         color: 'black',
         label: 'Contact',
         filled: true,
-        onClick: () => {
-          window.location.href = `mailto:`
-        },
+        onClick: (row) => handleBottomSectionActionClick('Contact', row),
       },
       {
         color: 'black',
