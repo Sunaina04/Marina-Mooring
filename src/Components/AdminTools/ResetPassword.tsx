@@ -4,12 +4,14 @@ import { ProgressSpinner } from 'primereact/progressspinner'
 import React, { useEffect, useRef, useState } from 'react'
 import { useUpdateUserMutation } from '../../Services/AdminTools/AdminToolsApi'
 import { ResetModalProps } from '../../Type/ComponentBasedType'
-import { ErrorResponse, SaveUserResponse } from '../../Type/ApiTypes'
+import { ErrorResponse, ResetPasswordResponse, SaveUserResponse } from '../../Type/ApiTypes'
 import { Toast } from 'primereact/toast'
+import { useResetPasswordMutation } from '../../Services/Authentication/AuthApi'
 
 const ResetPassword: React.FC<ResetModalProps> = ({ isResetModalOpen, customerId }) => {
   const [isLoading, setIsLoading] = useState(false)
-  const [editCustomer] = useUpdateUserMutation()
+  const tokenFromUrl = sessionStorage.getItem('token')
+  const [resetPassword] = useResetPasswordMutation()
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState<string>()
@@ -83,36 +85,30 @@ const ResetPassword: React.FC<ResetModalProps> = ({ isResetModalOpen, customerId
     }
   }
 
-  
-
-  const handleEdit = async () => {
+  const handleResetPassword = async () => {
     const errors = validateFields()
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors)
       return
     }
     setIsLoading(true)
-    const encodedPassword = btoa(password)
+    const resetPassPayload = {
+      newPassword: btoa(password), // Encoding password using btoa
+      confirmPassword: confirmPassword,
+    }
+    setIsLoading(true)
     try {
-      const editUserPayload = {
-        password: encodedPassword,
-        confirmPassword: encodedPassword,
-        firstName: customerId?.firstName,
-        lastName: customerId?.lastName,
-        email: customerId.email,
-      }
-
-      const response = await editCustomer({
-        payload: editUserPayload,
-        id: customerId?.id,
+      const response = await resetPassword({
+        token: tokenFromUrl,
+        payload: resetPassPayload,
       }).unwrap()
-      const { status, message } = response as SaveUserResponse
-      if (status === 200 || status === 201) {
+      const { status, message } = response as ResetPasswordResponse
+      if (status === 200) {
         setIsLoading(false)
         toastRef?.current?.show({
           severity: 'success',
           summary: 'Success',
-          detail: 'Password Updated Successfully!!!',
+          detail: message,
           life: 3000,
         })
         isResetModalOpen()
@@ -125,15 +121,9 @@ const ResetPassword: React.FC<ResetModalProps> = ({ isResetModalOpen, customerId
           life: 3000,
         })
       }
-    } catch (error) {
-      const { message, data } = error as ErrorResponse
+    } catch (error: any) {
       setIsLoading(false)
-      toastRef?.current?.show({
-        severity: 'error',
-        summary: 'Error',
-        detail: message || data?.message,
-        life: 3000,
-      })
+      console.error('Error occurred during password reset:', error)
     }
   }
 
@@ -336,7 +326,7 @@ const ResetPassword: React.FC<ResetModalProps> = ({ isResetModalOpen, customerId
           bottom: '0px',
         }}>
         <Button
-          onClick={handleEdit}
+          onClick={handleResetPassword}
           label={'Save'}
           style={{
             width: '100px',

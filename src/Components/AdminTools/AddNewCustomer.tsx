@@ -5,12 +5,7 @@ import { Button } from 'primereact/button'
 import InputComponent from '../CommonComponent/InputComponent'
 import { Country, Role, State } from '../../Type/CommonType'
 import { CustomerAdminDataProps } from '../../Type/ComponentBasedType'
-import {
-  CustomerPayload,
-  ErrorResponse,
-  GetUserResponse,
-  SaveUserResponse,
-} from '../../Type/ApiTypes'
+import { ErrorResponse, GetUserResponse, SaveUserResponse } from '../../Type/ApiTypes'
 import {
   useAddUserMutation,
   useGetUsersMutation,

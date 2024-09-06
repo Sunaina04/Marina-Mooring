@@ -109,6 +109,8 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   }
 
   const handleEditMode = () => {
+    console.log('customerData', customerData)
+
     setBoatyardName(customerData?.boatyardName || '')
     setStorageList(customerData?.storageAreas)
     setAddress(customerData?.address || '')
@@ -251,6 +253,8 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   }
 
   const handleAddStorage = () => {
+    console.log('storageList', storageList)
+
     setStorageList([...storageList, storage])
     setStorage('')
   }
