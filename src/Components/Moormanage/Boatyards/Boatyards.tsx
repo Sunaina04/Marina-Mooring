@@ -414,7 +414,7 @@ const Boatyards = () => {
         </div>
 
         <div
-          className={`bg-#00426F overflow-x-hidden h-[360px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col`}>
+          className={`bg-#00426F overflow-x-hidden h-[360px] mt-[3px] table-container flex flex-col`}>
           <div className="flex-grow overflow-y-auto">
             <DataTableComponent
               tableStyle={{
@@ -575,7 +575,7 @@ const Boatyards = () => {
               }}
             />
             <div
-              className={`bg-#00426F overflow-x-hidden h-[590px] mt-[3px] ml-[15px] mr-[15px] table-container flex flex-col`}>
+              className={`bg-#00426F overflow-x-hidden h-[590px] mt-[3px] table-container flex flex-col`}>
               <div className="flex-grow overflow-auto">
                 <DataTableComponent
                   tableStyle={{

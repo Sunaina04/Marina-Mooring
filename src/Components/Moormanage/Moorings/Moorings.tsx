@@ -751,7 +751,7 @@ const Moorings = () => {
                     }}
                   />
 
-                  <div className="ml-[15px] mr-[15px] table-container" style={{ overflow: 'auto' }}>
+                  <div className="table-container" style={{ overflow: 'auto' }}>
                     <DataTableComponent
                       data={mooringData}
                       tableStyle={{

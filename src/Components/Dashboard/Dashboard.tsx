@@ -168,7 +168,7 @@ const Dashboard = () => {
         id: 'id',
         label: 'ID',
         style: {
-          fontSize: '10px',
+          fontSize: '12px',
           width: '3vw',
           backgroundColor: '#FFFFFF',
           color: '#000000',
@@ -180,7 +180,7 @@ const Dashboard = () => {
         label: 'Customer Name',
         body: firstLastName,
         style: {
-          fontSize: '10px',
+          fontSize: '12px',
           backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: '700',
@@ -190,7 +190,7 @@ const Dashboard = () => {
         id: 'mooringNumber',
         label: 'Mooring Number',
         style: {
-          fontSize: '10px',
+          fontSize: '12px',
           backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: '700',
@@ -201,7 +201,7 @@ const Dashboard = () => {
         id: 'mooringServiceDate',
         label: 'Inspection Date',
         style: {
-          fontSize: '10px',
+          fontSize: '12px',
           backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: '700',
@@ -211,7 +211,7 @@ const Dashboard = () => {
         id: 'gpsCoordinates',
         label: 'Mooring Location ',
         style: {
-          fontSize: '10px',
+          fontSize: '12px',
           backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: '700',
@@ -221,7 +221,7 @@ const Dashboard = () => {
         id: 'mooringDueServiceStatusDto.status',
         label: 'Status',
         style: {
-          fontSize: '10px',
+          fontSize: '12px',
           backgroundColor: '#FFFFFF',
           color: '#000000',
           fontWeight: '700',

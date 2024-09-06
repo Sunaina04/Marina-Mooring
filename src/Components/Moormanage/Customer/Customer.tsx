@@ -529,7 +529,7 @@ const Customer = () => {
             }}
           />
 
-          <div className="ml-[15px] mr-[15px] table-container" style={{ overflow: 'auto' }}>
+          <div className="table-container" style={{ overflow: 'auto' }}>
             <DataTableComponent
               data={customerData}
               tableStyle={{
@@ -1000,7 +1000,7 @@ const Customer = () => {
                     </div>
                   </label>
                   <div
-                    className={`content  transition-all ease-in-out duration-500 ${accordion === 'faq1' ? '' : 'hidden'}`}>
+                    className={`content transition-all ease-in-out duration-500 ${accordion === 'faq1' ? '' : 'hidden'}`}>
                     <div style={{ justifyContent: 'center', alignItems: 'center' }}>
                       <div className="flex-grow bg-white rounded-md border">
                         <div
@@ -1011,7 +1011,7 @@ const Customer = () => {
                             fontSize: '15px',
                           }}>
                           <div
-                            className={`bg-#00426F overflow-x-hidden h-[320px]  table-container flex flex-col`}>
+                            className={`bg-#00426F overflow-x-hidden h-[320px] table-container flex flex-col`}>
                             <div className="flex-grow" style={{ overflow: 'auto' }}>
                               <DataTableComponent
                                 style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}

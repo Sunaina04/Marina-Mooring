@@ -245,9 +245,7 @@ const Report: React.FC = () => {
               borderRadius: '5px',
               marginLeft: '3rem',
             }}>
-            <div
-              data-testid="technician-data"
-              className="flex flex-col mt-[3px] ml-[15px] mr-[15px] table-container ">
+            <div data-testid="technician-data" className="flex flex-col mt-[3px] table-container ">
               <ChartsContainer>
                 <ChartCard>
                   <h2 className="ml-12">Job Type</h2>
@@ -268,9 +266,7 @@ const Report: React.FC = () => {
               width: '700px',
               height: '400px',
             }}>
-            <div
-              data-testid="workOrder"
-              className="flex flex-col mt-[3px] ml-[15px] mr-[15px] table-container ">
+            <div data-testid="workOrder" className="flex flex-col mt-[3px] table-container ">
               <div className="flex-grow ">
                 <ChartsContainer>
                   <ChartCard>
