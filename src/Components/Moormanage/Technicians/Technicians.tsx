@@ -381,6 +381,16 @@ const Technicians = () => {
   ])
 
   useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (technicianId) {
+        getOpenWorkOrder(technicianId)
+        getClosedWorkOrder(technicianId)
+      }
+    }, 600)
+    return () => clearTimeout(timeoutId)
+  }, [technicianId, filterDateFrom, filterDateTo])
+
+  useEffect(() => {
     if (dateFrom && dateTo) {
       setFilterDateFrom(formatDate(dateFrom))
       setFilterDateTo(formatDate(dateTo))

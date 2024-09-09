@@ -400,6 +400,7 @@ const Moorings = () => {
           setMooringData(content?.mooringResponseDtoList)
           setMooringGPSResponseData(content?.mooringWithGPSCoordinateResponseList)
           setCustomerId(content?.mooringResponseDtoList?.[0]?.customerId)
+          setMooringId(content?.mooringResponseDtoList?.[0]?.id)
           setSelectedProduct(content?.mooringResponseDtoList?.[0])
           setTotalRecords(totalSize)
         } else {
