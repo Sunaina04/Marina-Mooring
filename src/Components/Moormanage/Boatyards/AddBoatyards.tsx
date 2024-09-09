@@ -43,11 +43,11 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   const [storageList, setStorageList] = useState<string[]>([])
   const getFormattedCoordinate = (coordinates: any) => {
     try {
-      let [lat, long] = coordinates.split(/[ ,]+/)
+      let [lat, long] = coordinates?.split(/[ ,]+/)
 
       const convertToDecimal = (coordinate: any) => {
-        if (coordinate.split('.').length > 2) {
-          const [degree, minute, second] = coordinate.split('.').map((num: any) => parseFloat(num))
+        if (coordinate?.split('.').length > 2) {
+          const [degree, minute, second] = coordinate?.split('.').map((num: any) => parseFloat(num))
           return degree + minute / 60 + second / 3600
         }
         return parseFloat(coordinate)

@@ -90,13 +90,13 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   const firstErrorRef = useRef<HTMLDivElement>(null)
   const getFomattedCoordinate = (gpsCoordinatesValue: any) => {
     try {
-      let [lat, long]: any = gpsCoordinatesValue.split(' ')
-      if (lat.split('.').length > 2) {
-        const [degree, minute, second]: any = lat.split('.').map((num: any) => parseInt(num))
+      let [lat, long]: any = gpsCoordinatesValue?.split(' ')
+      if (lat?.split('.').length > 2) {
+        const [degree, minute, second]: any = lat?.split('.').map((num: any) => parseInt(num))
         lat = degree + minute / 60 + second / 3600
       }
-      if (long.split('.').length > 2) {
-        const [degree, minute, second]: any = long.split('.').map((num: any) => parseInt(num))
+      if (long?.split('.').length > 2) {
+        const [degree, minute, second]: any = long?.split('.').map((num: any) => parseInt(num))
         long = degree + minute / 60 + second / 3600
       }
       if (!(isNaN(lat) || isNaN(long))) {
@@ -250,7 +250,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
 
   const parseDate = (dateString: any) => {
     if (!dateString) return null
-    const [month, day, year] = dateString.split('/')
+    const [month, day, year] = dateString?.split('/')
     return new Date(year, month - 1, day)
   }
 
@@ -338,7 +338,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
           const reader = new FileReader()
           reader.onload = () => {
             if (typeof reader.result === 'string') {
-              resolve(reader.result.split(',')[1])
+              resolve(reader.result?.split(',')[1])
             } else {
               reject(new Error('FileReader result is not a string.'))
             }

@@ -112,7 +112,7 @@ const Customer = () => {
   }
   const parseCoordinates = (coordinates: any) => {
     if (!coordinates) return null
-    const [latitude, longitude] = coordinates.split(' ').map(parseFloat)
+    const [latitude, longitude] = coordinates?.split(' ').map(parseFloat)
     return isNaN(latitude) || isNaN(longitude) ? null : [latitude, longitude]
   }
   const gpsCoordinatesArray = mooringData.map(

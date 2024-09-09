@@ -36,7 +36,7 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
   const [checked, setChecked] = useState(false)
   const parseCoordinates = (coordinates: string): [number, number] | null => {
     if (!coordinates) return null
-    const [latitude, longitude] = coordinates.split(' ').map(parseFloat)
+    const [latitude, longitude] = coordinates?.split(' ').map(parseFloat)
     return isNaN(latitude) || isNaN(longitude) ? null : [latitude, longitude]
   }
 

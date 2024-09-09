@@ -296,7 +296,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
   }
 
   const handleTimeChange = (event: { target: { value: any } }) => {
-    const [min, sec] = event.target.value.split(':').map(Number)
+    const [min, sec] = event.target.value?.split(':').map(Number)
     if (!isNaN(min) && !isNaN(sec) && min >= 0 && sec >= 0 && sec < 60) {
       setTime({ minutes: min, seconds: sec })
       setErrorMessage((prevError) => ({ ...prevError, time: '' }))
@@ -320,7 +320,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
 
   const parseDate = (dateString: any) => {
     if (!dateString) return null
-    const [month, day, year] = dateString.split('/')
+    const [month, day, year] = dateString?.split('/')
     return new Date(year, month - 1, day)
   }
 
@@ -362,7 +362,7 @@ const AddWorkOrders: React.FC<WorkOrderProps> = ({
           const reader = new FileReader()
           reader.onload = () => {
             if (typeof reader.result === 'string') {
-              resolve(reader.result.split(',')[1])
+              resolve(reader.result?.split(',')[1])
             } else {
               reject(new Error('FileReader result is not a string.'))
             }

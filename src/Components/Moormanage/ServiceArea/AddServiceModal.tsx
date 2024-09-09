@@ -46,11 +46,11 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
   const toastRef = useRef<Toast>(null)
   const getFormattedCoordinate = (coordinates: any) => {
     try {
-      let [lat, long] = coordinates.split(/[ ,]+/)
+      let [lat, long] = coordinates?.split(/[ ,]+/)
 
       const convertToDecimal = (coordinate: any) => {
-        if (coordinate.split('.').length > 2) {
-          const [degree, minute, second] = coordinate.split('.').map((num: any) => parseFloat(num))
+        if (coordinate?.split('.').length > 2) {
+          const [degree, minute, second] = coordinate?.split('.').map((num: any) => parseFloat(num))
           return degree + minute / 60 + second / 3600
         }
         return parseFloat(coordinate)
@@ -83,7 +83,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
   const { getCountriesData } = CountriesData()
 
   const validateFields = () => {
-    const nameRegex =  /^[A-Za-z\s]*$/
+    const nameRegex = /^[A-Za-z\s]*$/
     //  const nameRegex =  /^[A-Za-z\s]*$/
     const errors: { [key: string]: string } = {}
     if (!serviceAreaName) {
@@ -361,11 +361,10 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
                 }}
               />
             </div>
-            
           </div>
           <div>
             <span className="font-medium text-sm text-[#000000]">
-            Sub Service Area
+              Sub Service Area
               {/* <span className="text-red-500">*</span> */}
             </span>
             <div className="mt-1 flex items-center gap-1 relative">
@@ -402,8 +401,8 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
                     }}
                     onClick={() => storage && handleAddStorage()}
                   />
-                  </div>
-                  </div>
+                </div>
+              </div>
             </div>
             <ul className="mt-1 flex w-[230px] overflow-y-auto ">
               {storageList.map((item, index) => (
@@ -433,9 +432,9 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
                 </li>
               ))}
             </ul>
+          </div>
         </div>
-      </div>
-      {isLoading && (
+        {isLoading && (
           <ProgressSpinner
             style={{
               position: 'absolute',
@@ -448,22 +447,51 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
             strokeWidth="4"
           />
         )}
-      <div className="mt-3">
-        <span className="font-medium text-sm text-[#000000]">Address</span>
-      </div>
-      <div className="flex gap-6 mt-1">
-        <div>
+        <div className="mt-3">
+          <span className="font-medium text-sm text-[#000000]">Address</span>
+        </div>
+        <div className="flex gap-6 mt-1">
+          <div>
+            <div className="">
+              <Dropdown
+                id="countryDropdown"
+                value={country}
+                onChange={(e) => {
+                  setCountry(e.value)
+                  setFieldErrors((prevErrors) => ({ ...prevErrors, country: '' }))
+                }}
+                editable
+                placeholder="Country"
+                options={countriesData}
+                optionLabel="name"
+                disabled={isLoading}
+                style={{
+                  width: '230px',
+                  height: '32px',
+                  border: '1px solid #D5E1EA',
+                  borderRadius: '0.50rem',
+                  fontSize: '0.8rem',
+                  paddingLeft: '0.5rem',
+                }}
+              />
+            </div>
+
+            {/* <p>
+              {errorMessage.address && <small className="p-error">{errorMessage.address}</small>}
+            </p> */}
+          </div>
+
           <div className="">
             <Dropdown
-              id="countryDropdown"
-              value={country}
-              onChange={(e) => {
-                setCountry(e.value)
-                setFieldErrors((prevErrors) => ({ ...prevErrors, country: '' }))
-              }}
+              id="stateDropdown"
+              placeholder="State"
               editable
-              placeholder="Country"
-              options={countriesData}
+              value={state}
+              onChange={(e) => {
+                setState(e.target.value)
+                setFieldErrors((prevErrors) => ({ ...prevErrors, state: '' }))
+              }}
+              options={statesData}
               optionLabel="name"
               disabled={isLoading}
               style={{
@@ -473,74 +501,22 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
                 borderRadius: '0.50rem',
                 fontSize: '0.8rem',
                 paddingLeft: '0.5rem',
+                color: 'black',
               }}
             />
-          </div>
-
-          {/* <p>
-              {errorMessage.address && <small className="p-error">{errorMessage.address}</small>}
-            </p> */}
-        </div>
-
-        <div className="">
-          <Dropdown
-            id="stateDropdown"
-            placeholder="State"
-            editable
-            value={state}
-            onChange={(e) => {
-              setState(e.target.value)
-              setFieldErrors((prevErrors) => ({ ...prevErrors, state: '' }))
-            }}
-            options={statesData}
-            optionLabel="name"
-            disabled={isLoading}
-            style={{
-              width: '230px',
-              height: '32px',
-              border: '1px solid #D5E1EA',
-              borderRadius: '0.50rem',
-              fontSize: '0.8rem',
-              paddingLeft: '0.5rem',
-              color: 'black',
-            }}
-          />
-          {/* <p>
+            {/* <p>
               {errorMessage.aptSuite && <small className="p-error">{errorMessage.aptSuite}</small>}
             </p> */}
-        </div>
+          </div>
 
-        <div className="flex flex-col ">
-          <InputComponent
-            value={zipCode}
-            onChange={(e) => {
-              setZipCode(e.target.value)
-              // setErrorMessage((prev) => ({ ...prev, zipCode: '' }))
-            }}
-            placeholder="Zip Code"
-            style={{
-              width: '230px',
-              height: '32px',
-              border: '1px solid #D5E1EA',
-              borderRadius: '0.50rem',
-              fontSize: '0.8rem',
-              padding: '0.5rem',
-            }}
-          />
-
-          {/* <p> {errorMessage.state && <small className="p-error">{errorMessage.state}</small>}</p> */}
-        </div>
-      </div>
-
-      <div className="flex  gap-6 mt-4">
-        <div>
-          <div className="">
+          <div className="flex flex-col ">
             <InputComponent
-              value={address}
+              value={zipCode}
               onChange={(e) => {
-                setAddress(e.target.value)
+                setZipCode(e.target.value)
+                // setErrorMessage((prev) => ({ ...prev, zipCode: '' }))
               }}
-              placeholder="Address"
+              placeholder="Zip Code"
               style={{
                 width: '230px',
                 height: '32px',
@@ -550,105 +526,129 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
                 padding: '0.5rem',
               }}
             />
+
+            {/* <p> {errorMessage.state && <small className="p-error">{errorMessage.state}</small>}</p> */}
           </div>
         </div>
 
-        <div>
+        <div className="flex  gap-6 mt-4">
           <div>
             <div className="">
               <InputComponent
-                value={gpsCoordinatesValue}
-                onChange={handleGpsCoordinatesChange}
-                
-                placeholder="GPS Coordinates"
+                value={address}
+                onChange={(e) => {
+                  setAddress(e.target.value)
+                }}
+                placeholder="Address"
                 style={{
                   width: '230px',
                   height: '32px',
-                  border: errorMessage.gpsCoordinatesValue ? '1px solid red' : '1px solid #D5E1EA',
+                  border: '1px solid #D5E1EA',
                   borderRadius: '0.50rem',
                   fontSize: '0.8rem',
                   padding: '0.5rem',
                 }}
               />
             </div>
-            <p>
-              {errorMessage.gpsCoordinatesValue && (
-                <small className="p-error">{errorMessage.gpsCoordinatesValue}</small>
-              )}
-            </p>
           </div>
-        </div>
-        <div></div>
-      </div>
 
-      <div className="flex mt-4 ">
-        <div>
-          <div>
-            <span className="font-medium text-sm text-[#000000]">Notes</span>
-          </div>
           <div>
             <div>
-              <div className=" mt-1">
+              <div className="">
                 <InputComponent
-                  value={notes}
-                  onChange={(e) => {
-                    setNotes(e.target.value)
-                  }}
+                  value={gpsCoordinatesValue}
+                  onChange={handleGpsCoordinatesChange}
+                  placeholder="GPS Coordinates"
                   style={{
                     width: '230px',
-                    height: '40px',
-                    border: '1px solid #D5E1EA',
+                    height: '32px',
+                    border: errorMessage.gpsCoordinatesValue
+                      ? '1px solid red'
+                      : '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
                     padding: '0.5rem',
-                    marginTop: '0.3rem',
                   }}
                 />
               </div>
+              <p>
+                {errorMessage.gpsCoordinatesValue && (
+                  <small className="p-error">{errorMessage.gpsCoordinatesValue}</small>
+                )}
+              </p>
             </div>
           </div>
+          <div></div>
         </div>
-        <div className="w-full h-[150px] p-2 rounded-lg mt-[22px]">
-          <CustomSelectPositionMap
-            onPositionChange={handlePositionChange}
-            zoomLevel={15}
-            center={center}
+
+        <div className="flex mt-4 ">
+          <div>
+            <div>
+              <span className="font-medium text-sm text-[#000000]">Notes</span>
+            </div>
+            <div>
+              <div>
+                <div className=" mt-1">
+                  <InputComponent
+                    value={notes}
+                    onChange={(e) => {
+                      setNotes(e.target.value)
+                    }}
+                    style={{
+                      width: '230px',
+                      height: '40px',
+                      border: '1px solid #D5E1EA',
+                      borderRadius: '0.50rem',
+                      fontSize: '0.8rem',
+                      padding: '0.5rem',
+                      marginTop: '0.3rem',
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="w-full h-[150px] p-2 rounded-lg mt-[22px]">
+            <CustomSelectPositionMap
+              onPositionChange={handlePositionChange}
+              zoomLevel={15}
+              center={center}
+            />
+          </div>
+        </div>
+
+        <div className={`"flex gap-4 ml-4 bottom-5 absolute left-6" ${isLoading ? 'blurred' : ''}`}>
+          <Button
+            label={'Save'}
+            onClick={handleSave}
+            style={{
+              width: '89px',
+              height: '42px',
+              backgroundColor: '#0098FF',
+              cursor: 'pointer',
+              fontWeight: 'bolder',
+              fontSize: '1rem',
+              boxShadow: 'none',
+              color: 'white',
+              borderRadius: '0.50rem',
+            }}
+          />
+
+          <Button
+            label={'Back'}
+            onClick={handleBack}
+            text={true}
+            style={{
+              backgroundColor: 'white',
+              color: '#000000',
+              border: 'none',
+              width: '89px',
+              fontSize: '14px',
+              height: '42px',
+              fontWeight: '500',
+            }}
           />
         </div>
-      </div>
-
-      <div className={`"flex gap-4 ml-4 bottom-5 absolute left-6" ${isLoading ? 'blurred' : ''}`}>
-        <Button
-          label={'Save'}
-          onClick={handleSave}
-          style={{
-            width: '89px',
-            height: '42px',
-            backgroundColor: '#0098FF',
-            cursor: 'pointer',
-            fontWeight: 'bolder',
-            fontSize: '1rem',
-            boxShadow: 'none',
-            color: 'white',
-            borderRadius: '0.50rem',
-          }}
-        />
-
-        <Button
-          label={'Back'}
-          onClick={handleBack}
-          text={true}
-          style={{
-            backgroundColor: 'white',
-            color: '#000000',
-            border: 'none',
-            width: '89px',
-            fontSize: '14px',
-            height: '42px',
-            fontWeight: '500',
-          }}
-        />
-      </div>
       </div>
     </>
   )

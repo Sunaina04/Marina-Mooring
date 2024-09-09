@@ -37,7 +37,7 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
 
   const parseCoordinates = (coordinates: string): [number, number] | null => {
     if (!coordinates) return null
-    const [latitude, longitude] = coordinates.split(' ').map(parseFloat)
+    const [latitude, longitude] = coordinates?.split(' ').map(parseFloat)
     return isNaN(latitude) || isNaN(longitude) ? null : [latitude, longitude]
   }
 

@@ -122,7 +122,7 @@ const Moorings = () => {
 
   const parseCoordinates = (coordinates: any) => {
     if (!coordinates) return null
-    const [latitude, longitude] = coordinates.split(' ').map(parseFloat)
+    const [latitude, longitude] = coordinates?.split(' ').map(parseFloat)
     return isNaN(latitude) || isNaN(longitude) ? null : [latitude, longitude]
   }
 

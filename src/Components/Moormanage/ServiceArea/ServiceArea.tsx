@@ -81,7 +81,7 @@ const ServiceArea = () => {
 
   const parseCoordinates = (coordinates: any) => {
     if (!coordinates) return null
-    const [latitude, longitude] = coordinates.split(' ').map(parseFloat)
+    const [latitude, longitude] = coordinates?.split(' ').map(parseFloat)
     return isNaN(latitude) || isNaN(longitude) ? null : [latitude, longitude]
   }
 
@@ -286,7 +286,7 @@ const ServiceArea = () => {
 
   const parseCoordinate = (coordinates: any) => {
     if (!coordinates) return null
-    const [latitude, longitude] = coordinates.split(' ').map(parseFloat)
+    const [latitude, longitude] = coordinates?.split(' ').map(parseFloat)
     return isNaN(latitude) || isNaN(longitude) ? null : [latitude, longitude]
   }
 
@@ -370,6 +370,7 @@ const ServiceArea = () => {
           if (status === 200 && Array.isArray(content) && content.length > 0) {
             setIsLoading(false)
             setMooringWithServiceAreasData(content)
+            setMooringResponseData(content[0]?.gpsCoordinates)
             setSelectedProduct(content[0])
             setTotalRecordsTwo(totalSize)
           } else {
@@ -447,7 +448,6 @@ const ServiceArea = () => {
             moorings={mooringWithServiceAreasData}
             zoomLevel={10}
           />
-          {/* <CustomDisplayPositionMap position={[latitude, longitude]} zoomLevel={15} /> */}
         </div>
 
         <div
