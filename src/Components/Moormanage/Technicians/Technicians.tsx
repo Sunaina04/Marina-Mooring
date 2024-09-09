@@ -164,32 +164,6 @@ const Technicians = () => {
     return `${month}/${day}/${year}`
   }
 
-  const handleEditButtonClick = () => {
-    setVisible(true)
-  }
-
-  const ActionButtonColumn: ActionButtonColumnProps = {
-    header: '',
-    buttons: [
-      {
-        color: 'black',
-        label: 'View',
-        underline: true,
-        fontWeight: 500,
-        onClick: handleEditButtonClick,
-      },
-    ],
-    headerStyle: {
-      fontSize: '10px',
-      height: '12px',
-      color: 'white',
-      backgroundColor: '#00426F',
-      marginTop: '1rem',
-      border: '1px solid #00426F',
-    },
-    style: { borderBottom: '1px solid #D5E1EA' },
-  }
-
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value)
   }
@@ -278,6 +252,7 @@ const Technicians = () => {
         const { status, message, content, totalSize } = response as GetUserResponse
         if (status === 200 && Array.isArray(content)) {
           setIsLoading(false)
+          setValue(options[0])
           setGetOpenWorkOrderData(content)
           setTotalRecordsTwo(totalSize)
           setOpenWorkOrder(totalSize)
@@ -322,6 +297,7 @@ const Technicians = () => {
         const { status, message, content, totalSize } = response as GetUserResponse
         if (status === 200 && Array.isArray(content)) {
           setIsLoading(false)
+          setValue(options[1])
           setGetOpenWorkOrderData(content)
           setTotalRecordsTwo(totalSize)
           setCompletedOrder(totalSize)
@@ -382,7 +358,7 @@ const Technicians = () => {
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      if (technicianId) {
+      if (technicianId && filterDateFrom && filterDateTo) {
         getOpenWorkOrder(technicianId)
         getClosedWorkOrder(technicianId)
       }
@@ -530,21 +506,21 @@ const Technicians = () => {
                   }
                   style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '500' }}
                 />
-                <div data-testid="progress">
-                  {/* {isLoading && (
-                    <ProgressSpinner
-                      style={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: '40%',
-                        transform: 'translate(-50%, -50%)',
-                        width: '50px',
-                        height: '50px',
-                      }}
-                      strokeWidth="4"
-                    />
-                  )} */}
-                </div>
+              </div>
+              <div data-testid="progressOne">
+                {isLoading && (
+                  <ProgressSpinner
+                    style={{
+                      position: 'absolute',
+                      top: '70%',
+                      left: '40%',
+                      transform: 'translate(-50%, -50%)',
+                      width: '50px',
+                      height: '50px',
+                    }}
+                    strokeWidth="4"
+                  />
+                )}
               </div>
               <div data-testid="PaginatorOne" className="mt-auto">
                 <Paginator
