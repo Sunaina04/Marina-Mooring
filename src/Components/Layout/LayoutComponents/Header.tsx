@@ -36,11 +36,13 @@ const Header: React.FC<HeaderProps> = ({ header, customer }) => {
       const { status, message, content } = response as GetUserResponse
       if (status === 200 && Array.isArray(content)) {
         if (content.length > 0) {
-          const firstLastName = content.map((item) => ({
+          const firstLastName = content?.map((item) => ({
             label: item.firstName + ' ' + item.lastName,
             value: item,
           }))
           setgetCustomerOwnerData(firstLastName)
+          dispatch(setCustomerName(firstLastName[0]?.label))
+          dispatch(setCustomerId(firstLastName[0]?.value?.id))
         } else {
           setgetCustomerOwnerData([])
         }
