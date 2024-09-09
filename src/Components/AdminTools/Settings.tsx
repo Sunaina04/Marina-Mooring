@@ -19,6 +19,7 @@ import { useGetCustomerMutation } from '../../Services/MoorManage/MoormanageApi'
 import { selectCustomerId } from '../../Store/Slice/userSlice'
 import {
   useEditMapCustomerToQuickBookMutation,
+  useGetQuickBookMutation,
   useMapCustomerToQuickBookMutation,
 } from '../../Services/AdminTools/AdminToolsApi'
 
@@ -27,6 +28,7 @@ const Settings = () => {
   const [quickBookCustomer, setQuickBookCustomer] = useState<{ label: any; id: any }[]>([])
 
   const [getCustomer] = useGetCustomerMutation()
+  const [getQuickBook] = useGetQuickBookMutation()
   const toast = useRef<Toast>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [totalRecords, setTotalRecords] = useState<number>()
@@ -85,93 +87,6 @@ const Settings = () => {
     if (data.firstName === null) return '-'
     else return data.firstName + ' ' + data.lastName
   }
-
-  // const tableColumnsPermission = useMemo(
-  //   () => [
-  //     {
-  //       id: 'firstName',
-  //       label: 'Customer Name',
-  //       body: firstLastName,
-  //       // style: { width: '20vw' },
-  //       style: columnStyle,
-  //     },
-  //     {
-  //       id: 'quickbookCustomerResponseDto.id',
-  //       label: 'QuickBook Customer Name',
-  //       style: columnStyle,
-  //       // style:{width:"40vw"},
-  //       body: (rowData: {
-  //         id: string
-  //         dropdownValue: string
-  //         quickbookCustomerResponseDto: any
-  //       }) => (
-  //         <>
-  //           <DropdownCell
-  //             // value={rowData?.quickbookCustomerResponseDto?.id}
-  //             value={
-  //               dropdownValues[rowData.id] ||
-  //               rowData?.quickbookCustomerResponseDto?.quickbookCustomerName
-  //             }
-  //             onChange={(e) => setDropdownValues({ ...dropdownValues, [rowData.id]: e.value })}
-  //             options={quickBookCustomer}
-  //             disabled={
-  //               (rowData?.quickbookCustomerResponseDto?.id || !!dropdownDisabled[rowData.id]) &&
-  //               rowData?.id !== currentlyEditing
-  //             }
-  //           />
-  //         </>
-  //       ),
-  //     },
-  //     {
-  //       id: 'Action',
-  //       label: 'Action',
-  //       // style:{width:"20vw"},
-  //       style: columnStyle,
-  //       body: (rowData: any) => (
-  //         // <span
-  //         //   className={`cursor-pointer underline ${savedValues[rowData.id] ? 'black' : 'text-green-500'}`}
-  //         //   onClick={() => {
-  //         //     if (!(savedValues[rowData?.id] || rowData?.quickbookCustomerResponseDto?.id)) {
-  //         //       MapCustomerToQuickBook(rowData)
-  //         //     } else {
-  //         //       if (!currentlyEditing) {
-  //         //         setCurrentlyEditing(rowData?.id)
-  //         //       } else {
-  //         //         UpdateMapCustomerToQuickBook(rowData)
-  //         //         setCurrentlyEditing(null)
-  //         //       }
-  //         //     }
-  //         //   }}>
-  //         //   {(rowData?.quickbookCustomerResponseDto?.id || savedValues[rowData.id]) &&
-  //         //   !currentlyEditing
-  //         //     ? 'Edit'
-  //         //     : 'Save'}
-  //         // </span>
-  //         <span
-  //           className={`cursor-pointer underline ${savedValues[rowData.id] ? 'black' : 'text-green-500'}`}
-  //           onClick={() => {
-  //             if (rowData.id === currentlyEditing) {
-  //               UpdateMapCustomerToQuickBook(rowData)
-  //               setCurrentlyEditing(null)
-  //             } else {
-  //               if (!(savedValues[rowData?.id] || rowData?.quickbookCustomerResponseDto?.id)) {
-  //                 MapCustomerToQuickBook(rowData)
-  //               } else {
-  //                 setCurrentlyEditing(rowData.id)
-  //               }
-  //             }
-  //           }}>
-  //           {rowData.id === currentlyEditing
-  //             ? 'Save'
-  //             : rowData?.quickbookCustomerResponseDto?.id || savedValues[rowData.id]
-  //               ? 'Edit'
-  //               : 'Save'}
-  //         </span>
-  //       ),
-  //     },
-  //   ],
-  //   [dropdownValues, savedValues, dropdownDisabled, quickBookCustomer, currentlyEditing],
-  // )
 
   const tableColumnsPermission = useMemo(
     () => [
@@ -280,6 +195,38 @@ const Settings = () => {
     }
   }, [getCustomer, selectedCustomerId, pageSize, pageNumber])
 
+  const getQuickBookData = useCallback(async () => {
+    setIsLoading(true)
+    try {
+      const response = await getQuickBook({}).unwrap()
+      const { status, content, message, totalSize } = response as CustomerResponse
+      if (status === 200 && Array.isArray(content)) {
+        if (content?.length > 0) {
+          setIsLoading(false)
+          setCustomerData(content)
+          setTotalRecords(totalSize)
+        } else {
+          setIsLoading(false)
+
+          setCustomerData([])
+          setTotalRecords(totalSize)
+        }
+      } else {
+        setIsLoading(false)
+        toast?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+      }
+    } catch (error) {
+      setIsLoading(false)
+      const { message: msg } = error as ErrorResponse
+      console.error('Error occurred while fetching customer data:', msg)
+    }
+  }, [selectedCustomerId])
+
   const fetchDataAndUpdate = useCallback(async () => {
     const { quickBookCustomerData } = await getQuickBookCustomerData()
 
@@ -379,6 +326,7 @@ const Settings = () => {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       getCustomerData()
+      getQuickBookData()
     }, 600)
     return () => clearTimeout(timeoutId)
   }, [selectedCustomerId, pageSize, pageNumber])

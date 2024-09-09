@@ -40,6 +40,13 @@ const adminToolsApi = userApi.injectEndpoints({
       }),
     }),
 
+    getQuickBook: builder.mutation({
+      query: ({}) => ({
+        url: 'api/v1/QBOCustomer/',
+        method: 'GET',
+      }),
+    }),
+
     deleteUser: builder.mutation({
       query: ({ userId, customerOwnerId }: { userId?: number; customerOwnerId?: number }) => ({
         url: `api/v1/user/${userId}`,
@@ -100,4 +107,5 @@ export const {
   useUpdateUserMutation,
   useMapCustomerToQuickBookMutation,
   useEditMapCustomerToQuickBookMutation,
+  useGetQuickBookMutation,
 } = adminToolsApi
