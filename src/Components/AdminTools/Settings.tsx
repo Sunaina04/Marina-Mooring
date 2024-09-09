@@ -200,22 +200,10 @@ const Settings = () => {
     try {
       const response = await getQuickBook({}).unwrap()
       const { status, content, message, totalSize } = response as CustomerResponse
-      if (status === 200 && Array.isArray(content)) {
-        if (content?.length > 0) {
-          setIsLoading(false)
-          setCustomerData(content)
-          setTotalRecords(totalSize)
-        } else {
-          setIsLoading(false)
-
-          setCustomerData([])
-          setTotalRecords(totalSize)
-        }
-      } else {
-        setIsLoading(false)
+      if (status === 200) {
         toast?.current?.show({
-          severity: 'error',
-          summary: 'Error',
+          severity: 'success',
+          summary: 'Success',
           detail: message,
           life: 3000,
         })
