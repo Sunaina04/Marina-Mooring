@@ -207,6 +207,13 @@ const Settings = () => {
           detail: message,
           life: 3000,
         })
+      } else {
+        toast?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
       }
     } catch (error) {
       setIsLoading(false)
