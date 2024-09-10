@@ -24,8 +24,6 @@ const CustomServiceAreaMoorinMap: React.FC<CustomServiceAreaMoorinMapProps> = ({
   const [map, setMap] = useState<L.Map | null>(null)
   const mapRef = useRef<any>(null)
   const toast = useRef<Toast>(null)
-  console.log('poistion', position)
-
   const parseCoordinates = (coordinates: string): [number, number] | null => {
     if (!coordinates) return null
     const [latitude, longitude] = coordinates?.split(' ').map(parseFloat)

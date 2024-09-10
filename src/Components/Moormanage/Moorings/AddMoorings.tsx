@@ -40,6 +40,7 @@ import { AiOutlineDelete } from 'react-icons/ai'
 import { Dialog } from 'primereact/dialog'
 import UploadImages from '../../CommonComponent/UploadImages'
 import { AppContext } from '../../../Services/ContextApi/AppContext'
+import { debounce } from 'lodash'
 
 const AddMoorings: React.FC<AddMooringProps> = ({
   moorings,
@@ -82,6 +83,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   const [mooringImages, setMooringImages] = useState<string[]>([])
   const [hoveredIndex, setHoveredIndex] = useState<null | number>(null)
   const [encodedImages, setEncodedImages] = useState<string[]>([])
+  const [mapPositionChanged, setMapPositionChanged] = useState<boolean>(true)
   const [imageRequestDtoList, setimageRequestDtoList] = useState<
     { imageName: string; imageData: string; note: string }[]
   >([])
@@ -117,8 +119,6 @@ const AddMoorings: React.FC<AddMooringProps> = ({
   const [saveMoorings] = useAddMooringsMutation()
   const [updateMooring] = useUpdateMooringsMutation()
   const [isLoading, setIsLoading] = useState(true)
-
-  const { isMapModalOpen, setMapModalOpen } = useContext(AppContext)
   const [formData, setFormData] = useState<any>({
     customerName: '',
     mooringNumber: '',
@@ -769,11 +769,14 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               </span>
               <div className="mt-2">
                 <InputComponent
-                  value={gpsCoordinatesValue}
-                  onChange={(e) => {
+                  {...(mapPositionChanged ? { value: gpsCoordinatesValue } : '')}
+                  onFocus={() => setMapPositionChanged(false)}
+                  onBlur={() => setMapPositionChanged(true)}
+                  defaultValue={mooringRowData?.gpsCoordinates}
+                  onChange={debounce((e) => {
                     setGpsCoordinatesValue(e.target.value)
                     setFieldErrors((prevErrors) => ({ ...prevErrors, gpsCoordinatesValue: '' }))
-                  }}
+                  })}
                   style={{
                     width: '230px',
                     height: '32px',

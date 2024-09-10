@@ -19,6 +19,7 @@ import {
 import { Toast } from 'primereact/toast'
 import { IoMdAdd, IoMdClose } from 'react-icons/io'
 import { InputText } from 'primereact/inputtext'
+import { debounce } from 'lodash'
 
 const AddServiceModal: React.FC<ServiceAreaProps> = ({
   closeModal,
@@ -43,6 +44,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
   const [storageList, setStorageList] = useState<string[]>([])
   const [serviceAreaTypeData, setServiceAreaTypeData] = useState<ServiceAreaType[]>()
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
+  const [mapPositionChanged, setMapPositionChanged] = useState<boolean>(true)
   const toastRef = useRef<Toast>(null)
   const getFormattedCoordinate = (coordinates: any) => {
     try {
@@ -84,7 +86,6 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
 
   const validateFields = () => {
     const nameRegex = /^[A-Za-z\s]*$/
-    //  const nameRegex =  /^[A-Za-z\s]*$/
     const errors: { [key: string]: string } = {}
     if (!serviceAreaName) {
       errors.name = 'Service Area Name is required'
@@ -123,6 +124,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
     setCountry(customerData?.countryResponseDto?.name || undefined)
     setState(customerData?.stateResponseDto?.name || undefined)
     setGpsCoordinatesValue(customerData?.gpsCoordinates || '')
+    setStorageList(customerData?.subServiceAreaList)
   }
 
   const saveServiceArea = async () => {
@@ -558,8 +560,13 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
             <div>
               <div className="">
                 <InputComponent
-                  value={gpsCoordinatesValue}
-                  onChange={handleGpsCoordinatesChange}
+                  {...(mapPositionChanged ? { value: gpsCoordinatesValue } : '')}
+                  onFocus={() => setMapPositionChanged(false)}
+                  onBlur={() => setMapPositionChanged(true)}
+                  defaultValue={getFormattedCoordinate(customerData?.gpsCoordinates)?.join(' ')}
+                  onChange={debounce((e) => {
+                    setGpsCoordinatesValue(e.target.value)
+                  })}
                   placeholder="GPS Coordinates"
                   style={{
                     width: '230px',

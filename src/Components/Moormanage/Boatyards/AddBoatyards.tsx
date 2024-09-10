@@ -100,7 +100,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
     const formattedLng = lng.toFixed(3)
     const concatenatedValue = `${formattedLat} ${formattedLng}`
     setGpsCoordinatesValue(concatenatedValue)
-    // setMapPositionChanged(true)
     setErrorMessage((prev) => ({ ...prev, gpsCoordinatesValue: '' }))
   }
 
@@ -501,11 +500,9 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
               <div className="">
                 <InputComponent
                   {...(mapPositionChanged ? { value: gpsCoordinatesValue } : '')}
-                  // onKeyDown={() => mapPositionChanged && setMapPositionChanged(false)}
                   onFocus={() => setMapPositionChanged(false)}
                   onBlur={() => setMapPositionChanged(true)}
                   defaultValue={getFormattedCoordinate(customerData?.gpsCoordinates)?.join(' ')}
-                  // value={gpsCoordinatesValue}
                   onChange={debounce((e) => {
                     setGpsCoordinatesValue(e.target.value)
                   })}

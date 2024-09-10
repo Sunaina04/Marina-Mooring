@@ -37,6 +37,7 @@ import { Dialog } from 'primereact/dialog'
 import { AiOutlineDelete } from 'react-icons/ai'
 import { NAME_REGEX, NUMBER_REGEX } from '../../Utils/RegexUtils'
 import UploadImages from '../../CommonComponent/UploadImages'
+import { debounce } from 'lodash'
 
 const AddCustomer: React.FC<CustomerDataProps> = ({
   customer,
@@ -78,6 +79,7 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
   const [mooringImageVisible, setMooringImageVisible] = useState(false)
   const [hoveredIndex, setHoveredIndex] = useState<null | number>(null)
   const [mooringStatus, setMooringStatus] = useState<MetaData[]>([])
+  const [mapPositionChanged, setMapPositionChanged] = useState<boolean>(true)
 
   const getFomattedCoordinate = (gpsCoordinatesValue: any) => {
     try {
@@ -1400,14 +1402,17 @@ const AddCustomer: React.FC<CustomerDataProps> = ({
                     </span>
                     <div className="mt-2">
                       <InputComponent
-                        value={gpsCoordinatesValue}
-                        onChange={(e) => {
+                        {...(mapPositionChanged ? { value: gpsCoordinatesValue } : '')}
+                        onFocus={() => setMapPositionChanged(false)}
+                        onBlur={() => setMapPositionChanged(true)}
+                        defaultValue={mooringRowData?.gpsCoordinates}
+                        onChange={debounce((e) => {
                           setGpsCoordinatesValue(e.target.value)
                           setFieldErrors((prevErrors) => ({
                             ...prevErrors,
                             gpsCoordinatesValue: '',
                           }))
-                        }}
+                        })}
                         style={{
                           width: '230px',
                           height: '32px',
