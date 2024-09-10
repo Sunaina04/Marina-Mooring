@@ -23,7 +23,7 @@ export const GearOffIcon = L.icon(gearOffIconOptions)
 
 const notInUseIconOptions: IconOptions = {
   iconUrl: '/assets/images/NotInUse.png',
-  iconSize: [120, 150],
+  iconSize: [60, 80],
 }
 
 export const NotInUseIcon = L.icon(notInUseIconOptions)

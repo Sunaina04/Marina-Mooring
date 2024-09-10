@@ -139,7 +139,7 @@ const CustomServiceAreaMoorinMap: React.FC<CustomServiceAreaMoorinMapProps> = ({
                   <span style={dotStyle('green')}></span> Gear On (in the water)
                 </div>
                 <div style={{ width: '5vw' }}>
-                  <span style={dotStyle('#ffff00')}></span> Need Service
+                  <span style={dotStyle('#808080')}></span> Need Service
                 </div>
               </div>
             </div>

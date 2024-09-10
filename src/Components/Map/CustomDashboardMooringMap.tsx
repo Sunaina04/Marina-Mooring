@@ -236,7 +236,7 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
                   <span style={dotStyle('#8C0DD1')}></span> Gear Off (out of the water)
                 </div>
                 <div>
-                  <span style={dotStyle('#ffff00')}></span>Need Service
+                  <span style={dotStyle('#808080')}></span>Need Service
                 </div>
               </div>
             </div>
