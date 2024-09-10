@@ -9,6 +9,7 @@ import {
   GearOffIcon,
   GearOnIcon,
   NeedInspectionIcon,
+  NeedServiceIcon,
   NorthIcon,
   NotInUseIcon,
   WestIcon,
@@ -70,7 +71,6 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
     fontSize: '10px',
     transform: 'translateX(-50%)',
     zIndex: 1000,
-    // border:"1px solid red"
   }
 
   const dotStyle = (color: any): React.CSSProperties => ({
@@ -95,6 +95,7 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
     2: GearOffIcon,
     3: NeedInspectionIcon,
     4: NotInUseIcon,
+    5: NeedServiceIcon,
   }
 
   const iconsByServiceAreaName = {
@@ -189,19 +190,6 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
         <div style={boxStyle}>
           <div className="flex justify-between h-8">
             <h2 className="text-sm">Status</h2>
-            {/* <div className="flex">
-              <button
-                className={`relative inline-flex h-6 mb-14 w-11 items-center rounded-full transition-colors duration-300 ${
-                  checked ? 'bg-green-500' : 'bg-gray-300'
-                }`}
-                onClick={handleCheckboxChange}>
-                <span
-                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-300 ${
-                    checked ? 'translate-x-6' : 'translate-x-1'
-                  }`}
-                />
-              </button>
-            </div> */}
           </div>
           <hr style={{ border: '1px solid #3F3F3F' }} />
           {checked ? (
@@ -230,13 +218,16 @@ const CustomDashboardMooringMap: React.FC<CustomMooringPositionMapProps> = ({
                 <div>
                   <span style={dotStyle('#3BB15E')}></span> Gear On (in the water)
                 </div>
+                <div>
+                  <span style={dotStyle('#FFFF00')}></span> Need Service
+                </div>
               </div>
               <div>
                 <div>
                   <span style={dotStyle('#8C0DD1')}></span> Gear Off (out of the water)
                 </div>
                 <div>
-                  <span style={dotStyle('#808080')}></span>Need Service
+                  <span style={dotStyle('#808080')}></span> Not In Use
                 </div>
               </div>
             </div>

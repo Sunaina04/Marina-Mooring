@@ -9,6 +9,7 @@ import {
   GearOffIcon,
   GearOnIcon,
   NeedInspectionIcon,
+  NeedServiceIcon,
   NotInUseIcon,
 } from './DefaultIcon'
 import { MooringPayload } from '../../Type/ApiTypes'
@@ -52,6 +53,7 @@ const CustomServiceAreaMoorinMap: React.FC<CustomServiceAreaMoorinMapProps> = ({
     2: GearOffIcon,
     3: NeedInspectionIcon,
     4: NotInUseIcon,
+    5: NeedServiceIcon,
   }
 
   useEffect(() => {
@@ -137,7 +139,10 @@ const CustomServiceAreaMoorinMap: React.FC<CustomServiceAreaMoorinMapProps> = ({
                   <span style={dotStyle('green')}></span> Gear On (in the water)
                 </div>
                 <div style={{ width: '5vw' }}>
-                  <span style={dotStyle('#808080')}></span> Need Service
+                  <span style={dotStyle('#808080')}></span> Not In Use
+                </div>
+                <div style={{ width: '5vw' }}>
+                  <span style={dotStyle('#FFFF00')}></span> Need Service
                 </div>
               </div>
             </div>

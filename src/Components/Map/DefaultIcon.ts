@@ -21,6 +21,13 @@ const gearOffIconOptions: IconOptions = {
 
 export const GearOffIcon = L.icon(gearOffIconOptions)
 
+const needServiceIconOptions: IconOptions = {
+  iconUrl: '/assets/images/NeedService.png',
+  iconSize: [120, 150],
+}
+
+export const NeedServiceIcon = L.icon(needServiceIconOptions)
+
 const notInUseIconOptions: IconOptions = {
   iconUrl: '/assets/images/NotInUse.png',
   iconSize: [60, 80],
