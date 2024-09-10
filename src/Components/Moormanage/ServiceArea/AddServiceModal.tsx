@@ -144,6 +144,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
         countryId: country?.id,
         notes: notes,
         gpsCoordinates: gpsCoordinatesValue,
+        subServiceAreaList: storageList,
       }
       const response = await addServiceArea(Payload).unwrap()
       const { status, message } = response as ServiceAreaResponse
@@ -199,6 +200,7 @@ const AddServiceModal: React.FC<ServiceAreaProps> = ({
         countryId: country?.id,
         notes: notes,
         gpsCoordinates: gpsCoordinatesValue,
+        subServiceAreaList: storageList,
       }
       const response = await updateServiceArea({
         payload: editServiceAreaPayload,

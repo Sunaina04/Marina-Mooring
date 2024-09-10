@@ -17,6 +17,7 @@ import { selectCustomerId } from '../../../Store/Slice/userSlice'
 import { Toast } from 'primereact/toast'
 import { IoMdAdd, IoMdClose } from 'react-icons/io'
 import { InputText } from 'primereact/inputtext'
+import { debounce } from 'lodash'
 
 const AddBoatyards: React.FC<BoatYardProps> = ({
   closeModal,
@@ -28,13 +29,12 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   const selectedCustomerId = useSelector(selectCustomerId)
   const [boatyardName, setBoatyardName] = useState('')
   const [address, setAddress] = useState('')
-  // const [selectedState, setSelectedState] = useState<any>()
   const [state, setState] = useState<any>()
   const [country, setCountry] = useState<any>()
   const [zipCode, setZipCode] = useState('')
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
   const [mainContact, setMainContact] = useState('')
-  const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState<any>()
+  const [gpsCoordinatesValue, setGpsCoordinatesValue] = useState('')
   const [countriesData, setCountriesData] = useState<Country[]>()
   const [statesData, setStatesData] = useState<State[]>()
   const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>({})
@@ -93,11 +93,12 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
     return errors
   }
 
-  const handleGpsCoordinatesChange = (e: any) => {
-    const value = e.target.value
-    setGpsCoordinatesValue(value)
-    setErrorMessage((prev) => ({ ...prev, gpsCoordinatesValue: '' }))
-  }
+  const debouncedSetGpsValue = useCallback(
+    debounce((value) => {
+      setGpsCoordinatesValue(value)
+    }, 500),
+    [],
+  )
 
   const handlePositionChange = (lat: number, lng: number) => {
     setCenter([lat, lng])
@@ -130,7 +131,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
 
     try {
       const payload = {
-        // boatyardId: boatyardId,
         boatyardName: boatyardName,
         address: address,
         zipCode: zipCode,
@@ -170,7 +170,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
       toastRef?.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: data?.message,
+        detail: message || data?.message,
         life: 3000,
       })
     }
@@ -187,13 +187,10 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
     try {
       setIsLoading(true)
       const editBoatYardPayload = {
-        // boatyardId: boatyardId,
         boatyardName: boatyardName,
         address: address,
         zipCode: zipCode,
         contact: mainContact,
-        // stateId: selectedState?.id || customerData?.stateResponseDto?.id,
-        // countryId: country?.id || customerData?.countryResponseDto?.id,
         stateId: state?.id,
         countryId: country?.id,
         mainContact: mainContact,
@@ -306,29 +303,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
       <Toast ref={toastRef} />
       <div className={`" ml-4" ${isLoading ? 'blurred' : ''}`}>
         <div className="flex gap-6  ">
-          {/* <div>
-            <span className="font-medium text-sm text-[#000000]">
-              Boatyard ID <span className="text-red-500">*</span>
-            </span>
-            <div className="mt-1">
-              <InputComponent
-                value={boatyardId}
-                onChange={(e) => {
-                  setBoatyardId(e.target.value)
-                  setErrorMessage((prev) => ({ ...prev, id: '' }))
-                }}
-                style={{
-                  width: '230px',
-                  height: '32px',
-                  border: errorMessage.id ? '1px solid red' : '1px solid #D5E1EA',
-                  borderRadius: '0.50rem',
-                  fontSize: '0.8rem',
-                  padding: '0.5rem',
-                }}
-              />
-            </div>
-            <p>{errorMessage.id && <small className="p-error">{errorMessage.id}</small>}</p>
-          </div> */}
           <div>
             <span className="font-medium text-sm text-[#000000]">
               Boatyard <span className="text-red-500">*</span>
@@ -353,15 +327,10 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
             <p>{errorMessage.name && <small className="p-error">{errorMessage.name}</small>}</p>
           </div>
           <div>
-            <span className="font-medium text-sm text-[#000000]">
-              Storage Area
-              {/* <span className="text-red-500">*</span> */}
-            </span>
+            <span className="font-medium text-sm text-[#000000]">Storage Area</span>
             <div className="mt-1 flex items-center gap-1 relative">
               <div>
                 <div className="p-input-icon-left">
-                  {/* <IoSearchSharp className="ml-2 text-blue-900" /> */}
-
                   <InputText
                     value={storage}
                     onChange={(e) => {
@@ -465,10 +434,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
                 }}
               />
             </div>
-
-            {/* <p>
-              {errorMessage.address && <small className="p-error">{errorMessage.address}</small>}
-            </p> */}
           </div>
 
           <div className="">
@@ -494,9 +459,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
                 color: 'black',
               }}
             />
-            {/* <p>
-              {errorMessage.aptSuite && <small className="p-error">{errorMessage.aptSuite}</small>}
-            </p> */}
           </div>
 
           <div className="flex flex-col ">
@@ -504,7 +466,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
               value={zipCode}
               onChange={(e) => {
                 setZipCode(e.target.value)
-                // setErrorMessage((prev) => ({ ...prev, zipCode: '' }))
               }}
               placeholder="Zip Code"
               style={{
@@ -516,8 +477,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
                 padding: '0.5rem',
               }}
             />
-
-            {/* <p> {errorMessage.state && <small className="p-error">{errorMessage.state}</small>}</p> */}
           </div>
         </div>
 
@@ -528,7 +487,6 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
                 value={address}
                 onChange={(e) => {
                   setAddress(e.target.value)
-                  // setErrorMessage((prev) => ({ ...prev, zipCode: '' }))
                 }}
                 placeholder="Address"
                 style={{
@@ -541,17 +499,16 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
                 }}
               />
             </div>
-            {/* <p>
-              {errorMessage.country && <small className="p-error">{errorMessage.country}</small>}
-            </p> */}
           </div>
 
           <div>
             <div>
               <div className="">
                 <InputComponent
-                  value={gpsCoordinatesValue}
-                  onChange={handleGpsCoordinatesChange}
+                  defaultValue={getFormattedCoordinate(customerData?.gpsCoordinates)?.join(' ')}
+                  onChange={debounce((e) => {
+                    setGpsCoordinatesValue(e.target.value)
+                  })}
                   placeholder="GPS Coordinates"
                   style={{
                     width: '230px',

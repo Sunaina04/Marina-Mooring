@@ -26,6 +26,7 @@ interface InputComponentProps {
   onFocus?: any
   onBlur?: any
   onKeyDown?: any
+  defaultValue?: any
 }
 
 const InputComponent: React.FC<InputComponentProps> = ({
@@ -41,6 +42,7 @@ const InputComponent: React.FC<InputComponentProps> = ({
   onFocus,
   onBlur,
   onKeyDown,
+  defaultValue,
 }) => {
   return (
     <div className="p-inputgroup">
@@ -57,6 +59,7 @@ const InputComponent: React.FC<InputComponentProps> = ({
         onFocus={onFocus}
         onBlur={onBlur}
         onKeyDown={onKeyDown}
+        defaultValue={defaultValue}
       />
     </div>
   )
