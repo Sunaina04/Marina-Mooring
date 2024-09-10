@@ -41,6 +41,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
   const toastRef = useRef<Toast>(null)
   const [storage, setStorage] = useState('')
   const [storageList, setStorageList] = useState<string[]>([])
+  const [mapPositionChanged, setMapPositionChanged] = useState<boolean>(true)
   const getFormattedCoordinate = (coordinates: any) => {
     try {
       let [lat, long] = coordinates?.split(/[ ,]+/)
@@ -93,19 +94,13 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
     return errors
   }
 
-  const debouncedSetGpsValue = useCallback(
-    debounce((value) => {
-      setGpsCoordinatesValue(value)
-    }, 500),
-    [],
-  )
-
   const handlePositionChange = (lat: number, lng: number) => {
     setCenter([lat, lng])
     const formattedLat = lat.toFixed(3)
     const formattedLng = lng.toFixed(3)
     const concatenatedValue = `${formattedLat} ${formattedLng}`
     setGpsCoordinatesValue(concatenatedValue)
+    // setMapPositionChanged(true)
     setErrorMessage((prev) => ({ ...prev, gpsCoordinatesValue: '' }))
   }
 
@@ -235,7 +230,7 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
     }
   }
 
-  const handleSave = () => {
+  const handleSave: any = () => {
     if (editMode) {
       updateBoatyards()
     } else {
@@ -505,7 +500,12 @@ const AddBoatyards: React.FC<BoatYardProps> = ({
             <div>
               <div className="">
                 <InputComponent
+                  {...(mapPositionChanged ? { value: gpsCoordinatesValue } : '')}
+                  // onKeyDown={() => mapPositionChanged && setMapPositionChanged(false)}
+                  onFocus={() => setMapPositionChanged(false)}
+                  onBlur={() => setMapPositionChanged(true)}
                   defaultValue={getFormattedCoordinate(customerData?.gpsCoordinates)?.join(' ')}
+                  // value={gpsCoordinatesValue}
                   onChange={debounce((e) => {
                     setGpsCoordinatesValue(e.target.value)
                   })}
