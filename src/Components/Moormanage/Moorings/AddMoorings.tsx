@@ -645,7 +645,9 @@ const AddMoorings: React.FC<AddMooringProps> = ({
 
       <div className={isLoading ? 'blurred' : ''}>
         <>
-          <div className="flex gap-6 ">
+          {/* Row 1 */}
+          <div className="flex gap-6 mt-3">
+            {/* Customer Name */}
             <div>
               <span className="font-medium text-sm text-[#000000]">
                 <div className="flex gap-1">
@@ -679,7 +681,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 </p>
               </div>
             </div>
-
+            {/* Mooring Number */}
             <div>
               <span className="font-medium text-sm text-[#000000]">
                 <div className="flex gap-1">
@@ -710,7 +712,84 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 </p>
               </div>
             </div>
-
+            {/* Mooring Status */}
+            <div>
+              <div>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">Mooring Status</div>
+                </span>
+              </div>
+              <div className="mt-2">
+                <Dropdown
+                  value={formData?.mooringStatus}
+                  onChange={(e) => handleInputChange('mooringStatus', e.target.value)}
+                  options={mooringStatus}
+                  optionLabel="status"
+                  editable
+                  disabled={isLoading}
+                  style={{
+                    width: '230px',
+                    height: '32px',
+                    border: '1px solid #D5E1EA',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+          {/* Row 2 */}
+          <div className="flex gap-6 mt-3">
+            {/* Service area */}
+            <div>
+              <span className="font-medium text-sm text-[#000000]">
+                <div className="flex gap-1">Service Area</div>
+              </span>
+              <div className="mt-2">
+                <Dropdown
+                  value={formData?.serviceAreaId}
+                  onChange={(e) => handleInputChange('serviceAreaId', e.value)}
+                  options={serviceArea}
+                  optionLabel="serviceAreaName"
+                  placeholder="Select"
+                  editable
+                  disabled={isLoading}
+                  style={{
+                    width: '230px',
+                    height: '32px',
+                    border: '1px solid #D5E1EA',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
+                  }}
+                />
+              </div>
+            </div>
+            {/* Boatyard */}
+            <div>
+              <span className="font-medium text-sm text-[#000000]">
+                <div className="flex gap-1">Boatyard</div>
+              </span>
+              <div className="mt-2">
+                <Dropdown
+                  value={formData?.boatYardName}
+                  onChange={(e) => handleInputChange('boatYardName', e.target.value)}
+                  options={boatyardsName}
+                  optionLabel="boatyardName"
+                  placeholder="Select"
+                  editable
+                  disabled={isLoading || formData?.mooringStatus?.id === 2}
+                  style={{
+                    width: '230px',
+                    height: '32px',
+                    border: '1px solid #D5E1EA',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
+                    cursor: formData?.mooringStatus?.id === 2 ? 'not-allowed' : 'pointer',
+                  }}
+                />
+              </div>
+            </div>
+            {/* Images */}
             <div className="">
               <span className="font-medium text-sm text-[#000000]">
                 <div className="flex gap-1"> Images</div>
@@ -738,31 +817,43 @@ const AddMoorings: React.FC<AddMooringProps> = ({
               </div>
             </div>
           </div>
-
+          {/* Row 3 */}
           <div className="flex gap-6 mt-3">
+            {isLoading && (
+              <ProgressSpinner
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '45%',
+                  transform: 'translate(-50%, -50%)',
+                  width: '50px',
+                  height: '50px',
+                  zIndex: 4,
+                }}
+                strokeWidth="4"
+              />
+            )}
+            {/* Boat Name */}
             <div>
               <span className="font-medium text-sm text-[#000000]">
-                <div className="flex gap-1">Service Area</div>
+                <div className="flex gap-1">Boat Name</div>
               </span>
               <div className="mt-2">
-                <Dropdown
-                  value={formData?.serviceAreaId}
-                  onChange={(e) => handleInputChange('serviceAreaId', e.value)}
-                  options={serviceArea}
-                  optionLabel="serviceAreaName"
-                  placeholder="Select"
-                  editable
-                  disabled={isLoading}
+                <InputComponent
+                  value={formData?.boatName}
+                  onChange={(e) => handleInputChange('boatName', e.target.value)}
                   style={{
                     width: '230px',
                     height: '32px',
                     border: '1px solid #D5E1EA',
                     borderRadius: '0.50rem',
                     fontSize: '0.8rem',
+                    paddingLeft: '0.5rem',
                   }}
                 />
               </div>
             </div>
+            {/* G.P.S Coordinates */}
             <div>
               <span className="font-medium text-sm text-[#000000]">
                 <div className="flex gap-1">G.P.S Coordinates</div>
@@ -788,66 +879,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 />
               </div>
             </div>
-            <div>
-              <span className="font-medium text-sm text-[#000000]">
-                <div className="flex gap-1">Boatyard</div>
-              </span>
-              <div className="mt-2">
-                <Dropdown
-                  value={formData?.boatYardName}
-                  onChange={(e) => handleInputChange('boatYardName', e.target.value)}
-                  options={boatyardsName}
-                  optionLabel="boatyardName"
-                  placeholder="Select"
-                  editable
-                  disabled={isLoading || formData?.mooringStatus?.id === 2}
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                    cursor: formData?.mooringStatus?.id === 2 ? 'not-allowed' : 'pointer',
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="flex gap-6 mt-3">
-            {isLoading && (
-              <ProgressSpinner
-                style={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '45%',
-                  transform: 'translate(-50%, -50%)',
-                  width: '50px',
-                  height: '50px',
-                  zIndex: 4,
-                }}
-                strokeWidth="4"
-              />
-            )}
-            <div>
-              <span className="font-medium text-sm text-[#000000]">
-                <div className="flex gap-1">Boat Name</div>
-              </span>
-              <div className="mt-2">
-                <InputComponent
-                  value={formData?.boatName}
-                  onChange={(e) => handleInputChange('boatName', e.target.value)}
-                  style={{
-                    width: '230px',
-                    height: '32px',
-                    border: '1px solid #D5E1EA',
-                    borderRadius: '0.50rem',
-                    fontSize: '0.8rem',
-                    paddingLeft: '0.5rem',
-                  }}
-                />
-              </div>
-            </div>
+            {/* Boat Size */}
             <div>
               <span className="font-medium text-sm text-[#000000]">
                 <div className="flex gap-1">Boat Size (in feet)</div>
@@ -868,18 +900,45 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 />
               </div>
             </div>
+          </div>
+          {/* Row 4 */}
+          <div className="flex gap-6 mt-3">
+            {/* Type of Vessel */}
             <div>
               <div>
                 <span className="font-medium text-sm text-[#000000]">
-                  <div className="flex gap-1">Size of Weight</div>
+                  <div className="flex gap-1">Type of Vessel</div>
                 </span>
               </div>
 
               <div className="mt-2">
+                <Dropdown
+                  value={formData?.boatType}
+                  onChange={(e) => handleInputChange('boatType', e.target.value)}
+                  options={type}
+                  optionLabel="boatType"
+                  editable
+                  disabled={isLoading}
+                  style={{
+                    width: '230px',
+                    height: '32px',
+                    border: '1px solid #D5E1EA',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
+                  }}
+                />
+              </div>
+            </div>
+            {/* Weight of Vessel */}
+            <div>
+              <span className="font-medium text-sm text-[#000000]">
+                <div className="flex gap-1">Weight of Vessel</div>
+              </span>
+              <div className="mt-2">
                 <InputComponent
-                  value={formData?.sizeOfWeight}
-                  onChange={(e) => handleInputChange('sizeOfWeight', e.target.value)}
+                  value={formData?.boatWeight}
                   type="text"
+                  onChange={(e) => handleInputChange('boatWeight', e.target.value)}
                   style={{
                     width: '230px',
                     height: '32px',
@@ -891,9 +950,34 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 />
               </div>
             </div>
-          </div>
+            {/* Inspection Date */}
+            <div>
+              <div>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">Inspection Date</div>
+                </span>
+              </div>
 
+              <div className="mt-2">
+                <Calendar
+                  value={parseDate(formData.inspectionDate)}
+                  onChange={(e) => handleInputChange('inspectionDate', formatDate(e.target.value))}
+                  dateFormat="mm/dd/yy"
+                  style={{
+                    width: '230px',
+                    height: '32px',
+                    border: '1px solid #D5E1EA',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
+                    padding: '0.5rem',
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+          {/* Row 5 */}
           <div className="flex gap-6 mt-3">
+            {/* Type of Weight */}
             <div>
               <div>
                 <span className="font-medium text-sm text-[#000000]">
@@ -920,6 +1004,58 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 />
               </div>
             </div>
+            {/* Size of Weight */}
+            <div>
+              <div>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">Size of Weight</div>
+                </span>
+              </div>
+
+              <div className="mt-2">
+                <InputComponent
+                  value={formData?.sizeOfWeight}
+                  onChange={(e) => handleInputChange('sizeOfWeight', e.target.value)}
+                  type="text"
+                  style={{
+                    width: '230px',
+                    height: '32px',
+                    border: '1px solid #D5E1EA',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
+                    paddingLeft: '0.5rem',
+                  }}
+                />
+              </div>
+            </div>
+            {/* Depth at Mean High Water */}
+            <div>
+              <div>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">Depth at Mean High Water</div>
+                </span>
+              </div>
+
+              <div className="mt-2">
+                <InputText
+                  value={formData?.depthAtMeanHighWater}
+                  type="text"
+                  onChange={(e) => handleInputChange('depthAtMeanHighWater', e.target.value)}
+                  style={{
+                    width: '230px',
+                    height: '32px',
+                    border: '1px solid #D5E1EA',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
+                    paddingLeft: '0.5rem',
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+          {/* Row 6 */}
+          <div className="flex gap-6 mt-3">
+            {/* Top Chain Condition */}
             <div>
               <div>
                 <span className="font-medium text-sm text-[#000000]">
@@ -946,7 +1082,7 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 />
               </div>
             </div>
-
+            {/* Top Chain Condition Install Date */}
             <div>
               <div>
                 <span className="font-medium text-sm text-[#000000]">
@@ -972,97 +1108,125 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                 />
               </div>
             </div>
-          </div>
-
-          <div className=" gap-6 mt-3 mb-16">
-            <div className="flex gap-6">
-              <div className="">
-                <div>
-                  <span className="font-medium text-sm text-[#000000]">
-                    <div className="flex gap-1">Depth at Mean High Water</div>
-                  </span>
-                </div>
-
-                <div className="mt-2">
-                  <InputText
-                    value={formData?.depthAtMeanHighWater}
-                    type="text"
-                    onChange={(e) => handleInputChange('depthAtMeanHighWater', e.target.value)}
-                    style={{
-                      width: '230px',
-                      height: '32px',
-                      border: '1px solid #D5E1EA',
-                      borderRadius: '0.50rem',
-                      fontSize: '0.8rem',
-                      paddingLeft: '0.5rem',
-                    }}
-                  />
-                </div>
-              </div>
+            {/* Bottom Chain Condition */}
+            <div>
               <div>
-                <div>
-                  <span className="font-medium text-sm text-[#000000]">
-                    <div className="flex gap-1">Bottom Chain Condition</div>
-                  </span>
-                </div>
-
-                <div className="mt-2">
-                  <Dropdown
-                    value={formData?.bottomChainCondition}
-                    onChange={(e) => handleInputChange('bottomChainCondition', e.value)}
-                    options={bottomChainCondition}
-                    optionLabel="condition"
-                    placeholder="Select"
-                    editable
-                    disabled={isLoading}
-                    style={{
-                      width: '230px',
-                      height: '32px',
-                      border: '1px solid #D5E1EA',
-                      borderRadius: '0.50rem',
-                      fontSize: '0.8rem',
-                    }}
-                  />
-                </div>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">Bottom Chain Condition</div>
+                </span>
               </div>
-              <div>
-                <div>
-                  <span className="font-medium text-sm text-[#000000]">
-                    <div className="flex gap-1">
-                      Bottom Chain Condition
-                      <span style={{ fontSize: '0.6rem' }}> (install date)</span>
-                    </div>
-                  </span>
-                </div>
 
-                <div className="mt-2">
-                  <Calendar
-                    value={parseDate(formData.bottomChainDate)}
-                    onChange={(e) =>
-                      handleInputChange('bottomChainDate', formatDate(e.target.value))
-                    }
-                    dateFormat="mm/dd/yy"
-                    style={{
-                      width: '230px',
-                      height: '32px',
-                      border: '1px solid #D5E1EA',
-                      borderRadius: '0.50rem',
-                      fontSize: '0.8rem',
-                      padding: '0.5rem',
-                    }}
-                  />
-                </div>
+              <div className="mt-2">
+                <Dropdown
+                  value={formData?.bottomChainCondition}
+                  onChange={(e) => handleInputChange('bottomChainCondition', e.value)}
+                  options={bottomChainCondition}
+                  optionLabel="condition"
+                  placeholder="Select"
+                  editable
+                  disabled={isLoading}
+                  style={{
+                    width: '230px',
+                    height: '32px',
+                    border: '1px solid #D5E1EA',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
+                  }}
+                />
               </div>
             </div>
+          </div>
+          {/* Row 7 */}
+          <div className="flex gap-6 mt-3">
+            {/* Bottom Chain Condition Install Date */}
+            <div>
+              <div>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">
+                    Bottom Chain Condition
+                    <span style={{ fontSize: '0.6rem' }}> (install date)</span>
+                  </div>
+                </span>
+              </div>
 
-            <div className="flex gap-6">
+              <div className="mt-2">
+                <Calendar
+                  value={parseDate(formData.bottomChainDate)}
+                  onChange={(e) => handleInputChange('bottomChainDate', formatDate(e.target.value))}
+                  dateFormat="mm/dd/yy"
+                  style={{
+                    width: '230px',
+                    height: '32px',
+                    border: '1px solid #D5E1EA',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
+                    padding: '0.5rem',
+                  }}
+                />
+              </div>
+            </div>
+            {/* Condition of Eye */}
+            <div>
+              <div>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">Condition of Eye</div>
+                </span>
+              </div>
+              <div className="mt-2">
+                <Dropdown
+                  value={formData?.conditionOfEye}
+                  onChange={(e) => handleInputChange('conditionOfEye', e.value)}
+                  options={conditionOfEye}
+                  optionLabel="condition"
+                  placeholder="Select"
+                  editable
+                  disabled={isLoading}
+                  style={{
+                    width: '230px',
+                    height: '32px',
+                    border: '1px solid #D5E1EA',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
+                  }}
+                />
+              </div>
+            </div>
+            {/* Condition of Eye Install Date */}
+            <div>
+              <div>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">
+                    Condition of Eye <span style={{ fontSize: '0.6rem' }}> (install date)</span>
+                  </div>
+                </span>
+              </div>
+              <div className="mt-2">
+                <Calendar
+                  value={parseDate(formData.conditionEyeDate)}
+                  onChange={(e) =>
+                    handleInputChange('conditionEyeDate', formatDate(e.target.value))
+                  }
+                  dateFormat="mm/dd/yy"
+                  style={{
+                    width: '230px',
+                    height: '32px',
+                    border: '1px solid #D5E1EA',
+                    borderRadius: '0.50rem',
+                    fontSize: '0.8rem',
+                    padding: '0.5rem',
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+          {/* Row 8 */}
+          <div className="flex gap-6">
+            <div>
+              {/* Pendant Condition */}
               <div className="mt-3">
-                <div>
-                  <span className="font-medium text-sm text-[#000000]">
-                    <div className="flex gap-1">Pendant Condition</div>
-                  </span>
-                </div>
-
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">Pendant Condition</div>
+                </span>
                 <div className="mt-2">
                   <InputComponent
                     value={formData?.pendantCondition}
@@ -1073,99 +1237,16 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                       border: '1px solid #D5E1EA',
                       borderRadius: '0.50rem',
                       fontSize: '0.8rem',
-                      paddingLeft: '0.5rem',
                     }}
                   />
                 </div>
               </div>
+              {/* Shackle, Swivel Condition */}
               <div className="mt-3">
-                <div>
-                  <span className="font-medium text-sm text-[#000000]">
-                    <div className="flex gap-1">Condition of Eye</div>
-                  </span>
-                </div>
+                <span className="font-medium text-sm text-[#000000]">
+                  <div className="flex gap-1">Shackle, Swivel Condition</div>
+                </span>
                 <div className="mt-2">
-                  <Dropdown
-                    value={formData?.conditionOfEye}
-                    onChange={(e) => handleInputChange('conditionOfEye', e.value)}
-                    options={conditionOfEye}
-                    optionLabel="condition"
-                    placeholder="Select"
-                    editable
-                    disabled={isLoading}
-                    style={{
-                      width: '230px',
-                      height: '32px',
-                      border: '1px solid #D5E1EA',
-                      borderRadius: '0.50rem',
-                      fontSize: '0.8rem',
-                    }}
-                  />
-                </div>
-              </div>
-
-              <div className="mt-3">
-                <div>
-                  <span className="font-medium text-sm text-[#000000]">
-                    <div className="flex gap-1">
-                      Condition of Eye <span style={{ fontSize: '0.6rem' }}> (install date)</span>
-                    </div>
-                  </span>
-                </div>
-                <div className="mt-2">
-                  <Calendar
-                    value={parseDate(formData.conditionEyeDate)}
-                    onChange={(e) =>
-                      handleInputChange('conditionEyeDate', formatDate(e.target.value))
-                    }
-                    dateFormat="mm/dd/yy"
-                    style={{
-                      width: '230px',
-                      height: '32px',
-                      border: '1px solid #D5E1EA',
-                      borderRadius: '0.50rem',
-                      fontSize: '0.8rem',
-                      padding: '0.5rem',
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="flex gap-6">
-              <div className="mt-3">
-                <div>
-                  <span className="font-medium text-sm text-[#000000]">
-                    <div className="flex gap-1">Inspection Date</div>
-                  </span>
-                </div>
-
-                <div className="mt-2">
-                  <Calendar
-                    value={parseDate(formData.inspectionDate)}
-                    onChange={(e) =>
-                      handleInputChange('inspectionDate', formatDate(e.target.value))
-                    }
-                    dateFormat="mm/dd/yy"
-                    style={{
-                      width: '230px',
-                      height: '32px',
-                      border: '1px solid #D5E1EA',
-                      borderRadius: '0.50rem',
-                      fontSize: '0.8rem',
-                      padding: '0.5rem',
-                    }}
-                  />
-                </div>
-              </div>
-
-              <div className="mt-3">
-                <div>
-                  <span className="font-medium text-sm text-[#000000]">
-                    <div className="flex gap-1">Shackle, Swivel Condition</div>
-                  </span>
-                </div>
-                <div className="mt-3">
                   <Dropdown
                     value={formData?.shackleSwivelCondition}
                     onChange={(e) => handleInputChange('shackleSwivelCondition', e.value)}
@@ -1180,104 +1261,29 @@ const AddMoorings: React.FC<AddMooringProps> = ({
                       border: '1px solid #D5E1EA',
                       borderRadius: '0.50rem',
                       fontSize: '0.8rem',
-                    }}
-                  />
-                </div>
-              </div>
-
-              <div className="mt-3">
-                <div>
-                  <span className="font-medium text-sm text-[#000000]">
-                    <div className="flex gap-1">Mooring Status</div>
-                  </span>
-                </div>
-                <div className="mt-2">
-                  <Dropdown
-                    value={formData?.mooringStatus}
-                    onChange={(e) => handleInputChange('mooringStatus', e.target.value)}
-                    options={mooringStatus}
-                    optionLabel="status"
-                    editable
-                    disabled={isLoading}
-                    style={{
-                      width: '230px',
-                      height: '32px',
-                      border: '1px solid #D5E1EA',
-                      borderRadius: '0.50rem',
-                      fontSize: '0.8rem',
+                      paddingLeft: '0.5rem',
                     }}
                   />
                 </div>
               </div>
             </div>
 
-            <div className="flex gap-6">
+            <div className="mt-3">
               <div>
-                <div className="mt-3">
-                  <div>
-                    <span className="font-medium text-sm text-[#000000]">
-                      <div className="flex gap-1">Type of Vessel</div>
-                    </span>
-                  </div>
-
-                  <div className="mt-2">
-                    <Dropdown
-                      value={formData?.boatType}
-                      onChange={(e) => handleInputChange('boatType', e.target.value)}
-                      options={type}
-                      optionLabel="boatType"
-                      editable
-                      disabled={isLoading}
-                      style={{
-                        width: '230px',
-                        height: '32px',
-                        border: '1px solid #D5E1EA',
-                        borderRadius: '0.50rem',
-                        fontSize: '0.8rem',
-                      }}
-                    />
-                  </div>
-                </div>
-
-                <div className="mt-3">
-                  <span className="font-medium text-sm text-[#000000]">
-                    <div className="flex gap-1">Weight of Vessel</div>
-                  </span>
-                  <div className="mt-2">
-                    <InputComponent
-                      value={formData?.boatWeight}
-                      type="text"
-                      onChange={(e) => handleInputChange('boatWeight', e.target.value)}
-                      style={{
-                        width: '230px',
-                        height: '32px',
-                        border: '1px solid #D5E1EA',
-                        borderRadius: '0.50rem',
-                        fontSize: '0.8rem',
-                        paddingLeft: '0.5rem',
-                      }}
-                    />
-                  </div>
-                </div>
+                <span className="font-medium text-sm text-[#000000]">Pin on Map</span>
               </div>
-
-              <div className="mt-3">
-                <div>
-                  <span className="font-medium text-sm text-[#000000]">Pin on Map</span>
-                </div>
-                <div
-                  className="mt-2"
-                  style={{
-                    height: '300px',
-                    width: '480px',
-                    overflow: 'hidden',
-                  }}>
-                  <CustomSelectPositionMap
-                    onPositionChange={handlePositionChange}
-                    zoomLevel={15}
-                    center={center}
-                  />
-                </div>
+              <div
+                className="mt-2"
+                style={{
+                  height: '300px',
+                  width: '480px',
+                  overflow: 'hidden',
+                }}>
+                <CustomSelectPositionMap
+                  onPositionChange={handlePositionChange}
+                  zoomLevel={15}
+                  center={center}
+                />
               </div>
             </div>
           </div>
