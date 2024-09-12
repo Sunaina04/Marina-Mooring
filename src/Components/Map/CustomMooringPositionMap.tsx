@@ -35,8 +35,6 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
   const [mooringDetails, setMooringDetails] = useState<MooringPayload>()
   const toast = useRef<Toast>(null)
   const [isZoom, setZoom] = useState<boolean>(false)
-  console.log('position', position)
-
   const parseCoordinates = (coordinates: string): [number, number] | null => {
     if (!coordinates) return null
     const [latitude, longitude] = coordinates?.split(' ').map(parseFloat)

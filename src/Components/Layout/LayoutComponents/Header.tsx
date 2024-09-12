@@ -56,8 +56,6 @@ const Header: React.FC<HeaderProps> = ({ header, customer }) => {
   const handleQuickBookApi = () => {
     const token = sessionStorage.getItem('token')
     const quickBooksLoginUrl = `${process.env.REACT_APP_BASE_URL}/api/v1/QBO/connectToQuickbooks?authToken=${token}`
-    console.log('url', quickBooksLoginUrl)
-
     window.open(quickBooksLoginUrl, 'QuickBooksWindow', 'width=800,height=600,scrollbars=yes')
   }
 
