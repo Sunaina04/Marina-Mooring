@@ -288,6 +288,7 @@ export interface ShowImagesProps {
 export interface ResetModalProps {
   isResetModalOpen: () => void
   customerId: any
+  isLoggedInUser?: boolean
 }
 
 export interface PreviewProps {

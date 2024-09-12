@@ -187,6 +187,7 @@ const HeaderProfile: React.FC<HeaderProps> = ({ customer }) => {
               setDialogVisible(false)
             }}
             customerId={customer}
+            isLoggedInUser={true}
           />
         )}
       </Dialog>

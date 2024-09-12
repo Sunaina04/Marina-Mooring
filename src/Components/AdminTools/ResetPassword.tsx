@@ -4,10 +4,15 @@ import { ProgressSpinner } from 'primereact/progressspinner'
 import React, { useEffect, useRef, useState } from 'react'
 import { useUpdateUserMutation } from '../../Services/AdminTools/AdminToolsApi'
 import { ResetModalProps } from '../../Type/ComponentBasedType'
-import { ErrorResponse, SaveUserResponse } from '../../Type/ApiTypes'
+import { ErrorResponse, ResetPasswordResponse, SaveUserResponse } from '../../Type/ApiTypes'
 import { Toast } from 'primereact/toast'
+import { useResetPasswordMutation } from '../../Services/Authentication/AuthApi'
 
-const ResetPassword: React.FC<ResetModalProps> = ({ isResetModalOpen, customerId }) => {
+const ResetPassword: React.FC<ResetModalProps> = ({
+  isResetModalOpen,
+  customerId,
+  isLoggedInUser,
+}) => {
   const [isLoading, setIsLoading] = useState(false)
   const [editCustomer] = useUpdateUserMutation()
   const [password, setPassword] = useState('')
@@ -16,7 +21,8 @@ const ResetPassword: React.FC<ResetModalProps> = ({ isResetModalOpen, customerId
   const [firstErrorField, setFirstErrorField] = useState('')
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({})
   const toastRef = useRef<Toast>(null)
-
+  const tokenFromUrl = sessionStorage.getItem('token')
+  const [resetPassword] = useResetPasswordMutation()
   const [passwordCriteria, setPasswordCriteria] = useState({
     uppercase: false,
     lowercase: false,
@@ -83,7 +89,49 @@ const ResetPassword: React.FC<ResetModalProps> = ({ isResetModalOpen, customerId
     }
   }
 
-  const handleEdit = async () => {
+  const handleResetPassword = async () => {
+    const errors = validateFields()
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors)
+      return
+    }
+    setIsLoading(true)
+    const resetPassPayload = {
+      newPassword: btoa(password), // Encoding password using btoa
+      confirmPassword: btoa(password),
+    }
+    setIsLoading(true)
+    try {
+      const response = await resetPassword({
+        token: tokenFromUrl,
+        payload: resetPassPayload,
+      }).unwrap()
+      const { status, message } = response as ResetPasswordResponse
+      if (status === 200) {
+        setIsLoading(false)
+        toastRef?.current?.show({
+          severity: 'success',
+          summary: 'Success',
+          detail: message,
+          life: 3000,
+        })
+        isResetModalOpen()
+      } else {
+        setIsLoading(false)
+        toastRef?.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: message,
+          life: 3000,
+        })
+      }
+    } catch (error: any) {
+      setIsLoading(false)
+      console.error('Error occurred during password reset:', error)
+    }
+  }
+
+  const handleSave = async () => {
     const errors = validateFields()
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors)
@@ -334,7 +382,9 @@ const ResetPassword: React.FC<ResetModalProps> = ({ isResetModalOpen, customerId
           bottom: '0px',
         }}>
         <Button
-          onClick={handleEdit}
+          onClick={() => {
+            isLoggedInUser ? handleResetPassword() : handleSave()
+          }}
           label={'Save'}
           style={{
             width: '100px',
