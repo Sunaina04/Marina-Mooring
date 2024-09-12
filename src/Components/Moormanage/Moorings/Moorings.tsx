@@ -53,6 +53,7 @@ const Moorings = () => {
   const [mooringData, setMooringData] = useState<MooringPayload[]>([])
   const [customerRecordData, setCustomerRecordData] = useState<any>()
   const [mooringResponseData, setMooringResponseData] = useState<any>()
+  const [selectedMooringResponseData, setSelectedMooringResponseData] = useState<any>()
   const [boatYardData, setBoatYardData] = useState<any[]>([])
   const [selectedCustomer, setSelectedCustomer] = useState<any>()
   const [mooringRowData, setMooringRowData] = useState<MooringPayload>()
@@ -398,6 +399,7 @@ const Moorings = () => {
         if (content?.mooringResponseDtoList?.length > 0) {
           setIsLoading(false)
           setMooringData(content?.mooringResponseDtoList)
+          setSelectedMooringResponseData(content?.mooringResponseDtoList?.[0])
           setMooringGPSResponseData(content?.mooringWithGPSCoordinateResponseList)
           setCustomerId(content?.mooringResponseDtoList?.[0]?.customerId)
           setMooringId(content?.mooringResponseDtoList?.[0]?.id)
@@ -765,7 +767,7 @@ const Moorings = () => {
                       scrollable={true}
                       columns={tableColumns}
                       style={{ borderBottom: '1px solid #D5E1EA', fontWeight: '400' }}
-                      onRowClick={async (row) => {
+                      onRowClick={async (row: any) => {
                         if (rowClickedActionInProgress) return null
                         setRowClickedActionInProgress(true)
                         try {
@@ -773,8 +775,7 @@ const Moorings = () => {
                         } finally {
                           setRowClickedActionInProgress(false)
                         }
-                        console.log('row?.data?.gpsCoordinates', row?.data?.gpsCoordinates)
-
+                        setSelectedMooringResponseData(row?.data)
                         setGPSResponseData(row?.data?.gpsCoordinates)
                       }}
                       selectionMode="single"
@@ -848,7 +849,7 @@ const Moorings = () => {
               }}
               iconsByStatus={iconsByStatus}
               moorings={mooringGPSResponseData}
-              mooringData={mooringData}
+              mooringData={selectedMooringResponseData}
               rightContanerWidth={rightContainerWidth}
               leftContanerWidth={leftContainerWidth}
               setRightContainer={setRightContainerWidth}

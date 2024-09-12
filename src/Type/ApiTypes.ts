@@ -339,6 +339,7 @@ export interface MooringPayload {
   sizeOfWeight: string
   typeOfWeight: MooringMetaDataTypes
   depthAtMeanHighWater: number
+  statusId: number
   mooringStatus: MooringStatus
   mooringDueServiceStatusDto: MooringStatus
   customerResponseDto: customerResponseDto
