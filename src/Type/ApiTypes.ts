@@ -425,6 +425,7 @@ export interface MooringResponseDtoList {
 export interface MooringWithGpsCoordinates {
   id: number
   mooringId: string
+  mooringNumber: string
   gpsCoordinates: string
   statusId: number
 }

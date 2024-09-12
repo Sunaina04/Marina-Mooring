@@ -50,7 +50,7 @@ const MooringMapModal: React.FC<TimeLineProps> = ({
             onClick={viewEdit}>
             View/edit
           </p>
-          <p className="text-xs text-white">ID:{mooringId}</p>
+          <p className="text-xs text-white">ID: {mooringId}</p>
         </div>
 
         {customerModalVisible && (
