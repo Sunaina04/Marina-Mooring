@@ -773,6 +773,9 @@ const Moorings = () => {
                         } finally {
                           setRowClickedActionInProgress(false)
                         }
+                        console.log('row?.data?.gpsCoordinates', row?.data?.gpsCoordinates)
+
+                        setGPSResponseData(row?.data?.gpsCoordinates)
                       }}
                       selectionMode="single"
                       onSelectionChange={(e) => {
@@ -1046,7 +1049,7 @@ const Moorings = () => {
                                 onRowClick={(rowData: any) => {
                                   setDialogVisible(true)
                                   setMooringRowData(rowData.data)
-                                  setGPSResponseData(rowData?.data?.gpsCoordinates)
+                                  // setGPSResponseData(rowData?.data?.gpsCoordinates)
                                 }}
                                 onSelectionChange={(e) => {
                                   setSelectedMooring(e.value)
