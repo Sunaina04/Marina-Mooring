@@ -61,11 +61,6 @@ const Header: React.FC<HeaderProps> = ({ header, customer }) => {
     window.open(quickBooksLoginUrl, 'QuickBooksWindow', 'width=800,height=600,scrollbars=yes')
   }
 
-  const handleQuickBookApis = () => {
-    const quickBooksLoginUrl = `${process.env.REACT_APP_BASE_URL}/api/v1/QBO/connectToQuickbooks`
-    window.open(quickBooksLoginUrl, 'QuickBooksWindow', 'width=800,height=600,scrollbars=yes')
-  }
-
   useEffect(() => {
     if (role === 1) {
       getUserHandler()
@@ -99,7 +94,7 @@ const Header: React.FC<HeaderProps> = ({ header, customer }) => {
           minWidth: '300px',
           justifyContent: 'end',
         }}>
-        {role === 1 && (
+        {(role === 1 || role === 2 || role === 3) && (
           <>
             <button
               style={{
@@ -115,6 +110,10 @@ const Header: React.FC<HeaderProps> = ({ header, customer }) => {
                 style={{ width: '150px', height: '35px' }}
               />
             </button>
+          </>
+        )}
+        {role === 1 && (
+          <>
             <Dropdown
               value={selectedCustomerName}
               onChange={(e) => {

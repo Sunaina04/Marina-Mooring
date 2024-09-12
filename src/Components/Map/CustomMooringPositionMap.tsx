@@ -35,6 +35,7 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
   const [mooringDetails, setMooringDetails] = useState<MooringPayload>()
   const toast = useRef<Toast>(null)
   const [isZoom, setZoom] = useState<boolean>(false)
+  console.log('position', position)
 
   const parseCoordinates = (coordinates: string): [number, number] | null => {
     if (!coordinates) return null
@@ -133,7 +134,7 @@ const CustomMooringPositionMap: React.FC<CustomMooringPositionMapProps> = ({
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             />
 
-            {moorings && (customerPage || dashboard)
+            {moorings && customerPage
               ? moorings.map((mooring: MooringPayload, index: number) => {
                   const coordinates = parseCoordinates(mooring.gpsCoordinates) || [
                     39.4926173, -117.5714859,
