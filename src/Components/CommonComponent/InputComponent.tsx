@@ -1,26 +1,31 @@
-import React from "react";
-import { InputText } from "primereact/inputtext";
+import React, { CSSProperties, FocusEventHandler } from 'react'
+import { InputText } from 'primereact/inputtext'
+import { BsEyeSlash } from 'react-icons/bs'
 
 interface InputStyle {
-  width?: string;
-  height?: string;
-  padding?: string;
-  fontSize?: string;
-  border?: string; 
-  fontFamily?: string;
-  borderRadius?: string; 
+  width?: string
+  height?: string
+  padding?: string
+  fontSize?: string
+  border?: string
+  fontFamily?: string
+  borderRadius?: string
 }
 
 interface InputComponentProps {
-  placeholder?: string;
-  type?: "text" | "password" | "number" | "email" | "date";
-  value?: string;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  disabled?: boolean;
-  required?: boolean;
-  autoFocus?: boolean;
-  style?: InputStyle;
-  name?: string;
+  placeholder?: string
+  type?: 'text' | 'password' | 'number' | 'email' | 'date' | 'file'
+  accept?: 'image/*'
+  value?: any
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+  disabled?: boolean
+  required?: boolean
+  autoFocus?: boolean
+  style?: React.CSSProperties
+  name?: string
+  onFocus?: any
+  onBlur?: any
+  onKeyDown?: any
 }
 
 const InputComponent: React.FC<InputComponentProps> = ({
@@ -32,7 +37,10 @@ const InputComponent: React.FC<InputComponentProps> = ({
   required,
   autoFocus,
   style,
-  name
+  name,
+  onFocus,
+  onBlur,
+  onKeyDown,
 }) => {
   return (
     <div className="p-inputgroup">
@@ -46,9 +54,12 @@ const InputComponent: React.FC<InputComponentProps> = ({
         autoFocus={autoFocus}
         name={name}
         style={style}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        onKeyDown={onKeyDown}
       />
     </div>
-  );
-};
+  )
+}
 
-export default InputComponent;
+export default InputComponent
